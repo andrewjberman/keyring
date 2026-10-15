@@ -142,6 +142,42 @@ The CTO ruled (open call dell2-20261015T193100Z-cf2a) that the run wrapper is cu
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent build cell with a disjoint write set (a new module and its test file). Worker `0.9.0_WK_IRPT_DASHBD~311` (`DB-i-11`).
 
+## 11. ROUND 125, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-124 analysis @e5c8b143fe, msg 8654, answering my packet @1190b13f77)
+
+Round 124 does not close on its own: the CVO graded the landed tree NOT MAY-CLOSE (contract 0.4.1 landed after the cut; AC2 and AC3 fail and 2 of 38 tests are red on trunk). The CTO accepted my proposed batch and added three items. Round 125 is cut on contract 0.4.1 (the file reads 0.4.1 at the cut; 0.4.2 has been asked of `~D2` and has not landed). It closes round 124 when it lands green on trunk, graded on the landed tree.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-12` | The Scope feed adapter and run wrapper on contract 0.4.1: Orion PRESENT rows `VENDOR_REPORTED` with `row_status` PRESENT (disarms W221-S3); ABSENT rows written INTO the table in the 0.4.1 shape with the contract's reason precedence (the `absent/` file and `BESIDE_TABLE` retire); the wrapper reads its field list and version from the contract file; refusals for a bad dimension key, a mismatched partition and a non-empty output directory; the adapter gets the full domain and account set so that a dropped first or last calendar day leaves 0 trading days unaccounted (W311-S1, S3); the 'proposed' marks removed; the end-of-day claim in the table when the contract declares it, else in the run record; fixtures only, no AWS | FWD-2 | LOCAL (code and tests; local files under a handed directory; nothing wired, scheduled, served or deployed) | `DB-i-11` (merged, @6c7b7ccb56) | I-L |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) One cell, not two: the adapter and the wrapper change together (the wrapper's golden grades the adapter's rows end to end) and one worker owns all four files. (b) The checker is driven by the contract FILE at HEAD (version, fields, hash, validator), so a 0.4.2 that declares `market_value_eod_claim` as a column changes what the checker expects, never its code, and the wrapper switches the claim from the run record to the table by reading the contract; the order names both placements. (c) An ABSENT row's unlisted columns follow `~D2`'s own `_absent` fixture in `test_account_return_contract_041.py` (`return_basis` and `day_quality` NOT_MEASURABLE, `guard_state` GUARD_NOT_REACHED); `carried_days` 0 and `flow_claim` absent are mine (the contract does not say; the validator accepts both). (d) W311-S1 is a criterion, as the CTO ruled: the wrapper passes the adapter the full domain and every account, and counts `trading_days_unaccounted` itself from the output. (e) W311-S2 is settled as: the repeated-key count is the number of distinct keys repeated. S3 is closed by the account set; S4, S5 and S6 are refusals with a count and no write. (f) The closing grade is the landed tree: at the drain I re-run all three criteria on the merged tree, not only in the worker's.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell with a disjoint write set of four existing files. Worker `0.9.0_WK_IRPT_DASHBD~312` (`DB-i-12`).
+
+## 12. ROUND 126, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-122 analysis item 3 and ADDENDUM 1 (msg 8678, open call dell2-20261015T211904Z-4255 ruled yes))
+
+The round-122 analysis left the series-ended cause read to this seat "at the next B-IN round"; rounds 123 to 125 took other analyses, so it was uncut. The CTO ruled it cut now, after round 125's drain (the call was queued during it), and ruled (msg 8679) that the TWR flip of the module rides contract 0.4.2 in the same merge window as `~D2`'s file, never ahead of it. That flip is a separate cell, cut when 0.4.2 lands, with the next round number; it is not in this issuance.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-13` | The series-ended cause read: the two saved round-122 Scope bodies against Opal's `fact_positions` silver (GET-only reader, no vendor call): for each Account series that ends before the window end, its days-before-window-end, how many positions partitions follow it, on how many the account is held, whether it is held on the newest, and the verdict STALE_AT_SOURCE / CLOSED_OR_TRANSFERRED / NOT_DETERMINED; counts and words only | FWD-2 | LOCAL (a GET-only read of Opal's own silver and private files; no vendor call, no write, nothing deployed) | none | I-M |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The CTO asked to print "its last date"; the repo carries days-before-window-end (an integer) and the account as a sha256, because a date next to a client's account would be a client fact in the repo. (b) STALE_AT_SOURCE means Opal's positions still hold the account on the newest partition after Orion's series ended; it does NOT prove a vendor fault (a position can outlive a vendor's performance record for another reason), and the basis words say so. (c) The read is bounded: LIST plus GETs under 200; a cap hit is a recorded result, not a widening. (d) The checker recomputes everything it can from the saved bodies and the worker's private extract; it cannot re-read S3, so the issuer spot-reads the newest partition at the drain. (e) The risk class is LOCAL as the CTO wrote (a GET-only read of Opal's own estate, as rounds 108 to 111 were).
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent read cell with a disjoint write set (its own worker folder and private folder); worker `0.9.0_WK_IRPT_DASHBD~313` (`DB-i-13`) runs alone; round 125's worker has already drained.
+
+## 13. ROUND 127, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-125 analysis (msg 8695, 8698) and his 0.4.2-landed message; contract 0.4.2 merged by `~D2` at 6ac152c83a)
+
+The CTO numbered the module's flip "round 126"; round 126 was already DB-i-13 (the cause read), and he confirmed (msg 8698) that the flip is round 127, cut when `~D2`'s 0.4.2 lands. It has landed: `return_basis` is TWR or NOT_MEASURABLE (VENDOR_REPORTED and `source_requires` are gone; provenance is `source`), and the optional column `market_value_eod_claim` is required on a PRESENT Orion row and null on an ABSENT row. The merged module writes VENDOR_REPORTED and keeps the claim in the run record, so on trunk the r125 checker's AC3 and 4 module tests read red; the CTO asked that the count be named, not suppressed (4 failed, 58 passed across the adapter and wrapper test files, measured at the cut).
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-14` | The Scope feed adapter and run wrapper on contract 0.4.2: PRESENT rows `TWR` (disarms W221-S3); `market_value_eod_claim` a declared column of the table (the run record's `claim_placement` retires; the wrapper refuses a contract that does not declare the column); `contract_version` read from the file; the W311-S3 test line; fixtures only, no AWS | FWD-2 | LOCAL (code and tests; local files under a handed directory; nothing wired, scheduled, served or deployed) | `DB-i-12` (merged, @7a8a2f681f) | I-N |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The wrapper REFUSES a contract that does not declare the claim column (count 1, nothing written) instead of keeping the run-record placement: round 125's two-placement code existed only to bridge the gap before 0.4.2, and a writer should not run behind its contract any more than ahead of it. (b) The r127 checker is driven by the contract file at HEAD and uses the 0.4.2 test module's validator; the r125 checker graded 0.4.1 and is superseded. (c) W311-S3 was already closed in the merged wrapper (the CTO accepted this, msg 8698); it is carried as a test line only. (d) DB-i-13 (round 126) is a read cell on a separate chain; the two share no file.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell with a disjoint write set of four existing files. Worker `0.9.0_WK_IRPT_DASHBD~314` (`DB-i-14`).
+
 ## Cells
 
 | cell id | owner |
@@ -157,3 +193,6 @@ The CTO ruled (open call dell2-20261015T193100Z-cf2a) that the run wrapper is cu
 | DB-i-9 | 0.9.0_WK_IRPT_DASHBD~309 |
 | DB-i-10 | 0.9.0_WK_IRPT_DASHBD~310 |
 | DB-i-11 | 0.9.0_WK_IRPT_DASHBD~311 |
+| DB-i-12 | 0.9.0_WK_IRPT_DASHBD~312 |
+| DB-i-13 | 0.9.0_WK_IRPT_DASHBD~313 |
+| DB-i-14 | 0.9.0_WK_IRPT_DASHBD~314 |

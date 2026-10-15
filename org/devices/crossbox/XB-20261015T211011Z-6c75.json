@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T211011Z-6c75",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell2",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "0.0.0_AB_MSTR~DELL2",
+ "subject": "NFRA_CTLPLN FWD-14: what this box recorded of the laptop's RDP attempts, 10-10 to 10-13",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD14_LAPTOP_ATTEMPT_READ.md",
+ "opened_at": "2026-10-15T21:10:11Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-15T21:13:43Z",
+  "bus_message_id": "e449d268-c3ad-48cf-8273-c368f701d9c1"
+ },
+ "ack": {
+  "at": "2026-10-15T21:23:00Z",
+  "by": "0.0.0_AB_MSTR~DELL2",
+  "bus_message_id": "316bff14-12c6-41a9-8c1e-e62dbfcdda85"
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": "2026-10-15T21:24:00Z",
+  "to_by": "0.0.0_AB_MSTR~DELL2"
+ }
+}

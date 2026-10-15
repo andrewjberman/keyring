@@ -43,9 +43,11 @@ Author: 1.0.0_SA_CTO~Z (NFRA_NERVES L3b). 2026-07-14.
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import json
 import os
 import re
+import subprocess
 import sys
 from collections import defaultdict
 
@@ -65,6 +67,24 @@ _CORPUS = [
     ("docs/doctrine", "DOCTRINE"),
     ("docs/references", "RISK"),                     # incident records
 ]
+
+
+def build_refusal(tree: str = _WS):
+    """A build is REFUSED where it would emit a degraded map: a sparse worktree (core.sparseCheckout
+    true), or a tree missing a corpus folder (_iter_docs skips a missing folder silently, so the map
+    keeps a few percent of its danger nodes with no sign). -> the refusal text, or None."""
+    try:
+        out = subprocess.run(["git", "-C", tree, "config", "--bool", "core.sparseCheckout"],
+                             capture_output=True, text=True, timeout=15)
+        if out.returncode == 0 and out.stdout.strip() == "true":
+            return "sparse worktree (core.sparseCheckout=true at %s)" % tree
+    except (OSError, subprocess.SubprocessError):
+        pass
+    missing = [rel for rel, _kind in _CORPUS if not os.path.exists(os.path.join(tree, rel))]
+    if missing:
+        return "corpus folder(s) absent under %s: %s" % (tree, ", ".join(missing))
+    return None
+
 # memory/ lives outside the repo (the agent memory dir) -- included when present.
 _MEMORY_DIR = os.path.expanduser(
     "~/.claude/projects/C--Users-AndrewBerman-Desktop-ajb-workspace/memory")
@@ -312,13 +332,21 @@ def main() -> int:
             print("  [%s] %s:%d  \"%s\"" % (c["kind"], c["doc"], c["line"], c["quote"][:120]))
         return 0
 
+    if args.cmd == "build":
+        refusal = build_refusal()
+        if refusal:
+            print("nerves-lexical: BLOCKED: build refused -- %s. No map written: a build here would "
+                  "emit a degraded danger map." % refusal)
+            return 2
     edges, stats = scan()
     if args.cmd == "build":
+        # built_utc is the map's AGE: comp-pulse reads it, never the file mtime (a checkout rewrites mtime).
         doc = {"_README": "NFRA_NERVES L3b -- the LEXICAL UNLOCK. Danger zones (holds/risks/doctrine) "
                           "entity-linked from the corpus onto the nodes they protect or indict. Every "
                           "claim carries its doc + LINE (a claim without a citation is not a claim). "
                           "A mention is EVIDENCE, not proof -- confidence is stated. Regenerate: "
                           "nerves_lexical build.",
+               "built_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
                "stats": stats, "edges": edges}
         # Atomic publish: a bare dump onto OUT lets a reader (or the comp-pulse auto-refresh,
         # which serializes only COMMIT-PATH rebuilds) see torn JSON mid-write. tmp + os.replace

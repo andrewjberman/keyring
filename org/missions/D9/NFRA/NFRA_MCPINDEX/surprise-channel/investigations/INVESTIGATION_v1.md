@@ -8435,6 +8435,111 @@ carries none.
       ]
     },
     "notes": "Owner of the ranking question is 2.0.0_SA_COO~O (R16.4): a rule that orders a curated need against a servable table needs a decision on which pin wins (E-16's or E-8's). Not a gate field; no access changes."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W46-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~46",
+    "surfaced_at": "2026-10-15T22:13:01Z",
+    "one_line": "The gold book's catalog open_items states an implicitDeny on the gateway role, against the MX-c-22 preflight that the gold prefixes need no grant change.",
+    "spec_asserts": "MX-c-22 preflight (comp-iam, task order section 1): the gold book and holding prefixes are already in the internal reader policy (OG-ap-20), so the history read needs no grant change, and the cell makes no AWS call.",
+    "world_is": "app/refs/DATA_CATALOG.yaml, the opal_data_etfs_gold_book row, open_items (line 12625 at 257da358d8), states: 'gateway role: GetObject on gold/book simulates implicitDeny (read-grant widening needed)'. The gold holding row's open_items is empty. This worker measured nothing in AWS; the catalog's own statement is the only evidence, and it contradicts the preflight premise for the book read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@257da358d8 line 12625 (opal_data_etfs_gold_book open_items)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-22.etfs-get-positioning-fund-ticker-and-as-of-history.md@257da358d8 section 1 preflight comp-iam"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Nothing is deployed by this cell (no deploy, no grant change). The live history read of the gold book would be AccessDenied at the gateway role until the catalog's own statement is resolved; the owner of the grant question is the issuer (2.0.0_SA_COO~MI) with NFRA_OPLGTW."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W46-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~46",
+    "surfaced_at": "2026-10-15T22:13:01Z",
+    "one_line": "The history branch composes etfs_funds' gold-only helpers instead of _holdings, which falls back to the silver object for a date the gold table lacks.",
+    "spec_asserts": "MX-c-22 section 1 item 3 (task order): reuse etfs_funds helpers such as its _holdings, _book_totals and _dated_parts where they fit rather than writing new S3 code; the history answer is gold only, with no_data and the nearest earlier date when the gold table lacks the date.",
+    "world_is": "etfs_funds.py _holdings (infra/aws/ec2/opal-gateway/app/etfs_funds.py@257da358d8 lines 407-412) falls back to the silver holdings object when the gold holding table has no partition for the date. Calling it would break the gold-only contract, so the history branch composes the module's other helpers (_catalog_rows, _scope, _gate, _dated_parts, _newest_part, _fund_rows, _book_totals, _norm, _audit_over_cap) and does not call _holdings. _book_totals and _dated_parts were reused as written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/etfs_funds.py@257da358d8 lines 384-443 (_holdings) and 407-412 (silver fallback)",
+        "infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py (this tree) _history_answer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "A form deviation from the letter of item 3 that the spec's own history rule requires. The reviewer decides whether _holdings should gain a gold-only flag; this cell does not edit etfs_funds.py."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W46-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~46",
+    "surfaced_at": "2026-10-15T22:13:01Z",
+    "one_line": "The spec says etfs_get_positioning refuses another as_of; the code answers no_data for it, and the cell keeps that answer.",
+    "spec_asserts": "MX-c-22 task order section 1 (opening paragraph): etfs_get_positioning(as_of) refuses any other as_of.",
+    "world_is": "At 257da358d8 the whole-object answer for a different as_of is status no_data with reason 'the served object is as of ...' (integration.py lines 259-261), not a refusal; test_portal_index.py test_etf_positioning_answer_carries_the_rows_own_caveats (line 683) asserts the no_data answer. Step 3 of the cell keeps that answer, so the code was not changed; the fund history branch is the only path that reads a past date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py@257da358d8 lines 259-261",
+        "infra/aws/ec2/opal-gateway/tests/test_portal_index.py@257da358d8 line 683"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Wording only in the opening paragraph of the task order; the behaviour the criteria grade is the no_data answer."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W46-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~46",
+    "surfaced_at": "2026-10-15T22:13:01Z",
+    "one_line": "A field-name guard in test_portal_index.py flagged the per-fund table's name as a key fragment; the restriction now finds the table by content.",
+    "spec_asserts": "MX-c-22 task order section 2 item 4 and c22.AC2: the lines the change adds type no S3 key or bucket; the gateway tests (AC3) pass.",
+    "world_is": "tests/test_portal_index.py test_module_holds_no_key_literal (line 481, one of the four AC3 files) walks every string constant under app/integrations/portal_index/ and flags any constant that equals a fragment of a known portal key. The bare field name of an object's per-fund table is such a fragment, so a first draft that looked the table up by that name failed AC3 (76 passed, 1 failed). The draft was rewritten to find the per-fund table by content (a top-level object keyed by the fund tickers); no key text was added. Measured after the rewrite: AC2 0 typed literals, AC3 77 passed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/tests/test_portal_index.py@257da358d8 lines 481-509",
+        "infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py (this tree) _restrict_fund"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The guard reads field names as key fragments; that is its design and was not edited (test_portal_index.py is outside this cell's paths)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W46-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~46",
+    "surfaced_at": "2026-10-15T22:13:01Z",
+    "one_line": "The order's prose expect fields are not regexes; the instance encodes the printed tokens as the checked regex, as the order instructs.",
+    "spec_asserts": "MX-c-22 task order section 4: each criterion's expect field is the printed-output expectation (prose), and the proof instance carries it as the checked expectation.",
+    "world_is": "The proof checker matches expect as a regex against the recorded output (task order section 5 step 1). The prose expects are not regexes, so the instance encodes the literal printed tokens (DENOMINATOR, CHECK, RESULT: PASS, exit=0) as the regex, as the order's section 5 instructs; the prose is kept in the instance's criterion_verbatim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-22.etfs-get-positioning-fund-ticker-and-as-of-history.md@257da358d8 section 4 and section 5 step 1",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~15/NFRA_MCPINDEX.TO-MX-t-10.portal-tool-etfs.proof_of_spec.json (the regex form in use)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disclosure row required by the order's own step 1."
   }
 ]
 ```

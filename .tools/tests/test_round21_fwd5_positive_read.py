@@ -6,6 +6,7 @@ Only `aws s3api head-object`, `list-object-versions` and `list-objects-v2` are c
 
 Modes:
   python .tools/tests/test_round21_fwd5_positive_read.py                 (default: post-deploy read)
+  python .tools/tests/test_round21_fwd5_positive_read.py --since <UTC>  (default with an explicit open time)
   python .tools/tests/test_round21_fwd5_positive_read.py --pre           (pre-deploy state)
   python .tools/tests/test_round21_fwd5_positive_read.py --ast-identical  (ast.dump of the script at the commit
                                                                          before the last one that touched it vs at it)
@@ -28,6 +29,7 @@ import ast
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
@@ -44,6 +46,8 @@ PREFIX = "code/gold/"
 REPO_DIR = "data/black_diamond/scripts/gold"
 REPO_PATH = REPO_DIR + "/" + TARGET
 SENTINEL_REL = "org/critical_paths/.open_deploys/ctlpln-r21-fwd5-one-script-20261015.json"
+CHANGE_DIR = "org/critical_paths/change_management/"
+COMPLETION_SUFFIX = "ctlpln-r21-fwd5-one-script-20261015_deploy_completion.md"
 AUDIT_REL = "org/safe-deploy-bypass-audit.log"
 AWS = str(TOOLS / "aws.cmd") if os.name == "nt" else str(TOOLS / "aws")
 READ_OPS = ("head-object", "list-object-versions", "list-objects-v2")
@@ -205,15 +209,42 @@ def mode_pre():
     return 0 if ok else 1
 
 
-def mode_default():
+def open_time_from_completion():
+    """Fallback for the open time once deploy_ledger.py close has removed the open sentinel: the CLOSED
+    completion record under org/critical_paths/change_management/ keeps the entry's `Date opened`.
+    Worktree copy when present, else the HEAD blob. -> (datetime, the record path)."""
+    rc, out = git_bytes("ls-tree", "-r", "--name-only", "HEAD", CHANGE_DIR)
+    if rc != 0:
+        raise ValueError("git ls-tree HEAD %s rc=%s" % (CHANGE_DIR, rc))
+    names = [n for n in out.decode("utf-8", errors="replace").splitlines()
+             if os.path.basename(n).endswith(COMPLETION_SUFFIX)]
+    if len(names) != 1:
+        raise ValueError("%d completion record(s) end %s at HEAD (need exactly 1)" % (len(names), COMPLETION_SUFFIX))
+    text, src = read_repo_file(names[0])
+    m = re.search(r"^\*\*Date opened:\*\*\s*(\S+)", text or "", re.M)
+    if not m:
+        raise ValueError("no 'Date opened' line in %s" % names[0])
+    return datetime.fromisoformat(m.group(1).replace("Z", "+00:00")), names[0]
+
+
+def mode_default(since_arg=None):
     versions, etag_eq, other, actor, opened = -1, False, -1, "UNKNOWN", None
-    text, src = read_repo_file(SENTINEL_REL)
-    try:
-        if text is None:
-            raise ValueError("entry absent in worktree and HEAD")
-        opened = datetime.fromisoformat(json.loads(text)["opened_at"].replace("Z", "+00:00"))
-    except Exception as exc:
-        print("ERROR: ledger entry %s unreadable: %s" % (SENTINEL_REL, exc))
+    if since_arg:
+        opened = datetime.fromisoformat(since_arg.replace("Z", "+00:00"))
+        print("open time: %s from --since" % opened.isoformat())
+    else:
+        text, src = read_repo_file(SENTINEL_REL)
+        try:
+            if text is not None:
+                opened = datetime.fromisoformat(json.loads(text)["opened_at"].replace("Z", "+00:00"))
+                print("open time: %s from the open sentinel %s" % (opened.isoformat(), SENTINEL_REL))
+            else:
+                # The sentinel is absent: the entry is closed. The closed completion record keeps the time.
+                opened, rec = open_time_from_completion()
+                print("open time: %s from the closed completion record %s (sentinel absent)"
+                      % (opened.isoformat(), rec))
+        except Exception as exc:
+            print("ERROR: open time of ledger entry unreadable: %s" % exc)
 
     rows, pages = list_all_versions(KEY)
     if rows is not None:
@@ -286,7 +317,8 @@ def main(argv):
         return mode_pre()
     if "--ast-identical" in argv:
         return mode_ast_identical()
-    return mode_default()
+    since = argv[argv.index("--since") + 1] if "--since" in argv and argv.index("--since") + 1 < len(argv) else None
+    return mode_default(since)
 
 
 if __name__ == "__main__":

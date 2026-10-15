@@ -19219,3 +19219,387 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W195-S1 -- the order's trace-inputs premise (every element of the priced map reads exactly [prices]) does not hold for the layout's own elements: the BUILDER_ONLY title reads no series and the classified holdings elements read the classifier's input
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W195-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~195",
+  "surfaced_at": "2026-10-15T20:45:17Z",
+  "one_line": "The order's trace-inputs premise, that every element of the priced map reads exactly [prices], does not hold for the layout's own elements: the BUILDER_ONLY title reads no series and the classified holdings elements read the classifier's input.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-93 names test_each_benchmark_price_carries_its_source_and_the_trace_inputs_stay_clean and states that every element's inputs is exactly [prices], the benchmark and risk-free series entering as plain lists so that no element gains a name it did not use.",
+  "world_is": "In a priced produce run the BUILDER_ONLY title element traces inputs [] and the opal.classified.holdings element traces inputs ['etf-classifications'], read by the CLASSIFY_METHODS elements that _opal_map adds, not by the price stage. The five OWN_SERIES elements trace ['prices'] as the order specifies. The first run of the test failed on opal.classified.holdings for this reason. The committed assertion scopes the exact-match check to the five OWN_SERIES elements, asserts the title reads [], and asserts that no element names benchmark, risk_free, SPY or BIL.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest of infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_benchmark.py on its first run, before the assertion was scoped: AssertionError opal.classified.holdings, ['etf-classifications'] == ['prices']",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_benchmark.py@a5603c58fd7517f39662e4a12073f48a1e4a5591 (test_each_benchmark_price_carries_its_source_and_the_trace_inputs_stay_clean, the scoped assertion)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py@a5603c58fd7517f39662e4a12073f48a1e4a5591 (_opal_map adds the classified elements; _price_stage gives the series elements the kept prices input)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W195-S2 -- the commit gate's client-data check could not check commit a5603c58fd: the hashed account-id list is absent on this device, the same standing condition recorded for commit 65a6fa6170 at IRPT_ANLREQ-D2-W190-S5
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W195-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~195",
+  "surfaced_at": "2026-10-15T20:45:17Z",
+  "one_line": "The commit gate's client-data check could not check commit a5603c58fd: the hashed account-id list is absent on this device, the same standing condition recorded for commit 65a6fa6170 at IRPT_ANLREQ-D2-W190-S5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "safe-commit runs the client-data check on the staged set of every commit, so a committed set is checked for client account identifiers.",
+  "world_is": "On this device the hashed account-id list is absent at C:/Users/Test/.opal/account_id_hashes.txt. The check printed WARN and reported that commit a5603c58fd (three AR-g-93 files: opal_producer.py, the new benchmark test and the prices test) was NOT checked for client account ids. This worker did not scan the staged diff for account identifiers.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for a5603c58fd: WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt (absent is not empty; this commit was NOT checked)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md: IRPT_ANLREQ-D2-W190-S5 records the same absent list for commit 65a6fa6170"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W157-S1 -- the worktree is a sparse checkout with no docs/ on disk, so the folder tests that read docs/contracts fail with ENOENT and AC1 cannot pass here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W157-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~157",
+  "surfaced_at": "2026-10-15T21:14:23Z",
+  "one_line": "The worktree is a sparse checkout with no docs/ or org/surprise_channel/ on disk, so 22 folder test cases outside the new file fail with ENOENT, on origin/PROD as well, and AR360-y-AC1 cannot print PORTAL-TESTS-OK in this worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR360-y-AC1 expects bun test over src/pages/InvestorReporting/tabs/analysis/tests, src/pages/TicketCenter and src/pages/InvestorReporting/__tests__/dsgn-irptv1 to report 0 failed in C:/dev/wk-irpt-anlreq-157/portal; the worker face expects org/ and .tools/ present, and a worktree that does not carry the paths is a BLOCKING row.",
+  "world_is": "git sparse-checkout list in C:/dev/wk-irpt-anlreq-157 names .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards. docs/ is absent on disk although docs/contracts/investor-reporting/v1/routes.json is tracked at HEAD, and org/surprise_channel/ is absent on disk though tracked. The folder run on origin/PROD e0b43076 with the composer reverted fails the same 22 cases (14 ENOENT on routes.json) as the candidate run on c22f4508 (cand/dell2/anlreq-no-price-date-t1; base origin/PROD e0b43076). The new file passes 6 of 6 in isolation. Not rebuilt: the tree was not reconstructed to make the criterion executable.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-157 (workspace HEAD 0bb931f5b4): .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards",
+      "folder run on candidate c22f4508: 22 failing cases outside the new file, ENOENT open C:\\dev\\wk-irpt-anlreq-157\\docs\\contracts\\investor-reporting\\v1\\routes.json (portal_check.py output, rc=1)",
+      "folder run on origin/PROD e0b43076 with the composer reverted: the same failing names apart from the new file (name-set diff of the two runs, .scratch/fail_prod.txt vs .scratch/fail_cand3.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W157-S2 -- dom-env registers happy-dom at module load, so in one bun process a later DOM file runs with document undefined
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W157-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~157",
+  "surfaced_at": "2026-10-15T21:14:23Z",
+  "one_line": "dom-env.ts registers happy-dom at module load, so in one bun process with other DOM files its registration is gone when a later file runs: document is not defined, and releaseDom throws Failed to unregister.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A DOM test file registers its own DOM (dom-env, released in afterAll) and passes when the folder it sits in runs as one bun process.",
+  "world_is": "In the folder run on origin/PROD e0b43076 and on the candidate, 10 cases fail with ReferenceError document is not defined and releaseDom throws Failed to unregister (prospect-suggested-swaps.test.tsx:80 among them). S60 (upload-press-did-you-mean) fails in the folder run on both. The new file avoids the ordering by registering inside its one DOM case and passes 6 of 6 in the folder run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/dom-env.ts at e0b43076: GlobalRegistrator.register() at line 25 runs at import; releaseDom at line 27 unregisters",
+      "folder run output on origin/PROD e0b43076 (.scratch/folders_prod.clean.txt): document is not defined and Failed to unregister lines, pre-existing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W157-S3 -- S55 seeds composer useState slots by call position, so removing the price-date state moved two seeded slots
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W157-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~157",
+  "surfaced_at": "2026-10-15T21:14:23Z",
+  "one_line": "S55 seeds ProspectComposer useState slots by call position, so removing the price-date state moved the upload attempt and proxies slots (#11 to #10, #16 to #15); both seeds are re-pinned and their guards hold.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-360 step 3 re-pins only the existing tests that exercised the date input or sent a price_date; the composer comment at ProspectComposer.tsx says slots declared after the seeded state do not move.",
+  "world_is": "s55.component-wiring.test.tsx seeds call #11 (uploadAttempt, expects null) and call #16 (proxies, expects an empty object). After the change, call #10 is uploadAttempt and call #15 is proxies at c22f4508. Without the re-pin S55 failed (ARM(d): the re-post did not carry the corrections). S55 does not exercise the date input, so its re-pin is collateral to the cell; it is recorded here, not as a widened scope.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/s55.component-wiring.test.tsx at c22f4508: seeds [10] and [15] with the guards in place (origin/PROD carried [11] and [16])",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx at c22f4508: useState calls 0 to 15 in call order; the price-date state is removed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W157-S4 -- in this happy-dom harness a dispatched input event does not reach the composer, so the typed-value path cannot be driven
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W157-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~157",
+  "surfaced_at": "2026-10-15T21:14:23Z",
+  "one_line": "In this bun and happy-dom harness a dispatched input event does not reach React onChange, so a typed price date cannot be driven through the composer and AR360-y-(c) carries its before-arm failure in a source assertion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-360 step 4(c): a file with a Shares column is uploaded with no price_date, and on origin/PROD the same case FAILS.",
+  "world_is": "On origin/PROD a value set through the prototype setter on the date input, then an input event, left the composer state unchanged; the same held for the notional text input. The upload body carried no price_date on origin/PROD, so the dynamic (c) passes there. (c) fails on origin/PROD through its source assertion on the upload options (priceDate: usd, ...). Recorded as measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/tests/prospect-no-price-date.test.tsx at c22f4508: case (c) reads ProspectComposer.tsx for the upload options and runs the default-state upload",
+      "instrumented bun runs on a temporary copy of the origin/PROD composer (not saved as files): onChange never fired for the date input or the notional input; the candidate composer and its tests are at c22f4508"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W157-S5 -- with no price date the composer hands the header a null as-of, so an uploaded prospect card states no as-of
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W157-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~157",
+  "surfaced_at": "2026-10-15T21:14:23Z",
+  "one_line": "The composer now sends a null as-of to the header prospect card, so an uploaded prospect card states no as-of until another source supplies one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-360 step 3: asOf becomes null where it was priceDate || null, and the page states the as-of from the report, not from a field.",
+  "world_is": "ProspectComposer.tsx at c22f4508 calls onProspectReviewed with asOf null (the effect at its header block). Not read in this order: how the header card renders a null as-of, and whether the report as-of reaches that card. This is a judgment point for L9, not graded here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx at c22f4508: onProspectReviewed({ ..., asOf: null, total: null })"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S128 -- DISARMS IRPT_ANLREQ-D2-W157-S1: AR360-y-AC1's folder failures are the same set on origin/PROD; the new file passes 6 of 6
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S128",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-15T21:37:00Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W157-S1: the issuer re-graded AR360-y-AC1's folder run in the worker's worktree after widening its sparse set (docs/contracts and infra/aws/lambda/investor-reporting); the failing set is the same 19 cases on the candidate and on origin/PROD, and the new file passes 6 of 6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W157-S1: the worktree is a sparse checkout, so folder cases that read docs/contracts fail with ENOENT and AR360-y-AC1 cannot print PORTAL-TESTS-OK there.",
+  "world_is": "Re-run by this seat in C:/dev/wk-irpt-anlreq-157/portal after git sparse-checkout add docs/contracts and infra/aws/lambda/investor-reporting: on candidate c22f4508, bun test over the three folders printed 535 pass, 19 fail (554 ran, 271 files); on origin/PROD e0b43076 detached, 529 pass, 19 fail (548 ran, 270 files); the failing-name lists (17 named lines plus unnamed errors) diff IDENTICAL, so the candidate adds 6 passing cases and no failure. The 19 remaining failures exist at the base (still-absent paths of a sparse worktree and a happy-dom registration error, W157-S2); they are not caused by this cell. portal_check.py as written still prints PORTAL-TESTS-BAD there because it demands 0 failed; the order's instance records AC1 as FAIL and stays as the worker wrote it. NOT read: a run in a full checkout with every contract path present. W157-S2, S3 and S4 are OBSERVATIONS the worker re-pinned or explained; W157-S5 (a null as-of reaches the header prospect card) is a judgment point and is cut as a read before any promote.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's two bun runs in C:/dev/wk-irpt-anlreq-157/portal (candidate c22f4508 and detached origin/PROD e0b43076), failing-name diff IDENTICAL",
+      "safe-merge 7ac19bb2fc (worker 157's branch drained)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The folder failures are identical at the base; the cell adds only passing cases. The live blocker for shipping is r32 and Andrew's word, not this.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W157-S1. Time of filing approximated from the re-run."
+}
+```
+
+## IRPT_ANLREQ-D2-W197-S1 -- the r32 driver printed R32-BUILD-OK and the issuer's verifier FAILs AR-G92-AC1: intake/uploads.py changed at the pin (AR-g-95, 4bc49a99fb) after the trial build at cbf05a6afa, so the delta at the pin is 15 changed and 284 identical, not 14 and 285
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W197-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~197",
+  "surfaced_at": "2026-10-15T21:18:37Z",
+  "one_line": "The release-32 delta at pin 26d720a980 is 15 changed (intake/uploads.py added by AR-g-95 commit 4bc49a99fb, which landed after the trial pin cbf05a6afa) and 284 identical; the verifier's hard-coded CHANGED list has 14 and fails on that one member.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-92 and ar_g92_checks.py CHANGED/ADDED state the release-32 delta at pin 26d720a980 as exactly 14 members changed and 11 added, none removed, 285 identical, with the 14 changed listed as SHA256SUMS, reports/resident_bindings.json, intake/portfolio.py, reports/build_resident_package.py, reports/generate_installed.py, reports/resident_installed.py, ycharts/generate/acceptance.py, ycharts/generate/normalized_input.py, ycharts/generate/prospect_submission.py, ycharts/generate/resident_worker.py, ycharts/generate/submission_service.py, ycharts/research/layout_overview.py, ycharts/research/opal_producer.py, ycharts/research/runner.py. The cell's trial figure (310 members, 14 changed, 11 added at cbf05a6afa) is the basis of that statement.",
+  "world_is": "The driver run at 26d720a980 (record org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~197/r32/RESIDENT_R32_BUILD.json) printed R32-BUILD-OK with changed 15, added 11, removed 0, unchanged 284; its delta_vs_r31.changed lists intake/uploads.py as a fifteenth member. The verify run printed AR-G92-FAIL delta differs from the expected: changed ['intake/uploads.py'] added [] removed [] (rc=1). The member is in files_from_r32.txt line 5. Its blob at cbf05a6afa is 48f39329ea and its r31 tarball member ./intake/uploads.py is 48f39329ea too; its blob at 26d720a980 is 48211e08e4, the same as the r32 member, so the r32 content is the pin's and is correct for the pin. The change is 4bc49a99fb (AR-g-95, worker ~196), which is an ancestor of the pin and was not an ancestor of the trial pin. Nothing was edited: the driver, the verifier, the files-from list and the record's delta are as the tools produce them; no retry with other arguments was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~197/r32/RESIDENT_R32_BUILD.json (worktree HEAD before the record commit): delta_vs_r31 changed count 15 incl. intake/uploads.py; unchanged 284; release_members 310",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g92_checks.py lines 25-29: CHANGED has 14 entries and no intake/uploads.py; verify output AR-G92-FAIL delta differs from the expected: changed ['intake/uploads.py'] added [] removed [] (rc=1)",
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r32/files_from_r32.txt@cbf05a6afa line 5: infra/aws/lambda/investor-reporting/intake/uploads.py",
+      "git rev-parse cbf05a6afa:infra/aws/lambda/investor-reporting/intake/uploads.py = 48f39329ea4c947dc30cba02e07ed499d6f683726204710b16656c29d6f3c0c1; 26d720a980:(same path) = 48211e08e459fe3a3a1d87663abce6c67caa90c1c50f50e4b93d48ed7514629d; r31 tarball member ./intake/uploads.py sha256 48f39329ea4c947dc30cba02e07ed499d6f683726204710b16656c29d6f3c0c1",
+      "git log c4c2afe896..26d720a980 -- infra/aws/lambda/investor-reporting/intake/uploads.py: 4bc49a99fb feat(IRPT_ANLREQ round 20, AR-g-95, 0.9.0_WK_IRPT_ANLREQ~196); git log c4c2afe896..cbf05a6afa on the same path: empty"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S129 -- disposition of IRPT_ANLREQ-D2-W197-S1: the verifier's expected list was stale; the build is right (15 changed, 284 identical)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S129",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T21:41:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's premise held and the issuer acted on it: the verifier's expected CHANGED list, cut at the trial pin cbf05a6afa, lacked intake/uploads.py, which AR-g-95 changed afterwards. The build was right. The list is corrected at 6cce05f41a, the order prose amended, and the verifier re-run on the worker's own record passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W197-S1 (BLOCKING): the delta at pin 26d720a980 is 15 changed and 284 identical; the issuer's list was stale, not the build; AR92-g-AC1 now passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AR-G92-OK members=310 changed=15 added=11 removed=0 builds_identical=310 scripts=4 gates=ok tar=3338a5c73c8bf0bb050850507ba9707a079055e803858321c8864ee8bb3a3f1f, run by the issuer on the merged record at 1e3b13e677",
+      "amendment 6cce05f41a; worker proof 126c258da5 (AC1 and AC2 PASS); merge 1e3b13e677"
+    ]
+  },
+  "spec_asserts": "TO-AR-g-92 AC1: the delta is exactly the changed and added members of the merged ENGINE cells, every one equal to git show at the pin.",
+  "world_is": "The delta at the pin includes intake/uploads.py (an r31 member that AR-g-95 changed), so 15 changed and 284 identical; each changed member equals its blob at the pin."
+}
+```
+
+## IRPT_ANLREQ-D2-W158-S1 -- the AR-y-361 mutant runs by swap-and-restore in the portal path, not from a scratch copy, because the new test imports its composer relative to itself
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W158-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~158",
+  "surfaced_at": "2026-10-15T21:57:06Z",
+  "one_line": "The AR-y-361 mutant could not run from a copy outside the product tree: the new test file imports ../ProspectComposer relative to itself, so mutant_check.py swapped the as-of-null mutant into the portal path for one bun run and restored it (sha256 verified).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR361-y-AC2 and cell step 5: mutant_check.py copies ProspectComposer.tsx to a scratch folder OUTSIDE the product tree with the as-of put back to null, and runs the new test file against the copy.",
+  "world_is": "The new test file imports '../ProspectComposer' and reads its own composer source by import.meta.url, so a copy outside tests/analysis is never the module it exercises. mutant_check.py (in the deliverable folder of this worktree) copies the candidate to <worktree>/.scratch/asof_mutant/, writes the mutant there, copies the mutant over portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx for one bun test run, then restores the candidate and verifies its sha256 (restored equals candidate: True). Result: MUTANT-FIRES, bun test rc=1, the one failing case is (g). NOT read: a run in a mirror tree in which the scratch copy is the imported module.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/tests/prospect-no-price-date.test.tsx@d06fed37 line with import { ProspectComposer } from '../ProspectComposer'",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~158/mutant_check.py: swap-and-restore with sha256 check; run printed MUTANT-FIRES (bun test rc=1) and restored==candidate True",
+      "the same method is in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~157/mutant_check.py (AR360 precedent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W159-S1 -- AR-y-362 step 1 premise fails: no source classifies BREIT, SREIT or KPEC as TICKER_DATA_NOT_ENTITLED for a bare ticker
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W159-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~159",
+  "surfaced_at": "2026-10-15T22:01:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-362 step 1 found no candidate the door source classifies TICKER_DATA_NOT_ENTITLED for a bare ticker: BREIT is TICKER_NOT_FOUND by its pinned capture, SREIT and KPEC have no hit in the door tree; BREIT chosen as the least-sure fallback.",
+  "spec_asserts": "TO-AR-y-362 step 1 (decomp AR-y-362, PRD v0.17 item 3): pick the ONE of BREIT, SREIT, KPEC that the door source classifies TICKER_DATA_NOT_ENTITLED; if none is so classified by source, pick the one a fixture or the entitlement list names as uncovered, and say it is the least-sure choice. The cell presumes one of the three is source-classified NOT_ENTITLED.",
+  "world_is": "At HEAD 35193dba68 no source line gives a bare BREIT, SREIT or KPEC the TICKER_DATA_NOT_ENTITLED code. The emit at intake/portfolio.py:533 needs a verified gated fund row that answers the bare ticker, and no fixture shows one for BREIT: the 9 gated BREIT rows in lookup_capture/04_suggest_BREIT.json are keyed BREIT.S and similar, and that file is a typeahead. The pinned securities_info capture (02_securities_info.json) has no BREIT row, so bare BREIT is NOT_FOUND and emits TICKER_NOT_FOUND (portfolio.py:520). SREIT and KPEC appear nowhere in infra/aws/lambda/investor-reporting (git grep rc=1); they are named only in the PRD, decomposition and task orders. The choice of BREIT is therefore by fixture (the only entitlement-gated fund shape in the door tree), not by source classification. Run 3 still files one unpriceable holding under the TICKER_NOT_FOUND class, which PRD v0.17 item 1 also files UNRESOLVED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py@35193dba68:519-520 emits TICKER_NOT_FOUND on state NOT_FOUND; :530-533 emits TICKER_DATA_NOT_ENTITLED only on reason PROVIDER_ENTITLEMENT_UNVERIFIED",
+      "infra/aws/lambda/investor-reporting/intake/security_resolution.py@35193dba68:184-190 sets NOT_FOUND on no candidates and PROVIDER_ENTITLEMENT_UNVERIFIED on a gated candidate",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_security_resolution.py@35193dba68:35-39 asserts BREIT state NOT_FOUND on the pinned capture; :44-46 asserts the nine gated BREIT rows are typeahead rows with features_needed",
+      "infra/aws/lambda/investor-reporting/intake/tests/fixtures/lookup_capture/02_securities_info.json@35193dba68 ids are AAPL, VNQ and $:CASH only; git grep -c -i -E 'SREIT|KPEC' HEAD -- infra/aws/lambda/investor-reporting returns no output (rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W160-S1 -- The cell's 'Did you mean <symbol> (<name>)?' has a company name in the parenthesis, but the door's suggestion carries no name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W160-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~160",
+  "surfaced_at": "2026-10-15T22:18:11Z",
+  "one_line": "The cell's 'Did you mean <symbol> (<name>)?' has a company name in the parenthesis, but the door's suggestion carries no name",
+  "spec_asserts": "AR-y-363 tree (A): 'Did you mean <symbol> (<name>)?' under the finding.",
+  "world_is": "The door's suggestion object is {symbol, source} only (the fixture suggested() in filing-hint.test.tsx; proxyableFindings reads .suggestion.symbol and nothing else). No name reaches the form, so the parenthesis is '(row N: TYPED)', as the PRD v0.15 hint line already rendered it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts@e0b43076 lines 96-98 read the suggestion's symbol only",
+      "portal/src/pages/TicketCenter/analysisRequest.ts@a168015b hintLine renders 'Did you mean X? (row N: TYPED)' and the test (a) of filing-decision-tree.test.tsx pins that line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W160-S2 -- Every tree item reaches the form only through the inherited NAME_PROXY gate, and the door's live actions for TICKER_NOT_FOUND were not read
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W160-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~160",
+  "surfaced_at": "2026-10-15T22:18:11Z",
+  "one_line": "Every tree item reaches the form only through the inherited NAME_PROXY gate, and the door's live actions for TICKER_NOT_FOUND were not read",
+  "spec_asserts": "AR-y-363 (A) and (A) without a suggestion: a TICKER_NOT_FOUND finding shows Yes, Replace, No (or Replace, No) under the finding.",
+  "world_is": "proxyableFindings returns no entry for a finding whose actions omit NAME_PROXY (prospect.ts line 94 at e0b43076), and filingHints is built from it. The tree's presence for an unknown ticker is therefore the door's action list, which the order's premise does not state. The fixtures carry NAME_PROXY; no live call was made, so the live list is not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts@e0b43076 line 94 (the actions gate)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts@a168015b filingHints (proxyableFindings, then code TICKER_NOT_FOUND)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W160-S3 -- The portal worktree has no committer identity, so the face's git -C commit with --author alone refuses
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W160-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~160",
+  "surfaced_at": "2026-10-15T22:18:11Z",
+  "one_line": "The portal worktree has no committer identity, so the face's git -C commit with --author alone refuses",
+  "spec_asserts": "Worker face: commit the PORTAL source inside the portal worktree with git -C <portal> and --author <serial>.",
+  "world_is": "git -C <portal> commit --author <serial> exited 128 with 'Committer identity unknown' on this box, and the portal worktree carries no .tools folder for safe-commit. Commit a168015b was made with the serial as GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL in the environment of that one command; no git config was written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@a168015b: git log -1 shows author 0.9.0_WK_IRPT_ANLREQ~160 (the --author value); the committer is the serial via the environment"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -18295,3 +18295,631 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm: task order DB-b-274 (round 141) makes the cap hold across the whole chain by a budget each self-invoke carries, with a probe that drives a whole chain; it lands in the repo first, then a later code-update pair deploys it, and the schedule stays DISABLED until the CTO's word after both."
 }
 ```
+
+## IRPT_DASHBD-D2-W221-S1 -- Contract 0.4.1 says an UNMAPPED_ACCOUNT row carries a source_account_id (required_when) wh
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W221-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~221",
+  "surfaced_at": "2026-10-15T20:18:25Z",
+  "one_line": "Contract 0.4.1 says an UNMAPPED_ACCOUNT row carries a source_account_id (required_when) while the same column's own rule text says an unmapped Orion account is written with no source_account_id; the two statements contradict and the order's change-nothing-else rule kept the text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-273 step 2: source_account_id gains required_when {reason_class: UNMAPPED_ACCOUNT} and nothing else changes; CTO ADDENDUM 6 item 6: an UNMAPPED_ACCOUNT ABSENT row carries a null account_id and a source_account_id.",
+  "world_is": "The optional column source_account_id still carries the 0.4.0 rule text: Set only where source is orion and the custodian account form is mapped through account_dim; an Orion account with no mapping is not written with a guessed id. A writer that follows the text writes an unmapped row with no source_account_id, and the 0.4.1 validator rejects it loudly (required_when). Left as the order said; no edit made to the rule text.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@ca3e3ded9a (optional_columns source_account_id rule)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-273.account-return-contract-041-row-status-reason-class-and-vendor-reported.md@ca3e3ded9a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W221-S2 -- The Scope adapter's absent records for unmapped accounts carry a set account_id, a null so
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W221-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~221",
+  "surfaced_at": "2026-10-15T20:18:25Z",
+  "one_line": "The Scope adapter's absent records for unmapped accounts carry a set account_id, a null source_account_id and no row_status, which is not the 0.4.1 shape for an UNMAPPED_ACCOUNT ABSENT row; a null row_status reads PRESENT. Whether a writer takes these records into the table is not measured here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract 0.4.1: an UNMAPPED_ACCOUNT ABSENT row carries a null account_id and a source_account_id; reason_class is required on every ABSENT row; a null row_status means a writer that predates the column and reads PRESENT.",
+  "world_is": "inflection_scope_feed_adapter.py _absent() (line 49) sets account_id to the Orion key string, and the unmapped branch (line 92) passes source_account_id None; the records carry no row_status key. The 0.4.1 validator is not run against these records and no adapter is edited (outside the grant). The shape is the finding; no served value is claimed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py@ca3e3ded9a (lines 49 and 92)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@ca3e3ded9a (rule24_record and optional_columns of 0.4.0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W221-S3 -- The Scope adapter writes return_basis TWR on every Orion row it builds, while contract 0.4
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W221-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~221",
+  "surfaced_at": "2026-10-15T20:18:25Z",
+  "one_line": "The Scope adapter writes return_basis TWR on every Orion row it builds, while contract 0.4.1 requires an Orion PRESENT row to carry VENDOR_REPORTED (source_requires); the adapter's rows would be read as Opal-computed TWR returns, and the 0.4.1 validator rejects them. Armed: the adapter is the Orion row producer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "Contract 0.4.1 source_requires {orion: {return_basis: VENDOR_REPORTED}}; source_rules.orion.return_basis: the Orion return is the vendor's reported measurement, not Opal's computation.",
+  "world_is": "inflection_scope_feed_adapter.py line 146 writes \"return_basis\": \"TWR\" on each Orion row (source orion, flow_claim absent, source_account_id set). Those rows fail the 0.4.1 declaration and a served row would label a vendor return as computed. The adapter is outside this order's grant and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py@ca3e3ded9a (line 146)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (source_requires, 0.4.1, uncommitted at this row)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W311-S1 -- A trading day at the edge of the feed that loses its day to the complete-day drop vanishes from the table: no row and no ABSENT record
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "The complete-day drop (rule 2) removes every row of an incomplete calendar day before adapt() runs, and adapt() takes its output domain from the first and last calendar day of the rows it is given; a trading day at either edge that falls outside the kept span therefore gets neither a row nor an ABSENT record, so the table silently omits it. Interior drops also move a trading day's end value to NO_EOD_VALUE, because rule 5 reads the next calendar day's start.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "Rule 2 drops every row of an incomplete day before adapt(); the round-123 adapter covers every trading day of a mapped account as a row or an ABSENT record (test_every_trading_day_of_every_account_is_in_rows_or_absent_exactly_once).",
+  "world_is": "Measured by a scratch probe on synthetic frames (not committed): with the first calendar day incomplete, its trading day reads in neither the partitions nor the absent file; with the last calendar day incomplete, the last trading day reads in neither. An interior incomplete day turns the prior trading day into NO_EOD_VALUE. Kept as written: the wrapper does not re-add the day or invent a fill. Not measured on real silver (later cell).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() steps 2 and 3",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py@uncommitted worktree file, adapt() min_day/max_day domain",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 rule 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~I2"
+}
+```
+
+## IRPT_DASHBD-D2-W311-S2 -- The repeated-key refusal's COUNT is ambiguous when a key repeats more than twice
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "Rule 1 asks for the COUNT of repeated keys in the ValueError message but does not say whether a key seen three times counts once (as a key) or twice (as its extra rows). The wrapper counts keys seen more than once, so a key seen three times and one seen twice read as 2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Rule 1: a key seen twice is a repeat; raise ValueError whose message carries the COUNT of repeated keys as a number, and write nothing.",
+  "world_is": "Probe: three rows of one (account, day) and two of another gave the message 'repeated (account, day) feed keys: 2' (3 extra rows). The refusal fires and nothing is written either way; only the number's meaning is open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() repeated-key block",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 rule 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W311-S3 -- Account counts in the run record leave out an account whose every row sat on an incomplete day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "accounts_in_feed, accounts_mapped and accounts_unmapped come from the adapter's manifest, which counts only the rows the wrapper passes in after the complete-day drop. An account whose rows all fall on incomplete days therefore disappears from all three counts. The rules do not say whether such an account is still in the feed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The run record takes accounts_in_feed, accounts_mapped and accounts_unmapped from the manifest (run record item 5).",
+  "world_is": "Probe: an input of two accounts, one with its only row on an incomplete day, gave accounts_in_feed 1 and accounts_mapped 1. The dropped day is still counted in calendar_days_incomplete. Counts only; not measured on real silver.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() record block",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py@uncommitted worktree file, adapt() manifest",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 rule 5 record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W311-S4 -- A duplicate or non-canonical dimension key collapses silently in the account map
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "The account map is {str(int(a)): str(a)} over the dimension column, so two dimension keys with one integer value (for example '3001' and '03001') become one entry, the later one winning, with no refusal and no count. The rules do not say which key a duplicate dimension entry must carry. Mapped ABSENT records take the integer-string form while rows take the dimension string, so the two agree only when the dimension key is canonical.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The cell DB-i-11 text: build the account map from the dimension's own key form.",
+  "world_is": "Read from the account-map line of the wrapper and probed: dimension ['3001', '03001'] gave accounts_mapped 1 with no error. Not measured on the real dimension (later cell).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() account-map block",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 run() function"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W311-S5 -- The silver partition key is not checked against the rows it names
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "The silver dict's keys ('date=YYYY-MM-DD') are sorted and then ignored: rows are read from each frame whatever its key says, and no row's day or pull_date is compared with the key. A frame filed under the wrong partition is read as if it were right.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "silver is { 'date=YYYY-MM-DD': DataFrame }, each frame carrying the feed columns including pull_date and day.",
+  "world_is": "Read from run(): the partition name is used only for ordering. No comparison exists in the wrapper or the adapter. Not measured on real silver.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() silver loop",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 run() function"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W311-S6 -- A rerun into the same out_dir leaves the earlier run's partitions and absent file beside the new run record
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "run() creates and overwrites date= partitions, the absent file and run_record.json under out_dir but removes nothing already there. A rerun over fewer dates, or one with no absent records, leaves the earlier run's partitions or absent file in place beside the new run record, which then no longer describes the directory. The rules say to write under out_dir and say nothing of a previous run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Write under out_dir (create it; touch nothing outside it) for each business date with rows, plus absent/ when there are absent records and run_record.json (run record item 4).",
+  "world_is": "Read from run(): no removal step exists, and every test uses a fresh temporary directory, so the rerun case is not exercised. Not measured on real output (later cell).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() write block",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 rule 4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S96 -- OBSERVATION: TO-DB-b-272 the handler chains the whole backfill from one {} event, the import smoke is partial, the stamp wrapper writes CHANGELOG.json
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S96",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T21:00:00Z",
+  "one_line": "TO-DB-b-272 odd finds, none blocking now: (1) the report-build handler chains every owed day from ONE {} event (chain_next recomputes owed_days from the newest landed day on each hop), 68 chained invocations to 2026-10-14 rather than the ten the packet described, so the original step 7 had no pause for its per-event after-read or stops; (2) the order's import smoke (import handler) only proves the top-level imports: removing a lazily imported adapter does not fail it, removing filled_report_values.py does; (3) the stamp wrapper again rewrote CHANGELOG.json outside the grant",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "handler.py lines 383-386 (nxt = the next owed day after the one built; chain_next self-invokes it asynchronously) and owed_days (line 134, capped at MAX_DAYS_PER_FIRE = 10 per call, recomputed from landed[-1] on each hop); a simulation with the bundle's own owed_days and trading_calendar gave 68 invocations in one chain from {}, first 2026-07-10, last 2026-10-14, 65 landed and 3 source-absent; the applier held step 7 before any backfill event (msg 8613), the issuer and the CTO amended the order to explicit {day} events (Amendment 1 @4f36450137), run as 65 events with every chain.invoked false",
+      "import smoke on the extracted bundle: rc 0 with all 19 members; rc 0 with data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_report_reader.py removed (imported inside try blocks); rc 1 (ModuleNotFoundError) with filled_report_values.py removed (top-level import, handler.py line 35)",
+      "git diff after record-terraform-deploy.sh --function: lambda-source-map.json gained last_deployed_commit, last_deployed_at, recorded_by on the one entry; infra/aws/terraform/investor-reporting/CHANGELOG.json gained an entry; the commit step was refused by the naming gate; CHANGELOG.json was restored and only the source-map stamp kept (bdc0f75e96)"
+    ]
+  },
+  "spec_asserts": "The packet's section on the backfill and the order's step 7: a `{}` event builds the oldest owed day and chains up to nine further days, one event at a time with an after-read each; the import smoke proves the bundle is importable.",
+  "world_is": "A `{}` event chains the whole backfill unpaused (the cap of ten bounds the owed list per call, not the chain), so per-event stops cannot act mid-chain; any event that names no day chains every day owed since the newest landed day, so a scheduled fire whose input names no day (its input was not read here) would chain as many days as are owed then (not measured here). The import smoke is a partial check. The explicit-day route removes the first at no cost; the second is carried by the criteria's live reads. Counts, dates and words only."
+}
+```
+
+## IRPT_DASHBD-D2-W222-S1 -- the earlier scheduled-fire test pinned the exact chain payload; it now reads the day key only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W222-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~222",
+  "surfaced_at": "2026-10-15T20:32:05Z",
+  "one_line": "The scheduled-fire test asserted the self-invoke payload as exactly {day}; the chain payload now also carries chain_left, so that assertion reads the day key only, as the order's refusal clause directs, and a new test pins the full payload.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-274, refusal clause: if an earlier test pins the exact chain payload {\"day\": <next>}, change it to read the day key only and say so in a row.",
+  "world_is": "The earlier test test_the_scheduled_fire_builds_the_oldest_owed_day_and_chains_the_next_once compared the one self-invoke payload with == {day: 2026-07-13}. The budgeted payload is {day, chain_left: 8}, so that comparison could not hold. The test now reads the day key and the function name, invocation type and count; the full payload is pinned by the new test test_the_budget_payload_is_the_day_and_chain_left_one_less.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/tests/test_reporting_gold_cot.py test_the_scheduled_fire_builds_the_oldest_owed_day_and_chains_the_next_once (base 64ae091211)",
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py chain_next payload (base 64ae091211)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Changed in the same commit as the handler edit. The day key and the single Event invoke are still asserted; the chain_left key is asserted in the new test."
+}
+```
+
+## IRPT_DASHBD-D2-W222-S2 -- a budget of zero with no context ARN keeps the present chain form; the order does not say which rule governs that case
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W222-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~222",
+  "surfaced_at": "2026-10-15T20:32:05Z",
+  "one_line": "The order states the capped chain form for a budget of zero with an owed day, and the present form otherwise; it does not settle a budget of zero with an owed day and no context ARN. chain_next returns the present form there, because no chain was possible.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-274, step 2 chain: when chain_left is 0 the day is built and nothing is invoked; the returned chain states {invoked False, day <next owed day or None>, capped True} when a next owed day exists and the budget ended it, and keeps its present form otherwise.",
+  "world_is": "The order does not say whether a missing invoked_function_arn with chain_left 0 and an owed day counts as the budget ending the chain. chain_next tests the owed day and the ARN before the budget, so that case returns the present form {invoked False, day} with no capped key. The tests cover a budget of zero with an ARN (capped form) and with nothing owed (present form); the no-ARN arm with a budget of zero is not tested.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py chain_next, the order of its three tests (base 64ae091211)",
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/tests/test_reporting_gold_cot.py test_chain_left_zero_builds_the_day_and_chains_nothing (base 64ae091211)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reading taken: a missing ARN means no chain was possible, so the budget did not end it. The issuer may rule the other reading; the change is one test-order line in chain_next."
+}
+```
+
+## IRPT_DASHBD-D2-W312-S1 -- the complete-day rule counts dropped days, but the run record names no key for dropped rows; the record was kept as the order lists it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W312-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~312",
+  "surfaced_at": "2026-10-15T21:15:42Z",
+  "one_line": "Step 6 says the dropped rows are counted. Step 8 lists the run record keys and names no dropped-row count, so the drop is carried by incomplete_days and calendar_days_incomplete only. No key was added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 6: 'Complete-day rule as round 124; the dropped rows are counted.' Step 8 lists the run record keys; none counts dropped rows.",
+  "world_is": "The wrapper computes no dropped-row count that it writes. Adding a key would invent a field, which the refusal clause forbids, so the record keeps the listed keys and the drop is visible through incomplete_days.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-12.inflection-scope-feed-module-on-contract-041-absent-rows-in-table-and-run-repairs.md (step 6 and step 8, base 3dde628d6e)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py (run() record block, worker edit uncommitted at filing; base 3dde628d6e)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reading taken: the dropped rows are counted by their days. The issuer may rule that a dropped-row key belongs in the record."
+}
+```
+
+## IRPT_DASHBD-D2-W312-S2 -- an out_dir that exists as a regular file is outside the empty-directory refusal, which counts entries in a directory
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W312-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~312",
+  "surfaced_at": "2026-10-15T21:15:42Z",
+  "one_line": "Step 2 refuses an out_dir that exists and is not empty, counting its entries. The order does not say what happens when out_dir exists as a file. The wrapper refuses it with a count of 1 and writes nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 2: REFUSE if out_dir exists and is not empty (count: entries in it). Each refusal writes NOTHING, not even out_dir.",
+  "world_is": "A regular file has no entries to count. The wrapper raises ValueError 'output path exists and is not a directory: 1 path' before any write. No rule covers this case.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-12.inflection-scope-feed-module-on-contract-041-absent-rows-in-table-and-run-repairs.md (step 2, base 3dde628d6e)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py (run() output-directory block, worker edit uncommitted at filing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The refusal is a count of one path. The issuer may rule a different refusal for a file at out_dir."
+}
+```
+
+## IRPT_DASHBD-D2-W312-S3 -- a dimension key that is None or NaN cannot be tested for canonical form, because int() raises on it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W312-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~312",
+  "surfaced_at": "2026-10-15T21:15:42Z",
+  "one_line": "Step 3 defines canonical as str(a) == str(int(a)). int() raises on None and NaN, so the test is undefined for a missing key. The wrapper counts such a key as an offender together with the duplicate keys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 3: REFUSE on a duplicate key or a key that is not canonical, meaning str(a) != str(int(a)) (count: offenders).",
+  "world_is": "A key whose int() raises TypeError or ValueError is treated as not canonical and is counted in the refusal. The rules name no treatment of a missing key, and no row is written for it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-12.inflection-scope-feed-module-on-contract-041-absent-rows-in-table-and-run-repairs.md (step 3, base 3dde628d6e)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py (dimension-key block, worker edit uncommitted at filing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reading taken: a missing key is an offender, never a silent skip. The issuer may rule the case otherwise."
+}
+```
+
+## IRPT_DASHBD-D2-W312-S4 -- the accounts parameter's ids are not stated to count in accounts_in_feed, accounts_mapped or accounts_unmapped
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W312-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~312",
+  "surfaced_at": "2026-10-15T21:15:42Z",
+  "one_line": "The order says accounts adds Orion ids to the output even with no feed rows, and that every other manifest key stands. It does not say whether accounts_in_feed, accounts_mapped and accounts_unmapped count those added ids. The adapter counts feed-row accounts only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Adapter: accounts (None, or Orion ids) is included in the output even when the ids have no rows in feed_rows; manifest: every other key stands.",
+  "world_is": "The wrapper passes every Orion id read from ALL rows as accounts, so its own record counts the same set either way and the two agree. A direct adapter call with accounts beyond the feed would show a manifest count below the output account count. The feed-only reading is kept, as round 124 defined the key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-12.inflection-scope-feed-module-on-contract-041-absent-rows-in-table-and-run-repairs.md (adapter parameters, base 3dde628d6e)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py (manifest block, worker edit uncommitted at filing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reading taken: feed-row accounts only. The issuer may rule that the parameter's ids count too."
+}
+```
+
+## IRPT_DASHBD-D2-S97 -- disarm of W311-S1: the edge-day loss is gone on the landed tree of round 125 (W221-S3 stays ARMED: the CTO ruled return_basis back to TWR, msg 8674)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S97",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T21:25:26Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W311-S1 on the landed tree of round 125 (DB-i-12, merged @7a8a2f681f): the wrapper no longer loses a trading day when a first or last calendar day is dropped (trading_days_unaccounted reads 0 on both fixtures). W221-S3 is NOT disarmed here: the module now writes VENDOR_REPORTED as contract 0.4.1 requires, but the CTO has since ruled (msg 8674) that VENDOR_REPORTED leaves return_basis in 0.4.2, so that row's premise reverses and it waits on 0.4.2 and a round that writes TWR.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "W311-S1: the complete-day drop can silently remove an edge trading day.",
+  "world_is": "On the merged tree DBI125-1-AC1, AC2 and AC3 PASS (28 of 28 expected rows with the first day, then the last day, incomplete; each edge day reads ABSENT NO_FEED_ROW or UNMAPPED_ACCOUNT for all 7 synthetic accounts, trading_days_unaccounted 0), and 93 tests pass across the adapter, wrapper and contract-041 test files. Synthetic fixtures only; the first real-row run is a later cell and re-reads the same count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W311-S1",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r125/p125_run041.py",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-W311-S1: its condition (an edge trading day with neither a row nor an ABSENT row) is absent on the landed tree of round 125, measured by the r125 checker (first-day and last-day fixtures, 28 of 28 rows, unaccounted count 0) and by 93 passing tests."
+}
+```
+
+## IRPT_DASHBD-D2-W223-S1 -- The Scope adapter already writes market_value_eod_claim as a row field and as a parquet column, so the claim is not only in its run record; the 0.4.1 contract declares no such column.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:11:31Z",
+  "one_line": "The Scope adapter already writes market_value_eod_claim as a row field and as a parquet column, so the claim is not only in its run record; the 0.4.1 contract declares no such column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-275, Why section: the Scope feed carries no end market value, the adapter infers it, and the claim lives only in the adapter's run record, so 0.4.1 has no field a consumer can reject on for it.",
+  "world_is": "The adapter's day rows carry market_value_eod_claim beside the contract's columns: the value is 'inferred' from the next calendar day's start value and 'measured' from the own end value (adapter lines 131 and 133, row field at line 144). The run writes it as a string column of the parquet (run line 27 names the field, line 116 appends it to the table fields). Two adapter tests pin the field and its two values, and one run test pins its string type. The claim therefore already travels as a field in the output; no contract declares it until 0.4.2 does.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py lines 131, 133 and 144 (base 198f2591f091c57df02ef8238aa1f10cff7147bb)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py lines 27 and 116 (base 198f2591f091c57df02ef8238aa1f10cff7147bb)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_adapter.py lines 173-188 and 263; data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_run.py line 189 (base 198f2591f091c57df02ef8238aa1f10cff7147bb)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found by the token census of market_value_eod_claim at the census commit (4 files, 14 hits). Only these lines were read; the adapter is outside this grant. The adapter's TABLE_FIELDS comment still says 22 sorted name:type lines, which is stale against the five optional columns of 0.4.1."
+}
+```
+
+## IRPT_DASHBD-D2-W223-S2 -- Under 0.4.2 all twelve tests of the 0.4.1 contract file fail: they build Orion rows without the claim, and that file's validator reads required_when but not required_unless_absent. The order's bounded edit covers the pinned version only, so the file does not pass whole.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:11:31Z",
+  "one_line": "Under 0.4.2 all twelve tests of the 0.4.1 contract file fail: they build Orion rows without the claim, and that file's validator reads required_when but not required_unless_absent. The order's bounded edit covers the pinned version only, so the file does not pass whole.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-275 step 4(b) and criterion DB142-1-AC3: the 0.4.0 and 0.4.1 contract tests pass once the contract reads 0.4.2, with bounded edits only where a test pins the literal contract version or a hash that 0.4.2 moves. The facts words of step 5 say every earlier writer still validates.",
+  "world_is": "The one edit the order names for the 0.4.1 file is the version pin, re-pointed at the supersedes entry (line 230). Twelve of its tests still fail, and each reports that market_value_eod_claim is required on the row. The 0.4.2 declaration requires the claim on every PRESENT Orion row and exempts an ABSENT row through required_unless_absent; the 0.4.1 file's copy of the validator does not read required_unless_absent, and its Orion fixtures carry no claim. Making the file pass needs a validator edit and a fixture edit, a route the order does not name, so the file is left failing and criterion DB142-1-AC3 is FAIL. The 0.4.0 file passes unedited, and the new 0.4.2 file passes with 22 tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_041.py row_problems, lines 58-85 (base 198f2591f091c57df02ef8238aa1f10cff7147bb; the one edit is line 230)",
+      "pytest of the 0.4.0, 0.4.1, cottonwood and 0.4.2 files in the worker worktree: 12 failed, 83 passed before the 0.4.2 file was added; all 12 failures are in the 0.4.1 file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by this worker. The issuer's choice: a 0.4.1 validator that honours required_unless_absent with fixtures that carry the claim, or a ruling that the 0.4.1 Orion fixtures are retired from the 0.4.2 reading. The contract itself is as the order states."
+}
+```
+
+## IRPT_DASHBD-D2-W223-S3 -- Resolves IRPT_DASHBD-D2-W223-S2 under the coordinator's ruling (order AMENDMENT 1 at e61247310c): the 0.4.1 test's bound is 60 lines, its validator reads required_unless_absent and its PRESENT Orion fixtures carry the claim; all 31 tests of that file now pass.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:24:04Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W223-S2 under the coordinator's ruling (order AMENDMENT 1 at e61247310c): the 0.4.1 test's bound is 60 lines, its validator reads required_unless_absent and its PRESENT Orion fixtures carry the claim; all 31 tests of that file now pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The BLOCKING row W223-S2 is resolved by the issuer's ruling: the claim is required on a PRESENT Orion row by the CTO's rule (msg 8655), so a 0.4.1 Orion row without it is meant to fail; the bounded 0.4.1 amendment is in the worker commit that carries this row.",
+  "spec_asserts": "Task order DB-b-275, criterion DB142-1-AC3: the 0.4.0 and 0.4.1 contract tests pass once the contract reads 0.4.2; for the 0.4.1 file, the bounded edit was named as the version pin only (surfaced in W223-S2).",
+  "world_is": "Under AMENDMENT 1 the 0.4.1 file's bound is 60 changed lines (the 0.4.0 test stays at 14). Its validator now reads required_unless_absent, and its PRESENT Orion fixtures carry market_value_eod_claim measured. Measured after the edit: 31 of 31 tests in the 0.4.1 file pass, 12 of 12 in the 0.4.0 file, 22 of 22 in the 0.4.2 file, and 52 in the two cottonwood files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order AMENDMENT 1 in IRPT_DASHBD.TO-DB-b-275 at commit e61247310c (box/dell2), merged into the worker branch at 8f4686bf0a",
+      "test_account_return_contract_041.py row_problems required_unless_absent clause and _orion_present market_value_eod_claim, changed in the worker commit that carries this row"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "notes": "Row W223-S2 stays UNDER_INVESTIGATION in its own row (the channel is append-only); this row is the resolution. The CVO's adjudication of S2 is the CVO's carrier and is not written here."
+}
+```
+
+## IRPT_DASHBD-D2-W223-S4 -- Resolves IRPT_DASHBD-D2-W223-S2 under AMENDMENT 2 of the order (the CTO's upheld L9 FAIL of 0.4.1 on rule 24 postulate iii): return_basis goes back to TWR and NOT_MEASURABLE, source_requires is removed, source_provenance carries who computed each source, and the 0.4.1 test is re-pointed within its 120-line bound; all 27 tests of the 0.4.2 file and 31 of the 0.4.1 file pass.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:41:53Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W223-S2 under AMENDMENT 2 of the order (the CTO's upheld L9 FAIL of 0.4.1 on rule 24 postulate iii): return_basis goes back to TWR and NOT_MEASURABLE, source_requires is removed, source_provenance carries who computed each source, and the 0.4.1 test is re-pointed within its 120-line bound; all 27 tests of the 0.4.2 file and 31 of the 0.4.1 file pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The BLOCKING row W223-S2 stays resolved: the claim requirement is the CTO's rule, and the 0.4.1 file's failures came from a superseded return_basis rule that Amendment 2 repairs in the same 0.4.2 contract.",
+  "spec_asserts": "Task order DB-b-275, Amendment 2: return_basis means which arithmetic (TWR); VENDOR_REPORTED leaves the enum; source_requires is removed; source_provenance maps each source value to who computed it; the 0.4.1 test's bound is 120 lines.",
+  "world_is": "The contract at the amended state holds return_basis TWR and NOT_MEASURABLE, a source_provenance block with three keys (orion vendor-computed; the two Black Diamond sources Opal-computed), and source_rules.orion.return_basis naming TWR with provenance read from source. The 0.4.2 file passes 27 tests, including TWR valid, VENDOR_REPORTED rejected and the provenance mapping; the 0.4.1 file passes 31 tests after re-pointing its superseded return_basis and source_requires assertions; the 0.4.0 file passes 12 and the cottonwood pair 52. AC1, AC2 and AC3 of the checker pass.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order AMENDMENT 2 of IRPT_DASHBD.TO-DB-b-275 at commit 02753bc7e3 (box/dell2), merged into the worker branch",
+      "checker p142_contract042.py amended at 02753bc7e3: return_basis enum, source_provenance, source_rules.orion.return_basis and rule24 v042.i_mece.return_basis clauses"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "notes": "W223-S2 and W223-S3 stay as written (append-only). S3 closed the S2 failure by the claim-aware 0.4.1 validator under AMENDMENT 1; AMENDMENT 2 changes the return_basis rule that the 0.4.1 file also pins. The CVO's adjudication of S2 is the CVO's carrier and is not written here."
+}
+```
+
+## IRPT_DASHBD-D2-W313-S1 -- the r126 checker's no-identifier limb refuses the record's extract path, which the order names as an exempt path field; DB-i-13 criterion DBI126-1-AC1 FAILs on that limb alone
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W313-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~313",
+  "surfaced_at": "2026-10-15T21:54:22Z",
+  "one_line": "The record's extract.path must be the absolute private folder path (the order's exemption for path fields), and that path carries an 8-digit run; the checker's no-identifier limb scans the whole record and refuses it, so DBI126-1-AC1 FAILs at that limb. The order's exemption is not in the checker.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-i-13 record rule: no run of 8 or more digits except in a sha256 value or a path or file field; the record carries the absolute private path of the extract. Checker p126_cause.py no_identifiers: any run of 8 or more digits anywhere in the record, after removing only 64-hex digests, fails.",
+  "world_is": "The private folder name carries an 8-digit run, so the record's extract.path holds one and no_identifiers refuses it (checker output: REASON a run of 8 or more digits in the record: 202, DBI126-1-AC1 FAIL). With that one field excluded in a diagnostic copy under the worker scratch (not the verdict), every other limb passes (DBI126-1-AC1 PASS): the script hash, the body hashes, the extract hash, the series and early-end counts, the per-account rows and the verdict counts all recompute equal. The official checker is unchanged; the criterion stays FAIL until the issuer rules the exemption.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r126/p126_cause.py@b8b717d5a5 (no_identifiers, the 8-digit regex over the whole record)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-13.orion-series-ended-cause-read-saved-bodies-against-positions-silver.md@768ab85a86 (record item 6: extract path, and the no-digit exemption for path and file fields)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~313/series_ended_cause.py (writes the record; the path is the private folder the order names)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a worker repair: the record keeps the path the order names, the checker is not edited, and the order stays open with DBI126-1-AC1 FAIL. Issuer choice: exempt the extract.path field in no_identifiers, or name the extract by a path with no 8-digit run. Reads on the record: 120 S3 reads (117 GETs), no write."
+}
+```
+
+## IRPT_DASHBD-D2-W313-S2 -- the issuer ruled IRPT_DASHBD-D2-W313-S1 by amending the r126 checker; the criterion re-run on the amended check reads PASS
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W313-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~313",
+  "surfaced_at": "2026-10-15T22:11:44Z",
+  "one_line": "Reconciliation of W313-S1: the issuer ruled the no-identifier limb wrong and amended the checker, so the record's extract.path and script.file are blanked before the 8-digit scan. The order text is unchanged. DBI126-1-AC1 re-run on the amended check reads PASS; the proof instance is re-recorded on that run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W313-S1 as filed: the checker's no-identifier limb scanned the whole record, so the exempt extract.path field made DBI126-1-AC1 FAIL at its first limb.",
+  "world_is": "The amendment 7ba971b30d blanks extract.path and script.file before the 8-digit scan and keeps the rule everywhere else; its selftest gains two arms and passes (selftest PASS, rc=0). The official run on the amended check reads DBI126-1-AC1 PASS (rc=0). No S3 read, vendor call or write was made for this reconciliation; the measurements in the record stand.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W313-S1",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r126/p126_cause.py@7ba971b30d (no_identifiers, the blanked fields)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~313/SERIES_ENDED_CAUSE_R126.json@0361ddd49d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "W313-S1 is not edited here (append-only). The issuer's ruling is the amendment at 7ba971b30d, as reported by the coordinator; this row records the re-run only."
+}
+```
+
+## IRPT_DASHBD-D2-S98 -- disarm of W221-S3: the Scope adapter writes TWR as contract 0.4.2 requires
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S98",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T22:26:37Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W221-S3 (the Orion adapter's return_basis against the contract), on the landed tree of round 127 (DB-i-14, merged @c7d980af1b): contract 0.4.2 takes VENDOR_REPORTED out of return_basis and removes source_requires, and the Scope adapter now writes TWR with provenance in source and the end-of-day claim in its declared column, so no Orion row disagrees with the contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "W221-S3: the Orion adapter writes a return_basis the contract does not accept for an Orion present row.",
+  "world_is": "On the merged tree DBI127-1-AC1, AC2 and AC3 PASS (28 of 28 rows validated by the 0.4.2 test module's row_problems; 4 partitions; 25 declared fields hashing to schema_hash_with_optional) and 90 tests pass across the adapter, wrapper and contract-042 test files. Synthetic fixtures only; no real run has happened and nothing is served from the module.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W221-S3",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r127/p127_run042.py",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-W221-S3: its condition (an Orion row whose return_basis the contract does not accept) is absent on the landed tree of round 127, measured by the r127 checker (28 of 28 rows pass the 0.4.2 validator, PRESENT rows TWR) and by 90 passing tests."
+}
+```

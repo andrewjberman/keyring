@@ -1493,6 +1493,139 @@
     "spec_asserts": "Issuer ruling on DSGN_RBNDV2-W23-S1 (order amend commit 3a3a890c9e): edit RB1R2-AC1 for the five grounds, change nothing else in either test. TO RB8B1-AC3: 0 fail across dsgn-rbndv2, panels and modal.",
     "world_is": "Arm (c) of RB1R2-AC1 pins the pre-cell count of exact-scope unlayered rules (1). The palette rule is still exactly one of the two such rules, so the control's intent holds, but its count arm reads the new rule. Under the ruling wording it is not in the authorized edit, so it was left untouched.",
     "notes": "Not edited. The minimal form the issuer may wish to rule on: checkOldRule selects the rule whose declarations include --palette-white (count 1 among those) instead of counting all exact-scope rules. Commit 590307cd is LOCAL on wk-DSGN_RBNDV2-23-portal."
+  },
+  {
+    "id": "DSGN_RBNDV2-W24-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~24",
+    "surfaced_at": "2026-10-15T20:03:52Z",
+    "one_line": "RV-g-1 cannot meet RB8G1-AC3 as written: the body-prefixed selector the cell mandates fails the pinned rb-1-t.tokens.test.ts TOKENS-OK arm, which requires every selector of a block whose prelude contains the scope attribute to start with that scope or equal :root scope; that test is outside the order's paths, so the order stays open on AC3.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal worktree wk-DSGN_RBNDV2-24-portal, src/index.css: git diff --stat reports 14 insertions in one file; the only added rule is body [data-panel-surface=\"light\"] with --success 145 70% 26% and --danger 352 75% 42%",
+        "portal/src/__tests__/dsgn-rbndv2/rb-1-t.tokens.test.ts lines 98-103: blocks.filter(b => b.prelude.includes(SCOPE)), then each selector must startWith(SCOPE) or equal ':root ' + SCOPE; the body-prefixed selector fails that expect (bun test, TOKENS-OK, 1 fail)",
+        "bun test src/__tests__/dsgn-rbndv2 src/ui/components/panels src/ui/components/modal: 41 pass, 1 fail, 42 tests across 29 files; the fail is RB1T-AC1 TOKENS-OK; RB8G1 SIGNAL-PAIR-OK passes; bun x tsc -p tsconfig.app.json --noEmit rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-g-1 cell: the selector is body [data-panel-surface=\"light\"], deliberately not :root [data-panel-surface=\"light\"] or the bare scope, because rb-1-r2.surfaces.test.ts and rb-1-r.remap.test.ts pin the count of those exact selectors. RB8G1-AC3: bun test over dsgn-rbndv2, panels and modal reads 0 fail. Refusal clause: do not weaken a test to pass.",
+    "world_is": "rb-1-t.tokens.test.ts also pins the scope-prefix form for every block whose prelude contains the scope attribute, and that pin is not in the cell's list of pinned tests, so no body-prefixed selector can pass it. The RV-g-1 edit is committed exactly as the cell writes it; the test was not edited (outside the order's paths) and no selector was substituted (the cell fixes it).",
+    "notes": "For the issuer to rule on. The cell's own pin list (rb-1-r2, rb-1-r.remap) does not name rb-1-t.tokens.test.ts. Commit of the RV-g-1 change is LOCAL on wk-DSGN_RBNDV2-24-portal; the order's status stays pending."
+  },
+  {
+    "id": "DSGN_RBNDV2-W25-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~25",
+    "surfaced_at": "2026-10-15T20:39:22Z",
+    "one_line": "RB8N1-AC3 cannot pass as written: the mandated nested-ground selector has commas inside :is(), and the pinned rb-1-t.tokens.test.ts TOKENS-OK arm (c) splits every scoped prelude on commas, so the :is() pieces fail its scope-prefix pin; that test is outside the order's two named tests, so AC3 stays red and the order stays open.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@5211a15d src/index.css: the second-layer rule sits unlayered after the :root [data-panel-surface=\"light\"] inner-surface block; its selector is the scope attribute, then :is(four item-ground classes), then :is(the same four), exactly as the cell mandates",
+        "portal/src/__tests__/dsgn-rbndv2/rb-1-t.tokens.test.ts lines 98-104 (unchanged at ca146d09): scoped = blocks whose prelude includes the scope; selectorsOf(prelude) = prelude.split(',') and every piece must start with the scope or equal ':root' + scope; the failing expect is line 103",
+        "bun test src/__tests__/dsgn-rbndv2 src/ui/components/panels src/ui/components/modal (portal@5211a15d, run 3): 42 pass, 1 fail, 644 expect() calls, 43 tests across 30 files; the fail is RB1T-AC1 TOKENS-OK at rb-1-t.tokens.test.ts:103, expect(received).toBe(expected), Expected true, Received false",
+        "precedent: DSGN_RBNDV2-W24-S1 records the same rb-1-t arm blocking RV-g-1; the issuer ruling there re-authored that selector"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RB8N1-AC3: every test under src/__tests__/dsgn-rbndv2/, src/ui/components/panels/ and src/ui/components/modal/ passes: the summary line reads 0 fail. Refusal clause: if a criterion cannot be met as written, stop and write a surprise row; do not weaken the test to pass. The order names edits only to rb-1-r2 (the RB1R2-AC1 grounds) and rb-8-b1 (its arm 4).",
+    "world_is": "The mandated selector begins with the scope attribute, but its inner commas (inside :is()) are read by the rb-1-t naive comma split as separate selectors without the scope prefix, so arm (c) of TOKENS-OK fails at line 103 on the first scoped block. rb-1-t was left untouched (the order does not name it); no selector was substituted (the order fixes it).",
+    "notes": "For the issuer to rule on. Two forms the issuer may weigh: the arm splits on top-level commas only (the form the rb-1-r2 checkOldRule ruling took), or the selector is written as comma-free per-pair selectors that each begin with the scope attribute. Commit 5211a15d is LOCAL on wk-DSGN_RBNDV2-25-portal; the order's status stays open."
+  },
+  {
+    "id": "DSGN_RBNDV2-W25-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~25",
+    "surfaced_at": "2026-10-15T20:39:22Z",
+    "one_line": "RB6Y1-AC1 failed once in the AC3 suite run: a test reported 5016.00 ms and failed on a git show read; the same test passes alone and passed in the next full run, so the suite is not deterministic under load.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bun test src/__tests__/dsgn-rbndv2 src/ui/components/panels src/ui/components/modal, second run (portal@5211a15d): 41 pass, 2 fail, 43 tests across 30 files; RB6Y1-AC1 arm (a), the Trending Topics row in ExecutiveSummary.tsx holds no border-white, failed at 5016.00 ms with a git show of d0cb67d0:src/pages/MarketPerformance/tabs/types.ts reported as the failing command",
+        "bun test src/__tests__/dsgn-rbndv2/rb-6-y1.border-sweep.test.ts run alone twice (portal@5211a15d): 7 pass, 0 fail on both runs",
+        "full suite runs 3 and 4 (portal@5211a15d): RB6Y1 passed in both; the only fail in each was RB1T-AC1 (DSGN_RBNDV2-W25-S1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RB8N1-AC3: bun test over src/__tests__/dsgn-rbndv2, src/ui/components/panels and src/ui/components/modal reads 0 fail, as a re-runnable invocation with a deterministic verdict.",
+    "world_is": "One of four full suite runs failed RB6Y1-AC1 on a timed test that shells out to git show; the RB6Y1 file passed alone twice and in the other full runs. The cause of the one timeout was not measured. The invocation's verdict therefore varied between runs.",
+    "notes": "Not edited. The RB6Y1 test file and its git show reads are outside this cell's changed files and were not touched. Observed on the worktree wk-DSGN_RBNDV2-25-portal."
+  },
+  {
+    "id": "DSGN_RBNDV2-W26-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~26",
+    "surfaced_at": "2026-10-15T21:09:13Z",
+    "one_line": "The RV-g-2 criterion RB8G2-AC2 names the scratch path /tmp/rb8g2-tsc.txt, while the worker face fixes scratch to <worktree>/.scratch/ only; the criterion's invocation was run as written, into /tmp, and the order is unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-g-2.delta-pair.md (worker face, ACCEPTANCE, RB8G2-AC2): the invocation writes its output to /tmp/rb8g2-tsc.txt",
+        "same order, worker face, Scratch clause: scratch is <your worktree>/.scratch/ only, and sibling workers overwrite each other under the shared scratchpad",
+        "run at portal@5fcb37f5: the criterion invocation as written exits TSC-RC=0 with 0 diagnostic lines; a first run into the worktree scratch file also exited 0 and was not kept as the recorded invocation"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Scratch: <worktree>/.scratch/ only (worker face). RB8G2-AC2: the typecheck invocation writes to /tmp/rb8g2-tsc.txt.",
+    "world_is": "The two instructions name different scratch locations. The criterion's invocation is the verdict's instrument and was run unchanged into /tmp; the worktree scratch rule was not applied to this one file. The verdict (TSC-RC=0, 0 diagnostic lines) is unaffected by the path.",
+    "notes": "For the issuer to rule on whether the criterion should name the worktree scratch path. Not edited; the order stays as issued."
+  },
+  {
+    "id": "DSGN_RBNDV2-W27-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~27",
+    "surfaced_at": "2026-10-15T21:42:05Z",
+    "one_line": "The RV-o-1 criterion RB9O1-AC2 names the scratch path /tmp/rb9o1-tsc.txt, while the worker face fixes scratch to <worktree>/.scratch/ only; the criterion's invocation was run as written, into /tmp, and the order is unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-o-1.outlines.md (worker face, ACCEPTANCE, RB9O1-AC2): the invocation writes its output to /tmp/rb9o1-tsc.txt",
+        "same order, worker face, Scratch clause: scratch is <your worktree>/.scratch/ only, and sibling workers overwrite each other under the shared scratchpad",
+        "same conflict already filed for the RV-g-2 order as DSGN_RBNDV2-W26-S1 (this file, 2026-10-15T21:09:13Z); run at portal@d52fc657: the criterion invocation as written exits TSC-RC=0 with 0 diagnostic lines"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Scratch: <worktree>/.scratch/ only (worker face). RB9O1-AC2: the typecheck invocation writes to /tmp/rb9o1-tsc.txt.",
+    "world_is": "The two instructions name different scratch locations. The criterion's invocation is the verdict's instrument and was run unchanged into /tmp; the worktree scratch rule was not applied to this one file. The verdict (TSC-RC=0, 0 diagnostic lines) is unaffected by the path.",
+    "notes": "For the issuer to rule on whether the criterion should name the worktree scratch path. Not edited; the order stays as issued. Filed on the same pattern as DSGN_RBNDV2-W26-S1."
+  },
+  {
+    "id": "DSGN_RBNDV2-W27-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~27",
+    "surfaced_at": "2026-10-15T21:42:05Z",
+    "one_line": "NestedCard.tsx's header says a section has no border, no fill, no radius and no left accent bar, and that data-accent sets no visual; after RV-o-1 a light-scope rule on [data-accent] paints an outline and an accent bar, so that header is stale.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@e88ffb03 src/ui/components/panels/NestedCard.tsx header lines 4 and 6: 'no border, no fill, no radius, no left accent bar' and 'accentColor ... sets the data-accent attribute and no visual'",
+        "portal@d52fc657 src/index.css: the unlayered block after the second-layer silver rule, [data-panel-surface=\"light\"] [data-accent] { border: 1px solid hsl(var(--hairline)); border-radius: 3px } and four border-left accent selectors",
+        "the cell bounds NestedCard.tsx out of this order's write surface, so the header was not edited"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NestedCard.tsx header (e88ffb03, lines 4 and 6): a section has no border, no fill, no radius and no left accent bar; data-accent sets no visual. RV-o-1: the outline and the bars are CSS on data-accent, and NestedCard is not edited.",
+    "world_is": "The CSS on data-accent now supplies the outline and the bars on a light panel, so the component's header describes a state the light panel no longer shows. Nothing in the test suite reads that header; rb-2-i1 pins only that NestedCard carries no visual class.",
+    "notes": "Not edited (outside this order's paths). For the issuer to rule whether the header is corrected in a later cell. A future reader relying on the header to conclude that data-accent is visually inert would be misled; no present behaviour is wrong."
   }
 ]
 ```

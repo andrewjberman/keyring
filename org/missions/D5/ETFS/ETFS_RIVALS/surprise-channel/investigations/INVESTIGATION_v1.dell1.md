@@ -911,6 +911,117 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "RIV-aw-1: an AI account names its periods in words and cites every figure; one correction per item.",
     "world_is": "The checker did its job. The model did not follow the one correction on two TXUE items; the prompt's citation format ([id] in text) and the wording rule against ids in text pull against each other, and 24 of 26 items passed. Changing the model does not by itself change that pull.",
     "notes": "Not fixed by this seat: ETFS_RIVALS parks after round 30 and no round 31 is cut without Andrew. Whether to move the writer to another model is Andrew's call (his word 'GPT6 astra' carries no verified model id); a model change is a code or Terraform env change through a CloudOps seat."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S19",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-15T20:32:33Z",
+    "one_line": "proof-of-spec-check's alignment limb reads only decompositions/ETFS_RIVALS_DECOMP.md, so a cell that lives in a round file (ETFS_RIVALS_DECOMP.round<N>.md) is reported as 'does NOT exist' and 11 task orders of this project read INVALID on a valid cell reference.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/proof-of-spec-check.py <instance> --governing-order <order> on the pending orders cb-1, dr-1, eg-1, gd-1, gf-1, gt-1, ln-1, nf-1, nm-3, rp-2, su-2 (2026-10-15 ~20:1xZ): each prints 'VIOLATION: alignment: cell_ref RIV-<id> ... does NOT exist in org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md'",
+        "the project's decompositions folder holds 12 files (ETFS_RIVALS_DECOMP.md plus round1..round11); 146 distinct cell ids across them, read by deliverables/2.0.0_SA_COO~RV/round30/build_completion_report.py",
+        "the 36 other pending orders read VALID under the same checker, so the gap is the cell lookup, not those instances"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A criterion's cell_ref resolves when the cell exists in any of the project's decomposition documents.",
+    "world_is": "The alignment limb resolves cell_ref against the one named decomp_ref.doc. Eleven instances whose cell was moved to a round file read INVALID, so those orders cannot be flipped complete and the completion report lists them as not terminal-with-proof.",
+    "notes": "Not fixed by this seat: the checker is not this project's. CTO ruling msg 6215: keep the 12 pending orders as they are, flip none without a VALID instance, file this row. iam-1 is the twelfth pending order and fails on schema (spec_ref group, artifact kind), a different cause."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W43-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~43",
+    "surfaced_at": "2026-10-15T21:17:29Z",
+    "one_line": "RIV-ya-1's chart reader (price_series.series) applies the precedence rule to the actions frame that load() windows by object date partition, so a Bloomberg split whose partition lies outside the chart window is not seen: an inferred split of the same key inside the window then applies alone, not the Bloomberg ratio, and the cell's 'whatever the two ratios' claim holds only for the rows both readers see",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/price_series.py _actions at base 1af8b0dba8 line 246: `if m and lo <= m.group(1) <= hi and u.endswith(\".parquet\") and not _is_void_uri(u)` (the partition date filter over the window's lo and hi)",
+        "data/etfs/scripts/rivalfunds/price_series.py load at base 1af8b0dba8 line 261: `return series(g4, g1, keys, start, end, actions=_actions(s, lo, hi))`, so series() sees only the windowed frame",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py load_actions at 1af8b0dba8 line 986 lists EVERY corporate_actions object (no date window), so the G5 reader pairs across all partitions while the chart reader pairs within the window",
+        "the round-31 check ya1_bloomberg_wins_check.py test_ac2 builds both rows in one frame passed straight to series(), so it cannot see the windowing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-ya-1 interface item 2: the same rule over the actions frame before _adjustments, so a Bloomberg split and an inferred split of the same ex_date apply ONCE (the Bloomberg row) whatever the two ratios.",
+    "world_is": "The rule is applied as specified to the frame series() is handed. load() hands it the object partitions dated inside [start, end], so a pair split across the window edge is not paired by the chart. No inferred object exists in the live store today (cell measured 0), so the case has not arisen; the G5 reader and the chart reader can disagree on which pairs exist.",
+    "notes": "Not edited (price_series.load is outside this order's paths for a windowing change). Owner of the call: 2.0.0_SA_COO~RV at the drain; the choices are to read the corporate_actions prefix unwindowed for the chart's precedence pass (the G5 reader's shape) or to accept the window edge with the disarm's detect-and-void. The worker's pairing is over the frame it is given, as the cell words it."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W44-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~44",
+    "surfaced_at": "2026-10-15T21:16:48Z",
+    "one_line": "The rivalfunds suite is not a clean regression net at base: 56 of the suite's tests fail on box/dell1 base (1af8b0dba8) before any RIV-yb-1 edit, so the cell's 'report the final line' reads red for reasons outside its two code sites.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd data/etfs/scripts && python -m pytest -q -p no:cacheprovider --color=no rivalfunds/tests on the worktree at HEAD 1af8b0dba8 with ai_accounts.py and ai_client.py restored to HEAD: '56 failed, 992 passed, 7 skipped' (.scratch/base_run.txt in the worker worktree)",
+        "the same suite after the RIV-yb-1 edits with tests/test_r6ap1_ai_stage.py left at HEAD: '57 failed, 993 passed, 7 skipped'; the 56 base failures are unchanged and the one addition is recorded as ETFS_RIVALS-D1-W44-S3",
+        "failing files include test_g6_gics_join.py, test_hp1_home_producer.py, test_i1_identity.py, test_i2_issuer_alias.py, test_r5b1_g1_windowed.py, test_riv_we1_claimed_as_of.py, test_r6ap1_ai_stage.py::test_policy_and_environment_split_and_committed_copy_is_current (outside the two client modules and the default-model string)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The rivalfunds suite (pytest from data/etfs/scripts) is the regression net for an AI-writer change: its final line is the cell's regression evidence, and a change that touches only the client request shape leaves the rest of the suite as it was.",
+    "world_is": "At the base commit the suite already reads 56 failed and 992 passed; the failures sit in grouping, identity, windowed-build, policy-generation and claim-as-of tests that do not touch the AI client. The 56 pre-existing failures are unchanged by the RIV-yb-1 edits; the one failure the edits add is recorded as ETFS_RIVALS-D1-W44-S3.",
+    "notes": "Not fixed by this seat: the 56 failures are outside RIV-yb-1's paths and the cell does not widen to them. The issuer decides whether the net is repaired before the merge."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W44-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~44",
+    "surfaced_at": "2026-10-15T21:16:48Z",
+    "one_line": "The worker worktree is a sparse checkout that omits org/surprise_channel: the investigation item schema the row gate names is tracked and indexed but absent on disk, so a worker cannot read it by path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git config --get core.sparseCheckout in C:/tmp/wk-riv-r31-44 returns 'true'; ls org/surprise_channel returns 'No such file or directory'; git ls-files org/surprise_channel lists 43 indexed files",
+        "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json reads the schema at 1af8b0dba8; git status shows no deletion of it, so the omission is the sparse cone, not a removed file",
+        "the first-act check 'test -d org && test -d .tools && echo TREE-OK' passes, because org/ and .tools/ exist; the omission is below org/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker worktree carries the org/ paths its task order names, and the schema that grades a surprise row is readable from the worktree by path.",
+    "world_is": "The worktree carries org/missions/D5/ETFS and .tools but not org/surprise_channel; the schema was reachable only through git show at HEAD. This worker read the schema from HEAD to choose the enum values and did not alter the sparse setting.",
+    "notes": "Not fixed by this seat: the sparse-checkout setting belongs to the worktree's creator, and the cell's write surface does not include it. The row gate (.tools/surprise-row-gate.py) reads the committed index, so the row itself is unaffected."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W44-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~44",
+    "surfaced_at": "2026-10-15T21:16:48Z",
+    "one_line": "BLOCKING: RIV-yb-1's required change makes data/etfs/scripts/rivalfunds/tests/test_r6ap1_ai_stage.py::test_rest_client_request_shape fail, and that file is not in the order's <paths>, so the fix cannot land under this grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "rivalfunds/tests/test_r6ap1_ai_stage.py lines 109-110 at HEAD 1af8b0dba8 assert the body {model: 'm', messages, response_format, temperature: 0.2}; with the RIV-yb-1 RestClient.chat the model 'm' is not a gpt-5 model and the key is omitted, so the assertion fails",
+        "the order's <paths> lists data/etfs/scripts/rivalfunds/ai_accounts.py, ai_client.py, tests/test_riv_yb1_model.py and the investigation file; test_r6ap1_ai_stage.py is not among them, so the worker left it at HEAD and did not commit it",
+        "cd data/etfs/scripts && python -m pytest -q -p no:cacheprovider --color=no rivalfunds/tests with the RIV-yb-1 edits and test_r6ap1 at HEAD: '57 failed, 993 passed, 7 skipped' (base 56 failed, 992 passed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's write grant (<paths>) admits every file the cell's required change must touch, so the cell lands without a file outside its grant.",
+    "world_is": "The one-line fix is to drop the temperature key from the expected body of test_rest_client_request_shape (the cell's own rule: temperature is sent only for a gpt-5 model, and the test uses 'm'). The file is outside the grant, so the worker did not commit it and the rivalfunds net reads 57 failed until the issuer admits the path or applies the one-line fix.",
+    "notes": "Blocking on the regression net only: AC1 and AC2 pass with the grant as written. The issuer adds data/etfs/scripts/rivalfunds/tests/test_r6ap1_ai_stage.py to <paths> (or applies the fix at the merge) before the net reads clean. The worker did not override the grant."
   }
 ]
 ```

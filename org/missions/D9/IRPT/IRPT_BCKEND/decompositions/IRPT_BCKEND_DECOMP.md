@@ -4415,3 +4415,53 @@ Check IB235-1 (`deliverables/2.0.0_SA_COO~P2/checks/r235/p235_cells.py`), dry-ru
 | `IB-pr-604` | the account join fix (key found in process), W426-S2 negative test, console counts only | FWD-21 | LOCAL | IB-pr-602 (drained) | PL3-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~440) starts now.
+
+## 230. ROUND 1, WORKSTREAM ~PQ (the APPLY of the holdings EXEMPTION pair; 2026-10-15 ~21:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on both halves signed: packet blob b4ad2d79c9, COO half @faa1fc5dc9, CTO half @a937b9931c, msg 8632)
+
+The exemption pair is signed, bound to IB-pr-595's transplant digests `d2eaf305` (49financial) and `bc2e8f54` (Cottonwood and Inflection). One WORLD order to `0.7.0_AE_CloudOps~IB2`: the gates, the digest gate per firm (the two members plus SHA256SUMS, `allow_older_date` 0, 49financial's CUSIP lines 12 against 12, the six drifted members equal live), the re-measure at the release (49financial refusing or publishing one listed account; Cottonwood four listed accounts; Inflection measured, any other verdict a STOP for Inflection only), the ledger, the three mints between fires, the business date stated before the fire, the first fire per firm and the exemption's after-read. It starts only after IB-pr-549's ledger is CLOSED (its after-read is the 2026-10-16 14:15Z fire). The join fix (IB-pr-604) and a candidate rebuilt with it are a separate addendum.
+
+Check IB236-1 (`deliverables/2.0.0_SA_COO~P2/checks/r236/p236_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control236.py`) passes the three positives and twenty-one negatives plus the no-record cases each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-605` | APPLY the exemption pair: gates, digest gate, re-measure, three mints, first fire per firm | FWD-21 | WORLD | IB-pr-549 ledger closed | PQ1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
+
+## 231. ROUND 3, WORKSTREAM ~PL, AMENDMENT 1 (cell `IB-pr-604` re-cut as the ADDENDUM 1 build; 2026-10-15 ~21:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ADDENDUM 1 @9fef489152, msg 8644)
+
+The cell of section 229 stopped: worker `~440` measured that no join key is wrong for 49 Financial's one remaining lost account (candidate-day custody 0 balance and 0 position rows under every key form; prior day 1 and 13; candidate-day SmartX map 1 row; rows W440-S1 to S3, drained @6c58d386ab). The CTO ruled (msg 8644): the SmartX row is evidence the account exists, so it is exempt-eligible; the exemption pair's ADDENDUM 1 writes that as a rule change with its own pair and names `smartx_map_present` as the manifest evidence; the two-consecutive-day threshold and the 95 percent floor are unchanged (one absent day is not eligible; the next business day decides); (c) is refused; the signed exemption pair ships first and Cottonwood does not wait; 49 Financial stays served at 2026-10-12 until the amended rule clears it on real data. `IB-pr-604` is re-cut as the code build of that addendum: the SmartX evidence read for 49 Financial's reader and the `evidence` key in the manifest entry, inside `ABSENT-AT-SOURCE-D` spans, with the exemption's decision, floor and threshold untouched. The criterion ids, the cell id and the check file stay; the worker slot is `~441`, the test file, the marker and the named tests change (check amended, control re-run: 3 positives pass, 7 negatives each fail their own arm, 0 unexpected; base dry-run AC1 to AC3 FAIL).
+
+Reading recorded for the CTO (not a ruling asked): `absent_at_source_exempt` does not consult SmartX at all; it already exempts any lost account absent from both custody tables on two consecutive days. So this build changes no gate decision, only adds the evidence key to the entry. The same rule, applied by the signed pair alone, exempts the account on the first business day after the apply on which custody still lacks it.
+
+Next cells, not yet cut (each needs the previous commit): the 49 Financial addendum candidate (the D spans applied onto the transplanted file of IB-pr-595, a new digest, the changed members still exactly the two files), then the addendum pair packet (COO half, the CTO half).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-604` | ADDENDUM 1 code build: SmartX evidence read and the `smartx_map_present` key (re-cut) | FWD-21 | LOCAL | IB-pr-602 (drained) | PL3-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~441) starts now.
+
+## 232. ROUND 4, WORKSTREAM ~PL (the 49 Financial ADDENDUM 1 release candidate; 2026-10-15 ~22:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on IB-pr-604 drained and the CTO's ADDENDUM 2 @594e598878, msg 8664)
+
+IB-pr-604 is drained @f888350689 (IB235-1 AC1 to AC3 re-run PASS on the landed tree, instance VALID, 77 tests pass, three `ABSENT-AT-SOURCE-D` spans in `holdings_snapshot.py`; the exemption's decision, floor and threshold untouched). The CTO ruled 49 Financial's publishing does not wait on the evidence key (msg 8664): the signed exemption pair covers its branch (ii), and the evidence-key addendum ships after under its own candidate digest and pair, its Branch A reading the node set unchanged. This round cuts the READ cell that builds that candidate: IB-pr-595's signed transplant files for 49financial plus ONLY the D spans, BUILD ONLY, compared with the live bundle, a NEW digest; the addendum pair packet (COO half) follows it, then the CTO half and a later apply cell.
+
+Check IB237-1 (`deliverables/2.0.0_SA_COO~P2/checks/r237/p237_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control237.py`) passes the three positives and sixteen negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-606` | READ the 49financial addendum candidate: signed transplant plus the D spans, build only, tests, compare with live | FWD-21 | SERVED | IB-pr-604 (drained) | PL4-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one bundle build; one worker (slot ~442) starts now.
+
+## 233. ROUND 5, WORKSTREAM ~PL (the SmartX evidence is never omitted silently; 2026-10-15 ~22:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO half of the exemption ADDENDUM 1, msg 8719 condition 2)
+
+The CTO signed the addendum's CTO half (blob `835fd2886e`, candidate `32d6dfcb`) with a condition the built candidate does not meet: the SmartX read is evidence and never a gate, and a read that fails or is refused at run time must give the account's `evidence` key the value `unread` with the reason, never omitted silently; Branch A reads `smartx_map_present` or `unread`; no IAM change rides. IB-pr-604's spans omit the key on a failed read, so candidate `32d6dfcb` is void for the apply and the addendum's COO half is re-stated on a rebuilt candidate. One LOCAL build cell changes the D spans (a reason CATEGORY set, no identifier, no message) and the tests; the candidate is then rebuilt (a later read cell) and the COO half re-stated.
+
+Check IB238-1 (`deliverables/2.0.0_SA_COO~P2/checks/r238/p238_cells.py`), dry-run at the base: AC1 to AC3 all FAIL (AC2 refuses to grade until the three `unread` tests exist); the control (`control238.py`) passes the three positives and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-607` | the SmartX evidence `unread` with a reason category on a failed or refused read; decision unchanged | FWD-21 | LOCAL | IB-pr-604 (drained) | PL5-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~443) starts now.

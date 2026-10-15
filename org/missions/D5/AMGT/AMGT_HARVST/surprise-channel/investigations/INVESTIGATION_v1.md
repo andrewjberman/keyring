@@ -9397,5 +9397,174 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S19",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-15T20:30:00Z",
+     "one_line": "On the dell1 runner's first pass wsj and barrons each refused 'expired', one in-profile refresh ran (3 s, outcome done) and the retried job was refused 'expired' again: the account stop rule fired and the runner was stopped by its stop file at 20:27:16Z.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "TO HVST-cb-2 section 2 step 8: 'if a publisher refuses again after its one refresh, do not re-register and do not sign in by hand: file ONE row naming the lines (publisher, class, http_status, host, login_redirect)'. COO half C-f: 'a FAILED refresh, or a second refusal after one, stops everything and files a row.' COO half Branch D expected the first cycle to end completed for a publisher with accepted > 0.",
+     "world_is": "cycle_runner.log from T0 2026-10-15T20:23:04Z. wsj: 20:23:06Z REFUSAL security-b0fe721e1f2a0d8b status=sign_in_refused class=expired http_status=- host=- login_redirect=-; 20:23:06Z REFRESH wsj: begin; 20:23:09Z REFRESH wsj: done; 20:23:10Z REFUSAL (class=expired http_status=- host=- login_redirect=-); STOP wsj: sign_in_refused; CYCLE wsj 20261015T202304Z asked 242 new 0 failed 1 completed false. barrons: 20:23:12Z REFUSAL class=expired http_status=- host=- login_redirect=- and REFRESH barrons: begin; 20:23:15Z REFRESH barrons: done; 20:23:16Z REFUSAL class=expired (same dashes); CYCLE barrons 20261015T202310Z new 0 failed 1 completed false, s3_get_count 0. REFRESH FAILED lines: 0. The refresh reported done in 3 s and the next job in the same profile was refused expired again, the same sequence as AMGT_HARVST-Z-S121 on site Z. The runner idles 300 s after a pass in which no cycle completed and then starts a new pass with a new refresh budget (cycle_runner.py IDLE_SECONDS = 300, main loop lines 343-347), so a second pass would have made two more sign-ins on the shared login at about 20:28:16Z. At 20:27:15Z, runner idle and no job in flight, this seat created the runner's stop file (C-f, C-d). The log read 'STOP-FILE ... present: no further cycle' at 20:27:16Z; at 20:27:26Z 0 cycle_runner processes and the task state Ready. Nothing was signed in by hand, nothing re-registered, no process ended. The +3 reads (cb2_reads.out): R1 log age 2.96 min; R2 pythonw.exe with --refresh-once; R3 MainWindowHandle 0 and no conhost child (control: python pid 16376 has conhost child 11636); R4 done 0, error lines 0 (control: 2 JOB lines reached by the same filter). R5 NOT_MINIMISED=0 is VACUOUS: 0 new Chrome windows were listed at either listing, so no runner window was graded; whether the refresh showed a window at 20:23:06Z-20:23:15Z was not observed. Nothing was collected: 0 stored, no E2 line. The task stays registered; the stop file is left in place until the +15 read.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "C:/dev/ajb_workspace/.runtime/harvest-cycle/state/cycle_runner.log lines stamped 20:23:05Z-20:23:16Z and 20:27:16Z (REFUSAL, REFRESH begin/done, JOB, CYCLE, STOP-FILE)",
+       "state/cycles/wsj/20261015T202304Z.checkpoint.json: done [], refusals 2 (class expired, http_status null, host null, login_redirect null), refreshes.wsj outcome done at 20:23:09Z",
+       "state/cycles/barrons/20261015T202310Z.cycle.json: new 0, failed 1, stopped sign_in_refused, completed false, s3_get_count 0, s3_get_bytes 0",
+       "lib/opal_data_harvest/cycle_runner.py at pin 47c623dcf8: IDLE_SECONDS = 300 (line 43), idle after a pass with no completed cycle (lines 343-347)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb2_reads.out (+3 reads) and cb2_windows.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S20",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-15T20:30:00Z",
+     "one_line": "HVST-cb-2 section 1.c names s3://opal-data-assets for the wsj and barrons prefixes; the builder's and the runner's bucket is opal-data-harvest, and opal-data-assets holds 0 objects under all four prefixes.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "TO HVST-cb-2 section 1.c: 'for the wsj and barrons bronze and silver prefixes under s3://opal-data-assets (derive them with lib/research/harvest/store.py table_prefix, never type them)'. The COO half names s3://opal-data-assets too.",
+     "world_is": "lib/research/harvest/store.py:39 HARVEST_BUCKET = 'opal-data-harvest'; store.address_of('wsj','bronze','article','date=2026-10-15') prints s3://opal-data-harvest/wsj/harvest/bronze/article/date=2026-10-15. cb2_start_c_s3.out: opal-data-harvest holds 1544 (wsj bronze), 421 (wsj silver), 774 (barrons bronze) and 288 (barrons silver) objects, newest 2026-10-15T15:33:16Z (wsj bronze), none after the 19:04:24Z cutoff; opal-data-assets holds 0 objects under all four prefixes. Condition 1.c was read on opal-data-harvest; the same read on opal-data-assets alone would have printed a vacuous zero.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/research/harvest/store.py:39 at pin 47c623dcf8",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb2_start_c_s3.out (both buckets, paginated, denominators printed)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W145-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~145",
+     "surfaced_at": "2026-10-15T20:41:39Z",
+     "one_line": "The profile-store envelope (bundle {}) reaches verification.repair, which indexes bundle[\"user_agent\"] and bundle[\"all_cookies\"] with no default: a challenged wsj or barrons job raises KeyError in the repair, not a sign-in refusal.",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "TO HVST-cb-8 section 1.c: read verification.repair and publishers.py for [\"bundle\"] and bundle[ uses, and for each tell report whether an empty bundle is safe for a tab publisher with seed_from_bundle false; if one is NOT safe, do not change it, file a row naming the line and keep the rest.",
+     "world_is": "verification.py:107 reads bundle = envelope[\"bundle\"]; verification.py:115 bundle[\"user_agent\"] and verification.py:116 bundle[\"all_cookies\"] index the dict with no default, so the empty bundle {} that get() now returns for wsj and barrons raises KeyError when repair runs (reached from worker.py:719 via TokenFirstSessions.repair_verification -> SessionManager.repair_verification -> verification.repair). The other tells are safe: publishers.py:371 only assigns the bundle; publishers.py:393 skips seed_cookies because seed_from_bundle is false; publishers.py:406-409 index the bundle only on the non-tab branch; sessions.py:71 and verification.py:39 use .get. Nothing changed: the fix belongs to the issuer. The same empty bundle already reached repair through the HVST-ca-1 renew when the vault held nothing (auth.py:91), so this is a pre-existing gap that get() now makes the normal start.",
+     "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+               "lib/opal_data_harvest/verification.py:107,115,116 at 7866071911 (bundle = envelope[\"bundle\"]; bundle[\"user_agent\"]; bundle[\"all_cookies\"])",
+               "lib/opal_data_harvest/publishers.py:371,393,406,408 at 7866071911 (assignment; seed guard; non-tab branch indexing)",
+               "lib/opal_data_harvest/worker.py:719 at 7866071911 (self.sessions.repair_verification on a challenge)",
+               "worktree run: python -m pytest lib/opal_data_harvest/test_cb8_profile_store_envelope.py -q -> 9 passed (the repair path is not exercised; no browser run)"
+          ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W145-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~145",
+     "surfaced_at": "2026-10-15T20:41:39Z",
+     "one_line": "The profile-store envelope carries network_auth_corroborated False, and the repair result inherits it, so the vault save that follows a successful repair refuses it with ValueError.",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "TO HVST-cb-8 section 1.b: the profile-store envelope is {\"publisher\", \"bundle\": {}, \"network_auth_corroborated\": False, \"renewed_by\": \"profile\", \"captured_at\"}; section 1.c asks only whether the empty bundle is safe.",
+     "world_is": "storage.py:58 SessionVault.save raises ValueError(\"Session lacks network authentication proof\") when envelope.get(\"network_auth_corroborated\") is falsy. auth.py:46 SessionManager.repair_verification calls self.vault.save(publisher, result) with result = dict(envelope, ...) from verification.py:188, which keeps the False. So a challenge repair that succeeds on a profile-store publisher raises at save instead of returning. Nothing changed; the envelope value is the spec's, so the choice between the two belongs to the issuer.",
+     "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+               "lib/opal_data_harvest/storage.py:58-59 at 7866071911 (save guard and ValueError)",
+               "lib/opal_data_harvest/auth.py:45-46 at 7866071911 (repair result passed to vault.save)",
+               "lib/opal_data_harvest/verification.py:188 at 7866071911 (result = dict(envelope, bundle=..., ...))",
+               "lib/opal_data_harvest/sessions.py (worktree, get profile branch): network_auth_corroborated False as the spec states"
+          ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S21",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-15T20:50:00Z",
+     "one_line": "AMGT_HARVST-D1-W145-S1 and -S2 (an empty profile-store bundle breaks verification.repair, and a repaired result is refused at the vault save) are unreachable from the dell1 runner; the residual is a manual run without --no-sign-in.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-8 section 1.c: for each reader of the envelope's bundle, say whether an empty bundle is safe for a tab publisher with seed_from_bundle false.",
+     "world_is": "verification.py:115-116 indexes bundle['user_agent'] and bundle['all_cookies']; storage.py:58 refuses an envelope whose network_auth_corroborated is False. Both sit on repair_verification. The runner passes --no-sign-in on every job: worker.py re-raises VerificationRequired before the repair when no_sign_in is set, and TokenFirstSessions.repair_verification refuses under no_sign_in, so neither line is reached from the runner. They are reachable from a run WITHOUT --no-sign-in that meets a bot challenge on wsj or barrons; before cb-8 that run's refresh (HVST-ca-1) already returned the same empty-bundle envelope, so cb-8 adds no new path. The tab transport's own challenge route (PacedSession routes a bot check to verification.route_bot_check) does not read the envelope's bundle (not changed or re-read here).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/opal_data_harvest/worker.py: the 'except VerificationRequired' branch re-raises when self.no_sign_in (read at a879d12881)",
+       "lib/opal_data_harvest/sessions.py: TokenFirstSessions.repair_verification refuses under no_sign_in (read at a879d12881)",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-8.a-profile-store-publisher-needs-no-saved-bundle.md COMPLETE note @a879d12881"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W145-S1",
+      "AMGT_HARVST-D1-W145-S2"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "Unreachable from the dell1 runner (every job runs --no-sign-in, which refuses the repair before either line); the residual, a manual signed-in-allowed run meeting a challenge on a profile-store publisher, predates cb-8 (HVST-ca-1 already returned the empty-bundle envelope) and is named here, not fixed."
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S22",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-15T20:55:00Z",
+     "one_line": "AMGT_HARVST-D1-S19 (the stop rule fired on the runner's first pass) and -S20 (the pair named the wrong bucket) are both resolved; both were defects of the issuer's order or pair, not of the account.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-2: the first pass of the dell1 runner collects for wsj and barrons; the pair's bucket is where the runner writes.",
+     "world_is": "S19: wsj and barrons each read REFUSAL expired, REFRESH done in 3 s, REFUSAL expired again; the runner log (lines 245-252, 502-509) and run record 20261015T202310Z-wsj-23b255623f show token_source None and no request made: TokenFirstSessions.get() demands a stored session and the runner's runtime root had none. SC1's stop was correct under the order's stop rule. Resolved operationally by AMENDMENT 1 (@1c5948e37a: seed the directory, CTO-bounded, msg 6216) and durably by HVST-cb-8 (merged a879d12881), which reaches the runner by the cb-9 re-pin. The second pass (T0 20:32:04Z) ran 17 jobs with 0 errors and stored articles. S20: the pair and order named opal-data-assets; the runner writes opal-data-harvest (store.HARVEST_BUCKET); erratum ledger/ERRATUM_CB2_PAIR_BUCKET_NAME_20261015.md, ratified by the CTO (@79a5321348).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb2_reads.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/ledger/ERRATUM_CB2_PAIR_BUCKET_NAME_20261015.md",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-2.the-dell1-runner-registered-for-wsj-and-barrons.md COMPLETE note"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-S19",
+      "AMGT_HARVST-D1-S20"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "Resolved: S19 by order amendment 1 and HVST-cb-8; S20 by the ratified erratum. Neither was an account or world fault."
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S23",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-15T21:50:00Z",
+     "one_line": "One wsj job of the dell1 runner ended TargetClosedError at the browser launch (21:22:20Z); the pair was kept for retry and the publisher cooled down 15 minutes; the cause is not read.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-2 (R1-R4 at +15) and the CTO half: a pair whose window a person closes is recorded, not retried; a wsj job that passes at one launch passes at the next.",
+     "world_is": "cycle_runner.log lines 820-825 at 2026-10-15T21:22:20Z: wsj security-5c640c443b8110da status=error, DETAIL TargetClosedError: BrowserType.launch_persistent_context: Target page, context or browser has been closed (the Chrome launch line follows in the log), PAIR kept for retry (error, attempt 1 of 3), PAIR-ERROR 1 in a row of 5 allowed, COOLDOWN wsj 899 s. The 70th wsj job of this pass (run 20261015T212132Z-run-16104ce3), after 69 jobs without an error since T0 20:32:04Z; the runner went on after the cooldown. The error is at the LAUNCH of the persistent context, before any page: it is not a challenge repair. NOT READ: what closed the browser (another seat's use of Chrome or a process reaper on the box, a profile lock, a crash); this seat did not use Chrome at 21:21Z. The same class (TargetClosedError at launch) was met once in a bbg local job at 19:50Z.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "C:/dev/ajb_workspace/.runtime/harvest-cycle/state/cycle_runner.log lines 820-825 (dell1, gitignored; the lines are quoted above)",
+       "run record 20261015T212132Z-run-16104ce3 under .runtime/harvest-cycle/runtime/run_records/ (dell1, gitignored)"
+      ]
+     },
+     "notes": "WHY THIS IS AN OBSERVATION: one job in 70, the runner continued, nothing stored is wrong. If it repeats, the question for the issuer is whether something on the box closes Chrome processes (a reaper) or whether the profile is contended; five errors in a row stop the publisher's leg (the driver's own cap).",
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
