@@ -105,7 +105,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** STAGED behind gr-1, gr-2, gr-3 and gr-4. Proven satisfiable by the issuer's reference (20 of 20). Centralising the step in the orchestrator is a deliberate simplification: five builders each calling the grounding step would be five copies of the same fetch-and-ground code and five test rewrites. OPAL_SOURCE blocks are grounded on the served fields they list in `opal_inputs`, so the contract's rule applies to them too; the numeric guard the Opal builders already have stays.
 
-<status>staged</status>
+<status>pending -- 2026-10-15 by the issuer (2.0.0_SA_COO~R2): gr-1 to gr-4 merged; worker ~454 re-provisioned from the current head (the first worktree's index was empty).</status>
 <round>106</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~454</slot>
