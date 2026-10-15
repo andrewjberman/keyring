@@ -374,6 +374,11 @@ cmd_provision() {
   if [ "$full" = "false" ]; then
     add_folder ".tools"
     add_folder "lib"
+    # BASE set (issuer ruling, CT-ag-2 round 1): folders a first safe-commit reads beyond the three above.
+    add_folder "org/modules/graph"       # commit-gate imports comp_constants_cli
+    add_folder "org/devices"             # to-pipeline-gate reads DEVICES.json
+    add_folder "infra/logic/registry"    # naming-gate reads the registry
+    add_folder "org/standards"           # NAMING_SCHEMA.json
     if [ "$pf_count" -eq 1 ]; then
       add_folder "$pf_hits"
     else
