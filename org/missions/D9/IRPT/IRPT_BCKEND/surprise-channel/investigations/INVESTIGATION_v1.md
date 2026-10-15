@@ -37365,3 +37365,308 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Both rows stay ARMED/carried under ~P2 until a pair that moves inf-gold-trigger measures T-1 completeness; V3 does not move the trigger."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W412-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~412",
+  "surfaced_at": "2026-10-15T10:53:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-569 read stopped at step 2: one Cottonwood refusal record version names account_lost with count 9 (candidate 2026-10-09), not the one lost account that row S158 describes.",
+  "spec_asserts": "IB-pr-569 step 2 and its STOP clause: every Cottonwood publish refusal record names one condition, account_lost, with lost_count 1; row S158 describes the refusal as one lost account.",
+  "world_is": "The Cottonwood platinum current publish_refusal.json has three versions. The version for candidate business date 2026-10-09 (refused_at 2026-10-12T14:17:38Z) names account_lost with count 9 and listed closed_accounts_not_refused count 8. The version for candidate 2026-10-12 (refused 2026-10-13T14:17:42Z) and the current object for candidate 2026-10-13 (refused 2026-10-14T14:17:41Z) each name account_lost count 1. The served business_date 2026-10-08 is unchanged in the index manifest. Per the order's clause the read stops here; no IB209-1 record is written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-object-versions and get-object --version-id on the cottonwood platinum current publish_refusal.json key, bucket opal-data-cottonwood, read only, at base 1713c505c19eab11b44b04141debbecdf958d089; 3 versions read, none written",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py at 1713c505c19eab11b44b04141debbecdf958d089 lines 3051 (closed = closed_accounts() & gone), 3055 to 3058 (marks gate, then add account_lost), read from the HEAD blob via git show"
+    ]
+  },
+  "notes": "Counts, dates and class names only; no account id is recorded. The 2026-10-09 version is the one that the S158 row did not see. Not read at this stop: the source partitions, the directory mark, the other firms. The three downloaded versions were held in scratch outside the tree and are deleted after this row."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W412-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~412",
+  "surfaced_at": "2026-10-15T10:53:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The worker worktree does not carry data/, so the publisher and its tests named by the IB-pr-569 order are not on disk; AC2 cannot pass in this worktree.",
+  "spec_asserts": "IB-pr-569 names the publisher data/assets/scripts/gold/investor_reporting/holdings_snapshot.py and its tests as the code to read at HEAD, and the p209 check site() requires each acceptance-path file to exist under the worktree root.",
+  "world_is": "The sparse-checkout cone of this worktree lists .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_BCKEND, org/modules/graph and org/standards; data/ is absent on disk, although git ls-files lists the publisher and its tests at HEAD 1713c505c19eab11b44b04141debbecdf958d089. The worker read the HEAD blobs into scratch outside the tree and did not widen the sparse checkout or write into data/.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list and ls on the worktree root at 1713c505c19eab11b44b04141debbecdf958d089: data/ absent",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r209/p209_cells.py lines 53 to 61 (site() reads the file under the worktree root)"
+    ]
+  },
+  "notes": "Blocks the AC2 criterion only. Needs the issuer or the integrator to either widen the worker's sparse grant to the three data/ publisher paths or to state that the acceptance-path read is out of scope for this worker."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W412-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~412",
+  "surfaced_at": "2026-10-15T10:53:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "comp-find --corpus aws is BLOCKED in this session (served-graph client unreachable), so the Cottonwood holdings prefix was found by computing the canonical address and listing the bucket instead.",
+  "spec_asserts": "IB-pr-569 step 2 names comp-find --corpus aws, or the rail's printed command, as the route to the firm's publication prefix and its refusal records.",
+  "world_is": "comp-find --corpus aws returned BLOCKED with the reason no module named projection_client, rc 2, which is no measurement and not a zero. lib/opal_naming.py address() gives the platinum current address for the firm, and a read-only list-objects-v2 under that prefix confirmed the layout.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws opal-data-cot at base 1713c505c19eab11b44b04141debbecdf958d089: BLOCKED, rc 2",
+      "lib/opal_naming.py address('irpt','cottonwood','platinum','holdings','current','manifest.json') at base 1713c505c19eab11b44b04141debbecdf958d089, read in the worktree"
+    ]
+  },
+  "notes": "The routing to the prefix is measured by address() output and list calls, not by the served graph. The served-graph client needs to be reachable before a comp-find aws read can be cited."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W412-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~412",
+  "surfaced_at": "2026-10-15T11:05:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The account-id mint (infra/aws/lambda/investor-reporting/_ids/ids.py) is outside the amended grant: the publisher's identity binding imports it, and it is not on disk in the worker worktree after the data/ sparse add.",
+  "spec_asserts": "Amendment 1 grants the worker the publisher and its tests under data/assets/scripts/gold/investor_reporting, and asks the worker to read the code it names; the publisher imports its opaque_id from the _ids module, which the grant does not name.",
+  "world_is": "holdings_snapshot.py binds opaque_id to _ids/ids.py (infra/aws/lambda/investor-reporting/_ids/ids.py). That file is tracked at HEAD 1713c505c19eab11b44b04141debbecdf958d089 but is outside the sparse grant. The worker read it from the HEAD blob into scratch outside the tree, used only its sha256 mint to test membership of the account in source partitions, and did not widen the sparse checkout further.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py at 1713c505c19eab11b44b04141debbecdf958d089 lines 169 to 176 (the identity binding to _ids.opaque)",
+      "git ls-files at 1713c505c19eab11b44b04141debbecdf958d089 lists infra/aws/lambda/investor-reporting/_ids/ids.py; that path is not in the worktree sparse-checkout list"
+    ]
+  },
+  "notes": "Counts only in the record: the membership test printed booleans and counts, with no account id or account value. The mint needs the registry at data/firm_registry.json, which is on disk at the data root but is not inside the granted folder. A future worker that must recompute an opaque id needs the _ids path granted or a stated reason it is out of scope."
+}
+```
+
+## IRPT_BCKEND-D2-S192 -- Dispositions on worker 412's rows; the S158 READ: the lost account is dropped by the COT account screen; 49 Financial has a refusal record too
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S192",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T11:11:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (the publish guard's owner decides) or whoever accepts the lost account",
+  "one_line": "Dispositions on worker 412's rows (D2-W412-S1 to S4) and the S158 READ: Cottonwood's lost account is in the source but dropped by the COT account screen (cause inferred), the first refusal named 9 lost accounts (8 closed, not refused), the one-date bypass does not clear account_lost, and 49 Financial has a refusal record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB209-1 AC1 to AC3 on the worker tree (all PASS) and the proof instance (VALID); merge f7ae7ad352",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~412/IB209-1_s158_read.json: three refusal record versions (candidates 2026-10-09 count 9 with 8 closed not refused, 2026-10-12 and 2026-10-13 count 1); the account listed in fact_holdings on 2026-10-08, 2026-10-12 and 2026-10-13 and absent from the candidates; no directory entry (271 entries: 2 TERMINATED, 269 UNKNOWN); guard at holdings_snapshot.py line 3058, closed-account exclusion line 3051, one-date bypass line 3191 (waives source_frontier_older only)"
+    ]
+  },
+  "spec_asserts": "Row D2-S158 and my IB-pr-569 order: every Cottonwood refusal names one lost account; the cause is a closed account, a source gap or a mapping break; 49 Financial and Inflection are not blocked.",
+  "world_is": "DISPOSITIONS. D2-W412-S1: the record counts differ (9, then 1, 1); recorded per candidate, my STOP clause was too tight (AMENDMENT 1 @0f2a54c0c4). D2-W412-S2 RESOLVED: a local sparse-checkout add, never committed. D2-W412-S3 (comp-find aws blocked, the canonical address used) and S4 (the id module is outside the grant): INERT, recorded. D2-S158 stays ARMED: the cause is inferred (candidate_filter at the COT account screen), not measured; the failing validate_cot_actual_positions condition is the next read. Correction to row S158: 49 Financial DOES have a refusal record (served 2026-10-12, one refusal), so the staleness is not Cottonwood alone; whether that refusal still blocks it (its candidate for 2026-10-13 and 2026-10-14) is not read and is the next read's second question."
+}
+```
+
+## IRPT_BCKEND-D2-S193 -- owner disposition: S158 and S192 have one disarm owner, 2.0.0_SA_COO~P2
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S193",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T11:28:30Z",
+  "one_line": "Owner disposition: rows IRPT_BCKEND-D2-S158 and D2-S192 (the holdings publish refusals: Cottonwood's dropped account and 49 Financial's refusal record) have ONE disarm owner, 2.0.0_SA_COO~P2, replacing 'the CTO or whoever accepts the lost account'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "S158 and S192 name 'the publish guard's owner decides, or whoever accepts the lost account' as disarm owner (CVO~IRPT ADJUDICATION_v113 @39208a6c27: name one seat).",
+  "world_is": "~P2 owns the holdings publisher and the reads that name the failing condition (CTO msg on 8247: 49F's refusal first, then the Cottonwood validator offline). The CTO rules the fix on those reads (a screen correction, or a custodian-confirmed TERMINATED mark, each a never-widen pair); the disarm act is ~P2's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v113.md @39208a6c27",
+      "2.0.0_SA_COO~P2 msg 8247"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S158 and S192 stay ARMED under ~P2; 49 Financial is served at 2026-10-12 (2 trading days behind T-1), Cottonwood 4 behind."
+}
+```
+
+## IRPT_BCKEND-D2-W413-S1 -- 49 Financial's refused account is marked ACTIVE in the custodian directory, so the closed-account exemption cannot clear account_lost
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W413-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~413",
+  "surfaced_at": "2026-10-15T11:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (the publish guard's owner decides) or whoever accepts the lost account",
+  "one_line": "49 Financial's single account_lost condition (candidate 2026-10-13, served 2026-10-12) names one account that the custodian directory marks ACTIVE, not TERMINATED; the closure exemption at line 3051 therefore cannot apply, and the omitting candidate filter is not read.",
+  "spec_asserts": "Row D2-S192 and the IB-pr-570 order: a refused account is a closed account, a source gap or a mapping break, and the closed-account exemption is the path that clears a closed account.",
+  "world_is": "MEASURED: the 49 Financial refusal record has one version (candidate 2026-10-13, refused 2026-10-14) with account_lost count 1 and listed.new_unclassified count 0. The directory dated 2026-10-13 has 4746 entries: 4673 ACTIVE, 73 TERMINATED, none carried forward. The refused account sits in one entry marked ACTIVE. The cause is INFERRED: the candidate builder omits an account the source still lists as open, and the filter that does it is not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~413/IB210-1_49f_refusal_read.json at bbdeae6f89 (refusals, served, account_or_field, cause blocks; counts only)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@bbdeae6f89 lines 2980 to 2989 (closed_account_ids exempts only TERMINATED entries) and lines 3051 to 3058 (closed exclusion, directory no-closures mark, add account_lost)"
+    ]
+  },
+  "notes": "Counts only in this row: the membership test printed booleans and counts, with no account id or value. The directory was read at its routed pointer in the legacy bucket, not the canonical address (see row D2-W413-S2)."
+}
+```
+
+## IRPT_BCKEND-D2-W413-S2 -- The publish gate's closed-account set is read from a legacy routed bucket; the canonical 49 Financial directory latest pointer is absent
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W413-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~413",
+  "surfaced_at": "2026-10-15T11:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The publisher's directory read (directory_runner prefix via the firm_bucket_map alias) resolves to a legacy routed bucket; the canonical address for the 49 Financial directory latest pointer returned NoSuchKey on get-object.",
+  "spec_asserts": "holdings_snapshot.py docstring: a new publication uses the canonical builder's primary private firm home; legacy routed bucket aliases remain input reads only.",
+  "world_is": "MEASURED: get-object of the canonical 49 Financial platinum directory current latest pointer returned NoSuchKey (rc 254). The gate's closed_account_ids and directory_marks_no_closures read the pointer through firm_bucket_map (the legacy routed bucket) at investor-reporting/directory/latest.json, which resolved to a dated directory (2026-10-13). Whether the two homes hold the same directory was not compared beyond this.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@bbdeae6f89 lines 2968 to 2977 (_directory_entries reads PROD_PREFIX directory latest.json through the bucket argument) and line 183 (49financial maps to a legacy routed bucket)",
+      "lib/opal_naming.py address('irpt','49financial','platinum','directory','current','latest.json') resolves to the canonical home; get-object on it returned NoSuchKey at 2026-10-15"
+    ]
+  },
+  "notes": "Read-only: head-object and get-object only, no writes. The gate's write path was not read beyond the directory read, and the two homes were not compared object by object."
+}
+```
+
+## IRPT_BCKEND-D2-W414-S1 -- The COT validator cannot be imported offline from the granted sparse checkout; the offline run of IB-pr-571 is blocked
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W414-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~414",
+  "surfaced_at": "2026-10-15T11:33:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The order's offline run (import validate_cot_actual_positions from holdings_snapshot.py) fails at the module's first infra import: the import chain lives outside the data/ sparse grant, so no offline outcome is measured in this order.",
+  "spec_asserts": "IB-pr-571 step 3: import the validator from the repository file (read-only), call it on the dropped account's rows as cot_screen_accounts calls it; the worktree sparse add is data/assets/scripts/gold/investor_reporting only, nothing wider.",
+  "world_is": "holdings_snapshot.py imports, at module level, ids (infra/aws/lambda/investor-reporting/_ids/ids.py, line 99 region), publication (infra/aws/lambda/investor-reporting/holdings/publication.py, line 103) and currency_authority (infra/aws/lambda/investor-reporting/reports/currency_authority.py, line 109). The probe loading the file from the sparse worktree stopped with ModuleNotFoundError: No module named 'ids' (rc=3, scratch outside the tree, no function called). All three files are tracked at HEAD bbdeae6f89b23308894c94e95b91951decfb9769 and absent from the worktree sparse list. The validator's own currency branch (line 386) also calls bind_report_currency from that chain. No blob was extracted into the tree to make the import work.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py at bbdeae6f89b23308894c94e95b91951decfb9769 lines 92 to 112 (the _REPO and _IDS_DIR, _HOLDINGS_DIR, _REPORTS_DIR path setup and the three infra imports); line 386 calls bind_report_currency",
+      "git ls-tree -r HEAD infra/aws/lambda/investor-reporting/ at bbdeae6f89b23308894c94e95b91951decfb9769 lists _ids/ids.py, holdings/publication.py and reports/currency_authority.py; git sparse-checkout list on the worktree names no infra path beyond infra/logic/registry",
+      "scratch import probe (python -B, PYTHONDONTWRITEBYTECODE, outside the tree): IMPORT-FAILED ModuleNotFoundError No module named 'ids', rc=3"
+    ]
+  },
+  "notes": "The order's grant names the data folder only, and the order says nothing wider. The result is a premise gap, not a guard: the validator body was read in full at line 348 to 548 and the screen at line 2266 to 2294. Criteria AC1 (offline run, source-row count) and the measured failing condition cannot be produced from this worktree under the grant. Also not read: the account's source rows, because the offline run was the reason for the rows. Counters: functions_invoked 0 (the probe failed before any function call), no AWS call made in this order. The schema file org/surprise_channel/schemas/investigation_item.schema.json is also outside the sparse grant, so this row follows the shape of the rows already in this file."
+}
+```
+
+## IRPT_BCKEND-D2-W414-S2 -- The round-210 check's accepted branch passes a record whose offline run was not performed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W414-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~414",
+  "surfaced_at": "2026-10-15T11:33:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "In p210_cells.py, v2 treats every outcome other than refused as the accepted branch, so AC2 can pass a record whose offline_run.outcome is neither refused nor accepted.",
+  "spec_asserts": "The check's v2 accepted branch is meant for an offline run that ran and accepted the rows (the cause left inferred or absent).",
+  "world_is": "v2 reads run.get outcome == refused as the only test; any other value, including a value meaning the run did not happen, takes the else branch, which only requires claim inferred or absent and a statement of 60+ characters. v1 (AC1) does require outcome in refused or accepted, so AC1 and AC2 disagree about the same record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r210/p210_cells.py at bbdeae6f89b23308894c94e95b91951decfb9769, function v2 (the if run.get outcome equal refused branch and its else branch) and function v1 (the outcome in refused or accepted test)"
+    ]
+  },
+  "notes": "Observed while writing the IB-pr-571 record: the record that honestly reports no offline run fails AC1 and passes AC2. The check is the issuer's; it is not edited here. The grader should read AC2 for this record with that in mind."
+}
+```
+
+## IRPT_BCKEND-D2-W414-S3 -- A second directory beyond the import chain was added to the local sparse grant: the currency authority file, read at call time
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W414-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~414",
+  "surfaced_at": "2026-10-15T11:47:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "After the amended import chain loaded, the validator's currency branch refused with 'currency authority not installed': bind_report_currency reads docs/contracts/investor-reporting/v1/CurrencyAuthorities.json at call time, which is not an import. The worker added that one directory, local and never committed.",
+  "spec_asserts": "AMENDMENT 1 step 0: add the directories the import chain resolves to, nothing else; the chain is the imports.",
+  "world_is": "reports/currency_authority.py resolves the authority file under the repository root at docs/contracts/investor-reporting/v1 (candidate parents[5]); the file is tracked at HEAD bbdeae6f89 and was absent from the worktree sparse list. The worker added exactly docs/contracts/investor-reporting/v1 (read-only use, never committed). No other directory was added beyond infra/aws/lambda/investor-reporting.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/currency_authority.py at bbdeae6f89 lines 18 to 28 (candidate paths, parents[5], CurrencyAuthorityRefused 'currency authority not installed')",
+      "git ls-tree HEAD docs/contracts/investor-reporting/ lists v1/CurrencyAuthorities.json; scratch run after the add: the validator call returned a custody refusal (no currency-authority refusal)"
+    ]
+  },
+  "notes": "The row is an observation for the issuer: a call-time data read is not an import, so the amendment's wording may not reach it. Decide whether the grant should name the contracts folder. No account value was read from that file."
+}
+```
+
+## IRPT_BCKEND-D2-W414-S4 -- The counter functions_invoked: the order's own step 3 calls the validator in the same process, so the bound cannot mean any local call
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W414-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~414",
+  "surfaced_at": "2026-10-15T11:47:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The record's six bound counters are all required to read 0 by the check, but the offline run is a local call of the validator and of cot_screen_accounts, which the order requires. The worker reads functions_invoked as deployed AWS functions invoked (0) and states the local calls in notes.",
+  "spec_asserts": "The order's six counters (functions_invoked, sign_ins_made, aws_writes_made, rows_written, figures_written, vendor_requests_sent) at 0; the run calls the validator from the repository file, which is a function.",
+  "world_is": "No counter definition is written in the check or the order. The worker recorded functions_invoked 0 on the reading that it counts AWS (deployed) function invocations; no Lambda was invoked, no AWS write was made, and the validator and screen were called in a scratch process. If the issuer means any function call, the offline run cannot satisfy the bound and the order is internally inconsistent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-571 (worker face, step 3 and the counter list in step 5)",
+      "checks/r196/p196_cells.py at bbdeae6f89 line 45 (BOUND tuple, equality to 0 checked by counters())"
+    ]
+  },
+  "notes": "Ask the issuer to define functions_invoked in the next amendment. Until then the record states the reading in its notes, so the grader sees it."
+}
+```
