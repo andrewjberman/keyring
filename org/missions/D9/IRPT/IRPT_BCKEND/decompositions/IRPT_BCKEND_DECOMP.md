@@ -4182,3 +4182,15 @@ Check IB214-1 (`deliverables/2.0.0_SA_COO~P2/checks/r214/p214_cells.py`), dry-ru
 | `IB-pr-575` | READ the lost account's presence across dim_balance 2026-10-08 to 2026-10-14, the upstream writer in the code and its 2026-10-13 run, whether the refusal clears | FWD-21 | SERVED | none | PE2-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~418) starts now.
+
+## 211. ROUND 1, WORKSTREAM ~PG (the closed_at_source exemption of account_lost in the holdings publish gate: the BUILD; 2026-10-15 ~13:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msgs 8268 and 8284)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a workstream issues its own round). The reads (IB-pr-569 to 575) found 49 Financial (the P1 firm, served 2026-10-12) and Cottonwood (served 2026-10-08) refused on a lost account the SOURCE shows with no positions, and the directory's TERMINATED mark cannot be written for an account absent from its source. The CTO ruled (msg 8284) one never-widen pair covering both firms for a guard exemption with a completeness condition: exempt an `account_lost` only when the source shows the account with no positions (absent or zero) in BOTH the positions and balance tables on the candidate date AND the prior trading day, each of those partitions complete (account count at least 95 percent of the prior day's), and each exempted account recorded in the publication manifest as `closed_at_source` with its dates; a reappearing account is re-included by the daily rebuild; the served DELTA is measured per firm by a producer dry run, before and after, and the pins and both branches go in the packet. This cell BUILDS the pure exemption, the gate's integration through one optional provider (default None, nothing else changes) and the manifest record, LOCAL, with the seven named tests and a difference control. The evidence loaders per firm, the dry-run DELTA and the pair packet are the next cells. Class LOCAL: the path is a data-pipeline script, not infrastructure.
+
+Check IB215-1 (`deliverables/2.0.0_SA_COO~P2/checks/r215/p215_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control215.py`) passes all three and seven negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-576` | BUILD closed_at_source_exempt, the gate's provider argument and the manifest record, with tests and a difference control | FWD-21 | LOCAL | none | PG1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one product file; one worker (slot ~419) starts now.
