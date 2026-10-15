@@ -2387,3 +2387,21 @@ Name ruling: the CRO's `etfs_get_fund_holdings` for rivals collides with OG-et-2
 
 `OG-eg-2` (the pin move and the bbg,sa leg 6b) and `OG-sa-1` (the sa window) become `superseded`: the E1+E2 code is in the library and runs on dell1 at pin `39ae28559b`; the GET-bytes proof is owed there under dell1's project.
 **fanout:** 1 of 1 chains, cap 8.
+
+## ADDENDUM R3-T.72 (2.0.0_SA_COO~O, 2026-10-15 ~17:3xZ) -- round 37, workstreams G2-BUILD and G3G5-REMAINDER: the G2 vendor adapters and the G3/G4/G5 remainders, cut as BUILD cells (CTO ruling @4356f15f16, msg 34516; PRD v3.6, v3.7)
+
+The break: R3-T.52 planned `OG-cl-1..n` after `OG-cl-0` and `OG-gt-6`; both completed 2026-10-14 and no `OG-cl-1` was cut; the rival funds (G5r) went ahead of Schwab and 49F against PRD v3.7. This issuance cuts the adapters and the remainders; they do not wait on a release slot. The seam is `deliverables/2.0.0_SA_COO~O/r37/G2_ADAPTER_PROTOCOL.md`, so the six adapters build in PARALLEL without importing one another; the issuer hooks them into the core at the merge.
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-cl-1` | the shared core of the five `client_*` tools (`app/client_core.py`, `app/client_role.py`) and the SCHWAB adapter (three masters deduped, never summed) | `app/client_core.py`, `app/client_role.py`, `app/client_adapter_schwab.py`, `tests/test_og_cl1.py` | WORLD | ~103 | cl-0 (complete) |
+| `OG-cl-2` | the Black Diamond 49F adapter, reading `opal-data-assets/blackdiamond/49f/silver/` AND the live `opal-data-bd/silver/` through its own role (Andrew's 49F word; the contract's `no_source_49f_a2` refusals are replaced) | `app/client_adapter_bd49f.py`, `tests/test_og_cl2.py` | WORLD | ~104 | the protocol file |
+| `OG-cl-3` | Orion and Eclipse (Inflection) | `app/client_adapter_orion.py`, `app/client_adapter_eclipse.py`, `tests/test_og_cl3.py` | WORLD | ~105 | the protocol file |
+| `OG-cl-4` | Black Diamond Cottonwood | `app/client_adapter_bdcottonwood.py`, `tests/test_og_cl4.py` | WORLD | ~106 | the protocol file |
+| `OG-cl-5` | SmartX (row filter, two-firm negative arm) | `app/client_adapter_smartx.py`, `tests/test_og_cl5.py` | WORLD | ~107 | the protocol file |
+| `OG-cl-6` | Commonwealth (closed delivery, 78 td) | `app/client_adapter_commonwealth.py`, `tests/test_og_cl6.py` | WORLD | ~108 | the protocol file |
+| `OG-gp-1` | G3/G4 remainder: the portal-v2 and mdpf catalog rows with no tool: classify each (COVERED by a live tool / BUILT here / DEFERRED), build the BUILT ones | `app/portal_served.py`, `tests/test_og_gp1.py` | WORLD | ~109 | none |
+| `OG-gf-1` | G5 wave B: the non-rival etfs rows with no tool, same classification, plus the `etfs_get_positioning` extension | `app/etfs_silver.py`, `tests/test_og_gf1.py` | WORLD | ~110 | none |
+
+After the merges: one HOOKUP cell per batch (registrations, lists, pins; the issuer's script), then the releases `OG-ap-23` (the client tools with their per-vendor read roles and never-widen asks, Schwab and 49F first) and the remainder release, queued after `OG-ap-22` and ahead of `OG-ap-17`. `NFRA_MCPINDEX` follows each release with a catalog cell (the `read_tool` rows).
+**fanout:** 8 of 8 chains (cl-1 .. cl-6, g3-1, g5-2 have no edge between them), cap 8.
