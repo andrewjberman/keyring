@@ -71,6 +71,16 @@ Build:
       with at least 93 passed.
    f. Your real-registry numbers stand and are useful: with no integration enabled, 11 tools reach `m365` by scope and 75 of 86 read undeclared. Report the same real-run summary again after the change.
 
+**AMENDMENT 2 (issuer, after your second report; rules your rows Z-W31-S3 and Z-W31-S4; the faults are in my spec, not in your work).** You are re-seated on this branch with your commits `90996f1825` and `7abfb91b46` as inherited state.
+   a. **Z-W31-S3 -- ONE assertion in the seam test changes, and only that one.** Line 346 of `tests/test_admin_people.py` asserts `("m365", "send_email")`. `send_email` calls Microsoft Graph but has no
+      `TOOL_GRAPH_SCOPES` entry, so under the single placement rule it is undeclared until the catalog declares it (kind `graph`). Replace that assertion with one that does not name a group:
+      BOSS holds a pair whose tool name is `send_email` and the population holds none (for example `any(t == "send_email" for _, t in _pairs(by_who[BOSS]))` and the negation for `by_who[POP]`).
+      This supersedes the words "must pass unchanged" in item (c) for that ONE line only; the rest of the seam test, which compares every person's holdings to the breakdown's, stays exactly as it is.
+      Add nothing else to that test and weaken nothing else. Name the change (file, test, old, new) in your report.
+   b. **Z-W31-S4 -- the expect lines are re-cut** (see section 4) to one pattern each that the checker can match against your output. Do not edit the check scripts or the order's proof lines; they are the issuer's.
+   c. Re-run both invocations; AC1 must read 10 of 10 and AC2 `failed=0`, `seam test failures=0`, 93 or more passed (you measured 103 in total). Re-write the instance, re-run `proof-of-spec-check.py ... AC1,AC2` and
+      report the same real-registry summary. Then STOP: the next order (`MP-pf-1`) is handed to you by the issuer after the drain.
+
 **Tests**, by these exact names, in `tests/test_admin_gateway_breakdown.py` (reuse that file's way of planting a registry, a catalog file and a graph-scope map):
 - `test_no_tool_lands_in_microsoft_365_without_a_graph_scope`: a planted native tool with no spec, no declaration and no Graph scope is NOT in `m365`; a planted
   tool with a Graph scope IS.
@@ -115,8 +125,8 @@ Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/I
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MP-pe-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pe1.AC1.sh; echo "exit=$?"</invocation><expect>named tests PASSED 10 of 10 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MP-pe-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pe1.AC2.sh; echo "exit=$?"</invocation><expect>admin suite: passed=93 or more failed=0; seam test failures=0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MP-pe-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pe1.AC1.sh; echo "exit=$?"</invocation><expect>named tests PASSED 10 of 10.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MP-pe-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pe1.AC2.sh; echo "exit=$?"</invocation><expect>failed=0; seam test failures=0.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE

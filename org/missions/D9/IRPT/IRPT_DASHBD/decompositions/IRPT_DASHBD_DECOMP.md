@@ -2257,3 +2257,17 @@ The CVO's L9 failed contract 0.4.0 narrowly: terms 2 and 3 (an ABSENT trading da
 **fanout:** 1 of 1 chains, cap 8, reason: one cell, one write surface (the contract file and its tests), worker `0.9.0_WK_IRPT_DASHBD~221`.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the clauses validated against a scratch reference contract (green) and 30 single-fault mutants of it (all red), the census recount against a tampered count (red)):** `checks/r140/p140_contract041.py` (DB140-1-AC1..AC3).
+
+## 139. ROUND 141, WORKSTREAM B-49F (2026-10-15 ~20:5xZ, issuer 2.0.0_SA_COO~D2, on the CTO's ADDENDUM 1 term 4 to the rounds 133-137 analysis, msg 8615, and the applier's hold, msg 8613; row `IRPT_DASHBD-D2-S95`)
+
+The handler caps the owed LIST at `MAX_DAYS_PER_FIRE` (10) but each hop recomputes the list from the newest landed day, so the chain never ends until nothing is owed: one event over a 65-day backlog chains 68 invocations. The signed packet's "at most 10 days" was wrong. The backfill goes ahead under the CTO's ruling A (round 139's order, Amendment 1: explicit day events, 2026-10-14 first); this cell fixes the cap before the reporting-gold schedule is ever enabled, because a scheduled fire after a gap would otherwise chain without a bound.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The handler carries a chain budget: an event without `chain_left` starts one of `MAX_DAYS_PER_FIRE` days in all, each self-invoke carries `chain_left` less one, a hop with none left chains nothing, a budget outside 0 to 9 (or not an integer) refuses before any call; tests; a facts record | DB-b-274 | B-49F report-build handler (the schedule enable's precondition) | WORLD | round 138 merged (same file) | chain A |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the budget rides in the self-invoke payload (`chain_left`), because the handler holds no state between invocations and the payload is the only thing a hop receives; (b) an explicit `day` event gets the same default budget as an empty event, so every entry path is capped and a manual day event cannot walk the whole backlog; (c) a bad budget is refused before any client or call, like a bad day; (d) the deployed function keeps the earlier code until a later code-update pair (a `safe-apply` of a 0/1/0 plan, never `update-function-code`), which is the CTO's signature and a separate order; the row S95 stays ARMED until then and the reporting-gold schedule stays DISABLED; (e) the round-131 checker's exact-payload clause is relaxed to read the `day` key, since the payload now carries a budget too.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell, one write surface (the handler directory), worker `0.9.0_WK_IRPT_DASHBD~222`.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected, the probe reproducing the defect: an empty event over 32 owed days builds more than ten; self-test green with 2 + 2 + 17 + 7 red arms; the probe validated against a scratch reference handler (green) and seven single-fault mutants (no cap, budget not decremented, no budget in the payload, default one too many, bool accepted, no upper bound, budget inflated: all red)):** `checks/r141/p141_chaincap.py` (DB141-1-AC1..AC3).

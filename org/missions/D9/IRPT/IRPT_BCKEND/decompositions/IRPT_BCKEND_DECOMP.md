@@ -4415,3 +4415,15 @@ Check IB235-1 (`deliverables/2.0.0_SA_COO~P2/checks/r235/p235_cells.py`), dry-ru
 | `IB-pr-604` | the account join fix (key found in process), W426-S2 negative test, console counts only | FWD-21 | LOCAL | IB-pr-602 (drained) | PL3-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~440) starts now.
+
+## 230. ROUND 1, WORKSTREAM ~PQ (the APPLY of the holdings EXEMPTION pair; 2026-10-15 ~21:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on both halves signed: packet blob b4ad2d79c9, COO half @faa1fc5dc9, CTO half @a937b9931c, msg 8632)
+
+The exemption pair is signed, bound to IB-pr-595's transplant digests `d2eaf305` (49financial) and `bc2e8f54` (Cottonwood and Inflection). One WORLD order to `0.7.0_AE_CloudOps~IB2`: the gates, the digest gate per firm (the two members plus SHA256SUMS, `allow_older_date` 0, 49financial's CUSIP lines 12 against 12, the six drifted members equal live), the re-measure at the release (49financial refusing or publishing one listed account; Cottonwood four listed accounts; Inflection measured, any other verdict a STOP for Inflection only), the ledger, the three mints between fires, the business date stated before the fire, the first fire per firm and the exemption's after-read. It starts only after IB-pr-549's ledger is CLOSED (its after-read is the 2026-10-16 14:15Z fire). The join fix (IB-pr-604) and a candidate rebuilt with it are a separate addendum.
+
+Check IB236-1 (`deliverables/2.0.0_SA_COO~P2/checks/r236/p236_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control236.py`) passes the three positives and twenty-one negatives plus the no-record cases each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-605` | APPLY the exemption pair: gates, digest gate, re-measure, three mints, first fire per firm | FWD-21 | WORLD | IB-pr-549 ledger closed | PQ1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
