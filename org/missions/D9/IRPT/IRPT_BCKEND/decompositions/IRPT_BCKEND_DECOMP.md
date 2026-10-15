@@ -4307,3 +4307,111 @@ Check IB225-1 (`deliverables/2.0.0_SA_COO~P2/checks/r225/p225_cells.py`), dry-ru
 | `IB-pr-592` | BUILD the named ratio_absent list in the frame attrs and the run manifest (day, security, accounts used; unkeyed rows by day), grading unchanged | FWD-21 | LOCAL | none | PM1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one product file; one worker (slot ~432) starts now.
+
+## 221. ROUND 2, WORKSTREAM ~PN (the Scope account feed stores the daily factor, admits SERIES_ENDED_AT_SOURCE and walks calendar days; 2026-10-15 ~17:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8484 and B-IN's round-122 probe)
+
+IB-pr-586 (merged @7b150e672a) built the feed with `return_value = performance / 100` per series point. B-IN's history probe (294 households, series calendar-day and contiguous from each account's start; chained factors equal Orion's period return up to a year; Orion annualizes its summary over a year; two series end 95 and 120 days early) and the CTO's ruling (round-118 ADDENDUM 3, msg 8484) fix four things: store the daily FACTOR only (never a summary), admit the reason class `SERIES_ENDED_AT_SOURCE` for the scheduled feed too, chain CALENDAR days weekends included, and give the scheduled run a window from the day after the newest landed partition. One LOCAL cell on the one script. The feed's apply order waits for it.
+
+Check IB227-1 (`deliverables/2.0.0_SA_COO~P2/checks/r227/p227_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control227.py`) passes the three positives and seven negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-594` | the feed stores the daily factor only, SERIES_ENDED_AT_SOURCE, calendar-day rows, the scheduled window from the newest landed day | FWD-3 | LOCAL | none | PN3-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one script; one worker (slot ~433) starts now.
+
+## 222. ROUND 4, WORKSTREAM ~PJ (the TRANSPLANT candidates of the three holdings bundles: the exemption alone; 2026-10-15 ~18:0xZ, issuer 2.0.0_SA_COO~P2 on dell2)
+
+IB-pr-590's overlay candidate (merged @53d1153a4b) overlaid HEAD's whole `holdings_snapshot.py` on each firm's minting pin. Reading the file against each pin with the exemption blocks removed showed that HEAD's file is NOT the pin plus the exemption: it also carries (a) the unreleased one-date bypass of IB-pr-536 (`allow_older_date`, the `ONE-DATE-ASSERT` block, a manual-path flag whose sign-off is not part of the exemption pair) for all three firms, and (b) for 49 Financial the REVERSAL of the CUSIP port (pin 1 keeps it live on purpose; pin 2 reversed it for Cottonwood and Inflection) and a `multi_asset` list change. The never-widen pair must move the exemption ALONE. This cell builds the TRANSPLANT candidate: each firm's minting-pin file with ONLY the exemption commits (IB-pr-576, 577, 582) applied, verified by stripping the exemption blocks and diffing against the pin, with the two transplanted files committed per firm so the check recomputes their hashes, BUILD ONLY, the offline tests on each transplant tree, and the live comparison. The exemption pair's COO half waits on it.
+
+Check IB228-1 (`deliverables/2.0.0_SA_COO~P2/checks/r228/p228_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control228.py`) passes all and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-595` | READ the transplant release candidates (exemption alone) of the three holdings bundles, BUILD ONLY, tested, against the live bundles | FWD-21 | SERVED | none | PJ6-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one read-only build cell; one worker (slot ~434) starts now.
+
+## 224. ROUND 5, WORKSTREAM ~PJ (the REBUILT release candidate of the 49 Financial performance function; 2026-10-15 ~18:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO half of the split pair, condition 3)
+
+IB-pr-585 built the candidate (`fvmE5j1h...`) before IB-pr-592 added the named `ratio_absent` list to the run manifest, which the CTO's signed half requires. The candidate is rebuilt at the current HEAD, BUILD ONLY, against the live package and the first candidate; the split pair's COO half is then re-issued on the new digest for the CTO to re-bind. One read-only cell; its harness is IB-pr-585's.
+
+Check IB230-1 (`deliverables/2.0.0_SA_COO~P2/checks/r230/p230_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control230.py`) passes the positives and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-597` | READ the REBUILT performance function candidate (with the named ratio-absent list), BUILD ONLY, against the live package | FWD-21 | SERVED | none | PJ7-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one read-only build cell; one worker (slot ~435) starts now.
+
+## 223. ROUND 6, WORKSTREAM ~PO (the APPLY of the Orion pair (b) ADDENDUM 1, the Scope account feed; 2026-10-15 ~18:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the signed halves and the CTO's msgs 8499 and 8496)
+
+Pair (b) ADDENDUM 1 is signed by both halves (blob 1e138cbeea; CTO half @74aa15de73). The builds are merged: IB-pr-586 (the pull step and its catalog row), IB-pr-587 (the one-account limit lifted) and IB-pr-594 (the daily factor, `SERIES_ENDED_AT_SOURCE`, calendar days, the scheduled window; the CTO's ADDENDUM-2 condition 1 gates BOTH applies on it). IB-pr-568 closed on the same executor, so the feed's apply takes IB2's next slot (the CTO's round analysis msg 8499). One WORLD order to `0.7.0_AE_CloudOps~IB2`: the gates (halves signed, builds complete, the live dispatch object equal to the repository copy, the roster column, the runner role's grants incl. the cross-bucket write, the LIVE notification filter, the bound equal to the household count read at the apply, the Inflection-only write set), the writes (script and trading calendar beside it, the address sidecar generated from `address()`, the dispatch object edited by the one row and its chain entries, the saved copy named first), and the FIRST SCHEDULED RUN read (coverage equals the denominator, no zero, the daily factor stored, within the bound). The account mapping's release (IB-pr-587) and the history backfill (ADDENDUM 2) are separate acts.
+
+Check IB229-1 (`deliverables/2.0.0_SA_COO~P2/checks/r229/p229_cells.py`, committed @f9d2f4541b), dry-run at the base: AC1 to AC3 all FAIL; the control (`control229.py`) passes the three positives and seventeen negatives plus the no-record cases each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-596` | APPLY the Scope account feed: the gates, the script and its beside-files, the sidecar, the dispatch row and entries, the first scheduled run | FWD-3 | WORLD | none | PO6-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
+
+## 225. ROUND 3, WORKSTREAM ~PN (the Scope account feed writes a day's keys only when the day is complete; 2026-10-15 ~18:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round analysis msg 8536, item 4)
+
+The feed (IB-pr-586, amended by IB-pr-594) calls Orion once per household and today writes every day's bronze and silver keys from the households that answered, even when some household failed. A partial day reads as a complete one: its missing accounts look like accounts with no return. The CTO's analysis orders the rule, with a test: a day's key pair is written ONLY when every household in that day's universe answered OK; the skipped days and the households that blocked them are named in the output, and the exit is non-zero. One LOCAL cell on the one script; the feed's apply (IB-pr-596) waits for it.
+
+Check IB231-1 (`deliverables/2.0.0_SA_COO~P2/checks/r231/p231_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control231.py`) passes the positives and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-599` | the feed writes a day's key pair only when the day is complete, names skipped days, exits non-zero | FWD-3 | LOCAL | none | PN4-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one script; one worker (slot ~436) starts now.
+
+## 226. ROUND 7, WORKSTREAM ~PO (the APPLY of the Scope account feed's IAM pair; 2026-10-15 ~19:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling msg 8553 after IB2's STOP at gate (f) of IB-pr-596, msg 8548)
+
+`address()` puts the feed in `opal-data-assets/orion/inflection/` (doctrine R4, the CTO ruled it right); the inf gold runner role reaches `opal-data-inf` only, so the feed's write simulates implicitDeny. The IAM pair (packet blob cea5395ee7; COO half @afc428c27c; CTO half @d0bf7c5ea7) grants ONE new inline policy: Put/Get on the two `scope_account_returns` prefixes, ListBucket under an `s3:prefix` condition, no Delete, no KMS. One WORLD order to `0.7.0_AE_CloudOps~IB2` applies it through `safe-apply` under its own ledger and proves it both ways (four allowed and four denied simulation arms) plus the CTO half's condition 3: the feed's own `exists()` run on the runner against a known-absent key must read ABSENT. IB-pr-596 resumes after it, amended.
+
+Check IB232-1 (`deliverables/2.0.0_SA_COO~P2/checks/r232/p232_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control232.py`) passes the three positives and fifteen negatives plus the no-record cases each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-600` | APPLY the one IAM resource for the feed's keys; the simulation arms; the exists() read on the runner | FWD-3 | WORLD | none | PO7-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
+
+## 227. ROUND 2, WORKSTREAM ~PL (49 Financial's refusal anatomy and the exemption-alone DELTA, re-measured on the TRANSPLANT tree; 2026-10-15 ~19:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling ADDENDUM 1 @334382c7f4, msg 8538)
+
+IB-pr-584 (anatomy) and IB-pr-580 (DELTA) were measured on HEAD's `holdings_snapshot.py`, which reverses the CUSIP port that 49 Financial's live bundle keeps (pin 1). IB-pr-595 (merged @5bf120faa2) built the 49 Financial transplant tree: pin 1 plus the exemption alone. The CTO orders both measurements repeated on that tree before the join, classification and dry-run cells (msg 8527 items 1 to 3) are cut, each only for what still trips against the new denominator. One READ cell, counts only; the harnesses are IB-pr-580's and IB-pr-584's, run with the two transplant files in place of the repository's.
+
+Check IB233-1 (`deliverables/2.0.0_SA_COO~P2/checks/r233/p233_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control233.py`) passes the three positives and fifteen negatives plus the no-record case each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-602` | READ the anatomy and the exemption-alone DELTA of 49 Financial on IB-pr-595's transplant tree | FWD-21 | SERVED | IB-pr-595 (drained) | PL2-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one read-only cell; one worker (slot ~437) starts now.
+
+## 228. ROUND 8, WORKSTREAM ~PO (the Scope feed's IAM resource rebuilt to pass the commit-time naming gate; 2026-10-15 ~19:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on IB2's STOP on IB-pr-600, msg 8563)
+
+IB-pr-600 stopped before any apply: the commit of the signed packet's HCL is refused by the commit-time naming gate (LGIC_ENFORCE, rule 30). The policy name carries a token in no vocabulary, and the scope, bucket and prefix strings were typed by hand where the gate permits only the `opal_name` module and `lookup()` over a registry-fed local. The defect is the packet's (mine): rule 30 asks the L4 text to cite builder output. One WORLD-by-path BUILD cell, repository only: the same resource, the same two statements, the same actions and conditions, spelled through the module and the registry, committed through the gate, its evaluated prefixes equal to `address()` output. No plan, no apply, no registry edit. The packet is then re-issued at the committed text for the CTO to re-bind, and IB-pr-600 applies from HEAD without editing the file.
+
+Check IB234-1 (`deliverables/2.0.0_SA_COO~P2/checks/r234/p234_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control234.py`) passes the three positives; seven HCL negatives, five record negatives, two counter/notes negatives and the no-input cases each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-603` | the IAM resource spelled through opal_name and the registry; the gate accepts the commit | FWD-3 | WORLD (path floor) | none | PO8-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one Terraform file; one worker (slot ~438) starts now.
+
+## 229. ROUND 3, WORKSTREAM ~PL (the 49 Financial account join fixed, the guard unchanged; 2026-10-15 ~20:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on IB-pr-602's finding and the CTO's ruling @334382c7f4 item 1)
+
+IB-pr-602 (merged @98bfeea0f2, the 49 Financial anatomy and the exemption-alone DELTA on IB-pr-595's transplant tree) found: `classified_security_lost` no longer trips (4 to 0 of 1,839; so the registry classification cell of the CTO's msg 8527 item 2 is not cut), `account_lost` still trips on ONE of 7,640 served accounts, cause `join` (the source reports it with positions, the candidate drops it), and the exemption alone moves no node because that account keeps the gate refusing. The CTO's item 1: fix the join, not the guard; a synthetic test with that account's shape; the held rows W426-S2 (a negative test) and W426-S3 (counts only on the console) ride in the same cell. One LOCAL build cell on `holdings_snapshot.py`. The exemption pair's transplant candidate is then rebuilt with this commit added (a later read cell); the dry run at HEAD with 0 lost follows it.
+
+Check IB235-1 (`deliverables/2.0.0_SA_COO~P2/checks/r235/p235_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control235.py`) passes the positives and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-604` | the account join fix (key found in process), W426-S2 negative test, console counts only | FWD-21 | LOCAL | IB-pr-602 (drained) | PL3-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~440) starts now.

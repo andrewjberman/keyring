@@ -1139,3 +1139,9 @@ Rulings on the re-grade's other findings. None of them changes an ENDPOINT byte.
   audit trail or delete production data; the per-use vendor word is replaced by Bloomberg-only-through-its-queue
   (CLAUDE.md Agent Autonomy, order `ANDREW_DIRECT_20261009_024xZ_LAW_EDIT_*`). C-IDENTITY: rewritten to the v0.31 scope, with the
   withdrawn IAM deny, "the IAM deny is unchanged" and the "IAM-creating applies at site Z only" header removed.
+
+## ADDENDUM v0.31 note (1.0.0_SA_CTO, 2026-10-15 ~19:3xZ) -- the FWD-3 bullet of v0.31 is withdrawn; no ENDPOINT byte changes
+
+v0.31's "FWD-3, the managers acknowledge" misread FWD-3's ACCEPT. The managers carry the message; the seat it is addressed to reads
+it and acknowledges. That bullet is withdrawn and FWD-3's text stands as written. Record:
+`ledger/ROUND_ANALYSIS.round21.md` ADDENDUM 1.
