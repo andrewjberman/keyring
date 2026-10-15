@@ -15822,3 +15822,26 @@ name the one known failure instead of silently inheriting it.
     "notes": "Which admission rule a firm principal should meet first is a design question for the issuer; the worker kept the order's principal-first ordering and did not change admission."
   }
   ```
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W92-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~92",
+    "surfaced_at": "2026-10-15T01:18:16Z",
+    "one_line": "The order names the proof instance ...mdpf-category-views-tool.proof_of_spec.json, but the pipeline gate finds an instance only by the order file's stem (...mdpf-category-views-by-row.proof_of_spec.json); the instance is written at the stem name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "OG-pt-5 section 5: write the proof instance at the named path W/NFRA_OPLGTW.TO-OG-pt-5.mdpf-category-views-tool.proof_of_spec.json, then validate it and flip the status.",
+    "world_is": "The flip commit with the instance at the named path was refused by to-pipeline-gate (layer 2): 'flips to complete ... and NO proof-of-spec instance was found beside it'. The gate's candidate search builds the instance name from the order file's own stem (.tools/to-pipeline-gate.py _proof_instance_candidates: stem + '.proof_of_spec.json'), and the order file's stem carries the slug by-row, not tool. The instance was renamed to the stem name; proof-of-spec-check.py then returned rc=0 VALID for it at that name.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: bash .tools/safe-commit.sh of the flip with the instance at the named path, at HEAD 6b381d604e: ERROR BLOCKED, to-pipeline-gate REFUSED 'no proof-of-spec instance was found beside it'; files unstaged",
+        "READ: .tools/to-pipeline-gate.py _proof_instance_candidates at HEAD 6b381d604e (names: stem + .proof_of_spec.json)"
+      ]
+    },
+    "notes": "Which name the issuer wants is the issuer's call. The worker used the gate's convention, which the sibling instance NFRA_OPLGTW.TO-OG-gt-9.search-window-pruning.proof_of_spec.json also follows, and did not use the override line."
+  }
+  ```
