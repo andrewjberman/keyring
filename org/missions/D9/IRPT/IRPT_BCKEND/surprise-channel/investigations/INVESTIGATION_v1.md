@@ -39878,3 +39878,157 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W436-S1 -- The commit gate of e78ddf1736 printed WARN: the hashed account-id list is absent on this box, so the commit was not checked for client account ids.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W436-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~436",
+  "surfaced_at": "2026-10-15T18:49:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The commit gate of e78ddf1736 printed WARN: the hashed account-id list is absent on this box, so the commit was not checked for client account ids.",
+  "spec_asserts": "The worker face client data rule: no real account id, household id, client id, name, quantity or value in any tracked file; the commit gate is the mechanical check for it.",
+  "world_is": "safe-commit of e78ddf1736 printed a WARN that the client-data check was absent (the hashed account-id list is not at its expected profile path), and the gate did not check the commit. The commit's own diff carries only synthetic ids from the existing test fixtures (accounts 7001 to 7005, households 5001 and 5002); no account-id list was read by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of e78ddf1736 in this worktree: line beginning WARN: client-data-check: hashed account-id list ABSENT",
+      "the same WARN on the same box was filed as IRPT_BCKEND-D2-W435-S1 (ARMED, disarm owner 2.0.0_SA_COO~P2)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W436-S2 -- A day skipped inside a scheduled window is never rewritten by a scheduled rerun: the window starts after the newest landed silver day, so only the day after it is retried.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W436-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~436",
+  "surfaced_at": "2026-10-15T18:49:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "A day skipped inside a scheduled window is never rewritten by a scheduled rerun: the window starts after the newest landed silver day, so only the day after it is retried.",
+  "spec_asserts": "The task order worker face: a rerun after a failed day recomputes the window from the newest landed day (IB-pr-594), so the skipped day is written by the rerun with no new code.",
+  "world_is": "That holds when the skipped day is the day after the newest landed day. scheduled_window_start (data/inf/manual_api/pull_inflection_scope_account_returns.py, SCOPE-FEED-B, line 683 at 0a1fa2b9c4) starts the window at the later of the newest landed day plus one and the pull date minus ten. A day skipped while a later day has landed sits below that start, so no scheduled rerun reaches it; only a --from-date rerun writes it. The new test test_rerun_after_a_failed_day_writes_the_day covers the newest-day case only.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@0a1fa2b9c4 lines 656 to 690 (landed_silver_days, scheduled_window_start)",
+      "e78ddf1736 data/inf/manual_api/test_scope_feed_day_complete.py test_rerun_after_a_failed_day_writes_the_day (the newest-day case only; the interior case was reasoned from the code and not run)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W436-S3 -- A --max-households smoke run writes no key for any day whose universe holds a household the cap did not call, because the cell judges completeness before the cap.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W436-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~436",
+  "surfaced_at": "2026-10-15T18:49:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A --max-households smoke run writes no key for any day whose universe holds a household the cap did not call, because the cell judges completeness before the cap.",
+  "spec_asserts": "The module usage line in data/inf/manual_api/pull_inflection_scope_account_returns.py: a run with --pull-date and --max-households 3 and --upload is a smoke run that calls three households and writes the feed keys.",
+  "world_is": "The cell judges each day on its universe before any --max-households cap, as the order states, so a capped run skips every day whose universe holds an uncalled household and exits 1. test_max_households_cap_does_not_shrink_the_universe_the_day_is_judged_on pins this behaviour. The usage line is unchanged and now describes a run that writes nothing for a multi-household day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e78ddf1736 data/inf/manual_api/test_scope_feed_day_complete.py test_max_households_cap_does_not_shrink_the_universe_the_day_is_judged_on (passes: one call, no write, exit 1)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@0a1fa2b9c4 lines 1 to 14 (usage and exit codes)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W436-S4 -- The order's BOUNDS forbid editing any existing assertion, and its CHANGE clause allows two; the worker followed the CHANGE clause and named both edits.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W436-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~436",
+  "surfaced_at": "2026-10-15T18:49:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's BOUNDS forbid editing any existing assertion, and its CHANGE clause allows two; the worker followed the CHANGE clause and named both edits.",
+  "spec_asserts": "BOUNDS: 'Every existing test stays green and no existing assertion is edited.' CHANGE: 'The two existing test files may change ONLY the assertions that assert a partial day is written after a failed household; say which in the record.'",
+  "world_is": "The cell's rule fails two existing tests as written: test_one_call_per_household_paced_no_retry and test_failed_household_writes_no_silver_rows_for_it each asserted that a partial day was written. The worker changed those assertions only (the silver reads and the exit code of the partial day) and named them in the record notes and in the commit message of e78ddf1736.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the order file IRPT_BCKEND.TO-IB-pr-599.scope-feed-day-complete.md, sections BOUNDS and the CHANGE paragraph of the worker face",
+      "e78ddf1736 git diff of data/inf/manual_api/test_pull_inflection_scope_account_returns.py: 3 insertions, 9 deletions, both edited tests named"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W436-S5 -- With SCOPE-FEED-C present the SCOPE-FEED-B run is shadowed: an edit to the B copy of run has no effect on the feed.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W436-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~436",
+  "surfaced_at": "2026-10-15T18:49:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "With SCOPE-FEED-C present the SCOPE-FEED-B run is shadowed: an edit to the B copy of run has no effect on the feed.",
+  "spec_asserts": "The SCOPE-FEED-B header: its definitions redefine the SCOPE-FEED-A functions of the same names, and removing the block restores the earlier definition (the difference control).",
+  "world_is": "The run loop now exists twice in the module: the SCOPE-FEED-B copy (line 693) and the SCOPE-FEED-C copy (line 793), which redefines it inside the same region. Python binds the later definition at import, so the B copy is dead while C is present. A later edit to the B copy changes nothing, and the tests exercise only the C copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e78ddf1736 data/inf/manual_api/pull_inflection_scope_account_returns.py: def run at line 693 (SCOPE-FEED-B) and def run at line 793 (SCOPE-FEED-C), END SCOPE-FEED-C at line 885",
+      "e78ddf1736 test_scope_feed_day_complete.py: every test reaches run through the module attribute, so only the later definition is run"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-S208 -- IB-pr-599 drained: the worker's ARMED rows disarmed with dispositions; the middle-day skip is an operator rerun with --from-date
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S208",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T18:59:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-599 drained: W436-S1, S2 and S5 and W435-S1 disarmed with their dispositions; the middle-day skip (W436-S2) is real and is handled by the operator rerun with --from-date, written into the apply order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-599 merged @0bf8103b1e; IB231-1 AC1 to AC3 re-run PASS in the main tree; proof instance VALID; 106 tests pass (10 new)",
+      "W436-S2 is read from the code by the worker (INFERRED) and agrees with the window rule of IB-pr-594: the scheduled window starts the day after the newest landed silver partition",
+      "W435-S1 and W436-S1 are the same instrument gap: the commit gate's hashed account-id list is absent on dell2 (set aside 2026-10-11), so neither commit was checked against it"
+    ]
+  },
+  "spec_asserts": "A skipped day is written by a rerun with no new code (the cell text of IB-pr-599).",
+  "world_is": "W436-S2: true only when the skipped day is the newest day of the window. If a later day of the same window lands complete and an earlier one is skipped (the days have different universes), the scheduled window starts after the later day and never retries the earlier one. DISPOSITION: not a rider on a build; the SKIPPED line the run prints names the day, and the operator's remedy is a rerun with --from-date <that day> (the backfill path, add-only, never overwrites): written into the apply order and the first-run read, which fails the run on any SKIPPED line. W436-S5 (the B copy of run is shadowed by the C copy): INERT, a cleanliness item for a later cell; the shipped behaviour is the C copy and it is tested. W436-S1 and W435-S1 (client-data list absent): INERT for these two commits, whose records are ID-free by their own criteria (no long digit run, counts only); the list's absence is MSTR's to restore and is not chased here. W436-S3 (a --max-households smoke run writes no key) and W436-S4 (the bounds wording) are INERT observations already stated in the rows."
+}
+```
