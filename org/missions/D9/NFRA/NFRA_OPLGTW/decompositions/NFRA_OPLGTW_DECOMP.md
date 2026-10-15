@@ -2331,3 +2331,11 @@ The Terraform half (the same Query/GetItem statement on the internal reader role
 
 The release (`OG-ap-21`: the person reader `OG-cp-1`, `OG-nw-2`, this cell, the published-analysis tool's registration `OG-gt-11`) retargets `harvest_published_invoke_iam.tf` to the internal reader role and moves the news statement off the instance role, grant first.
 **fanout:** 1 of 1 chain (cap 8).
+
+## ADDENDUM R3-T.66 (2.0.0_SA_COO~O, 2026-10-15 ~05:4xZ) -- round 37, workstream R37-PERSON-FIX: the two tests OG-cp-1 turned red (found by `~MI`, msg 34340)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-cp-2` | (1) re-serialise both contract copies exactly as `build_package` emits them, so the staged member equals the standard byte for byte (no value changes); (2) `test_access_get_not_live_when_type_unknown`: make its unknown-type condition explicit (the closed record set without `person_access`) now that the type is known | both contract copies, `tests/test_admin_people_access.py` | WORLD | ~97 | OG-cp-1 (merged) |
+
+Merges before `OG-ap-21` is cut. **fanout:** 1 of 1 chain (cap 8).
