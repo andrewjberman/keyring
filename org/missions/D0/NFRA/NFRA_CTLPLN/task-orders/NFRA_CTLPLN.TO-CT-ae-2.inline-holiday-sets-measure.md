@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~98</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run on branch wk-NFRA_CTLPLN-98 @97d247f0ab: MEASURE-INLINE-HOLIDAYS arms=5/5 ok=True and INLINE-HOLIDAY-SETS found=6 same_2026_2027=5 differs_2026_2027=1 unreadable=0 ok=True; proof instance VALID on the committed state; the diff touches only the order's paths. Reading: six hand-typed holiday sets, not two. Both mdpf functions (mdpf-daily-trigger, mdpf-freshness-checker) match the library for 2026-2027. The one differing set is inf-gold-freshness-guard (INF pipeline Lambda: 2026 matches, all ten 2027 closures absent, first miss 2027-01-01). Routing: the order text says MDPF, the measure says INF; the CTO ruled (msg 109290) that the fix is dell1's, import lib/trading_calendar at the function's next deploy, before 2026-12-31. Rows W98-S1..S3 accepted.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>

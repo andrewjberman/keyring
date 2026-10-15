@@ -14694,3 +14694,84 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "Those three derivations are unchanged, but the re-pin also changes the 49financial and inflection registry rows that the 49F and INF functions read through the registry's other readers (lookup spellings, bucket aliases, prefix resolution), which were not measured. Nothing is uploaded, so nothing is ARMED; the question is carried to the CTO's half as packet question 5 before any second upload."
 }
 ```
+
+## IRPT_DASHBD-D2-S60 -- one Inflection account holding positions has no Orion Scope group over Q3 or YTD; owner 2.0.0_SA_COO~I2
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S60",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T04:45:18Z",
+  "one_line": "One Inflection account that holds positions on every day of Q3 has no Orion Reporting/Scope Account group over Q3 or YTD (DB-i-5 and DB-i-6); the cause class is NOT_DETERMINED, and the Scope account feed must carry it as ABSENT NO_GROUP, never a zero or an Opal fill.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "CTO B-IN round-117 analysis ruling 1 and PRD FWD-2: an Inflection account's return is Orion's own account-level figure, read through Scope for each account the household holds.",
+  "world_is": "Scope returns 4 Account groups for a 5-account household in both a Q3 and a YTD window; the absent account holds positions on 87 of the quarter's days and shares its account type and registration category with the four present accounts. The cause is unread. The hazard: any consumer that sums or averages a household's account returns from the feed would silently cover 4 of 5 accounts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/IRPT_DASHBD_ROUND118_BIN_DRAIN_END_20261015.md @a75f9982df",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v79.md @1efdb79257 (CVO~IRPT: no row owned the finding)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: the round-119 read of Orion's account records (CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_119_20261015.md @712ede60c4) names a flag or records NOT_DETERMINED, AND ~P2's feed (IB-pr-556) carries the account as ABSENT NO_GROUP with no household-level aggregate built from the feed's account rows."
+}
+```
+
+## IRPT_DASHBD-D2-W307-S1 -- the one GET's header names were sent re-cased by the standard request builder, not as the estate pull sends them
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W307-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~307",
+  "surfaced_at": "2026-10-15T05:00:34Z",
+  "one_line": "The one GET of DB-i-7 sent three header names re-cased by the standard request builder (AppPath as Apppath, BrowserSessionId as Browsersessionid, User-Agent as User-agent), not as the estate pull sends them; the GET returned HTTP 200.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-i-7 worker face, step 2: GET 1 is made 'with the pull's own params and headers exactly'. The pull builds its headers with the keys AppPath, BrowserSessionId and User-Agent.",
+  "world_is": "The cell's request was built with the standard library request object, which stores each header key capitalized (keys Apppath, Browsersessionid, User-agent). The values are the pull's. HTTP header names are case-insensitive, so the request means the same as the pull's, but its header names differ in bytes. The one GET returned HTTP 200 with the account rows and no further GET was made, so the cap was not affected. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/inf-accounts-v2-daily/pull_inflection_new_portfolio.py@a4718eab10 lines 52-62 (the pull's headers keys AppPath, BrowserSessionId, User-Agent)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~307/account_record_read.py@e666798a70 (get() and headers(): urllib.request.Request add_header on each key)",
+      "local probe with no request made: the request object's header keys printed as Apppath, Browsersessionid and User-agent (python -I, offline, this cell)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-7. Form only. Not repaired in this cell: the one GET is already made and the cell's order allows no second GET. A later read that must match the pull's bytes would set the header names through a raw request, the issuer's choice."
+}
+```
+
+## IRPT_DASHBD-D2-S61 -- disarm owner's partial evidence for S60: the account-record read is done (no flag differs, cause NOT_DETERMINED, a start-date and model pattern inferred); the feed half is ~P2's and not yet landed
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S61",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T05:08:52Z",
+  "one_line": "S60 partial disarm evidence: half (1) is met -- the round-119 account-record read (DB-i-7) found the missing account in Orion's active roster, no exclusion-type flag differs, and the cause stays NOT_DETERMINED (inferred pattern: null accountStartDate and no modelName); half (2), ~P2's feed carrying the account as ABSENT NO_GROUP, is not yet landed, so S60 stays ARMED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "S60 notes: disarm needs the round-119 read to name a flag or record NOT_DETERMINED, AND ~P2's feed (IB-pr-556) to carry the account as ABSENT NO_GROUP with no household-level aggregate built from the feed's account rows.",
+  "world_is": "DB-i-7 made ONE GET (NewPortfolio isActive=true, 200, 3040 rows) that held all three accounts. Missing against present: 7 differing paths, relevant names accountStartDate, accountStartValue, modelName, none exclusion-type, no boolean difference. This seat read the nulls privately: the missing account has a null start date and value and no model; the series-less account has a start date and value and no model. Roster counts: 863 of the 980 dimension accounts are in the active roster; 40 have a null start date (all also without a model), 132 more have a start date and no model. The feed half (2) has not landed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~307/ACCOUNT_RECORD_READ_R119.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/IRPT_DASHBD_ROUND119_BIN_DRAIN_END_20261015.md",
+      "IRPT_DASHBD-D2-S60"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

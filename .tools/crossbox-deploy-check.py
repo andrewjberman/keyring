@@ -196,16 +196,18 @@ def is_act_row(row) -> bool:
 
 def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
     """files None, or a Terraform root: a live call or row hits when its text names the root or a covering project. A
-    non-Terraform root in FILES MODE: it hits only when it names a carried file or a project covering one (MDPF_SECCLASS
-    row D1-S23: a one-key ship on data/black_diamond drew STOP hits from calls that named only the shared root token)."""
+    non-Terraform root in FILES MODE: it hits only when it names a carried file or a project covering one, or (open_calls
+    rows of any kind) its own roots field names the root (CTO ruling 3, NFRA_CTLPLN round 14). A crossbox call file keeps the
+    files-only reading; the roots field is not read there (MDPF_SECCLASS row D1-S23: a one-key ship on data/black_diamond
+    drew STOP hits from calls that named only the shared root token)."""
     narrow = files is not None and not rel.startswith("infra/aws/terraform/")
     pats = file_patterns(files) if narrow else mention_patterns(rel)
     codes = [c[0] for c in covering]
     lines, hits = [], []
     scanned = 0  # every call file read and every open_calls row read (closed or not): the denominator
     if narrow:
-        lines.append("  files mode: a call or row hits only if it names one of the %d carried file(s) or a project covering one, "
-                     "not the shared root" % len(files))
+        lines.append("  files mode: a call hits only if it names one of the %d carried file(s) or a project covering one; a row "
+                     "hits on those or on its own roots field, not the shared root" % len(files))
     crossbox = sorted(glob.glob(os.path.join(repo_root, "org", "devices", "crossbox", "*.json")))
     if not crossbox:
         lines.append("  org/devices/crossbox/*.json: none recorded (0 files) -- reads clear")
@@ -254,7 +256,8 @@ def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
                     hit = roots_field_hit(row, rel)
                     why = ("act row " + hit) if hit else ""
                 else:
-                    why = (roots_field_hit(row, rel) if not narrow else "") or project_field_hit(row, codes) \
+                    # files mode: a row of any kind matches through its own roots field too (CTO ruling 3, NFRA_CTLPLN round 14)
+                    why = roots_field_hit(row, rel) or project_field_hit(row, codes) \
                         or mentions(json.dumps(row), pats)
                 if why:
                     hits.append("%s row %s %s" % (name, row.get("id", "?"), why))

@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~99</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run on branch wk-NFRA_CTLPLN-99 @93952baa78 (merged 193269c452): ROUND15-BATCH arms=9/9 ok=True, OPEN-CALL-ACT-ROOTS arms=8/8 ok=True, SAFE-COMMIT-DERIVATION cases=17/17 ok=True; proof instance VALID on the committed state; the diff touches only the order's paths. Reading: files mode now matches a roots-named row of any kind through its roots field (act rule unchanged); an ENFORCE refusal of the naming stage unstages every path in IN_SCOPE (W93-S1; WARN unchanged); infra/.gitignore ignores reached_roles_census.fresh_checkpoint.json (W95-S1); the identity-root search found no remaining simulate_policy mention (35 files, no change). Row W99-S1 accepted (the placement-refusal branch unstages only the graded files, same shape as W93-S1; INERT, not changed because the order names the ENFORCE branch only; carried).</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>

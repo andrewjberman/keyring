@@ -36020,3 +36020,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W398-S1 (the entry test pins ROUTES to two keys; outside the grant): RESOLVED by IB-pr-554 AMENDMENT 1 (c13575e177), my defect. D2-W398-S4 (the check's allowed set lacked that file on the branch): RESOLVED, my defect, the repaired check is on the branch (d13dfa57f4). D2-W397-S1, S2 and D2-W398-S2 (the filled document carries no firm key): INERT, recorded. D2-W398-S3 and D2-W399-S2 (a by_row map is keyed by account or by asset class): RULED: a by_row key names an account only for an account-grain member and only when it is an issued account id, an asset-class key names none, and a raw or malformed key refuses the request (built so in hop 3). D2-W399-S1 (BLOCKING, INERT: the packaged ExportBundle contract refuses a filled_report item; outside the grant): becomes a round-3 cell (the contract schema and its docs, with the packaged-contracts-match-docs test). D2-W399-S3 (the freeze has no caller and no production reader): becomes a round-3 cell (the submit wiring and a reader on the naming builder), after the gold table exists for the reader. NEXT for ~PS: round 3 = the contract cell now; the submit wiring and the composer from gold wait for the gold table (2.0.0_SA_COO~D2)."
 }
 ```
+
+## IRPT_BCKEND-D2-W400-S1 -- The pair (a) flat keys have no address() output: the order's own keys are a typed address, which the refusal clause stops
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W400-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~400",
+  "surfaced_at": "2026-10-15T04:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The flat keys s3://opal-data-inf/bronze/<feed>/<date>.jsonl.gz that IB-pr-556 pair (a) must write have no lib/opal_naming.py address() output and no registry row naming the per-feed, per-date landing key; the registry rules only the legacy bronze/ prefix, so writing the design means typing legacy keys, which the order's refusal clause stops. No design record and no packet were written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address('advi','inflection','bronze','positions','PLACEHOLDER','PLACEHOLDER.jsonl.gz') at base 8110ace2ee returns s3://opal-data-assets/orion/inflection/bronze/positions/PLACEHOLDER/PLACEHOLDER.jsonl.gz (read-only call from the worktree; the key grammar is {source}/{scope}/{tier}/{table}/{partition}, five segments)",
+      "infra/logic/registry/key_rulings.json:210-218 at 8110ace2ee rules bucket opal-data-inf, key bronze/, shape prefix, canonical orion/inflection/bronze/ (the mirror's map row, lambda_function.py:98-118), owner ADVI_FIRMBKTS; a grep of infra/logic/registry for bronze/positions, bronze/transactions and bronze/performance returns zero matches",
+      "data/inf/manual_api/pull_inflection_positions_daily.py:445 at 8110ace2ee writes bronze/positions/{snap_iso}.jsonl.gz to opal-data-inf: a three-segment legacy key, outside the five-segment grammar that address() implements",
+      "infra/logic/registry/scopes.json:128 at 8110ace2ee: the inflection scope bucket is opal-data-inflection, not opal-data-inf"
+    ]
+  },
+  "spec_asserts": "IB-pr-556 worker face step 3 and CLAUDE.md rule 30: every S3 address and resource name is lib/opal_naming.py output, and the refusal clause stops a worker on a need to type an object address by hand (that is a missing registry row: record it). The check p200_orion.py c2 requires the literal keys s3://opal-data-inf/bronze/<feed>/<date>.jsonl.gz for 7, 7 and 22 days.",
+  "world_is": "address() yields only the canonical five-segment opal-data-assets form for the inflection scope. The registry's ruling on the legacy bronze/ prefix names the mirror's destination (orion/inflection/bronze/), not the per-feed, per-date landing key that the producer writes and the mirror reads. The order's flat keys are therefore legacy addresses that would be typed by hand, with no ruled write target. Per the refusal clause the worker stopped before typing them: no design record, no packet, no key written. The check AC2 cannot pass until the registry rules the landing key or the issuer names its canonical target, an act outside this order's paths. Recorded, not decided: which key the producer should land is the issuer's and the CTO's call."
+}
+```
+
+## IRPT_BCKEND-D2-W400-S2 -- The existing raw schedule names grade OUT-OF-PATTERN, and no registry row holds a SCHEDULE name
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W400-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~400",
+  "surfaced_at": "2026-10-15T04:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The live daily positions rule inf-api-positions-daily grades OUT-OF-PATTERN under lib/opal_naming.py grade(); the builder names for the 6 AM fold grade CONFORMANT, but event_rules.json holds only event-pattern rows, so the fold's schedule has no registry row yet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py grade('inf-api-positions-daily','EVENT_RULE') at base 8110ace2ee returns ('OUT-OF-PATTERN', 'orion-inf-api-positions-daily'); name('advi','inflection','api-positions','daily') returns advi-inf-api-positions-daily (read-only calls)",
+      "name('orion','inflection','raw-producer','daily') returns orion-inf-raw-producer-daily; grade with type SCHEDULE returns CONFORMANT; name('orion','inflection','raw-producer','lambda') returns orion-inf-raw-producer-lambda; grade with type LAMBDA returns CONFORMANT",
+      "infra/logic/registry/event_rules.json at 8110ace2ee holds 13 rows, each an EVENT_RULE with an event pattern (canonical names such as advi-inf-assets-trigger-on-bronze-complete); none is a schedule",
+      "infra/aws/terraform/inf-pipeline/inf-api-positions.tf:179-182 at 8110ace2ee names the rule inf-api-positions-daily with cron(22 11 * * ? *); its description says 13:37 UTC, a stale clock text"
+    ]
+  },
+  "spec_asserts": "IB-pr-556 worker face step 2 asks whether the naming builder has a SCHEDULE kind and whether a registry row is needed for the new schedule; the READ record (IB199-4) expected the first builder call to refuse.",
+  "world_is": "The builder does not refuse a SCHEDULE name: the cadence token daily is a NAMING_SCHEMA.json cadence value and the 6 AM time lives in the schedule expression, not the name. The live rule name is out of pattern and the one registry table of rules holds no schedule row. No registry row is needed for the names to grade CONFORMANT; a row is needed only if the schedule is to be registered. The READ's expectation of a refusal is not borne out (read-only; nothing added)."
+}
+```
+
+## IRPT_BCKEND-D2-S184 -- Dispositions on worker 400's rows; the daily flat-key writer is still unlocated: retiring the CLIs or deploying beside it is held by COO half condition 1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S184",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T06:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 400's rows (D2-W400-S1, S2) and the Orion pairs packet: the daily flat-key writer is still UNLOCATED (the flat keys land 11:39-11:56Z each day after the parquet), so retiring the manual CLIs or deploying the scheduled handler could stop the feed or double it; condition 1 of the COO half holds both until the writer is found and handed over.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB200-4 AC1 to AC3 on the landed tree (PASS) and the proof instance (VALID); merge 7dc4dbbc6e; packet sha256 c3dcc22f02e8624eca4f402f77fe95ba28c3df331a0896e22ef94dd19bc56b62",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~400/IB200-4_orion_pairs_design.json live_writer: claim absent; flat transactions keys landed 11:39-11:43Z, performance 11:45-11:49Z, positions .jsonl.gz 11:48-11:56Z on 2026-10-10 to 2026-10-14, after the deployed positions parquet at 11:25-11:26Z; no trigger, log stream or instance found in that window"
+    ]
+  },
+  "spec_asserts": "CTO msg 8014 condition 1: pair (b) PORTS the manual CLI into the scheduled function, no second producer beside it, the CLI retired or repointed in the same pair.",
+  "world_is": "DISPOSITIONS. D2-W400-S1 (BLOCKING, INERT): the flat bronze keys have no address() output: SUPERSEDED by IB-pr-556 AMENDMENT 1 (they are an existing pipeline's read contract, rule 30 non-application), my defect. D2-W400-S2 (the existing schedule name grades OUT-OF-PATTERN): INERT, recorded. THE HAZARD (new, ARMED, owner me): nobody has located what writes the daily flat keys; the repository holds three manual CLIs that write exactly that key shape. Either a person or host runs a CLI by hand each morning, or another writer exists. Retiring the CLIs without finding it can stop the feed; deploying (b) beside it makes two producers of one key. COO half condition 1 makes finding and handing over that writer the releasing seat's first read-only step, and a STOP if it cannot be found. Disarm condition: the writer is located and stopped or handed to (b) in the release's ledger."
+}
+```
