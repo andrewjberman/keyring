@@ -15707,3 +15707,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For 2.0.0_SA_COO~P2 (the route and hop 5 owner under the CTO's ruling on call 076d): decide, before hop 5's window, whether a print reads the frozen filled object through this route (then add the version_id parameter, the render-delegate refusal and X-Opal-Version-Id, as the series has them) or server-side (then the portal's version query is removed by an F-SHIP amendment and the print takes its document from the render host). The portal side follows either way by an issuer amendment. Counts and paths only."
 }
 ```
+
+## IRPT_DASHBD-D2-W194-S1 -- the contract's supersedes is an OBJECT, so 'append an entry' became a two-element list; no other key moved
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W194-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~194",
+  "surfaced_at": "2026-10-15T07:59:23Z",
+  "one_line": "TO-DB-b-240 says append an entry to supersedes, but at base the contract's supersedes is a JSON object holding one 0.1.0 entry, not a list. The checker's supersedes clause iterates it as a list of entries, so an object cannot pass. Resolved by making supersedes a two-element list: the 0.1.0 entry verbatim, then the 0.2.0 entry the order names.",
+  "spec_asserts": "TO-DB-b-240 step 2: 'Append to supersedes an entry {contract_version 0.2.0, schema_hash unchanged, changes}. Change NOTHING else: columns, schema_hash, enums and every other key stay byte-for-byte.'",
+  "world_is": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json at base (cee3478342) carries supersedes as an object with contract_version 0.1.0, schema_hash b5fa and changes; there is no list to append to. The checker (org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r120/p120_srccol.py, check_contract) reads c.get('supersedes') as a list of dicts, so the object form raises and AC1 cannot pass. The edit: supersedes is now a list of two objects, the 0.1.0 object unchanged in its keys and values, then the 0.2.0 object (schema_hash 1b25, the 0.2.0 base hash). Only the container changed; columns, schema_hash, enums and every other key are as they were, and the other edits are the ordered ones (contract_version, optional_columns, schema_hash_with_optional).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@cee3478342: supersedes was an object (base line 189 region) with one 0.1.0 entry",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r120/p120_srccol.py@cee3478342: check_contract, supersedes clause iterates c.get('supersedes', []) and calls x.get on each entry",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json working tree after this cell: DB120-4-AC1 PASS and DB120-4-AC2 PASS under the checker"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~D2 (the issuer of the cell): confirm the list form of supersedes is the intended shape for later contract bumps, or amend the checker's supersedes clause to read an object. No served value and no hash moved. Counts and paths only."
+}
+```
