@@ -25,3 +25,42 @@ dell1; the seating itself is the CTO's (L3) and the COO's, not this record's.
 **Reading:** a request for a light-mode MOCK (an artifact), not a ruling on panel ground colour. Open call 1 (is ground colour in
 scope) stays open until Andrew answers it. His 2026-10-06 hold keeps the light `/market` experiment off the main branch, and
 that hold is unchanged.
+
+## Addendum, ~23:5xZ (same channel), verbatim
+
+> "look at my edits on opal A. i kind of like the idea of using the brand silver or something that is just barely off white
+> silver"
+
+**What Andrew's edit was (measured):** on canvas https://claude.ai/artifact/WVqCCv8SPkiBz8byz4ZpLh, board "A light", the page and
+sidebar background changed to `#EAEAF7`.
+
+**What the CRO added:** a board "A silver" using the brand's silver-white `#E8ECF5` (`portal/design/brands/opal-capital.json`
+`white`).
+
+**Reading:** this is a stated preference, not a ruling. Moving the page canvas off `#F4F6FA` would supersede Andrew's own
+2026-09-11 ruling, recorded in `portal/CLAUDE.md` and `DESIGN.md` C3, and that needs his explicit word.
+
+## Addendum, ~23:5xZ (same channel), verbatim
+
+> "i like my EAEAF7 lavender silver better frankly"
+
+**Reading:** Andrew prefers `#EAEAF7`, a lavender silver, over the brand silver-white `#E8ECF5` as the light-mode ground for the
+page and sidebar. `#EAEAF7` is not one of the brand file's values. This is still a preference, not a ruling that replaces the
+2026-09-11 `#F4F6FA` canvas; that supersession stays open call 1.
+
+## Addendum, ~00:0xZ 2026-10-15 (same channel), verbatim -- RULINGS
+
+> "This whole light mode build needs to stay on a feature tree on this box and is only pushed when i say so.  also yes, i like
+> EAEAF7"
+
+**What this rules, verbatim scope:**
+1. **The light-mode build lives on a feature branch on this box (the laptop).** It is pushed only on Andrew's word. Merging to
+   portal DEV or PROD is a push, so neither happens without his word either. This is consistent with his 2026-10-06 hold
+   that keeps light panels off the main branch.
+2. **`#EAEAF7` is the light-mode ground for the page and sidebar.** Panels are white with the 1px `#C4CBDB` border. Inside
+   the light-mode build this replaces the 2026-09-11 `#F4F6FA` canvas.
+3. **Open call 1 (is ground colour in scope) is answered:** yes. DSGN_RBNDV2's light-mode build carries the ground colour.
+
+**Not ruled (surfaced, not adjudicated):** the first order placed DSGN_RBNDV2 on DELL1 ("the design project can be handled on
+DELL1 box"). This order places the light-mode build on this box. Whether the whole project now seats on the laptop, or only
+the light-mode build does, is Andrew's to say.

@@ -16300,6 +16300,66 @@ name the one known failure instead of silently inheriting it.
 
   ```json
   {
+    "id": "NFRA_OPLGTW-Z-S137",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T03:37:36Z",
+    "one_line": "OG-ap-19's take-list omits app/typed_scope.py, and the release CANNOT IMPORT without it: portal_models.py:33 does `from . import typed_scope as ts` and all three taken modules reference it (3, 3, 4). The order mentions it zero times. app/tools.py imports portal_models at start-up, so the release as listed would have stopped the service from coming back.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the first run of the six suites: 9 passed, 2 FAILED, 4 ERRORS -- every one 'ImportError: cannot import name typed_scope from app'",
+        "after taking the one file: 29 passed, 0 failed, 0 errors over the same six suites",
+        "git cat-file: app/typed_scope.py is PRESENT at box/sitez and ABSENT at this base 047f11aa99",
+        "introduced by e6f3b2b1b7, cell OG-gt-6, 'the scope seam over harvest_typed'; 8093 bytes",
+        "reference counts in the taken modules: portal_models 3, portal_macro 3, news_typed 4",
+        "reference counts in OG-ap-18's five modules: 0, 0, 0, 0, 0 -- which is why ap-18 excluding it was correct and why this gap did not surface until now",
+        "typed_scope.py imports only harvest_read and harvest_typed, both present at this base, so taking it adds no further dependency",
+        "the order's text mentions typed_scope 0 times"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step 4's take-list is complete: taking the three modules, four test files, the hookup hunks, the .env keys and the two grants yields a release that imports and serves.",
+    "world_is": "It does not import. The take-list enumerates the files the CELLS wrote and the files the HOOKUP touched, and typed_scope.py is neither -- it is a seam another cell (OG-gt-6) wrote that these three modules were later built on top of, so it is invisible to a list derived from this release's own cells. I have TAKEN it so the halves rule on a release that works rather than one that cannot start, and named it in the commit message, the ask's diff section and the ask's widening section.",
+    "notes": "Two routes for the issuer: (a) amend the take-list to include app/typed_scope.py -- it is one pure seam module, it imports only things already live, and the release is tested with it at 29 of 29; RECOMMENDED. (b) let OG-gt-6 ship its own seam first and re-cut OG-ap-19 on that release, which costs a round and gains a cleaner attribution. The general lesson is the one worth keeping, and it is the same shape as Z-S130 one order ago: A TAKE-LIST DERIVED FROM THIS RELEASE'S OWN CELLS CANNOT SEE A DEPENDENCY AN EARLIER CELL WROTE. ap-18's own ask even listed typed_scope.py as deliberately absent, which made it look settled rather than pending. The cheap tell is mechanical and belongs at CUT time: grep the taken modules' import statements for names the release does not contain, before running anything. The expensive tell is the one that caught it here -- the host-shaped import check the order mandates, which is the second time in two orders that check has paid for itself."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S138",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T03:57:28Z",
+    "one_line": "RESOLVES NFRA_OPLGTW-Z-S137. Amendment A2 @68a7d83f97 ruled route (a): app/typed_scope.py rides OG-ap-19 whole, the cut ee23dd004c stands unchanged, and ap19.AC1 now reads 'outside the G3-G6 set 0 (want 0)' RESULT: PASS. The grader's allow-list was widened to admit typed_scope and gt6. The COO half is signed at that release_sha (@bcc91e7a86); the CTO and CVO halves are owed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "amendment A2 at HEAD (68a7d83f97 is an ancestor of my HEAD): 'Z-S137 ruled route (a), app/typed_scope.py rides this release whole; your cut ee23dd004c already takes it and stands unchanged'",
+        "ap19.AC1 re-run after the ruling: 'files differing 16; outside the G3-G6 set 0 (want 0); tools registered 13 of 13; SAFE 13 of 13; NATIVE 13 of 13' and RESULT: PASS -- the single failing limb is gone",
+        "the grader's ALLOW regex now reads (portal_models|portal_macro|news_typed|typed_scope) and test_og_(pt1|pt2|nw1|gt6|gt10), where before it named neither typed_scope nor gt6",
+        "the seam cell e6f3b2b1b7 is TWO files: app/typed_scope.py (172 lines) and tests/test_og_gt6.py (205 lines); A2 rules the test not required",
+        "the seam's own suite was RUN as evidence and NOT taken: tests/test_og_gt6.py checked out uncommitted into the release worktree reads 4 passed against the typed_scope.py this release ships, then removed -- the worktree is byte-identical to ee23dd004c afterwards (git status empty, HEAD equal)",
+        "seven suites with it present: 33 passed, 0 failed, 0 errors (pt1 4, pt2 5, nw1 5, gt6 4, gt10 2, entitlement_admin 9, data_entitlement_family 4)"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "A2 says the cut stands unchanged, so the release is complete as committed and the halves sign that sha.",
+    "world_is": "It is, and the one judgment this seat had to make on top of the ruling was whether to ALSO take the seam's test. A2 left it open ('NOT required; the allow-list tolerates it either way'), and taking it would have been the obvious engineering instinct -- ship a module with its own coverage. I did not, for a reason that outranks the instinct: THE COO HALF IS SIGNED AT ee23dd004c, and adding any file moves the release_sha and voids that signature. So the test was run as EVIDENCE in the worktree and removed, which buys the coverage claim without moving the artifact a half has already signed. A signature binds a sha, not an intent.",
+    "notes": "Two things worth keeping. (1) WHEN A RULING SAYS 'STANDS UNCHANGED', THE PERMISSIVE HALF OF THE SAME SENTENCE IS NOT AN INVITATION TO EDIT. 'tests/test_og_gt6.py is NOT required; the allow-list tolerates it either way' is true of the GRADER and says nothing about the SIGNATURE -- the allow-list would have passed a release with the test in it, and the COO half would not have covered that release. Read a tolerance clause against every instrument it does not mention. (2) EVIDENCE DOES NOT HAVE TO SHIP. Checking a test out, running it, and removing it is a legitimate way to learn something about a frozen artifact -- as long as the removal is verified (HEAD equal, git status empty) rather than assumed, which is the same discipline as reverting the legacy_addresses edit in Z-S136. Both times the finish was 'the tree is byte-identical to where it should be', measured."
+  }
+  ```
+
+  ```json
+  {
     "id": "NFRA_OPLGTW-Z-W94-S1",
     "project": "NFRA_OPLGTW",
     "fabric": "site-z",

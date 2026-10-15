@@ -126,6 +126,7 @@ design choice below is decided; do not re-decide any of it.
 infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/app/access_state.py
 infra/aws/ec2/opal-gateway/app/tools.py
+infra/aws/ec2/opal-gateway/app/integrations/base.py
 infra/aws/ec2/opal-gateway/tests/test_og_cp1.py
 infra/aws/ec2/opal-gateway/tests/test_access_state.py
 infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json
@@ -142,7 +143,7 @@ Read-only inputs: `app/identity_scope.py`, `app/integrations/registry.py`, `app/
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-cp-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/cp1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)pytest rc=0; named tests passed 6 of 6; failed/error lines 0.*contract parity test_ogd1_ac03: rc=0; 1 passed: yes.*failing ids not in the baseline: 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-cp-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/cp1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)pytest rc=0; named tests passed 7 of 7; failed/error lines 0.*contract parity test_ogd1_ac03: rc=0; 1 passed: yes.*failing ids not in the baseline: 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-cp-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/cp1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)contract copies byte-equal: yes; person_access in record_types 1 time\(s\) \(want 1\).*person_access fields declared 8 of 8; missing \[\]; tier field present: no.*POLICY_RECORD_TYPES carries person_access: yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -187,7 +188,9 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
 
 - A1 (issuer, 2026-10-15 ~03:4xZ): ISSUED. The four open questions are decided: (1) round 37, workstream R37-PERSON, in parallel with the Friday-set releases (CTO msg 34240-era sequencing: the release is a later gateway order after `OG-ap-20`); (2) tier records stay OUT, the rosters keep the tier; (3) the sort-key literal `person_access` follows the existing hand-named tuple; (4) the record shape is sent to `2.0.0_SA_COO~MP` with the issuance (their F2 writes to it). The slot is ~94. Gate limb: GATE (viii) on the issued order (placeholders NONE).
 
-<status>complete</status>
+- A2 (issuer, 2026-10-15 ~04:1xZ, worker row Z-W94-S1): the worker built the reader and the native-tool widening, and found a SECOND identity-scope floor in `app/integrations/base.py` (the `_scope_check` block of the integration call path, about line 156) outside its `<paths>`: without it the widening reaches native tools only and every integration tool or channel stays `identity_scope_denied`, which defeats `channels_allow`. Ruled: `app/integrations/base.py` joins `<paths>`. At that block, where `_scope_reason` is set, call `data_entitlement.person_widens(tool, get_current_principal(), _is_opal_user(email))` exactly as `tools._run` does; a revision admits the call past THIS floor only (every later gate - min_tier, credential, egress - is unchanged), and the revision rides the call's audit detail as `person_record_rev=<n>` on the ok and error paths; None keeps today's denial. Add `test_ogcp1_ac07` (offline): an Opal principal with `channels_allow` for an integration channel is admitted past the integration floor, `tools_deny` beats it, a non-Opal principal is not admitted, a read that raises admits nothing. cp1.AC1 reads 7 of 7. The order is reopened to pending and the slot re-seated. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+<status>pending</status>
 <round>37</round>
 <workstream>R37-PERSON</workstream>
 <slot>~94</slot>

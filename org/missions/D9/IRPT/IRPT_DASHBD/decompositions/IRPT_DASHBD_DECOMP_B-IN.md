@@ -58,6 +58,18 @@ The CTO's one cell is cut as ONE order. The ruling: stop reconstructing Inflecti
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent read cell with a disjoint write set (its own worker folder). Worker `0.9.0_WK_IRPT_DASHBD~304` (`DB-i-4`).
 
+## 4. ROUND 117, WORKSTREAM B-IN (2026-10-15 ~03:3xZ, issuer 2.0.0_SA_COO~I2, on `CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_117_20261015.md`, msg 7985, answering the round-116 drain-end packet @e14658f347: 1 of 1 PASS, answer YES)
+
+The CTO's one cell is cut as ONE order. The ruling: Scope (not ExcelReports) is the source for Inflection account returns; ONE probe settles the three unknowns of round 116 (does the Account grouping return one group per account with a daily series for a multi-account household; is the fee flag honoured; is the credential accepted and from which store). If (a) and (c) pass, `~P2` adds the feed in the Orion pair and the accounts show Orion's figure with the fee basis stated; if (a) fails, one call per account if `~P2` costs it acceptable.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-5` | The Scope probe: the household (lowest-sha with 2 or more accounts), at most 4 paced POSTs to `/api/v1/Reporting/Scope` (fee flag false, then true) over 2026-10-01 to 2026-10-13, the raw responses private, three verdicts recomputed by the checker from the saved bodies | FWD-2 | WORLD (a vendor read: no write, no deploy; the output is LOCAL) | none | I-E |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The class is WORLD, the CTO's own word ("a WORLD read, LOCAL output, no write"), though no infrastructure path or deploy verb forces it: a call to the vendor with the estate's credential is not a LOCAL record. (b) The household is a RULE (lowest sha256 among households with 2 or more accounts in the private dimension), so the checker recomputes it and the worker cannot choose a convenient one. (c) The three verdicts are defined by exact rules over the saved response bodies, so the checker recomputes them without a vendor call; the fee verdict `NET_WHEN_FALSE` needs the gap to tie to the summed `feeAmount` over the start value, as the CTO's ruling says. (d) The pace and the cap are in the order (at most 4 calls, at least 5 s apart, one retry per flag on a timeout or 5xx, no retry on a 4xx), and a refusal stops the cell; no other principal is tried. (e) The token is used in memory and never written anywhere.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent probe cell with a disjoint write set (its own worker folder and private folder). Worker `0.9.0_WK_IRPT_DASHBD~305` (`DB-i-5`).
+
 ## Cells
 
 | cell id | owner |
@@ -66,3 +78,4 @@ The CTO's one cell is cut as ONE order. The ruling: stop reconstructing Inflecti
 | DB-i-2 | 0.9.0_WK_IRPT_DASHBD~302 |
 | DB-i-3 | 0.9.0_WK_IRPT_DASHBD~303 |
 | DB-i-4 | 0.9.0_WK_IRPT_DASHBD~304 |
+| DB-i-5 | 0.9.0_WK_IRPT_DASHBD~305 |

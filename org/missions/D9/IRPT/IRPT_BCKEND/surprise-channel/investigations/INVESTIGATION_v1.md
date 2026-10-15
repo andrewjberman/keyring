@@ -35444,3 +35444,328 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W394-S1 (stale schedule text), S3 (no repo writer of the flat .jsonl.gz positions key; the repo pull writes parquet), S4 (14-day log retention, the gap-day logs are gone), S5 (2026-07-01 is parquet-only and before the header's stated raw stop): INERT, recorded. D2-W394-S2 (the 16:00 UTC silver sweep cannot see a feed whose bronze key never landed): stays ARMED, owner me; disarm condition: the CTO rules the re-pull route and the sweep's expected set names the missing days or the feed is covered by the 06:00 ET fold (the fold covers none of the 155 live rules for this feed). THE ANSWER TO 'WHY': inferred, not measured: no artifact states why the raw producer wrote no .jsonl.gz for the two days; measured: the source holds only parquet for positions on both days and nothing for transactions and performance. THE RE-PULL: needs a raw .jsonl.gz writer that the repo does not hold (not located), at least 640 Orion positions requests (320 households times 2 dates; transactions and performance counts not read) and the vendor JWT object by name; it is a vendor-write pair, not one lambda re-run. Recommendation: the next cell locates the raw producer of the 2,358 existing .jsonl.gz objects and costs the re-pull per feed; the pair is cut after it."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W395-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~395",
+  "surfaced_at": "2026-10-15T03:09:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-551 hop 3: the premise that the new route reuses the summary's named-account reader (_summary_named_accounts) does not hold; the filled document nests its accounts and carries no firm or client_id key, so the pair needs a new reader.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/entry.py@2a914408b8 lines 317-329 read by 0.9.0_WK_IRPT_BCKEND~395: the reader refuses unless the document's firm and client_id match the request and names accounts from accounts and unpublished_account_ids",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@2a914408b8 lines 110-122: document.shape and filled_report.top_level_keys (household and values only; accounts nested under household)"
+    ]
+  },
+  "spec_asserts": "The new route reuses the summary's named-account reader, _summary_named_accounts, and _check_covered, for its scope check (RD_REPORT_SERVE_PATH_R114.json proposed_route.words).",
+  "world_is": "At HEAD _summary_named_accounts (entry.py lines 317-329) reads the summary's own firm, client_id, accounts and unpublished_account_ids keys. The filled document carries household and values only, with its accounts at household.accounts and no firm or client_id key. A reuse as written refuses every filled document (it fails safe), so the reader is a new function in the pair. _check_covered itself is reusable as the design states.",
+  "notes": "Recorded in IB199-3_serve_path_design.json (scope_rule and hops 3) and SERVE_PATH_PAIR_PACKET_V1.md section 3."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W395-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~395",
+  "surfaced_at": "2026-10-15T03:09:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-551 hop 3: the premise that the route owner must add an IAM read on the new key does not hold at HEAD; the reporting-read role already reads the whole platinum reporting prefix and the API invoke grant already covers the path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-read/locals.tf@2a914408b8 lines 46-47 (irpt_rr_platinum_prefix and irpt_rr_platinum_read_arns) and lines 72-75 (the route keys)",
+      "infra/aws/terraform/investor-reporting/reporting-read/iam.tf@2a914408b8 lines 71-77 (s3:GetObject and s3:GetObjectVersion on local.irpt_rr_platinum_read_arns); infra/aws/terraform/investor-reporting/reporting-read/api.tf@2a914408b8 lines 44-50 (source_arn ends in GET/api/scoped/investor-reporting/reporting/*)"
+    ]
+  },
+  "spec_asserts": "The route owner must add an IAM read on the new key (RD_REPORT_SERVE_PATH_R114.json proposed_route.words).",
+  "world_is": "At HEAD the reporting-read role's read grant covers the whole platinum reporting prefix, which a new client=<id>/filled_report.json key falls under, and the API invoke grant covers every GET under reporting/ including the new path. The design therefore records new_iam false with these file lines. Whether the existing grant is the intended scope of the new object is for the CTO's signature, not for this worker.",
+  "notes": "Recorded in IB199-3_serve_path_design.json (blast_radius.new_iam false) and SERVE_PATH_PAIR_PACKET_V1.md section 4."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W395-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~395",
+  "surfaced_at": "2026-10-15T03:09:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-551 hop 2: the publisher is to publish the filled report, but no production writer of the document exists and no landing address for it is named; the input contract's source is absent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@2a914408b8 line 53 (writer: the sample builder only, no other writer)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~141/build_sample.py@2a914408b8 line 7 (WRITES private folder only: HOUSEHOLD_SAMPLE.json)"
+    ]
+  },
+  "spec_asserts": "Hop 2 publishes the filled report as a platinum object (order hop 2; RD_REPORT_SERVE_PATH_R114.json hop 2), so the publisher has a filled-report document to publish.",
+  "world_is": "At HEAD the only writers of document.filled_report are the private-folder sample builders (~141 build_sample.py line 7; ~175 build_sample_inflection_r110.py line 25). The publisher, the handler and the export read no filled document, and no landing address for one is named in the repository. The design records the input claim as absent and asks the CTO who writes the document and where it lands before the pair is signed.",
+  "notes": "Recorded in IB199-3_serve_path_design.json (input_contract claim absent) and SERVE_PATH_PAIR_PACKET_V1.md section 2."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W395-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~395",
+  "surfaced_at": "2026-10-15T03:09:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-551 hop 2: the order says a builder refusal is the trigger for a missing registry row; at HEAD the naming builder accepts the new object name without refusal, so the registry need rests on the closed family set in reporting_policies.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@2a914408b8 address() at line 2515, run by 0.9.0_WK_IRPT_BCKEND~395 with client=PLACEHOLDER and object filled_report.json: returned the address with no refusal",
+      "infra/logic/registry/reporting_policies.json@2a914408b8 lines 48-52 (family set of irpt-dashbd-served-reporting: SERVED_MANIFEST, SERVED_SERIES, CLIENT_SUMMARY); scopes.json@2a914408b8 line 340 (reporting_policies.json closes the family set)"
+    ]
+  },
+  "spec_asserts": "A builder REFUSAL is the signal for a missing registry row (the order's hop 2 and the CLAUDE.md rule 30 pattern), so registry_row_needed is read off the builder's answer.",
+  "world_is": "lib/opal_naming.py address() accepts the proposed object name filled_report.json and returns the address with no refusal. The registry need therefore rests on the closed family set in reporting_policies.json, not on a builder refusal. The design records registry_row_needed true on that basis and does not type any address.",
+  "notes": "Recorded in IB199-3_serve_path_design.json (hops 2 address_builder_output and registry_row_needed) and SERVE_PATH_PAIR_PACKET_V1.md section 1."
+}
+```
+
+## IRPT_BCKEND-D2-S181 -- Dispositions on worker 395's rows; the serve-path pair needs a new reader, no new IAM, and a named source for the document
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S181",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T04:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on worker 395's rows (D2-W395-S1 to S4) for the serve-path pair: the route needs a new named-account reader, no new IAM is needed, the document has no production source, and the registry row rests on the closed family set; all INERT, the missing document source is the CTO's question before any exercise.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB199-3 AC1 to AC3 on the worker's tree (PASS) and the proof instance (VALID); merge aaa65e0d68; round-close-check for workstream ~PS is read at close",
+      "I re-ran the naming builder: address('irpt','49financial','platinum','reporting','client=PLACEHOLDER','filled_report.json') returns s3://opal-data-49financial/irpt/49financial/platinum/reporting/client=PLACEHOLDER/filled_report.json and refuses nothing; packet sha256 7daa29f0fe10e0a7bda3eb2c12f1eee3bb4ca43ecc7361fbdf1327ded864abac"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); the CTO ruled hops 2-4 are cut as ONE never-widen pair on the document shape ~D2 fixes.",
+  "world_is": "DISPOSITIONS. D2-W395-S1 (the summary's _summary_named_accounts cannot be reused; the filled document nests its accounts): INERT, the pair carries a new reader (slice 551b). D2-W395-S2 (no new IAM on the read role or the invoke grant): INERT, the order's premise was mine and was wrong; the packet states new_iam false. D2-W395-S4 (the builder accepts the new object name; the registry row rests on the closed family set): INERT, my order's wording 'a builder refusal is the trigger' was too narrow. D2-W395-S3 (the document has NO production writer and no landing address): INERT as a hazard (nothing is built or served) but it is the gate on any exercise: the COO half v1 makes it condition 1 and the question goes to the CTO; the owner of the writer is hop 1's owner ~D2 by the CTO's table, the landing address is undecided. COO half signed at the packet bytes (NEVER_WIDEN_IB_pr_551_SERVE_PATH_HOPS_2_4_COO_HALF.md)."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S1 -- the flat positions writer is in the repo, in data/inf/manual_api, outside the folders W394-S3 searched
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the flat positions writer is in the repo, in data/inf/manual_api, outside the folders W394-S3 searched",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_positions_daily.py:445 at commit b0ec63516810 (git show HEAD, read 2026-10-15)",
+      "data/inf/manual_api/pull_inflection_transactions_rest.py:585 and data/inf/manual_api/pull_inflection_performance_rest.py:639 at commit b0ec63516810",
+      "infra/aws/lambda/inf-pipeline/inf-api-positions/pull_inflection_positions_daily.py:437 at commit b0ec63516810 writes the parquet key"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-D2-W394-S3 records no repo writer of the flat bronze/positions/{date}.jsonl.gz key; its search covered infra/aws/lambda only.",
+  "world_is": "The writer is data/inf/manual_api/pull_inflection_positions_daily.py:445 (bronze_key f-string for the flat key, put at line 447). The same folder holds the flat writers of transactions (pull_inflection_transactions_rest.py:585) and performance (pull_inflection_performance_rest.py:639). The positions Lambda writes only the .parquet key (infra/aws/lambda/inf-pipeline/inf-api-positions/pull_inflection_positions_daily.py:437). W394-S3 is refined, not reversed: the repo does hold the writer, in a folder that search did not cover."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S2 -- the flat positions keys written today near 11:51 UTC have no EventBridge rule and no bronze-runner dim behind them
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the flat positions keys written today near 11:51 UTC have no EventBridge rule and no bronze-runner dim behind them",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object on opal-data-inf bronze/positions/2026-10-14.jsonl.gz (LastModified 11:51:52 UTC, Metadata empty), read 2026-10-15",
+      "events list-rules, scheduled rules whose expression holds ' 11 * * ': eight rules, earliest 11:02, latest 11:45, none at 11:51",
+      "data/inf/scripts/bronze/orchestrator.py:95-105 at commit b0ec63516810: DIMS holds unified_account_dim, billing, tax, accounts_v2, performance, transactions, assets, geo; no positions"
+    ]
+  },
+  "spec_asserts": "The bronze runner rule opal-inf-bronze-runner-cron (cron 11:15 UTC, target inf-bronze-trigger) runs the Inflection bronze dims; the trigger header states cron(43 12 * * ? *).",
+  "world_is": "The flat positions objects for 2026-09-27, 2026-10-13 and 2026-10-14 carry LastModified 11:51, 11:56 and 11:51 UTC (head-object, read 2026-10-15). Eight scheduled rules fire in the 11 UTC hour (list-rules, read 2026-10-15) and none fires near 11:51 UTC. The orchestrator DIMS list (data/inf/scripts/bronze/orchestrator.py:95-105) has no positions dim. The Lambda writes parquet. So the writer of the daily flat positions key is not located. Object metadata is empty, so no writer role is named. Recorded as found; the producer behind the daily flat key is the open question for the S2 release."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S3 -- the mirror header's stop account does not reach the parquet-only positions days after the 2026-08-14 raw restart
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the mirror header's stop account does not reach the parquet-only positions days after the 2026-08-14 raw restart",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-inf bronze/positions LIST, 4723 keys (read 2026-10-15): 7 days with a .parquet and no .jsonl.gz",
+      "infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:19-42 at commit b0ec63516810 (the header with the 2026-07-10 stop and the 2026-08-14 restart)",
+      "git show -s 5fdbe386377489e8bfd77f0c390db2ed8e139721: RAW LANDED 14:01:19Z on 2026-08-14"
+    ]
+  },
+  "spec_asserts": "The mirror header (infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:19-30) says the raw producer died on 2026-07-10 and the parquet-only dates from that stop are the honest holes; lines 35-37 record the raw restart on 2026-08-14 (commit 5fdbe38637).",
+  "world_is": "The seven parquet-only positions days are 2026-07-01, 2026-07-03, 2026-07-04, 2026-07-05, 2026-08-06, 2026-09-28 and 2026-09-29. Four of them (07-01, 07-03, 07-04, 07-05) predate the stop. Two (09-28, 09-29) fall after the restart, when the raw feed ran on other days. Only 2026-08-06 falls in the outage the header names. The header's count of 10 parquet-only dates is a 2026-07-14 measurement and was not re-derived here."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S4 -- transactions and performance have trading days with no object in either format, which the parquet-only census cannot see
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "transactions and performance have trading days with no object in either format, which the parquet-only census cannot see",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-inf bronze/transactions LIST, 196 keys, and bronze/performance LIST, 185 keys (read 2026-10-15)",
+      "lib/trading_calendar.py trading_days_between over the feed spans, read 2026-10-15 (a local computation, no vendor call)",
+      "the mirror copies flat keys only: infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:77 at commit b0ec63516810"
+    ]
+  },
+  "spec_asserts": "The dropped-day census counts parquet-only days with no monolith bronze key; the mirror copies only flat .jsonl.gz keys (lambda_function.py:77 and :493).",
+  "world_is": "Against the trading calendar (lib/trading_calendar.py trading_days_between) and the union of both formats: transactions have 7 trading days with no key in either format between 2026-05-12 and 2026-10-14 (2026-07-01, 07-13, 07-14, 07-15, 08-06, 09-28, 09-29); performance has 22 between 2026-05-03 and 2026-10-14. Positions has none in its span. These are upstream absences, not mirror drops, so the census reads 0 dropped for both feeds. No artifact read states why the producers wrote nothing for those days."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S5 -- the shared rate limiter docstring states a 0.5 req/s floor; the code default floor is 2.0 req/s
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the shared rate limiter docstring states a 0.5 req/s floor; the code default floor is 2.0 req/s",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/bronze/rate_limiter.py:4 at commit b0ec63516810: 'Starts at SAFE_FLOOR (default 0.5 req/sec)'",
+      "data/inf/scripts/bronze/rate_limiter.py:112 at commit b0ec63516810: safe_floor: float = 2.0"
+    ]
+  },
+  "spec_asserts": "data/inf/scripts/bronze/rate_limiter.py:4 (and the copies in the inf-api-positions and inf-api-txn folders) says the limiter starts at SAFE_FLOOR (default 0.5 req/sec).",
+  "world_is": "The signature default at rate_limiter.py:112 is safe_floor: float = 2.0, and the pull scripts construct AdaptiveRateLimiter without a floor argument (for example data/inf/manual_api/pull_inflection_positions_daily.py:363). The floor in force is therefore 2.0 req/s. The docstring is stale, or the default changed without it. The cost read uses 2.0 as the floor."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S6 -- the bronze-runner rule and the trigger header state clock times the live rule does not carry
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the bronze-runner rule and the trigger header state clock times the live rule does not carry",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "events describe-rule opal-inf-bronze-runner-cron (read 2026-10-15): cron(15 11 * * ? *), ENABLED",
+      "infra/aws/lambda/inf-pipeline/inf-bronze-trigger/lambda_function.py:4 at commit b0ec63516810"
+    ]
+  },
+  "spec_asserts": "The rule description of opal-inf-bronze-runner-cron says daily Inflection bronze pulls at 13:30 UTC; infra/aws/lambda/inf-pipeline/inf-bronze-trigger/lambda_function.py:4 says EventBridge cron(43 12 * * ? *).",
+  "world_is": "Live describe-rule reads cron(15 11 * * ? *), ENABLED (read 2026-10-15). This is the same class as IRPT_BCKEND-D2-W394-S1: the clock text is stale and nothing was changed by this read. The 06:00 New York fold (ruling 23eff24d0c) moves these schedules."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S7 -- 2,259 flat positions objects share one write date, 2026-07-01, and the converter comment counts 2,265 history objects
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "2,259 flat positions objects share one write date, 2026-07-01, and the converter comment counts 2,265 history objects",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-inf bronze/positions LIST with LastModified (read 2026-10-15): 2259 .jsonl.gz objects with LastModified 2026-07-01, 94 with a date on or after 2026-07-10",
+      "head-object bronze/positions/2020-04-24.jsonl.gz (read 2026-10-15): LastModified 2026-07-01T00:03:50 UTC, Metadata empty"
+    ]
+  },
+  "spec_asserts": "infra/aws/lambda/inf-pipeline/inf-silver-chain/convert_orion_api_to_silver.py:863 at commit b0ec63516810 describes a 2,265-object historical .jsonl.gz backfill.",
+  "world_is": "The source holds 2,358 flat positions objects. 2,259 carry LastModified 2026-07-01 (one batch write that day), and 94 carry dates on or after 2026-07-10 with their own write dates. The comment's 2,265 is not the measured 2,358 (read 2026-10-15). The writer of the 2026-07-01 batch is not located, and object metadata is empty. Recorded so the history's provenance is not read as per-day writes."
+}
+```
+
+## IRPT_BCKEND-D2-S182 -- Dispositions on worker 396's rows; the Orion answers: the raw producer is manual, 7 positions days dropped, the mirror is not the defect
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S182",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T05:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on worker 396's rows (D2-W396-S1 to S7) and the Orion answers: the flat .jsonl.gz positions key is written only by a manual command-line pull, 7 positions days landed parquet-only and were dropped, the mirror's refusal of parquet is by design (not a defect to fix at the mirror), and the positions re-pull is 2,240 requests (about 19 minutes).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB199-4 AC1 to AC3 on the worker's tree (PASS) and the proof instance (VALID); merge 62d5757800; round-close-check for workstream ~PO reads MAY-CLOSE",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~396/IB199-4_orion_raw_producer_read.json: positions 4,723 source keys, 2,358 flat days, 7 parquet-only days, 7 silently dropped; transactions and performance 0 parquet-only days; raw writer data/inf/manual_api/pull_inflection_positions_daily.py:445 (a command-line pull, --upload-bronze, on no schedule; the deployed lambda writes parquet only); costs positions 2,240 requests, 0.31 hours, transactions and performance 0"
+    ]
+  },
+  "spec_asserts": "CTO msg 7980: locate the raw producer; read whether any other day landed raw as parquet and was dropped (a format the mirror ignores is a defect to fix at the mirror); cost the re-pull per feed; put the producer in the 6 AM ET fold; fold in the feed ~I2 may add.",
+  "world_is": "DISPOSITIONS. D2-W396-S1 to S7: all INERT (writer location, stale pacing and clock text, source-absent days), recorded. THE ANSWERS: (1) the raw producer is a MANUAL command-line pull in data/inf/manual_api, not scheduled; the deployed inf-api-positions lambda writes only parquet; so the .jsonl.gz feeds the mirror needs exist only when a person runs the CLI. (2) 7 positions days landed parquet-only and were dropped (the two known days and five more); transactions and performance none. (3) The mirror refuses parquet by design (it is schema-coerced, raw content not recoverable): the CTO's hypothesis that this is a mirror defect is NOT borne out; the defect is that the raw producer is not scheduled. (4) The re-pull: positions only, 7 days, 2,240 requests, about 19 minutes at the shared 2 req/s floor; transactions and performance need no re-pull for parquet-only days (the two known days are absent at the source for those feeds). (5) The 6 AM fold: one scheduler schedule, trading-day frontier, names from opal_naming. (6) ~I2's feed is not yet written. NEXT: two pairs, cut as cells after the CTO's word on the shape: (a) the one-time 7-day positions raw re-pull (writes only 7 keys in opal-data-inf bronze/positions, read-back, per-key rollback), (b) the scheduled Orion raw producer in the 6 AM fold."
+}
+```
