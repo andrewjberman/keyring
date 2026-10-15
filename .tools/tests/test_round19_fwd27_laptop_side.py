@@ -2,14 +2,14 @@
 r"""FWD-27 laptop-side read (NFRA_CTLPLN TO CT-ai-4, round 19).
 
 Runs .tools/ssh-tailnet-verify.py from this laptop for site Z (sitez), dell1 and dell2 as a READ:
-`hostname` by key, plus the tool's own no-password password_arm probe. No password is ever sent, no
-write happens on any box, nothing is run elevated.
+`hostname` by key, plus the tool's own no-password probe. No password is ever sent, no write happens
+on any box, nothing is run elevated.
 
-The login for each box is the client's own default login, as read by `ssh -G <box>` (a config read; no
-connection is made). The CVO regrade row 27 (2026-10-13) measured key login with no login given
-(`ssh -o BatchMode=yes <addr> hostname`, rc 0) on three boxes, so that default is the login those boxes
-accept. The tool still checks the printed hostname against the register, so a wrong login or a wrong
-machine reads as not done, never as done.
+The per-box logins are the ones recorded in the CT-ab-7 order, org/missions/D0/NFRA/NFRA_CTLPLN/
+task-orders/NFRA_CTLPLN.TO-CT-ab-7.ssh-tools-kbdint-and-replan.md (line 30): sitez as "Opal Bloomberg",
+dell1 and dell2 as "Test". The default identity is %USERPROFILE%\.ssh\id_ed25519 (the tool's default).
+The tool still checks the printed hostname against the register, so a wrong login or a wrong machine
+reads as not done, never as done.
 
 Last line:
     FWD27-LAPTOP-SIDE boxes=<n> key_ok=<k> password_refused=<p> ok=<True|False>
@@ -25,7 +25,9 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 TOOL = ROOT / ".tools" / "ssh-tailnet-verify.py"
-BOXES = ["sitez", "dell1", "dell2"]
+# CT-ab-7 order, line 30: the per-box login map (sitez "Opal Bloomberg"; dell1 and dell2 "Test").
+LOGIN_FOR = {"sitez": "Opal Bloomberg", "dell1": "Test", "dell2": "Test"}
+BOXES = list(LOGIN_FOR)
 TOOL_TIMEOUT_S = 240
 REFUSED_ARMS = ("REFUSED", "KBDINT-NO-PROMPT")
 
@@ -38,21 +40,10 @@ def field(line, name):
     return None
 
 
-def default_login(box):
-    """The login ssh would use for BOX with no -l, read from client config (ssh -G opens no connection)."""
-    out = subprocess.run(["ssh", "-G", box], capture_output=True, text=True, timeout=30)
-    for line in out.stdout.splitlines():
-        if line.startswith("user "):
-            return line[len("user "):].strip()
-    return ""
-
-
 def main():
     cmd = [sys.executable, str(TOOL), "--box", *BOXES, "--timeout", "5"]
     for box in BOXES:
-        login = default_login(box)
-        if login:
-            cmd += ["--user-for", "%s=%s" % (box, login)]
+        cmd += ["--user-for", "%s=%s" % (box, LOGIN_FOR[box])]
     proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TOOL_TIMEOUT_S)
     lines = (proc.stdout + proc.stderr).splitlines()
     for line in lines:
