@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~100</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run on branch wk-NFRA_CTLPLN-100 @e6a830ca36 (merged e2720105d5): WORKTREE-GC-OWN-COMMIT arms=8/8 ok=True, WORKTREE-GC-SELFTEST cases=3/3 ok=True, and the dry run prints SUMMARY with UNSTARTED=0; proof instance VALID on the committed state; the diff touches only the order's paths and the issuer read it. Reading: a worktree whose branch carries no commit of its own (own=0, or unknown for a detached HEAD or a missing reflog) is UNSTARTED and never removed by --go, clean or dirty; CLEAN and MERGED need own >= 1; --check-removable is the drain's test (own commit, in trunk or a box branch, clean status, not in use). The negative control (a branch at its issuance commit, clean and dirty) passes. Rows W100-S1 (ARMED, disarm_owner 1.0.0_SA_CTO: --go still force-removes a dirty merged worktree with an own commit, Andrew's standing word, while --check-removable refuses it; asked of the CTO with REC keep as is) and W100-S2 (INERT: the verb also refuses non-cache ignored files) accepted. Known limit: UNSTARTED is judged after ACTIVE, so a fresh own=0 worktree reads ACTIVE until 24 h idle.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
