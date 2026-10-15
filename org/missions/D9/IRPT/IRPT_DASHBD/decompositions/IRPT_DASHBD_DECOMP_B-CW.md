@@ -172,3 +172,23 @@ Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3
 | cell id | owner |
 |---|---|
 | DB-c-14 | 0.7.0_AE_CloudOps~DB2 |
+
+## 8. ROUND 121, WORKSTREAM B-CW (2026-10-15 ~06:1xZ, issuer 2.0.0_SA_COO~C2, on the CTO's rulings msgs 8099 and 8103: the Cottonwood `account_dim` is a SCHEDULED producer on the 49 Financial pattern, a build cell first reading that pattern)
+
+**The CTO's ruling (msg 8103):** "A one-shot gold write is not a production producer: production must be scheduled ... account_dim changes as accounts open and close. The build cell first reads how 49 Financial's gold account_dim is written (its function, schedule and role) and copies that pattern for Cottonwood under a *-cot-* builder-named role, scheduled after its Black Diamond silver inputs. If no 49F writer exists, add an account_dim emit to the Cottonwood holdings-performance function, with one more gold write grant, by an addendum to its pair. Not a new one-shot path. Cut it the round after the addendum resumes."
+
+**Read first, build after.** The read touches no file the resume order (`DB-c-14`) edits, so it is cut now; the BUILD cell (Terraform and code in the holdings-performance root, which the applier is changing) is cut only after the resume order drains. The issuer's own LIST at the cut read 0 `account_dim` partitions at the builder address for all three firms (49 Financial, Inflection, Cottonwood), so the 49 Financial pattern may not exist where the packet assumed; the cell finds out.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-15` | The READ: each firm's gold `account_dim` state, the repo code that writes an account dimension, the function, role and schedule that run it, the Cottonwood adapter's inputs and what it lacks for a scheduled run; the verdict on the CTO's two branches | FWD-2, FWD-11, FWD-15 | LOCAL (a read) | none | C-J |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) A read cell, one worker (`~408`), no edits. (b) The BUILD cell and the refreshed pair follow this read and the drain of `DB-c-14`. (c) The 2026-10-12 partition choice of the round-104 packet is superseded by the scheduled design (the producer computes its own date).
+
+**fanout:** 1 of 1 chains, cap 8, reason: one read cell. Worker `0.9.0_WK_IRPT_DASHBD~408`.
+
+## Cells (round 121)
+
+| cell id | owner |
+|---|---|
+| DB-c-15 | 0.9.0_WK_IRPT_DASHBD~408 |
