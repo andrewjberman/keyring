@@ -35540,3 +35540,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Recorded in IB199-3_serve_path_design.json (hops 2 address_builder_output and registry_row_needed) and SERVE_PATH_PAIR_PACKET_V1.md section 1."
 }
 ```
+
+## IRPT_BCKEND-D2-S181 -- Dispositions on worker 395's rows; the serve-path pair needs a new reader, no new IAM, and a named source for the document
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S181",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T04:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on worker 395's rows (D2-W395-S1 to S4) for the serve-path pair: the route needs a new named-account reader, no new IAM is needed, the document has no production source, and the registry row rests on the closed family set; all INERT, the missing document source is the CTO's question before any exercise.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB199-3 AC1 to AC3 on the worker's tree (PASS) and the proof instance (VALID); merge aaa65e0d68; round-close-check for workstream ~PS is read at close",
+      "I re-ran the naming builder: address('irpt','49financial','platinum','reporting','client=PLACEHOLDER','filled_report.json') returns s3://opal-data-49financial/irpt/49financial/platinum/reporting/client=PLACEHOLDER/filled_report.json and refuses nothing; packet sha256 7daa29f0fe10e0a7bda3eb2c12f1eee3bb4ca43ecc7361fbdf1327ded864abac"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); the CTO ruled hops 2-4 are cut as ONE never-widen pair on the document shape ~D2 fixes.",
+  "world_is": "DISPOSITIONS. D2-W395-S1 (the summary's _summary_named_accounts cannot be reused; the filled document nests its accounts): INERT, the pair carries a new reader (slice 551b). D2-W395-S2 (no new IAM on the read role or the invoke grant): INERT, the order's premise was mine and was wrong; the packet states new_iam false. D2-W395-S4 (the builder accepts the new object name; the registry row rests on the closed family set): INERT, my order's wording 'a builder refusal is the trigger' was too narrow. D2-W395-S3 (the document has NO production writer and no landing address): INERT as a hazard (nothing is built or served) but it is the gate on any exercise: the COO half v1 makes it condition 1 and the question goes to the CTO; the owner of the writer is hop 1's owner ~D2 by the CTO's table, the landing address is undecided. COO half signed at the packet bytes (NEVER_WIDEN_IB_pr_551_SERVE_PATH_HOPS_2_4_COO_HALF.md)."
+}
+```
