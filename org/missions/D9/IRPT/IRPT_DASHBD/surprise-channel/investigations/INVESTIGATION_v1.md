@@ -18055,3 +18055,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The earlier test pins the contract top-level hash to the 0.3.0 value. The 0.4.0 contract recomputes the top-level hash over 19 columns plus source, flow_claim and source_account_id, as the spec requires, so the earlier assertion is red at 5f91315a60. The test is not repaired here (outside the grant). The contract and its test commit 5f91315a60 are unaffected. Counts only."
 }
 ```
+
+## IRPT_DASHBD-D2-W219-S2 -- Amendment 1 resolves row S1 in the record: the one hash assertion of the Cottonwood test moves to the 0.3.0 supersedes entry; AC1, AC2 and AC3 PASS
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W219-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~219",
+  "surfaced_at": "2026-10-15T19:06:17Z",
+  "one_line": "Row IRPT_DASHBD-D2-W219-S1 is resolved in the record by the issuer's Amendment 1 (f8c18a0e87, carried by a merge of box/dell2): the one hash assertion at line 263 of the Cottonwood test now compares with the 0.3.0 entry of contract supersedes; 3 lines changed (2 added, 1 removed) at 131b4189c3; AC1 PASS, AC2 PASS, AC3 PASS (12 new tests, 52 earlier tests)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show f8c18a0e87 -- the order file: AMENDMENT 1 adds the Cottonwood test to the grant and bounds the edit to 8 lines",
+      "test_cottonwood_bd_account_return_daily.py at 131b4189c3: 3 lines changed (2 added, 1 removed), the assertion at line 263 now reads the 0.3.0 supersedes entry",
+      "python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r137/p137_contract040.py . DB137-2-AC3 at 131b4189c3: DB137-2-AC3 PASS (12 new tests, 52 earlier tests)"
+    ]
+  },
+  "spec_asserts": "Amendment 1 (f8c18a0e87): ONE assertion of the earlier Cottonwood test moves to the 0.3.0 supersedes entry; the file may change by at most 8 lines; then AC1, AC2 and AC3 are re-run.",
+  "world_is": "The assertion is replaced in 3 changed lines; the 52 earlier tests pass; the three criteria PASS; the contract's top-level schema_hash_with_optional is unchanged by the edit. The ARMED hazard of row IRPT_DASHBD-D2-W219-S1 is disarmed by this edit. Counts only.",
+  "notes": "Worker row: the disposition of IRPT_DASHBD-D2-W219-S1 from ARMED BLOCKING to resolved is for the CVO to make (a worker row cannot carry GRADUATED or adjudicates, gate A-1). S1 is not edited; this row is its resolution in the record."
+}
+```
