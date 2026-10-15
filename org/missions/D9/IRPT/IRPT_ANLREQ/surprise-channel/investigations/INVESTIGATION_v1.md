@@ -17286,3 +17286,107 @@
   "notes": "The addendum's source rule (catalogue only, no vendor call) and the existing mechanism (provider-verified, at upload) differ. Porting the existing suggestion is PORTAL_ONLY for the display and the accept; a catalogue-only suggestion is a new portal function with weak coverage. The CTO rules which source the Did you mean uses."
 }
 ```
+
+## IRPT_ANLREQ-D2-W171-S1 -- the AR-g-52 contract is silent on an exception raised by classify, and on a ticker that appears on two pool rows with one row matching the class and one not
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W171-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~171",
+  "surfaced_at": "2026-10-15T15:50:49Z",
+  "one_line": "The AR-g-52 contract names no outcome for an exception raised by the classify callable, nor for a ticker that appears on two pool rows with different classes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-52 item 4 says a proposal is class-checked from the pool row for that ticker, else from classify(ticker) if given, else dropped; item 5 gives typed drop reasons for a history call that raises, and none for a classify call that raises.",
+  "world_is": "swap_replacement.py at 011f9c1245 lets an exception from classify(ticker) propagate, because the contract gives it no drop reason and the message must not enter the result. A ticker on several pool rows counts as a pool candidate when any one row matches the class, and a proposal is class-checked against the set of classes its rows give, so the answer does not depend on row order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py:109 @011f9c1245 (key = _class_of(classify(ticker)), with no try around it)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py:47 @011f9c1245 (_pool_classes collects every pool row's class key per ticker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The adapter cell reads classify and decides its exception path; the CTO rules whether a classify fault is a NOT_CLASSIFIED drop or a loud failure. No module behaviour is changed by this row."
+}
+```
+
+## IRPT_ANLREQ-D2-W170-S1 -- AR-g-51 contract item 2 names the symbols argument an iterable, and a bare str is one: resolve_prices("SPY", ...) looks up S, P and Y, with no refusal and no rejected entry
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W170-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~170",
+  "surfaced_at": "2026-10-15T15:50:18Z",
+  "one_line": "A bare str passed as symbols is iterated character by character: each one-character str is a non-empty str, so it is stripped, upper-cased and looked up as a symbol. The contract names exactly two typed refusals, so none is raised for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-51 contract item 2: symbols is an iterable; each entry that is a non-empty str is stripped and upper-cased; a non-str or blank entry goes to rejected. Item 2 names exactly two refusals, PRICE_WINDOW and PRICE_READERS.",
+  "world_is": "price_source.py:71 _normalise iterates the symbols argument directly. A str argument yields single-character entries that are each non-empty str, so resolve_prices('SPY', ...) prices three symbols S, P and Y, and rejected stays empty. Built as the contract states; no third refusal added.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_source.py:71 @5057b4dbfd (read by file)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_source.py:74 @5057b4dbfd (read by file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No caller exists yet: the adapter and compose cells are the first callers. The CTO or the issuer decides whether the contract refuses a str symbols argument (a typed refusal) or the adapter cell passes a list. Not a defect in what was built against the contract as written."
+}
+```
+
+## IRPT_ANLREQ-D2-W170-S2 -- AR-g-51 contract item 4 keeps a row whose date matches YYYY-MM-DD in shape, so a calendar-impossible date such as 2026-13-45 passes the as_of cut and is kept
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W170-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~170",
+  "surfaced_at": "2026-10-15T15:50:18Z",
+  "one_line": "The date check is the shape pattern only, so 2026-13-45 and 2026-02-30 are accepted as row dates. They sort lexically and pass the T-1 cut when they are not later than as_of.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-51 contract items 2 and 4: start, end and as_of must match ^[0-9]{4}-[0-9]{2}-[0-9]{2}$, and a row is kept only when its date is a str matching that pattern and is not later than as_of.",
+  "world_is": "price_source.py:25-27 _is_date is a fullmatch of the shape pattern and nothing else; _usable_rows (price_source.py:43) keeps a shape-valid row whatever its calendar validity. The stdlib datetime module is in the allowed import set, but no calendar check was added because the contract states the pattern.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_source.py:25 @5057b4dbfd (read by file)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_source.py:43 @5057b4dbfd (read by file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Low hazard: a vendor or store row with an impossible date is not a normal output. The CTO decides whether the chain rejects a calendar-invalid date (a datetime.date parse at the row gate) or the contract's pattern stands."
+}
+```
+
+## IRPT_ANLREQ-D2-W170-S3 -- the commit gate printed WARN that the client-data check was not run on commit 5057b4dbfd, because the hashed account-id list is absent on this device
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W170-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~170",
+  "surfaced_at": "2026-10-15T15:50:18Z",
+  "one_line": "The safe-commit path printed WARN: client-data-check: hashed account-id list ABSENT, so commit 5057b4dbfd was not checked for client account ids; the commit still passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit-time client-data check examines each commit's staged files for hashed client account ids, and a commit it cannot examine is reported as not checked.",
+  "world_is": "On this worktree's device the list is absent at C:\\Users\\Test\\.opal\\account_id_hashes.txt and OPAL_ACCOUNT_ID_HASHES is unset. The two committed files are authored from made-up tickers and numbers, and carry no account identifier. The check ran as WARN, not as a refusal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 5057b4dbfd, client-data-check WARN line (read at commit time)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_source.py @5057b4dbfd (read by file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Environmental: the list lives on the operator's device and this worker cannot provision it. Recorded so the drain can decide whether the check must run on dell2 before a product commit lands."
+}
+```
