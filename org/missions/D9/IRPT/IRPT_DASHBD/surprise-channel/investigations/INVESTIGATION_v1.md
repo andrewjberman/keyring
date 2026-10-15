@@ -15707,3 +15707,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For 2.0.0_SA_COO~P2 (the route and hop 5 owner under the CTO's ruling on call 076d): decide, before hop 5's window, whether a print reads the frozen filled object through this route (then add the version_id parameter, the render-delegate refusal and X-Opal-Version-Id, as the series has them) or server-side (then the portal's version query is removed by an F-SHIP amendment and the print takes its document from the render host). The portal side follows either way by an issuer amendment. Counts and paths only."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W195-S1 -- the Cottonwood holdings-performance schedule file creates its schedule ENABLED, against the DISABLED ruling of the B-CW rounds
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W195-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~195",
+  "surfaced_at": "2026-10-15T08:07:18Z",
+  "one_line": "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf creates aws_scheduler_schedule.irpt_holdings_performance_cot with state ENABLED, while its own description and the B-CW round-115 and round-117 rulings say it is created DISABLED until the catch-up after-read",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "spec_asserts": "The schedule is created DISABLED and enabled only after the catch-up's after-read: the schedule resource's own description says CREATED DISABLED; enabled only after the catch-up's after-read; the round-117 CTO ruling (B-CW, section 1) reads 'The schedule is DISABLED'; the round-117 ruling 1 orders the one-line change to ENABLED only after the catch-up.",
+  "world_is": "At cee3478342, schedule.tf line 287 reads state = \"ENABLED\" on resource aws_scheduler_schedule.irpt_holdings_performance_cot (resource line 283, cron(15 8 ? * MON-FRI *), America/New_York). The file therefore says ENABLED and its description says DISABLED. Whether the live schedule is ENABLED was NOT read (no AWS call was allowed to this worker); the file as written would fire the Cottonwood holdings function at 08:15 before the catch-up.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf:283-288 at cee3478342: resource aws_scheduler_schedule irpt_holdings_performance_cot, description CREATED DISABLED, state = ENABLED, schedule_expression cron(15 8 ? * MON-FRI *)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-CW_ROUND_117_20261015.md section 1 (the schedule is DISABLED) and section 2 ruling 1 (ENABLED only after the catch-up's after-read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while reading the holdings-performance cot schedule as the precedent for the Cottonwood account return landing packet (DB-b-241, no build, no plan, no apply). The disarm owner is the B-CW issuer who carries the DB-c-7 schedule file; the applier 0.7.0_AE_CloudOps~DB2 is the one to hold the apply until the file reads DISABLED or the owner records why ENABLED is intended. Paths and words only; no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W195-S2 -- the dim_return_method row a landing of the Cottonwood account return writes sits outside the one-prefix write the order names
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W195-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~195",
+  "surfaced_at": "2026-10-15T08:07:18Z",
+  "one_line": "the producer's served rows point at method_version 2 whose row lives in irpt/cottonwood/gold/dim_return_method/, which the landing grant of TO-DB-b-241 (one Cottonwood gold prefix) does not reach",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The landing grant names the write of the ONE Cottonwood gold prefix (account_return_daily), and the adapter's rows carry method_version 2 (adapter line 56: the dim_return_method row 2, the custodian value).",
+  "world_is": "account_return_daily.py emit_method_row (line 2000, address at line 2016 with TABLE_METHOD dim_return_method, partition method_version=2) writes the method row under irpt/cottonwood/gold/dim_return_method/. A landing that writes only account_return_daily (data.parquet and manifest.json) leaves its method_version 2 rows pointing at a row no grant writes. Nothing is landed by this worker; INERT until a landing is cut.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:2000-2016 at cee3478342: emit_method_row and its opal_naming.address call with TABLE_METHOD (line 101 dim_return_method)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py:56 at cee3478342: METHOD_VERSION = 2, the row the rows point at"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer of DB-b-241's packet: decide whether the landing carries a second write statement for dim_return_method (a second prefix, its own grant) or writes a manifest that says the method row is not carried. Recorded as adapter_changes item 6 of RD_CW_LANDING_FACTS_R120.json. Counts and paths only."
+}
+```
