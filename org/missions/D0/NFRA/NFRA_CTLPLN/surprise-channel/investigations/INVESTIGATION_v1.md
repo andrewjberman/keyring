@@ -11958,3 +11958,28 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Filed for the owner of the box's commit gate to disposition. This worker did not create, move or read the account-id list and did not set OPAL_ACCOUNT_ID_HASHES. The file read is outside the worker's <paths>."
 }
 ```
+
+## NFRA_CTLPLN-S9134 -- open-calls.py scope reads CROSS-BOX on own-box IRPT_DASHBD cells, sending each to cross-adjudication
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9134",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-15T22:45:00Z",
+  "one_line": "Three dell2 IRPT_DASHBD calls in one day (cf2a, 4255, 5df4) measured verdict=CROSS-BOX only because other IRPT_DASHBD orders name the shared org/critical_paths/change_management paths, though each cell writes only ~I2's deliverables on dell2; each one cost a cross-adjudication round trip that its box's CTO could have settled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "open-calls skill: 'Whether a call touches only this box is MEASURED' -- the scope verdict should reflect the call's own write set (FWD-22: a lead settles its own box's calls).",
+  "world_is": "scope reads the project's order paths as a whole, so one shared ledger path in any order makes every call in the project CROSS-BOX; dell2's CTO wrote 'out of pattern: none in substance' on all three submissions.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "XA-20261015T194106Z-bfeb, XA-20261015T213049Z-226a, XA-20261015T224027Z-4035 submissions, section 'Out of pattern'",
+      "org/critical_paths/cross_adjudication/20261015T2245Z_XA-20261015T224027Z-4035.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
