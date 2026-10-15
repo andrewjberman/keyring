@@ -17058,3 +17058,86 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarms when the no-overwrite guard in write_day and the 2026-07-10 floor in owed_days (and in explicit day events) are merged and tested (round 125, cell DB-b-254). No landing packet is written before then. Counts, dates and words only."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W209-S1 -- OBSERVATION: the comment above the --method-row-only branch says it lists no partition, but line 2139 lists the custodian transactions prefix before the branch
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W209-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~209",
+  "surfaced_at": "2026-10-15T11:37:31Z",
+  "one_line": "The producer comment above the method-row-only branch says a method-row write needs no partition listing, but main lists the custodian transactions prefix before that branch, so the entry point issues one LIST on every run",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "account_return_daily.py@6e4604cc24 lines 2171-2173, the comment above the --method-row-only branch: 'BEFORE the inception scan and the partition listings: a method-row write needs none of them.'",
+  "world_is": "Line 2139, trn_days = partition_days(s3, src[transactions_prefix]), runs before the branch at line 2174. The method-row-only entry point therefore issues one paginated LIST of the custodian transactions prefix on every run, a dry run included. A grant for that entry point must carry the LIST as well as the PutObject.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@6e4604cc24 lines 2139 and 2171-2174 (the LIST precedes the branch)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@6e4604cc24 partition_days lines 468-479 (paginated LIST with a delimiter)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~209/RD_METHOD_ROW_READ_R125.json who_may_write.entry_point"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A reader who takes the comment at its word under-grants the entry point. Words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W209-S2 -- OBSERVATION: the reporting-gold handler docstring names one write prefix where the role's write list names six
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W209-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~209",
+  "surfaced_at": "2026-10-15T11:37:31Z",
+  "one_line": "The reporting-gold handler docstring says its role may write only the account_return_daily prefix; the role's write list names six gold prefixes, and dim_return_method is in none of them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@6e4604cc24 lines 14-15 (module docstring): 'this function's role may write ONLY the account_return_daily prefix'.",
+  "world_is": "reporting-gold/locals.tf irpt_rg_gold_write_arns (lines 104-111) and the WriteTheFiveGoldPrefixesOnly statement in reporting-gold/iam.tf (lines 92-97) name six gold prefixes: returns, class, activity, realized, unrealized and filled report values. The docstring is stale. The grant reading for dim_return_method is unchanged: it is in none of the six.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@6e4604cc24 lines 12-16",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf@6e4604cc24 lines 102-111",
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf@6e4604cc24 lines 92-97 and 175"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Only the docstring is stale; no grant is changed by this row. Counts and words only."
+}
+```
+
+## IRPT_DASHBD-D2-W209-S3 -- OBSERVATION (ARMED): the premise that the scheduled fire makes threshold_claims_source readable does not hold; no scheduled function reaches the writer and the served rows carry no claim column
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W209-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~209",
+  "surfaced_at": "2026-10-15T11:37:31Z",
+  "one_line": "The order's premise that the scheduled fire makes threshold_claims_source readable does not hold: no scheduled function calls emit_method_row, and the served method rows carry none of the six claim columns",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-b-256, the 'Why' paragraph: the thresholds-swap ledger's leg L7 expected threshold_claims_source to be readable after the first scheduled fire.",
+  "world_is": "The scheduled reporting-gold handler has zero calls of emit_method_row; its docstring says it omits the call by design. The only call sites are the two in account_return_daily.py main. The served v1 and v2 rows carry none of the six claim columns, so the scheduled fire cannot make them readable as built. The claim columns were added to the producer by commit 91e3ec5a47 on 2026-10-11, after v2 landed on 2026-10-03.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@6e4604cc24 (zero emit_method_row calls; docstring lines 12-16)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~209/RD_METHOD_ROW_READ_R125.json (served_versions and missing_in_newest)",
+      "git log of data/assets/scripts/gold/irpt_reporting/account_return_daily.py: commit 91e3ec5a47 (2026-10-11) adds the threshold claim columns"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Armed because the served threshold values carry no claim, so a reader of the current rows cannot tell measured from held. Disarms when the CTO takes option A, B or C in the record's who_may_write. This row proposes no grant. Words only."
+}
+```
