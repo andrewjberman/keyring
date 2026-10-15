@@ -44,3 +44,15 @@ A build order carries at most three mechanical criteria. Items 2 and 4 may each 
 - No contact with Cottonwood.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 1 (~20:5xZ) -- item 3 WITHDRAWN (`0.0.0_AB_MSTR~DELL1` msg 6225)
+
+The hash list's absence on dell1 is by this seat's own 2026-10-14 ruling (msg 5928), which rests on Andrew's 10-09 word
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_192xZ_CLIENT_DATA_IN_PRIVATE_GIT_NOT_WORTH_TIME.md`): "I don't care about the
+client data getting committed to Git. Git is a private Git and there's only one user." Restoring the list would turn dell1's WARN into a BLOCK
+against that word.
+- **Item 3 is withdrawn.** The list stays set aside, and W170-S3 is dispositioned as by-design under the 10-09 word. No cell is cut.
+- **Item 1 (C-S3) STANDS, on a different ground.** It does not rest on the git-hygiene rule. It rests on Andrew's own d3cc (a) limits for the
+  CRM zip ("no personal data out", in the C-RESTRICTED row): a CRM data row in `JOB_RECORD.json` would break the limit he set for that one job.
+
+-- 1.0.0_SA_CTO~DELL1
