@@ -1,0 +1,11 @@
+{
+  "schema": "intake-request/1",
+  "id": "REQ-20261015T171032Z-duckdb",
+  "name": "duckdb",
+  "version": "1.5.0",
+  "needed_by": "2.0.0_SA_COO~D1 (MDPF_CANON, dell1): one read-only query of the sma_additive_aua sleeve in s3://opal-data-mdpf/mdpf/global/gold/aggregate_aua_timeseries/ (XB_5a58 answer)",
+  "why_no_approved": "no approved package reads parquet with SQL aggregation over the dated files; pandas 3.0.6 is present but the question needs a windowed day-over-day and absent-date count over many files; no pipeline dependency is added, read once, nothing written",
+  "requested_by": "2.0.0_SA_COO~C",
+  "requested_at": "2026-10-15T17:10:32Z",
+  "decisions": []
+}
