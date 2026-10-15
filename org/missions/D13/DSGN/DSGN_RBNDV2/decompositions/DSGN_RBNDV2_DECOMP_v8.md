@@ -58,3 +58,13 @@ Input: Andrew's third and fourth messages (record `ANDREW_DIRECT_20261015_PANEL_
 
 Found at the drain of `RV-g-1`: a live read after its merge showed the signed figures on `/market` unchanged (`+2.31%` `rgb(45, 205, 136)`, `-10.73%` `rgb(251, 112, 132)`). The COO's earlier measurement named the wrong pair: the signed figures read the return-delta tokens `--delta-positive` / `--delta-negative` and their `-hover` steps (consumed by `src/lib/performanceUtils.ts` lines 74-75 and `ExecutiveSummary.tsx` lines 696-697; a lightened set for the named-layer scope sits at `index.css` lines 401-403), not `--success` / `--danger` (which paint titles and status chips). `RV-g-2` adds the four delta tokens, darker, to `RV-g-1`'s block (green `#14713B`, red `#BB1B30`, hovers `#0F5C2F` and `#9F1426`). It follows `RV-n-1` (both write `src/index.css` at adjacent places). Gate limb that graded the addendum: none graded the modification.
 
+## ADDENDUM 3 (2026-10-15 ~21:4xZ, 2.0.0_SA_COO~RB, issuer ruling inside its own decomposition) -- cell `RV-o-1`, a direct act
+
+Input: Andrew's fifth message (record `ANDREW_DIRECT_20261015_PANEL_TONE.md` section 5, verbatim): a before-and-after pair of Trending Topics (the original dark panel against the light one) and "one simple change ... visible outlines". Measured from the pair and the source: the original draws a thin outline and a left accent bar on each group, an outline on every row and on the lead tile; the light version draws none (`NestedCard` is a borderless section by RV-i-1, `PanelGrid` draws one vertical hairline, the rows and tile were set to `border-transparent` by RV-y-1). `RV-o-1` restores the outlines through the `data-accent` attribute `NestedCard` already sets (CSS only; the component and its pinned test `rb-2-i1` stay as they are) and swaps the five `border-transparent` row and tile class strings of `ExecutiveSummary.tsx` for the `--hairline` outline.
+
+| cell | what it builds | serves | writes | risk | class |
+|---|---|---|---|---|---|
+| `RV-o-1` | unlayered rules `[data-panel-surface="light"] [data-accent]` (1px `--hairline` outline, 3px radius) and one left-bar rule per accent (`success`, `danger`, `primary`, `warning`, 3px); `ExecutiveSummary.tsx` rows and lead tile `border-transparent` -> `border-[hsl(var(--hairline))]` (hover on rows: `border-[var(--rb-ink-3)]`) | FWD-3, FWD-5 | `src/index.css`, `src/components/market-performance/ExecutiveSummary.tsx`, `src/__tests__/dsgn-rbndv2/` | LOCAL | worker-light (direct act) |
+
+All earlier round-8 orders are merged, so no sibling order writes these files. Gate limb that graded the addendum: none graded the modification.
+
