@@ -37878,3 +37878,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS and four findings the CTO should see before the pair. (1) THE KEY: only 49 Financial's transactions carry the three columns (W415-S1, BLOCKING for the build as ruled); Cottonwood's Black Diamond feed names its splits in text types (Corporate Action Split, Reverse Split) and Inflection's Orion feed was not classifiable by this read, so the split key per firm is a declaration still to be written. (2) THE RATIO: 17 of 75 measured custodian ratios disagree with the close-price ratio at a 2 percent tolerance (the tolerance is the worker's, stated, not tuned); the build must say which ratio governs on a disagreement; the ruling takes the custodian's ratio and a control against the close. (3) THE COUNT: 985 distinct accounts held one of five split securities at t-1 on 2026-04-21 (846 held the 6-for-1 security with no same-day activity) against the ruling's 920 graded account-days; the 920 is the guard's graded set and was not reproduced (W415-S3). (4) THE INPUT: the holdings producer's declaration names no transactions prefix for any channel; 49 Financial's is declared in the irpt_reporting sources file (W415-S2), so the pure core needs a new per-(security, day) ratio table input and a declared split key per firm. D2-W415-S4 (the STOCK SPLIT text sits in the source-code description on all 1,348 STK rows and in the detail text on 36), S5 (the calendar fallback table) and S6 (a sibling Cottonwood prefix, fact_transactions_s2, not counted): INERT, recorded. D2-W415-S1 stays ARMED, owner me."
 }
 ```
+
+## IRPT_BCKEND-D2-S196 -- owner disposition for W413-S1 and S194 (~P2); remedy: one-account pair now, a source-measured-empty exemption under its own pair
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S196",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T12:14:53Z",
+  "one_line": "Owner disposition and remedy: rows IRPT_BCKEND-D2-W413-S1 and D2-S194 have ONE disarm owner, 2.0.0_SA_COO~P2 (as S193 ruled for S158/S192); the Cottonwood lost account is accepted by a one-account never-widen pair on the source's own zero-position evidence, and the publish guard gains a source-measured-empty exemption under its own pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W413-S1 and S194 name 'the CTO or whoever accepts' as owner (CVO~IRPT ADJUDICATION_v114 @a6f2db4f50: owner field regressed).",
+  "world_is": "IB-pr-571 (record IB210-2) MEASURED the cause: the account's source rows carry no positions on 3 dates, so the custody frame is empty at holdings_snapshot.py:403; the screen already drops 136 of 1,001 Cottonwood source accounts for the same reason, so a newly-empty account will recur. The CTO ruled (msg to ~P2 on 8262): accept this one account by a never-widen pair on that evidence; and here, the systemic remedy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~414/IB210-2_cot_validator_read.json (merged 61fd06850f)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v114.md @a6f2db4f50"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Systemic remedy (owner ~P2, its own never-widen pair, served DELTA stated): the account_lost guard exempts an account the SOURCE reports with zero positions on the candidate date AND the prior trading day, recorded per account in the publication manifest as closed_at_source with its dates; one zero day alone is still refused. The TERMINATED exemption is unchanged. The directory's missing TERMINATED mark is a separate row for the directory's owner."
+}
+```
