@@ -18342,3 +18342,32 @@
   "notes": "Closes the blocking condition of W179-S1 by the widening; S1 is not edited and keeps its filed text. S2, S3 and S4 stand as filed. S4 recorded the earlier cone (15 entries); the current cone is 13 entries after the issuer's ruling, and that change is not this worker's."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-S121 -- FWD-1 window 2: ticket and request filed, report package never attached (0 of 4), one commentary_ready message in flight
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S121",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-15T17:46:41Z",
+  "one_line": "FWD-1 window 2 filed the ticket and the request but the report package never attached: 0 of 4 on the page over 20 minutes, the job READY and SENT, the drafter ran once with no error, one message still in flight on commentary_ready, the packager secret never read.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (FWD-1 does not grade REALIZED on this window; whether to read the chain further or re-issue is the issuer's, and a third window needs a new address and a resident release per the CTO's addendum 2)",
+  "spec_asserts": "Order IRPT_ANLREQ.TO-RUN-FWD1.fwd1-staff-filing-window2-aq2 RUN2-AC2 and the FWD-1 DONE WHEN: the still-open ticket carries all four attachments (original_ref, the form answers, report_ref/pdf, commentary pdf_ref), attached by the packager svc-irpt-packager after the chain runs untouched.",
+  "world_is": "MEASURED 2026-10-15 by this seat: the driver filed TCK-20261015-944c84f8 at 17:00:32Z (201) and polled 19 times to 17:20:34Z reading 0 of 4 attachments on the page; the ticket record at 17:32Z holds attachment.input_id and upload_id and the form answers, no report_ref and no commentary pdf_ref, one created event, no client update. The accepted request analysis#REQ-d47252fe74634d0c5cdd8067#1 (accepted_at 1792083637) names the ticket, owner principal the synthetic address (OPAL_GLOBAL), commentary_requested true. The irpt-jobs row for that request reads state READY, outbox_state SENT, i3_sent_at 17:00:50Z, with checkpoint_pdf carrying a pdf_ref and checkpoint_publication carrying report_ref and opal_artifact_ref. outlook-global-commentary-draft-lambda ran once 17:00:52Z to 17:01:54Z (62545 ms), no ERROR, Traceback or Task timed out in 16:59Z to 17:40Z. The packager secret LastAccessedDate stayed 2026-10-13T20:00:00-04:00 (never read). commentary_ready read 0 visible and 1 in flight at 17:29Z and 17:38Z (0 and 0 at 16:56Z); both DLQs 0. The final page screenshot offers Retry analysis request, no Open report. The ticket-form answer add_commentary reads false while the request's commentary_requested reads true (both as read). NOT MEASURED: why the in-flight message persists, which component holds it, whether the packager was ever invoked (no packager log was read), and the resident journal; no queue was received from.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r31/A_RUN_FWD1_R2.txt and run_fwd1_r2/run_report.json @2c185e4e08",
+      "keyed reads 2026-10-15 17:21Z to 17:42Z: opal-tickets TCK-20261015-944c84f8, irpt-requests tenant 49financial (scan, denominator 2069), irpt-jobs 49financial REQ-d47252fe74634d0c5cdd8067, SQS get-queue-attributes x5, CloudWatch filter-log-events counts (opal-ticket-api 260 events; drafter 4 events)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This is IB-pr-456's live acceptance as the window graded it: the Opal producer path ran to a READY job and a stored report on this evidence, and the attach to the ticket did not happen in 20 minutes. The in-flight message may still resolve; this seat read only and did not wait beyond 17:42Z."
+}
+```
