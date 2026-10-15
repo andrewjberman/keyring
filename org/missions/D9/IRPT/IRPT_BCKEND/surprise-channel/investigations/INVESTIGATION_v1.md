@@ -38617,3 +38617,75 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W420-S3 RESOLVED (the 46 failures were the sparse worktree; in the main tree the 21 failures are identical at base). D2-W420-S2 INERT, recorded (the first-absent-day walk counts any row of the lost account while the exemption counts zero as absent, so first_absent_day can be null and the words then use the prior trading day). D2-W420-S1 stays ARMED, owner me: run_firm freezes the source receipts before the gate, so the prior-day partitions the exemption reads are not in the manifest source objects; the manifest entry carries the dates but not those object keys; it goes into the never-widen pair as a stated limit unless the CTO asks for the keys. D2-W421-S1 RESOLVED (AMENDMENT 1 @7c8acc5500), S2 RESOLVED (identifier chain, with a test), S3 RESOLVED (ticker_symbol is a column of the 49 Financial transactions partition: read by me today on one partition), S4 RESOLVED (check r216 amended @9a6cf90e04: the order file joins the allowed list). Not released: the changed gate and the new producer reach the firms only by an apply under a never-widen pair after a producer dry run (the exemption ALONE per firm, and the split adjustment before and after)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W425-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~425",
+  "surfaced_at": "2026-10-15T15:13:35Z",
+  "one_line": "IB-pr-583 premise: the run manifest split_adjust block is named to sum days_ratio_absent and unkeyed_split_rows over days, but the producer has no run-level manifest; each day writes its own manifest.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face, Change (4): the run manifest's split_adjust block gains days_ratio_absent (the number of days with unkeyed_split_rows above zero) and unkeyed_split_rows (summed over days).",
+  "world_is": "The producer writes one manifest.json per day: emit_day() writes it, and main() maps one(day) over the day list with no run-level aggregate. The new keys are filed per day: days_ratio_absent is 0 or 1 for the day and unkeyed_split_rows is the day's count, so a run total is a sum over the day manifests, which no code in the product computes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py@5e4de60381156ab04d057ea7305c0958f31981e8 emit_day() writes one manifest per day via the split_adjust block",
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py@5e4de60381156ab04d057ea7305c0958f31981e8 main() one(day) maps emit_day over the day list; no run-level manifest"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only: no grading moves. The key names and per-day values follow the spec; a run total needs a consumer that sums the day manifests, which is the CTO's to rule."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W425-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~425",
+  "surfaced_at": "2026-10-15T15:13:35Z",
+  "one_line": "IB-pr-583 shape: the manifest builder's return literal had to become a named block so the SPLIT-ADJUST-B merge could be hooked in; the A-block change carries no logic.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face, Change: all new logic inside SPLIT-ADJUST-B blocks; the module must stay importable with the blocks removed.",
+  "world_is": "_split_adjust_manifest() returned a dict literal. The B merge needed a name, so the literal became block = {...} with one B line (block.update) and return block; six A-block lines change shape. With the B blocks removed the function returns the original dict, and the difference control gave 10 failed and 0 errors.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py@5e4de60381156ab04d057ea7305c0958f31981e8 _split_adjust_manifest() return literal before the edit",
+      "tests/test_split_unkeyed.py difference control with the SPLIT-ADJUST-B blocks stripped in memory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The grant names the product file, so the shape change is inside it; no other product line moved and no existing assertion was edited."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W425-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~425",
+  "surfaced_at": "2026-10-15T15:13:35Z",
+  "one_line": "Difference-control trap: a strip-in-memory run without PYTHONPYCACHEPREFIX loads a stale __pycache__ .pyc and reports the stripped module as green.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face, difference control: the check removes every SPLIT-ADJUST-B block in memory and runs the new test file, which must FAIL on assertions.",
+  "world_is": "A runner that patches SourceFileLoader.get_data is bypassed when a valid .pyc exists, because the loader validates the pyc before it calls get_data. My first own run passed 10 of 10 with the blocks stripped. With PYTHONPYCACHEPREFIX set to a scratch directory the same run gave 10 failed and 0 errors. The issuer's p200 build_ac2 sets that prefix, so the check is not affected; a hand-written run is.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py@5e4de60381156ab04d057ea7305c0958f31981e8 build_ac2 sets PYTHONPYCACHEPREFIX",
+      "worker run on this worktree: first strip run 10 passed; second run with the prefix 10 failed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Instrument trap, not a product defect. Any hand-written removal run should set the prefix or delete the pycache first."
+}
+```
