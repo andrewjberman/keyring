@@ -40288,3 +40288,106 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-S209 -- The runner started for IB-pr-600's read was not stopped by the watchdog; the stop is Andrew's act
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S209",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T20:30:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The inf gold runner, started once for IB-pr-600's read, was still running 33 minutes after the command ended: the 300 s idle watchdog did not stop it; the stop is Andrew's act (CTO ruling msg 8597).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB2 msg 8633: the runner was started once at 19:53:40Z, one read-only SSM command succeeded at 19:54:06Z, and the runner was still running at 20:27Z; no second command was sent and the runner was not stopped",
+      "the CTO ruling msg 8597 (ADDENDUM 2 @57b25f40de): if the runner is not stopped 30 minutes after the command ends, IB2 records a row and does NOT stop it; the stop becomes Andrew's act",
+      "RUNBOOK lines 119 to 129 describe the watchdog (300 s idle) as the stop path"
+    ]
+  },
+  "spec_asserts": "The RUNBOOK's watchdog stops the runner after 300 s without a matching process (the CTO's premise for authorizing the start).",
+  "world_is": "The premise did not hold on this start: the runner stayed up. Cost only (an instance-hour rate), no data path is touched; the feed's first scheduled chain starts the same instance anyway. The watchdog's regex or its heartbeat guard is a runner question for CloudOps, not read here. The stop is Andrew's act and is queued as an open call; the order IB-pr-600 records the branch the ruling named (runner_row_filed, runner_stop_left_to_andrew) and its AC3 accepts exactly that branch."
+}
+```
+
+## IRPT_BCKEND-D2-W440-S1 -- The join fix has no key to correct: the one in_source_with_positions account has no candidate-day custody row under any key form, so the 49 Financial candidate never receives it.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W440-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~440",
+  "surfaced_at": "2026-10-15T20:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The join fix has no key to correct: the one in_source_with_positions account has no candidate-day custody row under any key form, so the 49 Financial candidate never receives it.",
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-604 (cell IB-pr-604, CTO ruling 334382c7f4 item 1): the one lost account is dropped on the account join by a key-form difference (type, padding, case or a firm-scope key) that a normalization inside ACCOUNT-JOIN-A corrects. The class in_source_with_positions is read as cause join (IB-pr-602 record, conditions_detail account_lost).",
+  "world_is": "Measured read-only on the transplant tree (base bf79a649fc), counts and categories only. The account has 0 candidate-day custody balance rows and 0 candidate-day custody position rows under the text key, the pad10 key and the loose alphanumeric key. Its prior-day custody holds 1 balance row and 13 position rows, both keys equal (length 10, leading zero). The candidate-day SmartX allocation map holds 1 row for it (key length 8). The 49 Financial builder mints ACCOUNT nodes only from candidate-day custody balance rows (holdings_49f.build_49f_actual, the loop over balance.index), and counts SmartX-only accounts without emitting them (smartx_accounts_not_in_custody, holdings_49f.py line 543). The absent-at-source evidence unions the candidate and prior custody days, so the class names in_source_with_positions while the candidate day holds no row. No stage shows a key-form difference; a normalization at the join would not change this account's outcome. The CVO decides whether this is a source absence, a custody-day gap or a designed exclusion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~440/IB235-1_drop_finder.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 (stage trace run once per revision on the scratch transplant tree)",
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 build_49f_actual loop over balance.index and line 543 smartx_not_in_custody",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~437/IB233-1_49f_transplant_reread.json@bf79a649fcb422c36545d30d9dc03f58ad3e7661 conditions_detail account_lost cause_split join=1"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W440-S2 -- The 49 Financial builder and the console identifier source both sit outside the paths grant: the join and the console fix named in the cell cannot be made inside holdings_snapshot.py alone.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W440-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~440",
+  "surfaced_at": "2026-10-15T20:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The 49 Financial builder and the console identifier source both sit outside the paths grant: the join and the console fix named in the cell cannot be made inside holdings_snapshot.py alone.",
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-604 Do step 2 places the join fix inside ACCOUNT-JOIN-A blocks in holdings_snapshot.py; Do step 3 says the build module prints tickers to the console and the fix is one line in the build module; the paths block is the write grant.",
+  "world_is": "BUILDERS['49financial'] is holdings_49f.build_49f_meshed (holdings_snapshot.py BUILDERS entry), so the custody loop and the SmartX census are in holdings_49f.py, which the paths block does not name. The console line 'Classification not found for ticker' is a logger.warning at infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py line 79, outside the grant. In holdings_snapshot.py the identifier-bearing output is the final json.dumps of the results in main() (its publish_gate listed id lists and manifest refused accounts), not a print of a ticker. Worker stderr and the scratch log carried identifier lines from the logger; they were deleted and nothing was committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 BUILDERS entry (line 2669) and main() json.dumps print (line 3610)",
+      "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 line 79 logger.warning",
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_BCKEND-D2-W426-S3"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W440-S3 -- The base holdings_snapshot.py is not the transplant bytes: the account-join lines match, but the CUSIP fallback, the one-date bypass and the multi_asset class list differ.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W440-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~440",
+  "surfaced_at": "2026-10-15T20:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The base holdings_snapshot.py is not the transplant bytes: the account-join lines match, but the CUSIP fallback, the one-date bypass and the multi_asset class list differ.",
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-604 reproduces the drop on the transplant tree (IB-pr-602 record) and places the fix in holdings_snapshot.py at base; the two trees are assumed to differ only where the cell says.",
+  "world_is": "Base holdings_snapshot.py sha256 bfa62fd0 differs from the IB-pr-595 transplant sha256 b9aae27f. The transplant adds cusip_key and the CUSIP fallback in classify_security and drops the multi_asset class and the one-date bypass (ONE-DATE-ASSERT, --allow-older-date). The account-join lines of the holdings module are not in the diff; the join lives in holdings_49f.py, which is identical on both trees. The drop finder ran on the transplant copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 sha256 bfa62fd0",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~434/transplant/49financial/holdings_snapshot.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 sha256 b9aae27f"
+    ]
+  }
+}
+```
