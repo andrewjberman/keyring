@@ -18029,3 +18029,269 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The session runs claude-haiku-5-5 and the attribution the harness supplies names Haiku 5.5; the face's Sonnet line was not written, and the coordinator may correct the line on the record if it wants the face's text. Counts only."
 }
 ```
+
+## IRPT_DASHBD-D2-W219-S1 -- the earlier Cottonwood test pins the 0.3.0 top-level hash, so it is red once the contract reads 0.4.0; AC3 stops here, the test file is outside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W219-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~219",
+  "surfaced_at": "2026-10-15T18:50:30Z",
+  "one_line": "Contract 0.4.0 moves the top-level schema_hash_with_optional (the 0.3.0 value is bc70..., the 0.4.0 value is 74fd..., as the spec requires) and the earlier Cottonwood test asserts the contract top-level value equals its 20-field 0.3.0 hash, so test_the_two_hashes_equal_the_contract_and_match_a_recomputation fails: 1 failed, 51 passed; the test file is outside the grant, so AC3 stops here",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I -m pytest -q data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_bd_account_return_daily.py at 5f91315a60: 1 failed, 51 passed (the failure is line 263 of that file)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_bd_account_return_daily.py:263@5f91315a60 asserts m.schema_hash_with_optional() == contract[schema_hash_with_optional]; the adapter hash is over 20 fields, so it equals the 0.3.0 value bc70ee2f2e, and the 0.4.0 contract value is 74fdee3def"
+    ]
+  },
+  "spec_asserts": "DB-b-270 criterion DB137-2-AC3 and the refusal clause: the two earlier contract-reading test files still pass once the contract reads 0.4.0; a failure caused by a hard-coded 0.3.0 in those files is a BLOCKING row and a stop, because they are not in the grant.",
+  "world_is": "The earlier test pins the contract top-level hash to the 0.3.0 value. The 0.4.0 contract recomputes the top-level hash over 19 columns plus source, flow_claim and source_account_id, as the spec requires, so the earlier assertion is red at 5f91315a60. The test is not repaired here (outside the grant). The contract and its test commit 5f91315a60 are unaffected. Counts only."
+}
+```
+
+## IRPT_DASHBD-D2-W219-S2 -- Amendment 1 resolves row S1 in the record: the one hash assertion of the Cottonwood test moves to the 0.3.0 supersedes entry; AC1, AC2 and AC3 PASS
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W219-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~219",
+  "surfaced_at": "2026-10-15T19:06:17Z",
+  "one_line": "Row IRPT_DASHBD-D2-W219-S1 is resolved in the record by the issuer's Amendment 1 (f8c18a0e87, carried by a merge of box/dell2): the one hash assertion at line 263 of the Cottonwood test now compares with the 0.3.0 entry of contract supersedes; 3 lines changed (2 added, 1 removed) at 131b4189c3; AC1 PASS, AC2 PASS, AC3 PASS (12 new tests, 52 earlier tests)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show f8c18a0e87 -- the order file: AMENDMENT 1 adds the Cottonwood test to the grant and bounds the edit to 8 lines",
+      "test_cottonwood_bd_account_return_daily.py at 131b4189c3: 3 lines changed (2 added, 1 removed), the assertion at line 263 now reads the 0.3.0 supersedes entry",
+      "python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r137/p137_contract040.py . DB137-2-AC3 at 131b4189c3: DB137-2-AC3 PASS (12 new tests, 52 earlier tests)"
+    ]
+  },
+  "spec_asserts": "Amendment 1 (f8c18a0e87): ONE assertion of the earlier Cottonwood test moves to the 0.3.0 supersedes entry; the file may change by at most 8 lines; then AC1, AC2 and AC3 are re-run.",
+  "world_is": "The assertion is replaced in 3 changed lines; the 52 earlier tests pass; the three criteria PASS; the contract's top-level schema_hash_with_optional is unchanged by the edit. The ARMED hazard of row IRPT_DASHBD-D2-W219-S1 is disarmed by this edit. Counts only.",
+  "notes": "Worker row: the disposition of IRPT_DASHBD-D2-W219-S1 from ARMED BLOCKING to resolved is for the CVO to make (a worker row cannot carry GRADUATED or adjudicates, gate A-1). S1 is not edited; this row is its resolution in the record."
+}
+```
+
+## IRPT_DASHBD-D2-W220-S1 -- the mandated day re-read of the returns partition adds one GET, so one earlier count assertion moves from 2 to 3; the rest of the earlier tests are unchanged
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W220-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~220",
+  "surfaced_at": "2026-10-15T19:29:41Z",
+  "one_line": "The mandated day re-read of the built day's own returns partition (frv.read_partition) adds one GET, so the earlier test asserting exactly two returns GETs reads 3; that one assertion is moved to 3 with a comment, every other earlier test is unchanged, and 42 tests pass (33 earlier, 9 new)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q infra/aws/lambda/investor-reporting/reporting-gold-cot/tests at deaac76f02 (the base, before any edit): 33 passed",
+      "handler.py at deaac76f02 plus the worker's uncommitted read: test_the_returns_partition_before_the_floor_is_never_listed_or_opened fails with assert 3 == 2; 32 passed, 1 failed",
+      "tests/test_reporting_gold_cot.py: the GET count of that test reads len(gets) == 3 with a comment naming the built day's re-read; the rest of the test is unchanged"
+    ]
+  },
+  "spec_asserts": "DB-b-271 step 2 reads the built day's own returns partition through frv.read_partition(reader, ad, frv.RET, day, [account_id]), and the order says every earlier test stays and still passes (the handler's earlier tests included).",
+  "world_is": "The named read is one more GET of the same returns partition, so the earlier exact-count assertion (two GETs on returns data.parquet, both in the floor window) reads three. The property the test names (no returns read before the floor) holds unchanged. Counts only.",
+  "notes": "Worker row: the resolution is the one-line count change in the earlier test, made so the named read and the earlier test can both stand; the CVO and the CTO read this row to accept or refuse that edit. No other earlier assertion moved."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S1 -- The spec writes a None holdings_price_return_reason beside a null holdings_price_return; the contract says that reason column is WHY the return is null
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "Rule 6 of DB-i-10 writes holdings_price_return None and holdings_price_return_reason None on every Orion row, but contract 0.4.0 says holdings_price_return_reason is WHY holdings_price_return is null (enum NO_HOLDINGS_ROW, HOLDINGS_NOT_OK); the validator does not catch a null return with no reason, so the adapter writes the spec's None as written and a later served run would carry an unlabelled null",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@13b4cd4c68 holdings_price_return_reason meaning: why holdings_price_return is null; null when it is present; enum NO_HOLDINGS_ROW, HOLDINGS_NOT_OK",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule 6: holdings_price_return None and holdings_price_return_reason None",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_040.py@13b4cd4c68 row_problems tests no condition on a reason beside a null holdings return"
+    ]
+  },
+  "spec_asserts": "Rule 6 of DB-i-10 writes holdings_price_return None and holdings_price_return_reason None; the contract's holdings_price_return_reason meaning says it carries the reason a holdings return is null.",
+  "world_is": "The module writes the spec's None as written (no reason class is invented, per the refusal clause). Every synthetic row passes the contract validator with that None. Counts only: 0 rows refused, 0 reason values written. Not measured on the real feed (a later cell)."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S2 -- The rules do not say what a repeated (account, day) feed row means
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "The rules key each account's feed row by its calendar day but do not say what a repeated (account, day) silver row means; the module reads the LAST one given, silently, and its adapt() docstring says so",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 feed description: one row per account per CALENDAR day",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py adapt() docstring, uncommitted worktree file (last row wins)"
+    ]
+  },
+  "spec_asserts": "The feed lands one row per account per CALENDAR day, and rules 2 to 5 read the account's own row on each day.",
+  "world_is": "A repeated (account, day) silver row would be resolved by input order, with no refusal and no count. Not measured: the adapter reads no feed, and the synthetic tests contain no repeat. Counts only."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S3 -- With no feed rows the rules have no min_day or max_day, so the output domain is undefined
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "The rules define min_day and max_day over the feed rows and say nothing for an empty feed; the module returns an empty result with zero counts, and test_empty_feed_returns_an_empty_result pins that choice",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule intro: min_day and max_day are the smallest and largest day in feed_rows",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_adapter.py@13b4cd4c68 is not yet committed; the empty case is its test_empty_feed_returns_an_empty_result"
+    ]
+  },
+  "spec_asserts": "Let min_day and max_day be the smallest and largest day in feed_rows; the output domain is the trading days between them.",
+  "world_is": "An empty feed has no domain, so the module writes no row and no absent record and reports zero counts. Counts only: 0 rows, 0 absent records for an empty input. The rules do not state this case."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S4 -- accounts_mapped counts feed accounts only; the rules do not say whether a map entry with no feed account counts
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "Rule 8 defines accounts_mapped and accounts_unmapped without saying whether an account_map key with no feed account is counted; the module counts feed accounts only, so such a key appears in neither count and writes no row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule 8: the manifest counts accounts_in_feed, accounts_mapped, accounts_unmapped",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py manifest block, uncommitted worktree file (counts over by_account keys)"
+    ]
+  },
+  "spec_asserts": "The manifest carries accounts_in_feed, accounts_mapped and accounts_unmapped; an account is MAPPED when its key is present in account_map.",
+  "world_is": "A map entry with no feed rows is in neither manifest count and writes no row or absent record. The synthetic map has no such entry, so the counts are 6 in feed, 5 mapped, 1 unmapped. Counts only."
+}
+```
+
+## IRPT_DASHBD-D2-S93 -- disarm of W310-S1: a None holdings reason beside a null return is valid under contract 0.4.0 and no reason class is invented
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S93",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T19:47:07Z",
+  "one_line": "Disarm of W310-S1 (ruled by its disarm owner): the Orion adapter rows carry holdings_price_return None and holdings_price_return_reason None; that is valid under contract 0.4.0 (the reason column is nullable and its enum holds only NO_HOLDINGS_ROW and HOLDINGS_NOT_OK, neither true for a vendor-reported return the holdings guard never saw), so no reason class is invented. A consumer tells a guard-less number by source = orion and guard_state = GUARD_NOT_REACHED, which the adapter writes on every row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "W310-S1: rule 6 writes holdings_price_return_reason None beside a null holdings_price_return, though the contract calls that column the reason the return is null.",
+  "world_is": "The contract file marks holdings_price_return_reason nullable and the validator accepts the row; all 17 golden rows carry source orion, flow_claim absent and guard_state GUARD_NOT_REACHED. Whether a third enum member is wanted for a vendor return is the contract owner's and the CVO's call at L9 and is carried in the round-123 packet; nothing is served from this table yet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W310-S1",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-W310-S1: the condition (an unlabelled null) is not a defect under contract 0.4.0, whose reason column is nullable and whose enum has no member true for a vendor return; every adapter row carries source orion and guard_state GUARD_NOT_REACHED, measured by the 17 golden rows the checker grades."
+}
+```
+
+## IRPT_DASHBD-D2-S94 -- disarm of IRPT_DASHBD-D2-S92: the report-build handler never chains across the two Cottonwood account_return_daily contracts
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S94",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T19:54:04Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-S92 (one Cottonwood account_return_daily table name, two contracts): the report-build handler reads each used partition's manifest contract_version and method_version, chains within one pair, refuses a mix or an unnamed contract with zero puts, never opens the Commonwealth partition, and the window fold reads NOT_SPANNED in words before the floor.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "S92: one table name is one contract; a return window is chained within one method; a test spanning 2026-06-22 and 2026-07-10 shows the stated floor or 'not enough history', never a splice (CTO round-128 ADDENDUM 2, round-133-to-137 analysis item 3).",
+  "world_is": "The handler test test_building_across_the_floor_never_opens_the_commonwealth_partition_and_early_windows_read_not_spanned (reporting-gold-cot/tests/test_contract_guard.py) holds a store with the 2026-06-22 Commonwealth partition beside the Black Diamond partitions, builds 2026-07-13, asserts no call touches a 2026-06 key, exactly one put, and that every qtd, ytd and last_12_months window-status row reads NOT_SPANNED with no number. The mixed-contract and unnamed-contract tests assert refusal with zero puts. The issuer's probe DB135-1-AC2 re-runs the same scenarios on the staged handler. Round 138 adds the households claim and does not change the guard; the landing schedule writes Black Diamond-era days only, so it does not widen the splice.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/tests/test_contract_guard.py@f25b913caf",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r135/p135_contract.py@f25b913caf",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUNDS_133_TO_137_20261015.md@93b8070c65 item 3"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-S92: the condition (a consumer chaining across the Commonwealth and Black Diamond eras) cannot occur in the report-build handler: the DB135 test that spans 2026-06-22 and 2026-07-10 shows the stated floor (NOT_SPANNED in words for every window reaching before 2026-07-10) and the refusal of a mixed or unnamed contract with zero puts, and the DB135 criteria and the re-pointed DB131 criteria pass on the landed tree."
+}
+```
+
+## IRPT_DASHBD-D2-S95 -- the report-build handler's MAX_DAYS_PER_FIRE does not cap the chain: one event chains every owed day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S95",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T20:21:20Z",
+  "one_line": "The Cottonwood report-build handler's MAX_DAYS_PER_FIRE caps the owed LIST, not the CHAIN: chain_next is handed the next owed day and every hop recomputes the list from the newest landed day, so one event (and a scheduled fire after a gap) chains every owed day; the packet's 10-day description was wrong and the applier held before any backfill write.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Packet NEVER_WIDEN_PACKET_COTTONWOOD_REPORTING_GOLD_LAMBDA.md revision 2, Acts 3 and 4: one {} event chains at most 10 days (MAX_DAYS_PER_FIRE).",
+  "world_is": "The applier simulated the bundle's own owed_days: one {} event runs 68 chained invocations (65 days plus the 3 source-absent days) in about 25 minutes, with no pause for an after-read. Nothing was invoked. The CTO ruled (ADDENDUM 1, msg 8615) explicit day events starting 2026-10-14 (nothing owed afterwards, so no event chains) and a build cell for the cap before the reporting-gold schedule is ever enabled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~DB2 msg 8613 (the applier's hold and its simulation)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUNDS_133_TO_137_20261015.md ADDENDUM 1 (msg 8615)",
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py (chain_next, owed_days)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: task order DB-b-274 (round 141) makes the cap hold across the whole chain by a budget each self-invoke carries, with a probe that drives a whole chain; it lands in the repo first, then a later code-update pair deploys it, and the schedule stays DISABLED until the CTO's word after both."
+}
+```

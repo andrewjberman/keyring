@@ -70,7 +70,7 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>12</round>
 <workstream>BBGLEG</workstream>
 <slot>~2</slot>
