@@ -17327,3 +17327,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The condition is met in the repo at 4200e3415b. The landing packet still owes: first act one explicit event for 2026-07-10, memory 1024 MB from the DB-b-255 measurement, catch-up by explicit days events, never a day on or before 2026-06-22. Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-S82 -- the first scheduled Cottonwood holdings_performance fire landed T-1 (2026-10-14) clean
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S82",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T12:27:26Z",
+  "one_line": "The first scheduled Cottonwood holdings_performance fire (08:15 New York, 12:15Z) landed T-1 = 2026-10-14 clean: 3 objects at 12:15:34Z, 1001 rows, schema 1.2, 0 days not computed; read by this seat from S3 and the function log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The signed pair (blob ad049d506c) ends with the schedule ENABLED and the first scheduled fire landing a gold partition for T-1 at the frontier, or a named hold when T-1's silver is absent; the ledger leg closes only after that fire reads clean.",
+  "world_is": "Read at 12:20Z, read-only. S3: holdings_performance_daily holds date=2026-10-14/data.parquet (LastModified 12:15:34Z, 39239 bytes) and holdings_performance_manifest holds date=2026-10-14/data.parquet (12:15:34Z) and manifest.json (12:15:34Z); 88 daily and 176 manifest objects, the newest gold date moved from 2026-10-13 to 2026-10-14; the manifest reads schema_version 1.2 and 1001 rows. CloudWatch log of irpt-cot-holdings-performance-lambda: invocation ab6ad0c3, computing date=2026-10-14 upload=True, EMIT 1 day(s) landed 1001 row(s), 0 day(s) not computed, census OK 827 / NON-POSITIVE-BASE 160 / ALL-HOLDINGS-EXCLUDED 14, Duration 1540 ms, no error. The fire is clean; no rollback. 0.7.0_AE_CloudOps~DB2 re-read it independently (msg 8271) and holds its ledger leg L8 open until the Inflection 14:00Z read, which step 9 of TO-DB-c-14 names. Counts, dates and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live S3 LIST and manifest.json read of opal-data-cottonwood irpt/cottonwood/gold/holdings_performance_{daily,manifest}/date=2026-10-14",
+      "CloudWatch log group /aws/lambda/irpt-cot-holdings-performance-lambda, invocation ab6ad0c3-c49b-4bd1-ae7a-70a45d5fb008",
+      "0.7.0_AE_CloudOps~DB2 msg 8271 (independent re-read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Evidence row for the drain-end addendum (B-CW rounds 117 to 125); nothing to disarm."
+}
+```
