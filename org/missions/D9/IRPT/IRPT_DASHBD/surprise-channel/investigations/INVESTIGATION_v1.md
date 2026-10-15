@@ -18295,3 +18295,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm: task order DB-b-274 (round 141) makes the cap hold across the whole chain by a budget each self-invoke carries, with a probe that drives a whole chain; it lands in the repo first, then a later code-update pair deploys it, and the schedule stays DISABLED until the CTO's word after both."
 }
 ```
+
+## IRPT_DASHBD-D2-W222-S1 -- the earlier scheduled-fire test pinned the exact chain payload; it now reads the day key only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W222-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~222",
+  "surfaced_at": "2026-10-15T20:32:05Z",
+  "one_line": "The scheduled-fire test asserted the self-invoke payload as exactly {day}; the chain payload now also carries chain_left, so that assertion reads the day key only, as the order's refusal clause directs, and a new test pins the full payload.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-274, refusal clause: if an earlier test pins the exact chain payload {\"day\": <next>}, change it to read the day key only and say so in a row.",
+  "world_is": "The earlier test test_the_scheduled_fire_builds_the_oldest_owed_day_and_chains_the_next_once compared the one self-invoke payload with == {day: 2026-07-13}. The budgeted payload is {day, chain_left: 8}, so that comparison could not hold. The test now reads the day key and the function name, invocation type and count; the full payload is pinned by the new test test_the_budget_payload_is_the_day_and_chain_left_one_less.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/tests/test_reporting_gold_cot.py test_the_scheduled_fire_builds_the_oldest_owed_day_and_chains_the_next_once (base 64ae091211)",
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py chain_next payload (base 64ae091211)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Changed in the same commit as the handler edit. The day key and the single Event invoke are still asserted; the chain_left key is asserted in the new test."
+}
+```
+
+## IRPT_DASHBD-D2-W222-S2 -- a budget of zero with no context ARN keeps the present chain form; the order does not say which rule governs that case
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W222-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~222",
+  "surfaced_at": "2026-10-15T20:32:05Z",
+  "one_line": "The order states the capped chain form for a budget of zero with an owed day, and the present form otherwise; it does not settle a budget of zero with an owed day and no context ARN. chain_next returns the present form there, because no chain was possible.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-274, step 2 chain: when chain_left is 0 the day is built and nothing is invoked; the returned chain states {invoked False, day <next owed day or None>, capped True} when a next owed day exists and the budget ended it, and keeps its present form otherwise.",
+  "world_is": "The order does not say whether a missing invoked_function_arn with chain_left 0 and an owed day counts as the budget ending the chain. chain_next tests the owed day and the ARN before the budget, so that case returns the present form {invoked False, day} with no capped key. The tests cover a budget of zero with an ARN (capped form) and with nothing owed (present form); the no-ARN arm with a budget of zero is not tested.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py chain_next, the order of its three tests (base 64ae091211)",
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/tests/test_reporting_gold_cot.py test_chain_left_zero_builds_the_day_and_chains_nothing (base 64ae091211)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reading taken: a missing ARN means no chain was possible, so the budget did not end it. The issuer may rule the other reading; the change is one test-order line in chain_next."
+}
+```
