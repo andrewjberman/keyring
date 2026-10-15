@@ -1173,6 +1173,69 @@
     "spec_asserts": "Environment block: the portal worktree is branched from feature/dsgn-rbndv2-light at 7f8731df, the difference-control base.",
     "world_is": "7f8731df is an ancestor of HEAD 5269d02c, not its tip. The base read by git show 7f8731df is unaffected; commit 5c317082 changes only the three footer paths relative to 5269d02c.",
     "notes": "Filed, not fixed. Same shape as DSGN_RBNDV2-W16-S1; the difference control is unaffected because it reads the base by commit."
+  },
+  {
+    "id": "DSGN_RBNDV2-W19-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~19",
+    "surfaced_at": "2026-10-15T16:37:28Z",
+    "one_line": "The RV-y-1 order sizes the border-white sweep at about 70 lines in 6 files; the measured base denominator is 63 border-white/N classes on 60 lines in the 6 in-scope files (62 lines in 7 files with SentimentGauge.tsx).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal d0cb67d0 (worktree HEAD d0cb67d0, no edits yet): git grep -n -E \"border-white/[0-9]+\" -- src/components/market-performance src/pages/MarketPerformance returns 60 lines and 63 occurrences across the 6 in-scope files",
+        "the same grep also matches src/components/market-performance/SentimentGauge.tsx (2 lines, excluded by the order): 62 lines in 7 files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-1 face: a measured denominator at the base, about 70 lines in 6 files.",
+    "world_is": "The base denominator is 60 lines (63 border-white/N classes) in the 6 in-scope files. BORDER_SWEEP_LIST.md carries 63 rows, one per class occurrence, and the test counts the measured set.",
+    "notes": "Filed, not fixed. The order figure is soft (about); the sweep covers the measured set and the list records the measured count."
+  },
+  {
+    "id": "DSGN_RBNDV2-W19-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~19",
+    "surfaced_at": "2026-10-15T16:41:51Z",
+    "one_line": "portal/CONTRIBUTING-BOXES.md says a portal feature is built on a cand/<box>/<slug> branch cut from the last PROD release and registered with open-calls.py; this order works on the worktree branch wk-DSGN_RBNDV2-19-portal, cut from feature/dsgn-rbndv2-light at d0cb67d0, and the order says commit to that branch and never push.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/CONTRIBUTING-BOXES.md (read at the portal worktree, 2387 bytes): steps 1-4 name cand/<box>/<slug> cut from the PROD release and open-calls.py add --kind approval",
+        "git -C portal rev-parse --abbrev-ref HEAD = wk-DSGN_RBNDV2-19-portal; git -C portal log -1 = d0cb67d0 (feature/dsgn-rbndv2-light base named in the order)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-1 face: commit to the worktree branch only; never push, merge or rebase; the portal rule CONTRIBUTING-BOXES.md says a portal change is made on a cand/<box>/<slug> branch and registered for approval.",
+    "world_is": "The two rules name different branches. This worker committed (locally) to the worktree branch and did not register an approval row, push, or merge to DEV. The branch naming and the approval registration are the issuer decision.",
+    "notes": "Filed, not fixed. Nothing was pushed, merged to DEV or registered with open-calls.py by this worker."
+  },
+  {
+    "id": "DSGN_RBNDV2-W19-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~19",
+    "surfaced_at": "2026-10-15T16:41:51Z",
+    "one_line": "tsc -p tsconfig.app.json --noEmit (portal root) reports one error TS2769 at src/__tests__/dsgn-rbndv2/rb-5-x5.hover-resolve.test.ts line 30 col 81: maxBuffer is passed to execSync, which the TypeScript overload set rejects; the same line is at base d0cb67d0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node_modules/.bin/tsc -p tsconfig.app.json --noEmit at the portal worktree: rc=2, error lines 1 (TS2769 at rb-5-x5.hover-resolve.test.ts(30,81)); no error line names rb-6-y1.border-sweep.test.ts",
+        "git show d0cb67d0:src/__tests__/dsgn-rbndv2/rb-5-x5.hover-resolve.test.ts lines 28-31 carry the same readBase line with maxBuffer; the file last changed at e72e5dbe (RV-x-5)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-1 face: a test file must typecheck (execSync, join, a cast on process.env reads); the bar is the test this order writes.",
+    "world_is": "The new test rb-6-y1.border-sweep.test.ts adds no tsc error. The one error sits in a neighbouring cell test (RV-x-5) that this order does not own, so it is recorded here and not edited.",
+    "notes": "Filed, not fixed. The fix belongs to the owner of RV-x-5; this worker did not touch that file."
   }
 ]
 ```
