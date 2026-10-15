@@ -136,3 +136,21 @@ Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3
 | cell id | owner |
 |---|---|
 | DB-c-11 | 0.9.0_WK_IRPT_DASHBD~406 |
+
+## 6. ROUND 119, WORKSTREAM B-CW (2026-10-15 ~05:2xZ, issuer 2.0.0_SA_COO~C2, on the CTO's conditions for the addendum, msg 8055; round 118 closed on `DB-c-11` PASS 2 of 2, merged @ad799ad40b)
+
+**The CTO's conditions** (msg 8055): (1) re-pin `scopes.json` to HEAD's registry as the build input, not a hand edit, and add a build-time test that the zip's `scopes.json` resolves each function's registry key (49 Financial, Inflection, `z09`): one test, no monitor; (2) the plan shows only the three code updates from the same zip, and after the upload the 49 Financial and Inflection derivations are read unchanged before their next 08:15 New York fire; (3) the catch-up then resumes from date 1 under the signed DB-c-5 sequence. `DB-c-11` proved the re-pin: `scopes.json` alone, to `69679b90e3dc52b670d33fddd96d06be1deaac90` (sha256 `6ce64167c26588521fded21330dc59e0109450e9a01c92e0f6ca9aa90b53cfae`), leaves every value the 49 Financial and Inflection channels derive (firm, prefixes, gold addresses, names) identical.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-12` | The BUILD INPUT for the second zip, repo files only: the source-map re-pin (the `pin` and `sha256` of the `scopes.json` entry, in the two holdings-performance function entries, nothing else) and the build-time test that the staged registry resolves the 49 Financial, Inflection and `z09` keys, with a planted negative control. Nothing is built, uploaded, planned or applied | FWD-2, FWD-11 | WORLD by the gate's path floor (`<paths>` names the source map under `infra/`; repo files only, no deploy) | none | C-H |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The edit is a committed change to the source map the build reads, never a patch of a zip. (b) Both function entries that stage the registry for this zip (`irpt-holdings-performance-lambda`, whose entry the build uses, and `irpt-inf-holdings-performance-lambda`, which mirrors it) get the same new pin so the two entries stay equal. Other functions' entries are not touched. (c) The test reads the staged pins, materializes the zip's members at those pins into a scratch tree, and runs the producer's `firm_scope()` for the three channels in a fresh process; an environment variable `HP_REGISTRY_SCOPES_PIN` overrides the `scopes.json` pin so the planted negative control (the old pin) can be shown to FAIL. (d) The applier runs the test after the build and before the upload; a failure is a STOP. (e) The addendum packet (`DB-c-11`) is signed by both halves over this cell's merged commit as well as its own bytes; the resume order to `~DB2` follows.
+
+**fanout:** 1 of 1 chains, cap 8, reason: the re-pin and the test are one small chain on one worker (the test's expected value is the re-pin). Worker `0.9.0_WK_IRPT_DASHBD~407`.
+
+## Cells (round 119)
+
+| cell id | owner |
+|---|---|
+| DB-c-12 | 0.9.0_WK_IRPT_DASHBD~407 |
