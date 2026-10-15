@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.6.0",
+  "contract_version": "0.7.0",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md v0.5 @0e7fd8eeb6",
   "authored_by": "0.4.0_DS_ClientPlatform~S",
@@ -96,36 +96,42 @@
     },
     {
       "name": "tolerance_claim",
+      "carrier": "see_manifest",
       "type": "string",
       "nullable": false,
       "meaning": "how the writer knows tolerance, one of enums.threshold_claims: measured (computed from the run's own data), inferred (derived from other values by a stated rule), held (given, neither measured nor derived by the writer) or absent (no value; tolerance is then null). A consumer rejects on this field, never on the bare number. When the thresholds input carried no claims the writer states held for a non-null value and absent for a null one, never measured (see threshold_claims_source)."
     },
     {
       "name": "large_flow_share_claim",
+      "carrier": "see_manifest",
       "type": "string",
       "nullable": false,
       "meaning": "how the writer knows large_flow_share, one of enums.threshold_claims: measured (computed from the run's own data), inferred (derived from other values by a stated rule), held (given, neither measured nor derived by the writer) or absent (no value; large_flow_share is then null). A consumer rejects on this field, never on the bare number. When the thresholds input carried no claims the writer states held for a non-null value and absent for a null one, never measured (see threshold_claims_source)."
     },
     {
       "name": "plausibility_band_low_claim",
+      "carrier": "see_manifest",
       "type": "string",
       "nullable": false,
       "meaning": "how the writer knows plausibility_band_low, one of enums.threshold_claims: measured (computed from the run's own data), inferred (derived from other values by a stated rule), held (given, neither measured nor derived by the writer) or absent (no value; plausibility_band_low is then null). A consumer rejects on this field, never on the bare number. When the thresholds input carried no claims the writer states held for a non-null value and absent for a null one, never measured (see threshold_claims_source)."
     },
     {
       "name": "plausibility_band_high_claim",
+      "carrier": "see_manifest",
       "type": "string",
       "nullable": false,
       "meaning": "how the writer knows plausibility_band_high, one of enums.threshold_claims: measured (computed from the run's own data), inferred (derived from other values by a stated rule), held (given, neither measured nor derived by the writer) or absent (no value; plausibility_band_high is then null). A consumer rejects on this field, never on the bare number. When the thresholds input carried no claims the writer states held for a non-null value and absent for a null one, never measured (see threshold_claims_source)."
     },
     {
       "name": "comparability_max_excluded_weight_claim",
+      "carrier": "see_manifest",
       "type": "string",
       "nullable": false,
       "meaning": "how the writer knows comparability_max_excluded_weight, one of enums.threshold_claims: measured (computed from the run's own data), inferred (derived from other values by a stated rule), held (given, neither measured nor derived by the writer) or absent (no value; comparability_max_excluded_weight is then null). A consumer rejects on this field, never on the bare number. When the thresholds input carried no claims the writer states held for a non-null value and absent for a null one, never measured (see threshold_claims_source)."
     },
     {
       "name": "threshold_claims_source",
+      "carrier": "see_manifest",
       "type": "string",
       "nullable": false,
       "meaning": "whether the five *_claim columns were STATED by the thresholds input (stated) or DEFAULTED by the writer because the input carried no claims (defaulted_no_claims); a defaulted `held` is not a deliberately held value, and this column is how a consumer tells the two apart. One of enums.threshold_claims_source."
@@ -265,10 +271,11 @@
     }
   },
   "landed_row_note": "The landed row above is the method_version=1 partition as read on 2026-10-01 and predates the claim columns: it carries none of the six. The served method_version=2 partition (the 49F row 2) was likewise written before the claim columns existed (issuer's statement in IRPT_DASHBD.TO-DB-b-118 AMENDMENT 1; not re-read here, no AWS call). Neither is rewritten for 0.4.0, and this file's landed_row block is unchanged by 0.4.0. A reader of a partition that lacks the *_claim columns must read its values as unclaimed, never as measured. 0.6.0: the same holds for income_basis_claim and income_basis_reason; a method_version=3 partition written before 0.6.0 states income_basis cash_when_received, which the table does not do, and is rewritten only by the never-widen packet NEVER_WIDEN_PACKET_METHOD_ROW3_INCOME.md (0.9.0_WK_IRPT_DASHBD~97), not by this contract.",
+  "carrier_note": "The six claim columns (tolerance_claim, large_flow_share_claim, plausibility_band_low_claim, plausibility_band_high_claim, comparability_max_excluded_weight_claim, threshold_claims_source) carry carrier see_manifest: the claims travel in the per-fire manifest's thresholds object, not in this served row, and the columns are kept, not dropped.",
   "supersedes": {
-    "contract_version": "0.5.0",
-    "schema_hash": "10760b7d2daf1fcfcae66ace286b2f541180cc907c930604f389f5bc28a8da9c",
-    "why": "emit_method_row gained two columns (income_basis_claim, income_basis_reason) and income_basis became nullable under the claim `absent`, so method row 3 stops stating cash_when_received, which its table does not do (IRPT_DASHBD.TO-DB-b-122, 1.0.0_SA_CTO~DELL2 ruling msg 4634); row 2 and every earlier column keep their values. A versioned bump, not an in-place edit: the emitted row carries columns the 0.5.0 contract did not declare and the parquet schema_hash changed with it. 0.5.0 itself superseded 0.4.0 (hash 700e55f7abb5a0b531ad0f09fb92b430f3712ae692687cad87bd2af5830f0c77): emit_method_row gained one column (tieout_tolerance_proposed_claim) and types tieout_tolerance_proposed double, so the tie-out tolerance states how the writer knows it (measured / inferred / held / absent) and is nullable only under `absent` (IRPT_DASHBD.TO-DB-b-120, 1.0.0_SA_CTO~DELL2 ruling msg 4143 on row IRPT_DASHBD-D2-W93-S3); and method_versions lists row 3, which METHOD_ROWS[3] already defined and emit_method_row already wrote. A versioned bump, not an in-place edit: the emitted row carries a column the 0.4.0 contract did not declare and the parquet schema_hash changed with it. 0.4.0 itself superseded 0.3.0 (hash 73e80ef7920f59134eda5ab06dfea766de295bd71e71b398023b52ae8acbe919), which superseded 0.2.0 (hash 198109613065ed7b72afd5ff178ac31c7ace2facddf0c65e96a65acfdd42e47d)."
+    "contract_version": "0.6.0",
+    "schema_hash": "fd468e209e53f14514380089c9281b0ca90f947ab8eaf53c841bdee666bdfba1",
+    "why": "No served reader takes a claim column from the dimension row (the recount and the classes in RD_CLAIM_READERS_R126.json), so the claims ride the per-fire manifest and the columns are marked, not dropped; the schema hash and every column are unchanged (IRPT_DASHBD.TO-DB-b-258, CTO ROUND-126 ANALYSIS ruling 2)."
   },
   "method_versions": [
     {
