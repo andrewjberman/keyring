@@ -15088,3 +15088,567 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The shared zip packages seven registry members at pins; after the addendum six stay at their old pins and scopes.json moves to 69679b90e3. The five named members differ from HEAD in size and content (counts above; the record carries sha256 of each). Nothing in the zip's code path needs them to move today: the full derivation of the three declared channels is identical with only scopes.json re-pinned. A later act re-pins them together with a differential on whatever the then-current producer reads from them; this row is that act's carrier. It is not an ARMED hazard: no function misbehaves on the old pins."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S66",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T06:35:00Z",
+  "one_line": "TO-DB-c-14 acceptance checker p120_bcw.py FAILS DBC120-1-AC1 and DBC120-2-AC1 on checker constants, not on the act: AC1 compares the source map to BASE eae8170b22 so another seat's irpt-status record trips 'an unrelated function entry changed', and looks the ledger up by glob '<slug>*' while the ledger tool names the file '<timestamp>_<slug>_deploy_completion.md'; AC2 applies the 8-digit rule to ledger_entry (the slug ends 20261015) and scopes_member_sha256 (the value the same checker requires carries 26588521); DBC120-3-AC1 PASSES",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .../checks/r120/p120_bcw.py . DBC120-1-AC1 -> 'an unrelated function entry changed: irpt-status' then FAIL; git diff eae8170b22 c0385c0168 on lambda-source-map.json already differs in irpt-status alone (commit 67639bb903 by 0.7.0_AE_CloudOps~AQ2), before any edit of mine; my map edits are the irpt-cot row (111 lines added) and the stamps on the two shared-zip rows",
+      "DBC120-2-AC1 -> 'a run of 8 or more digits in field ledger_entry'; with ledger_entry and scopes_member_sha256 added to DIGIT_OK_KEYS IN MEMORY (no file edited) the arm PASSES",
+      "diagnostic with BASE set to c0385c0168 in memory: AC1 then fails at 'the ledger entry is absent' (glob of '<slug>*' in org/critical_paths/change_management; the file is 20261015T0423Z_<slug>_deploy_completion.md)",
+      "DBC120-3-AC1 PASS on fresh Lambda, scheduler and test reads"
+    ]
+  },
+  "spec_asserts": "The three criteria are gradable on a correct apply: the record's required values pass the checker's own rules.",
+  "world_is": "The act's substance was measured directly and holds: member diff exactly scopes.json at the signed sha, registry test rc 0 on the built zip, plan 0/3/0 on the three named addresses, three CodeSha256 equal, replan No changes, derivations identical (94 keys), 36 of 36 keys written and no other, 12 manifests schema 1.2, three readers clean on 1.1 and 1.2, schedule ENABLED. The record COTTONWOOD_APPLY_RECORD_R2.json carries those values; I did not change any value to satisfy the checker and did not flip the order's status. Ask: amend p120_bcw.py/p117_bcw.py (BASE to the order commit c0385c0168 or an allow-list that includes irpt-status, the ledger lookup by '*<slug>*', ledger_entry and scopes_member_sha256 in DIGIT_OK_KEYS), then re-run the three criteria. Row id note: next free IRPT_DASHBD-D2-S<k>."
+}
+```
+
+## IRPT_DASHBD-D2-W408-S1 -- the 49 Financial account_dim writer sits at another prefix and token than the order names; DBC121-1-AC1's writer-naming arm cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W408-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~408",
+  "surfaced_at": "2026-10-15T06:45:56Z",
+  "one_line": "DB-c-15 finds the 49F scheduled account-dimension writer at a different prefix and token than the order names: the builder address irpt/49financial/gold/account_dim/ holds 0 partitions, the live 49F dimension is gold/advi/dimensions/dim_account/ (571 partitions, newest 2026-10-13), and its writer file a00_runner.py carries no literal account_dim token, so DBC121-1-AC1's writer-naming arm cannot pass as written; the record names the writer as measured and nothing was repaired",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/runners_49f/a00_runner.py@0241caf301 lines 44-57: GOLD_BUCKET opal-data-49financial, GOLD_ROOT gold/advi, OUT_PREFIX dimensions/dim_account/; literal account_dim count in the file 0",
+      "infra/aws/terraform/opal-assets/advi_49f_floor.tf@0241caf301 lines 325-402: aws_scheduler_schedule advi_49f_gold_floor, cron(45 12 * * ? *) UTC, no state attribute",
+      "S3 LIST, read-only, private script (not committed): irpt/49financial/gold/account_dim/ 0 date partitions; gold/advi/dimensions/dim_account/ 571 date partitions, newest 2026-10-13",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r121/p121_bcw.py@0241caf301 line 42: the writer file must contain the literal account_dim"
+    ]
+  },
+  "spec_asserts": "The order's writer rule: each named writer file must name account_dim, and the 49 Financial account_dim is the pattern to copy (TO-DB-c-15 worker face steps 1 to 3, and criterion DBC121-1-AC1).",
+  "world_is": "The 49F table is named dim_account and sits at gold/advi/dimensions/dim_account/ in the 49F bucket, written by a scheduled chain step; the builder address for 49F is empty. The writer file contains no literal account_dim token, so the naming arm fails as measured for that writer.",
+  "notes": "Ask for a ruling: whether the naming arm should accept dim_account as the same table. Not repaired in the record or the checker."
+}
+```
+
+## IRPT_DASHBD-D2-W408-S2 -- the CTO's branch 2 host, the Cottonwood holdings-performance function, is created DISABLED and reads and writes less than an account_dim emit needs
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W408-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~408",
+  "surfaced_at": "2026-10-15T06:45:56Z",
+  "one_line": "The Cottonwood holdings-performance function the CTO named as the emit host (branch 2) is a scheduled source whose schedule resource is created DISABLED pending a catch-up after-read; its role reads the holdings silver only and writes two gold prefixes, and its handler carries no account_dim path, so an emit would need a fact_allocations read grant, one more write grant and an emit path",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf@0241caf301 lines 283-292: aws_scheduler_schedule irpt_holdings_performance_cot, state DISABLED, cron(15 8 ? * MON-FRI *) America/New_York",
+      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf@0241caf301 lines 283-300: role irpt_holdings_performance_cot reads the Black Diamond holdings silver and writes the two Cottonwood gold prefixes",
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py@0241caf301: native Grep for account_dim or cottonwood returns 0 matches"
+    ]
+  },
+  "spec_asserts": "The CTO's branch 2 (TO-DB-c-15 Ordered-by line and worker face step 5): add an account_dim emit to the Cottonwood holdings-performance function, with one more gold write grant.",
+  "world_is": "That function's schedule is created DISABLED pending a catch-up after-read; its role grants no read of the allocations silver and no write of an account_dim prefix; its handler has no account_dim path.",
+  "notes": "Branch 2 needs the enable decision as well as the grant and the emit path."
+}
+```
+
+## IRPT_DASHBD-D2-W189-S1 -- safe-commit's client-data check did not run for 14d426b8e7 (the hashed account-id list is absent on this box)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W189-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~189",
+  "surfaced_at": "2026-10-15T06:11:21Z",
+  "one_line": "The commit gate's client account-id check was ABSENT on this box, so commit 14d426b8e7 (two files: the key-map read script and its record) was not checked for client account ids. Its content was checked by construction only: counts, names and words, no account number or key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the round issuer: place the hashed account-id list on this box, or name the owner who will)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE: bash .tools/safe-commit.sh --author 0.9.0_WK_IRPT_DASHBD~189 -F (message file) -- the two deliverable files, run in the background; log .scratch/commit1.log of worktree wk-IRPT_DASHBD-189 records the commit line [wk-IRPT_DASHBD-189 14d426b8e7].",
+      "VERBATIM from that log: WARN: client-data-check: hashed account-id list ABSENT at the device profile .opal folder (account_id_hashes.txt) -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).",
+      "The list path named by the WARN lies outside the repo and was not opened by this worker; its absence is the gate's own report, not a measurement of the list."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face, Client data: counts, dates, hashes, column names and words only in the repo, never an account number or key; every commit goes through .tools/safe-commit.sh, whose client-data check is the mechanism that verifies it.",
+  "world_is": "safe-commit.sh reported the client-data check as ABSENT on this box and passed commit 14d426b8e7 without it. Left alone, every later commit from a worker on this box passes the same way, so a commit carrying a real account number would not be caught by the gate. The two committed files hold no account number or key by construction; that is not a check against the list."
+}
+```
+
+## IRPT_DASHBD-D2-W187-S1 -- DB118-1-AC1 FAILS after this cell's module edit
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~187",
+  "surfaced_at": "2026-10-15T06:13:19Z",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-W187-S1",
+  "one_line": "DB118-1-AC1 FAILS after this cell's module edit: the round-118 record pins filled_report_values.py by sha256, so any change to the module reds that check until a round-118 record is re-cut.",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-233 BOUNDS: re-run DB118-1-AC1, AC2, AC3 and DB118-3-AC1, AC2 and report their last lines; the round-118 checkers were patched to accept contract 0.5.4 (commit d3c8b0a8e2 message).",
+  "world_is": "Measured in this worktree: p118_hop1.py DB118-1-AC1 rc 1, 'analysis file, hash or tracked flag'. The round-118 record RD_FILLED_REPORT_VALUES_R118.json (folder 0.9.0_WK_IRPT_DASHBD~185) pins analysis sha256 737276850e29f35bcf3584fecbc6ab856cd8b220b3c2496e8af671413eaa89eb, which is the HEAD module's sha; the module edited by this cell hashes differently. AC2 and AC3 of DB118-1 PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r118/p118_hop1.py@d3c8b0a8e2 line 217 (analysis sha256 must equal the module's bytes)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~185/RD_FILLED_REPORT_VALUES_R118.json@d3c8b0a8e2 (analysis block pins the HEAD module sha)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py@d3c8b0a8e2 (HEAD module, sha256 737276850e29f35bcf3584fecbc6ab856cd8b220b3c2496e8af671413eaa89eb)"
+    ]
+  },
+  "notes": "Counts and words only. The round-118 record belongs to worker ~185 and was not edited. Nothing is deployed or scheduled; no function misbehaves on the round-118 record."
+}
+```
+
+## IRPT_DASHBD-D2-W187-S2 -- DB118-3-AC2 and DB118-3-AC1 FAIL after contract 0.5.4
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~187",
+  "surfaced_at": "2026-10-15T06:13:19Z",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-W187-S2",
+  "one_line": "DB118-3-AC2 and DB118-3-AC1 FAIL after contract 0.5.4: the round-118 checks and one Cottonwood reader test count account-return members at 36; 0.5.4 makes ten members source the account-return contract, so the count is 46, and those ten name no Cottonwood firm source.",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-233 WORKER FACE and BOUNDS: the round-118 checkers were patched to accept contract 0.5.4 (commit d3c8b0a8e2 message); the Cottonwood firm_sources stay byte-for-byte and the 107 other members unchanged.",
+  "world_is": "Measured in this worktree: p118_cottonwood.py DB118-3-AC2 'expected 36 account-return members, found 46' rc 1; DB118-3-AC1 pytest 1 failed, 14 passed, test_a_frontier_before_as_of_gives_source_break_naming_the_frontier_for_every_account_return_member asserts 46 == 36. The contract now has 46 members sourced to the account-return contract, 36 with a firm_sources.cottonwood entry, and the ten repaired members (act.beginning_value, act.net_gain, act.ending_value at household and account grain, hold.net_gain_last_12_months, _ytd, _qtd, _since_inception) carry no firm_sources at all. Whether the ten take a Cottonwood source is a ruling the CTO owns.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r118/p118_cottonwood.py@d3c8b0a8e2 lines 133-134 (the count of 36)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_report_reader.py@d3c8b0a8e2 (the frontier test asserts the 36 count; the file is another order's)",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@0.5.4 in this worktree (members sourced to ACCOUNT_RETURN_DAILY: 46; with firm_sources.cottonwood: 36)"
+    ]
+  },
+  "notes": "Counts only. The Cottonwood reader and its test are outside this cell's grant and were not edited. The DB118-3 checks are re-run, not repaired."
+}
+```
+
+## IRPT_DASHBD-D2-W187-S3 -- The 49 Financial QA run of DB-b-233 used the hardcoded NYSE trading-calendar fallback
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~187",
+  "surfaced_at": "2026-10-15T06:13:19Z",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-W187-S3",
+  "one_line": "The 49 Financial QA run of DB-b-233 used the hardcoded NYSE trading-calendar fallback: pandas_market_calendars is absent on this box, so lib/trading_calendar answered from its 2010-2027 table.",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-233 step 4 names the QA run and its household basis; the order states no calendar source and no premise names one.",
+  "world_is": "The run's stderr printed the WARN 'trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027 ...)' twice. The as_of of the run, 2026-10-13, lies inside the covered span, so no figure is affected by the fallback on this run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py@d3c8b0a8e2 line 159 (the fallback WARN text)",
+      "run stderr of the QA run, this worktree .scratch/qa_run_stderr.txt (not committed; two WARN lines)"
+    ]
+  },
+  "notes": "Observation only. Regenerating the calendar is a lib/ act outside this grant; the covered span ends in 2027."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W190-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~190",
+  "surfaced_at": "2026-10-15T06:09:42Z",
+  "one_line": "The commit gate's client-data check reported its hashed account-id list ABSENT on this box, so the script commit and the record commit of the round 119 price read were not checked for account identifiers by the gate",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the safe-commit run of commit 0580161b29 printed WARN: client-data-check: hashed account-id list ABSENT at the operator home path, and the commit passed with that WARN; absent is not empty",
+      "the committed script and the record carry counts, dates and words only; neither was composed from an account identifier, and the private folder holds the counts file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A commit that may carry client data is checked against the hashed account-id list before it lands (the commit gate client-data-check).",
+  "world_is": "On this box the hashed list is absent at its default path, so the client-data check did not run for commit 0580161b29 or for the record commit; the gate printed WARN and passed. The content was written from counts only, but the gate did not measure that."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W190-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~190",
+  "surfaced_at": "2026-10-15T06:30:22Z",
+  "one_line": "DB119-4-AC1 cannot PASS as written: the checker's no-digit-run rule refuses the nine-digit numeric security identifiers that the order says may be named in the record (5 of 15 listed securities, 7 of 38 flagged pairs)",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p119_priceread.py (the issuer checker, amended on the coordinator's Amendment 1): LONG_DIGITS matches a run of eight or more digits and DIGIT_OK_KEYS exempts only sha256, path, file, key, where and vintage, so a security value is not exempt; the record check reports the run and refuses it",
+      "the order WORKER FACE states that a SECURITY identifier (a ticker or CUSIP of a listed security) with a count of accounts may be named in the record; the order and the checker disagree on the same field",
+      "the record RD_PRICE_READ_0421_R119.json names the securities as read; the checker run on it returns rc 1 with the message: a run of 8 or more digits outside the exempt fields; the five hits are all under the key security and each has nine digits"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order permits a SECURITY identifier, with a count of accounts, in the record; the criterion DB119-4-AC1 refuses any run of eight or more digits outside the exempt fields and its record clause names the exempt keys.",
+  "world_is": "The custodian dim_position partitions of 2026-04-20 and 2026-04-21 identify 5 of the 15 listed securities (7 of the 38 flagged pairs) by nine-digit numeric CUSIPs, which the checker's digit rule refuses. The record names them as read; nothing is masked, renamed or dropped, and the checker is not edited. Measured on the same run: 13968 pairs, 38 flagged (32 flat, 6 stale, none absent), 929 triangle accounts, 894 agreeing with the holdings gold and none with the account value. The order stays pending until the issuer decides whether the security key is exempt from the digit rule (a checker edit) or the identifiers are carried another way."
+}
+```
+
+
+## IRPT_DASHBD-D2-W409-S1 -- DBC122-2-AC1 cannot PASS as written: the mandated adapter import types the checker's forbidden token, so the lambda file is refused
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W409-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~409",
+  "surfaced_at": "2026-10-15T07:15:54Z",
+  "one_line": "DBC122-2-AC1 FAILS as written: the order's mandated line `import cottonwood_account_dim as adapter` in lambda_function.py types the token the checker's FORBIDDEN_TOKENS refuses in that file; every other bound measures PASS",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r122/p122_bcw.py@2ee7fcf0ed FORBIDDEN_TOKENS includes the literal 'cottonwood'; ac_2 lowercases the whole lambda_function.py and refuses any token substring",
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py@c1e843142c line 48 is the only token hit (Grep -i over the file): import cottonwood_account_dim as adapter",
+      "checker run at c1e843142c: DBC122-2-AC1 FAIL with 'lambda_function.py types a forbidden token: cottonwood'; with the token list emptied for measurement only (.scratch/measure_ac2_rest.py, not committed) the rest of the arm PASSes: ASCII, no boto3 client at import, adapter frozen part identical to 05ea78f452, FileExistsError line present, and the planted control (refusal removed in a scratch copy) makes test_upload_refuses_a_non_empty_partition FAIL"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 2 of DB-c-16 names the import line `import cottonwood_account_dim as adapter`; DBC122-2-AC1 requires that lambda_function.py types no firm token, and the checker's FORBIDDEN_TOKENS holds the token 'cottonwood'.",
+  "world_is": "Both cannot hold in one file: the adapter's module name carries the token, so the mandated import types it. The import is kept exactly as written, the criterion is reported FAIL with its measurement, and the order stays open. No checker edit and no loader workaround was made; choosing between a checker change and an import form is the issuer's call."
+}
+```
+
+## IRPT_DASHBD-D2-W409-S2 -- the order's source key `blackdiamond_z09` cannot be typed in the lambda, so the handler selects the declared source by its custodian
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W409-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~409",
+  "surfaced_at": "2026-10-15T07:15:54Z",
+  "one_line": "The source entry name the order names (blackdiamond_z09) embeds a registry key the checker refuses in lambda_function.py, so the handler picks the one declared source whose custodian is the Black Diamond custodian",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json@c1e843142c declares three custody sources: schwab_08335338 (custodian schwab), orion (custodian orion), blackdiamond_z09 (custodian blackdiamond); measured by a json load of the file",
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py@c1e843142c _declared_source() selects the sources whose custodian equals the typed custodian name and refuses unless exactly one matches; no source name, bucket or silver prefix is typed in the file",
+      "checks/r122/p122_bcw.py@2ee7fcf0ed FORBIDDEN_TOKENS includes 'z09', so the entry key cannot appear in the lambda file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 2 of DB-c-16 reads the silver bucket and prefix template from the entry `blackdiamond_z09` in sources.json, and types the firm token, bucket name and silver prefix nowhere in the lambda file.",
+  "world_is": "The entry key embeds the registry key z09, which the checker's token census refuses in the lambda file. The handler therefore selects the entry by its custodian field, which is not a firm token, and it refuses unless exactly one declared source matches. The resolved bucket, firm scope and prefix still come from the declaration through the producer's own helpers."
+}
+```
+
+## IRPT_DASHBD-D2-W409-S3 -- the silver resolution imports the holdings-performance producer, so the DB-c-17 package needs its declaration, registry tree and numpy and pandas
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W409-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~409",
+  "surfaced_at": "2026-10-15T07:15:54Z",
+  "one_line": "The handler's silver locations import the holdings-performance producer, which needs more packaged files and libraries than the lambda's own lib trees; the later packaging cell must carry them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda_function.py@c1e843142c _declared_source() imports holdings_performance from data/assets/scripts/gold/irpt_holdings_performance and calls load_declaration, declared_sources, firm_scope and resolved_prefix",
+      "holdings_performance.py@c1e843142c imports boto3, numpy, pandas and pyarrow at module level, and firm_scope() reads the registry through opal_naming.load_registry()",
+      "the holdings-performance handler docstring (infra/aws/lambda/investor-reporting/holdings-performance/handler.py@c1e843142c) already records the package set this needs: the producer at its original relative path, sources.json, lib/opal_naming.py, lib/trading_calendar.py, data/assets/scripts/lib/stream_parquet.py, infra/logic/registry/*.json and org/standards/NAMING_SCHEMA.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 2 says the bucket, prefix template and firm scope come from sources.json through the producer's registry-derived helpers, and a later cell (DB-c-17) packages the function; the order's package list is not stated.",
+  "world_is": "The package for the account_dim function must carry the producer file beside sources.json, the registry tree and NAMING_SCHEMA.json, plus numpy and pandas, or the handler fails at import. Nothing was packaged or built in this cell; the tests import the producer from the repo tree."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W188-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~188",
+  "surfaced_at": "2026-10-15T06:12:15Z",
+  "one_line": "The existing Cottonwood Black Diamond silver reader that the order reuses does not exist: cottonwood_report_reader.py guards only the four Cottonwood gold tables, and the silver is read by a raw GET in the round-103 dry run",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_report_reader.py@d3c8b0a8e2: guard() admits only FIRM_TABLES (account_dim, account_return_daily, holdings_performance_daily, holdings_performance_manifest) under the Cottonwood gold root; no silver prefix is granted",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py@d3c8b0a8e2: holds build_account_dim and the gold address only; no S3 reader class",
+      "deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json@d3c8b0a8e2: no repo reader found under data/assets/scripts/gold for fact_allocations or fact_transactions",
+      "deliverables/0.9.0_WK_IRPT_DASHBD~161/dry_run_account_dim.py@d3c8b0a8e2: reads the two silver tables with a raw get_object under a constant prefix, not through a grant-bounded reader"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 2 of DB-b-234 reuses the existing Cottonwood Black Diamond silver reader, which refuses any prefix outside the Cottonwood grant; the BOUNDS reads clause names it as the only silver read path.",
+  "world_is": "No grant-bounded Cottonwood silver reader exists at d3c8b0a8e2. The only Cottonwood reader guards gold tables and refuses silver, so silver is reachable only by a raw GET and no guard covers it. This is a premise failure, not an unreadable source: no read was refused. The reader (a GET-only class bounded to the two Black Diamond silver prefixes, built as the Inflection reader is) was not written, because the derivation stopped at row IRPT_DASHBD-D2-W188-S2."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W188-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~188",
+  "surfaced_at": "2026-10-15T06:12:15Z",
+  "one_line": "The External Flow column of silver fact_transactions carries direction words and no amount (Contribution, Withdrawal, None), so it cannot be read as a signed net external flow; the derivation stops here",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~188/EXT_FLOW_CENSUS_R119.txt@c2e1016a29: 124 fact_transactions partitions, 1086772 rows, 0 External Flow nulls; distinct values Contribution 102248, Withdrawal 54177, None 930347; External Flow is a string column and Market Value a double column",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~188/EXT_FLOW_CENSUS_R119.py@c2e1016a29: the GET-only census that measured the counts above",
+      "data/assets/scripts/gold/build_cottonwood_interpolated_backfill.py@d3c8b0a8e2: load_transactions signs abs(Market Value) by a four-type list (Cash Deposit, Cash Withdrawal, Transfer In, Transfer Out) and never reads External Flow",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-234.cottonwood-account-return-input-from-black-diamond-values-and-flows.md@d3c8b0a8e2: the BOUNDS refusal clause names this case: record absent with the reason, file a BLOCKING row with counts, stop"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "F_t is the net EXTERNAL flow taken from the External Flow column of fact_transactions, summed over the Trade Date window (cell step 2). BOUNDS refusal clause: if External Flow cannot be read as a signed net external flow for the types it is populated on, record it absent with the reason, file a BLOCKING row with counts and stop on that point.",
+  "world_is": "External Flow holds the words Contribution (102,248 rows), Withdrawal (54,177) and None (930,347) over 124 partitions (1,086,772 rows, 0 nulls). It carries no amount. The words are populated on types that are not external flows: Buy (3,445 Contribution), Sale (909 Withdrawal), Expense (4,362 Withdrawal), Management Fee (474 Contribution and 14,813 Withdrawal). The amount is the Market Value double column, which the Cottonwood producer reads signed by a four-type list, not by External Flow. Under the refusal clause no flow was computed, no type was placed, and no record field was filled from a Market Value reading."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W188-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~188",
+  "surfaced_at": "2026-10-15T06:41:52Z",
+  "one_line": "The issuer checker recomputes the Black Diamond account value by summing every fact_allocations row of the account-day, but the silver repeats the same value on 2 to 4 rows, so the sum doubles the value and AC2 cannot pass as written",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~188/ALLOC_DUPLICATE_ROWS_R119.txt@cb1d6af3bb: 83 fact_allocations partitions 2026-06-22 to 2026-10-13; 40235 account-days hold 2 rows, 132 hold 3 and 115 hold 4 (the rest hold 1); every pattern carries one identical Account Market Value (values_identical)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r119/p119_bdreturn.py@46cc1c2219: recompute_value sums float(v) over every fact_allocations row whose AccountID matches the probed account on the probed day",
+      "AC2 run on the worktree: FAIL: the account value of a probed (account, date) differs from the silver: <a client figure, withdrawn> against <a client figure, withdrawn> (the first probe; probes 1 and 3 each hold two identical silver rows, probe 2 holds one row)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2: the three (account, date) pairs the checker chooses have a market_value_eod equal to the account value the Black Diamond silver itself holds. Refusal clause: a criterion that cannot be satisfied as written is reported with the measurement, never repaired.",
+  "world_is": "The silver holds one account value per account-day, repeated on 2 to 4 identical rows; the checker's recompute sums the repeated rows, so a probe on a repeated account-day reads twice the silver's value. The table's market_value_eod carries the one value the silver holds and is not doubled. AC2 therefore cannot pass as written for this table. The checker is the issuer's file, outside this grant, and was not edited."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W188-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~188",
+  "surfaced_at": "2026-10-15T06:41:52Z",
+  "one_line": "The contract has no label or source column for the label the order asks to carry on every row; the label rides as the table's schema metadata and the record's source_label field",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@d3c8b0a8e2: the columns list holds 19 names and none is a label or source column",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py@d3c8b0a8e2: the label is the module constant LABEL and the ARROW_SCHEMA carries no label column",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py@cb1d6af3bb: to_table carries the label as schema metadata key source_label"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 2: the adapter carries the constant label on every output row, in the source_pipeline column or the column the Inflection adapter uses for its label, and the output has exactly the contract's columns.",
+  "world_is": "Neither the contract nor the round-109 Inflection adapter has a label column: the Inflection label is a module constant. A label column would add a twentieth column and break the exact-column clause the checker enforces. The label is carried in the module constant, the table's schema metadata and the record's source_label, not on each row."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W188-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~188",
+  "surfaced_at": "2026-10-15T06:41:52Z",
+  "one_line": "The Black Diamond fact_allocations link-base partition 2026-06-22 exists but holds no rows, and its empty run continues to 2026-07-09, so the account values the order expects from 2026-06-23 start on 2026-07-10",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~188/ALLOC_PARTITION_COVERAGE_R119.txt@cb1d6af3bb: 144 partitions 2026-04-22 to 2026-10-13; 111 non-empty, 33 empty; 17 empty before 2026-06-22; first empty 2026-04-25, last empty 2026-07-09",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~188/ALLOC_PARTITION_COVERAGE_R119.py@cb1d6af3bb: the count-only read that measured the partition rows",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-234.cottonwood-account-return-input-from-black-diamond-values-and-flows.md@46cc1c2219: step 5 states that the Black Diamond silver covers 2026-04-22 to 2026-06-22 as a window the two sources share"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 5: the Black Diamond silver also covers 2026-04-22 to 2026-06-22, a window the two sources share; the link base 2026-06-22 is read from fact_allocations when that partition exists; the first derived date is 2026-06-23.",
+  "world_is": "The 2026-06-22 partition exists and holds zero rows, so no account has a link-base value; the empty partitions run to 2026-07-09 and the first non-empty partition on or after the link base is 2026-07-10. The silver holds 44 non-empty partitions before 2026-06-22, so the shared window is populated only before the link base. The 25 derived accounts first hold a value on 2026-07-10, and their first derived row is that day (NOT_MEASURABLE), not 2026-06-23."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W188-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~188",
+  "surfaced_at": "2026-10-15T06:46:46Z",
+  "one_line": "Row IRPT_DASHBD-D2-W188-S3 (commit 538f2db2c8) quotes two client account-value figures in its grounding, and the repo must hold none; the channel owner should redact that grounding line",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md@538f2db2c8: the third grounding line of row IRPT_DASHBD-D2-W188-S3 quotes the two client figures of the AC2 output",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~188/IRPT_DASHBD.TO-DB-b-234.cottonwood-account-return-input-from-black-diamond-values-and-flows.proof_of_spec.json@d24d31880d: the AC2 output line and the determinism line carried the same two figures; the instance was regenerated without them"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Client data rule: counts, dates, hashes and words only in the repo, never an account id or a client value.",
+  "world_is": "Row S3 and the instance committed at d24d31880d quote two client account-value figures from the AC2 output. The next instance commit redacts them. Row S3 is append-only and was not edited, so its grounding line still holds the figures; the channel owner should redact it. The worker branch history, which is not pushed, still holds the figures."
+}
+```
+
+## IRPT_DASHBD-D2-W506-S1 -- a plain household scalar under an avs benchmark member is printed as every account's figure; the order's assertion for it cannot pass against the unmodified model
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W506-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~506",
+  "surfaced_at": "2026-10-15T06:58:37Z",
+  "one_line": "TO-DB-f-506 step 3 asks the household test to add the sixteen avs benchmark members as plain household scalars and assert the account tables do NOT print that scalar as an account figure. The model prints it: a value that is not by_row is taken as the figure for every row, so all three account tables print the scalar. The by_row reading the cell pins holds (9 tests pass; a fixed-row mutant fails 6), so the scalar case is left unpinned and the test file carries a comment instead of a test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE (bun -e inline, read-only, no file written), portal head 0d58fe2c: avs.qtd.benchmark_short_term set to the plain scalar 77.7 in the synthetic document; the account_overview section prints [\"77.7%\",\"77.7%\",\"77.7%\"] for SYN-0001, SYN-0002 and SYN-0003.",
+      "CODE: portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts at 0d58fe2c, figureCell (about lines 483-495): the value is read as the figure, and only a by_row map is indexed by rowKey, so a scalar is never narrowed to one account.",
+      "PRODUCER: data/assets/scripts/gold/irpt_reporting/filled_report_values.py at c8794f1232, line 9 of the module header: the avs benchmark members are account grain (by_row); _one_document writes a by_row map for any member that carries a row key, and a scalar only for a member with no row key (a household-grain member)."
+    ]
+  },
+  "spec_asserts": "Round 117 order TO-DB-f-506 step 3 (test title word household): a by_row map under a household-grain member is never read as a household figure, and a plain household scalar under an avs benchmark member is not printed as an account's figure (the account tables print the absent words for a missing row).",
+  "world_is": "The model prints a plain scalar as the figure of every account (3 of 3 account tables print 77.7%). The first half of the assertion holds (a by_row map under the household member prints the absent words, pinned by a passing test). The second half cannot pass against the unmodified model; the test file carries a comment for that case, and the grant names no source file to change it."
+}
+```
+
+## IRPT_DASHBD-D2-W506-S2 -- the order's test.todo marker does not typecheck in this portal (TS2339), so a failing case cannot be marked as todo
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W506-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~506",
+  "surfaced_at": "2026-10-15T06:58:37Z",
+  "one_line": "TO-DB-f-506 step 5 and step 3 name test.todo as the marker for a failing case. The portal's bun:test typings do not declare test.todo: bun run typecheck (tsc -b --noEmit) fails with TS2339 at the todo line. The todo was removed in portal commit 0d58fe2c (the case is a comment instead), and typecheck then returns 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal typecheck at 609476b3 (the first commit of avs-by-row.test.tsx): tsc -b --noEmit printed avs-by-row.test.tsx(246,8): error TS2339: Property 'todo' does not exist on type 'typeof test'.; rc 2.",
+      "portal typecheck at 0d58fe2c, the same tree minus the todo line: rc 0.",
+      "the bun test run at 609476b3 reported 9 pass, 1 todo, 0 fail, so the runtime accepts test.todo while the declared types do not."
+    ]
+  },
+  "spec_asserts": "Round 117 order TO-DB-f-506 step 5: a case the model does not satisfy is kept out of the committed file, one test per failing case marked test.todo with its title.",
+  "world_is": "This portal's bun:test declarations do not carry test.todo, so the marker fails the typecheck gate (step 4). No failing case exists in the committed file, so the gate is green; a future failing case needs another marker the declarations carry, or a comment as used here."
+}
+```
+
+## IRPT_DASHBD-D2-S67 -- disarm of D2-S64: the avs benchmark members are read as by_row per account and pinned by a test; a household scalar under one prints for every account, which the producer must never emit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S67",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-15T07:08:01Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-S64 (the avs benchmark members read as by_row per account): the report model reads all sixteen as by_row per account, pinned by a test on a three-account document in the contract's per-row shape; a household scalar under one of them prints as every account's figure, which the contract forbids and the producer must never emit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json document.filled_report.per_row_member_form: an account-grain member holds {by_row: {account_id: figure}}; a household-grain member holds its figure directly, never a by_row map.",
+  "world_is": "Order DB-f-506 (worker 0.9.0_WK_IRPT_DASHBD~506, drained at 1c3ea59e4b) wrote dashboard-side test avs-by-row.test.tsx on the portal branch (head 0d58fe2c): 9 tests pass on the unmodified model; all 16 members x 3 accounts are covered; each account prints its own figure; the absent entry prints the absent words; a not-spanned window prints the not-spanned words; a temporary fixed-row mutant failed 6 of 9. The finding is reads_by_row. Worker row W506-S1: a plain household scalar under an avs benchmark member prints as EVERY account's figure (figureCell takes a non-by_row value as is); the contract forbids a scalar under an account-grain member, so the guard belongs to the producer (the contract writer, ~D2), not to the reader. No source file changed. Counts and paths only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~506/BUILD_R117.json (finding reads_by_row; members_covered 16; accounts 3)",
+      "portal git: cand/dell2/irpt-default-performance-report lineage, branch wk-IRPT_DASHBD-506-portal @0d58fe2c43ffad9ca2ffeda422b42681c3494d1c (__tests__/irpt-dashbd/avs-by-row.test.tsx)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md rows D2-S64 and W506-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer disarm of D2-S64 by 2.0.0_SA_COO~F2 (the row's disarm owner); the row's adjudication is the CVO's. For ~D2 (contract writer): the guard against a household scalar under an account-grain member is a producer or contract-validation clause, not a reader one; a reader that cannot tell a scalar from a per_row map by shape is the contract's form, not a defect here."
+}
+```
+
+## IRPT_DASHBD-D2-S68 -- issuer's dispositions on the round 119 B-49F worker rows; W189-S1 disarmed by carrying it to W182-S1
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S68",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T07:15:25Z",
+  "one_line": "Issuer's dispositions on the round 119 workstream B-49F worker rows (W187-S1 to S3, W188-S1 to S6, W189-S1, W190-S1 and S2): every blocking row was ruled and repaired inside its own order; D2-S56 (ARMED, owner this seat, the contract-and-module carrier) is REMEDIATED and DISARMED: contract 0.5.4 and the module moved together at 9d740b6af9 and all ten pairs read equal in the QA table; W189-S1 (ARMED, owner this seat) is DISARMED by carrying the commit gate's absent client-data list to row W182-S1 (owner 0.0.0_AB_MSTR) with this seat's own identifier scans standing in; W188-S6 (two client figures in a worker branch) was handled by consolidating the worker's final files on a clean branch, withdrawing the two figures from row W188-S3 and deleting the contaminated local branch unmerged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The orders of round 119 B-49F: counts, dates, hashes and words only in the repo, a row or a report; never a household or account id or a client value; every commit through safe-commit, whose client-data check needs the hashed account-id list.",
+  "world_is": "W187-S1 and S2: the round-118 record pinned the module's hash and a Cottonwood reader test and the round-118 Cottonwood checker counted 36 account-return members where the repaired contract holds 46; re-pinned and repaired inside DB-b-233 (Amendment 1), the checker patched, and the round-110 criterion DB110-2-AC1 (a record built against six equivalence classes) and DB111-2-AC1 (a record built against the 0.5.1 bytes) accept what they were built against through the lineage. W187-S3 and the trading calendar fallback: carried by row W401-S1 (owner 0.0.0_AB_MSTR: install the calendar packages on dell2). W188-S1: the adapter carries its own GET-only reader with a guard; W188-S2: the vendor's External Flow words signed by Market Value, no re-classification, the (word, type) census reported; W188-S3: the issuer checker summed identical duplicate silver rows, fixed; W188-S4: the account return contract has no column to carry the label `computed from Black Diamond values and flows`, carried to the CTO; W188-S5: 33 Black Diamond allocation partitions are empty from 2026-04-25 to 2026-07-09, so the first derived row is 2026-07-10, carried to the CTO. W189-S1 and W190-S1: the commit gate's client-data list is absent on this box (the same condition as W182-S1); this seat scanned every changed file of every merge for client figures and long identifier runs. W190-S2: the checker's digit clause refused public security identifiers the order permits, fixed. Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUND119_B49F_DRAIN_END_20261015.md",
+      "merges 03701893e5 (DB-b-235), 9d740b6af9 (DB-b-233), 0fafe5f8c7 (DB-b-236), ba18aeec39 (DB-b-234, clean branch)",
+      "this seat's re-run of the fourteen round-118 and round-119 criteria and the ten earlier criteria on the landed tree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Open carriers: W182-S1 and W401-S1 (owner 0.0.0_AB_MSTR), the label column and the empty-partition gap (to the CTO in the slug)."
+}
+```

@@ -36411,3 +36411,545 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W401-S1 (the oneOf had no branch for a filled bundle): RESOLVED by IB-pr-557 AMENDMENT 1 (my defect). D2-W401-S2 (four seam tests failing at base, outside the grant): INERT, recorded. D2-W401-S3 (an existing branch admits a filled pin beside a narrative ref): INERT, recorded for the round-4 contract read. D2-W402-S1 (my order said _scope was already on the export path; it is not): INERT, my error, the freeze adds it. D2-W402-S2 (AC3 needs the worker's own commits): INERT. D2-W402-S3 (ARMED, owner me): infra/aws/lambda/ci/lambda-source-map.json lists no entry for _scope/filled_named_accounts.py, so a route or export deploy would omit it: a round-4 cell before any deploy leg. D2-W403-S1 (writer located), S2 (CloudTrail data events for opal-data-inf only from 2026-10-13 20:30Z), S4 (no StopInstances event; SendCommand hidden): INERT. D2-W403-S3 (ARMED, owner me): the flat-key pulls are steps of the gold chain that also feeds the silver transactions and performance steps, so retiring them (pair (b) as signed) couples to the gold chain; disarm condition: the CTO re-cuts pair (b) on the located writer (recommended: re-time the existing chain trigger into the 06:00 New York fold; no new producer, no port)."
 }
 ```
+
+## IRPT_BCKEND-D2-W405-S1 -- The rebuilt irpt-ycharts-generate candidate moves composition_admission.py, a member neither the order nor the R29c ledger names
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W405-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~405",
+  "surfaced_at": "2026-10-15T06:23:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The candidate built locally from current trunk (base 66a6cd8686) differs from the live R29c zip in exactly one member, composition_admission.py, which the order's step 5 does not name and the R29c ledger does not list; the three ENDPOINT members are equal to the live bytes and differ from the IB-pr-456 signed build.",
+  "spec_asserts": "IB-pr-561 steps 4 and 5: rebuild the candidate from current trunk source, record the moved members against the live zip, and the candidate must not move release 29's members (generate_installed.py, uploads.py, ordinary_viewer.py, interactive_access.py). The R29c ledger names those four as the release 29 L3 members.",
+  "world_is": "The four release 29 members are byte-identical to the live zip (r29c_members_preserved true). The one moved member is composition_admission.py (live sha256 prefix 50f5d11c, candidate prefix 8d9b7aad; 2791 vs 3330 bytes). Trunk last changed it at commit 83eb798a08 (2026-10-14 10:13 -0400, after the R29c deploy completion at 13:08:47Z). Releasing the candidate as built would also release that change; the live R29c package does not carry it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_scratch405/cmp_out.json (scratch, outside the repository): moved_members [composition_admission.py], moved_count 1, total_members 106 on both zips, four release 29 members identical",
+      "build: BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-ycharts-generate at base 66a6cd8686, rc 0, import-closure OK, nothing uploaded",
+      "git log -- infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py: 83eb798a08 (2026-10-14 10:13:26 -0400) is the newest commit touching it",
+      "infra/aws/lambda/ci/lambda-source-map.json line 4030 lists composition_admission.py in the irpt-ycharts-generate files array (native member, read from the worktree)"
+    ]
+  },
+  "notes": "Not a blocker for this order (the order grades no-silent-revert of the four release 29 members, which holds). The apply scope of the candidate is the COO's call."
+}
+```
+
+## IRPT_BCKEND-D2-W405-S2 -- The CTO rulings the order cites for step 2 (msgs 8116, 8130, 8133) are not readable from the worktree; no broker read tool is in this worker's face
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W405-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~405",
+  "surfaced_at": "2026-10-15T06:23:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 2 asks the worker to read CTO msgs 8116 and 8133; the worktree carries no copy of broker messages and this worker has no read tool for them, so the rulings were taken as the order quotes them (msg 8116 and the msg 8130 facts), and msg 8133 was not read.",
+  "spec_asserts": "IB-pr-561 step 2: read the IB-pr-456 packet and record, the ledger, and CTO msgs 8116 and 8133.",
+  "world_is": "Packet ~312, its record IB152-1_release_read.json and the R29c ledger were read from the worktree. Messages 8116 and 8133 are not in the worktree and are not reachable from this worker's face; the order's own text carries the msg 8116 ruling and the msg 8130 facts, which were used as quoted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-561.rebuild-the-ib-pr-456-ycharts-generate-candidate-on-the-live-r29c-bytes.md (worker face, cell IB-pr-561 text)",
+      "worktree listing of org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/ (packet and record present, no message files)"
+    ]
+  },
+  "notes": "Recorded so the CTO ruling set the COO cites can be confirmed by the issuer. No effect on the criteria, which grade the record's facts."
+}
+```
+
+## IRPT_BCKEND-D2-S187 -- IB-pr-456's commentary_requested behaviour is already live via release 29 L3; f61b may no longer gate it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S187",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T06:39:03Z",
+  "one_line": "IB-pr-456's ENDPOINT behaviour (submission and acceptance admit commentary_requested; IB-pr-455 code) is ALREADY LIVE on irpt-ycharts-generate since IRPT_ANLREQ release 29 leg L3 (2026-10-14 13:03Z), so IB-pr-456's pair, held for Andrew's BEFORE record f61b, no longer gates that behaviour; its rebuild over MfxpvRhV moves only composition_admission.py against live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "IB-pr-456 pair and round-183 analysis: commentary_requested reaches irpt-ycharts-generate only through IB-pr-456's apply, after Andrew's BEFORE record (call f61b).",
+  "world_is": "IB203-2 rebuild record (deliverables/0.9.0_WK_IRPT_BCKEND~405/IB203-2_ycharts_generate_rebuild.json): the candidate's submission.py, acceptance.py and AnalysisSubmissionRequest.schema.json equal the LIVE zip's bytes, and trunk @66a6cd8686 carries commentary_requested in all three (2, 2 and 1 hits). Live CodeSha256 5TRFZf6G is R29c's (ledger 20261014T1246Z, CLOSED). Whether release 29's signed pair named these three members is not read here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~405/IB203-2_ycharts_generate_rebuild.json (endpoint_members: changed vs the signed build, equal to live)",
+      "git show 66a6cd8686: acceptance.py/submission.py/schema grep commentary_requested = 2/2/1",
+      "2.0.0_SA_COO~P2 msg 8149"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: (1) ~Y2 reads whether release 29's pair (CTO half blob 5e8b3cbd95) named these three members; if not, a retroactive after-read of the live behaviour (one accepted request with commentary_requested true and one false, read from the accepted record) is filed. (2) ~P2's packet v2 states that f61b's BEFORE record is no longer obtainable for this behaviour and whether IB-pr-456 needs any before-record at all for composition_admission.py; the CTO then withdraws or re-words act f61b."
+}
+```
+
+## IRPT_BCKEND-D2-S188 -- CORRECTS S187: commentary_requested is not live; the rebuild staged old pins and omits IB-pr-455
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S188",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T06:45:13Z",
+  "one_line": "CORRECTS D2-S187: commentary_requested is NOT live (2.0.0_SA_COO~Y2 measured 0 occurrences in the live package's acceptance.py, submission.py and schema, control trunk 2). The real finding: the IB-pr-456 rebuild (IB203-2, candidate MfxpvRhV) staged those three members from the trunk source map's OLD pins, which predate IB-pr-455, so the candidate omits the very change IB-pr-456 releases. S187's premise is withdrawn; f61b still gates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "D2-S187 (this seat, @dd2bb21996): the candidate's ENDPOINT members equal live, therefore commentary_requested is live.",
+  "world_is": "~Y2 msg 8160: live package (S3 version sf9zrBdA..., sha256 b64 5TRFZf6G...) has 0 occurrences of commentary_requested in the three members; release 29's pair names generate_installed.py, uploads.py and ordinary_viewer.py, not these. Trunk @66a6cd8686 has 2/2/1. A BUILD_ONLY build stages each member from its source-map pin, not from HEAD, so a trunk map whose pins for these members predate IB-pr-455 yields a candidate without it. The equality to live in IB203-2 is the symptom.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~Y2 msg 8160 (live package byte count, control)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~405/IB203-2_ycharts_generate_rebuild.json (endpoint_members equal live; built from the trunk map, no override)",
+      "git show 66a6cd8686: commentary_requested 2/2/1 in the three members"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S187 is superseded by this row and needs no after-read. Disarm: ~P2 rebuilds with the three ENDPOINT members pinned at the IB-pr-455 commit (or HEAD) and every R29c member at its R29c pin, shows the member diff against live is exactly the IB-pr-456 set plus composition_admission.py, and each ENDPOINT member contains commentary_requested; the packet v2 is cut on that build."
+}
+```
+
+## IRPT_BCKEND-D2-W407-S1 -- the submit path freezes no filled_report source: the server pin lives in freeze_filled_report, the submit call site drops the page pin fields
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W407-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~407",
+  "surfaced_at": "2026-10-15T06:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-563 names the submit handler as the call site of the server-side pin, and names the one place the submit path freezes sources. No submit path freezes a filled_report source, so there is no such call site to re-point.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_service.py@71c9c81b67 lines 52-55: serve_submit branches on _retained.is_platinum(body) only; every other body takes the retained path (resolve, narrative build, submit_export)",
+      "infra/aws/lambda/investor-reporting/export/submit_async.py@71c9c81b67 lines 115-135: accept/run branch on _retained.is_platinum(body) only; no filled branch",
+      "infra/aws/lambda/investor-reporting/export/handler.py@71c9c81b67 lines 208-214 and 227-236: submit_export takes already-frozen report_revisions and calls bundle_mod.freeze; it does not read a source",
+      "infra/aws/lambda/investor-reporting/export/entry.py@71c9c81b67 lines 347-368: submit_export passes the parsed body to _async.accept; no freeze",
+      "grep of infra/aws/lambda/investor-reporting for freeze_filled_report, read_pinned_filled and filled_report_source at 71c9c81b67: no caller outside export/retained_export.py, export/bundle.py, _contracts/ExportBundle.schema.json and the export tests"
+    ]
+  },
+  "spec_asserts": "The submit handler calls the server-side pin at the one place the submit path freezes sources (IB-pr-563 WORKER FACE: freeze_filled_report is called by the submit handler; entry.py submit_export and handler.py submit_export are the named call sites).",
+  "world_is": "No submit path freezes a filled_report source. freeze_filled_report has no production caller. Built at 608495b0ed: the server pin is inside freeze_filled_report (server_pinned_body, FILLED-REPORT-E), so every freeze of a filled source pins the server's read; the only submit call site changed is entry.py submit_export, which drops the page's version_id, sha256 and size before accept (_page_pins_dropped, FILLED-REPORT-E). submit_service.py and submit_async.py, which hold the branch point for a future filled branch, are outside this order's paths grant and were not edited; no route or branch was added.",
+  "notes": "Disposition for the issuer: decide whether the filled branch is wired in submit_service.py (outside this grant) before any deploy leg; the server pin is ready for it."
+}
+```
+
+## IRPT_BCKEND-D2-W407-S2 -- no composition installs a filled_report reader: the server pin is unreachable in a deployed function until one is wired
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W407-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~407",
+  "surfaced_at": "2026-10-15T06:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The server-side pin reads the current filled report through an injected reader, but no installed composition supplies that reader; the reader exists only as the test doubles.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/entry.py@71c9c81b67 lines 384-402: _with_platinum_reader composes only ports['platinum_series'] (the PATH B reader); no filled reader is composed",
+      "grep of infra/aws/lambda/investor-reporting for freeze_filled_report, read_pinned_filled and filled_report_source at 71c9c81b67 names no installed reader; the reader contract reader(client_id, version_id=None) -> {key, version_id, body} is exercised only by export/tests/test_filled_report_*.py via StoreStub and VersionedStore doubles",
+      "measured at 608495b0ed: the same grep, no new installed reader added"
+    ]
+  },
+  "spec_asserts": "The freeze reads the current object's VersionId, sha256 and size through the same injected reader the freeze uses (IB-pr-563 ruling: the object at the naming builder's platinum address for client=<id>, through the injected reader).",
+  "world_is": "The injected filled reader is not composed by any installed function, and the naming-builder address for the filled report object is not typed or resolved in this change (no address appears in the diff). Until a composition installs the reader, a submit with a filled source would be refused as unavailable by server_pinned_body, never frozen from client-chosen bytes. Not wired here: submit_installed.py and the reader are outside this grant.",
+  "notes": "Disposition for the issuer: name the composition that installs the filled reader, with its naming-builder address, in the round-4 cell that wires the branch (S1)."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S1 -- positions day list in IB-pr-560 (a) contains three days that are not NYSE trading days
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order lists seven positions days with no flat key (2026-07-01, 07-03, 07-04, 07-05, 08-06, 09-28, 09-29); against lib/trading_calendar.py only four of them are trading days without a flat key, and 07-03, 07-04 and 07-05 hold a .parquet key only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~404/IB203-1_orion_recut_design.json@519b5ccbfb: pair_a.feeds.positions.days carries the order's seven days",
+      "lib/trading_calendar.py trading_days_between(2026-05-03, 2026-10-14) with the NYSE pandas_market_calendars source: 114 trading days; is_trading_day False for 07-03, 07-04 and 07-05; bucket listing bronze/positions/ read this session: .parquet only for those three days"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (a): the positions feed's absent trading days are 7, 2026-07-01, 07-03, 07-04, 07-05, 08-06, 09-28, 09-29, each with its flat key absent.",
+  "world_is": "Four of the seven are absent trading days (07-01, 08-06, 09-28, 09-29). Three are not trading days (a holiday and a weekend) and carry a .parquet key. The design keeps the order's seven because the check requires seven; the CTO rules the day set before any write."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S2 -- transactions day list in IB-pr-560 (a) omits six trading days with no key in either format
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order lists seven transactions days; against the calendar thirteen trading days hold no flat key, six of them 2026-05-04 to 2026-05-11, which the order does not list.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py trading_days_between(2026-05-03, 2026-10-14): 114 trading days; bucket listing bronze/transactions/ read this session: no .jsonl.gz and no .parquet key for 2026-05-04, 05-05, 05-06, 05-07, 05-08, 05-11, 07-01, 07-13, 07-14, 07-15, 08-06, 09-28, 09-29",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~404/IB203-1_orion_recut_design.json: pair_a.feeds.transactions.days carries the order's seven days"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (a): the transactions feed has seven absent trading days.",
+  "world_is": "Thirteen trading days hold no key in either format; the six May days fall before the window the order names. The design keeps the order's seven; the CTO rules whether the May days are in scope before any write."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S3 -- the chain's three pull steps carry no date token, so a past-day re-run cannot pass through them as the catalog stands
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-560 (a) re-runs the absent days THROUGH the chain's pull steps, but the catalog rows of INF_API_PULL_POSITIONS_DAILY, INF_API_PULL_TXN and INF_API_PULL_PERF carry no date token, and run_chain refuses --run-date for date-agnostic steps.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/code/gold/orion-gold-dispatch.sh (GET to scratch this session, 2127 lines): catalog rows at lines 293, 295 and 297 carry only --upload-bronze or --upload; line 706 comment describes the pulls as current-day redundant re-pulls",
+      "the same script, run_chain date-agnostic guard (around lines 816 to 865): --run-date rejected for a chain holding a date-agnostic step; the pull branch default_flags are expanded from the catalog row only"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (a): each absent day is re-run through the chain's own pull steps, with each key read ABSENT first.",
+  "world_is": "The steps as catalogued pull the current day and take no day argument; a past-day re-run through them is not expressible without a catalog change to an S3 object outside this repository. The act of (a) cannot start until that change exists and is reviewed."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S4 -- the gold dispatch catalog lives only in S3, with no repository copy
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "orion-gold-dispatch.sh, the catalog that every gold chain runs, exists only at the S3 object code/gold/orion-gold-dispatch.sh; the tree holds no copy under code/gold, so its edits are not version-controlled here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "find of the tree for code/gold: no directory of that name (ls error this session); the Lambda inf-gold-trigger fetches s3://opal-data-inf/code/gold/orion-gold-dispatch.sh at each dispatch (dispatch_cmd in infra/aws/lambda/inf-pipeline/inf-gold-trigger/lambda_function.py)",
+      "the object read by GET this session: 2127 lines, 110.7 KiB, no repository counterpart"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (b) and (a) name the dispatch object as the rollback surface and the catalog row as the change point.",
+  "world_is": "The change point and the rollback object both live in S3, without version control in this repository. An unrecorded edit to the object changes the live chain at the next dispatch. Until a repository copy or an object-version record exists, each catalog edit needs its own ledger entry."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S5 -- the silver aggregator's source is not in the tree, so its direct dispatch of inf-gold-trigger cannot be read or retired from source
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The silver aggregator (lambdas.tf module inf_silver_aggregator, artifact inf-pipeline/inf-silver-aggregator.zip) has no source directory under infra/aws/lambda/inf-pipeline, so IB-pr-560's retirement of its direct dispatch to inf-gold-trigger cannot be designed from source.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/ directory listing (22 entries) holds no inf-silver-aggregator directory; Grep for GOLD_TRIGGER_FUNCTION under that directory returned no match",
+      "infra/aws/terraform/inf-pipeline/lambdas.tf lines 286 to 297: module inf_silver_aggregator, function_name inf-silver-aggregator, artifact_key inf-pipeline/inf-silver-aggregator.zip, GOLD_TRIGGER_FUNCTION = inf-gold-trigger at line 295"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (b): the aggregator's direct dispatch of inf-gold-trigger is retired in the same window as the new schedule lands.",
+  "world_is": "The retirement names a code path whose source is not in this tree. The design can name the env handle and the behaviour the READ record observed (a FIRED gold trigger log line), not the code that makes the call. The retirement is blocked until the source is read from the artifact or the repository."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S6 -- the 06:00 New York fold lands before any measured completeness of T-1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "Every measured flat write on record lands 07:39 to 07:56 EDT after the 11:32Z trigger; a 06:00 New York fold starts the gold chain 1 h 39 min before the earliest measured pull, and T-1 completeness at 06:00 is not measured.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "aws s3 ls of bronze/positions, transactions and performance (local EDT listing, read 2026-10-15): flat writes 2026-10-10 to 10-14 between 07:39:45 and 07:56:39 EDT",
+      "bronze/performance/2026-10-14.jsonl.gz (GET to scratch): 315 rows each for 2026-10-12, 10-13 and 10-14; performance_rest.py lines 113 to 117: factors provisional, SETTLE_DAYS = 7"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (b): the design reads whether Orion's T-1 is complete by 06:00 New York before the re-timing lands, and names the earliest measured-complete time if it is not.",
+  "world_is": "Completeness at 06:00 is unmeasured; the earliest measured-complete time is not established. The probe in the packet's section 9 would decide it with 15 vendor requests across three read-only probes, to be sent by a later order. Until that probe exists, the ARMED condition is the 06:00 landing itself."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S7 -- stale timing comments: the bronze trigger's docstring and the dispatch script's pull comment disagree with Terraform and with the measured landings
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two timing comments are stale: infra/aws/lambda/inf-pipeline/inf-bronze-trigger/lambda_function.py line 4 says cron(43 12 * * ? *) while Terraform (eventbridge.tf line 69) holds cron(15 11 * * ? *); the dispatch script's line 706 says the cron landings run 12:30 to 13:40Z while the gold pulls measured 11:39 to 11:56Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/inf-bronze-trigger/lambda_function.py line 4 (read at 519b5ccbfb) versus infra/aws/terraform/inf-pipeline/eventbridge.tf line 69",
+      "orion-gold-dispatch.sh line 706 (scratch copy from S3) versus the bucket listing times read this session"
+    ]
+  },
+  "spec_asserts": "A timing comment in the bronze trigger and the dispatch script describes when the upstream pulls land.",
+  "world_is": "The Terraform value is the schedule in force; the measured landings are the evidence. The comments are not the schedule and must not be cited as one; the packet cites Terraform and the listings."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S8 -- the gold trigger's BLOCKED text says the hold is active while the Terraform release control is set
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "inf-gold-trigger's BLOCKED message (lambda_function.py line 379) tells an operator the hold is ACTIVE and lifts only after INF_B_00 and the coverage assertion land; the release control INF_GOLD_DISPATCH_RELEASE is set in lambdas.tf line 138, and its provenance line 139 reads CURED and LIFTED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/inf-gold-trigger/lambda_function.py line 379 (the not-released branch text, read at 519b5ccbfb)",
+      "infra/aws/terraform/inf-pipeline/lambdas.tf lines 138 and 139 (release value and provenance, read at 519b5ccbfb)"
+    ]
+  },
+  "spec_asserts": "The handler's message describes the live control state.",
+  "world_is": "The message is reached only when the release is absent, so it is not wrong at run time; as narrative it reads as an active hold beside a released control. An operator who reads the message would believe dispatch is held while it runs."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S9 -- a tolerated pull failure lets the gold chain report green with a day's key absent
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S9",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The dispatch script's pull branch logs WARN and returns success when an INF_API_PULL_* step fails or times out, so a day's flat key can stay absent while the chain reports complete.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "orion-gold-dispatch.sh pull branch (around lines 706 to 725, scratch copy from S3): on non-zero exit the step prints WARN, telem_error, and returns 0 ('TOLERATING; chain proceeds')",
+      "the packet's section 6 ABSENT-AT-SOURCE policy reads the key, not the chain status, for this reason"
+    ]
+  },
+  "spec_asserts": "A green chain run implies each pull step wrote its day.",
+  "world_is": "A tolerated failure leaves no key and no failed status at chain level. Every absent day in the three feeds is therefore a possibility the chain status cannot show. Disarm: the COO's daily key read for each feed, or a per-key check, before any day is counted as delivered."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S10 -- the positions manual CLI's docstring names a parquet key the write no longer produces
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S10",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "data/inf/manual_api/pull_inflection_positions_daily.py line 10 documents the output as bronze/positions/{snap_iso}.parquet while the write at line 445 is bronze/positions/{snap_iso}.jsonl.gz.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pull_inflection_positions_daily.py line 10 (docstring) and lines 175 to 176 and 445 (the key used by the resume check and the upload), read at 519b5ccbfb"
+    ]
+  },
+  "spec_asserts": "The CLI's docstring describes its output key.",
+  "world_is": "The write is the flat .jsonl.gz key the order and the check require. The docstring is stale; no runtime effect was observed. The retirement in IB-pr-560 removes the write and should correct the docstring in the same change."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W406-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~406",
+  "surfaced_at": "2026-10-15T06:32:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-562 criterion AC3 cannot pass on any source map. The check's selector importing_functions() in p204_cells.py takes a function only when the strings reporting/entry.py, export/retained_export.py or export/bundle.py occur in json.dumps(entry); no entry in lambda-source-map.json contains them, because the map lists these modules as bare file names under source_dir. The selector returns zero functions and AC3 fails with 'no function in the map packages an importing module'. The staging the cell asks for is done on the worker branch; the selector is the issuer's defect and the order stays open.",
+  "spec_asserts": "WORKER FACE cell IB-pr-562 and criterion AC3: the check computes the importing functions from the map and every one of them must carry exactly one staged_from entry for the shared reader.",
+  "world_is": "The selector yields 0 functions on the base map (71c9c81b67) and on the worker commit 9892daa1dd. The packaged importers are reached only through source_dir plus files: irpt-49f-reporting-read-lambda packages reporting/entry.py, irpt-export-render packages export/retained_export.py and export/bundle.py. The worker staged both functions on that computed set; the AC3 output is recorded verbatim in IB204-1_criteria_output.txt.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~P2/checks/r204/p204_cells.py importing_functions() at worktree HEAD 71c9c81b67 (the substring selector and IMPORTERS tuple)",
+      "python -I selector run over infra/aws/lambda/ci/lambda-source-map.json at 71c9c81b67: 0 functions; packaged-path selector (source_dir plus files): 2 functions",
+      "commit 9892daa1dd (lambda-source-map.json +16 -2; test_source_map_filled_named_accounts.py added): both functions carry one staged_from entry, pin 25bac3b7ea, sha256 verified by the build"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W406-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~406",
+  "surfaced_at": "2026-10-15T06:32:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's READ FIRST names irpt-ycharts-generate as a function whose entry mentions reporting/entry.py, export/retained_export.py or export/bundle.py. It does not: its source_dir is ycharts/generate, its entry is ycharts/generate/entry.py, and it packages no importer. The worker did not stage it; the packaged-path set is irpt-49f-reporting-read-lambda and irpt-export-render.",
+  "spec_asserts": "WORKER FACE cell IB-pr-562 READ FIRST: the functions whose entries mention reporting/entry.py, export/retained_export.py or export/bundle.py include irpt-ycharts-generate.",
+  "world_is": "irpt-ycharts-generate packages ycharts/generate/entry.py only; the bare name entry.py in its files list resolves under its own source_dir. The grep of the investor-reporting tree places the shared reader's import sites only at reporting/entry.py:403 and export/retained_export.py:421.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda-source-map.json at 71c9c81b67, the irpt-ycharts-generate entry: source_dir infra/aws/lambda/investor-reporting/ycharts/generate, files entry.py",
+      "Grep of infra/aws/lambda/investor-reporting for filled_named_accounts at 71c9c81b67: reporting/entry.py:403 and export/retained_export.py:421 only"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W406-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~406",
+  "surfaced_at": "2026-10-15T06:32:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The check's importer tuple names export/bundle.py, but no module imports the shared reader there: the reader is imported by name only in reporting/entry.py and export/retained_export.py. irpt-export-render packages bundle.py and retained_export.py, so the computed function set is unchanged; the tuple member adds nothing to the set.",
+  "spec_asserts": "WORKER FACE: the importing modules are reporting/entry.py, export/retained_export.py and export/bundle.py (the check's IMPORTERS tuple).",
+  "world_is": "export/bundle.py has no import of filled_named_accounts; its only effect on the computed set is through irpt-export-render, which packages retained_export.py as well.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of infra/aws/lambda/investor-reporting for filled_named_accounts at 71c9c81b67: no hit in export/bundle.py",
+      "lambda-source-map.json irpt-export-render files list includes bundle.py and retained_export.py at 71c9c81b67"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W408-S1 -- the trunk map's ENDPOINT pins hold no commentary_requested; IB203-2's note that trunk carries the R29c pins is not borne out
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W408-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~408",
+  "surfaced_at": "2026-10-15T07:01:38Z",
+  "one_line": "IB203-2 states that trunk now carries the R29c pins for the three irpt-ycharts-generate ENDPOINT members, so no override is needed. Measured at trunk 7b3c105542 the pins hold 0 commentary_requested each; the override-map candidate is the one that carries the signed bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "deliverables/0.9.0_WK_IRPT_BCKEND~405/IB203-2_ycharts_generate_rebuild.json (notes): the candidate was built from the trunk map with no BAU_SOURCE_MAP_OVERRIDE, because trunk now carries the R29c pins.",
+  "world_is": "git show at the trunk pins 1eed34a8c0 (submission.py), 2f7cc7be42 (acceptance.py) and 5be2acd7cc (AnalysisSubmissionRequest.schema.json) gives 0 occurrences of commentary_requested each (10348, 9852 and 4383 bytes). The signed bytes at e7bb7e923a (submission.py 18aba4f0, acceptance.py abbdab49, schema 1052343f) hold 3, 3 and 1 occurrences. The candidate built with the override map (CodeSha256 3+fMEJhQ8enneLH30XiiV5VYEC4kk0+hZl0SFFsyM4k=) carries the signed bytes. The trunk-map build recorded in IB203-2 (CodeSha256 MfxpvRhV) equals the live zip except composition_admission.py. Consistent with CTO row IRPT_BCKEND-D2-S188.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1eed34a8c0, 2f7cc7be42 and 5be2acd7cc (trunk 7b3c105542): commentary_requested 0 occurrences in each member",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~408/IB205-1_ycharts_generate_rebuild_v2.json (endpoint_members; candidate 3+fMEJhQ8enneLH30XiiV5VYEC4kk0+hZl0SFFsyM4k=)",
+      "IRPT_BCKEND-D2-S188 (CTO row: the rebuild staged old pins)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: 2.0.0_SA_COO~P2 cuts packet v2 on the candidate recorded in IB205-1 (CodeSha256 3+fMEJhQ8...), not on MfxpvRhV..., and treats the IB203-2 trunk-map note as superseded. No live write was made; this row records a premise the world does not hold."
+}
+```
+
+## IRPT_BCKEND-D2-S189 -- Dispositions on the round-4 workers' rows; D2-W402-S3 and D2-S185 disarmed; IB-pr-564 replaces the IB-pr-561 candidate
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S189",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T07:09:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on the round-4 ~PS, ~PO and ~PY workers' rows (D2-W404-S1 to S10, D2-W405-S1 and S2, D2-W406-S1 to S3, D2-W407-S1 and S2, D2-W408-S1); D2-W402-S3 and D2-S185 DISARMED; the IB-pr-561 candidate is replaced by IB-pr-564's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB203-1, IB203-2, IB204-1, IB204-2 and IB205-1 AC1 to AC3 on each worker tree (all PASS) and the proof instances (VALID); merges 0ea9b3e1d2 (560), 6f019c40ee (561), 05ea78f452 (562), 34ea6312cc (563), c324a93684 (564)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~408/IB205-1_ycharts_generate_rebuild_v2.json: candidate 3+fMEJhQ8 built with the candidate map at e7bb7e923a; the three ENDPOINT members carry commentary_requested 3, 3 and 1 and equal the signed hashes (resign_needed false); release 29's four members byte-identical to the live zip (digest 5TRFZf6G); moved against live: acceptance.py, submission.py, the schema and composition_admission.py (4 of 106); the live zip holds commentary_requested 0 times in the three members"
+    ]
+  },
+  "spec_asserts": "IB-pr-561 (my cell): rebuild the candidate from current trunk; the trunk source map carries the right pins, so the candidate carries commentary_requested.",
+  "world_is": "DISPOSITIONS. D2-W402-S3 DISARMED: the source map stages _scope/filled_named_accounts.py in irpt-49f-reporting-read-lambda and irpt-export-render (IB-pr-562 @05ea78f452, build-only import PASS for both). D2-S185 DISARMED: the live bytes are the R29c ledger (answered); the candidate keeps release 29's four members (IB-pr-564). D2-W405-S1: the composition_admission.py change (IRPT_ANLREQ cause commit 83eb798a08) still rides in the corrected candidate; stays ARMED, owner me, until the CTO rules on the packet. D2-W405-S2, D2-W406-S2 and S3 (ycharts-generate is not an importer; bundle.py imports nothing), D2-W407-S2 (no installed filled reader), D2-W408-S1 (the trunk map pins hold commentary_requested 0 times: the fact that corrected IB-pr-561): INERT, recorded. D2-W406-S1: RESOLVED, my check selector defect (fixed @c8a836b0fa, no criterion weakened). D2-W407-S1 (freeze_filled_report has no production caller): INERT, the round-5 enrichment (wire the submit branch and compose the reader). D2-W404-S1 and S2 (the 36-day denominators differ from the calendar: positions 4 of 7 are trading days without a flat key, transactions 13 trading days lack one, six of them 2026-05-04 to 2026-05-11, unlisted), S7, S8, S10 (stale comments): INERT, recorded for the re-cut. D2-W404-S3 (the chain's pull steps carry no date token and run_chain refuses --run-date, so pair (a) cannot re-run past days through them) and D2-W404-S5 (the silver aggregator has no source directory in the repository): BLOCKING for the Orion act, asked of the CTO; D2-W404-S4, S6 and S9 stay ARMED (owner me): the dispatch script is an unversioned S3 object; T-1 completeness at 06:00 NY is unmeasured and the earliest measured pull is 11:39Z; a failed pull logs WARN and the chain reports complete."
+}
+```

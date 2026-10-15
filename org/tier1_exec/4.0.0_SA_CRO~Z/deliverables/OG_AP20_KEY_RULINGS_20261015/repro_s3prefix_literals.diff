@@ -1,0 +1,13 @@
+diff --git a/infra/aws/terraform/opal-gateway/etfs_read_iam_krtest.tf b/infra/aws/terraform/opal-gateway/etfs_read_iam_krtest.tf
+new file mode 100644
+--- /dev/null
++++ b/infra/aws/terraform/opal-gateway/etfs_read_iam_krtest.tf
+@@ -0,0 +1,8 @@
++    condition {
++      test     = "StringLike"
++      variable = "s3:prefix"
++      values   = ["daily/*", "gold/book/*", "gold/holding/*", "platinum/reports/*", "silver/holdings/*", "rivalfunds/etfs/gold/*"]
++    }
++    resources = ["arn:aws:s3:::opal-data-etfs"]
++    # bucket opal-data-etfs
++    actions = ["s3:ListBucket"]
