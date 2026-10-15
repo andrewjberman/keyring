@@ -933,6 +933,72 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "A criterion's cell_ref resolves when the cell exists in any of the project's decomposition documents.",
     "world_is": "The alignment limb resolves cell_ref against the one named decomp_ref.doc. Eleven instances whose cell was moved to a round file read INVALID, so those orders cannot be flipped complete and the completion report lists them as not terminal-with-proof.",
     "notes": "Not fixed by this seat: the checker is not this project's. CTO ruling msg 6215: keep the 12 pending orders as they are, flip none without a VALID instance, file this row. iam-1 is the twelfth pending order and fails on schema (spec_ref group, artifact kind), a different cause."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W44-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~44",
+    "surfaced_at": "2026-10-15T21:16:48Z",
+    "one_line": "The rivalfunds suite is not a clean regression net at base: 56 of the suite's tests fail on box/dell1 base (1af8b0dba8) before any RIV-yb-1 edit, so the cell's 'report the final line' reads red for reasons outside its two code sites.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd data/etfs/scripts && python -m pytest -q -p no:cacheprovider --color=no rivalfunds/tests on the worktree at HEAD 1af8b0dba8 with ai_accounts.py and ai_client.py restored to HEAD: '56 failed, 992 passed, 7 skipped' (.scratch/base_run.txt in the worker worktree)",
+        "the same suite after the RIV-yb-1 edits with tests/test_r6ap1_ai_stage.py left at HEAD: '57 failed, 993 passed, 7 skipped'; the 56 base failures are unchanged and the one addition is recorded as ETFS_RIVALS-D1-W44-S3",
+        "failing files include test_g6_gics_join.py, test_hp1_home_producer.py, test_i1_identity.py, test_i2_issuer_alias.py, test_r5b1_g1_windowed.py, test_riv_we1_claimed_as_of.py, test_r6ap1_ai_stage.py::test_policy_and_environment_split_and_committed_copy_is_current (outside the two client modules and the default-model string)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The rivalfunds suite (pytest from data/etfs/scripts) is the regression net for an AI-writer change: its final line is the cell's regression evidence, and a change that touches only the client request shape leaves the rest of the suite as it was.",
+    "world_is": "At the base commit the suite already reads 56 failed and 992 passed; the failures sit in grouping, identity, windowed-build, policy-generation and claim-as-of tests that do not touch the AI client. The 56 pre-existing failures are unchanged by the RIV-yb-1 edits; the one failure the edits add is recorded as ETFS_RIVALS-D1-W44-S3.",
+    "notes": "Not fixed by this seat: the 56 failures are outside RIV-yb-1's paths and the cell does not widen to them. The issuer decides whether the net is repaired before the merge."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W44-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~44",
+    "surfaced_at": "2026-10-15T21:16:48Z",
+    "one_line": "The worker worktree is a sparse checkout that omits org/surprise_channel: the investigation item schema the row gate names is tracked and indexed but absent on disk, so a worker cannot read it by path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git config --get core.sparseCheckout in C:/tmp/wk-riv-r31-44 returns 'true'; ls org/surprise_channel returns 'No such file or directory'; git ls-files org/surprise_channel lists 43 indexed files",
+        "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json reads the schema at 1af8b0dba8; git status shows no deletion of it, so the omission is the sparse cone, not a removed file",
+        "the first-act check 'test -d org && test -d .tools && echo TREE-OK' passes, because org/ and .tools/ exist; the omission is below org/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker worktree carries the org/ paths its task order names, and the schema that grades a surprise row is readable from the worktree by path.",
+    "world_is": "The worktree carries org/missions/D5/ETFS and .tools but not org/surprise_channel; the schema was reachable only through git show at HEAD. This worker read the schema from HEAD to choose the enum values and did not alter the sparse setting.",
+    "notes": "Not fixed by this seat: the sparse-checkout setting belongs to the worktree's creator, and the cell's write surface does not include it. The row gate (.tools/surprise-row-gate.py) reads the committed index, so the row itself is unaffected."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W44-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~44",
+    "surfaced_at": "2026-10-15T21:16:48Z",
+    "one_line": "BLOCKING: RIV-yb-1's required change makes data/etfs/scripts/rivalfunds/tests/test_r6ap1_ai_stage.py::test_rest_client_request_shape fail, and that file is not in the order's <paths>, so the fix cannot land under this grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "rivalfunds/tests/test_r6ap1_ai_stage.py lines 109-110 at HEAD 1af8b0dba8 assert the body {model: 'm', messages, response_format, temperature: 0.2}; with the RIV-yb-1 RestClient.chat the model 'm' is not a gpt-5 model and the key is omitted, so the assertion fails",
+        "the order's <paths> lists data/etfs/scripts/rivalfunds/ai_accounts.py, ai_client.py, tests/test_riv_yb1_model.py and the investigation file; test_r6ap1_ai_stage.py is not among them, so the worker left it at HEAD and did not commit it",
+        "cd data/etfs/scripts && python -m pytest -q -p no:cacheprovider --color=no rivalfunds/tests with the RIV-yb-1 edits and test_r6ap1 at HEAD: '57 failed, 993 passed, 7 skipped' (base 56 failed, 992 passed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's write grant (<paths>) admits every file the cell's required change must touch, so the cell lands without a file outside its grant.",
+    "world_is": "The one-line fix is to drop the temperature key from the expected body of test_rest_client_request_shape (the cell's own rule: temperature is sent only for a gpt-5 model, and the test uses 'm'). The file is outside the grant, so the worker did not commit it and the rivalfunds net reads 57 failed until the issuer admits the path or applies the one-line fix.",
+    "notes": "Blocking on the regression net only: AC1 and AC2 pass with the grant as written. The issuer adds data/etfs/scripts/rivalfunds/tests/test_r6ap1_ai_stage.py to <paths> (or applies the fix at the merge) before the net reads clean. The worker did not override the grant."
   }
 ]
 ```
