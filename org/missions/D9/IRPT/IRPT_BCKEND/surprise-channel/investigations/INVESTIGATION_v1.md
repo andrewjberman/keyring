@@ -38757,3 +38757,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W424-S1 -- The commit gate's client-data check did not run for commit 381be2ca6c: the hashed account-id list was absent on this device, so the gate printed WARN and checked nothing.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W424-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~424",
+  "surfaced_at": "2026-10-15T15:13:08Z",
+  "one_line": "The commit gate's client-data check did not run for commit 381be2ca6c: the hashed account-id list was absent on this device, so the gate printed WARN and checked nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "The worker face's client data rule and the commit gate's client-data check together keep client account ids out of tracked files on every commit.",
+  "world_is": "On this device the hashed account-id list is not at the default user path and OPAL_ACCOUNT_ID_HASHES is unset, so the check printed a WARN and did not grade commit 381be2ca6c. The worker's own new test file uses synthetic ids (1001, 1002) and holdings_snapshot opaque ids; no real account id was typed by this worker. Until the list is placed, every commit on this device is ungraded for that rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 381be2ca6c: WARN: client-data-check: hashed account-id list ABSENT at the default user path -- this commit was NOT checked for client account ids",
+      "git show 381be2ca6c --stat: 3 files changed, 390 insertions (holdings_snapshot.py, tests/test_absent_at_source_receipts.py, the IB219-1 record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
