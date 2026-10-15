@@ -7,7 +7,7 @@ No judgment criterion this round.
 
 **Result:**
 - **FWD-3 REALIZED and FWD-24 REALIZED** on this seat's own reads (C-S74). The tally becomes 5 REALIZED, 19 ADVANCED, 0 GATED, 1 PARKED, 3 MOVED.
-- 13 round-22 rows are dismissed (C-S75), and W121-S3/S4 GRADUATE to REMEDIATION_v12 (C-S76).
+- 11 round-22 rows are dismissed (C-S75), and W121-S3/S4 GRADUATE to REMEDIATION_v12 (C-S76).
 - Three remediation rows close in place on verified done-whens: D1-S8 (REMEDIATED, DISARMED), W61-S1 (REMEDIATED, DISARMED) and W84-S1 (REMEDIATED) (C-S77).
 - Of the issuer's other proposed closures, W111-S1, S9105, S9101 and W79-S2 stay OPEN, each with the read that closes it.
 
