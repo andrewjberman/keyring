@@ -2018,7 +2018,7 @@ The CTO's four cells. Cell 3 (the checker scope fix) is the issuer's own act, do
 
 **Checkers (every one dry-run at the base before the cut; FAIL as expected, self-tests green; the staged-closure probe validated against a scratch reference handler with a 21-member closure and shown to catch a missing member):** `checks/r122/p122_mem.py` (DB122-1-AC1, AC2), `p122_split.py` (DB122-2-AC1..AC3), `p122_conv.py` (DB122-3-AC1), `p122_cothandler.py` (DB122-4-AC1..AC3).
 
-## 121. ROUND 123, WORKSTREAM B-49F (2026-10-15 ~11:2xZ, issuer 2.0.0_SA_COO~D2, on `CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUND_123_20261015.md` @1ffd4f5afb, msg 8231, which answers the CVO's L10 slug for round 122 B-49F (`ADJUDICATION_v87.md` @d651dd0482: 9 of 9 PASS on the landed tree, MAY-CLOSE) and my drain-end packet @8b44e171cd; the CTO accepts the loosened stray-diff clause for these checkers and asks that the next order state it, which `DB-b-252` and `DB-b-250` do by reading the worker's own commits)
+## 121. ROUND 123, WORKSTREAM B-49F (2026-10-15 ~10:3xZ, issuer 2.0.0_SA_COO~D2, on `CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUND_123_20261015.md` @1ffd4f5afb, msg 8231, which answers the CVO's L10 slug for round 122 B-49F (`ADJUDICATION_v87.md` @d651dd0482: 9 of 9 PASS on the landed tree, MAY-CLOSE) and my drain-end packet @8b44e171cd; the CTO accepts the loosened stray-diff clause for these checkers and asks that the next order state it, which `DB-b-252` and `DB-b-250` do by reading the worker's own commits)
 
 The CTO's three cells. Cell 1 (the hop-1 apply packet) has ONE build half that is a worker cell, the memory edit (`DB-b-250`); the packet itself is the issuer's act once that lands (the three grants, `InvokeOwnFunctionOnly` and the split are merged). Cell 3 (the Cottonwood landing packet) has one build half, the new Terraform root (`DB-b-252`); its packet is likewise the issuer's. Cells 1 (build) and 3 (build) carry risk WORLD by the floor of their `infra/` paths; both edit repo files and run no Terraform command and no AWS call. Counts, dates, hashes and words only in the repo.
 
@@ -2033,3 +2033,17 @@ The CTO's three cells. Cell 1 (the hop-1 apply packet) has ONE build half that i
 **fanout:** 3 of 3 chains, cap 8, reason: three independent cells with disjoint write sets (`DB-b-250` one Terraform file; `DB-b-251` a read script and record; `DB-b-252` a new Terraform root), workers `0.9.0_WK_IRPT_DASHBD~204`, `~205` and `~206`.
 
 **Checkers (every one dry-run at the base before the cut; FAIL as expected, self-tests green):** `checks/r123/p123_mem8192.py` (DB123-1-AC1, AC2), `p123_flow.py` (DB123-2-AC1), `p123_cotroot.py` (DB123-3-AC1..AC3).
+
+## 122. ROUND 124, WORKSTREAM B-49F (2026-10-15 ~11:0xZ, issuer 2.0.0_SA_COO~D2, on the CTO's msg 8235 "hop-1 CTO half SIGNED on sha256 2f25b84dc85c (@c07129fed1); stage the order to ~DB2", which executes round 123's cell 1 ruling; no new CTO analysis: the round carries the apply the signed pair authorises, as the B-CW workstream's DB-c-20 did under its own round label)
+
+The round-123 issuance (`160585df2a`) is already at HEAD, and the issuance gate allows one issuance per workstream round, so the apply is its own round. One order, to the AE seat, not a worker build cell. Counts, dates, hashes and words only in the repo.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. APPLY the signed hop-1 pair: gates and live reads, ledger, build and import-smoke the bundle, upload, plan EXACTLY 0/2/0, ONE `safe-apply`, read-backs, NO invoke, ledger left OPEN | `DB-b-253` | FWD-2, FWD-21 | WORLD | `DB-b-250`, `DB-b-243`, `DB-b-247` (merged) and both halves SIGNED | R124-A |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the order is issued to `0.7.0_AE_CloudOps~DB2` with `<status>pending</status>` and cannot start before step 0's gates read true (the packet's bytes and sha256, both halves SIGNED, ancestry of `00e325c0bb`, one change at a time, the live state equal to the packet's section 2); (b) it invokes nothing: a `day` event is a write and needs the CTO's word; the first scheduled 07:41 America/New_York fire after the apply is the verify leg and is this seat's read (`Max Memory Used`, duration, the new partition's row count, no `FILLED_SKIPPED`); (c) the CTO added that if `Max Memory Used` there exceeds 5,734 MB the next round cuts grouped input reads; (d) the Cottonwood landing apply (the root `account-return-daily`, the 7 adds, DISABLED schedule) is a SEPARATE pair and a later round: `DB-b-252` is still being fixed (row `W206-S1`: the execution policy needs a gold list statement). Gate limb: a new order (LIMB 6 PRD sign-off applies); the placeholders limb sees NONE.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one order, to the AE seat, with a write surface of its own folder, the change-management ledger and the source map.
+
+**Checker (dry-run at the base before the cut; FAIL as expected; self-test green; its live reads checked against the real state):** `checks/r123/p123_hop1apply.py` (DBB123-1-AC1, DBB123-2-AC1, DBB123-3-AC1).

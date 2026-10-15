@@ -4109,3 +4109,15 @@ Check IB208-1 (`deliverables/2.0.0_SA_COO~P2/checks/r208/p208_cells.py`), dry-ru
 | `IB-pr-568` | APPLY pair (a) of the signed Orion packet V3: the one-time dated backfill of the 33 absent flat bronze keys by the same pull code; the performance control first; read-back per key | FWD-3 | WORLD | the signed pair (done) | PB1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one act, one executing seat (CloudOps IB2); no worker subagent: the act is the seat's.
+
+## 205. ROUND 1, WORKSTREAM ~PC (the S158 READ: why Cottonwood's account is absent from the holdings candidate; 2026-10-15 ~10:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8020 and row D2-S158)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a workstream issues its own round): the READ the CTO asked for in msg 8020 ("the S158 READ in a later ~P round"). The ~P workstream's round 199 still holds IB-pr-549 pending at CloudOps IB2 (the 14:30Z holdings mint), so the READ issues as ~PC round 1 rather than waiting for ~P's close; its write surface is the worker's records only and it touches no file or object of ~P. Cottonwood's served holdings are four trading days behind (2026-10-08 served; later candidates refused by the publish guard on `account_lost` count 1). One cell: the refusals, where the account is lost against the source, the cause, whether it clears, the acceptance path as the publisher's code has it (guard, closed-account exclusion, the one-date bypass, any directory exemption) and the other firms' state. Nothing is published or bypassed.
+
+Check IB209-1 (`deliverables/2.0.0_SA_COO~P2/checks/r209/p209_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control209.py`) passes all three and nineteen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-569` | READ why Cottonwood's account is absent from the holdings candidate; the acceptance path in the code; the other firms' refusal state | FWD-21 | SERVED | none | PC1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~412) starts now.
