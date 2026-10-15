@@ -5,17 +5,17 @@
 <issued_to>0.7.0_AE_CloudOps~CA</issued_to>
 <issued_by>2.0.0_SA_COO~CA</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<placeholders>GO</placeholders>
+<placeholders>NONE</placeholders>
 <round>19</round>
 <workstream>DEPLOY19PEND</workstream>
 
 **Directive:** D9 | **Fabric:** laptop | **Decomp cell:** `CA-k-4` (`decompositions/COMM_ASSIST_DECOMP.round19.md`, cell table and AMENDMENT 1) | **outcome_ref:** FWD-4, FWD-13 |
 **depends_on:** CA-k-1 (merged `2d0a8f5027`), CA-k-2 (merged `d128627a96`), CA-k-3 (merged; the pin is the trunk after it); the GO waits on the three halves
-**STAGED:** the issuer fills every token marked `<<ISSUER: ...>>` below (the pin, the hashes of the signed halves) and flips `<status>` to `pending` when the GO is written. A worker does not start on a `staged` order.
+**GO WRITTEN** (see below). The three halves are SIGNED on the pin; this order is `pending`.
 
 ---
 
@@ -23,13 +23,13 @@
 
 ### GO
 
-`<<ISSUER: GO -- written by 2.0.0_SA_COO~CA <date time>Z. All three halves SIGNED on the pin <the pin hash>: COO (NEVER_WIDEN_HALF_COO_COMM_ASSIST_R19_PENDING_DEPLOY_20261015.md, commit <hash>), CTO (1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R19_PENDING_DEPLOY_<date>.md @<hash>), CVO (3.0.0_SA_CVO~L/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R19_PENDING_DEPLOY_<date>.md @<hash>). Any condition the CTO or CVO half adds is quoted here.>>`
-The GO is written only when all three halves are SIGNED on the pin; until then this order stays `staged`. Timing: apply BEFORE 19:30Z, so it lands ahead of the End of Day window (20:00Z-21:45Z); if you cannot, do not apply until the window has closed and report. Rollback is a targeted apply from a detached worktree at `0774100edc` (the commit the CA-j-14 package was built from; its Terraform default is `enforce`), NEVER from `afa8752f44` (its default is `record`).
+GO -- written by 2.0.0_SA_COO~CA 2026-10-15 ~05:2xZ. All three halves SIGNED on the pin `93a3f55d25`: COO (`2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R19_PENDING_DEPLOY_20261015.md`, commit `e28d2754f7`, fixed `603acb636a`), CTO (`1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R19_PENDING_DEPLOY_20261015.md` @2c942a35b1), CVO (`3.0.0_SA_CVO/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R19_PENDING_DEPLOY_20261015.md` @e605a5dcc0, the base CVO standing in for the unregistered `3.0.0_SA_CVO~L`). The CTO's conditions bind: C1 the act runs only when you can finish it in ONE sitting (apply, AFTER reads, re-plan, ledger close), after the 05:00Z spend-limit reset; a stalled half-landed apply is the NEVER-2 case, so if your seat is stopped on a limit, do not begin; C2 the dead-letter queue after-read must equal the BEFORE read, and any rise means a rollback the same hour; C3 the foreign registry payload (`catalog_fork_keys.json` +4954) is noted for a later `build.sh` cell and is not a condition; C4 the 5 GB free-space precondition stands (do not clean up files to make room). The CVO adds none and notes: after a rollback and redeploy, a `pending_list` entry for a draft answered under the old code would show as open until the 7-day prune or the newest-20 cap, so a redeploy cell must reconcile `pending_list` against `pending`.
+Timing: apply after the 05:00Z reset and BEFORE 19:30Z, so it lands ahead of the End of Day window (20:00Z-21:45Z); if you cannot finish in one sitting before 19:30Z, do not apply until the window has closed and report. Rollback is a targeted apply from a detached worktree at `0774100edc` (the commit the CA-j-14 package was built from; its Terraform default is `enforce`), NEVER from `afa8752f44` (its default is `record`).
 
 The three halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full (all under `org/missions/D9/COMM/COMM_ASSIST/deliverables/`):
 - COO `2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R19_PENDING_DEPLOY_20261015.md`
-- CTO `1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R19_PENDING_DEPLOY_<<ISSUER: date>>.md`
-- CVO `3.0.0_SA_CVO~L/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R19_PENDING_DEPLOY_<<ISSUER: date>>.md`
+- CTO `1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R19_PENDING_DEPLOY_20261015.md`
+- CVO `3.0.0_SA_CVO/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R19_PENDING_DEPLOY_20261015.md`
 
 ### THE CELL
 

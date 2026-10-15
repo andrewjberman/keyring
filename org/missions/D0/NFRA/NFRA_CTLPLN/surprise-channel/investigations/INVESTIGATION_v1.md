@@ -9932,3 +9932,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Filed by the issuer on the CTO's instruction (msg 109290) once the CT-ae-2 measure merged."
 }
 ```
+
+## NFRA_CTLPLN-W97-S1 -- kill-maint.ps1 held-tree guard SKIPs a claude.exe seat before the seat boundary can refuse it -- REFUSED and KILL-MAINT-REFUSED are unreachable (S9118 test)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W97-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~97",
+  "surfaced_at": "2026-10-15T04:36:30Z",
+  "one_line": "kill-maint.ps1 never reaches its seat-boundary refusal for a claude.exe seat: the held-tree guard SKIPs any tree that holds a claude.exe, so the REFUSED line and the KILL-MAINT-REFUSED audit line are unreachable for seats. Measured on a planted tree: SKIP, the tree alive, no audit line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/kill-maint.ps1@cd1e04765b:724-733 -- the sessionBelow loop sets true on protectedTree membership or a claude|codex name, and the held guard prints SKIP and continues before the seat-boundary block (:744-759) can run",
+      "planted run before the fix (test_kill_maint_planted.ps1 under wk-NFRA_CTLPLN-97 at cd1e04765b, kill-maint.ps1 unmodified): tree B planted and alive 4 of 4; kill-maint line 'SKIP: PID 43028 python.exe its tree holds a session PID or a declared job'; no REFUSED line; cases=8/10 ok=False",
+      "the same test after the fix at 21ad9d0ca4 (held guard calls Test-SeatBoundary first): 'REFUSED: seat boundary -- PID 18356 python.exe holds foreign seat 9.9.0_SA_TEST~PLANT at pid 21660; tree not stopped', KILL-MAINT-REFUSED reason=seat-boundary in the audit, tree B alive 4 of 4, cases=10/10 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "kill-maint.ps1 CT-ab-4 header (:228-229 and :744-759): a tree holding a claude.exe seat with another launch serial is REFUSED, the foreign serial printed, and a KILL-MAINT-REFUSED audit line written. NFRA_CTLPLN-S9118 done-when: a planted tree survives a real kill-maint -Execute.",
+  "world_is": "No seat was killed in either form: the SKIP guard protected the tree, but the refusal the spec names was dead code for every claude.exe seat, so the refusal and its audit line never fired. The fix is committed at 21ad9d0ca4 on wk-NFRA_CTLPLN-97 and is not merged to box/laptop; until it is, the S9118 interim rule stands unchanged.",
+  "notes": "Fix shape: the held guard judges Test-SeatBoundary first and refuses only a FOREIGN claude.exe or codex.exe seat (the serial and PID printed, the audit line written); a held tree with no foreign seat is still a SKIP and nothing new is stopped. Not widened to any other process."
+}
+```
+
+## NFRA_CTLPLN-W97-S2 -- CT-ae-1 literal planted shape is not targetable: a shell root that directly hosts claude.exe is a session shell, a fresh root is under the Monitor cap, powershell.exe is name-denied, and a powershell.exe copy named claude.exe exits under WMI
+
+```json
+{
+  "id": "NFRA_CTLPLN-W97-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~97",
+  "surfaced_at": "2026-10-15T04:36:30Z",
+  "one_line": "The literal planted shape in the CT-ae-1 recipe (a bash.exe or powershell.exe root with a claude.exe child, reaped by kill-maint -OnlyPid with the listed flags) cannot be exercised as written: the root is never a target, and the copy named claude.exe does not survive a WMI launch. The planted tree in the test is a python.exe root with a cmd.exe copy named claude.exe as its child.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/kill-maint.ps1@cd1e04765b:86-88 and :109 -- a claude.exe whose parent is a powershell|pwsh|cmd|bash|sh process makes that shell a session host, and the protected-tree subtree includes the root, so the root is never a candidate",
+      ".tools/kill-maint.ps1@cd1e04765b:384-388 -- denyName includes powershell, so a powershell.exe root is never a target; :458 -- a process younger than MonitorCapSeconds (default 1860) is never a generic candidate, so the test passes -MonitorCapSeconds 0 beside the TO's flags",
+      "measured 2026-10-15 04:2x-04:3xZ: Win32_Process.Create of a copy of powershell.exe named claude.exe returned rc=2 or exited with no script output within 3 s; the same launch of the real powershell.exe stayed alive; a copy of cmd.exe named claude.exe stayed alive with its ping.exe child"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO NFRA_CTLPLN.TO-CT-ae-1 BUILD item 1: a planted root wrapper that the reaper classifies as an ORPHAN (powershell.exe or bash.exe), with a claude.exe copy child, stopped by kill-maint -Execute -OnlyPid; if the classifier does not take the planted root, plant the shape it does take.",
+  "world_is": "The shape that works: a python.exe root (the ORPHAN class names bash/py), created through Win32_Process.Create so its parent is the WMI provider host and its working directory is a temporary folder outside every checkout; its child is a copy of cmd.exe named claude.exe carrying the serial token; kill-maint runs with -OnlyPid plus -MinAgeSeconds 0 and -MonitorCapSeconds 0. The classifier was not weakened and the real script is changed only at the held guard (NFRA_CTLPLN-W97-S1).",
+  "notes": "A root that starts its claude.exe through Start-Process would be a descendant of the worker's own session shell and protected; WMI creation keeps the root outside every session subtree. No real seat was touched: the claude.exe count before and after was 8 and 8."
+}
+```
