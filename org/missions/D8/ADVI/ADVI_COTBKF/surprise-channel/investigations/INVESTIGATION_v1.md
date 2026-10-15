@@ -9444,3 +9444,30 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-S5 -- disposes D1-W177-S1: the CRM key's bucket in opal_naming versus the grant
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-15T20:28:19Z",
+  "one_line": "Disposes D1-W177-S1 (its disarm_owner): the CRM zip's bucket in lib/opal_naming address() is opal-data-assets, the register exception X15 and the grant name opal-data-cottonwood; the grant is withdrawn, so the live hazard is gone and the mismatch is the registry owner's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "4.0.0_SA_CRO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "D1-W177-S1 (worker ~177): the grant names bucket opal-data-cottonwood, opal_naming.address() returns opal-data-assets for the same key; the job used the grant's bucket",
+      "WITHDRAWAL_RECORD.json (0.7.0_AE_CloudOps~CB1, commit 9ed098abde): role NoSuchEntity live, break-glass control returned an ARN, whole-root carved re-plan No changes",
+      "PRD C-HOMES / infra/logic/06_CONFORMANCE_LEDGER.md X15 (as cited in the CRO research note): only the CRM zip departs to the firm bucket; address() returns opal-data-assets for every other Commonwealth table"
+    ]
+  },
+  "spec_asserts": "the CRM zip is addressed through lib/opal_naming address(); a builder that returns a different bucket than the register's exception leaves a reader typing the bucket by hand (C-HOMES, rule 30).",
+  "world_is": "With the grant withdrawn no principal outside the break-glass pair can read the key, so the armed part of D1-W177-S1 (a job reading the wrong bucket under a live grant) no longer exists. The mismatch itself stands in the registry: address() has no route to the firm bucket for bronze crm. Not established: whether any other reader builds the CRM key from address() and would look in the wrong bucket (the guard in CB-e-3 compares full URIs; rows S14 and CB-e-3 discuss it).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
