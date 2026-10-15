@@ -16894,3 +16894,137 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the worker, counts only; no account identifier and no client value is quoted. The record RD_INKIND_FLOW_READ_R123.json carries receipt_accounts 972 and cohort 920 under the checker's definitions. Append only; the disposition is the issuer's."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S77",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T10:58:00Z",
+  "one_line": "TO-DB-b-253 STOP at step 0(c): the OPEN ledger irpt-dashbd-thresholds-swap-20261013 (HELD-SOVEREIGN-GATED, leg L7 open, read by 2.0.0_SA_COO~D2 on the 2026-10-14 11:41Z fire) names irpt-49f-reporting-gold-lambda, the function the order changes; the order's refusal clause makes that a STOP and the packet and both halves do not mention it",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261013T1228Z_irpt-dashbd-thresholds-swap-20261013_deploy_completion.md: Status HELD-SOVEREIGN-GATED, gate external (the scheduled 07:41 ET fire at 2026-10-14T11:41Z), legs L1 to L6 closed, L7 OPEN; its marker org/critical_paths/.open_deploys/irpt-dashbd-thresholds-swap-20261013.json is present at HEAD in 21 of 28 live worktrees (git grep of every worktree's .open_deploys, denominator 28)",
+      "step 0 (a), (b), (d) PASS: packet sha256 2f25b84dc85c1592801783ae23113e13c2686bad54b9fa6460ea6d353ac2635e equal, both halves SIGNED, 00e325c0bb ancestor of HEAD 538f2fa62d, live function MemorySize 3008 Timeout 900 CodeSha256 J6M/92Mh..., role policy seven statements, schedule ENABLED cron(41 7 ? * MON-FRI *) America/New_York",
+      "grep of the packet, the COO half and the CTO half for thresholds-swap, HELD-SOVEREIGN and one-change-at-a-time returns no line"
+    ]
+  },
+  "spec_asserts": "Gate 0(c): no ledger under change_management and no .open_deploys marker at any live worktree names the reporting-gold root or irpt-49f-reporting-gold; any one open is a STOP.",
+  "world_is": "One open ledger names the function. Nothing was written by this seat: no ledger opened, no upload, no plan, no apply (a worktree was cut, local only). The ledger belongs to 2.0.0_SA_COO~D2 (leg L7 is its read). Ask: close or supersede L7 on the issuer's own read of the 2026-10-14 fire, or rule that it does not block this apply; this seat resumes at step 1 on that word. My own ledger irpt-dashbd-cottonwood-holdings-performance-20261015 also contains the word reporting-gold, but only as one of three READERS checked; it changes nothing on this surface."
+}
+```
+
+## IRPT_DASHBD-D2-S78 -- the thresholds-swap ledger's L7 asked for threshold_claims_source on the fire; the field lives on the method row the fire does not write
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S78",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T11:03:00Z",
+  "one_line": "The thresholds-swap ledger's leg L7 asked the first scheduled fire to show threshold_claims_source stated; the fire cannot: that field is a column of the dim_return_method row, which the scheduled function does not write and whose served version 2 row (2026-10-03) carries no claim columns; L7 is closed with this read and the ledger is CLOSED (it was the open ledger that stopped TO-DB-b-253 at gate 0(c), row D2-S77)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Ledger irpt-dashbd-thresholds-swap-20261013 leg L7: the first scheduled fire after the release is read by the issuer: six-key thresholds object, claims measured measured held held inferred, threshold_claims_source stated.",
+  "world_is": "The fire of 2026-10-14T11:42:20Z (manifest LastModified of date=2026-10-13) wrote a thresholds object of six keys with claims measured, measured, held, held, inferred, as L7 required. No threshold_claims_source appears in that manifest. The field is a column of the dim_return_method row (account_return_daily.py emit_method_row, CLAIM_COLUMNS); the scheduled function's role has no write grant for that prefix, and the served rows are method_version=1 (2026-10-01) and method_version=2 (2026-10-03), the latter with no claim columns. L7 was closed with this read stated in its proof, and the ledger closed with all seven legs proven.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gold manifest s3 object date=2026-10-13/manifest.json (thresholds object and threshold_claims, read 2026-10-15)",
+      "gold dim_return_method prefix listing: method_version=1 and method_version=2 only (LastModified 2026-10-01 and 2026-10-03)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row and CLAIM_COLUMNS",
+      "org/critical_paths/change_management/20261013T1228Z_irpt-dashbd-thresholds-swap-20261013_deploy_completion.md leg L7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A reader that needs the claims source must read it from the method row, which is stale for the claims. Re-writing the method row is a served write under a never-widen pair (and its prefix is outside the reporting-gold role's grant); not proposed here. Counts and words only."
+}
+```
+
+## IRPT_DASHBD-D2-W206-S1 -- BLOCKING: the granted execution policy has no list on the gold prefix that the handler's default path lists
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W206-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~206",
+  "surfaced_at": "2026-10-15T10:42:38Z",
+  "one_line": "The order's execution-policy statements grant ListBucket on the silver bucket only; the handler's default no-day-key path LISTs the gold prefix, so the root as written would be refused on every scheduled fire once enabled",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "DB-b-252 step 2 lists the execution policy's statements: ListBucket on the silver bucket under a prefix condition, GetObject on the two silver tables, one PutObject on the account_return_daily gold prefix, and the function's own log group. No gold ListBucket is named.",
+  "world_is": "handler.py at HEAD 160585df2a lines 119 and 120 calls cbd.gold_prefix() and then newest_landed_day(s3, bucket, prefix) on the no-day-key path, which is the scheduled default; newest_landed_day (lines 47-54) issues list_objects_v2 with Bucket = the gold bucket and Prefix = the gold prefix. With the root's statements as written that LIST has no grant, so the default fire would fail on its first call once the schedule is enabled. Nothing was run: the box has no AWS call and no terraform.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py@160585df2a lines 47-54 (newest_landed_day, list_objects_v2 with Prefix and Delimiter) and lines 119-120 (no-day-key path)",
+      "infra/aws/terraform/investor-reporting/account-return-daily/iam.tf (this commit's bytes): the execution policy holds ListSilverTablePrefixesOnly, ReadTwoBlackDiamondSilverTablesOnly, WriteTheOneAccountReturnDailyGoldPrefixOnly and OwnLogStreamOnly; no statement carries ListBucket on the gold bucket",
+      "task order DB-b-252 step 2 (the execution policy statement list) and BOUNDS: the grant is the order's text, so it was built as written and not widened"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the apply pair must not carry this grant unchanged. Either the issuer amends the execution policy with a ListBucket on the gold bucket under a s3:prefix condition for the account_return_daily prefix, or the handler's default path is changed. Schedule stays DISABLED, so the hazard is latent until enable. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W206-S2 -- OBSERVATION: the five-name list has no name for the scheduler role policy
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W206-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~206",
+  "surfaced_at": "2026-10-15T10:42:38Z",
+  "one_line": "The order names five opal_name calls, and the scheduler role's inline policy needs a name the five do not carry; the worker reused the scheduler role's builder name for it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-252 step 2: FIVE opal_name module calls for the five names of the landing facts (function, execution role, execution policy, scheduler role, schedule), and the record's names list has exactly five entries.",
+  "world_is": "aws_iam_role_policy needs a policy name, and the scheduler policy is not one of the five. The root names it with module irpt_account_return_daily_scheduler_role_name (kind role, qualifier scheduler), so no sixth opal_name call and no sixth name in the record. The policy name equals the scheduler role's builder name; it is unique within its role, and no registry row was added.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/account-return-daily/iam.tf (this commit's bytes): resource aws_iam_role_policy.irpt_account_return_daily_scheduler takes name from module irpt_account_return_daily_scheduler_role_name",
+      "RD_CW_LANDING_FACTS_R120.json names list (five entries; no scheduler policy entry)",
+      "p123_cotroot.py check_facts: names must be exactly five, recomputed by lib/opal_naming.py name()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: if a distinct scheduler policy name is wanted, it is a sixth builder call and a sixth record entry, which the order did not name. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W206-S3 -- OBSERVATION resolving W206-S1: the fifth execution statement grants the gold list the handler's default path needs
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W206-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~206",
+  "surfaced_at": "2026-10-15T10:54:23Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W206-S1: Amendment 1 (d611d49b94) added the gold ListBucket the handler's default path needs; the root now carries that statement at 19f02f1330 and AC1 to AC3 pass at HEAD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment 1 of DB-b-252 (commit d611d49b94, issuer 2.0.0_SA_COO~D2): the execution policy gains a FIFTH statement, s3:ListBucket on the Cottonwood gold bucket with an s3:prefix StringLike condition for the ONE gold prefix account_return_daily, no other prefix or action; the facts record is refreshed and DB123-3-AC1..AC3 re-run to PASS at HEAD.",
+  "world_is": "The statement is in iam.tf at 19f02f1330 (sid ListTheOneAccountReturnDailyGoldPrefixOnly; actions s3:ListBucket only; resources the gold bucket; condition StringLike on s3:prefix irpt/<firm>/gold/account_return_daily/*). The root now has eight statements and two ListBucket statements. The facts record is refreshed (eight statement ids, the iam.tf hash a8172dac7e..., iam.words). Checker at the worktree: DB123-3-AC1 PASS, DB123-3-AC3 PASS; AC2 and the proof are re-run at the final commits. The schedule stays DISABLED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "amendment commit d611d49b94 (git log -1 --format=%h --author=2.0.0_SA_COO~D2): the order's Amendment 1 paragraph names the fifth statement, the one prefix and the no-other-action limit",
+      "infra/aws/terraform/investor-reporting/account-return-daily/iam.tf at 19f02f1330: the fifth statement block, and the sid list in the facts record's iam.statement_ids (eight entries)",
+      "p123_cotroot.py line 142 (amended): at least two s3:ListBucket statements; run at the worktree: DB123-3-AC1 PASS rc 0 before and after the statement"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the W206-S1 disarm is this fix; the schedule is still DISABLED and no apply has run. Counts and words only; no client figure is quoted."
+}
+```
