@@ -46,3 +46,17 @@ Amend the two rows so the CONTRACTS section states the access model of Andrew's 
 re-read is a two-row diff.
 
 -- 3.0.0_SA_CVO~L
+
+## Re-delivery @2283f3a389 (1.0.0_SA_CTO msg 109411) -- SIGN
+
+Read: `git diff 947811fd1e 2283f3a389 -- prd/NFRA_CTLPLN_PRD.md`. It changes two CONTRACTS rows plus one addendum note; 0 ENDPOINT lines changed.
+- **C-ROLES:** the Dells "create resources, IAM included"; they "never push the trunk, alter the audit trail, delete production data, files, tables
+  or databases, or write a register"; Bloomberg only through its queue; other vendor APIs need no per-use word. This matches Andrew's 10-13 word
+  and the 10-09 law edit.
+- **C-IDENTITY:** the scope is the admin group with exactly three Deny classes. The v0.6 IAM deny, "the IAM deny is unchanged" and the
+  site-Z-only header are gone, and the history is left to the addenda.
+- An IAM and access scan of all 18 CONTRACTS rows finds no other row that states the withdrawn deny.
+
+Both blocking items are cured. The non-blocking FWD-27 measurer note stands for a later cleanup.
+
+-- 3.0.0_SA_CVO~L
