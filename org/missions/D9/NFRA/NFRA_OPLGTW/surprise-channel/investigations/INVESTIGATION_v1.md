@@ -17573,3 +17573,59 @@ name the one known failure instead of silently inheriting it.
     "world_is": "The runner is healthy and counts its S3 GETs (the cycle records carry s3_get_count and s3_get_bytes, 0 here because the three cycles stopped before any silver read), but bbg, wsj and barrons capture nothing: a Bloomberg press-and-hold challenge and two expired vendor sessions are a person's sign-in, not a runner defect. Whether the expiries predate the 14:02Z Python outage is not read. The egress measurement OG-eg-2 owes is the sa cycle in progress (it reads silver per security). Routed to 1.0.0_SA_CTO~Z at 16:2xZ for the person-act list; this seat changes nothing on the runner."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S151",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T18:38:49Z",
+    "one_line": "OG-eg-3's PREMISE IS FALSE FOR sa: the site Z runner was still storing articles after the 14:02Z Python outage, so retiring it DID close a live capture path. Its own log shows 'JOB sa security-d13cdd57ffa64286 status=new_articles stored=2' at 18:25:18Z and 'CYCLE sa ... asked 242 new 3 held 922 failed 0 stopped stopped_by_operator' at 18:33:06Z -- three articles captured in the cycle that was running when my STOP file landed, two of them nine minutes before it took effect. The retire is not in question; the sentence 'retiring it opens no capture gap that is not already there' is.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the runner's own log, .runtime/harvest-cycle/state/cycle_runner.log, tail at 18:33:06Z: 'JOB sa security-d13cdd57ffa64286 status=new_articles run_id=20261015T180420Z-run-d79be5a8 stored=2' (18:25:18Z) and 'CYCLE sa 20261015T153409Z floor 2026-10-14 asked 242 new 3 held 922 failed 0 stopped stopped_by_operator completed false'",
+        "WHY the outage did not stop it, which is the mechanism and not a guess: the live process (PID 37428) started 2026-10-15T07:47:40Z, HOURS BEFORE C:/Program Files/Python314 lost its Lib at about 14:02Z. A long-lived process keeps the standard library it loaded at start; the outage broke NEW launches only. Recorded in W/EG3_BEFORE.json at step 1, before this row existed",
+        "the cycle was far from done: 'PAIRS sa: collected 7 retry 0 gave_up 0 never_started 235 of 242'. So 235 of 242 pairs were never asked in that cycle -- the capture that stopped was partial, which is a different statement from zero",
+        "the STOP itself behaved exactly as designed and is not implicated: 'STOP-FILE ... present: ending after the current job (7 pairs done)' then 'no further cycle', ending stopped_by_operator at a job boundary, never killed",
+        "the predicate was read rather than assumed: cycle_runner.stop_requested is bool(args.stop_file and Path(args.stop_file).exists()) -- existence only, content never read -- and the stop file is passed down to the backfill driver, which is why the end comes at a JOB boundary rather than only between cycles"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-eg-3 section 1: 'Site Z's runner has stored new 0 for every publisher since the 14:02Z Python outage, so retiring it opens no capture gap that is not already there.'",
+    "world_is": "new 3 for sa in the cycle that was live at the stop, two of them stored at 18:25:18Z. The premise holds for whatever publisher it was measured on and does not hold for sa. The retire stands on its own authority -- Andrew moved all harvest operations to dell1, PRD v3.11 and the CTO's msg 34500 -- and none of that is contingent on the premise.",
+    "notes": "WHY THIS MATTERS DOWNSTREAM rather than just being a wrong sentence. The pins stay locked until 'dell1 reports a productive cycle per publisher', and the E1/E2 GET-bytes proof is owed there. Anyone comparing dell1's first cycles against a site Z baseline of ZERO would be comparing against the wrong number for sa, and would read a dell1 cycle that captures little as a match rather than a regression. The honest baseline for sa on this box is new 3 over a cycle that reached 7 of 242 pairs, not new 0. THE SHAPE WORTH KEEPING: an outage that breaks an INTERPRETER does not stop a process that already loaded it, so 'the platform broke at T, therefore nothing ran after T' is false for every long-lived process started before T. The tell was in the before-read: the process's own creation time sat hours on the wrong side of the outage, which is why step 1 recorded it."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S152",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T19:28:55Z",
+    "one_line": "MY OWN EXIT-WAITER COUNTED ITSELF AND COULD NEVER HAVE REACHED ZERO. To wait for the harvest runner's exit I armed a loop that counted processes whose command line matched the token cycle_runner. The loop's own bash wrapper carries that token -- the probe's path and its -match literal are both in its command line -- so the census included the censor. Left armed it would have run the full two hours and then reported RUNNER-STILL-UP-AFTER-2H, and the order says that reading obliges an ARMED row: a false hazard about a runner that had already exited cleanly.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the two rows the loose filter returned at 18:53:36Z were BOTH created at 18:22:29Z -- the second my waiter was armed -- and one was literally 'bash.exe ... eval PS=powershell.exe; SCRIPT=.../eg3_count.ps1 ... -match \"cycle_runner\" ...'. The real runner, PID 37428 created 07:47:40Z, was already gone",
+        "after stopping the waiter the SAME loose filter read 0 of 732 processes, which is the control: the two it had been counting were its own",
+        "the correct filter -- Name matches pythonw or python AND CommandLine matches '-m lib.opal_data_harvest.cycle_runner' -- reads 0, and Get-Process -Id 37428 reads absent",
+        "POSITIVE CONTROL so the zero is not a broken filter: 47 to 50 python processes were present throughout, and the any-python arm of the same census returned them",
+        "the runner's exit is independently evidenced by its own log ending 'stopped stopped_by_operator' and 'STOP-FILE present: no further cycle' at 18:33:06Z, with no further write"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "a census of the processes matching a pattern reports how many of THOSE processes are running.",
+    "world_is": "it reported how many processes matched, and the searcher matched. The defect is invisible while the target is up -- the count is merely one too high, and 2 looks as alive as 1 -- and becomes decisive exactly when the target dies, because the floor is 1 and the exit condition is 0. An instrument whose error only shows at the moment of the verdict reads correct for the whole run.",
+    "notes": "THE RULE I AM TAKING: A CENSUS MUST EXCLUDE THE CENSOR. Any process-count loop that greps a token has to either filter on something the probe cannot carry -- here the real runner is pythonw.exe running '-m lib.opal_data_harvest.cycle_runner', which a bash wrapper can never be -- or exclude its own PID and its ancestry explicitly. This is the same shape as a check whose condition includes the artifact the check itself writes: carve out what YOUR act creates, not only what you expect to find. WHAT SAVED IT was not the probe: it was the silence being WRONG-SHAPED. The runner's log said 'no further cycle' at 18:33:06Z, so an exit was due within minutes; when the waiter had still not fired 27 minutes later I read the census by hand instead of trusting it. A waiter that has not fired is indistinguishable from a target that has not finished -- unless you know roughly when the target SHOULD finish. Arm a waiter with an expectation of its own latency, and treat a gross overshoot as evidence about the WAITER."
+  }
+  ```
