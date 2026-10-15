@@ -15064,3 +15064,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The shared zip packages seven registry members at pins; after the addendum six stay at their old pins and scopes.json moves to 69679b90e3. The five named members differ from HEAD in size and content (counts above; the record carries sha256 of each). Nothing in the zip's code path needs them to move today: the full derivation of the three declared channels is identical with only scopes.json re-pinned. A later act re-pins them together with a differential on whatever the then-current producer reads from them; this row is that act's carrier. It is not an ARMED hazard: no function misbehaves on the old pins."
 }
 ```
+
+## IRPT_DASHBD-D2-W189-S1 -- safe-commit's client-data check did not run for 14d426b8e7 (the hashed account-id list is absent on this box)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W189-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~189",
+  "surfaced_at": "2026-10-15T06:11:21Z",
+  "one_line": "The commit gate's client account-id check was ABSENT on this box, so commit 14d426b8e7 (two files: the key-map read script and its record) was not checked for client account ids. Its content was checked by construction only: counts, names and words, no account number or key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the round issuer: place the hashed account-id list on this box, or name the owner who will)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE: bash .tools/safe-commit.sh --author 0.9.0_WK_IRPT_DASHBD~189 -F (message file) -- the two deliverable files, run in the background; log .scratch/commit1.log of worktree wk-IRPT_DASHBD-189 records the commit line [wk-IRPT_DASHBD-189 14d426b8e7].",
+      "VERBATIM from that log: WARN: client-data-check: hashed account-id list ABSENT at the device profile .opal folder (account_id_hashes.txt) -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).",
+      "The list path named by the WARN lies outside the repo and was not opened by this worker; its absence is the gate's own report, not a measurement of the list."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face, Client data: counts, dates, hashes, column names and words only in the repo, never an account number or key; every commit goes through .tools/safe-commit.sh, whose client-data check is the mechanism that verifies it.",
+  "world_is": "safe-commit.sh reported the client-data check as ABSENT on this box and passed commit 14d426b8e7 without it. Left alone, every later commit from a worker on this box passes the same way, so a commit carrying a real account number would not be caught by the gate. The two committed files hold no account number or key by construction; that is not a check against the list."
+}
+```
