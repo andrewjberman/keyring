@@ -37487,3 +37487,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W412-S1: the record counts differ (9, then 1, 1); recorded per candidate, my STOP clause was too tight (AMENDMENT 1 @0f2a54c0c4). D2-W412-S2 RESOLVED: a local sparse-checkout add, never committed. D2-W412-S3 (comp-find aws blocked, the canonical address used) and S4 (the id module is outside the grant): INERT, recorded. D2-S158 stays ARMED: the cause is inferred (candidate_filter at the COT account screen), not measured; the failing validate_cot_actual_positions condition is the next read. Correction to row S158: 49 Financial DOES have a refusal record (served 2026-10-12, one refusal), so the staleness is not Cottonwood alone; whether that refusal still blocks it (its candidate for 2026-10-13 and 2026-10-14) is not read and is the next read's second question."
 }
 ```
+
+## IRPT_BCKEND-D2-S193 -- owner disposition: S158 and S192 have one disarm owner, 2.0.0_SA_COO~P2
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S193",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T11:28:30Z",
+  "one_line": "Owner disposition: rows IRPT_BCKEND-D2-S158 and D2-S192 (the holdings publish refusals: Cottonwood's dropped account and 49 Financial's refusal record) have ONE disarm owner, 2.0.0_SA_COO~P2, replacing 'the CTO or whoever accepts the lost account'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "S158 and S192 name 'the publish guard's owner decides, or whoever accepts the lost account' as disarm owner (CVO~IRPT ADJUDICATION_v113 @39208a6c27: name one seat).",
+  "world_is": "~P2 owns the holdings publisher and the reads that name the failing condition (CTO msg on 8247: 49F's refusal first, then the Cottonwood validator offline). The CTO rules the fix on those reads (a screen correction, or a custodian-confirmed TERMINATED mark, each a never-widen pair); the disarm act is ~P2's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v113.md @39208a6c27",
+      "2.0.0_SA_COO~P2 msg 8247"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S158 and S192 stay ARMED under ~P2; 49 Financial is served at 2026-10-12 (2 trading days behind T-1), Cottonwood 4 behind."
+}
+```
