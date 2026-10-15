@@ -27912,3 +27912,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by the worker for the issuer's read. No act taken on the form. The fourth form is a deliberate extra line, not a change to the expansion order or to the 20-click cap."
 }
 ```
+
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W473-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~473",
+  "surfaced_at": "2026-10-15T21:53:35Z",
+  "one_line": "AMGT-bn-5 budget line: the order fixes rows as the vendor-RETURNED PX_LAST count but leaves the names= field's unit open (names requested or names returned); implemented as names requested.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order file org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-bn-5.a4-pulls-a-window-held-as-data-defaulting-to-thirty-days-and-records-its-spend-on-the-budget-ledger.md at 8342f10684: batch_id form 'calls=<number of historical_data calls>:names=<names pulled>:pull_days=<d>'",
+      "integrations/bloomberg/research/price_axis_pull.py (worktree wk-AMGT_RESAPP-473, pre-commit) main(): record_pull_budget(calls=calls, names=len(securities), rows=returned_px_obs, ...) -- securities is the requested list, one per covered ticker"
+    ]
+  },
+  "spec_asserts": "Order section 1 item 4: batch_id = 'amgt-price-axis:<stamp>:calls=<number of historical_data calls>:names=<names pulled>:pull_days=<d>:rows_unit=returned-observations', and rows = 'the total count of PX_LAST observations the vendor RETURNED'.",
+  "world_is": "The order gives the rows figure an explicit unit (returned observations) but gives names= no unit, and 'names pulled' reads both as names requested and as names that came back. The two differ only for a requested name the vendor returned no PX_LAST rows for. Implemented as names requested (len of the securities list); the returned-observations count is exact under either reading. Recorded, not acted on: the ledger line is written under the requested reading.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Filed by the L7 worker for the issuer's disposition. If the issuer wants names returned, the change is one argument at the call site and a test expectation in test_price_axis_window.py."
+}
+```
