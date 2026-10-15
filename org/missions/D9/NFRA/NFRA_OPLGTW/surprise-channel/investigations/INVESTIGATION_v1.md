@@ -17573,3 +17573,124 @@ name the one known failure instead of silently inheriting it.
     "world_is": "The runner is healthy and counts its S3 GETs (the cycle records carry s3_get_count and s3_get_bytes, 0 here because the three cycles stopped before any silver read), but bbg, wsj and barrons capture nothing: a Bloomberg press-and-hold challenge and two expired vendor sessions are a person's sign-in, not a runner defect. Whether the expiries predate the 14:02Z Python outage is not read. The egress measurement OG-eg-2 owes is the sa cycle in progress (it reads silver per security). Routed to 1.0.0_SA_CTO~Z at 16:2xZ for the person-act list; this seat changes nothing on the runner."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T18:05:52Z",
+  "one_line": "The DATA_CATALOG rows that name the live opal-data-bd silver tables carry the live bucket and prefix, but are entity-named *_silver_legacy, their open_items say FROZEN copy do not build a tool on this prefix, and their contract blocks describe a frozen 2026-08-21 copy (date= shape, 36 td), not the live set (dated <d>.parquet files, newest 2026-10-09).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@b56fd6ef9d lines 4233-4246 and 4300-4306: entity opal_data_assets_silver_49financial_unrealized_silver_legacy, bucket opal-data-bd, prefix silver/unrealized/, key_template silver/unrealized/<d>.parquet, contract newest_part date=2026-08-21 (70 objects), freshness 36 td, open_items FROZEN copy do not build a tool on this prefix",
+      "READ the same file at lines 3450-3451, 3813-3814 and 4172-4173: allocations, fees and transactions rows carry the same bucket and prefix under *_silver_legacy entity names",
+      "MEASURED aws s3api list-objects-v2 --bucket opal-data-bd --prefix silver/unrealized/: 77 keys, 76 dated <d>.parquet, newest dated 2026-10-09.parquet, 17 columns"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CTO ruling 4356f15f16 and the task order name the live opal-data-bd silver tables as the 49F source, read through their DATA_CATALOG rows.",
+  "world_is": "The structured fields of those rows match the live prefixes, so the adapter reads them. The prose, the frozen open_items and the date= partition shape contradict the live set. The adapter derives partitions from the file name and states each lag from the live partition.",
+  "notes": "Measured, not ruled. The issuer confirms whether the FROZEN open_items are superseded by the ruling before the release order."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T18:05:52Z",
+  "one_line": "The adapter context the protocol names (app/client_core.py, OG-cl-1) is absent from HEAD b56fd6ef9d and from every local and remote ref, and the protocol's ctx.prefix takes vendor, segment, layer and table only, so it cannot address the opal-data-bd bucket. AC2 says the probe builds the adapter's context against the real silver; the issuer ruled a probe-local ProbeCtx is acceptable (A1 2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only HEAD infra/aws/ec2/opal-gateway: no client_* or core module; the only match on client is app/integrations/ycharts/client.py",
+      "git log --all --oneline -- infra/aws/ec2/opal-gateway/app/client_core.py: empty output, rc 0",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/G2_ADAPTER_PROTOCOL.md lines 3, 26 and 30-38: the core implements ctx; prefix(vendor, segment, layer, table) has no bucket argument"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 (task order section 4): the probe builds the adapter's context against the REAL silver with the box's credentials.",
+  "world_is": "No core context exists to build. This cell's probe carries a probe-local ProbeCtx implementing the protocol's methods over the DATA_CATALOG rows (matched by bucket and key_template) and typed_scope admission. The issuer ruled this in A1 2 of G2_ADAPTER_PROTOCOL.md (2026-10-15 ~18:3xZ), so AC2 is met by the probe-local context.",
+  "notes": "Resolved as to class: the issuer's A1 2 ruling binds the probe-local ctx; the row stays as the record that the core is absent. Class OBSERVATION, hazard INERT, no disarm_owner required."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T18:05:52Z",
+  "one_line": "The live silver/unrealized/ prefix holds a non-dated sibling, unrealized_gain_loss.parquet (0 rows, 16 all-null columns), that sorts after every dated partition, so a newest-by-name read returns it instead of the 2026-10-09 partition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED aws s3api list-objects-v2 --bucket opal-data-bd --prefix silver/unrealized/, keys sorted: the last key is silver/unrealized/unrealized_gain_loss.parquet",
+      "MEASURED pyarrow footer of that key: 0 rows, 16 columns, all null-typed",
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2f_bd_live_prefixes.md section (c) note 1: the non-dated siblings are named as not partitions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Protocol: list_partitions returns sorted partition ids, dates as YYYY-MM-DD strings, and newest_partition picks the newest at or before as_of.",
+  "world_is": "A listing that keeps non-dated keys yields a non-date partition id. The adapter admits only names matching YYYY-MM-DD.parquet. The core's list_partitions must apply the same filter; the protocol does not say so.",
+  "notes": "Measured, not ruled. The same trap may apply to realized (bd_realized_agg.parquet) and prices (canonical_prices.parquet) per census note 1."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T18:05:52Z",
+  "one_line": "The contract's fee row (date, fee type, amount, source id) has no fee-type column in live silver/fees: the 34 columns carry amounts (transaction_fee, account_fee, flat_fee, basis_points) beside fee_schedule_* descriptors, and no column labels a fee's type.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED pyarrow schema of silver/fees/2026-10-13.parquet (newest dated partition, 6,764 rows, 34 columns); column names and types read, no row values"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract get_fees: each fee row with its date, fee type, amount and the source id; the source's fee-type label is carried unchanged.",
+  "world_is": "The adapter returns one row per non-null fee amount column, sets fee_type to the source column name, and carries the source fee_schedule_type and fee_schedule_description beside it, unchanged, with label_claim inferred from the column name.",
+  "notes": "Measured, not ruled. The issuer decides whether a fee-type enum is needed. This cell writes none."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T18:05:52Z",
+  "one_line": "The contract's holdings positions carry a quantity, but live silver/unrealized (tax-lot grain, 108,439 rows in the newest dated partition) has no units or quantity column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED pyarrow schema of silver/unrealized/2026-10-09.parquet: 17 columns (open_date, market_value, unit_cost, inherited_date, relationship_id, account_number, account_id, asset_id, asset_name, last_dividend, original_asset_name, asset_display_name, symbol, ticker, cusip and the two _ columns); none is a quantity or units column"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract get_holdings: positions (ticker or cusip, quantity, market value, weight within the account) and the totals of the one partition read.",
+  "world_is": "The adapter returns the lots with market_value and unit_cost, sets quantity to null with claim absent, returns cash as null with claim absent (no cash row is identified in the source), and derives each lot's weight from market_value over the account's lots in the one partition, labelled derived. Grain stays lots, not positions.",
+  "notes": "Measured, not ruled. Per-ticker positions are not summed here, and the grain of unrealized is still unmeasured (contract decision 8)."
+}
+```
