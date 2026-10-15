@@ -13774,3 +13774,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W304-S1 -- The Orion session secret is named three different ways in the estate: the performance route table names orion/credential
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W304-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~304",
+  "surfaced_at": "2026-10-15T03:12:20Z",
+  "one_line": "The Orion session secret is named three different ways in the estate: the performance route table names orion/credentials for the Inflection tenant, the performance transport reads Secrets Manager orion/jwt/current, and the inf pull reads an S3 copy of the token.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-i-4: name the credential the estate's pull uses as the code that loads it names it, and say whether the endpoint is called with that credential.",
+  "world_is": "tenants.py sets session_secret_id orion/credentials for the INF route (line 170); orion_live.py loads its token from the Secrets Manager secret named by jwt_freshness SM_SECRET_ID, orion/jwt/current (orion_live.py line 41; jwt_freshness.py line 45); the pull reads the S3 key orion/jwt/current.json (pull_inflection_performance_dim.py line 57) although jwt_freshness.py documents Secrets Manager as the primary store (line 15). No path in the files read consults the INF route's session_secret_id; only the COT route value is read (bd_live.py line 43).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/tenants.py@38707eebf2 line 170",
+      "infra/aws/lambda/investor-reporting/performance/orion_live.py@38707eebf2 lines 40-41",
+      "infra/aws/lambda/inf-pipeline/inf-performance-daily/jwt_freshness.py@38707eebf2 lines 15 and 45",
+      "infra/aws/lambda/inf-pipeline/inf-performance-daily/pull_inflection_performance_dim.py@38707eebf2 line 57"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-4. Form only; no secret value was read and no call was made. The record's credential answer (REACHES, by code) rests on the reading that the transport and the pull hold the same estate token; which store is authoritative is for the CTO to weigh."
+}
+```
+
+## IRPT_DASHBD-D2-W304-S2 -- The inf-performance-daily pull header says it has been stale since 2026-04-28, while its own lambda_function.py schedule
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W304-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~304",
+  "surfaced_at": "2026-10-15T03:12:20Z",
+  "one_line": "The inf-performance-daily pull header says it has been stale since 2026-04-28, while its own lambda_function.py schedules the pull daily on EventBridge.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-i-4 (decomposition section 3): the inf-pipeline pull feeds the silver the tie-out used, so its live status bears on which account-level read the estate actually has.",
+  "world_is": "pull_inflection_performance_dim.py line 17 states 'Stale since 2026-04-28' and says consumers emit a WARN with a null fallback; inf-performance-daily/lambda_function.py line 17 states an EventBridge cron(40 13 * * ? *) that runs the pull at 13:40 UTC daily. This cell did not measure the schedule's live state (no AWS call), so the two statements are unreconciled in the repo.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/inf-performance-daily/pull_inflection_performance_dim.py@38707eebf2 line 17",
+      "infra/aws/lambda/inf-pipeline/inf-performance-daily/lambda_function.py@38707eebf2 line 17"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-4. Form only. The pull's Envision Performance Dim report is named in the record as an alternative per-account period return, not the chosen endpoint."
+}
+```
