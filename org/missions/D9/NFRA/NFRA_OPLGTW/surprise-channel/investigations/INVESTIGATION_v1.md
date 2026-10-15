@@ -16013,3 +16013,150 @@ name the one known failure instead of silently inheriting it.
     "notes": "OBSERVATION only: the clock convention for T-1 belongs to the calendar's owner. The cell follows the sibling tools' UTC convention and does not change it."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W92-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~92",
+    "surfaced_at": "2026-10-15T01:08:27Z",
+    "one_line": "The category-views catalog row is not indexed by the gate loader, so the firm verdict of mdpf_get_category_views is the per-scope aggregate-AUA row's verdict, not a verdict on its own row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "OG-pt-5 section 1 (keys come from the catalog): the table's own DATA_CATALOG row is read for bucket, prefix and key template, and the firm gate is catalog_gate.gate() on the principal and the key; if the gate cannot be called without a row for this dataset, call it with the row of getMdpfAggregateAUATimeSeriesByFirm and say so in a row.",
+    "world_is": "The entity row sits under silver_datasets (infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@cd23ff4f60, line 15635, contract c-5902fd256409) and carries bucket, prefix and key_template, but no key, verdict_class, allowlist or accessors. load_catalog in infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py indexes only channels artifact rows, so gate() on the entity key would return off-catalog. The tool therefore reaches the gate through portal_index resolve() with the getMdpfAggregateAUATimeSeriesByFirm row (a channels row, family axis scope, verdict serve, ALLOWLISTED, key-scope-segment). Its firm rule is the verdict applied to the category-views read, so a change to that row changes this tool's firm fence with no change to this tool's own row.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: pt5.AC2.sh invoked from the worktree root C:/tmp/wk-oplgtw-92 at HEAD cd23ff4f60 with the new module; output: 'category views: bad scopes refused True; global served False with its own as-of inside the object False; non-Opal refused True'",
+        "READ: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@cd23ff4f60:15635 (the entity row under silver_datasets) and the aggregate row in channels (its accessors name getMdpfAggregateAUATimeSeriesByFirm)",
+        "READ: infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py load_catalog (indexes channels.*.artifacts only) at HEAD cd23ff4f60"
+      ]
+    },
+    "notes": "Filed as ARMED because the proxy binding persists through normal catalog edits. Disarm is the catalog owner's act (NFRA_MCPINDEX gives the entity row an artifact row of its own, or the issuer rules the proxy). The worker did not add a row, edit DATA_CATALOG.yaml or edit catalog_gate.py, as the order requires."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W92-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~92",
+    "surfaced_at": "2026-10-15T01:08:27Z",
+    "one_line": "The category-views row's top-level freshness_field names the scope partition key, while its contract names the object's as-of field as_of; a reader that follows the top-level field takes the scope value as the as-of date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "OG-pt-5 section 1: as_of is THE OBJECT'S OWN as-of field, named by its contract; the contract block (G3_portal_v2.md, the category-views entry) names the field as_of.",
+    "world_is": "In infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@cd23ff4f60 the entity row has freshness_field 'FIELD:scope' at line 15640, while its contract block carries freshness.field 'as_of'. portal_index as_of_field() reads the top-level freshness_field, so it would not return the as-of date for this row. The tool reads the contract's field (portal_mdpf _as_of_field). No portal_index tool serves this entity today, so nothing is served wrongly now.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@cd23ff4f60:15640 (freshness_field: FIELD:scope) and the entity's contract.freshness block (field: as_of)",
+        "RUN: pt5.AC2.sh invoked from the worktree root C:/tmp/wk-oplgtw-92 at HEAD cd23ff4f60 with the new module; output: 'category views: bad scopes refused True; global served False with its own as-of inside the object False; non-Opal refused True'"
+      ]
+    },
+    "notes": "The contract block and the top-level field disagree on the same row. Which one the catalog owner keeps is not the worker's call."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W92-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~92",
+    "surfaced_at": "2026-10-15T01:08:27Z",
+    "one_line": "The order names app/catalog_gate.py, but the gate module is at app/graphql_plumbing/catalog_gate.py; the order's path does not exist at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "OG-pt-5 section 1: 'app/catalog_gate.py load_catalog' is where the loader is read from, and 'do not edit app/catalog_gate.py'.",
+    "world_is": "There is no app/catalog_gate.py at HEAD cd23ff4f60. The loader and gate are in infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py (load_catalog, gate, resolvable_keys). The worker read that file and did not edit it. portal_index/integration.py imports it as graphql_plumbing.catalog_gate.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ: infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py at HEAD cd23ff4f60 (the module with load_catalog and gate)",
+        "READ: the absence of infra/aws/ec2/opal-gateway/app/catalog_gate.py in the worktree at HEAD cd23ff4f60 (lane-scoped path check)"
+      ]
+    },
+    "notes": "A naming drift in the order only. No behaviour depends on it."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W92-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~92",
+    "surfaced_at": "2026-10-15T01:08:27Z",
+    "one_line": "The gate reads its principal from the request email, while the typed admission reads the request principal; the AC2 probe sets only the principal, so the gate refuses the global read and the admitted-read arm is not exercised live.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "OG-pt-5 AC2 (the live probe): with the Opal stand-in principal an admitted read of the object the gate admits equals an independent read (or the gate's own refusal is returned); the firm verdict is portal_index _principal() plus resolve() and catalog_gate.gate().",
+    "world_is": "portal_index _principal() derives the gate's principal from context.get_current_email(); typed_scope admission derives it from harvest_read.get_current_principal(). The probe patches only the second, so the gate sees an empty principal and returns 'unresolvable principal class -- deny by default' for scope global; the probe accepts that refusal, and its served arm reads False. In the server, context.set_current_principal sets both at once (app/context.py lines 87-92), so the divergence is a probe artifact in the path measured here; the server path was not exercised.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: pt5.AC2.sh invoked from the worktree root C:/tmp/wk-oplgtw-92 at HEAD cd23ff4f60 with the new module; output: 'category views: bad scopes refused True; global served False with its own as-of inside the object False; non-Opal refused True'",
+        "READ: infra/aws/ec2/opal-gateway/app/context.py lines 87-92 (set_current_principal sets principal and email together) at HEAD cd23ff4f60",
+        "READ: infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py _principal() (context.get_current_email) at HEAD cd23ff4f60"
+      ]
+    },
+    "notes": "The probe's served arm is the criterion's accepted alternative. The probe itself is the issuer's file and was not edited."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W92-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~92",
+    "surfaced_at": "2026-10-15T01:08:27Z",
+    "one_line": "The typed admission refuses every non-Opal address before the firm gate runs, so a firm principal reaches the gate's firm verdict only with an Opal-domain address; the two-firm test arm is built that way.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "OG-pt-5 AC1 test_ogpt5_ac02: a principal of firm A asking for firm B's scope is refused by the gate's own verdict with zero S3 calls and one audit record; the same principal asking for its own scope is served.",
+    "world_is": "typed_scope.admit_scope refuses any principal whose address fails tools._is_opal_user with typed_opal_only, before resolve() runs. A firm principal's address is not an Opal address, so the gate's firm verdict is reached only by an Opal-domain address whose gate identity is a firm. The test patches portal_index _principal to a firm for an Opal-domain stand-in. The zero-read refusal and the one audit record hold on both paths; the reason differs (typed_opal_only for a real firm address, typed_firm_gate for the patched arm).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ: infra/aws/ec2/opal-gateway/app/typed_scope.py admit_scope at HEAD cd23ff4f60 (Opal-only check before the served-prefix check)",
+        "RUN: python -m pytest tests/test_og_pt5.py from infra/aws/ec2/opal-gateway at the worktree HEAD cd23ff4f60 with the new module: 4 passed"
+      ]
+    },
+    "notes": "Which admission rule a firm principal should meet first is a design question for the issuer; the worker kept the order's principal-first ordering and did not change admission."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W92-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~92",
+    "surfaced_at": "2026-10-15T01:18:16Z",
+    "one_line": "The order names the proof instance ...mdpf-category-views-tool.proof_of_spec.json, but the pipeline gate finds an instance only by the order file's stem (...mdpf-category-views-by-row.proof_of_spec.json); the instance is written at the stem name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "OG-pt-5 section 5: write the proof instance at the named path W/NFRA_OPLGTW.TO-OG-pt-5.mdpf-category-views-tool.proof_of_spec.json, then validate it and flip the status.",
+    "world_is": "The flip commit with the instance at the named path was refused by to-pipeline-gate (layer 2): 'flips to complete ... and NO proof-of-spec instance was found beside it'. The gate's candidate search builds the instance name from the order file's own stem (.tools/to-pipeline-gate.py _proof_instance_candidates: stem + '.proof_of_spec.json'), and the order file's stem carries the slug by-row, not tool. The instance was renamed to the stem name; proof-of-spec-check.py then returned rc=0 VALID for it at that name.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: bash .tools/safe-commit.sh of the flip with the instance at the named path, at HEAD 6b381d604e: ERROR BLOCKED, to-pipeline-gate REFUSED 'no proof-of-spec instance was found beside it'; files unstaged",
+        "READ: .tools/to-pipeline-gate.py _proof_instance_candidates at HEAD 6b381d604e (names: stem + .proof_of_spec.json)"
+      ]
+    },
+    "notes": "Which name the issuer wants is the issuer's call. The worker used the gate's convention, which the sibling instance NFRA_OPLGTW.TO-OG-gt-9.search-window-pruning.proof_of_spec.json also follows, and did not use the override line."
+  }
+  ```
