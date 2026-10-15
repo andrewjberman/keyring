@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~107</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-107 @3d3bebc48d, merged fe16c8c9bc): SEAT-LIST-SHOW stale=none seats=10; SEAT-RECORD seats=10 named=10 idle_flagged=5 round_close_reviewer=present ok=True; proof VALID. The DONE WHEN grade element (W107-S2: round 18 has no judgment order) is supplied from an earlier graded round in the round-19 packet.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
