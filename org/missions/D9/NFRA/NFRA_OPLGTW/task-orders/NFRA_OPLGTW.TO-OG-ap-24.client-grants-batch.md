@@ -52,6 +52,7 @@ org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-grants-ap24.json
 org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZS/
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/terraform/opal-gateway/blackdiamond_reader_iam.tf
 </paths>
 
 `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZS/`. Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free; a correction is a NEW row citing the old id), fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
@@ -59,11 +60,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; run from the repo root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-ap-24"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap24.AC1.sh; echo "exit=$?"</invocation><expect>(?s)generator --check exit 0 \(want 0\); roles in the .tf 6 \(want 6\); wildcard resource 0 \(want 0\); put or delete in actions 0 \(want 0\); trust principals other than the gateway role 0 \(want 0\); plan: [0-9]+ to add, [0-9]+ to change, 0 to destroy.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-ap-24"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap24.AC1.sh; echo "exit=$?"</invocation><expect>(?s)generator --check exit 0 \(want 0\); roles in the .tf 5 \(want 5\); wildcard resource 0 \(want 0\); put or delete in actions 0 \(want 0\); trust principals other than the gateway role 0 \(want 0\); plan: [0-9]+ to add, [0-9]+ to change, 0 to destroy.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-ap-24"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap24.AC2.sh; echo "exit=$?"</invocation><expect>(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0; roles live in IAM 6 of 6;  policy live yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
-- `AC1`: the grant `.tf` equals what the generator derives from the merged adapters, six roles, no wildcard, no Put or Delete, trust only the gateway role, and the plan reads no destroy. `AC2` (Phase B): the roles are live in IAM, each read back, and the ledger is closed.
+- `AC1`: the grant `.tf` equals what the generator derives from the merged adapters, five role resources in the new .tf (the sixth, the Black Diamond role, is extended in `blackdiamond_reader_iam.tf`), no wildcard, no Put or Delete, trust only the gateway role, and the plan reads no destroy. `AC2` (Phase B): the roles are live in IAM, each read back, and the ledger is closed.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -77,6 +78,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-24.client-grants-batch.proof
 - Pre-cut: ap24.AC1 and ap24.AC2 base FAIL as expected (the `.tf`, the generator and the ledger are absent).
 
 - A1 (issuer, 2026-10-15 ~20:2xZ): `NFRA_MCPINDEX` MX-r-14 went live at `c4c106aea1` (19:50Z) and `OG-ap-21` (the person reader and its Terraform) is going to release on it NOW, ahead of the batch, so `NFRA_MCPORTAL` is unblocked tonight. Therefore the person-roles Terraform stays in `OG-ap-21` and is WITHDRAWN from this order (item 4); this order is the six vendor roles only. `OG-ap-21` is not superseded; `OG-ap-22` is, by the code batch. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+- A2 (issuer, 2026-10-15 ~23:4xZ, `0.7.0_AE_CloudOps~ZS` msg 34610, `PHASE_A_FINDINGS.md`): TWO RULINGS. (1) THE BD EXTENSION IS AN EDIT, NOT A SECOND POLICY: the live `gateway-blackdiamond-read-policy` carries explicit Denies outside `opal-data-bd/silver/fees/*`, and an explicit Deny beats any Allow, so the `opal-data-assets/blackdiamond/49f/silver/` read is added by editing `bd_read_policy` in `infra/aws/terraform/opal-gateway/blackdiamond_reader_iam.tf`, which is now in `<paths>`. The edit widens the `NotResource` of the two Deny statements and the Allow by that ONE prefix and nothing else (no new bucket, no `*`); the plan shows it as `1 to change`. The ask states it as a change to a LIVE role's policy, with the before sha (`4893211d4408180a`) and the rollback (re-apply the before policy). (2) THE NEW .tf HOLDS FIVE ROLE RESOURCES: `aws_iam_role.bd_read` is declared in `blackdiamond_reader_iam.tf`, so a sixth declaration would be a duplicate address. AC1 wants 5 `aws_iam_role` resources in `client_vendor_roles_iam.tf`; the six-roles count is read at AC2 in IAM (6 of 6, unchanged). Schwab: the grant stays at the 12 `dim_*` prefixes the adapter reads (OG-cl-1 reads `dim_*` and substitutes no `fact_*`); the absent `fact_*` coverage is a NAMED GAP in the ask (catalog rows MX-c-23, release MX-r-15), not coverage. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>

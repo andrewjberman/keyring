@@ -18746,3 +18746,482 @@ name the one known failure instead of silently inheriting it.
   "notes": "The issuer decides at the hookup whether the integer is a custodian number. This worker printed no account id and read none for this row."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "OG-gf-1 AC2 counts BUILT catalog rows (6) but the task order specifies the probe line one per BUILT tool (3 tools); the probe prints one line per BUILT row so the count is met.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC2.sh@b56fd6ef9d -- the probe test is pn >= nb, where nb is the BUILT count in the classification line (6 rows).",
+      "TASK ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gf-1.gf-wave-b-remainder.md@b56fd6ef9d section 1 Step 3 says print ONE line per tool; three tools are built and one of them (etfs_get_fund_bloomberg_profile) serves four BUILT rows of one table family.",
+      "RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~110/probe_built.py printed 6 probe lines, all answered True; denominator 6 BUILT catalog rows over 3 tools."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 3: the probe prints ONE line per BUILT tool; AC2 is met when the probe's answered lines cover the BUILT set.",
+  "world_is": "The check counts BUILT catalog rows, not tools. One tool answers four BUILT rows, so a strict per-tool probe prints 3 lines against a count of 6 and AC2 would fail. The worker printed one line per BUILT row (each row's section of the tool envelope). The task order's per-tool wording and the check's per-row count disagree.",
+  "notes": "Filed for FORM. Either grain is a legal reading; the classification and the probe answers are the same under both. The issuer decides the grain at the merge."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "OG-gf-1 criterion AC1 cannot be met in this cell: the CRO spec's extension of etfs_get_positioning (fund_ticker and as_of with gold book and holding history) is not built, so test_oggf1_ac04 stays red and AC1 reports FAIL.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DEF: infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py@b56fd6ef9d:398 -- def etfs_get_positioning(as_of: str = \"\") calls run('etfs_get_positioning', {}, as_of) inside the register closure; no fund_ticker parameter.",
+      "SPEC: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@b56fd6ef9d section (c) 'Existing tool verdicts' and the positioning extension row: extend with as_of history and fund_ticker, from gold book and holding for a past date.",
+      "RUN: gf1.AC1.sh printed 'pytest rc=1; named tests passed 3 of 4; failed/error lines 1' and RESULT: FAIL; the failing test is test_oggf1_ac04."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC1: the named tests pass, 4 of 4. test_oggf1_ac04: etfs_get_positioning is extended only as the G5 spec names, its existing tests still pass and its existing answer for an existing input is byte-equal.",
+  "world_is": "The extension is not built. etfs_get_positioning lives inside the register closure and calls the portal run path against the portal-v2 object; the history path reads gold book and holding, which etfs_funds already reads, but the byte-equality of the existing answer cannot be measured offline: the closure needs the portal run path and a live catalog, and no test for etfs_get_positioning exists at this HEAD. The test is red by design so the gap is not hidden.",
+  "notes": "BLOCKING for this cell only. The extension belongs to a cell that can exercise the portal run path. The three BUILT tools' named tests (ac01-ac03) pass; the probe answers 6 of 6 and refuses the non-Opal principal with zero reads on all three tools."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "The gateway tree at this HEAD has no infra/aws/ec2/opal-gateway/tests directory, and the folder sat outside the sparse cone; the order's test path was created there and the coordinator added the folder to the cone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LISTING: infra/aws/ec2/opal-gateway/ at worktree HEAD b56fd6ef9d holds app/, ACCESS_LAYER.md, README.md and related files, and no tests/ directory.",
+      "ORDER: the task order's surfaces name infra/aws/ec2/opal-gateway/tests/test_og_gf1.py, and gf1.AC1.sh runs pytest tests/test_og_gf1.py from the gateway directory."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order names infra/aws/ec2/opal-gateway/tests/test_og_gf1.py as a write surface, and the AC1 check runs that file from the gateway directory.",
+  "world_is": "The tests folder is absent at this HEAD and was outside the sparse cone. The worker wrote the test file at the named path; the coordinator then widened the cone to include the folder.",
+  "notes": "INERT: a path absent at HEAD is a cone fact, recorded so the merge reads the new folder as the order's, not as an unexplained addition."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "The CRO spec proposes the tool name etfs_get_fund_nav_history for the snapshot table, a name the merged tool already holds for silver/netassets_daily; this cell builds etfs_get_fund_snapshot for the snapshot table instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SPEC: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@b56fd6ef9d section for opal-data-etfs/silver/snapshots: proposed_tools names etfs_get_fund_nav_history.",
+      "DEF: infra/aws/ec2/opal-gateway/app/etfs_funds.py@b56fd6ef9d:289 -- etfs_get_fund_nav_history reads ENTITY_NAV = opal_data_etfs_silver_netassets_daily."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The snapshot table's proposed tool is etfs_get_fund_nav_history (G5 spec).",
+  "world_is": "That name is merged and reads netassets_daily. The snapshot table is served by etfs_get_fund_snapshot in etfs_silver.py, and the classification names it.",
+  "notes": "The issuer registers the three new tool names (etfs_get_new_securities, etfs_get_fund_bloomberg_profile, etfs_get_fund_snapshot) in app/tools.py and app/data_entitlement.py at the merge, and re-pins the counts. Filed for FORM; the name choice is the worker's and the issuer may rename."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T20:08:30Z",
+  "one_line": "gf1.AC1.sh names four tests, so once test_oggf1_ac04 is withdrawn (A1) it reads 'named tests passed 3 of 4' and RESULT: FAIL; the A1 statement that AC1 now reads 3 of 3 cannot be met by the script as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC1.sh@3bbdf8fbdc -- pytest_named tests/test_og_gf1.py test_oggf1_ac01 test_oggf1_ac02 test_oggf1_ac03 test_oggf1_ac04.",
+      "HELPER: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/_root.sh@3bbdf8fbdc -- pytest_named sets n=$# and passes only when p equals n.",
+      "RUN (this seat, worktree after the withdrawal): 'pytest rc=0; named tests passed 3 of 4; failed/error lines 0' then 'RESULT: FAIL', exit=1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 (issuer, 2026-10-15): test_oggf1_ac04 is withdrawn and gf1.AC1 reads 3 of 3. The order's AC1 expect regex reads 'named tests passed 3 of 3'.",
+  "world_is": "The check script still passes four names and its helper requires passed equal to four. With ac04 removed from tests/test_og_gf1.py the three named tests pass (pytest rc=0) and the script still reports FAIL. The criterion cannot read PASS as written. The check script is the issuer's file and was not edited.",
+  "notes": "Not resolved by the worker. The test-file side of A1 (ac04 withdrawn, 3 tests) is in this cell's commit. The issuer's options are to drop test_oggf1_ac04 from the script's name list, or to re-issue AC1 with its real expectation."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T20:08:30Z",
+  "one_line": "A1 ruling (3) says gf1.AC2 counts distinct BUILT tools and the probe prints one line per tool (3); the check script is unchanged and still counts BUILT rows (built 6), and the probe still prints six per-row lines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC2.sh@3bbdf8fbdc -- the classification line counts cnt BUILT over rows, and the probe pass count is grep -c of 'probe built: .* answered True'.",
+      "RUN (this seat): 'classification: assigned 15 of 15, covered 0, built 6, deferred 9; set equal True; built tools defined 6 of 6', 'built tools probed 6 (the worker's probe lines)', 'RESULT: PASS', exit=0.",
+      "PROBE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~110/probe_built.out.txt -- six 'probe built:' lines and 'probe denominator: 6 BUILT catalog rows over 3 tools; answered 6 of 6'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 (3): AC2 counts DISTINCT tools among the BUILT rows, with one probe line per BUILT tool (3).",
+  "world_is": "The check still counts rows and the probe prints per row. A per-tool probe would make the unchanged check read 'built tools probed 3' against 'built 6' and FAIL, so the probe was left per row. AC2 reads PASS as written; the distinct-tool count (3) is printed on the probe denominator line.",
+  "notes": "Repeats the gap recorded in NFRA_OPLGTW-Z-W110-S1 (prior seat). Recorded because the A1 ruling states the check change as done, and it is not in the check."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T20:08:30Z",
+  "one_line": "comp-find exits 49 with 'Python was not found' (the Windows Python alias) in the worker shell on site Z, before any search runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (worktree C:/tmp/wk-oplgtw-110): comp-find --name 'investigation_item.schema.json' . --limit 20 -> exit code 49, stderr 'Python was not found; run without arguments to install from the Microsoft Store'.",
+      "RAIL: the comp-rail denial deny_id=20261015T200535Z-29ab926b named this command as the RUN NEXT step."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "comp-find is the repo search instrument for the worker (CLAUDE.md rule 21).",
+  "world_is": "On this device the comp-find entry point fails before the search runs, so it produced no denominator. The schema lookup fell back to a native Read of a known path, which also found nothing in the worktree.",
+  "notes": "Recorded so an absent comp-find result on this device is not read as an absence in the repo."
+}
+```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The named test path infra/aws/ec2/opal-gateway/tests/test_og_cl5.py cannot be written in this worktree: its parent directory opal-gateway/tests/ is tracked at HEAD but outside the sparse-checkout cone, so the directory is absent.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ git sparse-checkout list in worktree C:/tmp/wk-oplgtw-107 at HEAD b56fd6ef9d: .tools, infra/aws/ec2/opal-gateway/app, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_OPLGTW, org/modules/graph, org/ref, org/standards, org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014 (this seat)",
+        "READ git ls-files infra/aws/ec2/opal-gateway/tests @b56fd6ef9d: tests/acceptance/ tracked; ls infra/aws/ec2/opal-gateway/tests in the worktree: absent (this seat)",
+        "RAN cl5.AC1.sh (timeout 120) in the worktree: output 'infra/aws/ec2/opal-gateway/tests/test_og_cl5.py absent', RESULT: FAIL, exit=1 (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order names infra/aws/ec2/opal-gateway/tests/test_og_cl5.py as a write path, and _root.sh pytest_named runs it from the gateway root (cd infra/aws/ec2/opal-gateway && python -m pytest tests/test_og_cl5.py).",
+    "world_is": "The worktree carries infra/aws/ec2/opal-gateway/app but not infra/aws/ec2/opal-gateway/tests, so the named path is absent. The gateway's existing test module sits under app/tests/. The sparse cone was not widened and no tree was rebuilt; the worker stopped before any build, per the TREE check. Needs the issuer to widen the cone or re-cut the path."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The firm ids that the task order says to read from partner_roster.json have no path in the contract, and the census path data/mdpf/config/partner_roster.json is outside this worktree's sparse cone, so the roster is absent.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2_CLIENT_TOOLS_CONTRACT.md (deliverables/0.9.0_WK_NFRA_OPLGTW~83) @b56fd6ef9d: names no partner_roster path (no match for partner_roster in the file) (this seat)",
+        "READ G2c_smartx.md prior_art: data/mdpf/config/partner_roster.json@7878037d98; git ls-files data/mdpf/config/partner_roster.json @b56fd6ef9d lists it (tracked) (this seat)",
+        "READ ls data in the worktree: absent; data/ not in the sparse cone (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The firm ids come from partner_roster.json, read through the path the contract names; never hand-type a firm map.",
+    "world_is": "The contract names no roster path. The census names data/mdpf/config/partner_roster.json, which this worktree does not carry. The census states the roster maps only the advisor name 49 Financial Group to firm_id 49financial; the SmartX advisors Titleist, Canopy and Parable carry no firm_id. The firm map cannot be derived from this worktree."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The task order's seam (app/typed_scope.py) and the protocol's ctx (G2_ADAPTER_PROTOCOL.md, implemented by app/client_core.py OG-cl-1) do not meet: the core is on no ref, and typed_scope exposes no prefix, list_partitions, read_rows, freshness_td or firm_segments.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2_ADAPTER_PROTOCOL.md (deliverables/2.0.0_SA_COO~O/r37) @b56fd6ef9d: the core app/client_core.py (OG-cl-1) implements ctx; the adapter imports no other adapter (this seat)",
+        "RAN ls infra/aws/ec2/opal-gateway/app/client_core.py and app/client_adapter_*.py in the worktree: absent; git log --all -- app/client_core.py and app/client_adapter_smartx.py: no rows (this seat)",
+        "GREP app/typed_scope.py @b56fd6ef9d for def/class: admit_scope, list_keys, newest_part, read_parquet, read_json, Scope; no prefix/list_partitions/read_rows/freshness_td/firm_segments (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The adapter is built against the protocol ctx (prefix, list_partitions, newest_partition, read_rows, freshness_td, firm_segments), and the probe builds the adapter's context against the REAL silver.",
+    "world_is": "No ctx implementation exists in the worktree or on any ref. The order names typed_scope as the seam to build on, and that module lacks the ctx methods. A real ctx for the probe cannot be built inside this order's write grant, so the adapter cannot be built to the protocol until OG-cl-1 lands or the issuer names the seam."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The two-firm negative arm cannot be built from two canonical firms: only 49financial maps to a SmartX firm_id, so the only cross-firm arm is 49financial against unregistered rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2c_smartx.md section (c) fork keys and open items @tier1_exec GATEWAY_DATA_CONTRACTS_20261014 (this seat)",
+        "READ G2_CLIENT_TOOLS_CONTRACT.md decision 5 and the SmartX row-filter bullets @b56fd6ef9d (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The fence proof is the TWO-FIRM NEGATIVE ARM: a request for one firm returns zero rows of any other firm.",
+    "world_is": "SmartX rows commingle four advisor firms in one key. Only 49financial has a firm_id in the roster. Titleist, Canopy and Parable are unregistered and must be dropped (decision 5). No SmartX rows exist for cottonwood or inflection. A negative arm between two canonical firms is not constructible; the arm the contract allows is 49financial against the unregistered rows."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The contract names no refusal code for a canonical firm (cottonwood or inflection) that the SmartX vendor does not serve, so AC6's firm-outside-FIRMS refusal has no named code.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2_CLIENT_TOOLS_CONTRACT.md 'Firm input' and the refusal arms of each tool @b56fd6ef9d (this seat)",
+        "READ G2_CLIENT_TOOLS_CONTRACT.md 'Refusal arms' for client_resolve_account: firm_not_canonical covers non-canonical values only; firm_unregistered covers Titleist, Canopy and Parable rows only (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A firm outside the vendor's FIRMS is refused (TO section 1, test_ogcl5_ac06).",
+    "world_is": "The contract's refusal codes do not include a code for a canonical firm the vendor does not serve. The SmartX bullets do not state that the vendor serves nothing for cottonwood or inflection, so the REFUSAL-with-contract-code rule has no code to cite."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The census part G2c_smartx.md records catalog_entry present:false for every SmartX silver table, but DATA_CATALOG.yaml at HEAD carries a row for each of the 13 smartx/platform/silver prefixes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GREP app/refs/DATA_CATALOG.yaml @b56fd6ef9d for 'prefix: smartx/platform/silver/': 13 rows, lines 11281-12149 (fact_* tables plus the two superseded drafts) (this seat)",
+        "READ G2c_smartx.md (c) and the per-table catalog_entry fields: present false on all 11 fact tables (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census records no DATA_CATALOG row for SmartX silver tables (catalog_entry present false).",
+    "world_is": "The catalog carries SmartX silver rows at HEAD, so ctx.prefix would resolve them and the no_catalog_row refusal does not fire for those tables. The census figure is stale. No gateway code was changed."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T19:52:58Z",
+    "one_line": "The protocol's envelope keys omit freshness_td and absent_reason, and its resolve_account signature omits the contract's account_suffix and account_ref pin; the SmartX adapter emits _freshness_td and _absent_reason as extra keys and does not implement the pin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2_ADAPTER_PROTOCOL.md sections 'Adapter side' and 'Context side' @9fa68ea4e6: the envelope keys are _as_of, _partition_date, _source_keys, _denominator, _platform_label, _platform_label_source, _label_claim (this seat)",
+        "READ G2_CLIENT_TOOLS_CONTRACT.md 'Shared envelope' and 'client_resolve_account' inputs @9fa68ea4e6: every answer carries freshness_td and absent_reason; resolve_account takes account_suffix or account_ref (this seat)",
+        "RAN tests/test_og_cl5.py on the worktree (base e7cbf77ec1, adapter uncommitted): 8 of 8 pass; resolve_account returns the full candidate list with no pin (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The core builds the shared envelope from the protocol's _-keys, and every SmartX answer states freshness_td and absent_reason; resolve_account pins one account on account_suffix or account_ref.",
+    "world_is": "The protocol lists no freshness or absent key, so the core cannot build those two envelope fields from the protocol alone. The adapter returns _freshness_td and _absent_reason as extra keys, which the core must carry. The protocol signature has no pin argument, so the adapter returns every candidate and implements no account_suffix or account_ref pin. No gateway code outside the adapter and its tests was changed."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T19:52:58Z",
+    "one_line": "partner_roster.json carries no advisor_id: its only SmartX join key is the advisor_name alias, so a byte-equal copy of the file cannot serve the advisor-id roster that ctx.firm_roster() must return.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ data/mdpf/config/partner_roster.json @e7cbf77ec1: partners[] carry firm_id and aliases.advisor_name ('49 Financial Group' for 49financial) and aliases.legacy_id; no advisor_id key anywhere in the file (this seat)",
+        "READ G2c_smartx.md section (c) and the fact_model_allocation_roster contract @GATEWAY_DATA_CONTRACTS_20261014: advisor_id is a column of fact_model_allocation_roster only (this seat)",
+        "RAN probe_smartx.py on the worktree (base e7cbf77ec1): build_roster joins the file's name aliases to the silver roster's advisor_id and advisor_name pairs; envelope_ok True, fence_negative_arm True (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ctx.firm_roster() returns advisor id to canonical firm id or None, served from a byte-equal copy of data/mdpf/config/partner_roster.json under app/refs/ (protocol A1 item 4).",
+    "world_is": "The file maps advisor names to firm ids and has no advisor id. A core that serves a byte-equal copy maps no advisor id, so every SmartX roster row drops as an unknown advisor and every resolve returns zero candidates with absent_reason no_account_match, not a refusal. The probe built the map by joining the file's name aliases to the silver roster's ids. The hookup must choose the advisor-id source before the SmartX release."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S9",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T19:52:58Z",
+    "one_line": "The probe reads as the box's own credentials with a nominal stand-in principal; principal admission (principal_required, typed_opal_only) is the core's and the probe does not exercise it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ app/typed_scope.py admit_scope @e7cbf77ec1: admission reads harvest_read.get_current_principal() and tools._is_opal_user; neither exists in a probe process (this seat)",
+        "READ the task order section 1 (probe): 'an Opal stand-in principal'; protocol A1 item 2: the probe writes its own ProbeCtx and the Context side has no principal (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The probe builds the adapter context with an Opal stand-in principal, and the Opal-only gate applies to client reads.",
+    "world_is": "Admission is the core's, through typed_scope.admit_scope, which needs a request principal this standalone probe does not have. The probe's stand-in is nominal, its reads use the box credentials, and it prints counts and booleans only. The core's own test must prove typed_opal_only at the hookup."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T19:52:58Z",
+    "one_line": "The contract's weekend fallback needs a prior-trading-day lookup, which ctx does not offer; the adapter walks back through list_partitions to the newest non-empty account-map partition instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2c_smartx.md freshness and open_items for fact_allocation_account_map @GATEWAY_DATA_CONTRACTS_20261014: the map is empty on weekends and holidays (27 of 91 partitions) (this seat)",
+        "READ G2_ADAPTER_PROTOCOL.md 'Context side' @9fa68ea4e6: ctx offers freshness_td and list_partitions, no prior-trading-day call (this seat)",
+        "RAN the probe on the worktree (base e7cbf77ec1): the map read used the newest non-empty partition; the trading calendar answered from its NYSE fallback (stderr WARN) (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A weekend as_of on the account map falls back to the prior trading day and says so (contract, SmartX resolve_account).",
+    "world_is": "ctx has no prior-trading-day function, so the adapter walks back at most 10 partitions to the newest non-empty map partition, data-driven, and reports the partition read in _denominator (account_map_partition, account_map_fallback_steps). The calendar's day count is not used for the fallback. The lookup is equivalent for weekends and holidays, but it is not the calendar the contract names."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T20:17:24Z",
+    "one_line": "The commit-time naming gate REFUSES the canonical firm-id literals in client_adapter_smartx.py as NEW hand-kept carriers (4 verdicts, WARN window, not blocking); the adapter takes the firm ids as literal protocol constants.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ .scratch/commit1.log (safe-commit run on the worktree, base e7cbf77ec1): 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/client_adapter_smartx.py:29 49financial' and ':30' for 49financial, cottonwood and inflection, 'NEW hand-kept carrier (context rule)', 'LIVE-READ-FAILED: CensusError' (this seat)",
+        "READ the same log: 'WARN window: 4 REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce' (this seat); the commit landed at 638daaaa76"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A hand-kept carrier of a served identifier outside a permitted context is read through lookup(...); the commit-time naming gate refuses a literal carrier (CLAUDE.md section 4, naming).",
+    "world_is": "The adapter's FIRMS and CANONICAL_FIRMS tuples carry the three canonical firm ids as literals, which the naming gate graded as four new hand-kept carriers. The gate is in its WARN window, so the commit was not refused. The adapter reads no lookup(); the issuer decides, at the hookup, whether the canonical firm list is read through lookup() before the gate enforces. No gate was overridden."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S12",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T20:24:55Z",
+    "one_line": "The task order names its proof instance NFRA_OPLGTW.TO-OG-cl-5.client_smartx.proof_of_spec.json (underscore), but the flip gate resolves deliverables/*/<order stem>.proof_of_spec.json (hyphen), so the complete flip is refused on the named path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ .tools/to-pipeline-gate.py _proof_instance_candidates @e7cbf77ec1: for a TREE order the candidate names are stem + '.proof_of_spec.json' under deliverables/*/, stem = the order's basename without .md (this seat)",
+        "READ the task order section 5 @e7cbf77ec1: 'Write the proof instance at W/NFRA_OPLGTW.TO-OG-cl-5.client_smartx.proof_of_spec.json' (underscore; the order file is ...TO-OG-cl-5.client-smartx.md, hyphen) (this seat)",
+        "RAN safe-commit with the status flip at worktree base 638daaaa76: to-pipeline-gate REFUSED, 'NO proof-of-spec instance was found beside it' (this seat, .scratch/commit2.log)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order section 5: the proof instance is written at W/NFRA_OPLGTW.TO-OG-cl-5.client_smartx.proof_of_spec.json and the status flips to complete once it validates.",
+    "world_is": "The flip gate finds an instance only under the order's stem name (client-smartx). The instance is written at W/NFRA_OPLGTW.TO-OG-cl-5.client-smartx.proof_of_spec.json, the underscore file is removed, and the instance validates at rc 0 under the new name. The order's named path and the gate's rule disagree; the issuer decides the name for later orders."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S13",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T21:28:29Z",
+    "one_line": "The cl5.AC2.sh check prints 'probe rc' from a pipeline whose last stage is tr, so the printed rc is tr's status, not the probe's exit code; the PASS verdict rests on the probe's own output line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/cl5.AC2.sh line 9 @3f1dc12bfc: out=$(timeout 115 python \"$P\" 2>&1 | tr -d '\r'); rc=$? (this seat)",
+        "RAN cl5.AC2.sh @3f1dc12bfc from the worktree root: printed 'probe rc 0' with the probe line 'envelope_ok True; independent_count_equal True; fence_negative_arm True; account_numbers_printed 0' and RESULT: PASS (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The AC2 check treats the probe's exit status as part of its verdict (the rc test in cl5.AC2.sh requires rc 0 from the probe run).",
+    "world_is": "The rc captured after the pipeline is the exit status of tr, which returns 0 whatever the probe returns. A probe that exits non-zero after printing a matching line would still pass the check. The probe in this round exits 0, so the verdict is unaffected here; the issuer decides whether the check captures the probe's own status (PIPESTATUS or pipefail)."
+  }
+  ```
