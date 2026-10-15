@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~104</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run on branch wk-NFRA_CTLPLN-104 @e04d14f563 (merged 4f05cf168c): WK-SPARSE-PROVISION arms=7/7 ok=True, wk-provision.sh --self-test RESULT: 0 arm(s) failed of 8, and SPARSE-REAL tracked_bytes_sparse=68134267 tracked_bytes_full=3636649180 ratio=0.02 du_sparse=105M green=True (a real sparse worktree of this repository ran the CT-af-2 cell's test, ROUND-CLOSE-DECOMP-ROUND arms=6/6, green); proof instance VALID; the diff touches only the order's paths. Reading: wk-provision.sh provision is a SPARSE cone checkout by default (base folders: .tools, lib, the project folder, org/modules/graph, org/devices, infra/logic/registry, org/standards, plus the --order paths); --full requires a reason; the portal step is unchanged (du_sparse includes the nested portal worktree, a full 2163-file checkout). The worker did not run safe-commit.sh inside a sparse worktree of its own (its worktree was full by the order); the ruled folder set comes from worker ~103, whose safe-commit ran in a hand-cut sparse worktree. BLOCKING row W104-S2 ruled by the issuer: the dispatch SKILL.md edit was refused by the file's byte-budget gate (33778 against 25600; HEAD 33198 is already over), so the worker restored the file; the issuer rewrote the recipe paragraph (old lines 218-227) shorter, net -48 bytes, commit 43f9022522, nothing else in the file changed. Row W104-S1 (the order's fixture layout D0/X/Y/CODE cannot satisfy the project-folder rule D*/*/CODE; the fixture uses D0/NFRA/PROJX) accepted.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
