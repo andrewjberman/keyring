@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~114</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in wk-NFRA_CTLPLN-114 @363731326b (merged at the drain): FWD2-BOX-ADDED tools=8/8 not_reached=0 named=8 ok=True; BOX-LISTS-FROM-REGISTER gate=derived status_report=derived ok=True; proof VALID. fabric_value_census.py exits 1 at the base (W114-S1, pre-existing); the reach rule ignores its exit code, declared in the proof.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

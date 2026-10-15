@@ -8,8 +8,13 @@ of the two files, no regex over source):
   3. no literal box list: neither file holds a tuple, list or set literal of two or more box names (box names =
      the register names, aliases and placement values, lower-cased).
 
+--register <path>  read the box names from this register copy instead of org/devices/DEVICES.json (fixtures only;
+                    the path is passed to lib/devices.py through OPAL_DEVICE_REGISTER for this process only).
+                    Prints one line BOXES-READ <names> (the register names read through lib/devices.py).
+
 LAST line: BOX-LISTS-FROM-REGISTER gate=<derived|literal> status_report=<derived|literal> ok=<True|False>
 """
+import argparse
 import ast
 import importlib.util
 import os
@@ -82,7 +87,17 @@ def mode_of(node):
     return "literal" if is_literal(node) else "derived"
 
 
-def main():
+def parse_args(argv):
+    ap = argparse.ArgumentParser(description="register-derived box lists (CT-ab-8, FWD-2)")
+    ap.add_argument("--register", default=None,
+                    help="register copy to read instead of org/devices/DEVICES.json (fixtures only)")
+    return ap.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    if args.register:
+        os.environ["OPAL_DEVICE_REGISTER"] = os.path.abspath(args.register)
     devices = load("devices_for_box_lists", "lib/devices.py")
     gate = load("to_pipeline_gate_box_lists", GATE_REL)
     report = load("box_status_report_box_lists", REPORT_REL)
@@ -107,6 +122,7 @@ def main():
          "%r vs %r" % (sorted(report_value), sorted(report_want)))
     case("status report holds no literal box list (%d containers scanned)" % report_scanned, not report_hits,
          "literal box lists at lines %s" % report_hits)
+    print("BOXES-READ " + " ".join(sorted(devices.names())))
     ok = all(RESULTS)
     print("BOX-LISTS-FROM-REGISTER gate=%s status_report=%s ok=%s" % (gate_mode, report_mode, ok))
     return 0 if ok else 1
