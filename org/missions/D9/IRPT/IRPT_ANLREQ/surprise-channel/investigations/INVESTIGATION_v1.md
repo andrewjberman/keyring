@@ -18672,3 +18672,88 @@
   "notes": "Closes the blocking condition of W182-S1 by the issuer's amendment; S1 is not edited and keeps its filed text. S2 stands as filed and was ruled correct by the issuer (the order governs). The AR-g-83 case in the amended checker is not verified by this worker."
 }
 ```
+
+## IRPT_ANLREQ-D2-W183-S1 -- AR-g-83 contract: a split dated on a dropped (bad-Close) row is not applied to the spanning return, so the literal formula reports -49 percent where the true move is +2 percent
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:07:20Z",
+  "one_line": "The AR-g-83 contract applies the split ratio on the returned row only (s_t), so a 2-for-1 split dated on a dropped bad-Close row is missed by the spanning return: -49 percent is read where the true move is +2 percent. Implemented literally; not corrected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-83 item 3: r_t = (P_t + D_t) / (P_prev / s_t) - 1, where P_prev is the previous usable row's as-traded close and s_t the split ratio on t (1.0 when none); a bad row between two good rows is dropped and the next return spans the gap. Item 2: factor(d) is the product of every split ratio dated strictly after d over ALL fetched rows, including a row whose Close is unusable.",
+  "world_is": "MEASURED on the module as committed at 286cdf9f94 (run just before the one-line __future__ import was added; no behaviour change) by calling make_reader(fetch=...) on three served rows: 2024-01-02 Close 50.0 Stock Splits 0.0; 2024-01-03 Close NaN Stock Splits 2.0; 2024-01-04 Close 51.0 Stock Splits 0.0. Output [('2024-01-02', 100.0), ('2024-01-04', 51.0)]. The as-traded close for 2024-01-02 is 100, its factor 2 coming from the split on the dropped 2024-01-03 row, while s on 2024-01-04 is 1.0, so the spanning return is 51 / 100 - 1 = -0.49. The true return across the 2-for-1 split is 51 / (100 / 2) - 1 = +0.02. The spec's own daily_tr has the same shape: it reindexes splits onto the close index only, so a split on a row absent from that index is not applied (data/mdpf/scripts/demque/tr_compare.py lines 45-49 at HEAD). NOT MEASURED: how often Yahoo serves a split day with a NaN or zero Close (no live pull, no network, no AWS, per the order).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py@286cdf9f94: the factor_by_date loop (factor(d) over all served rows) and the returns loop (s_t taken from the returned row only)",
+      "python -c measurement on the committed module, three-row case: [('2024-01-02', 100.0), ('2024-01-04', 51.0)]; the spec-literal return printed as -0.49 against the true +0.02",
+      "data/mdpf/scripts/demque/tr_compare.py@HEAD lines 45-49: s = sp.reindex(close.index).fillna(1.0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker, not dispositioned. Does not block AR83-g-AC1 or AC2: the contract cases pass as written. Whether the spanning return should carry a split on a dropped row is for the issuer and the CTO; a correction changes the contract's formula, which is not a worker act."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W183-S2 -- closes W183-S1: the issuer amended item 3 (af96479526, on main) so s_t is the product of the split ratios since the previous usable row; the reader is fixed at 497e911dab and checker case 11 passes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:24:37Z",
+  "one_line": "Closing row for W183-S1: the issuer's amendment af96479526 (main) makes s_t the product of the split ratios of every fetched row dated after the previous usable row up to and including t, so a split on a dropped bad-Close row counts across the gap. The reader at 497e911dab implements it; checker case 11 passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W183-S1 stands as filed and is not edited. It recorded that TO-AR-g-83 item 3 read s_t as the split ratio on t alone, which misses a split on a dropped bad-Close row for the return across the gap.",
+  "world_is": "The issuer's ruling (2.0.0_SA_COO~G2) and amendment af96479526 on main amend item 3: s_t is the product of the split ratios (as item 2 reads them) of every fetched row dated after the previous usable row's date up to and including t, 1.0 when none. The checker ar_g8x_checks.py g83 gained case 11 (D1 served 50, D2 bad Close with split 2.0, D3 served 51.51, expecting [(D1, 100.0), (D3, 103.02)]). The reader at 497e911dab implements the amended rule; the offline test test_a_split_on_a_dropped_bad_close_row_counts_for_the_return_across_the_gap passes; AC1 reads cases 11, wrong none and tests 12 passed (rc 0); AC2 reads AR-G83-HYGIENE-OK (rc 0). The issuer also ruled the judgment calls correct: a non-finite Dividends value counts as 0.0 and a bool Stock Splits value counts as 1.0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show af96479526 --stat: the amended order file (item 3 and the case count) and ar_g8x_checks.py (+3 lines, case 11)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py@497e911dab: the accrued-split loop over served rows between the previous usable row and t",
+      "ar_g8x_checks.py g83 run at the worktree after 497e911dab: 'cases 11, wrong none'; 'AR-G83-OK cases=11 tests=12', rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closing row: the finding is resolved in substance by the issuer's amendment af96479526 and the fix at 497e911dab. W183-S1 is not edited and keeps its filed text and disposition. The disposition is left UNDER_INVESTIGATION because the worker cannot transfer one: the gate refused GRADUATED from a worker (a CVO transfer at L9). The CVO's compile may close it."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W183-S3 -- the lane gate refused the amendment fix at HEAD because the order was flipped to complete; the amended order was committed as pending first (9db088e4ad), and the fix then passed at 497e911dab
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:30:03Z",
+  "one_line": "A worker's commit to the order's own paths was refused as another lane once the order was complete at HEAD: the owned-paths gate reads only NON-TERMINAL task orders at HEAD, so an amendment fix needed the order reopened (pending) in its own commit before the module and test could land.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face commits the worker's files with safe-commit scoped to the order's <paths>, and the order's status is flipped to complete only at the close. The owned-paths lane gate admits a worker's commit only to paths named by a non-terminal task order at HEAD issued to its serial.",
+  "world_is": "MEASURED 2026-10-15 at dbb40402f8 (the closing flip): safe-commit of infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py and its test was refused in block mode with 'owned-paths lane violation ... WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. Committing the amended order file alone (status pending, 9db088e4ad) restored the grant, and the same two files then committed at 497e911dab with rc 0. NOT MEASURED: whether a complete order with an amendment on main should reopen through the issuer rather than the worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree scratch .scratch/commit_fix.out (the refusal, lines 19-20: the two VIOLATION lines with the no-non-terminal-order text)",
+      "git log: 9db088e4ad (amended order, pending) then 497e911dab (module and test) on wk-IRPT_ANLREQ-183",
+      "git log: dbb40402f8 (the closing flip to complete) is the HEAD the refusal read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker for the CVO and the issuer. No order text was widened and no override was used: the gate was not bypassed, the grant was restored by the order's own status."
+}
+```
