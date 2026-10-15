@@ -109,3 +109,31 @@ The round-122 analysis follows the CVO's slug. These four inputs are ruled now s
 
 The rest of ADDENDUM 2 stands: the probe first (done); script-only dates; its own pair; keys read ABSENT first; on IB2 after addendum 1's
 first scheduled run is read.
+
+## ADDENDUM 4 (~18:2xZ): the Scope feed against `account_return_daily` 0.3.0 (`~I2` msg 8542)
+
+The merged feed fits contract 0.3.0 (`org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json`) in all but three places:
+- calendar days, where the contract has a trading-day `business_date`;
+- no `external_flow` or `income_received`, both non-nullable in the contract;
+- Orion's integer account id, where the contract has the custodian id form.
+
+**RULED: yes, `2.0.0_SA_COO~D2` (the contract's owner) writes 0.4.0, on these terms:**
+1. **`external_flow` and `income_received` become nullable ONLY where `source == "orion"`**, and the contract requires a claim field beside
+   them: `flow_claim: absent`, with the reason "vendor-reported return, not built from flows".
+   - A consumer that needs flows (a flow-built metric, a contribution) rejects on `flow_claim: absent` and states it in words. It never
+     treats a null as 0.
+   - Every 0.3.0 writer (the Black Diamond era) still validates unchanged under 0.4.0, because no existing type changes. The contract's own
+     test proves both.
+2. **`business_date` stays the TRADING day.**
+   - The adapter compounds each non-trading calendar day's factor into the next trading day's factor (the product) and states that in the
+     manifest.
+   - A trading day whose own factor is ABSENT stays ABSENT, even if a weekend factor exists; nothing is moved onto it.
+   - The raw calendar rows stay in the feed's own silver.
+3. **`account_id` is the custodian id form, mapped through `account_dim`.**
+   - Orion's integer id is kept in a new column, `source_account_id`.
+   - An Orion account with no mapping is an `ABSENT` row with reason class `UNMAPPED_ACCOUNT`, never dropped. The count is in the run
+     record.
+4. The contract file is a shared standard. 0.4.0 lands as one commit with its test, and the CVO grades the change at L9. Not the CTO: I
+   ruled it and do not self-grade it.
+
+`~I2` cuts the adapter cell on 0.4.0 when the feed's first data lands.

@@ -18400,3 +18400,137 @@
   "notes": "Window design: the driver removes the synthetic user at the end of the 20-minute poll while the resident retries about every 15 minutes, so the chain gets one retry inside the window and the user row is gone for the third. Whether ReportRefused would clear with the row present is not known; it fired twice while the row existed. S121 holds the filing-side facts; this row is its located cause on the resident side."
 }
 ```
+
+## IRPT_ANLREQ-D2-W181-S1 -- the commit gate's client account-id check did not run on 2ebf90bf43: the hashed list is absent on this box
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W181-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~181",
+  "surfaced_at": "2026-10-15T18:07:48Z",
+  "one_line": "The commit gate printed WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, so commit 2ebf90bf43 was NOT checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2 (the issuer routes the list placement or OPAL_ACCOUNT_ID_HASHES to the dell2 device owner; placing the list is not a worker act, and this worker did not disarm it)",
+  "spec_asserts": "The commit gate runs the client-data check on every commit (the worker face says commit via .tools/safe-commit.sh); the check reads the hashed account-id list named by OPAL_ACCOUNT_ID_HASHES or at the default path.",
+  "world_is": "MEASURED 2026-10-15 18:07Z in C:/dev/wk-irpt-anlreq-181: the probe ls C:/Users/Test/.opal/account_id_hashes.txt returned rc=2 (no such file). safe-commit.sh for 2ebf90bf43 printed 'WARN: client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids (absent is not empty ...)' and still committed (2 files, 288 insertions). The two committed files are new code only; no account id was typed into them. NOT MEASURED: whether the device owner holds the list elsewhere.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit 2ebf90bf43 on branch wk-IRPT_ANLREQ-181 (worker 0.9.0_WK_IRPT_ANLREQ~181), 2026-10-15 18:06Z",
+      "ls C:/Users/Test/.opal/account_id_hashes.txt in the worker worktree at 2026-10-15T18:07:48Z: rc=2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as a capability gap, not a commit fault. Every commit on this box carries the same unchecked state until the list is present or the env var is set, so the hazard is ARMED."
+}
+```
+
+## IRPT_ANLREQ-D2-W181-S2 -- the order says pyarrow is absent from the tests and the host; it imports here, and the S3 test ran rather than skipping
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W181-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~181",
+  "surfaced_at": "2026-10-15T18:07:48Z",
+  "one_line": "TO-AR-g-81 says pyarrow is not installed in the tests or on the host today; on this worktree pyarrow 25.0.1 imports, and the importorskip-guarded S3 test ran (10 passed, 0 skipped).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-81 cell text: 'pyarrow is not installed in the tests or on the host today' (and the worker face: pyarrow may be absent from this box; a test that needs one skips).",
+  "world_is": "MEASURED 2026-10-15 18:07Z in C:/dev/wk-irpt-anlreq-181: python -c 'import pyarrow' printed pyarrow 25.0.1, rc=0; python -c 'import pandas' printed pandas 3.0.6, rc=0. timeout 120 python -m pytest on test_price_adapter_bbg.py: '10 passed in 0.86s', rc=0, the S3 test not skipped. The acceptance check ar_g8x_checks.py g81 printed 'worker tests: 10 passed' and AR-G81-OK. The order's premise is off by the host state; the behaviour is unaffected because the S3 test is guarded either way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c import pyarrow in C:/dev/wk-irpt-anlreq-181 at 2026-10-15T18:07Z: pyarrow 25.0.1 rc=0",
+      "timeout 120 python -m pytest -q infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_adapter_bbg.py at 2ebf90bf43: 10 passed in 0.86s rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as a premise mismatch. The product is unaffected; the S3 path was exercised with a real pyarrow parquet round trip here."
+}
+```
+
+## IRPT_ANLREQ-D2-W184-S1 -- commit-gate client-data-check was absent on this box, so the AR-g-84 commit was not graded for client account ids
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W184-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~184",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "one_line": "commit-gate client-data-check was ABSENT on this box: the hashed account-id list is not at C:/Users/Test/.opal/account_id_hashes.txt, so commit 7db75de9d1 (AR-g-84, two new files) landed with the client account-id check ungraded",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "safe-commit.sh runs the client-data-check on every commit; an absent hashed list is reported as WARN, and absent is not empty (set OPAL_ACCOUNT_ID_HASHES or place the list there).",
+  "world_is": "On dell2 the hashed list is absent. The gate printed WARN and the commit landed without the client account-id check grading it. The gate did not measure the two added files; the worker's own reading is that they carry no account identifier.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for 7db75de9d1 on branch wk-IRPT_ANLREQ-184 (LOCAL): WARN client-data-check hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "git show --stat 7db75de9d1: 2 files, 220 insertions, both new under infra/aws/lambda/investor-reporting/ycharts/research/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W154-S1 -- the Keep button was offered past the twenty-correction cap, where its equal pair would be dropped
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W154-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~154",
+  "surfaced_at": "2026-10-15T18:04:17Z",
+  "one_line": "AR-y-354 added a cap gate to Keep that the cell did not state: Keep is now offered only while the cap allows, as Use is.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Cell AR-y-354 step 3 says Keep re-posts through the same path Use takes and that the correction list is capped at 20 with the 21st not built. The cell does not say the Keep button is hidden at the cap.",
+  "world_is": "At the hint candidate a6b83f692084 the UploadFindings Keep button had no cap gate, while Use was hidden once the filer had named twenty symbols. A Keep past the twentieth symbol would make correctionsFor build nothing for that symbol, so the page would re-post without its correction and show it kept. The candidate commit f78ea50e gates Keep with the same useFull test as Use (AnalysisRequestParts.tsx, the onKeep button). The gate is a choice the order did not state; the CVO may rule on it at L9.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@a6b83f692084 src/pages/TicketCenter/AnalysisRequestParts.tsx: the Keep button was rendered as {onKeep && (...)} with no useFull test, and the Use button as {onUse && !useFull && (...)}",
+      "portal@f78ea50ef87d src/pages/TicketCenter/AnalysisRequestParts.tsx: the Keep button is rendered as {onKeep && !useFull && (...)}; the 21st symbol is not built by correctionsFor (filing-hint-keep.test.tsx, cases a to g, passes 7 of 7 at f78ea50ef87d)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed under the one-line-form rule: a worker's off-spec choice is a row, not a stop. The gate is a single attribute; reverting it restores the candidate's behaviour and makes the cap silent for a twenty-first Keep."
+}
+```
+
+## IRPT_ANLREQ-D2-W154-S2 -- the scratch copy cannot resolve react without a node_modules link, so the checker links one
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W154-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~154",
+  "surfaced_at": "2026-10-15T18:04:17Z",
+  "one_line": "A bun test run from a scratch folder outside the portal tree cannot find react: bun 1.4.2 ignores NODE_PATH, so the mutant checker links node_modules with a junction.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Cell AR-y-354 AC2 runs the keep test file against a copy in a scratch folder outside the product tree, and the bounds say scratch goes outside the product tree.",
+  "world_is": "The portal test files import react and react-dom/server, and bun resolves a bare package only through a node_modules reachable from the importing file. A copy outside the portal finds none. NODE_PATH is not honoured by bun 1.4.2. mutant_check.py therefore creates a Windows junction from the scratch folder to portal/node_modules (a symlink to the workspace's portal/node_modules), runs the control and the mutant, and removes the junction with a non-recursive rmdir before the scratch folder is deleted. The target held its 313 entries after the run.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test from .scratch/before_arm with no node_modules: 'Cannot find package react' (rc 1), measured before the junction was made",
+      "bun test from .scratch/before_arm with NODE_PATH set to portal/node_modules: the same 'Cannot find package react' error (rc 1)",
+      "after mklink /J and rmdir of the link: ls of C:/dev/ajb_workspace/portal/node_modules lists 313 entries (rc 0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The junction is removed by rmdir, which never recurses into its target. A crashed run would leave a link in .scratch; mutant_check.py removes a leftover link before it builds a new copy."
+}
+```
