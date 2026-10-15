@@ -16946,3 +16946,85 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "A reader that needs the claims source must read it from the method row, which is stale for the claims. Re-writing the method row is a served write under a never-widen pair (and its prefix is outside the reporting-gold role's grant); not proposed here. Counts and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W206-S1 -- BLOCKING: the granted execution policy has no list on the gold prefix that the handler's default path lists
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W206-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~206",
+  "surfaced_at": "2026-10-15T10:42:38Z",
+  "one_line": "The order's execution-policy statements grant ListBucket on the silver bucket only; the handler's default no-day-key path LISTs the gold prefix, so the root as written would be refused on every scheduled fire once enabled",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "DB-b-252 step 2 lists the execution policy's statements: ListBucket on the silver bucket under a prefix condition, GetObject on the two silver tables, one PutObject on the account_return_daily gold prefix, and the function's own log group. No gold ListBucket is named.",
+  "world_is": "handler.py at HEAD 160585df2a lines 119 and 120 calls cbd.gold_prefix() and then newest_landed_day(s3, bucket, prefix) on the no-day-key path, which is the scheduled default; newest_landed_day (lines 47-54) issues list_objects_v2 with Bucket = the gold bucket and Prefix = the gold prefix. With the root's statements as written that LIST has no grant, so the default fire would fail on its first call once the schedule is enabled. Nothing was run: the box has no AWS call and no terraform.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py@160585df2a lines 47-54 (newest_landed_day, list_objects_v2 with Prefix and Delimiter) and lines 119-120 (no-day-key path)",
+      "infra/aws/terraform/investor-reporting/account-return-daily/iam.tf (this commit's bytes): the execution policy holds ListSilverTablePrefixesOnly, ReadTwoBlackDiamondSilverTablesOnly, WriteTheOneAccountReturnDailyGoldPrefixOnly and OwnLogStreamOnly; no statement carries ListBucket on the gold bucket",
+      "task order DB-b-252 step 2 (the execution policy statement list) and BOUNDS: the grant is the order's text, so it was built as written and not widened"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the apply pair must not carry this grant unchanged. Either the issuer amends the execution policy with a ListBucket on the gold bucket under a s3:prefix condition for the account_return_daily prefix, or the handler's default path is changed. Schedule stays DISABLED, so the hazard is latent until enable. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W206-S2 -- OBSERVATION: the five-name list has no name for the scheduler role policy
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W206-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~206",
+  "surfaced_at": "2026-10-15T10:42:38Z",
+  "one_line": "The order names five opal_name calls, and the scheduler role's inline policy needs a name the five do not carry; the worker reused the scheduler role's builder name for it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-252 step 2: FIVE opal_name module calls for the five names of the landing facts (function, execution role, execution policy, scheduler role, schedule), and the record's names list has exactly five entries.",
+  "world_is": "aws_iam_role_policy needs a policy name, and the scheduler policy is not one of the five. The root names it with module irpt_account_return_daily_scheduler_role_name (kind role, qualifier scheduler), so no sixth opal_name call and no sixth name in the record. The policy name equals the scheduler role's builder name; it is unique within its role, and no registry row was added.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/account-return-daily/iam.tf (this commit's bytes): resource aws_iam_role_policy.irpt_account_return_daily_scheduler takes name from module irpt_account_return_daily_scheduler_role_name",
+      "RD_CW_LANDING_FACTS_R120.json names list (five entries; no scheduler policy entry)",
+      "p123_cotroot.py check_facts: names must be exactly five, recomputed by lib/opal_naming.py name()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: if a distinct scheduler policy name is wanted, it is a sixth builder call and a sixth record entry, which the order did not name. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W206-S3 -- OBSERVATION resolving W206-S1: the fifth execution statement grants the gold list the handler's default path needs
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W206-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~206",
+  "surfaced_at": "2026-10-15T10:54:23Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W206-S1: Amendment 1 (d611d49b94) added the gold ListBucket the handler's default path needs; the root now carries that statement at 19f02f1330 and AC1 to AC3 pass at HEAD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment 1 of DB-b-252 (commit d611d49b94, issuer 2.0.0_SA_COO~D2): the execution policy gains a FIFTH statement, s3:ListBucket on the Cottonwood gold bucket with an s3:prefix StringLike condition for the ONE gold prefix account_return_daily, no other prefix or action; the facts record is refreshed and DB123-3-AC1..AC3 re-run to PASS at HEAD.",
+  "world_is": "The statement is in iam.tf at 19f02f1330 (sid ListTheOneAccountReturnDailyGoldPrefixOnly; actions s3:ListBucket only; resources the gold bucket; condition StringLike on s3:prefix irpt/<firm>/gold/account_return_daily/*). The root now has eight statements and two ListBucket statements. The facts record is refreshed (eight statement ids, the iam.tf hash a8172dac7e..., iam.words). Checker at the worktree: DB123-3-AC1 PASS, DB123-3-AC3 PASS; AC2 and the proof are re-run at the final commits. The schedule stays DISABLED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "amendment commit d611d49b94 (git log -1 --format=%h --author=2.0.0_SA_COO~D2): the order's Amendment 1 paragraph names the fifth statement, the one prefix and the no-other-action limit",
+      "infra/aws/terraform/investor-reporting/account-return-daily/iam.tf at 19f02f1330: the fifth statement block, and the sid list in the facts record's iam.statement_ids (eight entries)",
+      "p123_cotroot.py line 142 (amended): at least two s3:ListBucket statements; run at the worktree: DB123-3-AC1 PASS rc 0 before and after the statement"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the W206-S1 disarm is this fix; the schedule is still DISABLED and no apply has run. Counts and words only; no client figure is quoted."
+}
+```

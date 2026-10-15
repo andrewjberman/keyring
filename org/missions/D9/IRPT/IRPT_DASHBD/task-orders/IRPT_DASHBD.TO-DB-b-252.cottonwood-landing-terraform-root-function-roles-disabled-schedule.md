@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~206</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -51,6 +51,8 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-206` (branch `wk-IRPT_DASHBD-2
 - **Client data.** None is involved.
 - **Refusal clause.** A criterion you cannot satisfy AS WRITTEN is reported with your measurement, never repaired, widened or satisfied by a route this order did not name. A name the builder refuses is a missing registry row: file a BLOCKING row and stop on that point (never type the name). If the naming gate refuses any literal of the root, file a row with the file and line and stop; never force, override or edit the gate. An edit outside the grant is a defect: stop and file a row.
 - **Rows** go to the investigation file in the grant, ids `IRPT_DASHBD-D2-W206-S<k>` (start at S1), with the real current UTC time (`date -u +%FT%TZ`); append as BYTES. Commit with `.tools/safe-commit.sh`; run its gates in the background and wait for them. ASCII only in anything you write; every `.py` passes ruff (target py39, no semicolon-joined statements).
+
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-15, on worker row W206-S1; gate limb: a modification of an existing order, placeholders NONE, no criterion id, cell or path changes).** The handler's scheduled path (and the `owed_days` rule) LISTS the gold `account_return_daily` prefix to find the newest landed partition (`newest_landed_day`, `handler.py` lines 119 to 120), and the landing facts' five statements did not carry that list. The execution policy therefore gains a FIFTH statement: `s3:ListBucket` on the Cottonwood gold bucket, with an `s3:prefix` `StringLike` condition for the ONE gold prefix `account_return_daily` (derived the way the PutObject statement's prefix is), no other prefix, no other action. The root then holds five execution statements: the silver read, the silver list, the gold list, the gold put, the logs. Re-open means: add the statement, refresh the facts record (the statement ids, the file hashes, the `iam.words`), re-run `DB123-3-AC1..AC3` (the checker in your tree now also requires at least two `s3:ListBucket` statements), replace the proof instance and flip the order again as the LAST commit. The disarm of row W206-S1 is this fix; append an OBSERVATION row citing the amendment commit.
 
 <paths>
 infra/aws/terraform/investor-reporting/account-return-daily/
