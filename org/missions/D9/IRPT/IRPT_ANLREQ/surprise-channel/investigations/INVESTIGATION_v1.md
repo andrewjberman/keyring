@@ -18371,3 +18371,61 @@
   "notes": "This is IB-pr-456's live acceptance as the window graded it: the Opal producer path ran to a READY job and a stored report on this evidence, and the attach to the ticket did not happen in 20 minutes. The in-flight message may still resolve; this seat read only and did not wait beyond 17:42Z."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-W182-S1 -- AR-g-82 contract conflict: the default s3_root needs a nested import of opal_naming, which the AC2 hygiene allow-list forbids; built to the contract, AC2 left FAIL
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W182-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~182",
+  "surfaced_at": "2026-10-15T18:11:59Z",
+  "one_line": "AR-g-82 cannot meet AC2 as written: the contract's lazy import of opal_naming (default s3_root) is refused by the hygiene allow-list; built to the contract, AC2 FAILs and the order stays open.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-g-82 contract item 4 (worker face, make_reader default): when index_rows or price_rows is None the default s3_root imports opal_naming INSIDE the function, a bare import. AC2 (ar_g8x_checks.py hygiene82) admits nested imports only from NESTED_OK = pandas, pyarrow, yfinance, io, json, time, plus the top-level TOP_OK set.",
+  "world_is": "The two cannot both hold at worktree HEAD 224b73edce. price_adapter_demque.py _default_root() imports opal_naming nested, and hygiene82 prints AR-G82-HYGIENE-FAIL nested imports outside the allowed set: opal_naming (rc=1). opal_naming is in neither set. AC1 PASSes (cases=7 wrong none; tests 11 passed). No lazy route the allow-list admits reaches opal_naming without evading the check: a sys.modules lookup, __import__ or importlib are each refused or are a silent hack. The contract import is kept and AC2 is left FAIL, not weakened.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ar_g8x_checks.py hygiene82 at worktree HEAD 224b73edce: AR-G82-HYGIENE-FAIL nested imports outside the allowed set: opal_naming (rc=1)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g8x_checks.py lines 19-20 (TOP_OK, NESTED_OK) at 224b73edce",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_demque.py _default_root() at 224b73edce",
+      "lib/opal_naming.py address() at line 2515 at 224b73edce"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocking for this order only (AR82-g-AC2). Whether the allow-list widens or the default root routes another way belongs to the issuer and the CTO; this worker did not edit the check or the contract. The module is imported by nothing yet, so the hazard is INERT."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W182-S2 -- the facts record names the reader seam index_frame; the order names index_rows and price_rows; the module follows the order
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W182-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~182",
+  "surfaced_at": "2026-10-15T18:11:59Z",
+  "one_line": "The facts record PRICE_ADAPTER_FACTS.json q4 names the demque reader seam index_frame; the order names index_rows and price_rows. The module follows the order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The facts record r9/PRICE_ADAPTER_FACTS.json (q4 summary, line 558) states make_reader(s3, *, s3_root=None, index_frame=None).",
+  "world_is": "The order AR-g-82 (worker face items 2 and 3) fixes make_reader(s3, *, s3_root=None, index_rows=None, price_rows=None), index_rows a list of dicts and price_rows a mapping. The built module follows the order. The record and the order disagree on one public seam name.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~176/r9/PRICE_ADAPTER_FACTS.json line 558 at 224b73edce",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_demque.py make_reader signature at 224b73edce"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Observation only. The record is an issuer artifact and is not edited by this worker."
+}
+```
