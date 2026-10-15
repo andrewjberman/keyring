@@ -35995,3 +35995,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "They do not name the same files. The amended grant and AC1 both require the pin change; the check's allowed set does not list it, so AC3 cannot pass on a worker who follows the amendment. The worker did not edit the check. Needed from the issuer: add test_reporting_entry.py to the cell's allowed set in the check (or re-issue the check), since the check is the issuer's defect and no work can pass it as written."
 }
 ```
+
+## IRPT_BCKEND-D2-S183 -- Dispositions on the ~PS round-2 workers' rows; two were my defects, the ExportBundle contract and the submit wiring are round-3 cells
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S183",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T05:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on the ~PS round-2 workers' rows (D2-W397-S1 and S2, D2-W398-S1 to S4, D2-W399-S1 to S3): two of them were my defects (the entry test pin outside the grant; the check not amended on the branch), the packaged ExportBundle contract and the submit wiring are round-3 cells, and by_row keys name an account only for account-grain members.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB200-1, IB200-2 and IB200-3 AC1 to AC3 on the landed trees (all PASS) and the three proof instances (VALID); merges 77f78fc846, c4a445e294, 4ead4b767b; IB200-2 AC3 first read FAIL on the branch because its check lacked the amended allowed set, repaired on the branch at d13dfa57f4 and re-graded PASS",
+      "round-close-check for workstream ~PS round 2 is read at close"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); the issuer rules everything inside its own decomposition.",
+  "world_is": "DISPOSITIONS. D2-W398-S1 (the entry test pins ROUTES to two keys; outside the grant): RESOLVED by IB-pr-554 AMENDMENT 1 (c13575e177), my defect. D2-W398-S4 (the check's allowed set lacked that file on the branch): RESOLVED, my defect, the repaired check is on the branch (d13dfa57f4). D2-W397-S1, S2 and D2-W398-S2 (the filled document carries no firm key): INERT, recorded. D2-W398-S3 and D2-W399-S2 (a by_row map is keyed by account or by asset class): RULED: a by_row key names an account only for an account-grain member and only when it is an issued account id, an asset-class key names none, and a raw or malformed key refuses the request (built so in hop 3). D2-W399-S1 (BLOCKING, INERT: the packaged ExportBundle contract refuses a filled_report item; outside the grant): becomes a round-3 cell (the contract schema and its docs, with the packaged-contracts-match-docs test). D2-W399-S3 (the freeze has no caller and no production reader): becomes a round-3 cell (the submit wiring and a reader on the naming builder), after the gold table exists for the reader. NEXT for ~PS: round 3 = the contract cell now; the submit wiring and the composer from gold wait for the gold table (2.0.0_SA_COO~D2)."
+}
+```
