@@ -16458,3 +16458,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Resolution note for IRPT_DASHBD-D2-W199-S1, which is left as written (append only). The issuer owns the LIST; the worker re-read only the empty_days list. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-S76 -- disarm of D2-W401-S3: 2026-06-09 is excluded by the signed pair, the 12 dates landed, the scheduled window starts after 2026-10-13
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S76",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T09:40:34Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W401-S3 (the scheduled catch-up never reaches 2026-06-09): the signed pair excludes 2026-06-09 by ruling (no 2026-06-08 silver, no base for the producer), the 12-date catch-up landed, and the scheduled path's window now starts after 2026-10-13, so the hazard the row asserts is the ruled scope, not a gap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The catch-up dates are the silver trading days with no gold partition, and the scheduled plan reaches every such date (rows W401-S3, DB-c-1 and DB-c-2 listed 13 dates, 2026-06-09 first).",
+  "world_is": "The first pair (packet blob ad049d506c, CTO half and COO half signed) rules the catch-up at 12 dates and EXCLUDES 2026-06-09: its prior trading day 2026-06-08 has no silver partition and the declaration has no gap link, so the producer's rule has no base for it (packet Keys written and question 3; COO half condition 7: no write of 2026-06-09). The 12 dates 2026-09-28 to 2026-10-13 landed (36 keys, schema 1.2, after-read clean, record COTTONWOOD_APPLY_RECORD_R2.json), the newest gold daily date is 2026-10-13, so the scheduled window (trading days after the newest landed day, capped) starts 2026-10-14 and 2026-06-09 is outside it as the ruling intends. The handler is unchanged by this row. If a consumer later needs 2026-06-09, it is a separate decision and a manual event for that one date, never a change to the scheduled window. Words and dates only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~403/NEVER_WIDEN_PACKET_DB-c-5_R115.md (Keys written, question 3)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_DB-c-5_R115_COTTONWOOD_HOLDINGS_PERFORMANCE_COO_HALF.md (condition 7)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.7.0_AE_CloudOps~DB2/COTTONWOOD_APPLY_RECORD_R2.json (catch_up 12 dates, after-read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm owner 2.0.0_SA_COO~C2 (this row), done. The adjudication of the underlying row is the CVO's."
+}
+```

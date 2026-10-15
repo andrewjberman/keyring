@@ -1,0 +1,10 @@
+# Drive log 2.0.0_SA_COO~P2 IRPT_BCKEND, hour 09Z (2026-10-15), host desktop-n8rjv0a
+
+Substantive ticks since the 07Z log (08Z to 09Z). Push state: LOCAL on box/dell2.
+
+2026-10-15T08:30:00Z | IRPT_BCKEND | ~PS r5 issued @941abbfa1d (IB-pr-566 PATH C caller, IB-pr-567 installed reader + render; fanout 2 of 2, cap 8; control 6/16); spawned ~410 ~411; ~409 (Orion chain read) running; analyses PO5/PS5/PY3 @25f361860e taken; V3 packet owed after 409
+2026-10-15T08:20:00Z | IRPT_BCKEND | ~PO r5 drained (565 @8450a21863, W409-S1/S2 rulings; check rule fixed), ~PS r5 cell 1 drained (566 @2cb9105a27); Orion packet V3 final, COO half @dd855fdea5, CTO half signed @b5b6db462a; ~PB r1 issued @ff02fb99dc (IB-pr-568 to CloudOps IB2, 33-day dated backfill; control 3/23); 567 amended (one implementation, package the module) and worker 411 resumed
+2026-10-15T08:42:00Z | IRPT_BCKEND | tick | CVO~IRPT compiled+slugged ~PO r5 (e00a26e02c) and ~PS r5 (3add208f9f); CTO row S191 names this seat sole owner of W404-S6 and W409-S7; IB-pr-568 with IB2 (Orion JWT refresh ~09:51Z, 16,000 bound, throttle stop); CTO round-6 analyses not yet in; WAIT recorded until 09:55Z owner IB2
+2026-10-15T08:50:00Z | IRPT_BCKEND | CTO ~PO r6 / ~PS r6 analyses @41f22e06b8 taken (no new cell; W404-S6 and W409-S7 sole owner me, row S191; W411-S1 is STEP 0 of the deploy legs; deploy waits hop 1); IB-pr-568 AMENDMENT 4 @a8c2d88713 (the CVO grades the performance control before any performance day; positions and transactions proceed); WAIT on IB2 until 09:55Z
+2026-10-15T09:37:00Z | IRPT_BCKEND | tick | no new mail; IB2 waits on the Orion JWT refresh ~09:51Z then positions, transactions and the performance control (CVO grade before performance); 549 mint 14:30Z; f61b with Andrew; WAIT until 10:30Z owner IB2
+2026-10-15T09:41:00Z | IRPT_BCKEND | round state: ~PS r5 and ~PO r5 slugged by CVO~IRPT and answered by the CTO (r6 analyses: no new cell); ~PY closed on addendum 1 (both halves signed); ~PB r1 IB-pr-568 with CloudOps IB2 (16,000 request bound, throttle stop, CVO grade before performance); 549 mint 14:30Z; f61b with Andrew
