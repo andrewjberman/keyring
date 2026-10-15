@@ -17573,3 +17573,144 @@ name the one known failure instead of silently inheriting it.
     "world_is": "The runner is healthy and counts its S3 GETs (the cycle records carry s3_get_count and s3_get_bytes, 0 here because the three cycles stopped before any silver read), but bbg, wsj and barrons capture nothing: a Bloomberg press-and-hold challenge and two expired vendor sessions are a person's sign-in, not a runner defect. Whether the expiries predate the 14:02Z Python outage is not read. The egress measurement OG-eg-2 owes is the sa cycle in progress (it reads silver per security). Routed to 1.0.0_SA_CTO~Z at 16:2xZ for the person-act list; this seat changes nothing on the runner."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The named test path infra/aws/ec2/opal-gateway/tests/test_og_cl5.py cannot be written in this worktree: its parent directory opal-gateway/tests/ is tracked at HEAD but outside the sparse-checkout cone, so the directory is absent.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ git sparse-checkout list in worktree C:/tmp/wk-oplgtw-107 at HEAD b56fd6ef9d: .tools, infra/aws/ec2/opal-gateway/app, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_OPLGTW, org/modules/graph, org/ref, org/standards, org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014 (this seat)",
+        "READ git ls-files infra/aws/ec2/opal-gateway/tests @b56fd6ef9d: tests/acceptance/ tracked; ls infra/aws/ec2/opal-gateway/tests in the worktree: absent (this seat)",
+        "RAN cl5.AC1.sh (timeout 120) in the worktree: output 'infra/aws/ec2/opal-gateway/tests/test_og_cl5.py absent', RESULT: FAIL, exit=1 (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order names infra/aws/ec2/opal-gateway/tests/test_og_cl5.py as a write path, and _root.sh pytest_named runs it from the gateway root (cd infra/aws/ec2/opal-gateway && python -m pytest tests/test_og_cl5.py).",
+    "world_is": "The worktree carries infra/aws/ec2/opal-gateway/app but not infra/aws/ec2/opal-gateway/tests, so the named path is absent. The gateway's existing test module sits under app/tests/. The sparse cone was not widened and no tree was rebuilt; the worker stopped before any build, per the TREE check. Needs the issuer to widen the cone or re-cut the path."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The firm ids that the task order says to read from partner_roster.json have no path in the contract, and the census path data/mdpf/config/partner_roster.json is outside this worktree's sparse cone, so the roster is absent.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2_CLIENT_TOOLS_CONTRACT.md (deliverables/0.9.0_WK_NFRA_OPLGTW~83) @b56fd6ef9d: names no partner_roster path (no match for partner_roster in the file) (this seat)",
+        "READ G2c_smartx.md prior_art: data/mdpf/config/partner_roster.json@7878037d98; git ls-files data/mdpf/config/partner_roster.json @b56fd6ef9d lists it (tracked) (this seat)",
+        "READ ls data in the worktree: absent; data/ not in the sparse cone (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The firm ids come from partner_roster.json, read through the path the contract names; never hand-type a firm map.",
+    "world_is": "The contract names no roster path. The census names data/mdpf/config/partner_roster.json, which this worktree does not carry. The census states the roster maps only the advisor name 49 Financial Group to firm_id 49financial; the SmartX advisors Titleist, Canopy and Parable carry no firm_id. The firm map cannot be derived from this worktree."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The task order's seam (app/typed_scope.py) and the protocol's ctx (G2_ADAPTER_PROTOCOL.md, implemented by app/client_core.py OG-cl-1) do not meet: the core is on no ref, and typed_scope exposes no prefix, list_partitions, read_rows, freshness_td or firm_segments.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2_ADAPTER_PROTOCOL.md (deliverables/2.0.0_SA_COO~O/r37) @b56fd6ef9d: the core app/client_core.py (OG-cl-1) implements ctx; the adapter imports no other adapter (this seat)",
+        "RAN ls infra/aws/ec2/opal-gateway/app/client_core.py and app/client_adapter_*.py in the worktree: absent; git log --all -- app/client_core.py and app/client_adapter_smartx.py: no rows (this seat)",
+        "GREP app/typed_scope.py @b56fd6ef9d for def/class: admit_scope, list_keys, newest_part, read_parquet, read_json, Scope; no prefix/list_partitions/read_rows/freshness_td/firm_segments (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The adapter is built against the protocol ctx (prefix, list_partitions, newest_partition, read_rows, freshness_td, firm_segments), and the probe builds the adapter's context against the REAL silver.",
+    "world_is": "No ctx implementation exists in the worktree or on any ref. The order names typed_scope as the seam to build on, and that module lacks the ctx methods. A real ctx for the probe cannot be built inside this order's write grant, so the adapter cannot be built to the protocol until OG-cl-1 lands or the issuer names the seam."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The two-firm negative arm cannot be built from two canonical firms: only 49financial maps to a SmartX firm_id, so the only cross-firm arm is 49financial against unregistered rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2c_smartx.md section (c) fork keys and open items @tier1_exec GATEWAY_DATA_CONTRACTS_20261014 (this seat)",
+        "READ G2_CLIENT_TOOLS_CONTRACT.md decision 5 and the SmartX row-filter bullets @b56fd6ef9d (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The fence proof is the TWO-FIRM NEGATIVE ARM: a request for one firm returns zero rows of any other firm.",
+    "world_is": "SmartX rows commingle four advisor firms in one key. Only 49financial has a firm_id in the roster. Titleist, Canopy and Parable are unregistered and must be dropped (decision 5). No SmartX rows exist for cottonwood or inflection. A negative arm between two canonical firms is not constructible; the arm the contract allows is 49financial against the unregistered rows."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The contract names no refusal code for a canonical firm (cottonwood or inflection) that the SmartX vendor does not serve, so AC6's firm-outside-FIRMS refusal has no named code.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2_CLIENT_TOOLS_CONTRACT.md 'Firm input' and the refusal arms of each tool @b56fd6ef9d (this seat)",
+        "READ G2_CLIENT_TOOLS_CONTRACT.md 'Refusal arms' for client_resolve_account: firm_not_canonical covers non-canonical values only; firm_unregistered covers Titleist, Canopy and Parable rows only (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A firm outside the vendor's FIRMS is refused (TO section 1, test_ogcl5_ac06).",
+    "world_is": "The contract's refusal codes do not include a code for a canonical firm the vendor does not serve. The SmartX bullets do not state that the vendor serves nothing for cottonwood or inflection, so the REFUSAL-with-contract-code rule has no code to cite."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T18:01:11Z",
+    "one_line": "The census part G2c_smartx.md records catalog_entry present:false for every SmartX silver table, but DATA_CATALOG.yaml at HEAD carries a row for each of the 13 smartx/platform/silver prefixes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GREP app/refs/DATA_CATALOG.yaml @b56fd6ef9d for 'prefix: smartx/platform/silver/': 13 rows, lines 11281-12149 (fact_* tables plus the two superseded drafts) (this seat)",
+        "READ G2c_smartx.md (c) and the per-table catalog_entry fields: present false on all 11 fact tables (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The census records no DATA_CATALOG row for SmartX silver tables (catalog_entry present false).",
+    "world_is": "The catalog carries SmartX silver rows at HEAD, so ctx.prefix would resolve them and the no_catalog_row refusal does not fire for those tables. The census figure is stale. No gateway code was changed."
+  }
+  ```
