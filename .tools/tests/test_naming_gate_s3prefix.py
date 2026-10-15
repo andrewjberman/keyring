@@ -184,13 +184,15 @@ def test_ng1_ac01():
 
 
 def test_ng1_ac02():
-    """AC02: the same value WITHOUT the trailing '*' is not admitted BY THIS CLAUSE (A1: "not admitted by this clause").
-    Recorded, not hidden: at HEAD the MX-c-9 precedent already grades the bare key part CONFORMANT for its own reader (the
-    verdict's why names that precedent, not this clause). This test asserts the clause's admission only."""
+    """AC02 (A2 ruling on Z-W99-S3): the value WITHOUT the trailing '*' is not admitted BY THIS CLAUSE. The assertion is the
+    clause's admission only: no IAM-PREFIX-ADMITTED line for the run (the diff carries this one value) and no why-line that
+    attributes the verdict to the S3PREFIX clause. The gate may still grade the bare registered key part as before (the
+    MX-c-9 A4 precedent, for its own reader); that verdict is not asserted here."""
     repo = _build_repo()
     try:
         path, lines = _tf_file(_statements_for(["gold/book/"]))
         rc, out = _run_gate(repo, _diff([(path, lines)]))
+        assert _iam_line(out) is None, "the clause printed an admission for the value without '*':\n" + out
         assert "gold/book/" not in _admitted_values(out), out
         assert not any("S3PREFIX clause" in ln for ln in out.splitlines()
                        if ln.startswith("  why:") and "gold/book/" in ln), out
@@ -198,10 +200,11 @@ def test_ng1_ac02():
         _cleanup(repo)
 
 
-# AC03 near misses, each REFUSED as the amended order states. The tier-first ones REFUSE at HEAD. A bare '*' (empty key part) and
-# a non-tier-first unregistered prefix are NOT GRADED at HEAD (no verdict line; PASS, 0 graded): the gate refuses them only if a
-# refusal is added, which the cell's bounds forbid. They stay in the list as stated; the test is RED on them until the issuer rules.
-AC03_NEAR_MISSES = [
+# AC03 (A2 ruling on Z-W99-S2): the near misses are NOT ADMITTED BY THIS CLAUSE, and no new refusal class is added.
+#   AC03_REFUSED: tier-first shaped values (gold/, silver/, platinum/ ...). The gate REFUSES them as before (HEAD behaviour).
+#   AC03_UNGRADED: a value the gate never grades (a bare '*', a non-tier-first prefix). It stays ungraded (no verdict line),
+#   and is not admitted either. No REFUSE is expected for these.
+AC03_REFUSED = [
     "gold/book/**",       # a doubled wildcard
     "gold/*/book/*",      # a mid-path '*'
     "gold/book/?",        # a '?'
@@ -209,22 +212,32 @@ AC03_NEAR_MISSES = [
     "gold/book/x/*",      # a prefix one segment longer
     "gold/*",             # a prefix one segment shorter
     "gold/nope/*",        # an unregistered tier-first prefix
+]
+AC03_UNGRADED = [
     "*",                  # a bare '*' (empty key part)
     "nope/zzz/*",         # an unregistered, non-tier-first prefix
 ]
 
 
 def test_ng1_ac03():
-    """AC03: near misses are not admitted; the tier-first ones REFUSE, the bare and non-tier-first ones are not graded (status quo)."""
+    """AC03: for EVERY arm the clause admits nothing: no IAM-PREFIX-ADMITTED line in the run (a single run carries every arm, so
+    an admitted arm would print it) and no CONFORMANT verdict. The tier-first arms REFUSE as before. The bare and non-tier-first
+    arms stay ungraded (no verdict line) and are not admitted."""
     repo = _build_repo()
     try:
-        path, lines = _tf_file(_statements_for(AC03_NEAR_MISSES))
+        path, lines = _tf_file(_statements_for(AC03_REFUSED + AC03_UNGRADED))
         rc, out = _run_gate(repo, _diff([(path, lines)]))
         v = _verdicts(out)
+        assert _iam_line(out) is None, "the clause admitted a near miss (IAM-PREFIX-ADMITTED printed):\n" + out
         assert _admitted_values(out) == [], out
-        for value in AC03_NEAR_MISSES:
+        for value in AC03_REFUSED + AC03_UNGRADED:
+            assert v.get((TF_PATH, value)) != "CONFORMANT", "%r graded CONFORMANT:\n%s" % (value, out)
+        for value in AC03_REFUSED:
             got = v.get((TF_PATH, value))
-            assert got == "REFUSE", "%r: expected REFUSE, got %r (no verdict line = not graded)\n%s" % (value, got, out)
+            assert got == "REFUSE", "%r: expected REFUSE as before, got %r\n%s" % (value, got, out)
+        for value in AC03_UNGRADED:
+            got = v.get((TF_PATH, value))
+            assert got is None, "%r: expected ungraded (no verdict line), got %r\n%s" % (value, got, out)
     finally:
         _cleanup(repo)
 

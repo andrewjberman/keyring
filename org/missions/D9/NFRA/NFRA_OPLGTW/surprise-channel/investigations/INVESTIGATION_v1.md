@@ -16747,3 +16747,55 @@ name the one known failure instead of silently inheriting it.
     "notes": "Owner to rule whether the old tracker's bracket reset is a defect to fix in its own cell. A fix would move other permitted verdicts, so it needs its own grading."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W99-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~99",
+    "surfaced_at": "2026-10-15T08:10:58Z",
+    "one_line": "The naming gate's live limb runs inside the OFFLINE S3PREFIX tests: every NAMING REFUSE line in the throwaway repos carries LIVE-READ-FAILED (CensusError, rc=2) on this device. The asserted verdict strings are unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: pytest of .tools/tests/test_naming_gate_s3prefix.py at worktree HEAD 433d0a383c, before the ac03 edit: the failure output shows 'LIVE-READ-FAILED: CensusError: the live pull did not scan every node type (rc=2)' on each NAMING REFUSE line. The file ran in 18.66 s.",
+        "MEASURED: after the ac03 edit the same file reads 8 passed in 16.73 s (rc=0); the REFUSE verdict strings are unchanged.",
+        "SPEC: the test file header and order section 1 step 3 both say the S3PREFIX tests are offline (throwaway git repo, no live read).",
+        "NOT MEASURED: whether a successful live read could move a REFUSE verdict in these temp repos. This cell did not change _live_limb."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The S3PREFIX tests are offline: each throwaway repo is graded without a live read (test header; order section 1 step 3).",
+    "world_is": "On this device the gate's live limb is reached for each new refusal candidate in the temp repos and fails with CensusError rc=2, so the offline premise does not hold for the live limb. The asserted verdicts do not depend on it.",
+    "notes": "Not fixed by this cell (the limb is outside the clause and the bounds). Owner to rule whether the tests should set the live plane off, or whether the live-read failure should be a named SKIP in the verdict."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W99-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~99",
+    "surfaced_at": "2026-10-15T08:10:58Z",
+    "one_line": "ng1.AC2.sh counts REFUSE verdicts only, so its PASS does not witness the four registered ETF patterns grading CONFORMANT, which the order requires; a pattern that is ungraded or WARN would also pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ng1.AC2.sh, the ng_good line: grep -cE 'REFUSE.*(gold/book|gold/holding|platinum/reports|silver/holdings)' counts REFUSE lines only.",
+        "RUN: bash ng1.AC2.sh at worktree HEAD 433d0a383c: 'the four registered ETF patterns refused: 0 (want 0); the mistyped one refused: 1 (want 1+), enforce rc 1' and RESULT: PASS.",
+        "MEASURED: python .tools/naming-gate.py --diff .scratch/ng1_probe/probe.diff gives four 'NAMING CONFORMANT' verdicts (legacy keys gateway-etfs-gold-book, -gold-holding, -platinum-monthly-reports, -silver-holdings) and IAM-PREFIX-ADMITTED n=4 bucket=opal-data-etfs. The copy with silver/holdins REFUSEs under --enforce (rc 1).",
+        "ORDER: AC2 expect and A2 step 3 say the four registered ETF patterns must grade CONFORMANT and the mistyped one must REFUSE."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 and A2 step 3: the four registered ETF patterns must then grade CONFORMANT, and the mistyped one must REFUSE.",
+    "world_is": "The check's expect asserts the REFUSE count of the four patterns is 0 and does not count CONFORMANT verdicts. The four CONFORMANT verdicts were confirmed by a direct run, not by the check.",
+    "notes": "Not changed: the check is the issuer's file and this worker does not edit it. Owner may add a CONFORMANT count (expected 4) to the expect line."
+  }
+  ```
