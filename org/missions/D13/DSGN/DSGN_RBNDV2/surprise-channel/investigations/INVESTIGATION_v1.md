@@ -565,6 +565,66 @@
       "disposition": "UNDER_INVESTIGATION",
       "spec_asserts": "TO RV-m-1 Environment: the portal worktree is branched from feature/dsgn-rbndv2-light at adc70061 (the difference-control base).",
       "world_is": "adc70061 is an ancestor of the worktree HEAD febd743a, which adds the round-1 RV-r-3 sidebar token fix and its drain. The round-1 state the order describes is present; the base named in the order is not the HEAD. The RV-m-1 commit 1b157a12 sits on febd743a."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S3",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T08:55:14Z",
+      "one_line": "RB2M2-AC2 cannot pass as written by a correct adoption: each of the four TradeSubmission modals loses three onClick tokens (5 at adc70061, 2 now) because the overlay, the card stopPropagation and the header X handlers are the chrome ModalFrame replaces.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git -C portal show adc70061:src/pages/TradeSubmission/components/RejectModal.tsx: onClick count 5; the working tree (commit 1b157a12 plus the adoption edits): onClick count 2; useState 3 and 3",
+          "rb-2-m2.bound.test.ts run in the portal worktree: RB2M2-AC2 TradeDetailsModal.tsx onClick base 5 now 2, expect(after).toBeGreaterThanOrEqual(before) received 2, expected >= 5; test not weakened"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-2 RB2M2-AC2: for each ADOPTED file, the file still contains every useState, useEffect, onClick and onSubmit token count it had at the base (a count may not fall); insertions plus deletions at most 160 lines.",
+      "world_is": "The line bound holds (73, 82, 84, 96 changed lines against 160). useState, useEffect and onSubmit hold at base. onClick falls by three in each file, the three chrome handlers that ModalFrame now owns (scrim click, surface, Close control); the behaviour they carried is reproduced by the frame's onClose. The count bound cannot be met by an adoption that removes the chrome. The arm is not weakened; AC2 is recorded FAIL and the order stays open pending the issuer's ruling on the proxy."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S4",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T08:55:14Z",
+      "one_line": "The order's base form git show adc70061:portal/<file> run from the workspace root fails: adc70061 is not an object in the workspace repository; it is a commit of the portal repository.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git cat-file -t adc70061 run in /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-8 returns fatal: Not a valid object name adc70061",
+          "git -C portal cat-file -t adc70061 returns commit; cd portal && git show adc70061:src/pages/TradeSubmission/components/RejectModal.tsx prints the base file"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-2 RB2M2-AC1 invocation text: the base text is read with git show adc70061:portal/<file> from /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-8.",
+      "world_is": "The form from the workspace root produces no base text. The tests read the same commit from the portal root with git show adc70061:src/... (the same bytes, the portal prefix dropped). No criterion was weakened by the path change."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S5",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T08:55:14Z",
+      "one_line": "ModalFrame has no disabled state for its Close control, so the three action modals guard onClose while a submission is in flight; a backdrop click during submission no longer closes, where it did at base.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "RejectModal.tsx, ExecuteModal.tsx and ApproveModal.tsx at adc70061: the header X button carries disabled={isSubmitting}; the overlay onClick called onClose with no guard",
+          "portal/src/ui/components/modal/ModalFrame.tsx at 1b157a12: the Close button has no disabled prop; the scrim calls onClose when closeOnBackdrop is not false; Escape calls onClose"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-2 worker face: ALL state, effects, handlers, props and behaviour of the modal stay exactly as they are.",
+      "world_is": "requestClose wraps onClose in the three action modals and does nothing while isSubmitting, so the X and Escape cannot close an in-flight submission, as the disabled X did. A backdrop click during submission is now also ignored, which differs from base. Escape and focus return are new to these modals because the frame provides them; the frame's API has no prop to disable the Close control."
     }
 ]
 ```
