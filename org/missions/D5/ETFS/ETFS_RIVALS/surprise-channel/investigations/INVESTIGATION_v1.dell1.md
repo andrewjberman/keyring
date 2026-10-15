@@ -911,6 +911,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "RIV-aw-1: an AI account names its periods in words and cites every figure; one correction per item.",
     "world_is": "The checker did its job. The model did not follow the one correction on two TXUE items; the prompt's citation format ([id] in text) and the wording rule against ids in text pull against each other, and 24 of 26 items passed. Changing the model does not by itself change that pull.",
     "notes": "Not fixed by this seat: ETFS_RIVALS parks after round 30 and no round 31 is cut without Andrew. Whether to move the writer to another model is Andrew's call (his word 'GPT6 astra' carries no verified model id); a model change is a code or Terraform env change through a CloudOps seat."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S19",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-15T20:32:33Z",
+    "one_line": "proof-of-spec-check's alignment limb reads only decompositions/ETFS_RIVALS_DECOMP.md, so a cell that lives in a round file (ETFS_RIVALS_DECOMP.round<N>.md) is reported as 'does NOT exist' and 11 task orders of this project read INVALID on a valid cell reference.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/proof-of-spec-check.py <instance> --governing-order <order> on the pending orders cb-1, dr-1, eg-1, gd-1, gf-1, gt-1, ln-1, nf-1, nm-3, rp-2, su-2 (2026-10-15 ~20:1xZ): each prints 'VIOLATION: alignment: cell_ref RIV-<id> ... does NOT exist in org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md'",
+        "the project's decompositions folder holds 12 files (ETFS_RIVALS_DECOMP.md plus round1..round11); 146 distinct cell ids across them, read by deliverables/2.0.0_SA_COO~RV/round30/build_completion_report.py",
+        "the 36 other pending orders read VALID under the same checker, so the gap is the cell lookup, not those instances"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A criterion's cell_ref resolves when the cell exists in any of the project's decomposition documents.",
+    "world_is": "The alignment limb resolves cell_ref against the one named decomp_ref.doc. Eleven instances whose cell was moved to a round file read INVALID, so those orders cannot be flipped complete and the completion report lists them as not terminal-with-proof.",
+    "notes": "Not fixed by this seat: the checker is not this project's. CTO ruling msg 6215: keep the 12 pending orders as they are, flip none without a VALID instance, file this row. iam-1 is the twelfth pending order and fails on schema (spec_ref group, artifact kind), a different cause."
   }
 ]
 ```

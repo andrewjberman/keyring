@@ -9397,5 +9397,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S19",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-15T20:30:00Z",
+     "one_line": "On the dell1 runner's first pass wsj and barrons each refused 'expired', one in-profile refresh ran (3 s, outcome done) and the retried job was refused 'expired' again: the account stop rule fired and the runner was stopped by its stop file at 20:27:16Z.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "TO HVST-cb-2 section 2 step 8: 'if a publisher refuses again after its one refresh, do not re-register and do not sign in by hand: file ONE row naming the lines (publisher, class, http_status, host, login_redirect)'. COO half C-f: 'a FAILED refresh, or a second refusal after one, stops everything and files a row.' COO half Branch D expected the first cycle to end completed for a publisher with accepted > 0.",
+     "world_is": "cycle_runner.log from T0 2026-10-15T20:23:04Z. wsj: 20:23:06Z REFUSAL security-b0fe721e1f2a0d8b status=sign_in_refused class=expired http_status=- host=- login_redirect=-; 20:23:06Z REFRESH wsj: begin; 20:23:09Z REFRESH wsj: done; 20:23:10Z REFUSAL (class=expired http_status=- host=- login_redirect=-); STOP wsj: sign_in_refused; CYCLE wsj 20261015T202304Z asked 242 new 0 failed 1 completed false. barrons: 20:23:12Z REFUSAL class=expired http_status=- host=- login_redirect=- and REFRESH barrons: begin; 20:23:15Z REFRESH barrons: done; 20:23:16Z REFUSAL class=expired (same dashes); CYCLE barrons 20261015T202310Z new 0 failed 1 completed false, s3_get_count 0. REFRESH FAILED lines: 0. The refresh reported done in 3 s and the next job in the same profile was refused expired again, the same sequence as AMGT_HARVST-Z-S121 on site Z. The runner idles 300 s after a pass in which no cycle completed and then starts a new pass with a new refresh budget (cycle_runner.py IDLE_SECONDS = 300, main loop lines 343-347), so a second pass would have made two more sign-ins on the shared login at about 20:28:16Z. At 20:27:15Z, runner idle and no job in flight, this seat created the runner's stop file (C-f, C-d). The log read 'STOP-FILE ... present: no further cycle' at 20:27:16Z; at 20:27:26Z 0 cycle_runner processes and the task state Ready. Nothing was signed in by hand, nothing re-registered, no process ended. The +3 reads (cb2_reads.out): R1 log age 2.96 min; R2 pythonw.exe with --refresh-once; R3 MainWindowHandle 0 and no conhost child (control: python pid 16376 has conhost child 11636); R4 done 0, error lines 0 (control: 2 JOB lines reached by the same filter). R5 NOT_MINIMISED=0 is VACUOUS: 0 new Chrome windows were listed at either listing, so no runner window was graded; whether the refresh showed a window at 20:23:06Z-20:23:15Z was not observed. Nothing was collected: 0 stored, no E2 line. The task stays registered; the stop file is left in place until the +15 read.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "C:/dev/ajb_workspace/.runtime/harvest-cycle/state/cycle_runner.log lines stamped 20:23:05Z-20:23:16Z and 20:27:16Z (REFUSAL, REFRESH begin/done, JOB, CYCLE, STOP-FILE)",
+       "state/cycles/wsj/20261015T202304Z.checkpoint.json: done [], refusals 2 (class expired, http_status null, host null, login_redirect null), refreshes.wsj outcome done at 20:23:09Z",
+       "state/cycles/barrons/20261015T202310Z.cycle.json: new 0, failed 1, stopped sign_in_refused, completed false, s3_get_count 0, s3_get_bytes 0",
+       "lib/opal_data_harvest/cycle_runner.py at pin 47c623dcf8: IDLE_SECONDS = 300 (line 43), idle after a pass with no completed cycle (lines 343-347)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb2_reads.out (+3 reads) and cb2_windows.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S20",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-15T20:30:00Z",
+     "one_line": "HVST-cb-2 section 1.c names s3://opal-data-assets for the wsj and barrons prefixes; the builder's and the runner's bucket is opal-data-harvest, and opal-data-assets holds 0 objects under all four prefixes.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "TO HVST-cb-2 section 1.c: 'for the wsj and barrons bronze and silver prefixes under s3://opal-data-assets (derive them with lib/research/harvest/store.py table_prefix, never type them)'. The COO half names s3://opal-data-assets too.",
+     "world_is": "lib/research/harvest/store.py:39 HARVEST_BUCKET = 'opal-data-harvest'; store.address_of('wsj','bronze','article','date=2026-10-15') prints s3://opal-data-harvest/wsj/harvest/bronze/article/date=2026-10-15. cb2_start_c_s3.out: opal-data-harvest holds 1544 (wsj bronze), 421 (wsj silver), 774 (barrons bronze) and 288 (barrons silver) objects, newest 2026-10-15T15:33:16Z (wsj bronze), none after the 19:04:24Z cutoff; opal-data-assets holds 0 objects under all four prefixes. Condition 1.c was read on opal-data-harvest; the same read on opal-data-assets alone would have printed a vacuous zero.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/research/harvest/store.py:39 at pin 47c623dcf8",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb2_start_c_s3.out (both buckets, paginated, denominators printed)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
