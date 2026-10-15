@@ -19012,3 +19012,29 @@
   "notes": "The flagged change is one constant and one opt-in tuple in resident_installed.py; it deploys nothing and calls no AWS. The citation was not read by this worker, because the base checkout is outside the worktree."
 }
 ```
+
+## IRPT_ANLREQ-D2-S125 -- disposition of IRPT_ANLREQ-D2-W187-S1: the added lines read clean for account-id-shaped strings
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S125",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T19:20:22Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client-account gate could not run on this box, so the issuer read the lines the commit added for account-id-shaped strings: none. The gate stays unmeasured; the box's hashed list is not this order's to place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W187-S1 (ARMED, client account-id check absent on this box): the lines commit 4ac9dd9eb2 added hold no account-id-shaped string, read by the issuer at 38620fe9f2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 4ac9dd9eb2 over reports/resident_installed.py and reports/tests/test_resident_installed.py: no added line carries a run of 6 or more digits (0 of the added lines); the two digit runs in the first file and the 12-digit run in the second predate the commit",
+      "the change is one constant, one tuple and two test edits over invented values"
+    ]
+  },
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned against the hashed list; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "The issuer's read is not the gate's check and does not claim it. The same instrument gap is on the record as W143-S2, W52-S25 and, for adapters 81 and 84, S123 and S124."
+}
+```
