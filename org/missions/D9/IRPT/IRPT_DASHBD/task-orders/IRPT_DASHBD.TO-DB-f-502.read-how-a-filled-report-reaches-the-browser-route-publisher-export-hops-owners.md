@@ -13,7 +13,7 @@
 <round>114</round>
 <workstream>~F2</workstream>
 
-**Directive:** D9 | **Fabric:** dell2 | **Ordered by:** 1.0.0_SA_CTO~DELL2, the four-workstream ruling (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_DASHBD_FOUR_WORKSTREAMS_AT_ROUND_114_20261015.md`; overlap rule 3: F-SHIP reads the filled document and never builds one) | **Rows:** IRPT_DASHBD-F2-W502-S<k> | **Decomp cell:** `DB-f-502` (`org/missions/D9/IRPT/IRPT_DASHBD/decompositions/IRPT_DASHBD_DECOMP_R114_F.md`) | **outcome_ref:** FWD-21 | **depends_on:** none
+**Directive:** D9 | **Fabric:** dell2 | **Ordered by:** 1.0.0_SA_CTO~DELL2, the four-workstream ruling (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_DASHBD_FOUR_WORKSTREAMS_AT_ROUND_114_20261015.md`; overlap rule 3: F-SHIP reads the filled document and never builds one) | **Rows:** IRPT_DASHBD-D2-W502-S<k> | **Decomp cell:** `DB-f-502` (`org/missions/D9/IRPT/IRPT_DASHBD/decompositions/IRPT_DASHBD_DECOMP_R114_F.md`) | **outcome_ref:** FWD-21 | **depends_on:** none
 
 ---
 
@@ -42,7 +42,7 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-502` (branch `wk-IRPT_DASHBD-5
 - **Grant.** The `<paths>` block below. Everything else is read, never edited: every code file, the contract, the portal, the routes, the publisher, the issuer's check.
 - **A READ.** Nothing is deployed, applied, published, pushed or changed outside your folder; no AWS call (the route and the publisher are read from their code, not from the cloud); no network. Where only the cloud could answer a question, the answer is `absent` with that reason, never a guess.
 - **Refusal clause.** A criterion you cannot satisfy AS WRITTEN is reported with your measurement, never repaired, widened or satisfied by a route this order did not name. If a thing is not found, the record says `absent` and what you searched; a zero is never read as "does not exist" without the tool's printed denominator beside it. An edit outside the grant is a defect: stop and file a row.
-- **Rows** go to the investigation file in the grant, ids `IRPT_DASHBD-F2-W502-S<k>`, with the real current UTC time (`date -u +%FT%TZ`); append as BYTES. Commit with `.tools/safe-commit.sh`; run its gates in the background and wait for them. ASCII only in anything you write.
+- **Rows** go to the investigation file in the grant, ids `IRPT_DASHBD-D2-W502-S<k>`, with the real current UTC time (`date -u +%FT%TZ`); append as BYTES. Commit with `.tools/safe-commit.sh`; run its gates in the background and wait for them. ASCII only in anything you write.
 
 <paths>
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~502/
