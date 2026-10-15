@@ -69,20 +69,40 @@ _CORPUS = [
 ]
 
 
-def build_refusal(tree: str = _WS):
-    """A build is REFUSED where it would emit a degraded map: a sparse worktree (core.sparseCheckout
-    true), or a tree missing a corpus folder (_iter_docs skips a missing folder silently, so the map
-    keeps a few percent of its danger nodes with no sign). -> the refusal text, or None."""
+def _git_out(tree: str, *args):
+    """stdout of `git -C tree <args>` stripped, or None when git fails or cannot run."""
     try:
-        out = subprocess.run(["git", "-C", tree, "config", "--bool", "core.sparseCheckout"],
-                             capture_output=True, text=True, timeout=15)
-        if out.returncode == 0 and out.stdout.strip() == "true":
-            return "sparse worktree (core.sparseCheckout=true at %s)" % tree
+        out = subprocess.run(["git", "-C", tree, *args], capture_output=True, text=True, timeout=15)
     except (OSError, subprocess.SubprocessError):
-        pass
+        return None
+    return out.stdout.strip() if out.returncode == 0 else None
+
+
+def build_refusal(tree: str = _WS):
+    """A build is REFUSED where it would emit a degraded map: a LINKED worktree (its tree is not the
+    corpus the map describes: git-dir differs from git-common-dir), a sparse worktree (core.sparseCheckout
+    true), a tree missing a corpus folder (_iter_docs skips a missing folder silently, so the map keeps a
+    few percent of its danger nodes with no sign), or a tree whose portal/ is not an initialized checkout
+    with tracked files (a gitlink without its tree silently drops the portal .tsx danger nodes).
+    -> the refusal text, or None."""
+    gd, cd = _git_out(tree, "rev-parse", "--git-dir"), _git_out(tree, "rev-parse", "--git-common-dir")
+    if gd is None or cd is None:
+        return "not a git checkout (rev-parse failed at %s)" % tree
+    if os.path.abspath(os.path.join(tree, gd)) != os.path.abspath(os.path.join(tree, cd)):
+        return "linked worktree (git-dir %s differs from git-common-dir %s at %s)" % (gd, cd, tree)
+    if _git_out(tree, "config", "--bool", "core.sparseCheckout") == "true":
+        return "sparse worktree (core.sparseCheckout=true at %s)" % tree
     missing = [rel for rel, _kind in _CORPUS if not os.path.exists(os.path.join(tree, rel))]
     if missing:
         return "corpus folder(s) absent under %s: %s" % (tree, ", ".join(missing))
+    portal = os.path.join(tree, "portal")
+    if not os.path.isdir(portal):
+        return "portal/ absent under %s" % tree
+    top = _git_out(portal, "rev-parse", "--show-toplevel")
+    if top is None or os.path.normcase(os.path.abspath(top)) != os.path.normcase(os.path.abspath(portal)):
+        return "portal/ is not an initialized checkout at %s (a gitlink without its tree)" % tree
+    if not _git_out(portal, "ls-files"):
+        return "portal/ holds no tracked files at %s" % tree
     return None
 
 # memory/ lives outside the repo (the agent memory dir) -- included when present.
@@ -347,6 +367,10 @@ def main() -> int:
                           "A mention is EVIDENCE, not proof -- confidence is stated. Regenerate: "
                           "nerves_lexical build.",
                "built_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+               # the inputs the map was built from: the tree's HEAD, the portal submodule's checked-out sha, the edge count
+               "built_from_head": _git_out(_WS, "rev-parse", "HEAD"),
+               "portal_sha": _git_out(os.path.join(_WS, "portal"), "rev-parse", "HEAD"),
+               "edge_count": len(edges),
                "stats": stats, "edges": edges}
         # Atomic publish: a bare dump onto OUT lets a reader (or the comp-pulse auto-refresh,
         # which serializes only COMMIT-PATH rebuilds) see torn JSON mid-write. tmp + os.replace
