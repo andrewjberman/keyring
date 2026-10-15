@@ -15707,3 +15707,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For 2.0.0_SA_COO~P2 (the route and hop 5 owner under the CTO's ruling on call 076d): decide, before hop 5's window, whether a print reads the frozen filled object through this route (then add the version_id parameter, the render-delegate refusal and X-Opal-Version-Id, as the series has them) or server-side (then the portal's version query is removed by an F-SHIP amendment and the print takes its document from the render host). The portal side follows either way by an issuer amendment. Counts and paths only."
 }
 ```
+
+## IRPT_DASHBD-D2-W192-S1 -- lib/trading_calendar.py answered prev_trading_day from its hardcoded NYSE fallback on this box (pandas_market_calendars absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W192-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~192",
+  "surfaced_at": "2026-10-15T07:54:00Z",
+  "one_line": "TO-DB-b-238 step 2 names lib/trading_calendar.py prev_trading_day for the previous trading day of the five other dates. On this box the module printed a WARN that pandas_market_calendars is absent and answered from its hardcoded NYSE fallback (covers 2010-2027). The six pairs it returned are weekday-consecutive with no holiday between them, so the read was not affected; the source of the answer was the fallback, not the library.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 120 order DB-b-238 step 2: the previous trading day of each of the five other dates is taken from lib/trading_calendar.py prev_trading_day.",
+  "world_is": "prev_trading_day(2026-07-02) = 2026-07-01, (2026-10-13) = 2026-10-12, (2026-09-22) = 2026-09-21, (2026-10-06) = 2026-10-05, (2026-09-16) = 2026-09-15 and (2026-04-21) = 2026-04-20, each printed with the warning WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027. The calendar's own note says the fallback must be regenerated before 2028.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py at bf61bc8845 (prev_trading_day line 191; _fallback_source line 141; _announce_fallback line 148), run from the worktree root on 2026-10-15",
+      "balance_lag_read_r120.py at bf61bc8845 (deliverables folder 0.9.0_WK_IRPT_DASHBD~192), its run printed the calendar WARN once and the other-date prior dates above"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as an observation of a capability that is not on this box. No repair is made by this seat; the calendar's owner decides whether the library is installed on the fabric or the fallback is the declared source."
+}
+```
