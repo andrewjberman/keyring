@@ -14884,3 +14884,52 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-232 under the refusal clause: the criterion is reported with its measurement and the runs stop on this point. Counts and shapes only; no account id or client value."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W407-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~407",
+  "surfaced_at": "2026-10-15T05:36:56Z",
+  "one_line": "The build-time test that DB-c-12 requires types the three registered firm tokens (49financial, inflection, cottonwood) as string literals, and the commit's naming gate printed 2 paths in its domain and PASS 0 graded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-c-12 step 2 (task order text): the test asserts that the producer's firm_scope() returns 49financial, inflection and cottonwood for the three staged channel keys. The producer's firm_scope() docstring: the naming limb refuses a new string carrying a registered firm token anywhere outside the registry files, a generated block, or the arguments of a key(), address(), name() or lookup() call.",
+  "world_is": "Measured at commit 05e7ca7b87: the new file infra/aws/lambda/investor-reporting/holdings-performance/tests/test_zip_registry_resolves.py carries the three firm tokens as string literals in _EXPECTED. The gate output printed at that commit's safe-commit reads: '[naming-gate] DENOMINATOR: 2 path(s) in this diff; declaration-tree domain = 2 ... = 2', then 'COVERAGE: 0 path(s) ... could not see; 2 seen', then 'NAMING-GATE: PASS 0 graded'. So the gate counted 2 paths in its domain and graded none, and raised no refusal. Whether a later edit of this file would be refused is not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings-performance/tests/test_zip_registry_resolves.py@05e7ca7b87 (_EXPECTED string literals)",
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py@0df19dc747 (firm_scope docstring, naming-limb statement)",
+      "commit 05e7ca7b87 safe-commit output: [naming-gate] NAMING-GATE: PASS 0 graded, with the DENOMINATOR and COVERAGE lines above it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_DASHBD~407 on IRPT_DASHBD.TO-DB-c-12 (criterion DBC119-2-AC1). No action taken: the order's required assertion is implemented as written. Counts and shapes only."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W407-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~407",
+  "surfaced_at": "2026-10-15T05:36:56Z",
+  "one_line": "The build-time test refuses when HP_ZIP_PATH and HP_REGISTRY_SCOPES_PIN are both set, a behaviour DB-c-12 does not name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-c-12 step 2 (task order text): HP_ZIP_PATH extracts a built zip INSTEAD of materializing from pins, and HP_REGISTRY_SCOPES_PIN overrides the scopes.json pin of the materialized tree. The order names no behaviour for the two variables set together.",
+  "world_is": "Measured at commit 05e7ca7b87: test_staged_registry_resolves_each_function_key calls pytest.fail when both variables are set, because the scopes override applies only to materialized pins and would otherwise be silently ignored against the zip. The refusal is the worker's own addition and is not in the order. The planted negative control (HP_REGISTRY_SCOPES_PIN=14b52ca13a, no zip) FAILS with 'registry lookup(z09) failed' as required; the run with no variables PASSES. No run in this order sets both variables.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings-performance/tests/test_zip_registry_resolves.py@05e7ca7b87 (the both-set refusal in test_staged_registry_resolves_each_function_key)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-12.second-zip-build-input-source-map-repin-and-registry-test.md@0df19dc747 (cell step 2, the environment variable contract)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_DASHBD~407 on IRPT_DASHBD.TO-DB-c-12. No action taken beyond the refusal itself. Counts and shapes only."
+}
+```
