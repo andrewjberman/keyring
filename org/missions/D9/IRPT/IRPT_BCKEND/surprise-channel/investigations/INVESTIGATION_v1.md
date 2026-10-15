@@ -36411,3 +36411,170 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W401-S1 (the oneOf had no branch for a filled bundle): RESOLVED by IB-pr-557 AMENDMENT 1 (my defect). D2-W401-S2 (four seam tests failing at base, outside the grant): INERT, recorded. D2-W401-S3 (an existing branch admits a filled pin beside a narrative ref): INERT, recorded for the round-4 contract read. D2-W402-S1 (my order said _scope was already on the export path; it is not): INERT, my error, the freeze adds it. D2-W402-S2 (AC3 needs the worker's own commits): INERT. D2-W402-S3 (ARMED, owner me): infra/aws/lambda/ci/lambda-source-map.json lists no entry for _scope/filled_named_accounts.py, so a route or export deploy would omit it: a round-4 cell before any deploy leg. D2-W403-S1 (writer located), S2 (CloudTrail data events for opal-data-inf only from 2026-10-13 20:30Z), S4 (no StopInstances event; SendCommand hidden): INERT. D2-W403-S3 (ARMED, owner me): the flat-key pulls are steps of the gold chain that also feeds the silver transactions and performance steps, so retiring them (pair (b) as signed) couples to the gold chain; disarm condition: the CTO re-cuts pair (b) on the located writer (recommended: re-time the existing chain trigger into the 06:00 New York fold; no new producer, no port)."
 }
 ```
+
+## IRPT_BCKEND-D2-W405-S1 -- The rebuilt irpt-ycharts-generate candidate moves composition_admission.py, a member neither the order nor the R29c ledger names
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W405-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~405",
+  "surfaced_at": "2026-10-15T06:23:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The candidate built locally from current trunk (base 66a6cd8686) differs from the live R29c zip in exactly one member, composition_admission.py, which the order's step 5 does not name and the R29c ledger does not list; the three ENDPOINT members are equal to the live bytes and differ from the IB-pr-456 signed build.",
+  "spec_asserts": "IB-pr-561 steps 4 and 5: rebuild the candidate from current trunk source, record the moved members against the live zip, and the candidate must not move release 29's members (generate_installed.py, uploads.py, ordinary_viewer.py, interactive_access.py). The R29c ledger names those four as the release 29 L3 members.",
+  "world_is": "The four release 29 members are byte-identical to the live zip (r29c_members_preserved true). The one moved member is composition_admission.py (live sha256 prefix 50f5d11c, candidate prefix 8d9b7aad; 2791 vs 3330 bytes). Trunk last changed it at commit 83eb798a08 (2026-10-14 10:13 -0400, after the R29c deploy completion at 13:08:47Z). Releasing the candidate as built would also release that change; the live R29c package does not carry it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_scratch405/cmp_out.json (scratch, outside the repository): moved_members [composition_admission.py], moved_count 1, total_members 106 on both zips, four release 29 members identical",
+      "build: BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-ycharts-generate at base 66a6cd8686, rc 0, import-closure OK, nothing uploaded",
+      "git log -- infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py: 83eb798a08 (2026-10-14 10:13:26 -0400) is the newest commit touching it",
+      "infra/aws/lambda/ci/lambda-source-map.json line 4030 lists composition_admission.py in the irpt-ycharts-generate files array (native member, read from the worktree)"
+    ]
+  },
+  "notes": "Not a blocker for this order (the order grades no-silent-revert of the four release 29 members, which holds). The apply scope of the candidate is the COO's call."
+}
+```
+
+## IRPT_BCKEND-D2-W405-S2 -- The CTO rulings the order cites for step 2 (msgs 8116, 8130, 8133) are not readable from the worktree; no broker read tool is in this worker's face
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W405-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~405",
+  "surfaced_at": "2026-10-15T06:23:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 2 asks the worker to read CTO msgs 8116 and 8133; the worktree carries no copy of broker messages and this worker has no read tool for them, so the rulings were taken as the order quotes them (msg 8116 and the msg 8130 facts), and msg 8133 was not read.",
+  "spec_asserts": "IB-pr-561 step 2: read the IB-pr-456 packet and record, the ledger, and CTO msgs 8116 and 8133.",
+  "world_is": "Packet ~312, its record IB152-1_release_read.json and the R29c ledger were read from the worktree. Messages 8116 and 8133 are not in the worktree and are not reachable from this worker's face; the order's own text carries the msg 8116 ruling and the msg 8130 facts, which were used as quoted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-561.rebuild-the-ib-pr-456-ycharts-generate-candidate-on-the-live-r29c-bytes.md (worker face, cell IB-pr-561 text)",
+      "worktree listing of org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/ (packet and record present, no message files)"
+    ]
+  },
+  "notes": "Recorded so the CTO ruling set the COO cites can be confirmed by the issuer. No effect on the criteria, which grade the record's facts."
+}
+```
+
+## IRPT_BCKEND-D2-S187 -- IB-pr-456's commentary_requested behaviour is already live via release 29 L3; f61b may no longer gate it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S187",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T06:39:03Z",
+  "one_line": "IB-pr-456's ENDPOINT behaviour (submission and acceptance admit commentary_requested; IB-pr-455 code) is ALREADY LIVE on irpt-ycharts-generate since IRPT_ANLREQ release 29 leg L3 (2026-10-14 13:03Z), so IB-pr-456's pair, held for Andrew's BEFORE record f61b, no longer gates that behaviour; its rebuild over MfxpvRhV moves only composition_admission.py against live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "IB-pr-456 pair and round-183 analysis: commentary_requested reaches irpt-ycharts-generate only through IB-pr-456's apply, after Andrew's BEFORE record (call f61b).",
+  "world_is": "IB203-2 rebuild record (deliverables/0.9.0_WK_IRPT_BCKEND~405/IB203-2_ycharts_generate_rebuild.json): the candidate's submission.py, acceptance.py and AnalysisSubmissionRequest.schema.json equal the LIVE zip's bytes, and trunk @66a6cd8686 carries commentary_requested in all three (2, 2 and 1 hits). Live CodeSha256 5TRFZf6G is R29c's (ledger 20261014T1246Z, CLOSED). Whether release 29's signed pair named these three members is not read here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~405/IB203-2_ycharts_generate_rebuild.json (endpoint_members: changed vs the signed build, equal to live)",
+      "git show 66a6cd8686: acceptance.py/submission.py/schema grep commentary_requested = 2/2/1",
+      "2.0.0_SA_COO~P2 msg 8149"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: (1) ~Y2 reads whether release 29's pair (CTO half blob 5e8b3cbd95) named these three members; if not, a retroactive after-read of the live behaviour (one accepted request with commentary_requested true and one false, read from the accepted record) is filed. (2) ~P2's packet v2 states that f61b's BEFORE record is no longer obtainable for this behaviour and whether IB-pr-456 needs any before-record at all for composition_admission.py; the CTO then withdraws or re-words act f61b."
+}
+```
+
+## IRPT_BCKEND-D2-S188 -- CORRECTS S187: commentary_requested is not live; the rebuild staged old pins and omits IB-pr-455
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S188",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T06:45:13Z",
+  "one_line": "CORRECTS D2-S187: commentary_requested is NOT live (2.0.0_SA_COO~Y2 measured 0 occurrences in the live package's acceptance.py, submission.py and schema, control trunk 2). The real finding: the IB-pr-456 rebuild (IB203-2, candidate MfxpvRhV) staged those three members from the trunk source map's OLD pins, which predate IB-pr-455, so the candidate omits the very change IB-pr-456 releases. S187's premise is withdrawn; f61b still gates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "D2-S187 (this seat, @dd2bb21996): the candidate's ENDPOINT members equal live, therefore commentary_requested is live.",
+  "world_is": "~Y2 msg 8160: live package (S3 version sf9zrBdA..., sha256 b64 5TRFZf6G...) has 0 occurrences of commentary_requested in the three members; release 29's pair names generate_installed.py, uploads.py and ordinary_viewer.py, not these. Trunk @66a6cd8686 has 2/2/1. A BUILD_ONLY build stages each member from its source-map pin, not from HEAD, so a trunk map whose pins for these members predate IB-pr-455 yields a candidate without it. The equality to live in IB203-2 is the symptom.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~Y2 msg 8160 (live package byte count, control)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~405/IB203-2_ycharts_generate_rebuild.json (endpoint_members equal live; built from the trunk map, no override)",
+      "git show 66a6cd8686: commentary_requested 2/2/1 in the three members"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S187 is superseded by this row and needs no after-read. Disarm: ~P2 rebuilds with the three ENDPOINT members pinned at the IB-pr-455 commit (or HEAD) and every R29c member at its R29c pin, shows the member diff against live is exactly the IB-pr-456 set plus composition_admission.py, and each ENDPOINT member contains commentary_requested; the packet v2 is cut on that build."
+}
+```
+
+## IRPT_BCKEND-D2-W407-S1 -- the submit path freezes no filled_report source: the server pin lives in freeze_filled_report, the submit call site drops the page pin fields
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W407-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~407",
+  "surfaced_at": "2026-10-15T06:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-563 names the submit handler as the call site of the server-side pin, and names the one place the submit path freezes sources. No submit path freezes a filled_report source, so there is no such call site to re-point.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_service.py@71c9c81b67 lines 52-55: serve_submit branches on _retained.is_platinum(body) only; every other body takes the retained path (resolve, narrative build, submit_export)",
+      "infra/aws/lambda/investor-reporting/export/submit_async.py@71c9c81b67 lines 115-135: accept/run branch on _retained.is_platinum(body) only; no filled branch",
+      "infra/aws/lambda/investor-reporting/export/handler.py@71c9c81b67 lines 208-214 and 227-236: submit_export takes already-frozen report_revisions and calls bundle_mod.freeze; it does not read a source",
+      "infra/aws/lambda/investor-reporting/export/entry.py@71c9c81b67 lines 347-368: submit_export passes the parsed body to _async.accept; no freeze",
+      "grep of infra/aws/lambda/investor-reporting for freeze_filled_report, read_pinned_filled and filled_report_source at 71c9c81b67: no caller outside export/retained_export.py, export/bundle.py, _contracts/ExportBundle.schema.json and the export tests"
+    ]
+  },
+  "spec_asserts": "The submit handler calls the server-side pin at the one place the submit path freezes sources (IB-pr-563 WORKER FACE: freeze_filled_report is called by the submit handler; entry.py submit_export and handler.py submit_export are the named call sites).",
+  "world_is": "No submit path freezes a filled_report source. freeze_filled_report has no production caller. Built at 608495b0ed: the server pin is inside freeze_filled_report (server_pinned_body, FILLED-REPORT-E), so every freeze of a filled source pins the server's read; the only submit call site changed is entry.py submit_export, which drops the page's version_id, sha256 and size before accept (_page_pins_dropped, FILLED-REPORT-E). submit_service.py and submit_async.py, which hold the branch point for a future filled branch, are outside this order's paths grant and were not edited; no route or branch was added.",
+  "notes": "Disposition for the issuer: decide whether the filled branch is wired in submit_service.py (outside this grant) before any deploy leg; the server pin is ready for it."
+}
+```
+
+## IRPT_BCKEND-D2-W407-S2 -- no composition installs a filled_report reader: the server pin is unreachable in a deployed function until one is wired
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W407-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~407",
+  "surfaced_at": "2026-10-15T06:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The server-side pin reads the current filled report through an injected reader, but no installed composition supplies that reader; the reader exists only as the test doubles.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/entry.py@71c9c81b67 lines 384-402: _with_platinum_reader composes only ports['platinum_series'] (the PATH B reader); no filled reader is composed",
+      "grep of infra/aws/lambda/investor-reporting for freeze_filled_report, read_pinned_filled and filled_report_source at 71c9c81b67 names no installed reader; the reader contract reader(client_id, version_id=None) -> {key, version_id, body} is exercised only by export/tests/test_filled_report_*.py via StoreStub and VersionedStore doubles",
+      "measured at 608495b0ed: the same grep, no new installed reader added"
+    ]
+  },
+  "spec_asserts": "The freeze reads the current object's VersionId, sha256 and size through the same injected reader the freeze uses (IB-pr-563 ruling: the object at the naming builder's platinum address for client=<id>, through the injected reader).",
+  "world_is": "The injected filled reader is not composed by any installed function, and the naming-builder address for the filled report object is not typed or resolved in this change (no address appears in the diff). Until a composition installs the reader, a submit with a filled source would be refused as unavailable by server_pinned_body, never frozen from client-chosen bytes. Not wired here: submit_installed.py and the reader are outside this grant.",
+  "notes": "Disposition for the issuer: name the composition that installs the filled reader, with its naming-builder address, in the round-4 cell that wires the branch (S1)."
+}
+```

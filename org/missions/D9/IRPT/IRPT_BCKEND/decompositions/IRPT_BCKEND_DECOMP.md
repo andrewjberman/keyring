@@ -4060,3 +4060,15 @@ Checks (`deliverables/2.0.0_SA_COO~P2/checks/r204/p204_cells.py`, `control204.py
 | `IB-pr-563` | the server-side pin at submit: freeze_filled_report reads the current object, the submit handler calls it, a forged client pin is ignored | FWD-2 | WORLD (path floor) | none | PS4-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two cells with disjoint write sets; workers (slots ~406, ~407) start now.
+
+## 201. ROUND 2, WORKSTREAM ~PY (the IB-pr-456 candidate rebuilt WITH THE CANDIDATE MAP; 2026-10-15 ~07:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on ~Y2's live count (msg 8161) and CTO row D2-S187)
+
+Round 1 of ~PY closed MAY-CLOSE on a candidate (`MfxpvRhV`, IB-pr-561) that is WRONG: the issuer's cell said "rebuild from current trunk", but the trunk source map pins the three ENDPOINT members of irpt-ycharts-generate at commits that predate commentary_requested, so the build dropped the feature and equals the live zip except for composition_admission.py. ~Y2 counted the live zip (commentary_requested 0 times in the three members); the issuer confirmed the pins (0 at the pins, 3/3/1 at HEAD). The IB-pr-456 method re-pins exactly those three members with make_candidate_map.py at the signed commit e7bb7e923a and builds with BAU_SOURCE_MAP_OVERRIDE; release 29's pins (uploads.py, interactive_access.py) stay. One cell: the rebuild and its record; read-only, nothing uploaded. The pair's re-sign question waits on this record.
+
+Check IB205-1 (`deliverables/2.0.0_SA_COO~P2/checks/r205/p205_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control205.py`) passes all three and fifteen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-564` | REBUILD the irpt-ycharts-generate candidate with the candidate map: the ENDPOINT members at the signed pin carry commentary_requested, release 29's members stay at the live bytes, composition_admission.py recorded, the pre-apply digest restated | FWD-3 | SERVED | none | PY2-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~408) starts now.

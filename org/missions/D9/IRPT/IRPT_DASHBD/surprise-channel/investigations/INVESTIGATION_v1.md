@@ -15168,3 +15168,157 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Branch 2 needs the enable decision as well as the grant and the emit path."
 }
 ```
+
+## IRPT_DASHBD-D2-W189-S1 -- safe-commit's client-data check did not run for 14d426b8e7 (the hashed account-id list is absent on this box)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W189-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~189",
+  "surfaced_at": "2026-10-15T06:11:21Z",
+  "one_line": "The commit gate's client account-id check was ABSENT on this box, so commit 14d426b8e7 (two files: the key-map read script and its record) was not checked for client account ids. Its content was checked by construction only: counts, names and words, no account number or key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the round issuer: place the hashed account-id list on this box, or name the owner who will)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE: bash .tools/safe-commit.sh --author 0.9.0_WK_IRPT_DASHBD~189 -F (message file) -- the two deliverable files, run in the background; log .scratch/commit1.log of worktree wk-IRPT_DASHBD-189 records the commit line [wk-IRPT_DASHBD-189 14d426b8e7].",
+      "VERBATIM from that log: WARN: client-data-check: hashed account-id list ABSENT at the device profile .opal folder (account_id_hashes.txt) -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).",
+      "The list path named by the WARN lies outside the repo and was not opened by this worker; its absence is the gate's own report, not a measurement of the list."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face, Client data: counts, dates, hashes, column names and words only in the repo, never an account number or key; every commit goes through .tools/safe-commit.sh, whose client-data check is the mechanism that verifies it.",
+  "world_is": "safe-commit.sh reported the client-data check as ABSENT on this box and passed commit 14d426b8e7 without it. Left alone, every later commit from a worker on this box passes the same way, so a commit carrying a real account number would not be caught by the gate. The two committed files hold no account number or key by construction; that is not a check against the list."
+}
+```
+
+## IRPT_DASHBD-D2-W187-S1 -- DB118-1-AC1 FAILS after this cell's module edit
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~187",
+  "surfaced_at": "2026-10-15T06:13:19Z",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-W187-S1",
+  "one_line": "DB118-1-AC1 FAILS after this cell's module edit: the round-118 record pins filled_report_values.py by sha256, so any change to the module reds that check until a round-118 record is re-cut.",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-233 BOUNDS: re-run DB118-1-AC1, AC2, AC3 and DB118-3-AC1, AC2 and report their last lines; the round-118 checkers were patched to accept contract 0.5.4 (commit d3c8b0a8e2 message).",
+  "world_is": "Measured in this worktree: p118_hop1.py DB118-1-AC1 rc 1, 'analysis file, hash or tracked flag'. The round-118 record RD_FILLED_REPORT_VALUES_R118.json (folder 0.9.0_WK_IRPT_DASHBD~185) pins analysis sha256 737276850e29f35bcf3584fecbc6ab856cd8b220b3c2496e8af671413eaa89eb, which is the HEAD module's sha; the module edited by this cell hashes differently. AC2 and AC3 of DB118-1 PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r118/p118_hop1.py@d3c8b0a8e2 line 217 (analysis sha256 must equal the module's bytes)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~185/RD_FILLED_REPORT_VALUES_R118.json@d3c8b0a8e2 (analysis block pins the HEAD module sha)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py@d3c8b0a8e2 (HEAD module, sha256 737276850e29f35bcf3584fecbc6ab856cd8b220b3c2496e8af671413eaa89eb)"
+    ]
+  },
+  "notes": "Counts and words only. The round-118 record belongs to worker ~185 and was not edited. Nothing is deployed or scheduled; no function misbehaves on the round-118 record."
+}
+```
+
+## IRPT_DASHBD-D2-W187-S2 -- DB118-3-AC2 and DB118-3-AC1 FAIL after contract 0.5.4
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~187",
+  "surfaced_at": "2026-10-15T06:13:19Z",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-W187-S2",
+  "one_line": "DB118-3-AC2 and DB118-3-AC1 FAIL after contract 0.5.4: the round-118 checks and one Cottonwood reader test count account-return members at 36; 0.5.4 makes ten members source the account-return contract, so the count is 46, and those ten name no Cottonwood firm source.",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-233 WORKER FACE and BOUNDS: the round-118 checkers were patched to accept contract 0.5.4 (commit d3c8b0a8e2 message); the Cottonwood firm_sources stay byte-for-byte and the 107 other members unchanged.",
+  "world_is": "Measured in this worktree: p118_cottonwood.py DB118-3-AC2 'expected 36 account-return members, found 46' rc 1; DB118-3-AC1 pytest 1 failed, 14 passed, test_a_frontier_before_as_of_gives_source_break_naming_the_frontier_for_every_account_return_member asserts 46 == 36. The contract now has 46 members sourced to the account-return contract, 36 with a firm_sources.cottonwood entry, and the ten repaired members (act.beginning_value, act.net_gain, act.ending_value at household and account grain, hold.net_gain_last_12_months, _ytd, _qtd, _since_inception) carry no firm_sources at all. Whether the ten take a Cottonwood source is a ruling the CTO owns.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r118/p118_cottonwood.py@d3c8b0a8e2 lines 133-134 (the count of 36)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_report_reader.py@d3c8b0a8e2 (the frontier test asserts the 36 count; the file is another order's)",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@0.5.4 in this worktree (members sourced to ACCOUNT_RETURN_DAILY: 46; with firm_sources.cottonwood: 36)"
+    ]
+  },
+  "notes": "Counts only. The Cottonwood reader and its test are outside this cell's grant and were not edited. The DB118-3 checks are re-run, not repaired."
+}
+```
+
+## IRPT_DASHBD-D2-W187-S3 -- The 49 Financial QA run of DB-b-233 used the hardcoded NYSE trading-calendar fallback
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~187",
+  "surfaced_at": "2026-10-15T06:13:19Z",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-W187-S3",
+  "one_line": "The 49 Financial QA run of DB-b-233 used the hardcoded NYSE trading-calendar fallback: pandas_market_calendars is absent on this box, so lib/trading_calendar answered from its 2010-2027 table.",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-233 step 4 names the QA run and its household basis; the order states no calendar source and no premise names one.",
+  "world_is": "The run's stderr printed the WARN 'trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027 ...)' twice. The as_of of the run, 2026-10-13, lies inside the covered span, so no figure is affected by the fallback on this run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py@d3c8b0a8e2 line 159 (the fallback WARN text)",
+      "run stderr of the QA run, this worktree .scratch/qa_run_stderr.txt (not committed; two WARN lines)"
+    ]
+  },
+  "notes": "Observation only. Regenerating the calendar is a lib/ act outside this grant; the covered span ends in 2027."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W190-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~190",
+  "surfaced_at": "2026-10-15T06:09:42Z",
+  "one_line": "The commit gate's client-data check reported its hashed account-id list ABSENT on this box, so the script commit and the record commit of the round 119 price read were not checked for account identifiers by the gate",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the safe-commit run of commit 0580161b29 printed WARN: client-data-check: hashed account-id list ABSENT at the operator home path, and the commit passed with that WARN; absent is not empty",
+      "the committed script and the record carry counts, dates and words only; neither was composed from an account identifier, and the private folder holds the counts file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A commit that may carry client data is checked against the hashed account-id list before it lands (the commit gate client-data-check).",
+  "world_is": "On this box the hashed list is absent at its default path, so the client-data check did not run for commit 0580161b29 or for the record commit; the gate printed WARN and passed. The content was written from counts only, but the gate did not measure that."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W190-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~190",
+  "surfaced_at": "2026-10-15T06:30:22Z",
+  "one_line": "DB119-4-AC1 cannot PASS as written: the checker's no-digit-run rule refuses the nine-digit numeric security identifiers that the order says may be named in the record (5 of 15 listed securities, 7 of 38 flagged pairs)",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p119_priceread.py (the issuer checker, amended on the coordinator's Amendment 1): LONG_DIGITS matches a run of eight or more digits and DIGIT_OK_KEYS exempts only sha256, path, file, key, where and vintage, so a security value is not exempt; the record check reports the run and refuses it",
+      "the order WORKER FACE states that a SECURITY identifier (a ticker or CUSIP of a listed security) with a count of accounts may be named in the record; the order and the checker disagree on the same field",
+      "the record RD_PRICE_READ_0421_R119.json names the securities as read; the checker run on it returns rc 1 with the message: a run of 8 or more digits outside the exempt fields; the five hits are all under the key security and each has nine digits"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order permits a SECURITY identifier, with a count of accounts, in the record; the criterion DB119-4-AC1 refuses any run of eight or more digits outside the exempt fields and its record clause names the exempt keys.",
+  "world_is": "The custodian dim_position partitions of 2026-04-20 and 2026-04-21 identify 5 of the 15 listed securities (7 of the 38 flagged pairs) by nine-digit numeric CUSIPs, which the checker's digit rule refuses. The record names them as read; nothing is masked, renamed or dropped, and the checker is not edited. Measured on the same run: 13968 pairs, 38 flagged (32 flat, 6 stale, none absent), 929 triangle accounts, 894 agreeing with the holdings gold and none with the account value. The order stays pending until the issuer decides whether the security key is exempt from the digit rule (a checker edit) or the identifiers are carried another way."
+}
+```
