@@ -17573,3 +17573,101 @@ name the one known failure instead of silently inheriting it.
     "world_is": "The runner is healthy and counts its S3 GETs (the cycle records carry s3_get_count and s3_get_bytes, 0 here because the three cycles stopped before any silver read), but bbg, wsj and barrons capture nothing: a Bloomberg press-and-hold challenge and two expired vendor sessions are a person's sign-in, not a runner defect. Whether the expiries predate the 14:02Z Python outage is not read. The egress measurement OG-eg-2 owes is the sa cycle in progress (it reads silver per security). Routed to 1.0.0_SA_CTO~Z at 16:2xZ for the person-act list; this seat changes nothing on the runner."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "OG-gf-1 AC2 counts BUILT catalog rows (6) but the task order specifies the probe line one per BUILT tool (3 tools); the probe prints one line per BUILT row so the count is met.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC2.sh@b56fd6ef9d -- the probe test is pn >= nb, where nb is the BUILT count in the classification line (6 rows).",
+      "TASK ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gf-1.gf-wave-b-remainder.md@b56fd6ef9d section 1 Step 3 says print ONE line per tool; three tools are built and one of them (etfs_get_fund_bloomberg_profile) serves four BUILT rows of one table family.",
+      "RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~110/probe_built.py printed 6 probe lines, all answered True; denominator 6 BUILT catalog rows over 3 tools."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 3: the probe prints ONE line per BUILT tool; AC2 is met when the probe's answered lines cover the BUILT set.",
+  "world_is": "The check counts BUILT catalog rows, not tools. One tool answers four BUILT rows, so a strict per-tool probe prints 3 lines against a count of 6 and AC2 would fail. The worker printed one line per BUILT row (each row's section of the tool envelope). The task order's per-tool wording and the check's per-row count disagree.",
+  "notes": "Filed for FORM. Either grain is a legal reading; the classification and the probe answers are the same under both. The issuer decides the grain at the merge."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "OG-gf-1 criterion AC1 cannot be met in this cell: the CRO spec's extension of etfs_get_positioning (fund_ticker and as_of with gold book and holding history) is not built, so test_oggf1_ac04 stays red and AC1 reports FAIL.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DEF: infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py@b56fd6ef9d:398 -- def etfs_get_positioning(as_of: str = \"\") calls run('etfs_get_positioning', {}, as_of) inside the register closure; no fund_ticker parameter.",
+      "SPEC: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@b56fd6ef9d section (c) 'Existing tool verdicts' and the positioning extension row: extend with as_of history and fund_ticker, from gold book and holding for a past date.",
+      "RUN: gf1.AC1.sh printed 'pytest rc=1; named tests passed 3 of 4; failed/error lines 1' and RESULT: FAIL; the failing test is test_oggf1_ac04."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC1: the named tests pass, 4 of 4. test_oggf1_ac04: etfs_get_positioning is extended only as the G5 spec names, its existing tests still pass and its existing answer for an existing input is byte-equal.",
+  "world_is": "The extension is not built. etfs_get_positioning lives inside the register closure and calls the portal run path against the portal-v2 object; the history path reads gold book and holding, which etfs_funds already reads, but the byte-equality of the existing answer cannot be measured offline: the closure needs the portal run path and a live catalog, and no test for etfs_get_positioning exists at this HEAD. The test is red by design so the gap is not hidden.",
+  "notes": "BLOCKING for this cell only. The extension belongs to a cell that can exercise the portal run path. The three BUILT tools' named tests (ac01-ac03) pass; the probe answers 6 of 6 and refuses the non-Opal principal with zero reads on all three tools."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "The gateway tree at this HEAD has no infra/aws/ec2/opal-gateway/tests directory, and the folder sat outside the sparse cone; the order's test path was created there and the coordinator added the folder to the cone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LISTING: infra/aws/ec2/opal-gateway/ at worktree HEAD b56fd6ef9d holds app/, ACCESS_LAYER.md, README.md and related files, and no tests/ directory.",
+      "ORDER: the task order's surfaces name infra/aws/ec2/opal-gateway/tests/test_og_gf1.py, and gf1.AC1.sh runs pytest tests/test_og_gf1.py from the gateway directory."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order names infra/aws/ec2/opal-gateway/tests/test_og_gf1.py as a write surface, and the AC1 check runs that file from the gateway directory.",
+  "world_is": "The tests folder is absent at this HEAD and was outside the sparse cone. The worker wrote the test file at the named path; the coordinator then widened the cone to include the folder.",
+  "notes": "INERT: a path absent at HEAD is a cone fact, recorded so the merge reads the new folder as the order's, not as an unexplained addition."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "The CRO spec proposes the tool name etfs_get_fund_nav_history for the snapshot table, a name the merged tool already holds for silver/netassets_daily; this cell builds etfs_get_fund_snapshot for the snapshot table instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SPEC: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@b56fd6ef9d section for opal-data-etfs/silver/snapshots: proposed_tools names etfs_get_fund_nav_history.",
+      "DEF: infra/aws/ec2/opal-gateway/app/etfs_funds.py@b56fd6ef9d:289 -- etfs_get_fund_nav_history reads ENTITY_NAV = opal_data_etfs_silver_netassets_daily."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The snapshot table's proposed tool is etfs_get_fund_nav_history (G5 spec).",
+  "world_is": "That name is merged and reads netassets_daily. The snapshot table is served by etfs_get_fund_snapshot in etfs_silver.py, and the classification names it.",
+  "notes": "The issuer registers the three new tool names (etfs_get_new_securities, etfs_get_fund_bloomberg_profile, etfs_get_fund_snapshot) in app/tools.py and app/data_entitlement.py at the merge, and re-pins the counts. Filed for FORM; the name choice is the worker's and the issuer may rename."
+}
+```
