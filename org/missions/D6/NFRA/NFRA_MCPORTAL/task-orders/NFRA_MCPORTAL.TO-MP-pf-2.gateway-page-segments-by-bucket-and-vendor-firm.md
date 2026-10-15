@@ -74,6 +74,16 @@ Build:
 - `every tools table sits in a scroll container`: every `<table` of a tools table in the markup is inside `gateway-scroll`, and `gateway.css` holds `overflow-x: auto` for `.gateway-scroll` and `white-space: nowrap` for the tool name cell class you use.
 The existing gateway tests and `routes json equals the app routes` must still pass. If an existing assertion pins markup this contract changes, change only that assertion to the new truth and name each change in your report.
 
+**AMENDMENT 1 (issuer, after rendering your build at 1280 px and 390 px and LOOKING at it; these are my spec's faults, not yours; you are re-seated on this branch with your commits `89dd5f5` (mcportal) and `6f5b1d9b4d` (workspace) as inherited state).**
+   At 390 px the text is squished letter by letter: the summary table's headers read `To ol s` and `Hol der s`, `Commonwealth` breaks mid-word, `no one` breaks into three lines, and a segment's tools table breaks `Access` and `Data class` and every `transactions` cell one letter per line.
+   My spec only made tool and index NAMES non-wrapping and put no scroll box around the summary table. Fix, in `gateway.css` and `GatewayView.tsx` only:
+   a. **Every table on the page keeps each cell's text on one line.** In `gateway.css`, `.gateway-scroll th, .gateway-scroll td` take `white-space: nowrap`; `.gateway-scroll table` takes `min-width: max-content` (and keeps `width: 100%`), so a narrow screen scrolls the box and never squeezes a column. This applies to the tools tables, the holders tables and the summary table.
+   b. **The summary table sits in a `<div className="gateway-scroll">` too** (it is the one table that does not today). Its Group links never break inside a word (they are cell text, so rule a covers them).
+   c. **Section and segment headings may wrap between words only** (as the order already says); check this at 390 px and change nothing if it already holds.
+   d. **The page title.** Read `C:/tmp/mp-pf-33/portal/DESIGN.md` for the page-title style (size, weight, ink) and make the `Gateway` `<h1>` use it, with the existing tokens only. Today it renders as the browser's default 2em black heading while every section heading is navy. If DESIGN.md names no page-title style, make it the same navy ink as the section headings at one size larger than them and say so in your report. Do not touch the Refresh button.
+   e. **Tests.** Add ONE test, named exactly `every table cell keeps its text on one line`: `gateway.css` holds `white-space: nowrap` for `.gateway-scroll th, .gateway-scroll td` and `min-width: max-content` for `.gateway-scroll table`; and every `<table` in the fixture markup (summary, tools, holders) is inside `gateway-scroll`. The test `every tools table sits in a scroll container` keeps its name and meaning. AC1 now reads SEVEN named tests and 68 or more pass.
+   Re-run AC1, `tsc --noEmit -p tsconfig.app.json` and `bun run build`, re-write the instance, run `proof-of-spec-check.py` on it, commit as before, and report once. The check script and the proof lines are the issuer's; do not edit them.
+
 ## 2. BOUNDS
 
 1. Write surface: exactly the paths in section 3. Do not change `package.json`, `bun.lock`, any gateway (Python) file, Terraform or the manifest. Make no deploy and no network call.
@@ -99,7 +109,7 @@ Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/I
 ## 4. PROOF OF SPEC (literal; run from your WORKSPACE worktree root `C:/tmp/mp-pf-33` after your commits)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MP-pf-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pf2.AC1.sh; echo "exit=$?"</invocation><expect>named tests present in sources 6 of 6.*fail=0.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MP-pf-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pf2.AC1.sh; echo "exit=$?"</invocation><expect>named tests present in sources 7 of 7.*fail=0.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MP-pf-2" judgment="true"/>
 </proof_of_spec>
 

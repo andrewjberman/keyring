@@ -116,7 +116,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gp-1.classified-remainder.proof
 - The hookup (registrations, lists, pins) belongs to no cell (CUT BY WRITE SET): the issuer cuts one hookup order per merged batch.
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe or record absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G3G5-REMAINDER</workstream>
 <slot>~109</slot>

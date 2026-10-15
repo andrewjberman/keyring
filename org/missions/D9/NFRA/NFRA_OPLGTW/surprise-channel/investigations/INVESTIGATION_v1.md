@@ -17799,6 +17799,609 @@ name the one known failure instead of silently inheriting it.
 
 ```json
 {
+  "id": "NFRA_OPLGTW-Z-W105-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T18:14:14Z",
+  "one_line": "The catalog mechanism the cell names reaches none of the Orion or Eclipse silver rows: runtime_catalog() indexes 48 portal_datasets artifacts, and the nine silver_datasets rows for these tables carry no channel artifact key, so every ctx.prefix call for them is no_catalog_row with zero reads.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:2479 (silver_datasets section start) and :6823 (entity opal_data_assets_silver_orion_inflection_fact_positions, with prefix and key_template fields and no artifact key) @fc20cfc60a",
+      "READ infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py:57-74 @b56fd6ef9d: load_catalog indexes only the channels[*].artifacts rows, by row key",
+      "RUN scratch probe .scratch/cat_probe2.py in this worktree (runtime_catalog() from app/integrations/portal_index/integration.py): rows_by_key holds 48 rows, all portal json keys (first: json/benchmarks/model_portfolio_timeseries.json); none carries an orion or eclipse entity",
+      "READ infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py:58 @b56fd6ef9d: silver_datasets rows are documented as live-queried datasets with no S3 key",
+      "COUNT DATA_CATALOG.yaml silver_datasets section (lines 2479-18029): 221 entity rows, of which 9 are opal_data_assets_silver_orion or _eclipse (awk denominator 221)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face section 1: every bucket and key template is read at call time from the table's DATA_CATALOG row through app/integrations/portal_index/integration.py runtime_catalog() (catalog v0.5 is live); a row not found or retired is an absent_reason with zero reads.",
+  "world_is": "runtime_catalog() serves only the portal_datasets artifacts (48 keys). The Orion and Eclipse silver rows are not indexed by catalog_gate, and no gateway module reads silver_datasets for a key. ctx.prefix for any Orion or Eclipse table therefore returns no_catalog_row with zero reads, so AC2 (envelope on a real answer, independent count equal) cannot be met as written. AC1 is unaffected: its tests fake the catalog.",
+  "notes": "Measured, not dispositioned. The adapters take every prefix only through ctx.prefix, so the served index for these nine rows (or a named key mechanism) is the issuer's to add; this cell did not write DATA_CATALOG.yaml and did not read the silver through a second catalog path."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T18:14:14Z",
+  "one_line": "The named test directory is absent at the cut: infra/aws/ec2/opal-gateway/tests/ does not exist, and the gateway test file sits under app/tests/. The AC1 harness runs tests/test_og_cl3.py from the gateway directory, so the file is created at the named path and no existing test is moved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LS infra/aws/ec2/opal-gateway @b56fd6ef9d: entries ACCESS_LAYER.md, INTEGRATION_FRAMEWORK.md, IT_REQUEST.md, README.md, app/, audit.jsonl, deploy-to-ec2.sh, dev_smoke.py, identity_tool_allowlist.txt, make_diagram.py, requirements.txt; no tests entry",
+      "LS infra/aws/ec2/opal-gateway/app/tests @b56fd6ef9d: one entry (test_rivalfunds_view.py)",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/_root.sh (pytest_named): runs python -m pytest tests/<file> from infra/aws/ec2/opal-gateway and returns absent when the file is not there"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face section 3 names infra/aws/ec2/opal-gateway/tests/test_og_cl3.py as a write path, and the cell's tests sit beside the other gateway suites.",
+  "world_is": "At HEAD b56fd6ef9d the gateway carries no tests/ directory; its only test tree is app/tests/. The directory and the file are created by this cell's commit; no existing file is moved or edited.",
+  "notes": "Measured, not dispositioned. The order's path is kept because AC1's harness requires it; whether gateway suites belong under app/tests/ is a question for the issuer."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T18:14:14Z",
+  "one_line": "The contract's per-vendor bullets for client_get_transactions and client_get_fees name no Eclipse bullet, so the Eclipse adapter refuses both with the contract's own codes (vendor_no_transactions, no_fee_source) and reads nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~83/G2_CLIENT_TOOLS_CONTRACT.md lines 82-96 (transactions bullets: Black Diamond, Cottonwood, Orion, Schwab, Commonwealth, SmartX and Tax SMA; no Eclipse) and lines 120-134 (fees bullets: no Eclipse)",
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2b_orion_eclipse.md section (b) and (e): the nine Eclipse silver tables carry no transactions or fees; the Eclipse _history bronze (auditlog_model, auditlog_portfolio, trade_instances, closed_trades) is not silver and is not contracted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face section 1 and the protocol: a function a vendor does not serve raises AdapterRefusal with the contract's refusal code, never an empty body; the contract's per-vendor bullets name Orion and Eclipse.",
+  "world_is": "The contract has no Eclipse bullet under get_transactions or get_fees, and no Eclipse silver table carries account transactions or fees. The adapter refuses vendor_no_transactions and no_fee_source, both contract codes, with zero reads.",
+  "notes": "Measured, not dispositioned. The refusal is the contract's code applied by analogy; a bullet naming Eclipse would settle it."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T18:14:14Z",
+  "one_line": "The Eclipse allocation by account has no permitted account-to-portfolio bridge: fact_portfolios_full is keyed by portfolio id with no account column, and the only bridge, fact_portfolios_simple, is stated as not read for allocation. The adapter refuses the account path with account_not_resolved and serves the model path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_CLIENT_TOOLS_CONTRACT.md lines 108-112 (Eclipse allocation: fact_portfolios_full, fact_models, fact_model_composition; fact_portfolios_simple is stalled at 2 td and is not read)",
+      "READ G2b_orion_eclipse.md section (d): fact_portfolios_full fork_keys.account reads 'absent: portfolio grain; reach the account through fact_portfolios_simple.id -> accountNumber'; fact_portfolios_simple carries accountId and accountNumber (753 of 753 match)",
+      "READ G2b_orion_eclipse.md section (c): fact_models and fact_model_composition share only 1 id, so the model path needs a union, not a join"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract get_allocation for Eclipse reads fact_portfolios_full for drift, cash need, model and status, and takes a resolved account_ref or a model key.",
+  "world_is": "No Eclipse account reaches a portfolio under the contract's permitted reads: the account bridge is the one table the contract excludes. The adapter refuses the account path with account_not_resolved (detail names the missing bridge) and serves the model-grain path, which reads fact_models and fact_model_composition as the contract names, with a model never borrowed across firms.",
+  "notes": "Measured, not dispositioned. An account-level Eclipse allocation needs the contract to permit the bridge (or a bridge built for it); the adapter does not read the excluded table to get one."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T18:14:14Z",
+  "one_line": "The adapters use four refusal codes and one answer key that the contract and the protocol do not name: firm_outside_vendor_fence, no_partition_at_or_before, no_account_match and window_required, plus an _absent_reason key for an answer that carries absent_reason; Eclipse get_allocation takes a model keyword the protocol signature lacks.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_CLIENT_TOOLS_CONTRACT.md refusal lists (lines 60, 80, 98, 118, 134): firm_not_canonical covers only the three canonical values; no code names a canonical firm outside one vendor's FIRMS, a missing partition, a zero-candidate resolve or a missing window",
+      "READ G2_ADAPTER_PROTOCOL.md lines 16-20: the protocol signatures carry no model keyword and no _absent_reason key; its envelope keys are the _as_of, _partition_date, _source_keys, _denominator, _platform_label, _platform_label_source and _label_claim set"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract refusal arms are the only codes an adapter raises for a refused answer, and the protocol signatures are the seam every adapter is built against.",
+  "world_is": "The Orion and Eclipse modules raise firm_outside_vendor_fence for a canonical firm outside the vendor's FIRMS, no_partition_at_or_before for an as_of before the first partition, no_account_match for a resolve with zero candidates, and window_required for a missing date; an answer with no model assignment returns its body with _absent_reason no_model_assignment. Eclipse get_allocation accepts model=None in addition to the protocol arguments.",
+  "notes": "Measured, not dispositioned. The codes are new names, not new sources, and the keyword is additive; the issuer decides whether the contract names them before the hookup."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T14:40:00Z",
+  "one_line": "Under the A1 ruling the probe resolves prefixes from the DATA_CATALOG.yaml rows whose key_template names the table, and on that path the Orion probe answers from the real silver (AC2 PASS). The gateway runtime index still does not carry these silver rows, so the core Ctx (OG-cl-1) cannot take its prefixes from runtime_catalog() for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml key_template and bucket fields at lines 6268, 6344, 6911 and 7001 (eclipse fact_model_composition and fact_models, orion fact_positions and fact_transactions) @fc20cfc60a: the rows exist in the silver_datasets section",
+      "RUN org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~105/probe_orion.py before the ruling: refusal no_catalog_row with zero reads, because runtime_catalog() rows_by_key holds 48 portal artifacts (row NFRA_OPLGTW-Z-W105-S1)",
+      "RUN checks/cl3.AC2.sh after the ruling (ProbeCtx prefixes from the DATA_CATALOG.yaml key_template rows): probe orion: envelope_ok True; independent_count_equal True; fence_negative_arm True; account_numbers_printed 0; RESULT PASS, rc 0",
+      "EDIT app/client_adapter_orion.py and app/client_adapter_eclipse.py: the canonical firm outside FIRMS and the no-segment case raise firm_not_served (the A1 ruling's code); this row supersedes the firm_outside_vendor_fence name in row NFRA_OPLGTW-Z-W105-S5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 ruling (issuer, 2026-10-15): the catalog has the Orion and Eclipse rows, and the probe builds its own ProbeCtx from the DATA_CATALOG rows; a canonical firm outside FIRMS is refused firm_not_served with zero reads.",
+  "world_is": "The rows exist in DATA_CATALOG.yaml and the probe resolves them there, and the probe's reads of the real silver answer. The runtime index the gateway serves keys from (catalog_gate.load_catalog, channels artifacts) indexes none of them, so a core Ctx built on runtime_catalog() would still refuse every Orion and Eclipse table with no_catalog_row. Row NFRA_OPLGTW-Z-W105-S1 stays ARMED for the core; this cell did not disarm it, because its disarm owner is the issuer.",
+  "notes": "Measured, not dispositioned. Both mechanisms are true at the same commit; which one OG-cl-1's core uses is the issuer's decision. The probe's negative arm names another canonical firm and reads zero keys."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T15:10:00Z",
+  "one_line": "The order names the instance NFRA_OPLGTW.TO-OG-cl-3.client_orion.proof_of_spec.json, but the to-pipeline gate resolves an instance by the order file stem (NFRA_OPLGTW.TO-OG-cl-3.client-orion-eclipse.proof_of_spec.json, the sibling convention). The flip was refused; the instance is renamed to the stem name in this cell's deliverables folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ .tools/to-pipeline-gate.py:3178-3193 @commit c8c31dce34 (_proof_instance_candidates): the candidate names are the order stem plus .proof_of_spec.json or _PROOF_OF_SPEC.json, unless the staged order's own proof_of_spec block names an instance",
+      "RUN safe-commit of the status flip with the instance named client_orion: refused, to-pipeline-gate REFUSED 'NO proof-of-spec instance was found beside it' (.scratch/commit_b.log, line 16)",
+      "READ deliverables/0.9.0_WK_NFRA_OPLGTW~83/NFRA_OPLGTW.TO-OG-cl-0.client-roles-and-contract.proof_of_spec.json: the sibling instance carries the full stem in its name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 5: write the proof instance at W/NFRA_OPLGTW.TO-OG-cl-3.client_orion.proof_of_spec.json and validate it with the checker against the governing order.",
+  "world_is": "The checker validates the instance under any name, but the pipeline flip gate finds an instance only under the order stem name or through a proof block in the staged order, and the order's proof block names no instance. The instance is therefore saved as NFRA_OPLGTW.TO-OG-cl-3.client-orion-eclipse.proof_of_spec.json, and the order's stated name is unused.",
+  "notes": "Measured, not dispositioned. The order text and the gate disagree on the name; the issuer decides whether the order's name or the gate's convention stands. The instance content is unchanged apart from the surprise list."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The contract's Cottonwood bullets name the _s2 twins as read sources, but each _s2 table holds the 5-row xlsx report header (c1 label, c2 value), not account rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G2_assets_silver.md blackdiamond/cottonwood/silver/*_s2 contract blocks (columns c1, c2) @2a78786dda",
+      "READ DATA_CATALOG.yaml silver_datasets *_s2 entries: grain is the report-header line @ 2026-10-15 live runtime_catalog",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_CLIENT_TOOLS_CONTRACT.md Cottonwood bullets read blackdiamond/cottonwood/silver/fact_holdings/ and fact_holdings_s2/ (and the transactions and allocations twins) as the daily snapshot.",
+  "world_is": "The census column blocks for every _s2 table list only c1, c2 and the _source fields, with rows_newest 5. The adapter reads the data tables only; no _s2 key appears in source_keys.",
+  "notes": "Form only. The twins are not positions; a snapshot reader that summed them would read header text."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The model join finds no roster row for one strategy name that carries 514 of the 998 live assignment rows; the adapter answers those accounts with absent_reason model_not_in_roster.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN .scratch/join_count.py (count-only, no values printed) in worktree 106",
+      "READ G2_assets_silver.md fact_model_assignment proposed_tools block @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_assets_silver.md fact_model_assignment proposed tool: the strategy's target weights join from fact_model_definition and fact_model_blend. The join key is not stated.",
+  "world_is": "Count-only read of the newest partitions (2026-10-15): assignment 998 rows and 56 distinct strategy_name; roster 73 rows and 73 distinct model_name. 55 of 56 strategy names equal a roster model_name; 484 of 998 assignment rows resolve; the 514 rows of the remaining name have no roster or definition row.",
+  "notes": "The adapter joins strategy_name = roster model_name (inferred from column names) and states the join basis in the body. No remedy proposed; a rule on whether the 514-row strategy is a roster omission is the CRO's or the CTO's."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "fact_model_assignment does not join to the z09 account id; the adapter joins it on the custodian Account Number, and 6 assignment and 5 allocation numbers carry a mask that does not join.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN an inline count-only join of assignment account_number to allocation Account Number on the newest partitions in worktree 106 (no values printed); the masked counts came from the same inline run",
+      "READ G2_assets_silver.md fact_model_assignment columns block @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_assets_silver.md describes fact_model_assignment.account_id as the BD rebalancer account id (8 digits, example z08...), and the catalog says last-4 derives from account_number.",
+  "world_is": "Live newest assignment partition: account_id is 8 characters with neither a z08 nor a z09 prefix (998 of 998). account_number matches the allocation custodian numbers exactly on 861 distinct values. 6 of 998 assignment values and 5 of 1,520 allocation values carry an asterisk mask.",
+  "notes": "Masked values do not join, so those accounts answer no_model_assignment rather than matching on a mask. A reader must not rejoin on account_id."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The adapter raises or returns refusal codes that the contract does not name, and the protocol carries no channel for an absent_reason on an answered body.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_ADAPTER_PROTOCOL.md A1 section (uncommitted copy) in worktree 106",
+      "READ infra/aws/ec2/opal-gateway/app/client_adapter_bdcottonwood.py (uncommitted) refusal sites",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_CLIENT_TOOLS_CONTRACT.md names the refusal codes per tool; G2_ADAPTER_PROTOCOL.md defines AdapterRefusal raises and the underscore keys, with no absent_reason key.",
+  "world_is": "The adapter raises account_not_in_partition, no_partition_at_or_before_as_of, window_required, fence_firm_mismatch and model_not_in_roster, which the contract does not name. It returns absent_reason as a body key (null, no_model_assignment or model_not_in_roster). no_model_assignment is named by AC4 but not by the contract. firm_not_served is the A1 rule 3 code.",
+  "notes": "The core (OG-cl-1) must lift body absent_reason into the envelope. A ruling on the code names is the issuer's."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "For Cottonwood transactions the contract gives no behaviour for a requested window that starts before the newest partition's earliest trade date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_CLIENT_TOOLS_CONTRACT.md decision 3 and the Cottonwood transactions bullet @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract decision 3: Cottonwood transactions are a rolling window read from the newest partition, deduplicated on TransactionID.",
+  "world_is": "The adapter answers from the newest partition and reports partition_dates and window_starts_before_partition. A true absence and a window gap read the same as an empty list unless the caller reads that flag.",
+  "notes": "The flag is carried in the body; the envelope has no field for it."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The census tool spec and the contract disagree on the Cottonwood fee rows: the census adds an Account Fee column, the contract names Management Fee rows only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_assets_silver.md blackdiamond_list_fees (extend) block @2a78786dda",
+      "READ G2_CLIENT_TOOLS_CONTRACT.md client_get_fees Cottonwood bullet",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_assets_silver.md blackdiamond_list_fees (extend) returns Transaction Type = Management Fee rows + Account Fee. G2_CLIENT_TOOLS_CONTRACT.md Cottonwood fee bullet: Management Fee rows of fact_transactions.",
+  "world_is": "The adapter returns Transaction Type = Management Fee rows only, follows the contract, and does not add the Account Fee column.",
+  "notes": "A ruling on whether Account Fee joins the fee total is the issuer's."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "fact_holdings carries no Custodian column, so the holdings platform label is derived from fact_allocations for the same account.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_assets_silver.md fact_holdings columns block @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_CLIENT_TOOLS_CONTRACT.md envelope: platform_label is the source's own label per answer, with platform_label_source and label_claim. The Cottonwood holdings bullet names no label column.",
+  "world_is": "The census columns for fact_holdings have no Custodian. The adapter takes the label from fact_allocations for the same account and sets label_claim to inferred.",
+  "notes": "Holdings labels are inferred, never measured per row."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "Holdings carry duplicate (AccountID, AssetID) rows; the adapter sums them per asset as the census instructs, and the cause of the duplicates is not traced.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_assets_silver.md fact_holdings open_items @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_assets_silver.md fact_holdings open items: 102 duplicate (AccountID, AssetID) rows on 2026-10-13; a tool must sum per key, not dedupe blindly (cause not traced).",
+  "world_is": "The adapter sums Units and Market Value per AssetID within one account, falling back to CUSIP then Symbol, and returns one position per asset.",
+  "notes": "The cause is not traced in this cell."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The status flip of this task order to complete is outside this cell's write grant: the task order file is not in <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN cl4.AC1.sh and cl4.AC2.sh from worktree 106: RESULT PASS, RESULT PASS",
+      "READ task-order section 3 <paths> in worktree 106",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_OPLGTW.TO-OG-cl-4 section 5: flip the one <status> tag to complete when both criteria pass. Section 3 <paths> is the write grant.",
+  "world_is": "AC1 and AC2 both pass by output. The task order file NFRA_OPLGTW.TO-OG-cl-4.client-bd-cottonwood.md is not in this cell's <paths>, so the flip is not made in this worktree.",
+  "notes": "The issuer owns the flip. The proof instance is validated and committed on its own."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The live newest partitions are newer than the census figures the contract cites.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN probe partition listing (boto3 list_objects_v2, Delimiter /) in worktree 106, date only",
+      "READ G2_CLIENT_TOOLS_CONTRACT.md freshness figures @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_CLIENT_TOOLS_CONTRACT.md freshness: fact_holdings and fact_allocations newest 2026-10-13 at 0 td; fact_transactions newest 2026-10-14.",
+  "world_is": "Live listing at 2026-10-15T19:0xZ: fact_holdings and fact_allocations newest date=2026-10-14; fact_model_assignment, roster and definition newest date=2026-10-15. The adapter reads the newest partition at or before as_of, and the probe states the live partition.",
+  "notes": "The contract's td figures were measured at census time; they are not re-measured here."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:20:00Z",
+  "one_line": "The commit-time naming gate refuses four firm-name literals in the Cottonwood adapter as hand-kept carriers. The gate is in its warn window, so the commit is not blocked, and the adapter keeps the literals.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ safe-commit output of the OG-cl-4 commit attempt in worktree 106: naming-gate NAMING REFUSE at infra/aws/ec2/opal-gateway/app/client_adapter_bdcottonwood.py lines 31 and 32 (cottonwood, 49financial, inflection), each 'NEW hand-kept carrier (context rule)'",
+      "READ naming-gate line: 4 REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce; LIVE-READ-FAILED served-graph client blocked in this worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 4 and G2_ADAPTER_PROTOCOL.md: no bucket, prefix or key literal in adapter code; the firm set is the contract's fence. The commit-time naming gate refuses names it grades as hand-kept carriers.",
+  "world_is": "The adapter's FIRMS and CANONICAL_FIRMS tuples hold the firm keys as literals, which the naming gate grades as hand-kept carriers. The gate's live read was blocked in this worktree and the verdict is WARN, not ENFORCE. The commit is not blocked.",
+  "notes": "The literals are firm keys, not S3 addresses. Whether they move behind lookup() is the issuer's call at the hookup; this cell keeps them as written so the named tests and the probe stay byte-stable."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "The catalog row opal_data_mdpf_feeds_model_composition contradicts itself: its business_meaning says client data forked by account last-4, its fork_keys say the account fork is none (model level).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml @b56fd6ef9d, row opal_data_mdpf_feeds_model_composition: business_meaning 'Client data forked by firm, account last-4 and platform'; fork_keys.account = {column: 'none -- model level, no account'}",
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md section (d), contract opal-data-mdpf/feeds/model_composition: grain one row per (firm_id, model_key, ticker, as_of_date), no account column in the column list",
+      "RUN OG-gp-1 classification (this seat): the row is BUILT as mdpf_get_model_composition with Opal-only admission and no account grain; the business_meaning reading would have classed it with the account-grain feeds instead"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The catalog row's business_meaning reads as client data forked by account last-4, which would put model_composition with the account-grain feeds that need their own role.",
+  "world_is": "The row's own fork_keys and the CRO G4 contract both say model level with no account column. This seat classed the row by the fork_keys and the contract, and named the discrepancy here rather than editing the catalog, which is not in this cell's write grant.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "Four mdpf feed rows carry retired=true in the catalog while their S3 prefixes hold live objects written in the last three trading days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml @b56fd6ef9d: rows opal_data_mdpf_feeds_model_aua_positions_49financial, opal_data_mdpf_feeds_model_aua_positions_inflection, opal_data_mdpf_feeds_non_model_aua, opal_data_mdpf_feeds_partner_held_etf_49financial all retired=True",
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md section (b): model_aua_positions/49financial 125 objects newest 2026-10-14T03:31:41Z; model_aua_positions/inflection 105 newest 2026-10-12; partner_held_etf/49financial 293 newest 2026-10-14T03:30:47Z; non_model_aua/49financial 100 newest 2026-10-12",
+      "RUN OG-gp-1 classification (this seat): all four are DEFERRED on the retired flag, so the classification rests on a flag that the bucket contradicts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A retired catalog row means its dataset is no longer written or served, so a tool over it answers absent_reason with zero reads.",
+  "world_is": "The four prefixes still receive writes, and the account-grain feed is the input that the served histograms read. Whether retired here means not-served-to-portal rather than not-written is not read; this seat relied on the flag as written.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "The gateway instance role cannot read the model_composition prefix of opal-data-mdpf, so the BUILT tool answers only under a box identity until a never-widen read grant lands at release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md section (a) row 10: iam simulate-principal-policy opal-gateway-role s3:GetObject on the feeds prefixes returns implicitDeny (simulated); positive control platinum/mdpf/global/aum-metrics.json allowed",
+      "RUN OG-gp-1 probe (this seat) with the box's own credentials: mdpf_get_model_composition answered True for scope 49financial, 130 rows; the same tool under the gateway role is not exercised here"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A BUILT typed tool over a bucket prefix is served by the gateway once its order releases.",
+  "world_is": "The tool reads correctly under box credentials, but the gateway role has no grant on this prefix, so the release order must carry a never-widen read ask for mdpf/feeds/model_composition/ before the tool can answer on the gateway. The grant is not written in this cell (no IAM change in bounds).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "Two catalog rows declare the same two sentiment keys: the news row names news_market_mood as its read_tool, the singleton row names none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml @b56fd6ef9d: row opal_data_portal_v2_served_news_trending_and_sentiment (read_tool news_market_mood) lists json/sentiment/{fear-greed-index,keyword-sentiments}.json; row opal_data_portal_v2_served_sentiment_singletons (read_tool empty) lists the same two keys",
+      "READ infra/aws/ec2/opal-gateway/app/news_typed.py news_market_mood: reads FEAR_GREED_KEY and KEYWORD_SENTIMENTS_KEY (json/sentiment/ prefix)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each catalogued served object has one catalog row, so one row's read_tool answers for the object.",
+  "world_is": "Two rows own the same two objects. This seat classed the singleton row COVERED by news_market_mood on the code, and left the duplicate for the catalog owner to reconcile.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+  ```json
+  {
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T21:47:18Z",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "id": "NFRA_OPLGTW-Z-S153",
+    "one_line": "OG-ap-21 CUT IS THE FIRST RELEASE TO CARRY BOTH SIDES OF THE OPEN CONTRADICTION IN ROW NFRA_OPLGTW-Z-W67-S1, and this seat will not pick a side. The live base guards the tier line with 'not access.restricted and ...'; OG-cp-1 patch drops that guard. The base guard was PRESERVED, so live behaviour is unchanged -- and cp-1 own test_ogcp1_ac02 is RED as a direct consequence, because it expects the POST-ruling behaviour the guard prevents.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the conflict: ours (base c4c106aea1) reads 'tier = _tier_of(principal) if (not access.restricted and tool in TIER_ADMITTED_TOOLS) else None'; theirs (OG-cp-1 d5d2fb29bd) reads the same line WITHOUT 'not access.restricted and', and adds the person_access read after decide()",
+        "cp-1 did NOT remove the guard: at its own PARENT the line already read 'if (tool in TIER_ADMITTED_TOOLS)'. Its branch predates the guard, which entered at c37fdf95a5 (OG-bd-2) and fffac3b499 (OG-bd-3). The cp-1 commit message says its checks run after the existing gates which are never overridden, so preserving them is what it asks for",
+        "WHAT THE TEST SAYS WITH THE GUARD IN: tests/test_og_cp1.py::test_ogcp1_ac02 FAILS -- entitlement_denied where it asserts person_record_denied on blackdiamond_list_fees, the denial arriving from the profile gate (the principal restricted profile does not include that tool) before the person check is reached. 6 of 7 in that suite pass",
+        "AND THE REASON IS A ROW STILL OPEN: NFRA_OPLGTW-Z-W67-S1, class BLOCKING, disposition UNDER_INVESTIGATION. Its own text: OG-bd-2 test_ogbd2_ac03 asserts a PROFILED master_admin is DENIED blackdiamond_list_fees with entitlement_denied, while the CTO ruling (msg 33941 route (a)) requires that principal to be ALLOWED, and the OG-bd-3 order forbade editing that test. The guard in the live tree is what keeps the pre-ruling behaviour; dropping it is what the ruling asks for",
+        "fffac3b499 is itself a WIP commit whose own subject records the unresolved state: 'master_admin tier admission survives a profile; AC1 FAIL on OG-bd-2 ac03 contradiction (row W67-S1)' -- the title describes the intended behaviour while the code it landed guards against it",
+        "BOTH READINGS DENY THE TOOL. With the guard the refusal is entitlement_denied from the profile gate; without it the refusal is person_record_denied from the person record. Nothing is widened either way -- what changes is which gate fires first and therefore which code a caller sees"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-ap-21 step 3: take the person-roles hunks by 3-way against the base and run the suites of the taken tests.",
+    "world_is": "the hunk and the base disagree about a guard whose correct state is an OPEN CTO question (W67-S1), so no resolution satisfies both the base tests and the cp-1 test. The conservative one was taken -- the base guard preserved, live behaviour unchanged, the cp-1 test red with a named cause -- and no test was edited.",
+    "notes": "WHY THE GUARD WAS NOT JUST DROPPED TO GET A GREEN SUITE. Dropping it would (a) implement a CTO ruling inside a release whose order says nothing about it, (b) change the refusal behaviour of the entitlement chokepoint for every restricted profile, and (c) re-break OG-bd-2 test_ogbd2_ac03, which is the very contradiction W67-S1 is open on. A green suite bought that way would be a green suite about a different system. ONE ASK FOR THE ISSUER, a ruling rather than a preference: does OG-ap-21 ship the base guard (the cp-1 ac02 stays red, declared, and W67-S1 stays open) or the ruled behaviour (ac02 goes green, OG-bd-2 ac03 breaks, and W67-S1 is resolved in this release)? The cut is built the first way; the second is a one-line change plus a test the order forbids this seat to touch. THE SHAPE WORTH KEEPING: a 3-way conflict between a patch and a base can be a disagreement about what the system SHOULD do rather than about what the merge should contain -- and the tell is that the incoming side own TEST fails against the base behaviour. A merge resolved to make a test pass would have silently answered an open ruling."
+  }
+  ```
+
+  ```json
+  {
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T21:47:18Z",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "id": "NFRA_OPLGTW-Z-S154",
+    "one_line": "A MISSING SEAM THE TAKE-LIST OMITS, and the static scan meant to catch it cannot see the import. tests/test_admin_people_access.py is IN the take-list; it reaches app/admin_people_access.py through importlib.import_module inside a fixture; that module is at trunk and ABSENT at the base. All 7 of its tests ERROR with ModuleNotFoundError. The module is MP-pd-3 owner-gated per-person access handler -- NFRA_MCPORTAL work, not this release own.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the run: ERROR at setup of test_access_post_invokes_writer_with_set_person_access_and_relays_verdict -- ModuleNotFoundError: No module named app.admin_people_access, 7 errors of 7",
+        "the import is DYNAMIC: tests/test_admin_people_access.py line 54 does pa = importlib.import_module(app.admin_people_access) inside a fixture, alongside import_module calls for app.config, app.owner_gate, app.access_state and app.admin_grants",
+        "EVERY OTHER module it reaches that way IS at the base -- config, owner_gate, access_state, admin_grants, identity all present. Only admin_people_access is absent, so this is one missing file and not a broken cut",
+        "it exists at trunk and was added by b6dd9f9249 MP-pd-3 (PD.3): owner-gated per-person access handler; principal key on People rows -- an NFRA_MCPORTAL cell",
+        "THE SEAM INSTRUMENT READ CLEAR AND WAS WRONG TWICE OVER: p21_seams.py walks only the taken app MODULES, while the order says every app module the taken FILES import and the tests are taken files; and a second scan written over the taken TESTS still reported 0 missing, because it greps import STATEMENTS and this import is a function call. The RUN is the oracle; a static scan of a dynamic import is a clean-looking zero"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "step 3 take-list names tests/test_admin_people_access.py among the files taken WHOLE, and step 3 runs the suites of the taken tests.",
+    "world_is": "that test cannot run on this base, because its subject module is neither in the take-list nor at the base. Adding the module would ship an NFRA_MCPORTAL handler inside an NFRA_OPLGTW person-roles release, which is a scope decision and not a mechanical fix.",
+    "notes": "ONE ASK FOR THE ISSUER: drop tests/test_admin_people_access.py from the take-list, or add app/admin_people_access.py to it and accept that the MP-pd-3 handler rides this release. Neither was done here. WHY THIS IS THE THIRD VARIANT OF ONE DEFECT IN THREE RELEASES, which is the part worth generalising: ap-19 took a module whose seam the base lacked (Z-S137); the ap-20 hookup hunks carried a tool whose module the base lacked; ap-21 takes a TEST whose subject the base lacks. The family is a take-list that names a file without naming what that file needs, and each time the instrument that should have caught it was scoped one level too narrowly. The fix that would have caught ALL THREE is not a better grep -- it is running the taken tests against the cut BEFORE the release commit, which is what found this one."
+  }
+  ```
+
+```json
+{
   "id": "NFRA_OPLGTW-Z-W103-S1",
   "project": "NFRA_OPLGTW",
   "fabric": "site-z",
