@@ -91,7 +91,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-yr-1.yearinreview-refresh-relea
 
 - A3 (issuer, 2026-10-14 ~22:5xZ, msg 34270): the oracle for the SERVED page is the checked-out form `0d828b51d433a24f7e2ef2e6ea7967ee` (the path's `eol=lf` makes the blob LF, `3bbd5ab2`, but the deploy tars the checkout, which re-materialises the 344 CRLFs; measured by `~Z`). `YR_SERVED.json` `md5_source` and `md5_served_host` are `0d828b51`; yr1.AC1 still grades the BLOB in LF form. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>YEARINREVIEW</workstream>
 <slot>~AE</slot>
