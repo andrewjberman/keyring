@@ -9051,3 +9051,57 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+## ADVI_COTBKF-D1-W176-S1 -- The named Commonwealth tables carry no registration class, so same_registration_class is null on all 14 list rows; the research's 18 class corroborations cannot be reproduced from them.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W176-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~176",
+  "surfaced_at": "2026-10-15T19:15:35Z",
+  "one_line": "The named Commonwealth tables carry no registration class, so same_registration_class is null on all 14 list rows; the research's 18 class corroborations cannot be reproduced from them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "transactions silver (14 parquet objects, 1,416,497 rows): 25 columns, none a registration or account-class field; Position_Type holds CASH, MARGIN and four other line-level codes, not a class (value-count probe, counts only)",
+      "document_index.parquet listing_fields: 21 distinct keys (Account, AccountNumber, Acct, ClientName, DisplayName, DocName, DocType, DocumentName, DocumentType, FileName, Folder, FolderName, HouseholdName, Keyword, NumberOfPages, ReportID, ReportName, ReportSectionID, ReportVersionID, StmtDate, Year); none a class",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~176/REVIEW_LIST.csv: same_registration_class empty on 14 of 14 rows; NAME_REVIEW_RECORD.json columns_present",
+      "research RESEARCH_20261015_COTTONWOOD_MATCHING_KEYS.copy.md section 4 (line 58) reports 29 corroborated, same registration class 18"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-5 item 3: same_registration_class equals the Black Diamond account_registration_type where the Commonwealth side carries a class, and is null where it carries none; research section 4 measured 18 class corroborations.",
+  "world_is": "The named Commonwealth tables carry no class for any account, so the flag is null on every row and no class corroboration can be measured from them. Not established: where the research's class came from; the restricted CRM zip is outside this cell's grant and was not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W176-S2 -- document_index account strings are not in the ledger's form: an exact string join reaches 234 of the 1,533 Commonwealth accounts, the crosswalk's normalize_account join reaches 738 (as research measured); the order names no join rule, and the worker joined on normalize_account.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W176-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~176",
+  "surfaced_at": "2026-10-15T19:15:35Z",
+  "one_line": "document_index account strings are not in the ledger's form: an exact string join reaches 234 of the 1,533 Commonwealth accounts, the crosswalk's normalize_account join reaches 738 (as research measured); the order names no join rule, and the worker joined on normalize_account.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "document_index.parquet (11,119 rows): 985 distinct raw account strings, 752 distinct commonwealth_crosswalk.normalize_account keys (value-count probes of document_index and transactions, counts only; scratch scripts deleted)",
+      "exact string join of document accounts to transactions Account_Number: 234 accounts; normalize_account join on both sides: 738 accounts, equal to research section 4",
+      "unmatched Commonwealth accounts carrying a name key: 269 on the normalized join; 88 on the exact join",
+      "commit eee317417b, data/assets/scripts/silver/commonwealth_match_names.py: cw_names keyed by cw.normalize_account, with the reason in the comment above the loop"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-5 item 2: a Commonwealth account's document names are matched to that account; the order gives no join key between document_index and the ledger.",
+  "world_is": "The document account strings are not written in the ledger's form, and only the normalized form joins; an exact join would drop the names of 504 accounts. Not established: whether the document_index writer or the ledger writer should carry one form.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
