@@ -769,6 +769,12 @@ GO at ~19:2xZ (relayed by `4.0.0_SA_CRO~Z` msg 34543): "We have usage, run it no
      key segment. A row that neither source resolves carries `firm: unresolved` and is listed in the release record.
      It is never guessed.
    - The 24 rows MX-c-19 set (23 `49financial`, 1 `inflection`) keep their values.
+   - **AMENDED ~22:0xZ (`2.0.0_SA_COO~MP` msg 34589): tool-level pairs.** Each `tool_index` entry whose rows are opal-data-assets or
+     opal-data-bd also carries `serves`, the list of distinct (`vendor`, `firm`) pairs taken from the catalog rows that name it as
+     `read_tool`. A single-pair field is not used: the `client_*` tools serve many vendors, and one pair would read
+     `unresolved` for exactly the tools that matter. /gateway lists a tool under EVERY pair in its `serves`, so a tool can
+     appear in several sub-segments. A vendor-specific tool (for example `schwab_query`) serves one pair. A tool with no
+     assets/bd rows has no `serves`. MX-c-21 writes it from the rows; it is never typed.
 3. **The display and discovery group key is exactly (`bucket`) for every bucket, and (`bucket`, `vendor`, `firm`) for
    opal-data-assets and opal-data-bd.** No other grouping field is introduced. A new value in either list is an addendum
    here, not a local spelling.
