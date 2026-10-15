@@ -9552,3 +9552,30 @@ round.** Never edit an existing row.
   "notes": "Found by reading the existing test against item 1 before any code was written; no code was changed to resolve it."
 }
 ```
+
+## ADVI_COTBKF-D1-W181-S1 -- the --sechist reader labels its rows "sechist", which the use_class guard does not recognise as Yahoo
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W181-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~181",
+  "surfaced_at": "2026-10-15T21:08:53Z",
+  "one_line": "read_sechist reads an operator-named price series and labels every row source 'sechist'; the use_class guard recognises only yahoo_finance and linear_interpolation, so a Yahoo-derived series read this way would be labelled NOT_YAHOO.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py@5621d85218 L59 SECHIST_STORE = \"sechist\"; L67 YAHOO_SOURCES = (yahoo_finance, linear_interpolation); L164 def read_sechist; L189 source: SECHIST_STORE; L1085 sh = read_sechist(...) under --sechist",
+      "data/assets/scripts/silver/commonwealth_fwd3_serve.py@5621d85218 L320 yahoo_priced(h, rule=dv.YAHOO_SOURCES): the mask the use class and the porting verdict share"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cm-1 reader definition and CTO C3 (msg 6119): a Yahoo-sourced price that feeds an active account's value carries a Yahoo label the use_class guard recognises.",
+  "world_is": "Not established: whether any sechist prefix holds Yahoo-derived prices, and whether any served run was given --sechist (not measured; no S3 read, no run). The label gap is a fact of the code: a sechist row cannot read as Yahoo.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while listing the readers of the three modules for TO CB-cm-1. Not in that order's reader list: its definition is a Yahoo-sourced price, and this series is not established as Yahoo-sourced. No code changed."
+}
+```
