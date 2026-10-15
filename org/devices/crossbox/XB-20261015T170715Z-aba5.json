@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T170715Z-aba5",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell2",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "0.0.0_AB_MSTR~DELL2",
+ "subject": "NFRA_CTLPLN FWD-14: read this box RDP history for sessions from rc (100.98.173.75), report counts and times",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD14_RDP_HISTORY_READ.md",
+ "opened_at": "2026-10-15T17:07:15Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-15T17:10:10Z",
+  "bus_message_id": "752f3d0d-7eaa-4745-84fd-67b569499b99"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
