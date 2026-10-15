@@ -18524,3 +18524,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S96 -- OBSERVATION: TO-DB-b-272 the handler chains the whole backfill from one {} event, the import smoke is partial, the stamp wrapper writes CHANGELOG.json
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S96",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T21:00:00Z",
+  "one_line": "TO-DB-b-272 odd finds, none blocking now: (1) the report-build handler chains every owed day from ONE {} event (chain_next recomputes owed_days from the newest landed day on each hop), 68 chained invocations to 2026-10-14 rather than the ten the packet described, so the original step 7 had no pause for its per-event after-read or stops; (2) the order's import smoke (import handler) only proves the top-level imports: removing a lazily imported adapter does not fail it, removing filled_report_values.py does; (3) the stamp wrapper again rewrote CHANGELOG.json outside the grant",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "handler.py lines 383-386 (nxt = the next owed day after the one built; chain_next self-invokes it asynchronously) and owed_days (line 134, capped at MAX_DAYS_PER_FIRE = 10 per call, recomputed from landed[-1] on each hop); a simulation with the bundle's own owed_days and trading_calendar gave 68 invocations in one chain from {}, first 2026-07-10, last 2026-10-14, 65 landed and 3 source-absent; the applier held step 7 before any backfill event (msg 8613), the issuer and the CTO amended the order to explicit {day} events (Amendment 1 @4f36450137), run as 65 events with every chain.invoked false",
+      "import smoke on the extracted bundle: rc 0 with all 19 members; rc 0 with data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_report_reader.py removed (imported inside try blocks); rc 1 (ModuleNotFoundError) with filled_report_values.py removed (top-level import, handler.py line 35)",
+      "git diff after record-terraform-deploy.sh --function: lambda-source-map.json gained last_deployed_commit, last_deployed_at, recorded_by on the one entry; infra/aws/terraform/investor-reporting/CHANGELOG.json gained an entry; the commit step was refused by the naming gate; CHANGELOG.json was restored and only the source-map stamp kept (bdc0f75e96)"
+    ]
+  },
+  "spec_asserts": "The packet's section on the backfill and the order's step 7: a `{}` event builds the oldest owed day and chains up to nine further days, one event at a time with an after-read each; the import smoke proves the bundle is importable.",
+  "world_is": "A `{}` event chains the whole backfill unpaused (the cap of ten bounds the owed list per call, not the chain), so per-event stops cannot act mid-chain; any event that names no day chains every day owed since the newest landed day, so a scheduled fire whose input names no day (its input was not read here) would chain as many days as are owed then (not measured here). The import smoke is a partial check. The explicit-day route removes the first at no cost; the second is carried by the criteria's live reads. Counts, dates and words only."
+}
+```
