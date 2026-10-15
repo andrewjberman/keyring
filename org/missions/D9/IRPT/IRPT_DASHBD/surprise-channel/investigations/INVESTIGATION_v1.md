@@ -14285,3 +14285,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disarm_owner": "2.0.0_SA_COO~D2"
 }
 ```
+
+## IRPT_DASHBD-D2-W185-S9 -- The QA household frame's account ids match no account of the Cottonwood account_return_daily newest partition: zero of 999 frame accounts are present on as_of, so both QA runs refuse and no run is made.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:59:50Z",
+  "one_line": "The QA household frame's account ids match no account of the Cottonwood account_return_daily newest partition: zero of 999 frame accounts are present on as_of, so both QA runs refuse and no run is made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json: account_id is the custodian account id in the declaration form (10-character zero-padded); TO IRPT_DASHBD.TO-DB-b-232 Amendment 1 S6: the QA household frame is the Cottonwood account_dim adapter's own dry run, its account ids the account_return_daily keys.",
+  "world_is": "Measured read only. The frame carries 999 accounts, every id 11 characters (one letter and ten digits). The newest account_return_daily partition (2026-06-22, the frontier) carries 12 accounts, every id 8 or 9 characters, none in the 10-character form. The overlap is 0 of 999. With no household present on as_of, filled_report_values.py refuses in both runs (as_of 2026-06-22 and 2026-10-13) before any parquet is written; neither run wrote a row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@e44b45003f (account_id meaning)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-232.cottonwood-reader-into-the-filled-report-builder.md@e44b45003f (Amendment 1, S6)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (main: presence on as_of and the refusal, this worker's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-232 under the refusal clause: the criterion is reported with its measurement and the runs stop on this point. Counts and shapes only; no account id or client value."
+}
+```
