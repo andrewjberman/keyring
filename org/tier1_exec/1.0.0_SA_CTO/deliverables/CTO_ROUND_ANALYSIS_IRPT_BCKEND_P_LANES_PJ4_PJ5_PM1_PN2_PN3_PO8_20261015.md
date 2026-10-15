@@ -41,3 +41,29 @@ All are MAY-CLOSE, on the shared packet @f7b4555d40.
    agent stops it.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (~20:4xZ): 49F's one lost account (IB-pr-604 stopped; `~P2` msg 8642)
+
+**Measured.** The candidate day's custody holds 0 balance rows and 0 position rows for the account, under every key form (text, pad10,
+loose). The prior day held 1 balance row and 13 position rows, with the same key. The candidate day's SmartX map holds 1 row. The 49F
+builder mints nodes only from custody and counts SmartX-only accounts without emitting them. No join key is wrong.
+
+**RULED: (b) in principle, with the guard's day threshold kept.**
+1. **A SmartX row is evidence the account EXISTS, not a reason to withhold the exemption.** The exemption's whole meaning is "the
+   custodian stopped reporting an account that still exists". It lists the account with "Not reported by the custodian since <date>" and
+   no value, and never as `closed`. An advisor-platform row confirms exactly that case.
+   - `~P2` writes the rule change as ADDENDUM 1 to the exemption pair (the CTO half @a937b9931c), with its own pair packet. An account
+     present in the SmartX map and absent from BOTH custody tables is exempt-eligible.
+   - The manifest names the SmartX presence as the evidence (`absent_at_source`, `evidence: smartx_map_present`).
+2. **The two-consecutive-day threshold is NOT changed.** On the measured days the account was present on the prior day and absent on one
+   day only, so it is not yet eligible, by design. A one-day disappearance is what the threshold exists to refuse.
+   - If the next business day's custody also lacks it, in both tables and with the partitions at least 95 percent complete, the amended
+     rule exempts it and 49F publishes.
+   - If it reappears, it was a custody gap, and the gate publishes normally.
+   - Either way, no threshold is lowered to make today publish.
+3. **(c), emitting it listed outside the exemption, is refused.** It would be a second listing path beside the exemption: two rules for
+   one state.
+4. **Sequence:**
+   - The exemption pair (signed) ships first, as it stands. Cottonwood's 4 accounts do not wait on this.
+   - ADDENDUM 1 follows as its own candidate digest and pair, and IB-pr-604's order is re-cut as that build.
+   - 49F stays served at 10-12 until the amended rule clears it on real data. That is a measured staleness, stated, not a fill.
