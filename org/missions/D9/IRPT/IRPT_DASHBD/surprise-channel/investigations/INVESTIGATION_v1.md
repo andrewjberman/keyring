@@ -15322,3 +15322,82 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The custodian dim_position partitions of 2026-04-20 and 2026-04-21 identify 5 of the 15 listed securities (7 of the 38 flagged pairs) by nine-digit numeric CUSIPs, which the checker's digit rule refuses. The record names them as read; nothing is masked, renamed or dropped, and the checker is not edited. Measured on the same run: 13968 pairs, 38 flagged (32 flat, 6 stale, none absent), 929 triangle accounts, 894 agreeing with the holdings gold and none with the account value. The order stays pending until the issuer decides whether the security key is exempt from the digit rule (a checker edit) or the identifiers are carried another way."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W409-S1 -- DBC122-2-AC1 cannot PASS as written: the mandated adapter import types the checker's forbidden token, so the lambda file is refused
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W409-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~409",
+  "surfaced_at": "2026-10-15T07:15:54Z",
+  "one_line": "DBC122-2-AC1 FAILS as written: the order's mandated line `import cottonwood_account_dim as adapter` in lambda_function.py types the token the checker's FORBIDDEN_TOKENS refuses in that file; every other bound measures PASS",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r122/p122_bcw.py@2ee7fcf0ed FORBIDDEN_TOKENS includes the literal 'cottonwood'; ac_2 lowercases the whole lambda_function.py and refuses any token substring",
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py@c1e843142c line 48 is the only token hit (Grep -i over the file): import cottonwood_account_dim as adapter",
+      "checker run at c1e843142c: DBC122-2-AC1 FAIL with 'lambda_function.py types a forbidden token: cottonwood'; with the token list emptied for measurement only (.scratch/measure_ac2_rest.py, not committed) the rest of the arm PASSes: ASCII, no boto3 client at import, adapter frozen part identical to 05ea78f452, FileExistsError line present, and the planted control (refusal removed in a scratch copy) makes test_upload_refuses_a_non_empty_partition FAIL"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 2 of DB-c-16 names the import line `import cottonwood_account_dim as adapter`; DBC122-2-AC1 requires that lambda_function.py types no firm token, and the checker's FORBIDDEN_TOKENS holds the token 'cottonwood'.",
+  "world_is": "Both cannot hold in one file: the adapter's module name carries the token, so the mandated import types it. The import is kept exactly as written, the criterion is reported FAIL with its measurement, and the order stays open. No checker edit and no loader workaround was made; choosing between a checker change and an import form is the issuer's call."
+}
+```
+
+## IRPT_DASHBD-D2-W409-S2 -- the order's source key `blackdiamond_z09` cannot be typed in the lambda, so the handler selects the declared source by its custodian
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W409-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~409",
+  "surfaced_at": "2026-10-15T07:15:54Z",
+  "one_line": "The source entry name the order names (blackdiamond_z09) embeds a registry key the checker refuses in lambda_function.py, so the handler picks the one declared source whose custodian is the Black Diamond custodian",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json@c1e843142c declares three custody sources: schwab_08335338 (custodian schwab), orion (custodian orion), blackdiamond_z09 (custodian blackdiamond); measured by a json load of the file",
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py@c1e843142c _declared_source() selects the sources whose custodian equals the typed custodian name and refuses unless exactly one matches; no source name, bucket or silver prefix is typed in the file",
+      "checks/r122/p122_bcw.py@2ee7fcf0ed FORBIDDEN_TOKENS includes 'z09', so the entry key cannot appear in the lambda file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 2 of DB-c-16 reads the silver bucket and prefix template from the entry `blackdiamond_z09` in sources.json, and types the firm token, bucket name and silver prefix nowhere in the lambda file.",
+  "world_is": "The entry key embeds the registry key z09, which the checker's token census refuses in the lambda file. The handler therefore selects the entry by its custodian field, which is not a firm token, and it refuses unless exactly one declared source matches. The resolved bucket, firm scope and prefix still come from the declaration through the producer's own helpers."
+}
+```
+
+## IRPT_DASHBD-D2-W409-S3 -- the silver resolution imports the holdings-performance producer, so the DB-c-17 package needs its declaration, registry tree and numpy and pandas
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W409-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~409",
+  "surfaced_at": "2026-10-15T07:15:54Z",
+  "one_line": "The handler's silver locations import the holdings-performance producer, which needs more packaged files and libraries than the lambda's own lib trees; the later packaging cell must carry them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda_function.py@c1e843142c _declared_source() imports holdings_performance from data/assets/scripts/gold/irpt_holdings_performance and calls load_declaration, declared_sources, firm_scope and resolved_prefix",
+      "holdings_performance.py@c1e843142c imports boto3, numpy, pandas and pyarrow at module level, and firm_scope() reads the registry through opal_naming.load_registry()",
+      "the holdings-performance handler docstring (infra/aws/lambda/investor-reporting/holdings-performance/handler.py@c1e843142c) already records the package set this needs: the producer at its original relative path, sources.json, lib/opal_naming.py, lib/trading_calendar.py, data/assets/scripts/lib/stream_parquet.py, infra/logic/registry/*.json and org/standards/NAMING_SCHEMA.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 2 says the bucket, prefix template and firm scope come from sources.json through the producer's registry-derived helpers, and a later cell (DB-c-17) packages the function; the order's package list is not stated.",
+  "world_is": "The package for the account_dim function must carry the producer file beside sources.json, the registry tree and NAMING_SCHEMA.json, plus numpy and pandas, or the handler fails at import. Nothing was packaged or built in this cell; the tests import the producer from the repo tree."
+}
+```
