@@ -17275,3 +17275,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Resolves IRPT_DASHBD-D2-W207-S1 by an appended row, citing the issuer amendment commit 1bec1bfc83; S1's ARMED standing is disarmed by the issuer's amendment and the green suite. Form only; no client figure is quoted."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S80",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T11:56:00Z",
+  "one_line": "TO-DB-b-253 odd finds, none blocking: (1) the order names the artifact key irpt-49f-reporting-gold-lambda.zip, which does not exist (the root and the source map use the scope-less investor-reporting/irpt-reporting-gold-lambda.zip); (2) the builder only VERIFIES staged_from hashes, so the three new members' pin and sha256 had to be written before the build; (3) terraform fmt -check flags alignment in reporting-gold locals.tf; (4) the statement WriteTheFiveGoldPrefixesOnly now lists six prefixes; (5) 19 of 28 worktrees carry stale copies of the CLOSED thresholds-swap marker",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object on investor-reporting/irpt-49f-reporting-gold-lambda.zip: 404 and zero versions; investor-reporting/irpt-reporting-gold-lambda.zip: 4+ versions, current UcKN2ttQ... equals the live CodeSha256 (the rollback target); lambda-source-map.json artifact_s3_key and lambda.tf artifact_key agree on the scope-less name",
+      "build-and-upload.sh TMPJS_STAGE: a staged_from entry is hash-VERIFIED (declared sha256 vs git show of the pin) and a null sha256 always mismatches; a null pin resolves to the moving HEAD; the update script writes only artifact_s3_key and artifact_sha256. The three new members were pinned at 6459608700 and 45b34c2e5d (blobs equal to HEAD and to the sha256 the signed packet names) in commit a193e096c3 before the build",
+      "terraform fmt -check -diff on infra/aws/terraform/investor-reporting/reporting-gold: locals.tf lines 84-95 alignment (4 assignments); the file's sha256 b7a293c0578c is the one the signed packet names, so it was NOT rewritten",
+      "live role policy after the apply: statement WriteTheFiveGoldPrefixesOnly, 6 resources incl. filled_report_values; the sid keeps its old count word",
+      "git ls-tree of every worktree's HEAD for org/critical_paths/.open_deploys/irpt-dashbd-thresholds-swap-20261013.json: present in 19 of 28 after the issuer's close at ce030463bd (shared tree: absent)"
+    ]
+  },
+  "spec_asserts": "The order's key spelling, its claim that the build writes the three new members' pin and sha256, and its bound on the policy statement names hold as written.",
+  "world_is": "Nothing blocked: the act ran as signed (0/2/0, no invoke, ledger open at L6). Asks, all the issuer's or the CTO's: correct the key spelling in the order text; decide whether the packet's condition 3 should say the applier writes the pins BEFORE the build (the builder cannot write them); consider renaming WriteTheFiveGoldPrefixesOnly when the next policy change lands (a rename is a policy change, not done here); the fmt alignment is a repo defect owned by the author of locals.tf; the 19 stale marker copies sit in other seats' worktrees and are named, never closed."
+}
+```
