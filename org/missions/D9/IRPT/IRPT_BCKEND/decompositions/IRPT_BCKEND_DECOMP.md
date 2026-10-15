@@ -4023,3 +4023,40 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r202/p202_cells.py`, dry-run at the b
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one document; one worker (slot ~403) starts now.
 
+## 198. ROUND 4, WORKSTREAM ~PO (the Orion pairs RE-CUT on the located writer; 2026-10-15 ~07:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8127 (YES, re-cut (b) as a re-timing of the existing chain; (a) through the chain steps) and the located writer (IB-pr-559, row D2-S186))
+
+Round 3 of ~PO closed MAY-CLOSE (close commit e9fec793a0). The writer of the daily flat keys is the Orion pull steps of the gold chain on `inf-gold-layer-runner`, started by `inf-gold-trigger` (fired by `inf-silver-aggregator`) at about 11:32Z, and the same pulls feed the silver steps. The CTO voided the IB-pr-556 packet's design of pair (b): consolidate, never build alongside. (b) = MOVE the existing trigger chain into the 06:00 America/New_York fold (no new function, no port, silver steps chained), after a read of whether Orion's T-1 is complete by 06:00 NY (else the earliest measured-complete time); (a) = re-run the 36 absent trading days through the chain's own pull steps, each key read ABSENT first, ABSENT-AT-SOURCE recorded, never an empty key; the manual CLIs retired with a message naming the chain. One cell: the design record and the packet v2 (which supersedes v1), both halves UNSIGNED.
+
+Check IB203-1 (`deliverables/2.0.0_SA_COO~P2/checks/r203/p203_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control203.py`) passes all and seventeen negatives on IB203-1 each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-560` | the re-cut design and packet v2: (b) the re-timing of the existing chain into the 06:00 fold with the T-1 completeness read, the CLIs retired; (a) the 36-day re-run through the chain's own steps; READ ONLY | FWD-3 | SERVED | none | PO4-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one document; one worker (slot ~404) starts now.
+
+## 199. ROUND 1, WORKSTREAM ~PY (the IB-pr-456 rebuild on the live R29c bytes; 2026-10-15 ~07:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8116 (row D2-S185: the live irpt-ycharts-generate bytes are IRPT_ANLREQ release 29 leg L3) and the Y2 correction (msg 8130))
+
+A FOURTH WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a workstream issues its own round): the commentary_requested release (IB-pr-455/456) whose candidate package `AHxuDf7h...` was built before R29c landed. Applied as it is, it would silently revert release 29's L3 code. The CTO ruled: rebuild from current trunk source, restate the pre-apply digest as `5TRFZf6G...`, re-sign the pair only if ENDPOINT bytes move. Disjoint from ~P, ~PS and ~PO: its write surface is the worker's records only and the apply remains Andrew's execution ID (call f61b). One cell, READ ONLY on AWS, local build.
+
+Check IB203-2 (same file), dry-run at the base: AC1 to AC3 all FAIL; the control passes all and eight negatives on IB203-2 each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-561` | REBUILD the irpt-ycharts-generate candidate from current trunk; the live digest and moved members with their denominator; release 29's four members not moved; the three ENDPOINT members compared by hash; the pre-apply digest restated | FWD-3 | SERVED | none | PY1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~405) starts now.
+
+
+## 200. ROUND 4, WORKSTREAM ~PS (the serve path: the source map stages the shared reader, and the server pins the filled report at submit; 2026-10-15 ~07:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-4 analysis @ac865e2d91 (msg 8138) and his ruling on call f50a (msg 8104))
+
+Round 3 of ~PS closed MAY-CLOSE. The CTO's round-4 analysis names two cells, one issuance. (1) Row D2-W402-S3: `infra/aws/lambda/ci/lambda-source-map.json` is explicit per file and lists no entry for the shared named-account reader `_scope/filled_named_accounts.py`, which the filled-report route and the export freeze import by name; add a `staged_from` entry in EVERY function that packages an importing module, plus a build-only import test per function. (2) Call f50a: the SERVER pins the filled report at submit (freeze_filled_report reads the current object's VersionId, sha256 and size; the page sends the client id only; a forged client pin is ignored). Deploy legs still wait on 49 Financial gold for one date. Disjoint write sets: the map and one CI test; the export package.
+
+Checks (`deliverables/2.0.0_SA_COO~P2/checks/r204/p204_cells.py`, `control204.py`), dry-run at the base: all six FAIL; the control passes 6 positives and 16 negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-562` | the source-map `staged_from` entry for the shared reader in every importing function, a BUILD_ONLY import test per function | FWD-2 | WORLD (path floor) | none | PS4-a |
+| `IB-pr-563` | the server-side pin at submit: freeze_filled_report reads the current object, the submit handler calls it, a forged client pin is ignored | FWD-2 | WORLD (path floor) | none | PS4-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two cells with disjoint write sets; workers (slots ~406, ~407) start now.

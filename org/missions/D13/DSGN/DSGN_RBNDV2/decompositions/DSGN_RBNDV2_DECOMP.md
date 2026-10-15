@@ -109,3 +109,13 @@ light panel only; it does not move the band (`--bg-band`), a chart's colour, or 
   ink rule in `RV-t-1`; no ENDPOINT change, no page edit.
 - The canvas value lives in `portal/design/brands/opal-capital.json`, which `portal/src/index.css` names as the ONE writer;
   `RV-t-1` edits the source and regenerates, never the generated file alone.
+
+**Addendum 1 (issuer, 2026-10-15 ~06:0xZ; the issuer rules inside its own decomposition, /canonical-drive obligation 7):** one
+DIRECT-ACT cell, from surprise row `DSGN_RBNDV2-S2` found in the COO's early render of `/market` on the merged branch: inside the
+white panels the shared `Segmented` and `Button` controls written for a band ground read pale, because they spell their ink as the
+tokens `--palette-white` and `--palette-mediumGray`. No existing cell owns it and it sits on the thread page (FWD-1). Gate limb: none
+graded the amendment (the L6 gate grades newly-added orders; the coverage limb is noted, not graded, at EXECUTING).
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `RV-r-1` | DIRECT-ACT: ONE unlayered rule block in `portal/src/index.css`, selector `[data-panel-surface="light"]`, that redefines `--palette-white` to the navy ink `#0A1733` and `--palette-mediumGray` to the quiet ink `#4A5878`, each as an `H S% L%` triple like the theme's own, so every control inside a light panel that spells its ink with those two tokens reads navy and quiet-navy; nothing outside the scope changes | FWD-3, FWD-1 | `src/index.css`, `src/__tests__/dsgn-rbndv2/rb-1-r.*` | `src/ui/components/Controls.tsx`, `design/themes/opal-capital.css` | LOCAL |

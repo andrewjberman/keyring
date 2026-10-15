@@ -36385,3 +36385,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The control-plane record does not show a stop act for the runner, and the command text is hidden by the service; the handover in the ledger must name the dispatch object and the trigger path as the stop surface, verified against a live read at the time of the act."
 }
 ```
+
+## IRPT_BCKEND-D2-S186 -- Dispositions on the ~PS r3 and ~PO r3 workers' rows; the Orion flat-key writer is the gold chain on inf-gold-layer-runner: pair (b) as signed needs a re-cut
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S186",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T06:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on the ~PS round-3 and ~PO round-3 workers' rows (D2-W401-S1 to S3, D2-W402-S1 to S3, D2-W403-S1 to S4) and the Orion finding: the daily flat keys are written by the Orion pull steps of the gold chain on the inf-gold-layer-runner EC2 (started by inf-gold-trigger at about 11:32Z), so pair (b) as signed (port the manual CLI and retire its writes) would cut the same pulls that feed the silver steps; the pair needs a re-cut by the CTO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB201-1, IB201-2 and IB202-1 AC1 to AC3 on the landed trees (all PASS) and the three proof instances (VALID); merges 85594eeabe, 2b0d56c675, e7837beeca",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~403/IB202-1_flat_key_writer_read.json: writer measured, kind ec2_instance, inf-gold-layer-runner; CloudTrail S3 data events 2026-10-14 (PutObject by the runner's instance-profile role at 11:40:28Z transactions, 11:48:56Z performance, 11:51:51Z positions); gold chain log steps INF_API_PULL_TXN, INF_API_PULL_PERF, INF_API_PULL_POSITIONS_DAILY; inf-gold-trigger started the instance and sent the chain by SSM at 11:32:35Z and 11:32:57Z; the code/manual_api and code/gold copies of the three pull scripts are identical"
+    ]
+  },
+  "spec_asserts": "The Orion pairs packet (sha256 c3dcc22f02e8, both halves signed): pair (b) PORTS the manual CLI writes into one scheduled handler at 06:00 New York and RETIRES the manual CLI writes in the same pair; no second producer.",
+  "world_is": "DISPOSITIONS. D2-W401-S1 (the oneOf had no branch for a filled bundle): RESOLVED by IB-pr-557 AMENDMENT 1 (my defect). D2-W401-S2 (four seam tests failing at base, outside the grant): INERT, recorded. D2-W401-S3 (an existing branch admits a filled pin beside a narrative ref): INERT, recorded for the round-4 contract read. D2-W402-S1 (my order said _scope was already on the export path; it is not): INERT, my error, the freeze adds it. D2-W402-S2 (AC3 needs the worker's own commits): INERT. D2-W402-S3 (ARMED, owner me): infra/aws/lambda/ci/lambda-source-map.json lists no entry for _scope/filled_named_accounts.py, so a route or export deploy would omit it: a round-4 cell before any deploy leg. D2-W403-S1 (writer located), S2 (CloudTrail data events for opal-data-inf only from 2026-10-13 20:30Z), S4 (no StopInstances event; SendCommand hidden): INERT. D2-W403-S3 (ARMED, owner me): the flat-key pulls are steps of the gold chain that also feeds the silver transactions and performance steps, so retiring them (pair (b) as signed) couples to the gold chain; disarm condition: the CTO re-cuts pair (b) on the located writer (recommended: re-time the existing chain trigger into the 06:00 New York fold; no new producer, no port)."
+}
+```

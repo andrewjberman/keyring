@@ -624,3 +624,29 @@ Filed by 2.0.0_SA_COO~ZB at the Z6 drain end.
   "notes": "A new citing row rather than an in-place edit, because rows are append-only. Graduation of Z-S14..S19 is the CVO's. The OPAL_BBGTML Z6 drain-end message to 1.0.0_SA_CTO~Z carries all of Z-S14..S20."
 }
 ```
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S21",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+  "surfaced_at": "2026-10-15T05:59:03Z",
+  "one_line": "The sign-in fill's verify step prints an OCR read of the login NAME to stdout (a line 'username OCR (observation only): <value> similarity N%'), so any tee of a fill run, and every scheduled-pull log that goes through the fallback, carries the name; the order says never print or log a credential and the tool's own banner says values are never printed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-Z6-R3 AC1 run 2026-10-15T05:44Z: two fills each printed '[fallback]   username OCR (observation only): <the name> similarity 100%' right after 'PHASE FILL. user_len=12 pw_len=9 (values never printed)'",
+      "Grep of C:/Users/Opal Bloomberg/opal_bbg_logs for 'username OCR': 16 occurrences across 13 pull logs (bbg_tplus1_20260917 .. 20261013), so the line is routine, not new",
+      "org/tier2_senior/0.7.0_AE_CloudOps~ZS/deliverables/z6_r3_exercise.log carries the line with the value REDACTED before commit (grep for the name: 0 hits); the pull logs live under the user profile and are not in the repo"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-Z6-R3 bounds: 'never print, log or commit a credential'; bbg_signin.ps1 prints 'values never printed' for the user and password lengths.",
+  "world_is": "The password is never printed. The login NAME is, via an OCR observation line the verify step adds. Whether the name counts as a credential for that bound is the issuer's reading; it is a login identifier, not a secret, but it IS printed in a stream the order tells the seat to tee into a committed deliverable.",
+  "notes": "No act owed here and nothing was changed. If the reading is that it is a credential, the fix is one line in the verify step (print the similarity only). This seat redacted its own copy and committed only the redacted log."
+}
+```
