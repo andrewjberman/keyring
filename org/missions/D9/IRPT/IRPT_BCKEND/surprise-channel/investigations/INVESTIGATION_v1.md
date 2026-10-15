@@ -37670,3 +37670,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Ask the issuer to define functions_invoked in the next amendment. Until then the record states the reading in its notes, so the grader sees it."
 }
 ```
+
+## IRPT_BCKEND-D2-S194 -- Dispositions on workers 413 and 414's rows; 49 Financial's lost account is ACTIVE in the directory; Cottonwood's account has only no-position source rows (measured)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S194",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T11:54:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (the publish guard's owner decides) or whoever accepts the lost accounts",
+  "one_line": "Dispositions on workers 413 and 414's rows (D2-W413-S1, S2; D2-W414-S1 to S4) and the two refusal reads: 49 Financial (P1, two trading days behind) is refused on one account_lost whose account is ACTIVE in the directory; Cottonwood's account is dropped because all its source rows are no-position rows, so the validator refuses an empty custody frame (measured); D2-S158 stays ARMED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB210-1 and IB210-2 AC1 to AC3 on the worker trees (all PASS) and the proof instances (VALID); merges a9eb88ed54 (570) and 61fd06850f (571)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~413/IB210-1_49f_refusal_read.json: 49 Financial served 2026-10-12 (two trading days behind T-1 at 2026-10-14); one refusal record, candidate 2026-10-13, account_lost count 1, listed.new_unclassified 0; the account marked ACTIVE in a directory of 4,746 entries (4,673 ACTIVE, 73 TERMINATED), so closed_account_ids (TERMINATED only) cannot exempt it; the candidate builder's filter unread (cause inferred)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~414/IB210-2_cot_validator_read.json: the validator run offline on the dropped Cottonwood account's rows (2 rows over 3 dates): refused at holdings_snapshot.py line 403 because the custody frame is empty after the screen's no-position filter; zero independent-total rows for the account on 2026-10-13 (measured)"
+    ]
+  },
+  "spec_asserts": "Row D2-S158 and my IB-pr-569 order: the lost account is dropped by the COT account screen for a reason not yet measured; 49 Financial is not blocked.",
+  "world_is": "DISPOSITIONS. D2-W413-S1 (the refused 49 Financial account is ACTIVE in the directory, so the closure exemption cannot clear it; cause inferred): ARMED, owner me, carried into IB-pr-573. D2-W413-S2 (the closed-account set is read from a legacy bucket): INERT, recorded for the screen fix. D2-W414-S1 RESOLVED: the validator's import chain sat outside the sparse grant (AMENDMENT 1 of IB-pr-571). D2-W414-S2 RESOLVED: my check let an accepted branch pass a record that never ran the validator; fixed. D2-W414-S3 (a currency file added to the sparse grant) and S4 (functions_invoked is ambiguous: the offline run imports the repository function, which is not a Lambda invocation, counter 0): INERT, recorded. D2-S158 stays ARMED: the Cottonwood cause is now MEASURED (the account's source rows are all no-position rows, so the custody frame is empty after the no-position filter and the validator refuses), which points to a real closure or a stale source rather than a defect in the validator; the choice among a custodian-confirmed TERMINATED mark, a source confirmation of the no-position rows and a screen decision is the CTO's. 49 Financial's cause remains inferred until IB-pr-573."
+}
+```
