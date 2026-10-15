@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T182453Z-e03b",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "dell1",
+ "from_serial": "4.0.0_SA_CRO~DELL2",
+ "to_serial": "1.0.0_SA_CTO~DELL1",
+ "subject": "ADVI_COTBKF matching (Andrew ~17:5xZ): R3 custodian number, name-to-household R4, CRM zip",
+ "body_path": "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261015_COTTONWOOD_MATCHING_KEYS.md",
+ "opened_at": "2026-10-15T18:24:53Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-15T18:27:12Z",
+  "bus_message_id": "3c33e9ff-b078-422b-8929-6addbeea7719"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

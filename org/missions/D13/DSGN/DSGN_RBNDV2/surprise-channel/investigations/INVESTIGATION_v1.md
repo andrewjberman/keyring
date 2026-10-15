@@ -1236,6 +1236,198 @@
     "spec_asserts": "RV-y-1 face: a test file must typecheck (execSync, join, a cast on process.env reads); the bar is the test this order writes.",
     "world_is": "The new test rb-6-y1.border-sweep.test.ts adds no tsc error. The one error sits in a neighbouring cell test (RV-x-5) that this order does not own, so it is recorded here and not edited.",
     "notes": "Filed, not fixed. The fix belongs to the owner of RV-x-5; this worker did not touch that file."
+  },
+  {
+    "id": "DSGN_RBNDV2-W21-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~21",
+    "surfaced_at": "2026-10-15T17:06:48Z",
+    "one_line": "RV-y-3 names git show d0cb67d0:src/__tests__/dsgn-rbndv2/rb-6-y1.border-sweep.test.ts as the difference-control base; that file does not exist at d0cb67d0, so the git show would fail.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 86db3d1b (worktree wk-DSGN_RBNDV2-21-portal): git cat-file -e d0cb67d0:src/__tests__/dsgn-rbndv2/rb-6-y1.border-sweep.test.ts = fatal, path not in d0cb67d0; the folder listing at d0cb67d0 has 11 test files and no rb-6-y1",
+        "git log --diff-filter=A -- src/__tests__/dsgn-rbndv2/rb-6-y1.border-sweep.test.ts = e6319c40 (RV-y-1); e6319c40^ = d0cb67d0; e6319c40 holds the same y1 text as HEAD (git diff e6319c40 HEAD on that file = 0 lines)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-3 difference control: the standalone arms run on git show d0cb67d0:<y1 test path> and on git show d0cb67d0:<x5 test path>, and must report at least one failing arm.",
+    "world_is": "The y1 test first exists at e6319c40, the RV-y-1 commit whose parent is d0cb67d0. The x5 base at d0cb67d0 exists and names maxBuffer. This worker reads the y1 pre-fix text at e6319c40 and the x5 pre-fix text at d0cb67d0; the arms and the discrimination are unchanged.",
+    "notes": "Filed, not fixed. Substitution made in rb-6-y3.standalone.test.ts only: the y1 control reads e6319c40 because d0cb67d0 does not carry the file. The issuer decides whether the order text is corrected."
+  },
+  {
+    "id": "DSGN_RBNDV2-W21-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~21",
+    "surfaced_at": "2026-10-15T17:06:48Z",
+    "one_line": "RV-y-3 says the y1 test names org/missions literally; at its pre-fix text the path is split into quoted tokens, so a literal-string arm does not see it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal show e6319c40:src/__tests__/dsgn-rbndv2/rb-6-y1.border-sweep.test.ts | grep -c 'org/missions' = 0; the LIST_PATH constant (lines 28-38 at e6319c40) builds the path from the tokens 'org', 'missions', 'deliverables', '0.9.0_WK_DSGN_RBNDV2~19', one token per line",
+        "the literal arm alone on the y1 pre-fix text passes; the split-token arm (SPLIT_A, SPLIT_B in rb-6-y3.standalone.test.ts) fails it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-3 standalone arm: no test file contains the string org/missions or deliverables/0.9.0, and the difference control fails on the y1 base for that reason.",
+    "world_is": "The literal arm cannot discriminate the y1 pre-fix text. The standalone test also detects the same two segments written as separate quoted tokens, so the y1 control fails on that arm. No test in the folder names a workspace path after RV-y-3.",
+    "notes": "Filed, not fixed in any other file. The split-token detector is a stronger form of the order's literal arm, not a weaker one; the literal check is still performed."
+  },
+  {
+    "id": "DSGN_RBNDV2-W20-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~20",
+    "surfaced_at": "2026-10-15T17:09:08Z",
+    "one_line": "portal/src/components/market-performance/ExecutiveSummary.tsx line 268 builds the Trending Topics footer as a template literal from formatSourcesForFootnote, which passes each data source name through unchanged, so a lower-case name in the data prints lower-case in the footer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/lib/sourceRanking.ts:103-119 formatSourcesForFootnote joins getTopSources output with no case normalisation (portal@86db3d1b)",
+        "portal/src/components/market-performance/ExecutiveSummary.tsx:245-268 builds the footer; line 268 is the template literal (portal@86db3d1b)",
+        "the top_sources feed values are not read in this worktree, so whether a live name is lower-case is not measured here"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-2 order: fix the class, not the strings; read how a template literal builds its names; if formatSourcesForFootnote can output a lower-case source name, write a surprise row naming the line and do not edit it.",
+    "world_is": "The function can output a lower-case source name whenever the data carries one. Not edited: sourceRanking.ts is read-only for this cell.",
+    "notes": "Filed, not fixed. The owner of sourceRanking.ts decides whether names are normalised at the source or at the footer."
+  },
+  {
+    "id": "DSGN_RBNDV2-W20-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~20",
+    "surfaced_at": "2026-10-15T17:09:08Z",
+    "one_line": "Six string literals and two JSX texts beginning Source: open with lower-case prose, not a source name (for example 'Source: the report is not named in this security's data' and 'Source: a vendor's report.'); the capitalization rule has no reading for a sentence.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx:68 'Source: a vendor's report.' (portal@86db3d1b)",
+        "portal/src/pages/SecurityAnalysis/components/DossierSections.tsx:56, portal/src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx:430, portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx:176 'Source: the report is not named in this security's data' (portal@86db3d1b)",
+        "portal/src/pages/SecurityAnalysis/components/ThesisCards.tsx:255 'Source: machine draft from a filing' and its template twin (portal@86db3d1b); JSX texts at ThesisCards.tsx:153 and portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:499",
+        "portal/src/__tests__/dsgn-rbndv2/rb-6-y2.footer-source-case.test.ts header: a segment that opens in lower case is prose and is not checked"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-2 order: every footer source string reads with every word of the source name capitalized, small words excepted.",
+    "world_is": "These lines are sentences or prose clauses, not source names; title-casing them would change copy the order does not name. Left as written and counted as prose. NativeSections.tsx:68 is also compared by an existing test (rb iv-e-122, line 100), so changing it would edit a file outside the grant.",
+    "notes": "Filed, not fixed. Whether a prose fallback is a footer string is a ruling for the CVO."
+  },
+  {
+    "id": "DSGN_RBNDV2-W20-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~20",
+    "surfaced_at": "2026-10-15T17:09:08Z",
+    "one_line": "Three footer strings carry a lower-case qualifier after a comma ('Source: Black Diamond, holdings as of ...' at PositioningSummary.tsx:1606 and HoldingsTab.tsx:310; 'Source: ${provider}, as of ${asOf}.' at MethodAndSources.tsx:72); the rule was applied to the source name only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/Positioning/panels/PositioningSummary.tsx:1606 and portal/src/pages/Positioning/tabs/HoldingsTab.tsx:310 (portal@86db3d1b)",
+        "portal/src/pages/InvestorReporting/tabs/reporting/MethodAndSources.tsx:72 (portal@86db3d1b)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-2 order: in the source name after Source:, every word starts with a capital letter, small words excepted.",
+    "world_is": "The source-name segments (Black Diamond, Bloomberg, provider) obey the rule. The qualifier 'holdings as of' and ', as of' are not source names; a strict reading would print 'Holdings As of'. Not edited.",
+    "notes": "Filed, not fixed. The qualifier reading is a ruling for the CVO."
+  },
+  {
+    "id": "DSGN_RBNDV2-W20-S4",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~20",
+    "surfaced_at": "2026-10-15T17:09:08Z",
+    "one_line": "The order's premise says the portal worktree is branched from feature/dsgn-rbndv2-light at d0cb67d0; the worktree HEAD is 86db3d1b, one RV-y-1 drain above d0cb67d0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal/ rev-parse --short HEAD = 86db3d1b on branch wk-DSGN_RBNDV2-20-portal; git show -s --format=%s 86db3d1b = drain(DSGN_RBNDV2.TO-RV-y-1) merge of worker ~19",
+        "d0cb67d0 is the difference-control base and is an ancestor of 86db3d1b (the before counts read git show d0cb67d0:<file>)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-2 order environment: the portal worktree branched from the feature branch at d0cb67d0, the difference-control base.",
+    "world_is": "HEAD is one drain past d0cb67d0. The cell's edits sit on 86db3d1b; the difference against d0cb67d0 is the control only and does not change the verdict.",
+    "notes": "No action taken; recorded so the drain reads the base correctly."
+  },
+  {
+    "id": "DSGN_RBNDV2-W22-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~22",
+    "surfaced_at": "2026-10-15T17:58:48Z",
+    "one_line": "The order states the feature branch holds about 45 non-merge commits over ad7c100b; the measured count is 39 non-merge (59 total).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C ajb_wk/rbndv2-22/portal rev-list --count --no-merges ad7c100b..feature/dsgn-rbndv2-light = 39; rev-list --count ad7c100b..feature/dsgn-rbndv2-light = 59; feature tip 3509eae8",
+        "git diff --name-only ad7c100b feature/dsgn-rbndv2-light = 89 files and git diff --name-only origin/PROD ad7c100b = 22 files, both as the order states"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RV-z-1 facts measured at the cut: the feature branch holds about 45 non-merge commits (git rev-list --reverse --no-merges ad7c100b..feature/dsgn-rbndv2-light).",
+    "world_is": "39 non-merge commits. All 39 replayed in order onto origin/PROD @33ad65ee with zero conflicts and zero empty picks; the candidate is 39 commits over PROD. The 89-file and 22-file figures match; the about-45 figure does not.",
+    "notes": "Filed, not fixed. REHEARSAL_RECORD.md states the measured 39."
+  },
+  {
+    "id": "DSGN_RBNDV2-W22-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~22",
+    "surfaced_at": "2026-10-15T17:58:48Z",
+    "one_line": "git worktree add of the PROD scratch worktree left a full bun install as a directory in node_modules, so the order's step-2 link was never in place.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -ld ajb_wk/rbndv2-22/prod-baseline/node_modules showed a directory (drwx, 13:48) holding .bin and .tmp stamped 13:46 with 313 entries; ln -s to the shared install created no node_modules/node_modules link",
+        "ajb_wk/rbndv2-22/portal/node_modules is a junction to ajb_workspace/portal/node_modules (cmd dir /AL)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RV-z-1 step 2: link the scratch worktree node_modules the way the portal worktree has it (a junction to the shared one).",
+    "world_is": "The worktree add left a real install. The install was renamed to node_modules.scratch-install (a move, no delete) and a junction to the shared install was made with mklink /J. The shared install was checked intact after the baseline run and after the junction was removed. The baseline typecheck ran against the shared install.",
+    "notes": "Filed, not fixed. Cause not measured: whether a portal hook runs bun install on worktree add is unverified."
+  },
+  {
+    "id": "DSGN_RBNDV2-W22-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~22",
+    "surfaced_at": "2026-10-15T17:58:48Z",
+    "one_line": "git worktree remove --force on the PROD scratch worktree failed with Filename too long after unregistering it; the directory stays untracked at ajb_wk/rbndv2-22/prod-baseline.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C ajb_wk/rbndv2-22/portal worktree remove --force ../prod-baseline returned: error: failed to delete .../prod-baseline: Filename too long; git worktree list then shows no baseline entry",
+        "ls ajb_wk/rbndv2-22/prod-baseline shows the PROD source tree plus node_modules.scratch-install (286 top-level entries)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RV-z-1 step 2: remove that scratch worktree (git worktree remove --force) after the baseline typecheck.",
+    "world_is": "The residue is an untracked copy of PROD at 33ad65ee plus a bun install, and no git worktree tracks it. Deleting it is a recursive delete, which the autonomy rule holds for Andrew's word, so this worker did not delete it.",
+    "notes": "Disposition for Andrew or the drain: remove the directory. Not blocking the rehearsal; no criterion reads it."
   }
 ]
 ```

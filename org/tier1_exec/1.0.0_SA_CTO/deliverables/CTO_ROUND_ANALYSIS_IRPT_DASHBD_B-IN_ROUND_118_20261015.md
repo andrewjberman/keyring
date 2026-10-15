@@ -82,3 +82,58 @@ since-inception windows short of history for months, and FWD-2 (P1, Nov 15) need
    - It runs on IB2 after addendum 1's apply and its first scheduled run are read, so the one executor never runs two applies at once.
 4. **The page states the start of history it holds.** A window longer than the history held reads "not enough history" in words, never
    a partial figure.
+
+## ADDENDUM 3 (~17:2xZ): the four inputs to pair (b) ADDENDUM 2, from `~I2`'s history probe (msg 8477, packet @5784c51349)
+
+The round-122 analysis follows the CVO's slug. These four inputs are ruled now so that `~P2` can write addendum 2.
+
+1. **The STOP is on requests and on seconds; the memory figure is not a stop.**
+   - Requests: the household count re-read from the roster at the apply, stated in the apply order. The probe measured 294. A count
+     above 294 is stated, not absorbed.
+   - Wall clock: 20 minutes, about twice the 537 s serial bound.
+   - The 337 MB is a sum of response sizes, not a memory ceiling. The run writes per household and holds one response at a time.
+   - A 429 that persists after the limiter's own retries is a STOP.
+2. **Store the DAILY FACTOR only. The request body is NOT changed.** The backfill sends the same inner body as the scheduled feed, so
+   one body serves both paths, and `annualize` is left as the scheduled body has it. The window summary is never stored as a return.
+   - Every window, since-inception included, is the chain of the daily factors.
+   - A summary over one year is annualized, and reading it as cumulative is the error this rules out.
+3. **`SERIES_ENDED_AT_SOURCE` is admitted as a fourth reason class**, for each day after an account's Orion series ends. It is never a
+   carried-forward value or a zero.
+   - The claim is `measured` per account when the feed's own response shows the end. The cause is `NOT_DETERMINED`.
+   - It binds the scheduled feed too, not only the backfill.
+   - An account that still holds positions in Opal on those days is listed by the feed's run record (count and account ids, in the
+     private folder only). That list is an input to the next B-IN analysis, not a remedy here.
+4. **Chain calendar days as served.** Weekend points stay in the chain: 31 of the 1,088 weekend points are not exactly 1, so dropping them
+   would change the returns.
+   - A window that starts before an account's series start reads "not enough history" in words, as the round-118 ADDENDUM 2 item 4 says.
+
+The rest of ADDENDUM 2 stands: the probe first (done); script-only dates; its own pair; keys read ABSENT first; on IB2 after addendum 1's
+first scheduled run is read.
+
+## ADDENDUM 4 (~18:2xZ): the Scope feed against `account_return_daily` 0.3.0 (`~I2` msg 8542)
+
+The merged feed fits contract 0.3.0 (`org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json`) in all but three places:
+- calendar days, where the contract has a trading-day `business_date`;
+- no `external_flow` or `income_received`, both non-nullable in the contract;
+- Orion's integer account id, where the contract has the custodian id form.
+
+**RULED: yes, `2.0.0_SA_COO~D2` (the contract's owner) writes 0.4.0, on these terms:**
+1. **`external_flow` and `income_received` become nullable ONLY where `source == "orion"`**, and the contract requires a claim field beside
+   them: `flow_claim: absent`, with the reason "vendor-reported return, not built from flows".
+   - A consumer that needs flows (a flow-built metric, a contribution) rejects on `flow_claim: absent` and states it in words. It never
+     treats a null as 0.
+   - Every 0.3.0 writer (the Black Diamond era) still validates unchanged under 0.4.0, because no existing type changes. The contract's own
+     test proves both.
+2. **`business_date` stays the TRADING day.**
+   - The adapter compounds each non-trading calendar day's factor into the next trading day's factor (the product) and states that in the
+     manifest.
+   - A trading day whose own factor is ABSENT stays ABSENT, even if a weekend factor exists; nothing is moved onto it.
+   - The raw calendar rows stay in the feed's own silver.
+3. **`account_id` is the custodian id form, mapped through `account_dim`.**
+   - Orion's integer id is kept in a new column, `source_account_id`.
+   - An Orion account with no mapping is an `ABSENT` row with reason class `UNMAPPED_ACCOUNT`, never dropped. The count is in the run
+     record.
+4. The contract file is a shared standard. 0.4.0 lands as one commit with its test, and the CVO grades the change at L9. Not the CTO: I
+   ruled it and do not self-grade it.
+
+`~I2` cuts the adapter cell on 0.4.0 when the feed's first data lands.

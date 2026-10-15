@@ -17849,3 +17849,183 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-9. Form only: counts and flags; no value, no identifier, no date. The annualization explanation was tested and rejected (the chain does not match the annualized product for either account)."
 }
 ```
+
+## IRPT_DASHBD-D2-S91 -- two Inflection Orion account series end 95 and 120 days before the pull date; the feed carries the days after as ABSENT SERIES_ENDED_AT_SOURCE (owner for the ruled reason class)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S91",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T17:25:00Z",
+  "one_line": "Two of nine Orion Scope Daily series in the B-IN history probe end 95 and 120 days before 2026-10-13. Row D2-W309-S3 is INERT and has no owner, so this row owns the ruled reason class SERIES_ENDED_AT_SOURCE until the feed carries it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "CTO round-118 ADDENDUM 3 item 3 (@9418ec7e4e): each day after an account's Orion series ends is ABSENT SERIES_ENDED_AT_SOURCE, never a carried-forward value or a zero, in the scheduled feed and the backfill alike.",
+  "world_is": "The probe (round 122, @5784c51349) measured the two early ends. The cause is unread. Whether either account still holds positions in Opal on those days is not established. The hazard: a feed that carries forward the last factor, or writes a zero, would serve a fabricated flat return for months.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/IRPT_DASHBD_ROUND122_BIN_DRAIN_END_20261015.md @5784c51349",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v95.md @21df5c47c2 (CVO~IRPT item 3: the early-end row has no owner)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: ~P2's feed build (IB-pr-586) carries SERIES_ENDED_AT_SOURCE with a test of the after-end days, and the first run's private record lists the still-held accounts. The cause read (is Orion's series stale for an open account?) is ~I2's, at the next B-IN round."
+}
+```
+
+## IRPT_DASHBD-D2-S92 -- Cottonwood account_return_daily carries two contracts under one table name (method_version 3, then 2) with a 12-day gap; the consumer must never chain across them
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S92",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T17:35:00Z",
+  "one_line": "irpt/cottonwood/gold/account_return_daily holds a Commonwealth era (to 06-22, method_version 3, asof/firm_scope manifest) and a Black Diamond era (from 07-10, method_version 2, contract_version 0.3.0 manifest), with a 06-23 to 07-09 gap. A consumer that chains across them serves a spliced return.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "One table name is one contract (TAXONOMY LAW ii, same grain); a return window is chained within one method.",
+  "world_is": "CRO research @03d1a87a9c section B read four files: 19 vs 20 columns, method_version 3 vs 2 (it goes backwards), different manifests, and a 12-trading-day gap.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261015_COTTONWOOD_BACKFILL_STATE.md @03d1a87a9c section B",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUND_128_20261015.md ADDENDUM 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: the report-build handler reads each partition's manifest contract and method_version, chains within one contract only, and a test spanning 06-22 and 07-10 shows a stated floor or 'not enough history', never a splice. History is not rewritten under this row."
+}
+```
+
+## IRPT_DASHBD-D2-W216-S1 -- the commit-time naming gate refuses the order's mandated tf_file and tf_resource in the new source-map entry, so the entry cannot be committed and the build cannot run
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W216-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~216",
+  "surfaced_at": "2026-10-15T17:03:03Z",
+  "one_line": "TO-DB-b-265's source-map entry irpt-cot-reporting-gold-lambda is REFUSED at commit by the naming limb (LGIC_ENFORCE): its tf_file and tf_resource carry the firm token cot as hand-kept carriers, so the commit aborted with nothing staged; the entry must be committed before the BUILD_ONLY run, so AC2 cannot run, and the order stops there as its refusal clause directs",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit of infra/aws/lambda/ci/lambda-source-map.json on branch wk-IRPT_DASHBD-216 (base 2c6ed37df3) returned ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged. The diff was 142 insertions and 0 deletions; the entry is UNCOMMITTED in the worktree and nothing is staged",
+      "the naming-gate refusal lines, verbatim: NAMING REFUSE infra/aws/lambda/ci/lambda-source-map.json:6583 infra/aws/terraform/investor-reporting/reporting-gold-cot/lambda.tf -> lookup('cottonwood') ; NAMING REFUSE infra/aws/lambda/ci/lambda-source-map.json:6584 module.irpt_reporting_gold_cot.aws_lambda_function.this -> lookup('cottonwood') ; NAMING-GATE: REFUSE 2 graded",
+      "the two refused values are the order's mandated tf_file and tf_resource (the order names them, and the issuer checker's ROOT_DIR and tf_resource constants require them). The landing entry irpt-cot-account-return-daily-lambda carries neither token in its tf_file or tf_resource (infra/aws/terraform/investor-reporting/account-return-daily/lambda.tf and module.irpt_account_return_daily.aws_lambda_function.this), so it was never refused; the new entry's source_dir and iam_role also carry the token and were not among the two graded refusals"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-265 step 3 says to commit the new source-map entry irpt-cot-reporting-gold-lambda (tf_file infra/aws/terraform/investor-reporting/reporting-gold-cot/lambda.tf, tf_resource module.irpt_reporting_gold_cot.aws_lambda_function.this) BEFORE running the BUILD_ONLY build, and the refusal clause says that if the naming gate refuses a name the worker records the refusal line verbatim, files a BLOCKING row and stops, and never types a name to pass it.",
+  "world_is": "The commit-time naming gate refuses the two mandated carriers as hand-kept cot tokens outside every permitted context, so the entry cannot be committed, the build (which reads committed source) cannot run, and no criterion past AC1 can be measured. The gate's own suggested route, lookup('cottonwood'), exists for Python code (worker 214's handler, row IRPT_DASHBD-D2-W214-S1) and has no form inside a JSON carrier. No Terraform file of the root was written by this worker, so AC1 was not run either. The worktree keeps the uncommitted entry edit; no name was altered to pass the gate. Counts and paths only; no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W216-S2 -- a plain git merge of box/dell2 left a merge the drain refuser will not continue, so the merge was aborted and re-run through safe-merge.sh
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W216-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~216",
+  "surfaced_at": "2026-10-15T17:40:00Z",
+  "one_line": "The coordinator's ruling said to run git merge box/dell2 in the worktree; that merge conflicted on the append-only investigation file and safe-merge.sh --continue then refused it (rc 2, the merge was not opened by the script); the merge was aborted with safe-merge.sh --abort and re-run as safe-merge.sh box/dell2, which landed 4b03c4e76a with no conflict reported and the channel holding both rows",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge box/dell2 in the worktree reported CONFLICT (content) in org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md; the conflict was two appended blocks at the end of the file, resolved by keeping both (no existing row edited)",
+      "bash .tools/safe-merge.sh --continue returned: safe-merge: REFUSED -- a merge is open but THIS script did not open it (no conflict state at the worktree safe-merge-conflict path); rc=2",
+      "bash .tools/safe-merge.sh --abort returned: safe-merge: merge aborted; tree restored and conflict state cleared; then bash .tools/safe-merge.sh box/dell2 returned: safe-merge: MERGED and committed -- 4b03c4e76a (fast lane); index check 4b03c4e76a: 0 of 149 merged path(s) differ between the index and HEAD; the channel file has 0 conflict markers and both W216-S1 and D2-S90 rows"
+    ]
+  },
+  "spec_asserts": "The coordinator's message said to run git merge box/dell2 in the worktree first, and CLAUDE.md names safe-merge.sh as the merge limb for a shared branch; the order names no merge tool.",
+  "world_is": "A plain git merge that conflicts cannot be continued by safe-merge.sh --continue, which refuses a merge it did not open; the worker aborted the merge (no commit was lost, the resolution was re-made) and landed box/dell2 through safe-merge.sh box/dell2. Counts and paths only; no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W217-S1 -- the earlier handler test fixture holds returns partitions with no manifest, so the contract guard refuses the builds those tests make; the fixture gains a manifest per partition and one GET count selects data.parquet
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W217-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~217",
+  "surfaced_at": "2026-10-15T18:09:20Z",
+  "one_line": "The earlier handler test fixture holds returns partitions with no manifest.json, so the contract guard refuses the builds those tests make; the fixture gained one manifest per returns partition, and one earlier assertion that counted every account_return_daily GET now counts the data.parquet GETs only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the round-131 probe fixture, which holds returns partitions with no manifest, measured at 0852b79ac7: the one-day build refused with 'REFUSED: the returns partition 2026-07-10 names no contract' (run of checks/r131/p131_cothandler.py, DB131-1-AC2, rc=1)",
+      "after the fixture change, 26 tests pass (21 earlier, 5 new) in infra/aws/lambda/investor-reporting/reporting-gold-cot/tests at 0852b79ac7; the selector changed in test_the_returns_partition_before_the_floor_is_never_listed_or_opened in tests/test_reporting_gold_cot.py keeps its meaning: two data.parquet reads, both at or after the floor"
+    ]
+  },
+  "spec_asserts": "The worker face says the handler change is ADDITIVE, every earlier behaviour and test stays, and all earlier tests still pass; the earlier test fixture names no manifest object for any returns partition.",
+  "world_is": "The CTO ruling requires each used returns partition to name one contract pair in its manifest, so a partition with no manifest refuses. The earlier fixture had none, so the fixture gained one manifest per returns partition (the Commonwealth partition gained its asof and firm_scope manifest) and one GET count changed its selector. No production assertion changed. Counts only; no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W217-S2 -- the round-131 checker DB131-1-AC2 measures FAIL on the committed handler: its fixture has no manifests; the round-135 checker runs only the round-131 static clauses, not its probe
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W217-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~217",
+  "surfaced_at": "2026-10-15T18:09:20Z",
+  "one_line": "Run directly at 0852b79ac7, the round-131 checker DB131-1-AC2 prints FAIL: its fixture builds returns partitions with no manifest.json, so the one-day event refuses with the contract message; the round-135 checker's header says it runs every earlier clause of the round-131 checker, but it runs only that checker's static clauses",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r131/p131_cothandler.py . DB131-1-AC2 at 0852b79ac7 printed 'FAIL: the one-day event wrote nothing: {day 2026-07-13, failed SystemExit: REFUSED: the returns partition 2026-07-10 names no contract}' and 'DB131-1-AC2 FAIL', rc=1",
+      "the round-135 checker's run() for DB135-1-AC2 and DB135-1-AC3 calls its own run_probe and check_guard; check_probe of the round-131 checker is not called (only check_static is, for DB135-1-AC1)"
+    ]
+  },
+  "spec_asserts": "The round-135 checker header says it runs every earlier clause of p131_cothandler.py, and the worker face says every earlier behaviour stays.",
+  "world_is": "The round-131 probe's fixture builds no manifest, and the guard now refuses a partition that names no contract, so that checker's AC2 is red at this commit by design of the ruling. The round-131 checker sits in the issuer's check files, outside this grant, and is not edited. Its red is recorded here, not repaired. Counts only."
+}
+```
+
+## IRPT_DASHBD-D2-W217-S3 -- the worker face names the co-author line Claude Sonnet 5.5; this worker runs as Haiku 5.5, so the commit carries the Haiku attribution line
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W217-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~217",
+  "surfaced_at": "2026-10-15T18:09:20Z",
+  "one_line": "The worker face asks for the commit's last line to be Co-Authored-By Claude Sonnet 5.5; this worker runs as Haiku 5.5 and the session attribution names Haiku 5.5, so commit 0852b79ac7 ends with the Haiku line",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -1 --format=%B 0852b79ac7 ends with 'Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>'"
+    ]
+  },
+  "spec_asserts": "The worker face says to end each commit message with the line Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>.",
+  "world_is": "The session runs claude-haiku-5-5 and the attribution the harness supplies names Haiku 5.5; the face's Sonnet line was not written, and the coordinator may correct the line on the record if it wants the face's text. Counts only."
+}
+```
