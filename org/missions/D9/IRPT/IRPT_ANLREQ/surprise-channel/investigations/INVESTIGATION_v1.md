@@ -19529,3 +19529,77 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W160-S1 -- The cell's 'Did you mean <symbol> (<name>)?' has a company name in the parenthesis, but the door's suggestion carries no name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W160-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~160",
+  "surfaced_at": "2026-10-15T22:18:11Z",
+  "one_line": "The cell's 'Did you mean <symbol> (<name>)?' has a company name in the parenthesis, but the door's suggestion carries no name",
+  "spec_asserts": "AR-y-363 tree (A): 'Did you mean <symbol> (<name>)?' under the finding.",
+  "world_is": "The door's suggestion object is {symbol, source} only (the fixture suggested() in filing-hint.test.tsx; proxyableFindings reads .suggestion.symbol and nothing else). No name reaches the form, so the parenthesis is '(row N: TYPED)', as the PRD v0.15 hint line already rendered it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts@e0b43076 lines 96-98 read the suggestion's symbol only",
+      "portal/src/pages/TicketCenter/analysisRequest.ts@a168015b hintLine renders 'Did you mean X? (row N: TYPED)' and the test (a) of filing-decision-tree.test.tsx pins that line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W160-S2 -- Every tree item reaches the form only through the inherited NAME_PROXY gate, and the door's live actions for TICKER_NOT_FOUND were not read
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W160-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~160",
+  "surfaced_at": "2026-10-15T22:18:11Z",
+  "one_line": "Every tree item reaches the form only through the inherited NAME_PROXY gate, and the door's live actions for TICKER_NOT_FOUND were not read",
+  "spec_asserts": "AR-y-363 (A) and (A) without a suggestion: a TICKER_NOT_FOUND finding shows Yes, Replace, No (or Replace, No) under the finding.",
+  "world_is": "proxyableFindings returns no entry for a finding whose actions omit NAME_PROXY (prospect.ts line 94 at e0b43076), and filingHints is built from it. The tree's presence for an unknown ticker is therefore the door's action list, which the order's premise does not state. The fixtures carry NAME_PROXY; no live call was made, so the live list is not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts@e0b43076 line 94 (the actions gate)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts@a168015b filingHints (proxyableFindings, then code TICKER_NOT_FOUND)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W160-S3 -- The portal worktree has no committer identity, so the face's git -C commit with --author alone refuses
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W160-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~160",
+  "surfaced_at": "2026-10-15T22:18:11Z",
+  "one_line": "The portal worktree has no committer identity, so the face's git -C commit with --author alone refuses",
+  "spec_asserts": "Worker face: commit the PORTAL source inside the portal worktree with git -C <portal> and --author <serial>.",
+  "world_is": "git -C <portal> commit --author <serial> exited 128 with 'Committer identity unknown' on this box, and the portal worktree carries no .tools folder for safe-commit. Commit a168015b was made with the serial as GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL in the environment of that one command; no git config was written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@a168015b: git log -1 shows author 0.9.0_WK_IRPT_ANLREQ~160 (the --author value); the committer is the serial via the environment"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
