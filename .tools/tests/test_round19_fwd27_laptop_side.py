@@ -65,7 +65,7 @@ def main():
         key = field(line, "key") or ""
         if key.split(":")[0] == "ANSWERED":
             key_ok += 1
-        if (field(line, "password_arm") or "") in REFUSED_ARMS:
+        if (field(line, "password_arm") or "").split(":")[0] in REFUSED_ARMS:
             password_refused += 1
     ok = key_ok == len(BOXES)
     print("FWD27-LAPTOP-SIDE boxes=%d key_ok=%d password_refused=%d ok=%s"
