@@ -1,0 +1,85 @@
+{
+  "contract_version": "0.1.0",
+  "project": "IRPT_DASHBD",
+  "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~179",
+  "authored_under": "Round 111 cell DB-b-224 (issuer 2.0.0_SA_COO~D2, decomposition section 113). Model: IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (columns form, schema_hash and schema_hash_basis). Opened by the report contract's open_changes line 1: a household daily return series built the way the account series is built is a new contract.",
+  "table": "household_return_daily",
+  "grain": "household x trading day",
+  "partition": "date=YYYY-MM-DD",
+  "producer": "data/assets/scripts/gold/irpt_reporting/household_return_daily.py",
+  "columns": [
+    {
+      "name": "firm",
+      "type": "string",
+      "nullable": false,
+      "meaning": "The firm id of the registry row the household was read for. A value, never a code."
+    },
+    {
+      "name": "household_id",
+      "type": "string",
+      "nullable": false,
+      "meaning": "The household: the ADVI crosswalk relationship id that its member accounts share (the accounts present in the account gold)."
+    },
+    {
+      "name": "business_date",
+      "type": "string",
+      "nullable": false,
+      "meaning": "The trading day t, ISO date YYYY-MM-DD."
+    },
+    {
+      "name": "market_value_eod",
+      "type": "double",
+      "nullable": false,
+      "meaning": "Sum of the end-of-day market values V_t over ALL of the household's accounts with a row on t."
+    },
+    {
+      "name": "external_flow",
+      "type": "double",
+      "nullable": false,
+      "meaning": "Sum of the external flows F_t over ALL of the household's accounts with a row on t (capital in positive)."
+    },
+    {
+      "name": "total_return_daily",
+      "type": "double",
+      "nullable": true,
+      "meaning": "The household's daily return r_t: the prior-day-value weighted combination of its accounts' own total_return_daily over the accounts in S (weight V_p(a), the account's market_value_eod on the previous date). Null where the day cannot be measured (ACCOUNT_MISSING, NO_PRIOR_VALUE): never zero."
+    },
+    {
+      "name": "accounts_n",
+      "type": "int64",
+      "nullable": false,
+      "meaning": "Count of the household's accounts with a row on t."
+    },
+    {
+      "name": "day_quality",
+      "type": "string",
+      "nullable": false,
+      "meaning": "MEASURED (r_t computed), ACCOUNT_MISSING (a member with a row on the previous date has none on t), NO_PRIOR_VALUE (no previous date, a base not above zero, or an empty base)."
+    },
+    {
+      "name": "method_version",
+      "type": "int64",
+      "nullable": false,
+      "meaning": "The method version of THE METHOD in this contract (1)."
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "nullable": false,
+      "meaning": "The contract_version this row was written under."
+    }
+  ],
+  "enums": {
+    "day_quality": [
+      "MEASURED",
+      "ACCOUNT_MISSING",
+      "NO_PRIOR_VALUE"
+    ]
+  },
+  "method": "THE METHOD (amended on worker row IRPT_DASHBD-D2-W179-S1: the first cut chained the summed values and flows, which does not reproduce an account's own linked return on a carried or large-flow day). For a household and a trading day t with previous date p (the previous date on which the household has any row), let S be the accounts with a row on BOTH p and t. r_t = (sum over S of V_p(a) * r_t(a)) / (sum over S of V_p(a)), where V_p(a) is the account's market_value_eod on p (the weight) and r_t(a) is the account's OWN total_return_daily on t, used as it is, so the producer's linked return on a carried or large-flow day is carried into the household. Where every account's return is the endpoint form (V_t - F_t) / V_p - 1 this equals (sum V_t - sum F_t) / sum V_p - 1 over S; for a one-account household r_t is that account's return. An account with a row on p and none on t makes day t ACCOUNT_MISSING and r_t null (never zero); so does an account of S whose total_return_daily is null on t. An account with a row on t and none on p joins the household that day: it is outside S for that day, and its value enters the base from the next day. r_t is null with NO_PRIOR_VALUE when the household has no previous date, when sum V_p over S is not above zero, or when S is empty. market_value_eod, external_flow and accounts_n are the sum, the sum and the count over ALL of the household's accounts with a row on t. The window return is the product of (1 + r_t) over the trading days after the window's opening anchor up to and including as_of, minus one, and is null if any r_t in the window is null. The account return members of the report fold the same way (account_return_daily total_return_daily).",
+  "window_rule": "Round 112, cell DB-b-227 (columns and schema_hash unchanged). A household window return is computed by household_window_result in the producer module, over the window days: those after the opening anchor up to and including as_of (since inception: after the household's first row date). SOURCE_BREAK: a household window that holds an unmeasured account-day (an account with a row on the previous household date and no row on the day, or a null total_return_daily on the day) takes the kind SOURCE_BREAK, with words that name the account (its position among the household's accounts and its count of unmeasured days) and the gap; a window with a household-no-row day takes SOURCE_BREAK with words that name the days. INSUFFICIENT_HISTORY: a household that did not exist at the start of the window takes the kind INSUFFICIENT_HISTORY with its own words. A window that holds no day (for example a household whose only row is on the as_of day, in the since-inception window) takes the kind INSUFFICIENT_HISTORY with the words \"This household has no measured day in this period yet.\" and never a figure of zero. No imputation: a household window that holds an unmeasured account-day is SOURCE_BREAK with words naming the account and the gap, and the other accounts are never weighted in its place; a figure is never returned together with an absent form, and never zero in place of one. A window with no such day prints its figure, 100 times the product of (1 + r_t) over the window days, minus one.",
+  "schema_hash": "1c478c66c565218fe5d657712be1428d927a2f69eaf1cdc9522a5bd7cbd5c0a3",
+  "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries (the account contract's stated basis). The check recomputes it against the producer's columns, so contract and artifact cannot drift.",
+  "firm_specific_columns": "NONE. A firm-specific column is a contract violation (C-SHAPE). The function names no firm; the firm enters only as the firm column's value, taken from the registry row."
+}

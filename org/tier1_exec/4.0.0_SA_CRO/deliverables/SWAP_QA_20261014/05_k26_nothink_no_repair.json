@@ -1,0 +1,57 @@
+{
+ "cases": {
+  "BREIT": {
+   "known": null,
+   "swap": {
+    "content_head": "Based on my web search, I can now identify BREIT and propose ETF alternatives. Let me search for additional ETF options to ensure I have the best alternatives.",
+    "failure": "KIMI_BADJSON",
+    "searches": 1,
+    "seconds": 10.4
+   },
+   "yahoo": {
+    "last": null,
+    "rows": 0
+   }
+  },
+  "KPEC": {
+   "known": null,
+   "swap": {
+    "detail": "TimeoutError after 240 s",
+    "failure": "HTTP_0",
+    "seconds": 246.8
+   },
+   "yahoo": {
+    "last": null,
+    "rows": 0
+   }
+  },
+  "SREIT": {
+   "known": null,
+   "swap": {
+    "content_head": "Based on my web search, I found that \"SREIT\" refers to **Starwood Real Estate Income Trust**, a non-traded REIT (private/interval fund structure), not an ETF. It's also associated with Singapore REITs (S-REITs), but the specific identifier \"SREIT\" matches Starwood's private REIT.\n\nLet me search for ",
+    "failure": "KIMI_BADJSON",
+    "searches": 1,
+    "seconds": 23.2
+   },
+   "yahoo": {
+    "last": null,
+    "rows": 0
+   }
+  }
+ },
+ "model": "kimi-k2.6",
+ "probed_at_utc": "2026-10-14T18:31:47Z",
+ "qa_receipt_sha256": "602a045705675f9510aba8a8636be97021e988ce5ea121dbe286bb30147478c1",
+ "request_fields": {
+  "tools": [
+   {
+    "function": {
+     "name": "$web_search"
+    },
+    "type": "builtin_function"
+   }
+  ]
+ },
+ "temperature": 0.6,
+ "thinking": "disabled"
+}

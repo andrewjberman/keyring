@@ -14913,6 +14913,800 @@ name the one known failure instead of silently inheriting it.
 
 ```json
 {
+  "id": "NFRA_OPLGTW-Z-W81-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~81",
+  "surfaced_at": "2026-10-14T16:54:39Z",
+  "one_line": "The naming commit limb refuses both served portal key literals OG-pt-3 must hold, platinum/mdpf/ and platinum/mdpf/{scope}/category-views.json, as NEW OUT-OF-PATTERN S3Key, with canonical mdpf/{scope}/platinum/ forms. The bucket literal opal-data-portal-v2 is CONFORMANT. Per the FIRST ACT the order stops before any build.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_OPLGTW.TO-OG-pt-3 FIRST ACT: run the naming gate on the staged S3 key and prefix literals; if ANY literal is refused, do not type it, STOP at once, file ONE BLOCKING row naming the refused literals and the gate's canonical suggestion, and report (the issuer rules the resolution). Bounds: never split a string, never build a key from pieces, never override a gate.",
+  "world_is": "The gate refuses both literals in the served layout. Its canonical suggestions are mdpf/{scope}/platinum/ and mdpf/{scope}/platinum/{scope}/category-views.json. The served layout on opal-data-portal-v2 at HEAD is platinum/mdpf/{scope}/<object>.json, the form DATA_CATALOG.yaml and exercise_catalog_gate.py use. So the order's literal layout cannot be typed as written. Nothing was built, served or changed; the row is INERT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "naming-gate probe at base 835f9452c3, staged diff W/naming_probe/probe.diff (3 added lines, one literal each): 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/portal_mdpf.py:2 platinum/mdpf/ -> mdpf/{scope}/platinum/' and 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/portal_mdpf.py:3 platinum/mdpf/{scope}/category-views.json -> mdpf/{scope}/platinum/{scope}/category-views.json', then 'NAMING-GATE: REFUSE 3 graded', rc=1; verbatim at org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~81/naming_probe/probe_output.txt",
+      "the same run grades the bucket literal opal-data-portal-v2 as CONFORMANT as S3_BUCKET (probe line 1)",
+      "served layout at HEAD 835f9452c3: infra/aws/ec2/opal-gateway/app/graphql_plumbing/exercise_catalog_gate.py lines 42-45 hold platinum/mdpf/{scope}/aum-metrics.json; infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml line 677 names primary platinum/mdpf/{49financial|inflection|cottonwood|global}/...",
+      "infra/logic/registry grep for platinum (first 15 hits, not a census) returns prefixes under advi/, e.g. exemptions.json line 132 advi/49financial/platinum/49financial/ownership_map.json; no registry row was found for the platinum/mdpf/ layout in that read"
+    ]
+  },
+  "notes": "Filed by the worker on the FIRST ACT. No module, test, probe or catalog row was written. Resolution is the issuer's: a registry row or builder output for the portal-v2 layout, or a ruling on the gate's canonical form. The naming gate was not overridden and no key was typed by splitting."
+}
+```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S122",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T18:27:29Z",
+    "one_line": "A2 fixed zs1.AC2's branch LOGIC but not the <expect> REGEX that grades it. The fixed check prints 'WebACL rules identical before and after, updatewebacl_calls 0' and exits 0 with RESULT: PASS -- and the order's expect admits only '...identical..., updatewebacl_calls 1' or '...not changed by this apply, updatewebacl_calls 0', never the true third combination of identical AND zero. So the criterion cannot be PROVEN while it PASSES, and OG-zs-1's status tag stays staged on work that is fully landed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "zs1.AC2.sh at fd4e8e0bcb (2.0.0_SA_COO~O, the A2 fix) run by this seat: 'ledger CLOSED 1 of 1; sentinel at HEAD 0' / 'WebACL rules identical before and after, updatewebacl_calls 0' / 'live bare path unauthenticated: 401; twin unauthenticated: 401' / 'proof file: bare 401, twin authenticated 200, scanner authorizer read yes' / 'RESULT: PASS' / exit=0",
+        "the order's AC2 <expect> at 858549a2b7, the WebACL clause verbatim: 'WebACL (rules identical before and after, updatewebacl_calls 1|not changed by this apply, updatewebacl_calls 0)' -- an alternation of exactly two phrasings",
+        "proof-of-spec-check on the instance with AC2 marked PASS: 'VIOLATION: acceptance[AC2]: status=PASS but output_evidence does NOT match expect ... INVALID (rc=1)'",
+        "the same instance with AC2 marked FAIL and a status_reason: VALID (rc=0)",
+        "the <status> tag was flipped to complete and then REVERTED to staged in the same turn, uncommitted, because the order flips it only if AC1 and AC2 both PASS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2 (ruling on Z-S121): 'updatewebacl_calls of 0 is accepted beside your before and after snapshots (equal rules_sha256)... zs1.AC2 branch logic was unmeetable for your case and is fixed; my live re-run reads RESULT: PASS. Re-run it on your side, refresh the instance, flip the status to complete.'",
+    "world_is": "The re-run does read PASS, so the issuer's own instruction is satisfiable at the CHECK. It is not satisfiable at the CRITERION: a proof instance must quote both the real output and the order's expect, and the expect cannot match the output the fixed check now produces. The fix moved the check's acceptance from 'zero only when no snapshots exist' to 'zero beside equal snapshots' without widening the expect's alternation to describe that state, and the expect is what proof-of-spec-check grades. The gap is narrow and entirely in the order's own two halves -- nothing in the world is wrong and nothing needs re-applying.",
+    "notes": "What this seat did NOT do, because it is the tempting move: edit the <expect> inside its own instance so the strings match. The expect IS the criterion; copying a different one into the instance would be grading myself, and the invocation-alignment limb exists to catch exactly that. The remedy is one amendment by the issuer -- admit the third phrasing, e.g. 'rules identical before and after, updatewebacl_calls [01]' -- after which AC2 is marked PASS, the instance is refreshed and the tag flips. GENERAL FORM, worth more than this instance: when a ruling fixes a CHECK, the <expect> that grades the check is a SECOND surface and does not move with it. Z-S119's ruling had the same shape and did amend both (A3 replaced the criterion as well as the check), which is why that one closed cleanly."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S123",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T18:43:22Z",
+    "one_line": "RESOLVES Z-S122, and the defect was MINE: the issuer amended BOTH the check and AC2's <expect> in the same commit (fd4e8e0bcb, 18:04Z). My instance carried the expect I had copied from the pin the GO named (858549a2b7), 54 minutes older, reading 'updatewebacl_calls 1' where HEAD reads 'updatewebacl_calls [01]'. The mismatch I reported as a gap between the issuer's two surfaces was a gap between my citation and the order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the order's AC2 <expect> at HEAD, printed from the bytes: '...WebACL (rules identical before and after, updatewebacl_calls [01]|not changed by this apply, updatewebacl_calls 0)...'",
+        "what my instance embedded: the same regex with 'updatewebacl_calls 1' -- read from 74454c5e91/858549a2b7, the pin the GO message named",
+        "git log -1 on the order: fd4e8e0bcb, 2.0.0_SA_COO~O, committed 18:04Z -- the SAME commit as the check fix, so both surfaces moved together",
+        "after re-emitting the expect from the order at HEAD and marking AC2 PASS: proof-of-spec-check reads VALID (rc=0), and the <status> tag is flipped to complete",
+        "the check's own output, unchanged throughout: 'WebACL rules identical before and after, updatewebacl_calls 0' with RESULT: PASS and exit=0"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "Z-S122 asserted that A2 fixed zs1.AC2's branch logic but not the <expect> regex that grades it, and that the criterion therefore could not be proven while it passed.",
+    "world_is": "A2 fixed both. The expect at HEAD admits the third phrasing exactly as it needed to. What could not be proven was the criterion AS MY INSTANCE QUOTED IT -- and an instance's expect is only evidence if it is the order's current bytes. The verdict the checker printed ('status=PASS but output_evidence does NOT match expect') was precise and I read it as a defect in the order rather than in my copy of it.",
+    "notes": "CLAUDE.md already carries both halves of this: rule 27 says cite by path and READ AT HEAD, no version pinned; and 'a citation ages separately from the text it quotes: verify a quote by printing the bytes at the cited line, never by grepping for the quote.' I did the opposite -- I read the order once at the pin a GO message named, kept working from that copy across an hour in which the issuer amended it twice, and then reported the staleness as someone else's gap. The cost was one round trip and one row. The cheap habit that prevents it: when a criterion refuses, re-read THAT criterion's bytes at HEAD before concluding anything about the order, because a ruling in flight is exactly when the order moves. Z-S122 is resolved by this row, nothing in the world was wrong at any point, and OG-zs-1 is complete.",
+    "dismissal_reason": "Resolves NFRA_OPLGTW-Z-S122. The expect was amended by the issuer at fd4e8e0bcb together with the check; my instance quoted a 54-minute-old pin. Re-emitting AC2's expect from the order at HEAD makes the instance VALID with AC2 PASS, and OG-zs-1's <status> is flipped to complete. No act is owed by anyone: the check, the order and the world all agree and always did."
+  }
+  ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S124",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-14T19:11:45Z",
+  "one_line": "Rival funds: gold holdings_coverage for 2026-10-13 was built at 11:03Z from the first of two canonical_shape batches (BASG, GQGU only) and marks 11 funds 'gap'; the 11:09Z batch then delivered 2026-10-13 reports for 9 of them, yet the 13:11Z published page (which reads coverage) states those funds' latest report as 2026-10-12.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-etfs/rivalfunds/etfs/gold/holdings_coverage/date=2026-10-13/holdings_coverage.parquet LastModified 2026-10-14T11:03:27Z: 11 funds status 'gap' (selection_reason 'no source delivered a report for this day'), BASG and GQGU 'new' (read 2026-10-14T19:11:45Z)",
+      "canonical_shape/date=2026-10-13/: part holdings-20261014T110033Z-aa917b1a5643 (LastModified 11:01:33Z) holds BASG, GQGU; part holdings-20261014T110753Z-151ac337dbc8 (11:09:04Z, 500 rows) holds report_date 2026-10-13 for BASG, BIDD, ETFT, GQGU, IDVZ, INEQ, PCLG, PFOE, TSEL, TXUE, WCMG",
+      "platinum/page/date=2026-10-14/revisions/20261014T131150Z/manifest.json: funds['IDVZ/INEQ'].latest_report 2026-10-12; check report_date_freshness reads INEQ 'latest report 2026-10-12 vs expected 2026-10-13'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "holdings_coverage records, per (expected date, fund), whether a holdings report arrived; the page states each fund's latest report from it.",
+  "world_is": "Coverage was computed between the two canonical batches of the same date and was not rebuilt after the second, so 9 funds that have a 2026-10-13 snapshot in gold read 'gap' in coverage and '2026-10-12' on the published page. Whether coverage is rebuilt on a later run of the same date was not observed (one partition read).",
+  "notes": "Inert for the gateway today (no rival tool exists). The G5r spec makes the rival tools state a fund's latest report from canonical_shape's newest part, never from holdings_coverage or the manifest, until the ETFS_RIVALS pipeline owner (routed by the CTO) orders coverage after every canonical batch. The published page understating freshness is that pipeline's defect, not the gateway's."
+}
+```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S125",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T19:27:34Z",
+    "one_line": "CITES Z-W72-S2 and Z-W79-S3, which said the deploy ships app code and the trading calendar MAY fall back: it DOES. Measured on the live host -- lib/ is absent from /opt/opal-gateway entirely, lib/trading_calendar.py is absent, and the service interpreter answers ModuleNotFoundError: No module named 'lib'. So every G1 typed tool's trading_days_behind_t1 takes its guarded fallback on every call, and any freshness these tools state is NOT trading-day based.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM on i-07dccb1615503ac99 at 2026-10-14T19:2xZ: 'lib/ dir on the host: ABSENT', 'lib/trading_calendar.py: ABSENT', 'files under lib/ on the host: 0'",
+        "the SERVICE interpreter, not a bare python: /opt/opal-gateway/.venv/bin/python with sys.path including /opt/opal-gateway -> 'ModuleNotFoundError: No module named lib'",
+        "the repo's own copy exists and is current (lib/trading_calendar.py md5 6596e52fa01f2bee1160863c4e39318a), so this is a SHIPPING gap and not a missing file",
+        "app/harvest_identity.py:108-127: the import is lazy and guarded -- when it fails the tool returns (None, 'lib/trading_calendar.py is not importable on this runtime, so no trading-day lag is measured'), so the absence is REPORTED and never guessed",
+        "the deploy uploads the gateway app directory as opal-gateway-<sha>.tar.gz; lib/ is in the release WORKTREE's sparse cone but not in what the deploy ships, which is why the host has never had it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A2 of OG-ap-18: 'lib/trading_calendar.py is imported by the tools: confirm in the served read that it reaches the installed code (rows Z-W72-S2, Z-W79-S3 say the deploy ships app code and the calendar may fall back)'. CLAUDE.md also holds the calendar as the ONE frontier for any staleness claim.",
+    "world_is": "It does not reach the installed code, and this was answerable in Phase A rather than at the served read: the host has no lib/ at all. The code's guard means nothing breaks and nothing lies -- the field is absent with a stated reason instead of being filled with a wall-clock guess, which is the right failure. What the halves are signing is therefore a set of tools whose trading-day lag field never populates as deployed today. The practical consequence is narrow but real: a reader who asks one of these tools how fresh a security's coverage is gets an absent_reason, not a number, and must go to the pipeline's own freshness surface instead.",
+    "notes": "INERT: no act is owed inside OG-ap-18, the tools are safe to ship, and the ask states the limitation plainly in its own section rather than burying it. The remedy is a deploy-cone change -- ship lib/ (or at least lib/trading_calendar.py) with the gateway artifact -- which belongs to whoever owns deploy-to-ec2.sh's upload set, not to this applier order. Worth noting for whoever takes it: the guard makes the gap SILENT in the sense that no error is raised, so nobody would have found it from logs; it was found by asking the host whether the file exists."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The OG-nw-1 preflight says the cell changes no IAM and adds no AWS call beyond S3 reads, but its body requires a DynamoDB read grant and DynamoDB Query and GetItem calls.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e lines 14-15: preflight comp-iam says this cell changes no IAM and adds no AWS call beyond s3:GetObject and s3:ListBucket on opal-data-harvest",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e lines 35, 67-71: DynamoDB Query and GetItem through _ddb() and the one aws_iam_role_policy on aws_iam_role.gw"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 preflight (lines 14-15): 'this cell changes no IAM and adds no AWS call beyond those two' (s3:GetObject and s3:ListBucket on opal-data-harvest).",
+    "world_is": "The body of the same order requires a DynamoDB read grant (ONE aws_iam_role_policy with dynamodb:Query and dynamodb:GetItem on three tables and two indexes) and DynamoDB reads through _ddb(). Built to the body: news_typed.py, the grant file news_read_iam.tf and the ask. A release that takes the preflight at its word ships the tools without the grant and they fail at runtime.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED until the issuer corrects the preflight or confirms the body. The grant is planned (1 to add, 0 to change, 0 to destroy) and not applied (Phase A)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The source_date_index GSI that the order says to use for a source filter is sparse: it holds a small fraction of the articles table, so a source filter through it would undercount.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G6_news.md@f625acd50e line 42: source_date_index is ALL-projected with 9,905 items (sparse) against ItemCount 381,261",
+        "live read-only check 2026-10-14 with box credentials: the GSI returned 1 item for one publisher across all time, while the base table held 29 items of that publisher on 2026-10-13 alone"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 tool 1 (news_search_articles): 'source filters on the source (use the GSI when source is given)' over source_date_index (source plus published_at).",
+    "world_is": "The index carries only items with a published_at attribute, and most items do not carry one. news_typed.py therefore reads the base table per day and filters the source in Python, which keeps the count correct. The grant still names source_date_index because the order's list names it; the tool does not read it.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED: the order's instruction to use the index would silently undercount any source-filtered answer. The issuer amends tool 1 or confirms the base-table read; the grant may narrow to the date-index alone if the index stays unread."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The security_key in the mention index is a Bloomberg-style TICKER_EXCHANGE_Equity key, so a ticker has to match as a prefix, and one ticker can match several listings.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "live read-only shape count 2026-10-14 of security_key in the newest part amgt/harvest/gold/article_security_mention/date=2026-10-08: 52,424 rows, 234 distinct keys, one shape TICKER_EXCHANGE_Equity (e.g. ASML_US_Equity and ASML_NA_Equity)",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e line 63: 'filtered to the security'; the order names no ticker-to-key mapping"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 tool 5 (news_for_security): mentions filtered to the security and the ticker or security_key given.",
+    "world_is": "The index keys are exchange-qualified. news_typed.py matches a ticker as the prefix of the key before the exchange, so a ticker can select more than one listing, and it reports the matched key in each mention row.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT inside the newest part's coverage. The precision line of the answer says a ticker match is a prefix match."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The order requires admit_scope before every DynamoDB call, but the typed scope seam has no scope for DynamoDB reads, so the tools need one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/typed_scope.py@f625acd50e lines 56-76: admit_scope takes a Scope; its non-HARVEST branch serves S3 prefixes and needs a bucket",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e lines 29-32: admit_scope is called FIRST before any S3 or DynamoDB call; no DynamoDB scope is named"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 seam (lines 29-32): admit_scope(scope, tool, ref) is called first, before any S3 or DynamoDB call; the order names no scope for the DynamoDB reads.",
+    "world_is": "news_typed.py builds one admission scope for DynamoDB reads with no bucket and the served prefix news/, and the references are news/articles, news/trending and news/keyword. The principal and Opal checks and their refusal codes run unchanged; the seam is not edited.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: the admission is the seam's own principal and Opal check. The issuer may name a DynamoDB scope in the seam at the merge."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The order says news_for_security runs the text fallback as a stated fallback without saying when, so the trigger is a build choice.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e lines 61-63: 'THEN, as a stated fallback, news_search_articles with text=<ticker>'; no trigger condition is named"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 tool 5 (lines 61-63): the harvest index first, then, as a stated fallback, news_search_articles with text=<ticker>; the answer carries mentions and fallback.",
+    "world_is": "No trigger is named. news_typed.py always runs the text fallback when a ticker is given, and each fallback row carries match text, so the answer always has both sections. With only security_key given, the fallback is absent with its reason stated.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: the choice is labelled in the answer. The issuer confirms always-run or run-when-empty; the probe's fallback check is non-vacuous only when the fallback runs."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:32:48Z",
+    "one_line": "The order caps the window at 14 days but does not say whether that is a day difference or an inclusive count, and its own test calls a 15-day window refused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e line 50: 'CAPPED AT 14 DAYS (a longer window is refused)'; line 78: 'a 15-day window is refused with ZERO calls'"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 tool 1 (line 50): the window date_from..date_to is capped at 14 days, and a longer window is refused harvest_bad_argument with zero reads.",
+    "world_is": "The order does not fix the counting. news_typed.py counts the calendar days from date_from through date_to inclusive: 2026-10-01..2026-10-14 is accepted and 2026-10-01..2026-10-15 (15 days) is refused with zero reads. The per-day cap of 2,000 is applied to items read.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: the reading is stated in the answer's window block and in the ask. The issuer confirms the inclusive reading or amends the cap."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T18:48:28Z",
+    "one_line": "Eight of nineteen tests in test_deploy_base_guard.py refuse with a missing comp_constants_cli.py although that file is present and tracked at HEAD, so the refusal does not come from the .env edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest infra/aws/ec2/opal-gateway/tests/test_deploy_base_guard.py::test_ogbi4_ac01 on this worktree: 'REFUSED (no upload): the deploy tree lacks the manifest-commit import closure -- missing org/modules/graph/comp_constants_cli.py'",
+        "git ls-files at the worktree HEAD lists org/modules/graph/comp_constants_cli.py (tracked; last touched by 2bc837ee41); the file exists in the worktree"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 scope: the cell edits only the .env printf line of deploy-to-ec2.sh and the gateway app and tests; no deploy-guard test is in the proof of spec.",
+    "world_is": "The three other deploy suites pass (11 of 11) with the edited script. The eight failures are in the base-guard rig, which reports a file the worktree holds. This worker did not run the base-guard suite on the base commit, so the failure is not proven pre-existing.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT for this cell: no proof criterion runs the base-guard suite. The rig's tree check should be read by its owner; this worker did not edit it."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W82-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~82",
+    "surfaced_at": "2026-10-14T19:06:27Z",
+    "one_line": "The order's last step flips the task order's status tag to complete, but the task-order file is not in this worker's write grant, so the flip cannot be made by this worker.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-nw-1.news-tools.md@f625acd50e section 5: 'flip the ONE <status> tag to complete only if AC1, AC2 and AC3 PASS'",
+        "the same order's <paths> block (section 3) lists no task-order path; the write grant is the <paths> block (lane gate)"
+      ]
+    },
+    "spec_asserts": "TO-OG-nw-1 section 5: 'flip the ONE <status> tag to complete only if AC1, AC2 and AC3 PASS, and report once'.",
+    "world_is": "AC1, AC2 and AC3 all PASS at 45dd184bbb (the proof instance records them). The flip edits the task-order file, which is outside <paths>. This worker leaves <status> as it stands and reports the flip as held for the issuer; the proof commit for the sibling order OG-zs-1 (66e04acbc9 and 9789a95f77 on this branch) left its status staged in the same way.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "BLOCKING for the order's final step only; the proof instance and the code are complete and valid. The issuer flips the tag, or the CTO grants the path."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W86-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~86",
+    "surfaced_at": "2026-10-14T19:29:33Z",
+    "one_line": "The order's type rule for defaultTradingEngineId (int64 if every non-null value is an integer, string if mixed) has no non-null value to apply: every row of every bronze date 2026-10-10..14 carries the column null, so the type was chosen as string, with the reason in the source comment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: read-only boto3 get_object of eclipse/inflection/bronze/<date>/portfolios_simple.json in opal-data-assets, this session, from C:/tmp/wk-oplgtw-86: 846 rows and 23 columns per date for 2026-10-10..14; the column is present on 846 of 846 rows and null on 846 of 846 rows on each date (0 non-null values); 2026-10-08 and 10-09 carry 22 columns.",
+        "SOURCE: data/assets/scripts/silver/mirror_schemas.py:317 @d835fcdabf -- the type rule of OG-ec-1 step 1 reads the non-null values; 'every non-null value is an integer' over zero values is vacuously true and is not evidence for int64.",
+        "CONVERTER: pyarrow 24.0.0 on this device, pa.Table.from_pandas with an int64 schema raises ArrowInvalid on the strings '12' and 'ABC' and accepts None; a string schema accepts all four inputs, so the string type cannot fail a whole folder on a later non-null value."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-ec-1 step 1: choose the declared type from the REAL non-null values of defaultTradingEngineId in the 2026-10-14 bronze object -- int64 if every non-null value is an integer, string if mixed -- and say which in a comment.",
+    "world_is": "The 2026-10-14 bronze object carries the column on every row and every value is null; 2026-10-10..13 are the same. The type rule therefore has no evidence. The worker chose string, the type that cannot raise on a later non-null value. AC1 and AC2 do not grade the type. The type is the one input the data did not decide: confirm it or change it at the applier order, when the first non-null value is measured.",
+    "notes": "INERT: the type sets the arrow type of a column that is null in every landed row; nothing deploys in this cell (the release is NFRA_OPLGTW.TO-OG-ap-18). OBSERVATION: no criterion is blocked. The row closes when a non-null value is measured or the issuer rules the type."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S126",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T20:03:45Z",
+    "one_line": "MY PHASE A IMPORT CHECK COULD NOT HAVE CAUGHT THE DEFECT THE ISSUER HELD THE DEPLOY FOR. harvest_identity.py:86 reads Path(__file__).resolve().parents[5]; my release tree is 8 parents deep so it resolves, the host's /opt/opal-gateway/app/ is 4 so it raises IndexError at import and the service would not start. An import test run in a repo checkout is blind to a path-DEPTH assumption that only fails at the install root. Census: exactly ONE such line in the shipped app code, and it exists to put the repo root on sys.path for `from lib import trading_calendar` -- the same mechanism Z-S125 measured as unavailable. One line, two symptoms.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "app/harvest_identity.py:86 in the cut release 4275edccad: `_REPO_ROOT = Path(__file__).resolve().parents[5]` with the comment `# app -> opal-gateway -> ec2 -> aws -> infra -> the repo root`, used at :110-111 to append _REPO_ROOT to sys.path before `from lib import trading_calendar`",
+        "computed both depths: /opt/opal-gateway/app/harvest_identity.py has 4 parents, so parents[5] raises IndexError; C:/tmp/og-rel-gt/infra/aws/ec2/opal-gateway/app/harvest_identity.py has 8, so parents[5] resolves to C:/tmp/og-rel-gt -- exactly what the comment intends",
+        "my Phase A evidence, recorded in gt_release.json and cited in the ask: 'all five modules import cleanly in the release tree'. True as scoped, and not transferable to the host: the test and the target differ in the one property the assumption depends on",
+        "census over the ten shipped files for parents[N] / __file__ / dirname / *_ROOT: ONE hit in app code (harvest_identity.py:86) and five in the tests (parents[1], the gateway dir, which is depth-correct relative to the tests and never runs on the host); 0 in the five hookup files",
+        "for contrast, the already-live app/harvest_read.py (OG-hv-1, deployed without incident) uses no __file__-relative root at all, which is why hv-2's deploy did not meet this class",
+        "the deploy was HELD by the issuer (msg 34207) before any command ran: ledger nfra-oplgtw-gateway-release-gt was never opened -- 0 entry, 0 sentinel at HEAD, 0 on disk -- so there is nothing to close or supersede"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-ap-18 Phase A asked for the re-cut and the tests, and A2 asked me to confirm the typed modules import. I reported that all five import cleanly, which the ask carries as closing the risk that a HEAD copy had grown an import of an excluded module.",
+    "world_is": "The claim I made is the one I measured -- no shipped file references typed_scope or harvest_published, and the modules import in the release tree -- and it is narrower than it reads. Importability is not a property of the module alone when the module computes a path from its own location: it is a property of the module AT A DEPTH. The release tree is deeper than the install root, so the test environment satisfied the assumption the host violates. Three halves signed with my sentence in front of them; a signer could reasonably have read it as host-importability, and it was not.",
+    "notes": "The remedy is the issuer's and already in motion (OG-gt-8: a safe root plus lib/ staged into the artifact), and this row does not ask for anything. What it adds for the re-cut: the census says there is exactly ONE line of this class in the shipped app code, so a single fix closes it, and the fix should be checked AT THE INSTALL DEPTH rather than in a checkout. The cheap general control, which I did not run and will from now on: import the shipped modules with the app root at the depth the host uses -- or simply assert that no shipped module derives a path from __file__ beyond its own package -- because `parents[N]` is silently correct in every repo tree and silently fatal in the install tree. Related: Z-S125 (the calendar never reaches the host), which is the other half of this same line's purpose."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W87-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~87",
+    "surfaced_at": "2026-10-14T20:33:44Z",
+    "one_line": "The same parents[5] line that OG-gt-8 removes from harvest_identity.py and news_typed.py also sits in app/portal_macro.py and app/portal_models.py, outside this cell's paths, so it is not removed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: infra/aws/ec2/opal-gateway/app/portal_macro.py:55 @fdf8d53ccb -- _REPO_ROOT = Path(__file__).resolve().parents[5], guarded by a sys.path append at lines 82-83",
+        "CODE: infra/aws/ec2/opal-gateway/app/portal_models.py:39 @fdf8d53ccb -- the same line, guarded by a sys.path append at lines 74-75",
+        "CENSUS: a read of infra/aws/ec2/opal-gateway for _REPO_ROOT @fdf8d53ccb (worktree, by path) found app/harvest_identity.py:86 and app/news_typed.py:24 (both removed by OG-gt-8), app/portal_macro.py:55, app/portal_models.py:39, ops/schwab_status.py:53, ops/schwab_entitlement_admin.py:55; tests/test_admin_fabric_overlap.py carries an unrelated _REPO_ROOT",
+        "IMPORT: deploy-to-ec2.sh:265-269 @fdf8d53ccb tars app/ whole and tars ops/ not at all, so both app/ lines ride into every artifact built from this tree; whether the running service imports either module at startup was not measured"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-gt-8 names two lines, GW/app/harvest_identity.py line 86 and GW/app/news_typed.py line 24, as the parents[5] defect class to fix, and its paths are those two modules and the deploy script.",
+    "world_is": "app/portal_macro.py:55 and app/portal_models.py:39 carry the same fixed-depth line on the same host-shaped path, and they are in app/, which the artifact ships whole. Neither file is in this cell's paths, so neither is edited here. ops/schwab_status.py:53 and ops/schwab_entitlement_admin.py:55 also carry it; ops/ is not in the tar list, so they are not on the host import path.",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "ARMED: an artifact built from this tree before the two lines are removed would carry them; the disarm is a one-line change in each file, owned by the issuer's cell routing. The census is one grep, not a full import audit: the import closure of the two app modules was not walked."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W87-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~87",
+    "surfaced_at": "2026-10-14T20:33:44Z",
+    "one_line": "The deploy script's md5 read-back names app/server.py and app/oauth_as.py only, not app/, deploy/ and dashboard/ as the order's premise states, and it names no lib/ file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:525 @fdf8d53ccb -- md5sum ${REMOTE_DIR}/app/server.py ${REMOTE_DIR}/app/oauth_as.py, the last line of the remote heredoc",
+        "CODE: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:322-324 @fdf8d53ccb -- the only host-side removals before extraction are deploy/mail_sender_table.txt and deploy/mail_sender_domain_table.txt; no rm of REMOTE_DIR precedes the tar -xzf at line 324, so lib/ extracts with the rest of the artifact"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order states that the md5 read-back in the deploy script names only app/, deploy/ and dashboard/, and it asks the worker to report that read-back rather than edit it.",
+    "world_is": "The read-back at line 525 names two app/ files and nothing in deploy/ or dashboard/, and no lib/ file either. It does not decide whether lib/ landed. Nothing was edited there; the premise difference is recorded here.",
+    "notes": "INERT: a read-back print with no removal or gate effect. The calendar's absence on the host degrades to the reported absent reason, as the modules already do."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W90-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~90",
+    "surfaced_at": "2026-10-14T21:19:14Z",
+    "one_line": "The OG-gt-10 cell cites row NFRA_OPLGTW-Z-W90-S1 as the finding of the portal parents[5] defect; no such row exists in this channel, and the defect's finding row is NFRA_OPLGTW-Z-W87-S1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHANNEL: org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md @5ded7131ea -- a Grep for 'Z-W90-S' and 'W90' returns no match before this row; the parents[5] finding is row NFRA_OPLGTW-Z-W87-S1 (the ISSUER NOTES of the cell also say 'Found by the worker of OG-gt-8 (row Z-W87-S1)')",
+        "CODE: infra/aws/ec2/opal-gateway/app/portal_models.py:39 and app/portal_macro.py:55 @5ded7131ea -- both lines parents[5], IndexError on the host path; re-measured by the AC2 base run of this worker at 5ded7131ea: 2 of 69 file(s) scanned"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The OG-gt-10 cell says the defect was found by the worker of OG-gt-10 and cites row NFRA_OPLGTW-Z-W90-S1 for it.",
+    "world_is": "No row NFRA_OPLGTW-Z-W90-S1 exists before this one, so the citation resolves to nothing. The defect is the same one that row NFRA_OPLGTW-Z-W87-S1 (ARMED, disarm_owner 2.0.0_SA_COO~O) records. Commit 4cbbf2f64a removes both parents[5] lines in the two modules, so that ARMED hazard is disarmed in this worktree. The W87 row is not edited here; the disarm record stays with its disarm_owner.",
+    "notes": "INERT: the defect is removed by 4cbbf2f64a in this worktree. The citation mismatch is a cite-only premise difference; the cell's criteria do not depend on it."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W90-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~90",
+    "surfaced_at": "2026-10-14T21:19:14Z",
+    "one_line": "On this worker's interpreter the staged lib/trading_calendar.py answers from its hardcoded NYSE fallback, because pandas_market_calendars is absent, and the fallback table is flagged for regeneration before 2028.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: timeout 120 bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gt10.AC1.sh at 4cbbf2f64a (C:/tmp/wk-oplgtw-90, Python 3.14.7) -- output line 1: 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)'; the same run printed 'calendar importable yes; T-1 computable yes' and RESULT: PASS",
+        "NOT MEASURED: the host's interpreter and whether it carries pandas_market_calendars; this row records the worker's interpreter only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The OG-gt-10 cell asserts the modules find the staged calendar and compute T-1 from lib/trading_calendar.py, with no note on which calendar source answers.",
+    "world_is": "The staged calendar on this interpreter answers from the hardcoded fallback table, not from the market-calendar package, and the module's own warning says that table must be regenerated before 2028. The module's answers are still a date, so the AC passes.",
+    "notes": "INERT: no behaviour of the two portal modules changes; the warning is the trading_calendar module's own. Filed so the host's calendar source is measured before any release relies on it. Nothing was edited for this row."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S127",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+    "surfaced_at": "2026-10-14T21:38:13Z",
+    "one_line": "OG-sa-1 step 1 cannot be read as written: at the runner's pin the sa publisher is a browser-TAB publisher whose account id comes from the profile's own user_id cookie, the pin's sa profile did not exist and holds no Seeking Alpha login, so check() raised NotAuthorized before any account request -- there is NO http_status to record, and registering sa from this pin would start from that same empty profile.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/lib/opal_data_harvest/publishers.py lines 372-382 (transport 'tab': TabSession on a persistent profile; for sa the account id is the profile's user_id cookie, 'None -> check raises') and lines 393-394 (the bundle seed comes AFTER that cookie read)",
+        "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/lib/opal_data_harvest/tab_transport.py lines 38-50 (default_profile_root follows the CHECKOUT the code runs from, i.e. the pin worktree, which is the live task's WorkingDirectory) and lines 89-103 (the persistent Chrome launch and the origin page load)",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_probe_result.json -- class unauthorized_account, exception NotAuthorized, http_status null, requests_made 0, sign_in_calls 0, refresh_calls 0, token_source secrets:seeking-alpha/session (secrets_session 2026-09-11T02:13:39Z), read_at 2026-10-14T21:32:40Z",
+        "PowerShell CreationTimeUtc of C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/.runtime/opal-data-harvest/browser-profiles/*: barrons 12:30:02Z, bbg 00:11:45Z, wsj 12:20:24Z, sa 21:32:02Z -- the sa directory is the only one created by the probe, the others belong to runner cycles",
+        "the live task's registration as read at 2026-10-14T21:1xZ: STATE Running, --publishers bbg wsj barrons --refresh-once, WorkingDirectory C:\\Users\\Opal Bloomberg\\Desktop\\wk-harvest-runner-pin-3d88eccbc3"
+      ]
+    },
+    "spec_asserts": "NFRA_OPLGTW.TO-OG-sa-1 section 1 step 1: 'Read the access the way the harvester's own SA capture does it (the same account and entry point; read-only, one request, no capture)' and write SA1_ACCESS.json with an http_status N; 'A 2xx is ACCESS_HOLDS; anything else is ACCESS_REFUSED'. Step 2 then treats a refusal as 'the renewal is Andrew's act'. The order's picture is a vendor account that answers with a status.",
+    "world_is": "Measured on site Z 2026-10-14T21:32Z. (1) At the runner's pin 3d88eccbc3 the sa publisher is NOT a token-over-HTTP client: publishers.py routes it through a TabSession (a headed persistent Chrome profile) and takes the account id from that profile's own user_id cookie; with no such cookie the id is None and check() raises NotAuthorized. (2) The profile root follows the checkout, so for the live task (WorkingDirectory = the pin worktree) it is the pin's own .runtime/opal-data-harvest/browser-profiles. Its sa directory DID NOT EXIST until this seat's probe created it at 21:32:02Z; it holds a fresh Chrome profile (264 files) with no Seeking Alpha cookie. (3) So the one read this seat could make returned NotAuthorized with requests_made 0: Seeking Alpha was never asked, and no HTTP status exists. Writing ACCESS_REFUSED would state a refusal the vendor never gave and would route the order to 'the renewal is Andrew's'; writing ACCESS_HOLDS would be false. Neither SA1_ACCESS.json nor SA1_PROOF.json was written. (4) The same fact bears on step 3 itself: re-registering the runner with sa from this pin starts it on this empty sa profile, so its first sa job would reach check() with no account id. Whether a job seeds the profile from the stored bundle first was not established: the id is read at line 380-382 before the seed at 393-394, and this seat ran no job. (5) The runner is untouched (Running, publishers bbg wsj barrons), no ledger was opened, no sentinel exists, nothing was written to a bucket.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "THE ASK FOR THE ISSUER, one decision: how is step 1 to be read? (a) through the profile the runner will actually use -- which is empty, so the read needs a Seeking Alpha sign-in inside that profile first, and no sign-in is in this order; or (b) one request through a profile that already holds a login (the main tree has browser-profiles/sa, last modified 2026-10-12 08:00, NOT read by this seat; selecting it is the OPAL_HARVEST_PROFILE_ROOT environment variable, which this seat did not set) -- a second vendor read beyond the order's bound, so it needs the issuer's word. This seat takes neither without it. ALSO FOR THE ROUND: Z-W85-S2 recorded sa check() hard-coding an account id; at this pin the id is the cookie's, so the HVST-ac-2 probe that read 200 'authorized: true' (ADJUDICATION_v40, with a saved-session token) may have used a different path than the tab publisher the runner would run from this pin -- whether that 200 carries to this path was not established here. See row Z-S128 for what this seat's own probe did beyond the one request."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S128",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+    "surfaced_at": "2026-10-14T21:38:13Z",
+    "one_line": "This seat's access probe went past OG-sa-1's 'one request': building the sa publisher session launches headed Chrome and loads the Seeking Alpha origin, so the probe made THREE origin page loads (two --dry runs, one real) that its request counter could not see, read the stored sa session twice, and created the pin's sa browser profile.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/lib/opal_data_harvest/tab_transport.py lines 89-103: TabSession.__init__ calls launch_persistent_context(... headless=False) and page.goto(origin) at construction",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_access_probe.py -- the probe; its CappedInner wraps the inner session's get() only, and its --dry flag returns AFTER the publisher session is built",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_dry_runner.json, sa1_dry_main.json, sa1_probe_result.json -- the three runs: two dry (runner runtime root, main-tree runtime root), one real (runner root); all report requests_made 0",
+        "PowerShell at 21:3xZ: 0 chrome processes left; the sa profile directory created 21:32:02Z, last written 21:32:42Z, 264 files"
+      ]
+    },
+    "spec_asserts": "NFRA_OPLGTW.TO-OG-sa-1 section 2 BOUNDS: 'a second vendor read beyond step 1's one request' is a Never; 'No object is written to or deleted from any bucket by you'; the preflight declares step 1 as 'read-only, one request, no capture'. This seat's probe was written to that bound and counted its requests in code (cap 1).",
+    "world_is": "The probe's counter read 0 requests in all three runs, which was true of the instrument and not of the world. For a tab publisher the session build itself launches headed Chrome on the persistent profile and navigates to the vendor origin; that happens inside the constructor, before the wrapped get() exists, and the --dry flag only skipped the account read after the build. So between 21:32:02Z and 21:32:42Z the seat caused three Chrome launches and three loads of the Seeking Alpha origin (a page load, not the account endpoint, no sign-in, no capture, no article fetch). It also resolved the stored sa session in memory three times (Secrets Manager seeking-alpha/session each time; the main tree's sa.dpapi once, in the second dry run), never printing or writing a value, and it created the pin worktree's browser-profiles/sa directory. No sign-in, no refresh, no bucket write, no change to the task or to any other profile; 0 Chrome processes remain. The runner is unaffected: it was on bbg and its bbg profile was last written 21:32:55Z by its own cycle.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed so the bound is not silently crossed. HOW IT HAPPENED: the two dry runs went out in ONE command, and the real run in the next, after reading the dry output -- which printed requests_made 0 and gave no sign a browser had been launched, because this seat had not read TabSession's constructor. The first sign was the real run's NotAuthorized, and this seat made no fourth contact after it. NOT DONE: the new sa profile directory was not deleted (it is the profile the runner would use from this pin, deleting it is not this order's change, and the 264 files are a stock Chrome profile). THE LESSON, for any later probe of a tab publisher: read the constructor before trusting a counter that wraps only get()."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "The task order's premise that the gold article_sentiment read is the cost is refuted: the sentiment dataset is 5 parts in one date partition, 2.1 MB; the silver join is 38.2 of the 42.3 s of the no-window call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 section 1, 'The defect': 'The earlier CTO reading was that the gold article_sentiment join scans one ~110 MB partition; the numbers above say the silver join may cost as much. Profile first, then fix what dominates.' Step 3: 'read only the silver partitions of the page's own articles'.",
+    "world_is": "Measured read only on opal-data-harvest with box credentials: article_sentiment holds 5 parts, 2,096,262 bytes, all in date=2026-10-03 (13,235 rows), 0.7 s wall on the no-window call. The silver join reads 849 parts, 172,503,185 bytes, 38.2 s wall. The base already reads only the page's silver partitions; the cost is the part count inside them (no manifest or index exists; one sa partition holds 1,086 parts).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: profile of harvest_search_articles(ASML, limit=5) and a 7-day window on opal-data-harvest, read only, from C:/tmp/wk-oplgtw-88 at base ae365fc589; per-stage seconds and bytes by prefix (scratch profile, not committed)",
+        "CODE: infra/aws/ec2/opal-gateway/app/harvest_press.py@ae365fc589 -- _silver_join groups the page's (publisher, fetched day) partitions only and reads every part of each"
+      ]
+    },
+    "notes": "The sentiment pruning is still implemented (its premise measured clean, see S4). The no-window silver cost is what the one-hour cut removes part of (S2, S3)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "Silver parts are pruned by their name stamp against a measured lateness bound: the bound holds on every sampled row (under one second), but it is a measurement of this bucket, not a guarantee, and a part whose records lag its stamp by more than the one-hour margin would drop a record from the answer without an error.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "TO-OG-gt-9 step 2: 'Measure that premise on the real bucket before relying on it ... widen the cut by the measured slack and say so'. Step 3: 'Keep the answer's content identical for the same inputs.'",
+    "world_is": "The silver part stamp (part-YYYYMMDDTHHMMSSZ) is not a bound on fetched_at as stated, but every violation is small: 1,050 of 9,356 rows on the no-window partitions (844 of 849 parts) and 351 of 6,897 rows on the 7-day partitions (145 of 145 parts) carry a fetched_at after their stamp, and the latest lag was 0.999789 s and 0.993040 s. The module skips a part when its stamp plus a one-hour margin is before its partition's earliest page fetch: 156 of 849 parts on the no-window call and 79 of 145 on the 7-day call. The three sampled calls returned answers identical to the unpruned read (articles compared field by field).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: per-part stamp against the max fetched_at of its rows over every part of the no-window and 7-day page partitions, read only, box credentials, from C:/tmp/wk-oplgtw-88 at base ae365fc589 (scratch measurement, not committed)",
+        "CODE: infra/aws/ec2/opal-gateway/app/harvest_press.py -- SILVER_LATENESS, _stamp, _prunable and the fallback in _silver_join (this commit)"
+      ]
+    },
+    "notes": "HAZARD, not measured to fire: if a future writer stamps a part earlier than its records' fetch by more than SILVER_LATENESS, the pruned read misses those records with no error. Disarm options for the issuer: (a) measure the lateness over every silver partition and widen SILVER_LATENESS to the observed maximum with margin; (b) drop the silver prune (PRUNE = False) and accept the 42-47 s no-window call. The sentiment prune is a separate premise (0 violations) and is not ARMED."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "The no-window call answers in 38.1 s against the 40 s bar after the silver prune, on a 1.9 s margin; the stated method (reading less, identical answers) has no further lever in the module.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 section 4 AC2: 'on the real bucket both calls answer under 40 s'. Section 1 step 3: 'Reduce whatever else dominates the profile by reading less, not by caching across calls'.",
+    "world_is": "No-window seconds: 42.3 before (profile run), 47.5 before (dump run); 38.1 after (AC2 run) and 39.5 after (dump run). Silver parts read 693 of 849. The residual is 693 single-object GETs of about 0.2 MB at about 0.44 s each through a 10-thread pool (PART_THREADS, which the module comment ties to the boto3 connection-pool default). A further cut needs a partition index or more concurrency; neither is reading less with identical answers.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: AC2 check gt9.AC2.sh and the dump runs, read only, from C:/tmp/wk-oplgtw-88 at base ae365fc589 and the working tree of this commit"
+      ]
+    },
+    "notes": "Margin measured over two after-runs and one AC2 run only; a further run may land nearer 40 s. PART_THREADS was not changed: that is outside the stated method."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "The article_sentiment partition pruning removes nothing on this bucket: the dataset is one date partition (2026-10-03), so both calls read 1 of 1 sentiment partitions.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 step 2: 'read only article_sentiment partitions dated on or after the earliest fetched_at UTC day among the page's rows'. AC3: the denominator carries sentiment_partitions_read of sentiment_partitions_total.",
+    "world_is": "article_sentiment holds 5 parts, all in date=2026-10-03. The page's earliest fetch day is on or before 2026-10-03 on both sampled calls, so the cut keeps that one partition. The premise measured clean: 0 sentiment rows dated before their article's fetch day in 13,195 rows, so the slack is 0 days.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: every article_sentiment part read whole and each row compared to its article's fetched day from the newest article_security_mention part, read only, from C:/tmp/wk-oplgtw-88 at base ae365fc589 (scratch measurement)"
+      ]
+    },
+    "notes": "The pruning is implemented and tested offline (test_oggt9_ac01..ac03); on this bucket it has nothing to cut yet, and it will when the dataset gains dated partitions."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:02:46Z",
+    "one_line": "BLOCKING for the final step only: the task order's <status> flip to complete is in the task-order file, which is outside this order's <paths>, so this worker did not make it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 section 5: 'flip the ONE <status> tag to complete only if both PASS, and report once'. Section 3 <paths> lists three files: harvest_press.py, tests/test_og_gt9.py and the investigation file.",
+    "world_is": "Both criteria PASS at the commit of this instance (AC1 3 of 3 named tests; AC2 38.1 s and 10.9 s). The flip edits org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gt-9.search-window-pruning.md, which is not in my write grant, so it is not made.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gt-9.search-window-pruning.md section 3 <paths> (three entries, the task-order file not among them)"
+      ]
+    },
+    "notes": "BLOCKING for the final flip only. The code, the tests and the proof instance are complete and valid. The issuer flips the tag, or the CTO grants the path."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W88-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~88",
+    "surfaced_at": "2026-10-14T21:38:34Z",
+    "one_line": "The no-window call measured 48.4 s in this pass, outside the 38-42.5 s range the A1 amendment gives for the pruned call; it still answers under the amended 50 s bound, on a 1.6 s margin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-OG-gt-9 A1 amendment, commit 43f3b5309f (issuer record face): 'the no-window bound is 50 s -- the silver join is the cost and the pruned call measures 38-42.5 s on this box's link'. Worker face section 4, AC2: the no-window call answers under 50 s.",
+    "world_is": "AC2 re-run at HEAD 8bff3d7c9f, whose code bytes equal 661838f224: 'search ASML: no window 5 article(s) in 48.4 s (want < 50); 7d ending at the newest (2026-10-05) 2 article(s), 1 with a sentiment label, in 16.5 s (want < 40); denominator names partitions read True; envelope whole True'. Earlier after-runs of the same code measured 38.1 s, 39.5 s and 39.4 s (see S3). The spread across runs on this box's link is about 10 s.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: gt9.AC2.sh invoked from the worktree root C:/tmp/wk-oplgtw-88 at HEAD 8bff3d7c9f, read only, box credentials; the output line is quoted in world_is"
+      ]
+    },
+    "notes": "AC2 passes under the amended 50 s bound, so no code change was made. The 38-42.5 s premise in the amendment does not hold for every run on this link; keeping or revisiting the bound is the issuer's call. Relates to S3 (INERT)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S129",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+    "surfaced_at": "2026-10-14T21:56:31Z",
+    "one_line": "OG-sa-1 step 1 (as amended A1) reads ACCESS_REFUSED on the RUNNER-PROFILE half only: the Seeking Alpha account answers HTTP 200 authorizedUser with 1 subscription (it is active, not at 402), but the runner's own sa profile holds no login, so a sign-in -- a person act -- stands between the account and the capture.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_access_read.json -- account_requests 1, http_status 200, data_type authorizedUser, subscription_items 1, profile_has_user_id true (main tree), read_at 2026-10-14T21:54:01Z; chrome_launches 1 and origin_page_loads 1 are the session's own construction and are counted",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/SA1_ACCESS.json and SA1_PROOF.json -- outcome ACCESS_REFUSED, runner_profile_login false, branch refused, runner_changed false",
+        "runner profile read by sqlite cookie NAMES only, mode=ro immutable=1, on C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-3d88eccbc3/.runtime/opal-data-harvest/browser-profiles/sa/Default/Network/Cookies: 0 user_id cookies of 3 seekingalpha.com cookies (no value read)",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/sa1_AC1.out and sa1_AC2.out -- both RESULT: PASS at 2026-10-14T21:55Z"
+      ]
+    },
+    "spec_asserts": "NFRA_OPLGTW.TO-OG-sa-1 as amended A1 (msg 34234, @13f6bb6c7f): ACCESS_HOLDS needs BOTH a 2xx from the account read AND the runner's own SA profile carrying a login; anything else is ACCESS_REFUSED with the reason naming the failed half; the sign-in is 'a person act, not yours'. Row AMGT_HARVST-Z-W37-S4 had recorded an HTTP 402 (renewal pending at the account holder).",
+    "world_is": "Measured on site Z 2026-10-14T21:54Z. (1) The account half HOLDS: one request through the main tree's browser-profiles/sa returned HTTP 200, data.type authorizedUser, 1 subscription item. There is no 402 now, so the account is active and a renewal is not what stands in the way; the 402 of Z-W37-S4 is superseded by this read (it was already GRADUATED at ADJUDICATION_v40). (2) The runner half FAILS: the runner's own sa profile, <pin>/.runtime/opal-data-harvest/browser-profiles/sa, holds 3 anonymous seekingalpha.com cookies and no user_id cookie, so its tab has no account to authenticate as. (3) Outcome ACCESS_REFUSED, branch refused: the runner was left Running with publishers bbg wsj barrons, no ledger, no sentinel, nothing written to a bucket, nothing copied from the main tree's profile into the runner's. (4) The remedy the order names is a person act, a Seeking Alpha sign-in inside the runner's profile, routed by the issuer to the CTO. Whether a first sa job would instead seed that profile from the stored session bundle was not established (row Z-S127 item 4) and this seat ran no job to find out.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "FOR THE ISSUER: the order is complete on branch 'refused' (AC1 and AC2 PASS). The open act is the sign-in in the runner's sa profile; once someone has done it, step 1 is re-read (profile half only, no vendor request needed: cookie names suffice) and, if it then reads HOLDS, steps 3-5 follow under the same order or a re-cut. Not done by this seat: no sign-in, no seeding, no copy between profiles, no change to the task."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S130",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T22:12:20Z",
+    "one_line": "A4 tells me to take tests/test_og_gt8.py but NOT app/news_typed.py, and two of that suite's three tests assert on BOTH modules -- so test_oggt8_ac01 and ac02 cannot pass in this release by construction. The harvest_identity half of each PASSES; only the news_typed half fails, with ModuleNotFoundError. Nothing that ships is defective: gt-8's test suite spans two modules the order split across two releases (news_typed rides OG-ap-19).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tests/test_og_gt8.py in the v2 cut 7521aee725: 2 failed, 1 passed",
+        "test_oggt8_ac01 asserts res['harvest_identity'] == {'import': 'ok', 'calendar': True} AND res['news_typed'] == {'import': 'ok', 'calendar': True}; the first holds, the second reads {'import': 'ModuleNotFoundError', 'calendar': None}",
+        "test_oggt8_ac02 is the no-lib arm and behaves identically: harvest_identity {'import': 'ok', 'calendar': False} holds, news_typed is the ModuleNotFoundError",
+        "A4 verbatim: 'app/news_typed.py is NOT in this release (it rides OG-ap-19); take the harvest_identity.py hunk only' -- and, separately, 'tests/test_og_gt8.py'",
+        "gt-8's own commit 43e5e0383e touches app/harvest_identity.py (+11-5) AND app/news_typed.py (+11-5) with the same fix, plus deploy-to-ec2.sh and tests/test_og_gt8.py",
+        "the rest of the suite set is clean: 49 passed, 2 failed, 0 errors over ten suites, and ap18.AC1 reads RESULT: PASS with 18 files and 0 outside the G1 set"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A4's take-list includes tests/test_og_gt8.py and excludes app/news_typed.py, which implies the test can be satisfied without the module it half-covers.",
+    "world_is": "It cannot. One cell fixed the same defect in two modules and wrote one suite over both; the release boundary runs between them. The useful half of that suite still earns its place here -- its harvest_identity assertions are an INDEPENDENT corroboration of the host-shaped import check, written by the cell's own author rather than by me, and they pass in both the lib-present and lib-absent arms. What it cannot do is go green.",
+    "notes": "Three routes and this seat picked none, because the choice changes what the halves are signing: (a) take app/news_typed.py as well -- it widens this release beyond A4 and pulls OG-ap-19's cell forward; (b) accept test_oggt8_ac01/ac02 as unmeetable in this release and say so in the criterion, which is what the ask does today; (c) let tests/test_og_gt8.py ride OG-ap-19 with the module it covers, which costs this release the corroboration but leaves no red. The general shape is worth more than the instance: a cell that fixes one defect across TWO modules writes ONE suite over both, and any release boundary drawn between those modules inherits a test that cannot pass. The tell is cheap -- read the test's assertions for module names outside the take-list BEFORE cutting, not after the suite runs red."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S131",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+    "surfaced_at": "2026-10-14T23:00:30Z",
+    "one_line": "OG-ec-2 Phase B cannot satisfy its own AC2 as written: it applies one Terraform resource but has no step that puts the new package into S3, and the module reads the code hash from the S3 object, so the apply changes the OPAL_BUILD_COMMIT pin alone and the deployed code stays at the old digest.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/modules/yang-lambda/main.tf:19,37-39 -- the function takes s3_object_version and source_code_hash from data.aws_s3_object.artifact (key opal-assets/opal-assets-silver-eclipse.zip), not from the repo",
+        "Targeted plan in worktree C:/tmp/og-rel-ec2 (branch rel-nfra-oplgtw-ec2 @4fd05be0d3) at 2026-10-14T22:41Z: 0 to add, 1 to change, 0 to destroy, the change being environment OPAL_BUILD_COMMIT b915719f25 -> 8929c5f16d ONLY; source_code_hash and s3_object_version unchanged",
+        "S3 artifact latest version 9KbX3Ee84D5n9e2hNtWsRkg6pk40yYcW, 37461 bytes, content-sha256 clrUz/ikqSMgd5Edtx7gJFceLH2LSjow7c6Vfqtw64g= equals the live CodeSha256; the repo package builds to GxWRZhTMvkSWAXuBQHuzjZcAwQ3mJg3C0da8/ZoD6zU= (control: the deployed tree rebuilds to the live digest)",
+        "Prior eclipse release uploaded first: ledger nfra-oplgtw-fd2-eclipse-drain L2 and commit 83b77e13d3 ('artifact uploaded and stamped'), then applied",
+        "TO-OG-ec-2 section 2: 'No object is written by you'; Phase B steps 3-5 list ledger, apply, sweep, proof and no upload"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-ec-2 Phase B step 3 and AC2: applying the ONE converter resource through safe-apply deploys the repo's converter, with the deployed hash read back equal to the repo's.",
+    "world_is": "The apply carries the pin and nothing of the code until the artifact object in S3 is replaced. The replacement is one object write to opal-313476888478-lambda-artifacts (the bound 'no object is written by you' was written about silver, and this seat reads it that way, but the issuer's word decides). Phase A is complete and unaffected: the plan, the counts and the ask are all measured. Phase B is blocked on this ruling, not on any defect in the converter or the fix.",
+    "notes": "Two routes: (a) amend the order so Phase B step 3 reads 'build-and-upload.sh opal-assets opal-assets-silver-eclipse (BUILD, verified by head-object), then the targeted apply' and the bound reads 'no silver object is written by you' -- recommended, it is how the previous eclipse release landed; (b) re-cut the order. The ask (section 3, item 3) carries the same question so the two halves sign knowing it. Rollback for the upload is the artifact's current latest version above."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S132",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T23:42:40Z",
+    "one_line": "A SPARSE release worktree cannot run deploy-to-ec2.sh. The script resolves two .env S3 roots through lib/opal_naming.py address(), which loads every file in infra/logic/registry/; those 7 files were IN the release commit but not in the worktree's sparse cone, so address() raised FileNotFoundError and the deploy refused in Step 2/3 -- before any artifact was built or uploaded. Same class as cloud-ops trap (4) for safe-apply, but on the DEPLOY path, which that trap does not name.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First deploy attempt 2026-10-14T22:58:39Z-22:58:47Z, rc=1: FileNotFoundError [Errno 2] No such file or directory: 'C:\\\\tmp\\\\og-rel-yr2\\\\infra\\\\logic\\\\registry\\\\systems.json' in lib/opal_naming.py _read_text, reached from address() <- key() <- _registry() <- load_registry()",
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:94 and :103 -- ADVI_FEE_STATEMENT_S3_ROOT and ADVI_MARKET_UPDATE_S3_ROOT are each `cd $WORKSPACE_ROOT && python -c 'from lib.opal_naming import address; ...'` (LGIC R30: every S3 address is builder output, never hand-typed)",
+        "git ls-tree -r --name-only HEAD -- infra/logic/registry read 7 files AT the release commit, while `ls -A infra/logic/registry` in the same worktree read 'No such file or directory' -- in the commit, absent from the checkout",
+        "git sparse-checkout list before the fix: .tools, data/transcripts/scripts/teams, infra/aws/ec2/opal-gateway, lib, org/modules/graph, org/standards, org/tier2_senior/0.7.0_AE_CloudOps~Z -- `lib` IS in the cone, which is why the import itself succeeded and the failure landed one layer deeper, at the registry the module reads at call time",
+        "Step 3/3 never ran: 'ERROR: Deployment script failed. Manifest not updated.' and no object appeared under s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/ for this release until the second run",
+        "Fix: git sparse-checkout add infra/logic (7 files materialised). HEAD did not move -- rev-parse read bf7ffb62f4ae5af8298d3c24960c63d2965542d9 before and after -- and the A1 guard plus the page's checked-out md5 (0d828b51d433a24f7e2ef2e6ea7967ee) were both re-read AFTER the widening, not carried over",
+        "Second attempt 23:03:38Z-23:05:14Z rc=0, SSM 768a6366-ab1a-4220-aea9-b8e7b2cfcda3 Success"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's Phase B step 4 says to deploy from the release worktree through safe-ec2-deploy.sh, which presupposes that a worktree cut narrowly enough to hold the gateway source can run the deploy script.",
+    "world_is": "It cannot, and the dependency is invisible from the order: the deploy script's need for infra/logic/registry/ is not in its source_path, not in EC2_MANIFEST, and not in the artifact's member list (app deploy requirements.txt identity_tool_allowlist.txt). It is reached only at RUN time through a builder call that exists precisely because LGIC R30 forbids typing the address. The cone was sized for what the ARTIFACT contains; the script reads more than it ships.",
+    "notes": "The general shape, which outlives this instance: a sparse cone sized from the FILES AN ACT SHIPS is too narrow for the act's TOOLING, and the gap shows up only at run time, because the tooling reaches its inputs through a resolver rather than a path you can see in the order. cloud-ops trap (4) banks exactly this for safe-apply (it names lib and the agent home folder) and the deploy path needs the same sentence with infra/logic/registry/ added -- these two roots are not interchangeable: `lib` was already in the cone here and the deploy still refused. The cheap tell, worth more than the list: the failure is LOUD and lands before any upload, so the cost is one round trip and never a half-landed deploy -- which is why the right fix is to widen the cone, never to hand-type the resolved root to get past it (that would put a typed S3 address into a release and breach LGIC R30 silently). UNDER_INVESTIGATION is the disposition because the INSTANCE is resolved but the DECISION is not mine: the recommendation is that the issuer add one line to the release orders' Phase B -- cut the release worktree with `infra/logic` in the cone, or cut it full -- and until the issuer rules, nothing stops the next release worktree being cut the same way. There is no enum value for 'the instance is fixed and the standing question is open', so this says it in words rather than inventing one (the gate refused RESOLVED_IN_FLIGHT, correctly). Nothing about this release is affected: the guard was re-read after the widening and the deploy that landed is the signed release_sha."
+  }
+  ```
+
+```json
+{
     "id": "NFRA_OPLGTW-Z-W85-S1",
     "project": "NFRA_OPLGTW",
     "fabric": "site-z",

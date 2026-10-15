@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.5",
+  "prd_version": "v3.8",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1299,5 +1299,86 @@ The ruling:
 - **Z-S110 (49F BD converter out of memory)** takes the same route once its cause is read.
 - This is not a widening: the converter already writes these folders. The fix moves the folder's freshness, not who
   can read it.
+
+CONTRACTS-side; ENDPOINT unchanged.
+
+### v3.6 addendum (2026-10-14 ~18:5xZ, 1.0.0_SA_CTO~Z) -- 49F Black Diamond reads opal-data-bd (Andrew-direct); the G2 order
+
+**Andrew-direct ~18:3xZ, verbatim in `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_183xZ_49F_BLACK_DIAMOND_FROM_OPAL_DATA_BD_AND_THE_TARGET_LAYOUT.md`:** "We can allow 49F Black Diamond pulls from opal-data-bd, you're right
+that's fine." It amends v3.4 for 49F Black Diamond ONLY.
+
+**Contract change:**
+1. The 49F BD adapter of the `client_*` tools reads `s3://opal-data-bd/silver/<table>/YYYY-MM-DD.parquet`, per CRO~Z G2f
+   (`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2f_bd_live_prefixes.md` @5e5d312ada: 8 tables, 49F only; schemas 4 equal, 3 live-subset, 0 differ). G2f is restored for this
+   adapter. Increment vs snapshot is measured before any tool sums or spans dates.
+2. The read goes through a role scoped to `opal-data-bd/silver/`, with its own never-widen ask (v3.2: never the global
+   internal reader).
+3. `assets` (80 trading days behind) and `transactions_enriched` (122 behind) answer with their lag stated and are never
+   presented as current.
+4. Every other client source stays the `opal-data-assets` vendor silver folders (v3.4 unchanged). `opal-data-mdpf`
+   feeds and the per-firm buckets stay not served.
+
+**The target layout is NOT this project's act.** 49F BD moves into `opal-data-assets/blackdiamond/` in LGIC_NAMING form,
+and 49F's BD and Schwab gold land in `opal-data-49financial`. That is a pipeline migration (rule 30 / R19). When it lands,
+the 49F BD adapter re-points to `opal-data-assets/blackdiamond/<49F>/silver/` in one cell, and the opal-data-bd read is
+retired.
+
+**G2 order (ruling to `2.0.0_SA_COO~O`, msg 34174 answered):**
+1. Schwab (existing role; 49F's custodian data).
+2. 49F Black Diamond (opal-data-bd).
+3. Orion/Inflection (Eclipse after Z-S117).
+4. BD Cottonwood.
+5. SmartX (row filter).
+6. Commonwealth.
+Friday 2026-10-16 = G1, G3, G5 wave A, G6, and Schwab if it fits.
+
+CONTRACTS-side; ENDPOINT unchanged.
+
+### v3.7 addendum (2026-10-14 ~19:3xZ, 1.0.0_SA_CTO~Z) -- FWD-22 enrichment G5r: rival funds through the gateway (Andrew-direct, XB-eda5)
+
+**Input.** Andrew-direct ~19:0xZ at the laptop (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_190xZ_RIVALFUNDS_INDEXED_INTO_OPALGATEWAY.md`, on CLOUD): "we should also have the rivalfunds indexed out and
+available too". Order XB-20261014T185521Z-eda5 went to `4.0.0_SA_CRO~Z`, whose spec is `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5r_rivalfunds_spec.md` @e1b9937129.
+
+**G5r enrichment list:**
+1. The nine G5 rival tools stand (`etfs_get_peer_group`, `etfs_get_fund_holdings`, `etfs_who_holds`,
+   `etfs_get_fund_trades`, `etfs_get_fund_flows`, `etfs_compare_peers`, `etfs_get_research_notes`,
+   `etfs_get_security_reference`, `etfs_get_coverage`). Every one reads GOLD under `opal-data-etfs/rivalfunds/etfs/gold/`,
+   newest part per date partition, never summing parts, and passes `claim` through on the inferred tables.
+2. One new tool, `etfs_get_rival_page_status(page_day?)`, reads the platinum `manifest.json` (newest revision): what was
+   PUBLISHED and whether it passed its checks. Its `latest_report` is shown beside the gold value, both labelled.
+3. **Z-S124 binds:** a fund's latest report comes from `canonical_shape` only, never from `holdings_coverage` or the
+   manifest. Both understate 9 funds today.
+4. Security search by CUSIP/ISIN works here (unlike the harvest), within G5r section 2's fill rates.
+5. Read class (Opal users), no firm fork: this is Opal fund research.
+6. **One never-widen ask for all of G5:** the G5 wave-A ask also names `opal-data-etfs/rivalfunds/etfs/gold/*` and the
+   platinum page prefix, so the rival tools need no second ask.
+7. **Order:** after Friday's set (G1, G3, G5 wave A, G6, and Schwab if it fits), ahead of the remaining G2 vendors.
+   Priority stays P4, site Z in the background.
+
+CONTRACTS-side; ENDPOINT unchanged.
+
+### v3.8 addendum (2026-10-14 ~20:3xZ, 1.0.0_SA_CTO~Z) -- the site Z harvest cycle runner without Seeking Alpha (Security Analysis gap G6) is a defect cell here
+
+On `0.0.0_AB_MSTR~Z` msg 34214 (relay of the laptop CTO and `1.0.0_SA_CTO~DELL1`,
+`CTO_RULING_DELL1_SECURITY_ANALYSIS_G1_G6_HOMES_20261014.md` @ce117ec6cb on box/dell1): G6 is site Z's.
+
+**The one check, read:** the 2026-10-13T23:53Z stop was NOT on Andrew's word. It was AMGT_HARVST `HVST-bz-10`'s own stop and
+re-registration under a task order (`fcfb0cec38`, `887a47f05e`). That order kept the existing publisher set
+`bbg wsj barrons` on purpose: its adversary forbade changing the publishers. `sa` was already absent before it. Andrew's
+standing word on Seeking Alpha is to keep it ("also seeking alpha will renew, we're keeping that",
+`ANDREW_DIRECT_20260929_204xZ_OPEN_CALLS_ALL_FINE_SEEKING_ALPHA_RENEWS.md`). Live at ~20:3xZ: task "Opal Data Harvest -
+Continuous Cycle" is Running, with `--publishers bbg wsj barrons --refresh-once`.
+
+**Ruling.** AMGT_HARVST is PARKED (dell1's allocation). `seeking-alpha/harvest/silver/*` is a G1 table this project serves
+(FWD-22). So v3.5's rule extends to it: a harvest producer defect on site Z that keeps a FWD-22 table from landing is a
+DEFECT CELL cut here, WORLD, with a ledger entry. The cell, in order:
+1. Read Seeking Alpha access first (row AMGT_HARVST-Z-W37-S4: HTTP 402, "renewal pending, at the account holder"). If it
+   still refuses, stop and report. The renewal is Andrew's act, and no capture runs against a refusing account.
+2. If access holds, stop the runner by its own STOP file at a cycle boundary (zero pairs lost, as bz-10 proved), then
+   re-register through `install-cycle-schedule.ps1 -Publishers bbg,wsj,barrons,sa -Windowless -RefreshOnce`, with `-Plan` read
+   first. State dir and runtime root are unchanged.
+3. Place the trading-day trigger for the four SA tables that the CRO findings name
+   (`org/tier1_exec/4.0.0_SA_CRO/deliverables/SECURITY_ANALYSIS_DAILY_PULLS_DEMQUE_DOSSIER_FINDINGS_20261014.md` lines 661-666).
+No new vendor use: the capture resumes under the use already worded for the harvester.
 
 CONTRACTS-side; ENDPOINT unchanged.

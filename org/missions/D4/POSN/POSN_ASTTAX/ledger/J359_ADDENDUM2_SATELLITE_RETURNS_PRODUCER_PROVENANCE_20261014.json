@@ -1,0 +1,29 @@
+{
+  "record": "PROVENANCE -- J359 addendum 2: build_satellites_characteristics.py lands on box/dell1 with the models-blended-with-GLD returns rule (a record, not a decision)",
+  "written_by": "2.0.0_SA_COO~J1",
+  "date": "2026-10-14",
+  "changes_posn_asttax_status": false,
+  "changes_decomposition_or_task_orders": false,
+  "rewords_a_literal": false,
+  "why_this_record_is_here": "The producer belongs to POSN_ASTTAX (TO-V4-1, TO-W1-1). J359 is a remote job with no project home. The naming gate (LGIC_ENFORCE DEC-6) grades a new S3 key literal only for a committing project that a registered legacy_addresses.json row names as reader, derived from the staged graded-extension paths; this record is a .json under the POSN_ASTTAX project home for that reason. Same route as the first landing, ruled by XA-20261014T184815Z-ad15 and authorized again by 1.0.0_SA_CTO~DELL1 msg 5811.",
+  "legacy_row": {
+    "key": "yang-platinum-model-portfolio-benchmarks",
+    "bucket": "opal-data-portal-v2",
+    "template": "json/benchmarks/model_portfolio_benchmarks.json",
+    "reader": "POSN_ASTTAX",
+    "commit": "724b84f846",
+    "written_by": "4.0.0_SA_CRO~DELL1"
+  },
+  "lands": {
+    "file": "data/assets/scripts/gold/build_satellites_characteristics.py",
+    "git_blob": "285eb2170b1352fbd4313d0ec5d1857b51afc0e2",
+    "replaces": "the file deployed at 2026-10-14T18:51Z from commit efb3f6550f (landed on box/dell1 at ffed7952a7)",
+    "change": "each satellite's trailing returns = (1 - g) x the sleeve-weighted average of the underlying Opal models' realized returns + g x the GLD return, g = GLD weight in the satellite's holdings; one new READ of the Model Portfolios benchmarks object; the holdings-level backcast, the returns coverage block and the old returns contributors are retired"
+  },
+  "authority_chain": {
+    "andrew_words_verbatim_in": "org/tier1_exec/4.0.0_SA_CRO/deliverables/J359_SATELLITE_FACTSHEET_EDITS_SPEC_20261014.md addendum 2 @0c6d3d2f94",
+    "never_widen_pair": "the second pair for this act: COO half org/tier1_exec/2.0.0_SA_COO~J1/deliverables/NEVER_WIDEN_J359_ADDENDUM2_SATELLITE_RETURNS_COO_HALF.md (CTO half owed at the time of writing)",
+    "first_pair": "NEVER_WIDEN_J359_SATELLITE_CHARACTERISTICS_COO_HALF.md @e1dfba9db8 and the CTO half @2b6f842af2 (the scalars; unchanged by this act)"
+  },
+  "why_the_landing_is_owed": "The function will be deployed from this build; until the file lands on box/dell1, a package rebuilt from box/dell1 or CLOUD would regress the served returns to the holdings backcast and drop the benchmarks read."
+}

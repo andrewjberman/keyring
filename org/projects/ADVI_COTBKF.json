@@ -3,11 +3,11 @@
  "home": "org/missions/D8/ADVI/ADVI_COTBKF",
  "directive": "D8",
  "macro_code": "ADVI",
- "fabric": "dell2",
+ "fabric": "dell1",
  "dep_stage": "EXECUTING",
  "status": "hold",
  "name": "The Cottonwood 10-year backfill from Commonwealth: the delivery kept as received, its history typed and readable, its documents indexed, its most sensitive details held only where Andrew decided",
  "generated_from": "org/missions/D8/ADVI/ADVI_COTBKF/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-14T00:35:28Z"
+ "generated_at": "2026-10-14T18:55:00Z"
 }

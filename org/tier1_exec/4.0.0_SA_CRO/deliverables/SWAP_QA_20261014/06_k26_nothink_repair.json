@@ -1,0 +1,153 @@
+{
+ "cases": {
+  "BREIT": {
+   "known": null,
+   "swap": {
+    "content_head": "{\"identified_asset\":\"BREIT\",\"security_type\":\"Non-listed REIT\",\"asset_class\":\"Real Estate\",\"sub_asset_class\":\"Diversified Commercial Real Estate\",\"region\":\"United States\",\"capitalization\":null,\"credit\":null,\"duration\":null,\"sources\":[\"https://www.breit.com/\",\"https://www.morningstar.com/alternative-i",
+    "failure": "KIMI_SCHEMA_INVALID",
+    "searches": 1,
+    "seconds": 24.0
+   },
+   "yahoo": {
+    "last": null,
+    "rows": 0
+   }
+  },
+  "KPEC": {
+   "candidates": [
+    {
+     "known": null,
+     "sources": {
+      "https://www.invesco.com/us/financial-products/etfs/product-detail?audienceType=Investor&ticker=PSP": 200
+     },
+     "symbol": "PSP",
+     "yahoo": {
+      "last": "2026-10-14",
+      "rows": 252
+     }
+    },
+    {
+     "known": null,
+     "sources": {
+      "https://www.proshares.com/our-etfs/alternative/pex": 404
+     },
+     "symbol": "PEX",
+     "yahoo": {
+      "last": "2026-10-14",
+      "rows": 252
+     }
+    },
+    {
+     "known": null,
+     "sources": {
+      "https://www.vaneck.com/us/en/bizd/overview/": 302
+     },
+     "symbol": "BIZD",
+     "yahoo": {
+      "last": "2026-10-14",
+      "rows": 252
+     }
+    }
+   ],
+   "known": null,
+   "sources": {
+    "https://awareinvest.com/terminal/intel/kkr-private-equity-conglomerate-kpec-discloses-monthly-nav-for-february-2026-2026-03-20": 200,
+    "https://www.kkr.com/wealth/strategies/private-equity": 200,
+    "https://www.kkrpec.com/": 403,
+    "https://www.renaissanceinvestments.ca/cibc-kkr-global-private-equity-strategy": 200,
+    "https://www.sec.gov/Archives/edgar/data/1957845/000119312523102058/d398317d1012g.htm": 403
+   },
+   "swap": {
+    "parsed": {
+     "asset_class": "Alternatives",
+     "candidates": [
+      {
+       "reason": "Invesco Global Listed Private Equity ETF provides exposure to publicly listed private equity companies and business development companies (BDCs), offering the closest liquid proxy to direct private equity exposure. It tracks companies that invest in or lend to private businesses, similar to KPEC's strategy of acquiring and controlling portfolio companies.",
+       "sources": [
+        "https://www.invesco.com/us/financial-products/etfs/product-detail?audienceType=Investor&ticker=PSP"
+       ],
+       "symbol": "PSP"
+      },
+      {
+       "reason": "ProShares Global Listed Private Equity ETF offers exposure to global listed private equity firms, providing access to the same underlying asset class as KPEC through publicly traded vehicles. It focuses on companies whose principal business is to invest in, lend capital to, or provide services to privately held companies.",
+       "sources": [
+        "https://www.proshares.com/our-etfs/alternative/pex"
+       ],
+       "symbol": "PEX"
+      },
+      {
+       "reason": "VanEck BDC Income ETF provides exposure to business development companies that perform middle-market lending and equity investments similar to private equity firms. BDCs operate with comparable strategies of investing in private or thinly traded companies, making this a closer functional alternative to KPEC's direct private company investments than broad listed private equity ETFs.",
+       "sources": [
+        "https://www.vaneck.com/us/en/bizd/overview/"
+       ],
+       "symbol": "BIZD"
+      }
+     ],
+     "capitalization": null,
+     "credit": null,
+     "duration": null,
+     "identified_asset": "KKR Private Equity Conglomerate LLC (K-PEC)",
+     "reason": "KPEC (KKR Private Equity Conglomerate LLC) is an evergreen private equity fund operated by KKR, not a publicly traded ETF or stock. It is an institutional/private wealth vehicle available only to accredited investors with high minimum investments. The fund acquires, owns, and controls portfolio companies through KKR's private equity platform. As a private fund, it is not available to retail investors and has no direct publicly traded equivalent. The proposed alternatives are ETFs that invest in listed private equity firms and BDCs, which provide the closest liquid, tradable exposure to private equity strategies but with important structural differences: they hold publicly traded securities rather than direct private company stakes, offer daily liquidity, and lack the lock-up periods and capital call structures of true private equity vehicles. These are coarse approximations and require user approval before investment.",
+     "region": "Global",
+     "security_type": "Private Fund (Evergreen Private Equity Vehicle)",
+     "sources": [
+      "https://www.kkrpec.com/",
+      "https://www.kkr.com/wealth/strategies/private-equity",
+      "https://www.renaissanceinvestments.ca/cibc-kkr-global-private-equity-strategy",
+      "https://www.sec.gov/Archives/edgar/data/1957845/000119312523102058/d398317d1012g.htm",
+      "https://awareinvest.com/terminal/intel/kkr-private-equity-conglomerate-kpec-discloses-monthly-nav-for-february-2026-2026-03-20"
+     ],
+     "sub_asset_class": "Private Equity"
+    },
+    "repaired": true,
+    "rounds": 3,
+    "searches": 1,
+    "seconds": 40.5,
+    "usage": {
+     "cached_tokens": 4096,
+     "completion_tokens": 717,
+     "completion_tokens_details": {
+      "reasoning_tokens": 1
+     },
+     "prompt_tokens": 4935,
+     "prompt_tokens_details": {
+      "cached_tokens": 4096
+     },
+     "total_tokens": 5652
+    }
+   },
+   "yahoo": {
+    "last": null,
+    "rows": 0
+   }
+  },
+  "SREIT": {
+   "known": null,
+   "swap": {
+    "content_head": "```json\n{\n  \"identified_asset\": \"Starwood Real Estate Income Trust\",\n  \"security_type\": \"Non-Traded REIT\",\n  \"asset_class\": \"Real Estate\",\n  \"sub_asset_class\": \"Diversified REIT\",\n  \"region\": \"United States\",\n  \"capitalization\": null,\n  \"credit\": null,\n  \"duration\": null,\n  \"sources\": [\n    \"https:/",
+    "failure": "KIMI_SCHEMA_INVALID",
+    "searches": 1,
+    "seconds": 41.0
+   },
+   "yahoo": {
+    "last": null,
+    "rows": 0
+   }
+  }
+ },
+ "model": "kimi-k2.6",
+ "probed_at_utc": "2026-10-14T18:36:59Z",
+ "qa_receipt_sha256": "5b00fcf7f6a9bc6e1f05259d9329ea7e4e15fe07e9566c61801e9b62cb7a38fd",
+ "request_fields": {
+  "tools": [
+   {
+    "function": {
+     "name": "$web_search"
+    },
+    "type": "builtin_function"
+   }
+  ]
+ },
+ "temperature": 0.6,
+ "thinking": "disabled"
+}

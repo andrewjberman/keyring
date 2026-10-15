@@ -572,18 +572,21 @@ def bound_judgment_ids(text: str | None = None) -> list[str]:
                   if attrs.get("judgment", "").strip().lower() == "true")
 
 
-def coverage_check(inst: dict, expected_arg: str, judgment_ids=()) -> list[str]:
+def coverage_check(inst: dict, expected_arg: str, judgment_ids=(), frames=None) -> list[str]:
     """CVO step-zero mechanized: instance criterion set vs the TO's expected set. `judgment_ids` (CT-ac-7) are the
     judgment="true" criteria of the BOUND governing order: they join the expected set, so a row for one is admitted
     and its ABSENCE is a silent omission, exactly as for any expected id (round-close-check needs that row). Empty
-    (UNBOUND) = the expected set exactly as the caller stated it."""
+    (UNBOUND) = the expected set exactly as the caller stated it.
+    The coverage frame is INFORMATIONAL, not a violation (W91-S2): when `frames` is a list it receives the frame
+    line as 'NOTE: coverage-frame: ...', and the returned list holds the real violations only."""
     expected = _expected_ids(expected_arg) | set(judgment_ids)
     carried = {r.get("criterion_id", "") for r in inst.get("acceptance", [])}
     v = [f"coverage: criterion '{c}' in the TO's expected set has NO instance row (silent omission)"
          for c in sorted(expected - carried)]
     v += [f"coverage: instance row '{c}' is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)"
           for c in sorted(carried - expected)]
-    v.insert(0, f"coverage-frame: expected={len(expected)} carried={len(carried)} matched={len(expected & carried)}") if v else None
+    if v and frames is not None:
+        frames.append(f"NOTE: coverage-frame: expected={len(expected)} carried={len(carried)} matched={len(expected & carried)}")
     return v
 
 
@@ -2479,7 +2482,7 @@ def _self_test() -> int:
     # ---- CT-ac-7 (NFRA_CTLPLN-D2-S5): the BOUND order's judgment="true" criteria join the expected set. Pure: the bound
     # order's text is injected to bound_judgment_ids(text); UNBOUND is bound_judgment_ids(None) with _BOUND_ORDER None.
     # The end-to-end arms through the command line live in .tools/tests/test_proof_judgment_expected.py. Coverage frame
-    # lines are not violations, so they are filtered before counting.
+    # lines are not violations and never enter the list coverage_check returns (W91-S2).
     _jt = ('<criterion id="AC1" cell_refs="FIX-a-1"><invocation>echo ok</invocation><expect>ok</expect></criterion>\n'
            '<criterion id="J1" cell_refs="FIX-a-1" judgment="true"/>\n')
     _JROWS = {"AC1": {"criterion_id": "AC1", "status": "PASS"},
@@ -2489,8 +2492,7 @@ def _self_test() -> int:
 
     def _jc(name, carried, bound_text, expect_v, needle=None, absent=None):
         jids = bound_judgment_ids(bound_text) if bound_text is not None else bound_judgment_ids(None)
-        got = [x for x in coverage_check({"acceptance": [_JROWS[c] for c in carried]}, "AC1", jids)
-               if not x.startswith("coverage-frame")]
+        got = coverage_check({"acceptance": [_JROWS[c] for c in carried]}, "AC1", jids)
         ok = (len(got) == expect_v and (needle is None or any(needle in x for x in got))
               and (absent is None or not any(absent in x for x in got)))
         arms.append((name, ok, len(got), expect_v, (got[0] if got else "")[:110]))
@@ -2614,10 +2616,11 @@ def main() -> int:
     # before any limb runs, and every limb below then reads the bound order. Unbound, this only prints its frame.
     bind_violations, bind_frames = governing_binding_check(inst, bound_rel)
     violations.extend(bind_violations)
+    coverage_frames: list[str] = []
     if len(args) == 2:
         # CT-ac-7: a BOUND order's judgment="true" criteria are expected too (UNBOUND: none, the behaviour is unchanged).
         jids = bound_judgment_ids()
-        violations.extend(coverage_check(inst, args[1], jids))
+        violations.extend(coverage_check(inst, args[1], jids, frames=coverage_frames))
         added = sorted(set(jids) - _expected_ids(args[1]))
         if added:
             print("NOTE: bound governing order's judgment criteria admitted as expected (CT-ac-7; the proof must carry "
@@ -2683,6 +2686,8 @@ def main() -> int:
     print(f"proof-of-spec-check | structural={structural} | acceptance rows={n_acc} | violations={len(violations)}")
     print(f"  checker-vintage: {checker_vintage()}")
     for line in align_frames:
+        print(f"  {line}")
+    for line in coverage_frames:
         print(f"  {line}")
     # ALIGNMENT AND SCHEMA ARE DIFFERENT ORACLES, AND THE ALIGNMENT LINES ARE BYTE-IDENTICAL
     # ON A VALID AND AN INVALID INSTANCE. Measured 2026-08-26 on one real instance: stripping

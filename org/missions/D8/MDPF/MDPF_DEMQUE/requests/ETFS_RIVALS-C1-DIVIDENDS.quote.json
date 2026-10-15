@@ -1,0 +1,21 @@
+{
+ "allowance_gap": null,
+ "basis_note": "Independent quote: the request alone, no other request ahead of it, at the measured ceiling per non-trading-day fire (no carry-over). 70 reference cells by the reference rule; DVD_HIST_ALL returns about 13 rows per security, so the cell count is an undercount (cells_claim_note on the request; row W55-S1).",
+ "cells": {
+  "bloomberg_reference": 70
+ },
+ "cells_remaining": 70,
+ "claims": {
+  "ceiling": "held",
+  "reserve": "held"
+ },
+ "finish_date": "2026-10-16",
+ "finish_date_claim": "held",
+ "frozen_by": "2.0.0_SA_COO~Q1",
+ "label": "full-request quote",
+ "page": "rival funds (ETFS_RIVALS)",
+ "quoted_at": "2026-10-14T19:38:50Z",
+ "quoted_for_today": "2026-10-14",
+ "request_id": "ETFS_RIVALS-C1-DIVIDENDS",
+ "securities_count": 70
+}

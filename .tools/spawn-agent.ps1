@@ -232,7 +232,21 @@ if (-not $Tab -and $Serial -match '^2\.[0-9]+\.0_SA_COO') {
 # A spawner running inside a Claude Code session carries CLAUDE_CODE_CHILD_SESSION=1 into the new window, and a claude.exe
 # that inherits it saves no transcript (banner "Transcript saving is off"), so a dead seat leaves no record of why it ended.
 # The seat is a top-level session, not a child: clear the marker first (NFRA_CTLPLN-Z-S10).
-$inner = "Remove-Item Env:CLAUDE_CODE_CHILD_SESSION -ErrorAction SilentlyContinue; [Console]::Write(([char]27).ToString() + ']0;$title' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$title'; `$env:OPAL_TAB_TITLE = '$title'; . `"$ajb`"; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
+# Per-seat log sink (NFRA_CTLPLN-Z-S8 remedy, 1.0.0_SA_CTO~Z msg 34224): one gitignored file per launch,
+# .runtime/spawn-logs/<serial>.<launch UTC>.log, holding a START line, the seat's stderr, and an EXIT line with
+# claude.exe's exit code. A missing EXIT line means the window itself was killed. stdout is NOT captured: the seat
+# is an interactive TUI, and redirecting its stdout would detach it from the console (stderr-only keeps
+# IsOutputRedirected=False, measured). ASCII so the file never mixes UTF-16 redirection with ASCII lines.
+# A log sink only: nothing reads it automatically.
+$seatLogDir = Join-Path $ws '.runtime\spawn-logs'
+New-Item -ItemType Directory -Force -Path $seatLogDir | Out-Null
+$seatLogDirShort = $null
+try { $seatLogDirShort = (New-Object -ComObject Scripting.FileSystemObject).GetFolder($seatLogDir).ShortPath } catch { $seatLogDirShort = $null }
+if (-not $seatLogDirShort) { $seatLogDirShort = $seatLogDir }
+$seatLog = Join-Path $seatLogDirShort ('{0}.{1}.log' -f $Serial, [DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ'))
+$logPre  = "`$PSDefaultParameterValues['Out-File:Encoding'] = 'ascii'; 'START $Serial pid ' + `$PID + ' at ' + [DateTime]::UtcNow.ToString('o') | Out-File -Append '$seatLog'; "
+$logPost = " 2>> '$seatLog'; 'EXIT rc=' + `$LASTEXITCODE + ' at ' + [DateTime]::UtcNow.ToString('o') | Out-File -Append '$seatLog'"
+$inner = "Remove-Item Env:CLAUDE_CODE_CHILD_SESSION -ErrorAction SilentlyContinue; [Console]::Write(([char]27).ToString() + ']0;$title' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$title'; `$env:OPAL_TAB_TITLE = '$title'; . `"$ajb`"; $logPre" + "ajb -Headless$moFlags $Serial$extraStr$logPost $marker`: $Serial"
 
 # Title path: prefer wt.exe with an explicit --title at tab CREATION (works
 # without the suppressApplicationTitle setting); the OSC/WindowTitle pair in
@@ -264,7 +278,7 @@ if ($usableWt) {
     # -ArgumentList element. Note this script never observes the child's fate
     # -- the sound oracle for a live agent is its own register_agent, not our
     # "launched" print.
-    $innerWtPayload = "Remove-Item Env:CLAUDE_CODE_CHILD_SESSION -ErrorAction SilentlyContinue; [Console]::Write(([char]27).ToString() + ']0;$title' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$title'; `$env:OPAL_TAB_TITLE = '$title'; . $ajbForWt; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
+    $innerWtPayload = "Remove-Item Env:CLAUDE_CODE_CHILD_SESSION -ErrorAction SilentlyContinue; [Console]::Write(([char]27).ToString() + ']0;$title' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$title'; `$env:OPAL_TAB_TITLE = '$title'; . $ajbForWt; $logPre" + "ajb -Headless$moFlags $Serial$extraStr$logPost $marker`: $Serial"
     $innerForWt = $innerWtPayload -replace ';', '\;'
     # `-w new` opens a fresh WT window (one-window-per-agent UX convention).
     & wt.exe -w new new-tab --title $title powershell.exe -NoProfile -NoExit -Command $innerForWt

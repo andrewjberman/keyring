@@ -3068,3 +3068,93 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
   }
 ]
 ```
+
+## Rows filed by 0.9.0_WK_MDPF_DEMQUE~55 (DQ-t-63, workstream ETFSINTAKE; the branch's copy, appended at its end)
+
+```json
+[
+  {
+    "id": "MDPF_DEMQUE-D1-W55-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~55",
+    "surfaced_at": "2026-10-14T19:21:27Z",
+    "one_line": "The dividend request counts 70 reference cells, one per security, but DVD_HIST_ALL is a bulk field that returns several event rows per security; the reference rule cannot price those rows, so the cell count is an undercount of what the draw returns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t63 (Worker Face, request 3): ETFS_RIVALS-C1-DIVIDENDS is a channel reference request with one cell per security under bbg_quote's reference rule, 70 cells for the pinned names file.",
+    "world_is": "bbg_quote's reference rule prices securities x fields, one row each. DVD_HIST_ALL returns several dividend event rows per security. BACKFILL_GAPS_FOR_DEMQUE.md Row 3 (the issuer's measurement, not re-measured by this worker) cites 9,354 event rows for 724 securities, about 13 each, so the rows drawn are about thirteen times the 70 cells. The build writes a cells_claim_note into the request saying so. No rule in bbg_quote prices a bulk field per row, so the queue's ledger carries 70 cells for this request.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/BACKFILL_GAPS_FOR_DEMQUE.md @c9e98081a6 (Row 3: 9,354 event rows, 724 securities)",
+        "data/mdpf/scripts/demque/bbg_quote.py reference channel, cells = securities x fields, @9b7d894bcb",
+        "build of 2026-10-13 in this worker's run on 2026-10-14 (ETFS_RIVALS-C1-DIVIDENDS cells 70, securities 70; rc=0)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W55-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~55",
+    "surfaced_at": "2026-10-14T19:21:27Z",
+    "one_line": "Eleven securities held by the Rival Funds or shown in a page dialog have no row in the security universe, so the owed set carries no Bloomberg ticker for them; 2,711 units are left out of the requests, under the 2 percent refusal line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t63 (Worker Face): the owed set gives a Bloomberg ticker for each security; a security with none is counted as no_ticker and left out; more than 2 percent of the units with no ticker refuses the build and files a BLOCKING row.",
+    "world_is": "Build of 2026-10-13: no_ticker 2,711 units of 216,361 (1.25 percent: TR union 123,933 plus close union 89,717 plus 2,711). The eleven securities are BCS_US_Equity, BDORY_US_Equity, BYDDY_US_Equity, MER_PM_Equity, NVS_US_Equity, PST_IM_Equity, SAN_US_Equity, SU_CN_Equity, VALE3_BZ_Equity and ZURVY_US_Equity (no universe row on 2026-10-13), and JD_US_Equity (its universe row has last_seen 2025-06-02, before the 365-day window, so the owed read drops it). The G1 holdings and the dialog keys carry them in key form (security_id BCS_US_Equity), so the universe read does not resolve them. The build does not derive a ticker from the key form; the units are counted and left out, as the order directs.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/history_owed.py owed(): universe rows with a blank security_bloomberg or a last_seen before the window are dropped, @9b7d894bcb",
+        "universe read on 2026-10-13 (history_owed._universe): 1,058 rows; the eleven security_id values have no row with a ticker, JD_US_Equity has last_seen 2025-06-02",
+        "data/mdpf/scripts/demque/etfs_rivals_intake.py plan_units() no_ticker count (this order's branch, uncommitted when this row was filed)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W55-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~55",
+    "surfaced_at": "2026-10-14T19:21:27Z",
+    "one_line": "Every request carries window_start 2025-10-13, so the build is valid only for --day 2026-10-13: bbg_quote refuses the requests for any later page day, and the build exits 2 with the rule named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t63 (Worker Face): the stage floor and every request window_start are 2025-10-13, and --day is a required argument with no default.",
+    "world_is": "Measured in-process by this worker: a D30 request for need_date 2026-10-14 with window_start 2025-10-13 is refused by bbg_quote._validate with 'non_client window_start 2025-10-13 is more than 365 days before need_date 2026-10-14'. The 365-day rule moves with the need date and the order's floor does not, so the next page day needs a window design from the issuer. The build refuses rather than trims, as bbg_quote does, and writes no request for a later day.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_quote.py _check_window (non_client window_start more than 365 days before need_date refused), @9b7d894bcb",
+        "in-process bbg_quote._validate on a D30 request, need_date 2026-10-14, window_start 2025-10-13: refused (this worker's run on 2026-10-14)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W55-S4",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~55",
+    "surfaced_at": "2026-10-14T19:21:27Z",
+    "one_line": "The AC2 check dq_t63_real.py fails at its own line 81 (from lib import trading_calendar) on a plain run, because the check does not put the repo root on sys.path; with PYTHONPATH set to the worktree root the same invocation reads INTAKE-REAL-OK.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t63, DQ9-t63-AC2 invocation: python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t63_real.py, run from the worktree root, expects INTAKE-REAL-OK.",
+    "world_is": "Plain run, PYTHONPATH unset: the two builds ran and the check then raised ImportError: cannot import name 'trading_calendar' from 'lib' (unknown location) at dq_t63_real.py line 81, so no arm was graded. The same trap is recorded as MDPF_DEMQUE-D1-W51-S3: a plain run puts the script directory on sys.path, and lib resolves to an unrelated site-packages namespace package. With PYTHONPATH set to the worktree root the run reads INTAKE-REAL-OK (3 min 46 s; account-id oracle 0 hits against 29,617 hashes). The check sits outside this order's write grant and was not edited.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t63_real.py line 81 (the import inside main, after the two builds) @9b7d894bcb",
+        "plain-run traceback and PYTHONPATH run of dq_t63_real.py in this worker's run on 2026-10-14",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md (row MDPF_DEMQUE-D1-W51-S3, the same trap) @9b7d894bcb"
+      ]
+    }
+  }
+]
+```

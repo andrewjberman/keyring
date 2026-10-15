@@ -3,11 +3,11 @@
  "home": "org/missions/D8/ADVI/ADVI_BILLING",
  "directive": "D8",
  "macro_code": "ADVI",
- "fabric": "dell2",
+ "fabric": "dell1",
  "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Q-2: advisory-fee billing, buy or build: fees worked out from Opal's own data, traced to the agreement, the Schwab fee file without Black Diamond",
  "generated_from": "org/missions/D8/ADVI/ADVI_BILLING/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-09T19:39:08Z"
+ "generated_at": "2026-10-14T18:55:00Z"
 }
