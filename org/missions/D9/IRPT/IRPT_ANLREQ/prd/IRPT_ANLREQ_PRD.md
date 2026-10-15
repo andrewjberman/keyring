@@ -420,8 +420,9 @@ Authority: Andrew at the dell2 terminal, verbatim (recorded by `4.0.0_SA_CRO~DEL
 selection for prices. The prices should always be whatever the most recent data is. Doing T+1 is most logical, which is what we'd be able
 to provide internally as well as all our API solutions to my knowledgds".
 
-**Ruled reading of "T+1": the latest close, available the next morning.** On the estate's calendar that is the T-1 frontier
-(`lib/trading_calendar.py`), which is what Yahoo (cut at T-1), YCharts and Bloomberg deliver.
+**The term is T-1, confirmed by Andrew the same minute, verbatim: "T-1 is the correct terminology, let's just stick to that".** Every price
+is the T-1 close: the T-1 frontier of `lib/trading_calendar.py`, which is what Yahoo (cut at T-1), YCharts and Bloomberg deliver. No
+record, field or label says "T+1".
 1. **C-PRICES gains one sentence:** no price-date input; every price is the T-1 frontier close, stated as the report's as-of.
 2. **The form loses its price-date field** (`TicketCenter.tsx:411` sends `priceDate: ''`). That is FILING `~Y2`'s portal cell.
 3. **The server derives the date and never requires it** (share quantities, `intake/portfolio.py:208-212`, AR-y-242..245). The door
