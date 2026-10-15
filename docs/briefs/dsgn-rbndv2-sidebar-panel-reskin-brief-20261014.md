@@ -87,8 +87,9 @@ This brief treats SHAPE and FRAME as in scope and GROUND COLOUR as out, until he
 - Any project holding a portal FAST lease on a page file. RBNDV2 should not need a page lease (O3); if it does, the lease
   overlap check is the mechanism.
 
-**Pages that bypass the primitives (O4):** bringing them onto `Panel` is a per-page edit, which O3 rules out by default. Pulling
-any of them in is Andrew's scope call, not the decomposition's.
+**Pages that bypass the primitives (O4): OUT OF SCOPE.** Bringing them onto `Panel` is a per-page edit, which O3 rules out.
+`4.0.0_SA_CRO~A` ruled this on 2026-10-14 from Andrew's own words: "a surgical mechanism for just hitting the sidebar and default
+panel cards". O4 still makes the leftover pages visible. Pulling any of them in later needs Andrew's word.
 
 ---
 
@@ -193,7 +194,8 @@ The choice among these angles belongs to the PRD and to Andrew's eye (O5).
 ## PART V -- WHAT MUST BE TRUE (named, not sequenced)
 
 - Andrew's word on panel ground colour in or out of scope (Part II), given the 2026-10-06 light-panel hold.
-- Andrew's word on the bypassing pages in or out of scope (O4).
+- Andrew's pick of a direction from the option canvas https://claude.ai/artifact/K67YcR7n63uBakFbnNKUBG. Its boards:
+  today; A, Opal-led; B, Opal + Hex blend. The CRO recommends A's sidebar with B's panel.
 - A way for Andrew to see old and new on one page (O5). The no-shadow-pipeline law (CLAUDE.md section 5) is written for
   pipelines. Whether a design comparison may use a runtime toggle, a branch preview or a static mock is the CTO's call, not
   this brief's.
