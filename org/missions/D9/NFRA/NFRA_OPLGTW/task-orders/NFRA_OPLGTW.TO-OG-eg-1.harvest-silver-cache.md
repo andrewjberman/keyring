@@ -71,7 +71,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-eg-1.harvest-silver-cache.proof
 - Round 37, workstream EGRESS (decomposition addendum R3-T.68; PRD v3.10 @c3b76c142b; CTO msg 34372: FIRST in the queue after the release in flight). The applier half is `OG-eg-2` (stop at a cycle boundary, `-Plan` first, re-register; carries the `sa` re-registration if still pending; the live proof is the first cycle record's `s3_get_bytes` against the CUR baseline of 4-6 GB an hour for the harvest bucket).
 - Pre-cut: eg1.AC1 base FAIL as expected (test file absent); eg1.AC2 passes at base (it is the regression guard).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>EGRESS</workstream>
 <slot>~98</slot>
