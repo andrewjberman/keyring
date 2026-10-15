@@ -17810,3 +17810,50 @@ name the one known failure instead of silently inheriting it.
     "world_is": "ctx has no prior-trading-day function, so the adapter walks back at most 10 partitions to the newest non-empty map partition, data-driven, and reports the partition read in _denominator (account_map_partition, account_map_fallback_steps). The calendar's day count is not used for the fallback. The lookup is equivalent for weekends and holidays, but it is not the calendar the contract names."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T20:17:24Z",
+    "one_line": "The commit-time naming gate REFUSES the canonical firm-id literals in client_adapter_smartx.py as NEW hand-kept carriers (4 verdicts, WARN window, not blocking); the adapter takes the firm ids as literal protocol constants.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ .scratch/commit1.log (safe-commit run on the worktree, base e7cbf77ec1): 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/client_adapter_smartx.py:29 49financial' and ':30' for 49financial, cottonwood and inflection, 'NEW hand-kept carrier (context rule)', 'LIVE-READ-FAILED: CensusError' (this seat)",
+        "READ the same log: 'WARN window: 4 REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce' (this seat); the commit landed at 638daaaa76"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A hand-kept carrier of a served identifier outside a permitted context is read through lookup(...); the commit-time naming gate refuses a literal carrier (CLAUDE.md section 4, naming).",
+    "world_is": "The adapter's FIRMS and CANONICAL_FIRMS tuples carry the three canonical firm ids as literals, which the naming gate graded as four new hand-kept carriers. The gate is in its WARN window, so the commit was not refused. The adapter reads no lookup(); the issuer decides, at the hookup, whether the canonical firm list is read through lookup() before the gate enforces. No gate was overridden."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S12",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T20:24:55Z",
+    "one_line": "The task order names its proof instance NFRA_OPLGTW.TO-OG-cl-5.client_smartx.proof_of_spec.json (underscore), but the flip gate resolves deliverables/*/<order stem>.proof_of_spec.json (hyphen), so the complete flip is refused on the named path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ .tools/to-pipeline-gate.py _proof_instance_candidates @e7cbf77ec1: for a TREE order the candidate names are stem + '.proof_of_spec.json' under deliverables/*/, stem = the order's basename without .md (this seat)",
+        "READ the task order section 5 @e7cbf77ec1: 'Write the proof instance at W/NFRA_OPLGTW.TO-OG-cl-5.client_smartx.proof_of_spec.json' (underscore; the order file is ...TO-OG-cl-5.client-smartx.md, hyphen) (this seat)",
+        "RAN safe-commit with the status flip at worktree base 638daaaa76: to-pipeline-gate REFUSED, 'NO proof-of-spec instance was found beside it' (this seat, .scratch/commit2.log)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order section 5: the proof instance is written at W/NFRA_OPLGTW.TO-OG-cl-5.client_smartx.proof_of_spec.json and the status flips to complete once it validates.",
+    "world_is": "The flip gate finds an instance only under the order's stem name (client-smartx). The instance is written at W/NFRA_OPLGTW.TO-OG-cl-5.client-smartx.proof_of_spec.json, the underscore file is removed, and the instance validates at rc 0 under the new name. The order's named path and the gate's rule disagree; the issuer decides the name for later orders."
+  }
+  ```

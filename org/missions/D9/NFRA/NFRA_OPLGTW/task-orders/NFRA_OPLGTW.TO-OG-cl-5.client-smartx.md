@@ -93,7 +93,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cl-5.client_smartx.proof_of_spe
 
 - A1 (issuer, 2026-10-15 ~18:4xZ, worker rows Z-W107-S1..S6, all read): the first seat BLOCKED, rightly, and its rows rule the whole adapter family (rulings in `G2_ADAPTER_PROTOCOL.md` section A1, which binds this order): (S1) the `tests/` folder was outside the cone: the issuer added it (a path absent at HEAD never added its folder); the cone also holds `data/mdpf/config/`. (S2) the roster path is `data/mdpf/config/partner_roster.json` (tracked; now in `<paths>`): your PROBE reads it; your ADAPTER reads the roster only through `ctx.firm_roster()` (A1 item 4; the core serves it from a byte-equal copy under `app/refs/` at the hookup). (S3) the real `Ctx` is `OG-cl-1`'s and on no ref you hold: your probe writes its own `ProbeCtx` (A1 item 2); `typed_scope.py` has none of those methods by design; the catalog HAS 13 `smartx/platform/silver` rows (S6: the census's "catalog present: false" is stale). (S4) only `49financial` has a SmartX firm id: the two-firm negative arm is synthetic in the TESTS (a `FakeCtx` with rows of two firm ids), and in the PROBE it is a request naming another canonical firm refused with zero keys read (A1 item 5). (S5) a canonical firm outside the vendor's `FIRMS` raises `AdapterRefusal("firm_not_served")` (A1 item 3). The first seat's rows and BLOCKED proof instance (commits `90f43f588d`, `c84f8080af`) are inherited state; re-record the instance from the real outputs. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G2-BUILD</workstream>
 <slot>~107</slot>
