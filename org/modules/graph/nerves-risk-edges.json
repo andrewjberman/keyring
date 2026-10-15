@@ -1,9 +1,9 @@
 {
  "_README": "NFRA_NERVES L3b -- the LEXICAL UNLOCK. Danger zones (holds/risks/doctrine) entity-linked from the corpus onto the nodes they protect or indict. Every claim carries its doc + LINE (a claim without a citation is not a claim). A mention is EVIDENCE, not proof -- confidence is stated. Regenerate: nerves_lexical build.",
- "built_utc": "2026-10-15T19:46:35Z",
+ "built_utc": "2026-10-15T19:56:01Z",
  "stats": {
   "docs_scanned": 2719,
-  "docs_with_no_addressable_ref": 312,
+  "docs_with_no_addressable_ref": 265,
   "refs_dropped_as_too_ambiguous": 667,
   "top_ambiguous_refs": [
    "server.py",
@@ -15,13 +15,13 @@
    "lambda_function.py",
    "ajb.ps1"
   ],
-  "nodes_with_claims": 2692,
+  "nodes_with_claims": 2703,
   "by_severity": {
-   "HOLD": 2079,
-   "RISK": 127,
-   "DOCTRINE": 486
+   "HOLD": 2083,
+   "RISK": 132,
+   "DOCTRINE": 488
   },
-  "total_claims": 14803
+  "total_claims": 14910
  },
  "edges": [
   {
@@ -62808,6 +62808,25 @@
    ]
   },
   {
+   "node": "file:portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "org/critical_paths/change_management/20260612T2024Z_advisor_intelligence_all_approval.md",
+     "line": 12,
+     "ref": "portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "**File:** `portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx`"
+    }
+   ]
+  },
+  {
    "node": "file:infra/aws/terraform/globgrph/d4f1_request_alarm.tf",
    "severity": "HOLD",
    "kinds": [
@@ -63872,6 +63891,44 @@
    ]
   },
   {
+   "node": "file:portal/.runtmp/bench_vintage_smoke.mjs",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "org/critical_paths/change_management/20260731T2215Z_yang-rollforward-20260727-plus-cdn-invalidation.md",
+     "line": 63,
+     "ref": "portal/.runtmp/bench_vintage_smoke.mjs",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "Runner: `portal/.runtmp/bench_vintage_smoke.mjs` (puppeteer-core over CDP, **real login** as"
+    }
+   ]
+  },
+  {
+   "node": "file:portal/.runtmp/bench_vintage/benchmark_tab.png",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "org/critical_paths/change_management/20260731T2215Z_yang-rollforward-20260727-plus-cdn-invalidation.md",
+     "line": 72,
+     "ref": "portal/.runtmp/bench_vintage/benchmark_tab.png",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "**RENDER** -- Benchmark tab, `portal/.runtmp/bench_vintage/benchmark_tab.png`: BENCHMARK COMPARISON"
+    }
+   ]
+  },
+  {
    "node": "file:docs/architecture/MDLP_MONPUB_MANIFEST_REGRESSION_FIX.md",
    "severity": "HOLD",
    "kinds": [
@@ -64286,6 +64343,25 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "`20260812T1403Z_49f-p3-gold-root-repoint.md`). It did **not** cover the `dimensions/` tier"
+    }
+   ]
+  },
+  {
+   "node": "file:portal/.frontend-dev/screenshots/mdpf_evr_fe2_PROD_v2.1.162_global_REAL.png",
+   "severity": "HOLD",
+   "kinds": [
+    "HOLD"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "HOLD",
+     "doc": "org/critical_paths/change_management/20260815T211100Z_portal_prod_promote_MDPF_EVR_FE2.md",
+     "line": 40,
+     "ref": "portal/.frontend-dev/screenshots/mdpf_evr_fe2_PROD_v2.1.162_global_REAL.png",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "PNG `portal/.frontend-dev/screenshots/mdpf_evr_fe2_PROD_v2.1.162_global_REAL.png` (1440x2346): deployed PROD bundle"
     }
    ]
   },
@@ -76564,6 +76640,71 @@
    ]
   },
   {
+   "node": "file:portal/src/pages/ModelPortfolios.tsx",
+   "severity": "RISK",
+   "kinds": [
+    "RISK",
+    "DOCTRINE"
+   ],
+   "n_claims": 72,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260721T205028Z_model_portfolios-benchmark_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/pages/ModelPortfolios.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/pages/ModelPortfolios.tsx` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260721T205028Z_model_portfolios-benchmark_all_approval.md",
+     "line": 12,
+     "ref": "portal/src/pages/ModelPortfolios.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/pages/ModelPortfolios.tsx` (model_portfolios.headline, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260721T212631Z_model_portfolios-benchmark_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/pages/ModelPortfolios.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/pages/ModelPortfolios.tsx` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260721T212631Z_model_portfolios-benchmark_all_approval.md",
+     "line": 12,
+     "ref": "portal/src/pages/ModelPortfolios.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/pages/ModelPortfolios.tsx` (model_portfolios.headline, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260721T222312Z_model_portfolios-benchmark_all_approval.md",
+     "line": 13,
+     "ref": "portal/src/pages/ModelPortfolios.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/pages/ModelPortfolios.tsx` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260721T222312Z_model_portfolios-benchmark_all_approval.md",
+     "line": 14,
+     "ref": "portal/src/pages/ModelPortfolios.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/pages/ModelPortfolios.tsx` (model_portfolios.headline, SEV1)"
+    }
+   ]
+  },
+  {
    "node": "file:.tools/spawn-agent.ps1",
    "severity": "RISK",
    "kinds": [
@@ -77015,6 +77156,134 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "- Paths touched: .tools/portal-hooks/install.sh, .tools/portal-hooks/pre-push, org/tier0/ledger/LD-0646.md"
+    }
+   ]
+  },
+  {
+   "node": "file:portal/src/api/portal-proxy.ts",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 12,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260717T141222Z_model_portfolios-benchmark_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/api/portal-proxy.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/portal-proxy.ts` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260721T213626Z_model_portfolios-benchmark_all_approval.md",
+     "line": 12,
+     "ref": "portal/src/api/portal-proxy.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/portal-proxy.ts` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260721T222312Z_model_portfolios-benchmark_all_approval.md",
+     "line": 12,
+     "ref": "portal/src/api/portal-proxy.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/portal-proxy.ts` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260722T062956Z_model_portfolios-benchmark_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/api/portal-proxy.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/portal-proxy.ts` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260724T142623Z_model_portfolios-benchmark_all_approval.md",
+     "line": 12,
+     "ref": "portal/src/api/portal-proxy.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/portal-proxy.ts` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260724T144241Z_model_portfolios-benchmark_all_approval.md",
+     "line": 12,
+     "ref": "portal/src/api/portal-proxy.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/portal-proxy.ts` (model_portfolios.benchmark, SEV1)"
+    }
+   ]
+  },
+  {
+   "node": "file:portal/src/api/endpoints/aum.ts",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 11,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260711T030504Z_model_portfolios-headline_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/api/endpoints/aum.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/endpoints/aum.ts` (model_portfolios.headline, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260721T213626Z_model_portfolios-benchmark_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/api/endpoints/aum.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/endpoints/aum.ts` (model_portfolios.headline, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260721T222312Z_model_portfolios-benchmark_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/api/endpoints/aum.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/endpoints/aum.ts` (model_portfolios.headline, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260723T014148Z_model_portfolios-benchmark_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/api/endpoints/aum.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/endpoints/aum.ts` (model_portfolios.headline, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260724T142623Z_model_portfolios-benchmark_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/api/endpoints/aum.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/endpoints/aum.ts` (model_portfolios.headline, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260724T144241Z_model_portfolios-benchmark_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/api/endpoints/aum.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/api/endpoints/aum.ts` (model_portfolios.headline, SEV1)"
     }
    ]
   },
@@ -77600,6 +77869,61 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "liveness-oracle block moved whole to `org/tier1_exec/2.0.0_SA_COO/DRIVE.md` as \u00a74a at the same wording, a four-line"
+    }
+   ]
+  },
+  {
+   "node": "file:portal/src/components/BenchmarkHeatmap.tsx",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 5,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260715T153809Z_model_portfolios-benchmark_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/components/BenchmarkHeatmap.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/components/BenchmarkHeatmap.tsx` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260804T165324Z_model_portfolios-benchmark_all_approval.md",
+     "line": 13,
+     "ref": "portal/src/components/BenchmarkHeatmap.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/components/BenchmarkHeatmap.tsx` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260804T192349Z_model_portfolios-benchmark_all_approval.md",
+     "line": 13,
+     "ref": "portal/src/components/BenchmarkHeatmap.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/components/BenchmarkHeatmap.tsx` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260804T205910Z_model_portfolios-benchmark_all_approval.md",
+     "line": 11,
+     "ref": "portal/src/components/BenchmarkHeatmap.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/components/BenchmarkHeatmap.tsx` (model_portfolios.benchmark, SEV1)"
+    },
+    {
+     "kind": "RISK",
+     "doc": "org/critical_paths/change_management/20260804T213518Z_model_portfolios-benchmark_all_approval.md",
+     "line": 12,
+     "ref": "portal/src/components/BenchmarkHeatmap.tsx",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "- `portal/src/components/BenchmarkHeatmap.tsx` (model_portfolios.benchmark, SEV1)"
     }
    ]
   },
@@ -80314,6 +80638,25 @@
      "line": 60,
      "ref": "infra/aws/lambda-edge/_shared/firm-config.mjs",
      "confidence": "STRONG",
+     "ambiguous": false,
+     "quote": "(`infra/aws/lambda-edge/_shared/firm-config.mjs`, `portal/src/lib/firmAccess.ts`). The extractor is"
+    }
+   ]
+  },
+  {
+   "node": "file:portal/src/lib/firmAccess.ts",
+   "severity": "RISK",
+   "kinds": [
+    "RISK"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "RISK",
+     "doc": "docs/references/MDPF_POSTMORTEM_20260722.md",
+     "line": 60,
+     "ref": "portal/src/lib/firmAccess.ts",
+     "confidence": "EXACT",
      "ambiguous": false,
      "quote": "(`infra/aws/lambda-edge/_shared/firm-config.mjs`, `portal/src/lib/firmAccess.ts`). The extractor is"
     }
@@ -86038,6 +86381,25 @@
    ]
   },
   {
+   "node": "file:portal/CONTRIBUTING-BOXES.md",
+   "severity": "DOCTRINE",
+   "kinds": [
+    "DOCTRINE"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "DOCTRINE",
+     "doc": "CLAUDE.md",
+     "line": 323,
+     "ref": "portal/CONTRIBUTING-BOXES.md",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "a chosen-set promote** (NFRA_DEVPLN; `portal/CONTRIBUTING-BOXES.md`). Test-only needs no approver; a live FAST lease is"
+    }
+   ]
+  },
+  {
    "node": "file:org/tier2_senior/0.4.0_DE_ClientPlatform/task_orders/ADVI_INFGRO.005.de-portal-gro-side-by-side.md",
    "severity": "DOCTRINE",
    "kinds": [
@@ -89777,6 +90139,25 @@
      "confidence": "STRONG",
      "ambiguous": false,
      "quote": "`docs/references/COO_DRIVE_REARM_HISTORY.md` holds the pre-trim cell **byte-for-byte**, struck markup"
+    }
+   ]
+  },
+  {
+   "node": "file:portal/src/lib/pairedProvenanceRead.ts",
+   "severity": "DOCTRINE",
+   "kinds": [
+    "DOCTRINE"
+   ],
+   "n_claims": 1,
+   "claims": [
+    {
+     "kind": "DOCTRINE",
+     "doc": "org/tier0/ledger/LD-0417.md",
+     "line": 74,
+     "ref": "portal/src/lib/pairedProvenanceRead.ts",
+     "confidence": "EXACT",
+     "ambiguous": false,
+     "quote": "(closed-enum loud-degrade, `portal/src/lib/pairedProvenanceRead.ts`) \u2014 itself a visible"
     }
    ]
   },
