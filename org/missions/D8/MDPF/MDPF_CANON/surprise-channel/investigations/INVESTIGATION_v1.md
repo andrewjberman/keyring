@@ -2643,3 +2643,28 @@
   "notes": "No act taken. CN-r-2 is not built or graded here: its three criteria were not run, and the order stays open with no proof instance. Remedy belongs to the issuer or COO: a worker worktree whose cone includes infra/aws, or a re-cut of the CN-r-2 paths."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W30-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~30",
+  "surfaced_at": "2026-10-15T15:21:44Z",
+  "one_line": "CN-r-2 order names a <status> flip to complete, but the worker face (lines 1-105) carries no <status> element to flip.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-r-2 section 5 (line 102): flip this order's <status> to complete in the SAME commit as the proof instance, only when every criterion passes. The worker face is lines 1-105 and the record face is never read by this worker.",
+  "world_is": "Lines 1-105 of MDPF_CANON.TO-CN-r-2.publisher-latest-json-read-grant.md carry no <status> element. The only occurrence of the word status in those lines is the instruction itself at line 102. All three criteria AC1-AC3 PASS and the proof instance validates, but there is no status field inside the worker face to write complete into.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head -105 of the order, grep -n -i status (worktree C:/dev/wk-canon-r10-30, read 2026-10-15T15:21Z): one hit, line 102, the flip instruction; no <status> tag",
+      "Read of the order lines 1-105: <paths> at lines 76-81, <proof_of_spec> at lines 88-92, the instruction block at lines 98-104; no <status> element in the face",
+      "criteria AC1 AC2 AC3 PASS by output, proof-of-spec-check rc recorded in the instance commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No act taken on the flip: the order status is NOT written to complete. The record face is out of this worker's read set, so the status element is not located here. Remedy belongs to the issuer (2.0.0_SA_COO~D1): state where the <status> element lives or flip it on the issuer's side after the proof instance is read."
+}
+```
