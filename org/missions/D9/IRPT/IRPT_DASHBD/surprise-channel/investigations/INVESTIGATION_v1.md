@@ -18602,3 +18602,107 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Reading taken: a missing ARN means no chain was possible, so the budget did not end it. The issuer may rule the other reading; the change is one test-order line in chain_next."
 }
 ```
+
+## IRPT_DASHBD-D2-W312-S1 -- the complete-day rule counts dropped days, but the run record names no key for dropped rows; the record was kept as the order lists it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W312-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~312",
+  "surfaced_at": "2026-10-15T21:15:42Z",
+  "one_line": "Step 6 says the dropped rows are counted. Step 8 lists the run record keys and names no dropped-row count, so the drop is carried by incomplete_days and calendar_days_incomplete only. No key was added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 6: 'Complete-day rule as round 124; the dropped rows are counted.' Step 8 lists the run record keys; none counts dropped rows.",
+  "world_is": "The wrapper computes no dropped-row count that it writes. Adding a key would invent a field, which the refusal clause forbids, so the record keeps the listed keys and the drop is visible through incomplete_days.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-12.inflection-scope-feed-module-on-contract-041-absent-rows-in-table-and-run-repairs.md (step 6 and step 8, base 3dde628d6e)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py (run() record block, worker edit uncommitted at filing; base 3dde628d6e)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reading taken: the dropped rows are counted by their days. The issuer may rule that a dropped-row key belongs in the record."
+}
+```
+
+## IRPT_DASHBD-D2-W312-S2 -- an out_dir that exists as a regular file is outside the empty-directory refusal, which counts entries in a directory
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W312-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~312",
+  "surfaced_at": "2026-10-15T21:15:42Z",
+  "one_line": "Step 2 refuses an out_dir that exists and is not empty, counting its entries. The order does not say what happens when out_dir exists as a file. The wrapper refuses it with a count of 1 and writes nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 2: REFUSE if out_dir exists and is not empty (count: entries in it). Each refusal writes NOTHING, not even out_dir.",
+  "world_is": "A regular file has no entries to count. The wrapper raises ValueError 'output path exists and is not a directory: 1 path' before any write. No rule covers this case.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-12.inflection-scope-feed-module-on-contract-041-absent-rows-in-table-and-run-repairs.md (step 2, base 3dde628d6e)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py (run() output-directory block, worker edit uncommitted at filing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The refusal is a count of one path. The issuer may rule a different refusal for a file at out_dir."
+}
+```
+
+## IRPT_DASHBD-D2-W312-S3 -- a dimension key that is None or NaN cannot be tested for canonical form, because int() raises on it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W312-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~312",
+  "surfaced_at": "2026-10-15T21:15:42Z",
+  "one_line": "Step 3 defines canonical as str(a) == str(int(a)). int() raises on None and NaN, so the test is undefined for a missing key. The wrapper counts such a key as an offender together with the duplicate keys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 3: REFUSE on a duplicate key or a key that is not canonical, meaning str(a) != str(int(a)) (count: offenders).",
+  "world_is": "A key whose int() raises TypeError or ValueError is treated as not canonical and is counted in the refusal. The rules name no treatment of a missing key, and no row is written for it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-12.inflection-scope-feed-module-on-contract-041-absent-rows-in-table-and-run-repairs.md (step 3, base 3dde628d6e)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py (dimension-key block, worker edit uncommitted at filing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reading taken: a missing key is an offender, never a silent skip. The issuer may rule the case otherwise."
+}
+```
+
+## IRPT_DASHBD-D2-W312-S4 -- the accounts parameter's ids are not stated to count in accounts_in_feed, accounts_mapped or accounts_unmapped
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W312-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~312",
+  "surfaced_at": "2026-10-15T21:15:42Z",
+  "one_line": "The order says accounts adds Orion ids to the output even with no feed rows, and that every other manifest key stands. It does not say whether accounts_in_feed, accounts_mapped and accounts_unmapped count those added ids. The adapter counts feed-row accounts only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Adapter: accounts (None, or Orion ids) is included in the output even when the ids have no rows in feed_rows; manifest: every other key stands.",
+  "world_is": "The wrapper passes every Orion id read from ALL rows as accounts, so its own record counts the same set either way and the two agree. A direct adapter call with accounts beyond the feed would show a manifest count below the output account count. The feed-only reading is kept, as round 124 defined the key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-12.inflection-scope-feed-module-on-contract-041-absent-rows-in-table-and-run-repairs.md (adapter parameters, base 3dde628d6e)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py (manifest block, worker edit uncommitted at filing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reading taken: feed-row accounts only. The issuer may rule that the parameter's ids count too."
+}
+```
