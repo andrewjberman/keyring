@@ -36578,3 +36578,255 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Disposition for the issuer: name the composition that installs the filled reader, with its naming-builder address, in the round-4 cell that wires the branch (S1)."
 }
 ```
+
+## IRPT_BCKEND-D2-W404-S1 -- positions day list in IB-pr-560 (a) contains three days that are not NYSE trading days
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order lists seven positions days with no flat key (2026-07-01, 07-03, 07-04, 07-05, 08-06, 09-28, 09-29); against lib/trading_calendar.py only four of them are trading days without a flat key, and 07-03, 07-04 and 07-05 hold a .parquet key only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~404/IB203-1_orion_recut_design.json@519b5ccbfb: pair_a.feeds.positions.days carries the order's seven days",
+      "lib/trading_calendar.py trading_days_between(2026-05-03, 2026-10-14) with the NYSE pandas_market_calendars source: 114 trading days; is_trading_day False for 07-03, 07-04 and 07-05; bucket listing bronze/positions/ read this session: .parquet only for those three days"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (a): the positions feed's absent trading days are 7, 2026-07-01, 07-03, 07-04, 07-05, 08-06, 09-28, 09-29, each with its flat key absent.",
+  "world_is": "Four of the seven are absent trading days (07-01, 08-06, 09-28, 09-29). Three are not trading days (a holiday and a weekend) and carry a .parquet key. The design keeps the order's seven because the check requires seven; the CTO rules the day set before any write."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S2 -- transactions day list in IB-pr-560 (a) omits six trading days with no key in either format
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order lists seven transactions days; against the calendar thirteen trading days hold no flat key, six of them 2026-05-04 to 2026-05-11, which the order does not list.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py trading_days_between(2026-05-03, 2026-10-14): 114 trading days; bucket listing bronze/transactions/ read this session: no .jsonl.gz and no .parquet key for 2026-05-04, 05-05, 05-06, 05-07, 05-08, 05-11, 07-01, 07-13, 07-14, 07-15, 08-06, 09-28, 09-29",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~404/IB203-1_orion_recut_design.json: pair_a.feeds.transactions.days carries the order's seven days"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (a): the transactions feed has seven absent trading days.",
+  "world_is": "Thirteen trading days hold no key in either format; the six May days fall before the window the order names. The design keeps the order's seven; the CTO rules whether the May days are in scope before any write."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S3 -- the chain's three pull steps carry no date token, so a past-day re-run cannot pass through them as the catalog stands
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-560 (a) re-runs the absent days THROUGH the chain's pull steps, but the catalog rows of INF_API_PULL_POSITIONS_DAILY, INF_API_PULL_TXN and INF_API_PULL_PERF carry no date token, and run_chain refuses --run-date for date-agnostic steps.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/code/gold/orion-gold-dispatch.sh (GET to scratch this session, 2127 lines): catalog rows at lines 293, 295 and 297 carry only --upload-bronze or --upload; line 706 comment describes the pulls as current-day redundant re-pulls",
+      "the same script, run_chain date-agnostic guard (around lines 816 to 865): --run-date rejected for a chain holding a date-agnostic step; the pull branch default_flags are expanded from the catalog row only"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (a): each absent day is re-run through the chain's own pull steps, with each key read ABSENT first.",
+  "world_is": "The steps as catalogued pull the current day and take no day argument; a past-day re-run through them is not expressible without a catalog change to an S3 object outside this repository. The act of (a) cannot start until that change exists and is reviewed."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S4 -- the gold dispatch catalog lives only in S3, with no repository copy
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "orion-gold-dispatch.sh, the catalog that every gold chain runs, exists only at the S3 object code/gold/orion-gold-dispatch.sh; the tree holds no copy under code/gold, so its edits are not version-controlled here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "find of the tree for code/gold: no directory of that name (ls error this session); the Lambda inf-gold-trigger fetches s3://opal-data-inf/code/gold/orion-gold-dispatch.sh at each dispatch (dispatch_cmd in infra/aws/lambda/inf-pipeline/inf-gold-trigger/lambda_function.py)",
+      "the object read by GET this session: 2127 lines, 110.7 KiB, no repository counterpart"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (b) and (a) name the dispatch object as the rollback surface and the catalog row as the change point.",
+  "world_is": "The change point and the rollback object both live in S3, without version control in this repository. An unrecorded edit to the object changes the live chain at the next dispatch. Until a repository copy or an object-version record exists, each catalog edit needs its own ledger entry."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S5 -- the silver aggregator's source is not in the tree, so its direct dispatch of inf-gold-trigger cannot be read or retired from source
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The silver aggregator (lambdas.tf module inf_silver_aggregator, artifact inf-pipeline/inf-silver-aggregator.zip) has no source directory under infra/aws/lambda/inf-pipeline, so IB-pr-560's retirement of its direct dispatch to inf-gold-trigger cannot be designed from source.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/ directory listing (22 entries) holds no inf-silver-aggregator directory; Grep for GOLD_TRIGGER_FUNCTION under that directory returned no match",
+      "infra/aws/terraform/inf-pipeline/lambdas.tf lines 286 to 297: module inf_silver_aggregator, function_name inf-silver-aggregator, artifact_key inf-pipeline/inf-silver-aggregator.zip, GOLD_TRIGGER_FUNCTION = inf-gold-trigger at line 295"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (b): the aggregator's direct dispatch of inf-gold-trigger is retired in the same window as the new schedule lands.",
+  "world_is": "The retirement names a code path whose source is not in this tree. The design can name the env handle and the behaviour the READ record observed (a FIRED gold trigger log line), not the code that makes the call. The retirement is blocked until the source is read from the artifact or the repository."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S6 -- the 06:00 New York fold lands before any measured completeness of T-1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "Every measured flat write on record lands 07:39 to 07:56 EDT after the 11:32Z trigger; a 06:00 New York fold starts the gold chain 1 h 39 min before the earliest measured pull, and T-1 completeness at 06:00 is not measured.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "aws s3 ls of bronze/positions, transactions and performance (local EDT listing, read 2026-10-15): flat writes 2026-10-10 to 10-14 between 07:39:45 and 07:56:39 EDT",
+      "bronze/performance/2026-10-14.jsonl.gz (GET to scratch): 315 rows each for 2026-10-12, 10-13 and 10-14; performance_rest.py lines 113 to 117: factors provisional, SETTLE_DAYS = 7"
+    ]
+  },
+  "spec_asserts": "IB-pr-560 (b): the design reads whether Orion's T-1 is complete by 06:00 New York before the re-timing lands, and names the earliest measured-complete time if it is not.",
+  "world_is": "Completeness at 06:00 is unmeasured; the earliest measured-complete time is not established. The probe in the packet's section 9 would decide it with 15 vendor requests across three read-only probes, to be sent by a later order. Until that probe exists, the ARMED condition is the 06:00 landing itself."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S7 -- stale timing comments: the bronze trigger's docstring and the dispatch script's pull comment disagree with Terraform and with the measured landings
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two timing comments are stale: infra/aws/lambda/inf-pipeline/inf-bronze-trigger/lambda_function.py line 4 says cron(43 12 * * ? *) while Terraform (eventbridge.tf line 69) holds cron(15 11 * * ? *); the dispatch script's line 706 says the cron landings run 12:30 to 13:40Z while the gold pulls measured 11:39 to 11:56Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/inf-bronze-trigger/lambda_function.py line 4 (read at 519b5ccbfb) versus infra/aws/terraform/inf-pipeline/eventbridge.tf line 69",
+      "orion-gold-dispatch.sh line 706 (scratch copy from S3) versus the bucket listing times read this session"
+    ]
+  },
+  "spec_asserts": "A timing comment in the bronze trigger and the dispatch script describes when the upstream pulls land.",
+  "world_is": "The Terraform value is the schedule in force; the measured landings are the evidence. The comments are not the schedule and must not be cited as one; the packet cites Terraform and the listings."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S8 -- the gold trigger's BLOCKED text says the hold is active while the Terraform release control is set
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "inf-gold-trigger's BLOCKED message (lambda_function.py line 379) tells an operator the hold is ACTIVE and lifts only after INF_B_00 and the coverage assertion land; the release control INF_GOLD_DISPATCH_RELEASE is set in lambdas.tf line 138, and its provenance line 139 reads CURED and LIFTED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/inf-gold-trigger/lambda_function.py line 379 (the not-released branch text, read at 519b5ccbfb)",
+      "infra/aws/terraform/inf-pipeline/lambdas.tf lines 138 and 139 (release value and provenance, read at 519b5ccbfb)"
+    ]
+  },
+  "spec_asserts": "The handler's message describes the live control state.",
+  "world_is": "The message is reached only when the release is absent, so it is not wrong at run time; as narrative it reads as an active hold beside a released control. An operator who reads the message would believe dispatch is held while it runs."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S9 -- a tolerated pull failure lets the gold chain report green with a day's key absent
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S9",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The dispatch script's pull branch logs WARN and returns success when an INF_API_PULL_* step fails or times out, so a day's flat key can stay absent while the chain reports complete.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "orion-gold-dispatch.sh pull branch (around lines 706 to 725, scratch copy from S3): on non-zero exit the step prints WARN, telem_error, and returns 0 ('TOLERATING; chain proceeds')",
+      "the packet's section 6 ABSENT-AT-SOURCE policy reads the key, not the chain status, for this reason"
+    ]
+  },
+  "spec_asserts": "A green chain run implies each pull step wrote its day.",
+  "world_is": "A tolerated failure leaves no key and no failed status at chain level. Every absent day in the three feeds is therefore a possibility the chain status cannot show. Disarm: the COO's daily key read for each feed, or a per-key check, before any day is counted as delivered."
+}
+```
+
+## IRPT_BCKEND-D2-W404-S10 -- the positions manual CLI's docstring names a parquet key the write no longer produces
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W404-S10",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~404",
+  "surfaced_at": "2026-10-15T06:37:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "data/inf/manual_api/pull_inflection_positions_daily.py line 10 documents the output as bronze/positions/{snap_iso}.parquet while the write at line 445 is bronze/positions/{snap_iso}.jsonl.gz.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pull_inflection_positions_daily.py line 10 (docstring) and lines 175 to 176 and 445 (the key used by the resume check and the upload), read at 519b5ccbfb"
+    ]
+  },
+  "spec_asserts": "The CLI's docstring describes its output key.",
+  "world_is": "The write is the flat .jsonl.gz key the order and the check require. The docstring is stale; no runtime effect was observed. The retirement in IB-pr-560 removes the write and should correct the docstring in the same change."
+}
+```
