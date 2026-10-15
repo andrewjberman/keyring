@@ -17501,3 +17501,93 @@
   "notes": "S1 is closed by the widening and by the record. S2 (org/surprise_channel/schemas skip-worktree) is not addressed by this row and stays as filed. The record's recommendation is A (stamp at acceptance); the grant is the shared gate for A and B, and the CTO or CloudOps decides it."
 }
 ```
+
+## IRPT_ANLREQ-D2-W153-S1 -- AR-y-352's cell names the portal request helpers fetchJson, postJson and apiClient; the Ticket Center path uses apiRequest and bare fetch()
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W153-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~153",
+    "surfaced_at": "2026-10-15T16:37:11Z",
+    "one_line": "AR-y-352's cell names the portal request helpers fetchJson, postJson and apiClient for the Q1 trace. In portal/src (non-test) postJson and apiClient do not exist, and fetchJson is only a parameter or local name in the InvestorReporting readers and comparisonCatalogue.ts. The Ticket Center's requests go through apiRequest (api/api-client.ts:143) and bare fetch(). The trace searched those transports too, so no request was missed on that account.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-352 Q1: search portal/src/api/ and the pages' own calls for fetchJson, postJson, apiClient, fetch( and the endpoint clients, to list every non-GET request from the sign-in landing to the Submit click.",
+    "world_is": "comp-find 'postJson|apiClient\\b|fetchJson' over portal/src: 16 hits in 1497 files; postJson 0, apiClient 0, fetchJson 16 (dashboard/reportingRead.ts, export/resolveBundle.ts, tabs/analysis/GenerateComposer.tsx, tabs/analysis/comparisonCatalogue.ts, one test). The Ticket Center transports are apiRequest (portal/src/api/api-client.ts:143) and fetch() (portal/src/contexts/AuthContext.tsx:174, portal/src/services/analytics.ts:777).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'postJson|apiClient\\b|fetchJson' portal/src --limit 40: DENOMINATOR 16 hit(s) across 1497 file(s), corpus=all",
+        "portal/src/api/api-client.ts:143 export async function apiRequest<T>(",
+        "portal/src/contexts/AuthContext.tsx:174 const response = await fetch(`${API_BASE}/auth/refresh`, {",
+        "portal/src/services/analytics.ts:777 await fetch(`${this.config!.apiEndpoint}/ingest`, {",
+        "portal/src/pages/TicketCenter/TicketCenter.tsx:103 const resolved = await client.resolveDirectoryContext("
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form-only record of a premise name that does not match the tree at portal origin/DEV ad7c100b5c. No hazard is claimed; the Q1 result rests on the transports named here."
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W153-S2 -- apiRequest answers a 401 by re-sending the same request, method and body included, so a write answered 401 is sent again
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W153-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~153",
+    "surfaced_at": "2026-10-15T16:37:11Z",
+    "one_line": "apiRequest answers a 401 by refreshing the token and re-sending the same request once, method and body included (portal api-client.ts:173-175 and :226-228). A write whose first answer was 401 is therefore sent a second time, and the synthetic run's guard admits each send as a fresh POST.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The synthetic run may WRITE only what the signed pair names (a ticket, an upload, an analysis, a report attachment), each write one step of the filing (AR-y-352 context; the guard's purpose in fwd1_driver.mjs).",
+    "world_is": "refreshAndRetry (portal/src/api/api-client.ts:105-125) calls attemptTokenRefresh and then fetch(url, { ...options, headers }); options carries the POST body for every method. No method check and no idempotency key is in that path. Whether any write route answers 401 after accepting the write was not measured.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/api/api-client.ts:173 if (response.status === 401 && renderToken === null) {",
+        "portal/src/api/api-client.ts:175 response = await refreshAndRetry(url, options, isFormData)",
+        "portal/src/api/api-client.ts:124 return fetch(url, { ...options, headers: retryHeaders })",
+        "portal/src/api/api-client.ts:226 if (response.status === 401) {"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Recorded as a form observation for the owner of the portal request path. Not ARMED: no route was measured to answer 401 after accepting a write, and no disarm owner is named here."
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W153-S3 -- the row-gate schema is absent from this worktree's sparse checkout; the row was shaped against the blob at HEAD
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W153-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~153",
+    "surfaced_at": "2026-10-15T16:37:11Z",
+    "one_line": "The row-gate schema org/surprise_channel/schemas/investigation_item.schema.json is absent from this worktree's sparse checkout (org/surprise_channel does not exist on disk). This row was shaped against the schema read as a blob at HEAD with git show, not against a file on disk. Same form as IRPT_ANLREQ-D2-W172-S2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Worker face: each row passes the row gate (.tools/surprise-row-gate.py), which validates NEW rows against org/surprise_channel/schemas/investigation_item.schema.json; the worker writes its rows in its own worktree.",
+    "world_is": "ls org/surprise_channel: No such file or directory in C:/dev/wk-irpt-anlreq-153; git sparse-checkout list does not carry org/surprise_channel; git ls-tree HEAD org/surprise_channel/schemas/ lists investigation_item.schema.json (blob 696468806e9e) and remediation_row.schema.json. No sparse-checkout change was made.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls org/surprise_channel: No such file or directory (worktree C:/dev/wk-irpt-anlreq-153)",
+        "git ls-tree HEAD org/surprise_channel/schemas/ -> 100644 blob 696468806e9e8163a32b71c65d18d3a98ca318c2 investigation_item.schema.json",
+        "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json rc=0 (read for this row's shape)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed in this worker's worktree. The skip-worktree is the subject of IRPT_ANLREQ-D2-W172-S2, which this row does not change."
+  }
+]
+```
