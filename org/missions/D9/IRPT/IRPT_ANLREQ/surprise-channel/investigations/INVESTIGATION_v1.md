@@ -17340,3 +17340,30 @@
   "notes": "The row gate's verdict is the check that counts for this row's shape. The schema was not read, so no schema claim is made here."
 }
 ```
+
+## IRPT_ANLREQ-D2-W172-S3 -- closing row: IRPT_ANLREQ-D2-W172-S1 is RESOLVED by the issuer's widening of the sparse checkout and by the completed AR-g-53 record
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W172-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~172",
+  "surfaced_at": "2026-10-15T16:02:02Z",
+  "one_line": "IRPT_ANLREQ-D2-W172-S1 (BLOCKING, ticket-center sources skip-worktree) is RESOLVED: the issuer widened the sparse checkout (infra/aws/lambda/ticket_center, infra/aws/terraform, infra/logic, data/mdpf/scripts/demque and the CTO deliverables folder), and the AR-g-53 record r7/C_SWITCH_DESIGN.json now answers Q1 to Q4 from those paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker rule: a worktree that does not carry the paths the order names is a BLOCKING row and a stop; the row S1 was the stop.",
+  "world_is": "git sparse-checkout list in C:/dev/wk-irpt-anlreq-172 now includes infra/aws/lambda/ticket_center and infra/aws/terraform; ticket_center/lambda_function.py and terraform/ticket-center/main.tf are on disk. Ruling from the issuer 2.0.0_SA_COO~G2 in the coordinator message: S1 was right and the defect was the provisioning. The record r7/C_SWITCH_DESIGN.json passes ar_g_read_checks.py shape53 (SHAPE-OK) and cite (CITES-OK 102 of 102) at 458578b8b8 plus this record's commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-172 (cone; ticket_center and terraform present)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:617 and infra/aws/terraform/ticket-center/main.tf:48 read on disk for the record",
+      "ar_g_read_checks.py cite: CITES-OK 102 of 102 on org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~172/r7/C_SWITCH_DESIGN.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S1 is closed by the widening and by the record. S2 (org/surprise_channel/schemas skip-worktree) is not addressed by this row and stays as filed. The record's recommendation is A (stamp at acceptance); the grant is the shared gate for A and B, and the CTO or CloudOps decides it."
+}
+```
