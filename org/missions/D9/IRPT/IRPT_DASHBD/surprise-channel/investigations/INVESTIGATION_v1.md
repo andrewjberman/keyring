@@ -15374,3 +15374,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "This portal's bun:test declarations do not carry test.todo, so the marker fails the typecheck gate (step 4). No failing case exists in the committed file, so the gate is green; a future failing case needs another marker the declarations carry, or a comment as used here."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S67 -- disarm of D2-S64: the avs benchmark members are read as by_row per account and pinned by a test; a household scalar under one prints for every account, which the producer must never emit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S67",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-15T07:08:01Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-S64 (the avs benchmark members read as by_row per account): the report model reads all sixteen as by_row per account, pinned by a test on a three-account document in the contract's per-row shape; a household scalar under one of them prints as every account's figure, which the contract forbids and the producer must never emit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json document.filled_report.per_row_member_form: an account-grain member holds {by_row: {account_id: figure}}; a household-grain member holds its figure directly, never a by_row map.",
+  "world_is": "Order DB-f-506 (worker 0.9.0_WK_IRPT_DASHBD~506, drained at 1c3ea59e4b) wrote dashboard-side test avs-by-row.test.tsx on the portal branch (head 0d58fe2c): 9 tests pass on the unmodified model; all 16 members x 3 accounts are covered; each account prints its own figure; the absent entry prints the absent words; a not-spanned window prints the not-spanned words; a temporary fixed-row mutant failed 6 of 9. The finding is reads_by_row. Worker row W506-S1: a plain household scalar under an avs benchmark member prints as EVERY account's figure (figureCell takes a non-by_row value as is); the contract forbids a scalar under an account-grain member, so the guard belongs to the producer (the contract writer, ~D2), not to the reader. No source file changed. Counts and paths only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~506/BUILD_R117.json (finding reads_by_row; members_covered 16; accounts 3)",
+      "portal git: cand/dell2/irpt-default-performance-report lineage, branch wk-IRPT_DASHBD-506-portal @0d58fe2c43ffad9ca2ffeda422b42681c3494d1c (__tests__/irpt-dashbd/avs-by-row.test.tsx)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md rows D2-S64 and W506-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer disarm of D2-S64 by 2.0.0_SA_COO~F2 (the row's disarm owner); the row's adjudication is the CVO's. For ~D2 (contract writer): the guard against a household scalar under an account-grain member is a producer or contract-validation clause, not a reader one; a reader that cannot tell a scalar from a per_row map by shape is the contract's form, not a defect here."
+}
+```
