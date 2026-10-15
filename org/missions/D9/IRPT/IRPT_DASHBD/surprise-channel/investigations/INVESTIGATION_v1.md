@@ -17717,3 +17717,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The stamp is reachable by --function, which touches the source map but also the wrapper's CHANGELOG.json write, so a worker with only the source map in its grant must restore that file. A synchronous invoke of a function that runs longer than the CLI read timeout needs --cli-read-timeout 0 or it retries; the retries here were refused by concurrency 1 and ran nothing, so the one-invocation bound held on the Lambda side (Invocations 1). Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W309-S1 -- The Scope history probe cannot start: the Orion loader modules the probe template imports are absent from this sparse worktree, so no call, body or token was obtained.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W309-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~309",
+  "surfaced_at": "2026-10-15T16:37:16Z",
+  "one_line": "DB-i-9 cannot start: the Orion loader modules the probe template imports (orion_selected, orion_live) are tracked at HEAD but absent from this sparse worktree, so no Scope call, no inner body and no session token was obtained; zero calls made, DBI122-1-AC1 base FAIL (no record).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face builds the inner scope body from orion_selected.requests_for and reads the session token through the estate's own loader (orion_live.orion_session_jwt), exactly as the round-120 template does; the template's MODULE_DIRS puts infra/aws/lambda/investor-reporting/performance and infra/aws/lambda/inf-pipeline/inf-performance-daily on the import path under the worktree root.",
+  "world_is": "At HEAD 5bdf4f810a the modules are tracked (orion_selected.py, orion_live.py and tenants.py are in the index), but this worktree's sparse-checkout list (.tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/ref, org/standards) omits infra/aws/lambda, so the directory is absent on disk and the import cannot run. Every path the order names is carried. Counts only: 0 vendor calls, 0 secret reads, 0 S3 or DynamoDB writes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/orion_selected.py@5bdf4f810a (tracked; defines requests_for), orion_live.py@5bdf4f810a (tracked; the session loader), tenants.py@5bdf4f810a (tracked): 3 of 3 present in the index",
+      "git sparse-checkout list in the worktree wk-IRPT_DASHBD-309 prints 8 entries, none under infra/aws/lambda; ls of infra/aws/lambda reports no such directory (0 entries on disk)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r122/p122_hist.py run at the worktree root returns rc=1 (record absent; no call made) at 5bdf4f810a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-9 as a premise failure: a path the template relies on is elsewhere in this worktree. Not repaired: the sparse list was not widened and nothing was copied or reconstructed from another tree, per the order's rule. No hazard is ARMED, so no disarm owner is set; the worktree's sparse setting is for the issuer and the lane to route."
+}
+```
