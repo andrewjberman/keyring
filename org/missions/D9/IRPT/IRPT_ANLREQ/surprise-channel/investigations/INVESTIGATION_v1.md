@@ -19395,3 +19395,110 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S128 -- DISARMS IRPT_ANLREQ-D2-W157-S1: AR360-y-AC1's folder failures are the same set on origin/PROD; the new file passes 6 of 6
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S128",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-15T21:37:00Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W157-S1: the issuer re-graded AR360-y-AC1's folder run in the worker's worktree after widening its sparse set (docs/contracts and infra/aws/lambda/investor-reporting); the failing set is the same 19 cases on the candidate and on origin/PROD, and the new file passes 6 of 6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W157-S1: the worktree is a sparse checkout, so folder cases that read docs/contracts fail with ENOENT and AR360-y-AC1 cannot print PORTAL-TESTS-OK there.",
+  "world_is": "Re-run by this seat in C:/dev/wk-irpt-anlreq-157/portal after git sparse-checkout add docs/contracts and infra/aws/lambda/investor-reporting: on candidate c22f4508, bun test over the three folders printed 535 pass, 19 fail (554 ran, 271 files); on origin/PROD e0b43076 detached, 529 pass, 19 fail (548 ran, 270 files); the failing-name lists (17 named lines plus unnamed errors) diff IDENTICAL, so the candidate adds 6 passing cases and no failure. The 19 remaining failures exist at the base (still-absent paths of a sparse worktree and a happy-dom registration error, W157-S2); they are not caused by this cell. portal_check.py as written still prints PORTAL-TESTS-BAD there because it demands 0 failed; the order's instance records AC1 as FAIL and stays as the worker wrote it. NOT read: a run in a full checkout with every contract path present. W157-S2, S3 and S4 are OBSERVATIONS the worker re-pinned or explained; W157-S5 (a null as-of reaches the header prospect card) is a judgment point and is cut as a read before any promote.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's two bun runs in C:/dev/wk-irpt-anlreq-157/portal (candidate c22f4508 and detached origin/PROD e0b43076), failing-name diff IDENTICAL",
+      "safe-merge 7ac19bb2fc (worker 157's branch drained)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The folder failures are identical at the base; the cell adds only passing cases. The live blocker for shipping is r32 and Andrew's word, not this.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W157-S1. Time of filing approximated from the re-run."
+}
+```
+
+## IRPT_ANLREQ-D2-W197-S1 -- the r32 driver printed R32-BUILD-OK and the issuer's verifier FAILs AR-G92-AC1: intake/uploads.py changed at the pin (AR-g-95, 4bc49a99fb) after the trial build at cbf05a6afa, so the delta at the pin is 15 changed and 284 identical, not 14 and 285
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W197-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~197",
+  "surfaced_at": "2026-10-15T21:18:37Z",
+  "one_line": "The release-32 delta at pin 26d720a980 is 15 changed (intake/uploads.py added by AR-g-95 commit 4bc49a99fb, which landed after the trial pin cbf05a6afa) and 284 identical; the verifier's hard-coded CHANGED list has 14 and fails on that one member.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-92 and ar_g92_checks.py CHANGED/ADDED state the release-32 delta at pin 26d720a980 as exactly 14 members changed and 11 added, none removed, 285 identical, with the 14 changed listed as SHA256SUMS, reports/resident_bindings.json, intake/portfolio.py, reports/build_resident_package.py, reports/generate_installed.py, reports/resident_installed.py, ycharts/generate/acceptance.py, ycharts/generate/normalized_input.py, ycharts/generate/prospect_submission.py, ycharts/generate/resident_worker.py, ycharts/generate/submission_service.py, ycharts/research/layout_overview.py, ycharts/research/opal_producer.py, ycharts/research/runner.py. The cell's trial figure (310 members, 14 changed, 11 added at cbf05a6afa) is the basis of that statement.",
+  "world_is": "The driver run at 26d720a980 (record org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~197/r32/RESIDENT_R32_BUILD.json) printed R32-BUILD-OK with changed 15, added 11, removed 0, unchanged 284; its delta_vs_r31.changed lists intake/uploads.py as a fifteenth member. The verify run printed AR-G92-FAIL delta differs from the expected: changed ['intake/uploads.py'] added [] removed [] (rc=1). The member is in files_from_r32.txt line 5. Its blob at cbf05a6afa is 48f39329ea and its r31 tarball member ./intake/uploads.py is 48f39329ea too; its blob at 26d720a980 is 48211e08e4, the same as the r32 member, so the r32 content is the pin's and is correct for the pin. The change is 4bc49a99fb (AR-g-95, worker ~196), which is an ancestor of the pin and was not an ancestor of the trial pin. Nothing was edited: the driver, the verifier, the files-from list and the record's delta are as the tools produce them; no retry with other arguments was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~197/r32/RESIDENT_R32_BUILD.json (worktree HEAD before the record commit): delta_vs_r31 changed count 15 incl. intake/uploads.py; unchanged 284; release_members 310",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g92_checks.py lines 25-29: CHANGED has 14 entries and no intake/uploads.py; verify output AR-G92-FAIL delta differs from the expected: changed ['intake/uploads.py'] added [] removed [] (rc=1)",
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r32/files_from_r32.txt@cbf05a6afa line 5: infra/aws/lambda/investor-reporting/intake/uploads.py",
+      "git rev-parse cbf05a6afa:infra/aws/lambda/investor-reporting/intake/uploads.py = 48f39329ea4c947dc30cba02e07ed499d6f683726204710b16656c29d6f3c0c1; 26d720a980:(same path) = 48211e08e459fe3a3a1d87663abce6c67caa90c1c50f50e4b93d48ed7514629d; r31 tarball member ./intake/uploads.py sha256 48f39329ea4c947dc30cba02e07ed499d6f683726204710b16656c29d6f3c0c1",
+      "git log c4c2afe896..26d720a980 -- infra/aws/lambda/investor-reporting/intake/uploads.py: 4bc49a99fb feat(IRPT_ANLREQ round 20, AR-g-95, 0.9.0_WK_IRPT_ANLREQ~196); git log c4c2afe896..cbf05a6afa on the same path: empty"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S129 -- disposition of IRPT_ANLREQ-D2-W197-S1: the verifier's expected list was stale; the build is right (15 changed, 284 identical)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S129",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T21:41:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's premise held and the issuer acted on it: the verifier's expected CHANGED list, cut at the trial pin cbf05a6afa, lacked intake/uploads.py, which AR-g-95 changed afterwards. The build was right. The list is corrected at 6cce05f41a, the order prose amended, and the verifier re-run on the worker's own record passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W197-S1 (BLOCKING): the delta at pin 26d720a980 is 15 changed and 284 identical; the issuer's list was stale, not the build; AR92-g-AC1 now passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AR-G92-OK members=310 changed=15 added=11 removed=0 builds_identical=310 scripts=4 gates=ok tar=3338a5c73c8bf0bb050850507ba9707a079055e803858321c8864ee8bb3a3f1f, run by the issuer on the merged record at 1e3b13e677",
+      "amendment 6cce05f41a; worker proof 126c258da5 (AC1 and AC2 PASS); merge 1e3b13e677"
+    ]
+  },
+  "spec_asserts": "TO-AR-g-92 AC1: the delta is exactly the changed and added members of the merged ENGINE cells, every one equal to git show at the pin.",
+  "world_is": "The delta at the pin includes intake/uploads.py (an r31 member that AR-g-95 changed), so 15 changed and 284 identical; each changed member equals its blob at the pin."
+}
+```
+
+## IRPT_ANLREQ-D2-W158-S1 -- the AR-y-361 mutant runs by swap-and-restore in the portal path, not from a scratch copy, because the new test imports its composer relative to itself
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W158-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~158",
+  "surfaced_at": "2026-10-15T21:57:06Z",
+  "one_line": "The AR-y-361 mutant could not run from a copy outside the product tree: the new test file imports ../ProspectComposer relative to itself, so mutant_check.py swapped the as-of-null mutant into the portal path for one bun run and restored it (sha256 verified).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR361-y-AC2 and cell step 5: mutant_check.py copies ProspectComposer.tsx to a scratch folder OUTSIDE the product tree with the as-of put back to null, and runs the new test file against the copy.",
+  "world_is": "The new test file imports '../ProspectComposer' and reads its own composer source by import.meta.url, so a copy outside tests/analysis is never the module it exercises. mutant_check.py (in the deliverable folder of this worktree) copies the candidate to <worktree>/.scratch/asof_mutant/, writes the mutant there, copies the mutant over portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx for one bun test run, then restores the candidate and verifies its sha256 (restored equals candidate: True). Result: MUTANT-FIRES, bun test rc=1, the one failing case is (g). NOT read: a run in a mirror tree in which the scratch copy is the imported module.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/tests/prospect-no-price-date.test.tsx@d06fed37 line with import { ProspectComposer } from '../ProspectComposer'",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~158/mutant_check.py: swap-and-restore with sha256 check; run printed MUTANT-FIRES (bun test rc=1) and restored==candidate True",
+      "the same method is in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~157/mutant_check.py (AR360 precedent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

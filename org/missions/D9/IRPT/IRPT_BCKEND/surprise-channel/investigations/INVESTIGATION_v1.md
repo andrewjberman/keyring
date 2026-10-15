@@ -40391,3 +40391,105 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W441-S1 -- IB235-1-AC3 reads the task order status flip as an authored change to a path the record cannot list before the flip.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W441-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~441",
+  "surfaced_at": "2026-10-15T21:21:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB235-1-AC3 reads the task order status flip as an authored change to a path the record cannot list before the flip.",
+  "spec_asserts": "IB235-1-AC3 (checks/r235/p235_cells.py, P7.ac3 with P0.own_changes): changed_paths equals the worker's own non-deliverable commits since base, and every path lies in the grant. The order sequence commits the instance, then flips the task order status to complete in the final commit.",
+  "world_is": "own_changes reads every path changed by commits authored by the worker since base (deliverables and the channel excluded). The status flip changes the task order file, a granted path, so after the flip the record's two changed_paths no longer equal the own changes and AC3 reads a difference at HEAD. Measured at 0a745b842b: AC3 PASS with two changed paths, before the flip. Not re-run after the flip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r235/p235_cells.py@e2700915d2195f8396d540796bc92a8a64c0c527 CHECKS and CELLS allowed and required sets",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py@e2700915d2195f8396d540796bc92a8a64c0c527 own_changes (git log by author, ALLOWED_PREFIX)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~441/IB235-1_record.json (changed_paths, two paths at 0a745b842b)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W441-S2 -- The 49 Financial SmartX evidence uses the snapshot overlay clock, not a re-pick at the build cutoff, because the evidence provider receives no cutoff.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W441-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~441",
+  "surfaced_at": "2026-10-15T21:21:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 49 Financial SmartX evidence uses the snapshot overlay clock, not a re-pick at the build cutoff, because the evidence provider receives no cutoff.",
+  "spec_asserts": "TO IB-pr-604 item 1 and the cell text: read the SmartX account map partition the build read with _latest_date_partition(..., as_of=...) for the same cutoff, through the same VersionedInputs; the CTO ruling names the candidate day's SmartX map.",
+  "world_is": "run_firm hands the provider the snapshot and the custody candidate day only; the build cutoff (business_date) is not carried to the provider. The snapshot clocks carry overlay_as_of, which is the value load_49f_sources picked with _latest_date_partition, so the read is the partition the build read. Re-picking at the cutoff would change a signature outside the D spans. The overlay pick is the latest map partition at or before the cutoff, which can be older than the candidate day, so 'the candidate day's SmartX map' and the built partition can differ.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py@e2700915d2195f8396d540796bc92a8a64c0c527 lines 210-224 load_49f_sources overlay pick and read",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@e2700915d2195f8396d540796bc92a8a64c0c527 build_snapshot clocks overlay_as_of (lines 2728-2738) and run_firm business_date cutoff (line 3427)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W441-S3 -- The order record template names four negative tests; the check requires all eight named tests in negative_tests.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W441-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~441",
+  "surfaced_at": "2026-10-15T21:21:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order record template names four negative tests; the check requires all eight named tests in negative_tests.",
+  "spec_asserts": "TO IB-pr-604 record template: negative_tests lists four names. The check requires every name in CELLS 1 named to appear in negative_tests.",
+  "world_is": "checks/r235/p235_cells.py CELLS 1 named holds eight test names, and P7.ac3 tests set(named) is a subset of set(negative_tests). The worker lists all eight in negative_tests; the four template names are among them. No check was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r235/p235_cells.py@e2700915d2195f8396d540796bc92a8a64c0c527 CELLS named tuple",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-604.account-join-49f.md@e2700915d2195f8396d540796bc92a8a64c0c527 record template line 58"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W441-S4 -- Measured at the flipped HEAD: IB235-1-AC3 FAILS on the status flip, which the record did not list.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W441-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~441",
+  "surfaced_at": "2026-10-15T21:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Measured at the flipped HEAD: IB235-1-AC3 FAILS on the status flip, which the record did not list.",
+  "spec_asserts": "The record (IB235-1_record.json) lists the repository paths the worker changed since base, deliverables and channel excluded, and IB235-1-AC3 reads that list against the worker's own commits at HEAD.",
+  "world_is": "Measured at a55b618df2: AC3 FAIL with 'changed_paths differs from the worker's own commits since base', because the flip commit changed the task order file. The record was updated to three paths (the task order included, since the worker changed it) and the three criteria were re-run at the new HEAD. The same timing conflict is in IRPT_BCKEND-D2-W441-S1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-604.account-join-49f.md@a55b618df2 status flip",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r235/p235_cells.py@e2700915d2195f8396d540796bc92a8a64c0c527 AC3 via P7.ac3",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~441/IB235-1_record.json (changed_paths, three paths after the update)"
+    ]
+  }
+}
+```
