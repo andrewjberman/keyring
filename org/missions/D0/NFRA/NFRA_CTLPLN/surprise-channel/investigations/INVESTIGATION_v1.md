@@ -10399,3 +10399,28 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "A git worktree prune removes admin entries whose directories are missing, so it can remove the rbndv2-8 admin entry if its directory was already gone. Branch deletion is not a prune act, so the branch removal came from another actor. Which act removed the entry is not measured here; the drop lies between two reads that bracket one real run that pruned."
 }
 ```
+
+## NFRA_CTLPLN-W105-S8 -- safe-commit appends a tracked audit log in the worktree on each commit by an unknown-seat author
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T11:09:57Z",
+  "one_line": "Each safe-commit of this worker appended one AUTHOR-SEAT-WARN line to the TRACKED file org/git-author-override-audit.laptop.log in the worker's worktree (eight lines, one per commit). That file is outside the worker's <paths> and is left uncommitted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff -- org/git-author-override-audit.laptop.log in the worktree: 1 file changed, 8 insertions(+), all AUTHOR-SEAT-WARN lines for 0.9.0_WK_NFRA_CTLPLN~105",
+      "the same WARN as NFRA_CTLPLN-W105-S2 (author names no known seat; WARN-only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 RULES: write surface = the <paths>; no file outside them is changed by the worker.",
+  "world_is": "safe-commit.sh's author-seat check appends to a tracked audit log on each commit by a serial the roster does not know. In a sparse worktree that file is a tracked change the worker cannot commit under its lane, so it stays dirt until the worktree is removed."
+}
+```
