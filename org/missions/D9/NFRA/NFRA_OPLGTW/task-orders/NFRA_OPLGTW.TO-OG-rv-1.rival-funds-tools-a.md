@@ -126,7 +126,7 @@ the issuer to make at the merge.
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 - The five tools of this cell read the SAME newest-part rule as `OG-rv-2`'s; the two modules are separate write sets and may each carry their own six-line helper.
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>RIVAL-FUNDS</workstream>
 <slot>~100</slot>
