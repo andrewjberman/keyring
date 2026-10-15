@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-15T04:23:21.768287+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261015T143946Z
 **Deploy:** IRPT_DASHBD TO-DB-c-9: APPLY the signed pair DB-c-5 (packet blob ad049d506c, COO half @219d7cb42d, CTO half @80a6ca8dd9): rebuild + upload the SHARED zip investor-reporting/irpt-holdings-performance-lambda.zip (run by irpt-holdings-performance-lambda [49F], irpt-inf-holdings-performance-lambda [INF] and the NEW irpt-cot-holdings-performance-lambda [COT]), ONE safe-apply creating the Cottonwood function, 2 roles, DISABLED schedule irpt-cot-holdings-performance-daily, 12-date catch-up (36 keys, opal-data-cottonwood gold), reader check, then schedule ENABLED
 **Authored by:** 0.7.0_AE_CloudOps~DB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -32,6 +32,7 @@
 - 20261015T061736Z LEG L6 closed: after-read: fresh LIST both Cottonwood gold prefixes (261 objects after, 225 before): all 36 keys exist; objects with La
 - 20261015T062131Z LEG L7 closed: ENABLE: schedule.tf block irpt_holdings_performance_cot one line DISABLED->ENABLED committed @d9e46a0c1f after the after
 - 20261015T143741Z LEG L8 closed: FIRST SCHEDULED FIRES on the second zip (all three functions CodeSha256 o9UugRAVhYmF3Q2ULtU6eaaNiLFRAFWW4tjjQPyj2Ok=), e
+- 20261015T143946Z CLOSED -- all 8 legs proven
 
 ## Carried notes (hand-written lines kept across re-renders)
 
