@@ -18371,3 +18371,32 @@
   "notes": "This is IB-pr-456's live acceptance as the window graded it: the Opal producer path ran to a READY job and a stored report on this evidence, and the attach to the ticket did not happen in 20 minutes. The in-flight message may still resolve; this seat read only and did not wait beyond 17:42Z."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-S122 -- FWD-1 window 2: the resident's packaging refused three times; the DLQ holds the message
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S122",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-15T18:06:06Z",
+  "one_line": "FWD-1 window 2 chain stopped at the resident's packaging step: every attempt printed IRPT_RESIDENT_PACKAGE retained_for_retry (ReportRefused twice, CurrentAuthorityRefused ACTOR_NOT_FOUND once), three receives reached the maxReceiveCount of 3, and the commentary_ready DLQ now holds 1 message; the cause of ReportRefused is not read.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (what to read or fix next; the resident is ~G2's release surface and the pair's third window needs a new address and a resident release per CTO addendum 2)",
+  "spec_asserts": "Order IRPT_ANLREQ.TO-READ-FWD1R2: read where the chain stopped after the filing. FWD-1 DONE WHEN: the still-open ticket carries all four attachments, attached by the packager after the resident renders the package.",
+  "world_is": "MEASURED 2026-10-15 by this seat (record org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r31/A_READ_FWD1R2_STALL.txt, SSM command 69ce9802-bc0d-40a5-ba8e-aa0aacd8085e, journal 16:55:00Z to 18:10:00Z, redacted in the script): the resident (unit irpt-analysis-resident, active, NRestarts 0, root r31) handled the request at 17:00:29Z (RESOLVE state=READY, POLL handled=1) and at 17:00:50Z (POLL handled=1); it then printed IRPT_RESIDENT_PACKAGE retained_for_retry class=ReportRefused code=- at 17:01:54Z and 17:17:02Z and class=CurrentAuthorityRefused code=ACTOR_NOT_FOUND at 17:32:10Z (three receives about 15 minutes apart). The draft (2968 bytes) and the report PDF (225463 bytes) exist; the ticket carries neither attachment; the packager secret was not accessed (day-granularity LastAccessedDate unchanged). commentary_ready reads 0 and 0 and its DLQ reads visible 1 at 17:57:05Z (maxReceiveCount 3, visibility timeout 1800); it read 0 and 0 at 17:38Z. INFERRED: that the third refusal follows the removal of the synthetic user at 17:20:36Z (the code name); that the DLQ message is this request's. NOT READ: why ReportRefused (code=-), the resident source, the DLQ message, when it was redriven, any other tenant's requests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r31/journal_out_fwd1r2.txt (redacted host journal output) and A_READ_FWD1R2_STALL.txt",
+      "get-queue-attributes x5 at 17:57:05Z; ConsistentRead of the request item, job row and artifact rows; head-object of the PDF, metadata and draft objects (17:53Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Window design: the driver removes the synthetic user at the end of the 20-minute poll while the resident retries about every 15 minutes, so the chain gets one retry inside the window and the user row is gone for the third. Whether ReportRefused would clear with the row present is not known; it fired twice while the row existed. S121 holds the filing-side facts; this row is its located cause on the resident side."
+}
+```

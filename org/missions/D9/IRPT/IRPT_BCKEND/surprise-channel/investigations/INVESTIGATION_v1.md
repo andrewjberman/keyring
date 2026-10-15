@@ -39621,3 +39621,129 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "S204 is DISARMED on a report I did not make myself: the acceptance is read from ~Y2's and ~AQ2's record, not by a get-item of mine (the item carries a client request). The chain after acceptance (attachments, commentary_ready, the packager secret) is IRPT_ANLREQ's and is tracked there; it is not part of IB-pr-456. The PROD promote of the filing page is client-facing and stays Andrew's word under the push law; my condition for it, an accepted request carrying the member, is met."
 }
 ```
+
+## IRPT_BCKEND-D2-W433-S1 -- The calendar-day rule (3) would fail the existing --from-date test that pins trading-day rows, so the rule is applied to the scheduled window only; the issuer rules the backfill.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S1",
+  "one_line": "The calendar-day rule (3) would fail the existing --from-date test that pins trading-day rows, so the rule is applied to the scheduled window only; the issuer rules the backfill.",
+  "spec_asserts": "Change (3) and test calendar_days_include_weekends_in_the_window_and_the_rows: a non-trading calendar day takes its universe from the previous trading day's held accounts, and the rows chain by calendar day, weekends included, in the window.",
+  "world_is": "The existing test test_from_date_window_splits_series_into_per_day_rows_and_skips_existing_keys asserts that a --from-date run writes no key for 2026-10-10 or 2026-10-11 (dropped == []), and its fixture carries positions for trading days only. Applying the calendar-day rule to the --from-date path would write those weekend keys and refuse for a missing positions partition, so the existing test would fail. The build applies the rule to the scheduled window (no --from-date) and the backfill keeps its trading-day rows. Consequence: a backfill leaves weekend days unwritten, and the scheduled window starts after the newest landed day, so a later scheduled run does not refill them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/test_pull_inflection_scope_account_returns.py@2bd17b566f lines 315-337 (the --from-date test: dropped == [] and the trading-day fixture)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@2bd17b566f lines 490-492 (the --from-date candidate days are trading days only)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@77c8e46741 SCOPE-FEED-B run(): the --from-date branch keeps trading days; the scheduled branch walks calendar days"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S2 -- The order's 'capped at 10 calendar days back' is built as no earlier than 10 days before the pull date, so a capped window holds up to 11 calendar days inclusive.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S2",
+  "one_line": "The order's 'capped at 10 calendar days back' is built as no earlier than 10 days before the pull date, so a capped window holds up to 11 calendar days inclusive.",
+  "spec_asserts": "Change (4): the scheduled window takes a calendar-day window from the day after the newest landed silver partition through the pull date, capped at 10 calendar days back.",
+  "world_is": "The order does not say whether the cap is start no earlier than pull minus 10 calendar days (11 days inclusive) or a window of 10 calendar days inclusive (start no earlier than pull minus 9). The build uses pull minus 10 through SCHEDULED_LOOKBACK_DAYS = 10; the test scheduled_window_starts_after_the_newest_landed_day_and_is_capped pins 2026-10-04 for a pull date of 2026-10-14. The other reading is a one-constant change for the issuer to rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@77c8e46741 SCHEDULED_LOOKBACK_DAYS and scheduled_window_start()",
+      "data/inf/manual_api/test_scope_feed_daily_factor.py@77c8e46741 test_scheduled_window_starts_after_the_newest_landed_day_and_is_capped"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S3 -- The order's 'a Monday run also carries the weekend' cannot hold under the default pull date, the prior trading day: a run on a Monday pulls the Friday.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S3",
+  "one_line": "The order's 'a Monday run also carries the weekend' cannot hold under the default pull date, the prior trading day: a run on a Monday pulls the Friday.",
+  "spec_asserts": "Change (4) and its rationale: the window runs through the pull date, so a Monday run also carries the weekend.",
+  "world_is": "The default pull date is lib/trading_calendar.prev_trading_day(today), the T-1 trading day that the order's pull-date rule states. On a Monday that is the Friday, so the window ends on the Friday and carries no weekend. The weekend is carried by the run whose pull date is the Monday (a Tuesday run by default) or by a run given --pull-date. The build follows the stated rule; the choice of schedule and pull date is for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@2bd17b566f line 480 (the default pull date is tc.prev_trading_day(today))",
+      "lib/trading_calendar.py@2bd17b566f prev_trading_day(date): the NYSE trading day strictly before date"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S4 -- A Read of the task order by its path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker; the same as IRPT_BCKEND-D2-W432-S1.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S4",
+  "one_line": "A Read of the task order by its path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker; the same as IRPT_BCKEND-D2-W432-S1.",
+  "spec_asserts": "The worker face: do not read the RECORD FACE of the task order; the record fields are the issuer's.",
+  "world_is": "The Read tool returned the whole order file, including the RECORD FACE section, on this worker's first read of the order. The build took its values from the worker face and from the run itself, and used nothing from the RECORD FACE beyond the record fields the face names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-594.scope-feed-daily-factor.md@2bd17b566f (the file as read by the worker; the RECORD FACE section is in the same file)",
+      "IRPT_BCKEND-D2-W432-S1 in org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md (the same observation on the earlier order)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S5 -- The block redefines five SCOPE-FEED-A functions so the difference control can run; ruff F811 is suppressed per line and the A originals stay as shadowed code.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S5",
+  "one_line": "The block redefines five SCOPE-FEED-A functions so the difference control can run; ruff F811 is suppressed per line and the A originals stay as shadowed code.",
+  "spec_asserts": "Change: all new logic inside SCOPE-FEED-B blocks; the module imports with the blocks removed; removing the blocks in memory fails the new tests on assertions.",
+  "world_is": "Changing the A-block functions in place would let the removal run pass, so the block carries replacement definitions of daily_points, classify, _day_rows, _silver_frame and run. The A originals stay above it and are shadowed while the block is present. Ruff F811 (redefinition of an unused name) is raised on those five definitions and suppressed per line with a noqa comment. Retiring the A originals is a later cleanup for the issuer, after the block is adopted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@2bd17b566f lines 236, 251, 456, 469, 476 (the A originals that the block redefines)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@77c8e46741 SCOPE-FEED-B block: five redefinitions with the noqa F811 comment"
+    ]
+  }
+}
+```
