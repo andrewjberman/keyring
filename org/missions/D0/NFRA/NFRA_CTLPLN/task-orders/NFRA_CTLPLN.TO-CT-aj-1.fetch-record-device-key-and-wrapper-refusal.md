@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~112</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in wk-NFRA_CTLPLN-112 @941e0ed9aa (merged at the drain): FETCH-DEVICE arms=8/8 ok=True; WRAPPER-REFUSAL rc=3 names_route=True ok=True; INTAKE-REQUESTS arms=15/15 ok=True; INTAKE-FETCH-TEST cases=19/19 ok=True; proof VALID. W111-S1 is closed for fetch records written by intake_fetch.py; intake_check.py is a second writer with no device key (W112-S4), carried.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

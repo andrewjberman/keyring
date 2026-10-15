@@ -61,6 +61,21 @@ def utcnow():
     return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def this_device():
+    """This box's canonical register name (lib/devices.py this_device, from AGENTBUS_DEVICE), or None when the
+    box cannot be named. None is written as null and the downloads reader counts it as unattributed."""
+    repo = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+    lib = os.path.join(repo, "lib")
+    if lib not in sys.path:
+        sys.path.insert(0, lib)
+    import devices  # the register reader (lib/devices.py); fail-closed: a broken register names no box
+    try:
+        name, _basis = devices.this_device()
+    except devices.RegisterError:
+        return None
+    return name
+
+
 def norm_dist(name):
     return re.sub(r"[-_.]+", "_", name).lower()
 
@@ -209,6 +224,7 @@ class Fetch:
             "outcome": None,
             "reason": None,
             "fetched_by": os.environ.get("OPAL_AGENT_SERIAL") or "unknown",
+            "device": this_device(),
             "at": utcnow(),
         }
 
