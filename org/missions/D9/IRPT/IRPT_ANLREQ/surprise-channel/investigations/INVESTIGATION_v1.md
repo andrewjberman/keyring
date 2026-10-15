@@ -18429,3 +18429,32 @@
   "notes": "Closing row: the finding is resolved in substance by the issuer's amendment af96479526 and the fix at 497e911dab. W183-S1 is not edited and keeps its filed text and disposition. The disposition is left UNDER_INVESTIGATION because the worker cannot transfer one: the gate refused GRADUATED from a worker (a CVO transfer at L9). The CVO's compile may close it."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-W183-S3 -- the lane gate refused the amendment fix at HEAD because the order was flipped to complete; the amended order was committed as pending first (9db088e4ad), and the fix then passed at 497e911dab
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:30:03Z",
+  "one_line": "A worker's commit to the order's own paths was refused as another lane once the order was complete at HEAD: the owned-paths gate reads only NON-TERMINAL task orders at HEAD, so an amendment fix needed the order reopened (pending) in its own commit before the module and test could land.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face commits the worker's files with safe-commit scoped to the order's <paths>, and the order's status is flipped to complete only at the close. The owned-paths lane gate admits a worker's commit only to paths named by a non-terminal task order at HEAD issued to its serial.",
+  "world_is": "MEASURED 2026-10-15 at dbb40402f8 (the closing flip): safe-commit of infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py and its test was refused in block mode with 'owned-paths lane violation ... WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. Committing the amended order file alone (status pending, 9db088e4ad) restored the grant, and the same two files then committed at 497e911dab with rc 0. NOT MEASURED: whether a complete order with an amendment on main should reopen through the issuer rather than the worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree scratch .scratch/commit_fix.out (the refusal, lines 19-20: the two VIOLATION lines with the no-non-terminal-order text)",
+      "git log: 9db088e4ad (amended order, pending) then 497e911dab (module and test) on wk-IRPT_ANLREQ-183",
+      "git log: dbb40402f8 (the closing flip to complete) is the HEAD the refusal read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker for the CVO and the issuer. No order text was widened and no override was used: the gate was not bypassed, the grant was restored by the order's own status."
+}
+```
