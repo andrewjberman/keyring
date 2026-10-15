@@ -16513,3 +16513,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Resolution note for IRPT_DASHBD-D2-W201-S1, which is left as written (append only). The fact the surprise row recorded is now false in the worktree; the worker executes DB-b-247 as written. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W201-S3 -- BLOCKING: the 105 earlier handler tests cannot all pass after the TO's own step 2 (run() must stop calling filled_stage); 104 pass, 1 fails
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T09:51:43Z",
+  "one_line": "TO-DB-b-247 step 2 requires run() to stop calling filled_stage, and the order's own refusal clause requires that the 105 earlier handler tests all pass; they cannot both hold: after the step-2 edit 104 pass and 1 fails, test_stage_runs_after_the_class_and_lot_stages, which asserts the scheduled run appends 'filled' through the patched filled_stage. The worker stopped at this point, as the order directs.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-247 step 2: run() no longer calls filled_stage (checker DB122-2-AC1 rejects a Name call to filled_stage inside run). Refusal clause: if the 105 earlier handler tests cannot all pass after the edit, file a BLOCKING row with the numbers and stop. Step 3 names the 105 as 'must keep passing'.",
+  "world_is": "After the step-2 edit (handler.py: five functions added, run() calls owed_filled_days and run_filled_day, run() takes chain=None, lambda_handler reads filled_day_event; 114 lines added, 6 existing lines changed or removed in the handler), the directory infra/aws/lambda/investor-reporting/reporting-gold/tests runs 105 tests: 104 passed, 1 failed. The failure is FilledStageTests.test_stage_runs_after_the_class_and_lot_stages in test_filled_report_values_stage.py line 160: expected order ['returns','class','lots','filled'], got ['returns','class','lots']. That test appends 'filled' only from a patched filled_stage, which the edited run() no longer calls. The test file is outside the TO's grant, so the worker did not edit it. ruff (py39) passes on handler.py. The worker did not commit the handler change (a committed red state would break the 105); the uncommitted diff is in the worktree and saved as a patch under the worker's scratch folder. Steps 3 to 5, the Terraform, the facts record, the proof instance and the status flip were not done.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest on infra/aws/lambda/investor-reporting/reporting-gold/tests in C:/dev/wk-irpt-dashbd-201 at HEAD 88e486a113 with the step-2 edit: 1 failed, 104 passed (the failure text quoted above)",
+      "pytest on the same directory at HEAD 88e486a113 before the edit: 105 passed (baseline)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_filled_report_values_stage.py @88e486a113 lines 88-103 (the patched filled_stage appends 'filled') and line 160 (the asserted order)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_split.py @88e486a113 (check_handler_source: run() must not call filled_stage; the test-name and pytest arms of DB122-2-AC1 require 113 passing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the order cannot satisfy its step 2 and its 105-test clause together without an edit to tests/test_filled_report_values_stage.py (outside the grant) or a changed step 2. The worker has not widened the grant or edited that test. The step-2 handler diff is uncommitted in the worker's worktree. Counts and words only; no client figure is quoted."
+}
+```
