@@ -8071,6 +8071,27 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W38-S16",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~38",
+    "surfaced_at": "2026-10-15T01:35:44Z",
+    "one_line": "A10 catalog commit 08dc822f3c landed rc=0 with no CATALOG-EXEMPT admitted= line: the naming gate graded 0 of 1 paths (the .yaml is outside its graded set), so the catalog literal admission the order expects did not run.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AMENDED A10 step (3) of NFRA_MCPINDEX.TO-MX-c-14 (org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-14.silver-table-rows-generator-g2-g4-g5-g6.md, the A10 paragraph): the safe-commit log must hold a line starting CATALOG-EXEMPT admitted= with refused=0 and DONE rc=0 before the commit is reported. A8 ISSUER NOTES: the emitted gateway catalog is graded by the naming gate, which admits a catalog literal only as a whole string held at HEAD in infra/logic/registry/catalog_fork_keys.json.",
+    "world_is": "The A10 commit 08dc822f3c (branch wk-NFRA_MCPINDEX-38, LOCAL, 1 file, DATA_CATALOG.yaml) landed with DONE rc=0. The log (worktree scratch .scratch_a10_commit.log) holds no CATALOG-EXEMPT line. Its naming-gate lines read: 'DENOMINATOR: 1 path(s) ... 0 = 1 path(s)', 'COVERAGE: 0 path(s) in the declaration domain the gate could not see ... 1 seen', 'NAMING-GATE: PASS 0 graded'. The commit-gate line reads 'WARN: commit-gate checked 0 of 1 file(s) -- NOTHING WAS CHECKED'. The client-data-check WARNs that the hashed account-id list is ABSENT and the commit was not checked for client account ids. Zero REFUSE lines. Denominator: 1 path, 0 graded.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-r16-38/.scratch_a10_commit.log (the safe-commit output, DONE rc=0, zero CATALOG-EXEMPT lines, NAMING-GATE PASS 0 graded)",
+        "08dc822f3c937db236c5ede8a4d24e99666a2a60 (LOCAL on wk-NFRA_MCPINDEX-38; git show --stat: 1 file, DATA_CATALOG.yaml, 81 insertions 74 deletions)",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@08dc822f3c (the committed catalog bytes; apply_catalog_r16.py cmp equal=True)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
