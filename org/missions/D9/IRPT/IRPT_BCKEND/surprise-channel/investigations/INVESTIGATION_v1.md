@@ -38474,3 +38474,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A holding whose cusip is blank carries its ticker as its key and is not matched to the split security, so its t-1 basis is not divided and it reads the split as a loss. NOT MEASURED: the count of such rows on a split day was not read (offline grant, no data read). The gap is visible only once the producer is released; it is not fixed in this cell."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W421-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~421",
+  "surfaced_at": "2026-10-15T14:11:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Amendment 1 reads ticker_symbol from the 49F transactions partition, but the order's measured column list for that partition omits it; the read is expected to fail loudly for that day, not to pass silently.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-578 worker face (base 476d0ed981904ef7708b21ecabbd7b98427a6694) lists the transactions columns as tran_srcde, transaction_source_code_description, cusip, account_id, quantity, business_date: no ticker_symbol",
+      "amendment commit d47a0d916e, part (2): the transactions read takes cusip AND ticker_symbol for the identifier chain",
+      "holdings_performance.py _frame_for reads the declared columns with read_partition(columns=...), and pandas raises on a requested column the parquet does not carry"
+    ]
+  },
+  "spec_asserts": "Amendment 1 part (2): the split security key is the entry's identifier chain, so the transactions read takes cusip and ticker_symbol, and a split row with a blank cusip matches by ticker.",
+  "world_is": "The measured column list of the day's transactions partition in the order's READ does not include ticker_symbol. NOT READ here: the grant has no S3 read, so the presence of the column is unverified. If it is absent, the read raises for that day and the day fails loudly; it does not return an unadjusted figure. Measure the column before release."
+}
+```
