@@ -2812,3 +2812,29 @@
   "notes": "Not a fault in the mcportal change: the 70-pass run was on the committed tree 421f8fb. The recorded invocation text is unchanged; the cd is a harness wrapper, because the order's no-cd form cannot reach the worktree from a reset shell. A run from the primary checkout grades that checkout's tree, not MP-pf-2's. Disarm for the issuer: pin the check's root to the worktree it grades, or name the cwd in the invocation."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T23:22:20Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S60",
+  "one_line": "Z-W33-S7 is DISARMED: the AC1 'absent' line was the worker's own parallel-call slip; pf2.AC1.sh passes from the worktree root and the issuer re-ran it there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W33-S7. The worker ran the check in parallel with its cd, so it read the wrong directory (its own report says it re-ran in sequence). The checks take their root from the worktree root by design, and the order says to run them from there. The issuer re-ran pf2.AC1 from C:/tmp/mp-pf-33: 9 of 9 named tests, pass=70, fail=0, RESULT: PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain commit 7772bf7d1b message: pf2.AC1 re-run by the issuer, 9 of 9 named tests, bun 70 pass 0 fail",
+      "worker report: the false 'absent' line came from a parallel call, not from the check"
+    ]
+  },
+  "spec_asserts": "Z-W33-S7 asserted that AC1 takes its root from the shell's current directory, so a run from the default directory fails.",
+  "world_is": "True, and by design: every pf check begins by changing to the worktree root named in the order; run from there it passes.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pf-2 (merged @7772bf7d1b)."
+}
+```

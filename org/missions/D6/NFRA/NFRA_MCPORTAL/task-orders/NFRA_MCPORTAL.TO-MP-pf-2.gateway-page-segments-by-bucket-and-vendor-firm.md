@@ -138,7 +138,7 @@ Report once, with:
 render the fixture at 1280 and 390 px with headless Edge, one screenshot per segment, and look at each. Check dry-run at the base: AC1 FAIL as expected (`mcportal/src/pages/gateway` absent in the issuer's checkout; the base in the worker's
 nested tree reads 0 of 6 names). The segments appear on the live page only after MP-pf-1 and MP-pe-1 are released by 2.0.0_SA_COO~O and MCPINDEX's first C-GROUP catalog release lands.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>PF</workstream>
 <slot>~33</slot>
