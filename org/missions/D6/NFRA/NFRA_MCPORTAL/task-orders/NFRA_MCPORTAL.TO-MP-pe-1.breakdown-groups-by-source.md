@@ -53,6 +53,34 @@ Build:
    each group's own tool list (a tool in two groups appears in both groups' holder rows), `rating` read by group id (a group id with no row reads `unrated`).
    Do not change `_admits`, the holder evaluation, the grant-store scan, or the kill-switch handling.
 
+**AMENDMENT 1 (issuer, after your first report; rules your rows Z-W31-S1 and Z-W31-S2; the faults are in my spec, not in your work).**
+   a. **Rule 3 is a PARTIAL signal, not the Microsoft 365 list.** `TOOL_GRAPH_SCOPES` is the consent-scope map for scoped identities and omits tools that plainly use Graph
+      (your row S2). Keep rule 3 exactly as you built it (tools with a Graph scope entry join `m365` when nothing else places them) and add the new rule 2 kind below. No hand-kept
+      list of Microsoft tools is added anywhere.
+   b. **Rule 2 gains a second kind.** A `source_group` element may have `kind` equal to `bucket` OR `graph`. A tool with a validly declared element of kind `graph` joins the
+      existing Microsoft 365 group (`id` `m365`, `kind` `native`, `auth` `delegated`, `min_tier` `per tool`), whatever the element's `id` and `name`; a tool that also has `bucket` elements
+      is listed in those bucket groups too. Rule 5 now reads: a `source_group` is declared only when every element has non-empty string `id` and `name` and `kind` equal to `bucket` or `graph`.
+   c. **ONE placement rule for both views (your row S1).** `app/admin_people.py` (lines 87 to 97) has its own copy of the placement rule: every tool with no spec goes to `m365`. Replace it:
+      make the placement one function in `app/admin_gateway_breakdown.py` (for example `_group_ids_for_tools(names, ...)` returning, per tool, the list of group descriptors `{id, name, kind}`),
+      used by BOTH `_compute` in the breakdown and `_compute` in `app/admin_people.py`, and delete the People view's own loop. `app/admin_people.py` is now in your paths for that and nothing else.
+      The People rows' channels must carry the same `id` and `name` the breakdown gives the same tool. Do NOT weaken `test_person_holdings_equal_breakdown_holders`: it must pass unchanged.
+   d. **Two more tests, same file rules as the eight below**: `test_declared_graph_kind_places_the_tool_in_m365` (in `tests/test_admin_gateway_breakdown.py`: a tool with no spec and no scope but a
+      declared element `{id: m365, name: Microsoft 365, kind: graph}` is in `m365`) and `test_people_view_places_tools_in_the_breakdowns_groups` (ALSO in `tests/test_admin_gateway_breakdown.py`, importing the People view's `_compute`: in one planted world with a
+      declared bucket tool, an undeclared tool and a scoped tool, every channel `id` and `name` the People view gives a tool equals the one the breakdown gives it). AC1 now reads TEN named tests.
+   e. **AC1's wording.** The expect line now says what the script prints: `named tests PASSED 10 of 10 -- RESULT: PASS -- exit=0`. Re-run both invocations; AC2 must read `failed=0` and `seam test failures=0`
+      with at least 93 passed.
+   f. Your real-registry numbers stand and are useful: with no integration enabled, 11 tools reach `m365` by scope and 75 of 86 read undeclared. Report the same real-run summary again after the change.
+
+**AMENDMENT 2 (issuer, after your second report; rules your rows Z-W31-S3 and Z-W31-S4; the faults are in my spec, not in your work).** You are re-seated on this branch with your commits `90996f1825` and `7abfb91b46` as inherited state.
+   a. **Z-W31-S3 -- ONE assertion in the seam test changes, and only that one.** Line 346 of `tests/test_admin_people.py` asserts `("m365", "send_email")`. `send_email` calls Microsoft Graph but has no
+      `TOOL_GRAPH_SCOPES` entry, so under the single placement rule it is undeclared until the catalog declares it (kind `graph`). Replace that assertion with one that does not name a group:
+      BOSS holds a pair whose tool name is `send_email` and the population holds none (for example `any(t == "send_email" for _, t in _pairs(by_who[BOSS]))` and the negation for `by_who[POP]`).
+      This supersedes the words "must pass unchanged" in item (c) for that ONE line only; the rest of the seam test, which compares every person's holdings to the breakdown's, stays exactly as it is.
+      Add nothing else to that test and weaken nothing else. Name the change (file, test, old, new) in your report.
+   b. **Z-W31-S4 -- the expect lines are re-cut** (see section 4) to one pattern each that the checker can match against your output. Do not edit the check scripts or the order's proof lines; they are the issuer's.
+   c. Re-run both invocations; AC1 must read 10 of 10 and AC2 `failed=0`, `seam test failures=0`, 93 or more passed (you measured 103 in total). Re-write the instance, re-run `proof-of-spec-check.py ... AC1,AC2` and
+      report the same real-registry summary. Then STOP: the next order (`MP-pf-1`) is handed to you by the issuer after the drain.
+
 **Tests**, by these exact names, in `tests/test_admin_gateway_breakdown.py` (reuse that file's way of planting a registry, a catalog file and a graph-scope map):
 - `test_no_tool_lands_in_microsoft_365_without_a_graph_scope`: a planted native tool with no spec, no declaration and no Graph scope is NOT in `m365`; a planted
   tool with a Graph scope IS.
@@ -81,6 +109,7 @@ that THIS contract changes, change only that assertion to the new truth and name
 
 <paths>
 infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py
+infra/aws/ec2/opal-gateway/app/admin_people.py
 infra/aws/ec2/opal-gateway/tests/test_admin_gateway_breakdown.py
 infra/aws/ec2/opal-gateway/tests/test_admin_people.py
 org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~31/**
@@ -96,8 +125,8 @@ Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/I
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MP-pe-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pe1.AC1.sh; echo "exit=$?"</invocation><expect>breakdown grouping tests: 0 failed; named tests PASSED 8 of 8 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MP-pe-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pe1.AC2.sh; echo "exit=$?"</invocation><expect>admin suite: passed=101 or more failed=0; seam test failures=0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MP-pe-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pe1.AC1.sh; echo "exit=$?"</invocation><expect>named tests PASSED 10 of 10.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MP-pe-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pe1.AC2.sh; echo "exit=$?"</invocation><expect>failed=0; seam test failures=0.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE

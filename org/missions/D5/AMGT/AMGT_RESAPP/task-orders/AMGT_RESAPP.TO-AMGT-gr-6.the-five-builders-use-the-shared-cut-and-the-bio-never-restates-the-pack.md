@@ -37,14 +37,22 @@ The package `lib/research/aifill/` already holds `contract.py`, `orchestrate.py`
 3. Everything else is unchanged: prompts, caps, guards, citations, the fall-through.
 
 ### Tests
-Extend the existing `tests/test_block_mgmt_bio.py`, `tests/test_block_mgmt_recent.py` and `tests/test_text_blocks.py`: a cut test per builder using a reply that straddles `Ps.` at the cap, and the bio's restatement cases (restates; adds what the passage lacks; no passage). Touch no existing test except one that asserted the old cut at an abbreviation.
+Extend the existing `tests/test_block_mgmt_bio.py`, `tests/test_block_mgmt_recent.py` and `tests/test_text_blocks.py`: a cut test per builder using a reply that straddles `Ps.` at the cap, and the bio's restatement cases (restates; adds what the passage lacks; no passage). Touch no existing test except one that asserted the old cut at an abbreviation, AND EXCEPT THE SIX THE ISSUER'S RULING (AMENDMENT 1, below) NAMES.
+
+### AMENDMENT 1 (issuer ruling on the first seat's rows W455-S1, S2, S3 and S5): the six existing tests and the FA-3 control assert the OLD behaviour this cell replaces; update each to the new rule, and nothing else
+Your predecessor on this order left commits `eb6f8950f0` and `04ca39f18f` on branch `wk-AMGT_RESAPP-455` (the five builders, the new tests, `AIFILL GR-6 ARMS: YES (15 of 15)`). Start from them; do not redo them. Then:
+1. `tests/test_text_blocks.py`: `ALLOWED_IMPORTS` gains the line `from lib.research.aifill import contract, sentences` (the cell's step 1 requires that import). The three parametrised `test_block_source_is_ascii_and_imports_only_re_and_contract` cases then pass.
+2. `tests/test_block_mgmt_recent.py::test_cut_keeps_a_sentence_end_at_exactly_the_cap`: the old text `'a' * 799 + '. ' + 'b' * 50` has a full stop before a lowercase word, which the shared module rules is no sentence end. Change the tail to start with a capital (`'B' * 50`) so the test still asserts a real sentence end at exactly the cap.
+3. `tests/test_block_mgmt_bio.py::test_opal_path_cites_the_pack_with_no_web_search` and `::test_opal_officer_row_and_resolved_profile_are_cited_with_their_inputs`: their Opal replies restate the pack passage, which the rule now withholds. Change each reply to one that adds what the passage lacks (at least half of its tokens outside the passage; measure with `block_mgmt_bio._tokens` and `_restates` against the folded fixture passage), keeping the assertions on OPAL_SOURCE, one model call and the citations. Do not change the rule or its thresholds.
+4. The FA-3 control `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py` (now in `<paths>`): its `BIO_TEXT` is a restating reply. Replace the constant with a reply that adds what the passage lacks (same measurement as step 3, a sentence about the person that is not in the passage), and change nothing else in the file. AC3 then reads `AIFILL FA-3 ARMS: YES (20 of 20)`.
+5. Re-run AC1, AC2 and AC3; AC2 must read `N passed` with no failure. Re-commit the proof-of-spec instance. Your surprise rows are `AMGT_RESAPP-D1-W455-S6` onward (S1 to S5 exist; the issuer rules them by this amendment).
 
 Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W455-S<k>`, `disarm_owner` `2.0.0_SA_COO~R2`.
 
 ## 2. BOUNDS
 
 
-1. Write ONLY the five `lib/research/aifill/block_*.py` modules named above and the three existing test modules `test_block_mgmt_bio.py`, `test_block_mgmt_recent.py`, `test_text_blocks.py`. The contract, the orchestrator and everything else are other cells'. The modules still do no I/O.
+1. Write ONLY the five `lib/research/aifill/block_*.py` modules named above and the three existing test modules `test_block_mgmt_bio.py`, `test_block_mgmt_recent.py`, `test_text_blocks.py`, plus the one FA-3 control file AMENDMENT 1 names (its `BIO_TEXT` constant only). The contract, the orchestrator and everything else are other cells'. The modules still do no I/O.
 - Leave `lib/research/management/`, `lib/research/filings/`, `lib/research/posture/` and every existing module untouched.
 - No network, no AWS, no real model call, no `pip install`: every model call in your tests is a stub or the recorded response. The `anthropic` package is never imported (the installed 0.45.0 crashes on web-search blocks).
 - Python 3.9 syntax (`from __future__ import annotations`, `typing.Optional`, no `X | Y` unions evaluated at runtime, no `match`); ASCII-only source files (write non-ASCII characters as `\uXXXX` escapes); stdlib only.
@@ -61,6 +69,7 @@ lib/research/aifill/block_identity_description.py
 lib/research/aifill/tests/test_block_mgmt_bio.py
 lib/research/aifill/tests/test_block_mgmt_recent.py
 lib/research/aifill/tests/test_text_blocks.py
+org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -91,7 +100,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** STAGED behind gr-1 (`sentences`) only. Proven satisfiable by the issuer's reference builders (15 of 15) and the check discriminates: the unchanged builders read 10 FAIL arms. The restatement thresholds (75 percent of sentences, 80 percent of tokens) are the issuer's: V US's bio restated its pack passage almost word for word. The web path is not changed by this cell: the orchestrator's grounding step (gr-5) covers it.
 
 <status>staged</status>
-<status>pending -- 2026-10-14 by the issuer (2.0.0_SA_COO~R2): gr-1 merged; worker ~455 cut from @90ef5aa850.</status>
+<status>complete -- 2026-10-15 by the issuer (2.0.0_SA_COO~R2): merged at 9e8272e0f6 (worker ~455, re-seated; instance VALID rc=0 in-branch; AC1 YES 15 of 15, AC2 179 passed, AC3 four controls YES; drain check: aifill suite 735 passed, ruff clean). Earlier: AMENDMENT 1 ruled the first seat's rows W455-S1/S2/S3/S5 (six stale tests and the FA-3 control updated to the new rule); AC2 and AC3 read FAIL on its instance; the slot is re-seated on branch wk-AMGT_RESAPP-455 (eb6f8950f0, 04ca39f18f inherited). Gate limb: none graded the amendment (existing order, no new criteria).</status>
 <round>106</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~455</slot>

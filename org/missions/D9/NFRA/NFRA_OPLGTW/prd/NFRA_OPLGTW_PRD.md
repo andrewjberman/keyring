@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.11",
+  "prd_version": "v3.12",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1422,6 +1422,8 @@ know that so they can communicate this and update the repo as needed." It supers
 move (`ANDREW_DIRECT_20261015_160xZ_WSJ_BARRONS_OPS_RUN_ON_DELL1.md` @94086281f2) and this seat's ruling on it (@86581c31be).
 
 **Measured on site Z** (`cycle_runner.log`, ~16:3xZ): no publisher stored anything since the 14:02Z Python outage.
+**CORRECTED (~20:3xZ, `2.0.0_SA_COO~O` msg 34573, row Z-S151): wrong for `sa`, which stored 2 at 18:25Z because the old
+process kept its loaded libraries. The retirement stands on Andrew's word (all harvest operations to dell1), not on the zero.**
 - bbg: `new 0`, stopped `bot_check` at 15:22Z.
 - sa: `new 0`, last cycle 14:57Z.
 - wsj and barrons: `new 0`, `sign_in_refused` at 15:3xZ.
@@ -1448,3 +1450,32 @@ Retiring the runner now therefore opens no capture gap.
    MSTR to MSTR. Un-parking AMGT_HARVST, its runner and its egress proof on dell1 are dell1's CTO's calls.
 
 CONTRACTS-side; ENDPOINT unchanged.
+
+### v3.12 addendum (2026-10-15 ~19:4xZ, 1.0.0_SA_CTO~Z) -- the gateway finish by EOD Fri 2026-10-16: serve and entitle; batch releases; a second applier
+
+On the CRO plan `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_FINISH_PLAN_EOD_20261016.md` @6cc033c818 and Andrew's GO (msg 34543), whose words are carried in full in NFRA_MCPINDEX PRD v0.17. This
+project's part, in his words: "COO~O handle whatever opalgateway server infrastructure needs to be done to accomodate and
+managing entitlements/access, through NFRA_OPLGTW."
+
+1. **Build:** `OG-cl-1..6`, `OG-gp-1` and `OG-gf-1` (cut @6fc29c2dbf) land as build cells. Each new tool's catalog row
+   carries CONTRACT C-GROUP (MCPINDEX v0.17).
+2. **Batch the code releases.**
+   - The gateway host stays one release at a time, with one actor per host.
+   - Each release carries EVERY code cell that is ready: rival tools (ap-22), the G2 adapters, gp-1, gf-1 and ap-17's code.
+   - This replaces one release per cell. Each batch carries one never-widen pair naming every cell in it.
+3. **A second applier for IAM/Terraform.**
+   - The firm data grants, vendor read roles and rival grant go to an idle applier (`0.7.0_AE_CloudOps~ZS`), in parallel
+     with the code release on `0.7.0_AE_CloudOps~Z`.
+   - The surfaces differ, so the two never touch one host at once.
+   - Catalog releases stay on `0.7.0_AE_CloudOps~MI`.
+   - Re-issue the grant cells now.
+4. **Never-widen halves stay, and are pre-stated.** COO~O sends each grant's ask as soon as its plan reads. This seat signs
+   on receipt, with the plan read.
+5. **Client data:** each vendor reads through its own prefix-conditioned role, never `gateway-global-internal-reader-role`.
+   SmartX and Tax SMA filter rows in code, with the two-firm negative arm inside the cell.
+6. **Off the critical path:** the pipeline-defect rows (Z-S110 49f OOM, Z-S111 Eclipse stall, Z-S112, Z-S113, Z-S124). Each
+   tool states its freshness in trading days. The fixes run beside the work.
+7. **Done by 2026-10-16 ~22:00Z:** every in-scope catalog row's `read_tool` is live, and each group answers one driven call
+   by a real Opal principal under its grant, with the no-firm and two-firm negative arms.
+
+CONTRACTS-side under FWD-22; ENDPOINT unchanged.

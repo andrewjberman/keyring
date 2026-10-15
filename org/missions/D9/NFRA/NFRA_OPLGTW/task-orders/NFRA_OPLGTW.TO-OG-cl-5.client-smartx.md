@@ -65,6 +65,7 @@ infra/aws/ec2/opal-gateway/app/harvest_read.py
 infra/aws/ec2/opal-gateway/app/internal_role.py
 infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py
 lib/trading_calendar.py
+data/mdpf/config/partner_roster.json
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -89,6 +90,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cl-5.client_smartx.proof_of_spe
 - Round 37, workstream G2-BUILD (decomposition addendum R3-T.72). CTO ruling @4356f15f16 (msg 34516): G2 and the G3/G5 remainders are BUILD cells, they do not wait on a release slot; they rejoin the release queue after OG-ap-22, ahead of OG-ap-17. Each vendor adapter needs its own prefix-conditioned read role and never-widen ask at its release; client data never reads through `gateway-global-internal-reader-role` (PRD v3.2).
 - The hookup (registrations, lists, pins) belongs to no cell (CUT BY WRITE SET): the issuer cuts one hookup order per merged batch.
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe or record absent).
+
+- A1 (issuer, 2026-10-15 ~18:4xZ, worker rows Z-W107-S1..S6, all read): the first seat BLOCKED, rightly, and its rows rule the whole adapter family (rulings in `G2_ADAPTER_PROTOCOL.md` section A1, which binds this order): (S1) the `tests/` folder was outside the cone: the issuer added it (a path absent at HEAD never added its folder); the cone also holds `data/mdpf/config/`. (S2) the roster path is `data/mdpf/config/partner_roster.json` (tracked; now in `<paths>`): your PROBE reads it; your ADAPTER reads the roster only through `ctx.firm_roster()` (A1 item 4; the core serves it from a byte-equal copy under `app/refs/` at the hookup). (S3) the real `Ctx` is `OG-cl-1`'s and on no ref you hold: your probe writes its own `ProbeCtx` (A1 item 2); `typed_scope.py` has none of those methods by design; the catalog HAS 13 `smartx/platform/silver` rows (S6: the census's "catalog present: false" is stale). (S4) only `49financial` has a SmartX firm id: the two-firm negative arm is synthetic in the TESTS (a `FakeCtx` with rows of two firm ids), and in the PROBE it is a request naming another canonical firm refused with zero keys read (A1 item 5). (S5) a canonical firm outside the vendor's `FIRMS` raises `AdapterRefusal("firm_not_served")` (A1 item 3). The first seat's rows and BLOCKED proof instance (commits `90f43f588d`, `c84f8080af`) are inherited state; re-record the instance from the real outputs. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
