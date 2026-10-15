@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~119</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-119 @36e4e2c9bc, merged 3c3d04d4ec) and its own read of the holding folder at 19:3xZ: JOURNEY-FETCH wheels=1 file=duckdb-1.5.0-cp314-cp314-win_amd64.whl device=laptop sha256=11ae50aaeda2 requests=4 ok=True; JOURNEY-CHECK checks_run=7 failed=0 check8=AWAITING released=False ok=True; JOURNEY-TAG recorded=cp314-cp314-win_amd64 wheel=cp314-cp314-win_amd64 ok=True; proof VALID. The issuer listed C:/opal-intake/holding/intake-20261015-duckdb/ (exactly one file, 13575130 bytes, sha256 11ae50aaeda2145b50294ee0...) and C:/opal-intake/release/ (only the earlier batch intake-20261008-a): the cp312 wheel was not fetched and nothing of this batch is released. The wheel was fetched on the CTO's approval @29a69ec1c5 with dell1's CTO's interpreter choice (cp314, call bde8). Check 8 is recorded by the tool as failed/not_checked because the CTO's signature file does not exist yet (W119-S1: the tool says failed, not awaiting); the CTO signs it after reading checks 1-7. Risks the checks leave (for the CTO's reading): check 3 compares against an installed copy on the laptop and not a cp314 build; the compiled _duckdb.cp314-win_amd64.pyd is named but not compared; check 7 does not show the antivirus inspected the file; no check can rule out a taken-over maker account (FWD-17). The fetch made 4 requests to the index for that one wheel (metadata, file, digest, attestation).</status_reason>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
