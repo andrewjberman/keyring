@@ -142,6 +142,18 @@ The CTO ruled (open call dell2-20261015T193100Z-cf2a) that the run wrapper is cu
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent build cell with a disjoint write set (a new module and its test file). Worker `0.9.0_WK_IRPT_DASHBD~311` (`DB-i-11`).
 
+## 11. ROUND 125, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-124 analysis @e5c8b143fe, msg 8654, answering my packet @1190b13f77)
+
+Round 124 does not close on its own: the CVO graded the landed tree NOT MAY-CLOSE (contract 0.4.1 landed after the cut; AC2 and AC3 fail and 2 of 38 tests are red on trunk). The CTO accepted my proposed batch and added three items. Round 125 is cut on contract 0.4.1 (the file reads 0.4.1 at the cut; 0.4.2 has been asked of `~D2` and has not landed). It closes round 124 when it lands green on trunk, graded on the landed tree.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-12` | The Scope feed adapter and run wrapper on contract 0.4.1: Orion PRESENT rows `VENDOR_REPORTED` with `row_status` PRESENT (disarms W221-S3); ABSENT rows written INTO the table in the 0.4.1 shape with the contract's reason precedence (the `absent/` file and `BESIDE_TABLE` retire); the wrapper reads its field list and version from the contract file; refusals for a bad dimension key, a mismatched partition and a non-empty output directory; the adapter gets the full domain and account set so that a dropped first or last calendar day leaves 0 trading days unaccounted (W311-S1, S3); the 'proposed' marks removed; the end-of-day claim in the table when the contract declares it, else in the run record; fixtures only, no AWS | FWD-2 | LOCAL (code and tests; local files under a handed directory; nothing wired, scheduled, served or deployed) | `DB-i-11` (merged, @6c7b7ccb56) | I-L |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) One cell, not two: the adapter and the wrapper change together (the wrapper's golden grades the adapter's rows end to end) and one worker owns all four files. (b) The checker is driven by the contract FILE at HEAD (version, fields, hash, validator), so a 0.4.2 that declares `market_value_eod_claim` as a column changes what the checker expects, never its code, and the wrapper switches the claim from the run record to the table by reading the contract; the order names both placements. (c) An ABSENT row's unlisted columns follow `~D2`'s own `_absent` fixture in `test_account_return_contract_041.py` (`return_basis` and `day_quality` NOT_MEASURABLE, `guard_state` GUARD_NOT_REACHED); `carried_days` 0 and `flow_claim` absent are mine (the contract does not say; the validator accepts both). (d) W311-S1 is a criterion, as the CTO ruled: the wrapper passes the adapter the full domain and every account, and counts `trading_days_unaccounted` itself from the output. (e) W311-S2 is settled as: the repeated-key count is the number of distinct keys repeated. S3 is closed by the account set; S4, S5 and S6 are refusals with a count and no write. (f) The closing grade is the landed tree: at the drain I re-run all three criteria on the merged tree, not only in the worker's.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell with a disjoint write set of four existing files. Worker `0.9.0_WK_IRPT_DASHBD~312` (`DB-i-12`).
+
 ## Cells
 
 | cell id | owner |
@@ -157,3 +169,4 @@ The CTO ruled (open call dell2-20261015T193100Z-cf2a) that the run wrapper is cu
 | DB-i-9 | 0.9.0_WK_IRPT_DASHBD~309 |
 | DB-i-10 | 0.9.0_WK_IRPT_DASHBD~310 |
 | DB-i-11 | 0.9.0_WK_IRPT_DASHBD~311 |
+| DB-i-12 | 0.9.0_WK_IRPT_DASHBD~312 |

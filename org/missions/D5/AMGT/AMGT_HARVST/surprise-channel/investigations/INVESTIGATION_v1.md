@@ -9517,5 +9517,32 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "Unreachable from the dell1 runner (every job runs --no-sign-in, which refuses the repair before either line); the residual, a manual signed-in-allowed run meeting a challenge on a profile-store publisher, predates cb-8 (HVST-ca-1 already returned the empty-bundle envelope) and is named here, not fixed."
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S22",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-15T20:55:00Z",
+     "one_line": "AMGT_HARVST-D1-S19 (the stop rule fired on the runner's first pass) and -S20 (the pair named the wrong bucket) are both resolved; both were defects of the issuer's order or pair, not of the account.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-2: the first pass of the dell1 runner collects for wsj and barrons; the pair's bucket is where the runner writes.",
+     "world_is": "S19: wsj and barrons each read REFUSAL expired, REFRESH done in 3 s, REFUSAL expired again; the runner log (lines 245-252, 502-509) and run record 20261015T202310Z-wsj-23b255623f show token_source None and no request made: TokenFirstSessions.get() demands a stored session and the runner's runtime root had none. SC1's stop was correct under the order's stop rule. Resolved operationally by AMENDMENT 1 (@1c5948e37a: seed the directory, CTO-bounded, msg 6216) and durably by HVST-cb-8 (merged a879d12881), which reaches the runner by the cb-9 re-pin. The second pass (T0 20:32:04Z) ran 17 jobs with 0 errors and stored articles. S20: the pair and order named opal-data-assets; the runner writes opal-data-harvest (store.HARVEST_BUCKET); erratum ledger/ERRATUM_CB2_PAIR_BUCKET_NAME_20261015.md, ratified by the CTO (@79a5321348).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb2_reads.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/ledger/ERRATUM_CB2_PAIR_BUCKET_NAME_20261015.md",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-2.the-dell1-runner-registered-for-wsj-and-barrons.md COMPLETE note"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-S19",
+      "AMGT_HARVST-D1-S20"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "Resolved: S19 by order amendment 1 and HVST-cb-8; S20 by the ratified erratum. Neither was an account or world fault."
+    }
 ]
 ```
