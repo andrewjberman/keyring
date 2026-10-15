@@ -15734,3 +15734,158 @@ name the one known failure instead of silently inheriting it.
     "notes": "Two routes, and this seat picked none because it decides what three halves are signing. (a) ADOPT THE LF FORM: let ap-18's deploy ship the blob's bytes, amend yr-1's A3 oracle and W/YR_SERVED.json to 3bbd5ab2, and accept a one-time 344-terminator change to a served page whose rendered content does not change. Stable forever after, because every clean checkout reproduces it -- RECOMMENDED. (b) PRESERVE 0d828b51: write the CRLF bytes into the ap-18 deploy tree's working copy before the deploy so the page is a 0-diff. Keeps the record true and the host byte-stable, but it makes the served artifact a property of the deploy tree again, which is the same shape A6 already had to rule on for lib/trading_calendar.py. Either way the ask must say it, because a half signing 'the release's files only' would not expect a page outside the take-list to move. The general lesson is the one worth keeping: UNDER eol=lf, A CRLF WORKING COPY IS NOT DIRTY, so 'git status is clean' does not mean 'my working copy equals the blob' -- and when the shipping mechanism reads the WORKING TREE while the record reasons about the BLOB, the two can disagree indefinitely with no instrument complaining. Compare the bytes the shipper will actually read, in the tree it will read them from."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W84-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~84",
+    "surfaced_at": "2026-10-14T18:17:21Z",
+    "one_line": "The naming gate refuses two served-prefix literals of the OG-et-1 module (platinum/etf_ownership_dashboard.json and platinum/reports/) as out-of-pattern S3 keys, so the cell stops at its FIRST ACT before any module, test or probe is built.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/naming-gate.py --diff .scratch/naming_probe.diff --enforce, run in worktree C:/tmp/wk-oplgtw-84 at HEAD 7c411780ad: rc=1, last line 'NAMING-GATE: REFUSE 4 graded'. The staged diff adds BUCKET = opal-data-etfs and SERVED_PREFIXES = (daily/, platinum/etf_ownership_dashboard.json, platinum/reports/) to infra/aws/ec2/opal-gateway/app/etfs_ownership.py.",
+        "gate output: 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/etfs_ownership.py:2 platinum/reports/ -> {source}/{scope}/platinum/reports/ why: NEW and OUT-OF-PATTERN as S3Key: REFUSE'; the same why for platinum/etf_ownership_dashboard.json at lines 2 and 3 with suggestion {source}/{scope}/platinum/etf-ownership-dashboard.json.",
+        "gate output: 'NAMING CONFORMANT ...etfs_ownership.py:1 opal-data-etfs -> opal-data-etfs why: CONFORMANT as S3_BUCKET'. The gate printed no line for daily/."
+      ]
+    },
+    "spec_asserts": "TO-OG-et-1 FIRST ACT: every S3 key or prefix literal the module holds passes .tools/naming-gate.py --diff --enforce before the module is built, and SERVED_PREFIXES is exactly daily/, platinum/etf_ownership_dashboard.json and platinum/reports/.",
+    "world_is": "The gate refuses platinum/etf_ownership_dashboard.json and platinum/reports/ as NEW and OUT-OF-PATTERN S3Key literals (suggested {source}/{scope}/platinum/etf-ownership-dashboard.json and {source}/{scope}/platinum/reports/). The bucket literal opal-data-etfs is CONFORMANT. The literals were not split and not overridden; the cell stopped at the refusal.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "BLOCKING for OG-et-1: AC1 and AC2 cannot be met as the order is written, since the module cannot pass its own FIRST ACT. The same two literals are the SERVED_PREFIXES that the order says generate the OG-et-3 IAM grant by AST, so the issuer's reconciliation of the gate's suggested keys with the served key names decides both cells. The row states what the gate printed; it does not rule which side is right."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W84-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~84",
+    "surfaced_at": "2026-10-15T00:40:00Z",
+    "one_line": "The order takes the partner segments from a listing of the partner prefix AND refuses an unknown firm with zero reads; a listing is itself a read, so the segment set is taken from the catalog row's own fork_keys firm values instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-et-1.etfs-ownership-tools.md lines 59-60 (firm REQUIRED, one partner key segment, read from a listing of the partner prefix; none, empty, comma list or unknown refused harvest_bad_argument with ZERO reads) and test_oget1_ac02 at line 76.",
+        "CATALOG: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:12752-12756 @53982a9f45 -- fork_keys firm values are the three partner segments; the row is read at call time, with no S3 read.",
+        "CODE: infra/aws/ec2/opal-gateway/app/etfs_ownership.py etfs_get_partner_ownership and _firms() in this commit -- the admission order is principal, then the firm check against the row, then the first listing of the firm prefix."
+      ]
+    },
+    "spec_asserts": "The partner segment set is read from a listing of the partner prefix, and an unknown firm is refused harvest_bad_argument with zero S3 calls.",
+    "world_is": "Both cannot hold at once: a listing of the partner prefix is an S3 call, so an unknown firm can only be refused with zero calls against a set held without a listing. The catalog row declares the same three segments in fork_keys firm values, so the module reads that set (zero calls) and lists the firm prefix only for a firm already admitted. The segment set is not typed in code.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "OBSERVATION and INERT: the refusal set and the listing set are the same three segments today. If the catalog row gains or loses a segment the two still agree, because both are the row. The issuer rules whether the listing should be the sole source."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W84-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~84",
+    "surfaced_at": "2026-10-15T00:41:00Z",
+    "one_line": "The order says the monthly report defaults to the newest folder under the report root; that root also holds two non-month folders, so a plain newest-by-name read would select the corrections folder.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PROBE: read-only listing of the report root, run by et1.AC2.sh at the worktree root on 2026-10-15: sub-folders 2026-05, 2026-06, 2026-07, 2026-08, 2026-09, _archive, corrections; a plain max() over the names returns corrections.",
+        "PROBE: the corrections folder holds FINDINGS.md and two csv files whose names do not match the partner csv name pattern, so a read of it would yield no coverage line.",
+        "CODE: infra/aws/ec2/opal-gateway/app/etfs_ownership.py etfs_get_monthly_report, the default branch: sorted over the folder names that match YYYY-MM with a month value 01 to 12, then the max of those."
+      ]
+    },
+    "spec_asserts": "The monthly report with no month argument reads the newest folder under the report root.",
+    "world_is": "The root holds month folders plus _archive and corrections. The default selects the newest folder whose name is a calendar month; the non-month folders are never the default, and the corrections folder is reached only by a caller who names it, which the month argument does not allow.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "OBSERVATION and INERT: the default returns the newest calendar-month folder, 2026-09 at this read. Nothing in the tool reads the corrections folder."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W84-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~84",
+    "surfaced_at": "2026-10-15T00:42:00Z",
+    "one_line": "The dashboard catalog row carries an open item that a gateway tool returning the object whole reads three firms in one call and needs an explicit ruling; the order's rollup returns the object whole, so that open item is live at this merge.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CATALOG: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:13578-13580 @53982a9f45 -- open_items: 'the object holds three firms by design (internal_only=true); a gateway tool returning it whole reads three firms in one call -- needs an explicit ruling'.",
+        "ORDER: NFRA_OPLGTW.TO-OG-et-1 lines 63-64 (the rollup returns the object's own figures and sums nothing) and the G5 census line 133 (firm optional; the cross-partner whole needs a ruling).",
+        "CODE: infra/aws/ec2/opal-gateway/app/etfs_ownership.py etfs_get_ownership_rollup -- the one admission is typed_scope.admit_scope, which refuses any principal that is not an Opal user (typed_opal_only) before the read."
+      ]
+    },
+    "spec_asserts": "The rollup returns the dashboard object's own figures for the cross-partner whole, with the as-of in the object.",
+    "world_is": "The object carries three firms' figures in one document. The only path to it in this module is Opal-only admission, so a firm principal cannot reach it through this tool. The catalog's open item asks for a ruling before any future grant names a firm for this object.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "INERT: no firm principal can reach the rollup through this tool. The ruling is needed before any data grant names a firm for the dashboard object."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W84-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~84",
+    "surfaced_at": "2026-10-15T00:43:00Z",
+    "one_line": "On this runtime the lag figures come from the hardcoded NYSE fallback calendar, because the pandas_market_calendars package is absent; the trading_days_behind_t1 values are answered from the fallback table, which covers 2010 to 2027.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PROBE: et1.AC2.sh at the worktree root, 2026-10-15, stdout: 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)'.",
+        "CODE: lib/trading_calendar.py _require_covered and _announce_fallback -- the fallback fails closed outside its covered years and announces itself once per process."
+      ]
+    },
+    "spec_asserts": "Each denominator carries trading_days_behind_t1 from lib/trading_calendar.py.",
+    "world_is": "The field is present and computed, from the fallback source, on this runtime. The fallback is correct inside its covered years and refuses outside them, which the module reports as a lag_absent_reason rather than a guessed count.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "INERT: the lag is a denominator field, not a served value, and the fallback is labelled in the probe output. The package install is a separate matter for the platform owner."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W84-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~84",
+    "surfaced_at": "2026-10-15T00:50:00Z",
+    "one_line": "The order asks this worker to flip its own <status> tag to complete, but the task-order file is not in the order's <paths> write grant, so this worker cannot make that flip and leaves it to the issuer.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-et-1.etfs-ownership-tools.md lines 96-106 (the <paths> grant: the module, the test file, the catalog-free seam files, G5_etfs.md, lib/trading_calendar.py and the investigation file; the task-order file itself is not listed).",
+        "ORDER: lines 121-126 ('WHEN YOU ARE DONE': flip the ONE <status> tag to complete only if both criteria PASS) and line 140 (<status>pending</status>).",
+        "RULE: a path a worker needs that its order lacks is a BLOCKING row on that criterion, never an override (worker face, Bounds and Surprise rules)."
+      ]
+    },
+    "spec_asserts": "On both criteria PASS, the worker flips the task order's one <status> tag to complete and commits it with the instance and deliverables.",
+    "world_is": "Both criteria PASS at the cited checks (AC1 5 of 5 named tests; AC2 newest partner file 4 rows against 4 independent). The task-order file is outside this worker's write grant, so the flip is not committed here; the order remains pending until the issuer makes the flip.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "notes": "BLOCKING for the status tag only: the code, the tests and the proof instance are complete and committed on the worker branch. The issuer grants the path or makes the flip."
+  }
+  ```
