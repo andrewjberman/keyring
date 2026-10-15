@@ -16458,3 +16458,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Resolution note for IRPT_DASHBD-D2-W199-S1, which is left as written (append only). The issuer owns the LIST; the worker re-read only the empty_days list. Counts and words only; no client figure is quoted."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W202-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~202",
+  "surfaced_at": "2026-10-15T09:41:27Z",
+  "one_line": "The worktree carries no data/ tree, so the order's read source data/assets/scripts/gold/irpt_reporting/sources.json is absent and the bucket and prefixes cannot be read from it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-248 step 1 and step 5 read data/assets/scripts/gold/irpt_reporting/sources.json from the worktree (the bucket and the positions and transactions prefixes are read from it, never typed); the criterion checker p122_conv.py reads the same path from its repo root to recount. The bar says a worktree that does not carry the paths the order names is BLOCKING and the order stops.",
+  "world_is": "The file is tracked at HEAD 7d5697ef1a (blob d9ff5642ad) but is not on disk in the worktree: there is no data/ directory, core.sparseCheckout is true, and git sparse-checkout list names .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph and org/standards only. The base checkout C:/dev/ajb_workspace carries the file. The checker run at the worktree root printed FAIL: no org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~202/RD_CONVERSION_READ_R122.json (rc 1), so no record was written. No copy of the file, no sparse-checkout change and no read outside the worktree was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/sources.json @7d5697ef1a (git ls-tree HEAD: tracked, blob d9ff5642adbb08cf995811e2b947d276e4086100)",
+      "worktree C:/dev/wk-irpt-dashbd-202 @7d5697ef1a: test -f on the path returns absent; git config core.sparseCheckout returns true; git sparse-checkout list (no data entry)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_conv.py @7d5697ef1a (load path of the recount: root/data/assets/scripts/gold/irpt_reporting/sources.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocking on the order's read path, filed by the worker that stopped at the grant. Counts and words only; no client figure is quoted. The order stays open; the issuer decides the checkout scope. Append only."
+}
+```
