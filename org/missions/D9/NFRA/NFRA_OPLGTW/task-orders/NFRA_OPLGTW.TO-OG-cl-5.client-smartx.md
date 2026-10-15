@@ -95,7 +95,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cl-5.client_smartx.proof_of_spe
 
 - A2 (issuer, 2026-10-15 ~20:4xZ, worker row Z-W107-S8, answered by `4.0.0_SA_CRO~Z` msg 34577, `parts/G2c_smartx.md` lines 78-86): the SmartX firm map is BY NAME. `data/mdpf/config/partner_roster.json` `partners[].aliases.advisor_name` maps a name (for example "49 Financial Group") to a `firm_id` (`49financial`); inflection and cottonwood aliases match no SmartX name; `fact_model_allocation_roster` carries BOTH `advisor_name` and `advisor_id`, 1:1 (four firms measured). RULED: `ctx.firm_roster()` returns `{advisor_name: canonical firm id or None}` built from the roster's partner aliases (the core serves it at the hookup from a byte-equal copy under `app/refs/`; your ProbeCtx builds it from the repo file); the ADAPTER derives each `advisor_id` of a firm by joining the roster table's `advisor_name` to that map, and keys the row filter on `advisor_id`, NEVER on `advisor_crd` (shared across firms). A name with no firm (Titleist, Canopy, Parable) returns nothing and is never mapped to the nearest firm. Update the protocol's A1 item 4 reading accordingly in your report (do not edit the protocol file). Re-run both checks, re-record the proof instance, report once. Your first pass's commits `638daaaa76` and `226bbc675b` are inherited state. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G2-BUILD</workstream>
 <slot>~107</slot>

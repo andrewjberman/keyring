@@ -8540,6 +8540,281 @@ carries none.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Disclosure row required by the order's own step 1."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W50-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~50",
+    "surfaced_at": "2026-10-15T22:48:14Z",
+    "one_line": "The naming gate's K7 membership list (org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json) and the schema the order names (org/surprise_channel/schemas/investigation_item.schema.json) are outside this worktree's sparse cone; the gate WARNs and the commit lands, and the schema cannot be read in this worktree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO MX-c-30 Bounds 4 and section 3: a commit through the naming gate is graded on its staged set, and an investigation row is validated against org/surprise_channel/schemas/investigation_item.schema.json.",
+    "world_is": "Commit df1d8d9740 (safe-commit of 4 paths, rc=0) printed '[naming-gate] why: RAISE as S3Key: rule or registry defect, not a refusal: K7: the LIST org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json is absent and this key's verdict turns on membership ... so this copy mints nothing: WARN' (.scratch/commit_i.txt, lines 18 and 20). The sparse cone of wk-NFRA_MCPINDEX-50 holds workflows, infra/aws/ec2/opal-gateway, the census folder and the D9 mission files; org/missions/D14 and org/surprise_channel are not in it, and org/surprise_channel/schemas/investigation_item.schema.json does not exist in the worktree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list in C:/tmp/mi2-wk50 (no org/missions/D14, no org/surprise_channel entry)",
+        "safe-commit output of df1d8d9740: commit-gate and naming-gate lines 18 and 20 of .scratch/commit_i.txt",
+        "cat of org/surprise_channel/schemas/investigation_item.schema.json in C:/tmp/mi2-wk50: No such file or directory"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~52",
+    "surfaced_at": "2026-10-15T22:26:38Z",
+    "disarm_owner": "2.0.0_SA_COO~MI2",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W52-S1",
+    "one_line": "The 11 slice-h1 harvest rows carry no topic text to draw curated tags from: business_meaning is a format/table/prefix line ending '(plumbing / raw store)' and the only example question is 'Where is the <table> bronze table of the harvest bucket?'.",
+    "spec_asserts": "MX-c-34 cell (order section 1): the tags are drawn from the row's own business_meaning and example_questions, and invent no fact the row does not state; a good tag is a topic in plain language (e.g. 'wall street journal articles').",
+    "world_is": "For harvest_amgt_harvest_bronze_research_report, harvest_amgt_harvest_state_pull_log, harvest_barrons_harvest_bronze_article, harvest_bloomberg_harvest_bronze_news_listing and the other 7 slice-h1 rows (DATA_CATALOG.yaml harvest_datasets, lines 18730-19986 at HEAD of the worktree), business_meaning reads only 'bronze <format> table <table> at <prefix> in bucket opal-data-harvest; grain: not read by this census (plumbing / raw store).' and example_questions holds one 'Where is the <table> table' line. No topic word exists in the row text, so the tags were written from the layer, format, publisher, table name and the stated raw-store/plumbing fact, not from a topic. The check passes (7 of 7 ok, exit 0) because the entity name supplies the grounding word; the tags are not a topic reading of the data.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@HEAD lines 18730-18781 (research_report), 19268-19318 (barrons article), 19485-19513 (bloomberg article), 19783-19812 (bloomberg news_listing) -- business_meaning and example_questions read at the worktree",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~52/research_group_map_h1.json (the tags written)"
+      ]
+    },
+    "notes": "Form only: the cell's premise (topic text on the row) does not hold for these 11 rows. Whether plain topic tags exist for raw-store plumbing tables is for the issuer and the CTO at the Z-C-S61 close. Not a gate field; no access changes."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~52",
+    "surfaced_at": "2026-10-15T22:26:38Z",
+    "disarm_owner": "2.0.0_SA_COO~MI2",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W52-S2",
+    "one_line": "The order says the tag check has eight planted arms; the script carries twelve, and all twelve pass when run.",
+    "spec_asserts": "MX-c-34 face (preflight and section 2 control): 'eight planted arms (plant_ct.py, 8 of 8) are the control'.",
+    "world_is": "plant_ct.py at the worktree (round18/checks/plant_ct.py) defines 12 arms (good file passes; fewer than 4 tags; more than 6; symbol; uppercase; one-word; missing entity; extra entity; extra key; repeated tag; copied derived tags; no word from the row). Run at the worktree root with TMPDIR set to the worker scratch: 'PLANTED 12 of 12', exit=0. The count in the order is stale against the script; the script's own result was not changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py (the arms list, the final PLANTED line)"
+      ]
+    },
+    "notes": "Form only: the control count in the face is 8, the script's is 12; the 12-of-12 result is recorded as the mutant control in the proof instance. Not a gate field; no access changes."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W53-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~53",
+    "surfaced_at": "2026-10-15T22:34:00Z",
+    "one_line": "The face states the planted-arm control as 8 of 8 (preflight comp-adversary and ISSUER NOTES); the plant_ct.py on the worktree runs 12 arms and all 12 behave (PLANTED 12 of 12, rc=0). The graded criterion MX-c-35 AC1 is unaffected.",
+    "spec_asserts": "Face preflight: 'comp-adversary: ... eight planted arms (`plant_ct.py`, 8 of 8) are the control'; ISSUER NOTES: 'Planted arms: plant_ct.py 8 of 8.'",
+    "world_is": "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py at worktree HEAD b39af50e9d defines 12 arms (good file passes, plus 11 planted defects); run from the worktree root it prints PLANTED 12 of 12 and exit 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py@b39af50e9d (arms list, 12 entries)",
+        "the run in the worker worktree C:/tmp/mi2-wk53: 'PLANTED 12 of 12' and exit=0 (2026-10-15T22:3xZ)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W53-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~53",
+    "surfaced_at": "2026-10-15T22:34:00Z",
+    "one_line": "Step 5.2 and the completion rule append <status>complete</status> to the task order file, but that file is not among the order's <paths>, so the lane grant does not admit the flip; the worker leaves the order at issued and the issuer lands the flip.",
+    "spec_asserts": "Order section 3 <paths> is the write grant (the research_group_map_h2.json file, deliverables/**, and the INVESTIGATION_v1.md); section 5 step 2 says APPEND <status>complete</status> to the task order when the criterion PASSES.",
+    "world_is": "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-35.curated-tags-h2.md carries <status>issued</status> at line 94 and is not in the <paths> block (lines 63-67). Criterion AC1 PASSES (exit=0), so the flip is the one step the grant blocks.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-35.curated-tags-h2.md@b39af50e9d (lines 63-67 <paths>, line 86 step 5.2, line 94 <status>issued</status>)",
+        "the same pattern recorded for MX-c-18 as NFRA_MCPINDEX-Z-W42-S1 in deliverables/0.9.0_WK_NFRA_MCPINDEX~42/NFRA_MCPINDEX.TO-MX-c-18.nl-tags-on-every-catalog-row.proof_of_spec.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W54-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~54",
+    "surfaced_at": "2026-10-15T22:34:03Z",
+    "one_line": "MX-c-36's check ct_check.py grades the 'grounded in the row's text' limb against entity name + business_meaning + example_questions, so the limb is met by words the row takes from its S3 prefix and format (seeking, alpha, json) and its entity name, not only by the row's meaning.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/ct_check.py lines 79-81 (grounded set built from e + business_meaning + example_questions)",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml lines 22056-22691 (harvest_datasets rows; business_meaning of the 10 h3 rows carries 'seeking-alpha/...' and 'bronze json ...' prefix and format words)",
+        "measured at worktree HEAD b39af50e9d: 10 of 10 rows have a tag word that appears in business_meaning or example_questions, but the shared words for the Seeking Alpha rows are alpha, seeking, json, and for social_v1 data, json, social"
+      ]
+    },
+    "spec_asserts": "MX-c-36 face section 1 and criterion AC1: at least one tag shares a word of 4 or more letters with the row's own text, the text being the row's business_meaning and example_questions (face: 'Draw them from the row's own business_meaning and example_questions').",
+    "world_is": "ct_check.py adds the entity name to that text (line 79), and the business_meaning of every h3 row carries its S3 prefix (seeking-alpha, wsj, social) and format (json, html, xml). A tag can therefore clear the limb on 'seeking alpha ...' or 'raw ... json files' without grounding in what the row is for. The check returned PASS on my file, and my file's tags are also grounded in meaning words such as article, news, listing, report, symbol, store.",
+    "notes": "OBSERVATION only: the check's grounding limb is a mechanical floor, which the face states as its purpose. Filed so the issuer, reading the sample at the drain, knows the PASS does not itself show the tags are grounded in the rows' meaning. No change to ct_check.py (outside my grant).",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~55",
+    "surfaced_at": "2026-10-15T22:30:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W55-S1",
+    "one_line": "The MX-c-37 order names eight planted arms (plant_ct.py, 8 of 8) as its control; the control as it stands at HEAD runs twelve arms and reports 12 of 12.",
+    "spec_asserts": "NFRA_MCPINDEX.TO-MX-c-37 section 0 preflight and the ISSUER NOTES: 'eight planted arms (plant_ct.py, 8 of 8) are the control'.",
+    "world_is": "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py at 3317942ecc defines twelve arms (good file passes, fewer than 4 tags, more than 6 tags, symbol, uppercase, one-word, missing entity, extra entity, extra key, repeated tag, copied derived tags, ungrounded tags). Run on the worker's worktree with the curated p1 file present: 'PLANTED 12 of 12', rc=0. The count in the order is stale; the arms behave. No file was changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-37.curated-tags-p1.md@3317942ecc (preflight line 16; ISSUER NOTES line 86)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py@3317942ecc (arms list, lines 54-65)",
+        "worker run: python org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py -> PLANTED 12 of 12, exit 0"
+      ]
+    },
+    "notes": "Trivial count drift in an order's prose control; the criterion (ct.p1.sh) itself is unaffected. Filed so the control's stated size matches its measurement."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~55",
+    "surfaced_at": "2026-10-15T22:30:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W55-S2",
+    "one_line": "Step 5.2 of MX-c-37 asks for <status>complete</status> appended to the task order itself, but the task order file is not in the worker's <paths>; the flip was not made.",
+    "spec_asserts": "NFRA_MCPINDEX.TO-MX-c-37 section 5 step 2: 'APPEND <status>complete</status> only if the criterion PASSES'; section 3 <paths> lists the deliverables folder and the investigation channel only.",
+    "world_is": "The task order NFRA_MCPINDEX.TO-MX-c-37.curated-tags-p1.md is outside the worker's write grant. Its last status tag at HEAD 3317942ecc is <status>issued</status>. AC1 PASSES by output, so the order's criterion is met, but the status flip it names cannot be made inside the lane. The flip is left for the issuer; nothing was edited outside <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-37.curated-tags-p1.md@3317942ecc (<paths> block lines 57-61; step 5.2 line 80; <status>issued</status> line 88)",
+        "worker run: timeout 120 bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/ct.p1.sh -> RESULT: PASS, exit 0"
+      ]
+    },
+    "notes": "The flip needs the issuer (2.0.0_SA_COO~MI2) to append the status in its own lane, or the grant to widen to the task-order file on Andrew's or the issuer's word. Not a gate field."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-15T22:50:54Z",
+    "one_line": "c21_check.py opens bucket_source relative to the repo root, but the TO defines bucket_source relative to infra/aws/ec2/opal-gateway; AC2's declared-S3 sub-check cannot pass under the documented convention.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO section 1 item 3: bucket_source is <path>:<line>, the path relative to infra/aws/ec2/opal-gateway; for an S3 bucket the bucket name must appear within 6 lines of that line. Criterion AC2 expects 'declared S3 buckets unproved 0'.",
+    "world_is": "c21_check.py ac2 opens each bucket_source with open(path) relative to the process cwd, and c21.AC2.sh runs it from the repo root (_root.sh). Measured in worktree C:/tmp/wk-r18-45: 'declared S3 buckets 5, unproved 5' (harvest_get_article, news_for_security, opal_data_refresh_upload, schwab_get_access, schwab_prepare_download), RESULT FAIL, rc=1. Resolved from the gateway folder, all six declared S3 sources name their bucket inside the window (harvest_read.py:26 for three, opal_portal/integration.py:109, deploy/NFRA_OPLGTW_CONTRACT.json:301 for two); harvest_list is outside the checker's members list.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c21_check.py@257da358d8 (ac2: open(path) at the bucket_source check, relative to cwd)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/_root.sh@257da358d8 (cd to the repo root before the python call)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-21.c-group-bucket-on-every-row-and-tool.md@257da358d8 (section 1 item 3: bucket_source path relative to infra/aws/ec2/opal-gateway)",
+        "c21.AC2 run at the repo root of worktree 0.9.0_WK_NFRA_MCPINDEX~45: 'declared S3 buckets 5, unproved 5', RESULT FAIL, rc=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-15T22:50:54Z",
+    "one_line": "A served PENDING tool (harvest_list) has no members.yaml entry, so its declared bucket needed a top-level buckets: list the TO does not name, and the AC2 checker does not grade it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO section 1 item 3: a tool that no row names declares bucket: in tool_index/members.yaml as a new optional field on a member; the emitter refuses a tool with no derivable and no declared bucket.",
+    "world_is": "harvest_list is served by the deployed census (99 served tools) and its entry lives in tool_index/pending_members.yaml, outside this cell's <paths>. A members.yaml member for it would duplicate the pending entry and refuse the emit. It is declared in a new top-level buckets: list of members.yaml (read by emit_catalog_v02.load_declared_buckets; bucket opal-data-harvest, bucket_source app/harvest_read.py:26). c21_check reads only the members list, so AC2 does not grade this declaration.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tool_index/pending_members.yaml@257da358d8 (harvest_list, owner AMGT_HARVST)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c21_check.py@257da358d8 (ac2: members dict built from members.yaml only)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-21.c-group-bucket-on-every-row-and-tool.md@257da358d8 (section 1 item 3, members.yaml declaration)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-15T22:50:54Z",
+    "one_line": "The two (a) tools whose index is a channel row have no bucket to inherit: channel rows carry no bucket, so the emitter gives them the catalog's top-level bucket, which the TO does not state.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO section 1 item 3: the bucket of a member-a tool is the bucket of its index row; item 1 writes bucket on the three asset sections only.",
+    "world_is": "gateway_query_catalog and opal_asker_query index mp.04.model-portfolio-timeseries, a channel row under channels.*.artifacts. Channel rows carry no bucket and sit outside the three sections. The emitter gives both tools the catalog's top-level bucket (opal-data-portal-v2), the value the comment in c21_check.py names for this case. AC2 does not grade the case (no expected value is checked).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@257da358d8 (channels.*.artifacts rows carry no bucket field)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c21_check.py@257da358d8 (ac2: exp = None for an (a) tool indexed by a channel row)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-21.c-group-bucket-on-every-row-and-tool.md@257da358d8 (section 1 item 3)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-15T22:50:54Z",
+    "one_line": "The tool index definition lines point at the deployed commit c4c106aea1, not the HEAD the order runs on; the cited bucket_source lines were located by reading the worktree, not from the definition field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO section 1 item 3: read the tool's definition (the tool index's definition field gives its file and line).",
+    "world_is": "The definition field is written from the census at the deployed commit c4c106aea1 (whoami at app/tools.py:198). HEAD 257da358d8 has moved the gateway app (git diff --stat c4c106aea1 HEAD lists 21 changed files under infra/aws/ec2/opal-gateway/app, app/tools.py among them; whoami is defined at line 210 in the worktree). Each declaration cites a worktree line that was read and checked to be the tool's own call.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/assets_group_map.json@257da358d8 (census base c4c106aea1 named in its _about)",
+        "infra/aws/ec2/opal-gateway/app/tools.py@257da358d8 (whoami def at line 210; census definition line 198 at c4c106aea1)",
+        "git diff --stat c4c106aea1 257da358d8 -- infra/aws/ec2/opal-gateway/app (21 files changed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-15T22:50:54Z",
+    "one_line": "The order gives no rule for a write-only S3 target or a contract-configured bucket: copy_site_file_to_s3 is classed by its Graph read, and the two Schwab tools cite the deploy contract file, not the tool's own code.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO section 1 item 3: a tool reading several buckets takes its primary one; bucket_source is the line in the tool's own code where it names the bucket or the store.",
+    "world_is": "copy_site_file_to_s3 reads one SharePoint item through the Graph call (app/integrations/advi_billing/site_to_s3.py:168) and writes an S3 object under a deploy-time root (ADVI_FEE_STATEMENT_S3_ROOT / ADVI_MARKET_UPDATE_S3_ROOT, no literal bucket in code); it is classed graph by its read. schwab_get_access and schwab_prepare_download name opal-data-assets only as source_bucket in deploy/NFRA_OPLGTW_CONTRACT.json:301, outside the tool's code; cited there.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/advi_billing/site_to_s3.py@257da358d8 (Graph call line 168; put_object to a configured bucket)",
+        "infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json@257da358d8 (source_bucket opal-data-assets at line 301)",
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py@257da358d8 (get_access and prepare_download read the contract bucket)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
