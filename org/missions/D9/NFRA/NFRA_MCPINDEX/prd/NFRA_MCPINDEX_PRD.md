@@ -772,8 +772,12 @@ GO at ~19:2xZ (relayed by `4.0.0_SA_CRO~Z` msg 34543): "We have usage, run it no
 3. **The display and discovery group key is exactly (`bucket`) for every bucket, and (`bucket`, `vendor`, `firm`) for
    opal-data-assets and opal-data-bd.** No other grouping field is introduced. A new value in either list is an addendum
    here, not a local spelling.
-4. **The `firm` VALUE on a row is a label for grouping.** Visibility and data access stay where they are: catalog visibility
-   is MX-c-19's gate, and data access is the firm's data grant (NFRA_OPLGTW v3.1 Ruling 2 / v3.2).
+4. **CORRECTED ~20:0xZ (`2.0.0_SA_COO~MI` msg 34558): the `firm` VALUE is NOT a pure label.** `_silver_answer` (MX-r-14) shows a
+   firm-scoped row to its own firm whenever `firm` is a known firm, so setting `firm` to `49financial`, `cottonwood` or
+   `inflection` WIDENS catalog visibility to that firm's principals. Every catalog release that adds or changes a known-firm
+   value carries its own never-widen pair naming those rows, gated on the difference control at 0 cross-firm leaks.
+   `multi`, `none` and `unresolved` are not known firms and stay invisible to firm principals. Data access is unchanged: it
+   needs the firm's data grant (NFRA_OPLGTW v3.1 Ruling 2 / v3.2).
 
 **Scope of FWD-22 for this finish (Andrew's list):**
 - everything in opal-data-harvest;
