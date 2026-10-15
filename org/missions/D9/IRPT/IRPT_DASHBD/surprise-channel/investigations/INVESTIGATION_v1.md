@@ -15088,3 +15088,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The shared zip packages seven registry members at pins; after the addendum six stay at their old pins and scopes.json moves to 69679b90e3. The five named members differ from HEAD in size and content (counts above; the record carries sha256 of each). Nothing in the zip's code path needs them to move today: the full derivation of the three declared channels is identical with only scopes.json re-pinned. A later act re-pins them together with a differential on whatever the then-current producer reads from them; this row is that act's carrier. It is not an ARMED hazard: no function misbehaves on the old pins."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S66",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T06:35:00Z",
+  "one_line": "TO-DB-c-14 acceptance checker p120_bcw.py FAILS DBC120-1-AC1 and DBC120-2-AC1 on checker constants, not on the act: AC1 compares the source map to BASE eae8170b22 so another seat's irpt-status record trips 'an unrelated function entry changed', and looks the ledger up by glob '<slug>*' while the ledger tool names the file '<timestamp>_<slug>_deploy_completion.md'; AC2 applies the 8-digit rule to ledger_entry (the slug ends 20261015) and scopes_member_sha256 (the value the same checker requires carries 26588521); DBC120-3-AC1 PASSES",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .../checks/r120/p120_bcw.py . DBC120-1-AC1 -> 'an unrelated function entry changed: irpt-status' then FAIL; git diff eae8170b22 c0385c0168 on lambda-source-map.json already differs in irpt-status alone (commit 67639bb903 by 0.7.0_AE_CloudOps~AQ2), before any edit of mine; my map edits are the irpt-cot row (111 lines added) and the stamps on the two shared-zip rows",
+      "DBC120-2-AC1 -> 'a run of 8 or more digits in field ledger_entry'; with ledger_entry and scopes_member_sha256 added to DIGIT_OK_KEYS IN MEMORY (no file edited) the arm PASSES",
+      "diagnostic with BASE set to c0385c0168 in memory: AC1 then fails at 'the ledger entry is absent' (glob of '<slug>*' in org/critical_paths/change_management; the file is 20261015T0423Z_<slug>_deploy_completion.md)",
+      "DBC120-3-AC1 PASS on fresh Lambda, scheduler and test reads"
+    ]
+  },
+  "spec_asserts": "The three criteria are gradable on a correct apply: the record's required values pass the checker's own rules.",
+  "world_is": "The act's substance was measured directly and holds: member diff exactly scopes.json at the signed sha, registry test rc 0 on the built zip, plan 0/3/0 on the three named addresses, three CodeSha256 equal, replan No changes, derivations identical (94 keys), 36 of 36 keys written and no other, 12 manifests schema 1.2, three readers clean on 1.1 and 1.2, schedule ENABLED. The record COTTONWOOD_APPLY_RECORD_R2.json carries those values; I did not change any value to satisfy the checker and did not flip the order's status. Ask: amend p120_bcw.py/p117_bcw.py (BASE to the order commit c0385c0168 or an allow-list that includes irpt-status, the ledger lookup by '*<slug>*', ledger_entry and scopes_member_sha256 in DIGIT_OK_KEYS), then re-run the three criteria. Row id note: next free IRPT_DASHBD-D2-S<k>."
+}
+```
