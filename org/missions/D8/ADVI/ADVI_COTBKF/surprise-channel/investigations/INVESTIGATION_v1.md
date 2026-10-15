@@ -8872,3 +8872,182 @@ round.** Never edit an existing row.
   "disarm_owner": "1.0.0_SA_CTO~DELL2"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W169-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~169",
+  "surfaced_at": "2026-10-15T18:03:47Z",
+  "one_line": "TO CB-ch-1 cannot start: worktree C:/dev/wk-cotbkf-169 is a sparse checkout whose pattern list has no data/ entry, so data/assets/scripts/silver/ (the order paths: the build script and its test folder) is absent on disk, though the folder is committed at HEAD 824588956e. Stopped at the first act (BLOCKING). Nothing written under data/, no sparse-checkout widened, no tree rebuilt from another checkout. AC1, AC2, AC3 and the account-id scan ran and failed on the missing paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-cotbkf-169 sparse-checkout list (worktree HEAD 824588956e): .tools, infra/logic/registry, lib, org/devices, org/missions/D8/ADVI/ADVI_COTBKF, org/modules/graph, org/ref, org/standards; the sparse file at C:/dev/ajb_workspace/.git/worktrees/wk-cotbkf-169/info/sparse-checkout opens /* and !/*/ and lists no data/ pattern",
+      "test -d data and test -d data/assets: both absent in C:/dev/wk-cotbkf-169; ls of the worktree root carries no data entry",
+      "git ls-tree HEAD data/assets/scripts/ lists the silver tree at 824588956e; git rev-parse HEAD:data/assets/scripts/silver/commonwealth_signs.py returns 054f8502aaaf867ab3adaf417263b4b8611e9ab6: the committed path exists and is not checked out",
+      "order ADVI_COTBKF.TO-CB-ch-1.rebuild-active-set-scripts.md, the paths block lines 64-65 name data/assets/scripts/silver/cotbkf_active_set_v2.py and data/assets/scripts/silver/tests/test_cotbkf_active_set_v2.py; the first act says a worktree lacking the named paths is a BLOCKING row and a stop",
+      "runs at 2026-10-15T18:0x UTC in the worktree: AC1 python read of deliverables/0.9.0_WK_ADVI_COTBKF~169/REBUILD_RECORD.json rc=1 FileNotFoundError; AC2 same rc=1; AC3 pytest on the test path rc=4 no tests ran; account-id scan rc=4 no tests ran"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-1 names data/assets/scripts/silver/cotbkf_active_set_v2.py and its test as the worker write grant (paths block), and its first act requires the worktree to carry the paths the order names; otherwise BLOCKING and stop.",
+  "world_is": "The worktree carries org/ and .tools/ but is sparse-checked-out with no data/ pattern, so the named data/ paths are not on disk; the paths are committed at HEAD. Whether this worktree was meant to admit data/ (the lane grant names it) or the order names the wrong worktree is not established. No file was written under data/; the order is left pending with no proof flip.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W169-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~169",
+  "surfaced_at": "2026-10-15T18:26:21Z",
+  "one_line": "CB-ch-1 build from the committed script (blob 867a2cf1daa21dc46432d523cf8cc29beca1b990, after repair 3 at 68ffc04bc9): REVERSE_MATCH_V3.csv reproduces its pin byte for byte (860 rows); ACTIVE_COTTONWOOD_SET_V2.csv does not (41,808 rows against 41,826; sha256 differs). The record rules do not reproduce the V2 file on ticker (285 paired rows) and held_to (48 paired rows) and on 339 pinned-only and 321 rebuilt-only rows. Three repairs used; file left as built, not forced. AC1 FAIL.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REBUILD_RECORD.json and the two outside files in C:/dev/_cotbkf_rebuild_20261015/ (rows, sha256 and counts in the worker report; no account value recorded here)",
+      "pinned file org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ACTIVE_COTTONWOOD_SET_V2.csv (committed, sha256 5cef7ab0c9e10fe299cb757d4dba31792d069bad35f7250defa76e18773046ae): joined pairs carry only their both row; CW-only, BD-only and joined pair sets are disjoint (counts measured)",
+      "repairs: 8cd4c0a81f (type read as stored, 164 rows), 9f617f4fd9 (candidate id before its description; near 0 to 13, AMBIGUOUS 0 to 27), 68ffc04bc9 (joined pair one row: 62,754 to 41,808 rows)",
+      "the record rule for ticker of a window not established by key: the ticker key of a not_established window is the (ticker,name) pair in the pinned file and the name alone here; row counts on not_established differ 818 against 834"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-1 (AC1, CB86ch1-AC1): the two rebuilt files, hashed now, equal the two committed pins; a file that does not reproduce is not forced and not edited to match.",
+  "world_is": "The reverse match reproduces; the window file does not, on the ticker of a window and on its held_to and on the structure of the not_established and joined rows. Not established: which of the record rules differ from the round-85 script (the round-85 script is lost; the record names the rules, not the code).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W169-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~169",
+  "surfaced_at": "2026-10-15T18:26:21Z",
+  "one_line": "Source listings have moved past the record: silver/holdings lists 90 dated keys (record: 88 through 2026-10-12) and gold/canonical/holdings lists 137 (record: 135); the two later keys in each (2026-10-13, 2026-10-14) are excluded by the snapshot pin. The Commonwealth crosswalk prefix also lists crosswalk.parquet beside crosswalk.csv; the record names the csv and the build reads the csv.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "listing by boto3 ListObjectsV2 paginated, bucket opal-data-cot prefix silver/holdings/: 90 objects, first 2026-06-08, last 2026-10-14 (denominator 90)",
+      "listing opal-data-cot prefix gold/canonical/holdings/: 137 objects, last 2026-10-14 (denominator 137)",
+      "listing opal-data-assets prefix commonwealth/cottonwood/silver/crosswalk/date=2026-06-23/: 2 objects, crosswalk.csv and crosswalk.parquet",
+      "ACTIVE_SET_V2_RECORD.json sources: 88 silver keys to 2026-10-12, 135 gold keys to 2026-10-12 (the record figures)"
+    ]
+  },
+  "spec_asserts": "ACTIVE_SET_V2_RECORD.json sources: the silver and gold listings name 88 and 135 dated keys, 2026-06-08..2026-10-12 and 2026-04-22..2026-10-12.",
+  "world_is": "The prefixes now hold two later dated keys each. The build pins the snapshot at 2026-10-12 and reads only keys dated on or before it, so the listing growth does not enter the rebuilt files. Not established: whether a later write altered a key the record already read; the record names no checksums for its keys.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W169-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~169",
+  "surfaced_at": "2026-10-15T18:53:49Z",
+  "one_line": "CAUSE ESTABLISHED: the rebuilt ACTIVE_COTTONWOOD_SET_V2.csv row order depends on the process hash seed. The committed script (blob edbddd5f, commit b65e3ecdbd) gave three window-file sha256 values across PYTHONHASHSEED 1, 2 and default. The final sort key (account, side, cusip, held_from) has no tie-break, so tied rows come out in set-iteration order. The pinned file orders its 61 tied groups by held_to (61 of 61) and by window_basis (61 of 61). A total key (account, side, cusip, held_from, held_to, window_basis) is the measured candidate; not applied, the amendment cap of six repairs is reached.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "runs of data/assets/scripts/silver/cotbkf_active_set_v2.py at commit b65e3ecdbd with PYTHONHASHSEED=1, PYTHONHASHSEED=2 and the default seed: window-file sha256 values differ (counts and hashes only; the outside files are not in the tree)",
+      "the sort in the build: out_v2.sort(key=lambda r: (r[0], r[1], r[2], r[4])) has no tie-break on held_to or window_basis",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ACTIVE_COTTONWOOD_SET_V2.csv: within 61 groups sharing account, side, cusip and held_from the rows are ordered by held_to (61 of 61) and by window_basis (61 of 61) (counts only)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-1 AC1: the rebuilt files, hashed now, equal the committed pins; the script run from its commit reproduces the file bytes.",
+  "world_is": "Two runs of the same committed script can write different bytes for the same inputs, so byte equality depends on the process hash seed as well as on the rules. Not established: whether the total key above reproduces the pinned bytes; that is measured on the pinned file ordering only, not by a rebuild.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W170-S1 -- The order's write grant (data/assets/scripts/silver/) and its named builder inputs (data/mdpf/scripts/demque/) are tracked at HEAD but outside this worktree's sparse-checkout cone, so the worktree does not carry the paths the order names; the order is not executable here. Stopped before any build (refusal clause); no file was written outside the deliverables folder.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W170-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~170",
+  "surfaced_at": "2026-10-15T18:02:56Z",
+  "one_line": "The order's write grant (data/assets/scripts/silver/) and its named builder inputs (data/mdpf/scripts/demque/) are tracked at HEAD but outside this worktree's sparse-checkout cone, so the worktree does not carry the paths the order names; the order is not executable here. Stopped before any build (refusal clause); no file was written outside the deliverables folder.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-cotbkf-170 sparse-checkout list (core.sparseCheckout=true, worktree HEAD 824588956ea188ade47ac480f1dd0b87e6c00e11): .tools, infra/logic/registry, lib, org/devices, org/missions/D8/ADVI/ADVI_COTBKF, org/modules/graph, org/ref, org/standards; no data/ entry",
+      "ls -d C:/dev/wk-cotbkf-170/data: no such file (the worktree has no data/ on disk); git status --short in the worktree: 0 entries",
+      "git -C C:/dev/wk-cotbkf-170 ls-tree -r --name-only HEAD data/mdpf/scripts/demque/ lists active_set.py, b1_request.py, bbg_quote.py, bbg_allowance.json; data/assets/scripts/silver/ is tracked at HEAD and absent on disk",
+      "base checkout C:/dev/ajb_workspace (same HEAD 824588956e) holds data/mdpf/scripts/demque/b1_request.py and the two MDPF_DEMQUE failed-14 and option-C request files on disk; the committed V2 file in the worktree hashes 5cef7ab0c9e10fe299cb757d4dba31792d069bad35f7250defa76e18773046ae, matching the order"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-2 worker face: the grant is the <paths> block (data/assets/scripts/silver/cotbkf_active_bbg_need.py and its tests); the builder inputs are read at the worktree root (data/mdpf/scripts/demque/b1_request.py); a worker whose worktree does not carry the named paths files a BLOCKING row and stops, and never rebuilds or extracts the tree.",
+  "world_is": "The worktree's sparse-checkout cone omits data/, so the named write path and the named builder inputs are tracked at HEAD but not materialised in this worktree. The order's read-first list points at the base checkout, but the write grant cannot be created in this worktree without widening the cone, which is a tree reconstruction the worker face forbids. Nothing was run against the builders, no cone or config was changed, and no checkout was run. Not established: whether the issuer intends the cone widened for this worker or the build run from the base checkout.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W170-S2 -- CB86ch2-AC2 cannot be met as written: its glob slices/ACTIVE_BBG_SLICE_*.json also matches the .quote.json files that item 5 places beside each slice, and a quote file has no securities key, so the invocation raises KeyError and exits rc 1 whatever the slices hold. Stopped at the criterion (refusal clause); the slices and quote files are written as the face says.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W170-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~170",
+  "surfaced_at": "2026-10-15T18:27:10Z",
+  "one_line": "CB86ch2-AC2 cannot be met as written: its glob slices/ACTIVE_BBG_SLICE_*.json also matches the .quote.json files that item 5 places beside each slice, and a quote file has no securities key, so the invocation raises KeyError and exits rc 1 whatever the slices hold. Stopped at the criterion (refusal clause); the slices and quote files are written as the face says.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 invocation run as written in C:/dev/wk-cotbkf-170 (timeout 120): traceback ends at json.load(open(f))['securities'] with KeyError 'securities', for slices/ACTIVE_BBG_SLICE_01.quote.json; rc 1",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~170/slices/ holds 27 ACTIVE_BBG_SLICE_NN.json and 27 ACTIVE_BBG_SLICE_NN.quote.json; the quote file keys are allowance_gap, allowance_today, basis, cells, cells_remaining, claims, finish_date, finish_date_claim, label, page, request_id (no securities key)",
+      "diagnostic, not a criterion run: with the quote files excluded from the glob the same invocation prints files=27 count=27 max_cells=5856 day=5858 sum_cells=154024 within_day=True no_dollar_column=True; its slice_cusips term counts securities entries (2238), not distinct CUSIPs (1732)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-2 item 5: one request file per slice under slices/ and a .quote.json beside each; CB86ch2-AC2 sums securities over slices/ACTIVE_BBG_SLICE_*.json and prints within_day and no_dollar_column.",
+  "world_is": "The criterion and the item-5 placement cannot both hold as written: the glob matches the quote files, and the slice_cusips term counts entries, not CUSIPs. No file was changed to meet the criterion. Not established: whether the issuer wants the quote files in another folder, or the glob narrowed to the slice .json files with the CUSIP term counted as distinct CUSIPs.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W170-S3 -- The post-commit account-id scan (test_cotbkf_no_account_ids.py) cannot run on this device: its account set (C:/dev/_cotbkf_private_evidence_20261009/account_set.json; env COTBKF_ACCOUNT_SET unset) is absent, so the test fails closed with rc 1 and scans no file. The worker ran a count-only substitute over the 61 committed files against the 860 V2 account keys (0 hits), reported separately; no account number was read into the repository.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W170-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~170",
+  "surfaced_at": "2026-10-15T18:31:59Z",
+  "one_line": "The post-commit account-id scan (test_cotbkf_no_account_ids.py) cannot run on this device: its account set (C:/dev/_cotbkf_private_evidence_20261009/account_set.json; env COTBKF_ACCOUNT_SET unset) is absent, so the test fails closed with rc 1 and scans no file. The worker ran a count-only substitute over the 61 committed files against the 860 V2 account keys (0 hits), reported separately; no account number was read into the repository.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py -q -s, worktree C:/dev/wk-cotbkf-170 at 885fe8dc7b (timeout 120): 1 failed in 0.20s, AssertionError 'account set absent (COTBKF_ACCOUNT_SET or default path): the test fails closed'; rc 1; no DENOMINATOR line printed",
+      "data/assets/scripts/silver/tests/_cotbkf_acct_check.py:27 ACCOUNT_SET_DEFAULT = C:/dev/_cotbkf_private_evidence_20261009/account_set.json; ls of that path: no such file; COTBKF_ACCOUNT_SET unset in the process environment",
+      "count-only substitute, not the test: 61 files in the worker's diff since 824588956e under org/missions/D8/ADVI/ADVI_COTBKF and data/assets/scripts/silver, read from the worktree; 860 V2 account_key values checked as substrings; 0 files with a hit"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-2 BOUNDS: after the last commit run env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py -q -s and give its DENOMINATOR line; the account set is held outside the repository.",
+  "world_is": "The account set is not present on dell1 (its default folder does not exist), so the scan fails closed and reports no denominator here. Nothing was read from or printed out of the set by the worker. Not established: whether the set exists on another device, or whether its owner should place it here before the scan is run.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

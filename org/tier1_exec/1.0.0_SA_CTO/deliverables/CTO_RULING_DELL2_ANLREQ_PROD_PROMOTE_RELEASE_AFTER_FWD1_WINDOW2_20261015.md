@@ -41,3 +41,22 @@ and it buys nothing.
 - **c8c3 re-promotes when one DEV window delivers 4 of 4 attachments** on a fixed package step, read by the applier.
 - `~Y2`'s source read of the package refusal is the next cell. It must also name the DLQ message's disposition and the RESERVED retention
   row's owner. Neither is redriven or deleted without a ruling.
+
+## ADDENDUM 2 (~18:5xZ): the package refusal has a cause; the fix and run 3 (`~Y2` msg 8565, read AR-y-357)
+
+**Cause (measured, `PACKAGE_REFUSAL_READ.json`, 130 of 130 cites OK).**
+- Refusals 1 and 2 are `repository.py:392`, "unregistered artifact family". The resident registers only `irpt-x10-v1` and
+  `irpt-ycdgen-research-v1` (`resident_installed.py:392`), and `ANALYSIS_COMMENTARY` lives only in `irpt-anlreq-x10-v1`.
+- Refusal 3 is the run's own removal of the test user.
+- The RESERVED retention row is not the cause.
+
+**RULED:**
+1. **The fix rides `2.0.0_SA_COO~G2`'s ONE resident release** (the four-lanes ruling's shared hazard: one artifact, one pair). It adds
+   `irpt-anlreq-x10-v1` to `additional_policy_revisions` in `build_resident_runtime`, with the pinned test. It is not a separate release.
+2. **The same release carries run 3's NEW producer address.** My addendum-2 half admitted r41a ONCE, so run 3 needs a new address, and a
+   new address needs a resident release. Both ride together, so the resident moves once.
+3. **The DLQ message is NOT redriven.** Its actor (the window-2 test user) no longer exists, so a redrive would refuse again
+   (`ACTOR_NOT_FOUND`). It stays in the DLQ until its retention expires. No delete is ordered, and run 3 is the proof, not the redrive.
+4. **The RESERVED row is the drafter's (`svc-commentary`), and it expires. No act.**
+5. **Sequence:** the ~G2 release, then FWD-1 run 3 under a new addendum. The test user's row is held until the attachments are read, then
+   removed as before. Then c8c3 re-promotes when run 3 reads 4 of 4 attachments (ADDENDUM 1).

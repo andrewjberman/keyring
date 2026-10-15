@@ -3888,7 +3888,28 @@ name the one known failure instead of silently inheriting it.
     },
     "spec_asserts": "W3-S22: the 5 access-layer routes and /callback identify a caller by ALB email only, so a restricted person can read Daily Sprint pages and complete the legacy consent.",
     "world_is": "Daily Sprint pages serve the owner only. The legacy consent remains reachable but yields no tool a restricted profile may call, and a deny record can close it per person."
-  }
+  },
+{
+  "id": "NFRA_OPLGTW-D1-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "dell1",
+  "surfaced_by": "4.0.0_SA_CRO~DELL1",
+  "surfaced_at": "2026-10-15T18:25Z",
+  "one_line": "No Gateway tool can return the bytes of a native PDF attached to a Teams chat from another user's OneDrive: read_teams_attachment fetches the bytes and returns only a hint, and read_document asks Graph for format=pdf, which Graph refuses on a .pdf input (406 InputFormatNotSupported).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/tools.py read_teams_attachment (GET /shares/{tok}/driveItem/content, then _office_binary_hint returns metadata + hint, bytes dropped) and read_document (GET {drive}/items/{id}/content?format=pdf; drive is /me/drive or /sites/{site_id}/drive only).",
+      "RUN 2026-10-15 ~18:15Z: read_teams_attachment on Lauren Harmon's 'ASML earnings update 3Q26.pdf' -> binary:true, hint 'PDF -- call read_document', drive_id b!1Kv4wa2-...; read_document(item_id) -> Graph 400 'item ID is not valid for the requested drive' (/me/drive); read_document(site_id=opalinvest-my.sharepoint.com,c1f8abd4-bead-4419-916a-9866ca084e3c,0ff62995-48ba-4752-8230-a34893196cb2, decoded from the drive id) -> Graph 406 InputFormatNotSupported 'pdf'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "read_teams_attachment's docstring: a binary Office/PDF file returns a hint 'pointing at read_document / read_workbook ... plus the driveId + itemId those tools need'.",
+  "world_is": "The hint points at a reader that cannot open the file on either ground: read_document cannot address a foreign drive by driveId (it takes no drive_id), and even with the personal site's id it requests a PDF rendition, which Graph does not produce from a PDF. A chat-attached PDF is therefore unreadable through the Gateway end to end.",
+  "notes": "INERT: nothing served is wrong; a read is refused. Smallest fix candidates for the Gateway owner: (a) read_teams_attachment returns bounded base64 for application/pdf (it already holds the bytes); (b) read_document skips format=pdf when the item is already a PDF and accepts drive_id. Found while pulling Lauren Harmon's 3Q26 earnings-update PDFs for a /report skill study (Andrew-direct at this terminal)."
+}
 ]
 ```
 
