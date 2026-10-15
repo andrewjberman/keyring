@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~97</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run on branch wk-NFRA_CTLPLN-97 @d7a9b831a5 (merged a133dfa1e5): KILL-MAINT-PLANTED cases=10/10 ok=True (the real claude.exe seats unchanged, 8 before and 8 after) and STOP-AT-DESCENDANT cases=27/27 ok=True; proof instance VALID on the committed state; the diff touches only the order's paths. Reading: the planted foreign-seat tree SURVIVED a real kill-maint -Execute -OnlyPid and the control tree died, but the refusal was never reached for a seat: the held-tree guard SKIPped any tree holding a claude.exe, so the REFUSED line and the KILL-MAINT-REFUSED audit line were unreachable (row W97-S1). The worker's fix in .tools/kill-maint.ps1 (commit 21ad9d0ca4) judges the seat boundary first for a held tree and only REFUSES (prints the foreign serial, writes the audit line, stops nothing); seat-boundary.ps1 unchanged. The recipe's literal shape (bash or powershell root with a claude.exe child) cannot be planted as written; the test plants a python.exe root with a cmd.exe copy named claude.exe (row W97-S2). Rows W97-S1 and W97-S2 accepted. S9118 is closed by this run.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
