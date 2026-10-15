@@ -17750,3 +17750,27 @@ name the one known failure instead of silently inheriting it.
   "notes": "No contract code is changed; AC11 passes on the contract codes it names."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T19:45Z",
+  "one_line": "The commit-time naming gate printed NAMING REFUSE for the firm literals in the client core and the Schwab adapter while its live census read failed, and the commit still landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "COMMIT: safe-commit of the OG-cl-1 files at 5c8c1554e5 printed NAMING REFUSE lines (for example app/client_core.py:32 49financial -> lookup('49financial'); app/client_adapter_schwab.py:33 49financial) with LIVE-READ-FAILED CensusError, and exited 0 with the commit landed.",
+      "NAMING: the same gate's message names the firm values as hand-kept carriers outside every permitted context; the canonical firm names are the contract's (G2_CLIENT_TOOLS_CONTRACT.md line 21, firm input)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 4 (naming): the commit-time naming gate REFUSES names; a builder refusal is a registry row to add, not a hand-typed workaround.",
+  "world_is": "The gate's refusal lines did not block this commit because its live census read failed in this shell; the firm literals are the contract's canonical values, and the gate's lookup route was not run.",
+  "notes": "Recorded for the issuer's naming review. No criterion is affected; the worker did not change the literals to pass the gate."
+}
+```
