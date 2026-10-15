@@ -1775,3 +1775,29 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "This commit adds only three test files and one reader file, with no account ids in the diff as far as the worker read it. The row records that the check was not run, not that a leak occurred. The disarm owner is named as the infrastructure seat (MSTR runs infrastructure) and was not contacted."
 }
 ```
+
+## COMM_ASSIST-D2-S2 -- the commit gate's client-data check did not run on dell2 either: the hashed account-id list is absent at this box's path
+
+```json
+{
+  "id": "COMM_ASSIST-D2-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~CA2",
+  "surfaced_at": "2026-10-15T07:45:00Z",
+  "one_line": "safe-commit on dell2 prints WARN client-data-check: the hashed account-id list is ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, so commit 5bab1a0866 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 5bab1a0866 on box/dell2: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CA-l-1 says: 'Commit with .tools/safe-commit.sh under your own serial'; the commit gate is the mechanism the order relies on for the commit step.",
+  "world_is": "The gate ran and passed its other checks, but its client-data leg reported the list absent on dell2 and did not check the commit. Same hazard as COMM_ASSIST-W29-S2, a different box and path. Absent is not empty.",
+  "notes": "The commit adds ten small evidence files (command outputs, status words, file names and row counts); the seat read no item text and none is recorded. The row records that the check was not run, not that a leak occurred. Nothing was installed or placed to cure it: the order forbids edits beyond its paths."
+}
+```

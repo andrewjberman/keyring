@@ -129,3 +129,13 @@ limb: none graded the amendment.
 |---|---|---|---|---|---|
 | `RV-r-2` | DIRECT-ACT: ONE unlayered rule block in `portal/src/index.css`, selector exactly `:root [data-panel-surface="light"]`, redefining inside a light panel: `--semantic-background-contentPanel`, `--bg-medium`, `--bg-card`, `--bg-dark` and `--bg-medium-alt` to white `#FFFFFF`; `--bg-header` to the silver tint `#EEF1F6`; `--semantic-background-hover` to `#E6EBF4`; each as an `H S% L%` triple. Every dark inner ground then reads white or silver and its (now navy) ink reads on it; nothing outside the panel changes | FWD-4, FWD-3, FWD-1 | `src/index.css`, `src/__tests__/dsgn-rbndv2/rb-1-r2.*` | `portal/src/components/PerformanceHeatMap.tsx`, `portal/src/components/BenchmarkHeatmap.tsx` | LOCAL |
 
+**Addendum 3 (issuer, 2026-10-15 ~07:5xZ):** one more DIRECT-ACT cell, from the CVO's L9 grade of `RB1S-AC3` (adjudication row `DSGN_RBNDV2-C-S1`,
+`surprise-channel/adjudications/ADJUDICATION_v1.md`): the sidebar's violet accent never renders. `--rb-accent` and its siblings are HEX-valued by this
+decomposition's section 2, and `AppSidebar.tsx` and `SidebarLink.tsx` wrap them in `hsl(...)`, which is invalid at computed-value time, so the eyebrow
+underline falls back to currentColor (navy) and the current page's underline is dropped. The interface was declared hex-valued; the sidebar cell read
+the HSL-triple habit of the neighbouring tokens. The sidebar test read source text and could not see it. Gate limb: none graded the amendment.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `RV-r-3` | DIRECT-ACT: in `AppSidebar.tsx` and `SidebarLink.tsx` every `hsl(var(--rb-X))` becomes `var(--rb-X)` (the 13 sites: ink, ink-2, ink-3, rule, accent), no other change; the sidebar tests are updated where they assert the `hsl(` form, and one new test guards the token format | FWD-2, FWD-1 | `src/ui/components/sidebar/**` | `src/index.css` | LOCAL |
+
