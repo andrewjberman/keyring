@@ -4092,3 +4092,15 @@ The tab transport opens a visible headful Chrome per job (`tab_transport.py:99`)
 - **Fan-out:** 1 worker (cb-5), 1 chain of 1, cap 8.
 - **Checks dry-run at the base before the cut:** cb-5 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`47 passed`). The probe's positive control: a plain Chrome window reads not minimised; zero Chrome windows before and after.
 - **Deviation from the CTO half (reported to him):** the half names `--start-minimized`; it was measured and does not minimise, so the cell uses the protocol call.
+
+## 110. ROUND 87, workstream RUNNER-REGISTER -- `HVST-cb-5` merged and measured; `HVST-cb-2` CUT, STAGED; `HVST-cb-6` defined, 2026-10-15 ~20:0xZ
+
+`HVST-cb-5` merged `e6649b1250` (AC1 5 passed, AC2 47 passed); its issuer-run AC3 PASSED (`2657939237`): a real `wsj` job ended `complete_candidates` with 5 accepted, 383 of 384 window samples minimised, the 384th inside the 3 s launch allowance, none after it. The CTO half's condition (c) is met for the cell.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cb-2` | `cb-2` | **The dell1 runner registered for `wsj` and `barrons`** from a locked pin carrying `39ae28559b`, `d0c48b3946`, `08c80a8f75` and `e6649b1250`; `OPAL_HARVEST_PROFILE_ROOT` set so a re-pin keeps the profiles; the stop file's parent created first (row Z-S120); `-Plan` read first; five reads (log fresh, task XML, no console, collector spawn, every runner window minimised) at +3 and +15 minutes; signed rollback; account stop rule. | WORLD | seat `0.7.0_AE_CloudOps~SC1` | CUT, STAGED: waits on site Z's formal Disabled read-back (CTO C-g) filed as `ledger/SITE_Z_RETIRE_READBACK_20261015.md` |
+| `HVST-cb-6` | (cut at the registration) | **The close read, read only:** the first productive cycle per publisher: its `.cycle.json`, the accepted count, `s3_get_count` and `s3_get_bytes` (CTO C-h, the E2 proof); reported to the CTO and, through MSTR, to site Z. Organic, about a cycle length. | LOCAL (read) | seat `0.7.0_AE_CloudOps~SC1` | DEFINED |
+
+- **Fan-out:** 0 workers (a seat order), 1 chain.
+- **Checks at the cut:** cb-2's criteria are reads of dell1's scheduler and of a file the seat writes; at the base no task exists, so AC1 and AC2 FAIL as expected, and AC3's file does not exist. Not dry-run as commands (they would read a task that does not exist).
