@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~391</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>cancelled</status>
+<status_reason>NOT RUN over a STOP: packet v3 reads IB-pr-545's record, which stopped (49financial 119 against the signed 32 at pin 2); a packet written over an unattributed change would sign a scope the measurement does not hold; the CTO's round-198 analysis rules the per-firm pin question first</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
