@@ -14251,3 +14251,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "W404-S1 (BLOCKING on DBC116-3-AC1) was the issuer's defect, fixed; the worker's build needed no change. W404-S2: the packet's input-frontier hold is not a separate build; the existing producer already refuses a day with no silver (rc 1, nothing written), so a held fire fails visibly rather than stamping a stale day; the drain-end packet asks the CTO whether a distinct log line is wanted. W404-S3 (no terraform binary on dell2, the fmt arm skipped) and S4 (the existing Inflection block alignment in lambda.tf may already fail terraform fmt) are the applier's: terraform fmt, validate and plan run under safe-apply on the lane that has the binary. W405-S1 to S4 (bronze landings unread, five _s2 twins exposing only c1 and c2, the ambiguity of no return column against seven pattern-matched gain/loss and date columns, and two conflicting texts in the issuer's step 2) are noted: the verdict ACCOUNT_VALUE_ONLY stands on the checker's fresh recount. The DB-c-7 handler change is in a SHARED zip: the 49 Financial and Inflection functions carry it only when the applier rebuilds and applies; the pair's apply order names that."
 }
 ```
+
+## IRPT_DASHBD-D2-W306-S1 -- The fee rule tests feeAmount above 0, but the vendor's feeAmount sums on the fee-bearing accounts are negative, so the stated rule reads NO_FEE_IN_WINDOW for both pairs while a signed reading ties the gap.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W306-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~306",
+  "surfaced_at": "2026-10-15T04:23:28Z",
+  "one_line": "The fee rule tests feeAmount above 0, but the vendor's feeAmount sums on the fee-bearing accounts are negative, so the stated rule reads NO_FEE_IN_WINDOW for both pairs while a signed reading ties the gap.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "TO DB-i-6 step 5 rule (b) and the verdict_b rule of the round-117 checker: the tie population is the accounts with fee above 0, obs = perf_true - perf_false must equal fee over startv, and accounts_with_fee counts feeAmount above 0.",
+  "world_is": "The feeAmount sums on the fee-bearing accounts are negative: in the q3 flag-false body 2 of 4 groups carry a negative sum and none a positive one; in the ytd flag-false body 3 of 4 carry a negative sum and none a positive one. A signed reading (a negative feeAmount is a charge, expected gap = minus fee over startValue) ties 2 of 2 q3 fee-bearing accounts and 1 of 3 ytd fee-bearing accounts; the other 2 ytd accounts have a startValue of zero. Both pairs read NO_FEE_IN_WINDOW by the rule, so false is not shown to be net by the rule. Counts only; no value is written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r117/p117_scope.py@0057ad8e6e lines 105-123 (verdict_b tests fee above 0)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~306/SCOPE_PROBE2_R118.json (b_fee_basis and coverage; lands in this cell's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-6. Form only: the rule was not changed and no verdict was re-graded; the signed reading is a count, not a verdict. A ruling is needed on the sign convention before any tie-out relies on fee above 0."
+}
+```
+
+## IRPT_DASHBD-D2-W306-S2 -- Two of the three ytd fee-bearing accounts carry a startValue of zero, so the tie to the fee sum is undefined for them, and the stated rule has no branch for a zero start on a negative fee.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W306-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~306",
+  "surfaced_at": "2026-10-15T04:23:28Z",
+  "one_line": "Two of the three ytd fee-bearing accounts carry a startValue of zero, so the tie to the fee sum is undefined for them, and the stated rule has no branch for a zero start on a negative fee.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-i-6 step 5 rule (b): NET_WHEN_FALSE needs fee over startv for each fee-bearing account; the rule presumes a positive start value.",
+  "world_is": "In the ytd window two accounts carry a nonzero feeAmount sum and a startValue of zero, and their returns differ across the flags. Every q3 account that differs across the flags carries a start value. The rule does not define a tie for a zero start. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r117/p117_scope.py@0057ad8e6e lines 105-123 (verdict_b, start value handling)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~306/SCOPE_PROBE2_R118.json (b_fee_basis and coverage; lands in this cell's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-6. Form only, observed on the ytd pair that the pre-stated rule ran."
+}
+```
