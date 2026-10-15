@@ -896,6 +896,49 @@
     "spec_asserts": "TO RV-c-1 Part 1 and the cell's Out-of-this-cell clause: the other three market modals that hold the same literal white chart props are named by file and line numbers in a surprise row and left as they are.",
     "world_is": "RSIModal.tsx carries white-on-dark chart chrome at six lines on the white A-light surface, so its axis and tick text stays unreadable there. The file is not in the grant and was not edited.",
     "notes": "Filed, not fixed. The cell's bounds name this file as a wall. A follow-on that maps this file must cover all four of its alpha values, not the three RV-c-1 names."
+  },
+  {
+    "id": "DSGN_RBNDV2-W11-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~11",
+    "surfaced_at": "2026-10-15T11:51:17Z",
+    "one_line": "RSIModal.tsx line 229 (the custom dot circle stroke, alpha 0.3) falls in the gap between the RV-c-2 alpha bands (at or below 0.15 to rule, 0.4 to quiet, 0.5 or more to ink-3) and was mapped to var(--rb-quiet) as the nearest band.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/market-performance/RSIModal.tsx@6396217d line 229: stroke=\"rgba(255,255,255,0.3)\" on the dot circle of the RSI chart (read by sed at base 6396217d)",
+        "portal/src/components/market-performance/RSIModal.tsx@c1035901 line 229: stroke=\"var(--rb-quiet)\"; RB3C2-AC1 test rb-3-c2.chart-chrome.test.ts prints VERDICT CHART-CHROME-2-OK (bun test rc=0)",
+        "portal/src/components/market-performance/RSIModal.tsx@c1035901 lines 370 and 376: XAxis and YAxis stroke props at alpha 0.1 mapped to var(--rb-quiet) by the explicit axis-stroke rule; the alpha band would have given var(--rb-rule)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-c-2 cell text: every other white-alpha chart literal is mapped by its alpha (at or below 0.15 to var(--rb-rule), 0.4 to var(--rb-quiet), 0.5 or more to var(--rb-ink-3)), and each such line is named in the report.",
+    "world_is": "RSIModal.tsx line 229 carries alpha 0.3, which is not at or below 0.15, not 0.4, and not 0.5 or more, so the band rule has no member for it. The explicit axis-stroke rule (quiet) and the alpha band (rule at 0.1) also disagree for lines 370 and 376; the explicit rule was applied there.",
+    "notes": "Line 229 is mapped to var(--rb-quiet): distance 0.1 to the 0.4 band against 0.15 to the 0.15 band. The alternative is var(--rb-rule). The issuer may overrule either choice; the code change is one token on one line. Chart-chrome test arm (a) and AC1 pass on the mapping as written."
+  },
+  {
+    "id": "DSGN_RBNDV2-W11-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~11",
+    "surfaced_at": "2026-10-15T11:51:17Z",
+    "one_line": "The worktree sparse checkout omits org/surprise_channel/schemas/ from disk although git tracks investigation_item.schema.json at HEAD, so the row contract the order names was read with git show HEAD and not from the working tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "rbndv2-11 worktree (branch wk-DSGN_RBNDV2-11): git config core.sparseCheckout reports true; ls org/surprise_channel/schemas/ returns No such file or directory",
+        "git ls-files --error-unmatch org/surprise_channel/schemas/investigation_item.schema.json lists the path; git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json returns 10462 bytes; git status reports 0 deleted entries"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order names org/surprise_channel/schemas/investigation_item.schema.json as the row contract a worker reads per the surprise-channel rule, expected readable at the worktree path.",
+    "world_is": "That path is absent from disk in this sparse worktree while git tracks it at HEAD. Nothing was restored or checked out; the schema was read from HEAD with git show.",
+    "notes": "Filed, not fixed. The row was validated by field against the HEAD copy of the schema. The worktree was not changed."
   }
 ]
 ```
