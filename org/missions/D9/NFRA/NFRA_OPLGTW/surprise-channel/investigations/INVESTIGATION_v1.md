@@ -16360,6 +16360,56 @@ name the one known failure instead of silently inheriting it.
 
   ```json
   {
+    "id": "NFRA_OPLGTW-Z-W94-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~94",
+    "surfaced_at": "2026-10-15T03:58:18Z",
+    "one_line": "The identity-scope floor has a second call site outside this order's paths: integrations/base.py run_integration_tool denies a scoped identity's integration tool, so a per-person widening never reaches an integration tool or an integration channel (it fails closed; narrowing is unaffected).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "app/tools.py:145-152 @a8e22ed56d -- identity_scope.check at _run, the native dispatch floor the order names (C-PERSON (c)); the widening is applied here",
+        "app/integrations/base.py:155-161 @a8e22ed56d -- a SECOND identity_scope check (_scope_check) in run_integration_tool; base.py is in neither the order's <paths> nor its read-only inputs",
+        "comp-find 'identity_scope' infra/aws/ec2/opal-gateway/app @a8e22ed56d -- DENOMINATOR 45 hit(s) across 119 file(s); the denial call sites are tools.py:149 and integrations/base.py:156"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v2.9 C-PERSON (c), as the order's worker face states it: the widening applies 'where identity_scope.check(email, tool) denies ... the call site in app/tools.py _run about line 145'; the face's <paths> and read-only inputs name no other identity-scope call site (face section 1 item 3(c); section 3).",
+    "world_is": "There are two identity_scope.check call sites on the dispatch floor: app/tools.py:149 (_run, native tools, widened by this cell) and app/integrations/base.py:156-161 (run_integration_tool, integration tools, NOT widened because base.py is outside <paths>). A scoped identity's integration-tool call is denied identity_scope_denied whatever its per-person record says. Narrowing is unaffected: base.py calls data_entitlement.tool_denial, which applies stopped, tools_deny and channels_deny to integration tools. The reader decides integration tools as served (person_widens; channel_of reads registry._ACTIVE_BY_TOOL); only the dispatch leg is missing.",
+    "notes": "Route for the issuer: grant integrations/base.py to this order (or a follow-on cut) and add beside its _scope_check the same call the native floor makes: data_entitlement.person_widens(tool, get_current_principal(), <the Opal-principal test of tools._is_opal_user(email)>). The reader is unchanged. Until then the integration leg of C-PERSON widening is inert and the F2 writer should not rely on it. Native widening is proven at the live tools._run floor by test_ogcp1_ac03 (tests/test_og_cp1.py, offline)."
+  }
+  ```
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W94-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~94",
+    "surfaced_at": "2026-10-15T04:26:45Z",
+    "one_line": "The commit gate's client-data check could not run on this device: the hashed account-id list is absent at its default path, so commit a445101400 (A2) was not checked for client account ids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of commit a445101400 (paths: infra/aws/ec2/opal-gateway/app/integrations/base.py and infra/aws/ec2/opal-gateway/tests/test_og_cp1.py): WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).",
+        "the WARN is the gate's own read of that path at commit time on this device (read at a445101400; no other commit on this device was measured)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "safe-commit runs client-data-check on every commit and grades it for client account ids; the WARN names the hashed list as the input it reads.",
+    "world_is": "On this device the list is absent at its default path, so the check printed WARN and let commit a445101400 through with no verdict from it. Absent is not empty.",
+    "notes": "Not blocking this order: the commit's two paths are gateway code and its offline test, and this seat did not scan their content for client account ids. ARMED because the same absence would repeat on any later commit on this device until the list is placed or the variable is set; that act belongs to the device owner, outside this order's write surface, and was not done here."
+  }
+  ```
+
+  ```json
+  {
     "id": "NFRA_OPLGTW-Z-W95-S1",
     "project": "NFRA_OPLGTW",
     "fabric": "site-z",
