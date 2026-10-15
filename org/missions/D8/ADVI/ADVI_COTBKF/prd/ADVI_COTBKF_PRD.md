@@ -5,7 +5,7 @@
  "project": "ADVI_COTBKF",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v0.10",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "docs/briefs/cottonwood-commonwealth-10y-backfill-brief-20261006.md@902feb3a4f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -109,7 +109,7 @@ place to daily; both R20 departures acknowledged; the restricted prefix's reader
 | C-RAW: the delivery kept as received (FWD-2) | this project | The five delivered zips are written once, byte for byte, never unpacked in bronze (R9). A manifest beside them carries each file's name as shipped, size and SHA-256, and both dates: the data's date and the received date. |
 | C-DATE: which date labels the delivery | Andrew's call 2, "Yes agreed" | The partition date is the vendor's stamp, `date=2026-06-23`; the received date (2026-10-06) is in the manifest. |
 | C-SENSITIVE: the most sensitive details (FWD-7) | Andrew's call 1, "Agreed", and his "maybe" on the bucket | Tax IDs, dates of birth, driver's license and passport numbers exist ONLY in the raw delivered files. The silver tables carry each person without those four fields; a date of birth becomes the birth year. This departs from R10's every-column rule and is declared as an R20 register entry for Andrew's acknowledgement. **Placement of the raw files that carry those fields** (the CRM zip, which holds contacts and insurance): Andrew's thought is that they "maybe" stay in `opal-data-cottonwood` rather than `opal-data-assets`. This PRD proposes exactly that, as a second R20 departure: the CRM zip is written to the Cottonwood firm bucket under a prefix readable by a small named group only; the other four zips go to `opal-data-assets` per C-HOMES. Both departures ACKNOWLEDGED by Andrew ("All agreed", record 174xZ); no byte of the CRM zip is written before C-RESTRICTED's policy is live. |
-| C-RESTRICTED: the firm-bucket prefix for the CRM zip (FWD-7) | the bucket's Terraform owner (`infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf`, lane `CLOUD_OPS_OR_ETL`, an AE seat); Andrew names the readers | ONE prefix in `opal-data-cottonwood`, its key fixed in the R20 entry. Its bucket policy DENIES every read to every principal except the named group, and denies every write except the one landing role, once. The named group, by Andrew's word ("All agreed"): Andrew alone, plus a break-glass role used only on his word; no agent seat is in it. The policy is a Terraform change in that file, applied by its owner under a never-widen pair, and proven by one refused read from an agent's identity and one allowed read by the group. Nothing is written to the prefix before the policy is live. |
+| C-RESTRICTED: the firm-bucket prefix for the CRM zip (FWD-7) | the bucket's Terraform owner (`infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf`, lane `CLOUD_OPS_OR_ETL`, an AE seat); Andrew names the readers | ONE prefix in `opal-data-cottonwood`, its key fixed in the R20 entry. Its bucket policy DENIES every read to every principal except the named group, and denies every write except the one landing role, once. The named group, by Andrew's word ("All agreed"): Andrew alone, plus a break-glass role used only on his word; no agent seat is in it, except ONE matching-job role for the length of one job (v0.11, Andrew 2026-10-15). The policy is a Terraform change in that file, applied by its owner under a never-widen pair, and proven by one refused read from an agent's identity and one allowed read by the group. Nothing is written to the prefix before the policy is live. |
 | C-DAILY: daily returns are derived, not delivered (FWD-3) | this project; Andrew's word for any outside price vendor | MEASURED by the brief (F2): the performance file holds Month, Year and Inception-to-date rows only. Daily returns are built: (1) daily holdings per account rebuilt from the transactions, each account's opening state from its own history (positions exist for one day only, 2026-06-23, 83 of 1,533 accounts); (2) each holding valued daily with a closing price; (3) a daily after-fee time-weighted return with the day's flows taken out; (4) the days chained per month and compared with Commonwealth's monthly return, each month graded MATCH within a stated tolerance or DIFF with its reason. Price history is read from Opal's existing stores first (build ladder rung 2), with the coverage of those stores over these securities printed; a security no Opal store prices leaves its days UNPRICED, and any outside price vendor (Bloomberg, Yahoo Finance or other) waits for Andrew's per-use word. A day not computable is UNKNOWN, never interpolated. |
 | C-SILVER: typed tables (FWD-1, 3, 4) | this project | One typed parquet table per delivered data file, holding EVERY row of the file: two identical lines are two rows, each carrying its source line number; "de-duplicated" means only that re-landing the same delivery adds nothing. Row count equals the file's record count (a quoted field may span lines), printed beside it; transactions, performance, positions, and one per CRM file; every vendor column kept except C-SENSITIVE's four; hive partitions; each row carries the file it came from. |
 | C-DOCUMENTS: one index, unique documents (FWD-5) | Andrew's call 3, "Agreed" | The 51 listing files become one de-duplicated document index (account, type, date, page count, source archive or archives). Each UNIQUE document is unpacked once into a declared documents table; the three archives also stay whole in bronze. |
@@ -420,3 +420,18 @@ ENDPOINT is unchanged.
 - **Round 79's list is unchanged.** The request file to dell1's queue is cut (msg 6361); nothing on dell2 fetches a price.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.11 -- C-RESTRICTED: one matching job may read the CRM zip, once (L10; CONTRACTS changed: the ratified-text half re-opens) (`1.0.0_SA_CTO~DELL1`, 2026-10-15 ~19:1xZ)
+
+- **Andrew, VERBATIM** (~19:0xZ, laptop record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_190xZ_D3CC_A_ONE_JOB_READS_RESTRICTED_CRM_ZIP.md`
+  @6e96dd543a, on call `dell1-20261015T184344Z-d3cc`): "I agree with (a), let's see what we can do with that for now."
+- **C-RESTRICTED gains ONE exception.** One builder-named IAM role is added to the readers of the CRM prefix for the length of ONE account-
+  matching job, and withdrawn the same day. Its own allow names the one key. The LIST and WRITE denies are unchanged. The job reads in memory,
+  writes only account-link rows (`commonwealth_account, bd_account_id, rule, tier`) and counts, and no CRM value leaves it.
+- **Everything else in C-RESTRICTED and C-SENSITIVE stands.** No standing agent read is created. Asking Cottonwood for a mapping file is not
+  approved.
+- **Pair:** `ledger/NEVER_WIDEN_R88_CRM_MATCH_GRANT_COO_HALF.md` @85e152e5ca and the CTO half beside it. The grant is applied only after this
+  addendum's ratified-text half is signed again.
+- **Ruling record:** `ledger/CTO_RULING_DELL1_UNPARK_ACCELERATE_20261015.md` amendments 3 and 5.
+
+-- 1.0.0_SA_CTO~DELL1
