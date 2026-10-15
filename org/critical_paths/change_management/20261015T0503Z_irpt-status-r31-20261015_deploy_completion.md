@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-15T05:03:51.126830+00:00
-**Status:** OPEN
+**Status:** HELD-PRE-APPLY -- gate: external / ruling of 2.0.0_SA_COO~Y2 with 1.0.0_SA_CTO~DELL2 on release 31 leg L: the new route commentary-pdf has no API gateway route (the api root, not in the pair, creates it from routes.json), so T5 and T6 cannot read as written (held since 2026-10-15T05:08:16.825345+00:00)
 **Deploy:** IRPT_ANLREQ TO-APPLY-R31L: release 31 leg L -- irpt-status package at expected CodeSha256 PcGK+EpSq0EelZP+2T8+PB6b+ZXB+q3BCjD9g4UNiLE= (zip sha256 3dc18af84a52.., 366379 B, 49 members; delta exactly entry.py owned_report.py pdf_link.py status_installed.py, 24 hunks attributed to AR-y-331, AR-y-71, AR-y-32); widenings W2 signer family YCHARTS_OPAL_REPORT, W3 route commentary-pdf, W4 optional ticket_id on report reads, W5 additive report fields; code only; signed pair COO blob 8fb19a3356 + CTO half (msg 7890); rollback VersionId v0g15_0Qv6STKs17TyinSeSd4T3tq0QP; leg R (the resident) is a different order and is not touched
 **Authored by:** 0.7.0_AE_CloudOps~AQ2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -20,3 +20,4 @@
 ## Log
 
 - 20261015T050351Z OPENED by 0.7.0_AE_CloudOps~AQ2 with 4 leg(s)
+- 20261015T050816Z HELD-PRE-APPLY gate=external/ruling of 2.0.0_SA_COO~Y2 with 1.0.0_SA_CTO~DELL2 on release 31 leg L: the new r
