@@ -16541,3 +16541,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Worker held the source-map commit under the order's refusal clause (never repaired, widened or forced). AC3 cannot be met as written until the ruling. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W203-S4 -- OBSERVATION resolving W203-S3: the function directory was renamed by Amendment 1 (90dc82c71f)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T10:06:22Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W203-S3: the issuer's Amendment 1 (90dc82c71f) renamed the function directory to account-return-daily; the handler, tests and source-map entry now carry the new path and the naming gate admitted the entry commit",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W203-S3 (BLOCKING) recorded that the naming gate refused the source_dir literal account-return-cot of the new source-map entry, which the order and the checker fixed at that path.",
+  "world_is": "The issuer ruled by Amendment 1 (commit 90dc82c71f, relayed by the coordinator): the function directory is infra/aws/lambda/investor-reporting/account-return-daily in the order and in the checker FN_DIR. The worker moved the handler and tests with git mv (commit 81d97eb30b), set source_dir to that path and committed the entry (commit 45c3e51a8b): the naming gate admitted the commit with no refusal. The facts record was refreshed (commit 2c2a1bf89d). Row S3 is left as written (append only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-249.cottonwood-landing-function-code-handler-source-map-closure.md @90dc82c71f (AMENDMENT 1 paragraph and paths block)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_cothandler.py @90dc82c71f (FN_DIR is account-return-daily)",
+      "git log of wk-IRPT_DASHBD-203: 81d97eb30b (rename), 45c3e51a8b (source-map entry, admitted by the gate), 2c2a1bf89d (facts record refresh)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution row for IRPT_DASHBD-D2-W203-S3, appended only; S3 is not edited. The entry's remaining literals were not refused. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W203-S5 -- BLOCKING: the AC3 stray clause reads the old directory from the first handler commit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T10:06:22Z",
+  "one_line": "The checker's AC3 stray clause reads the old directory path from the worker's first handler commit (24b2cb7758), so DB122-4-AC3 cannot PASS after the Amendment 1 rename without rewriting history, which this worker may not do",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB122-4-AC3 says nothing else under infra/, data/, lib/ or org/standards/ changes in the worker's own commits outside the new function directory (the checker's stray clause, FN_DIR-scoped). The order's amended FN_DIR is account-return-daily.",
+  "world_is": "The worker's commit 24b2cb7758 added infra/aws/lambda/investor-reporting/account-return-cot/handler.py and its tests, the old directory. Commit 81d97eb30b renamed them to account-return-daily. The checker's own_files lists every path a worker commit names, so the old paths are stray. Running DB122-4-AC3 gives: FAIL: this worker's commits changed files outside the grant: ['infra/aws/lambda/investor-reporting/account-return-cot/handler.py', 'infra/aws/lambda/investor-reporting/account-return-cot/tests/test_handler.py']. The other AC3 clauses pass: the record form and hashes, the closure equal to the entry, the source-map gain of 121 lines with 0 lost in worker commits, pins null. Clearing the stray clause needs one of: an issuer ruling that a rename's old path is not a stray (checker change, issuer file), or a recorded FAIL for AC3. The worker did not rewrite history, edit the checker, or force anything.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC3 run at HEAD 2c2a1bf89d: DB122-4-AC3 rc 1, FAIL line naming the two old account-return-cot paths (checks/r122/p122_cothandler.py run() stray clause)",
+      "git show --name-only --format= 24b2cb7758 lists infra/aws/lambda/investor-reporting/account-return-cot/handler.py and tests/test_handler.py; git show --stat 81d97eb30b shows the rename",
+      "task order AMENDMENT 1 @90dc82c71f (rename, git mv in one commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the order cannot be flipped to complete while AC3 is FAIL. Options are the issuer's ruling on the stray clause, or the order stays open with AC3 recorded FAIL. Counts and words only; no client figure is quoted."
+}
+```
