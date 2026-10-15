@@ -523,6 +523,29 @@
       },
       "spec_asserts": "TO RV-r-3 RB1R3-AC1: every --rb- name used in the two files is one of the five names defined in src/index.css :root.",
       "world_is": "The defined set is seven names. The test reads the defined set from the CSS text and checks that every used name is in it; the used set is the five named in the criterion, so the verdict is the same under either reading."
+    },
+    {
+      "id": "DSGN_RBNDV2-W9-S1",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~9",
+      "surfaced_at": "2026-10-15T08:35:21Z",
+      "one_line": "The RV-i-1 section contract turns the round-1 test RB1P-AC1 arm (f) red: that arm requires NestedCard to render the box surface and hairline it now removes.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~RB -- rule whether RB1P-AC1 arm (f) is amended to the section contract (a round-2 criterion amendment) or the round-1 test is kept; until then the portal panels test run on this branch stays red at that arm. The worker did not edit the round-1 test.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "portal/src/ui/components/panels/__tests__/dsgn-rbndv2/rb-1-p.panel.test.tsx lines 122-135 (arm f: NestedCard root must carry bg-[hsl(var(--bg-surface))] and border-[hsl(var(--hairline))]) at branch HEAD febd743a plus the RV-i-1 commit",
+          "bun test run of rb-1-p.panel.test.tsx after the RV-i-1 change: 0 pass, 1 fail; Expected to contain bg-[hsl(var(--bg-surface))]; Received [ py-4, px-4 ]",
+          "portal/src/ui/components/panels/NestedCard.tsx at the RV-i-1 commit: cn('py-4 px-4', className), no bg- class, no border class, no absolute bar",
+          "bun test run of rb-2-i1.sections.test.tsx: VERDICT: SECTIONS-OK, 27 expect() calls, 1 pass"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-i-1 RB2I1-AC1: NestedCard renders a section with no border box, no bg- fill, no radius and no absolutely positioned bar, and PanelGrid draws the hairlines. Round-1 TO RV-p-1 RB1P-AC1 arm (f): NestedCard, like SectionCard and DarkCard, renders the white surface and the hairline border.",
+      "world_is": "Both assertions cannot hold on the same NestedCard. RV-i-1 was executed as written, so the round-1 arm (f) now fails by design. The worker left the round-1 test unchanged and did not weaken the RV-i-1 criterion."
     }
 ]
 ```
