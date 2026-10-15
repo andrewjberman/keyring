@@ -35813,3 +35813,290 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-D2-W399-S1 -- The packaged ExportBundle contract refuses a bundle that carries a filled_report item: its authorized_report_revisions i
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W399-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~399",
+  "surfaced_at": "2026-10-15T04:17:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The packaged ExportBundle contract refuses a bundle that carries a filled_report item: its authorized_report_revisions items are additionalProperties false and admit no filled_report_source property, so bundle.validate refuses the frozen filled bundle that hop 4 builds.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json at 1506a4828e: authorized_report_revisions items list properties authorization_ref, immutable, performance_source, report_id and revision only, with additionalProperties false",
+      "a probe in scratch (outside the repository) froze one filled_report item with bundle.freeze and then ran bundle.validate: ValidationError on authorized_report_revisions",
+      "infra/aws/lambda/investor-reporting/export/handler.py:236 calls bundle_mod.validate(frozen) on the frozen bundle at 1506a4828e"
+    ]
+  },
+  "spec_asserts": "Hop 4 (IB-pr-555) makes a filled_report export bundle that the export path can freeze and validate: the freeze yields a bundle the export handler accepts.",
+  "world_is": "The packaged contract is outside this order's grant and is unchanged by this cell. Until the contract admits a filled_report_source item (a contract change owned outside this order), bundle.validate refuses any filled bundle. Nothing is deployed, so no served bundle is affected today. It blocks any wiring that validates a filled bundle."
+}
+```
+
+## IRPT_BCKEND-D2-W399-S2 -- The packet's scope rule names every by_row account key, but a by_row map is keyed by account or by asset class; the expo
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W399-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~399",
+  "surfaced_at": "2026-10-15T04:17:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The packet's scope rule names every by_row account key, but a by_row map is keyed by account or by asset class; the export freeze built here gates on household.accounts account_id only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json per_row_member_form at 1506a4828e: a by_row map is keyed by account_id or asset class; hold.allocation is keyed by asset class and an entry may hold the text UNHELD",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~395/SERVE_PATH_PAIR_PACKET_V1.md section 3 and IB199-3_serve_path_design.json scope_rule: every account key of each values by_row map is named",
+      "infra/aws/lambda/investor-reporting/export/retained_export.py freeze_filled_report and filled_accounts_named at the worker commit"
+    ]
+  },
+  "spec_asserts": "The hop-3 scope rule names each household.accounts account_id and every account key of each values by_row map, each checked by the covered-set test, so a filled report is refused unless its viewer covers all of them.",
+  "world_is": "Read literally, the rule counts asset-class keys of hold.allocation as accounts and refuses every filled report whose allocation map is keyed by asset class. The export freeze built in this cell gates on household.accounts account_id, which the contract makes one key per account of the household, and does not gate on by_row keys. The route's named-account reader (hop 3, not built here) needs the same decision. Surfaced for the CTO's ruling; not decided here."
+}
+```
+
+## IRPT_BCKEND-D2-W399-S3 -- The filled_report freeze has no caller and resolves no object address: the submit call sites and a production reader bui
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W399-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~399",
+  "surfaced_at": "2026-10-15T04:17:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The filled_report freeze has no caller and resolves no object address: the submit call sites and a production reader built on the naming builder are outside this order's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_async.py:123 and submit_service.py:53 dispatch only on _retained.is_platinum(body) at 1506a4828e; no branch calls is_filled_report or freeze_filled_report",
+      "infra/aws/lambda/investor-reporting/export/retained_export.py read_pinned_filled takes an injected reader that returns the object key; the cell types no address and does not call lib/opal_naming.address()",
+      "the order's paths block names bundle.py, retained_export.py and the new test file only"
+    ]
+  },
+  "spec_asserts": "The worker face says the submit pins the filled-report object by its VersionId and sha256, the object sits at the naming builder's address and the address is never typed.",
+  "world_is": "The submit wiring and the production reader that resolves the key through lib/opal_naming.address() are not in this cell's grant, so the freeze helpers are callable but not called. The key reaches the freeze only through the injected reader. Wiring the submit and building that reader is a later cell in the same window."
+}
+```
+
+## IRPT_BCKEND-D2-W398-S1 -- IB-pr-554 cannot add its route key to ROUTES: test_reporting_entry.py pins ROUTES to exactly two keys and is outside the grant (worker stopped at the refusal clause)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W398-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~398",
+  "surfaced_at": "2026-10-15T04:11:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-554 orders one new key in entry.py ROUTES and that the existing tests still pass, but the existing test_one_route_and_function_name pins ROUTES to exactly the two summary-era keys, and that test file is not in the paths grant; the worker stopped at the refusal clause and changed no product file",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/tests/test_reporting_entry.py:74 at commit e056f8fd97006cf33b1861e93001a36591e0237d reads: assert entry.ROUTES == {entry.ROUTE_KEY: entry.OPERATION, entry.SUMMARY_ROUTE_KEY: \"reporting-summary-read\"} (exact two-key equality)",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py:373 at commit e056f8fd97006cf33b1861e93001a36591e0237d reads: ROUTES = {ROUTE_KEY: OPERATION, SUMMARY_ROUTE_KEY: SUMMARY_OPERATION}",
+      "run by 0.9.0_WK_IRPT_BCKEND~398 at commit e056f8fd97 (base, no edit): python -m pytest test_reporting_entry.py test_reporting_summary.py, rc 0, 21 passed (the base is green)",
+      "IRPT_BCKEND.TO-IB-pr-554 paths block grants entry.py, api.tf, locals.tf and the new test file only; test_reporting_entry.py is not granted"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-554 WORKER FACE: build one new key in ROUTES beside SUMMARY_ROUTE_KEY; existing behaviour unchanged and the existing tests must still pass; the refusal clause stops the worker on a change that breaks an existing entry or summary test and cannot be made additive.",
+  "world_is": "Adding the route key to ROUTES makes the ROUTES dict three keys, so the existing assertion at test_reporting_entry.py:74 fails; AC1 runs that file as a regress test, so AC1 cannot pass with the route built as ordered. The only additive alternatives (a side mapping merged into the Entry constructor, or leaving ROUTES unchanged) keep the test green by evading the one-route table the test pins, and were not built. Needed from the issuer: widen the grant to test_reporting_entry.py to update its two-key assertion to three keys, or re-cut the route placement. At this base AC1, AC2 and AC3 FAIL (no new test file, no FILLED-REPORT-B block, no record); the criteria output is recorded in IB200-2_criteria_output.txt."
+}
+```
+
+## IRPT_BCKEND-D2-W398-S2 -- the filled document carries no firm key, so the other-firm refusal rests on firm-keyed account ids and the firm-keyed address
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W398-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~398",
+  "surfaced_at": "2026-10-15T04:24:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the contract 0.5.1 filled report has exactly two keys (household, values) and no firm or client_id, so the summary's firm check cannot be copied; the route refuses another firm's document through account coverage and the firm-keyed address",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at commit e056f8fd97006cf33b1861e93001a36591e0237d: document.filled_report.top_level_keys is [household, values]; household_fields is [household_ref, as_of, first_data_date, accounts]",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py _filled_named_accounts at the working tree of 0.9.0_WK_IRPT_BCKEND~398 (the two-key check and the named-account walk); _summary_named_accounts reads the summary's firm and client_id keys",
+      "infra/aws/lambda/investor-reporting/_ids/ids.py _mint: opaque_account(firm, raw) is a pure function of (firm, raw) and refuses a firm that is not an enabled client firm"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-554 WORKER FACE: an object of another firm is refused; the summary's firm and client_id checks are the model.",
+  "world_is": "The filled document carries no firm key at any level the contract names, so a document cannot be checked for its firm by content. The worker built the other-firm refusal as account coverage (a document naming another firm's opaque account ids is never covered by this firm's scope) plus the firm-keyed address (another tenant's request reads only its own key). Both are tested. A contract change that adds a firm key would let the route check it directly. Recorded so the other-firm arm is read as coverage-based, not as a firm check."
+}
+```
+
+## IRPT_BCKEND-D2-W398-S3 -- the filled-report route reads by_row keys that mix account ids and asset-class names; the reader classifies a key as an account by its issued-id form
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W398-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~398",
+  "surfaced_at": "2026-10-15T04:24:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "a by_row key is an account only by its issued account id form; asset-class keys (hold.allocation) name no account, and a raw account number in a by_row map is refused rather than passed through",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at commit e056f8fd97006cf33b1861e93001a36591e0237d, document.filled_report.per_row_member_form: a by_row map is keyed by an account_id or by an asset class; the asset-class vocabulary is not enumerated in the contract",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py _filled_named_accounts at the working tree of 0.9.0_WK_IRPT_BCKEND~398: is_issued(account) keys are named; any other key matching a run of six or more digits is named as None and refused; any other key names no account"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-554 WORKER FACE: every account key of each values member's by_row map that is keyed by an account is checked; every account the document names is checked.",
+  "world_is": "The contract does not name the asset-class keys, so the reader cannot enumerate them. The worker classifies a key as an account only by the issued id form, which is the form the route accepts on the wire. A key that is neither an issued id nor an asset class is not provable from the contract; the worker refuses a key that looks like a raw account number (a run of six or more digits) and lets any other non-account key through as an asset class. Recorded so that the asset-class vocabulary can be enumerated by the contract owner."
+}
+```
+
+## IRPT_BCKEND-D2-W398-S4 -- the grant for IB-pr-554 is internally inconsistent: the amended paths block grants test_reporting_entry.py, but the check's allowed set for cell IB200-2 does not
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W398-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~398",
+  "surfaced_at": "2026-10-15T04:24:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "after AMENDMENT 1 the paths block grants test_reporting_entry.py, which is the pin the worker must update, but the check's allowed set for IB200-2 (checks/r200/p200_cells.py CELLS 2) omits it, so AC3 refuses the amended change as a stray path",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-554.hop-3-report-route-scope-check-and-declaration.md at commit d1a9a93041: AMENDMENT 1 and the paths block line for infra/aws/lambda/investor-reporting/reporting/tests/test_reporting_entry.py",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py at the worktree: CELLS['2'] allowed = {entry.py, api.tf, locals.tf, test_reporting_filled_report.py}; AC3 fails any changed path outside allowed as a stray path",
+      "the worker changed test_reporting_entry.py line 74 (the two-key pin, now three keys) as AMENDMENT 1 directs; AC1 needs that change; read from the check's source, AC3 will then refuse it as a stray path (the AC3 run is recorded in IB200-2_criteria_output.txt)"
+    ]
+  },
+  "spec_asserts": "The order's grant (paths block, as amended) and the check's allowed set for cell IB200-2 name the same files, and the record's changed_paths must equal the worker's own changes.",
+  "world_is": "They do not name the same files. The amended grant and AC1 both require the pin change; the check's allowed set does not list it, so AC3 cannot pass on a worker who follows the amendment. The worker did not edit the check. Needed from the issuer: add test_reporting_entry.py to the cell's allowed set in the check (or re-issue the check), since the check is the issuer's defect and no work can pass it as written."
+}
+```
+
+## IRPT_BCKEND-D2-S183 -- Dispositions on the ~PS round-2 workers' rows; two were my defects, the ExportBundle contract and the submit wiring are round-3 cells
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S183",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T05:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on the ~PS round-2 workers' rows (D2-W397-S1 and S2, D2-W398-S1 to S4, D2-W399-S1 to S3): two of them were my defects (the entry test pin outside the grant; the check not amended on the branch), the packaged ExportBundle contract and the submit wiring are round-3 cells, and by_row keys name an account only for account-grain members.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB200-1, IB200-2 and IB200-3 AC1 to AC3 on the landed trees (all PASS) and the three proof instances (VALID); merges 77f78fc846, c4a445e294, 4ead4b767b; IB200-2 AC3 first read FAIL on the branch because its check lacked the amended allowed set, repaired on the branch at d13dfa57f4 and re-graded PASS",
+      "round-close-check for workstream ~PS round 2 is read at close"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); the issuer rules everything inside its own decomposition.",
+  "world_is": "DISPOSITIONS. D2-W398-S1 (the entry test pins ROUTES to two keys; outside the grant): RESOLVED by IB-pr-554 AMENDMENT 1 (c13575e177), my defect. D2-W398-S4 (the check's allowed set lacked that file on the branch): RESOLVED, my defect, the repaired check is on the branch (d13dfa57f4). D2-W397-S1, S2 and D2-W398-S2 (the filled document carries no firm key): INERT, recorded. D2-W398-S3 and D2-W399-S2 (a by_row map is keyed by account or by asset class): RULED: a by_row key names an account only for an account-grain member and only when it is an issued account id, an asset-class key names none, and a raw or malformed key refuses the request (built so in hop 3). D2-W399-S1 (BLOCKING, INERT: the packaged ExportBundle contract refuses a filled_report item; outside the grant): becomes a round-3 cell (the contract schema and its docs, with the packaged-contracts-match-docs test). D2-W399-S3 (the freeze has no caller and no production reader): becomes a round-3 cell (the submit wiring and a reader on the naming builder), after the gold table exists for the reader. NEXT for ~PS: round 3 = the contract cell now; the submit wiring and the composer from gold wait for the gold table (2.0.0_SA_COO~D2)."
+}
+```
+
+## IRPT_BCKEND-D2-W400-S1 -- The pair (a) flat keys have no address() output: the order's own keys are a typed address, which the refusal clause stops
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W400-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~400",
+  "surfaced_at": "2026-10-15T04:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The flat keys s3://opal-data-inf/bronze/<feed>/<date>.jsonl.gz that IB-pr-556 pair (a) must write have no lib/opal_naming.py address() output and no registry row naming the per-feed, per-date landing key; the registry rules only the legacy bronze/ prefix, so writing the design means typing legacy keys, which the order's refusal clause stops. No design record and no packet were written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address('advi','inflection','bronze','positions','PLACEHOLDER','PLACEHOLDER.jsonl.gz') at base 8110ace2ee returns s3://opal-data-assets/orion/inflection/bronze/positions/PLACEHOLDER/PLACEHOLDER.jsonl.gz (read-only call from the worktree; the key grammar is {source}/{scope}/{tier}/{table}/{partition}, five segments)",
+      "infra/logic/registry/key_rulings.json:210-218 at 8110ace2ee rules bucket opal-data-inf, key bronze/, shape prefix, canonical orion/inflection/bronze/ (the mirror's map row, lambda_function.py:98-118), owner ADVI_FIRMBKTS; a grep of infra/logic/registry for bronze/positions, bronze/transactions and bronze/performance returns zero matches",
+      "data/inf/manual_api/pull_inflection_positions_daily.py:445 at 8110ace2ee writes bronze/positions/{snap_iso}.jsonl.gz to opal-data-inf: a three-segment legacy key, outside the five-segment grammar that address() implements",
+      "infra/logic/registry/scopes.json:128 at 8110ace2ee: the inflection scope bucket is opal-data-inflection, not opal-data-inf"
+    ]
+  },
+  "spec_asserts": "IB-pr-556 worker face step 3 and CLAUDE.md rule 30: every S3 address and resource name is lib/opal_naming.py output, and the refusal clause stops a worker on a need to type an object address by hand (that is a missing registry row: record it). The check p200_orion.py c2 requires the literal keys s3://opal-data-inf/bronze/<feed>/<date>.jsonl.gz for 7, 7 and 22 days.",
+  "world_is": "address() yields only the canonical five-segment opal-data-assets form for the inflection scope. The registry's ruling on the legacy bronze/ prefix names the mirror's destination (orion/inflection/bronze/), not the per-feed, per-date landing key that the producer writes and the mirror reads. The order's flat keys are therefore legacy addresses that would be typed by hand, with no ruled write target. Per the refusal clause the worker stopped before typing them: no design record, no packet, no key written. The check AC2 cannot pass until the registry rules the landing key or the issuer names its canonical target, an act outside this order's paths. Recorded, not decided: which key the producer should land is the issuer's and the CTO's call."
+}
+```
+
+## IRPT_BCKEND-D2-W400-S2 -- The existing raw schedule names grade OUT-OF-PATTERN, and no registry row holds a SCHEDULE name
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W400-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~400",
+  "surfaced_at": "2026-10-15T04:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The live daily positions rule inf-api-positions-daily grades OUT-OF-PATTERN under lib/opal_naming.py grade(); the builder names for the 6 AM fold grade CONFORMANT, but event_rules.json holds only event-pattern rows, so the fold's schedule has no registry row yet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py grade('inf-api-positions-daily','EVENT_RULE') at base 8110ace2ee returns ('OUT-OF-PATTERN', 'orion-inf-api-positions-daily'); name('advi','inflection','api-positions','daily') returns advi-inf-api-positions-daily (read-only calls)",
+      "name('orion','inflection','raw-producer','daily') returns orion-inf-raw-producer-daily; grade with type SCHEDULE returns CONFORMANT; name('orion','inflection','raw-producer','lambda') returns orion-inf-raw-producer-lambda; grade with type LAMBDA returns CONFORMANT",
+      "infra/logic/registry/event_rules.json at 8110ace2ee holds 13 rows, each an EVENT_RULE with an event pattern (canonical names such as advi-inf-assets-trigger-on-bronze-complete); none is a schedule",
+      "infra/aws/terraform/inf-pipeline/inf-api-positions.tf:179-182 at 8110ace2ee names the rule inf-api-positions-daily with cron(22 11 * * ? *); its description says 13:37 UTC, a stale clock text"
+    ]
+  },
+  "spec_asserts": "IB-pr-556 worker face step 2 asks whether the naming builder has a SCHEDULE kind and whether a registry row is needed for the new schedule; the READ record (IB199-4) expected the first builder call to refuse.",
+  "world_is": "The builder does not refuse a SCHEDULE name: the cadence token daily is a NAMING_SCHEMA.json cadence value and the 6 AM time lives in the schedule expression, not the name. The live rule name is out of pattern and the one registry table of rules holds no schedule row. No registry row is needed for the names to grade CONFORMANT; a row is needed only if the schedule is to be registered. The READ's expectation of a refusal is not borne out (read-only; nothing added)."
+}
+```
+
+## IRPT_BCKEND-D2-S184 -- Dispositions on worker 400's rows; the daily flat-key writer is still unlocated: retiring the CLIs or deploying beside it is held by COO half condition 1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S184",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T06:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 400's rows (D2-W400-S1, S2) and the Orion pairs packet: the daily flat-key writer is still UNLOCATED (the flat keys land 11:39-11:56Z each day after the parquet), so retiring the manual CLIs or deploying the scheduled handler could stop the feed or double it; condition 1 of the COO half holds both until the writer is found and handed over.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB200-4 AC1 to AC3 on the landed tree (PASS) and the proof instance (VALID); merge 7dc4dbbc6e; packet sha256 c3dcc22f02e8624eca4f402f77fe95ba28c3df331a0896e22ef94dd19bc56b62",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~400/IB200-4_orion_pairs_design.json live_writer: claim absent; flat transactions keys landed 11:39-11:43Z, performance 11:45-11:49Z, positions .jsonl.gz 11:48-11:56Z on 2026-10-10 to 2026-10-14, after the deployed positions parquet at 11:25-11:26Z; no trigger, log stream or instance found in that window"
+    ]
+  },
+  "spec_asserts": "CTO msg 8014 condition 1: pair (b) PORTS the manual CLI into the scheduled function, no second producer beside it, the CLI retired or repointed in the same pair.",
+  "world_is": "DISPOSITIONS. D2-W400-S1 (BLOCKING, INERT): the flat bronze keys have no address() output: SUPERSEDED by IB-pr-556 AMENDMENT 1 (they are an existing pipeline's read contract, rule 30 non-application), my defect. D2-W400-S2 (the existing schedule name grades OUT-OF-PATTERN): INERT, recorded. THE HAZARD (new, ARMED, owner me): nobody has located what writes the daily flat keys; the repository holds three manual CLIs that write exactly that key shape. Either a person or host runs a CLI by hand each morning, or another writer exists. Retiring the CLIs without finding it can stop the feed; deploying (b) beside it makes two producers of one key. COO half condition 1 makes finding and handing over that writer the releasing seat's first read-only step, and a STOP if it cannot be found. Disarm condition: the writer is located and stopped or handed to (b) in the release's ledger."
+}
+```

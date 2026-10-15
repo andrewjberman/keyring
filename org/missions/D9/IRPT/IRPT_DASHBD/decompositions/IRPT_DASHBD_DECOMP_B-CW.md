@@ -116,3 +116,23 @@ Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3
 |---|---|
 | DB-c-9 | 0.7.0_AE_CloudOps~DB2 |
 | DB-c-10 | 2.0.0_SA_COO~C2 |
+
+## 5. ROUND 118, WORKSTREAM B-CW (2026-10-15 ~04:5xZ, issuer 2.0.0_SA_COO~C2, on the STOP of the apply order `DB-c-9` by `0.7.0_AE_CloudOps~DB2`, msg 8042)
+
+**What happened (measured by this seat after the STOP, read only).** `DB-c-9` steps 0 to 5 ran: the shared zip was rebuilt and landed (S3 version `vrBQAr57i...`, `handler.py` the only member that differs from the previous zip), ONE `safe-apply` read 7 to add, 2 to change, 0 to destroy, and all three functions (49 Financial, Inflection, Cottonwood) now run `CodeSha256` `OawCMaEq...`; the Cottonwood execution role, scheduler role and schedule exist, the schedule is `DISABLED`; the gold listing is unchanged (75 daily and 150 manifest objects, newest write 2026-09-29). Step 6, the first catch-up invoke (2026-09-28), was REFUSED by the producer: `registry lookup('z09') failed: KeyError`. Cause, reproduced by this seat in the extracted live zip: the zip carries `infra/logic/registry/scopes.json` at the PIN in `infra/aws/lambda/ci/lambda-source-map.json` (commit `14b52ca13a`, 15,565 bytes, 11 scope rows, no `z09` row); HEAD's `scopes.json` (20,150 bytes, 14 rows) adds `z09`. The producer derives the Cottonwood firm from the registry (`firm_scope()`, `lookup("z09")`), so the shared zip cannot serve Cottonwood until `scopes.json` is re-pinned. With ONLY `scopes.json` replaced by HEAD's blob the extracted tree resolves `blackdiamond_z09` to `cottonwood`, and `orion` and `schwab_08335338` resolve to `inflection` and `49financial` exactly as before. The signed pair covered a zip whose members differ from the live one by `handler.py` only; re-pinning a registry member is a second zip upload, so it needs a new signed act (the applier's STOP, correct). The defect is the issuer's: DB-c-7's build did not read that the Cottonwood firm derivation needs a registry row the staged pin lacked.
+
+**The state the STOP left is consistent and nothing served moved**: no Cottonwood gold key was written; the 49 Financial and Inflection functions run the loud-failure handler (they carry the listing grant) and their registry derivations are unchanged; the schedule is DISABLED; the ledger `irpt-dashbd-cottonwood-holdings-performance-20261015` is open with legs L5 to L8.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-11` | The READ and the ADDENDUM PACKET: the live zip's seven registry members against their pins and HEAD, `scopes.json`'s row diff, the differential of the producer's own firm derivation for the three declared channels in the extracted live zip tree versus the tree with the minimal re-pinned members, and the unsigned addendum packet for the second zip (member diff, the plan, the resume at the catch-up, both branches, rollback, the CTO's questions) | FWD-2, FWD-11 | LOCAL (a read and a packet; the act it prepares is WORLD under a new signed pair) | none | C-G |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) One worker cell, one chain, slot `~406`: the record and the packet come from one run. (b) The addendum is a NEW signed act; nothing here re-uses the first pair for the second upload. (c) The fix to be proven minimal is re-pinning `scopes.json` alone (the issuer's measurement); the cell tests that and any further member the producer's derivation needs, and states the smallest set. (d) The apply order that resumes at step 6 is cut after both halves of the addendum are signed, to `0.7.0_AE_CloudOps~DB2`, which holds the open ledger.
+
+**fanout:** 1 of 1 chains, cap 8, reason: the read and the packet are one chain (the packet's re-pin set is the read's output). Worker `0.9.0_WK_IRPT_DASHBD~406`.
+
+## Cells (round 118)
+
+| cell id | owner |
+|---|---|
+| DB-c-11 | 0.9.0_WK_IRPT_DASHBD~406 |
