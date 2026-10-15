@@ -15733,3 +15733,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed as an observation of a capability that is not on this box. No repair is made by this seat; the calendar's owner decides whether the library is installed on the fabric or the fallback is the declared source."
 }
 ```
+
+## IRPT_DASHBD-D2-W192-S2 -- the commit-time client-data check did not run on this box (the hashed account-id list is absent), so the client-id clause of the pre-commit scan was done by hand
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W192-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~192",
+  "surfaced_at": "2026-10-15T07:58:27Z",
+  "one_line": "The order's pre-commit scan for client figures and long identifier runs had a gate behind it, and on this box that gate could not run: safe-commit printed client-data-check WARN, the hashed account-id list is ABSENT at the operator's home .opal folder, so the commit was NOT checked for client account ids. This seat scanned the staged text by hand for long digit runs and for account-id-shaped values; it did not have the list to compare against.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 120 order DB-b-238 BOUNDS and WORKER FACE: before every commit, scan what you stage for a client figure and for long identifier runs; counts, dates and words only in the repo.",
+  "world_is": "The commit of the analysis script, the counts-only record and this row (commit e1dbfeff48) printed: WARN: client-data-check: hashed account-id list ABSENT at the operator's .opal folder -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there). The staged text carries no account identifier by construction: the script reads account ids only into memory and prints counts; the record carries counts, dates and words.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit e1dbfeff48 on wk-IRPT_DASHBD-192: the .tools/safe-commit.sh output carries the client-data-check WARN line quoted in world_is",
+      "deliverables folder 0.9.0_WK_IRPT_DASHBD~192 at e1dbfeff48: balance_lag_read_r120.py (print of counts only) and RD_BALANCE_LAG_R120.json (counts, dates and words only; a long-digit-run scan of the record returned no run, and the script's only run is inside its private folder path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed for the owner of the client-data gate on this fabric. No repair is made by this seat; the list is not copied into the worktree and no hash list is read by this seat."
+}
+```
