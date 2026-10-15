@@ -1648,6 +1648,28 @@
     "spec_asserts": "BOUNDS: commit workspace files through .tools/safe-commit.sh; commit the portal files inside /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-28/portal on the worktree branch. Environment: the portal worktree is a separate repo.",
     "world_is": "The portal repo has no .tools/ of its own, so the only safe-commit available is the workspace copy, run with the portal as cwd. It worked (commit cc368d50, author set, message verified MATCH), but the commit-gate reports NOTHING CHECKED for a .tsx file, so the gate adds no evidence to a portal commit and the tsc criterion carries the typecheck instead.",
     "notes": "Not worked around beyond the single invocation. For the issuer to rule which safe-commit a portal commit should use. The order did not name the instrument for portal files; the one used is recorded here, not assumed to be the intended one."
+  },
+  {
+    "id": "DSGN_RBNDV2-W29-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~29",
+    "surfaced_at": "2026-10-15T23:05:53Z",
+    "one_line": "The order names no commit tool for the portal repo; the portal worktree is its own git repo with no .tools directory, so I committed the portal files with the root worktree's ../.tools/safe-commit.sh run from the portal directory, and its risk-reflex and naming-gate fell back to workspace-root copies.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal worktree git rev-parse --show-toplevel = C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-29/portal, a separate repo on branch wk-DSGN_RBNDV2-29-portal; ls of portal/.tools returned no such directory; ../.tools/safe-commit.sh exists in the root worktree",
+        "safe-commit output at portal commit c2e0802f: 'risk-reflex WARN: comp-pulse: the caller toplevel ... carries no .tools/comp-pulse -- EXECUTING THE BAKED PATH C:/Users/AndrewBerman/Desktop/ajb_workspace/.tools/comp-pulse'; commit-gate 'checked 0 of 2 file(s) -- NOTHING WAS CHECKED' for the .tsx and .ts files",
+        "the commit's test and typecheck evidence was taken separately: bun test rb-10-r1 (VERDICT: SPOTLIGHT-OUTLINES-OK), tsc -p tsconfig.app.json rc=0, and the panels, modal and market-performance run with 0 fail"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Bounds of RV-r-1: commit workspace files through .tools/safe-commit.sh; commit the portal files inside the portal worktree on the worktree branch. The order names no safe-commit path for the portal repo.",
+    "world_is": "The portal repo carries no .tools of its own. The only safe-commit is the root worktree's ../.tools/safe-commit.sh, which I ran from inside the portal directory. The commit-gate graded 0 of 2 files because it reads only .py, .sh, .tf and org/projects/*.json, and the risk-reflex used the baked workspace-root comp-pulse path.",
+    "notes": "Not changed: the commit landed on the portal worktree branch as c2e0802f. For the issuer to say which tool and gate a portal-repo commit is to name. No gate hazard is present on this commit; the test and typecheck instruments ran on the committed bytes."
   }
 ]
 ```
