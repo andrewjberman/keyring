@@ -15679,3 +15679,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Owner for S1 disarm: this seat (issuer), done. The CVO adjudicates the BLOCKING row at L9 if it grades it; S2 and S3 are inputs to DB-c-17 (package) and DB-c-18 (packet)."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S70 -- the filled-report route ignores version_id: a print of a frozen filled export through the route would draw the current object, not the pinned one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S70",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-15T07:31:06Z",
+  "one_line": "The filled-report route ignores a version_id, so a print of a frozen filled export that reads the report through the route (as the portal print does, ?version_id=) would draw the CURRENT object, not the pinned one; the PATH B series route refuses that by rule (a render delegate must name a version, and the answer names the version it read).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Signed pair IB-pr-551, hop 4: the filled object is frozen the way PATH B freezes the series, and the render reads the pinned version (retained_export.filled_render_read, which reads a frozen item back through the one pinned read). reporting/entry.py header, THE PINNED READ (CTO batch 203): on which=series, version_id reads exactly that S3 version, a RENDER_DELEGATE reading without it is refused INVALID_INPUT, and the answer names the version in X-Opal-Version-Id.",
+  "world_is": "infra/aws/lambda/investor-reporting/reporting/entry.py at HEAD: FILLED_ROUTE_KEY serves reporting_filled_read -> serve_filled_report(client_id, scope_accounts, firm) -> _fetch_filled(firm, client_id, s3), whose get_object names no VersionId; _check_version admits version_id on which=series only and the filled route has no version parameter, no render-delegate rule and no X-Opal-Version-Id header. The portal print (render/PrintEntry.tsx and dashboard/report/reportRead.ts reportReadPath, round 115, branch cand/dell2/irpt-default-performance-report) appends ?version_id=<frozen version> to the report path for a frozen print; the route would drop it and return the current object. Whether the render host reads the pinned object server-side (filled_render_read) and never through this route is hop 5's design, not read by this seat; if it does, the portal's version query is dead weight and the print must be handed the document another way; if it reads through the route, the route needs version_id and the render-delegate rule before hop 5 starts. Inert: nothing is deployed and no route serves a report yet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/entry.py at HEAD: header lines 38-44, VERSION_PARAM (line 101), _check_version (line 178), _fetch_filled (line 377), serve_filled_report (line 391), reporting_filled_read",
+      "infra/aws/lambda/investor-reporting/export/retained_export.py: filled_render_read (the pinned read-back of a frozen filled item)",
+      "portal git: cand/dell2/irpt-default-performance-report @0d58fe2c: dashboard/report/reportRead.ts (reportReadPath with version_id) and render/PrintEntry.tsx"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~P2 (the route and hop 5 owner under the CTO's ruling on call 076d): decide, before hop 5's window, whether a print reads the frozen filled object through this route (then add the version_id parameter, the render-delegate refusal and X-Opal-Version-Id, as the series has them) or server-side (then the portal's version query is removed by an F-SHIP amendment and the print takes its document from the render host). The portal side follows either way by an issuer amendment. Counts and paths only."
+}
+```
