@@ -1,0 +1,1023 @@
+{
+ "meta": {
+  "ticker_short": "ASML",
+  "period": "2Q26",
+  "author": "Lauren Harmon",
+  "fiscal_quarter_end": "2026-06-30",
+  "note": "Worked example: Lauren Harmon's ASML 2Q26 earnings update (harvest bronze research-report 79929f9a75d7bab4), transcribed. Figures 1, 11, 13 and 16 carry the values printed on her charts (growth lines recomputed from those rounded values); the other figures are placeholders here."
+ },
+ "blocks": [
+  {
+   "type": "title",
+   "company_line": "ASML Holding NV (ASML-US)",
+   "period_line": "2Q26 earnings update"
+  },
+  {
+   "type": "summary",
+   "header": {
+    "left": [
+     [
+      "Ticker",
+      "ASML-NL"
+     ],
+     [
+      "Name",
+      "ASML Holding NV"
+     ],
+     [
+      "Sector",
+      "Electronic Technology"
+     ],
+     [
+      "Location",
+      "Netherlands"
+     ],
+     [
+      "Currency",
+      "Euro"
+     ],
+     [
+      "Fiscal Yr",
+      "12"
+     ],
+     [
+      "PE NTM",
+      "30.0x"
+     ],
+     [
+      "Fund",
+      "PFOE",
+      "IDVZ"
+     ],
+     [
+      "Weight",
+      "6.1%",
+      "2.4%"
+     ]
+    ],
+    "middle": [
+     [
+      "Date of Pricing",
+      "9/2/26",
+      "ADTV",
+      "$ 0.2"
+     ],
+     [
+      "Share Price",
+      "$ 1,435.40",
+      "Short Interest / Total",
+      ""
+     ],
+     [
+      "Market Cap (bn)",
+      "$ 557",
+      "Oustanding Shares",
+      "385.4"
+     ],
+     [
+      "Net Debt",
+      "$ (8.7)",
+      "Float",
+      "99.3%"
+     ],
+     [
+      "Other",
+      "$ (1.6)",
+      "Beta",
+      "2.3x"
+     ],
+     [
+      "Enterprise Value",
+      "$ 546.9",
+      "Div Yield",
+      "0.5%"
+     ]
+    ],
+    "right": [
+     [
+      "Cash & Equiv",
+      "$13.3",
+      "26.3%",
+      "Curr Liab",
+      "$24.3",
+      "48.0%"
+     ],
+     [
+      "Intangibles",
+      "$5.1",
+      "10.1%",
+      "LT Liab",
+      "$2.9",
+      "5.7%"
+     ],
+     [
+      "Fixed Assets",
+      "$8.2",
+      "16.3%",
+      "Com Equity",
+      "$19.6",
+      "38.8%"
+     ],
+     [
+      "Total Assets",
+      "$50.6",
+      "",
+      "TL & SE",
+      "$50.6",
+      ""
+     ]
+    ]
+   },
+   "summary": {
+    "quarters": [
+     "1Q24",
+     "2Q24",
+     "3Q24",
+     "4Q24",
+     "1Q25",
+     "2Q25",
+     "3Q25",
+     "4Q25",
+     "1Q26",
+     "2Q26"
+    ],
+    "annual": [
+     "2025",
+     "2026E",
+     "2027E",
+     "2028E",
+     "2029E"
+    ],
+    "rows": [
+     {
+      "label": "Revenue",
+      "q": [
+       "5,290",
+       "6,243",
+       "7,467",
+       "9,263",
+       "7,742",
+       "7,692",
+       "7,516",
+       "9,718",
+       "8,767",
+       "9,327"
+      ],
+      "a": [
+       "32,667",
+       "43,455",
+       "55,526",
+       "67,061",
+       "75,249"
+      ]
+     },
+     {
+      "label": "y/y Growth",
+      "kind": "growth",
+      "q": [
+       "",
+       "",
+       "",
+       "",
+       "46%",
+       "23%",
+       "1%",
+       "5%",
+       "13%",
+       "21%"
+      ],
+      "a": [
+       "16%",
+       "33%",
+       "28%",
+       "21%",
+       "12%"
+      ]
+     },
+     {
+      "label": "Operating Income",
+      "q": [
+       "1,391",
+       "1,835",
+       "2,441",
+       "3,355",
+       "2,738",
+       "2,664",
+       "2,468",
+       "3,431",
+       "3,158",
+       "3,456"
+      ],
+      "a": [
+       "11,301",
+       "17,314",
+       "23,955",
+       "30,281",
+       "35,226"
+      ]
+     },
+     {
+      "label": "Operating Margin",
+      "q": [
+       "26.3%",
+       "29.4%",
+       "32.7%",
+       "36.2%",
+       "35.4%",
+       "34.6%",
+       "32.8%",
+       "35.3%",
+       "36.0%",
+       "37.1%"
+      ],
+      "a": [
+       "34.6%",
+       "39.8%",
+       "43.1%",
+       "45.2%",
+       "46.8%"
+      ]
+     },
+     {
+      "label": "EBITDA",
+      "q": [
+       "1,606",
+       "2,062",
+       "2,677",
+       "3,596",
+       "2,979",
+       "2,919",
+       "2,743",
+       "3,686",
+       "3,417",
+       "3,703"
+      ],
+      "a": [
+       "12,648",
+       "18,688",
+       "25,290",
+       "31,524",
+       "37,153"
+      ]
+     },
+     {
+      "label": "EBITDA Margin",
+      "q": [
+       "30.4%",
+       "33.0%",
+       "35.8%",
+       "38.8%",
+       "38.5%",
+       "37.9%",
+       "36.5%",
+       "37.9%",
+       "39.0%",
+       "39.7%"
+      ],
+      "a": [
+       "38.7%",
+       "43.0%",
+       "45.5%",
+       "47.0%",
+       "49.4%"
+      ]
+     },
+     {
+      "label": "EPS",
+      "q": [
+       "3.11",
+       "4.01",
+       "5.28",
+       "6.84",
+       "6.00",
+       "5.90",
+       "5.48",
+       "7.34",
+       "7.15",
+       "7.58"
+      ],
+      "a": [
+       "24.71",
+       "38.20",
+       "52.66",
+       "67.72",
+       "76.65"
+      ]
+     },
+     {
+      "label": "y/y Growth",
+      "kind": "growth",
+      "q": [
+       "",
+       "",
+       "",
+       "",
+       "93%",
+       "47%",
+       "4%",
+       "7%",
+       "19%",
+       "29%"
+      ],
+      "a": [
+       "28%",
+       "55%",
+       "38%",
+       "29%",
+       "13%"
+      ]
+     },
+     {
+      "label": "Avg Diluted Shares",
+      "q": [
+       "394",
+       "394",
+       "394",
+       "394",
+       "393",
+       "388",
+       "388",
+       "387",
+       "386",
+       "385"
+      ],
+      "a": [
+       "389",
+       "386",
+       "384",
+       "378",
+       "388"
+      ]
+     },
+     {
+      "label": "y/y Growth",
+      "kind": "growth",
+      "q": [
+       "",
+       "",
+       "",
+       "",
+       "0%",
+       "-1%",
+       "-2%",
+       "-2%",
+       "-2%",
+       "-1%"
+      ],
+      "a": [
+       "-1%",
+       "-1%",
+       "0%",
+       "-2%",
+       "3%"
+      ]
+     },
+     {
+      "label": "Cap Ex",
+      "q": [
+       "424",
+       "538",
+       "416",
+       "706",
+       "417",
+       "429",
+       "315",
+       "470",
+       "422",
+       "386"
+      ],
+      "a": [
+       "1,631",
+       "1,974",
+       "2,288",
+       "2,542",
+       "3,471"
+      ]
+     },
+     {
+      "label": "FCF",
+      "q": [
+       "(669)",
+       "392",
+       "535",
+       "8,841",
+       "(474)",
+       "333",
+       "263",
+       "10,962",
+       "(2,588)",
+       "1,404"
+      ],
+      "a": [
+       "11,085",
+       "10,849",
+       "19,262",
+       "23,633",
+       "26,739"
+      ]
+     },
+     {
+      "label": "DPS",
+      "q": [
+       "1.52",
+       "1.52",
+       "1.52",
+       "1.84",
+       "1.60",
+       "1.60",
+       "1.60",
+       "2.70",
+       "1.88",
+       "1.88"
+      ],
+      "a": [
+       "7.50",
+       "9.19",
+       "11.84",
+       "14.39",
+       "18.15"
+      ]
+     },
+     {
+      "label": "y/y Growth",
+      "kind": "growth",
+      "q": [
+       "",
+       "",
+       "",
+       "",
+       "5%",
+       "5%",
+       "5%",
+       "47%",
+       "18%",
+       "18%"
+      ],
+      "a": [
+       "17%",
+       "23%",
+       "29%",
+       "21%",
+       "26%"
+      ]
+     },
+     {
+      "label": "Dividend Yield",
+      "kind": "rule",
+      "q": [],
+      "a": [
+       "0.8%-1.5%",
+       "0.6%",
+       "0.8%",
+       "1.0%",
+       "1.3%"
+      ]
+     },
+     {
+      "label": "FCF Yield",
+      "q": [],
+      "a": [
+       "2.4%-4.6%",
+       "1.9%",
+       "3.5%",
+       "4.2%",
+       "4.8%"
+      ]
+     },
+     {
+      "label": "P/E",
+      "q": [],
+      "a": [
+       "20.6x-39.5x",
+       "37.6x",
+       "27.3x",
+       "21.2x",
+       "18.7x"
+      ]
+     },
+     {
+      "label": "FCF Margin",
+      "kind": "rule",
+      "q": [
+       "-13%",
+       "6%",
+       "7%",
+       "95%",
+       "-6%",
+       "4%",
+       "4%",
+       "113%",
+       "-30%",
+       "15%"
+      ],
+      "a": [
+       "34%",
+       "25%",
+       "35%",
+       "35%",
+       "36%"
+      ]
+     },
+     {
+      "label": "ROA",
+      "q": [
+       "19%",
+       "17%",
+       "17%",
+       "17%",
+       "21%",
+       "22%",
+       "22%",
+       "19%",
+       "21%",
+       "22%"
+      ],
+      "a": []
+     },
+     {
+      "label": "ROE",
+      "q": [
+       "60%",
+       "53%",
+       "49%",
+       "47%",
+       "56%",
+       "58%",
+       "54%",
+       "50%",
+       "52%",
+       "54%"
+      ],
+      "a": []
+     }
+    ]
+   }
+  },
+  {
+   "type": "heading",
+   "text": "Recommendation: Maintain positions in PFOE and IDVZ"
+  },
+  {
+   "type": "para",
+   "text": "ASML delivered a clean beat-and-raise quarter. Net sales and gross margin both came in above the top of guidance, and management raised full-year 2026 guidance for the second time this year on the back of accelerating AI-driven capacity investment. The stock nonetheless dipped modestly on the print as investors weighed the strength against a steep implied second-half ramp and lingering China/geopolitical overhang."
+  },
+  {
+   "type": "heading",
+   "text": "Headline results"
+  },
+  {
+   "type": "subhead",
+   "text": "Positives"
+  },
+  {
+   "type": "dash",
+   "items": [
+    "Total net sales of €9.3B were above the €8.4-9.0B guided range, up 21% year-over-year (€7.7B in Q2 2025) and 6% sequentially (€8.8B in Q1 2026). Gross margin of 54% exceeded the 51-53% guided range. Net income rose 26% year-over-year to €2.9B (basic EPS of €7.59). Installed Base Management (service) sales of €2.76B came in roughly €300M above guidance, underscoring a high-margin, recurring revenue engine that management expects to grow >30% annually. Full-year 2026 outlook lifted to €43-45B net sales and 54-56% gross margin, the second upward revision in 2026. Intel Foundry reached a production milestone using High-NA EUV on its 18A process for Core Ultra Series 3 chips, which is the first concrete commercial validation of the platform. Management said ASML has “already received substantially all orders needed for 2027 and a large number of orders for 2028,” a multi-year demand signal well beyond the normal order book. On capital returns, the interim dividend was raised to €1.88/share (from €1.60 in the prior interim), plus €1.1B of share buybacks in the quarter."
+   ]
+  },
+  {
+   "type": "subhead",
+   "text": "Negatives"
+  },
+  {
+   "type": "dash",
+   "items": [
+    "Shares fell 3.8% following the print despite the beat-and-raise, reflecting the demanding scale of the implied second-half ramp and unresolved China policy risk. First-half 2026 free cash flow was negative (€1.3B) despite €5.7B of net income over the same period, as inventory and prepayments built ahead of the H2 shipment ramp. The raised full-year guidance implies €14B+ of net sales in Q4 2026 alone, an unusually demanding execution requirement in a single quarter. EUV fell to 57% of system sales in Q2 (from 66% in Q1) as DUV/immersion (29%) and metrology gained share. Not necessarily negative, but a reminder that near-term mix will swing quarter to quarter. A small number of customers (TSMC, Samsung, Intel, and memory makers) continue to account for the large majority of sales (roughly 61% from the top four customers in 2025)."
+   ]
+  },
+  {
+   "type": "heading",
+   "text": "Geographic highlights"
+  },
+  {
+   "type": "dash",
+   "items": [
+    "Regional mix shifted markedly within the quarter, driven mainly by the pace of individual customers' fab buildouts rather than any broad-based regional trend. South Korea remained the largest market at 43% of Q2 sales, though down slightly from 45% in Q1, reflecting the phasing of Samsung and SK Hynix memory and logic tool deliveries. Taiwan surged to 30% of Q2 sales from 23% in Q1, driven by TSMC's continued advanced-node and AI-accelerator capacity expansion. China fell sharply to 14% of Q2 sales, down from 19% in Q1 and well below the 36% peak in Q4 2025, as the prior pull-forward buying ahead of export-control deadlines normalizes. Management reiterated that China should still average around 20% of full-year 2026 sales, driven primarily by mainstream/legacy logic demand rather than leading-edge tools. US was 9% of Q2 sales, tied to Intel's foundry buildout, including its High-NA-enabled 18A ramp. Net takeaway is that the geographic story in 2026 is increasingly a Korea/Taiwan/China rotation tracking each region's AI and memory capex cycle, with China's quarterly swings creating more optical volatility than the steadier 20% full-year run-rate management is guiding to."
+   ]
+  },
+  {
+   "type": "heading",
+   "text": "Segment highlights"
+  },
+  {
+   "type": "dash",
+   "items": [
+    "EUV lithography was 57% of Q2 system sales. Full-year 2026 EUV business is guided to grow 45%. ASML plans 65 Low-NA EUV units in 2026, stepping up to a 30% unit increase in 2027. One High-NA system was recognized in revenue in Q2, with 4-5 expected for the full year. DUV/immersion was 29% of Q2 system sales. 130 immersion DUV units are planned for 2026 (in line with 2025), rising in step with the 2027 30% capacity increase. Metrology and inspection demand is being lifted by greater process-control intensity at advanced nodes, guided to grow 25% for the full year. Installed Base Management (services) was €2.76B in Q2 sales, €300M above guidance, from field upgrades and service contracts on the growing installed fleet. This is guided to grow >30% annually. Logic-related sales are guided to grow 25%+ in 2026 on 3nm capacity expansion for AI accelerators and initial 2nm ramps. Memory has become the more explosive driver with DRAM/HBM-related sales guided to grow 75%+ in 2026 as supply-constrained DDR/HBM pricing motivates aggressive fab expansion. Memory is now management's single largest incremental growth driver for the year. On the 2027-2028 capacity plan, ASML intends to raise 2027 capacity by 30% in units for both Low-NA EUV and DUV immersion (equivalent to 45% more wafer capacity once productivity gains are included), achievable within its existing manufacturing footprint. A further 30% expansion for 2028 is under investigation, though not yet fully secured in orders. The 2027 tool mix shifts toward higher-ASP, higher-productivity E- and F-model systems."
+   ]
+  },
+  {
+   "type": "heading",
+   "text": "Headwinds and risks"
+  },
+  {
+   "type": "dash",
+   "items": [
+    {
+     "topic": "China / export policy",
+     "text": "the proposed US MATCH Act could tighten DUV export restrictions to China further. China's quarterly sales share has already fallen from 36% (Q4 2025) to 19% (Q1 2026) to 14% (Q2 2026), and while management still expects 20% for the full year, the policy overhang keeps this a recurring source of headline risk."
+    },
+    {
+     "topic": "High-NA adoption pace",
+     "text": "TSMC, the industry's largest foundry, has said it will skip High-NA EUV for its upcoming A14 node, pushing broad commercial adoption out toward 2029 and leaving Intel as the primary near-term High-NA reference customer. Customers are also pushing back on High-NA pricing relative to Low-NA multi-patterning economics, and ASML has said platform maturity is key to proving out the cost case."
+    },
+    {
+     "topic": "Supply chain and customer concentration",
+     "text": "ASML depends heavily on Zeiss for EUV optics, and management confirmed there is no fungibility between High-NA and Low-NA optics, limiting flexibility to reallocate capacity if demand mix shifts. A handful of customers account for the majority of revenue, so any pause or delay by a single large customer (TSMC, Samsung, Intel, SK Hynix, Micron) can move results materially."
+    },
+    {
+     "topic": "Execution risk and valuation",
+     "text": "the raised full-year guide implies an unusually steep H2 ramp (€14B+ required in Q4 alone) and negative H1 free cash flow from working-capital build, raising the bar for flawless execution into year-end. Shares trade around 38x estimated 2026 EPS, a multiple that assumes another strong year in 2027-28, leaving limited room for disappointment."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "text": "Guidance"
+  },
+  {
+   "type": "dash",
+   "items": [
+    "UPDATED full-year 2026 guidance to EUR 43-45bn in total net sales with 54-56% gross margin. The current FY2026 sales guide is roughly 16% above the April guidance at the midpoint and roughly 20% above the initial January 2026 guidance midpoint. For Q3 2026, the company expects EUR 11-12bn in total net sales, EUR 2.9bn in installed base management sales, and 55-57% gross margin. The company also plans to INCREASE low NA EUV capacity by 30% in 2027 and is investigating a further 30% expansion for 2028, with similar 30% increases planned for immersion systems. This effectively extends the guidance conversation two years further out than is typical for ASML."
+   ]
+  },
+  {
+   "type": "heading",
+   "text": "Rating actions and target price changes"
+  },
+  {
+   "type": "para",
+   "text": "The investment community responded to the print with broad upward revisions to earnings estimates and price targets, though some brokers remained cautious regarding valuation and geopolitical risks. Bernstein maintained an Outperform rating with a street-high target price of €2,500, arguing that ASML's 2028 earnings potential is dramatically underappreciated and forecasting a 30% revenue CAGR through 2028. JPMorgan reiterated an Overweight rating and raised its price target to €2,100 (from €1,900), noting that the 85 EUV tool capacity for 2027 is likely a \"floor\" rather than a ceiling. UBS reiterated a Buy rating and increased its target price to €2,250 (from €2,100), highlighting that demand visibility is extending unusually far, and capacity adds more than compensate for any near-term \"noise.\" HSBC maintained a Buy rating and raised its target price to €2,149 (from €1,883), driven by increased confidence in 2028 EPS power reaching over €78. Jefferies maintained a Hold rating but raised its target price to €1,650 (from €1,560), cautioning that the stock may face cyclical de-rating as it trades close to peak multiples. Santander reiterated an Underperform rating with a target price of €1,291, citing risks from Chinese competitors developing immersion tools and potential export restrictions."
+  },
+  {
+   "type": "heading",
+   "text": "Appendix"
+  },
+  {
+   "type": "figures",
+   "items": [
+    {
+     "title": "Figure 1: local currency sales growth (% year-over-year)",
+     "type": "bar",
+     "format": "0",
+     "categories": [
+      "Jun-22",
+      "Sep-22",
+      "Dec-22",
+      "Mar-23",
+      "Jun-23",
+      "Sep-23",
+      "Dec-23",
+      "Mar-24",
+      "Jun-24",
+      "Sep-24",
+      "Dec-24",
+      "Mar-25",
+      "Jun-25",
+      "Sep-25",
+      "Dec-25",
+      "Mar-26",
+      "Jun-26"
+     ],
+     "series": [
+      {
+       "name": "sales growth",
+       "values": [
+        35,
+        10,
+        29,
+        91,
+        27,
+        15,
+        13,
+        -22,
+        -10,
+        12,
+        28,
+        46,
+        23,
+        1,
+        5,
+        13,
+        21
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Figure 2: margins (%)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 3: sales by application (bn)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 4: sales growth by application (% year-over-year)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 5: sales by system (bn)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 6: sales growth by system (% year-over-year)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 7: sales by technology (bn)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 8: sales growth by technology (% year-over-year)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 9: net system sales by region (bn)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 10: net system sales growth by region (% y-o-y)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 11: total system sales in units (mn)",
+     "type": "combo",
+     "format": "0",
+     "categories": [
+      "Jun-21",
+      "Sep-21",
+      "Dec-21",
+      "Mar-22",
+      "Jun-22",
+      "Sep-22",
+      "Dec-22",
+      "Mar-23",
+      "Jun-23",
+      "Sep-23",
+      "Dec-23",
+      "Mar-24",
+      "Jun-24",
+      "Sep-24",
+      "Dec-24",
+      "Mar-25",
+      "Jun-25",
+      "Sep-25",
+      "Dec-25",
+      "Mar-26",
+      "Jun-26"
+     ],
+     "series": [
+      {
+       "name": "total unit sales (mn)",
+       "values": [
+        72,
+        79,
+        82,
+        62,
+        91,
+        86,
+        106,
+        137,
+        150,
+        149,
+        164,
+        110,
+        140,
+        156,
+        177,
+        117,
+        124,
+        127,
+        167,
+        129,
+        145
+       ]
+      },
+      {
+       "name": "growth (% year-over-year)",
+       "as": "line",
+       "format": "0.0",
+       "labels": "last",
+       "values": [
+        null,
+        null,
+        null,
+        null,
+        26.4,
+        8.9,
+        29.3,
+        121.0,
+        64.8,
+        73.3,
+        54.7,
+        -19.7,
+        -6.7,
+        4.7,
+        7.9,
+        6.4,
+        -11.4,
+        -18.6,
+        -5.6,
+        10.3,
+        16.9
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Figure 12: price per unit (mn)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 13: net bookings (bn)",
+     "type": "combo",
+     "format": "0.0",
+     "categories": [
+      "Jun-21",
+      "Sep-21",
+      "Dec-21",
+      "Mar-22",
+      "Jun-22",
+      "Sep-22",
+      "Dec-22",
+      "Mar-23",
+      "Jun-23",
+      "Sep-23",
+      "Dec-23",
+      "Mar-24",
+      "Jun-24",
+      "Sep-24",
+      "Dec-24",
+      "Mar-25",
+      "Jun-25",
+      "Sep-25",
+      "Dec-25"
+     ],
+     "series": [
+      {
+       "name": "net bookings",
+       "values": [
+        8.3,
+        6.2,
+        7.1,
+        7.0,
+        8.5,
+        8.9,
+        6.3,
+        3.8,
+        4.5,
+        2.6,
+        9.2,
+        3.6,
+        5.6,
+        2.6,
+        7.1,
+        3.9,
+        5.5,
+        5.4,
+        13.2
+       ]
+      },
+      {
+       "name": "growth (% year-over-year)",
+       "as": "line",
+       "format": "0.0",
+       "labels": "last",
+       "values": [
+        null,
+        null,
+        null,
+        null,
+        2.4,
+        43.5,
+        -11.3,
+        -45.7,
+        -47.1,
+        -70.8,
+        46.0,
+        -5.3,
+        24.4,
+        0.0,
+        -22.8,
+        8.3,
+        -1.8,
+        107.7,
+        85.9
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Figure 14: net bookings by application (bn)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 15: net bookings growth by application (% y-o-y)",
+     "pending": true,
+     "pending_note": "Data pending -- carry forward from the ticker's chartbook, or ASML quarterly results / AlphaSense"
+    },
+    {
+     "title": "Figure 16: EUV bookings (bn)",
+     "type": "combo",
+     "format": "0.0",
+     "categories": [
+      "Jun-21",
+      "Sep-21",
+      "Dec-21",
+      "Mar-22",
+      "Jun-22",
+      "Sep-22",
+      "Dec-22",
+      "Mar-23",
+      "Jun-23",
+      "Sep-23",
+      "Dec-23",
+      "Mar-24",
+      "Jun-24",
+      "Sep-24",
+      "Dec-24",
+      "Mar-25",
+      "Jun-25",
+      "Sep-25",
+      "Dec-25"
+     ],
+     "series": [
+      {
+       "name": "EUV bookings",
+       "values": [
+        4.9,
+        2.9,
+        2.6,
+        2.5,
+        5.4,
+        3.8,
+        3.4,
+        1.6,
+        1.6,
+        0.5,
+        5.6,
+        0.7,
+        2.5,
+        1.4,
+        3.0,
+        1.2,
+        2.3,
+        3.6,
+        7.4
+       ]
+      },
+      {
+       "name": "growth (% year-over-year)",
+       "as": "line",
+       "format": "0.0",
+       "labels": "last",
+       "values": [
+        null,
+        null,
+        null,
+        null,
+        10.2,
+        31.0,
+        30.8,
+        -36.0,
+        -70.4,
+        -86.8,
+        64.7,
+        -56.2,
+        56.2,
+        180.0,
+        -46.4,
+        71.4,
+        -8.0,
+        157.1,
+        146.7
+       ]
+      }
+     ]
+    },
+    {
+     "note": "Net bookings are a demand signal for future revenue. This reflects the value of new orders received minus any cancelations or order adjustments."
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "text": "Why we own"
+  },
+  {
+   "type": "para",
+   "text": "ASML is the sole supplier of one of the most critical tools in the entire global semiconductor supply chain. Specifically, ASML is a capital equipment company with a dominant position in deep ultraviolet (DUV) lithography machines and sole manufacturer of extreme ultraviolet (EUV) lithography machines. Lithography machines are tools used by chipmakers like TSMC, Samsung and Intel to manufacture the world’s most advanced chips. While volumes are relatively low (500+ unit sales annually), the price for a leading edge EUV machine is north of $200mn. Chips are the building blocks for the digital economy, powering everything from smartphones and computers to datacenters, cars and medical devices, which is a substantial tailwind to the business. Semiconductor industry sales are expected to reach $1.5tn this year and could top $2tn by the end of the decade. ASML’s technology is the embodiment of accumulated engineering knowledge across hundreds of interdependent subsystems (laser physics, vacuum engineering, mirror optics, etc.) which took decades of effort and significant resources to master. With a dominant position in its part of the value chain (90% of the DUV lithography market and 100% of EUV), derived from high switching costs and deeply entrenched customer relationships, ASML benefits from the ever-increasing pervasiveness of chips. While the semiconductor industry is inherently cyclical, much like TSMC, the most advanced modern technology does not exist without ASML, and it should remain a core position."
+  }
+ ]
+}

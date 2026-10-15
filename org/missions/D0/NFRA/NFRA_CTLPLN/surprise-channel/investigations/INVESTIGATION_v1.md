@@ -11897,3 +11897,37 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The --fetch flag encodes the pre-release state (one held wheel), as --check did (NFRA_CTLPLN-W122-S4). The ruling from 2.0.0_SA_COO~C covered --check only, so --fetch was left unchanged; the seat reports it and does not change the flag without a ruling."
 }
 ```
+
+## NFRA_CTLPLN-Z-S14 -- three more unrecorded endings; the first readable log shows the host ended, not claude
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-15T21:45Z",
+  "one_line": "Three more site Z seats ended unrecorded between 20:33Z and 21:34Z (CloudOps~ZS, CloudOps~ZW, COO~ZB). The first readable per-seat log, ~ZW's, has a START line and no EXIT line, so its PowerShell host was ended while claude ran; claude did not exit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "adjudicates": [
+    "NFRA_CTLPLN-Z-S12",
+    "NFRA_CTLPLN-Z-S13"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-liveness.py 20:33:05Z: dead=0; 21:34:02Z: dead=3 (CloudOps~ZS 1 open order placed here, CloudOps~ZW 0 orders, COO~ZB 0 orders)",
+      ".runtime/spawn-logs/0.7.0_AE_CloudOps~ZW.20261014T233227Z.log: only 'START 0.7.0_AE_CloudOps~ZW pid 34392 at 2026-10-14T23:32:27Z'; the logPost EXIT line never ran",
+      "org/mcp/agent-spawn-audit.log: no KILL or FORCE-KILL line for these serials; KILL-MAINT-RUN 20:33:51Z and 21:34:57Z both targets=0",
+      "0.7.0_AE_CloudOps~Z, a tab in the same window as ~ZS and ~ZW at the 20:2xZ peek, is still alive (pid 36168), so the whole window did not close",
+      "the 20:2xZ peek of 0.7.0_AE_CloudOps~ZQ showed the session now signed in to another organization after the weekly-limit stop"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S12 and Z-S13 kept a Claude Code auto-update and a usage limit as candidate causes, to be settled by the next readable exit.",
+  "world_is": "A claude exit would have let the host write EXIT rc=. The missing EXIT line points to the host or tab being ended from outside: a tab close, or an external process stop that the fabric audit does not record. Neither an auto-update nor a usage limit by itself kills the host. The selective loss (two tabs of one window gone, a third alive) fits single tab closes. ~ZS and ~ZB were respawned at 21:4xZ (pids 49312, 34280); ~ZW holds no order and was not.",
+  "notes": "If Andrew closed these tabs on purpose, the respawns undo that and he can say so; this row does not assume either way."
+}
+```

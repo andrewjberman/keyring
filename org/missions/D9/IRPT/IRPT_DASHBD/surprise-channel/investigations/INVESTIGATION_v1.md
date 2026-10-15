@@ -18994,3 +18994,85 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Minimum edit to a pinned assertion."
 }
 ```
+
+## IRPT_DASHBD-D2-W313-S1 -- the r126 checker's no-identifier limb refuses the record's extract path, which the order names as an exempt path field; DB-i-13 criterion DBI126-1-AC1 FAILs on that limb alone
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W313-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~313",
+  "surfaced_at": "2026-10-15T21:54:22Z",
+  "one_line": "The record's extract.path must be the absolute private folder path (the order's exemption for path fields), and that path carries an 8-digit run; the checker's no-identifier limb scans the whole record and refuses it, so DBI126-1-AC1 FAILs at that limb. The order's exemption is not in the checker.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-i-13 record rule: no run of 8 or more digits except in a sha256 value or a path or file field; the record carries the absolute private path of the extract. Checker p126_cause.py no_identifiers: any run of 8 or more digits anywhere in the record, after removing only 64-hex digests, fails.",
+  "world_is": "The private folder name carries an 8-digit run, so the record's extract.path holds one and no_identifiers refuses it (checker output: REASON a run of 8 or more digits in the record: 202, DBI126-1-AC1 FAIL). With that one field excluded in a diagnostic copy under the worker scratch (not the verdict), every other limb passes (DBI126-1-AC1 PASS): the script hash, the body hashes, the extract hash, the series and early-end counts, the per-account rows and the verdict counts all recompute equal. The official checker is unchanged; the criterion stays FAIL until the issuer rules the exemption.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r126/p126_cause.py@b8b717d5a5 (no_identifiers, the 8-digit regex over the whole record)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-13.orion-series-ended-cause-read-saved-bodies-against-positions-silver.md@768ab85a86 (record item 6: extract path, and the no-digit exemption for path and file fields)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~313/series_ended_cause.py (writes the record; the path is the private folder the order names)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a worker repair: the record keeps the path the order names, the checker is not edited, and the order stays open with DBI126-1-AC1 FAIL. Issuer choice: exempt the extract.path field in no_identifiers, or name the extract by a path with no 8-digit run. Reads on the record: 120 S3 reads (117 GETs), no write."
+}
+```
+
+## IRPT_DASHBD-D2-W313-S2 -- the issuer ruled IRPT_DASHBD-D2-W313-S1 by amending the r126 checker; the criterion re-run on the amended check reads PASS
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W313-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~313",
+  "surfaced_at": "2026-10-15T22:11:44Z",
+  "one_line": "Reconciliation of W313-S1: the issuer ruled the no-identifier limb wrong and amended the checker, so the record's extract.path and script.file are blanked before the 8-digit scan. The order text is unchanged. DBI126-1-AC1 re-run on the amended check reads PASS; the proof instance is re-recorded on that run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W313-S1 as filed: the checker's no-identifier limb scanned the whole record, so the exempt extract.path field made DBI126-1-AC1 FAIL at its first limb.",
+  "world_is": "The amendment 7ba971b30d blanks extract.path and script.file before the 8-digit scan and keeps the rule everywhere else; its selftest gains two arms and passes (selftest PASS, rc=0). The official run on the amended check reads DBI126-1-AC1 PASS (rc=0). No S3 read, vendor call or write was made for this reconciliation; the measurements in the record stand.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W313-S1",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r126/p126_cause.py@7ba971b30d (no_identifiers, the blanked fields)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~313/SERIES_ENDED_CAUSE_R126.json@0361ddd49d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "W313-S1 is not edited here (append-only). The issuer's ruling is the amendment at 7ba971b30d, as reported by the coordinator; this row records the re-run only."
+}
+```
+
+## IRPT_DASHBD-D2-S98 -- disarm of W221-S3: the Scope adapter writes TWR as contract 0.4.2 requires
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S98",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T22:26:37Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W221-S3 (the Orion adapter's return_basis against the contract), on the landed tree of round 127 (DB-i-14, merged @c7d980af1b): contract 0.4.2 takes VENDOR_REPORTED out of return_basis and removes source_requires, and the Scope adapter now writes TWR with provenance in source and the end-of-day claim in its declared column, so no Orion row disagrees with the contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "W221-S3: the Orion adapter writes a return_basis the contract does not accept for an Orion present row.",
+  "world_is": "On the merged tree DBI127-1-AC1, AC2 and AC3 PASS (28 of 28 rows validated by the 0.4.2 test module's row_problems; 4 partitions; 25 declared fields hashing to schema_hash_with_optional) and 90 tests pass across the adapter, wrapper and contract-042 test files. Synthetic fixtures only; no real run has happened and nothing is served from the module.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W221-S3",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r127/p127_run042.py",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-W221-S3: its condition (an Orion row whose return_basis the contract does not accept) is absent on the landed tree of round 127, measured by the r127 checker (28 of 28 rows pass the 0.4.2 validator, PRESENT rows TWR) and by 90 passing tests."
+}
+```

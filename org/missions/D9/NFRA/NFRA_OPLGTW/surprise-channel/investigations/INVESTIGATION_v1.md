@@ -18244,3 +18244,158 @@ name the one known failure instead of silently inheriting it.
   "notes": "The literals are firm keys, not S3 addresses. Whether they move behind lookup() is the issuer's call at the hookup; this cell keeps them as written so the named tests and the probe stay byte-stable."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "The catalog row opal_data_mdpf_feeds_model_composition contradicts itself: its business_meaning says client data forked by account last-4, its fork_keys say the account fork is none (model level).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml @b56fd6ef9d, row opal_data_mdpf_feeds_model_composition: business_meaning 'Client data forked by firm, account last-4 and platform'; fork_keys.account = {column: 'none -- model level, no account'}",
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md section (d), contract opal-data-mdpf/feeds/model_composition: grain one row per (firm_id, model_key, ticker, as_of_date), no account column in the column list",
+      "RUN OG-gp-1 classification (this seat): the row is BUILT as mdpf_get_model_composition with Opal-only admission and no account grain; the business_meaning reading would have classed it with the account-grain feeds instead"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The catalog row's business_meaning reads as client data forked by account last-4, which would put model_composition with the account-grain feeds that need their own role.",
+  "world_is": "The row's own fork_keys and the CRO G4 contract both say model level with no account column. This seat classed the row by the fork_keys and the contract, and named the discrepancy here rather than editing the catalog, which is not in this cell's write grant.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "Four mdpf feed rows carry retired=true in the catalog while their S3 prefixes hold live objects written in the last three trading days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml @b56fd6ef9d: rows opal_data_mdpf_feeds_model_aua_positions_49financial, opal_data_mdpf_feeds_model_aua_positions_inflection, opal_data_mdpf_feeds_non_model_aua, opal_data_mdpf_feeds_partner_held_etf_49financial all retired=True",
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md section (b): model_aua_positions/49financial 125 objects newest 2026-10-14T03:31:41Z; model_aua_positions/inflection 105 newest 2026-10-12; partner_held_etf/49financial 293 newest 2026-10-14T03:30:47Z; non_model_aua/49financial 100 newest 2026-10-12",
+      "RUN OG-gp-1 classification (this seat): all four are DEFERRED on the retired flag, so the classification rests on a flag that the bucket contradicts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A retired catalog row means its dataset is no longer written or served, so a tool over it answers absent_reason with zero reads.",
+  "world_is": "The four prefixes still receive writes, and the account-grain feed is the input that the served histograms read. Whether retired here means not-served-to-portal rather than not-written is not read; this seat relied on the flag as written.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "The gateway instance role cannot read the model_composition prefix of opal-data-mdpf, so the BUILT tool answers only under a box identity until a never-widen read grant lands at release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md section (a) row 10: iam simulate-principal-policy opal-gateway-role s3:GetObject on the feeds prefixes returns implicitDeny (simulated); positive control platinum/mdpf/global/aum-metrics.json allowed",
+      "RUN OG-gp-1 probe (this seat) with the box's own credentials: mdpf_get_model_composition answered True for scope 49financial, 130 rows; the same tool under the gateway role is not exercised here"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A BUILT typed tool over a bucket prefix is served by the gateway once its order releases.",
+  "world_is": "The tool reads correctly under box credentials, but the gateway role has no grant on this prefix, so the release order must carry a never-widen read ask for mdpf/feeds/model_composition/ before the tool can answer on the gateway. The grant is not written in this cell (no IAM change in bounds).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "Two catalog rows declare the same two sentiment keys: the news row names news_market_mood as its read_tool, the singleton row names none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml @b56fd6ef9d: row opal_data_portal_v2_served_news_trending_and_sentiment (read_tool news_market_mood) lists json/sentiment/{fear-greed-index,keyword-sentiments}.json; row opal_data_portal_v2_served_sentiment_singletons (read_tool empty) lists the same two keys",
+      "READ infra/aws/ec2/opal-gateway/app/news_typed.py news_market_mood: reads FEAR_GREED_KEY and KEYWORD_SENTIMENTS_KEY (json/sentiment/ prefix)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each catalogued served object has one catalog row, so one row's read_tool answers for the object.",
+  "world_is": "Two rows own the same two objects. This seat classed the singleton row COVERED by news_market_mood on the code, and left the duplicate for the catalog owner to reconcile.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+  ```json
+  {
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T21:47:18Z",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "id": "NFRA_OPLGTW-Z-S153",
+    "one_line": "OG-ap-21 CUT IS THE FIRST RELEASE TO CARRY BOTH SIDES OF THE OPEN CONTRADICTION IN ROW NFRA_OPLGTW-Z-W67-S1, and this seat will not pick a side. The live base guards the tier line with 'not access.restricted and ...'; OG-cp-1 patch drops that guard. The base guard was PRESERVED, so live behaviour is unchanged -- and cp-1 own test_ogcp1_ac02 is RED as a direct consequence, because it expects the POST-ruling behaviour the guard prevents.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the conflict: ours (base c4c106aea1) reads 'tier = _tier_of(principal) if (not access.restricted and tool in TIER_ADMITTED_TOOLS) else None'; theirs (OG-cp-1 d5d2fb29bd) reads the same line WITHOUT 'not access.restricted and', and adds the person_access read after decide()",
+        "cp-1 did NOT remove the guard: at its own PARENT the line already read 'if (tool in TIER_ADMITTED_TOOLS)'. Its branch predates the guard, which entered at c37fdf95a5 (OG-bd-2) and fffac3b499 (OG-bd-3). The cp-1 commit message says its checks run after the existing gates which are never overridden, so preserving them is what it asks for",
+        "WHAT THE TEST SAYS WITH THE GUARD IN: tests/test_og_cp1.py::test_ogcp1_ac02 FAILS -- entitlement_denied where it asserts person_record_denied on blackdiamond_list_fees, the denial arriving from the profile gate (the principal restricted profile does not include that tool) before the person check is reached. 6 of 7 in that suite pass",
+        "AND THE REASON IS A ROW STILL OPEN: NFRA_OPLGTW-Z-W67-S1, class BLOCKING, disposition UNDER_INVESTIGATION. Its own text: OG-bd-2 test_ogbd2_ac03 asserts a PROFILED master_admin is DENIED blackdiamond_list_fees with entitlement_denied, while the CTO ruling (msg 33941 route (a)) requires that principal to be ALLOWED, and the OG-bd-3 order forbade editing that test. The guard in the live tree is what keeps the pre-ruling behaviour; dropping it is what the ruling asks for",
+        "fffac3b499 is itself a WIP commit whose own subject records the unresolved state: 'master_admin tier admission survives a profile; AC1 FAIL on OG-bd-2 ac03 contradiction (row W67-S1)' -- the title describes the intended behaviour while the code it landed guards against it",
+        "BOTH READINGS DENY THE TOOL. With the guard the refusal is entitlement_denied from the profile gate; without it the refusal is person_record_denied from the person record. Nothing is widened either way -- what changes is which gate fires first and therefore which code a caller sees"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-ap-21 step 3: take the person-roles hunks by 3-way against the base and run the suites of the taken tests.",
+    "world_is": "the hunk and the base disagree about a guard whose correct state is an OPEN CTO question (W67-S1), so no resolution satisfies both the base tests and the cp-1 test. The conservative one was taken -- the base guard preserved, live behaviour unchanged, the cp-1 test red with a named cause -- and no test was edited.",
+    "notes": "WHY THE GUARD WAS NOT JUST DROPPED TO GET A GREEN SUITE. Dropping it would (a) implement a CTO ruling inside a release whose order says nothing about it, (b) change the refusal behaviour of the entitlement chokepoint for every restricted profile, and (c) re-break OG-bd-2 test_ogbd2_ac03, which is the very contradiction W67-S1 is open on. A green suite bought that way would be a green suite about a different system. ONE ASK FOR THE ISSUER, a ruling rather than a preference: does OG-ap-21 ship the base guard (the cp-1 ac02 stays red, declared, and W67-S1 stays open) or the ruled behaviour (ac02 goes green, OG-bd-2 ac03 breaks, and W67-S1 is resolved in this release)? The cut is built the first way; the second is a one-line change plus a test the order forbids this seat to touch. THE SHAPE WORTH KEEPING: a 3-way conflict between a patch and a base can be a disagreement about what the system SHOULD do rather than about what the merge should contain -- and the tell is that the incoming side own TEST fails against the base behaviour. A merge resolved to make a test pass would have silently answered an open ruling."
+  }
+  ```
+
+  ```json
+  {
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T21:47:18Z",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "id": "NFRA_OPLGTW-Z-S154",
+    "one_line": "A MISSING SEAM THE TAKE-LIST OMITS, and the static scan meant to catch it cannot see the import. tests/test_admin_people_access.py is IN the take-list; it reaches app/admin_people_access.py through importlib.import_module inside a fixture; that module is at trunk and ABSENT at the base. All 7 of its tests ERROR with ModuleNotFoundError. The module is MP-pd-3 owner-gated per-person access handler -- NFRA_MCPORTAL work, not this release own.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the run: ERROR at setup of test_access_post_invokes_writer_with_set_person_access_and_relays_verdict -- ModuleNotFoundError: No module named app.admin_people_access, 7 errors of 7",
+        "the import is DYNAMIC: tests/test_admin_people_access.py line 54 does pa = importlib.import_module(app.admin_people_access) inside a fixture, alongside import_module calls for app.config, app.owner_gate, app.access_state and app.admin_grants",
+        "EVERY OTHER module it reaches that way IS at the base -- config, owner_gate, access_state, admin_grants, identity all present. Only admin_people_access is absent, so this is one missing file and not a broken cut",
+        "it exists at trunk and was added by b6dd9f9249 MP-pd-3 (PD.3): owner-gated per-person access handler; principal key on People rows -- an NFRA_MCPORTAL cell",
+        "THE SEAM INSTRUMENT READ CLEAR AND WAS WRONG TWICE OVER: p21_seams.py walks only the taken app MODULES, while the order says every app module the taken FILES import and the tests are taken files; and a second scan written over the taken TESTS still reported 0 missing, because it greps import STATEMENTS and this import is a function call. The RUN is the oracle; a static scan of a dynamic import is a clean-looking zero"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "step 3 take-list names tests/test_admin_people_access.py among the files taken WHOLE, and step 3 runs the suites of the taken tests.",
+    "world_is": "that test cannot run on this base, because its subject module is neither in the take-list nor at the base. Adding the module would ship an NFRA_MCPORTAL handler inside an NFRA_OPLGTW person-roles release, which is a scope decision and not a mechanical fix.",
+    "notes": "ONE ASK FOR THE ISSUER: drop tests/test_admin_people_access.py from the take-list, or add app/admin_people_access.py to it and accept that the MP-pd-3 handler rides this release. Neither was done here. WHY THIS IS THE THIRD VARIANT OF ONE DEFECT IN THREE RELEASES, which is the part worth generalising: ap-19 took a module whose seam the base lacked (Z-S137); the ap-20 hookup hunks carried a tool whose module the base lacked; ap-21 takes a TEST whose subject the base lacks. The family is a take-list that names a file without naming what that file needs, and each time the instrument that should have caught it was scoped one level too narrowly. The fix that would have caught ALL THREE is not a better grep -- it is running the taken tests against the cut BEFORE the release commit, which is what found this one."
+  }
+  ```
