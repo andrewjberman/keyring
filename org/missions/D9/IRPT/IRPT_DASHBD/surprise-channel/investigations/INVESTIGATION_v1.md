@@ -17058,3 +17058,246 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarms when the no-overwrite guard in write_day and the 2026-07-10 floor in owed_days (and in explicit day events) are merged and tested (round 125, cell DB-b-254). No landing packet is written before then. Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W208-S1 -- OBSERVATION: the handler's dry-run results carry no account count; the count is taken by the adapter's accounts_in_partition after the timed call
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W208-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~208",
+  "surfaced_at": "2026-10-15T11:35:25Z",
+  "one_line": "The handler's dry-run results carry the day, held, reason and rows but no account count, so the measurement takes each day's account count with the adapter's accounts_in_partition, one more GET per day outside the timed call",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-255 step 2 records, per day, the accounts and rows the derivation produced, from the handler's returned results.",
+  "world_is": "lambda_handler returns {ok, days, results, held}; each results entry carries day, held, reason and rows (account-return-daily/handler.py @fe343dbc14, the return statement and _run). The entry has no account count. The measuring script counts accounts with the adapter's accounts_in_partition, the call run_day makes, after the timed handler call and inside the sampled window. The two counts equal the two row counts of the day. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py @fe343dbc14: the lambda_handler return statement and the results entry written by _run",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py @fe343dbc14: run_day (presence_hold, accounts_in_partition, the dry-run result {day, held, reason, rows})",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~208/cot_memory_r125.py (the accounts_in_partition count after each day)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and words only; no account id is quoted. Hazard INERT: the measurement is unaffected, since the extra GET runs after the timed call and inside the sampled window, which only raises the recorded peak."
+}
+```
+
+## IRPT_DASHBD-D2-W208-S2 -- OBSERVATION: on this box the trading calendar answered from its hardcoded NYSE fallback (pandas_market_calendars absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W208-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~208",
+  "surfaced_at": "2026-10-15T11:35:25Z",
+  "one_line": "The measuring run printed WARN from lib/trading_calendar.py: pandas_market_calendars is absent on this box, so the previous-trading-day answers came from the hardcoded NYSE fallback (covering 2010 to 2027)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The handler's previous trading day and owed days come from lib/trading_calendar.py, the one frontier for the trading calendar.",
+  "world_is": "A dry-run of lambda_handler on this box at fe343dbc14 printed the WARN line: trading_calendar has no pandas_market_calendars and answers from the NYSE hardcoded-fallback table (2010 to 2027), with a note that the table must be regenerated before 2028. Both measured days, 2026-07-10 and 2026-10-13, fall inside that coverage, so the answers used are the fallback's. The calendar only chooses the derivation's window; the memory measurement is not changed by it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py @fe343dbc14: the fallback path that prints the WARN line",
+      "the WARN line printed by the run of org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~208/cot_memory_r125.py on 2026-10-15",
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py @fe343dbc14: prev_trading_day and owed_days"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and words only. Hazard INERT for this cell; the calendar owner decides whether the box should carry pandas_market_calendars."
+}
+```
+
+## IRPT_DASHBD-D2-W209-S1 -- OBSERVATION: the comment above the --method-row-only branch says it lists no partition, but line 2139 lists the custodian transactions prefix before the branch
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W209-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~209",
+  "surfaced_at": "2026-10-15T11:37:31Z",
+  "one_line": "The producer comment above the method-row-only branch says a method-row write needs no partition listing, but main lists the custodian transactions prefix before that branch, so the entry point issues one LIST on every run",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "account_return_daily.py@6e4604cc24 lines 2171-2173, the comment above the --method-row-only branch: 'BEFORE the inception scan and the partition listings: a method-row write needs none of them.'",
+  "world_is": "Line 2139, trn_days = partition_days(s3, src[transactions_prefix]), runs before the branch at line 2174. The method-row-only entry point therefore issues one paginated LIST of the custodian transactions prefix on every run, a dry run included. A grant for that entry point must carry the LIST as well as the PutObject.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@6e4604cc24 lines 2139 and 2171-2174 (the LIST precedes the branch)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@6e4604cc24 partition_days lines 468-479 (paginated LIST with a delimiter)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~209/RD_METHOD_ROW_READ_R125.json who_may_write.entry_point"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A reader who takes the comment at its word under-grants the entry point. Words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W209-S2 -- OBSERVATION: the reporting-gold handler docstring names one write prefix where the role's write list names six
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W209-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~209",
+  "surfaced_at": "2026-10-15T11:37:31Z",
+  "one_line": "The reporting-gold handler docstring says its role may write only the account_return_daily prefix; the role's write list names six gold prefixes, and dim_return_method is in none of them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@6e4604cc24 lines 14-15 (module docstring): 'this function's role may write ONLY the account_return_daily prefix'.",
+  "world_is": "reporting-gold/locals.tf irpt_rg_gold_write_arns (lines 104-111) and the WriteTheFiveGoldPrefixesOnly statement in reporting-gold/iam.tf (lines 92-97) name six gold prefixes: returns, class, activity, realized, unrealized and filled report values. The docstring is stale. The grant reading for dim_return_method is unchanged: it is in none of the six.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@6e4604cc24 lines 12-16",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf@6e4604cc24 lines 102-111",
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf@6e4604cc24 lines 92-97 and 175"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Only the docstring is stale; no grant is changed by this row. Counts and words only."
+}
+```
+
+## IRPT_DASHBD-D2-W209-S3 -- OBSERVATION (ARMED): the premise that the scheduled fire makes threshold_claims_source readable does not hold; no scheduled function reaches the writer and the served rows carry no claim column
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W209-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~209",
+  "surfaced_at": "2026-10-15T11:37:31Z",
+  "one_line": "The order's premise that the scheduled fire makes threshold_claims_source readable does not hold: no scheduled function calls emit_method_row, and the served method rows carry none of the six claim columns",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-b-256, the 'Why' paragraph: the thresholds-swap ledger's leg L7 expected threshold_claims_source to be readable after the first scheduled fire.",
+  "world_is": "The scheduled reporting-gold handler has zero calls of emit_method_row; its docstring says it omits the call by design. The only call sites are the two in account_return_daily.py main. The served v1 and v2 rows carry none of the six claim columns, so the scheduled fire cannot make them readable as built. The claim columns were added to the producer by commit 91e3ec5a47 on 2026-10-11, after v2 landed on 2026-10-03.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@6e4604cc24 (zero emit_method_row calls; docstring lines 12-16)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~209/RD_METHOD_ROW_READ_R125.json (served_versions and missing_in_newest)",
+      "git log of data/assets/scripts/gold/irpt_reporting/account_return_daily.py: commit 91e3ec5a47 (2026-10-11) adds the threshold claim columns"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Armed because the served threshold values carry no claim, so a reader of the current rows cannot tell measured from held. Disarms when the CTO takes option A, B or C in the record's who_may_write. This row proposes no grant. Words only."
+}
+```
+
+## IRPT_DASHBD-D2-W207-S1 -- BLOCKING: the round-125 floor contradicts an earlier handler test (expects 5 owed days from 2026-06-01, the floor gives 3), so the handler suite is one failure red and DB-b-254 cannot flip complete
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W207-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~207",
+  "surfaced_at": "2026-10-15T11:31:27Z",
+  "one_line": "The start floor in owed_days contradicts an earlier handler test: test_owed_days_three_examples expects 5 owed days from 2026-06-01 and the floor gives 3, so the handler suite is one failure red and DB-b-254 cannot flip complete",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "DB-b-254 step 3 and BOUNDS: owed_days takes the later of the day after newest_landed and FLOOR_DAY 2026-07-10; the handler test file holds at least 15 tests and all pass; the earlier tests keep their meaning and only their fake S3 objects may gain a list_objects_v2 method.",
+  "world_is": "The earlier assertion of test_owed_days_three_examples (handler test file, working tree at base 945f619bbd) is len(owed_days(2026-06-01, 2026-07-15)) == 5 == MAX_DAYS_PER_FIRE. With the floor the result is 3 days (2026-07-10, 2026-07-13, 2026-07-14), so the floor and that assertion cannot both hold. The floor is in the code as the order and the DB125-1-AC2 staged probe require, and the probe part of that criterion passes. The assertion was not edited. Handler pytest: 15 passed, 1 failed. Adapter pytest: 37 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest in the worktree on infra/aws/lambda/investor-reporting/account-return-daily/tests/test_handler.py: 1 failed (test_owed_days_three_examples, assert 3 == 5), 15 passed; base 945f619bbd",
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py owed_days with FLOOR_DAY, worktree at base 945f619bbd",
+      "order IRPT_DASHBD.TO-DB-b-254.cottonwood-write-guard-and-start-floor.md step 3 and BOUNDS, and the checker p125_guard.py probe owed_gap at base 945f619bbd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the earlier assertion needs an amendment (the floor changes the answer for that input) or the reading of the floor needs settling. The worker stopped on that point and did not edit the assertion. S79 stays ARMED until this is resolved and the handler suite is green. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W207-S2 -- OBSERVATION: the handler test fake already had a list method (a page queue for newest_landed_day), so the guard's undelimited LIST branches that method rather than adding one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W207-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~207",
+  "surfaced_at": "2026-10-15T11:31:27Z",
+  "one_line": "The handler test FakeS3 already had a list_objects_v2 that pops a page queue for newest_landed_day, so the guard's undelimited LIST had to be answered by a branch on the absence of Delimiter, not by a new method",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-254 step 2 and BOUNDS: where a fake S3 object lacks list_objects_v2, give it one that lists the keys put so far; only their fake S3 objects may gain a list_objects_v2 method.",
+  "world_is": "The handler test file's FakeS3 had list_objects_v2 already, answering newest_landed_day's paged LIST (with Delimiter) from a page queue. The guard's LIST carries no Delimiter. The method now answers an undelimited LIST from the keys planted or put so far and keeps the page queue for the delimited LIST, so the newest_landed tests keep their meaning. The adapter test FakeWriter had no list method and gained one, as the order allows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/account-return-daily/tests/test_handler.py FakeS3.list_objects_v2 at base 945f619bbd (the page queue before the edit)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_bd_account_return_daily.py FakeWriter at base 945f619bbd (put_object only before the edit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the order's text did not anticipate a fake that already had the method. No client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W207-S3 -- OBSERVATION: resolves IRPT_DASHBD-D2-W207-S1 under issuer Amendment 1 (commit 1bec1bfc83); the one contradicted handler example is changed to the cap check and the handler suite is green
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W207-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~207",
+  "surfaced_at": "2026-10-15T11:41:19Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W207-S1: the floor contradicted one earlier handler example; Amendment 1 (commit 1bec1bfc83) allowed that one example to change, and it now reads the cap check on 2026-09-15; the handler suite is 16 of 16 passing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-b-254 Amendment 1 (commit 1bec1bfc83, issuer 2.0.0_SA_COO~D2): the one superseded example in test_owed_days_three_examples may change to the cap check on 2026-09-15, the first owed day being 2026-07-10; nothing else in it or in any other earlier test changes beyond the fake list method.",
+  "world_is": "test_owed_days_three_examples in the handler test file now asserts len(owed_days(2026-06-01, 2026-09-15)) == 5 == MAX_DAYS_PER_FIRE and owed_days(2026-06-01, 2026-09-15)[0] == 2026-07-10. No other assertion of an earlier test changed. The handler suite passes 16 of 16 at the worker's commit; the adapter suite passes 37 of 37.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer Amendment 1 in the order file, commit 1bec1bfc83 (git log author 2.0.0_SA_COO~D2)",
+      "infra/aws/lambda/investor-reporting/account-return-daily/tests/test_handler.py test_owed_days_three_examples at the worker's commit carrying this row: pytest 16 passed",
+      "row IRPT_DASHBD-D2-W207-S1 (BLOCKING, ARMED) in this file, which this row resolves"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolves IRPT_DASHBD-D2-W207-S1 by an appended row, citing the issuer amendment commit 1bec1bfc83; S1's ARMED standing is disarmed by the issuer's amendment and the green suite. Form only; no client figure is quoted."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S80",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T11:56:00Z",
+  "one_line": "TO-DB-b-253 odd finds, none blocking: (1) the order names the artifact key irpt-49f-reporting-gold-lambda.zip, which does not exist (the root and the source map use the scope-less investor-reporting/irpt-reporting-gold-lambda.zip); (2) the builder only VERIFIES staged_from hashes, so the three new members' pin and sha256 had to be written before the build; (3) terraform fmt -check flags alignment in reporting-gold locals.tf; (4) the statement WriteTheFiveGoldPrefixesOnly now lists six prefixes; (5) 19 of 28 worktrees carry stale copies of the CLOSED thresholds-swap marker",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object on investor-reporting/irpt-49f-reporting-gold-lambda.zip: 404 and zero versions; investor-reporting/irpt-reporting-gold-lambda.zip: 4+ versions, current UcKN2ttQ... equals the live CodeSha256 (the rollback target); lambda-source-map.json artifact_s3_key and lambda.tf artifact_key agree on the scope-less name",
+      "build-and-upload.sh TMPJS_STAGE: a staged_from entry is hash-VERIFIED (declared sha256 vs git show of the pin) and a null sha256 always mismatches; a null pin resolves to the moving HEAD; the update script writes only artifact_s3_key and artifact_sha256. The three new members were pinned at 6459608700 and 45b34c2e5d (blobs equal to HEAD and to the sha256 the signed packet names) in commit a193e096c3 before the build",
+      "terraform fmt -check -diff on infra/aws/terraform/investor-reporting/reporting-gold: locals.tf lines 84-95 alignment (4 assignments); the file's sha256 b7a293c0578c is the one the signed packet names, so it was NOT rewritten",
+      "live role policy after the apply: statement WriteTheFiveGoldPrefixesOnly, 6 resources incl. filled_report_values; the sid keeps its old count word",
+      "git ls-tree of every worktree's HEAD for org/critical_paths/.open_deploys/irpt-dashbd-thresholds-swap-20261013.json: present in 19 of 28 after the issuer's close at ce030463bd (shared tree: absent)"
+    ]
+  },
+  "spec_asserts": "The order's key spelling, its claim that the build writes the three new members' pin and sha256, and its bound on the policy statement names hold as written.",
+  "world_is": "Nothing blocked: the act ran as signed (0/2/0, no invoke, ledger open at L6). Asks, all the issuer's or the CTO's: correct the key spelling in the order text; decide whether the packet's condition 3 should say the applier writes the pins BEFORE the build (the builder cannot write them); consider renaming WriteTheFiveGoldPrefixesOnly when the next policy change lands (a rename is a policy change, not done here); the fmt alignment is a repo defect owned by the author of locals.tf; the 19 stale marker copies sit in other seats' worktrees and are named, never closed."
+}
+```

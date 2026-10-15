@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~207</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -47,6 +47,8 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-207` (branch `wk-IRPT_DASHBD-2
 - **Client data.** None is involved; fixtures are synthetic.
 - **Refusal clause.** A criterion you cannot satisfy AS WRITTEN is reported with your measurement, never repaired, widened or satisfied by a route this order did not name. If a change to the adapter would break an earlier test in a way that is not just a fake client lacking `list_objects_v2`, or the floor cannot be added without changing a signature the checker calls, file a BLOCKING row with the numbers and stop on that point. An edit outside the grant is a defect: stop and file a row.
 - **Rows** go to the investigation file in the grant, ids `IRPT_DASHBD-D2-W207-S<k>` (start at S1), with the real current UTC time (`date -u +%FT%TZ`); append as BYTES. Commit with `.tools/safe-commit.sh`; run its gates in the background and wait for them. ASCII only in anything you write; every `.py` passes ruff (target py39, no semicolon-joined statements).
+
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-15, on worker row W207-S1; gate limb: a modification of an existing order, placeholders NONE, no criterion id, cell or path changes).** Step 3 said the earlier handler tests keep their meaning. One of them cannot: `test_owed_days_three_examples` pins round 122's third example, "newest 2026-06-01 on 2026-07-15 owes five days", and the floor makes that three (2026-07-10, 2026-07-13, 2026-07-14). The floor is the CTO's ruling; the example is superseded. You may change THAT ONE example in THAT ONE test to the cap check on a date where five days fit above the floor (newest 2026-06-01 on 2026-09-15 owes five days, the first being 2026-07-10), and nothing else in it or in any other earlier test beyond the fake S3 list method of step 2. State the change in the facts record's `words`. Resolve row `W207-S1` by an appended OBSERVATION row citing the amendment commit.
 
 <paths>
 data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py
