@@ -185,7 +185,7 @@ def cmd_downloads(a):
     rec_dir = os.path.join(a.root, "records")
     if not os.path.isdir(rec_dir):
         return refuse("record folder missing: " + rec_dir)
-    requests = files = unattributed = 0
+    requests = files = unattributed = by_batch = 0
     for dp, _dn, fn in os.walk(rec_dir):
         for f in sorted(fn):
             if not f.endswith(".fetch.json"):
@@ -196,20 +196,45 @@ def cmd_downloads(a):
                 return refuse("fetch record unreadable: %s (%s)" % (f, exc))
             if str(rec.get("at") or "")[:10].replace("-", "") != a.day:
                 continue
-            if not rec.get("device"):
-                # no device key (written before the key existed) or a null device: never guessed to be the asking box
+            device = rec.get("device")
+            if "device" not in rec:
+                # a record written before the device key existed: attributed only by the batch's declared device
+                # (records/<batch>/DEVICE_OF_BATCH.txt, first line); with no declaration it stays unattributed
+                device = batch_declared_device(dp)
+                if device is None:
+                    unattributed += 1
+                    continue
+                by_batch += 1
+            if not device:
+                # a null device: never guessed to be the asking box
                 unattributed += 1
                 continue
-            if rec["device"] != a.device:
+            if device != a.device:
                 continue
             files += 1
             requests += len(rec.get("requests") or [])
     if unattributed:
         print("NOTE: %d fetch record(s) on day %s carry no device and are not counted for any device"
               % (unattributed, a.day), file=sys.stderr)
-    print("DOWNLOADS-TODAY device=%s day=%s requests=%d files=%d unattributed=%d"
-          % (a.device, a.day, requests, files, unattributed))
+    print("DOWNLOADS-TODAY device=%s day=%s requests=%d files=%d%s unattributed=%d"
+          % (a.device, a.day, requests, files, " attributed_by=batch" if by_batch else "", unattributed))
     return 0
+
+
+DEVICE_OF_BATCH = "DEVICE_OF_BATCH.txt"
+
+
+def batch_declared_device(batch_dir):
+    """The device a batch folder declares in DEVICE_OF_BATCH.txt (its first non-empty line, stripped), or None when the
+    file is absent or empty. The declaration is a human-written fact about the batch's route (C-INTAKE), read here."""
+    p = os.path.join(batch_dir, DEVICE_OF_BATCH)
+    if not os.path.isfile(p):
+        return None
+    with open(p, encoding="utf-8") as fh:
+        for line in fh:
+            if line.strip():
+                return line.strip()
+    return None
 
 
 def main(argv=None):

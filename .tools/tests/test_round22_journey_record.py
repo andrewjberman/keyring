@@ -194,7 +194,8 @@ def cmd_check() -> bool:
     sig_exists = (REPO_ROOT / CHECK8_SIGNATURE_REL).is_file()
     if c8.get("verdict") == "passed" and sig_exists:
         check8 = "SIGNED"
-    elif c8.get("verdict") in ("failed", "unsigned") and not sig_exists:
+    elif c8.get("verdict") in ("awaiting", "failed", "unsigned") and not sig_exists:
+        # 'awaiting' is the tool's recorded state; 'failed' plus an absent file is the form written before it existed
         check8 = "AWAITING"
     else:
         check8 = "OTHER"
