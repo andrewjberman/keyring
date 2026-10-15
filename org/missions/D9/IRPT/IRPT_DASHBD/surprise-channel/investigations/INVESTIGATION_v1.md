@@ -16592,3 +16592,114 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Resolution note for IRPT_DASHBD-D2-W200-S1, which is left as written (append only). The measured day is not quoted here; the counts, seconds and megabytes are in the record. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W201-S1 -- BLOCKING: the worktree's sparse checkout carries no infra/aws path, so all four grant paths of TO-DB-b-247 are absent on disk and the order stops before any edit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T09:40:35Z",
+  "one_line": "TO-DB-b-247 names four infra/aws paths in its grant (handler.py, the new test file, iam.tf, locals.tf); the worktree C:/dev/wk-irpt-dashbd-201 is a sparse checkout that excludes infra/aws on disk, so the order is not executable here and the worker stopped with no edit, no commit to infra and no criterion run",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-247 <paths> names infra/aws/lambda/investor-reporting/reporting-gold/handler.py, infra/aws/lambda/investor-reporting/reporting-gold/tests/test_filled_per_day.py, infra/aws/terraform/investor-reporting/reporting-gold/iam.tf and infra/aws/terraform/investor-reporting/reporting-gold/locals.tf as the worker's write grant, and the WORKER FACE says the worktree carries them (the order's own first act: if the worktree does not carry the paths the order names, that is a BLOCKING row and a stop).",
+  "world_is": "In the worktree at HEAD 7d5697ef1a, git sparse-checkout list returns .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph and org/standards. infra/aws does not exist on disk: ls reports no such directory, and all four grant paths are ABSENT on disk. The index still tracks the paths (git ls-files -v -- infra/aws: 9191 of 9191 entries carry the skip-worktree flag), and the three repo files are tracked at HEAD (git ls-tree HEAD: 3 of 3). The base checkout C:/dev/ajb_workspace on the same commit carries handler.py on disk. The checker, the order file and the investigation file ARE present in the worktree. Per the order's first-act rule the worker did not rebuild, extract, widen the sparse scope or re-checkout the tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-dashbd-201 (HEAD 7d5697ef1a): .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/standards",
+      "git ls-files -v -- infra/aws in C:/dev/wk-irpt-dashbd-201: 9191 of 9191 entries carry the skip-worktree flag; ls -d infra/aws reports no such directory",
+      "git ls-tree HEAD infra/aws/lambda/investor-reporting/reporting-gold/handler.py infra/aws/terraform/investor-reporting/reporting-gold/iam.tf infra/aws/terraform/investor-reporting/reporting-gold/locals.tf @7d5697ef1a: 3 of 3 present",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-247.per-day-self-invoke-split-of-the-hop-1-filled-stage.md @7d5697ef1a (WORKER FACE first act and <paths> block)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer and the drain owner: the grant's infra/aws paths are not materialised in this worktree, so DB-b-247 cannot be executed here as written. The worker did not widen the sparse scope or re-check-out the tree (the order forbids rebuilding the tree to make an order executable). Order stays pending; no proof instance written; no status flip. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W201-S2 -- resolves IRPT_DASHBD-D2-W201-S1: the worktree's sparse checkout is disabled by the issuer's ruling, and infra/aws is on disk
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T09:49:10Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W201-S1: the issuer ruled the sparse checkout was a provisioning error and ran git sparse-checkout disable in the worktree; infra/aws and the four grant paths are now on disk, so TO-DB-b-247 proceeds as written",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W201-S1 (BLOCKING) recorded that TO-DB-b-247's four infra/aws grant paths were absent from the worktree C:/dev/wk-irpt-dashbd-201 because it was a sparse checkout, and that the order stops on that premise.",
+  "world_is": "The issuer (2.0.0_SA_COO~D2) ruled the sparse checkout a provisioning error (the worktree provisioner defaults to sparse and the paths were not added) and disabled it in the worktree. The worker re-measured: git config core.sparseCheckout reports false, git sparse-checkout list reports the worktree is not sparse, infra/aws is on disk, handler.py, iam.tf and locals.tf are present, and the tests directory is present. The new test file is not yet written, as the order intends. The order proceeds as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer ruling relayed to worker 0.9.0_WK_IRPT_DASHBD~201 by the coordinator on surprise row IRPT_DASHBD-D2-W201-S1: git sparse-checkout disable run in C:/dev/wk-irpt-dashbd-201 (ruling text quoted in the worker's own session, not in the repo)",
+      "git config core.sparseCheckout in C:/dev/wk-irpt-dashbd-201 (re-measured 2026-10-15T09:48:12Z): false; git sparse-checkout list: not sparse",
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf and infra/aws/lambda/investor-reporting/reporting-gold/handler.py present on disk in C:/dev/wk-irpt-dashbd-201 at HEAD 67c4202df1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution note for IRPT_DASHBD-D2-W201-S1, which is left as written (append only). The fact the surprise row recorded is now false in the worktree; the worker executes DB-b-247 as written. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W201-S3 -- BLOCKING: the 105 earlier handler tests cannot all pass after the TO's own step 2 (run() must stop calling filled_stage); 104 pass, 1 fails
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T09:51:43Z",
+  "one_line": "TO-DB-b-247 step 2 requires run() to stop calling filled_stage, and the order's own refusal clause requires that the 105 earlier handler tests all pass; they cannot both hold: after the step-2 edit 104 pass and 1 fails, test_stage_runs_after_the_class_and_lot_stages, which asserts the scheduled run appends 'filled' through the patched filled_stage. The worker stopped at this point, as the order directs.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-247 step 2: run() no longer calls filled_stage (checker DB122-2-AC1 rejects a Name call to filled_stage inside run). Refusal clause: if the 105 earlier handler tests cannot all pass after the edit, file a BLOCKING row with the numbers and stop. Step 3 names the 105 as 'must keep passing'.",
+  "world_is": "After the step-2 edit (handler.py: five functions added, run() calls owed_filled_days and run_filled_day, run() takes chain=None, lambda_handler reads filled_day_event; 114 lines added, 6 existing lines changed or removed in the handler), the directory infra/aws/lambda/investor-reporting/reporting-gold/tests runs 105 tests: 104 passed, 1 failed. The failure is FilledStageTests.test_stage_runs_after_the_class_and_lot_stages in test_filled_report_values_stage.py line 160: expected order ['returns','class','lots','filled'], got ['returns','class','lots']. That test appends 'filled' only from a patched filled_stage, which the edited run() no longer calls. The test file is outside the TO's grant, so the worker did not edit it. ruff (py39) passes on handler.py. The worker did not commit the handler change (a committed red state would break the 105); the uncommitted diff is in the worktree and saved as a patch under the worker's scratch folder. Steps 3 to 5, the Terraform, the facts record, the proof instance and the status flip were not done.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest on infra/aws/lambda/investor-reporting/reporting-gold/tests in C:/dev/wk-irpt-dashbd-201 at HEAD 88e486a113 with the step-2 edit: 1 failed, 104 passed (the failure text quoted above)",
+      "pytest on the same directory at HEAD 88e486a113 before the edit: 105 passed (baseline)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_filled_report_values_stage.py @88e486a113 lines 88-103 (the patched filled_stage appends 'filled') and line 160 (the asserted order)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_split.py @88e486a113 (check_handler_source: run() must not call filled_stage; the test-name and pytest arms of DB122-2-AC1 require 113 passing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the order cannot satisfy its step 2 and its 105-test clause together without an edit to tests/test_filled_report_values_stage.py (outside the grant) or a changed step 2. The worker has not widened the grant or edited that test. The step-2 handler diff is uncommitted in the worker's worktree. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W201-S4 -- resolves IRPT_DASHBD-D2-W201-S3: Amendment 1 (82091e0b7f) puts the one pinned test in the grant, and the step-2 handler change plus that one test update pass the whole handler directory
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T10:00:04Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W201-S3: the issuer's Amendment 1 (commit 82091e0b7f) puts tests/test_filled_report_values_stage.py in the grant for one change; the worker updated only test_stage_runs_after_the_class_and_lot_stages and the handler directory now passes 120 tests",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W201-S3 (BLOCKING) recorded that TO-DB-b-247 step 2 (run() stops calling filled_stage) and the refusal clause (the 105 earlier handler tests all pass) could not both hold, and that the worker stopped on that point.",
+  "world_is": "The issuer committed Amendment 1 as 82091e0b7f (order status stays pending): the order's paths name tests/test_filled_report_values_stage.py for ONE change, the update of test_stage_runs_after_the_class_and_lot_stages to the new behaviour, and the checker allows that file. The worker made that one change (every other test of the file is byte-identical: the file's diff is one method, 17 added and 3 removed lines), committed the handler, the new test file and iam.tf in 66b0a5a021, and the facts record in 940ec59113. The whole handler test directory passes 120 tests (105 earlier, 15 new). The three criteria DB122-2-AC1, AC2 and AC3 print PASS at the worker's HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 82091e0b7f -- org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-247.per-day-self-invoke-split-of-the-hop-1-filled-stage.md (Amendment 1 in the order's refusal clause and <paths>)",
+      "git show 82091e0b7f -- org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_split.py (OLD_TEST_REL allowed in the facts and stray-file clauses)",
+      "git diff --numstat 66b0a5a021^ 66b0a5a021 -- infra/aws/lambda/investor-reporting/reporting-gold/tests/test_filled_report_values_stage.py (the one method changed in the worker's commit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~201/RD_SPLIT_FACTS_R122.json @940ec59113 (tests: 15 new, dir_total 120; files_changed with the four hashes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution note for IRPT_DASHBD-D2-W201-S3, which is left as written (append only). The order's own criteria at the worker's HEAD are recorded in the order's proof instance. Counts and words only; no client figure is quoted."
+}
+```
