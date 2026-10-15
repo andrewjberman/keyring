@@ -16163,6 +16163,35 @@ name the one known failure instead of silently inheriting it.
 
   ```json
   {
+    "id": "NFRA_OPLGTW-Z-S134",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T01:35:12Z",
+    "one_line": "OG-ap-15 step 6 says to update each family's lambda-source-map entry at its live grade, and for the four families I closed earlier only artifact_sha256 was updated: last_deployed_commit and last_deployed_at still read e0750442c9 / 2026-09-27 for orion, eclipse and blackdiamond, and schwab's read OG-ap-12's values rather than this order's pin 12ecbe2b8f. I fixed etf (the family graded now) and left the other four, because their grades are already terminal and eclipse's entry is in a LIVE PEER's hands.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lambda-source-map.json functions[] read at 2026-10-15T01:3xZ: artifact_sha256 EQUALS this order's package_sha256 for schwab, etf, orion and blackdiamond (4 of 5)",
+        "last_deployed_commit / last_deployed_at before my etf edit: schwab a11240c01c / 2026-10-12T23:40:59Z (the OG-ap-12 deploy), and orion, eclipse, blackdiamond AND etf all e0750442c9 / 2026-09-27T10:44:31Z",
+        "this order's own build commits are 12ecbe2b8f, 58ee124eb7, 67c7697ede, b915719f25 and fdf2b07a9e -- none of which appears in any of those four entries",
+        "TO-OG-ap-15 step 6 verbatim: 'Then update infra/aws/lambda/ci/lambda-source-map.json's entry for the family and close the ledger'",
+        "eclipse's artifact_sha256 reads GxWRZhTMvkSWAXuBQHuzjZcAwQ3mJg3C0da8/ZoD6zU= (the REPO's current build) against this order's live clrUz/ikqSMgd5Edtx7gJFceLH2LSjow7c6Vfqtw64g=, which is OG-ec-2's in-flight work: 0.7.0_AE_CloudOps~ZS committed 9121e4f6ac 'eclipse converter artifact uploaded and stamped' at 19:21Z today, and its own row Z-S131 names both hashes",
+        "etf is now corrected in place: pin 58ee124eb785f9f73d0fec0482ccd79e131af841, last_deployed_at 2026-10-14T00:45:58Z (the Lambda's own LastModified), deployed_code_sha256 equal to artifact_sha256; 234 of 235 sibling entries compared and unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step 6 binds the source-map update to each family's live grade, so a closed family's entry names this order's pin.",
+    "world_is": "For four of the five it names an older one. Nothing BREAKS: CLAUDE.md rule 4 is explicit that this map pairs a Lambda with its repo dir and is NOT a deployed-vs-built control, so a stale pin misleads a reader without disarming any mechanism -- which is exactly why it went unnoticed through four closes. The fields that ARE load-bearing for this order (artifact_sha256) are right for all four, and eclipse's difference is a live peer's act rather than drift.",
+    "notes": "Two routes for the issuer: (a) I backfill schwab, orion and blackdiamond's pin and date from each family's ap15_build.json entry and its Lambda's own LastModified -- cheap, but it edits three TERMINAL family grades and touches a file three other seats committed to today; or (b) rule it cosmetic and leave them, since the map is not a currency control. I recommend (a) for schwab specifically, because its entry names a DIFFERENT real deploy (OG-ap-12) rather than an obviously stale default, which is the shape most likely to be misread as current. eclipse must be left alone either way until OG-ec-2 lands. The general lesson: when a step says 'update the entry', a partially-updated entry is worse than an untouched one -- etf's read artifact_sha256 NEW beside deployed_code_sha256 OLD, which is internally contradictory and reads as a deploy that half happened. Grade the whole entry or none of it."
+  }
+  ```
+
+  ```json
+  {
     "id": "NFRA_OPLGTW-Z-W93-S1",
     "project": "NFRA_OPLGTW",
     "fabric": "site-z",
