@@ -16247,6 +16247,60 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W412-S1 -- A Cottonwood account_dim write whose ETag check fails leaves an unverified object at its key, and the handler's landed-partition guard then refuses every later write to that day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W412-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~412",
+  "surfaced_at": "2026-10-15T08:59:35Z",
+  "one_line": "A Cottonwood account_dim write whose ETag check fails leaves an unverified object at its key, and the handler's landed-partition guard then refuses every later write to that day, so the writer's same-key overwrite cannot run.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "data/assets/scripts/lib/stream_parquet.py finalize(), lines 138-145: on an ETag mismatch the unverified object at the key is 'left for the idempotent same-key reconvert to overwrite'.",
+  "world_is": "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py lines 133-134 return TARGET_ALREADY_LANDED for any object under the day's gold prefix before any silver read, and data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py lines 184-185 raise FileExistsError for a non-empty partition. No handler or adapter path overwrites an existing key, so an unverified object blocks every later invoke and scheduled fire for that day. The function is not deployed, so the hazard is latent: it needs an integrity failure to arise.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/lib/stream_parquet.py lines 136-148 (put_object then the ETag comparison and StreamWriteUnverified) @cd0675ff9c",
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py lines 133-134 (gold_partition_exists then TARGET_ALREADY_LANDED) @cd0675ff9c",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py lines 184-185 (FileExistsError for a non-empty partition) @cd0675ff9c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-19. The branch was read, not exercised: no write was made. The unverified-write branch is written into the packet's Both branches section, and the CTO's half is asked for the ruling (Questions for the CTO's half, item 7)."
+}
+```
+
+## IRPT_DASHBD-D2-W412-S2 -- The bounds arm DBC124-2-AC1 fails on the issuer's own base-pinning commit, which lies inside the checker's range and changes the base file the arm does not allow
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W412-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~412",
+  "surfaced_at": "2026-10-15T09:03:03Z",
+  "one_line": "The bounds arm DBC124-2-AC1 fails on the issuer's own base-pinning commit cd0675ff9c, which lies inside the checker's range and changes checks/r124/BASE_R124.txt, a file the arm does not allow; no worker file outside the grant changed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-c-19 criterion DBC124-2-AC1: the only files changed since the base are the packet, the record, the worker's other records in its folder, the channel and the order; the arm's ALLOWED list in checks/r124/p124_bcw.py names those and nothing under checks/.",
+  "world_is": "git log --first-parent --no-merges --name-only over f02b7e9545..HEAD lists cd0675ff9c (the issuer's amendment, checks/r124/BASE_R124.txt, one line changed) and 452aa82ce2 (the worker's packet commit). The arm reports 'files outside the grant changed: ...checks/r124/BASE_R124.txt' and prints DBC124-2-AC1 FAIL at 452aa82ce2. The worker did not edit the checker, the base file or any file outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r124/p124_bcw.py ac_2 and the ALLOWED tuple @cd0675ff9c",
+      "git log f02b7e9545..HEAD --name-only at 452aa82ce2: cd0675ff9c changes checks/r124/BASE_R124.txt only",
+      "python -I checks/r124/p124_bcw.py . DBC124-2-AC1 at 452aa82ce2: 'files outside the grant changed: ...BASE_R124.txt' and FAIL, rc 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-19. The checker and its base are the issuer's. The order stays open on DBC124-2-AC1 until the issuer decides whether the base or the arm changes. The worker did not repair, widen or re-base the arm."
+}
+```
+
 ## IRPT_DASHBD-D2-W196-S1 -- the order's population wording differs from run(): the scheduled set is the holdings population unioned with the newest returns accounts, and the measurement used run()'s set
 
 ```json
