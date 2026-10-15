@@ -35210,3 +35210,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W392-S1 (the 45 symbols are CUSIPs, not tickers): INERT, form only. D2-W392-S3 (the classifier's DynamoDB get_item reads sit outside the order's stated S3 surface): INERT, reads only, the bound is widened in the next order's text. D2-W392-S2 (the CUSIP-keyed canonical rows carry no sub_asset_class, writer mdpf-secclass-clean-names-v2): stays ARMED, owner me; it does not reach this release because pin 2 carries no port; disarm condition: the CTO rules the port release's option (keep_prior_sub_class, documented_correction or backfill_canonical_rows). D2-W390-S1 and S2 (49financial at pin 2: 119 changed nodes and the built gate REFUSED on classified_security_lost while live PUBLISHED): the STOP, carried to the CTO; the measured cause is that the live 49financial bundle already carries more CUSIP handling (12 lines) than the Cottonwood and Inflection live bundles (2 lines), so reverting the port moves 49financial; Cottonwood 255 and Inflection 841 reproduce as the signed cash rule alone. Recommendation: a per-firm pin, pin 2 for Cottonwood and Inflection (signed scope 255 and 841), and for 49financial the closure-fix pin b1d354cfc9 (the round-196 differential of 32 held with the port in) or its own measured pin; hazard INERT (nothing minted), LOAD-BEARING for the release."
 }
 ```
+
+## IRPT_BCKEND-D2-S178 -- The live 49financial producer already carries the CUSIP port: it is the closure-fix pin minus the signed changes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S178",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T01:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The live 49financial holdings_snapshot.py is the closure-fix pin b1d354cfc9 minus exactly the signed changes (40 differing lines: the cash rule, its two call sites, the exemption repair and the generated registry line); it therefore already carries the CUSIP port, which explains why pin 2 (port reverted) moves 49financial by 119 nodes and pin 1 holds it at 32.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "diff of the live bundle files (downloaded by version id in C:/dev/_scratch390/live) against git show of holdings_snapshot.py at each pin, differing-line counts: live 49financial vs b1d354cfc9 40, vs 49467335d2 (the old release pin) 40, vs 5fad7eaaa8 59; live cottonwood vs b1d354cfc9 125, vs 5fad7eaaa8 102; live 49financial vs live cottonwood 85",
+      "the 40 lines against b1d354cfc9 read: the generated registry stamp, the apply_cash_rule function and its two call sites in classify_security, and the carried-forward exemption helper; no CUSIP line differs"
+    ]
+  },
+  "spec_asserts": "The CTO's round-197 ruling treats the CUSIP port as a change that no live producer carries, so reverting it leaves 49financial at 32 (CTO analysis item 2).",
+  "world_is": "The live 49financial producer already runs the CUSIP port; Cottonwood's and Inflection's live producers do not. The port is therefore not 'its own release' for 49financial: it is live there. A per-firm pin follows from the bytes: 49financial on b1d354cfc9 (parity with live except the signed changes, 32 measured in round 196), Cottonwood and Inflection on 5fad7eaaa8 (255 and 841, the signed cash rule alone). Read from file bytes only; the live 49financial bundle's own minting commit was not found and the 12 cusip-named lines were not read line by line."
+}
+```
