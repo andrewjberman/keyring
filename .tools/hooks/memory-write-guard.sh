@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# memory-write-guard.sh -- PreToolUse (Write|Edit): seats do not write lessons to the auto-memory directory.
+# memory-write-guard.sh -- PreToolUse (Write|Edit|Bash|PowerShell): seats do not write lessons to the auto-memory directory.
+# Bash/PowerShell: a command that WRITES into the memory directory (redirect, tee, sed -i, cp/mv onto it, or a
+# PowerShell write cmdlet) gets the same refusal; a read passes (1.0.0_SA_CTO~Z msg 34396, the same gate on a second path).
 #
 # Andrew-direct 2026-09-24 ~17:0xZ ("yes instead of the cap"), record
 # org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_MEMORY_PREFERENCES_ONLY_AND_THREE_HELD_ITEMS_YES.md:
