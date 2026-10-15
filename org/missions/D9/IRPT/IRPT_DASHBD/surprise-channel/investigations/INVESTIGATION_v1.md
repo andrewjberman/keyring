@@ -14911,3 +14911,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "S9 carries to the CTO: Cottonwood needs a join key between its household key and its return table (and a return table wider than 12 accounts) before any Cottonwood household report; the Cottonwood account_dim apply is B-CW's pair. The QA runs return in a later order once a key exists."
 }
 ```
+
+## IRPT_DASHBD-D2-W308-S1 -- The client-data check of safe-commit found its hashed account-id list absent on this box, so the commit that tracked the round-120 probe script was not checked for client account ids.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W308-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~308",
+  "surfaced_at": "2026-10-15T05:32:08Z",
+  "one_line": "The client-data check of safe-commit found its hashed account-id list absent on this box, so the commit that tracked the round-120 probe script was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "The commit step of TO IRPT_DASHBD.TO-DB-i-8 runs .tools/safe-commit.sh, whose client-data check (.tools/git-hooks/client-data-check.py) refuses a commit that carries a client account id; the check reads a hashed list at OPAL_ACCOUNT_ID_HASHES or the default path under the user profile.",
+  "world_is": "Measured on commit ee9050798e (one file, 344 insertions, the probe script): safe-commit printed a WARN that the hashed account-id list is ABSENT at the default path on this box and that the commit was NOT checked for client account ids (absent is not empty). The committed file carries no account id, household id or client value; its content was scanned by hand before the commit. Future commits on this box pass this check unchecked until the list is placed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/client-data-check.py@ee9050798e (line 78 prints the ABSENT WARN)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~308/second_household_probe.py@ee9050798e (the commit that printed the WARN)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-8 as a missing capability (the gate could not run its check). Counts and shapes only; no account id or client value. The disarm owner is the issuer's routing choice; the owner of the hashed list is not verified by this worker."
+}
+```
