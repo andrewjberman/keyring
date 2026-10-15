@@ -625,6 +625,47 @@
       "disposition": "UNDER_INVESTIGATION",
       "spec_asserts": "TO RV-m-2 worker face: ALL state, effects, handlers, props and behaviour of the modal stay exactly as they are.",
       "world_is": "requestClose wraps onClose in the three action modals and does nothing while isSubmitting, so the X and Escape cannot close an in-flight submission, as the disabled X did. A backdrop click during submission is now also ignored, which differs from base. Escape and focus return are new to these modals because the frame provides them; the frame's API has no prop to disable the Close control."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S6",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T09:27:19Z",
+      "one_line": "ModalFrame's focus-on-open effect runs after React's autoFocus, so the autoFocus search and weight inputs of SecurityLookupModal and BulkEditModal likely lose focus to the dialog surface on open.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~RB -- ModalFrame's focus effect should skip the focus call when focus is already inside the surface; route to the owner of the RV-m-1 frame.",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "portal/src/ui/components/modal/ModalFrame.tsx at 1b157a12: the focus effect is a useEffect that calls surfaceRef.current.focus() on open",
+          "portal/src/pages/PortfolioManagement/components/SecurityLookupModal.tsx and BulkEditModal.tsx at 8c65d1c9 (the adoption commit, portal branch wk-DSGN_RBNDV2-8-portal): the input carries autoFocus; React applies autoFocus during commit, before passive effects; not walked in a browser (no server, per the order)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-3 worker face: ALL state, effects, handlers, props and behaviour of each adopted modal stay exactly as they are.",
+      "world_is": "The adopted modals keep their autoFocus attributes unchanged. By the order of React's commit and effect phases, the frame's focus effect moves focus from the input to the surface on open, so the autofocus behaviour of the two inputs is likely lost. Not walked in a live DOM; the fix is in the frame, outside this order's grant, and the adopted files were not changed to work around it."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S7",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T09:27:19Z",
+      "one_line": "ModalFrame adds a Close control and Escape-to-close to modals that had neither: UploadConfirmationModal and the ExportModal success view got a new close control, and Escape now closes ExportModal while a submission is in flight (its X and backdrop could already do so).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git show adc70061:portal/src/pages/PortfolioManagement/components/UploadConfirmationModal.tsx: no close button in the header; the backdrop calls onClose",
+          "git show adc70061:portal/src/pages/PortfolioManagement/components/ExportModal.tsx: the success header has no close button; the form X and backdrop are unguarded (no disabled); Cancel is disabled while submitting"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-3 worker face: ALL state, effects, handlers, props and behaviour of each adopted modal stay exactly as they are.",
+      "world_is": "These two gains come from the frame's shared chrome, not from the adopted files. UploadPortfolioModal's header X was disabled while uploading; the frame's Close control cannot be disabled, so the handler guard (handleClose) carries that rule, as recorded in DSGN_RBNDV2-W8-S5."
     }
 ]
 ```
