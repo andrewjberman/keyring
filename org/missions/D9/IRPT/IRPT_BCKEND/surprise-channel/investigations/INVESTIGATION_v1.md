@@ -39047,3 +39047,160 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The schema path is absent from the sparse worktree; the schema is present in the committed tree at HEAD and was read there; the rows here conform to its required fields and enums."
 }
 ```
+
+## IRPT_BCKEND-D2-W428-S1 -- The pin worktree came up sparse: the shared repo config sets core.sparseCheckout=true, so the pin's closure was missing until sparse checkout was disabled in that worktree alone.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W428-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~428",
+  "surfaced_at": "2026-10-15T16:22:27Z",
+  "one_line": "The pin worktree came up sparse: the shared repo config sets core.sparseCheckout=true, so the pin's closure was missing until sparse checkout was disabled in that worktree alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB-pr-589 worker face, Do step 2: create a worktree outside the repository with git worktree add --detach <scratch>/pin <PIN> and run the declared builder from it; the order gives no sparse condition for the pin.",
+  "world_is": "git worktree add on this box inherited core.sparseCheckout=true from the shared .git/config, and the pin's own config.worktree carried it, so the pin held only the sparse directories. A closure member, data/assets/scripts/silver/opal_strategy_matcher.py, was absent, and build_bundle_payload refused with member authority missing. git sparse-checkout disable inside the pin worktree alone restored the full closure with zero dirty entries; the base worktree keeps its own sparse list.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/opal_strategy_matcher.py@c5c06462414832b495c243a86254a4b959ba7c9b is a declared closure member in .tools/safe_deploy_core.py@c5c06462414832b495c243a86254a4b959ba7c9b (_IRPT_HOLDINGS_CLOSURE) and is present in the git tree",
+      "git config --show-origin core.sparseCheckout read file .git/config true (shared) before the disable; the pin worktree config.worktree read false after the disable"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only: the builder failed loudly and wrote nothing. A worker pinning a worktree on this box should check core.sparseCheckout before it builds from the pin."
+}
+```
+
+## IRPT_BCKEND-D2-W428-S2 -- The IB-pr-549 mints record states the landed bundles by version id and after_sha256_equals_built, not by a sha256 value, and its apply record is not in the folder.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W428-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~428",
+  "surfaced_at": "2026-10-15T16:22:27Z",
+  "one_line": "The IB-pr-549 mints record states the landed bundles by version id and after_sha256_equals_built, not by a sha256 value, and its apply record is not in the folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB-pr-589 worker face, Do step 3: the live bundle's sha256 must equal the sha256 the IB2 record of IB-pr-549 states as landed, and a difference is a STOP; the face names the record as the landed bundle sha256 per firm. The IB-pr-549 order names deliverables/0.7.0_AE_CloudOps~IB2/IB199-2_apply_record.json as its apply record.",
+  "world_is": "IB199-2_mints_and_business_date_statement.json holds per firm before_version_id, after_version_id, minted_from_pin and after_sha256_equals_built true; it holds no sha256 value. The IB-pr-549 apply record IB199-2_apply_record.json is not in the IB2 folder. The live IsLatest version id of each of the three bundles equals its after_version_id (3 of 3), so the comparison used the version id; the live sha256 is measured and recorded in IB222-1_holdings_bundles_candidate.json without a stated value to compare against.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB199-2_mints_and_business_date_statement.json@c5c06462414832b495c243a86254a4b959ba7c9b holds after_version_id and after_sha256_equals_built with no sha256 value",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-549.apply-holdings-producer-release-per-firm-pins.md@c5c06462414832b495c243a86254a4b959ba7c9b step 9 names IB199-2_apply_record.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only: the version-id match is the only landed identity the record states; the issuer decides whether a sha256 figure should be added to the IB2 record."
+}
+```
+
+## IRPT_BCKEND-D2-W428-S3 -- The three merges were expected to change only holdings_snapshot.py at the pin, but seven other closure members differ between the live bundles and the pin; each is named with a reason in the candidate record.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W428-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~428",
+  "surfaced_at": "2026-10-15T16:22:27Z",
+  "one_line": "The three merges were expected to change only holdings_snapshot.py at the pin, but seven other closure members differ between the live bundles and the pin; each is named with a reason in the candidate record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB-pr-589 worker face, Do step 4: holdings_snapshot.py is the member the merges IB-pr-576, 577 and 582 change after the pins; every other changed member is named in extra_changed_reasons with a reason of 30 or more characters (the drift guard).",
+  "world_is": "Between the minting pins and the base commit, seven further closure members changed: data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py, dim_mdpf_aum_metrics.py, mdpf_category_registry.py, infra/aws/lambda/investor-reporting/holdings/publication.py, infra/logic/registry/exemptions.json, reporting_policies.json and lib/opal_naming.py, each in one or two commits. The live bytes equal the minting pin blob for all 46 closure members of each firm (138 of 138 checks), so the seven are the drift the live bundles lack. Every firm's candidate names all seven with a reason; holdings_snapshot.py is among the changed members in each firm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~428/IB222-1_holdings_bundles_candidate.json@c5c06462414832b495c243a86254a4b959ba7c9b is the candidate record; its extra_changed_reasons holds seven entries per firm",
+      "git log between the minting pin and c5c06462414832b495c243a86254a4b959ba7c9b for each of the seven paths, counted by the harness ib222_1_holdings_candidate.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only: the candidate is a measured comparison and ships nothing. Whether the never-widen pair carries the seven is the CTO's to rule; the apply must name them."
+}
+```
+
+## IRPT_BCKEND-D2-W430-S1 -- The import chain of IB-pr-587 reads data/firm_registry.json at the repo root, which no named sparse directory carries; the worker used the module's own IRPT_FIRM_REGISTRY override on a scratch copy of the tracked blob.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W430-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~430",
+  "surfaced_at": "2026-10-15T16:27:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The import chain of IB-pr-587 reads data/firm_registry.json at the repo root, which no named sparse directory carries; the worker used the module's own IRPT_FIRM_REGISTRY override on a scratch copy of the tracked blob.",
+  "spec_asserts": "The worker face says to add the directory of each import error until the named test files collect, using the directories it lists; those directories are the sparse set the chain needs.",
+  "world_is": "At base a4a81b30af the chain reads data/firm_registry.json: infra/aws/lambda/investor-reporting/_ids/ids.py _find_registry (line 136) raises IdRefused when no candidate exists. The worktree is in cone mode, so the only sparse add that brings that root file is the whole data/ tree. The worker set IRPT_FIRM_REGISTRY to a scratch copy of the tracked blob (not committed) and added docs/contracts/investor-reporting, which the face names, for the currency authority. Both are local only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ids.py:136 at a4a81b30af: _find_registry raises IdRefused when no candidate path exists (read in the worktree)",
+      "data/firm_registry.json is a tracked blob at a4a81b30af and is absent from the worktree sparse tree",
+      "pytest on the existing mapping test, in order: ids not found; IdRefused at collection; CurrencyAuthorityRefused (2 failed, 2 passed); 4 passed after the two additions"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W430-S2 -- The worker's Read of the order file returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W430-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~430",
+  "surfaced_at": "2026-10-15T16:27:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The worker's Read of the order file returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker.",
+  "spec_asserts": "The worker face is the whole worker context and the RECORD FACE never travels to a worker; the worker face instructs the worker not to read the RECORD FACE.",
+  "world_is": "The Read tool returned all 94 lines of the order file, including the RECORD FACE section after the paths block. The worker had no way to read only the worker face with the tool it was given. The worker wrote its record from the worker face clauses and did not change its plan from the RECORD FACE content.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-587.orion-household-accounts.md at a4a81b30af: 94 lines, RECORD FACE at lines 83 to 93",
+      "worker face instruction at line 20 of the same file: the RECORD FACE is not part of the worker context"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W430-S3 -- After the household lift, orion_selected.py line 11 states that the mapping refuses any multi-account household, which is no longer true; the consumer guard that remains is calculate() lines 140 to 153.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W430-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~430",
+  "surfaced_at": "2026-10-15T16:27:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "After the household lift, orion_selected.py line 11 states that the mapping refuses any multi-account household, which is no longer true; the consumer guard that remains is calculate() lines 140 to 153.",
+  "spec_asserts": "The orion_selected.py module docstring (line 11) says the one-account Scope request is safe for a household holding exactly the ONE mapped account, because orion_account_mapping refuses any other. The order says the serve-path consumers are not changed by this cell.",
+  "world_is": "The lift makes that docstring false, and the orion_account_mapping.py comment at lines 76 to 79 still states the old refusal. requests_for (orion_selected.py line 67) addresses the household entity with vendor_household_id. The guard that remains is calculate() at lines 140 to 153: exactly one selected account, and exactly one Account group whose groupEntityId equals vendor_account_id, else refused. The worker did not change orion_selected.py (outside the grant) and did not run the guard against a live Orion return; the guard was read, not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "orion_selected.py:11 at a4a81b30af: module docstring names orion_account_mapping as the refuser of any other household",
+      "orion_selected.py:140-153 at a4a81b30af: calculate() guards on one selected account and one Account group whose groupEntityId matches",
+      "orion_selected.py:67-89 at a4a81b30af: requests_for addresses the household entity with the mapped household id"
+    ]
+  }
+}
+```
