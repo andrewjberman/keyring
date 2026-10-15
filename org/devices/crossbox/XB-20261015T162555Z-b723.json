@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T162555Z-b723",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "laptop",
+ "from_serial": "0.0.0_AB_MSTR~DELL1",
+ "to_serial": "0.0.0_AB_MSTR",
+ "subject": "FWD-3 manager pair test",
+ "body_path": "org/devices/crossbox/bodies/FWD3_manager_pair_test_dell1_to_laptop_20261015.md",
+ "opened_at": "2026-10-15T16:25:55Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-15T16:26:54Z",
+  "bus_message_id": "ba981062-5966-44f5-bc65-f4f16f79f5c8"
+ },
+ "ack": {
+  "at": "2026-10-15T16:30:51Z",
+  "by": "0.0.0_AB_MSTR",
+  "bus_message_id": "c3a7aa17-5b3b-4ca5-a19e-b61c81ec1754"
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

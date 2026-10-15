@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T162412Z-f8a5",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "0.0.0_AB_MSTR~Z",
+ "subject": "NFRA_CTLPLN FWD-21: quote spawn-audit lines 19401-19404 into a committed record, report the hash",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD21_SITEZ_AUDIT_QUOTE.md",
+ "opened_at": "2026-10-15T16:24:12Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-15T16:33:19Z",
+  "bus_message_id": "f7511070-a830-494d-8fbd-35d63a62079a"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

@@ -17548,3 +17548,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Measured, not dispositioned: the catalog belongs to NFRA_MCPINDEX and this cell did not write it."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S150",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-10-15T16:19:52Z",
+    "one_line": "The harvest runner runs real jobs again on Python 3.14.8 (since 15:02:46Z) but three of the four publishers stop at once on a vendor sign-in: bbg at 15:22:34Z on a Bloomberg press-and-hold challenge (bot_check, ChallengeFailed), wsj at 15:33:16Z and barrons at 15:34:09Z on 401 sign_in_refused (class expired, the task runs --no-sign-in so nothing refreshes it); only sa is capturing (UPLOAD lines rc=0 from 16:04Z), so no new bbg, wsj or barrons article lands until a person signs those profiles in.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ cycles/bbg/20261015T150246Z.cycle.json: stopped bot_check, failures[0] ChallengeFailed bot_check challenge_failed (bloomberg_press_and_hold), asked 242, new 0, s3_get_count 0, s3_get_bytes 0 (this seat)",
+        "READ cycles/wsj/20261015T152234Z.cycle.json and cycles/barrons/20261015T153316Z.cycle.json: stopped sign_in_refused, SignInRefused 401 under --no-sign-in: no refresh; cycle_runner.log REFUSAL line class=expired (this seat)",
+        "READ cycle_runner.log tail at 16:15Z: JOB sa ... status=no_acceptable_new_articles and UPLOAD sa ... rc=0, so the sa profile copied under OG-sa-1 step 2b is signed in (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "With the runner on the merged code and Python restored, the four publishers capture on their cycles.",
+    "world_is": "The runner is healthy and counts its S3 GETs (the cycle records carry s3_get_count and s3_get_bytes, 0 here because the three cycles stopped before any silver read), but bbg, wsj and barrons capture nothing: a Bloomberg press-and-hold challenge and two expired vendor sessions are a person's sign-in, not a runner defect. Whether the expiries predate the 14:02Z Python outage is not read. The egress measurement OG-eg-2 owes is the sa cycle in progress (it reads silver per security). Routed to 1.0.0_SA_CTO~Z at 16:2xZ for the person-act list; this seat changes nothing on the runner."
+  }
+  ```

@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T162724Z-9e94",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "dell1",
+ "from_serial": "0.0.0_AB_MSTR~DELL2",
+ "to_serial": "0.0.0_AB_MSTR~DELL1",
+ "subject": "FWD-3 manager pair test",
+ "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/fwd3_pair_test/BODY_dell2_to_dell1.md",
+ "opened_at": "2026-10-15T16:27:24Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-15T16:28:27Z",
+  "bus_message_id": "9757ce2d-8701-4c2d-8d41-9b8c74b70fe9"
+ },
+ "ack": {
+  "at": "2026-10-15T16:36:50Z",
+  "by": "0.0.0_AB_MSTR~DELL1",
+  "bus_message_id": "83398e49-f8f7-4ca8-b076-03e60d128a5c"
+ },
+ "closed": {
+  "from_at": "2026-10-15T16:57:05Z",
+  "from_by": "0.0.0_AB_MSTR~DELL2",
+  "to_at": null,
+  "to_by": null
+ }
+}
