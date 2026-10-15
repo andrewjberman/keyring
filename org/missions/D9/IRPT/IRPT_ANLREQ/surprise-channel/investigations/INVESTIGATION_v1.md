@@ -17390,3 +17390,114 @@
   "notes": "Environmental: the list lives on the operator's device and this worker cannot provision it. Recorded so the drain can decide whether the check must run on dell2 before a product commit lands."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-S120 -- FWD-1 run r41: the driver guard refused the directory resolve POST and the firm selector never rendered; nothing filed
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S120",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-15T16:08:07Z",
+  "one_line": "The FWD-1 run died at step 4 before any ticket was filed: the driver's route guard refused POST /api/scoped/investor-reporting/directory/resolve (not among its seven allowed POST shapes) and the firm selector never appeared; the synthetic user was removed (ABSENT x2); no retry.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (amend the driver's POST allow-list or the order, or re-issue; a second run is a new act the pair does not cover: NO RETRY is the CTO's condition 3)",
+  "spec_asserts": "Order IRPT_ANLREQ.TO-RUN-FWD1 step 5 and the driver's STEP-4: on /ticket-center, New Ticket, type Analysis Request, choose the firm, file; the guard admits GET/HEAD/OPTIONS and exactly seven POST shapes (fwd1_driver.mjs POST_ALLOWED lines 34-42). The pair's W1 to W5 and RUN1-AC2 expect a ticket with attachments n of 4.",
+  "world_is": "MEASURED 2026-10-15 16:03:30Z to 16:04:11Z (run_report.json, one attempt): mint rc=0, sign-in through the real form reached /market, then waitFor getByLabel('Choose the firm this request is filed under') timed out at 30000 ms; guard_refused lists exactly one entry, POST /api/scoped/investor-reporting/directory/resolve; the screenshot 01-signed-in.png shows loading skeleton bars and no form; ticket_id null; polls empty. The finally removed the row: remove rc=0, ABSENT GSI and ABSENT CONSISTENT. Seat's own after-reads 16:05Z: ConsistentRead get_item absent, email-index count 0, packager secret LastAccessedDate unchanged (2026-10-13T20:00:00-04:00), the five queues 0 and 0. INFERRED, NOT MEASURED: that the firm selector's population waits on the refused directory/resolve call; the portal at origin/DEV ad7c100b5c declares that operation (src/api/endpoints/investor-reporting.ts line 239, resolve-scope POST) and the label lives in src/pages/TicketCenter/AnalysisRequestParts.tsx line 114, but the page's call chain was not traced. The run is one attempt and was not repeated.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/aq2-fwd1-out-20261015/run_report.json (steps, guard_refused, absent, errors) and 01-signed-in.png, copied to org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r31/run_fwd1/",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs lines 34-42 (POST_ALLOWED) and 166-172 (guard)",
+      "portal origin/DEV ad7c100b5c: src/api/endpoints/investor-reporting.ts:239, src/pages/TicketCenter/AnalysisRequestParts.tsx:114"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The driver's selftest (29 cases) and mutant check passed on the allow-list as written, so neither could see that the page itself posts a directory call before the form renders; the allow-list was never exercised against the real page until this run. Whether adding the resolve POST (a read-shaped POST to the data plane, no write) widens the pair is the CTO's call, not this seat's."
+}
+```
+
+## IRPT_ANLREQ-D2-W172-S1 -- BLOCKING: the ticket-center source and the ticket-center Terraform the AR-g-53 cell names are skip-worktree in this worktree, so Q1 and Q2 cannot be read; the order stops
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W172-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~172",
+  "surfaced_at": "2026-10-15T15:49:52Z",
+  "one_line": "The task order names infra/aws/lambda/ticket_center/lambda_function.py and infra/aws/terraform/ticket-center/main.tf as the sources for the ticket-table reach (Q1) and the resident's ticket identity (Q2); neither path is on disk in worktree wk-IRPT_ANLREQ-172, so the worker rule stops the order.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-53 cell: Q1 reads the ticket table, its key, type and owner markers from infra/aws/lambda/ticket_center/lambda_function.py and infra/aws/terraform/ticket-center/main.tf in the worktree, and Q2 reads the resident host role from the tracked Terraform. Worker face: a worktree that does not carry the paths the order names is a BLOCKING row and a stop; never rebuild, extract or reconstruct the tree.",
+  "world_is": "git sparse-checkout list in C:/dev/wk-irpt-anlreq-172 is cone-mode and lists .tools, infra/aws/lambda/investor-reporting, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps, org/modules/graph, org/ref, org/standards; infra/aws/lambda/ticket_center (31 files) and infra/aws/terraform/ticket-center (4 files) are tracked at 5aefc342bf with skip-worktree flag S and are absent on disk. Glob '**/ticket*/**' and '**/main.tf' under infra/ return no files. The positive control infra/aws/lambda/investor-reporting is on disk (26 entries). No checkout, sparse change or copy was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-172 (cone; no infra/aws/lambda/ticket_center or infra/aws/terraform entry)",
+      "git ls-files -t infra/aws/lambda/ticket_center at 5aefc342bf: 31 S (skip-worktree), 0 on disk",
+      "git ls-files -t infra/aws/terraform/ticket-center at 5aefc342bf: 4 S, 0 on disk",
+      "Glob '**/ticket*/**' and '**/main.tf' under C:/dev/wk-irpt-anlreq-172/infra returned no files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This is the BLOCKING class the worker rule names, not a skip: the order's Q1 and Q2 have no source in this worktree. Reading the blobs with git show would be an extract to make the order executable, which the rule forbids, so none was read. The issuer decides whether to re-cut the read with a worktree that carries infra/aws/lambda/ticket_center and infra/aws/terraform, or to name the ticket-center read as a separate cell."
+}
+```
+
+## IRPT_ANLREQ-D2-W172-S2 -- the surprise-channel schema the row must match is skip-worktree here, so this row was shaped on the rows already in this file
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W172-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~172",
+  "surfaced_at": "2026-10-15T15:49:52Z",
+  "one_line": "org/surprise_channel/schemas/investigation_item.schema.json, the schema this channel row must match, is tracked at 5aefc342bf but skip-worktree and absent on disk in this worktree (org/surprise_channel is not in the sparse cone).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face: each row conforms to org/surprise_channel/schemas/investigation_item.schema.json, checked by .tools/surprise-row-gate.py at commit.",
+  "world_is": "git ls-files -t org/surprise_channel/schemas at 5aefc342bf: 2 files, both S (skip-worktree); ls org/surprise_channel returns no such directory. The field set of this row was copied from the rows already in INVESTIGATION_v1.md (W151-S5 and W150-S1), not from the schema file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -t org/surprise_channel/schemas at 5aefc342bf (S flag on investigation_item.schema.json and remediation_row.schema.json)",
+      "ls org/surprise_channel in C:/dev/wk-irpt-anlreq-172: No such file or directory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The row gate's verdict is the check that counts for this row's shape. The schema was not read, so no schema claim is made here."
+}
+```
+
+## IRPT_ANLREQ-D2-W172-S3 -- closing row: IRPT_ANLREQ-D2-W172-S1 is RESOLVED by the issuer's widening of the sparse checkout and by the completed AR-g-53 record
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W172-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~172",
+  "surfaced_at": "2026-10-15T16:02:02Z",
+  "one_line": "IRPT_ANLREQ-D2-W172-S1 (BLOCKING, ticket-center sources skip-worktree) is RESOLVED: the issuer widened the sparse checkout (infra/aws/lambda/ticket_center, infra/aws/terraform, infra/logic, data/mdpf/scripts/demque and the CTO deliverables folder), and the AR-g-53 record r7/C_SWITCH_DESIGN.json now answers Q1 to Q4 from those paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker rule: a worktree that does not carry the paths the order names is a BLOCKING row and a stop; the row S1 was the stop.",
+  "world_is": "git sparse-checkout list in C:/dev/wk-irpt-anlreq-172 now includes infra/aws/lambda/ticket_center and infra/aws/terraform; ticket_center/lambda_function.py and terraform/ticket-center/main.tf are on disk. Ruling from the issuer 2.0.0_SA_COO~G2 in the coordinator message: S1 was right and the defect was the provisioning. The record r7/C_SWITCH_DESIGN.json passes ar_g_read_checks.py shape53 (SHAPE-OK) and cite (CITES-OK 102 of 102) at 458578b8b8 plus this record's commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-172 (cone; ticket_center and terraform present)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:617 and infra/aws/terraform/ticket-center/main.tf:48 read on disk for the record",
+      "ar_g_read_checks.py cite: CITES-OK 102 of 102 on org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~172/r7/C_SWITCH_DESIGN.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S1 is closed by the widening and by the record. S2 (org/surprise_channel/schemas skip-worktree) is not addressed by this row and stays as filed. The record's recommendation is A (stamp at acceptance); the grant is the shared gate for A and B, and the CTO or CloudOps decides it."
+}
+```

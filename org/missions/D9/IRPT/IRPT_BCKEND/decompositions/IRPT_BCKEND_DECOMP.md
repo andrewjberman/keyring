@@ -4257,3 +4257,29 @@ Check IB220-1 (`deliverables/2.0.0_SA_COO~P2/checks/r220/p220_cells.py`), dry-ru
 | `IB-pr-584` | READ the anatomy of 49 Financial's remaining refusal: lost accounts by class, classified_security_lost, the conditions that remain | FWD-21 | SERVED | none | PL1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one read-only cell; one worker (slot ~426) starts now.
+
+## 217. ROUND 2, WORKSTREAM ~PJ (the release candidates the two never-widen deploy pairs need; 2026-10-15 ~16:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO round analysis @57266eeb77, msg 8435)
+
+The CTO's round analysis of ~PJ and ~PK round 1 (both MAY-CLOSE) recuts in ONE issuance: (1) the anatomy READ of 49 Financial's remaining refusal becomes an order (IB-pr-584, issued in workstream ~PL a few minutes earlier and amended @d911b8752f with the per-condition threshold, value and source-or-join cause the CTO named; it is the cell that serves item 1 and stays in ~PL); (2) the never-widen deploy pair for IB-pr-580, 582 and 583 is cut now, in parallel. The pair's COO half names the blast radius per firm and per key and the rollback per key, so it needs, per release, a CANDIDATE: the package built from a pin and compared with the live one. Two READ cells, BUILD ONLY, disjoint outputs: IB-pr-585 builds the candidate of the 49 Financial performance function that carries the split adjustment (IB-pr-578 and 583) and compares it with the live package; IB-pr-589 builds the three per-firm holdings bundles from a pin that carries the exemption, its listing and the receipts (IB-pr-576, 577, 582) and compares them with the live bundles IB-pr-549 minted. Neither uploads, mints or invokes anything. The pair packet is written when they land.
+
+Checks IB221-1 (`checks/r221/p221_cells.py`) and IB222-1 (`checks/r222/p222_cells.py`), dry-run at the base: AC1 to AC3 of both all FAIL; the controls (`control221.py`, `control222.py`) pass their positives and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-585` | READ the 49 Financial performance function's release candidate (the split adjustment), BUILD ONLY, against the live package | FWD-21 | SERVED | none | PJ3-a |
+| `IB-pr-589` | READ the three per-firm holdings bundles' release candidates (the exemption, its listing, the receipts), BUILD ONLY, against the live bundles | FWD-21 | SERVED | none | PJ4-a |
+
+fanout: 2 of 2 chains, cap 8, reason: two read-only build cells with disjoint outputs; workers slots ~427 and ~428 start now.
+
+## 218. ROUND 1, WORKSTREAM ~PN (the Orion Scope account feed: the BUILD; 2026-10-15 ~16:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8411 and the signed pair (b) addendum 1)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). The CTO round-118 analysis ADDENDUM 1 (msg 8411) moved the feed from "after IB-pr-568" to "now": the feed is an addendum to pair (b), writes only its own prefixes (disjoint from pair (a)), and only its APPLY waits for the executor. The addendum (`deliverables/2.0.0_SA_COO~P2/ORION_PAIR_B_ADDENDUM_1_SCOPE_ACCOUNT_FEED.md`, blob 1e138cbeea) carries the rules of rounds 118 to 121: one Scope call per household with the Account grouping, `calcGrossOfFees` false on every request, `fee_basis` NET with its note (round 119), the coverage rule with `ABSENT` and the reason classes `NO_GROUP`, `GROUP_NO_SERIES` and `NO_START_DATE_AT_SOURCE` with the claim per account (rounds 120 and 121), never a zero and never an Opal fill, writes to the feed's own bronze and silver prefixes built by `address()`. The COO half is signed (`NEVER_WIDEN_ORION_PAIR_B_ADDENDUM_1_SCOPE_FEED_COO_HALF.md`) and the CTO half is signed @9de748bb47 (msg 8448). Two LOCAL/WORLD-by-path cells on disjoint files: IB-pr-586 builds the pull step, its tests and its one catalog row in the dispatch script (repository copy); IB-pr-587 lifts the one-account limit of `orion_account_mapping.py` in the same release and adds a household-members helper. The apply (script upload, the dispatch object edit, the first-run read) is a CloudOps order cut after these merge, queued directly after IB-pr-568.
+
+Check IB223 (`deliverables/2.0.0_SA_COO~P2/checks/r223/p223_cells.py`), dry-run at the base: AC1 to AC3 of both cells all FAIL; the control (`control223.py`) passes the six positives and fourteen negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-586` | BUILD the Scope account feed pull step (coverage rule, fee_basis NET, own prefixes) and its catalog row | FWD-3 | LOCAL | none | PN1-a |
+| `IB-pr-587` | LIFT the one-account limit of orion_account_mapping.py, add the household-members helper | FWD-3 | WORLD | none | PN2-a |
+
+fanout: 2 of 2 chains, cap 8, reason: two cells on disjoint files (a new pull script with the dispatch script; the Lambda mapping module); workers slots ~429 and ~430 start now.
