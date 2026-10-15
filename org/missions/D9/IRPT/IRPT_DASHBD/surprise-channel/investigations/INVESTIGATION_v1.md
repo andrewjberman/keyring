@@ -16595,3 +16595,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the issuer: the order cannot be flipped to complete while AC3 is FAIL. Options are the issuer's ruling on the stray clause, or the order stays open with AC3 recorded FAIL. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W203-S6 -- OBSERVATION resolving W203-S5: the issuer's checker fix (616950e0bd) clears the stray clause
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T10:09:55Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W203-S5: the issuer's checker fix (616950e0bd) makes the stray-file clause count only paths that still exist at HEAD; DB122-4-AC3 now PASS at HEAD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W203-S5 (BLOCKING) recorded that the AC3 stray clause read the old directory from the worker's first handler commit, so AC3 could not pass after the Amendment 1 rename without a history rewrite.",
+  "world_is": "The issuer's commit 616950e0bd (2.0.0_SA_COO~D2) changed the checker's stray-file clause to ignore paths the worker moved away. At HEAD 616950e0bd the three criteria run from the worktree root: DB122-4-AC1 PASS (rc 0), DB122-4-AC2 PASS (rc 0), DB122-4-AC3 PASS (rc 0). Row S5 is left as written (append only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -1 --format=%h --author=2.0.0_SA_COO~D2 in wk-IRPT_DASHBD-203 = 616950e0bd (one file: checks/r122/p122_cothandler.py, one line changed)",
+      "checks/r122/p122_cothandler.py run at HEAD 616950e0bd: DB122-4-AC1 PASS, DB122-4-AC2 PASS, DB122-4-AC3 PASS, each rc 0",
+      "row IRPT_DASHBD-D2-W203-S5 (BLOCKING) in this channel, committed at 03e4bef65d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution row for IRPT_DASHBD-D2-W203-S5, appended only. The order's status flip follows in a later commit. Counts and words only; no client figure is quoted."
+}
+```
