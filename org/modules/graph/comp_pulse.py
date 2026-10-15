@@ -56,6 +56,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 from collections import Counter, defaultdict
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -120,10 +121,13 @@ class Source:
         self.age_h = None
         self.data = None
         if self.exists:
-            try:
-                self.age_h = (dt.datetime.now().timestamp() - os.path.getmtime(path)) / 3600.0
-            except OSError:
-                self.age_h = None
+            self._read_age()
+
+    def _read_age(self):
+        try:
+            self.age_h = (dt.datetime.now().timestamp() - os.path.getmtime(self.path)) / 3600.0
+        except OSError:
+            self.age_h = None
 
     @property
     def stale(self) -> bool:
@@ -148,6 +152,141 @@ class Source:
         except Exception:  # noqa: BLE001
             self.exists = False   # unreadable == absent; never a half-trusted source
             return None
+
+
+# ---------------------------------------------------------------------------
+# the danger map: its age, its one rebuild, and the sparse-tree rule (NFRA_CTLPLN round 22, CT-al-3)
+# ---------------------------------------------------------------------------
+MAP_REL = os.path.join("org", "modules", "graph", "nerves-risk-edges.json")
+REBUILD_TIMEOUT_S = 120
+REBUILD_LOCK_NAME = ".nerves-risk-edges.rebuild.lock"
+REBUILD_LOCK_STALE_S = 600
+BUILD_SPAWNS = 0   # counted: a child build actually started in this process (the --sparse arm reads it)
+
+
+class RiskSource(Source):
+    """The danger map. Its AGE is the build time the file carries (built_utc, written by
+    nerves_lexical build), never the file's mtime: a checkout rewrites mtime, so a week-old map
+    read fresh. A map with no readable built_utc has UNKNOWN age and is STALE."""
+
+    def __init__(self, path: str):
+        self.built_utc = None
+        super().__init__(path, "danger map (nerves_lexical)")
+
+    def _read_age(self):
+        self.age_h = None
+        try:
+            with open(self.path, encoding="utf-8") as fh:
+                doc = json.load(fh)
+        except Exception:  # noqa: BLE001
+            return
+        stamp = doc.get("built_utc") if isinstance(doc, dict) else None
+        try:
+            built = dt.datetime.strptime(stamp, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=dt.timezone.utc)
+        except (TypeError, ValueError):
+            return
+        self.built_utc = stamp
+        self.age_h = (dt.datetime.now(dt.timezone.utc) - built).total_seconds() / 3600.0
+
+    @property
+    def stale(self) -> bool:
+        return self.exists and (self.age_h is None or self.age_h > STALE_AFTER_HOURS)
+
+    @property
+    def vintage(self) -> str:
+        if not self.exists:
+            return "UNKNOWN-VINTAGE (absent -- this section CANNOT be computed and is NOT guessed)"
+        if self.age_h is None:
+            return "UNKNOWN-VINTAGE (no built_utc in the map: age unknown, treated as STALE)  !! STALE"
+        tag = "  !! STALE" if self.stale else ""
+        return "%.1fh old (built_utc %s)%s" % (self.age_h, self.built_utc, tag)
+
+
+def _git(tree: str, *args):
+    try:
+        out = subprocess.run(["git", "-C", tree, *args], capture_output=True, text=True, timeout=15)
+        return out.returncode, out.stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        return 1, ""
+
+
+def is_sparse_tree(tree: str) -> bool:
+    rc, out = _git(tree, "config", "--bool", "core.sparseCheckout")
+    return rc == 0 and out == "true"
+
+
+def main_tree_of(tree: str):
+    """The main checkout of this worktree (git's common dir is <main>/.git). None when unknown."""
+    rc, common = _git(tree, "rev-parse", "--git-common-dir")
+    if rc != 0 or not common:
+        return None
+    gd = os.path.abspath(os.path.join(tree, common))
+    return os.path.dirname(gd) if os.path.basename(gd) == ".git" else None
+
+
+def rebuild_risk_map(map_path: str, timeout: int = REBUILD_TIMEOUT_S):
+    """ONE rebuild of the danger map by its own builder, as a child process capped at `timeout`
+    seconds. A lock file keeps two reflexes from building at once. -> (ok, why)."""
+    global BUILD_SPAWNS
+    graph = os.path.dirname(map_path)
+    builder = os.path.join(graph, "nerves_lexical.py")
+    if not os.path.isfile(builder):
+        return False, "no nerves_lexical.py beside the map"
+    lock = os.path.join(graph, REBUILD_LOCK_NAME)
+    try:
+        if os.path.exists(lock) and time.time() - os.path.getmtime(lock) > REBUILD_LOCK_STALE_S:
+            os.remove(lock)   # a dead reflex's lock; the map's own age is never read from mtime
+        os.close(os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY))
+    except FileExistsError:
+        return False, "another reflex holds the rebuild lock"
+    except OSError as exc:
+        return False, "rebuild lock unavailable (%s)" % exc
+    try:
+        BUILD_SPAWNS += 1
+        p = subprocess.run([sys.executable, builder, "build"], cwd=graph, capture_output=True,
+                           text=True, encoding="utf-8", errors="replace", timeout=timeout)
+        if p.returncode != 0:
+            last = ((p.stdout or "") + (p.stderr or "")).strip().splitlines()
+            return False, "build rc=%d: %s" % (p.returncode, last[-1] if last else "no output")
+        return True, "rebuilt in place by nerves_lexical build"
+    except subprocess.TimeoutExpired:
+        return False, "build timed out after %d s" % timeout
+    except OSError as exc:
+        return False, "build could not start (%s)" % exc
+    finally:
+        try:
+            os.remove(lock)
+        except OSError:
+            pass
+
+
+def resolve_risk_map(tree: str, own_map: str, rebuild=rebuild_risk_map):
+    """THE ONE DECISION on which danger map the reflex reads. -> (source, note, blind).
+    - own map fresh (embedded built_utc inside the limit): read it, nothing is built.
+    - sparse tree (core.sparseCheckout true): NEVER builds. Reads the MAIN tree's map; none there
+      -> blind=True (the reflex prints BLIND: sparse worktree, no map).
+    - own map STALE: rebuilt ONCE by the reflex, then re-read. A failed or timed-out rebuild leaves
+      the map STALE, which the reflex reports as NOT-DECIDABLE with the reason.
+    - own map ABSENT: no rebuild (absent stays absent: NOT-DECIDABLE, never a silent build)."""
+    own = RiskSource(own_map)
+    if own.exists and not own.stale:
+        return own, None, False
+    if is_sparse_tree(tree):
+        main = main_tree_of(tree)
+        main_map = os.path.join(main, MAP_REL) if main else None
+        if main_map and os.path.isfile(main_map):
+            return (RiskSource(main_map),
+                    "sparse worktree: read the MAIN tree's map (%s); no build here" % main_map, False)
+        if own.exists:
+            return own, "sparse worktree: own map STALE and no main-tree map; no build here", False
+        return own, "sparse worktree: no danger map here or in the main tree", True
+    if not own.exists:
+        return own, None, False
+    ok, why = rebuild(own_map)
+    fresh = RiskSource(own_map)
+    if ok and not fresh.stale:
+        return fresh, "danger map was STALE; rebuilt once by the reflex (%s)" % why, False
+    return fresh, "danger map STALE; the one rebuild did not clear it (%s)" % why, False
 
 
 # ---------------------------------------------------------------------------
@@ -347,6 +486,8 @@ def render_reflex(hits, denom, risk_src: Source, invocation: str) -> str:
     L = ["comp-pulse diff -- THE PRE-COMMIT RISK REFLEX (NFRA_NERVES L5)",
          "  INVOCATION (pin beside any quoted result): %s" % invocation,
          "  danger map: %s" % risk_src.vintage]
+    if denom.get("rebuild_note"):
+        L.append("  REBUILD: %s" % denom["rebuild_note"])
     if hits is None:
         reason = denom.get("reason") or "danger map unavailable"
         L += ["  ANSWER STATE: PARTIAL_OR_BLIND",
@@ -403,7 +544,7 @@ def danger_x_traffic(risk_src: Source, attention: Counter, top: int, newest=None
 def compile_pulse(days: int = 7, top: int = 8, invocation: str = "",
                   budget_s: float | None = None, budget_source: str = "", cursor: int = 0) -> dict:
     edges_src = Source(EDGES, "co-change edges (nerves_accrete)")
-    risk_src = Source(RISK, "danger map (nerves_lexical)")
+    risk_src = RiskSource(RISK)
 
     scan = None
     if budget_s is not None:
@@ -433,7 +574,7 @@ def compile_pulse(days: int = 7, top: int = 8, invocation: str = "",
                          "stale": edges_src.stale},
             "danger": {"available": risk_src.exists, "vintage": risk_src.vintage,
                        "stale": risk_src.stale,
-                       "query_only": "never rebuilt by comp-pulse"},
+                       "rebuild": "the diff reflex rebuilds ONCE when STALE; never in a sparse tree"},
         },
         "hot": [{"ref": r, "attention": round(w, 2),
                  "newest_age_d": round(newest[r], 1) if r in newest else None}
@@ -746,7 +887,6 @@ def main() -> int:
 
     if args.cmd == "diff":
         paths = [] if args.no_population else (args.paths or _staged_files())
-        risk_src = Source(RISK, "danger map (nerves_lexical)")
         if not paths:
             print(_render_reflex_state(
                 invocation, "NOT_APPLICABLE",
@@ -760,8 +900,17 @@ def main() -> int:
                 "the supplied repository subject(s) do not exist: %s" % ", ".join(missing)))
             print("  " + disclosure_line(budget_s, budget_source))
             return 2
+        risk_src, rebuild_note, blind = resolve_risk_map(_WS, RISK)
+        if blind:
+            print(_render_reflex_state(invocation, "PARTIAL_OR_BLIND",
+                                       "BLIND: sparse worktree, no map"))
+            print("  " + rebuild_note + " -- NOT-DECIDABLE: the reflex CANNOT clear this diff.")
+            print("  " + disclosure_line(budget_s, budget_source))
+            return 2
         clock = Clock(budget_s)
         hits, denom = risk_reflex(risk_src, paths, clock=clock, cursor=args.cursor)
+        if rebuild_note:
+            denom = dict(denom, rebuild_note=rebuild_note)
         if args.json:
             print(json.dumps({"invocation": invocation, "hits": hits, "denominators": denom,
                               "map_vintage": risk_src.vintage,
