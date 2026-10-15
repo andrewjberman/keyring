@@ -13961,3 +13961,110 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-4. Form only. The pull's Envision Performance Dim report is named in the record as an alternative per-account period return, not the chosen endpoint."
 }
 ```
+
+## IRPT_DASHBD-D2-W405-S1 -- The bronze tables are raw Excel workbooks and JSON files, not Parquet, and no bronze table has date= partitions, so the footer method reads no columns there; the raw workbooks may hold a return column that silver dropped and were not read.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "The bronze tables are raw Excel workbooks and JSON files, not Parquet, and no bronze table has date= partitions, so the footer method reads no columns there; the raw workbooks may hold a return column that silver dropped and were not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 steps 2 and 3: a table is a common prefix under a layer, its columns are the sorted names of one Parquet object in its newest date= partition, and a date-named folder under bronze/ is recorded with partition_count 0.",
+  "world_is": "The bronze/ tables hold one .xlsx workbook per business day (transactions, realized, unrealized, holdings, allocations, account_attributes), one .json per date (_retry_net), and date-named folders holding a _BRONZE_COMPLETE.json marker (two read). None has a date= partition, so the Parquet footer method has no object to read there. The workbook columns were not read, so a return column held in the raw vendor files is not ruled out by this read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (bronze entries, this commit)",
+      "s3 LIST of blackdiamond/cottonwood/ and its layers, worker private run (not committed), read at 2026-10-15T03:39:15Z",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. Form only; the raw workbooks were not opened."
+}
+```
+
+## IRPT_DASHBD-D2-W405-S2 -- Five silver tables have an _s2 twin whose only data columns are c1 and c2, so the twin's content cannot be named from its footer and the return-name test cannot see inside it.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "Five silver tables have an _s2 twin whose only data columns are c1 and c2, so the twin's content cannot be named from its footer and the return-name test cannot see inside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 steps 3 and 4: the column names of one Parquet object name each table's content, and return_like_columns is computed over those names in every table.",
+  "world_is": "silver fact_allocations_s2 (144 partitions), fact_holdings_s2 (93), fact_realized_s2 (122), fact_transactions_s2 (124) and fact_unrealized_s2 (144) carry the same partition counts as their parents plus the metadata columns and c1 and c2 only. The parents carry named columns. The twins' content was not read (footer only), so a return column held under c1 or c2 would be invisible to the name pattern.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (silver _s2 entries, this commit)",
+      "s3 LIST of blackdiamond/cottonwood/ and its layers, worker private run (not committed), read at 2026-10-15T03:39:15Z",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. Form only."
+}
+```
+
+## IRPT_DASHBD-D2-W405-S3 -- The ACCOUNT_VALUE_ONLY definition reads no return column, but the name pattern finds seven return-like columns, all dollar gain or loss at position or lot grain or a date; the verdict reads the definition as no account-grain return column.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "The ACCOUNT_VALUE_ONLY definition reads no return column, but the name pattern finds seven return-like columns, all dollar gain or loss at position or lot grain or a date; the verdict reads the definition as no account-grain return column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 step 5: ACCOUNT_VALUE_ONLY means account-grain values and flows with no return column; ACCOUNT_RETURN_SERIES needs a table with account-grain rows and a return-like column over time.",
+  "world_is": "return_like_columns holds seven entries: silver fact_realized (Long-Term Gain/Loss, Short-Term Gain/Loss, Total Gain Loss), silver fact_unrealized (the same three) and silver fact_transactions (Return Date). The gain or loss columns are dollar amounts per position or per sold lot, not returns, and Return Date is a date. Read literally, no return column fails; the record takes the account-grain reading and says so in words.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (return_like_columns and verdict, this commit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. The verdict is the worker's judgment and is not graded here."
+}
+```
+
+## IRPT_DASHBD-D2-W405-S4 -- The meta/ layer holds status JSON objects directly and also three table folders, so the order's rule for a layer holding objects directly (an empty tables list) and the order's step-2 instruction disagree; the record follows the step-2 instruction and the checker.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "The meta/ layer holds status JSON objects directly and also three table folders, so the order's rule for a layer holding objects directly (an empty tables list) and the order's step-2 instruction disagree; the record follows the step-2 instruction and the checker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 step 2 in the task-order file: a layer that holds objects directly rather than table folders is recorded with an empty tables list. The worker-face text of the same step says to record every common prefix as a tables entry.",
+  "world_is": "meta/ holds direct objects (a -complete, -missing or -result JSON per date, and backfill-status.json) and three table folders (conversions, pulls, templates). The checker DBC116-4-AC1 requires the tables to equal a fresh LIST of common prefixes, so an empty list would fail it; the record lists the three folders and words names the direct objects.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd (step 2, both texts)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (meta entries, this commit)",
+      "s3 LIST of blackdiamond/cottonwood/ and its layers, worker private run (not committed), read at 2026-10-15T03:39:15Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. Form only; the two texts of step 2 should be reconciled by the issuer."
+}
+```
