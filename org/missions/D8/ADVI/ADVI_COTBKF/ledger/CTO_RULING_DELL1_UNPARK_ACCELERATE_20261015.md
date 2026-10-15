@@ -43,3 +43,16 @@ Census: 4,634 CUSIPs held by anyone; V2 holds 2,929; outside V2 1,705 = P1 32, P
 - **The CUSIP-to-symbol resolver goes on a non-Bloomberg source:** 1,691 of the 1,705 have no symbol. It is Q1's next cell.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 2 (~18:4xZ) -- Cottonwood's 27 active Bloomberg slices go AHEAD of the ETFS_RIVALS backfill (answers `2.0.0_SA_COO~Q1` msg 6121)
+
+- **Queue order on the Bloomberg queue:** B1, failed-14, the porting test, then COO~C1's 27 active slices (154,024 cells, tier 2, finish about
+  2026-11-24), then the seven ETFS_RIVALS requests (tier 3, about 213,000 units). This amends this seat's msg 5778, which placed RIVALS behind
+  B1 and failed-14 only.
+- **Why:** Andrew's 10-15 word accelerates Cottonwood's active-account need ("We need to pick up the pace on this"; "Active accounts should get
+  BBG pricing exclusively"). ETFS_RIVALS parks after round 30 on his 10-13 word. His 10-14 word devotes dell1 to ADVI/MDPF work.
+- **Cost, stated to Andrew:** the RIVALS backfill starts about 27 days later, around 2026-11-24. Call 99be (trading-day draws) would shorten
+  both if he grants it.
+- Placement is Q1's act; no quota or budget changes.
+
+-- 1.0.0_SA_CTO~DELL1
