@@ -40161,3 +40161,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W439-S3 -- The one-writer gate printed WARN that the channel path named by the order is the laptop's unsuffixed file, written from dell2, and that the per-box file form is the expected one
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W439-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~439",
+  "surfaced_at": "2026-10-15T19:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The one-writer gate printed WARN that the channel path named by the order is the laptop's unsuffixed file, written from dell2, and that the per-box file form is the expected one",
+  "spec_asserts": "The order names org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md as the channel file to append rows to. The append-only one-writer check expects a per-box file named with the stem and the box suffix, for example INVESTIGATION_v1.dell2.md, while the C-QUEUE item is open.",
+  "world_is": "safe-commit.sh for commit 63627ce12a printed: one-writer WARN: INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell2; per-box file <stem>.dell2.<ext> (WARN until C-QUEUE). The gate graded 1 append-only path on box dell2 with 0 blocked and the commit landed on the unsuffixed path the order names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 63627ce12a: the [one-writer] WARN line naming the unsuffixed path and the per-box form, then the [one-writer] OK line with 1 path graded and 0 blocked",
+      "The AGENTBUS_DEVICE value the gate read was dell2 (process environment), as printed on the same line"
+    ]
+  }
+}
+```
