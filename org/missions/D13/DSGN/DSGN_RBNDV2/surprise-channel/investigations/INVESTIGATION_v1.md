@@ -523,6 +523,48 @@
       },
       "spec_asserts": "TO RV-r-3 RB1R3-AC1: every --rb- name used in the two files is one of the five names defined in src/index.css :root.",
       "world_is": "The defined set is seven names. The test reads the defined set from the CSS text and checks that every used name is in it; the used set is the five named in the criterion, so the verdict is the same under either reading."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S1",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T08:32:09Z",
+      "one_line": "The pre-commit checks passed a portal .tsx commit with 0 of 3 files checked: the risk reflex scanned 0 of 3 with a STALE danger map, and commit-gate reads only .py/.sh/.tf/org/projects JSON.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~RB -- route to the commit-gate and risk-reflex owner; no worker can disarm it.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "safe-commit output of commit 1b157a12 in the portal worktree (branch wk-DSGN_RBNDV2-8-portal): comp-pulse WARN, the portal toplevel carries no .tools/comp-pulse, so the baked path C:/Users/AndrewBerman/Desktop/ajb_workspace/.tools/comp-pulse ran; danger map 194.9h old, ANSWER STATE PARTIAL_OR_BLIND, scanned 0 of 3",
+          "safe-commit output of commit 1b157a12: [commit-gate] WARN checked 0 of 3 file(s); the gate reads only .py / .sh / .tf / org/projects/*.json",
+          "the worker ran the checks itself before the commit: bun test on rb-2-m1.frame.test.tsx (1 pass) and bun x tsc --noEmit -p tsconfig.app.json (rc=0, 0 error TS lines) in the portal worktree"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Rule 14 of CLAUDE.md: every .py edit passes .tools/commit-gate.sh; rule 14a: commit via .tools/safe-commit.sh. The TO RV-m-1 names no frontend pre-commit check.",
+      "world_is": "safe-commit ran for a portal .tsx-only commit, and the commit-gate and risk reflex both checked none of its three files and printed that as WARN, not as a failure. Every frontend commit on the portal worktree passes this path unchecked by the pre-commit gates."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S2",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T08:32:09Z",
+      "one_line": "The order says the portal feature branch is at adc70061; the worktree HEAD is febd743a, three commits later, carrying the RV-r-3 merge and its token-format fix (919f5cc3).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git -C portal rev-parse --short HEAD at the worktree start: febd743a (wk-DSGN_RBNDV2-8-portal); git merge-base --is-ancestor adc70061 HEAD: ancestor",
+          "git -C portal log --oneline adc70061..HEAD before the RV-m-1 commit: 919f5cc3 fix(DSGN_RBNDV2 RV-r-3) and febd743a drain(DSGN_RBNDV2.TO-RV-r-3)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-1 Environment: the portal worktree is branched from feature/dsgn-rbndv2-light at adc70061 (the difference-control base).",
+      "world_is": "adc70061 is an ancestor of the worktree HEAD febd743a, which adds the round-1 RV-r-3 sidebar token fix and its drain. The round-1 state the order describes is present; the base named in the order is not the HEAD. The RV-m-1 commit 1b157a12 sits on febd743a."
     }
 ]
 ```
