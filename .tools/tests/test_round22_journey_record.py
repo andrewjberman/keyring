@@ -6,7 +6,8 @@ intake_check.py (checks 1-7; check 8 awaits the CTO's signature file). This test
 holding folder. It makes no network request, writes nothing, installs nothing and runs no package file.
 
 Flags (each prints one line; exit 0 only when every requested line says ok=True):
-  --fetch   JOURNEY-FETCH wheels=<n> file=<name> device=<d> sha256=<12 hex> requests=<r> ok=<True|False>
+  --fetch   JOURNEY-FETCH wheels=<n> file=<name> device=<d> sha256=<12 hex> requests=<r> ok=<True|False> where=<holding|release|holding+release|NONE>
+            (state-aware: the batch's one cp314 wheel, in holding OR release; a released wheel is moved; mutants held)
   --check   JOURNEY-CHECK checks_run=<n> failed=<f> check8=<AWAITING|SIGNED|OTHER> released=<True|False> ok=<True|False>
   --tag     JOURNEY-TAG recorded=<tag> wheel=<tag> ok=<True|False>
   --release JOURNEY-RELEASE released=<n> check8=<SIGNED|OTHER> file=<name> sha256=<12 hex> ok=<True|False>
@@ -94,41 +95,68 @@ def held_wheels() -> list[str]:
     return sorted(p.name for p in folder.iterdir() if p.is_file() and p.suffix == ".whl")
 
 
+def batch_wheels() -> list[tuple[str, str]]:
+    """Every .whl of the batch wherever it sits: (where, name), where = holding or release. A released wheel is MOVED,
+    so one place holds it; two entries means a copy was left behind."""
+    found = []
+    for where, folder in (("holding", holding_dir()), ("release", release_dir())):
+        if folder.is_dir():
+            found += [(where, p.name) for p in sorted(folder.iterdir()) if p.is_file() and p.suffix == ".whl"]
+    return found
+
+
 def cp312_present() -> bool:
-    for folder in (holding_dir(), records_dir()):
+    for folder in (holding_dir(), release_dir(), records_dir()):
         if folder.is_dir() and any(WHEEL_CP312_MARK in p.name for p in folder.iterdir()):
             return True
     return False
 
 
+FETCH_MUTANT_CASES = (
+    ("wheel_in_both_folders", [("holding", WHEEL_NAME), ("release", WHEEL_NAME)], False),
+    ("cp312_wheel_present", [("release", WHEEL_NAME)], True),
+)
+
+
+def fetch_state_ok(found: list, disk_sha_matches: bool, rec_ok: bool, device_ok: bool, cp312: bool) -> bool:
+    """ok for --fetch (state-aware, holding or release): exactly ONE wheel in the batch wherever it sits, that wheel is the
+    cp314 one, its disk SHA-256 equals the fetch record's, the fetch record is present, the device is this box, and no cp312
+    wheel is in holding, release or the records."""
+    if len(found) != 1 or found[0][1] != WHEEL_NAME:
+        return False
+    tag = PYTAG_RE.match(found[0][1])
+    return (tag is not None and tag.group(1) == "cp314" and disk_sha_matches and rec_ok and device_ok and not cp312)
+
+
 def cmd_fetch() -> bool:
-    wheels = held_wheels()
-    name = wheels[0] if len(wheels) == 1 else None
+    found = batch_wheels()
+    name = found[0][1] if len(found) == 1 else "NONE"
+    where = "+".join(sorted(set(w for w, _ in found))) or "NONE"
     fetch_path = records_dir() / (WHEEL_NAME + ".fetch.json")
     rec = read_json(fetch_path) if fetch_path.is_file() else {}
     device = rec.get("device")
     requests = len(rec.get("requests", []))
     sha12 = "-"
     disk_matches = False
-    if name is not None:
-        disk = sha256_of(holding_dir() / name)
+    if len(found) == 1:
+        folder = holding_dir() if found[0][0] == "holding" else release_dir()
+        disk = sha256_of(folder / name)
         sha12 = disk[:12]
         disk_matches = disk == rec.get("held_sha256")
     box = this_box()
-    ok = (
-        len(wheels) == 1
-        and name == WHEEL_NAME
-        and PYTAG_RE.match(name or "") is not None
-        and PYTAG_RE.match(name).group(1) == "cp314"
-        and bool(rec)
-        and device == box
-        and disk_matches
-        and not cp312_present()
-    ) if name is not None else False
-    print("JOURNEY-FETCH wheels=%d file=%s device=%s sha256=%s requests=%d ok=%s"
-          % (len(wheels), name or "NONE", device, sha12, requests, ok))
+    cp312 = cp312_present()
+    ok = fetch_state_ok(found, disk_matches, bool(rec), device == box, cp312)
+    mutants_held = True
+    for label, m_found, m_cp312 in FETCH_MUTANT_CASES:
+        m_ok = fetch_state_ok(m_found, True, True, True, m_cp312)
+        mutants_held = mutants_held and not m_ok
+        print("JOURNEY-FETCH-MUTANT case=%s wheels=%d places=%s cp312=%s ok=%s expected=False held=%s"
+              % (label, len(m_found), "+".join(sorted(set(w for w, _ in m_found))), m_cp312, m_ok, not m_ok))
+    ok = ok and mutants_held
+    print("JOURNEY-FETCH wheels=%d file=%s device=%s sha256=%s requests=%d ok=%s where=%s"
+          % (len(found), name, device, sha12, requests, ok, where))
     print("JOURNEY-FETCH-DETAIL box=%s fetch_record=%s disk_matches_record=%s cp312_present=%s"
-          % (box, fetch_path.is_file(), disk_matches, cp312_present()))
+          % (box, fetch_path.is_file(), disk_matches, cp312))
     return ok
 
 
