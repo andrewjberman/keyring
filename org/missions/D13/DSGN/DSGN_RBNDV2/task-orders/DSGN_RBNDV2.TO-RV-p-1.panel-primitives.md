@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_RBNDV2~3</issued_to>
 <issued_by>2.0.0_SA_COO~RB</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -25,7 +25,7 @@ Edit the primitives in `portal/src/ui/components/panels/` so every panel renders
 
 `Panel.tsx`: in EVERY variant (`chart`, `nested`, `mixed`, `heatmap`) the root is the white surface `bg-[hsl(var(--bg-surface))]` with a 1px border `border-[hsl(var(--hairline))]`, square corners (no `rounded-lg`; at most the 2px hairline radius), no shadow, and it carries the attribute `data-panel-surface="light"` (a sibling cell keys a legibility rule on that exact attribute and value). The band-valued `chart`/`mixed` surfaces and the `--bg-header` use go. Update the variant comment block to say what is now true.
 
-`PanelHeader.tsx`: drop the navy strip (`bg-[hsl(var(--bg-header))]`, `border-white/10`, `rounded-t-[4px]`, `text-white`), the bold uppercase title and the `HelpCircle` title pattern (keep a help affordance only if a prop already drives it, as a quiet icon button on the right, not in the title). The title is the fixture's eyebrow: 11px, 700, letter-spacing 0.14em, uppercase, `--rb-ink-2`, with a 2px `--rb-accent` bottom border and 4px padding below; an optional number renders before it in `--rb-quiet` 12px; the actions slot sits on the right; the header has padding `22px 30px 16px` and a 1px `--rb-rule` rule below. Keep the existing rule that a title never overlaps its actions at high zoom (wrap, `flex-wrap`).
+`PanelHeader.tsx`: drop the navy strip (`bg-[hsl(var(--bg-header))]`, `border-white/10`, `rounded-t-[4px]`, `text-white`), the bold uppercase title and the `HelpCircle` title pattern (keep a help affordance only if a prop already drives it, as a quiet icon button on the right, not in the title). The title is the fixture's eyebrow: 11px, 700, letter-spacing 0.14em, uppercase, `--rb-ink-2`, with a 2px `--rb-accent` bottom border and 4px padding below; the actions slot sits on the right; the header has padding `22px 30px 16px` and a 1px `--rb-rule` rule below. Keep the existing rule that a title never overlaps its actions at high zoom (wrap, `flex-wrap`).
 
 `PanelContent.tsx`: padding `24px 30px`, no `rounded-b-lg`, no inset box. `PanelFooter.tsx` and `SmartPanelFooter.tsx`: the source caption is 11px, uppercase, letter-spacing 0.08em, `--rb-quiet`, above a 1px `--rb-rule` rule, with margin `0 30px` and padding `10px 0 14px`; no navy footer strip. `NestedCard.tsx`, `SectionCard.tsx`, `DarkCard.tsx`: render the same white surface and hairline with no box inside a box.
 
@@ -38,7 +38,7 @@ The sibling cells define `--rb-*` (a token cell) and repoint `--bg-page`; build 
 ### ACCEPTANCE
 
 <criterion id="RB1P-AC1" cell_refs="RV-p-1"><invocation>cd <WS>/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_RBNDV2~3; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/ui/components/panels/__tests__/dsgn-rbndv2/rb-1-p.panel.test.tsx 2>&1 | tail -25</invocation><expect>VERDICT: PANEL-LIGHT-OK</expect></criterion>
-`RB1P-AC1` -- rendering `Panel` in each of its four variants with `PanelHeader` (a title, a number and one action), `PanelContent` and a footer to static markup: every variant's root carries `data-panel-surface="light"`, the `--bg-surface` ground and the `--hairline` border; no markup in any variant contains `shadow`, `rounded-lg`, `--bg-header`, `--bg-band` or an inset box (a bordered element directly inside the content wrapper); the header title element carries the 2px `--rb-accent` bottom border; the title and the action are siblings that can wrap. The test prints `VERDICT: PANEL-LIGHT-OK` only when every arm holds.
+`RB1P-AC1` -- rendering `Panel` in each of its four variants with `PanelHeader` (a title and one action), `PanelContent` and a footer to static markup: every variant's root carries `data-panel-surface="light"`, the `--bg-surface` ground and the `--hairline` border; no markup in any variant contains `shadow`, `rounded-lg`, `--bg-header`, `--bg-band` or an inset box (a bordered element directly inside the content wrapper); the header title element carries the 2px `--rb-accent` bottom border; the title and the action are siblings that can wrap. The test prints `VERDICT: PANEL-LIGHT-OK` only when every arm holds.
 
 <criterion id="RB1P-AC2" cell_refs="RV-p-1"><invocation>cd <WS>/portal && git diff --name-only ad7c100b5c..HEAD -- src/pages src/components | wc -l</invocation><expect>0</expect></criterion>
 `RB1P-AC2` -- no page file and no file under `src/components` differs from the branch base once your commits are in: the count printed is 0 (C-PANEL: the primitives change, no page file is edited). At the base the same command prints 0 as well, which is the control that the command measures the right surface.
