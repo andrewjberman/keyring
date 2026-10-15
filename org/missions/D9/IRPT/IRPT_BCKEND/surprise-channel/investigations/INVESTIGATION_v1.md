@@ -39569,3 +39569,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W434-S1 -- The pre-commit client-data check was not run on the transplant commit: its account-id list is absent on this box, so the commit printed a WARN and proceeded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The safe-commit of the six transplant files printed WARN: client-data-check hashed account-id list ABSENT on this box, so the commit was not checked for client account ids; the six files are code and carry no account id by hand reading.",
+  "spec_asserts": "Worker face cell IB-pr-595 (client data rule): no real account id, household id, client id or security identifier in any tracked file. The commit gate of the tree is the check that enforces it, and it reads its list from the account-id hashes file or OPAL_ACCOUNT_ID_HASHES.",
+  "world_is": "safe-commit of fa610b01b4 (six files under deliverables/0.9.0_WK_IRPT_BCKEND~434/transplant/) printed: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty). The commit then passed the other gates (pre-commit gate clean for 6 of 6 files; surprise-row gate and to-pipeline gate OK). The record was then written with counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at fa610b01b4 (this worktree): line beginning WARN: client-data-check: hashed account-id list ABSENT",
+      "commit fa610b01b4 on branch wk-IRPT_BCKEND-434: six files, 12170 insertions, all under org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~434/transplant/",
+      "the committed holdings_snapshot.py and publication.py were read by the harness for counts and hashes only; no account id appears in the harness output"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W434-S2 -- The first Read of the task order returned the whole file, RECORD FACE included, although the worker reads only the WORKER FACE; the worker did not act on the RECORD FACE beyond the record shape the WORKER FACE restates
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The Read of org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-595.holdings-transplant.md returned the whole file, the RECORD FACE included, though the instruction is to read only the WORKER FACE; the same surfacing as IRPT_BCKEND-D2-W431-S1.",
+  "spec_asserts": "The order's launch instruction says to read the section headed WORKER FACE (from WORKER FACE to RECORD FACE) and not to read the RECORD FACE.",
+  "world_is": "A single Read call of the order file (no offset or limit) returned all 94 lines, the WORKER FACE and the RECORD FACE with its preflight block. No ordering of the worker's acts depended on the RECORD FACE: its record shape and the three criteria are repeated in the WORKER FACE, which was the source used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-595.holdings-transplant.md in worktree C:/dev/wk-IRPT_BCKEND-434 at base d327c250bc, first act",
+      "the WORKER FACE record shape at the order's lines 44 to 48 matches the RECORD FACE's own shape text",
+      "IRPT_BCKEND-D2-W431-S1 in INVESTIGATION_v1.md records the same whole-file return for IB-pr-590"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W434-S3 -- The worker scratch rule (the worktree .scratch directory) and the order's scratch rule (outside the repository) name different places; the worker kept the pin worktrees and the harness scratch outside the repository and used .scratch for one message file
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says scratch files go in a directory OUTSIDE the repository, while the worker rule says scratch lives in the worktree .scratch directory; the two rules name different places, the same conflict as IRPT_BCKEND-D2-W431-S2.",
+  "spec_asserts": "Worker face: Scratch files go in a directory OUTSIDE the repository. Worker rule: scratch is <your worktree>/.scratch/ only.",
+  "world_is": "The three pin worktrees (git worktree add) had to sit outside the repository, so they went under the session scratchpad. The harness scratch and fragments went there too. A commit message file went in the worktree .scratch directory, which is gitignored (.gitignore line 450).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree list at the pins: C:/Users/Test/AppData/Local/Temp/claude/C--dev-ajb-workspace/47eeb1ac-c959-4795-ad75-ff16a015ad46/scratchpad/ir434/pins/{49financial,cottonwood,inflection}",
+      ".gitignore:450 .scratch/ (git check-ignore of .scratch/x.txt)",
+      "IRPT_BCKEND-D2-W431-S2 in INVESTIGATION_v1.md records the same conflict for IB-pr-590"
+    ]
+  }
+}
+```
