@@ -18881,3 +18881,53 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W156-S1..S2 -- AR-y-359 (0.9.0_WK_IRPT_ANLREQ~156): the amended FWD-1 driver self-test case and a stale self-test count in the r41 record
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W156-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~156",
+    "surfaced_at": "2026-10-15T19:00:52Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "AR-y-359 asks for one self-test case that names the retired producer address, while AC2 requires that address to occur in neither amended driver file; the case asserts that the driver EMAIL equals the mint helper EMAIL constant instead (the cell's assert-the-constant fallback), so neither file carries the retired address.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs:26 (const EMAIL = 'fwd1-staff-r41a@opal.invalid' at the base) @3514aeecc6ad6be52977aaf06b0946f47f4b9814",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_mint.py:22 (EMAIL = \"fwd1-staff-r41a@opal.invalid\" at the base) @3514aeecc6ad6be52977aaf06b0946f47f4b9814",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~156/address_check.py (AC2: r41a in neither file, r41b exactly once in each)"
+      ]
+    },
+    "spec_asserts": "AR-y-359 cell item 1: add ONE self-test case that the old address fwd1-staff-r41a@opal.invalid is NOT the run's address; AC2: the token r41a occurs in neither amended file and the r41b address occurs exactly once in each.",
+    "world_is": "A case that spells the old address puts the token r41a into fwd1_driver.mjs, so AC2 fails; a case that spells the r41b address puts a second copy of it into the driver, so AC2 fails. The added case compares EMAIL with the EMAIL constant read at runtime from fwd1_mint.py, so neither literal appears in the case. The mutant that restores the r41a address in the driver fails that case (MUTANT-FIRES).",
+    "notes": "Form only. The conflict is between two instructions of the order, not an open question about the driver. Disposition left for the CVO at L9."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W156-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~156",
+    "surfaced_at": "2026-10-15T19:00:52Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The r41 folder's FWD1_DRIVER_RECORD.json reports SELFTEST-OK 29 cases, while the driver at the AR-y-359 base carries 36 self-test cases (measured by node --selftest at 3514aeecc6).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/r41/FWD1_DRIVER_RECORD.json:241 (\"SELFTEST-OK 29 cases\") @3514aeecc6ad6be52977aaf06b0946f47f4b9814",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs (base self-test prints SELFTEST-OK 36 cases) @3514aeecc6ad6be52977aaf06b0946f47f4b9814"
+      ]
+    },
+    "spec_asserts": "AR-y-359 cell: selftest_cases_before is 36, and the record is the instrument that reports the driver's self-test.",
+    "world_is": "The r41 record in the ~149 folder reports 29 cases; the driver at base reports 36. The cause of the difference is not measured here.",
+    "notes": "Not touched by AR-y-359: the record is outside the grant. Recorded so the CVO can read the count against the driver's history."
+  }
+]
+```
