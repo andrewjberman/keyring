@@ -18,7 +18,7 @@ Arms (stdlib; temporary directories and temporary git repositories only; no netw
   (S) the naming stage of .tools/safe-commit.sh, extracted VERBATIM from the script at test time and run in a temporary
       repository against a stub gate: it passes --staged-paths with every in-scope path (a space in a path included), the
       --diff holds only the graded extensions, the derivation file is removed, WARN never changes the exit code and
-      ENFORCE still stops the commit (fail-closed).
+      ENFORCE still stops the commit (fail-closed) and unstages every in-scope path it staged (W93-S1, round 15).
 
 Final line: SAFE-COMMIT-DERIVATION cases=<k>/<n> ok=<True|False>
 """
@@ -307,10 +307,9 @@ def check_stage(tmp):
     check("(S) WARN: a gate REFUSE (stub rc 1) does not change the stage exit code", rc == 0 and "STAGE-REACHED" in text,
           "rc=%d" % rc)
     rc, text, logtxt, still, _t = run_stage(tmp, "enforce-rc1", 1, enforce=True)
-    # the stage unstages the graded files (the eight extensions) on refusal, as it always has; the .md stays staged
-    md_left = sorted([HOME_MCP + "a.md", HOME_MCP + "my notes.md"])
-    check("(S) ENFORCE: a gate REFUSE still stops the commit (rc 1) and unstages the graded files",
-          rc == 1 and "STAGE-REACHED" not in text and sorted(still) == md_left, "rc=%d still=%r" % (rc, still))
+    # W93-S1 (NFRA_CTLPLN round 15, CT-ae-3): the refusal unstages EVERY path this call staged, the .md deliverables included
+    check("(S) ENFORCE: a gate REFUSE still stops the commit (rc 1) and unstages every in-scope path (W93-S1)",
+          rc == 1 and "STAGE-REACHED" not in text and sorted(still) == [], "rc=%d still=%r" % (rc, still))
 
 
 if __name__ == "__main__":

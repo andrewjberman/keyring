@@ -35769,3 +35769,47 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W396-S1 to S7: all INERT (writer location, stale pacing and clock text, source-absent days), recorded. THE ANSWERS: (1) the raw producer is a MANUAL command-line pull in data/inf/manual_api, not scheduled; the deployed inf-api-positions lambda writes only parquet; so the .jsonl.gz feeds the mirror needs exist only when a person runs the CLI. (2) 7 positions days landed parquet-only and were dropped (the two known days and five more); transactions and performance none. (3) The mirror refuses parquet by design (it is schema-coerced, raw content not recoverable): the CTO's hypothesis that this is a mirror defect is NOT borne out; the defect is that the raw producer is not scheduled. (4) The re-pull: positions only, 7 days, 2,240 requests, about 19 minutes at the shared 2 req/s floor; transactions and performance need no re-pull for parquet-only days (the two known days are absent at the source for those feeds). (5) The 6 AM fold: one scheduler schedule, trading-day frontier, names from opal_naming. (6) ~I2's feed is not yet written. NEXT: two pairs, cut as cells after the CTO's word on the shape: (a) the one-time 7-day positions raw re-pull (writes only 7 keys in opal-data-inf bronze/positions, read-back, per-key rollback), (b) the scheduled Orion raw producer in the 6 AM fold."
 }
 ```
+```json
+{
+  "id": "IRPT_BCKEND-D2-W397-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~397",
+  "surfaced_at": "2026-10-15T04:15:17Z",
+  "one_line": "IB-pr-553 build: the order names the switch FILLED_REPORT_PASS for the default-OFF filled-report pass but no invocation key; I added the event key filled_report true in handler.py lambda_handler, which runs the pass only when the switch also reads exactly 1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the order's WORKER FACE (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-553.hop-2-filled-report-publisher-plumbing.md@49b3f3a20bc12840ce6013f26550504ce862b943) names the switch and no event key",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py at the worker commit: lambda_handler branch on event filled_report is True, before the summaries branch; off switch returns with no read and no put"
+    ]
+  },
+  "spec_asserts": "The filled-report pass is OFF unless the environment switch FILLED_REPORT_PASS reads exactly 1; the order names no way for the pass to be invoked.",
+  "world_is": "The order gives no invocation path. The worker added one event key, filled_report true, as the only entry to the pass; the switch remains the gate, so with the switch off the event returns OFF and reads and writes nothing. The COO should name the invocation (or accept this key) before a scheduled fire is wired.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-D2-W397-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~397",
+  "surfaced_at": "2026-10-15T04:15:17Z",
+  "one_line": "IB-pr-553 order ordering: criterion AC3 computes the worker's changed paths from its own commits since base, so the criteria output cannot be recorded inside the product commit it grades; the order's sequence (criteria output in the first commit, instance last) cannot be followed literally.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py own_changes() and build_ac3(): git log --author base..HEAD, changed_paths compared to the record",
+      "the order's proof_of_spec and commit sequence paragraph (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-553.hop-2-filled-report-publisher-plumbing.md@49b3f3a20bc12840ce6013f26550504ce862b943)"
+    ]
+  },
+  "spec_asserts": "Commit the product files, tests, record and criteria output first, then the instance last, with its artifact rows set to the hash of that commit.",
+  "world_is": "AC3 reads the worker's own commits since the base commit, so an AC3 result recorded before the product commit exists reads FAIL. The worker committed the product, tests and record first, then ran the criteria at that HEAD and committed the criteria output, then committed the instance with the product commit hash. The COO should state the order of commits in the issuance if the sequence is meant literally.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

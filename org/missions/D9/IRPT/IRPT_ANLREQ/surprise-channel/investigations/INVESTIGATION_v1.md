@@ -16740,3 +16740,133 @@
   "notes": "Resolves IRPT_ANLREQ-D2-W148-S1."
 }
 ```
+
+## IRPT_ANLREQ-D2-W149-S1 -- the order's folder rule and its checker invocations name different folders
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W149-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~149",
+  "surfaced_at": "2026-10-15T03:37:28Z",
+  "one_line": "The order puts the artifacts in fwd1_driver/ but names the three checkers at the deliverable root; the checkers were placed where the invocations name them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-345 build list: all inside the deliverable folder fwd1_driver/. Acceptance AC1 to AC3 invoke .../0.9.0_WK_IRPT_ANLREQ~149/driver_check.py, mutant_check.py and hash_check.py at the deliverable root. Record: r41/.",
+  "world_is": "The two rules disagree for the checkers only. The checkers sit at the root, the driver, mint helper and CSV sit in fwd1_driver/, and the record sits in fwd1_driver/r41/. Every invocation resolves.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-345.fwd1-driver-and-mint-helper-build.md:32 @493aeb8805 names the fwd1_driver folder",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-345.fwd1-driver-and-mint-helper-build.md:47 @493aeb8805 names the root path of driver_check.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolved by placement; the issuer may want the order's folder rule stated once."
+}
+```
+
+## IRPT_ANLREQ-D2-W149-S2 -- the Submit control carries no data-slot, so the driver selects it by its accessible name
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W149-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~149",
+  "surfaced_at": "2026-10-15T03:37:28Z",
+  "one_line": "The Submit control is a button with no data-slot; the driver locates it by role and its exact label, File Analysis Request.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-345 cell step 4: locate the Submit control's exact label and data-slot from the source and record them.",
+  "world_is": "The button is labelled 'File Analysis Request' at portal/src/pages/TicketCenter/TicketCenter.tsx:731 and carries no data-slot (opened at :726, disabled while creating or held at :728). The label is located at origin/DEV ad7c100b; AR-y-344 recorded it as not located.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:726-731 @ad7c100b reads the button and its label",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/r41/FWD1_DRIVER_RECORD.json submit_control @493aeb8805 records label, line and data_slot null"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A data-slot would make the Submit selector stable across label edits; not requested here."
+}
+```
+
+## IRPT_ANLREQ-D2-W149-S3 -- the minted hash is checked only by Python bcrypt in this worktree; the login side's bcryptjs cannot run here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W149-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~149",
+  "surfaced_at": "2026-10-15T03:37:28Z",
+  "one_line": "The mint helper writes a Python bcrypt hash that login verifies with bcryptjs, and no bcryptjs is installed here, so that cross-library check is not exercised before the run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-345 AC3: the hash verifies with bcryptjs through node when a bcryptjs package exists in the portal or auth-handler node_modules; bcryptjs=ABSENT is printed, not a failure.",
+  "world_is": "hash_check printed HASH-OK scheme=2b cost=12 python=ok bcryptjs=ABSENT. The auth handler's package.json lists bcryptjs at line 18, but no node_modules is installed there, and portal/package.json carries no bcrypt dependency.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/hash_check.py run output HASH-OK ... bcryptjs=ABSENT @493aeb8805",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/package.json:18 @493aeb8805 lists bcryptjs ^2.4.3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A $2b$12$ hash from Python bcrypt is expected to verify under bcryptjs; that is the claim to test on the applier's box before the run."
+}
+```
+
+## IRPT_ANLREQ-D2-W149-S4 -- the poll needs board tab clicks to find the ticket, and the order said touch nothing after Submit
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W149-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~149",
+  "surfaced_at": "2026-10-15T03:37:28Z",
+  "one_line": "The ticket's package row sits under whichever board tab holds the ticket, and a reload resets to Open, so the poll clicks the tabs; those clicks are read-only navigation, not writes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-345 STEP-4B and STEP-5: from the Submit click the driver only reads; it reloads the ticket page every 60 s and records the four items.",
+  "world_is": "The board shows one tab at a time (Open, In Progress, Completed), and a reload opens Open. The driver clicks the tabs to find the row; each click issues GETs and no write. This is a UI click after Submit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:118-122 @ad7c100b defines the three board tabs",
+      "portal/src/components/TabNavigation.tsx:53 @ad7c100b renders each tab as a button"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Whether a tab click counts as a read is for L9 to rule; the driver's tab clicks are named in the record's selectors."
+}
+```
+
+## IRPT_ANLREQ-D2-W149-S5 -- the one-writer check grades the named channel path as the laptop's and names a per-box file for dell2
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W149-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~149",
+  "surfaced_at": "2026-10-15T03:50:00Z",
+  "one_line": "The one-writer check WARNs that the unsuffixed INVESTIGATION_v1.md is the laptop's file and that a dell2 append belongs in a per-box file; the order names the unsuffixed path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-345 surprise rule: append one row to the investigation file the task order names, surprise-channel/investigations/INVESTIGATION_v1.md.",
+  "world_is": "The one-writer check graded the append as an unsuffixed-file write from dell2 (WARN until C-QUEUE) and named the per-box file <stem>.dell2.<ext>. The rows were appended to the named file and the surprise-row gate passed (4 new rows checked).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-345.fwd1-driver-and-mint-helper-build.md:67 @493aeb8805 names the unsuffixed channel path",
+      "safe-commit output of d091266946 carries the one-writer WARN for INVESTIGATION_v1.md (dell2 write to the laptop file) @d091266946"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The carrier question for the CVO: which file a dell2 worker appends to when the order names the unsuffixed path."
+}
+```
