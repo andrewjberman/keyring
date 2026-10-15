@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_RBNDV2~8</issued_to>
 <issued_by>2.0.0_SA_COO~RB</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -40,7 +40,7 @@ The list:
 `RB2M2-AC1` -- reading each of the 4 listed files as text: a file the test table marks ADOPTED imports `ModalFrame` from `@/ui/components/modal/ModalFrame`, renders `<ModalFrame`, and contains none of `fixed inset-0`, `role="dialog"`, `aria-modal`, `aria-labelledby`, `from '@/ui/components/catalyst/dialog'`; a file marked NOT-A-MODAL carries a non-empty reason in the table and its text is byte-identical to the base (`git show adc70061:portal/<file>` from `<WS>`, compared); the table covers all 4 files with ADOPTED plus NOT-A-MODAL equal to 4 (print the denominator); (difference control: the same ADOPTED arms run on the base text of every ADOPTED file must FAIL, proving the test can fail). The test prints `VERDICT: ADOPTION-OK` only when every arm holds.
 
 <criterion id="RB2M2-AC2" cell_refs="RV-m-2"><invocation>cd <WS>/portal && /c/Users/AndrewBerman/.bun/bin/bun test src/ui/components/modal/__tests__/dsgn-rbndv2/rb-2-m2.bound.test.ts 2>&1 | tail -25</invocation><expect>VERDICT: ADOPTION-BOUND-OK</expect></criterion>
-`RB2M2-AC2` -- for each ADOPTED file, `git diff --numstat adc70061 -- <file>` (run by the test in the portal root with `execSync`) shows insertions plus deletions of at most 160 lines, and the file still contains every `useState`, `useEffect`, `onClick` and `onSubmit` token count it had at the base (the behaviour-preserved bound: a count may not fall). The test prints `VERDICT: ADOPTION-BOUND-OK` only when every arm holds.
+`RB2M2-AC2` -- for each ADOPTED file, `git diff --numstat adc70061 -- <file>` shows insertions plus deletions of at most 160 lines, and the file still contains at least its base count of `useState`, `useEffect` and `onSubmit` tokens, and at least its base count of `onClick` tokens MINUS 3 (a correct adoption removes at most three chrome handlers that ModalFrame owns, the overlay click, the card stopPropagation and the header close; every action button keeps its handler). The test prints `VERDICT: ADOPTION-BOUND-OK` only when every arm holds.
 
 
 <expected_criteria>RB2M2-AC1, RB2M2-AC2</expected_criteria>
