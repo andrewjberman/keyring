@@ -14598,3 +14598,51 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T04:40:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-S58",
+  "one_line": "TO-DB-c-9 STOP at step 6, catch-up date 1 (2026-09-28): the Cottonwood function refuses with registry lookup('z09') KeyError because the shared zip packages scopes.json from an older pin (15565 bytes, 0 z09 rows) while HEAD's scopes.json (20150 bytes) carries the z09 row; zero keys written, schedule DISABLED, nothing further done",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "invoke irpt-cot-holdings-performance-lambda {date 2026-09-28, source blackdiamond_z09} 2026-10-15T04:34:38Z: StatusCode 200, FunctionError Unhandled, Runtime.ExitError exit status 1; log line: REFUSED: registry lookup('z09') failed: KeyError: 'z09'",
+      "built zip and live zip (downloaded by Lambda Code.Location, sha256 equals CodeSha256 DaDtnTCq...) both carry infra/logic/registry/scopes.json sha256 a4e0637257b6.. 15565 bytes with 0 occurrences of z09; worktree HEAD 789677569c scopes.json sha256 6ce64167c265.. 20150 bytes, 6 occurrences; the source map files list names infra/logic/registry/scopes.json and the entry carries staged_from pins",
+      "gold listing after the invoke, both Cottonwood prefixes: 75 and 150 objects, 0 with LastModified at or after 2026-10-15T04:34:00Z (unchanged from the before-read)"
+    ]
+  },
+  "spec_asserts": "The signed packet's catch-up runs the Cottonwood function on the shared zip built from HEAD, which carries the registry row that reaches Cottonwood through lookup('z09'); the zip differs from live by handler.py only.",
+  "world_is": "The zip differs from live by handler.py only (as signed) and that is why it cannot work: the packaged registry is the live zip's older copy and has no z09 row, so the Cottonwood producer cannot resolve its firm. State left as it is: shared zip VersionId vrBQAr57i.p3TMhjdSld3c_E5HMqX8iy live on all THREE functions (CodeSha256 OawCMaEqqo8SifvrVSY06yLTeKKCF8Nw51HceVDh66g=), 7 resources added and 2 functions changed by the one safe-apply, replan No changes, Cottonwood schedule irpt-cot-holdings-performance-daily DISABLED, ledger irpt-dashbd-cottonwood-holdings-performance-20261015 OPEN (legs L5 to L8). The 49F and INF functions now run the loud-failure handler (signed). Rollback of the code is the prior S3 version S7DO3mEXQ2zsk0pkiJB127d_VSHCksbh; nothing was written to a gold prefix, so no delete is needed. A rebuild that refreshes the staged registry members is a new act and needs its own signed pair. (Row id note: the order names IRPT_DASHBD-D2-DB2-S<k>; the gate's id grammar refuses that shape, so the row takes the next free IRPT_DASHBD-D2-S<k>; surfaced by 0.7.0_AE_CloudOps~DB2.)"
+}
+```
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T04:40:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-S59",
+  "one_line": "TO-DB-c-9 odd finds: the Inflection execution role's listing statement is named ListTheOwnInflectionDailyGoldPrefixForCatchUp (the order's gate (e) names ListTheOwnDailyGoldPrefixForCatchUp); the new Cottonwood function has no lambda-source-map.json row (Rule 4) so record-deploy-scope refuses it, and the map is outside the order's paths",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live get-role-policy: irpt-49f-holdings-performance-role carries Sid ListTheOwnDailyGoldPrefixForCatchUp (prefix irpt/49financial/gold/holdings_performance_daily/*); irpt-inf-holdings-performance-role carries Sid ListTheOwnInflectionDailyGoldPrefixForCatchUp (prefix irpt/inflection/gold/holdings_performance_daily/*); both ListBucket on the own daily gold prefix, so the gate's purpose holds",
+      "python infra/aws/lambda/ci/record-deploy-scope.py investor-reporting/holdings-performance --plan <saved plan> --dry-run: REFUSE, module.irpt_holdings_performance_cot.aws_lambda_function.this has NO source-map row; rerun with --function stamped the other 2 of 2 rows (3c45e1522e -> cb5edd65f1)",
+      "build-and-upload.sh rewrote artifact_sha256 on irpt-holdings-performance-lambda to OawCMaEqqo8SifvrVSY06yLTeKKCF8Nw51HceVDh66g=; the map is not among the order's paths, so no map edit is committed; the one-file patch is deliverables/0.7.0_AE_CloudOps~DB2/lambda-source-map.OWED_PATCH_DB-c-9.diff"
+    ]
+  },
+  "spec_asserts": "Gate (e) reads the listing statement by one name on both execution roles; the order's paths cover the apply, not the source map.",
+  "world_is": "Gate (e) was graded on substance (live listing grants on both roles) and recorded true. The source map's artifact_sha256 for irpt-holdings-performance-lambda and the two stamped last-deployed rows are owed to the issuer, and the Cottonwood function still needs its own row (Rule 4); until then the map's hash for the shared zip reads the OLD zip's value against a live zip that is the new one. (Row id note: the order names IRPT_DASHBD-D2-DB2-S<k>; the gate's id grammar refuses that shape, so the row takes the next free IRPT_DASHBD-D2-S<k>; surfaced by 0.7.0_AE_CloudOps~DB2.)"
+}
+```
