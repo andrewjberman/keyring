@@ -50,16 +50,16 @@ S9118, both ARMED. Every NFRA_CTLPLN order is terminal at HEAD.
     "owner": "2.0.0_SA_COO~C",
     "round": "v14",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~C",
       "round": "v14"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "0.0.0_AB_MSTR",
-      "at": null
+      "at": "2026-10-15T05:45Z"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
