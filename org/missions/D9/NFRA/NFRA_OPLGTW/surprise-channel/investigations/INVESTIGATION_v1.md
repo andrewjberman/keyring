@@ -15755,3 +15755,73 @@ name the one known failure instead of silently inheriting it.
     "notes": "OBSERVATION only: the FIRST ACT stop is governed by row NFRA_OPLGTW-Z-W85-S1, not by this row. The naming owner should state which literal contexts the gate grades before a key-staging probe is treated as a pass."
 }
 ```
+```json
+{
+    "id": "NFRA_OPLGTW-Z-W85-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~85",
+    "surfaced_at": "2026-10-15T00:40:13Z",
+    "one_line": "The order says the four Opal tickers are read from the data, but no catalog row of the four entities carries a ticker list, so the module types the four tickers once.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CATALOG: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@d46dc5e910 -- the four entity rows (opal_data_etfs_silver_netassets_daily, opal_data_etfs_gold_holding, opal_data_etfs_gold_book, opal_data_etfs_silver_holdings) carry fork_keys with values [] and no tickers list.",
+        "CONTRACT: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@d46dc5e910 lines 656-657 -- the ticker list (DIVZ, IDVZ, PFDE, PFOE) sits in the config/etf_universe object, a fifth table outside the four rows and outside the served prefixes.",
+        "MODULE: infra/aws/ec2/opal-gateway/app/etfs_funds.py (pre-commit working tree on wk-NFRA_OPLGTW-85) -- FUND_TICKERS is typed once; reading the universe object before the refusal would break the zero-read refusal the order also requires."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order KEYS section (TO-OG-et-2 line 59): the four tickers are read from the data, not typed twice; any other ticker is refused harvest_bad_argument with ZERO reads.",
+    "world_is": "No catalog row of the four entities names the tickers, and the only object that does (the universe config) is not one of the four rows and not a served prefix. A ticker set read from the data would need a read before the refusal, which the zero-read rule forbids. The module therefore types the four tickers once in one constant.",
+    "notes": "OBSERVATION only: the decision of where the ticker set should live (a catalog field on the four rows, or a registry row) is the owner's, not the worker's. Until it is ruled, the constant is the one place the four tickers are typed."
+}
+```
+```json
+{
+    "id": "NFRA_OPLGTW-Z-W85-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~85",
+    "surfaced_at": "2026-10-15T00:40:13Z",
+    "one_line": "The runtime catalog file's header comment reads v0.4 while its body carries version 0.5; the rows this cell reads are the v0.5 rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CATALOG HEADER: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@d46dc5e910 line 1 reads 'DATA_CATALOG v0.4 -- THE RUNTIME CATALOG AT ITS ONE HOME'.",
+        "CATALOG BODY: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@d46dc5e910 line 50 reads 'version: 0.5' and line 52 'supersedes: v0.4 (MX-c-11 ...)'; the four entity rows read by this cell sit in the body."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order A1 and KEYS section: the branch carries DATA_CATALOG.yaml v0.5 (the NFRA_MCPINDEX v0.5 table rows).",
+    "world_is": "The body is v0.5 and the header comment is stale at v0.4. Both are in the same file, so a reader who trusts the first line sees the older version. No behaviour depends on the comment; the loader reads the body.",
+    "notes": "OBSERVATION only: the header is NFRA_MCPINDEX's to correct (the catalog file is that seat's alone to write). Nothing in this cell edits it."
+}
+```
+```json
+{
+    "id": "NFRA_OPLGTW-Z-W85-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~85",
+    "surfaced_at": "2026-10-15T00:40:13Z",
+    "one_line": "trading_days_behind_t1 is measured against the previous trading day of the UTC date, so the same holdings date can read one trading day behind across the UTC midnight that falls inside the New York trading day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CALENDAR: lib/trading_calendar.py@d46dc5e910 lines 207-221 -- trading_days_behind takes the two dates it is given; the sibling tools news_typed.py and portal_macro.py pass prev_trading_day of _today(), and their _today() is the UTC date (portal_macro.py line 75).",
+        "LIVE: a bounded read of etfs_get_fund_holdings from infra/aws/ec2/opal-gateway on the UTC date 2026-10-15 -- as_of 2026-10-13 with trading_days_behind_t1 1 for all four Opal funds."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order Section 1 (the envelope): the denominator carries trading_days_behind_t1 from lib/trading_calendar.py, as the one trading-day staleness measure.",
+    "world_is": "The measure is taken from the UTC calendar date, not the New York trading date. The value for an unchanged file changes at UTC midnight, which is the evening of the trading day in New York. The contract's own frontier for the same file reads 2026-10-13 as T-1.",
+    "notes": "OBSERVATION only: the clock convention for T-1 belongs to the calendar's owner. The cell follows the sibling tools' UTC convention and does not change it."
+}
+```
