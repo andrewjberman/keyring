@@ -16160,3 +16160,52 @@ name the one known failure instead of silently inheriting it.
     "notes": "Which name the issuer wants is the issuer's call. The worker used the gate's convention, which the sibling instance NFRA_OPLGTW.TO-OG-gt-9.search-window-pruning.proof_of_spec.json also follows, and did not use the override line."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W93-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~93",
+    "surfaced_at": "2026-10-15T01:54:40Z",
+    "one_line": "The OG-gt-12 order's Bounds say app/tools.py, data_entitlement.py, destructive_ops.py and the pinned-count tests are NOT the worker's (the issuer registers them at the merge), while its step 1 and <paths> have the worker apply the hookup that edits exactly those files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "OG-gt-12 section 2 (Bounds): app/tools.py, data_entitlement.py, destructive_ops.py and the pinned-count tests are NOT yours; the issuer registers every tool and re-pins the counts at the merge, in one commit; do not edit them. Section 1 step 1 and section 3 <paths> grant those same files to this worker and direct it to run the issuer's script that edits them.",
+    "world_is": "The worker followed step 1 and the <paths> grant: hookup_g5cv.py ran once on the cut HEAD 956d3fca09 (rc 0, 'hookup applied: 6 tools') and its five-file result is commit 3532daff79. No other edit was made to those files. The conflict between the Bounds sentence and step 1 is recorded for the issuer to confirm no second registration pass runs at the merge (see S2: the script is not idempotent).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gt-12.g5cv-hookup.md at HEAD 956d3fca09, section 2 Bounds and section 1 step 1",
+        "RUN: python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/hookup_g5cv.py infra/aws/ec2/opal-gateway at worktree HEAD 956d3fca09: 'hookup applied: 6 tools', rc=0; commit 3532daff79 (5 files, 56 insertions, 5 deletions)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Which reading the issuer intends is the issuer's call. The worker followed the explicit step and the path grant and hand-edited nothing."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W93-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~93",
+    "surfaced_at": "2026-10-15T01:54:40Z",
+    "one_line": "The issuer's hookup script is not idempotent: run again on the committed tree it passes its import and registration anchors and writes duplicate registrations into tools.py, data_entitlement.py and destructive_ops.py before its test-pin assertion refuses.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "OG-gt-12 section 1 step 1: the issuer's prepared script makes exactly the listed edits and nothing else; if the script refuses (an expected line has moved), STOP and file a BLOCKING row, changing nothing by hand. The order's merge step has the issuer register every tool and re-pin the counts in one commit.",
+    "world_is": "On the committed tree (HEAD 3532daff79 content) a re-run is NOT refused up front: the import anchor and the harvest registration anchor still occur once, so tools.py gains a second def block per tool, and data_entitlement.py and destructive_ops.py gain a second NATIVE/SAFE entry per name. The refusal comes only at the test-pin edit (count 0 for '== 89'), after those three files were already written. Measured on a scratch copy of the five files: etfs_get_partner_ownership def count 1 -> 2 in tools.py; NATIVE entry count 1 -> 2; script rc=1 with AssertionError at test_entitlement_admin.py.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: copy of app/tools.py, app/data_entitlement.py, app/destructive_ops.py, tests/test_entitlement_admin.py, tests/test_data_entitlement_family.py from HEAD 3532daff79 into a scratch gateway copy; python hookup_g5cv.py <scratch> at worktree HEAD 3532daff79: rc=1, AssertionError 'test_entitlement_admin.py: 'assert len(registered_tool_names) == 89' found 0 times'; grep -c '^def etfs_get_partner_ownership(' tools.py 1 -> 2; grep -c '\"etfs_get_partner_ownership\"' data_entitlement.py 1 -> 2",
+        "READ: hookup_g5cv.py lines 36-37, 43-44, 49-51, 58 at 2.0.0_SA_COO~O r37 (edit asserts count 1 on import and anchor; test edit is last)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Armed because the order's merge step runs the same registration in one commit: a second pass on the tree this worker committed writes duplicates before it refuses. Disarm is the issuer's: do not re-run hookup_g5cv.py on HEAD 3532daff79 or later; the registration is already present. The scratch copy was deleted after the run."
+  }
+  ```
