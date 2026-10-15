@@ -8899,3 +8899,29 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-W170-S2 -- CB86ch2-AC2 cannot be met as written: its glob slices/ACTIVE_BBG_SLICE_*.json also matches the .quote.json files that item 5 places beside each slice, and a quote file has no securities key, so the invocation raises KeyError and exits rc 1 whatever the slices hold. Stopped at the criterion (refusal clause); the slices and quote files are written as the face says.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W170-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~170",
+  "surfaced_at": "2026-10-15T18:27:10Z",
+  "one_line": "CB86ch2-AC2 cannot be met as written: its glob slices/ACTIVE_BBG_SLICE_*.json also matches the .quote.json files that item 5 places beside each slice, and a quote file has no securities key, so the invocation raises KeyError and exits rc 1 whatever the slices hold. Stopped at the criterion (refusal clause); the slices and quote files are written as the face says.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 invocation run as written in C:/dev/wk-cotbkf-170 (timeout 120): traceback ends at json.load(open(f))['securities'] with KeyError 'securities', for slices/ACTIVE_BBG_SLICE_01.quote.json; rc 1",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~170/slices/ holds 27 ACTIVE_BBG_SLICE_NN.json and 27 ACTIVE_BBG_SLICE_NN.quote.json; the quote file keys are allowance_gap, allowance_today, basis, cells, cells_remaining, claims, finish_date, finish_date_claim, label, page, request_id (no securities key)",
+      "diagnostic, not a criterion run: with the quote files excluded from the glob the same invocation prints files=27 count=27 max_cells=5856 day=5858 sum_cells=154024 within_day=True no_dollar_column=True; its slice_cusips term counts securities entries (2238), not distinct CUSIPs (1732)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-2 item 5: one request file per slice under slices/ and a .quote.json beside each; CB86ch2-AC2 sums securities over slices/ACTIVE_BBG_SLICE_*.json and prints within_day and no_dollar_column.",
+  "world_is": "The criterion and the item-5 placement cannot both hold as written: the glob matches the quote files, and the slice_cusips term counts entries, not CUSIPs. No file was changed to meet the criterion. Not established: whether the issuer wants the quote files in another folder, or the glob narrowed to the slice .json files with the CUSIP term counted as distinct CUSIPs.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
