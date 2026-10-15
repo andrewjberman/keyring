@@ -24,16 +24,16 @@ Three rows, one ARMED (W10-S2). Not exercised in the round: Andrew's real read a
   "owner": "2.0.0_SA_COO~CA",
   "round": "v6",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~CA",
    "round": "v6"
   },
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO",
-   "at": null
+   "at": "2026-10-14T22:00Z"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "COMM_ASSIST-D2-S1",

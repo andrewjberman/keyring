@@ -1222,3 +1222,28 @@
   "world_is": "S6 and W1-S19 read DISMISSED_WITH_REASON from this row; the hazard W1-S19 named stays contained by the pre-push limb and its cleanup is a carried enrichment item, not a live armed row."
 }
 ```
+
+## NFRA_DEVPLN-D2-S1 -- portal-merge-forward.sh reports every failed merge commit as "conflict"; on dell2 the cause was a missing git identity
+
+```json
+{
+  "id": "NFRA_DEVPLN-D2-S1",
+  "project": "NFRA_DEVPLN",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T20:20:00Z",
+  "one_line": "portal-merge-forward.sh reported result=REFUSED reason=conflict for cand/dell2/asof-date-only-no-invented-clock when the merge commit actually failed with 'Committer identity unknown' (the portal repo on dell2 has no git identity); every merge failure is reported as a conflict, so any dell2 seat landing a portal merge reads a false reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal-merge-forward.sh header: any doubt refuses (fail closed) and the result line names the reason.",
+  "world_is": "0.0.0_AB_MSTR~DELL2 msg 7848: the first run refused reason=conflict; the second run with a per-run identity in env vars (no config change) printed MERGE-FORWARD result=MERGED dev_before=9de7c7e322 dev_after=66d221626e pushed=yes. This seat's ls-remote read: origin/DEV = 66d221626ec3ca04b68485b95ec7998d0dd60264. The refusal failed closed (nothing pushed), so the hazard is a wrong reason, not a wrong state. Owner of the fix: the script's cell (DP-b-2): set an identity per run or report the true failing step.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "relay 0.0.0_AB_MSTR~DELL2 msg 7848 (both run lines)",
+      "git -C portal ls-remote origin DEV -> 66d221626ec3ca04b68485b95ec7998d0dd60264 (this seat, ~20:2xZ)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

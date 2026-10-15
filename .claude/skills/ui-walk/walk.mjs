@@ -46,6 +46,14 @@ for (let i = 0; i < argv.length; i++) {
   // statuses only are printed and written (probe-get.json). GET only: the guard is unchanged.
   else if (a === '--probe-get') (opt.probeGets = opt.probeGets || []).push(argv[++i].replace(/^[A-Za-z]:[\\/].*?[\\/]Git(?=[\\/])/i, '').replace(/\\/g, '/'))
   else if (a === '--hover') opt.hovers.push(argv[++i])
+  // --hover-after-press "<css>@<xfrac>" (repeatable, plain routes): AFTER every --press, move the mouse onto the first
+  // visible match of <css> at x = xfrac (0..1) of its width, mid-height, and shoot the viewport + run the checks. For a
+  // hover-only popup behind page state no URL carries (a chart tooltip on a toggled view). Requested by 2.0.0_SA_COO~D1.
+  else if (a === '--hover-after-press') {
+    const v = String(argv[++i] || ''); const at = v.lastIndexOf('@'); const frac = Number(v.slice(at + 1))
+    if (at < 1 || !Number.isFinite(frac) || frac < 0 || frac > 1) throw new Error(`--hover-after-press wants "<css>@<xfrac 0..1>", got "${v}"`)
+    ;(opt.hoverAfterPress = opt.hoverAfterPress || []).push({ css: v.slice(0, at), frac })
+  }
   else if (a === '--security') opt.securities.push(argv[++i])
   else if (a === '--thread') opt.thread = argv[++i]
   else if (a === '--max-minutes') opt.maxMinutes = Number(argv[++i])
@@ -1865,6 +1873,25 @@ try {
         log('PRESS', label, pressed ? 'pressed' : 'NOT FOUND')
         await checks(page, `${route}-press-${label}`)
         if (opt.contrastTable) await contrastTable(page, `${route}-press-${label}`)
+      }
+      // --hover-after-press: the presses above set the page state; now hover into it (a chart tooltip follows the pointer,
+      // so the move is stepped). One viewport shot + checks per spec; a missing target is hover:no-match, never a silent skip.
+      for (const [k, h] of (opt.hoverAfterPress || []).entries()) {
+        if (!timeLeft()) break
+        const el = page.locator(h.css).first()
+        if (!(await el.count().catch(() => 0))) { findings.push({ step, check: 'hover:no-match', claim: 'measured', observed: `--hover-after-press: no element matches ${h.css}` }); continue }
+        await el.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {})
+        const b = await el.boundingBox().catch(() => null)
+        if (!b || !b.width || !b.height) { findings.push({ step, check: 'hover:no-match', claim: 'measured', observed: `--hover-after-press: ${h.css} has no visible box` }); continue }
+        const x = b.x + b.width * h.frac; const y = b.y + b.height / 2
+        await page.mouse.move(x, y, { steps: 8 }).catch(() => {})
+        await settle(page, 600)
+        const file = `shots/hover-after-press-${k + 1}-viewport.png`
+        await page.screenshot({ path: path.join(OUT, file) }).catch(() => {})
+        log('HOVER-AFTER-PRESS', h.css, `@${h.frac}`, `(${Math.round(x)},${Math.round(y)})`, '->', file)
+        await checks(page, `${route}-hover-after-press-${k + 1}`)
+        await page.mouse.move(0, 0).catch(() => {})
+        await settle(page, 250)
       }
       if (opt.contrastTable && !(opt.presses || []).length) await contrastTable(page, `${route}-load`)
       await exploreScope(page, 'body', route)

@@ -1,0 +1,25 @@
+{
+ "allowance_gap": null,
+ "allowance_today": 0,
+ "basis": "history backfill quoted over NON-trading days (weekends and NYSE holidays, lib/trading_calendar.py is_trading_day) at the measured ceiling per day; a trading day's backfill allowance is 0 (production draws history on trading days); counted only on days a scheduled drawer fires (drawer_schedule.py)",
+ "basis_note": "Independent quote: the request alone, no other request ahead of it, at the measured ceiling per non-trading-day fire (no carry-over). STACKED in queue order (surface B first, then the C1 stages, A/B/E/C/D): finish 2027-02-28, through stage D365 of both fields: 258,967 cumulative history cells. The two fields of a stage draw together by rank.",
+ "cells": {
+  "bloomberg_history": 68442
+ },
+ "cells_remaining": 68442,
+ "claims": {
+  "ceiling": "measured",
+  "reserve": "held"
+ },
+ "finish_date": "2026-11-22",
+ "finish_date_claim": "measured",
+ "finish_date_stacked": "2027-02-28",
+ "finish_date_stacked_claim": "inferred",
+ "frozen_by": "2.0.0_SA_COO~Q1",
+ "label": "full-request quote",
+ "page": "rival funds (ETFS_RIVALS)",
+ "quoted_at": "2026-10-14T19:38:50Z",
+ "quoted_for_today": "2026-10-14",
+ "request_id": "ETFS_RIVALS-C1-CLOSE-CURVES-D365",
+ "securities_count": 366
+}

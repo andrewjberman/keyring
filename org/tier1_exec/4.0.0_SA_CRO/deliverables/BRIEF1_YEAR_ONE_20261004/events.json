@@ -1,6 +1,6 @@
 {
  "page": {
-  "headline": "Year one: 3 partner firms live, 17 portal pages, and {{multiple}} times the monthly build rate",
+  "headline": "Year one: 3 partner firms live, 18 portal pages, and {{multiple}} times the monthly build rate",
   "sub": "Since the portal (Nov 12, 2025) and workspace (Nov 18, 2025) repositories began: {{total}} commits across both. Andrew built alone through February; an AI agent organization joined on Mar 2, 2026 and now writes almost every commit.",
   "span": "November 2025 to October 2026",
   "chart_read": "Weekly commits rose from a few dozen to {{peak_week}} at the peak. Agents took over in March, and monthly volume has more than doubled every two months on average since.",
@@ -33,7 +33,7 @@
     "monthly commit volume, Dec 2025 ({{dec}}) to Sep 2026 ({{sep}})"
    ],
    [
-    "17",
+    "18",
     "portal pages in the navigation today"
    ],
    [
@@ -113,8 +113,8 @@
   ],
   "notes": [
    "A commit is one saved change. Counts cover both repositories, all branches, with merges excluded, and are measured from git.",
-   "The kind of work (the three colored bands) is inferred from the files each commit touched, using the same rules as the Daily Operating Report.",
-   "Commit volume measures activity, not output. Product-build commits rose about {{product_multiple}} times ({{dec_product}} in December to {{sep_product}} in September); most of the added volume is coordination and controls ({{controls_share}}% of the year), the records that let many agents work in parallel safely.",
+   "The kind of work (the two colored bands) is inferred from the files each commit touched, using the Daily Operating Report's rules regrouped into two bands: product (everything aimed at the product, including the task orders and plans that coordinate it) and audit (logs and records).",
+   "Commit volume measures activity, not output. Product commits rose about {{product_multiple}} times ({{dec_product}} in December to {{sep_product}} in September); audit (session logs, deploy and project ledgers, investigation records) is {{audit_share}}% of the year, the paper trail that lets many agents work in parallel safely.",
    "Portal page dates are the day each page was first built (measured). Production dates before Feb 26, 2026 are bounds, because the portal's deploy tags start that day.",
    "Pipeline dates are the day a schedule first appeared in the infrastructure code unless a first run is cited, so they are marked inferred.",
    "Partner context and the $2.1B figure come from Andrew's Outlook (read-only pass, Oct 4, 2026); they are cited as email, date and organization, and carry no personal details.",
@@ -682,6 +682,32 @@
    "detail": "Cottonwood's Black Diamond history conversion slipped to late December or January; Opal supplied legacy-model performance in the meantime.",
    "claim": "measured",
    "evidence": "email, 2026-10-01, Alongside and Opal"
+  },
+  {
+   "date": "2026-10-06",
+   "cat": "page",
+   "title": "Data Freshness page",
+   "detail": "An internal Tools page that shows, for every covered name, when each research input last landed and which are stale. Live from portal v2.1.201.",
+   "claim": "measured",
+   "evidence": "portal fb939c4a (App.tsx nav entry), tag portal-v2.1.201 2026-10-06"
+  },
+  {
+   "date": "2026-10-13",
+   "cat": "system",
+   "title": "Research harvest opened to Opal staff through the gateway",
+   "detail": "All 24 areas of the research data store (news, filings, models, peers, scores) made available to Opal users in Claude through the Opal gateway, managed by gateway entitlements; outside users stay refused.",
+   "key": true,
+   "claim": "measured",
+   "evidence": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261013_200xZ_NINE_OPEN_CALLS_ANSWERED_FIRMBKTS_DEMQUE_BRIEF_HARVEST.md (call 8)"
+  },
+  {
+   "date": "2026-10-14",
+   "cat": "system",
+   "title": "Data contracts for the gateway: 308 tables across six data stores",
+   "detail": "Every research, client-asset, portal, model-portfolio, ETF and news table catalogued with its columns, keys and freshness, so Claude can reach each one through a typed gateway tool.",
+   "key": true,
+   "claim": "measured",
+   "evidence": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/INDEX.md"
   }
  ]
 }

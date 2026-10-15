@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~388</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>cancelled</status>
+<status_reason>NOT RUN: its predecessor IB-pr-542 records a STOP (4 UNATTRIBUTED nodes) and this order says do not write packet v3 over a STOP; no worker was seated; the packet is cut in the round after the CTO's ruling on the 4 nodes</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>

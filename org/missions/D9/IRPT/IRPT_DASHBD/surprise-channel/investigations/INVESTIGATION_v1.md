@@ -11691,3 +11691,1366 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S35",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T17:59:49Z",
+  "one_line": "Issuer's dispositions on worker 174's five rows (round 109, DB-b-216): none changes the round's spec; S2 and S3 are one repair (link through missing valuation days) for the round-110 enrichment list, S1, S4 and S5 are definition facts carried to the CTO's round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Mid-round the decomposition is frozen; the only off-spec act is a surprise row. DB-b-216 asks for a method-stated derivation and a tie-out that says what it can and cannot compare, with no figure filled where a window is not comparable.",
+  "world_is": "W174-S2 (BLOCKING, partial): Orion fact_positions lacks 2026-07-01 and 2026-09-28, so the YTD, last-12-month and since-inception windows read not comparable and only QTD ties out; the record says so in words and fills no figure, which is what the order asked. The repair is the engine's link through intervening valuations (the Schwab engine's carried-day rule) applied to the Inflection adapter, one cell for round 110. W174-S3 (calendar-daily partitions give carried_days 3 on Mondays) is the same repair. W174-S1 (account_id is not zero-padded in Orion): the derived table keeps the dim form; the contract wording is for the CTO to correct, no consumer reads the pad. W174-S4 (no day_quality or guard_state value for computed-but-unguarded): an enum change is a schema decision under the taxonomy law and is not taken here; the table reads MEASURED with GUARD_NOT_REACHED and the report prints neither word. W174-S5 (isActive false rows with non-zero currentValue: 19,390 of 2,057,322 account-day rows): the module includes them and states the basis; whether they are market value is a data-definition fact for the CTO. S1, S4 and S5 go to the round-110 analysis request in the L10 slug. No hazard is armed on any of the five.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~174/TWR_TIEOUT_R109.json (tie_out windows, basis_words)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r109/p109_round109.py check_twr: DB109-3-AC1 PASS on the landed tree",
+      "this seat's own read of rows W174-S1 to W174-S5 in this file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S36",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T18:26:39Z",
+  "one_line": "Issuer's rulings on worker 173's rows W173-S8 to W173-S11 (DB-b-215): S8 was my check's error and is amended; S9 is disarmed by a relabel rule in the order; S10 and S11 are generic render fixes accepted and passed to the CVO's judgment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB109-2-AC1 as first cut required an unheld class entry in the sample and planted its note-level mutant on a household year-to-date net gain; the amended DB-b-214 sample holds neither. CLAUDE.md section 2: an ARMED hazard disarms same-turn through its disarm_owner (this seat, for W173-S9).",
+  "world_is": "W173-S8 (BLOCKING): both clauses assumed a 49 Financial-shaped sample; the Inflection sample places no asset class (allocation absent in words, 0 UNHELD entries, 0 dashes printed) and prints no household year-to-date net gain. An issuer error, not a render defect: the checker now drops the unheld precondition (the dash count must equal the unheld count, here 0 of 0) and plants the absent-note mutant on a key the sample prints. Measured: DB109-2-AC1 on the worker's tree with the amended checker reads PASS (20 pages, 0 clipped, 259 cells, 34 notes). W173-S9 (ARMED, mine): the sample's last4 label takes the last four characters of the custodian number; 1 of 5 labels is all digits and 4 of 5 are distinct. Ruled: the order now relabels the sample to four-digit ordinals (0001 to 0005 by account_id order), a relabel of the existing sample with no source read, and the checker refuses a non-digit or repeated label (dry-run on the current sample: FAIL as expected). The hazard is disarmed by that rule; the render is private and was never recorded. What last four a real Inflection account should print is a data-definition fact (the custodian number is not digits-only) carried to the CTO's round analysis. W173-S10: the round-106 not-held rule blanked the ending value of a not-spanned window while the sample carries the value at as_of; the worker's generic fix prints it; accepted (the 49 Financial sample carried no not-spanned window) and named for the CVO at DB109-2-J1. W173-S11: the export's row-height estimate ignored wrapped lines; the generic fix splits the holdings table over two sheets; accepted, calibrated on one table, named for the CVO. No firm-keyed edit in any of the three portal changes (worker's report; tests catch the firm-keyed mutant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r109/p109_round109.py (check_render, mutate_printed_note, note_level9, the last4 clause)",
+      "worker tree wk-IRPT_DASHBD-173 @ba1b6f5031: this seat's own run of DB109-2-AC1 with the amended checker (PASS before the last4 clause; FAIL on the last4 clause as expected) and a count-only measure of the sample's labels (5 accounts, 4 distinct, 1 all-digit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-215.inflection-render-through-the-whole-document-and-note-rules.md step 1a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "Contract 0.4.3 sources every household-grain return ABSENT, so the Orion household return that TO cell (b) and criterion DB109-1-AC1 require is not filled in the sample; the household-return clause fails as written.",
+  "spec_asserts": "TO DB-b-214 cell 4(b) and criterion DB109-1-AC1 (the round-109 CTO analysis cell 2): pvs.<window>.return_cumulative for the household take Orion's client-keyed fact_performance, and at least one household return window fills and is listed in household_return_windows.",
+  "world_is": "Contract 0.4.3 (org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3) sources pvs.<window>.return_cumulative and hold.return_<window> as source ABSENT, reason 'A household-grain return is not carried by any sibling contract'. Its READ_RULE says a figure is never derived from a source the contract does not name, and its OPEN list says the household return members are ABSENT until a new contract exists. The shape checker (p105 check_sample_shape_k) requires an ABSENT member to hold the absent form, so a filled household return would fail the shape clause. The builder therefore writes the nine household-return members (four pvs and five hold) absent with the contract's reason (kind NO_SOURCE_YET) and household_return_windows is an empty list. Measured, not filled: the newest fact_performance partition (2026-10-14) holds the client's dates, the client series holds the anchor day of qtd, ytd and last_12_months and the as_of day, so all four windows would open if a contract sourced them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3 (members pvs.*.return_cumulative and hold.return_*: source ABSENT; document read_rule; open_changes item 1)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py@df0d2ad2f3 (check_sample_shape_k: an ABSENT member must hold the absent form)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@df0d2ad2f3 (build_values: the ABSENT branch writes the contract reason)",
+      "measured in the private build: BUILD_COUNTS.json client_performance_opens_on_anchor and household_return_windows (counts and booleans only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stop on this point, not on the build: the rest of the sample is built and checked. The CTO's round-109 analysis says the household return comes from Orion's client grain, but the ratified contract at 0.4.3 says it is not carried, and changing that needs a contract version bump or a PRD addendum, which a worker does not write. No value was plugged. Ruling needed from the CTO: (a) a contract version that sources the household return from fact_performance, with the index-level rule, or (b) the render prints the household return as absent. The criterion clause stays FAIL until one of them lands."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "The contract derives account first_data_date and window_status from the account return table, which this firm does not have until DB-b-216, so the build takes first data dates from Orion transactions and sets window statuses from span alone, and every spanned window reads BREAK.",
+  "spec_asserts": "TO DB-b-214 step 3 and step 4 require each account's first data date (with the method stated in words) and window_status for the four windows, as the filled-report shape requires.",
+  "world_is": "Contract 0.4.3 first_data_date_rule: the business_date of the account's first row in the account return table. window_status_rule: NOT_SPANNED when the account has no return row on the opening anchor, BREAK when a day in the window has no row, else MEASURED, read from the account return table. Neither table exists for this firm yet. The build took first data dates from the earliest transDate of the account in the newest fact_transactions partition (4 of 5 accounts), and from the earliest createdDate of its fact_positions rows for the one account with no transaction there (1 of 5). Window status: NOT_SPANNED where the first data date is after the window's opening anchor (trading-day anchor from lib/trading_calendar.py), otherwise BREAK, because no account return row exists for the window's days; since_inception opens on the first data date and reads BREAK. The sample carries 4 windows x 5 accounts = 20 statuses: 8 NOT_SPANNED and 12 BREAK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3 (document.filled_report.window_status_rule and first_data_date_rule)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@df0d2ad2f3 (first-date and window-status derivation, named in its header)",
+      "measured in the private build: BUILD_COUNTS.json first_date_source_counts and HOUSEHOLD_SAMPLE.json (counts and words only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: left alone, the render prints BREAK for every spanned window, and BREAK in the contract's words means a day has no return row, which reads to a client as a broken source. The render (DB-b-215) and the issuer decide the words; the disarm owner is the issuer. The build did not invent returns, and no status is MEASURED, because no return is read for this firm yet."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "Orion's assetClass carries 125 distinct fund-category labels and Opal's seven classes come from a classification table this build is not granted, so the allocation members are absent rather than placed by a mapping the build would invent.",
+  "spec_asserts": "TO DB-b-214 cell 4(c): hold.allocation takes each asset class's share when fact_positions carries an asset class Opal's seven classes can place, and otherwise every entry is absent NO_SOURCE_YET.",
+  "world_is": "fact_positions (newest partition) carries assetClass with 125 distinct Orion fund-category labels and productCategory with three values (Bond, Equity, Money Market). The class contract (IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json) takes class values from the etf-classifications table, read by the shared ETFClassifier through DynamoDB GetItem, which is outside this build's grant. The only class signal inside the grant is isCustodialCash, and the class rule counts money-market funds as cash, so a cash share from custodial lines alone would understate cash. The build writes hold.allocation (seven classes) and holdings.rows.class_hierarchy absent with NO_SOURCE_YET and the reason in words.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_CLASS_DAILY_CONTRACT.json@df0d2ad2f3 (class_source: etf-classifications, GetItem through ETFClassifier)",
+      "measured in the newest fact_positions partition: distinct assetClass and productCategory counts (counts only; no holding recorded)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The TO's fallback applies (every entry absent NO_SOURCE_YET). A ruling is needed only if the render must show an allocation for this firm: the classification read would need its own grant."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "The served model series holds returns to 2026-10-13 and the household's as_of is 2026-10-14, so every window of the 32 benchmark members and the 12-month chart lacks its last trading day and reads SOURCE_BREAK in words.",
+  "spec_asserts": "TO DB-b-214 cell 4(d): the 32 model benchmark members and the 12-month chart fill from the served model series exactly as the sibling builder does.",
+  "world_is": "The served object (model_portfolio_timeseries, read through model_series_windows.read_served_series) carries a data_as_of of 2026-10-13 (its last trading day). The sample's as_of is the newest fact_positions partition, 2026-10-14. Under the window rule a window is filled only when every trading day from its first day to the as_of holds a return, so each window misses 2026-10-14 and the member reads 'the model series holds no return on 1 trading day(s) of the window' with kind SOURCE_BREAK. The chart reads the same way. Four stems x four windows = 16 pvs members and 16 avs members, plus the chart: 33 absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured in the private build: BUILD_COUNTS.json model_source and model_series_trading_days (counts and dates; no value)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@df0d2ad2f3 (bench_value and chart_value, the sibling window rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A timing condition of the served series, not a build defect: the builder reports it and does not repair it. A later series refresh that reaches 2026-10-14 would fill these members on the next build with no code change."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "TO cell 4(a) fills the ending values from fact_positions, while contract 0.4.3 names the account return table as their source; the build followed the TO, and it also filled the account-grain avs ending values so the whole-document rule finds one figure.",
+  "spec_asserts": "TO DB-b-214 cell 4(a): pvs.<window>.ending_value, hold.ending_value, act.ending_value.household and act.ending_value.account take the same figure, the market value of the household's positions at as_of from fact_positions.",
+  "world_is": "Contract 0.4.3 sources pvs.<window>.ending_value, avs.<window>.ending_value and act.ending_value.* to the account return table's market_value_eod on as_of, and its READ_RULE says a figure is never derived from a source the contract does not name. The account return table is not built for this firm, so the figure comes from fact_positions currentValue summed per account at as_of (2026-10-14). The household figure is that sum; every account and window carries the same account figure. avs.<window>.ending_value is not named in the TO, but the whole-document rule groups it with act.ending_value.account, so an absent avs cell beside a filled act cell would be a conflict. The rule found 0 conflicts and 0 disagreements over the sample, and the household figure is recorded only in the private folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@df0d2ad2f3 (READ_RULE; members pvs.*.ending_value and avs.*.ending_value)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r106/p106_round106.py@df0d2ad2f3 (figure_key and whole_document_scan: ending_value groups by entity and as_of)",
+      "measured: the issuer's whole-document scan of the private sample (0 conflicts, 0 disagreements, 0 unmapped)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CTO rules whether fact_positions may stand in for the account return table's market value for these members, or whether they stay absent until the return table exists."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:27:13Z",
+  "one_line": "The TO asks for account_id in the custodian form, but the checker and the adapter key the household's accounts by Orion's account id; the build uses that key for account_id and takes last4 from the custodian account number.",
+  "spec_asserts": "TO DB-b-214 cell 3: each account's account_id in the custodian form the shape requires, and last4. The checker requires the sample's accounts to equal the adapter's account_dim accounts of the household.",
+  "world_is": "The adapter's account_dim keys each account on Orion's account id (the accountId column). The custodian account number is a separate column (accountNumber) on fact_positions. The checker compares the sample's account_id set with the dry run's account_id set, which is the Orion id. Using the custodian number as account_id would fail the account-set clause. The build therefore sets account_id to the adapter key, and last4 to the last four characters of accountNumber on the account's positions (recorded as a count only; no value is written to the repo).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py@df0d2ad2f3 (ACCOUNT_COL and the account key of build_account_dim)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r109/p109_round109.py@df0d2ad2f3 (check_sample: sorted(acc) == sorted(accts))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A renderer that shows account_id to a reader would show Orion's internal id, not the custodian number. The render (DB-b-215) prints last4 only. A ruling on the account key for display is the CTO's."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T17:44:31Z",
+  "one_line": "After the as-of moved to the last positions date on or before the served series' end (amendment W173-S4), the household's account membership still comes from the newest positions and fact_assets partitions, so the order does not say which partition defines the membership.",
+  "spec_asserts": "TO DB-b-214 step 3 (amended): the household is chosen from the adapter's account_dim among households of 2 or more accounts, the sample's accounts are that household's accounts, and as_of is the newest fact_positions date on or before the served series' last date.",
+  "world_is": "The adapter's account_dim is built from the newest fact_positions and fact_assets partitions (2026-10-14), which is the basis of the round-108 dry run the checker recomputes the household from. The values are read at as_of (2026-10-13). The build used the newest partitions for membership and the as-of partition for values, and recorded that in method_words. Measured: all five household accounts carry position rows on 2026-10-13, and the account set equals the dry-run set. Nothing in the order says which partition defines membership when the two dates differ; a membership that held on the newest date but not on as_of would be carried into the sample with an absent or zero value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py@4ee0fead99 (build_account_dim takes the holdings and roster frames it is given)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@4ee0fead99 (step 1 and step 2: membership from the newest partitions, values from the as-of partition)",
+      "measured in the private build: BUILD_COUNTS.json account_positions_rows_as_of (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the issuer's disposition; no value was changed. The checker's household rule is fixed to the dry-run membership, so the build kept that membership and read values at as_of."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "Two clauses of the render checker assume a sample with an asset-class allocation and a household net gain; the Inflection sample, built as the amended order requires, has neither, so DB109-2-AC1 fails at check_render's unheld-class precondition and would fail at its note-level control even if that were met.",
+  "spec_asserts": "DB109-2-AC1 (the criterion checker, check_render, and its note_level control): the sample holds at least one unheld class entry so the dash is checked; and the two planted mutants of the whole-document and note-level rules are each reported.",
+  "world_is": "(1) check_render requires uc >= 1 (the sample holds an UNHELD class entry). The Inflection sample's hold.allocation is absent in every class, per the amended DB-b-214 step 4(c) fallback (no seven-class placement from the granted sources), so unheld_count is 0 and the clause fails with 'the sample holds no unheld class entry to check'. The dash clause itself measures 0 dashes in the export, equal to 0 unheld entries. (2) note_level's control plants a note naming hold.net_gain_ytd|household and requires the note-level rule to report it; the rule reports a note only when a printed cell carries the same key, and the sample prints no household year-to-date net gain (no source), so the planted mutant is not reported and CONTROL fails. Measured by a collecting replication of check_render (the checker itself stops at its first failing clause): every other render clause passes, 20 pages read, 0 clipped, 259 whole-document cells, 34 notes (33 absent, 1 pointer), 0 note-rule failures in either view.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r109/p109_round109.py@f093ea2189 (check_render: need(uc >= 1); the render's dash clause)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py@f093ea2189 (unheld_count counts UNHELD entries of by_row maps)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r107/p107_round107.py@f093ea2189 (note_level: the mutant_absent_note control is reported only when a printed cell carries its key)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/RENDER_R109.json@d350162d (the measured record: note_level, kind_notes, chart_slots, pdf_clipping)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stop on these two clauses, not on the render: the criterion is FAIL as written and the order stays pending. The issuer decides whether the precondition is the checker's to change (for example, a sample with no class placement exercises the dash by no entry, and the control by a figure the sample carries) or the sample's. No checker file was edited; the render was not changed to satisfy either clause."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "The sample's last-four field takes the last four characters of the custodian account number, so four of the five account labels in the render end in non-digit characters; the labels read as fragments and do not identify an account.",
+  "spec_asserts": "TO DB-b-214 (amended) step 3: each account entry carries last4, and an account's last four digits are shown as #### in anything recorded; the render prints each account by its last4 in the account header, the footer and the note keys.",
+  "world_is": "The builder's last4 is the last four characters of the account's custodian number (fact_positions accountNumber). For four of the five household accounts those four characters include non-digit characters, so the render's labels, footers and table rows show non-digit fragments. The count of accounts whose last four characters are all digits is 1 of 5 (measured by counting only). The render prints these labels in every account page and in the Activity, Taxable and Gain and Loss tables. Nothing was typed into the repo: the fragments are in the private render only, and this row quotes none of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~173/build_sample_inflection.py@4ee0fead99 (last4 = custodian number [-4:], step 2 of the build)",
+      "measured: the final private render, pages 5 to 19 (labels only; counts in this row, no value)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: any later render of this sample prints the same fragments to a reader. The fix is the sample's last-four rule (the builder, under DB-b-214, which is complete); this order's grant does not include the builder or the sample, so the fix is not made here. The issuer decides the rule (digits only, or a masked form) and re-issues the sample."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "The round-106 not-held rule blanked every cell of a window the account did not span, the ending value included; the ending value is the figure at as_of, so the note rule found twelve notes naming it absent beside printed figures, and the render now prints it (a change to round-107 behaviour).",
+  "spec_asserts": "TO DB-b-215 step 4: everything else is the round-107 behaviour, unchanged; step 2: fix what the checker or the reading finds.",
+  "world_is": "valueSummaryGrid and activityGrid passed the NOT_SPANNED flag to every cell of a window column, so an account whose window was not spanned printed the words for its ending value in that window, while the sample carries the ending value at as_of for every account, and the whole-document keys (ending_value, account, as_of) are printed elsewhere. The note-level rule reported twelve contradictions in both views. The fix (commit d350162d) skips the ending-value row (pvs and avs) and the ending-value column (activity summary) in the not-held flag; every other cell, the footnote and the not-held wording are unchanged. The round-106 test that pinned the blanked ending value was edited minimally and named in that commit. The 49 Financial sample carried no NOT_SPANNED window, so this path had not been exercised before.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit d350162db95501c208bb805d529b5fc17b5b9480 (reportModel.ts; report-render-r106.test.tsx; report-render-r109.test.tsx test (d))",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r107/p107_round107.py@f093ea2189 (note_rule: an absent note naming a key a printed cell carries FAILS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the CVO's judgment at L9 on DB109-2-J1 and for the issuer's disposition: the change is generic (not firm-keyed), and it changes the round-107 display of a not-held window's ending value from words to the figure."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W173-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~173",
+  "surfaced_at": "2026-10-14T18:19:32Z",
+  "one_line": "The export's page estimate charged every grid row one line, but 'Not available yet' wraps to two or three lines in the thirteen-column holdings table, so the table ran into the footer; the estimate now counts the wrapped lines (commits e97cb4eb and 3fd628d0).",
+  "spec_asserts": "TO DB-b-215 step 6: each sheet fits one PDF page; fix what the reading finds.",
+  "world_is": "The Inflection holdings table prints the absent words in every class row, and the narrow allocation column wraps them to three lines. documentSheets.ts charged GRID_ROW_PX (21 px) per row, so the 49 Financial-shaped estimate placed too many rows on the sheet. gridRowCost() now adds GRID_LINE_PX (26 px, calibrated on the rendered page) for each further wrapped line of the widest cell, with about 110 characters across a grid. The table now splits across two sheets with its head repeated. Grids of short figures cost what they cost before; the tab has no pagination.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commits e97cb4eb and 3fd628d0 (render/performance/report/documentSheets.ts)",
+      "measured: the final render, pages 7 and 8 (read as images)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The constant is calibrated on one table; a firm whose grid cells carry long figures would see the same estimate used. The change applies to every firm's grids, not only Inflection's."
+}
+```
+
+## IRPT_DASHBD-D2-S37 -- Cottonwood's served performance gold ends 2026-09-25 (12 trading days behind T-1) and its channel has no scheduler
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S37",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T18:40:00Z",
+  "one_line": "s3://opal-data-cottonwood/irpt/cottonwood/gold/holdings_performance_daily/ newest partition is date=2026-09-25, 12 trading days behind T-1 2026-10-13; the feeding channel blackdiamond_z09 has no scheduler (relayed from dell1); Cottonwood's irpt holdings end 2026-10-08, 3 trading days behind, writer unresolved. P1 (all clients at all firms, due Nov 15) cannot be met for Cottonwood until a scheduled producer exists.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Andrew-direct 2026-10-14 ~17:3xZ (P1): the performance reporting tab functional for all clients at all firms by Nov 15 internal; CLAUDE.md: production pipelines MUST be scheduled.",
+  "world_is": "This seat's reads 2026-10-14 ~18:4xZ: list-objects-v2 of the prefix shows newest date=2026-09-25 (then 09-24); lib/trading_calendar.trading_days_behind(2026-09-25, 2026-10-13) = 12 (the hardcoded NYSE fallback, 2010-2027). Relayed, not read here: blackdiamond_z09 (sources.json:159) has no scheduler; irpt holdings ends 10-08 with its writer unresolved (4.0.0_SA_CRO P3_COTTONWOOD_BACKEND_CENSUS_AND_PORTFOLIO_GROUP_20261014.md @1b7cad0123, Q-B, on origin/box/dell1; relay msg 7800). Distinct from DB-b-201 (Cottonwood silver for the reporting gold stops 2026-06-23).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-cottonwood --prefix irpt/cottonwood/gold/holdings_performance_daily/ (rail-checked: no comp-freshness entry), 2026-10-14 ~18:4xZ",
+      "lib/trading_calendar.py trading_days_behind -> 12",
+      "relay 0.0.0_AB_MSTR~DELL2 msg 7800 from 1.0.0_SA_CTO~DELL1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D2"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S38",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T19:20:38Z",
+  "one_line": "Issuer's ruling on worker 175's BLOCKING row W175-S1 (DB-b-217): the order assumed period-named columns in Orion's fact_performance; the table holds one cumulative factor per client per date, and the window return is the factor ratio the round-108 read already validated; the order and decomposition are amended and the worker resumes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-217 step 3 (as first cut): an Orion column whose period is evident from its name is SOURCED, and at least one household return window must be sourced; the CTO's ruling (round 110): the household return comes from Orion fact_performance at the client grain with its source claimed.",
+  "world_is": "W175-S1: the newest fact_performance partition holds 482,971 rows for 315 clients and the columns client_id, date, factor and platform metadata; no column names a period, so the order's name rule sourced no window. An issuer error: the round-108 read (COVERAGE_READS_R108.json) had already read the table as a cumulative index level and validated the reading (the reported window return, the factor on the last day over the factor on the first, sat within tolerance of the with-income computed return, 762 transactions checked). Ruled: all four windows are sourced by one fold, 100 * (factor(as_of) / factor(opening day) - 1) in percent points, the opening day being the contract's opening anchor for qtd, ytd and last_12_months and the household's first_data_date for since_inception; a window with no factor row on either date is absent in that sample. The CTO's ruling and the contract's change rule stand; no other firm's member moves. Order DB-b-217 step 3 and decomposition section 112 decision (b) are amended; the worker is resumed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~175/PERF_SHAPE_R110.json on wk-IRPT_DASHBD-175 @eaf511cdbe (column names and counts)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~172/COVERAGE_READS_R108.json (orion_dividends: the factor read as an index level)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-217.contract-0-5-0-equivalence-map-and-inflection-household-return-source.md step 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S39",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T19:35:49Z",
+  "one_line": "Issuer's rulings on worker 176's BLOCKING row W176-S1 (the as-of fix changes one byte-for-byte golden) and worker 177's BLOCKING row W177-S1 (no independent close series inside the grant): the golden is re-pinned inside the grant; the independent series is named in the order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-219 AC3: the whole-scope suite after has no new failing test; DB-b-220 step 3: the offset is measured against an independent close series, never one derived from the holdings file.",
+  "world_is": "W176-S1: the date-only fix prints 'September 29th, 2026' where the ModelPortfolios footer printed 'September 29th, 2026, 5:00p ET', and iv-e-120's golden compares that mount byte for byte, so one test (b) newly fails. The golden pins the very clock the order removes: ruled re-pinned, that one sentence only, with the golden file added to the order's paths; the test file stays untouched. W177-S1: the worker's grant was one S3 prefix and no independent close series was reachable. An issuer error: my order said 'for example the model benchmark's served series' and granted no read of it. The YCharts gateway returns 403 (an access refusal, not worked around), so the independent series is the served dated model series (four daily index_benchmark_return series) already read through model_series_windows; the offset is estimated by correlating the bond ETFs' day-to-day price change in the holdings files with that series at three offsets, one estimate per security-and-series pair at a correlation of 0.5 or more, at least 4 pairs else UNDETERMINED; the checker counts offset estimates; the worker also records the share of securities unchanged across the weekend and holiday partition pairs. The issuer's own count-only probe of the Cottonwood files around 12 to 15 June and 18 to 22 June found: Friday to Saturday differ, Saturday to Sunday identical, Sunday to Monday differ; for the 19 June market holiday, Thursday to Friday differ and Friday, Saturday and Sunday are identical: the pattern fits neither 'the file holds its own date's close' nor 'the file holds the prior trading day's close' cleanly, which is why the read needs the independent series. Orders DB-b-219 and DB-b-220 and the BD check are amended; both workers are resumed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 176's report and portal commit 3db44fe0e9 on wk-IRPT_DASHBD-176-portal (suite after: one new failing id)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~177/RD_BD_DATE_R110.json on wk-IRPT_DASHBD-177 @e3fb825188 (date carriers; 0 files compared)",
+      "this seat's count-only probe of silver fact_holdings partitions 2026-06-11 to 2026-06-23 (price equality shares between consecutive partitions; no value recorded)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W178-S1 -- the holdings-refresh root says its schedule slot STAYS DISABLED, but the slot reads ENABLED in code and live
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W178-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~178",
+  "surfaced_at": "2026-10-14T19:26:44Z",
+  "one_line": "The holdings-refresh Terraform header says the irpt-holdings-snapshot slot STAYS DISABLED pending a separate never-widen half, while schedule.tf declares its state ENABLED under signed halves and the live schedule reads ENABLED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf lines 14-15 at 6c67ce88b6: 'It STAYS DISABLED: the enable is a separate act under its own never-widen half (R4 step 4).'",
+      "infra/aws/terraform/investor-reporting/directory/schedule.tf lines 69-73 at 6c67ce88b6: state ENABLED, note 'R4: ENABLED under signed halves'",
+      "aws scheduler get-schedule --name irpt-holdings-snapshot --group-name default (live describe, 2026-10-14 ~19:26Z): State ENABLED, cron(15 10 ? * MON-FRI *), last modified 2026-09-28"
+    ]
+  },
+  "spec_asserts": "holdings_refresh.tf header: the slot irpt-holdings-snapshot STAYS DISABLED; the enable is a separate act under its own never-widen half (R4 step 4).",
+  "world_is": "schedule.tf declares the slot ENABLED and cites three signed halves; the live schedule reads ENABLED; the header comment was not updated. Whether a never-widen half covers the enable was not read here. The fire reaches per-firm holdings publication through the refresh dispatch."
+}
+```
+
+## IRPT_DASHBD-D2-W178-S2 -- Cottonwood's irpt holdings end 2026-10-08 under an ENABLED weekday schedule, three trading days short
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W178-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~178",
+  "surfaced_at": "2026-10-14T19:26:44Z",
+  "one_line": "Cottonwood's gold holdings table ends at date=2026-10-08, three trading days behind T-1 (2026-10-13), although its ENABLED Monday-to-Friday 10:15 America/New_York trigger should have written 2026-10-09, 2026-10-12 and 2026-10-13; the cause is not established by this read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --prefix irpt/cottonwood/gold/holdings/ --delimiter / (grant read, 2026-10-14 ~19:1xZ): 10 date partitions, 2026-09-22 then 2026-09-28 to 2026-10-08; no partition for 2026-09-23, 2026-09-24, 2026-09-25, 2026-10-09, 2026-10-12, 2026-10-13",
+      "lib/trading_calendar.py trading_days_behind(2026-10-08, 2026-10-13) = 3 (run read-only at the worktree)",
+      "aws scheduler get-schedule --name irpt-holdings-snapshot (live, State ENABLED); infra/aws/terraform/investor-reporting/directory/schedule.tf line 71 'one validated Holdings publication per firm per weekday'"
+    ]
+  },
+  "spec_asserts": "directory/schedule.tf: the irpt-holdings-snapshot trigger, cron(15 10 ? * MON-FRI *) America/New_York, produces one validated Holdings publication per firm per weekday through the refresh dispatch.",
+  "world_is": "The Cottonwood holdings partitions after the schedule's last modification on 2026-09-28 run through 2026-10-08 and then stop; 2026-10-09, 2026-10-12 and 2026-10-13 are absent while the schedule reads ENABLED. The run log and SSM command history were not read (outside the grant), so the cause is NOT_ESTABLISHED."
+}
+```
+
+## IRPT_DASHBD-D2-W178-S3 -- the scheduled holdings-performance function has no identity that can read the Black Diamond channel it declares
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W178-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~178",
+  "surfaced_at": "2026-10-14T19:26:44Z",
+  "one_line": "data/assets/scripts/gold/irpt_holdings_performance/sources.json declares the blackdiamond_z09 channel for the holdings-performance producer, but the only scheduled function's role reads just the 49 Financial Schwab silver and writes just the 49 Financial gold, so a Cottonwood fire of the declared channel would be refused at the read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf line 52 at 6c67ce88b6: the 49F role 'Reads exactly the declared silver ... and writes ONLY the two gold prefixes'; line 172 gives the Inflection role the same firm-isolation wording and names no 49F or Cottonwood grant",
+      "comp-find --corpus aws over IAM_ROLE and IAM_POLICY with 'holdings-performance' (2026-10-14 ~19:1xZ): the holdings-performance roles are the 49F and Inflection roles and their scheduler roles; none is Cottonwood",
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py lambda_handler passes the event source to main --source, so the channel is chosen by the trigger input"
+    ]
+  },
+  "spec_asserts": "sources.json blackdiamond_z09 is a declared custody channel that holdings_performance.py reads; a new firm channel is an entry in the declaration and never a code branch (PRD v0.19 ruling 1, as the file's own comment states).",
+  "world_is": "The declared Cottonwood channel has a silver grant in the declaration but no scheduled identity with a read grant on its Black Diamond silver prefix or a write grant on its Cottonwood gold prefixes. Nothing was invoked to test the refusal (the grant is read-only); the finding is from the Terraform text and the served IAM list."
+}
+```
+
+## IRPT_DASHBD-D2-W178-S4 -- this worker's trading-calendar answer came from the hardcoded NYSE fallback, while the newest gold manifest was written with pandas_market_calendars
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W178-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~178",
+  "surfaced_at": "2026-10-14T19:26:44Z",
+  "one_line": "On dell2 at 2026-10-14, lib/trading_calendar.py answered from its hardcoded NYSE fallback (pandas_market_calendars absent, WARN printed), while the newest Cottonwood gold manifest records calendar_source NYSE/pandas_market_calendars; the frontier count in this read rests on the fallback.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py imported read-only with python -I at the worktree (2026-10-14): stderr WARN 'pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027'; calendar_source() returned the same label",
+      "hpm manifest.json of irpt/cottonwood/gold/holdings_performance_manifest/date=2026-09-25 (GET, grant read): calendar_source NYSE/pandas_market_calendars",
+      "The fallback holiday list has no entry between 2026-09-25 and 2026-10-13; the pandas count was not run because the package is absent on this box"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 5: a pipeline is never called stale until the trading calendar is resolved through lib/trading_calendar.py.",
+  "world_is": "The same calendar module answers from two sources on two boxes: the fallback on dell2 and pandas_market_calendars where the writer ran. The count of 12 trading days behind for the Cottonwood performance table holds on the fallback and was not re-run on pandas."
+}
+```
+
+## IRPT_DASHBD-D2-W177-S1 -- no independent close series is reachable for the holdings offset, so DB-b-220 stops (BLOCKING)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:24:16Z",
+  "one_line": "DB-b-220 cannot measure the holdings offset: no independent close series for Black Diamond's securities over the 120-day window is reachable inside the grant or held in the repo, so the cell stops at its BLOCKING refusal.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 3: the offset is measured against an INDEPENDENT close series (a repo or served series that does not come from the Black Diamond file, for example the model benchmark's served series or a published price file already in the repo); if no independent close series exists, say so in a BLOCKING row and stop.",
+  "world_is": "The one granted prefix holds only Black Diamond positions: 93 partitions, one object each, dated 2026-06-09 through 2026-10-13. The independent comparator the 2026-10-01 read used (the Schwab own-date anchor) sits under a different prefix, outside the grant, so it was not read. Repo search found no tracked file with daily closes for 2026-06-16 through 2026-10-13: histdata_daily_px_BABA_US_Equity.json ends 2025-12-31; data/smartx/benchmarks/benchmark_returns.json is returns with data_as_of 2025-11-28; infra/aws/lambda/investor-reporting/performance/fixtures/bd_series.json is a scrubbed account-level series, not security closes. No vendor call was made. The record reads the holdings date UNDETERMINED with claim absent and files_compared 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json blackdiamond_z09 positions_prefix, resolved read-only by holdings_performance.resolved_prefix to blackdiamond/cottonwood/silver/fact_holdings/",
+      "aws s3api list-objects-v2 --bucket opal-data-assets --prefix blackdiamond/cottonwood/silver/fact_holdings/ at 2026-10-14T19:13Z (93 objects, 93 partitions)",
+      "integrations/bloomberg/research/tests/fixtures/fye_join/histdata_daily_px_BABA_US_Equity.json (last date 2025-12-31)",
+      "data/smartx/benchmarks/benchmark_returns.json (data_as_of 2025-11-28)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer decision needed: name an independent close series that covers 2026-06-16 through 2026-10-13 (served or repo, not from the Black Diamond file) for DB-b-220 to re-run, or rule that the holdings offset is not measurable and the citation is decided on the date carriers alone."
+}
+```
+
+## IRPT_DASHBD-D2-W177-S2 -- Black Diamond object write days are rewrite days for early partitions, not pull days
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:24:16Z",
+  "one_line": "Black Diamond holdings object write days are not pull days: 44 of 93 partitions were written the day after their date and 49 later, 27 of those in one batch on 2026-07-14.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 2: the object LastModified is the day the file was written to S3, a carrier whose meaning must be named (a pull day or a rewrite day).",
+  "world_is": "LIST of the prefix at 2026-10-14T19:13Z: 93 partitions, one object each. Written the next day after the partition date: 44 (partitions dated 2026-07-22 through 2026-10-13). Written later than that: 49, all dated 2026-06-09 through 2026-09-25; 27 carry a write day of 2026-07-14, 3 of 2026-09-28, 2 of 2026-08-25, 1 of 2026-07-15, and 16 further partitions carry other days. So the LastModified of an early partition is a rewrite day, not its pull day. The cause of the rewrites was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-assets --prefix blackdiamond/cottonwood/silver/fact_holdings/ at 2026-10-14T19:13Z (LastModified per object, counted by .scratch/window.py in the worker worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W177-S3 -- the worktree portal differs from the workspace portal at the cited adapt.ts lines
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:24:16Z",
+  "one_line": "The worktree's portal carries different content from the workspace portal the cell cites: the holdings date read at adapt.ts lines 1229-1233 is not at those lines in the worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 1: the portal date citation is read at portal/src/pages/InvestorReporting/contracts/adapt.ts lines 158-167, 804-818 and 1229-1233, from C:/dev/ajb_workspace/portal (the worktree's portal may be empty).",
+  "world_is": "The worktree's portal is populated but carries different content. Its adapt.ts has business_date only at lines 121, 134, 374 and 585, and no holdings adapter at lines 1229-1233. The workspace portal (read-only) has adaptHoldingsSnapshot at adapt.ts line 1164, reading wire.clocks.business_date at lines 1229 and 1233. The citation record uses SecurityList.tsx line 623, which is the same line in both trees. The read used the workspace portal, as directed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/portal/src/pages/InvestorReporting/contracts/adapt.ts lines 1164, 1229 and 1233 (read at 2026-10-14T19:23Z)",
+      "portal/src/pages/InvestorReporting/contracts/adapt.ts in the worktree (grep business_date: lines 121, 134, 374, 585)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W177-S4 -- the 2026-06-12 to 2026-06-22 partitions do not follow one date basis, and a partition exists for the 2026-06-19 holiday
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W177-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~177",
+  "surfaced_at": "2026-10-14T19:42:41Z",
+  "one_line": "Black Diamond's holdings partitions for the 2026-06-12 to 2026-06-22 week do not follow one date basis: a partition exists for the 2026-06-19 market holiday, and the weekend and holiday partitions change in a mixed pattern.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-220 step 3 (calendar signature): the share of the nine named securities whose price is unchanged between consecutive partitions of 2026-06-12 to 2026-06-15 and 2026-06-18 to 2026-06-22 is printed as a count, not checked.",
+  "world_is": "Consecutive partitions, unchanged prices of the seven named securities present in both: 06-12 to 06-13 0 of 7; 06-13 to 06-14 7 of 7; 06-14 to 06-15 0 of 7; 06-18 to 06-19 0 of 7; 06-19 to 06-20 7 of 7; 06-20 to 06-21 7 of 7; 06-21 to 06-22 0 of 7. The 2026-06-19 partition exists, although the market was closed that day and the step names no such partition. Its prices equal 06-20's and differ from 06-18's. A Saturday partition (06-13) differs from the Friday partition, while another Saturday (06-20) equals the Friday holiday partition. The pattern fits no single basis of the four in the declaration. Counts only; the cause was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-assets --prefix blackdiamond/cottonwood/silver/fact_holdings/ at 2026-10-14T19:40Z (partitions 2026-06-12 to 2026-06-22 present in the listing)",
+      "worker worktree .scratch/offset.py calendar signature block (Ticker, Units and Market Value columns, read-only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Relevant to any date-basis ruling for weekend and holiday partitions; the file's own labels do not settle it."
+}
+```
+
+## IRPT_DASHBD-D2-W176-S1 -- the shared as-of fix changes a date-only footer whose byte-for-byte golden sits outside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W176-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~176",
+  "surfaced_at": "2026-10-14T19:29:51Z",
+  "one_line": "The shared as-of fix (DB-b-219) changes the ModelPortfolios date-only footer, and the byte-for-byte golden of iv-e-120 test (b) still pins its old 5:00p ET clock. That file is outside this cell's grant, so the whole-suite run has one new failing id and criterion DB110-4-AC3 cannot pass as written.",
+  "spec_asserts": "TO DB-b-219 criterion DB110-4-AC3 requires suite_after new_failing_ids [] (whole-scope bun test, base versus after). Its BOUNDS say an edit outside the <paths> grant is a defect: stop and file a row. The grant names footer-date-format, PageEnd and iv-e-45 as the only neighbour tests that may be re-pinned.",
+  "world_is": "At portal tip 3db44fe0 the iv-e-120 test (b) renders ModelPortfolios without the prop and compares it byte for byte with iv-e-120.golden/model_portfolios_mount.before.html. The golden holds 'September 29th, 2026, 5:00p ET' and the render now writes 'September 29th, 2026'. Base suite: 1529 tests, 15 fail. After suite: 1530 tests, 16 fail. The only new failing id is 'IVE120 ... (b) ModelPortfolios mount without the prop renders byte-for-byte as before'. The iv-e-120 test file and its golden are outside the <paths> grant and were not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@3db44fe0 src/lib/dateUtils.ts formatPanelTimestamp date-only branch (the change that removes the clock from a date-only value)",
+      "portal@3db44fe0 src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-120.total-base-in-the-card.test.tsx lines 163-168 (test (b), byte-for-byte golden compare; this file is not changed by the worker)",
+      "portal@3db44fe0 src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-120.golden/model_portfolios_mount.before.html (one line carries 'September 29th, 2026, 5:00p ET')",
+      "measured 2026-10-14T19:27Z: full suite base 1529 tests 15 fail, after 1530 tests 16 fail (worker deliverables ASOF_R110.json, suite_after.new_failing_ids); measured 2026-10-14T19:28Z: bun test on the iv-e-120 file alone, 4 pass 1 fail",
+      "measured: DB110-4-AC3 checker output 'FAIL: tests: mutant_failed true, lint 0, typecheck 0, no new failing test'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided by this worker, and not edited. Options for the CTO or COO: (a) re-golden the one line of iv-e-120.golden/model_portfolios_mount.before.html to 'September 29th, 2026', the same kind of re-pin this cell made for create5pm-et.test.ts, in a grant that names that file; or (b) widen this cell's grant to name it. The worker did not choose between them."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S40",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T19:50:49Z",
+  "one_line": "Issuer's rulings on worker 175's rows W175-S2 and W175-S3 (two earlier checks pinned the contract members byte for byte), W175-S4 (non-positive factor rows) and its wording note: the two checks are amended to ignore the per-firm source keys, S4 is disarmed, the claim words are corrected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-217 step 5: the 14 earlier live criteria still pass after the contract edit; step 3 (amended): the factor is a positive index level; step 4 (d): the claim says the figure is reported by the platform at client grain and not computed by Opal.",
+  "world_is": "W175-S2 and W175-S3 (BLOCKING): DB105-1-AC1 requires the members byte for byte equal to the 0.4.1 members and DB106-1-AC1 requires version 0.4.3 and the same; contract 0.5.0 adds firm_sources and firm_absent to the four household return members, which the order itself requires, so the two conventions could not both hold: an issuer error in the checks, not a regression. Ruled: both checks compare the members with the per-firm source keys stripped (a later per-firm source does not change what 0.4.1 to 0.4.3 said), DB106-1-AC1 accepts version 0.4.3 or later and the 0.4.3 bytes in the sample record; with those edits all 14 earlier criteria read PASS on worker 175's contract 0.5.0 tree (this seat's own run). W175-S4 (ARMED, mine): the newest Orion fact_performance partition holds 409 rows (276 zero, 133 negative) of 482,971, in 2 of 315 clients; the sample household's 807 rows are all positive and the fold reads a window absent when either factor is not positive, so no figure is computed from a non-positive factor; disarmed, with the 2 clients named as a count for the next consumer. Wording note: the claim 'not computed by Opal' sits beside a fold that divides two platform factor values; the claim is corrected to say the figure is derived from the platform's reported client performance factor, as the ratio of two dated factor values, and that the factor itself is reported by the platform, not computed by Opal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 175's report and contract 0.5.0 at wk-IRPT_DASHBD-175 @0f44011dd8 (equivalence classes, firm_sources); this seat's run of the 14 earlier criteria on that tree after the check edits: 14 of 14 PASS",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py (strip_firm) and r106/p106_round106.py",
+      "worker row IRPT_DASHBD-D2-W175-S4 (counts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S41",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T20:08:24Z",
+  "one_line": "Issuer's rulings on worker 175's three BLOCKING rows on DB-b-222 (W175-S5 two accounts share a last four, S6 punctuation in the custodian number's last four characters, S7 the client's factor series does not reach the household's first-data date): all three are real-data facts the order did not allow for; the label, the label check and the household return check are amended and the worker resumes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-222 step 2 (g) as first cut: each account's last4 is the last four characters of its custodian number, distinct within the household, letters or digits only; step 2 (f): every sourced household return window is filled with a number.",
+  "world_is": "W175-S5: of the five household accounts four distinct last-four values appear, so one pair shares a last four; a real client statement would show the same four characters twice. Ruled: the sample keeps the real last four; the render tells the pair apart with ' (k of n)' after the label, only where a last four is shared (order 223 and the render check amended); the sample record carries last4_collisions, which the checker recounts. W175-S6: two of the five custodian numbers carry one punctuation character inside their last four characters; ruled: the label is the last four ALPHANUMERIC characters after any other character is dropped (the CTO's rule allows letters and digits, nothing else). W175-S7: the household's since-inception window opens on its first-data date and the client's factor series has no row on that day (the series starts later; the other three opening days and as_of each have a row); under the amended rule that window is absent, and the check required a number. Ruled: a sourced window without a factor row on its opening day reads INSUFFICIENT_HISTORY in words ('Orion's client performance series does not reach back to the start of this period.'), at least one window must be filled, and the record names the filled and the history-less windows; the checker recomputes the states. This is true to the source and is not a repair: the household return for since inception stays unavailable for this household. Orders DB-b-222 and DB-b-223 and the check p110_inflection.py are amended (selftest 10 arms).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 175's report and rows W175-S5 to W175-S7 at wk-IRPT_DASHBD-175 @aead5baeed (counts only)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r110/p110_inflection.py (check_sample, render_extras)",
+      "orders DB-b-222 and DB-b-223 in org/missions/D9/IRPT/IRPT_DASHBD/task-orders/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S42",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T20:20:10Z",
+  "one_line": "Issuer's rulings on worker 175's rows W175-S8 (the kind carrier refuses INSUFFICIENT_HISTORY on a member the contract sources for the firm) and W175-S9 (the holdings overview repeats the household return and the contract left those cells ABSENT): the carrier check takes the firm, and contract 0.5.1 sources the four hold.return members like their pvs twins and adds four return equivalence classes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-105 kind carrier: a member the contract sources to ABSENT must be NO_SOURCE_YET; the whole-document rule: one figure, one state, across tables; the contract's equivalence map (DB-b-217): members that name one quantity for one entity compare as one.",
+  "world_is": "W175-S8: pvs.since_inception.return_cumulative keeps source ABSENT for every other firm and is sourced for Inflection by firm_sources, so for Inflection the absent kind INSUFFICIENT_HISTORY (the factor series does not reach the opening day) is true and refused only because the carrier check does not know the firm: kind_problems takes an optional firm, as check_sample_shape_k does. W175-S9: the whole-document rule reads 3 disagreements, the household return printed in the portfolio value summary for qtd, ytd and last_12_months while the holdings overview's hold.return cells for the same windows are ABSENT; they are the same household return. Not a plug: the contract (0.5.1, inside order 222's grant now) sources hold.return_<window> exactly like pvs.<window>.return_cumulative (hold.return_mtd stays absent: no pvs twin) and four equivalence classes, one per window, make the equivalence rule catch the next such pair; the DB110-1 check reads both. My order DB-b-217 missed the twins: an issuer error found by the whole-document rule on the first built sample.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 175's report and rows W175-S8 and W175-S9 at wk-IRPT_DASHBD-175 @a8813b093d (counts: 323 cells, 226 absent, 3 conflicts)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py (kind_problems firm) and r110/p110_inflection.py (check_contract hold mirror)",
+      "this seat's dry-run of the amended DB110-1-AC1 on the worker's 0.5.0 tree: FAIL as expected (hold.return_qtd lacks the firm source)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S43",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T20:58:30Z",
+  "one_line": "Issuer's rulings on worker 175's two BLOCKING rows on DB-b-223 (W175-S10 the round-109 label clause refuses alphanumeric and shared last fours, W175-S11 the round-110 entry point never set the firm-title global): both are defects in my render check; the generated check drops the round-109 clause and sets the title, and DB110-3-AC1 reads PASS on the worker's tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-223: DB110-3-AC1 is round 109's render clauses re-bound to the sample v3 plus the round-110 clauses (the real last four, a shared last four told apart by (k of n)).",
+  "world_is": "W175-S10: round 109's check_render carried the clause 'each account's last4 label must be four digits and distinct' that I added in the round-109 relabel ruling (D2-S36); round 110 supersedes it (four letters or digits, shared last fours told apart); the generated round-110 check kept it, so it refused the real labels. W175-S11: the round-110 entry point built check_render from round 109's source but never set the firm-title global that round 109's main sets, so the title clause would raise a TypeError. Both are in my check, not in the render: the generator now removes the one superseded clause (and fails loudly if the clause is not found exactly once) and sets the title from the registry. On the worker's tree DB110-3-AC1 reads PASS (20 pages, none clipped; the whole-document and note-level rules clean; the planted mutants reported). The render's own findings (a lot line at the top of each gain and loss page above its own heading; a shared-last-four label that reads as a word) go to the CVO's judgment in the L8 packet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 175's report and rows W175-S10 and W175-S11 at wk-IRPT_DASHBD-175 @a53797d5ba",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r110/p110_inflection.py (build_check_render)",
+      "this seat's own run of DB110-3-AC1 on the worker's tree after the fix: PASS; at base in main: FAIL as expected (no record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T19:15:41Z",
+  "one_line": "Orion fact_performance carries no column whose name gives a period: its only measure is factor, an index level, so the order's name-based window rule sources none of the four household windows and the contract 0.5.0 edit stops (BLOCKING, DB110-1-AC1 FAIL).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-217 step 3: the newest partition's columns decide each contract window; an Orion column whose period is evident from its name and matches document.windows is SOURCED; a window whose period is not evident is ABSENT; at least one window must be sourced, else file a BLOCKING row with the column list and stop. Step 4 presumes a column that holds a windowed household return.",
+  "world_is": "Newest partition date=2026-10-14 of s3://opal-data-assets/orion/inflection/silver/fact_performance/ (adapter GET-only reader: 2 LIST, 1 GET): 482,971 rows, 315 distinct client ids, no account key. Columns: client_id, date, factor, and six pipeline metadata columns (pull_date, _source_file, _source_as_of, _source, _feed, _schema_version). The only measure column is factor, an index level (the round-108 read takes the ratio of the last window day to the first). No column names a period, so under step 3 none of qtd, ytd, last_12_months or since_inception is SOURCED, and at least one is required. Record: PERF_SHAPE_R110.json in the worker folder.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_performance/date=2026-10-14/ column names read via data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py InflectionSilverReader, 2026-10-14T19:15Z",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~172/READ_COVERAGE_RUN_R108.json@a54a1d5d12 (orion.performance_form: an index level, the ratio of the last window day to the first)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~175/PERF_SHAPE_R110.json@a54a1d5d12 (this worker's column and decision record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. Two readings are open for the issuer and the CTO: (a) the household return is a ratio over the dated rows of factor, a fold the order does not name; (b) the order's name rule is amended to take a period from the dates of the rows. Under the order as written the four windows are ABSENT and DB110-1-AC1 stays FAIL; DB-b-222 and DB-b-223 are staged behind this row. The round-110 CTO ruling (household return from Orion fact_performance at client grain) is not in question; its window period is."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T19:43:58Z",
+  "one_line": "The earlier criterion DB105-1-AC1 reads FAIL after the 0.5.0 edit, on the clause 'no member may change in 0.4.2 (the members are byte-for-byte the 0.4.1 members)' in check_kind of p105_round105.py; DB110-1-AC1 itself requires firm_sources on the four pvs.<window>.return_cumulative members, which is a member change, so the two cannot both hold.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-217 step 5: re-run the 14 earlier criteria after the edit; each must read PASS; a criterion that turns FAIL because of the contract change is a BLOCKING row naming it and the clause; never edit an issuer check file. DB110-1-AC1 (the same order) re-runs DB105-1-AC1 and DB109-1-AC1 and requires the four return members to carry firm_sources or firm_absent.",
+  "world_is": "Contract 0.5.0 (sha256 4e0344ef...) changes members: the four pvs.<window>.return_cumulative members gain firm_sources.inflection and keep source ABSENT; c['members'] != the 0.4.1 members, so check_kind fails. Measured: DB105-1-AC1 FAIL (rc 1); DB110-1-AC1 fails first on the older_criteria record and would fail on DB105-1-AC1 at its re-run. The members clause and the amended step 3 and 4(d) cannot both hold; the order's own step 4(d) requires the member change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r105/p105_round105.py check_kind, the members equality clause (read at the worktree, HEAD of wk-IRPT_DASHBD-175)",
+      "python -I .../checks/r105/p105_round105.py . DB105-1-AC1 -> 'FAIL: no member may change in 0.4.2 (the members are byte-for-byte the 0.4.1 members)' rc 1, after the edit; PASS at base",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at the 0.5.0 bytes, sha256 4e0344efad123a633a84b2748c4d29ed888d6afc4c897c3bb80a65285f1887c1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The issuer must either supersede DB105-1-AC1 for the 0.5.0 bump (as DB104-2 and DB104-3 were superseded at 0.4.2) or name the members clause as amended. The 0.5.0 contract edit is committed as the step-4 deliverable; DB110-1-AC1 cannot read PASS while DB105-1-AC1 reads FAIL, because the order's own check re-runs it."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T19:43:58Z",
+  "one_line": "The earlier criterion DB106-1-AC1 reads FAIL after the 0.5.0 bump, on the clause 'the contract must be 0.4.3 with the 0.4.2 bytes in its lineage' and the clause 'no member may change in 0.4.3' in check_build of p106_round106.py; the 0.5.0 bump changes members by design (DB110-1-AC1).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-217 step 5: re-run the 14 earlier criteria after the edit; each must read PASS; a criterion that turns FAIL because of the contract change is a BLOCKING row naming it and the clause; never edit an issuer check file.",
+  "world_is": "Contract reads 0.5.0. check_build requires c['contract_version'] == '0.4.3' and c['members'] == the 0.4.2 members. Measured: DB106-1-AC1 FAIL (rc 1) with the version clause as the first failing need; the members clause would also fail on the 0.5.0 members.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r106/p106_round106.py check_build, lines 194 and 199 (read at the worktree)",
+      "python -I .../checks/r106/p106_round106.py . DB106-1-AC1 -> 'FAIL: the contract must be 0.4.3 with the 0.4.2 bytes (sha256 e9c389b75c19...) in its lineage' rc 1, after the edit; PASS at base",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at the 0.5.0 bytes, sha256 4e0344efad123a633a84b2748c4d29ed888d6afc4c897c3bb80a65285f1887c1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The same supersede-or-amend decision as IRPT_DASHBD-D2-W175-S2 applies; the issuer's DB110-1-AC1 check does not re-run DB106-1-AC1, so this row does not block DB110-1-AC1 by itself, but the chain's record convention does."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T19:43:58Z",
+  "one_line": "Orion fact_performance (newest partition, counts only): 409 of 482,971 rows carry a factor of zero or less, in 2 of 315 clients (276 exact zeros, 133 negatives); the sample household's 807 rows are all positive, so the factor is positive on every row the household's windows read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO DB-b-217 step 3 (amended): the factor is positive on every row you test, and the factor is an index level; if not, file a BLOCKING row with the measurement and stop.",
+  "world_is": "The 409 non-positive rows sit in two clients, neither the sample household; the affected clients' rows are not a leading run (the pattern is interleaved). The window fold divides by the opening-day factor, so a household that includes one of those clients would meet a zero or negative denominator. The 0.5.0 fold text makes the figure absent when either factor is not positive; the builder (DB-b-222) must honour that clause.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_performance/date=2026-10-14/ read via the adapter's GET-only reader, 2026-10-14T19:40Z (counts only)",
+      "the sample household picked by the round-109 rule (pick_household over the private account_dim dry run): 807 rows, none non-positive",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at 0.5.0, the firm_sources fold of pvs.<window>.return_cumulative (absent when either factor is not positive)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Measured here, not classed as a blocking premise failure: the amended step 3 requires positivity on the rows tested, and the rows tested (the household's) are positive. The disarm is the builder's honouring of the fold's absent clause in DB-b-222, which this worker has not started."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:04:16Z",
+  "one_line": "The household's five accounts carry four distinct custodian last-four values: two accounts share one, so DB-b-222 step 2(g) requires a BLOCKING row stating the count and a stop; no sample is built.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-222 step 2(g): each account's last4 is the last four characters of its custodian number as the silver stores it, distinct within the household; if two accounts of the household share a last four, file a BLOCKING row stating only the count and stop.",
+  "world_is": "Read at HEAD of wk-IRPT_DASHBD-175 on 2026-10-14 ~20:03Z: the newest fact_positions partition (adapter GET-only reader), the household picked by the round-108 rule (5 accounts). Each account carries one distinct stored custodian number; the last four characters give 4 distinct values over 5 accounts. Count: 1 pair of accounts shares a last four.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_positions/date=2026-10-14/ read through InflectionSilverReader (1 GET), 2026-10-14T20:02Z; counts only",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~171/ACCOUNT_DIM_DRY_RUN.parquet (the round-108 household rule, counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The issuer must rule on the label rule for a shared last four; the order's own rule stops the build. No account id or last four is written in this row."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:04:16Z",
+  "one_line": "Two of the five accounts' stored custodian numbers end in a last-four window that holds one punctuation character; the order says letters are allowed and nothing else is changed, and DB110-2-AC1 requires each last four to be four letters or digits, so the label clause cannot hold as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-222 step 2(g): each account's last4 is the last four characters of its custodian number as the silver stores it (letters allowed, nothing else changed); DB110-2-AC1: each last4 is four letters or digits, distinct, never an ordinal.",
+  "world_is": "The same read as S5: 2 of 5 accounts have one non-alphanumeric character among the last four characters of the stored number (one punctuation mark each); 3 of 5 are letters and digits only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_positions/date=2026-10-14/ read through InflectionSilverReader, 2026-10-14T20:02Z; character classes counted, values not printed",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r110/p110_inflection.py check_sample, the last4 clause (read at HEAD)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. A label rule that admits the punctuation mark, or the issuer's ruling on what the label prints, is needed before a sample can carry these two last fours. The row carries counts and classes only."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:04:16Z",
+  "one_line": "The household's since-inception return opens on the household's first data date, which has no row in Orion's client factor series (the series opens about four years later), so the amended rule files that window absent for this sample; DB110-2-AC1 instead requires every window the contract sources to hold a number.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-217 step 3 (amended) and DB-b-222 step 2(f): each pvs return the contract sources for Inflection is the client-grain figure; a window whose opening day or as_of has no factor row is absent for that sample (the builder files it). DB110-2-AC1: the household return is filled in exactly the windows the contract sources, and each sourced window is a number.",
+  "world_is": "Read on 2026-10-14 ~20:03Z: the newest fact_performance partition holds the household's client factor rows from a start about four years after the household's first data date (earliest positions row among its accounts), through the newest date; so the factor row on the first data date is absent. The qtd, ytd and last_12_months opening days and the as_of day each have a row. Only since_inception is affected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/orion/inflection/silver/fact_performance/date=2026-10-14/ read through InflectionSilverReader, 2026-10-14T20:02Z; the client's dates counted, not printed",
+      "C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~174/work/positions_daily_cache.parquet (first positions date per household account, read-only)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r110/p110_inflection.py check_sample, the household return clause (sourced windows must be numbers)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. Two readings are open: the amended rule (absent for this sample, kind INSUFFICIENT_HISTORY) against the checker's clause (every sourced window a number). The build is not started, so no value was filled or substituted."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:16:01Z",
+  "one_line": "DB110-2-AC1 fails its kind carrier: kind_problems in p105_round105.py requires every member the contract sources to ABSENT to carry NO_SOURCE_YET, but DB-b-222 step 2(f) requires pvs.since_inception.return_cumulative to carry INSUFFICIENT_HISTORY; the contract keeps source ABSENT for that member by its own 0.5.0 text.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-222 step 2(f) (amended): a window the contract sources but whose opening day or as_of has no factor row is the absent form {absent, kind: INSUFFICIENT_HISTORY} with the order's words. DB110-2-AC1 kind carrier: p105_round105.py kind_problems requires a member the contract sources to ABSENT to be NO_SOURCE_YET.",
+  "world_is": "Built sample (private, not written here): the household return windows qtd, ytd and last_12_months are numbers; since_inception is absent with INSUFFICIENT_HISTORY (the household's first data date has no factor row). DB110-2-AC1 FAIL, first clause: 'kind carrier: pvs.since_inception.return_cumulative: a member the contract sources to ABSENT must be NO_SOURCE_YET, got INSUFFICIENT_HISTORY'. The kind_problems rule was not amended with the 0.5.0 firm_sources, which keep source ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p105_round105.py kind_problems, line 145 (read at HEAD of wk-IRPT_DASHBD-175): the source-ABSENT NO_SOURCE_YET clause has no firm_sources exemption",
+      "python -I .../checks/r110/p110_inflection.py . DB110-2-AC1 on the built sample, rc 1, 2026-10-14T20:14Z: the kind carrier clause (output above)",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at 0.5.0 (sha256 72ab629a45af32f07cc5948bd4240fe80e2690ed7926dce4e61c24c3ec647363): the since_inception member keeps source ABSENT"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The issuer must either amend kind_problems to exempt a member with firm_sources (as the round-105 shape check was amended for the sourced member), or rule that the window kind is NO_SOURCE_YET. The sample is not changed to satisfy the clause, since step 2(f) names INSUFFICIENT_HISTORY."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:16:01Z",
+  "one_line": "The whole-document rule reads 3 conflicts on the household return: pvs.qtd, ytd and last_12_months return_cumulative are filled from Orion's client factor, while hold.return_qtd, ytd and last_12_months (the same household return, contract source ABSENT) stay absent; neither DB-b-217 nor DB-b-222 names hold.return_*, so no value may be plugged into them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB110-2-AC1: the sample v3 passes the whole-document rule with 0 conflicts. Refusal clause (DB-b-222): a pair of cells that genuinely disagree is a finding; file a row naming the key and stop on that point; never plug a value.",
+  "world_is": "The whole-document scan of the built sample: 323 cells scanned, 226 absent, 278 keys, 0 unmapped, 3 conflicts, all on the key return_cumulative at household grain for the windows qtd, ytd and last_12_months. The contract's hold.return_<window> members have source ABSENT with no firm_sources, so the holdings cell for the same household return reads absent while the overview cell reads a number.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "P6.whole_document_scan (p110_inflection.py imports it from p106/p109 chain), run on the built sample: conflicts 3, disagreements 0; the messages name hold.return_qtd, hold.return_ytd, hold.return_last_12_months against the pvs cells",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at 0.5.0: hold.return_qtd, hold.return_ytd, hold.return_last_12_months source ABSENT, no firm_sources, not in an equivalence class",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~175/BUILD_R110.json (the measured whole_document block)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. Either the 0.5.0 contract sources hold.return_<window> for Inflection from the same figure (a contract change the issuer or CTO rules), or the whole-document rule is amended to treat a household return printed once as one cell. The record reports conflicts 3, not 0."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:54:30Z",
+  "one_line": "DB110-3-AC1 fails on the copied round-109 clause 'each account's last4 label must be four digits and the labels distinct within the household', while the round-110 clauses and the order's label rule accept alphanumeric last fours and a shared last four told apart by (k of n).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB110-3-AC1 (the round-110 render clauses): every 'ending XXXX' label is an account's real last four as the sample holds it, and two accounts that share a last four are told apart by (k of n). DB-b-223 step 1: the label rule is the CTO's: alphanumeric allowed. Round-109 clause (check_render in p109_round109.py, copied by build_check_render): each last4 label is four digits and the labels are distinct.",
+  "world_is": "Read on 2026-10-14 ~20:55Z: the final render (RENDER_R110.json) prints each account label as its last four as stored, alphanumeric; the five accounts carry 4 distinct last fours, 2 of them all-digit; two accounts share one value and carry (1 of 2) and (2 of 2). DB110-3-AC1 FAIL: 'each account's last4 label must be four digits and the labels distinct within the household (5 accounts, 4 distinct, 2 all-digit)'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I .../checks/r110/p110_inflection.py . DB110-3-AC1, rc 1, 2026-10-14T20:52Z: the clause above is the first failing line",
+      "p109_round109.py check_render, the last4 clause (read at HEAD of wk-IRPT_DASHBD-175)",
+      "C:/dev/_irpt_private_evidence_20261009/fwd21_sample_r110/FWD21_EXPORT_49F_SAMPLE.html (the label text, counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The issuer must amend the copied clause for round 110 (alphanumeric labels; distinct only where the (k of n) suffix tells them apart), as round 105 and round 106 were amended. Diagnostic only, in scratch: with this one clause removed in memory, every later round-109 clause passes on the final render; the issuer's file is not edited."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W175-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~175",
+  "surfaced_at": "2026-10-14T20:54:30Z",
+  "one_line": "The round-110 check entry (p110_inflection.py main) runs the copied round-109 check_render without setting FIRM_TITLE9, which the round-109 main() sets; the title clause 'FIRM_TITLE9 in vt' then raises TypeError on None, so DB110-3-AC1 cannot read the title clause.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB110-3-AC1 re-binds every round-109 render clause, including the registry firm title on both HTMLs (p109 check_render: need('Sample Firm' not in vt and FIRM_TITLE9 in vt)).",
+  "world_is": "p109_round109.py sets FIRM_TITLE9 inside main() (global FIRM_TITLE9; FIRM_TITLE9 = firm_title()). p110_inflection.py main() calls CHECKS[cid](root) directly, so FIRM_TITLE9 stays None. Diagnostic in scratch with FIRM_TITLE9 set: the title clause passes on both HTMLs. As run, the criterion's title clause would fail with TypeError: 'in <string>' requires string as left operand, not NoneType.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p109_round109.py lines 68, 270 and 464-473 (FIRM_TITLE9 global, its use, its setting in main), read at HEAD of wk-IRPT_DASHBD-175",
+      "p110_inflection.py main(), read at HEAD: no FIRM_TITLE9 setting",
+      "scratch diagnostic: the check_render clauses after the label clause, with FIRM_TITLE9 set and the label clause removed in memory, all pass (the issuer's files are not edited)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The issuer must set the title in the round-110 entry point (or the copied clause must read firm_title() directly). It is latent behind S10: the label clause fails first."
+}
+```
+
+## IRPT_DASHBD-D2-S44 -- disarm owner's evidence for W178-S1: the holdings slot's enable IS signed; only the header comment is stale
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S44",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-14T21:15:00Z",
+  "one_line": "W178-S1 disarm evidence: schedule.tf declares irpt-holdings-snapshot ENABLED citing three signed halves, and all three exist as commits (COO 8d601db072, CTO f541e1cbf0, CRO 283d590379, each the R4 step-4 ENABLE half); the 'STAYS DISABLED' line in holdings_refresh.tf:15 is a stale comment, not an unsigned enable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md hard stop: served output moves only under a never-widen sign-off (CTO+COO).",
+  "world_is": "This seat's reads ~21:1xZ: infra/aws/terraform/investor-reporting/directory/schedule.tf:71-99 state ENABLED, citing COO 8d601db072, CTO f541e1cbf0, CRO 283d590379; git cat-file reads each a commit: 8d601db072 'request(2.0.0_SA_COO~M, R4 step 4): the ENABLE half', f541e1cbf0 'signoff(1.0.0_SA_CTO): R4 step 4 ENABLE ... CTO half SIGNED', 283d590379 'signoff(4.0.0_SA_CRO): R4 enable CRO half SIGNED'. holdings_refresh.tf:15 still reads 'It STAYS DISABLED: the enable is a separate act under its own never-widen half (R4 step 4)', which predates that act. The comment fix is hygiene for IRPT_BCKEND's next Terraform cell on that root (comment only; no plan change).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/directory/schedule.tf:71-99",
+      "infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf:15",
+      "git cat-file -t / git log -1 of 8d601db072, f541e1cbf0, 283d590379"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W181-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~181",
+  "surfaced_at": "2026-10-14T21:39:36Z",
+  "one_line": "Premise check on the Orion accountNumber field: on the newest partition it carries a digit run on every dry-run account and one value per account, so the premise that it holds text fragments and no number does not hold there (measured, counts only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Worker face, Why: the field the sample builder took for the custodian account number (accountNumber in Orion fact_positions) carries text fragments, not a number, so the labels read fragments.",
+  "world_is": "Newest partition date=2026-10-14 of Orion fact_positions (37008 rows): accountNumber holds one value per account for all 980 dry-run accounts, each with a digit run of 4 or more, unique per account, and one value per account across the five sampled dated partitions where the account appears. 73 accounts carry an alphabetic character in the value. Same column name and value shape in Orion fact_assets. Counts only; no value copied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~181/RD_ACCOUNT_NUMBER_FIELD_R111.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r111/p111_acctfield.py",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W181-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~181",
+  "surfaced_at": "2026-10-14T21:39:36Z",
+  "one_line": "The stability clause names an Eclipse positions table, but no Eclipse silver table is named as positions; the one account-keyed Eclipse table is fact_portfolios_simple, which was measured for stability instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face step 4: stability for every string column of fact_positions and of the Eclipse positions table.",
+  "world_is": "The round-108 record names four Eclipse silver tables: fact_model_composition, fact_models, fact_portfolios_full, fact_portfolios_simple. None is named positions. Only fact_portfolios_simple carries an account key (accountId); the other three carry none, so their columns are keyed false. Stability was measured for all 18 string columns of fact_portfolios_simple over five dated partitions, and for any other column passing the digit-run and uniqueness tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~172/READ_COVERAGE_RUN_R108.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~181/RD_ACCOUNT_NUMBER_FIELD_R111.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S45",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T21:45:36Z",
+  "one_line": "Issuer's disposition of worker 181's row W181-S1 (the Orion accountNumber holds a digit run on every account, against the ruling's premise that it holds text fragments): the field qualifies as the custodian number under the round-111 rule; this round's labels use no stored field, so the hazard is disarmed here and the finding goes to the CTO's next round analysis.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The CTO's round-111 ruling: Inflection's accountNumber field carries text fragments, not a custodian number; DB-b-226 reads which field holds the custodian number (95 percent of accounts with a digit run of at least 4, stable across sampled partitions, unique).",
+  "world_is": "W181-S1 (ARMED, mine): of 217 string columns over 8 silver tables and 20 partitions, 3 qualify: Orion fact_positions accountNumber (980 distinct values over the 980 dry-run accounts, a digit run of 4 or more on each, the same value across five sampled partitions), Orion fact_assets accountNumber and Eclipse fact_portfolios_simple accountNumber (753 keys). The round-109 and round-110 labels printed the LAST FOUR CHARACTERS of that value, which for some accounts are letters, so the label showed a text tail: the value is an identifier that holds a digit run AND other characters, not a text fragment and not digits only. Disarmed for this round: DB-b-225 prints 'Account <n> of <N>' for every account and reads no stored field, so no render prints a fragment; the finding for the next round, for the CTO to rule: the label may take the last four DIGITS of the value's longest digit run, printed as 'ending NNNN', from fact_positions.accountNumber (the field this read names), keeping the position label for an account without a run of 4 digits. Not decided here (a label rule is the CTO's ruling).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~181/RD_ACCOUNT_NUMBER_FIELD_R111.json at the merge edaefd57d3 (counts and column names)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r111/p111_acctfield.py: DB111-3-AC1 PASS on the landed tree",
+      "worker 181's row W181-S1 and report"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S46",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T21:52:57Z",
+  "one_line": "Issuer's ruling on worker 179's BLOCKING row W179-S1 (4 of 5701 one-account household window comparisons differ from their account, all since inception, on carried large-flow days): my method chained summed values and flows in the endpoint form, which does not reproduce the account series' linked return; the method becomes the prior-day-value weighted combination of the accounts' own returns, and the order, the check and the decomposition are amended.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-224: a one-account household equals its account's cumulative return in every window (hard clause, 1e-9); the household daily return chains summed values and external flows.",
+  "world_is": "W179-S1: the worker read 570 partitions of the firm's account return gold and 4013 households (1742 multi-account) and found the maximum one-account gap 4.04e-4 in 4 of 5701 window comparisons, all since inception, in 4 households; at day level 6 of 907,548 day pairs differ, all on LARGE_FLOW days with carried days: the producer's total_return_daily links through intervening custodian valuations there (its amendment 5(e)), which the endpoint form (sum V_t - sum F_t) / sum V_p - 1 does not reproduce. An issuer error in the method, not a data fault. Ruled: the household daily return is the prior-day-value weighted combination of its accounts' own total_return_daily (the same as the summed-values-and-flows form wherever each account's return is the endpoint form; for a one-account household it is the account's return, exactly); an account whose return is None makes the day ACCOUNT_MISSING; no enum change. The checker's independent function and synthetic arm carry a linked day (25 self-test arms), and a control shows the endpoint form disagrees on it. The worker's tie-out counts (windows, bins, reasons) are to be re-measured on the amended method; the first-cut counts are not accepted as the record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 179's report and row W179-S1 at wk-IRPT_DASHBD-179 @806e1b9873 (counts)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r111/p111_household.py (expected, expected_endpoint, synthetic; self-test 25 arms)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-224.firm49-household-daily-return-twr-and-range-tie-out.md step 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W180-S1 -- the portal rule file CONTRIBUTING-BOXES.md is absent from the portal branch this order grants, so the rule could not be read before the portal change
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "CLAUDE.md names portal/CONTRIBUTING-BOXES.md as the rule to read before any change under portal/; the file is absent from the portal branch this order grants (wk-IRPT_DASHBD-180-portal, cut from wk-IRPT_DASHBD-175-portal), so the portal change was made under the order's grant alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CLAUDE.md, Portal section: portal/CONTRIBUTING-BOXES.md is the rule; read it before you touch portal/.",
+  "world_is": "git -C portal cat-file -e 02fb789e863bac627490db7e2c5a0676e54e8f34:CONTRIBUTING-BOXES.md and the same path under portal/ both fail (the file is not in the round-110 tip this branch is cut from). git -C portal ls-files returns zero names matching contributing at the worker commit c81d54ff31b0. git -C portal log --all -- CONTRIBUTING-BOXES.md shows the file was added at 07f065e6 and last changed at b5222d78, so it lives in other history, not on this branch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal cat-file -e 02fb789e863bac627490db7e2c5a0676e54e8f34:CONTRIBUTING-BOXES.md (absent)",
+      "git -C portal ls-files, grep -i contributing at c81d54ff31b0 (zero matches)",
+      "git -C portal log --all -- CONTRIBUTING-BOXES.md (07f065e6, b5222d78)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here."
+}
+```
+
+## IRPT_DASHBD-D2-W180-S2 -- a plain git commit in the portal repo refuses without a committer identity; the commit used a per-command committer name and address
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "The order commits portal files with plain git and the worker's author line; on this device the portal repo has no committer identity, so the first plain commit refused and the worker supplied the committer for that one command.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face: portal files commit in the portal repo with plain git and your author line.",
+  "world_is": "git -C portal commit with --author set and no committer identity refused: 'Committer identity unknown ... unable to auto-detect email address'. The worker set GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL to its own serial on that one command and wrote no git configuration. Commit c81d54ff31b0 carries the serial as author and as committer, and it did not pass through safe-commit.sh (the order's plain-git route). The workspace commit ade84c588d did pass through safe-commit.sh and needed no such setting.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal commit output of the first attempt (refusal, rc 128)",
+      "git -C portal log -1 at c81d54ff31b0 (author and committer 0.9.0_WK_IRPT_DASHBD~180)",
+      "git -C C:/dev/wk-irpt-dashbd-180 log at ade84c588d (safe-commit author line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here."
+}
+```
+
+## IRPT_DASHBD-D2-W180-S3 -- the whole-scope InvestorReporting suite fails 20 tests at the round-110 portal tip here, where the round-110 record measured 5; the failing set is unchanged by this round
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "The whole-scope suite base at the round-110 portal tip is 1294 pass and 20 fail in this worktree, where the round-110 record measured 1298 pass and 5 fail; the 20 failing tests are outside the label surface and are the same before and after this round's change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-110 render record (RENDER_R110.json, tests.suite_base) measured the whole-scope suite base at pass 1298, skip 27, fail 5, with no new failing id.",
+  "world_is": "bun test src/pages/InvestorReporting at base 02fb789e863b in this worktree: 1294 pass, 27 skip, 20 fail of 1341 tests in 403 files. The failing names are in the route-table, producer-fixture, request-corpus, envelope, version-header and fixture-set suites (F14-AC3, F14-AC13, F14-AC15, F14-AC16, F57-AC2, IVE26-AC3, IVE48-AC1, IVE98 and the fixture cases). After the round-111 change: 1300 pass, 27 skip, 20 fail of 1347 tests in 404 files; the failing set equals the base set. The cause of the difference from the round-110 count is not measured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting at 02fb789e863b (the private output suite_base.txt, its failing list fail_base.txt)",
+      "bun test src/pages/InvestorReporting at c81d54ff31b0 (suite_after.txt, fail_after.txt; comm of the two lists is empty)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~175/RENDER_R110.json tests.suite_base"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here."
+}
+```
+
+## IRPT_DASHBD-D2-W180-S4 -- safe-commit could not run its client account-id check on the round-111 record commit: the hashed account-id list is absent on this device
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W180-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~180",
+  "surfaced_at": "2026-10-14T21:46:04Z",
+  "one_line": "On the round-111 record commit safe-commit printed that its client account-id check did not run, because the hashed account-id list is absent at the device path; the worker's own committed content was read and holds no account id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Client data lives only under the private evidence folder: no account id, last four or figure in the repo, a row or a report (the worker face bounds).",
+  "world_is": "safe-commit.sh on commit ade84c588d printed: WARN client-data-check: hashed account-id list ABSENT at the user profile path (.opal folder, account_id_hashes.txt) -- this commit was NOT checked for client account ids. The commit holds the relabel record (counts, hashes, a private folder path, words) and the harness copy only. The worker read both files and wrote no account id, last four or figure into them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for ade84c588d (the WARN line)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~180/BUILD_R111.json at ade84c588d",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~180/render_sample.ts at ade84c588d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The later portal commit c81d54ff31b0 also passed no client-data check (see W180-S2)."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W179-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~179",
+  "surfaced_at": "2026-10-14T21:45:32Z",
+  "one_line": "The one-account equality the face and criterion DB111-1-AC1 require (a one-account household equals its account's window return within 1e-9) fails on the 49 Financial gold: 4 of 5,701 one-account household-window comparisons differ, all in since_inception, max gap 4.04e-4; the producer's total_return_daily is the linked form of amendment 5(e), not the endpoint form.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-224 step 6 (org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2 issuance, cell DB-b-224): every ONE-ACCOUNT household equals its account's cumulative return in every window where both exist, within 1e-9, and that equality is a hard requirement. The premise behind it: the account series total_return_daily is the endpoint form r_t = (V_t - F_t) / V_(t-1) - 1 (producer header, data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 9), so the household method over one account reproduces it.",
+  "world_is": "The endpoint form does not reproduce the producer on every day. Scratch day-level read of the same 570 partitions (not committed): 907,548 consecutive-row pairs of one-account accounts compared; 6 differ beyond 1e-9 (max day gap 1.10e-3), all on LARGE_FLOW days with carried_days above zero, where the producer links through custodian valuations (its amendment 5(e), producer lines 1366-1381). Driver window tie-out (dry_run_household_return_r111.py, HOUSEHOLD_TIEOUT_R111.json): 2,176 one-account households compared; 4 household-window comparisons differ beyond 1e-9, 4 distinct households, all in since_inception; qtd, ytd and last_12_months have none; max absolute gap 4.04e-4. Per the face the method was NOT adjusted to make them equal; criterion DB111-1-AC1 FAILS on this clause and the order stays open. Nothing sources this table yet: the report's household members stay ABSENT (report contract open_changes line 1).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 9 at 332465706b: header states r_t = (V_t - F_t) / V_(t-1) - 1",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 1366-1381 at 332465706b: amendment 5(e) links through every custodian valuation in the window; the endpoint form only with no intervening valuation",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 1355 at 332465706b: carried_days = len(carried) on every row",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~179/HOUSEHOLD_TIEOUT_R111.json (counts; driver sha256 in its driver field) and the driver's stdout ONE-ACCOUNT MISMATCH line: 4 household-window comparisons, all since_inception"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker; the method was not adjusted. The CTO rules whether the household series over one account must reproduce the linked producer form (LARGE_FLOW days with carried days), or whether the account-return members of the report need the same endpoint form. Counts only: no household or account id and no client value is recorded."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W183-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~183",
+  "surfaced_at": "2026-10-14T22:32:18Z",
+  "one_line": "A household whose only table date is the as_of day has zero window days in since_inception: round 111 counts it not comparable, the round-112 checker recount counts it a figure over zero days, so the two tie-outs differ by one (2,563 against 2,564 none; 1,450 against 1,449 figures).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "DB-b-228 step 2 (the since_inception window is the household's days after its first date) and the round-112 checker's window rule (p112_household.py recount: n_wd and n_h over the window days); the round-111 tie-out HOUSEHOLD_TIEOUT_R111.json counts since_inception not_comparable 2,564 and households_compared 1,449, and the round-111 driver returns None for a household with no days in its window.",
+  "world_is": "The one household whose first table date is the as_of day (2026-10-13) has zero days in its since_inception window: n_wd and n_h are both zero, so the checker's rule counts it neither NONE nor INSUFFICIENT_HISTORY but a figure over zero days, giving since_inception households_none 2,563 and figure 1,450 against the round-111 2,564 and 1,449. The round-111 driver returns None for the same household. Measured by a count of first dates in the private table (one household on the as_of day, zero on the day before); no household id recorded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r112/p112_household.py lines 236-245 at c33edfe326: n_wd and n_h over the window days, and the figure branch when neither a bad day nor a no-row day exists",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~179/dry_run_household_return_r111.py lines 93-96 at c33edfe326: household_cum returns None when the days list is empty",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~179/HOUSEHOLD_TIEOUT_R111.json windows.since_inception: not_comparable 2564, households_compared 1449",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~183/RD_HOUSEHOLD_NONE_CAUSE_R112.json windows.since_inception: households_none 2563 with the four kind counts; the worker's private measurement counts one first date on the as_of day"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker; the window rule was not adjusted and the record follows the checker's rule. The issuer rules the zero-day window: a figure over no days (the checker) or not comparable (round 111). Counts only: no household or account id and no client value is recorded."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W183-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~183",
+  "surfaced_at": "2026-10-14T22:37:29Z",
+  "one_line": "The commit-time client-data check did not run on dell2 for commit 85cb94a3a2: the hashed account-id list is absent at its default path, so safe-commit printed WARN and passed the commit unchecked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "DB-b-228 step 7 and the Bounds (no account or household id in the repo, a row or the report), with the commit gate of safe-commit.sh as the mechanism that checks a commit for client account ids before it lands; the worker's own scan of its content is not the gate.",
+  "world_is": "On this device the hashed account-id list is absent at its default path (the gate prints ABSENT at the user profile path and says absent is not empty; OPAL_ACCOUNT_ID_HASHES is not set for this run), so the client-data check printed WARN and the commit 85cb94a3a2 landed with the check not run. The commit holds counts, dates, words and one tracked script with no id literal; that is a worker reading, not the gate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output of commit 85cb94a3a2 (worker log under the worktree scratch folder): WARN client-data-check: hashed account-id list ABSENT at the user profile path; this commit was NOT checked for client account ids",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~183/household_none_cause_r112.py and RD_HOUSEHOLD_NONE_CAUSE_R112.json at 85cb94a3a2: counts, dates, words and a sha256 only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker; the commit was not re-run and no list was placed on the device. Counts only: no household or account id and no client value is recorded. The issuer routes the hashed list to the device owner."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S47",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-14T22:43:05Z",
+  "one_line": "Issuer's dispositions on worker 183's rows W183-S1 (a household whose only date is the as_of day has no since-inception window day, and the rule returned a figure over zero days) and W183-S2 (the commit gate's client-data check could not run on this box): the zero-day window reads INSUFFICIENT_HISTORY in words, the order and the check are amended and worker 182 is resumed; the gate gap is infrastructure, filed by worker 182 as W182-S1 for 0.0.0_AB_MSTR, and this seat's own identifier scans stand in for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-227: a window that holds an unmeasured account day takes SOURCE_BREAK; a household that did not exist at the window's start takes INSUFFICIENT_HISTORY; never a figure beside an absent form. The commit gate's client-data check compares changed files to a hashed account-id list.",
+  "world_is": "W183-S1: the cause read found one household whose only table date is the as_of day: its since-inception window holds no day, round 111 counted it not comparable, and my DB-b-227 rule (a product over the window days) would print a figure of 0 for it, a figure over nothing: an issuer omission. Ruled: a window with no day reads INSUFFICIENT_HISTORY with the words 'This household has no measured day in this period yet.'; the since-inception count becomes 1449 figures and 1 insufficient, the four-form words_forms; order DB-b-227 and the DB112 check are amended and the worker resumed. W183-S2 (and W182-S1, owner 0.0.0_AB_MSTR): the commit-time client-data check printed WARN on dell2 because the hashed account-id list is absent at its default path, so no worker commit this round was checked against it; every changed file of every drained branch was scanned by this seat for identifier-length digit runs and the records carry counts, hashes and words only; the missing list is the integrator's infrastructure and stays his. Disarmed here for this seat's part.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 183's report and rows W183-S1 and W183-S2; worker 182's row W182-S1",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r112/p112_household.py (W_NODAY, recount): the since-inception recount reads 1449 figures and 1 INSUFFICIENT_HISTORY",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-227.household-window-source-break-rule-no-imputation.md (a2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W182-S1 -- the commit gate's client-data check did not run on dell2 (the hashed account-id list is absent), so this order's commits were not checked for client account ids
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W182-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~182",
+  "surfaced_at": "2026-10-14T22:39:38Z",
+  "one_line": "The commit gate's client-data check could not run on this device (the hashed account-id list is absent), so the commits of TO DB-b-227 were not checked for client account ids; the gate printed WARN and both commits landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "spec_asserts": "The order's bound: 'No account or household id in the repo, a row or your report', with the commit gates run before each commit so that a commit carrying a client id is refused.",
+  "world_is": "The commit gate printed 'WARN: client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids' for commit a804efc2de and again for commit 64184e219f, and both landed. The worker read the committed files and found no account or household id and no client value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit a804efc2de: the safe-commit output in the worktree scratch folder (commit_a_out2.log) carries the WARN line for client-data-check",
+      "commit 64184e219f: the safe-commit output in the worktree scratch folder (commit_b_out.log, line 16) carries the same WARN line",
+      "the gate's own message names the absent list at the operator profile path C:/Users/Test/.opal/account_id_hashes.txt (absent at the time of both commits)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-227. The disarm owner is the integrator (0.0.0_AB_MSTR) because the commit gate is infrastructure; the CTO may reassign it. The row states the form only; it carries no client value."
+}
+```

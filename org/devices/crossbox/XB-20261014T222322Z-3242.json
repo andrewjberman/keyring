@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261014T222322Z-3242",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "laptop",
+ "from_serial": "2.0.0_SA_COO~D1",
+ "to_serial": "0.7.0_AE_CloudOps~U7",
+ "subject": "MDPF_CANON CN-q-1: deploy auth-validator-edge with the per-firm MDPF leaf gate -- build, upload, plan, apply, prove (lap",
+ "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~U7/task_orders/ADHOC.canon-q1-edge-firm-gate-deploy.md",
+ "opened_at": "2026-10-14T22:23:22Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-14T22:25:22Z",
+  "bus_message_id": "f634ddfe-b36f-48d9-820a-710c5b72fcb6"
+ },
+ "ack": {
+  "at": "2026-10-14T22:30:12Z",
+  "by": "0.7.0_AE_CloudOps~U7",
+  "bus_message_id": "17261193-84fb-447c-ba23-4f5fe1db68c1"
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

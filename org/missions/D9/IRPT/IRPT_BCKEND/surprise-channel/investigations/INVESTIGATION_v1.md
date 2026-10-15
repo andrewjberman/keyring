@@ -34727,3 +34727,407 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W384-S1 (BLOCKING, ARMED, owner me: the Cottonwood table of the packet omits silver/opal_unidentified.py): CONFIRMED AND WIDER than the row. The packet table lists the members of the BUILT bundle; the built bundle lacks the file because the closure declaration lacks it, so adding it to the packet table cannot make a mint carry it. A Cottonwood bundle minted from the pin cannot import the cottonwood builder. STAYS ARMED; its disarm is the closure fix as a new pin and the bundle-tree differential, not an edit to the table. D2-W384-S2 (Inflection REFUSED on source_frontier_older on both codes): INERT; the served Inflection frontier is now 2026-10-13 so a candidate dated 2026-10-12 is older; the clock moved, the code did not; the release's gate comparison must be live against pin at the same served state. D2-W384-S3 (Cottonwood: 236 changes beyond the signed rule reproduce with holdings_snapshot.py swapped alone): INERT as a hazard; attribution is proven to the member and NOT to a commit: the five keyword-matched commits are not shown to cause the basis and sub-class relabels, and the check that accepted them (mine) is too weak; at the commit level they are UNATTRIBUTED, measured in counts and fields. D2-W384-S4 (python -I writes __pycache__ into trees despite PYTHONDONTWRITEBYTECODE): INERT; the files are in scratch trees outside the repository."
 }
 ```
+
+## IRPT_BCKEND-D2-W385-S1 -- The pin commit of the closure fix is refused by the TO issuance gate on the pin branch: the order file is a new task order under a worker serial, and the old pin's decomposition has no cell IB-pr-540
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W385-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~385",
+  "surfaced_at": "2026-10-14T17:49:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Step 2 of TO-IB-pr-540 cannot be executed as written: committing the order file on the new-pin branch (old pin 49467335d2 plus the order file) is refused by .tools/to-pipeline-gate.py (layer 2). The new pin commit therefore cannot be made by this worker, so the closure fix is not landed and the closure defect D2-W384-S1 stays ARMED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of the order file in C:/dev/wk-ib540-pin (branch pin-ib-pr-540, HEAD 49467335d2) exited rc=1 with the TO issuance gate REFUSED, 5 violations: (a) a NEW tree task order committed under 0.9.0_WK_IRPT_BCKEND~385 (LD-0521 A3: only 2.0.0_SA_COO or a ~lane of it may add a task order); (b) owned_cells names cell IB-pr-540, not a cell of the pin's IRPT_BCKEND_DECOMP.md (391 cell ids read from its index); (c) criteria IB196-1-AC1, AC2, AC3 name the same absent cell",
+      "grep-count, path-pinned: the decomposition at the base 0d7cf141bd carries IB-pr-540 in 6 lines; the decomposition at the old pin 49467335d2 carries no IB-pr-540 line (the cell is round 196, after the pin's round 191)",
+      "the edited core file (two added lines, zero deleted lines, .tools/safe_deploy_core.py) is uncommitted in C:/dev/wk-ib540-pin; its git blob hash is a09879f2f8d223a71b58889ec0283e1cc1878541",
+      "no override was used: the pipeline-override line was not added, the order file was not edited, and no commit was made on the pin branch"
+    ]
+  },
+  "spec_asserts": "Step 2 of TO-IB-pr-540: the worker lane admits the pin commit once the order file is on the pin branch, and the new pin is committed there with safe-commit.sh; AC1 requires the new pin to descend from the old pin and to change only the core file and the order file.",
+  "world_is": "The to-pipeline-gate (the L6 neck) refuses the order file on the pin branch for the three reasons above; the premise that placing the order file admits the commit does not hold for a file that is new to the pin tree. The commit cannot be made by this worker, so the closure fix has no pin hash and AC1 to AC3 cannot pass. The bundle builds, the import proof and the closure-equals-trace measurement were run from the uncommitted pin worktree and are recorded in IB196-1_closure_record.json with new_pin null. I did not attempt a core-only commit (it would bypass the order admission the lane is built to enforce), did not use the pipeline-override escape, and did not edit the order file. How the fix reaches the pin (a COO-authored commit path or a placement the gate accepts) is the issuer's decision."
+}
+```
+
+## IRPT_BCKEND-D2-W385-S2 -- The order's bundle_delta reads members_changed as [] but a manifest bundle's generated SHA256SUMS member changes by one added line whenever a member is added
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W385-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~385",
+  "surfaced_at": "2026-10-14T17:49:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 3 of TO-IB-pr-540 defines bundle_delta as the member comparison by sha256 with members_changed and members_removed both []. Read literally, the generated SHA256SUMS member is in members_changed for every fix of this kind, because it lists the members and its bytes change. The record reports members_changed [] over the closure members and states SHA256SUMS apart.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratch build of the old pin (49467335d2) and of the pin working tree: 46 and 47 members per firm; the only member whose bytes differ across the two builds other than the added member is SHA256SUMS (safe_deploy_core.build_bundle_payload, stamp manifest, writes a SHA256SUMS member listing every member)",
+      "the SHA256SUMS listings differ by exactly one added line, the sha256 of data/assets/scripts/silver/opal_unidentified.py, and no removed line"
+    ]
+  },
+  "spec_asserts": "Step 3 and AC3 of TO-IB-pr-540: bundle_delta members_added is exactly the one added member and members_changed and members_removed are both empty.",
+  "world_is": "Over the 46 closure members, the old and new bundles differ by exactly the added member (members_changed over closure members is empty, all 45 other members have identical bytes). The generated index differs by its one added line. The definition in the order counts the index. The record states the closure-member comparison and the index separately and does not alter the check. The issuer decides whether the definition excludes generated manifests."
+}
+```
+
+## IRPT_BCKEND-D2-W386-S1 -- The live investor-reporting bundles carry 44 closure members; the new pin's closure carries 46: two modules (strategy matcher, unidentified) are on the built side only
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W386-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~386",
+  "surfaced_at": "2026-10-14T18:21:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The three live investor-reporting bundles (version ids as the order names them) hold 44 code members plus SHA256SUMS; the new pin's bundle holds 46 plus SHA256SUMS. The live bundles lack silver/opal_strategy_matcher.py, which the OLD pin's closure also carries, and silver/opal_unidentified.py, which the new pin adds. The built side therefore has two modules the live side does not.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object --version-id on the three live bundle keys (49financial UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD, cottonwood oyIYMVdh_l2zCg5ZWvn3ISPPS6_9Q82_, inflection PzhCs97qVBXkZcIjaOklHmzWiFsOFafM): each tar lists 45 entries (44 code members plus SHA256SUMS), identical member names across the three firms; object metadata member-count reads 44",
+      "set difference of the new pin closure (safe_deploy_core._IRPT_HOLDINGS_CLOSURE at b1d354cfc9, 46 entries) against the live member names: exactly data/assets/scripts/silver/opal_strategy_matcher.py and data/assets/scripts/silver/opal_unidentified.py; live names not in the closure: SHA256SUMS only",
+      "the old pin 49467335d2 closure declares data/assets/scripts/silver/opal_strategy_matcher.py (git show 49467335d2:.tools/safe_deploy_core.py, line 501), so the live bundle predates the old pin's closure as well as the new one"
+    ]
+  },
+  "spec_asserts": "IB-pr-541 steps 1 and 2: the live side is the live bundle bytes as downloaded, the built side is core.build_bundle_payload at the new pin, and both are extracted and imported as bundles (built side 47 files: closure plus SHA256SUMS).",
+  "world_is": "The built side is 47 files as asserted. The live side is 45 files: its code members are the new closure minus the two named modules. Every live tree's SHA256SUMS verifies against its own members (sha256sum -c, exit 0 on each of the three). The differential therefore compares a live tree that lacks two modules with a built tree that carries them; the module-level import behaviour of each side is recorded by the run, not assumed here.",
+  "notes": "Measured by the worker, not remediated: the order is READ ONLY and the live bundles are not to be re-minted. Recorded so the attribution in IB-pr-542 and the packet can name the membership difference as a fact."
+}
+```
+
+## IRPT_BCKEND-D2-W386-S2 -- The served publication is read by two code versions with two different shapes: one served state cannot be handed to both gates, so the index is captured once and each code reads its own served state from that capture
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W386-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~386",
+  "surfaced_at": "2026-10-14T18:52:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-541 step 3 asks for one served read fed to each code's evaluate_publish_gate. The served_publication of the new pin returns a keyed summary (placed and unplaced keys, account ids, node count); the live Cottonwood served_publication returns the node list that its evaluate_publish_gate reads as served['nodes']. The first attempt fed the built summary to the live gate and the Cottonwood live build raised KeyError 'nodes'. The harness now captures the publication index once (begin) and gives each code its own served read of that one capture; the two reads must name the same revision, index date, index version, account count and node count, and a disagreement is a STOP.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first attempt, scratch run log of the Cottonwood pair: REFUSED: build live_r1 failed at evaluate_publish_gate, live holdings_snapshot.py line 2973 reads served['nodes'] (scratch, live tree of the Cottonwood bundle)",
+      "built (new pin) served_publication, holdings_snapshot.py at b1d354cfc9 lines 2955-2982: returns business_date, index_date, revision, node_count, account_ids, placed_keys, unplaced_keys, index_version",
+      "live Cottonwood served_publication, scratch copy of the live bundle lines 2889-2908: returns business_date, index_date, revision, nodes, account_ids, index_version; its evaluate_publish_gate at line 2944 reads served['nodes'] at line 2973",
+      "the 49financial pair of the first attempt completed with both gates PUBLISHED, because its live reader also returned the keyed shape; that result is superseded by the re-run on the corrected harness and is not reported as the record"
+    ]
+  },
+  "spec_asserts": "IB-pr-541 step 3: read the firm's served publication ONCE and evaluate each code's evaluate_publish_gate against THAT one served state, with gate.served_state recorded once.",
+  "world_is": "The two code versions do not share a served shape, so a single served object cannot be passed to both gates as written. Both readers take the same begin() capture and read the exact versions it names; the harness records a same-state fingerprint for each code (revision, index date, index version, account count, node count) and stops on any disagreement. gate.served_state is recorded once from the single capture (latest date and index version id).",
+  "notes": "Harness-level adaptation inside the order's bounds (read only, no new reads beyond the one capture and each reader's own versioned reads). The first attempt's scratch output is superseded and is not reported."
+}
+```
+
+## IRPT_BCKEND-D2-W386-S3 -- python -I ignores PYTHONDONTWRITEBYTECODE: the extracted live and built bundle trees received bytecode caches on the first build, so a tree listing is not the bundle's member list
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W386-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~386",
+  "surfaced_at": "2026-10-14T19:52:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The harness runs each build as python -I and sets PYTHONDONTWRITEBYTECODE in the child environment, but -I ignores every PYTHON* variable, so each build wrote __pycache__ .pyc files into the scratch extractions of the built and live trees. The first listing of a built tree counted 64, 77 and 66 files against the 47 bundle members. The record counts the bundle's own files (the .pyc caches excluded), and the member names are the bundle's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the built tree of one firm, listed after the runs: 47 bundle files plus 17 cpython-314 .pyc files under __pycache__ directories of the producer, lib and infrastructure modules (scratch, not the repository)",
+      "the same caches appear in the live extraction of each firm: the harness wrote no file into any repository tree; the caches are in the scratch extractions only",
+      "the record's built_bundle_members counts the extraction excluding __pycache__ and .pyc files and reads 47 on each firm, equal to the 47 entries the payload builder names (46 closure members plus SHA256SUMS)"
+    ]
+  },
+  "spec_asserts": "IB-pr-541 step 2: the built_bundle_members count is the files in the built tree (the closure plus SHA256SUMS, 47), and the harness is read only.",
+  "world_is": "The raw file count of an extracted tree after a python -I run is the bundle plus bytecode caches; the bundle's own count is 47 as asserted once the caches are excluded. No repository file was written by the harness, and no bundle content changed.",
+  "notes": "Corrected in the harness's count (not in the build): the count excludes __pycache__ and .pyc. Scratch is removed at the end of the order."
+}
+```
+
+## IRPT_BCKEND-D2-W387-S1 -- git revert --no-commit of 01e843ce2e (the SC-e-56 CUSIP fallback) does not apply at the new pin: three paths conflict
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W387-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~387",
+  "surfaced_at": "2026-10-14T20:36:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "git revert --no-commit 01e843ce2e at the new pin b1d354cfc9 exits 1 with unmerged holdings_snapshot.py, tests/test_holdings_snapshot.py and the investor-reporting terraform CHANGELOG.json; the commit also places a canonical CUSIP table file, so its revert is not a code-only undo. IB-pr-542 AC1 cannot pass on this commit as the order is written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git revert --no-commit 01e843ce2e in worktree C:/dev/wk-ib542-r-cusip (detached at b1d354cfc9): exit 1; git diff --name-only --diff-filter=U lists data/assets/scripts/gold/investor_reporting/holdings_snapshot.py, data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py and infra/aws/terraform/investor-reporting/CHANGELOG.json",
+      "git show --stat 01e843ce2e: 11 files, 2347 insertions and 28 deletions, including a 1,960-line canonical table file HOLDINGS_CUSIP_NEWLY_PLACED_20261007.json and a checks script",
+      "git log -S CUSIP at b1d354cfc9 on holdings_snapshot.py: 01e843ce2e is the commit that introduces the CUSIP lookup on the pin line (35999d31a4 and b3e63a795e also name CUSIP and are not among the four named commits)"
+    ]
+  },
+  "spec_asserts": "IB-pr-542 step 3: each named commit's revert applies cleanly in a worktree at the new pin, and the revert of the one named commit removes its change; the order names 01e843ce2e as the commit whose revert undoes the SC-e-56 CUSIP fallback.",
+  "world_is": "Later edits on the pin line overlap the lines 01e843ce2e changed, and the commit places data as well as code, so git refuses the revert. No revert was hand-resolved and no bundle was built from the conflicted tree.",
+  "notes": "Refusal clause of the order: a revert that does not apply cleanly is a STOP. Attribution of the CUSIP group needs a method the order does not name (CTO decision). The surfaced_at stamp is date -u at the row's write."
+}
+```
+
+## IRPT_BCKEND-D2-W387-S2 -- the multi_asset premise does not hold at the new pin: 01e843ce2e removed the value 4cc72587d6 added, so reverting 4cc72587d6 conflicts; 9efbec3c2f removes only a comment line
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W387-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~387",
+  "surfaced_at": "2026-10-14T20:36:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "At the new pin the multi_asset value is already absent from ASSET_CLASS_VALUES: 01e843ce2e replaced the line 4cc72587d6 had added. git revert --no-commit 4cc72587d6 exits 1 (holdings_snapshot.py and two test files unmerged). 9efbec3c2f changes holdings_snapshot.py by one deleted comment line only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show -U0 4cc72587d6 on holdings_snapshot.py: one changed line, adding multi_asset to the ASSET_CLASS_VALUES tuple",
+      "git show -U0 01e843ce2e on holdings_snapshot.py: that tuple line replaced by a line reading unclassified with the comment SC-e-56: multi_asset left (the table holds 0 rows; the six-class rule refuses it)",
+      "git revert --no-commit 4cc72587d6 in worktree C:/dev/wk-ib542-r-multi (detached at b1d354cfc9): exit 1; unmerged paths holdings_snapshot.py, tests/test_holdings_narrowed.py and tests/test_holdings_snapshot.py",
+      "git show -U0 9efbec3c2f on holdings_snapshot.py: one deleted line, the DEPLOY-SERVE-HELD comment; no class value changes"
+    ]
+  },
+  "spec_asserts": "IB-pr-542 names 4cc72587d6 as the one commit whose revert undoes the multi_asset change in holdings_snapshot.py at the new pin, and says 9efbec3c2f removes the DEPLOY-SERVE-HELD lines.",
+  "world_is": "The multi_asset change at the pin is undone by 01e843ce2e, not by 4cc72587d6, so 4cc72587d6's revert re-adds a value the pin no longer carries and conflicts. The 9efbec3c2f change is comment-only and cannot move a node's classification. The FWD-14 gate condition named multi_asset (added by 9af6811b61) is a gate, not a node field.",
+  "notes": "The order's identification rule (print the search) gives 4cc72587d6 as the only commit whose subject names multi_asset and whose diff adds the value; the conflict is the measured outcome, not a choice of commit."
+}
+```
+
+## IRPT_BCKEND-D2-W387-S3 -- git revert of 7ace854890 and 3f2bdda578 at the new pin exits 1 on the project channel file alone; the holdings_snapshot.py reverts stage clean
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W387-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~387",
+  "surfaced_at": "2026-10-14T20:36:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "git revert --no-commit of 7ace854890 (account_id) and 3f2bdda578 (keyed gate) at b1d354cfc9 exits 1, and the only unmerged path in each is the project surprise channel file itself, which both commits edited. Their code reverts stage without conflict but git still reports the revert as not applied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git revert --no-commit 7ace854890 in worktree C:/dev/wk-ib542-r-account (detached at b1d354cfc9): exit 1; git diff --name-only --diff-filter=U lists only org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md",
+      "git revert --no-commit 3f2bdda578 in worktree C:/dev/wk-ib542-r-keyed (detached at b1d354cfc9): exit 1; the same single unmerged path",
+      "git status --short in both worktrees: holdings_snapshot.py staged as M without an unmerged marker"
+    ]
+  },
+  "spec_asserts": "IB-pr-542 step 3: a revert that does not apply cleanly is recorded as revert_applied false and is a STOP; the revert of each named commit is the code change that commit made.",
+  "world_is": "The conflict sits in a channel log that is not a bundle closure member, so it cannot change the built bundle, but git's verdict is a refused revert. The order's rule is applied as written: revert_applied false, no hand-resolution, no bundle built from either reverted tree.",
+  "notes": "Filed so the CTO can decide whether a revert that conflicts only on the channel log is acceptable for the toggling method. The row carries no node, account or client identifier."
+}
+```
+
+## IRPT_BCKEND-D2-W387-S4 -- the revert conflicts filed as S1 to S3 are resolved under IB-pr-542 AMENDMENT 1 (order commit d8bfa44b3e, step 3a); the resolutions are recorded per commit
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W387-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~387",
+  "surfaced_at": "2026-10-14T21:25:06Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolved, not a STOP: the amended order (step 3a) makes a conflicting revert resolvable. Non-closure conflicts (the channel documents, CHANGELOG, tests, table files) are taken from HEAD; the closure-member conflict in holdings_snapshot.py is resolved by hand; the toggled tree differs from new_pin only in closure members (byte-level diff against the base bundle agrees). Recorded per commit in IB196-3_toggle_attribution.json (resolution, toggled_files). Rows W387-S1 to S3 stay as filed; this row closes the conflict question only and does not dismiss the attribution finding in W387-S6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The four named reverts conflict at the new pin (rows S1 to S3); under the amendment each is resolved and the four toggled trees are built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~387/IB196-3_toggle_attribution.json@5f35bcff83 (the pre-amendment record: the four reverts exited 1)",
+      "the amended record: per_commit resolution account_id and keyed_gate non_closure_taken_from_head; cusip_fallback and multi_asset hand_resolved_closure_member; toggled_files each a closure member the commit changed",
+      "git diff against new_pin of the four worktrees: account_id three closure members, keyed_gate one, cusip_fallback one, multi_asset one; diff -rq against the base bundle lists exactly these"
+    ]
+  },
+  "spec_asserts": "IB-pr-542 step 3 as first written: a conflicting revert is recorded as revert_applied false and is a STOP. Step 3a (AMENDMENT 1) withdraws that rule for this case.",
+  "world_is": "The conflicts are real (the commits' lines were edited later on the pin line) but resolvable within the closure rule: the non-closure paths do not run in the bundle, and the one closure-member conflict has a single hunk that the pin already carries (multi_asset) or can be resolved by removing the commit's own lines (cusip_fallback).",
+  "notes": "Surfaced_at is date -u at the row's write. The pre-amendment record and this row are both kept; the amended record supersedes the pre-amendment revert_applied values."
+}
+```
+
+## IRPT_BCKEND-D2-W387-S5 -- two hand-resolved files written in text mode came out with CRLF line endings; caught by the byte-level diff against the base bundle, fixed, and the toggled bundles rebuilt
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W387-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~387",
+  "surfaced_at": "2026-10-14T21:25:06Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolved in the worker's own worktrees before any measurement was kept: the two hand-resolved holdings_snapshot.py files were rewritten with LF line endings, the bundles were rebuilt and every toggled build was rerun. The CRLF pass was killed after one build and none of its numbers are used. Content was identical in both encodings; only the bytes differed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A Python text-mode write on Windows turned LF into CRLF in two hand-resolved toggle files; the content hash matched, the bytes did not, and the bundle diff caught it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the first toggled bundle of the cusip and multi toggles held holdings_snapshot.py with 3,248 and 3,265 CRLF lines against 0 in the base bundle; the LF-normalised sha256 matched the base",
+      "after conversion to LF the byte sizes equal the base bundle file (196,482 bytes for the multi tree) and diff -rq against the base bundle lists only the closure members each commit changed"
+    ]
+  },
+  "spec_asserts": "IB-pr-542 step 3a: the toggled tree differs from new_pin ONLY by undoing that one commit's change to the closure members; the toggled diff is saved against new_pin.",
+  "world_is": "A hand edit through a text-mode write changes line endings on Windows. Git normalises CRLF on add, so git diff hid the change; only a byte-level comparison showed it.",
+  "notes": "Mechanism note for the worker's own tooling: write hand-resolved files in binary mode, or compare bundle trees byte for byte before building. No repository file other than the worker's own deliverables was affected."
+}
+```
+
+## IRPT_BCKEND-D2-W387-S6 -- BLOCKING: four Cottonwood beyond-rule nodes are not reached by any of the four named reverts; the attribution is a STOP with 232 of 236 attributed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W387-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~387",
+  "surfaced_at": "2026-10-14T21:25:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Of 236 Cottonwood beyond-rule nodes, 232 are removed entirely by the cusip_fallback revert and 0 by any other; the other 4 carry an asset_class fixed_income -> cash change that no single toggle removes (the signed cash rule still applies to their reverted fallback answer), so the release's attribution is UNATTRIBUTED for 4 nodes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~387/IB196-3_toggle_attribution.json (this commit, amended record): beyond_rule_total 236, per_commit removed_nodes 0 / 0 / 232 / 0, overlap 0, joint 0, unattributed 4; the arithmetic 232 - 0 + 0 + 4 = 236 holds; run1 and run2 digests equal",
+      "the four nodes (values only, no identifiers): live fixed_income, basis NAME_ALIAS, sub_asset_class Cash; base and identity-patch cash, basis TABLE, sub Money Market; cusip_fallback toggle: basis NAME_ALIAS and sub Cash equal to live, asset_class cash",
+      "the mutant planted in base and every toggle: total 237, unattributed 5, flagged"
+    ]
+  },
+  "spec_asserts": "IB-pr-542 attribution rule: a change no single toggle removes is UNATTRIBUTED, a STOP; the signed cash rule is the identity-patch set (249) and everything else is named for the four commits.",
+  "world_is": "The identity-patch definition classifies a node as signed only when the live value equals the identity value; these four nodes differ from live already in the identity build, so they fall outside the 249 and into the 236. Their asset_class difference is produced by the signed cash rule acting on a fallback answer that the cusip revert restores, which none of the four named commits removes alone. The live code keeps fixed_income on the same node.",
+  "notes": "Reported as a STOP per the rule; the attribution is not reclassified. The CTO decides whether these four belong to the signed cash rule (a definition change for the identity-patch set) or to a fifth named commit (IB-pr-529, the cash rule itself, which is not a named commit of this order)."
+}
+```
+
+## IRPT_BCKEND-D2-S176 -- Dispositions on the round-196 workers' rows; DISARM of D2-W384-S1; the CUSIP fallback explains 232 of Cottonwood's 236 beyond-rule nodes and 4 are overdetermined (a STOP)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S176",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-14T21:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on the round-196 workers' rows (D2-W385-S1 and S2, D2-W386-S1 to S3, D2-W387-S1 to S6) and the DISARM of D2-W384-S1: the closure is fixed into a new pin and proven on the built bundles; 232 of Cottonwood's 236 beyond-rule nodes are the CUSIP fallback, 4 are overdetermined by it and the signed cash rule and are a STOP for the CTO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB196-1 and IB196-2 AC1 to AC3 and IB196-3 AC1 to AC3 on the landed trees, and the three proof instances: IB196-1 and -2 PASS and VALID; IB196-3 AC1 FAIL (4 unattributed), AC2 and AC3 PASS, VALID; round-close-check --workstream ~P MAY-CLOSE (orders=4, 2 complete, 2 cancelled with reasons); merges cbc7701656 (pin branch), 457ecc1bf4, cf000707b0, 15ead085bb",
+      "I read the toggle record IB196-3_toggle_attribution.json (per-commit removed nodes 0 / 0 / 232 / 0; overlap 0, joint 0, unattributed 4) and the worker's analysis of the 4 nodes (live fixed_income, NAME_ALIAS, Cash; pin cash, TABLE, Money Market; the CUSIP toggle restores basis and sub-class but the signed cash rule still moves asset_class to cash)",
+      "drain-end packet deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUND_196_P_DRAIN_END_20261014.md"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27); an ARMED row is disarmed with its evidence when its disarm condition is met.",
+  "world_is": "DISPOSITIONS. DISARM D2-W384-S1 (the pin's bundle closure lacked opal_unidentified.py): the closure now holds it on the new pin b1d354cfc9, every .py closure member imports under python -I from each firm's built bundle, and the differential was re-run on the built bundles (IB-pr-540 and IB-pr-541). D2-W385-S1 (the pin commit refused by the TO issuance gate): RESOLVED, my order's design: the issuer made the pin commit with an audited suite-gate bypass (three unrelated tests red on trunk too). D2-W385-S2 (SHA256SUMS counted in bundle_delta): INERT, the generated index changes by one line with the added member. D2-W386-S1 (the live bundles lack the matcher and unidentified modules): INERT, expected from the evidence. D2-W386-S2 (the live and built served readers differ in shape, each gate runs on its own code's reader against one captured index): INERT, recorded. D2-W386-S3 (python -I writes __pycache__ despite PYTHONDONTWRITEBYTECODE): INERT, scratch only. D2-W387-S1, S2, S3 (the four reverts conflict at the new pin: later commits touch the same hunks; at the new pin the multi_asset line is already replaced by the CUSIP port): RESOLVED by IB-pr-542 AMENDMENT 1 (my order's design). D2-W387-S4 and S5 (the amendment applied; a CRLF write slip caught by the byte-level diff and redone): INERT. D2-W387-S6 (232 of 236 beyond-rule nodes removed by the CUSIP fallback toggle alone, 0 by the others, 4 unattributed because the signed cash rule overdetermines their asset_class change): the STOP, carried to the CTO with the recommendation of one combined toggle; hazard INERT (nothing minted), LOAD-BEARING for the release."
+}
+```
+
+## IRPT_BCKEND-D2-W392-S1 -- OBSERVATION: the 45 blanked Cottonwood nodes carry CUSIP display symbols, not ticker-shaped symbols
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W392-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~392",
+  "surfaced_at": "2026-10-14T22:14:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's cell text asks for each of the 45 blanked nodes' ticker-shaped symbol; the display symbol on every one of them is a nine-character CUSIP identifier, carried under a CUSIP security_id namespace.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~392/IB197-4_cusip_sub_class_read.json causes[0].securities_public_symbols: 44 distinct nine-character CUSIP values for the 45 nodes",
+      "scratch comparison of the built and live snapshots at the pin's bundle: security_id namespace CUSIP on 45 of 45 blanked nodes; display symbol equal to the security_id value on 45 of 45"
+    ]
+  },
+  "spec_asserts": "Cell IB-pr-547: for each of the 45 nodes, keep the node's public ticker-shaped symbol and its asset class.",
+  "world_is": "No ticker-shaped symbol exists on these 45 nodes; the display symbol is the CUSIP of the security. The symbols are public security identifiers and are recorded as such in the read's causes list. No account, node identifier or holding name is recorded.",
+  "notes": "Form only: the read proceeded with the CUSIP symbols as the public security identifiers the causes list names."
+}
+```
+
+## IRPT_BCKEND-D2-W392-S2 -- OBSERVATION: the CUSIP-keyed canonical rows behind the 45 blanked values carry no sub_asset_class and name one writer
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W392-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~392",
+  "surfaced_at": "2026-10-14T22:14:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The CUSIP-keyed canonical rows that the port's branch reads for the 45 nodes have no sub_asset_class key, and all 45 were last updated by one named writer; any release of the port blanks these values until the rows or the branch change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratch read of the canonical table by the 45 CUSIP keys through the pin's classifier: identifier_namespace CUSIP on 45 of 45, classified_by scheduled on 45 of 45, updated_by mdpf-secclass-clean-names-v2 on 45 of 45, sub_asset_class key present on 0 of 45",
+      "trace of classify_security at the pin on the 45 nodes: symbol lookup miss then CUSIP lookup hit on 45 of 45; the served sub-class is None on 45 of 45 (holdings_snapshot.py:993)"
+    ]
+  },
+  "spec_asserts": "Cell IB-pr-547 and the port's own release: the port follows as its own release after this READ, and the sub-class the port serves for a CUSIP-keyed security comes from the row it reaches.",
+  "world_is": "The CUSIP branch returns the row without a sub-class for these 45 keys; the row's writer is the named scheduled writer mdpf-secclass-clean-names-v2, whose source was not read in this order. The hazard is ARMED because a release of the port carries the blank into the served holdings snapshot on the next build.",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "notes": "Disarm condition for the issuer: the option is ruled by the CTO and the port's release carries the chosen option (keep the prior sub-class, a documented correction, or a backfill of the rows). Recorded for the issuer; no disarm is made by this worker."
+}
+```
+
+## IRPT_BCKEND-D2-W392-S3 -- OBSERVATION: the classifier's canonical-table reads are DynamoDB get_item calls outside the stated read surface
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W392-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~392",
+  "surfaced_at": "2026-10-14T22:14:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The trace read the canonical classification table by DynamoDB get_item through the classifier object the harness's build already uses; the harness's read wrapper covers S3 only, so these reads were not on the order's stated read surface.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pin infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py lines 60-84: get_classification calls table.get_item only; no write method is called on this path",
+      "the trace made 90 canonical lookups on the 45 nodes (symbol and CUSIP key per node), all get_item reads; the two snapshot builds made further per-node lookups that were not counted"
+    ]
+  },
+  "spec_asserts": "Bounds: the only AWS calls are s3api get-object on live bundle keys by version id and the harness's get and list reads with the worker's identity.",
+  "world_is": "The classifier reads the canonical table through a DynamoDB resource, which is not wrapped by the harness's S3 read wrapper; the reads are get_item only and none writes. The order's bound did not name this read path.",
+  "notes": "Form only: no write, invoke or send was made on this path. Counted here so the read surface is on the record."
+}
+```

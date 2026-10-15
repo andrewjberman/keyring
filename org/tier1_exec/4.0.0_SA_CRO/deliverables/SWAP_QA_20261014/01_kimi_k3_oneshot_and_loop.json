@@ -1,0 +1,121 @@
+{
+ "cases": [
+  {
+   "kind": "check",
+   "loop": {
+    "parse": "PARSED",
+    "result": {
+     "confidence": 0.75,
+     "reason": "QULA does not correspond to a commonly known US-listed ticker; it is an adjacent-letter transposition of QUAL (iShares MSCI USA Quality Factor ETF), which is plausible given the equity ETF context.",
+     "suggestion": "QUAL"
+    },
+    "rounds": [
+     {
+      "finish_reason": "stop",
+      "http": 200,
+      "seconds": 17.85,
+      "usage": {
+       "completion_tokens": 528,
+       "completion_tokens_details": {
+        "reasoning_tokens": 457
+       },
+       "prompt_tokens": 169,
+       "prompt_tokens_details": {
+        "cache_write_tokens": 0
+       },
+       "total_tokens": 697
+      }
+     }
+    ],
+    "search_calls": 0,
+    "seconds_total": 17.85
+   },
+   "one_shot": {
+    "error_head": null,
+    "finish_reason": "stop",
+    "http": 200,
+    "parse": "PARSED",
+    "seconds": 10.5
+   },
+   "symbol": "QULA"
+  },
+  {
+   "kind": "swap",
+   "loop": {
+    "rounds": [
+     {
+      "finish_reason": "tool_calls",
+      "http": 200,
+      "seconds": 6.86,
+      "usage": {
+       "completion_tokens": 1,
+       "prompt_tokens": 246,
+       "total_tokens": 247
+      }
+     },
+     {
+      "error_head": "{\"error\":{\"message\":\"Invalid request: tokenization failed\",\"type\":\"invalid_request_error\"}}",
+      "http": 400,
+      "seconds": 0.63
+     }
+    ],
+    "search_calls": 1,
+    "seconds_total": 7.49
+   },
+   "one_shot": {
+    "error_head": null,
+    "finish_reason": "tool_calls",
+    "http": 200,
+    "parse": "KIMI_FINISH_UNSUPPORTED",
+    "seconds": 7.26
+   },
+   "symbol": "BREIT"
+  },
+  {
+   "kind": "swap",
+   "loop": {
+    "rounds": [
+     {
+      "finish_reason": "tool_calls",
+      "http": 200,
+      "seconds": 6.52,
+      "usage": {
+       "completion_tokens": 1,
+       "prompt_tokens": 245,
+       "total_tokens": 246
+      }
+     },
+     {
+      "error_head": "{\"error\":{\"message\":\"Invalid request: tokenization failed\",\"type\":\"invalid_request_error\"}}",
+      "http": 400,
+      "seconds": 0.59
+     }
+    ],
+    "search_calls": 1,
+    "seconds_total": 7.11
+   },
+   "one_shot": {
+    "error_head": null,
+    "finish_reason": "tool_calls",
+    "http": 200,
+    "parse": "KIMI_FINISH_UNSUPPORTED",
+    "seconds": 7.61
+   },
+   "symbol": "KPEC"
+  }
+ ],
+ "model": "kimi-k3",
+ "probed_at_utc": "2026-10-14T18:14:42Z",
+ "qa_receipt_sha256": "d8b798fe85e43ba3b5c25797738db8ba1febb61119db88ed2cace5ce04f7bb0b",
+ "request_fields_under_test": {
+  "tools": [
+   {
+    "function": {
+     "name": "$web_search"
+    },
+    "type": "builtin_function"
+   }
+  ]
+ },
+ "url": "https://api.moonshot.ai/v1/chat/completions"
+}

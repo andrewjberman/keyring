@@ -7,7 +7,7 @@
  --canvas:#E9ECF1; --card:#FFFFFF; --card2:#F5F7FA; --plot:#FCFCFB;
  --ink:#10141D; --dim:#5D6675; --faint:#8B94A6; --hair:#E4E8EE; --axis:#C9CFDA;
  --accent:#5e72e4;
- --s-product:#2a78d6; --s-delivery:#1baf7a; --s-controls:#4a3aa7; --s-other:#C9CFDA;
+ --s-product:#2a78d6; --s-audit:#1baf7a; --s-other:#C9CFDA;
  --ev:#10141D; --ev-soft:rgba(16,20,29,.28);
  --r:16px; --shadow:0 1px 2px rgba(16,20,29,.05),0 10px 30px rgba(16,20,29,.06);
  color-scheme:light;
@@ -17,7 +17,7 @@
   --canvas:#121418; --card:#1B1E24; --card2:#23272F; --plot:#1A1A19;
   --ink:#F2F4F8; --dim:#AEB5C2; --faint:#8790A0; --hair:#2C313A; --axis:#3A404B;
   --accent:#8193f0;
-  --s-product:#3987e5; --s-delivery:#199e70; --s-controls:#9085e9; --s-other:#4A505C;
+  --s-product:#3987e5; --s-audit:#199e70; --s-other:#4A505C;
   --ev:#F2F4F8; --ev-soft:rgba(242,244,248,.30);
   --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.25);
   color-scheme:dark;
@@ -27,7 +27,7 @@
   --canvas:#121418; --card:#1B1E24; --card2:#23272F; --plot:#1A1A19;
   --ink:#F2F4F8; --dim:#AEB5C2; --faint:#8790A0; --hair:#2C313A; --axis:#3A404B;
   --accent:#8193f0;
-  --s-product:#3987e5; --s-delivery:#199e70; --s-controls:#9085e9; --s-other:#4A505C;
+  --s-product:#3987e5; --s-audit:#199e70; --s-other:#4A505C;
   --ev:#F2F4F8; --ev-soft:rgba(242,244,248,.30);
   --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.25);
   color-scheme:dark;
@@ -333,7 +333,7 @@ document.getElementById("phases").innerHTML=DATA.page.phases.map(p=>`<div class=
  <div class="st">${p.stats.map(([b,s])=>`<div><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("")}</div></div>`).join("");
 document.getElementById("live").innerHTML=CAT.map(([k,lab])=>{const items=EV.filter(e=>e.cat===k);
  return `<div class="col"><h3>${esc(lab)}<span>${items.length}</span></h3>${items.map(e=>`<div class="li"><span class="d">${esc(short(e.date))}</span><span><span class="t">${esc(e.title)}</span>${e.claim==="inferred"?'<span class="q">INFERRED DATE</span>':""}${e.detail?`<div class="x">${esc(e.detail)}</div>`:""}</span></div>`).join("")}</div>`;}).join("");
-{const M=DATA.months;const cols=[["month","Month"],["total","All"],["workspace","Workspace"],["portal","Portal"],["product","Product build"],["delivery","Plan/test/deliver"],["controls","Coord./controls"],["other","Unclassified"],["human","By Andrew"],["agent","By agents"],["seats","Agent seats"]];
+{const M=DATA.months;const cols=[["month","Month"],["total","All"],["workspace","Workspace"],["portal","Portal"],["product","Product"],["audit","Audit"],["other","Unclassified"],["human","By Andrew"],["agent","By agents"],["seats","Agent seats"]];
  document.getElementById("tbl").innerHTML=`<thead><tr>${cols.map(c=>`<th scope="col">${c[1]}</th>`).join("")}</tr></thead><tbody>`+
   M.map(r=>`<tr>${cols.map(([k])=>`<td>${k==="month"?esc(MON[+r.month.slice(5)-1]+" "+r.month.slice(0,4)):fmt(r[k])}</td>`).join("")}</tr>`).join("")+`</tbody>`;}
 document.getElementById("notes").innerHTML="<ul>"+DATA.page.notes.map(n=>`<li>${esc(n)}</li>`).join("")+"</ul>";

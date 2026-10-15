@@ -1,0 +1,33 @@
+{
+  "record": "PROVENANCE -- J359: build_satellites_characteristics.py lands on box/dell1 (a record, not a decision)",
+  "written_by": "2.0.0_SA_COO~J1",
+  "date": "2026-10-14",
+  "changes_posn_asttax_status": false,
+  "changes_decomposition_or_task_orders": false,
+  "rewords_a_literal": false,
+  "why_this_record_is_here": "The producer belongs to POSN_ASTTAX (TO-V4-1, TO-W1-1). J359 is a remote job with no project home. The naming gate (LGIC_ENFORCE DEC-6) grades a new S3 key literal only for a committing project that a registered legacy_addresses.json row names as reader; the committing project is derived from the staged graded-extension paths, which is why this record is a .json under the POSN_ASTTAX project home. Route (a) of the cross-adjudication named below.",
+  "landing_ruling": {
+    "cross_adjudication": "org/critical_paths/cross_adjudication/20261014T1852Z_XA-20261014T184815Z-ad15.md",
+    "note": "Written by the laptop CTO and named in 1.0.0_SA_CTO~DELL1 msgs 5727 and 5731; NOT on this box's checkout when this record was written.",
+    "legacy_row": "cottonwood-platinum-satellites-registry (opal-data-cot, platinum/satellites/registry.json, reader POSN_ASTTAX)",
+    "legacy_row_commit": "311d00b038"
+  },
+  "lands": {
+    "file": "data/assets/scripts/gold/build_satellites_characteristics.py",
+    "source_commit": "efb3f6550f (origin wk-remote-J359)",
+    "git_blob": "1fbdfd3137b77270a5184c08b4d6d3c84c331a37",
+    "replaces": "the file as deployed from pin 102b2b29d3 (sha256 prefix 1d816a91; new sha256 prefix d09589cb)",
+    "change": "the four scalars (fee, yield, duration, beta) follow the Models' method over each satellite's declared model sleeves; each return window divides by the weight of the holdings that have it; one new READ of platinum/satellites/registry.json (the key the satellite registry producer already writes; this file writes nothing there)"
+  },
+  "authority_chain": {
+    "andrew_words_verbatim_in": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/J359_SATELLITE_FACTSHEET_EDITS_SPEC_20261014.md @fcf39274d6",
+      "the same file, addendum @9aeef838d6"
+    ],
+    "never_widen_coo_half": "org/tier1_exec/2.0.0_SA_COO~J1/deliverables/NEVER_WIDEN_J359_SATELLITE_CHARACTERISTICS_COO_HALF.md @e1dfba9db8",
+    "never_widen_cto_half": "org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_CTO_HALF_J359_SATELLITE_CHARACTERISTICS_20261014.md @2b6f842af2",
+    "cvo_grade": "org/tier1_exec/3.0.0_SA_CVO/deliverables/J359_SATELLITE_FACTSHEET_GRADE_20261014.md @021d94b53b",
+    "deploy_order": "org/tier2_senior/0.7.0_AE_CloudOps~DELL1/task_orders/ADHOC.j359-satellite-characteristics-deploy.md"
+  },
+  "why_the_landing_is_owed": "The function was deployed at 2026-10-14T18:51Z from the build at efb3f6550f, which the naming gate refused on box/dell1. Until this file lands here, box/dell1 and CLOUD hold the older producer, and a package rebuilt from them would regress the deployed function: the four scalars back to the pro-rated figures and no read of registry.json. The landing closes that gap and nothing else."
+}

@@ -1989,3 +1989,583 @@
   "notes": "Filed by the fourth seat (0.9.0_WK_MDPF_CANON~21, AMENDMENT 3 drive). Observation of the instrument's teardown only; the record is complete and the run's exit is 0. The instrument is read-only for this order; resolution owner: 2.0.0_SA_COO~D1. The refusal itself matched the expected min-firms prefix (see the proof instance, AC1 6 of 6)."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W24-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~24",
+  "surfaced_at": "2026-10-14T19:20:16Z",
+  "one_line": "The face says read portal/CONTRIBUTING-BOXES.md before touching portal/, but that file is not on the candidate branch at its head 34cd12d2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face section 1 preamble and the portal rule: read portal/CONTRIBUTING-BOXES.md before any change under portal/. The base is the candidate branch cand/dell1/mdpf-canon-aua-trend-groups-and-as-of at head 34cd12d2.",
+  "world_is": "git -C portal ls-tree HEAD lists no CONTRIBUTING-BOXES.md at 34cd12d2. The file exists at 07f065e6 (NFRA_DEVPLN DP-b-4) and is reachable from PROD and other cand/dell1 branches. The worker read it with git show from 07f065e6 after the edits and before the commit, read-only. Its rule is unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@34cd12d2 git ls-tree HEAD --name-only: no CONTRIBUTING-BOXES.md (read 2026-10-14 in the worktree C:/dev/wk-canon-r7-24/portal)",
+      "portal@07f065e6 CONTRIBUTING-BOXES.md (introducing commit; git show read-only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_MDPF_CANON~24 on the CN-i-2 drive. Form only. Resolution owner: 2.0.0_SA_COO~D1."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W24-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~24",
+  "surfaced_at": "2026-10-14T19:20:16Z",
+  "one_line": "Face section 5.1 names git -C portal commit for the nested portal repository; CLAUDE rule 14a and the NEVER list refuse a bare git commit, so the commit went through safe-commit.sh run from the portal directory.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face section 5.1 step 1: commit the four portal files with git -C <worktree>/portal commit --author ... -F <msgfile>. CLAUDE rule 14a: commit via .tools/safe-commit.sh; NEVER a bare git commit.",
+  "world_is": "The commit was made with bash ../.tools/safe-commit.sh run from the portal directory, so the portal repository was the commit target. Same author string, a Write-tool message file, the four paths named. Result: commit 71ed7393 on wk-MDPF_CANON-24-portal, 4 files, 40 insertions, 3 deletions; msg-verify MATCH. No bare git commit was run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@71ed7393 (LOCAL on wk-MDPF_CANON-24-portal), safe-commit output: committed, msg-verify MATCH len=1357",
+      "CLAUDE.md rule 14a and the NEVER list: commit via safe-commit.sh, never a bare git commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_MDPF_CANON~24. The face's git -C form and the CLAUDE rule differ for a nested repo; the safe-commit form was taken. Resolution owner: 2.0.0_SA_COO~D1."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W24-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~24",
+  "surfaced_at": "2026-10-14T19:20:16Z",
+  "one_line": "The commit gates read none of the four .ts/.tsx portal files; the risk reflex answered PARTIAL_OR_BLIND on a stale danger map.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1",
+  "spec_asserts": "CLAUDE rules 14 and 14a: every commit passes the commit gates. Face section 5.1: if a portal hook refuses, file a row. The face names no frontend gate and no typecheck.",
+  "world_is": "The output of commit 71ed7393 reads: commit-gate WARN 'checked 0 of 4 file(s) -- NOTHING WAS CHECKED' (the gate reads only .py/.sh/.tf and org/projects JSON); comp-pulse risk-reflex ANSWER STATE PARTIAL_OR_BLIND, danger map STALE at 212.9h, scanned 0 of 4, and the tool ran from the base checkout's path because the portal carries no .tools. The four frontend files reached the repository with no gate read. The worker's own bun run typecheck (tsc -b --noEmit) returned rc=0; it is not a gate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@71ed7393 safe-commit output: '[commit-gate] WARN: commit-gate checked 0 of 4 file(s) -- NOTHING WAS CHECKED' and '[risk-reflex] ANSWER STATE: PARTIAL_OR_BLIND'",
+      "portal/package.json script typecheck = tsc -b --noEmit (read-only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: left alone, every portal .ts/.tsx commit passes the commit-time gate unread. The worker changed no gate (outside its paths). Disarm owner 2.0.0_SA_COO~D1 routes gate coverage for portal frontend files. Filed by 0.9.0_WK_MDPF_CANON~24."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W24-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~24",
+  "surfaced_at": "2026-10-14T19:20:16Z",
+  "one_line": "The face gives the new Trend detail note the class text-white/60, which the portal colour law lists as illegal on the canvas and on white panels.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face section 1d(iii): the note paragraph className is '-mt-3 mb-4 text-xs text-white/60', verbatim. Portal CLAUDE.md colour law: text-white* is illegal on the canvas (#F4F6FA) and on white panels, legal only on the band (#0A1733).",
+  "world_is": "The sibling window paragraph directly above the note, in the same Trend block of ModelPortfolios.tsx, carries the same text-white/60 idiom, so the note inherits its ground. The worker did not render and did not measure the ground the Trend block sits on. The face's class was kept verbatim.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@71ed7393 src/pages/ModelPortfolios.tsx: the added note paragraph carries className text-xs text-white/60 (the sibling window paragraph carries the same idiom)",
+      "portal/CLAUDE.md section 'Color law' (read-only): text-white* illegal on canvas and white panels"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The judgment grader (AC4, round close) reads the rendered ground. Filed by 0.9.0_WK_MDPF_CANON~24."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S25",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-14T20:00:00Z",
+  "one_line": "On the Model Portfolios page (Global, as-of 2026-10-13) the Client card reads $292.26M while the Client drill-down it opens reads $341.10M ($2.20M Supervised + $338.89M Unsupervised); the card is the one that adds to the $2.18B Total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3.0.0_SA_CVO read tmp/ui-walk/20261014T193640Z/shots/006--portfolios-select-0-Global-All-.png: Total $2.18B; Models $1.83B; SMAs $50.75M; Client $292.26M",
+      "3.0.0_SA_CVO read tmp/ui-walk/20261014T193640Z/shots/014--portfolios-open-Client-Client-directed-.png: header $341.10M; Supervised $2.20M; Unsupervised $338.89M",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/CN_I_2_REPAIR_RENDER_20261014.md 'Observed, not caused by this repair' (the issuer saw it and filed no row)"
+    ]
+  },
+  "spec_asserts": "One figure per category on one page and one as-of: a drill-down's header equals the card that opens it (the Total Assets breakdown; the drill-down's own footnote says the categories equal total AUA).",
+  "world_is": "The two numbers differ by $48.84M on the same page and as-of. $1.83B + $50.75M + $292.26M is about the $2.18B Total, so the drill-down's $341.10M is the one that does not tie. The drill-down is client-facing on PROD today, independent of the CN-i-2 candidate (the repair touches only its colour). The cause is not read: the two figures may come from different category-views fields, or one may carry SMA assets the other subtracts.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S26",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-14T20:05:00Z",
+  "one_line": "round-close-check cannot see a re-grade: it sorts ADJUDICATION_v*.md as strings (v1, v10, v11, v12, v2 ...) and returns the FIRST CVO-kind verdict it finds, so a later MET for CN-i-1 AC4 can never replace D1-C-S73's NOT MET in v10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/round-close-check.py:118-119 glob returns sorted(glob.glob(pattern)) (string order); grade_criterion returns on the first CVO-kind non-doer row with a verdict word",
+      "3.0.0_SA_CVO round-close-check --project MDPF_CANON --round 7 after ADJUDICATION_v12 (HELD) was written: 'TO-CN-i-1 AC4 -> GRADED (adjudication row MDPF_CANON-D1-C-S73 ... (verdict NOT MET))'"
+    ]
+  },
+  "spec_asserts": "Spine L9: the CVO's grade of a judgment criterion is the one round-close-check reads; a re-grade after a repair replaces the earlier verdict.",
+  "world_is": "The first verdict in string-sorted file order wins, so a repaired criterion stays NOT MET in the gate forever, and a round that needs it MET cannot read MAY-CLOSE. String order also misplaces v10+ against v2..v9 for any project past nine adjudications.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S27",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-14T20:55:00Z",
+  "one_line": "Per-firm MDPF leaves are reachable by ANY authenticated login: /api/general/mdpf/* is rewritten to platinum/mdpf/* behind the JWT check alone, with no firm scoping, so a demo-tenant or partner login can fetch another firm's per-firm series (e.g. /api/general/mdpf/49financial/...) by URL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-routes behaviors: '/api/general/*' -> S3-opal-data-portal-v2-json [AUTH] [ROUTER]; viewer-request auth-validator-edge, origin-request public-data-router",
+      "infra/aws/lambda-edge/public-data-router/index.mjs:51-54: '/api/general/mdpf/' -> '/platinum/mdpf/' rewrite, no firm check",
+      "infra/aws/lambda-edge/auth-validator-edge/aggregate_gate.mjs:24-27: the only firm gate on the /api/general/* paths is AGGREGATE_PATHS (opal_aggregate.json)",
+      "portal origin/PROD src/pages/ModelPortfolios.tsx:240: the page interpolates the firmId into /api/general/mdpf/{firmId}/... (the client chooses the path)"
+    ]
+  },
+  "spec_asserts": "Firm data separation (CLAUDE.md section 5; MDPF_CANON FWD-3): a partner or demo login sees no other firm's data; the CTO's v2.20 note (msg 5867) states the demo tenant 'cannot reach those values through the page or the API'.",
+  "world_is": "From source, the separation is enforced only in the page (effectiveFirmId), not at the edge for the mdpf family: the per-firm leaves under platinum/mdpf/{firm}/ answer any valid JWT. NOT read: the deployed bytes of the two edge functions (read from repo source) and a live request with a partner token. v2.20's Global-leaf fold is correct in itself; this row is the pre-existing route gap its premise leans on.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W28-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~28",
+  "surfaced_at": "2026-10-14T21:42:39Z",
+  "one_line": "CN-q-1 commit refused by the LGIC naming limb: the new edge module infra/aws/lambda-edge/auth-validator-edge/mdpf_gate.mjs carries the firm names 49financial, inflection and cottonwood as literals (lines 40-42), refused as hand-kept carriers outside every permitted context; nothing committed on wk-MDPF_CANON-28; the three criteria pass on the uncommitted worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh rc=1 at HEAD 0e60da2afb for infra/aws/lambda-edge/auth-validator-edge/{mdpf_gate.mjs,index.mjs,tests/mdpf_gate.spec.mjs}: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.'",
+      "[naming-gate] NAMING REFUSE mdpf_gate.mjs:40 49financial -> lookup('49financial'); :41 inflection -> lookup('inflection'); :42 cottonwood -> lookup('cottonwood'); NAMING-GATE: REFUSE 3 graded (DENOMINATOR 3 path(s))",
+      "git status after the refusal: index.mjs M (unstaged, 18 insertions), mdpf_gate.mjs and tests/mdpf_gate.spec.mjs untracked, git diff --cached empty",
+      "harness r9_cn_q_1.py on the worktree (uncommitted): handler 14 of 14 arms exit=0; seam 5 of 5 arms exit=0; control 5 of 5 arms exit=0"
+    ]
+  },
+  "spec_asserts": "Order CN-q-1 worker face: step 1 says mdpf_gate.mjs may copy the issuer reference verbatim and imports nothing; the firm map (49financial, inflection, cottonwood, demo to global) is the page's own map and is written as literal strings; section 3 grants write on exactly the three product files. No clause names a naming-gate lookup or a registry row.",
+  "world_is": "The LGIC naming limb (ENFORCE) refuses the three firm-name literals in the new edge module and refuses the commit. The route its message names, lookup(), is the Python naming library, which the import-nothing .mjs edge module cannot call; a registry row or an R20 register entry lies outside the order's paths. The worker did not edit the gate, bypass it, or rename the literals.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left ARMED by this row: the leak S27 (MDPF_CANON-D1-S27, disarm 1.0.0_SA_CTO~DELL1), which this cell closes once it lands. This row does not change S27's standing."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 2 (trendModelOrderWithNonModel) cannot take the recipe: PROD's line is a call argument with a trailing comma, so the Global Trend is left at the feature text there.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx trendModelOrderWithNonModel (feature text, unchanged)",
+      "git -C portal show 5ab67a65:src/pages/ModelPortfolios.tsx: line '() => [...trendModelOrder, 'Non-Model'],' (PROD)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 FAIL: 24 PROD line(s) removed; 16 missing at HEAD (this line among them)"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 2: Global gets [...trendModelOrder, 'Non-Model'] (PROD line '() => [...trendModelOrder, 'Non-Model'],'), other scopes the feature's list.",
+  "world_is": "The PROD line ends with a comma inside useMemo(...). A conditional whose ? and : sit on their own lines cannot carry that comma without a syntax error, so the site was NOT edited and keeps the feature list at every scope (portal@19494a76 ModelPortfolios.tsx, the useMemo beside 'const trendModelOrderWithNonModel'). Check P1 lists this line missing at HEAD.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 3 (timeSeriesData memo) cannot take the recipe: PROD's line is a return statement, so Global still gets the custom-model grouping.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx timeSeriesData useMemo (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes the PROD return line"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 3: Global gets rollBlendsIntoArchetypeSeries(timeSeriesDataRaw.by_model) alone; other scopes keep groupCustomModelsSeries(rolled, new Set(MODEL_ORDER)).",
+  "world_is": "The PROD line 'return { ...timeSeriesDataRaw, by_model: rollBlendsIntoArchetypeSeries(timeSeriesDataRaw.by_model) }' starts with the return keyword, which cannot sit inside a ? : expression on its own line. The site was NOT edited (portal@19494a76, the timeSeriesData useMemo); Global still runs groupCustomModelsSeries there. Check P1 lists the line missing.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 4 (tooltip buckets) cannot take the recipe: PROD's line is a const declaration, so Global still runs presentTrendEntries in the tooltip.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx renderTrendTooltip 'const buckets = presentTrendEntries(...)' (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes 'const buckets = payload.filter(...)'"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 4: Global gets payload.filter((entry) => entry.dataKey !== 'interp_total'); other scopes keep presentTrendEntries(...).",
+  "world_is": "The PROD line is 'const buckets = payload.filter(...)'. The declaration keyword and name cannot be placed inside a ? : branch on their own lines, and a block form is not the recipe. The site was NOT edited (portal@19494a76, renderTrendTooltip). Check P1 lists the line missing.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 8 (quarterly bars and daily area data points) cannot take the recipe: PROD and feature lines are assignment statements, so Global keeps the feature's data points.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx bar and area data-point blocks (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes the PROD assignment lines and their comments"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 8: Global gets PROD's nmKey, sma_additive and Client data-point assignments (the 'dataPoint[nmKey] =' and 'dataPoint['sma_additive'] = addPt?.smaAdditiveAua ?? null' lines, plus their PROD comments); other scopes keep the feature's.",
+  "world_is": "Each PROD and feature line is a full assignment statement ('dataPoint[...] = ...'), and the feature's line is also a whole statement. No ? : expression on its own lines carries both, so both data-point sites (bars and area) were NOT edited. Global keeps the feature's Other AUA, ETF and Client values there. Check P1 lists 6 such lines missing (the two comment pairs and the four assignment lines).",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "CN-i-3 site 10 (bar fill) cannot take the recipe: PROD's line is a JSX attribute, so Global keeps the feature colour on the bars.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx Bar fill (feature text, unchanged)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes 'fill={modelColor?.primary || PALETTE.gray300}'"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). Site 10: Global gets fill={modelColor?.primary || PALETTE.gray300}; other scopes keep the feature's fill.",
+  "world_is": "The PROD line 'fill={modelColor?.primary || PALETTE.gray300}' is a whole JSX attribute. Placing it inside a ? : branch would drop the fill= prefix; keeping the prefix would duplicate the whole Bar element, which is not the recipe. The site was NOT edited (portal@19494a76, the bar mount inside trendStackSeries.map). Check P1 lists the line missing.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S6",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "The feature changed two Area colour statements the face's site list does not name; the recipe cannot carry them, so Global keeps the feature colour on the area chart.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show 5ab67a65:src/pages/ModelPortfolios.tsx: 'const color = getModelColor(s.label)?.primary || PALETTE.blue400' and '... || PALETTE.gray300'",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes both const color lines"
+    ]
+  },
+  "spec_asserts": "Face recipe: Global takes PROD text, other scopes the feature text; each text on its own lines; ? and : on lines of their own (face section 1). The face names ten sites; the area chart's two 'const color = ...' statements (the gradient colour and the Area colour, PROD 'getModelColor(s.label)?.primary || PALETTE.blue400' and '... || PALETTE.gray300') are the same colour change as site 10 but are not in the list.",
+  "world_is": "Both PROD colour statements are whole 'const color = ...' lines, the same shape as site 2 and 4, so the recipe cannot place them. They were NOT edited; check P1 lists both missing. Flagged here because the face's site list omits them.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-cut the site, or refuse portal 19494a76 as the CN-i-3 candidate until it is re-cut)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S7",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "The issuer's check P1 requires two PROD lines that the face's keep-list says to leave as the feature wrote them (the [scopeAumMetrics] dependency and the CategoryViewTree import), so AC1 cannot pass while the keep-list holds.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 src/pages/ModelPortfolios.tsx: '}, [scopeAumMetrics, dataAsOf])' and 'import { CategoryViewTree, l1ColorOf }'",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round7/checks/r8_cn_i_3.py sites -> P1 missing list includes '}, [scopeAumMetrics])' and the PROD CategoryViewTree import"
+    ]
+  },
+  "spec_asserts": "Face section 1: 'Leave every OTHER hunk of the diff alone: the imports for carriedAsOf/asOfLabel, ... the [scopeAumMetrics, dataAsOf] dependency'. Check P1: every PROD line the feature removed is present at HEAD.",
+  "world_is": "PROD's '}, [scopeAumMetrics])' and 'import { CategoryViewTree } from '@/components/CategoryViewTree'' are removed hunks that the keep-list leaves in the feature's form (the dependency gains dataAsOf; the import gains l1ColorOf, which the feature's trendColorOf needs). P1 therefore reads these two lines missing with no Trend text left to restore. Both were kept, as the face says.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S8",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "The worker's worktree carries the pre-amendment CN-i-2 order (issued_to ~24, status complete); the re-cut order (issued_to ~25, status pending) is commit dafba4dbf3 and is not in this branch.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1f6fa7e8b6:org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-i-2.aua-trend-repair-colour-tooltip-note.md (issued_to ~24, status complete)",
+      "git show dafba4dbf3:org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-i-2.aua-trend-repair-colour-tooltip-note.md (issued_to ~25, status pending)"
+    ]
+  },
+  "spec_asserts": "The face is the re-cut order for ~25 at the path MDPF_CANON.TO-CN-i-2.aua-trend-repair-colour-tooltip-note.md, status pending until AC1 and AC2 pass.",
+  "world_is": "At the worker's outer HEAD 1f6fa7e8b6 the order file reads '<issued_to>0.9.0_WK_MDPF_CANON~24' and '<status>complete</status>'. 'git merge-base --is-ancestor dafba4dbf3 HEAD' is not an ancestor, and dafba4dbf3:<same path> reads issued_to ~25, owned cells CN-i-2 and CN-i-3, status pending. The worker used the face, and did not edit or flip the file (AC1 fails, so no flip). A 'complete' status on an open order would read as terminal to the L10 gate.",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~D1 (re-issue the order from the amended path or merge dafba4dbf3 into the worker branch)"
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W25-S9",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~25",
+  "surfaced_at": "2026-10-14T20:34:35Z",
+  "one_line": "Two portal-route conflicts: the face's commit route (bare git -C commit) and branch name (wk-MDPF_CANON-25-portal) differ from the standing worker rule (safe-commit) and portal/CONTRIBUTING-BOXES.md (cand/<box>/<slug>).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@19494a76 (LOCAL on wk-MDPF_CANON-25-portal; author 0.9.0_WK_MDPF_CANON~25)",
+      "portal/CONTRIBUTING-BOXES.md rules 1 and 4 (cand/<box>/<slug>, open-calls.py add)"
+    ]
+  },
+  "spec_asserts": "Standing worker rule: every commit via .tools/safe-commit.sh. portal/CONTRIBUTING-BOXES.md: a portal feature is on cand/<box>/<slug>, cut from the last PROD release, registered with open-calls.py.",
+  "world_is": "Face section 5.1 names 'git -C <portal> commit'; the portal commit 19494a76 was made that way (bare git, not safe-commit), and the branch is wk-MDPF_CANON-25-portal (a worker branch, cut from PROD plus the three feature commits). Nothing was pushed and nothing was registered. The issuer owns the approval register and the cand/ name.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W27-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~27",
+  "surfaced_at": "2026-10-14T21:47:51Z",
+  "one_line": "CN-p-2 step 9 retires the Global Other AUA and its gates, but the period-end row filter (the plottedKeys block in ModelPortfolios.tsx) also read the retired hasGlobalEnterprise; it now reads timeSeriesData.isPerFirm, the same gate as the Non-Model show chain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-2 section 1 step 9: the Bar and Area show gates become 'non_model shown only when timeSeriesData.isPerFirm'. The step names the show gates and the legend; it does not name the all-plotted-null row filter that also reads the retired constant.",
+  "world_is": "The plottedKeys block (pre-edit ModelPortfolios.tsx line 2298, portal base f8c7d310) pushed Non-Model into the Global plotted key set on hasGlobalEnterprise, a constant step 9 deletes. Left in place, a Global Non-Model key would survive the row filter while the Global show gate no longer draws it. Changed to timeSeriesData.isPerFirm (one line). W3 of the wiring check requires the constant absent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/ModelPortfolios.tsx@f8c7d310:2298 'if (timeSeriesData.isPerFirm || hasGlobalEnterprise) {'",
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-p-2.portal-variant1-trend-stitch-and-approved-edits.md@0e60da2afb (section 1, step 9)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on its own worktree branch; the surprise is the page text, not its significance."
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W27-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~27",
+  "surfaced_at": "2026-10-14T21:47:51Z",
+  "one_line": "CN-p-2 step 11 renders the Variant 1 composition footnote with no scope gate, so it also shows on the per-firm views of an internal session; the module returns it for every Variant 1 call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-2 step 11: '<p data-trend-composition>{compositionFootnote(trendMode)}</p>', each rendered only when its text is non-null; section 2 bound 8 forbids a per-scope fork. The module docstring for compositionFootnote says 'Internal sessions only: it names two partner firms'.",
+  "world_is": "compositionFootnote('variant1') is non-null on every Variant 1 render. The composition sentence (Inflection enters 2026-05-15, Cottonwood 2026-05-28) therefore shows on the 49 Financial and Inflection per-firm views for internal sessions as well as on Global. Built literally as written; a Global-only gate is the issuer's decision.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/ref/cn_p_2_helpers.ts@0e60da2afb compositionFootnote, lines 150-155 (returns the text for variant1 with no scope argument)",
+      "portal/src/pages/ModelPortfolios.tsx (worktree, the data-trend-composition paragraph under the detail note)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Display text only; the Variant 2 demo tenant gets null. Filed for the issuer to decide the scope."
+}
+```
+```json
+{
+  "id": "MDPF_CANON-D1-W27-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~27",
+  "surfaced_at": "2026-10-14T21:47:51Z",
+  "one_line": "CN-p-2 step 4 says the Inflection series take 'the same mapping' as the 49 Financial series, but the primary-label filter would drop Inflection's Custom members; the Inflection mapping keeps every non-SMA member and folds it through groupCustomModelsSeries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-2 step 4: firm49 keeps only labels in GLOBAL_PRIMARY_LABELS; inflectionCustom is 'the same mapping for the Inflection series', then rollBlendsIntoArchetypeSeries, then groupCustomModelsSeries(...)[CUSTOM_MODELS_LABEL].",
+  "world_is": "Inflection's Custom Models value is the fold of its non-primary members, so a primary-label filter applied to Inflection would empty the series and the Variant 1 window 2026-05-15 .. 2026-07-19 would draw no Custom line. The worker applied the SMA-cohort exclusion to Inflection and no primary-label filter; 'the same mapping' is read as the cohort rule only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/ref/cn_p_2_helpers.ts@0e60da2afb indexByPeriod(stitch.inflectionCustom) used for Custom inside the window",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round9/checks/r9_cn_p_2.py@0e60da2afb V2 arm (Variant 1 draws Inflection's own series, 53)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The V2 arm passes on the built page, so the reading matches the issuer's check."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T21:43:21Z",
+  "one_line": "CN-p-1 step 4 names a seven-line comment above the Muni tuple in SMA_MEMBERS; the comment at HEAD is eight lines. All eight were removed with the tuple and the one specified comment line was put in their place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-1 step 4: delete the muni tuple and its seven-line comment above it; put ONE comment line in their place.",
+  "world_is": "data/mdpf/scripts/gold/mdpf_category_registry.py@a9ebbe661e carries the muni comment on lines 349-356 (eight lines) above the tuple on line 357. The edit removed lines 349-357 and inserted the single specified line: 1446 to 1438 lines, CRLF kept, no other line touched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/gold/mdpf_category_registry.py@a9ebbe661e lines 349-357 read before the edit",
+      "post-edit read: 1438 of 1438 lines CRLF; grep shows the single new muni comment line at 349"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A count mismatch only; the action matches the order's stated intent."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T21:43:21Z",
+  "one_line": "A failed SMArtX read does not stop at the loader: build_all wraps the loader in _isolated, which turns the C2-SIBLING raise into None, and the or-fallback then builds Global with empty legs. The run goes non-green, but the order's never-an-absence rule is not enforced at the call site.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1",
+  "spec_asserts": "TO CN-p-1 step 2: load_smartx_sma_legs: a denied or failed read is never an absence -- RuntimeError whose message STARTS C2-SIBLING FAIL-LOUD:. TO step 3: the loader is called through _isolated('global', ...) or ({}, None).",
+  "world_is": "data/mdpf/scripts/gold/mdpf_gold_consolidator.py@a9ebbe661e (worktree edit, uncommitted): _isolated (about lines 2897-2909) catches the RuntimeError, records manifest errors['global'], logs SCOPE FAILED and returns None. The or-fallback then applies empty legs, so every pre-2026-05-18 trend group is None for that run. The manifest is non-green (ok = not manifest errors, about line 3366). NOT READ: whether the Global object is still published on a non-green run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py _isolated definition, read in the worktree (about lines 2897-2909)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py build_all wiring, read in the worktree (lines 3059-3061)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py manifest ok line, read in the worktree (about line 3366)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Armed on the code's own scheduled path once deployed (CloudOps's deploy, not this order). Routed to the issuer, which owns the cell and the wiring decision."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S3",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T21:43:21Z",
+  "one_line": "Two comment lines in mdpf_category_registry.py still name muni after the Muni tuple is removed, including a denominator comment (3 of 6 determined). The order says not to touch any other line, so both are left as they are.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-1 step 4: do not touch SMA_BASIS_VERIFIED, the crosswalk or any other line of the registry.",
+  "world_is": "data/mdpf/scripts/gold/mdpf_category_registry.py@a9ebbe661e after the edit: line 356 ('ground as muni ...') and line 364 ('# 3 of 6 determined, 3 UNVERIFIED (muni/idvz/pfde) ...') still name muni; the SMA_MEMBERS count is now 5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep of the registry for muni in the worktree, after the edit: lines 349, 356, 364",
+      "SMA_MEMBERS members after the edit read by the issuer's P5 arm: divz, idvz, pfde, pfoe, tax"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stale comments only; no code path reads them. Left for the owner of the registry comments."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W26-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~26",
+  "surfaced_at": "2026-10-14T22:05:41Z",
+  "one_line": "TO CN-p-1 says the touched files are CRLF; at HEAD three of the four are LF (0 CRLF lines). Each file was edited with the endings it has, so the diff is not a line-ending rewrite.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-1 section 1 (code, preamble) and steps 4 and 5: the files mdpf_gold_consolidator.py, mdpf_category_registry.py and test_stratid_round2_inside_model.py are CRLF; keep their line endings.",
+  "world_is": "At 92ecb84add: data/mdpf/scripts/gold/mdpf_gold_consolidator.py 0 of 3476 lines CRLF; data/mdpf/scripts/gold/mdpf_category_registry.py 0 of 1438 CRLF; data/mdpf/tests/stratid/test_stratid_round2_inside_model.py 0 of 136 CRLF; data/mdpf/tests/canon/test_global_trend_groups.py 153 of 153 CRLF (the file this order creates, from the first pass).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "byte count of CRLF pairs and newlines per file, read in the worktree at 92ecb84add before the edit (python, open(...,'rb'))",
+      "post-edit byte count: consolidator wiring block edited with the Edit tool, no line-ending change; test (f) appended to the CRLF test file with CRLF endings (218 of 218 lines CRLF)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A premise mismatch only; no code path reads line endings. Kept as found."
+}
+```
