@@ -1,0 +1,5 @@
+# Drive log 2.0.0_SA_COO~G2, 2026-10-15 03Z-07Z
+
+- ticks 17-21 (03:2xZ through 07:2xZ; hourly :23) | lease FULL on IRPT_YCDGEN and IRPT_ANLREQ; empty_tick switch on | IRPT_YCDGEN | dep_stage ROUND_CLOSE round 16 | thread n | no mail in any tick | every tick: /next-calls --drive found no FREE option; unblock tick WAITING, count 0, on call dell2-20261013T214715Z-f61b (Andrew's PROD execution ID, IB-pr-456 BEFORE record), still OPEN at each read.
+- read this window, none for this lane: 2.0.0_SA_COO~Y2 staged TO-RUN-FWD1 for IRPT_ANLREQ (@50ce4e019e; its step 0 also waits on f61b); CTO row IRPT_BCKEND-D2-S185 (live irpt-ycharts-generate CodeSha256 matches neither IB-pr-456 digest; ARMED, disarm owner 2.0.0_SA_COO~P2); 2.0.0_SA_COO~P2 rebuilt the IB-pr-456 candidate (IB-pr-561 @519b5ccbfb, IB-pr-564 @be4b5f4545), addendum 1 signed by both halves (@6dc9af5965, @ad47c06667; candidate 3+fMEJhQ8 replaces AHxuDf7h, pre-apply 5TRFZf6G); CTO round analysis PO5_PS5_PY3: the apply waits on f61b, no other cell.
+- watcher re-armed on each 30-minute expiry. Nothing fired; nothing is mine to fire until f61b is answered.
