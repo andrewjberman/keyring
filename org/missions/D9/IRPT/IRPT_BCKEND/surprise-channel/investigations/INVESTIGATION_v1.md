@@ -39204,3 +39204,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W431-S1 -- The Read of the order file returned the whole file, RECORD FACE included, as it did for IB-pr-587 (IRPT_BCKEND-D2-W430-S2); the worker acted on the WORKER FACE and the paths block only.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W431-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~431",
+  "surfaced_at": "2026-10-15T16:57:25Z",
+  "one_line": "The Read of the order file returned the whole file, RECORD FACE included, as it did for IB-pr-587 (IRPT_BCKEND-D2-W430-S2); the worker acted on the WORKER FACE and the paths block only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "The worker face is the whole worker context; the RECORD FACE never travels to a worker, and the worker face instructs the worker not to read it.",
+  "world_is": "The Read tool returned the order file IRPT_BCKEND.TO-IB-pr-590.holdings-overlay.md in full at base fa2502c5b1, including the RECORD FACE from line 82 to the end. The worker had no tool that reads only the WORKER FACE. The worker did not use any RECORD FACE content for an act; its record fields were taken from the WORKER FACE clauses.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-590.holdings-overlay.md@fa2502c5b116dba01a3f7b2522f5f0e6b107b821 has the heading RECORD FACE at line 82",
+      "IRPT_BCKEND-D2-W430-S2 in the same channel file records the same condition for IB-pr-587 at a4a81b30af"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only, recurring condition. The disarm rests with the issuer, who owns the order file form."
+}
+```
+
+## IRPT_BCKEND-D2-W431-S2 -- The order's scratch instruction (outside the repository) and the worker scratch rule (the worktree .scratch directory) name different places; the worker used a directory outside the repository for pin worktrees and scratch files.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W431-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~431",
+  "surfaced_at": "2026-10-15T16:57:25Z",
+  "one_line": "The order's scratch instruction (outside the repository) and the worker scratch rule (the worktree .scratch directory) name different places; the worker used a directory outside the repository for pin worktrees and scratch files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB-pr-590 worker face, Do step 2 and the scratch sentence: the pin worktree is made OUTSIDE the repository and scratch files go in a directory OUTSIDE the repository. The worker scratch rule names the worktree .scratch directory as the only scratch location.",
+  "world_is": "Both sentences cannot be met literally with the same directory. The worker placed the three pin worktrees, the downloads, the candidates, the fragments and the pytest logs in C:/dev/scratch-IB590-431, which is outside the repository and not the shared scratchpad; nothing was written to the worktree .scratch directory. Both locations are untracked and nothing from them is committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-590.holdings-overlay.md@fa2502c5b116dba01a3f7b2522f5f0e6b107b821 worker face, Do step 2 and the paragraph on scratch files",
+      ".gitignore@fa2502c5b116dba01a3f7b2522f5f0e6b107b821 line 450 ignores .scratch/ (the worker scratch location)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only. The issuer may state one location for later rounds."
+}
+```
