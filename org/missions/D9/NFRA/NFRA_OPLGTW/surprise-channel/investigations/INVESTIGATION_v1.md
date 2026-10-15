@@ -17233,7 +17233,7 @@ name the one known failure instead of silently inheriting it.
     },
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "A producer on a scheduled task keeps capturing while a device update runs.",
-    "world_is": "No python runs on the box: safe-commit and every gate are blocked (no seat can commit), and the runner captures nothing for four publishers while it retries on its idle cycle. OG-eg-2's AC2 must read a cycle that ran jobs, not these. Reported to 0.0.0_AB_MSTR~Z and 0.7.0_AE_CloudOps~ZW at 14:25Z. I changed nothing on the install. UPDATE 14:31Z: the bare python command in this seat's Git Bash now resolves to Python 3.11 (sys.prefix C:/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311), not Python 3.14, so shell python runs again; no change by this seat. C:/Program Files/Python314 is still without its Lib (only site-packages), and the runner's registered interpreter is that 3.14 pythonw.exe, so the runner's 14:27Z cycles still failed. Whoever owns the interpreter policy (0.0.0_AB_MSTR~Z) must say whether 3.14 is restored or retired; re-registering the runner on another interpreter is 0.7.0_AE_CloudOps~ZW's act under its own order, not this seat's."
+    "world_is": "No python runs on the box: safe-commit and every gate are blocked (no seat can commit), and the runner captures nothing for four publishers while it retries on its idle cycle. OG-eg-2's AC2 must read a cycle that ran jobs, not these. Reported to 0.0.0_AB_MSTR~Z and 0.7.0_AE_CloudOps~ZW at 14:25Z. I changed nothing on the install. UPDATE 14:31Z: the bare python command in this seat's Git Bash now resolves to Python 3.11 (sys.prefix C:/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311), not Python 3.14, so shell python runs again; no change by this seat. C:/Program Files/Python314 is still without its Lib (only site-packages), and the runner's registered interpreter is that 3.14 pythonw.exe, so the runner's 14:27Z cycles still failed. Whoever owns the interpreter policy (0.0.0_AB_MSTR~Z) must say whether 3.14 is restored or retired; re-registering the runner on another interpreter is 0.7.0_AE_CloudOps~ZW's act under its own order, not this seat's. RESOLVED 15:06Z (read by this seat): the MSP rolled 3.14.8 back at 14:35Z (MSTR msg 34468), then a reinstall put 3.14.8 back with its Lib (python.exe reports 3.14.8, 191 Lib entries, pyarrow/boto3/yaml import) by 15:03Z; the runner's bbg cycle started 15:02:46Z and its first JOB line at 15:06:19Z reads status=no_new_articles (run id 20261015T150248Z); no runner re-registration was needed. Records 14:22Z-14:57Z of cycles/<publisher> are outage failures and are not an egress measurement. Disarmed."
   }
   ```
 
@@ -17289,5 +17289,34 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "the order's WHEN YOU ARE DONE names the instance path, and the pipeline gate admits a complete flip when a VALID instance sits beside the order.",
     "world_is": "the two disagree on the filename, and the GATE is the one with teeth. Resolved by writing the instance where the gate looks, which is also where the project's own precedent puts it. The order's sentence is the issuer's to correct; nothing is blocked by it now.",
     "notes": "WHY NOT THE OVERRIDE. The gate's FIX line offers '# pipeline-override: <reason>', audited and printed. Using it would have made a FILENAME disagreement look like an order that stands outside the pipeline, which is false and would have put a false reason in an audit log. An override is for a claim about the work, not a way around a typo. THE SHAPE WORTH KEEPING: when an order's PROSE and a GATE disagree about a path, the gate is the mechanism and the prose is a wish -- but read the completed SIBLING before concluding which is wrong, because the sibling shows what the convention actually is. Here ap-19's instance matching its own stem is what turned 'the gate is being awkward' into 'the order typed the wrong name'."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S149",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T15:12:22Z",
+    "one_line": "OG-ap-21 step 2 cannot read '1 to add, 1 to change': the invoke policy it retargets was NEVER APPLIED. aws_iam_role_policy.gw_harvest_published_invoke is absent from terraform state and the gateway instance role carries no such policy live, so changing its role is a second ADD, not a change. The targeted plan reads '2 to add, 0 to change, 0 to destroy' with exactly the two intended resources and nothing else. AND THE CONSEQUENCE FOR THE ASK: the order's widening sentence says the news AND invoke statements MOVE from the instance role to the internal reader, narrowing the instance role. Only the NEWS statement moves. The invoke statement was never on any role, so it is a NEW grant on the internal reader and narrows nothing.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform -chdir=infra/aws/terraform/opal-gateway state list, filtered to the three policy addresses in question, returns exactly ONE: aws_iam_role_policy.gw_news_read. Neither gw_harvest_published_invoke nor int_reader_news_read is in state",
+        "LIVE, on a second plane: aws iam list-role-policies --role-name opal-gateway-role names gateway-global-news-read-policy and NO gateway-global-harvest-published-invoke-policy",
+        "the plan itself: '# aws_iam_role_policy.gw_harvest_published_invoke will be CREATED' and '# aws_iam_role_policy.int_reader_news_read will be CREATED', then 'Plan: 2 to add, 0 to change, 0 to destroy'. No resource outside the two targets appears, so the order's 'any other change is a STOP' limb is satisfied -- the divergence is in the add/change SPLIT, not in extra resources",
+        "harvest_published_invoke_iam.tf's own header says it, and has since OG-gt-5 wrote it: 'PHASE A: this file is code only. It is NOT applied and NOT deployed by the cell that wrote it. The apply is a later order, after the three halves of the never-widen ask sign (W/NEVER_WIDEN_ASK_OG-gt-5.md)' -- that later order never came",
+        "terraform fmt -check clean on both files (-check, never -diff, which WRITES)",
+        "plan saved at W/P21_PLAN.txt, 3663 bytes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "step 2(c): 'the plan must read 1 to add, 1 to change, 0 to destroy (the new policy; the invoke policy's role)'; and step 4(3): 'no grant widens (the news and invoke statements MOVE from the instance role to the internal reader role, narrowing the instance role)'.",
+    "world_is": "the invoke policy exists only as unapplied code, so there is nothing to change and nothing to narrow. The plan is correct at 2 to add; the order's expected line was written against an assumption that OG-gt-5's grant had been applied.",
+    "notes": "I AM NOT WRITING THE ASK'S WIDENING SECTION TO THE ORDER'S SENTENCE. A never-widen half signing 'no grant widens, the statements merely move' would be signing something false about half of it: the internal reader gains lambda:InvokeFunction on opal-amgt-scoped-api that NO role holds today. That is a real widening and it belongs in the widening section as one, which is exactly what that half exists to catch. The news half of the sentence IS a move and does narrow the instance role, but only in Phase B when gw_news_read is destroyed after the served read. So the ask will state three things separately: one NEW grant, one MOVE whose old half survives until Phase B, and an instance role that narrows at the END of the sequence rather than at the start. THE SHAPE WORTH KEEPING: 'retarget X from role A to role B' reads like a move and plans like an addition whenever X was never applied -- and the tell is in the plan's VERB (created, not updated), which is cheap to read and easy to skim past when you are looking at the count instead. A plan's total can match while its verbs say something else entirely; here the total did NOT match, which is the only reason I looked at the verbs at all."
   }
   ```
