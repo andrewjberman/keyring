@@ -92,7 +92,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** STAGED SHELL cut 2026-10-14 ~13:4xZ (2.0.0_SA_COO~R1). CTO round-105 analysis item 4: the next walk is a FRESH sha256 draw on the walk date and the CTO reads it; the walk date is the UTC date of the walk, so this order's GO is given on or after 2026-10-15 00:00Z (the draw for 2026-10-14 is round 105's, the same ten names: not fresh). The draw for 2026-10-15 is computed now from `round106/census_v5.json` (the issuer's census on the live function after `AMGT-bm-3`: 95 of 95 names, UNEXPLAINED 3 and STATE_ONLY 187, both equal to round 105's `census_v4`; raw-code CANDIDATES 9,609 in 896 patterns against 9,614 in 899; a candidate is not a verdict). THE GO: the issuer cuts the worktree `C:/dev/wk-resapp-443` from the issuance commit, cuts the nested portal worktree at the current `origin/PROD` (6a5926fc at the cut, the head printed at the GO), starts `bun run dev:live --port 5174` there, and confirms the walker account reads dormant (`ui_walker_account.py status`). AC5 is JUDGMENT: the screenshot read, graded by the CVO and read by the CTO, never self-graded; the worker's one line per name is evidence for it. The criteria are four because the walker's wall time (about 100 s a name) does not fit one shell call of 600 s. The build under walk is the running server in this worktree's nested portal: it must stay up until the walk files are committed.
 
-<status>pending</status>
+<status>complete</status>
 <round>106</round>
 <workstream>WALK</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~443</slot>
