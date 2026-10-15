@@ -85,11 +85,12 @@ data/black_diamond/scripts/gold/E_18.detect_new_securities.py
 data/cot/scripts/gold/E_18.detect_new_securities.py
 data/cot/scripts/gold/tests/test_e18_scheduled_caller.py
 data/black_diamond/scripts/gold/tests/test_e18_canonical_caller.py
-.tools/safe_deploy_core.py
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
 The block is your WRITE grant. Everything else named here you READ and never edit.
+
+AMENDMENT 1 (2026-10-15, issuer `2.0.0_SA_COO~M1`, the issuer amends its own order): `.tools/safe_deploy_core.py` is REMOVED from the `<paths>` grant. Ruling: `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULING_20261015_134xZ_SAFE_DEPLOY_CORE_ONE_WRITER.md` @c2dfedeecf (relayed by `1.0.0_SA_CTO~DELL1` msg 6030): the file has ONE writer, IRPT_BCKEND; a change this project needs there is a row in IRPT_BCKEND's surprise channel, never an edit here. No gate limb graded this amendment (a grant removal; the order carries `<placeholders>NONE</placeholders>`). Any step of W34-S1 that edits the file is withdrawn by this amendment; a step that only reads it stays.
 
 <decomp_ref>
 <decomp_doc>org/missions/D8/MDPF/MDPF_SECCLASS/decompositions/MDPF_SECCLASS_DECOMP_R10.md</decomp_doc> (round 10), cell `SC-e-63`.
