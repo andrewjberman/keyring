@@ -19681,3 +19681,54 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W200-S1 -- the commit gate's client account-id check cannot run on this box: the hashed list is absent, so the AR-g-99 commit was made unchecked
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W200-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~200",
+  "surfaced_at": "2026-10-15T22:54:58Z",
+  "one_line": "On this box the safe-commit client-data check cannot run because the hashed account-id list is absent at its default path; commit 060e838c6f was made without that check, and every later commit on this box is exposed to the same gap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2",
+  "spec_asserts": "The TO-AR-g-99 worker face says to commit with bash .tools/safe-commit.sh and names no client-data precondition. The safe-commit gate chain is expected to run the client account-id check on every commit it admits.",
+  "world_is": "safe-commit.sh printed WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, and said this commit was NOT checked for client account ids, when committing 060e838c6f on wk-IRPT_ANLREQ-200. The commit holds two pure Python files (a module and its offline tests) and no data file, so no client data entered this commit; the gap is the check itself. This worker did not place or point the list, which is outside this order's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit 060e838c6f on branch wk-IRPT_ANLREQ-200 (this worktree): WARN client-data-check, hashed account-id list ABSENT, commit NOT checked for client account ids",
+      "git show --stat 060e838c6f lists exactly two files: infra/aws/lambda/investor-reporting/ycharts/research/yahoo_history_days.py and its tests/test_yahoo_history_days.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W199-S1 -- AR-g-98: swap_pass.REQUEST_CHUNK's comment names yahoo_history_days.DEFAULT_CHUNK as its source, and that module is not in this base
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W199-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~199",
+  "surfaced_at": "2026-10-15T22:58:14Z",
+  "one_line": "AR-g-98 sets REQUEST_CHUNK = 50 and its comment says it equals yahoo_history_days.DEFAULT_CHUNK; no yahoo_history_days module exists at the base, so the equality the comment asserts cannot be read in this worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-98 cell, swap_pass.py constants: REQUEST_CHUNK = 50 (the candidates one Yahoo request carries), with a comment that it equals yahoo_history_days.DEFAULT_CHUNK.",
+  "world_is": "At base 9438a8aaab the research folder holds no yahoo_history_days module (a Glob of yahoo_history_days*.py under infra/aws/lambda/investor-reporting/ycharts/research returned no file); the figure 50 is the cell's own, and the comment's equality is unverified until the sibling AR-g-99 port lands. Not edited by this worker beyond the comment as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@d071c86041:25 comment names yahoo_history_days.DEFAULT_CHUNK as the same figure as REQUEST_CHUNK",
+      "infra/aws/lambda/investor-reporting/ycharts/research/ at 9438a8aaab holds no yahoo_history_days module (Glob read at 2026-10-15T22:58Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

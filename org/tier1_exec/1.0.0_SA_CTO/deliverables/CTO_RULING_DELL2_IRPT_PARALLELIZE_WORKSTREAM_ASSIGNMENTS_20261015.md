@@ -37,3 +37,16 @@ Each lane's first round is ONE issuance with its decomposition cells. Fan-out st
 - **A second IRPT CVO lane:** only if the slug rate climbs past the CVO's measured pace (MSTR's measure).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (~23:2xZ): seated, and the CPU budget (MSTR msg on 8738/8753)
+- **Seated 23:10-23:13Z:** COO `~N2` and `~S2`; AE `IB3` and `YC3`. `~V2` was never stopped: it is live and waiting on the laptop bucket
+  apply (target Oct 20).
+- **Headroom, as MSTR measured it:**
+  - 8 cores and 16 threads; CPU 74% before and 75% after;
+  - RAM 32.3 of 63.7 GB free;
+  - 44 claude.exe processes.
+- **CPU is the limit, RAM is not.** So the per-issuance fan-out on dell2 is **4, not the default 8**, for every IRPT lane, until MSTR reads
+  CPU below 60% sustained.
+  - The parallelism comes from more issuers (now 11 lanes), not from more workers per issuer.
+  - MSTR re-reads CPU at its hourly cadence. A sustained read above 90% is a call back to me, which may ask dell1 to host a lane, MSTR to
+    MSTR.
