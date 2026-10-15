@@ -13054,3 +13054,60 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-227. The disarm owner is the integrator (0.0.0_AB_MSTR) because the commit gate is infrastructure; the CTO may reassign it. The row states the form only; it carries no client value."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W184-S1 -- pandas_market_calendars is absent on dell2, so lib/trading_calendar.py answers from its hardcoded NYSE fallback
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W184-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~184",
+  "surfaced_at": "2026-10-15T01:45:21Z",
+  "one_line": "TO-DB-b-229's calendar read (step 5) answered 2026-04-21 from lib/trading_calendar.py's hardcoded NYSE fallback, not from the pandas_market_calendars package: the module's own WARN line printed on every run, so the package capability is missing on this box. The answer (trading day) is the same under the fallback; the fallback covers 2010-2027 and the module says to regenerate it before 2028.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run log of the read script (worktree scratch run2.log, line 1): 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)'",
+      "lib/trading_calendar.py at e53c37c8ac: is_trading_day answers from NYSE_HOLIDAYS_FALLBACK when _USE_PMC is false (lines 177-188); _require_covered raises CalendarCoverageError outside 2010-2027 (lines 164-174)",
+      "the same answer on both paths for the order's date: 2026-04-21 is a Tuesday and is not in the generated closure list, so is_trading_day returns True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-b-229 step 5 and DB113-1-AC1: the library calendar answers whether 2026-04-21 is a trading day (lib/trading_calendar.py, call is_trading_day); the order names no fallback and assumes the calendar answers from the NYSE package.",
+  "world_is": "On dell2 the package pandas_market_calendars is not importable, so every is_trading_day call answers from the hardcoded fallback table and prints one WARN line; for the order's date the fallback gives the NYSE answer (True), so the criterion's calendar clause is met, but the answer is not the package's.",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-229. The fallback is the module's own designed path (the W282-S3 announce line); the row records that the package capability is absent on this box and that the fallback's coverage ends in 2027. No action is taken here."
+}
+```
+
+## IRPT_DASHBD-D2-W184-S2 -- the households broken on 2026-04-21 are carried by FLOW_UNRECONCILED rows, not by its NOT_MEASURABLE rows
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W184-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~184",
+  "surfaced_at": "2026-10-15T01:45:21Z",
+  "one_line": "On 2026-04-21 the 858 households broken are carried by FLOW_UNRECONCILED account-days (943 of the 1,061 household-sense unmeasured account-days of that date, guard_state GRADED_DISAGREED), while the day's NOT_MEASURABLE rows are 123 firm-wide (117 link breaks with a non-positive base, 6 with an absent base, all with holdings_price_return_reason HOLDINGS_NOT_OK). The cell's framing of the worst date as a NOT_MEASURABLE event does not hold for its households.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run log (worktree scratch run2.log): 'PROFILE 2026-04-21 (all accounts)': 5,902 gold rows; day_quality FLOW_UNRECONCILED 944, MEASURED 4,801, NOT_MEASURABLE 123, LARGE_FLOW 34",
+      "run log: 'PAIRS ON 2026-04-21 (household sense)': FLOW_UNRECONCILED GRADED_DISAGREED 943, NOT_MEASURABLE link break NONPOSITIVE 117, FLOW_UNRECONCILED NOT_GRADED_OUTSIDE_DOMAIN 1",
+      "the producer sets FLOW_UNRECONCILED at data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 1505, 1517 and 1522 (RULING 17: the guard graded and disagreed serves nothing)",
+      "record RD_NOT_MEASURABLE_R113.json date_0421 (rows_not_measurable 123, households_broken 858) at e53c37c8ac plus this worker's commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-b-229 WORKER FACE, Why: the 861 households broken by 2026-04-21 come from this producer's NOT_MEASURABLE rows on that date ('a producer or input defect on that day'), and step 4 reads the day's NOT_MEASURABLE rows as its cause.",
+  "world_is": "The date's household breakage runs through the guard's FLOW_UNRECONCILED disagreements: 943 of the date's 1,061 household-sense unmeasured account-days are FLOW_UNRECONCILED with GRADED_DISAGREED, and only 117 are NOT_MEASURABLE link breaks. The date-level NOT_MEASURABLE count (123) is small relative to the households it breaks. The record reports the NOT_MEASURABLE split as the order asks; the FLOW share is reported here as a measured count.",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-229. Counts only; no account or household id and no client value. The disarm owner is the round issuer; the CTO may reassign. The row states the form; the repair is a later round's packet under a never-widen pair."
+}
+```
