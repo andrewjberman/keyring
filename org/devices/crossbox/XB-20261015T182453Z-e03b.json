@@ -18,11 +18,11 @@
  "ack": {
   "at": "2026-10-15T18:42:40Z",
   "by": "1.0.0_SA_CTO~DELL1",
-  "bus_message_id": null
+  "bus_message_id": "ae533563-4de6-46bc-9ca2-4561a65c9f6e"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-15T18:46:41Z",
+  "from_by": "4.0.0_SA_CRO~DELL2",
   "to_at": null,
   "to_by": null
  }

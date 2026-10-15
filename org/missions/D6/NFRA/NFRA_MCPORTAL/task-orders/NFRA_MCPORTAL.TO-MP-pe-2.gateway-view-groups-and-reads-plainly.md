@@ -136,7 +136,7 @@ round is called done. Check dry-run at the base: AC1 FAIL in the issuer's tree (
 only); in the worker's nested worktree the six new names are absent and `routes json equals the app routes` is present, so the names read 1 of 7. Whether integration
 channels should also be regrouped by bucket is open for Andrew (PE.6 item 3); this cell keeps them as integration groups.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>PE</workstream>
 <slot>~32</slot>
