@@ -37461,3 +37461,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Counts only in the record: the membership test printed booleans and counts, with no account id or account value. The mint needs the registry at data/firm_registry.json, which is on disk at the data root but is not inside the granted folder. A future worker that must recompute an opaque id needs the _ids path granted or a stated reason it is out of scope."
 }
 ```
+
+## IRPT_BCKEND-D2-S192 -- Dispositions on worker 412's rows; the S158 READ: the lost account is dropped by the COT account screen; 49 Financial has a refusal record too
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S192",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T11:11:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (the publish guard's owner decides) or whoever accepts the lost account",
+  "one_line": "Dispositions on worker 412's rows (D2-W412-S1 to S4) and the S158 READ: Cottonwood's lost account is in the source but dropped by the COT account screen (cause inferred), the first refusal named 9 lost accounts (8 closed, not refused), the one-date bypass does not clear account_lost, and 49 Financial has a refusal record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB209-1 AC1 to AC3 on the worker tree (all PASS) and the proof instance (VALID); merge f7ae7ad352",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~412/IB209-1_s158_read.json: three refusal record versions (candidates 2026-10-09 count 9 with 8 closed not refused, 2026-10-12 and 2026-10-13 count 1); the account listed in fact_holdings on 2026-10-08, 2026-10-12 and 2026-10-13 and absent from the candidates; no directory entry (271 entries: 2 TERMINATED, 269 UNKNOWN); guard at holdings_snapshot.py line 3058, closed-account exclusion line 3051, one-date bypass line 3191 (waives source_frontier_older only)"
+    ]
+  },
+  "spec_asserts": "Row D2-S158 and my IB-pr-569 order: every Cottonwood refusal names one lost account; the cause is a closed account, a source gap or a mapping break; 49 Financial and Inflection are not blocked.",
+  "world_is": "DISPOSITIONS. D2-W412-S1: the record counts differ (9, then 1, 1); recorded per candidate, my STOP clause was too tight (AMENDMENT 1 @0f2a54c0c4). D2-W412-S2 RESOLVED: a local sparse-checkout add, never committed. D2-W412-S3 (comp-find aws blocked, the canonical address used) and S4 (the id module is outside the grant): INERT, recorded. D2-S158 stays ARMED: the cause is inferred (candidate_filter at the COT account screen), not measured; the failing validate_cot_actual_positions condition is the next read. Correction to row S158: 49 Financial DOES have a refusal record (served 2026-10-12, one refusal), so the staleness is not Cottonwood alone; whether that refusal still blocks it (its candidate for 2026-10-13 and 2026-10-14) is not read and is the next read's second question."
+}
+```
