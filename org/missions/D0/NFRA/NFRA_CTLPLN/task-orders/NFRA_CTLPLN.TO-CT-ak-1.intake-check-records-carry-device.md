@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~116</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in wk-NFRA_CTLPLN-116 @f93c75e5fe (merged at the drain): CHECK-DEVICE arms=6/6 ok=True; INTAKE-CHECK-TEST cases=57/57 skipped=0 ok=True; FETCH-DEVICE arms=8/8 ok=True; proof VALID. The fetch-shaped record that intake_check.py writes now carries device (base 1/6). W116-S1/S2 ruled by the issuer: the check verb's own record (intake-check/1) carries no device and the downloads reader reads only *.fetch.json, so the downloads count is answered by fetch records; attributing check records is not needed for FWD-19 and is not cut.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
