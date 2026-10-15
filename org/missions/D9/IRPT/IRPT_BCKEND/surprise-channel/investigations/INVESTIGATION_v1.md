@@ -35744,3 +35744,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The source holds 2,358 flat positions objects. 2,259 carry LastModified 2026-07-01 (one batch write that day), and 94 carry dates on or after 2026-07-10 with their own write dates. The comment's 2,265 is not the measured 2,358 (read 2026-10-15). The writer of the 2026-07-01 batch is not located, and object metadata is empty. Recorded so the history's provenance is not read as per-day writes."
 }
 ```
+
+## IRPT_BCKEND-D2-S182 -- Dispositions on worker 396's rows; the Orion answers: the raw producer is manual, 7 positions days dropped, the mirror is not the defect
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S182",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T05:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on worker 396's rows (D2-W396-S1 to S7) and the Orion answers: the flat .jsonl.gz positions key is written only by a manual command-line pull, 7 positions days landed parquet-only and were dropped, the mirror's refusal of parquet is by design (not a defect to fix at the mirror), and the positions re-pull is 2,240 requests (about 19 minutes).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB199-4 AC1 to AC3 on the worker's tree (PASS) and the proof instance (VALID); merge 62d5757800; round-close-check for workstream ~PO reads MAY-CLOSE",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~396/IB199-4_orion_raw_producer_read.json: positions 4,723 source keys, 2,358 flat days, 7 parquet-only days, 7 silently dropped; transactions and performance 0 parquet-only days; raw writer data/inf/manual_api/pull_inflection_positions_daily.py:445 (a command-line pull, --upload-bronze, on no schedule; the deployed lambda writes parquet only); costs positions 2,240 requests, 0.31 hours, transactions and performance 0"
+    ]
+  },
+  "spec_asserts": "CTO msg 7980: locate the raw producer; read whether any other day landed raw as parquet and was dropped (a format the mirror ignores is a defect to fix at the mirror); cost the re-pull per feed; put the producer in the 6 AM ET fold; fold in the feed ~I2 may add.",
+  "world_is": "DISPOSITIONS. D2-W396-S1 to S7: all INERT (writer location, stale pacing and clock text, source-absent days), recorded. THE ANSWERS: (1) the raw producer is a MANUAL command-line pull in data/inf/manual_api, not scheduled; the deployed inf-api-positions lambda writes only parquet; so the .jsonl.gz feeds the mirror needs exist only when a person runs the CLI. (2) 7 positions days landed parquet-only and were dropped (the two known days and five more); transactions and performance none. (3) The mirror refuses parquet by design (it is schema-coerced, raw content not recoverable): the CTO's hypothesis that this is a mirror defect is NOT borne out; the defect is that the raw producer is not scheduled. (4) The re-pull: positions only, 7 days, 2,240 requests, about 19 minutes at the shared 2 req/s floor; transactions and performance need no re-pull for parquet-only days (the two known days are absent at the source for those feeds). (5) The 6 AM fold: one scheduler schedule, trading-day frontier, names from opal_naming. (6) ~I2's feed is not yet written. NEXT: two pairs, cut as cells after the CTO's word on the shape: (a) the one-time 7-day positions raw re-pull (writes only 7 keys in opal-data-inf bronze/positions, read-back, per-key rollback), (b) the scheduled Orion raw producer in the 6 AM fold."
+}
+```
