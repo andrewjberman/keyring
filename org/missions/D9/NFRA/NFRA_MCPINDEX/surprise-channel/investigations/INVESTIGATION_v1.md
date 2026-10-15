@@ -7965,6 +7965,69 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W40-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~40",
+    "surfaced_at": "2026-10-15T00:47:54Z",
+    "one_line": "The MX-c-16 worker face says the emitter run must END with the HARVEST ROWS and SILVER lines; the run's final printed line is the TOOL INDEX line, with SILVER, NEED and HARVEST printed before it. The run itself is clean (rc 0, no EMIT REFUSED), so the criterion is not affected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Round-16 MX-c-16 worker face, section 1 step 3: python workflows/atom_decomposition/emit_catalog_v02.py must end with the HARVEST ROWS and SILVER lines and no EMIT REFUSED line.",
+    "world_is": "The run in the worker worktree ended rc=0 with no EMIT REFUSED line. Printed order: SILVER DATASET ENTRIES (226 emitted), NEED ENTRIES (35), HARVEST ROWS (78), then TOOL INDEX (N=70, a=11 b=47 c=12) as the last line. Neither the HARVEST nor the SILVER line is the final line.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/emit_catalog_v02.py@32af6d6df5 (the TOOL INDEX print at line 1855 follows the HARVEST and SILVER prints)",
+        "C:/tmp/wk-mcpindex-r16-40/.scratch/emit_r16.out (the captured stdout of the regeneration run, 2026-10-15)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W40-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~40",
+    "surfaced_at": "2026-10-15T00:58:00Z",
+    "one_line": "The MX-c-16 worker face step 5.2 says to append <status>complete</status> to the task order, but the task order file is not among the five <paths> entries, so the status flip is withheld and left for the issuer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-c-16 worker face section 5 step 2: APPEND <status>complete</status> to the task order only if all three criteria PASS, and commit the instance, the deliverables and the flip together. Section 3 names the write surfaces as <paths>, which are the worker's write grant.",
+    "world_is": "The three criteria PASS (AC1 rc=0, AC2 rc=0, AC3 rc=0). The task order file NFRA_MCPINDEX.TO-MX-c-16.certified-channel-corrections-in-the-emitter.md is not among the five <paths> entries (emit_catalog_v02.py, validate_catalog_v02.py, tests/, the deliverables folder, INVESTIGATION_v1.md). The flip is therefore not made in this worker's commit; the instance and the code are committed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-16.certified-channel-corrections-in-the-emitter.md@32af6d6df5 (section 3 <paths>; section 5 step 2)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~40/c16.AC1.out, c16.AC2.out, c16.AC3.out (the three PASS outputs)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W40-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~40",
+    "surfaced_at": "2026-10-15T00:58:21Z",
+    "one_line": "After the MX-c-16 re-rule of the aum-metrics row to deny, the unit test test_every_a_entry_links_only_served_catalog_rows fails: the gateway_query_catalog tool-index entry (member a) still links ft.04.portfolios-aum-metrics, and that entry sits in tool_index/members.yaml, outside this order's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-c-16 worker face section 1 step 2: run python -m pytest -q -p no:cacheprovider workflows/atom_decomposition/tests; all must pass. Section 2 bound 1: change only the files in <paths>.",
+    "world_is": "Unit tests after the three changes: 181 passed, 1 failed (of 182). The failure: EmittedCatalogTests::test_every_a_entry_links_only_served_catalog_rows, AssertionError 'deny' == 'deny' for (gateway_query_catalog, ft.04.portfolios-aum-metrics). The catalog row is now deny by design; the a-entry link lives in workflows/atom_decomposition/tool_index/members.yaml (links list, and a history_depth row) and measured.yaml (history_depth rows at two lines), none of which is in <paths>. The test was not edited and the members file was not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-mcpindex-r16-40/org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~40/unit_tests.out (the failing run, 1 failed 181 passed)",
+        "workflows/atom_decomposition/tool_index/members.yaml@32af6d6df5 (gateway_query_catalog a-entry, links list includes ft.04.portfolios-aum-metrics)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
