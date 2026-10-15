@@ -47,3 +47,20 @@ sidebar background changed to `#EAEAF7`.
 **Reading:** Andrew prefers `#EAEAF7`, a lavender silver, over the brand silver-white `#E8ECF5` as the light-mode ground for the
 page and sidebar. `#EAEAF7` is not one of the brand file's values. This is still a preference, not a ruling that replaces the
 2026-09-11 `#F4F6FA` canvas; that supersession stays open call 1.
+
+## Addendum, ~00:0xZ 2026-10-15 (same channel), verbatim -- RULINGS
+
+> "This whole light mode build needs to stay on a feature tree on this box and is only pushed when i say so.  also yes, i like
+> EAEAF7"
+
+**What this rules, verbatim scope:**
+1. **The light-mode build lives on a feature branch on this box (the laptop).** It is pushed only on Andrew's word. Merging to
+   portal DEV or PROD is a push, so neither happens without his word either. This is consistent with his 2026-10-06 hold
+   that keeps light panels off the main branch.
+2. **`#EAEAF7` is the light-mode ground for the page and sidebar.** Panels are white with the 1px `#C4CBDB` border. Inside
+   the light-mode build this replaces the 2026-09-11 `#F4F6FA` canvas.
+3. **Open call 1 (is ground colour in scope) is answered:** yes. DSGN_RBNDV2's light-mode build carries the ground colour.
+
+**Not ruled (surfaced, not adjudicated):** the first order placed DSGN_RBNDV2 on DELL1 ("the design project can be handled on
+DELL1 box"). This order places the light-mode build on this box. Whether the whole project now seats on the laptop, or only
+the light-mode build does, is Andrew's to say.
