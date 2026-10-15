@@ -5,7 +5,8 @@
 <issued_to>0.7.0_AE_CloudOps~CT2</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C. Seat 0.7.0_AE_CloudOps~CT2 opened the NEVER-2 entry ctlpln-r21-fwd5-one-script-20261015 (17:55Z), and closed it at 18:07Z with all 3 legs proven (commit 35ac3c0dd0; proof instance VALID, committed 4781da8f97). Issuer's own re-read at 18:08Z: s3://opal-data-bd/code/gold/diag_sleeve_fix.py holds 2 versions (new VersionId ceImQVXASssU3IUCRXRjMkoA1XnifTf7, written 18:02:18Z) and its ETag equals the committed script md5 c204fd9be3bbfc43346a14b4c71051af (etag_equals_repo_md5=True); org/safe-deploy-bypass-audit.log shows exactly one PINNED-DEPLOY row for the path at 18:01:57Z (slug ctlpln-r21-fwd5-one-script-20261015, pin 971327859b33) and two HELD-DEPLOY rows (17:51:27Z, 17:53:05Z, reason no-open-ledger-names-it) before the entry opened. The CloudOps seat reports 0 of 190 other code/gold keys changed since the entry opened (the issuer's own count was denied by the comp rail and is not made). THE ACTOR CLAIM OF STEP 5 IS NOT MET AND IS THE ISSUER'S ERROR (row S9132, BLOCKING, ruled): the shared-branch push gate (LD-0367/0368) lets only 0.0.0_AB_MSTR push box/laptop, so the deploy was the scheduled box-sync push of 0.0.0_AB_MSTR, via the D1-S8 pinned-entry path (the script had reached CLOUD by integrate before that push, which is the D1-S8 scenario, exercised for real). The three written criteria (versions=2, other_changed=0, etag_equals_repo_md5=True) hold; the post-close re-run of the read test prints other_changed=-1 because the sentinel it reads for the open time is gone after close (carried to a round-22 cell).</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
