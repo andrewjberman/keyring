@@ -38058,3 +38058,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Counts only. The worker did not alter the count to pass the check."
 }
 ```
+
+## IRPT_BCKEND-D2-W417-S7 -- the live Cottonwood and 49 Financial holdings bundles match neither HEAD nor the IB-pr-549 pins; the deployed Cottonwood gate refuses where HEAD publishes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W417-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~417",
+  "surfaced_at": "2026-10-15T13:03:26Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (holds the Cottonwood acceptance pair until the IB-pr-549 mint and its next fire)",
+  "one_line": "The live holdings bundles run a holdings_snapshot.py that matches neither HEAD nor the IB-pr-549 pins. Live Cottonwood (bundle version oyIYMVdh_l2zCg5ZWvn3ISPPS6_9Q82_, pin 5fad7eaaa8fb4c512190fa406b78c683c4b6ad1f) and live 49 Financial (bundle version UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD, pin b1d354cfc9341168a3b4c316a344876ce0049b97) both differ from HEAD. The deployed Cottonwood gate refuses the lost account (REFUSED, account_lost 1) where HEAD lists it and publishes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live bundles read by GET of existing objects at the IsLatest version ids (list-object-versions re-read 2026-10-15): opal-data-cottonwood irpt/cottonwood/code/gold/investor-reporting-holdings.tar.gz and opal-data-49financial irpt/49financial/code/gold/investor-reporting-holdings.tar.gz",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~417/IB213-1_terminated_mark_read.json (deployed_vs_head; notes, lines 4 to 6)",
+      "the deployed Cottonwood gate executed in scratch over HEAD helpers with the live directory: REFUSED, account_lost count 1; HEAD gate on the same candidate: PUBLISHED, account_lost_not_refused count 1"
+    ]
+  },
+  "spec_asserts": "IB-pr-574 amendment 2 and the CTO's msg 8281: the live Cottonwood and 49 Financial bundles are read so that deployed_vs_head is recorded against HEAD and the IB-pr-549 pins.",
+  "world_is": "STATE: the Cottonwood bundle's directory_marks_no_closures lacks the carried-forward exclusion that HEAD has, so it refuses the lost account; HEAD would list and publish it. Neither live file equals HEAD or its pin (sha256 prefixes: deployed Cottonwood dfa017b8, deployed 49 Financial 5651000b, HEAD fa16b2c3, pins 06de07d8 and 6c6eed90). A deploy of HEAD would change the gate's answer for the lost account. ARMED until the IB-pr-549 mint and its next fire are read.",
+  "notes": "Read only. Nothing was written, minted or deployed."
+}
+```
