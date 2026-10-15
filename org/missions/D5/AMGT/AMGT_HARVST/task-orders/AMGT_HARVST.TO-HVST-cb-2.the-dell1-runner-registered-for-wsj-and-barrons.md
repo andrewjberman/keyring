@@ -77,14 +77,16 @@ This order touches none of them (the runner writes `opal-data-assets` harvest pr
 
 **ISSUER NOTES:**
 - Authority: CTO addenda 3 and 4; Andrew-direct 2026-10-15 ~16:3xZ. Pair: COO half @5271f99a66 + CTO half @5e75337456 (both GIVEN). CTO ruled: (c) minimise first (done: HVST-cb-5 merged `e6649b1250`, AC3 PASS `2657939237`), then (a) register and read the first cycle's effect on the terminals; if the registration shows a job failing minimised that passes headful, do not leave it registered headful, return the question to the CTO.
-- **STAGED, not sent:** the order waits on (c) above, site Z's formal Disabled read-back (CTO C-g), which `0.0.0_AB_MSTR~DELL1` relays and the issuer files as `ledger/SITE_Z_RETIRE_READBACK_20261015.md`. The 18:54Z STOPPED read is not enough for a 24/7 writer.
+- **SENT 2026-10-15 ~20:2xZ (status pending):** site Z's formal read-back is filed (`ledger/SITE_Z_RETIRE_READBACK_20261015.md`, runner ended 18:33:06Z, task Disabled 19:04:24Z, site Z's read relayed by MSTR 6192 and CTO 6194). Before it was sent, the order waited on (c) above, site Z's formal Disabled read-back (CTO C-g), which `0.0.0_AB_MSTR~DELL1` relays and the issuer files as `ledger/SITE_Z_RETIRE_READBACK_20261015.md`. The 18:54Z STOPPED read is not enough for a 24/7 writer.
 - Executor `0.7.0_AE_CloudOps~SC1`: live on dell1, idle, no open order at 19:5xZ. Delivered by the broker with this file's path; not crossbox.
 - **The close read is `HVST-cb-6` (read only, cut at the registration):** the first productive cycle per publisher, with the `.cycle.json` record, the accepted count and `s3_get_count` / `s3_get_bytes` (CTO C-h, the E2 proof). It is organic and about a cycle length.
 - **Not covered, named:** a challenge repair (Press and Hold, slider) in a minimised window (Barron's has `automatic_verification_enabled`): the first reads watch for it; `bbg` and `sa` are not in the runner.
 
+- **Unmeasured, for the first reads (issuer, 20:1xZ):** a CHALLENGE repair in a minimised window. Bloomberg samples this seat took: minimised, with a Press and Hold challenge, 1 job ended `TargetClosedError`; the same job with the minimise call disabled solved the challenge and ended complete (5 accepted); a minimised job that met no challenge ended complete (5 accepted). Three samples cannot separate the window from chance. If a `barrons` or `wsj` job ends `TargetClosedError` or `challenge_failed` at a challenge, file the row with the job id and keep the runner as it is.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>87</round>
 <workstream>RUNNER-REGISTER</workstream>
 <slot>dell1</slot>

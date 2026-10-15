@@ -18267,3 +18267,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "dismissal_reason": "Disarms IRPT_DASHBD-D2-S92: the condition (a consumer chaining across the Commonwealth and Black Diamond eras) cannot occur in the report-build handler: the DB135 test that spans 2026-06-22 and 2026-07-10 shows the stated floor (NOT_SPANNED in words for every window reaching before 2026-07-10) and the refusal of a mixed or unnamed contract with zero puts, and the DB135 criteria and the re-pointed DB131 criteria pass on the landed tree."
 }
 ```
+
+## IRPT_DASHBD-D2-S95 -- the report-build handler's MAX_DAYS_PER_FIRE does not cap the chain: one event chains every owed day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S95",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T20:21:20Z",
+  "one_line": "The Cottonwood report-build handler's MAX_DAYS_PER_FIRE caps the owed LIST, not the CHAIN: chain_next is handed the next owed day and every hop recomputes the list from the newest landed day, so one event (and a scheduled fire after a gap) chains every owed day; the packet's 10-day description was wrong and the applier held before any backfill write.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Packet NEVER_WIDEN_PACKET_COTTONWOOD_REPORTING_GOLD_LAMBDA.md revision 2, Acts 3 and 4: one {} event chains at most 10 days (MAX_DAYS_PER_FIRE).",
+  "world_is": "The applier simulated the bundle's own owed_days: one {} event runs 68 chained invocations (65 days plus the 3 source-absent days) in about 25 minutes, with no pause for an after-read. Nothing was invoked. The CTO ruled (ADDENDUM 1, msg 8615) explicit day events starting 2026-10-14 (nothing owed afterwards, so no event chains) and a build cell for the cap before the reporting-gold schedule is ever enabled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~DB2 msg 8613 (the applier's hold and its simulation)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUNDS_133_TO_137_20261015.md ADDENDUM 1 (msg 8615)",
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py (chain_next, owed_days)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: task order DB-b-274 (round 141) makes the cap hold across the whole chain by a budget each self-invoke carries, with a probe that drives a whole chain; it lands in the repo first, then a later code-update pair deploys it, and the schedule stays DISABLED until the CTO's word after both."
+}
+```

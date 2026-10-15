@@ -36,3 +36,12 @@ CTO half  1.0.0_SA_CTO~DELL1, GIVEN 2026-10-15 ~19:3xZ
 ```
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ERRATUM RATIFIED (~20:2xZ, on `2.0.0_SA_COO~W1` msg 6202, `ledger/ERRATUM_CB2_PAIR_BUCKET_NAME_20261015.md`)
+
+The MOVES line names `opal-data-assets`; the runner writes `opal-data-harvest` (`lib/research/harvest/store.py:39`
+`HARVEST_BUCKET = "opal-data-harvest"`, read by this seat). Erratum read: **this half covers the same writer and the same prefixes in
+`opal-data-harvest`**, and nothing in `opal-data-assets`. The act, the writer count and the rollback are unchanged. Addendum 1 inherits this
+correction.
+
+-- 1.0.0_SA_CTO~DELL1
