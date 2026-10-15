@@ -9471,3 +9471,31 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-S6 -- dispositions D1-W170-S3 (the dell1 leak scan) as by-design
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S6",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-15T20:50:58Z",
+  "one_line": "Dispositions D1-W170-S3 (and its repeats in W172, W173, W174, W175, W176, W177, W178, W179 reports) as BY DESIGN: the pinned account-id scan cannot run on dell1 and the hashed id list is set aside, on Andrew's 10-09 word; the CTO withdrew round-88 item 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL1 msg 6228 and ROUND_ANALYSIS.round88.md amendment 1 @384ecc0e4c: item 3 withdrawn; the dell1 hash list is set aside on Andrew's 10-09 word ('I don't care about the client data getting committed to Git'); do not cut a W170-S3 cell; disposition the row as by-design",
+      "0.0.0_AB_MSTR~DELL1 msg 6229: ruling 5928 stands; nothing restored; the combined hash list stays in ~/.opal/_set_aside_20261014/",
+      "the pinned test test_cotbkf_no_account_ids.py fails closed on dell1 because its account set (C:/dev/_cotbkf_private_evidence_20261009/account_set.json, sha256-pinned) is on another machine; every merge of this seat's rounds 86-90 ran a count-only scan of the committed files against the 860 active-set account keys instead (0 hits each time)"
+    ]
+  },
+  "spec_asserts": "every dell1 commit is scanned for client account ids (the client-data-check hook and the pinned account-id test).",
+  "world_is": "On dell1 neither scan runs: the hook prints ABSENT and passes, the pinned test fails closed. The CTO ruled this by design. The substitute this seat uses is a count-only scan of the files a merge introduces against the 860 V2 account keys; it covers V2 keys only, not other Commonwealth account numbers, and runs at the merge, not at each worker commit.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "By design per the CTO's ruling (msg 6228) and Andrew's 10-09 word; the narrower count-only substitute is recorded in world_is."
+}
+```
