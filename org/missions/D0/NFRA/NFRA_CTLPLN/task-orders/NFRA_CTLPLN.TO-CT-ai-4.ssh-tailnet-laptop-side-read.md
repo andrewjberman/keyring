@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~109</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run (the SERVED real run: three read-only SSH logins by key from the laptop) in wk-NFRA_CTLPLN-109 @0584d0f346: FWD27-LAPTOP-SIDE boxes=3 key_ok=3 password_refused=3 ok=True; SSH-VERIFY-SELFTEST cases=12/12 ok=True; proof VALID. The per-box logins (sitez 'Opal Bloomberg', dell1/dell2 Test) were the issuer's ruling on W109-S1/S2 from the CT-ab-7 order; the rc, muse, laptop-target, off-tailnet and password-off arms are not driven and are named with owners in the record.</status_reason>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
