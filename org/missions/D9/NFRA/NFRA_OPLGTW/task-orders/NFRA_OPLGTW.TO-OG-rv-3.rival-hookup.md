@@ -78,7 +78,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rv-3.rival-hookup.proof_of_spec
 
 - A1 (issuer, 2026-10-15 ~10:4xZ, worker rows Z-W102-S1..S4, all read): the first seat BLOCKED, rightly. (S1) the provisioned worktree's sparse cone omitted `infra/aws/ec2/opal-gateway` (the provision call carried no `--order`): the ISSUER added the folder to the cone (`git sparse-checkout add infra/aws/ec2/opal-gateway`, the provisioner's own act) and the worker rebuilds nothing. (S2) the proof invocations still named the six-tool `gt12.AC1.sh` and `gt12.AC2.sh` (a template carry-over): they now name `rv3.AC1.sh` and `rv3.AC2.sh`, which grade ten of ten. (S3) accepted: rv3.AC2's outside-files zero is read AFTER your commit, against the base of the branch. (S4) the bounds bullet forbade editing the five files that step 1 directs the script to edit, and the record face carried a duplicate fragment: both repaired. The order is re-issued on the same branch (inherited commit `fac4ca01c3`, a BLOCKED proof instance and rows S1-S4: re-record the instance from the real outputs). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>RIVAL-HOOKUP</workstream>
 <slot>~102</slot>
