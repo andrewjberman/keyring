@@ -1026,6 +1026,27 @@
     "spec_asserts": "TO RV-x-1 spec: every text-white inside a solid indigo box keeps white ink in a light panel, reached by the descendant context of the indigo box.",
     "world_is": "A text-white class on the indigo box itself is not a descendant of it, so the specified context does not reach it and the legibility rule turns that text navy on indigo. Whether a light panel renders this Tooltip was not measured in this worktree; the reach is unverified.",
     "notes": "Filed, not fixed: Tooltip.tsx is outside this order's <paths>, and the order names the three tooltips that are descendant-shaped. The fix belongs to the owner of the tooltip surface."
+  },
+  {
+    "id": "DSGN_RBNDV2-W16-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~16",
+    "surfaced_at": "2026-10-15T15:36:39Z",
+    "one_line": "RV-x-4 says the portal worktree is branched from feature/dsgn-rbndv2-light at 7f8731df, but the worktree HEAD is 9027a72d, a descendant of 7f8731df that carries the RV-x-1 merge; 7f8731df is an ancestor of HEAD, not its tip.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal worktree wk-DSGN_RBNDV2-16-portal: git rev-parse HEAD = 9027a72d at the start of the order; git merge-base --is-ancestor 7f8731df HEAD printed ANCESTOR-YES",
+        "git -C portal log -1 9027a72d: 'drain(DSGN_RBNDV2.TO-RV-x-1): merge worker 0.9.0_WK_DSGN_RBNDV2~13 ... into feature/dsgn-rbndv2-light'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-x-4 environment block: the portal worktree is branched from feature/dsgn-rbndv2-light at 7f8731df, the difference-control base.",
+    "world_is": "7f8731df is an ancestor of the worktree HEAD 9027a72d, which carries the RV-x-1 merge. The difference-control arms read the base by git show 7f8731df and are unaffected. The worker's commit 140f474f touches only the three RV-x-4 paths, so the descendant commits were not edited by this cell.",
+    "notes": "Filed, not fixed. The order's branch premise is stale relative to the live branch; the cut point is the drain's merge commit, not the base named in the order. Whether the RV-x-1 merge changes the light-panel render of the Fear and Greed panel was not measured here; the arms are text arms."
   }
 ]
 ```
