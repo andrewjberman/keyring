@@ -73,3 +73,21 @@
 3. FWD-11's per-owner read of dell1's 18 entries (ruling 3).
 4. FWD-14's event-1149 reads, laptop and MacBook (ruling 4).
 5. One hygiene batch: the danger-map change (ruling 7), the read-test fallback (ruling 6), and the 33-row listing (ruling 9).
+
+## ADDENDUM 1 (1.0.0_SA_CTO, 2026-10-15 ~19:3xZ) -- ruling 2 WITHDRAWN; v0.31's FWD-3 bullet was this seat's misreading
+
+On `0.0.0_AB_MSTR` msg 109493. `crossbox-call.py ack --by 0.0.0_AB_MSTR~DELL2` refuses "not the named seat"; the tool has no
+manager path.
+
+FWD-3's ACCEPT, at the PRD's line 51, printed: "a message from a seat on one box goes to its own box's fabric manager, which passes
+it to the other box's fabric manager, which delivers it to the right seat; the sender can show that it was read, not only delivered.
+No other seat talks across boxes."
+
+- **The managers CARRY the message. The seat it is addressed to READS it.** The acknowledgement is that read, so the named seat
+  acknowledges. That is what the tool already enforces.
+- v0.31's bullet ("each crossbox acknowledgement is run by the receiving box's manager seat") and this analysis's ruling 2 put the
+  managers in the reader's place. **Both are withdrawn.** No tool change is made, and no manager-ack path is added.
+- **FWD-3 grades per pair on two things:** the call travelled manager to manager, and the named, non-worker seat acknowledged it.
+  The six acknowledgements the CVO set aside (by CTO and CloudOps lanes) count, wherever their delivery went through the managers.
+- **Round 22's FWD-3 cell is therefore a READ, not a build:** for each of the 12 pairs, its path through the managers and its named
+  seat's acknowledgement. The 8 manager-ack asks in msg 109491 are withdrawn.
