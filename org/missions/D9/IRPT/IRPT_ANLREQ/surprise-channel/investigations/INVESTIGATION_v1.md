@@ -17884,3 +17884,55 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W175-S1 -- AR-g-63: the cell does not say what happens when the t0 recomputed after a BAD_BASE exclusion makes a remaining ticker's base unusable; the module repeats the exclusion until every used base is usable
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W175-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~175",
+  "surfaced_at": "2026-10-15T16:38:21Z",
+  "one_line": "AR-g-63 item 3 says a base <= 0 excludes the ticker and t0 is recomputed over the tickers still in, but not whether the recomputed t0 can expose a second base <= 0; the module excludes those too and recomputes until none remains.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-63 item 3: each ticker's base is its value as of t0; a base <= 0 excludes the ticker with reason BAD_BASE and t0 is recomputed over the tickers still in.",
+  "world_is": "Recomputing t0 over the remaining tickers can only move t0 earlier, so a remaining ticker's value as of the new t0 can be <= 0 (a zero observation before the other ticker's start). The cell is silent on that second exclusion. The module runs the exclusion as a loop, so every used base is positive and no division by a zero base is reachable. Reading taken where the cell is silent: a non-finite base (NaN) is also BAD_BASE, since the cell names only the <= 0 case.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/portfolio_series.py@8676450a96 buy_and_hold, the while loop over t0 and the BAD_BASE exclusion",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_portfolio_series.py@8676450a96 test_typed_exclusions_and_coverage (case Z: a 0.0 first observation at the common start)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Both readings pass the twelve AR-g-63 cases (AR-G63-OK cases=12). The cell's author decides whether the loop is the intended rule."
+}
+```
+
+## IRPT_ANLREQ-D2-W175-S2 -- the commit gate's client-data check could not run on this box: the hashed account-id list is absent, so the commit printed WARN "this commit was NOT checked for client account ids"
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W175-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~175",
+  "surfaced_at": "2026-10-15T16:38:21Z",
+  "one_line": "safe-commit of 8676450a96 printed WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt; absent is not empty, so the commit was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face: every commit goes through .tools/safe-commit.sh, which runs the commit gates; the CLAUDE.md commit law gates the commit.",
+  "world_is": "On this box the account-id hash list is not at C:\\Users\\Test\\.opal\\account_id_hashes.txt and OPAL_ACCOUNT_ID_HASHES is not set, so the client-data check ran no comparison and the commit reported only the WARN. The two committed files hold made-up symbols and dates and no account identifier, so this commit's content carries no client account id. Not ARMED for this commit; the box-level absence stands for every commit on this box and its owner was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for 8676450a96: line 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt'",
+      "git show --stat 8676450a96: 2 files, both under infra/aws/lambda/investor-reporting/ycharts/research/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The gate's own text says absent is not empty. The owner of the list and the location decision were not read; no change was made to the gate or the list."
+}
+```
