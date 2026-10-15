@@ -14647,6 +14647,54 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~406",
+  "surfaced_at": "2026-10-15T04:56:09Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-W406-S1",
+  "one_line": "DBC118-1-AC1 cannot PASS as written: the record fields the order names (zip.bucket, the registry hashes, the pins, scopes_diff.changed, channels) trip the r114 identifier guard the checker runs first; the body passes with the guard off",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p118_bcw.py DBC118-1-AC1 at worktree HEAD c51c7e6539 printed: 'a run of 8 or more digits in field bucket' then DBC118-1-AC1 FAIL (rc=1)",
+      "enumerate of the r114 no_identifiers walk over SCOPES_PIN_READ_R118.json: 14 violations; 8-digit runs in bucket (the account number inside the bucket name), pin (x2), pinned_sha256, in_zip_sha256, head_sha256 (x2), new_sha256; foreign firm tokens under changed (49financial, inflection) and under the channel keys orion and schwab_08335338 (values inflection and 49financial) in both channel maps",
+      "diagnostic only (not the verdict): the DBC118-1-AC1 body with no_identifiers patched to a no-op returns PASS, so the record content and the re-run derivations agree with the producer; the guard is the only refusal"
+    ]
+  },
+  "spec_asserts": "DBC118-1-AC1 requires the record to hold the fields the order names (zip bucket, registry pins and sha256 values, scopes_diff changed keys, per-channel firm results) and the checker's identifier guard to pass on that record.",
+  "world_is": "The identifier guard refuses those named fields by their content (an 8-digit account number in the bucket name, 8-digit runs in git and sha256 hex, firm tokens as map values and list items under non-exempt keys); the guard is the r114 checker's, and the record was written exactly as the order names it. Nothing was repaired or renamed; the criterion stays FAIL and the order stays open."
+}
+```
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~406",
+  "surfaced_at": "2026-10-15T04:56:09Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-W406-S2",
+  "one_line": "The scopes re-pin changes registry rows for 49financial and inflection (and cottonwood, etfs) that the 49F and INF functions also read from the shared zip; the differential measured only the three channels' firm_scope()",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scopes_diff measured from git blobs: added z09, 4698, transcripts; changed 49financial, cottonwood, etfs, inflection; removed none (record SCOPES_PIN_READ_R118.json)",
+      "differential in fresh python -I processes: schwab_08335338 resolves to 49financial and orion to inflection in both the live tree and the scopes-only re-pinned tree; blackdiamond_z09 refused then cottonwood",
+      "the three added rows carry no monolith_scopes and no added spelling collides with the custody master or the orion monolith; the monolith orion carries only inflection in both blobs"
+    ]
+  },
+  "spec_asserts": "The both-branches clause of the packet relies on the 49 Financial and Inflection derivations being unchanged by the re-pin, measured by the producer's firm_scope() for the three declared channels.",
+  "world_is": "Those three derivations are unchanged, but the re-pin also changes the 49financial and inflection registry rows that the 49F and INF functions read through the registry's other readers (lookup spellings, bucket aliases, prefix resolution), which were not measured. Nothing is uploaded, so nothing is ARMED; the question is carried to the CTO's half as packet question 5 before any second upload."
+}
+```
+
 ## IRPT_DASHBD-D2-S60 -- one Inflection account holding positions has no Orion Scope group over Q3 or YTD; owner 2.0.0_SA_COO~I2
 
 ```json
