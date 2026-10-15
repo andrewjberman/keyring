@@ -19810,3 +19810,57 @@
   "world_is": "The files are code and tests over made-up tickers and dates; the issuer's read is not the gate's check and does not claim it. The same instrument gap is on the record as W143-S2, W52-S25 and S124."
 }
 ```
+
+## IRPT_ANLREQ-D2-W162-S1 -- The composer's noticeDescriptions reader lives in prospect.ts and matches every NOTICE severity, so the cell's code-exact rule could not be met by importing it; a local reader was written
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W162-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~162",
+  "surfaced_at": "2026-10-15T23:09:44Z",
+  "one_line": "noticeDescriptions is exported from prospect.ts (not the composer) and returns the description of every portfolio finding of severity NOTICE, whatever its code, so importing it cannot show only TICKER_DATA_NOT_ENTITLED; a local reader keyed on that code was written in the Ticket Center folder instead.",
+  "spec_asserts": "AR-y-365 item 1: a finding of any other code in portfolio.findings shows nothing new; import noticeDescriptions read-only if it is exported from the composer, otherwise write a small local function in src/pages/TicketCenter/. The cell places noticeDescriptions in the Investor Reporting composer.",
+  "world_is": "portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts:112 exports noticeDescriptions; it keeps an item only when item.severity === 'NOTICE' and its description is a non-empty string, with no code test. The composer ProspectComposer.tsx imports it at line 9 and calls it at line 356. Commit 7af732ee on cand/dell2/anlreq-filing-notice adds notCoveredNoticeLines in src/pages/TicketCenter/analysisRequest.ts (line 231), keyed on NOT_COVERED_NOTICE_CODE = TICKER_DATA_NOT_ENTITLED (line 225). Investor Reporting and src/api are unchanged on that branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts@50db1eb4ad lines 108-120 (noticeDescriptions, severity test only)",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx@50db1eb4ad lines 9 and 356",
+      "portal/src/pages/TicketCenter/analysisRequest.ts@7af732ee11 lines 225-240 (notCoveredNoticeLines)",
+      "git -C portal diff --name-only 50db1eb4ad cand/dell2/anlreq-filing-notice: four paths, all under src/pages/TicketCenter/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W162-S2 -- The cell's render point (TicketCenter.tsx near line 390) is the staff filing path only; the partner page is a separate return that files through the same fileAnalysisRequest, so the notice was also placed on the partner page
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W162-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~162",
+  "surfaced_at": "2026-10-15T23:09:44Z",
+  "one_line": "The cell names TicketCenter.tsx near line 390 as the place to render the notice; line 390 is the staff path's success branch. The partner page (an early return under if (partner)) files through the same fileAnalysisRequest and would have shown no notice, so the notice was rendered under its banner as well.",
+  "spec_asserts": "AR-y-365 item 1: after a filing whose upload answer carries a TICKER_DATA_NOT_ENTITLED finding, the form shows the notice under the filed outcome; the cell's render point is TicketCenter.tsx near line 390.",
+  "world_is": "At 50db1eb4 the staff success branch is TicketCenter.tsx lines 385-397 and the partner success branch lines 442-447; the partner page is the if (partner) return at line 578 of 7af732ee. Commit 7af732ee keeps one state, filedNotices, set from outcome.notices on each success and cleared at the start of each filing; it renders <FilingNotice> under the partner banner (line 619) and under the staff FilingSteps (line 709), and the two never render together because the partner return and the staff return are exclusive.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@7af732ee11 lines 394-395 (staff success: setFilingSteps, setFiledNotices)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@7af732ee11 line 453 (partner success: setFiledNotices)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@7af732ee11 lines 578 and 619 (if (partner) return; partner render)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@7af732ee11 lines 707-709 (staff FilingSteps and FilingNotice)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
