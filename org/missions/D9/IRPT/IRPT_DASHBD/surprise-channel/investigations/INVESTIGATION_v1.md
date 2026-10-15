@@ -14884,3 +14884,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-232 under the refusal clause: the criterion is reported with its measurement and the runs stop on this point. Counts and shapes only; no account id or client value."
 }
 ```
+
+## IRPT_DASHBD-D2-S62 -- issuer's dispositions on W185-S6 to S9: S8 disarmed; S9 is a Cottonwood data finding (no join key), AC3 struck
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S62",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T05:23:04Z",
+  "one_line": "Issuer's dispositions on worker 185's rows W185-S6 to S9 (DB-b-232): S6 (the Cottonwood gold account_dim holds no object) ruled by a private household frame for QA, then superseded by S9; S7 repaired in the module (households through the adapter, a missing sibling table is NO_SOURCE_YET); S8 (ARMED, mine) DISARMED: the empty-lot folds are the absent form, with test_empty_lot_source_is_absent_not_zero; S9 is a finding about the Cottonwood data, not a defect: the household key (Black Diamond account key, 11 characters, 999 accounts) and the return table's key (Commonwealth custodian number, 8 or 9 characters, 12 accounts at the 2026-06-22 frontier) have zero overlap, so criterion DB118-3-AC3 is struck and carried to the CTO in the slug.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-232 as issued: two QA runs of the Cottonwood reader, run 1 at the frontier holding measured account-return members; the ask of ~C2 (msg 7949): 'a Cottonwood member for each field the 49 Financial report reads from account_return_daily'.",
+  "world_is": "Drain re-run on the landed tree 17e300d554: DB118-1-AC1 to AC3, DB118-2-AC1 and DB118-3-AC1 and AC2 PASS (21 module tests, 15 reader tests, 3 test_refuses_* negatives). W185-S8 disarmed: the repair is merged and its test is required by the DB118-1-AC3 checker; the worker checked the module's other folds and found no other zero-from-empty. S9: both QA runs refuse correctly with 'no household holds an account present on as_of'. Cottonwood has, today, no account_dim in the cloud (its pair DB-b-200 is unsigned and nothing is applied), no activity, lot or class gold, and a return table of 12 accounts at its frontier from one Commonwealth delivery. Also found at the drain: DB110-2-AC1 and DB111-2-AC1 read FAIL on the contract's pinned hash after the contract moved to 0.5.3; repinned through the lineage (commit 34272a71e6), both PASS. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 185's report and rows W185-S6 to S9 (merge 17e300d554)",
+      "this seat's re-run of the six round-118 criteria on the landed tree and of the earlier ten (r110 to r113)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/ASK_D2_COTTONWOOD_MEMBER_SOURCES_R115.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S9 carries to the CTO: Cottonwood needs a join key between its household key and its return table (and a return table wider than 12 accounts) before any Cottonwood household report; the Cottonwood account_dim apply is B-CW's pair. The QA runs return in a later order once a key exists."
+}
+```
