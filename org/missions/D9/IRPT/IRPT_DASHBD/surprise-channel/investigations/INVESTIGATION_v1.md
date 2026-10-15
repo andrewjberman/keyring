@@ -16165,3 +16165,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Issuer decision needed: either the arm compares against a base the merge does not perturb (for example the issuance commit with the other seats' entries excluded by key), or the merge is accepted as the entry's introducing commit and the arm is re-based. The worker did not rewrite history or edit the checker. AC2 PASS and the source-map values are unaffected."
 }
 ```
+
+## IRPT_DASHBD-D2-S72 -- issuer names the owner of the 2026-07-09 Black Diamond silver re-run (CTO round-121 ruling 5)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S72",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T08:32:00Z",
+  "one_line": "Owner of the 2026-07-09 Black Diamond silver re-run for Cottonwood: the Cottonwood pipeline of ADVI_FIRMBKTS (seat 2.0.0_SA_COO~B1, which issues that project's orders); until the re-run the day reads ABSENT with the reason SILVER_BUILD_GAP",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-121 analysis ruling 5 (B-49F): the 2026-07-09 silver-build gap goes to the Black Diamond silver chain's owner to re-run that one day under its own pair; this seat names the owner in a row.",
+  "world_is": "Round 120 DB-b-239 (RD_BD_BRONZE_AND_MAP_R120.json): silver fact_allocations has 33 empty days, 32 source-empty by bronze size and 2026-07-09 with a 337,213-byte bronze workbook (SILVER_BUILD_GAP, gap_days = [2026-07-09]). The Cottonwood silver build is run by the cot-pipeline: cot-bd-session-trigger (mode silver-run) starting SSM document opal-cot-silver-run on the Cottonwood exporter, inventoried by ADVI_FIRMBKTS (PLANINV_COTTONWOOD_PIPELINE.json); that project's current orders are issued by 2.0.0_SA_COO~B1. No other seat's project names the silver build.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~193/RD_BD_BRONZE_AND_MAP_R120.json",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~78/PLANINV_COTTONWOOD_PIPELINE.json (rule.cot-bronze-complete targets cot-bd-session-trigger mode silver-run)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-m-1.readiness-halt-guard.md (issued_by 2.0.0_SA_COO~B1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner named per the CTO's ruling; the ask to re-run that one day under its own never-widen pair goes to 2.0.0_SA_COO~B1 as one message. Whether the day's bronze workbook holds rows is NOT read here; the re-run is what establishes it."
+}
+```
+
+## IRPT_DASHBD-D2-S73 -- issuer disarms worker row W193-S1 by carrying it to W182-S1 (CTO round-121 ruling 6)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S73",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T08:32:00Z",
+  "one_line": "Disarm of worker row IRPT_DASHBD-D2-W193-S1 (ARMED, disarm owner this seat): the commit gate's client-data check could not run on this box because its hashed account-id list is absent; carried to row W182-S1 (owner 0.0.0_AB_MSTR), with this seat's own identifier scans standing in",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-121 analysis ruling 6: W193-S1 (ARMED, no disarm row) is disarmed by a row from this seat citing W182-S1's ground, as the CVO dismissed it.",
+  "world_is": "W193-S1 is the same condition as W189-S1 and W182-S1: WARN client-data-check, hashed account-id list ABSENT at the gate's path. The worker's own scan of the two staged files found 0 of 1,533 private history ids; this seat scanned every added line of all five round-120 merges for runs of 9 or more digits outside hash, pin, commit and schema-hash fields and found none, and read every changed file of DB-b-239. The condition itself stays open under W182-S1 (owner 0.0.0_AB_MSTR) until the list is placed or OPAL_ACCOUNT_ID_HASHES is set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md rows IRPT_DASHBD-D2-W193-S1 and IRPT_DASHBD-D2-W182-S1",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v85.md (the CVO dismissed it)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUND_121_20261015.md ruling 6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "W193-S1 is DISARMED here (hazard no longer ARMED under this seat); the carrier is W182-S1. Round 120's packet mislabelled the criteria count as ten (the orders declare eight); noted as the issuer's error."
+}
+```

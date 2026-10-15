@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_COMM_ASSIST~31</issued_to>
 <issued_by>2.0.0_SA_COO~CA</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
@@ -46,8 +46,8 @@ Your interface is the header of `org/missions/D9/COMM/COMM_ASSIST/deliverables/2
 <criterion id="CAl3-AC2" cell_refs="CA-l-3"><invocation>python "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r17/checks/check_i2_regression.py"</invocation><expect>I2-REGRESSION ok=True</expect></criterion>
 `CAl3-AC2` -- the bound, a control that PASSES at the base (64 passed): the assistant's flow tests.
 
-<criterion id="CAl3-AC3" cell_refs="CA-l-3"><invocation>python "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r19/checks/check_l3_batch.py"</invocation><expect>L3-BATCH ok=True arms=8 of 8</expect></criterion>
-`CAl3-AC3` -- the bound, a control that PASSES at the base: round 19's batch (the natural test alone, the mail tests, the reader texts) must stay repaired.
+<criterion id="CAl3-AC3" cell_refs="CA-l-3"><invocation>python "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r18/checks/check_k2_reader.py"</invocation><expect>K2-READER ok=True arms=7 of 7</expect></criterion>
+`CAl3-AC3` -- the bound, a control that PASSES at the base (7 of 7): the reader's six sources. (AMENDED 2026-10-15 by the issuer: this criterion first named round 19's `check_l3_batch.py`, whose `no_product_change` arm allows only that cell's four files and so grades the three files THIS cell must edit as stray changes; a control that cannot pass was the issuer's defect, found by worker ~31, which refused it and filed COMM_ASSIST-W31-S1.)
 </proof_of_spec>
 
 <expected_criteria>CAl3-AC1,CAl3-AC2,CAl3-AC3</expected_criteria>
@@ -81,5 +81,5 @@ naming: no name is created (CLAUDE.md rule 30 non-application).
 lane: the <paths> block IS the grant (worker RULING 1).
 </preflight>
 
-Base: CAl3-AC1 base: FAIL as measured (2 of 6; `alone:test_teams_chat_jobs`, `alone:test_teams_chat_eod_republish`, `alone:test_teams_chat_stale_eod` and `combined` fail with `ModuleNotFoundError: No module named 'test_teams_chat_tenant'`); green arm 5 of 5 against a scratch reference in a non-git mirror (since removed; `no_product_change` is skipped there and bites in a worktree), negative control (a renamed test) fails `names`. CAl3-AC2 base: PASS as measured (control, 64 passed). CAl3-AC3 base: PASS as measured (control, 8 of 8).
+Base: CAl3-AC1 base: FAIL as measured (2 of 6; `alone:test_teams_chat_jobs`, `alone:test_teams_chat_eod_republish`, `alone:test_teams_chat_stale_eod` and `combined` fail with `ModuleNotFoundError: No module named 'test_teams_chat_tenant'`); green arm 5 of 5 against a scratch reference in a non-git mirror (since removed; `no_product_change` is skipped there and bites in a worktree), negative control (a renamed test) fails `names`. CAl3-AC2 base: PASS as measured (control, 64 passed). CAl3-AC3 base: PASS as measured (control, K2-READER arms=7 of 7).
 Source: CTO round-19 analysis ruling 4 (`ledger/ROUND_ANALYSIS.round19.md` @b4f6d499d0, msg 109356); issuer ruling W19-S5 and the round-19 packet's enrichment item 4; commit `8454482177` as the shape.

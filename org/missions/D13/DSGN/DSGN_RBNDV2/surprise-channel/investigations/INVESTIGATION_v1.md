@@ -482,6 +482,47 @@
     "spec_asserts": "L7: the WORKER FACE is the worker's whole context and the RECORD FACE never travels to the worker.",
     "world_is": "The order file at the worker's worktree path contains the RECORD FACE header and its preflight block. The worker read them in passing while locating the criteria and took no action from them; the criteria, invocations and expectations used are the WORKER FACE's.",
     "notes": "Observed only; the worker did not open the rest of the RECORD FACE section."
-  }
+  },
+    {
+      "id": "DSGN_RBNDV2-W7-S1",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~7",
+      "surfaced_at": "2026-10-15T07:58:58Z",
+      "one_line": "The test file RB1R3-AC1 names, rb-1-r3.token-format.test.ts, is absent from the worktree at HEAD adc70061; the worker authored it at that path to the criterion's arms.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~RB -- confirm at the drain that the authored file is the test the order meant, and that no other cell writes the same path.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "portal/src/ui/components/sidebar/__tests__/dsgn-rbndv2/ listing at adc70061 (worktree /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-7/portal): rb-1-s.app-seam.test.ts and rb-1-s.sidebar.test.tsx only",
+          "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-r-3.sidebar-token-format.md ACCEPTANCE: the invocation names src/ui/components/sidebar/__tests__/dsgn-rbndv2/rb-1-r3.token-format.test.ts"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-r-3 RB1R3-AC1: the criterion's invocation runs src/ui/components/sidebar/__tests__/dsgn-rbndv2/rb-1-r3.token-format.test.ts and expects VERDICT: SIDEBAR-TOKEN-FORMAT-OK.",
+      "world_is": "The named file did not exist, so the invocation could not produce its verdict. The worker wrote the file at the named path, inside the granted folder, with the arms the criterion lists and the adc70061 difference control, and did not weaken any assertion."
+    },
+    {
+      "id": "DSGN_RBNDV2-W7-S2",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~7",
+      "surfaced_at": "2026-10-15T07:58:58Z",
+      "one_line": "The criterion says the --rb names used by the sidebar are five names defined in index.css :root; the :root block defines seven.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "UNDER_INVESTIGATION",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "portal/src/index.css lines 135-141 (:root block, RB-t-1 tokens): --rb-rule, --rb-row-rule, --rb-ink, --rb-ink-2, --rb-ink-3, --rb-quiet, --rb-accent",
+          "the sidebar files at the cell's HEAD use exactly accent, ink, ink-2, ink-3, rule (AppSidebar.tsx, SidebarLink.tsx)"
+        ]
+      },
+      "spec_asserts": "TO RV-r-3 RB1R3-AC1: every --rb- name used in the two files is one of the five names defined in src/index.css :root.",
+      "world_is": "The defined set is seven names. The test reads the defined set from the CSS text and checks that every used name is in it; the used set is the five named in the criterion, so the verdict is the same under either reading."
+    }
 ]
 ```
