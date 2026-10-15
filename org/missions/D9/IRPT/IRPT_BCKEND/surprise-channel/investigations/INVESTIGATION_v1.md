@@ -35769,3 +35769,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W396-S1 to S7: all INERT (writer location, stale pacing and clock text, source-absent days), recorded. THE ANSWERS: (1) the raw producer is a MANUAL command-line pull in data/inf/manual_api, not scheduled; the deployed inf-api-positions lambda writes only parquet; so the .jsonl.gz feeds the mirror needs exist only when a person runs the CLI. (2) 7 positions days landed parquet-only and were dropped (the two known days and five more); transactions and performance none. (3) The mirror refuses parquet by design (it is schema-coerced, raw content not recoverable): the CTO's hypothesis that this is a mirror defect is NOT borne out; the defect is that the raw producer is not scheduled. (4) The re-pull: positions only, 7 days, 2,240 requests, about 19 minutes at the shared 2 req/s floor; transactions and performance need no re-pull for parquet-only days (the two known days are absent at the source for those feeds). (5) The 6 AM fold: one scheduler schedule, trading-day frontier, names from opal_naming. (6) ~I2's feed is not yet written. NEXT: two pairs, cut as cells after the CTO's word on the shape: (a) the one-time 7-day positions raw re-pull (writes only 7 keys in opal-data-inf bronze/positions, read-back, per-key rollback), (b) the scheduled Orion raw producer in the 6 AM fold."
 }
 ```
+
+## IRPT_BCKEND-D2-W399-S1 -- The packaged ExportBundle contract refuses a bundle that carries a filled_report item: its authorized_report_revisions i
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W399-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~399",
+  "surfaced_at": "2026-10-15T04:17:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The packaged ExportBundle contract refuses a bundle that carries a filled_report item: its authorized_report_revisions items are additionalProperties false and admit no filled_report_source property, so bundle.validate refuses the frozen filled bundle that hop 4 builds.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json at 1506a4828e: authorized_report_revisions items list properties authorization_ref, immutable, performance_source, report_id and revision only, with additionalProperties false",
+      "a probe in scratch (outside the repository) froze one filled_report item with bundle.freeze and then ran bundle.validate: ValidationError on authorized_report_revisions",
+      "infra/aws/lambda/investor-reporting/export/handler.py:236 calls bundle_mod.validate(frozen) on the frozen bundle at 1506a4828e"
+    ]
+  },
+  "spec_asserts": "Hop 4 (IB-pr-555) makes a filled_report export bundle that the export path can freeze and validate: the freeze yields a bundle the export handler accepts.",
+  "world_is": "The packaged contract is outside this order's grant and is unchanged by this cell. Until the contract admits a filled_report_source item (a contract change owned outside this order), bundle.validate refuses any filled bundle. Nothing is deployed, so no served bundle is affected today. It blocks any wiring that validates a filled bundle."
+}
+```
+
+## IRPT_BCKEND-D2-W399-S2 -- The packet's scope rule names every by_row account key, but a by_row map is keyed by account or by asset class; the expo
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W399-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~399",
+  "surfaced_at": "2026-10-15T04:17:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The packet's scope rule names every by_row account key, but a by_row map is keyed by account or by asset class; the export freeze built here gates on household.accounts account_id only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json per_row_member_form at 1506a4828e: a by_row map is keyed by account_id or asset class; hold.allocation is keyed by asset class and an entry may hold the text UNHELD",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~395/SERVE_PATH_PAIR_PACKET_V1.md section 3 and IB199-3_serve_path_design.json scope_rule: every account key of each values by_row map is named",
+      "infra/aws/lambda/investor-reporting/export/retained_export.py freeze_filled_report and filled_accounts_named at the worker commit"
+    ]
+  },
+  "spec_asserts": "The hop-3 scope rule names each household.accounts account_id and every account key of each values by_row map, each checked by the covered-set test, so a filled report is refused unless its viewer covers all of them.",
+  "world_is": "Read literally, the rule counts asset-class keys of hold.allocation as accounts and refuses every filled report whose allocation map is keyed by asset class. The export freeze built in this cell gates on household.accounts account_id, which the contract makes one key per account of the household, and does not gate on by_row keys. The route's named-account reader (hop 3, not built here) needs the same decision. Surfaced for the CTO's ruling; not decided here."
+}
+```
+
+## IRPT_BCKEND-D2-W399-S3 -- The filled_report freeze has no caller and resolves no object address: the submit call sites and a production reader bui
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W399-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~399",
+  "surfaced_at": "2026-10-15T04:17:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The filled_report freeze has no caller and resolves no object address: the submit call sites and a production reader built on the naming builder are outside this order's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_async.py:123 and submit_service.py:53 dispatch only on _retained.is_platinum(body) at 1506a4828e; no branch calls is_filled_report or freeze_filled_report",
+      "infra/aws/lambda/investor-reporting/export/retained_export.py read_pinned_filled takes an injected reader that returns the object key; the cell types no address and does not call lib/opal_naming.address()",
+      "the order's paths block names bundle.py, retained_export.py and the new test file only"
+    ]
+  },
+  "spec_asserts": "The worker face says the submit pins the filled-report object by its VersionId and sha256, the object sits at the naming builder's address and the address is never typed.",
+  "world_is": "The submit wiring and the production reader that resolves the key through lib/opal_naming.address() are not in this cell's grant, so the freeze helpers are callable but not called. The key reaches the freeze only through the injected reader. Wiring the submit and building that reader is a later cell in the same window."
+}
+```
