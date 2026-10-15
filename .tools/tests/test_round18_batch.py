@@ -233,7 +233,8 @@ def _remove_sparse(main: Path, nested: Path, wt: Path, branch: str) -> None:
                        capture_output=True, text=True)
     if wt.exists():  # the worktree still on disk after git's removal: the temporary tree is ours, no links in it
         shutil.rmtree(wt, onerror=FX._clear_readonly)
-    subprocess.run(["git", "-C", str(ROOT), "worktree", "prune"], capture_output=True, text=True)
+    # no `git worktree prune` here: a prune is repository-wide and clears every unrelated prunable entry (the
+    # round-17 cmd_remove comment forbids it); git worktree remove above already drops this worktree's own entry
     subprocess.run(["git", "-C", str(ROOT), "branch", "-D", branch], capture_output=True, text=True)
 
 
