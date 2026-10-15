@@ -8435,6 +8435,27 @@ carries none.
       ]
     },
     "notes": "Owner of the ranking question is 2.0.0_SA_COO~O (R16.4): a rule that orders a curated need against a servable table needs a decision on which pin wins (E-16's or E-8's). Not a gate field; no access changes."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W50-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~50",
+    "surfaced_at": "2026-10-15T22:48:14Z",
+    "one_line": "The naming gate's K7 membership list (org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json) and the schema the order names (org/surprise_channel/schemas/investigation_item.schema.json) are outside this worktree's sparse cone; the gate WARNs and the commit lands, and the schema cannot be read in this worktree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO MX-c-30 Bounds 4 and section 3: a commit through the naming gate is graded on its staged set, and an investigation row is validated against org/surprise_channel/schemas/investigation_item.schema.json.",
+    "world_is": "Commit df1d8d9740 (safe-commit of 4 paths, rc=0) printed '[naming-gate] why: RAISE as S3Key: rule or registry defect, not a refusal: K7: the LIST org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json is absent and this key's verdict turns on membership ... so this copy mints nothing: WARN' (.scratch/commit_i.txt, lines 18 and 20). The sparse cone of wk-NFRA_MCPINDEX-50 holds workflows, infra/aws/ec2/opal-gateway, the census folder and the D9 mission files; org/missions/D14 and org/surprise_channel are not in it, and org/surprise_channel/schemas/investigation_item.schema.json does not exist in the worktree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list in C:/tmp/mi2-wk50 (no org/missions/D14, no org/surprise_channel entry)",
+        "safe-commit output of df1d8d9740: commit-gate and naming-gate lines 18 and 20 of .scratch/commit_i.txt",
+        "cat of org/surprise_channel/schemas/investigation_item.schema.json in C:/tmp/mi2-wk50: No such file or directory"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
