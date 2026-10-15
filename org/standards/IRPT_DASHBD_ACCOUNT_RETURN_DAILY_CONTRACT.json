@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.2.0",
+  "contract_version": "0.3.0",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
   "authored_by": "0.4.0_DS_ClientPlatform~S",
@@ -124,6 +124,21 @@
       "meaning": "the shape of this emission"
     }
   ],
+  "optional_columns": [
+    {
+      "name": "source",
+      "type": "string",
+      "nullable": true,
+      "meaning": "where this account-day's return comes from, named in words so a page can state it; one of the values below, and it names the source the return was computed from, not the emitter's code path",
+      "values": [
+        "orion",
+        "computed from Black Diamond values and flows",
+        "computed from custodian holdings"
+      ],
+      "rule": "An ABSENT or null source means the table was written before this column existed, or its emitter has not adopted the column yet; a page states NO source for such a table and never infers one from the other columns. A null is never a value of source.",
+      "since_schema_version": "1.1"
+    }
+  ],
   "enums": {
     "history_scope": [
       "FULL",
@@ -184,16 +199,27 @@
     }
   },
   "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
+  "schema_hash_with_optional": "bc70ee2f2e0b54fd13e3b11fedae943003d4172199a561a4923c3e1a1ad59a27",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries. The check recomputes it against the landed parquet, so contract and artifact cannot drift.",
   "firm_specific_columns": "NONE. A firm-specific column is a contract violation (C-SHAPE); no sb_cd, tr_cd or any Schwab code survives into this table -- they live only in the adapter's sources.json.",
-  "supersedes": {
-    "contract_version": "0.1.0",
-    "schema_hash": "b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058",
-    "changes": [
-      "return_basis LOSES the member HOLDINGS_INCOME_FALLBACK (ruling 17: the substitution is withdrawn, so a guard disagreement serves no number).",
-      "NEW non-null string column guard_state, 19 columns in all (ruling 18's field: what the holdings guard DID with the account-day)."
-    ]
-  },
+  "supersedes": [
+    {
+      "contract_version": "0.1.0",
+      "schema_hash": "b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058",
+      "changes": [
+        "return_basis LOSES the member HOLDINGS_INCOME_FALLBACK (ruling 17: the substitution is withdrawn, so a guard disagreement serves no number).",
+        "NEW non-null string column guard_state, 19 columns in all (ruling 18's field: what the holdings guard DID with the account-day)."
+      ]
+    },
+    {
+      "contract_version": "0.2.0",
+      "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
+      "changes": [
+        "0.2.0 is the base of this minor bump; the 19 columns, their types and schema_hash are unchanged in 0.3.0.",
+        "0.3.0 adds the OPTIONAL column source (string, nullable, values as words) under optional_columns, with its own schema_hash_with_optional; source is NOT added to columns, so schema_hash and every 19-column check stay as they were."
+      ]
+    }
+  ],
   "schema_hash_control": "THE METHOD IS CONTROLLED, not asserted: recomputing it over the same ARROW_SCHEMA with guard_state removed reproduces 0.1.0's published hash b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058 exactly. A hash whose method could not reproduce the previous published value would be unverifiable.",
   "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py -- the 19-field ARROW_SCHEMA this hash is taken from. The producer commit carrying guard_state must land WITH this contract, because the check recomputes the hash against the landed parquet.",
   "served_day_rules": {
