@@ -18429,3 +18429,33 @@
   "notes": "Observation only. The record is an issuer artifact and is not edited by this worker."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-W182-S3 -- resolves W182-S1: the issuer's amendment a294ca574a admits the contract's nested opal_naming import in the hygiene allow-list; AC2 now passes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W182-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~182",
+  "surfaced_at": "2026-10-15T18:25:33Z",
+  "one_line": "BLOCKING row W182-S1 is resolved by the issuer's amendment a294ca574a: NESTED_OK now includes opal_naming; AC2 hygiene82 prints AR-G82-HYGIENE-OK and AC1 g82 prints AR-G82-OK cases=7 tests=11, both at this worker's tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W182-S1 (BLOCKING): the order's contract item 4 requires a nested import of opal_naming in the default s3_root; the AC2 hygiene allow-list (NESTED_OK in ar_g8x_checks.py) did not admit it, so AR82-g-AC2 FAILed.",
+  "world_is": "Re-measured in worktree C:/dev/wk-irpt-anlreq-182 at product commit 224b73edce with the issuer's amended checker copied in as an uncommitted modification (not committed by this worker; not in its paths): git diff shows NESTED_OK = pandas, pyarrow, yfinance, io, json, time, opal_naming, and the g82 AC1 run is unchanged. hygiene82 prints AR-G82-HYGIENE-OK top=math,tr_level nested=io,opal_naming,pyarrow (rc 0). g82 prints AR-G82-OK cases=7 tests=11 (rc 0). The issuer's amendment is on main at a294ca574a (git cat-file -t reads commit in this worktree). The same diff also adds an AR-g-83 case (cases83, a split on a dropped bad-Close row) which is outside this order and was not run here by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ar_g8x_checks.py hygiene82 at worktree C:/dev/wk-irpt-anlreq-182 with the amended checker: AR-G82-HYGIENE-OK top=math,tr_level nested=io,opal_naming,pyarrow (rc=0)",
+      "ar_g8x_checks.py g82 at the same tree: AR-G82-OK cases=7 tests=11 (rc=0)",
+      "git diff of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g8x_checks.py in the worktree: NESTED_OK line 20 gains opal_naming; uncommitted",
+      "git cat-file -t a294ca574a in the worktree reads commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closes the blocking condition of W182-S1 by the issuer's amendment; S1 is not edited and keeps its filed text. S2 stands as filed and was ruled correct by the issuer (the order governs). The AR-g-83 case in the amended checker is not verified by this worker."
+}
+```
