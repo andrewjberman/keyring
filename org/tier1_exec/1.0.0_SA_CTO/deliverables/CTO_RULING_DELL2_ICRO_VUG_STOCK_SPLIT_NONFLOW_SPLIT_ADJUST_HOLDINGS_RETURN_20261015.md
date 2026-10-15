@@ -29,3 +29,12 @@ confirms the 6.0 split on 2026-04-21.
    `SPLIT_UNADJUSTED_COMPARISON` in words, replacing `CONVERSION_LEG_ABSENT`.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## Erratum (on CVO~IRPT ADJUDICATION_v115 @aadb84c1c9, msg 8269)
+
+Item 4's "the producers already key on all three" holds for **49 Financial only**. `(tran_srcde, tr_cd, sb_cd)` is 49F's Schwab schema.
+Cottonwood (Black Diamond) and Inflection (Orion) carry none of those columns (W415-S1). As ruled to `~P2` on msg 8265: each firm uses a
+DECLARED split key taken from its own feed's vocabulary. That is the triple for 49F; `Corporate Action Split` / `Reverse Split` for Black
+Diamond; and `Stock Split` / `Reverse Stock Split` for Orion (the existing adapter mapping). 49F's pair goes first. The custodian ratio governs
+when it is a clean rational within 0.5 percent, and otherwise the day is `SPLIT_RATIO_ABSENT`. The pair measures its DELTA by a producer dry
+run. The 920 count (graded account-days) and the 985 count (accounts holding a split security) are different sets, and both stand.
