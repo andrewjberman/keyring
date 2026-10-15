@@ -789,7 +789,48 @@
       "disposition": "UNDER_INVESTIGATION",
       "spec_asserts": "TO RV-m-5 worker face: look in the files' own directories for any other overlay and name it in a surprise row, a wall you may not edit.",
       "world_is": "SatelliteModal.tsx and EtfModal.tsx are modals on HeroDialog and are not on the RV-m-5 list; LoadingSpinner.tsx draws a full-page loader, which is not a modal. None is edited."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S14",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T10:23:36Z",
+      "one_line": "The App.tsx account-menu popup items keep hover:bg-white/10, and the round-1 light-scope remap excludes hover-variant classes, so on the white popup surface the hover tint is white on white and shows nothing.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "portal/src/App.tsx at ec15d42a: the popup buttons carry hover:bg-white/10 and hover:text-white",
+          "portal/src/index.css lines 546-555 (round-1 scoped rule): the bg-white/ remap excludes classes containing :bg-white/ (a hover variant), so the hover fill is not remapped to a visible tint"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-6 worker face: App.tsx is changed only for the account-menu popup surface, which takes the A-light look; the popup's own classes are not changed.",
+      "world_is": "The surface is the A-light panel and the item text reads navy. The item hover fill (white at 10 percent) does not show on the white surface. Not walked in a browser (no server, per the order); the issuer decides whether the hover needs a light tint token."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S15",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T10:23:36Z",
+      "one_line": "ExportModal and SatelliteModal pass a width class (sm:max-w-[75rem]! and max-w-[56rem]) that must win over the frame's size class through the class merge; the merge is checked by reading the class string only, not by a rendered width.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "portal/src/pages/InvestorReporting/export/ExportModal.tsx: EXPORT_MODAL_PANEL_CLASS = 'sm:max-w-[75rem]!' passed as className to ModalFrame (size xl)",
+          "portal/src/components/SatelliteModal.tsx at ec15d42a: className max-w-[56rem] when there is no sheet, over the size xl max-w-[64rem]"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-6 worker face: each adopted modal keeps its width (the export panel 75rem; the satellite sheet without a factsheet 56rem).",
+      "world_is": "The frame's cn() merge keeps the className's important sm:max-w and the later max-w, so the intended widths should hold. Not walked: no server, no browser, no rendered width measured."
     }
 ]
+```
 ```
 ```
