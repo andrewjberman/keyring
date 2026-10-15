@@ -19476,3 +19476,30 @@
   "world_is": "The delta at the pin includes intake/uploads.py (an r31 member that AR-g-95 changed), so 15 changed and 284 identical; each changed member equals its blob at the pin."
 }
 ```
+
+## IRPT_ANLREQ-D2-W159-S1 -- AR-y-362 step 1 premise fails: no source classifies BREIT, SREIT or KPEC as TICKER_DATA_NOT_ENTITLED for a bare ticker
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W159-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~159",
+  "surfaced_at": "2026-10-15T22:01:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-362 step 1 found no candidate the door source classifies TICKER_DATA_NOT_ENTITLED for a bare ticker: BREIT is TICKER_NOT_FOUND by its pinned capture, SREIT and KPEC have no hit in the door tree; BREIT chosen as the least-sure fallback.",
+  "spec_asserts": "TO-AR-y-362 step 1 (decomp AR-y-362, PRD v0.17 item 3): pick the ONE of BREIT, SREIT, KPEC that the door source classifies TICKER_DATA_NOT_ENTITLED; if none is so classified by source, pick the one a fixture or the entitlement list names as uncovered, and say it is the least-sure choice. The cell presumes one of the three is source-classified NOT_ENTITLED.",
+  "world_is": "At HEAD 35193dba68 no source line gives a bare BREIT, SREIT or KPEC the TICKER_DATA_NOT_ENTITLED code. The emit at intake/portfolio.py:533 needs a verified gated fund row that answers the bare ticker, and no fixture shows one for BREIT: the 9 gated BREIT rows in lookup_capture/04_suggest_BREIT.json are keyed BREIT.S and similar, and that file is a typeahead. The pinned securities_info capture (02_securities_info.json) has no BREIT row, so bare BREIT is NOT_FOUND and emits TICKER_NOT_FOUND (portfolio.py:520). SREIT and KPEC appear nowhere in infra/aws/lambda/investor-reporting (git grep rc=1); they are named only in the PRD, decomposition and task orders. The choice of BREIT is therefore by fixture (the only entitlement-gated fund shape in the door tree), not by source classification. Run 3 still files one unpriceable holding under the TICKER_NOT_FOUND class, which PRD v0.17 item 1 also files UNRESOLVED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py@35193dba68:519-520 emits TICKER_NOT_FOUND on state NOT_FOUND; :530-533 emits TICKER_DATA_NOT_ENTITLED only on reason PROVIDER_ENTITLEMENT_UNVERIFIED",
+      "infra/aws/lambda/investor-reporting/intake/security_resolution.py@35193dba68:184-190 sets NOT_FOUND on no candidates and PROVIDER_ENTITLEMENT_UNVERIFIED on a gated candidate",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_security_resolution.py@35193dba68:35-39 asserts BREIT state NOT_FOUND on the pinned capture; :44-46 asserts the nine gated BREIT rows are typeahead rows with features_needed",
+      "infra/aws/lambda/investor-reporting/intake/tests/fixtures/lookup_capture/02_securities_info.json@35193dba68 ids are AAPL, VNQ and $:CASH only; git grep -c -i -E 'SREIT|KPEC' HEAD -- infra/aws/lambda/investor-reporting returns no output (rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
