@@ -18734,3 +18734,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "dismissal_reason": "Disarms IRPT_DASHBD-D2-W311-S1: its condition (an edge trading day with neither a row nor an ABSENT row) is absent on the landed tree of round 125, measured by the r125 checker (first-day and last-day fixtures, 28 of 28 rows, unaccounted count 0) and by 93 passing tests."
 }
 ```
+
+## IRPT_DASHBD-D2-W313-S1 -- the r126 checker's no-identifier limb refuses the record's extract path, which the order names as an exempt path field; DB-i-13 criterion DBI126-1-AC1 FAILs on that limb alone
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W313-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~313",
+  "surfaced_at": "2026-10-15T21:54:22Z",
+  "one_line": "The record's extract.path must be the absolute private folder path (the order's exemption for path fields), and that path carries an 8-digit run; the checker's no-identifier limb scans the whole record and refuses it, so DBI126-1-AC1 FAILs at that limb. The order's exemption is not in the checker.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-i-13 record rule: no run of 8 or more digits except in a sha256 value or a path or file field; the record carries the absolute private path of the extract. Checker p126_cause.py no_identifiers: any run of 8 or more digits anywhere in the record, after removing only 64-hex digests, fails.",
+  "world_is": "The private folder name carries an 8-digit run, so the record's extract.path holds one and no_identifiers refuses it (checker output: REASON a run of 8 or more digits in the record: 202, DBI126-1-AC1 FAIL). With that one field excluded in a diagnostic copy under the worker scratch (not the verdict), every other limb passes (DBI126-1-AC1 PASS): the script hash, the body hashes, the extract hash, the series and early-end counts, the per-account rows and the verdict counts all recompute equal. The official checker is unchanged; the criterion stays FAIL until the issuer rules the exemption.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r126/p126_cause.py@b8b717d5a5 (no_identifiers, the 8-digit regex over the whole record)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-13.orion-series-ended-cause-read-saved-bodies-against-positions-silver.md@768ab85a86 (record item 6: extract path, and the no-digit exemption for path and file fields)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~313/series_ended_cause.py (writes the record; the path is the private folder the order names)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a worker repair: the record keeps the path the order names, the checker is not edited, and the order stays open with DBI126-1-AC1 FAIL. Issuer choice: exempt the extract.path field in no_identifiers, or name the extract by a path with no 8-digit run. Reads on the record: 120 S3 reads (117 GETs), no write."
+}
+```
