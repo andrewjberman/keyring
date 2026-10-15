@@ -57,3 +57,12 @@ tick, axis and grid chrome and one cap class change.
 
 - The footer clip is a one-class cause (`max-h-[72vh]` passed by the modal), so the cell is small; the 15-prop chart class is the real work.
 - Item 2 is executed as drain discipline; the counts print in the merge commit message.
+
+**Addendum 1 (issuer, 2026-10-15 ~12:0xZ; the issuer rules inside its own decomposition, /canonical-drive obligation 7):** one DIRECT-ACT cell, from the `RV-c-1` worker's rows `DSGN_RBNDV2-W10-S1` and `W10-S2`: `IndexPerformanceModal.tsx`
+(lines 456, 460, 461, 472, 473, 479) and `RSIModal.tsx` (lines 229, 334, 351, 370, 375, 376) hold the same literal white chart props the CTO named in the other two modals. They are on the round-2 adoption list (`RV-m-4`), so a modal whose axes
+cannot be read is the same defect (C-MODAL, FWD-3). Gate limb: none graded the amendment.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `RV-c-2` | DIRECT-ACT: the literal white chart props of `IndexPerformanceModal.tsx` and `RSIModal.tsx` read the same tokens as `RV-c-1`: grid stroke `var(--rb-rule)`, axis stroke `var(--rb-quiet)`, tick fill `var(--rb-ink-3)`; any other white-alpha chart literal maps by alpha (at or below 0.15 to rule, 0.4 to quiet, 0.5 or more to ink-3) and is named | FWD-3, FWD-5 | `src/components/market-performance/IndexPerformanceModal.tsx`, `src/components/market-performance/RSIModal.tsx`, `src/components/market-performance/__tests__/dsgn-rbndv2/` | `src/components/market-performance/FearGreedModal.tsx` | LOCAL |
+
