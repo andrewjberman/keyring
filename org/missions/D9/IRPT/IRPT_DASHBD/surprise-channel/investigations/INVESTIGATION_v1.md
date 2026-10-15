@@ -15890,3 +15890,54 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm owner 2.0.0_SA_COO~C2 (this row), done. The description text is corrected in the next change to that block, if one is ever made. For the new account_dim root (DB-c-18) the schedule is created DISABLED, enabled by the same one-line change after its catch-up after-read."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W191-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~191",
+  "surfaced_at": "2026-10-15T08:02:00Z",
+  "one_line": "The filled stage needs the full gold history, not one day of each gold table",
+  "spec_asserts": "TO-DB-b-237 step 2 says the stage reads that day's gold tables of the firm, through the same reader helpers the earlier stages use, and builds the day's rows from them.",
+  "world_is": "The module's build_document and main() take the whole history: every partition of account_return_daily, account_activity_daily, account_lot_realized and account_class_daily (read_gold_rows with every=True), the newest unrealized-lot partition, and the served model series that the windows are computed from. The stage follows the module: filled_inputs reads those partitions once per fire and builds every owed day from them. The fire's 900 s ceiling is shared with the earlier stages; the stage's duration was not measured in this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py at 69f66970b5: build_document lines 643-717; main lines 1011-1112",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py at 69f66970b5: filled_inputs and filled_stage",
+      "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf at 69f66970b5: timeout = 900"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer's packet: state the measured duration of the filled stage before the apply, or the first fire after the apply carries the timeout risk. Counts and paths only."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W191-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~191",
+  "surfaced_at": "2026-10-15T08:02:00Z",
+  "one_line": "The reporting-gold role grants no read of the served model series or of the household crosswalk",
+  "spec_asserts": "TO-DB-b-237 asks the IAM question for the write prefix only and says the stage's reads go through the handler's own reader helpers, which the role's existing read statements cover.",
+  "world_is": "iam.tf reads are the statements ListExactlyTheSixGoldPrefixes and ReadTheSixGoldPrefixesOnly, scoped by locals.tf to the irpt gold prefixes (holdings, returns, class, activity, realized, unrealized). The module reads two surfaces outside them: the served model series object (read_served_series: bucket opal-data-portal-v2, key json/benchmarks/model_portfolio_timeseries.json) and the advi household_crosswalk gold prefix (FirmAdapter.households). No statement in iam.tf grants either. At the apply those reads are denied; the stage then logs each day as FILLED_SKIPPED and the earlier tables are unaffected. The packet must add read grants for both surfaces, or the stage cannot land.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf at 69f66970b5: statements ListExactlyTheSixGoldPrefixes and ReadTheSixGoldPrefixesOnly",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf at 69f66970b5: irpt_rg_gold_read_prefixes",
+      "data/assets/scripts/gold/irpt_reporting/adapters/model_series_windows.py at 69f66970b5: SERVED_BUCKET, SERVED_KEY, read_served_series",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py at 69f66970b5: FirmAdapter.crosswalk_prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks the apply's landing of the stage, not this cell's build; nothing is deployed. The write-prefix gap (the filled prefix is not in WriteTheFiveGoldPrefixesOnly) is a fact in RD_HOP1_STAGE_FACTS_R120.json, not a row."
+}
+```
