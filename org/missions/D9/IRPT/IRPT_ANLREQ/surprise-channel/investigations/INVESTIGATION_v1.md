@@ -19732,3 +19732,81 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S130 -- disposition of IRPT_ANLREQ-D2-W198-S1: the stale proxy prose is left until those files next change
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T23:27:58Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S130",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The prose is stale and harmless: three comments and one docstring name a retired flow and change no behaviour. They are fixed the next time portfolio.py and uploads.py change for another reason, so a prose-only edit does not force a second re-pin of the Lambda's staged rows before r33.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W198-S1: the stale proxy prose in portfolio.py and uploads.py is left until those files next change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AR-g-96 merged @78e28b386b; ar_g96_checks g96 and regress re-run by the issuer on the merged tree: AR-G96-OK 23 cases, AR-G96-REGRESS-OK 225 tests",
+      "the worker's row W198-S1 lists the four places; none is executed code"
+    ]
+  },
+  "spec_asserts": "NAME_PROXY is retired from every filer-facing finding (PRD v0.19): a finding the door emits carries no such action or word.",
+  "world_is": "No finding or word the door emits names a proxy (AC1 case D1 and D8 dump every finding and both word tables); only source comments do."
+}
+```
+
+## IRPT_ANLREQ-D2-S131 -- disposition of IRPT_ANLREQ-D2-W199-S1: the two request sizes are equal
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T23:27:58Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S131",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Both modules are now merged and the equality the comment asserts is measured: swap_pass.REQUEST_CHUNK equals yahoo_history_days.DEFAULT_CHUNK, 50.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W199-S1: REQUEST_CHUNK equals DEFAULT_CHUNK (50), read on the merged tree after AR-g-98 and AR-g-99 landed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python import of both modules on the merged tree: swap_pass.REQUEST_CHUNK == yahoo_history_days.DEFAULT_CHUNK -> True, 50",
+      "AR-g-98 merged @8540b8449c, AR-g-99 merged @a6bcac3875; round 24's wiring test will assert the equality"
+    ]
+  },
+  "spec_asserts": "The swap's per-holding Yahoo request bound uses the history port's real request size.",
+  "world_is": "The two constants are equal; no coupling test exists yet (the wiring cell adds one)."
+}
+```
+
+## IRPT_ANLREQ-D2-S132 -- disposition of IRPT_ANLREQ-D2-W200-S1: the merged files read clean for account-id-shaped strings
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T23:27:58Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S132",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The client-account gate could not run on this box, so the issuer read the merged files for account-id-shaped strings: none present. The gate stays unmeasured; the box's hashed list is not this order's to place.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W200-S1 (ARMED, client account-id check absent on this box): the merged files hold no account-id-shaped string, read by the issuer at a6bcac3875.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Regex (?<![0-9.])[0-9]{6,}(?![0-9]) over yahoo_history_days.py (137 lines) and tests/test_yahoo_history_days.py (128 lines) at a6bcac3875: no match",
+      "The same read of swap_pass.py, build_swap_pool.py and their tests at 8540b8449c: no match"
+    ]
+  },
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned against the hashed list; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "The files are code and tests over made-up tickers and dates; the issuer's read is not the gate's check and does not claim it. The same instrument gap is on the record as W143-S2, W52-S25 and S124."
+}
+```
