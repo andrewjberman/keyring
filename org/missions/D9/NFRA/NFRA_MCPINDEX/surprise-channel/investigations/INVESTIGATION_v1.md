@@ -8435,6 +8435,112 @@ carries none.
       ]
     },
     "notes": "Owner of the ranking question is 2.0.0_SA_COO~O (R16.4): a rule that orders a curated need against a servable table needs a decision on which pin wins (E-16's or E-8's). Not a gate field; no access changes."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-15T22:50:54Z",
+    "one_line": "c21_check.py opens bucket_source relative to the repo root, but the TO defines bucket_source relative to infra/aws/ec2/opal-gateway; AC2's declared-S3 sub-check cannot pass under the documented convention.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO section 1 item 3: bucket_source is <path>:<line>, the path relative to infra/aws/ec2/opal-gateway; for an S3 bucket the bucket name must appear within 6 lines of that line. Criterion AC2 expects 'declared S3 buckets unproved 0'.",
+    "world_is": "c21_check.py ac2 opens each bucket_source with open(path) relative to the process cwd, and c21.AC2.sh runs it from the repo root (_root.sh). Measured in worktree C:/tmp/wk-r18-45: 'declared S3 buckets 5, unproved 5' (harvest_get_article, news_for_security, opal_data_refresh_upload, schwab_get_access, schwab_prepare_download), RESULT FAIL, rc=1. Resolved from the gateway folder, all six declared S3 sources name their bucket inside the window (harvest_read.py:26 for three, opal_portal/integration.py:109, deploy/NFRA_OPLGTW_CONTRACT.json:301 for two); harvest_list is outside the checker's members list.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c21_check.py@257da358d8 (ac2: open(path) at the bucket_source check, relative to cwd)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/_root.sh@257da358d8 (cd to the repo root before the python call)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-21.c-group-bucket-on-every-row-and-tool.md@257da358d8 (section 1 item 3: bucket_source path relative to infra/aws/ec2/opal-gateway)",
+        "c21.AC2 run at the repo root of worktree 0.9.0_WK_NFRA_MCPINDEX~45: 'declared S3 buckets 5, unproved 5', RESULT FAIL, rc=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-15T22:50:54Z",
+    "one_line": "A served PENDING tool (harvest_list) has no members.yaml entry, so its declared bucket needed a top-level buckets: list the TO does not name, and the AC2 checker does not grade it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO section 1 item 3: a tool that no row names declares bucket: in tool_index/members.yaml as a new optional field on a member; the emitter refuses a tool with no derivable and no declared bucket.",
+    "world_is": "harvest_list is served by the deployed census (99 served tools) and its entry lives in tool_index/pending_members.yaml, outside this cell's <paths>. A members.yaml member for it would duplicate the pending entry and refuse the emit. It is declared in a new top-level buckets: list of members.yaml (read by emit_catalog_v02.load_declared_buckets; bucket opal-data-harvest, bucket_source app/harvest_read.py:26). c21_check reads only the members list, so AC2 does not grade this declaration.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tool_index/pending_members.yaml@257da358d8 (harvest_list, owner AMGT_HARVST)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c21_check.py@257da358d8 (ac2: members dict built from members.yaml only)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-21.c-group-bucket-on-every-row-and-tool.md@257da358d8 (section 1 item 3, members.yaml declaration)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-15T22:50:54Z",
+    "one_line": "The two (a) tools whose index is a channel row have no bucket to inherit: channel rows carry no bucket, so the emitter gives them the catalog's top-level bucket, which the TO does not state.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO section 1 item 3: the bucket of a member-a tool is the bucket of its index row; item 1 writes bucket on the three asset sections only.",
+    "world_is": "gateway_query_catalog and opal_asker_query index mp.04.model-portfolio-timeseries, a channel row under channels.*.artifacts. Channel rows carry no bucket and sit outside the three sections. The emitter gives both tools the catalog's top-level bucket (opal-data-portal-v2), the value the comment in c21_check.py names for this case. AC2 does not grade the case (no expected value is checked).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@257da358d8 (channels.*.artifacts rows carry no bucket field)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c21_check.py@257da358d8 (ac2: exp = None for an (a) tool indexed by a channel row)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-21.c-group-bucket-on-every-row-and-tool.md@257da358d8 (section 1 item 3)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-15T22:50:54Z",
+    "one_line": "The tool index definition lines point at the deployed commit c4c106aea1, not the HEAD the order runs on; the cited bucket_source lines were located by reading the worktree, not from the definition field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO section 1 item 3: read the tool's definition (the tool index's definition field gives its file and line).",
+    "world_is": "The definition field is written from the census at the deployed commit c4c106aea1 (whoami at app/tools.py:198). HEAD 257da358d8 has moved the gateway app (git diff --stat c4c106aea1 HEAD lists 21 changed files under infra/aws/ec2/opal-gateway/app, app/tools.py among them; whoami is defined at line 210 in the worktree). Each declaration cites a worktree line that was read and checked to be the tool's own call.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/assets_group_map.json@257da358d8 (census base c4c106aea1 named in its _about)",
+        "infra/aws/ec2/opal-gateway/app/tools.py@257da358d8 (whoami def at line 210; census definition line 198 at c4c106aea1)",
+        "git diff --stat c4c106aea1 257da358d8 -- infra/aws/ec2/opal-gateway/app (21 files changed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-15T22:50:54Z",
+    "one_line": "The order gives no rule for a write-only S3 target or a contract-configured bucket: copy_site_file_to_s3 is classed by its Graph read, and the two Schwab tools cite the deploy contract file, not the tool's own code.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO section 1 item 3: a tool reading several buckets takes its primary one; bucket_source is the line in the tool's own code where it names the bucket or the store.",
+    "world_is": "copy_site_file_to_s3 reads one SharePoint item through the Graph call (app/integrations/advi_billing/site_to_s3.py:168) and writes an S3 object under a deploy-time root (ADVI_FEE_STATEMENT_S3_ROOT / ADVI_MARKET_UPDATE_S3_ROOT, no literal bucket in code); it is classed graph by its read. schwab_get_access and schwab_prepare_download name opal-data-assets only as source_bucket in deploy/NFRA_OPLGTW_CONTRACT.json:301, outside the tool's code; cited there.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/advi_billing/site_to_s3.py@257da358d8 (Graph call line 168; put_object to a configured bucket)",
+        "infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json@257da358d8 (source_bucket opal-data-assets at line 301)",
+        "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py@257da358d8 (get_access and prepare_download read the contract bucket)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
