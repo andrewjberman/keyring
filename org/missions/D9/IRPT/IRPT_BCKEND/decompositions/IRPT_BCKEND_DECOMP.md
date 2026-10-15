@@ -4158,3 +4158,15 @@ Check IB212-1 (`deliverables/2.0.0_SA_COO~P2/checks/r212/p212_cells.py`), dry-ru
 | `IB-pr-573` | RUN 49 Financial's candidate screen offline on the lost ACTIVE account's rows; the failing condition; the comparison with Cottonwood's; the fix options in the code | FWD-21 | SERVED | none (the Cottonwood comparison reads IB-pr-571 if landed) | PE1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~416) starts now.
+
+## 209. ROUND 1, WORKSTREAM ~PF (how Cottonwood's EMPTY-at-the-source account is accepted as closed; 2026-10-15 ~12:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8263)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a workstream issues its own round). The Cottonwood validator READ (IB-pr-571) measured the failing condition: the account has only no-position rows in the custodian source, so the validator refuses an empty custody frame. The CTO ruled (msg 8263) that the source itself reports zero positions on three trading dates, so the account is EMPTY at the source, not silently lost: the "closed at the source" branch of his S158 ruling. The acceptance is a never-widen pair bound to the one account and the first date it is accepted from (evidence: the source rows' dates and zero position counts; blast radius one account leaving the served snapshot; rollback the prior publication; guard unchanged, no general override, no custodian contact), and the directory's missing TERMINATED mark is filed as a row for the directory's owner. The pair needs the MECHANISM: the guard exempts an account only through the directory's TERMINATED mark (`closed_account_ids`). One READ cell: who writes the mark, its shape, the precedent (2 TERMINATED entries in 271), the evidence dates, and an OFFLINE gate run with a stub closed-account provider proving the account lists as closed and not refused and no other node moves. Nothing is written. The pair packet follows on its record.
+
+Check IB213-1 (`deliverables/2.0.0_SA_COO~P2/checks/r213/p213_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control213.py`) passes all three and eighteen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-574` | READ the TERMINATED mark's writer, shape and precedent, the zero-position evidence dates for the one account, and an offline gate run with the mark stubbed | FWD-21 | SERVED | none | PF1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~417) starts now.
