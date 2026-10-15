@@ -16238,3 +16238,33 @@ name the one known failure instead of silently inheriting it.
     "notes": "Armed because the order's merge step runs the same registration in one commit: a second pass on the tree this worker committed writes duplicates before it refuses. Disarm is the issuer's: do not re-run hookup_g5cv.py on HEAD 3532daff79 or later; the registration is already present. The scratch copy was deleted after the run."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S135",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T02:20:57Z",
+    "one_line": "RESOLVES NFRA_OPLGTW-Z-S133 and records two grader findings from the same act. Z-S133 is RULED (amendment A8, route (a)) and LANDED: the host now serves /yearinreview in its LF form 3bbd5ab2, measured post-deploy. Separately, ap18.AC2 failed three limbs on my first run and all three were my own record rather than the release -- two graded field names I had nested under names of my own, and an md5 I had placed inside runbook 7.2's graded paragraph window, where rb.AC2 reads any backticked hex string as a ROLLBACK TARGET COMMIT.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "amendment A8 at HEAD: 'Z-S133 ruled route (a) (CTO msg 34298): this deploy ships the page in its LF form 3bbd5ab2 (identical content); Phase B records the host's page md5 in GT_SERVED.json as yearinreview_md5'",
+        "measured on the host after the 01:57:04Z deploy: /yearinreview md5 3bbd5ab2d325657020357003c3ea387d, 47891 bytes, 0 CRLF, and \"until\": \"2026-10-11\" still present -- so the content did not change and only the 344 line terminators did",
+        "ap18.AC2 first run: 'trading-day lag numeric no; host calendar md5 equal no' -- both facts WERE measured and present in W/GT_SERVED.json, nested under triggers as numeric_somewhere and lib_new_artifact_member.md5; the grader reads body.trading_days_behind_t1_numeric and body.host_calendar_md5_equal, the names A4 and A6(2) use",
+        "ap18.AC2 first run: 'rb.AC2 FAIL' with 'no guard: 3de6a337e268614698943b038248113b' and 'not in manifest history: 3de6a337e268614698943b038248113b' -- that string is lib/trading_calendar.py's MD5, not a commit",
+        "rb.AC2.sh:23-24 reads para = the first TWO paragraphs of section 7.2 and shas = every backticked [0-9a-f]{10,40} in them, then requires each non-live one to carry app/data_entitlement.py and to appear in the manifest's deployed_commit history",
+        "after moving the md5 one paragraph down and naming bf7ffb62f4 in the window: 'targets named 1, without guard 0, not in manifest history 0' and rb.AC2 RESULT: PASS; the window now holds exactly 047f11aa99 and bf7ffb62f4",
+        "ap18.AC2 after both fixes: ledger CLOSED 1 of 1, sentinel 0, landed=current, rb.AC2 PASS, registry 46 -> 56, per-tool 10 of 10, lag numeric yes, host calendar md5 equal yes, RESULT: PASS"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "Z-S133 asked which of two routes the issuer wanted, and A8 answered route (a). A record that CARRIES a measurement satisfies a criterion that asks for it.",
+    "world_is": "Route (a) is live and reproducible -- every clean checkout materialises the LF form, which is what made it the recommendation. But a measurement is only graded if it is under the NAME the grader reads: mine were present, correct and invisible. And a hash in prose is not inert: section 7.2 is machine-graded, and an md5 placed in its first two paragraphs is indistinguishable to rb.AC2 from a commit that does not exist, so a documentation sentence failed a release criterion. ONE LIVE CONSEQUENCE REMAINS, and it is the issuer's: yr1.AC2 compares the host against md5_source 0d828b51 in W/YR_SERVED.json, so that criterion will now read host-md5 != source against a correct deploy. Re-pointing that record to 3bbd5ab2 is the issuer's call and I have not done it unilaterally.",
+    "notes": "Three lessons, in descending order of how much they generalise. (1) THE GRADER IS THE ORACLE FOR A FIELD NAME, not my summary of what the field means: I recorded both facts faithfully under descriptive names of my own and the criterion read them as absent, which is indistinguishable from not having measured them. Read the grader's bytes for the key, exactly as one reads a criterion's bytes for its invocation. (2) A HASH IN A MACHINE-GRADED DOCUMENT IS AN INPUT, NOT A DECORATION. 7.2's first two paragraphs are the rollback-target window; anything 10-40 hex and backticked there is parsed as a commit. The runbook now carries a sentence saying so, inside the paragraph where the md5 lives, so the next editor does not re-introduce it -- the fix that lasts is the one that explains itself at the site. (3) AN INVESTIGATION ROW IS APPEND-ONLY. I first tried to flip Z-S133's hazard_standing and disposition IN PLACE, reasoning that the disarm_owner had ruled so recording the disarm was faithful. The gate refused: 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit', and only a REMEDIATION row's own clocks may advance in place. It is right, and my own banked note had the cases the wrong way round. Z-S133 keeps its ARMED/UNDER_INVESTIGATION bytes exactly as written, and this row is what resolves it."
+  }
+  ```
