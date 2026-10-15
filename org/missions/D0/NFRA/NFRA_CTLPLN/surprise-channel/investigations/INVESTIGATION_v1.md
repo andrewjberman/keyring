@@ -11033,3 +11033,80 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "A selftest path writes fetch-shaped records without a device key. The reader counts each as unattributed, so a selftest record can never be counted for a box. Where the selftest writes was not traced beyond cfg.records_dir."
 }
 ```
+
+## NFRA_CTLPLN-W113-S1 -- the pinned-entry deploy derives the S3 key from the safe-deploy.sh header, not from the core's PIPELINE_MAP; silver and bronze keys are unverified
+
+```json
+{
+  "id": "NFRA_CTLPLN-W113-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~113",
+  "surfaced_at": "2026-10-15T14:35:03Z",
+  "one_line": "The pinned-entry step in the pre-push hook maps a deploy-scope path to its S3 object from the safe-deploy.sh header (data/black_diamond -> opal-data-bd, data/inf -> opal-data-inf, data/cot -> opal-data-cot; key code/<layer>/<name>). The order did not name safe_deploy_core.py's PIPELINE_MAP as a read, so I did not read it; the silver and bronze keys are unverified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/pre-push-safe-deploy.sh@19564581c6 pinned_entry_deploy(): the PINNED_PY block (BUCKETS map and the code/<layer>/<name> key line)",
+      ".tools/safe-deploy.sh@9cfc5f5fd8 header lines 27-33 (the pipeline-to-bucket mapping and the cot gold key note; the PIPELINE_MAP reference names the core, which is not read here)",
+      "test run .tools/tests/test_round20_pinned_entry_deploy.py (default arm): STUB | S3-READ opal-data-inf/code/gold/pinned_fixture.py, a local test double, not the real bucket"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-2 BUILD step 1: the gate compares the object the entry pins with what S3 holds for it; the order does not state the bucket or key of a deploy-scope file.",
+  "world_is": "The gate reads s3://opal-data-<pipe>/code/<layer>/<name> for a pinned file. A wrong key reads as ABSENT, which counts as differing, so a pinned file would be redeployed on every box push while its entry is OPEN (the bytes deployed are always the pinned blob). The owner should check the key against PIPELINE_MAP in .tools/safe_deploy_core.py (ONE WRITER IRPT_BCKEND; not edited here)."
+}
+```
+
+## NFRA_CTLPLN-W113-S2 -- the worker sparse set omits org/critical_paths/.open_deploys, which the order names as a read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W113-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~113",
+  "surfaced_at": "2026-10-15T14:35:03Z",
+  "one_line": "The order says to read one entry of org/critical_paths/.open_deploys/, but the worktree cut by wk-provision did not carry that folder; it was added with git sparse-checkout add (rc=0) and the folder then listed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree /c/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-113: git sparse-checkout list (before the add) held .tools, infra/logic/registry, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards",
+      "ls -a org/critical_paths/.open_deploys/ -> 'No such file or directory' before git sparse-checkout add org/critical_paths/.open_deploys (rc=0); 17 sentinel files listed after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: the sparse set holds the paths of this order; a missing folder is named by a sparse-checkout add and the folder is named in the report.",
+  "world_is": "The read the order asked for (one pinned-entry shape) was not in the sparse set; the add was the prescribed remedy and is named in the worker report."
+}
+```
+
+## NFRA_CTLPLN-W113-S3 -- on a pinned-entry deploy the safe-deploy seat gate reports apply-who REFUSED for the worker serial
+
+```json
+{
+  "id": "NFRA_CTLPLN-W113-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~113",
+  "surfaced_at": "2026-10-15T14:35:03Z",
+  "one_line": "A pinned-entry deploy routed through safe-deploy.sh prints 'APPLY-WHO ... verdict=REFUSED reason=a WORKER does not apply' for the worker serial. It is WARN (apply-who is warn-only by ruling 106858), so the deploy proceeds. The crossbox check had no verdict in the temporary repository only because lib/ is absent there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test run output (default arm) PUSH | safe-deploy: [seat-gates] mode=WARN APPLY-WHO serial=0.9.0_WK_NFRA_CTLPLN~113 kind=WORKER root=inf verdict=REFUSED reason=a WORKER does not apply",
+      ".tools/safe-deploy.sh@9cfc5f5fd8 header comment: apply-who is warn-only in this wrapper (ruling 106858); a no-verdict blocks only under an ENFORCE switch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "safe-deploy.sh seat-gate block: apply-who grades a DEPLOY and is WARN-only in this wrapper.",
+  "world_is": "The refusal is printed and does not change the exit code in WARN mode. Whether a pinned deploy by a worker serial should pass apply-who under a future ENFORCE switch is the owner's question; not decided here."
+}
+```
