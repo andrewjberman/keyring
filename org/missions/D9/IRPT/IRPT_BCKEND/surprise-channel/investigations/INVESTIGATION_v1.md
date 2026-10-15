@@ -38498,3 +38498,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The measured column list of the day's transactions partition in the order's READ does not include ticker_symbol. NOT READ here: the grant has no S3 read, so the presence of the column is unverified. If it is absent, the read raises for that day and the day fails loudly; it does not return an unadjusted figure. Measure the column before release."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W421-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~421",
+  "surfaced_at": "2026-10-15T14:17:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The standing worker rule says to flip the task order status to complete with the instance, but the task order file is outside the paths grant and the AC3 checker refuses it; the flip (7fb308cd25) was reverted (2608245362) and the order stays pending.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 7fb308cd25 flipped the status line of IRPT_BCKEND.TO-IB-pr-578.split-adjust-49f.md to complete with the proof instance; commit 2608245362 reverted it to pending",
+      "p216_cells.py AC3 at HEAD 2608245362 fails: changed_paths differs from the worker's own commits since base; the task-order file is listed as a change and is not in the allowed grant",
+      "the order's <paths> block does not name the task-order file; the standing rule says flip status with the instance"
+    ]
+  },
+  "spec_asserts": "The standing worker rule: after every criterion passes and the instance validates, flip the task order status to complete and commit the instance, deliverables and flip together. The order's grant is its <paths> block, and AC3 grades the worker's own changed paths against that grant.",
+  "world_is": "The two cannot both hold: the status line is the order file, which the grant does not name, so the flip makes AC3 fail, and rewriting history to undo it is not permitted. The order is therefore left pending by a revert commit. The issuer needs to rule whether the flip is the issuer's act or whether the grant names the order file. Nothing deployed; LOCAL only."
+}
+```
