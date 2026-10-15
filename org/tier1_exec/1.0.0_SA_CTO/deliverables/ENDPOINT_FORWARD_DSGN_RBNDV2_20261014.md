@@ -1,86 +1,69 @@
-# ENDPOINT (step 2, /endpoint --forward) -- DSGN_RBNDV2, the surgical re-skin of the portal sidebar and default panel cards
+# ENDPOINT (step 2, /endpoint --forward) -- DSGN_RBNDV2, v2: three targeted steps and a closing walk, on the laptop
 
-**Author:** `1.0.0_SA_CTO`, 2026-10-14 ~20:4xZ. **Brief:** `docs/briefs/dsgn-rbndv2-sidebar-panel-reskin-brief-20261014.md`
-(15,189 bytes, `4.0.0_SA_CRO~A`, commit 1e6d26b626). **Order:** Andrew-direct ~20:1xZ,
-`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_201xZ_DSGN_RBNDV2_SURGICAL_SIDEBAR_AND_PANEL_RESKIN.md`.
-**Status:** NOT YET LANDED in a PRD. Its home is the `ENDPOINT` section of
-`org/missions/D13/DSGN/DSGN_RBNDV2/prd/DSGN_RBNDV2_PRD.md`, written at L4 once Andrew confirms the DONE WHEN lines below.
+**Author:** `1.0.0_SA_CTO`, 2026-10-15 ~03:4xZ. **Supersedes** this file's v1 (FWD-1 to FWD-7, @39a72e7f7f, plus ADDENDUM 1
+@055464bc1a). v1 never landed in a PRD, so its ids carry no contract and are re-cut here.
+
+**Brief:** `docs/briefs/dsgn-rbndv2-sidebar-panel-reskin-brief-20261014.md`, Part I-R (R1-R4) @7c44838003, by
+`4.0.0_SA_CRO~A`. **Order:** `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_201xZ_DSGN_RBNDV2_SURGICAL_SIDEBAR_AND_PANEL_RESKIN.md`
+and its addenda.
+
+**Andrew, verbatim (~00:1xZ):**
+
+> "lets do this whole project on the laptop. it should be extremely targeted, I think its just 3 steps. 1.) Sidebar flip to
+> this color + background same color #EAEAF7. 2.) Panels flip to this fixture type, including solution for modals. 3.)
+> White-&-silver-scaling for heat maps instead of the blue scaling. Once these three are done we just look page by page,
+> modal by modal, and point out if reds/greens etc have to be darker."
+
+**And (~00:0xZ):** "This whole light mode build needs to stay on a feature tree on this box and is only pushed when i say so."
+
+**Status:** NOT YET LANDED. Its home is the `ENDPOINT` section of `org/missions/D13/DSGN/DSGN_RBNDV2/prd/DSGN_RBNDV2_PRD.md`.
+**Placement:** LAPTOP (his word).
 
 ```
-  FWD-1  Andrew opens Market Overview on the dev build, signed in with real data, and sees the new
-         sidebar and the new default panels doing their job on a real page
-         DONE WHEN  EXERCISED -- Andrew has looked at the page and said whether it reads as Opal's work
-         ACCEPT     the page shows real figures, not sample ones; the new look arrived without anyone
-                    rewriting that page; Andrew can say yes or no to how it looks
-         SOURCE     brief Part I, "Candidate thread"
+  FWD-1  Andrew opens Market Overview on the laptop's local build of the design branch, signed in with real
+         data, and sees the new sidebar, background, panels and heat maps together on a real page
+         DONE WHEN  EXERCISED -- Andrew has looked at it and said yes or no
+         ACCEPT     the page shows real figures; the new look came from the shared pieces, not from
+                    rewriting that page; Andrew can say whether it reads as Opal's work
+         SOURCE     brief Part I (the Market Overview thread) with R1-R3
 
-  FWD-2  The left navigation looks like Opal's own, not a template rail
-         DONE WHEN  EXERCISED -- someone who knows opalinvest.com has compared the two
-         ACCEPT     shown the portal beside opalinvest.com, a person says the navigation looks like the
-                    same firm's work; shown it beside a stock admin dashboard, they say it does not
-         SOURCE     brief O1; Part III "Recognisability"
+  FWD-2  The sidebar and the page background are the lavender silver Andrew chose
+         DONE WHEN  APPLIED -- on every page that uses the standard layout
+         ACCEPT     the sidebar and the page behind the panels are both #EAEAF7 on every standard page,
+                    and the sidebar's text and active item are still easy to read
+         SOURCE     R1
 
-  FWD-3  A panel looks like Opal's own, with the precision of an analytics tool, not a stock web card
-         DONE WHEN  EXERCISED -- the same comparison has been made for a panel
-         ACCEPT     a person says the panel looks like Opal's work; nobody says "this looks like Hex"; the
-                    old look (stacked dark strips, a box inside a box, a shouting title with a help icon)
-                    is gone
-         SOURCE     brief O2; Part III "The Hex half is precision, not costume"
+  FWD-3  Panels and pop-up windows use the new panel style
+         DONE WHEN  APPLIED -- on every standard panel and every standard pop-up
+         ACCEPT     panels are white with a thin silver-grey edge, with no stacked dark strips and no box
+                    inside a box; pop-up windows match the panels instead of keeping the old dark look
+         SOURCE     R2 ("including solution for modals")
 
-  FWD-4  The new look reaches every page that uses the standard sidebar and panels, through one change
-         DONE WHEN  APPLIED -- the change is in place and every page using the standard pieces shows it
-         ACCEPT     a reviewer reading the change finds only the sidebar, the shared panel pieces and the
-                    shared colours and corners, and no individual page edited to get the new look
-         SOURCE     brief O3; Part III "Surgical"
+  FWD-4  Heat maps shade from white to silver instead of blue
+         DONE WHEN  APPLIED -- every heat map on the standard pieces
+         ACCEPT     a reader can still tell high from low at a glance, and no heat map is left in the old
+                    blue scale
+         SOURCE     R3
 
-  FWD-5  The pages that did NOT get the new panel are named, not quietly left behind
-         DONE WHEN  APPLIED -- the list exists and matches what a person sees
-         ACCEPT     anyone can read which pages still draw their own old-style panels, open one, and
-                    see that it is indeed still old-style
-         SOURCE     brief O4
+  FWD-5  Every page and pop-up has been walked, and any red, green or other signal colour that is too
+         faint on the new background is darkened
+         DONE WHEN  EXERCISED -- the walk is done and its list is answered
+         ACCEPT     there is a list naming each page and pop-up looked at, each colour that needed
+                    darkening, and that it was darkened; Andrew agrees nothing on it still reads faint
+         SOURCE     R4 ("page by page, modal by modal")
 
-  FWD-6  Andrew sees old and new together and gives his word before any client does
-         DONE WHEN  EXERCISED -- Andrew has compared them and answered
-         ACCEPT     Andrew can look at the current and the new sidebar and panel on the same page, and
-                    nothing of the new look reaches a page a client can open until he says so
-         SOURCE     brief O5
-
-  FWD-7  The next page anyone builds gets the new sidebar and panel without asking
-         DONE WHEN  APPLIED -- the written design rules describe the new look and the design check uses them
-         ACCEPT     a builder starting a new page finds the new sidebar and panel described in the design
-                    rules, and the design check flags a panel built the old way
-         SOURCE     brief O6
-
-  Nothing regresses (a bar on FWD-2 to FWD-4, not an outcome of its own): panel titles still do not
-  run into their buttons when zoomed in, keyboard focus stays visible, and text stays readable against
-  its background (brief Part III "Nothing regresses").
+  FWD-6  Nothing leaves the laptop's design branch until Andrew says so
+         DONE WHEN  APPLIED -- the branch exists on the laptop and no push of it has happened without his word
+         ACCEPT     neither the shared development site nor the live site shows any of this until he
+                    says to push it
+         SOURCE     Andrew ~00:0xZ ("only pushed when i say so"); his 2026-10-06 light-panel hold
 ```
 
-**OPEN FOR ANDREW (scope, from brief Part II), with a recommendation for each:**
-1. **Panel background colour:** today navy on most panels, white on some. The brief keeps SHAPE and FRAME in scope and
-   COLOUR out, because of your 2026-10-06 hold that keeps the light Market page experiment off the main branch.
-   **REC: leave colour out**; this project changes shape and frame only.
-2. **Pages that draw their own panels instead of using the shared ones (FWD-5):** bringing them over means editing
-   pages, which the surgical rule excludes by default. **REC: list them only**, and bring any over only on your word, page
-   by page.
-3. **DSGN_REBRND's held work:** nothing is reused unless you ask (brief Part II). **REC: start clean.**
+**Dropped from v1, and what the project no longer promises:**
+- the separate list of pages that bypass the shared panels: the FWD-5 walk covers every page;
+- the written design rules and design-check update, which were v1 FWD-7: not in his three steps.
 
-**Placement:** dell1, on your word ("the design project can be handled on DELL1 box"). D13/DSGN. The L3 registration follows
-your confirmation of the lines above.
+If he wants either back, it returns as a new outcome.
 
-**NOT READ:** the task-order register, any project JSON (none exists yet), the DSGN_REBRND worktrees, the Yang Liu Teams
-thread (the brief marks it as an addendum owed once you sign in to the gateway), and brief Parts IV-VII beyond the outcome
-territory, boundary and bar.
-
-## ADDENDUM 1 (~03:2xZ 2026-10-15): Andrew's rulings at 4.0.0_SA_CRO~A, applied to the endpoint
-
-Andrew, verbatim (~00:0xZ, `ANDREW_DIRECT_20261014_201xZ_..._PANEL_RESKIN.md` addendum @f4532f545c): "This whole light mode build
-needs to stay on a feature tree on this box and is only pushed when i say so. also yes, i like EAEAF7"
-
-- **Open item 1 is answered: background colour is IN scope.** The page and sidebar ground is `#EAEAF7`; panels are white with
-  a 1px `#C4CBDB` border. FWD-2 and FWD-3 grade the light build with that ground.
-- **FWD-4 and FWD-6 tighten.** The build lives on a laptop feature branch, and nothing is pushed (not DEV, not PROD) without
-  his word. FWD-6's "before anything reaches a client" becomes "before anything leaves the laptop's feature branch".
-  FWD-1's "dev build" is the LOCAL dev build (port 5174) of that branch.
-- **Open item 2 (placement) is for him:** the first order placed DSGN_RBNDV2 on dell1; this one places the light-mode build on
-  the laptop.
+**NOT READ:** the task-order register; any project JSON (none exists yet); the Teams thread (the brief marks it owed after his
+gateway sign-in).
