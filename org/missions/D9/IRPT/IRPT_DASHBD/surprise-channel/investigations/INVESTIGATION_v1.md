@@ -17717,3 +17717,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The stamp is reachable by --function, which touches the source map but also the wrapper's CHANGELOG.json write, so a worker with only the source map in its grant must restore that file. A synchronous invoke of a function that runs longer than the CLI read timeout needs --cli-read-timeout 0 or it retries; the retries here were refused by concurrency 1 and ran nothing, so the one-invocation bound held on the Lambda side (Invocations 1). Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W214-S1 -- OBSERVATION: the commit-time naming gate refuses a hand-typed firm literal in the Cottonwood handler; the constant reads the registry instead
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W214-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~214",
+  "surfaced_at": "2026-10-15T16:23:36Z",
+  "one_line": "The order's worker face says the handler's module constant is FIRM = \"cottonwood\" (a plain string constant); the commit-time naming gate refused that line as a NEW hand-kept carrier of the firm name (LGIC_ENFORCE), so the first commit was blocked and the constant was changed to read the registry through opal_naming.lookup(\"cottonwood\")[\"key\"], as the Cottonwood adapter reads it; the checker grades no FIRM literal",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first safe-commit of infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py and its tests: the naming-gate lines read NAMING REFUSE infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py:37 cottonwood -> lookup('cottonwood') and NAMING-GATE: REFUSE 1 graded; the commit aborted with the files unstaged (ERROR: BLOCKED -- the naming limb refused, LGIC_ENFORCE DEC-6)",
+      "the cited line before the fix was FIRM = \"cottonwood\" at handler.py line 37; after the fix it is FIRM = opal_naming.lookup(\"cottonwood\")[\"key\"] and the second safe-commit of the same two paths passed the naming gate (commit 58659e4696 on wk-IRPT_DASHBD-214)",
+      "the Cottonwood adapter already reads the firm key the same way at data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_report_reader.py (naming.lookup(\"cottonwood\")[\"key\"]); the registry row exists, so no registry row was added"
+    ]
+  },
+  "spec_asserts": "The order's worker face (step 2) names the handler module constants as FIRM = \"cottonwood\" and FLOOR_DAY = \"2026-07-10\" (a plain string constant), and rule 30 of the standing rules says every resource name and firm name comes from the canon and its builders.",
+  "world_is": "The face's literal and the commit-time naming gate disagree: the gate refuses a hand-kept firm literal at LGIC_ENFORCE, and the sanctioned route is lookup(). The handler reads the firm through lookup(); FLOOR_DAY stays a plain string constant, which the checker's static clause requires. The checker's AC1 names no FIRM literal, so AC1 is not affected by the change. Counts and paths only; no client value."
+}
+```
