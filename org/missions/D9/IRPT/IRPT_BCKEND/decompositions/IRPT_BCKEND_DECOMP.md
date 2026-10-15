@@ -4331,3 +4331,15 @@ Check IB228-1 (`deliverables/2.0.0_SA_COO~P2/checks/r228/p228_cells.py`), dry-ru
 | `IB-pr-595` | READ the transplant release candidates (exemption alone) of the three holdings bundles, BUILD ONLY, tested, against the live bundles | FWD-21 | SERVED | none | PJ6-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one read-only build cell; one worker (slot ~434) starts now.
+
+## 224. ROUND 5, WORKSTREAM ~PJ (the REBUILT release candidate of the 49 Financial performance function; 2026-10-15 ~18:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO half of the split pair, condition 3)
+
+IB-pr-585 built the candidate (`fvmE5j1h...`) before IB-pr-592 added the named `ratio_absent` list to the run manifest, which the CTO's signed half requires. The candidate is rebuilt at the current HEAD, BUILD ONLY, against the live package and the first candidate; the split pair's COO half is then re-issued on the new digest for the CTO to re-bind. One read-only cell; its harness is IB-pr-585's.
+
+Check IB230-1 (`deliverables/2.0.0_SA_COO~P2/checks/r230/p230_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control230.py`) passes the positives and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-597` | READ the REBUILT performance function candidate (with the named ratio-absent list), BUILD ONLY, against the live package | FWD-21 | SERVED | none | PJ7-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one read-only build cell; one worker (slot ~435) starts now.
