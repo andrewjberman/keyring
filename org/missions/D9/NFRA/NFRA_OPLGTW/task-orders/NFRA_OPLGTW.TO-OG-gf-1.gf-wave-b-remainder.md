@@ -51,7 +51,7 @@ KEYS COME FROM THE CATALOG (CTO ruling msg 34173): the gateway CODE types NO S3 
 - `test_oggf1_ac01`: the classification file names every assigned row exactly once and no `COVERED` row names a tool that is absent from the merged modules.
 - `test_oggf1_ac02`: each BUILT etfs tool reads the NEWEST part per date partition only (a fake with a re-run of different values: the answer equals the newer), names its weight unit and passes `claim` through where the row has one.
 - `test_oggf1_ac03`: each BUILT tool refuses a non-Opal and an absent principal with ZERO reads, an over-cap object `harvest_over_cap`, and answers `absent_reason` for a missing or retired row.
-- `test_oggf1_ac04`: `etfs_get_positioning` is EXTENDED only as the CRO's G5 spec names (read the spec); its existing tests still pass and its existing answer for an existing input is byte-equal.
+- `test_oggf1_ac04`: WITHDRAWN by A1 (the `etfs_get_positioning` extension is not in this cell).
 
 ## 2. BOUNDS
 
@@ -82,7 +82,7 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-gf-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)pytest rc=0; named tests passed 4 of 4; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-gf-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)pytest rc=0; named tests passed 3 of 3; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-gf-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC2.sh; echo "exit=$?"</invocation><expect>(?s)classification: assigned 15 of 15, covered \d+, built \d+, deferred \d+; set equal True; built tools defined (\d+) of \1.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -98,6 +98,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gf-1.classified-remainder.proof
 - Round 37, workstream G3G5-REMAINDER (decomposition addendum R3-T.72). CTO ruling @4356f15f16 (msg 34516): G2 and the G3/G5 remainders are BUILD cells, they do not wait on a release slot; they rejoin the release queue after OG-ap-22, ahead of OG-ap-17. Each vendor adapter needs its own prefix-conditioned read role and never-widen ask at its release; client data never reads through `gateway-global-internal-reader-role` (PRD v3.2).
 - The hookup (registrations, lists, pins) belongs to no cell (CUT BY WRITE SET): the issuer cuts one hookup order per merged batch.
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe or record absent).
+
+- A1 (issuer, 2026-10-15 ~19:2xZ, worker rows Z-W110-S1..S4, all read): the first seat finished the three tools and its classification (15 of 15; covered 0, built 6 rows over 3 tools, deferred 9) and refused one criterion, rightly. Rulings: (1) `test_oggf1_ac04` and the `etfs_get_positioning` extension are WITHDRAWN from this cell: that tool is registered inside `app/integrations/portal_index/integration.py` (NFRA_MCPINDEX's file, not in this order's `<paths>`), and by Andrew's split the indexing and tooling work is `2.0.0_SA_COO~MI`'s; the issuer routes the extension to that seat by message. gf1.AC1 now reads 3 of 3. (2) RENAME `etfs_get_fund_bloomberg_profile` to `etfs_get_fund_bloomberg_characteristics`: the naming gate types a name ending `_profile` as an instance profile and REFUSES it (row Z-W110 note on `INSTANCE_PROFILE`); do the rename in `app/etfs_silver.py`, `tests/test_og_gf1.py`, `W/CLASSIFICATION.json` and `W/probe_built.py` with a whole-word replace and print the count per file; no BUILT tool name may end in `_group`, `_role` or `_profile`. (3) S1: the AC2 check now counts DISTINCT tools among the BUILT rows, not rows: one probe line per BUILT TOOL (3), as the order says. (4) S3: the cone now holds `tests/`. (5) S4: noted; the snapshot tool is `etfs_get_fund_snapshot`. The first seat's commit `2c4d7a0684` is inherited state: re-record the proof instance from the real outputs after the rename. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
