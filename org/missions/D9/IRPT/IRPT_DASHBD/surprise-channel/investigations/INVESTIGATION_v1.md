@@ -13458,3 +13458,60 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "W401-S3 (disarm owner this seat) is disarmed on the packet's text. W402-S1 is closed: the defect was the issuer's checker, now fixed, and worker 402's record needed no edit. W402-S3 is correct: the amendment also added paths to the 8-digit exemption list, which the amendment's commit message does not describe; both exemptions are for repo file paths. NOT closed by this row: W401-S1 (ARMED, disarm owner 0.0.0_AB_MSTR): pandas_market_calendars is absent on dell2, so every trading-day answer in this round came from the NYSE fallback table and the package-equality test was not run (DB-c-3: ran false); W401-S2 and W402-S2 (INERT observations, carried in the drain-end packet)."
 }
 ```
+
+## IRPT_DASHBD-D2-W502-S1 -- the task order names the read route and the publisher as owned by workstream ~P2; the files issue them under 2.0.0_SA_COO~P
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W502-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~502",
+  "surfaced_at": "2026-10-15T01:48:21Z",
+  "one_line": "TO DB-f-502 names the owner of the served reporting read route and of the platinum publisher as IRPT_BCKEND workstream ~P2; the files issue both surfaces under 2.0.0_SA_COO~P, and ~P2 appears only as the issuer of a round-146 check.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order's Why paragraph and its cell step 2 name the owner of the read route irpt-reporting-read and of the platinum publisher as IRPT_BCKEND workstream ~P2.",
+  "world_is": "The task orders that built the publisher and the read route are issued by 2.0.0_SA_COO~P: IRPT_DASHBD TO-DB-b-2 (platinum publisher), TO-DB-b-4 (reporting read route) and TO-DB-b-17 (publisher summaries), and IRPT_BCKEND TO-IB-pr-304 and TO-IB-pr-316. The investor-reporting deploy record (CHANGELOG line 515) names 2.0.0_SA_COO~P for irpt-49f-reporting-read-lambda. The serial 2.0.0_SA_COO~P2 is named only as the issuer of IRPT_BCKEND round 146 checks for workstream ~P. The worker's record names 2.0.0_SA_COO~P as owner; the ~P2 naming for these surfaces is not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-2.platinum-publisher-series-manifest.md lines 5-6 (issued_by 2.0.0_SA_COO~P) @413876740f",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-4.reporting-read-route.md lines 5-6 (issued_by 2.0.0_SA_COO~P) @413876740f",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-304.render-reach-reporting-route.md lines 5-6 (issued_by 2.0.0_SA_COO~P) @413876740f",
+      "infra/aws/terraform/investor-reporting/CHANGELOG.json line 515 (deploy record r58 names 2.0.0_SA_COO~P for irpt-49f-reporting-read-lambda) @413876740f",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r146/p146_cells.py first line (issuer 2.0.0_SA_COO~P2, workstream ~P) @413876740f"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-502. Record owner fields name 2.0.0_SA_COO~P. The row states the form only; the owner call is the issuer's."
+}
+```
+
+## IRPT_DASHBD-D2-W502-S2 -- the export host the task order calls a server render has no live render host on the record: a dedicated host is not built and the existing render-capable instance is stopped
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W502-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~502",
+  "surfaced_at": "2026-10-15T01:48:21Z",
+  "one_line": "The export is rendered by a server host in code (run-export-render.sh line 29), but the host README records no dedicated export host built and the one render-capable instance declared stopped, with a start that needs Andrew's per-use word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order's Why paragraph and cell step 4 say the export is rendered by a server host from a frozen series version, which a filled-report hop would extend.",
+  "world_is": "The code premise holds: run-export-render.sh line 29 runs node render_export.cjs, which opens the print route in Chromium. The host README records that a dedicated export host was refused and not built (lines 55 and 80-85), and that the one existing Playwright-capable instance, irpt-ycharts-runner, is declared stopped in its Terraform root; starting it is recorded as needing Andrew's per-use word (lines 56 and 66-71). The host half of the export names no live issuing seat in the files; its author is worker 0.9.0_WK_IRPT_BCKEND~4. A filled-report render has no live host on the record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-export/run-export-render.sh line 29 (node render_export.cjs) @413876740f",
+      "infra/aws/ec2/investor-reporting-export/README.md lines 55-56 (host options; the runner is stopped) @413876740f",
+      "infra/aws/ec2/investor-reporting-export/README.md lines 66-71 (start needs Andrew's per-use word) @413876740f",
+      "infra/aws/ec2/investor-reporting-export/README.md lines 4-5 (author worker 0.9.0_WK_IRPT_BCKEND~4) @413876740f"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-502. Live host state was not read (no AWS call); the stopped state is the README's record. The row states the form only."
+}
+```
