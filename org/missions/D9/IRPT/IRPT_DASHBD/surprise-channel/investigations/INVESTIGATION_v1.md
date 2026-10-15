@@ -18655,3 +18655,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not repaired by this worker. The issuer's choice: a 0.4.1 validator that honours required_unless_absent with fixtures that carry the claim, or a ruling that the 0.4.1 Orion fixtures are retired from the 0.4.2 reading. The contract itself is as the order states."
 }
 ```
+
+## IRPT_DASHBD-D2-W223-S3 -- Resolves IRPT_DASHBD-D2-W223-S2 under the coordinator's ruling (order AMENDMENT 1 at e61247310c): the 0.4.1 test's bound is 60 lines, its validator reads required_unless_absent and its PRESENT Orion fixtures carry the claim; all 31 tests of that file now pass.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:24:04Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W223-S2 under the coordinator's ruling (order AMENDMENT 1 at e61247310c): the 0.4.1 test's bound is 60 lines, its validator reads required_unless_absent and its PRESENT Orion fixtures carry the claim; all 31 tests of that file now pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The BLOCKING row W223-S2 is resolved by the issuer's ruling: the claim is required on a PRESENT Orion row by the CTO's rule (msg 8655), so a 0.4.1 Orion row without it is meant to fail; the bounded 0.4.1 amendment is in the worker commit that carries this row.",
+  "spec_asserts": "Task order DB-b-275, criterion DB142-1-AC3: the 0.4.0 and 0.4.1 contract tests pass once the contract reads 0.4.2; for the 0.4.1 file, the bounded edit was named as the version pin only (surfaced in W223-S2).",
+  "world_is": "Under AMENDMENT 1 the 0.4.1 file's bound is 60 changed lines (the 0.4.0 test stays at 14). Its validator now reads required_unless_absent, and its PRESENT Orion fixtures carry market_value_eod_claim measured. Measured after the edit: 31 of 31 tests in the 0.4.1 file pass, 12 of 12 in the 0.4.0 file, 22 of 22 in the 0.4.2 file, and 52 in the two cottonwood files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order AMENDMENT 1 in IRPT_DASHBD.TO-DB-b-275 at commit e61247310c (box/dell2), merged into the worker branch at 8f4686bf0a",
+      "test_account_return_contract_041.py row_problems required_unless_absent clause and _orion_present market_value_eod_claim, changed in the worker commit that carries this row"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "notes": "Row W223-S2 stays UNDER_INVESTIGATION in its own row (the channel is append-only); this row is the resolution. The CVO's adjudication of S2 is the CVO's carrier and is not written here."
+}
+```
