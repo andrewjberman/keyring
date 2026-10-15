@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~170</issued_to>
 <issued_by>2.0.0_SA_COO~C1</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -45,8 +45,8 @@
 <criterion id="CB86ch2-AC1" cell_refs="CB-ch-2"><invocation>python -c "import json;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~170/ACTIVE_BBG_NEED_RECORD.json',encoding='utf-8'));ok=d['in_b1']+d['in_failed14']+d['new_cusips']==d['need_cusips'];print('ACTIVE-BBG-NEED need=%d new=%d cells_new=%d cells_per_day=%d days_new=%d finish_new=%s partition_sums=%s'%(d['need_cusips'],d['new_cusips'],d['cells_new'],d['day_rate']['cells_per_day'],d['days_new'],d['finish_new'],ok))"</invocation><expect>partition_sums=True</expect></criterion>
 `CB86ch2-AC1` -- the need, its partition against the two existing requests, its cells, its day rate and its finish date are printed from the record, and the partition sums.
 
-<criterion id="CB86ch2-AC2" cell_refs="CB-ch-2"><invocation>python -c "import json,glob,csv;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~170/ACTIVE_BBG_NEED_RECORD.json',encoding='utf-8'));base='org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~170/';rows=list(csv.DictReader(open(base+'ACTIVE_BBG_ORDER.csv',encoding='utf-8')));s=d['slices'];fs=sorted(glob.glob(base+'slices/ACTIVE_BBG_SLICE_*.json'));cusips=sum(len(json.load(open(f,encoding='utf-8'))['securities']) for f in fs);print('ACTIVE-BBG-SLICES files=%d count=%d max_cells=%d day=%d sum_cells=%d order_rows=%d slice_cusips=%d within_day=%s no_dollar_column=%s'%(len(fs),s['count'],s['max_cells'],d['day_rate']['cells_per_day'],s['sum_cells'],len(rows),cusips,s['max_cells']<=d['day_rate']['cells_per_day'],'value_held' not in rows[0]))"</invocation><expect>within_day=True no_dollar_column=True</expect></criterion>
-`CB86ch2-AC2` -- the slice files exist and match the record's count, no slice exceeds a day's cells, and the committed order file carries no dollar column.
+<criterion id="CB86ch2-AC2" cell_refs="CB-ch-2"><invocation>python -c "import json,glob,csv;d=json.load(open('org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~170/ACTIVE_BBG_NEED_RECORD.json',encoding='utf-8'));base='org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~170/';rows=list(csv.DictReader(open(base+'ACTIVE_BBG_ORDER.csv',encoding='utf-8')));s=d['slices'];fs=sorted(glob.glob(base+'slices/ACTIVE_BBG_SLICE_[0-9][0-9].json'));cusips=sum(len(json.load(open(f,encoding='utf-8'))['securities']) for f in fs);print('ACTIVE-BBG-SLICES files=%d count=%d max_cells=%d day=%d sum_cells=%d order_rows=%d slice_cusips=%d within_day=%s no_dollar_column=%s'%(len(fs),s['count'],s['max_cells'],d['day_rate']['cells_per_day'],s['sum_cells'],len(rows),cusips,s['max_cells']<=d['day_rate']['cells_per_day'],'value_held' not in rows[0]))"</invocation><expect>within_day=True no_dollar_column=True</expect></criterion>
+`CB86ch2-AC2` (AMENDMENT 1, 2.0.0_SA_COO~C1: the glob was `ACTIVE_BBG_SLICE_*.json`, which also matched the `.quote.json` files item 5 places beside each slice; it now matches the slice files only) -- the slice files exist and match the record's count, no slice exceeds a day's cells, and the committed order file carries no dollar column.
 
 <criterion id="CB86ch2-AC3" cell_refs="CB-ch-2"><invocation>python -m pytest data/assets/scripts/silver/tests/test_cotbkf_active_bbg_need.py -q</invocation><expect>3 passed</expect></criterion>
 `CB86ch2-AC3` -- the partition, slice and ordering rules hold on stubs.
