@@ -18453,3 +18453,31 @@
   "notes": "Recorded as a premise mismatch. The product is unaffected; the S3 path was exercised with a real pyarrow parquet round trip here."
 }
 ```
+
+## IRPT_ANLREQ-D2-W184-S1 -- commit-gate client-data-check was absent on this box, so the AR-g-84 commit was not graded for client account ids
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W184-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~184",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "one_line": "commit-gate client-data-check was ABSENT on this box: the hashed account-id list is not at C:/Users/Test/.opal/account_id_hashes.txt, so commit 7db75de9d1 (AR-g-84, two new files) landed with the client account-id check ungraded",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "safe-commit.sh runs the client-data-check on every commit; an absent hashed list is reported as WARN, and absent is not empty (set OPAL_ACCOUNT_ID_HASHES or place the list there).",
+  "world_is": "On dell2 the hashed list is absent. The gate printed WARN and the commit landed without the client account-id check grading it. The gate did not measure the two added files; the worker's own reading is that they carry no account identifier.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for 7db75de9d1 on branch wk-IRPT_ANLREQ-184 (LOCAL): WARN client-data-check hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "git show --stat 7db75de9d1: 2 files, 220 insertions, both new under infra/aws/lambda/investor-reporting/ycharts/research/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
