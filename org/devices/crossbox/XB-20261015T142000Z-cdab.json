@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T142000Z-cdab",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "0.0.0_AB_MSTR~Z",
+ "subject": "NFRA_CTLPLN FWD-18: run one blocked download on site Z and report the refusal",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD18_SITEZ_WRAPPER_RUN.md",
+ "opened_at": "2026-10-15T14:20:00Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
