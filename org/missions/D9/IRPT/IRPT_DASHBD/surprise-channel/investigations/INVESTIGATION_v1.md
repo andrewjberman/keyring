@@ -15863,3 +15863,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the issuer of DB-b-241's packet: decide whether the landing carries a second write statement for dim_return_method (a second prefix, its own grant) or writes a manifest that says the method row is not carried. Recorded as adapter_changes item 6 of RD_CW_LANDING_FACTS_R120.json. Counts and paths only."
 }
 ```
+
+## IRPT_DASHBD-D2-S71 -- disarm of D2-W195-S1: the Cottonwood holdings schedule reads ENABLED by the signed pair's step 8 after the after-read, and the live schedule agrees
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S71",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T08:12:43Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W195-S1 (the Cottonwood holdings-performance schedule file reads ENABLED): ENABLED is the signed pair's step 8, applied after the catch-up's after-read; the live schedule reads ENABLED and matches the file; only the resource's description text is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The Cottonwood schedule is created DISABLED and enabled by one line only after the catch-up's after-read (pair NEVER_WIDEN_PACKET_DB-c-5_R115.md, 'Catch-up first' step 6; CTO round 117 ruling 1).",
+  "world_is": "Commit d9e46a0c1f by 0.7.0_AE_CloudOps~DB2 (DB-c-14 step 8) changed the single line state DISABLED to ENABLED in schedule.tf block irpt_holdings_performance_cot after the catch-up's after-read (36 keys, schema 1.2, 12 dates, three readers). Read by this seat at the tick time with a live scheduler get_schedule of irpt-cot-holdings-performance-daily: State ENABLED, cron(15 8 ? * MON-FRI *), America/New_York, the same as the file. The file and the live schedule agree; the sequence the row asserts (DISABLED until the after-read) was followed; the row read the file before that commit's effect was known to its worker. NOT a hazard: the 08:15 fire is the intended first scheduled fire. The one stale item is the resource description string still saying CREATED DISABLED; it changes no behaviour and is carried, not applied alone (an apply for a description is not worth a ledger).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git commit d9e46a0c1f (subject names step 8 and the after-read counts)",
+      "live scheduler get_schedule irpt-cot-holdings-performance-daily read by this seat (State ENABLED)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_DASHBD-D2-W195-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm owner 2.0.0_SA_COO~C2 (this row), done. The description text is corrected in the next change to that block, if one is ever made. For the new account_dim root (DB-c-18) the schedule is created DISABLED, enabled by the same one-line change after its catch-up after-read."
+}
+```
