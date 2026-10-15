@@ -13108,3 +13108,82 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-1. The row states the form only."
 }
 ```
+
+## IRPT_DASHBD-D2-W302-S1 -- the round-108 reader has no method that lists the silver common prefixes; the silver table list came from its client after the grant check
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W302-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~302",
+  "surfaced_at": "2026-10-15T01:39:31Z",
+  "one_line": "The round-108 reader has no method that lists the silver common prefixes, so the Orion silver table list was taken by one LIST through the reader's own client after its grant check, under the granted silver prefix only; the four tables found are the set a fresh LIST by the checker reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-i-2 cell 1: list the Orion silver tables under s3://opal-data-assets/orion/inflection/silver/ (the common prefixes, through the reader).",
+  "world_is": "InflectionSilverReader in inflection_account_dim.py offers list_partitions (date= names under one table), read_parquet and latest_partition; it has no method that returns the silver common prefixes. The LIST was made with the reader's _split grant check first and the reader's _api() client second, Delimiter slash, under the granted silver prefix only. No write call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py at 1cb46e909b: class InflectionSilverReader, methods _api, _split, list_partitions, read_parquet, latest_partition",
+      "the worker's silver LIST printed four common prefixes (fact_assets, fact_performance, fact_positions, fact_transactions) and the record silver_tables carries the same names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-2. Counts and names only; no client value is recorded. The reader's gap is a capability note for the issuer, not a change to the reader."
+}
+```
+
+## IRPT_DASHBD-D2-W302-S2 -- the two missing days are absent from three Orion silver feeds, not only fact_positions
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W302-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~302",
+  "surfaced_at": "2026-10-15T01:39:31Z",
+  "one_line": "The two NYSE trading days 2026-07-01 and 2026-09-28 are absent from silver fact_positions, fact_performance and fact_transactions and from bronze positions, performance and transactions; fact_assets carries both days in silver and bronze assets. No repo file records a cause.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "Round 109 row IRPT_DASHBD-D2-W174-S2 and TO DB-i-2 frame the gap as a missing fact_positions partition on two trading days.",
+  "world_is": "Both dates are absent from the fact_performance and fact_transactions silver tables and from the bronze performance and transactions feeds as well. fact_assets has both dates in silver and bronze assets. Bronze positions has no file for either date, so the silver fact_positions gap has no bronze source to convert. The repo catalog entry records the absent trading days as measured and gives no cause. Left alone, a daily sweep that converts whatever bronze lands would keep reproducing feed-by-feed holes on any day a feed fails to land.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the worker's LIST of the four silver prefixes and of the bronze feed prefixes, recorded as counts in org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~302/DATE_GAP_READ_R114.json (partition_present and bronze_present)",
+      "workflows/atom_decomposition/catalog_entries/opal_data_assets_silver_orion_inflection_fact_positions.yaml at 1cb46e909b (contract.partition note: latest absent trading days 2026-07-01, 2026-09-28; no cause)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-2. The disarm owner is the issuer, who routes the finding to the CTO's tolerance ruling. Counts only; no account or household id is recorded. Nothing was re-pulled or written."
+}
+```
+
+## IRPT_DASHBD-D2-W302-S3 -- the trading-day answer came from the calendar's hardcoded NYSE fallback because pandas_market_calendars is absent on this box
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W302-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~302",
+  "surfaced_at": "2026-10-15T01:39:31Z",
+  "one_line": "lib/trading_calendar printed WARN that pandas_market_calendars is absent and answered from the hardcoded NYSE fallback; both gap dates read as trading days from that fallback, which matches the weekday rule and the holiday list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-i-2 cell 2: record whether each date is a trading day per lib/trading_calendar.py is_trading_day.",
+  "world_is": "is_trading_day returned True for 2026-07-01 and True for 2026-09-28, but printed WARN: pandas_market_calendars absent; answering from the NYSE hardcoded-fallback covering 2010 to 2027. The answer is the fallback's answer, not the library calendar's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py at 1cb46e909b: is_trading_day (the fallback set NYSE_HOLIDAYS_FALLBACK answers when the library is absent)",
+      "the worker's run of is_trading_day on both dates on this box, which printed the WARN line verbatim"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-2. The fallback's answer for these two dates is the weekday rule plus the holiday list; the CTO may want the library calendar installed on dell2 before the tolerance ruling. Nothing was installed."
+}
+```
