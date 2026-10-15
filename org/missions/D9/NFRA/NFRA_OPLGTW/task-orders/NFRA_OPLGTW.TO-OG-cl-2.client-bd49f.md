@@ -90,7 +90,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cl-2.client_bd49f.proof_of_spec
 - The hookup (registrations, lists, pins) belongs to no cell (CUT BY WRITE SET): the issuer cuts one hookup order per merged batch.
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe or record absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G2-BUILD</workstream>
 <slot>~104</slot>
