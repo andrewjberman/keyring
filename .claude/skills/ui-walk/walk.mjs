@@ -10,6 +10,7 @@
 //        [--day "<security>=<YYYY-MM-DD>"]...
 //        [--security "VLO US"]... [--thread "Valero"] [--deep]
 //        [--firm "<label>"] [--first-client]   (--firm presses the header Firm option by its visible label first)
+//        [--open-first "<summary text>"]...    (expand each closed <details> whose summary reads that text FIRST, before the 20-click cap)
 //
 // By default it ARMS the account, walks, and DISARMS in a finally block (always, even on failure).
 import { createRequire } from 'node:module'
@@ -18,6 +19,7 @@ import { mkdirSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { isSignInPage } from './signin_detect.mjs'
+import { orderSummaries } from './open_first.mjs'
 
 // UI_WALK_ROOT lets a copy of this file in a linked worktree drive the shared tree's portal/node_modules and tmp/.
 const ROOT = process.env.UI_WALK_ROOT || fileURLToPath(new URL('../../../', import.meta.url))
@@ -28,7 +30,7 @@ const EMAIL = 'opal-ui-walker@opal.test'
 
 // ---- args ---------------------------------------------------------------------------------------------------------
 const argv = process.argv.slice(2)
-const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, hovers: [], login: true, settleExtraMs: 0, periodsPerAccount: false, days: [], thread: null, expectTexts: [], reloadReopen: false, firm: null, firstClient: false }
+const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, hovers: [], login: true, settleExtraMs: 0, periodsPerAccount: false, days: [], thread: null, expectTexts: [], reloadReopen: false, firm: null, firstClient: false, openFirst: [] }
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === '--base') opt.base = argv[++i]
@@ -55,6 +57,9 @@ for (let i = 0; i < argv.length; i++) {
     ;(opt.hoverAfterPress = opt.hoverAfterPress || []).push({ css: v.slice(0, at), frac })
   }
   else if (a === '--security') opt.securities.push(argv[++i])
+  // --open-first "<summary text>" (repeatable): in every scope, a closed <details> whose summary reads that text (trimmed,
+  // case-insensitive) is expanded before the others, so the 20-click cap does not run out first (AMGT_RESAPP round 107).
+  else if (a === '--open-first') opt.openFirst.push(String(argv[++i] || ''))
   else if (a === '--thread') opt.thread = argv[++i]
   else if (a === '--max-minutes') opt.maxMinutes = Number(argv[++i])
   else if (a === '--no-arm') opt.arm = false
@@ -312,16 +317,33 @@ const timeLeft = () => Date.now() < deadline
 
 // ---- generic exploration of one scope ------------------------------------------------------------------------------
 async function exploreScope(page, scopeSel, label) {
-  // expand every closed <details>
-  const sums = page.locator(`${scopeSel} details:not([open]) > summary`)
-  const nSum = await sums.count().catch(() => 0)
+  // expand every closed <details>, in the order orderSummaries() gives: an --open-first entry's summary first, then page order
+  const closedSel = `${scopeSel} details:not([open]) > summary`
+  const nSum = await page.locator(closedSel).count().catch(() => 0)
+  const key = (t) => String(t || '').trim().toLowerCase()
+  const entries = new Map() // normalised text -> the entry as the operator typed it
+  for (const e of opt.openFirst) if (key(e) !== '' && !entries.has(key(e))) entries.set(key(e), e)
+  const texts0 = entries.size ? await page.locator(closedSel).allInnerTexts().catch(() => []) : []
+  for (const [k, e] of entries) if (!texts0.some((t) => key(t) === k)) log(`OPEN-FIRST "${e}": not found in ${label}`)
+  const opened = new Set()
   for (let i = 0; i < Math.min(nSum, 20) && timeLeft(); i++) {
-    const s = page.locator(`${scopeSel} details:not([open]) > summary`).first()
-    const txt = ((await s.innerText().catch(() => '')) || '').trim()
+    const texts = await page.locator(closedSel).allInnerTexts().catch(() => [])
+    if (!texts.length) break
+    const k = orderSummaries(texts, opt.openFirst)[0]
+    const txt = (texts[k] || '').trim()
     if (DO_NOT_CLICK.test(txt)) break
-    await s.click({ timeout: 3000 }).catch(() => {})
+    const entry = entries.get(key(txt))
+    // the summary is read as a handle before the click, so its <details> can be counted after the page settles
+    const handle = entry !== undefined ? await page.locator(closedSel).nth(k).elementHandle().catch(() => null) : null
+    await page.locator(closedSel).nth(k).click({ timeout: 3000 }).catch(() => {})
     await settle(page, 500)
+    if (entry !== undefined && !opened.has(key(txt))) {
+      opened.add(key(txt))
+      const rows = handle ? await handle.evaluate((el) => [...(el.parentElement ? el.parentElement.querySelectorAll('tr') : [])].filter((r) => { const b = r.getBoundingClientRect(); return b.width > 0 && b.height > 0 }).length).catch(() => 0) : 0
+      log(`OPEN-FIRST "${entry}": opened (${rows} table row(s) visible inside it)`)
+    }
   }
+  for (const [k, e] of entries) if (texts0.some((t) => key(t) === k) && !opened.has(k)) log(`OPEN-FIRST "${e}": not opened in ${label} (refused or out of time)`)
   if (nSum) await checks(page, `${label}-expanded`)
   // native selects: read options (duplicates are checked in CHECKS); walk each option for account pickers
   const selects = page.locator(`${scopeSel} select`)
