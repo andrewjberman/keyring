@@ -3888,7 +3888,28 @@ name the one known failure instead of silently inheriting it.
     },
     "spec_asserts": "W3-S22: the 5 access-layer routes and /callback identify a caller by ALB email only, so a restricted person can read Daily Sprint pages and complete the legacy consent.",
     "world_is": "Daily Sprint pages serve the owner only. The legacy consent remains reachable but yields no tool a restricted profile may call, and a deny record can close it per person."
-  }
+  },
+{
+  "id": "NFRA_OPLGTW-D1-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "dell1",
+  "surfaced_by": "4.0.0_SA_CRO~DELL1",
+  "surfaced_at": "2026-10-15T18:25Z",
+  "one_line": "No Gateway tool can return the bytes of a native PDF attached to a Teams chat from another user's OneDrive: read_teams_attachment fetches the bytes and returns only a hint, and read_document asks Graph for format=pdf, which Graph refuses on a .pdf input (406 InputFormatNotSupported).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/tools.py read_teams_attachment (GET /shares/{tok}/driveItem/content, then _office_binary_hint returns metadata + hint, bytes dropped) and read_document (GET {drive}/items/{id}/content?format=pdf; drive is /me/drive or /sites/{site_id}/drive only).",
+      "RUN 2026-10-15 ~18:15Z: read_teams_attachment on Lauren Harmon's 'ASML earnings update 3Q26.pdf' -> binary:true, hint 'PDF -- call read_document', drive_id b!1Kv4wa2-...; read_document(item_id) -> Graph 400 'item ID is not valid for the requested drive' (/me/drive); read_document(site_id=opalinvest-my.sharepoint.com,c1f8abd4-bead-4419-916a-9866ca084e3c,0ff62995-48ba-4752-8230-a34893196cb2, decoded from the drive id) -> Graph 406 InputFormatNotSupported 'pdf'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "read_teams_attachment's docstring: a binary Office/PDF file returns a hint 'pointing at read_document / read_workbook ... plus the driveId + itemId those tools need'.",
+  "world_is": "The hint points at a reader that cannot open the file on either ground: read_document cannot address a foreign drive by driveId (it takes no drive_id), and even with the personal site's id it requests a PDF rendition, which Graph does not produce from a PDF. A chat-attached PDF is therefore unreadable through the Gateway end to end.",
+  "notes": "INERT: nothing served is wrong; a read is refused. Smallest fix candidates for the Gateway owner: (a) read_teams_attachment returns bounded base64 for application/pdf (it already holds the bytes); (b) read_document skips format=pdf when the item is already a PDF and accepts drive_id. Found while pulling Lauren Harmon's 3Q26 earnings-update PDFs for a /report skill study (Andrew-direct at this terminal)."
+}
 ]
 ```
 
@@ -17573,6 +17594,208 @@ name the one known failure instead of silently inheriting it.
     "world_is": "The runner is healthy and counts its S3 GETs (the cycle records carry s3_get_count and s3_get_bytes, 0 here because the three cycles stopped before any silver read), but bbg, wsj and barrons capture nothing: a Bloomberg press-and-hold challenge and two expired vendor sessions are a person's sign-in, not a runner defect. Whether the expiries predate the 14:02Z Python outage is not read. The egress measurement OG-eg-2 owes is the sa cycle in progress (it reads silver per security). Routed to 1.0.0_SA_CTO~Z at 16:2xZ for the person-act list; this seat changes nothing on the runner."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S151",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T18:38:49Z",
+    "one_line": "OG-eg-3's PREMISE IS FALSE FOR sa: the site Z runner was still storing articles after the 14:02Z Python outage, so retiring it DID close a live capture path. Its own log shows 'JOB sa security-d13cdd57ffa64286 status=new_articles stored=2' at 18:25:18Z and 'CYCLE sa ... asked 242 new 3 held 922 failed 0 stopped stopped_by_operator' at 18:33:06Z -- three articles captured in the cycle that was running when my STOP file landed, two of them nine minutes before it took effect. The retire is not in question; the sentence 'retiring it opens no capture gap that is not already there' is.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the runner's own log, .runtime/harvest-cycle/state/cycle_runner.log, tail at 18:33:06Z: 'JOB sa security-d13cdd57ffa64286 status=new_articles run_id=20261015T180420Z-run-d79be5a8 stored=2' (18:25:18Z) and 'CYCLE sa 20261015T153409Z floor 2026-10-14 asked 242 new 3 held 922 failed 0 stopped stopped_by_operator completed false'",
+        "WHY the outage did not stop it, which is the mechanism and not a guess: the live process (PID 37428) started 2026-10-15T07:47:40Z, HOURS BEFORE C:/Program Files/Python314 lost its Lib at about 14:02Z. A long-lived process keeps the standard library it loaded at start; the outage broke NEW launches only. Recorded in W/EG3_BEFORE.json at step 1, before this row existed",
+        "the cycle was far from done: 'PAIRS sa: collected 7 retry 0 gave_up 0 never_started 235 of 242'. So 235 of 242 pairs were never asked in that cycle -- the capture that stopped was partial, which is a different statement from zero",
+        "the STOP itself behaved exactly as designed and is not implicated: 'STOP-FILE ... present: ending after the current job (7 pairs done)' then 'no further cycle', ending stopped_by_operator at a job boundary, never killed",
+        "the predicate was read rather than assumed: cycle_runner.stop_requested is bool(args.stop_file and Path(args.stop_file).exists()) -- existence only, content never read -- and the stop file is passed down to the backfill driver, which is why the end comes at a JOB boundary rather than only between cycles"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-eg-3 section 1: 'Site Z's runner has stored new 0 for every publisher since the 14:02Z Python outage, so retiring it opens no capture gap that is not already there.'",
+    "world_is": "new 3 for sa in the cycle that was live at the stop, two of them stored at 18:25:18Z. The premise holds for whatever publisher it was measured on and does not hold for sa. The retire stands on its own authority -- Andrew moved all harvest operations to dell1, PRD v3.11 and the CTO's msg 34500 -- and none of that is contingent on the premise.",
+    "notes": "WHY THIS MATTERS DOWNSTREAM rather than just being a wrong sentence. The pins stay locked until 'dell1 reports a productive cycle per publisher', and the E1/E2 GET-bytes proof is owed there. Anyone comparing dell1's first cycles against a site Z baseline of ZERO would be comparing against the wrong number for sa, and would read a dell1 cycle that captures little as a match rather than a regression. The honest baseline for sa on this box is new 3 over a cycle that reached 7 of 242 pairs, not new 0. THE SHAPE WORTH KEEPING: an outage that breaks an INTERPRETER does not stop a process that already loaded it, so 'the platform broke at T, therefore nothing ran after T' is false for every long-lived process started before T. The tell was in the before-read: the process's own creation time sat hours on the wrong side of the outage, which is why step 1 recorded it."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S152",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T19:28:55Z",
+    "one_line": "MY OWN EXIT-WAITER COUNTED ITSELF AND COULD NEVER HAVE REACHED ZERO. To wait for the harvest runner's exit I armed a loop that counted processes whose command line matched the token cycle_runner. The loop's own bash wrapper carries that token -- the probe's path and its -match literal are both in its command line -- so the census included the censor. Left armed it would have run the full two hours and then reported RUNNER-STILL-UP-AFTER-2H, and the order says that reading obliges an ARMED row: a false hazard about a runner that had already exited cleanly.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the two rows the loose filter returned at 18:53:36Z were BOTH created at 18:22:29Z -- the second my waiter was armed -- and one was literally 'bash.exe ... eval PS=powershell.exe; SCRIPT=.../eg3_count.ps1 ... -match \"cycle_runner\" ...'. The real runner, PID 37428 created 07:47:40Z, was already gone",
+        "after stopping the waiter the SAME loose filter read 0 of 732 processes, which is the control: the two it had been counting were its own",
+        "the correct filter -- Name matches pythonw or python AND CommandLine matches '-m lib.opal_data_harvest.cycle_runner' -- reads 0, and Get-Process -Id 37428 reads absent",
+        "POSITIVE CONTROL so the zero is not a broken filter: 47 to 50 python processes were present throughout, and the any-python arm of the same census returned them",
+        "the runner's exit is independently evidenced by its own log ending 'stopped stopped_by_operator' and 'STOP-FILE present: no further cycle' at 18:33:06Z, with no further write"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "a census of the processes matching a pattern reports how many of THOSE processes are running.",
+    "world_is": "it reported how many processes matched, and the searcher matched. The defect is invisible while the target is up -- the count is merely one too high, and 2 looks as alive as 1 -- and becomes decisive exactly when the target dies, because the floor is 1 and the exit condition is 0. An instrument whose error only shows at the moment of the verdict reads correct for the whole run.",
+    "notes": "THE RULE I AM TAKING: A CENSUS MUST EXCLUDE THE CENSOR. Any process-count loop that greps a token has to either filter on something the probe cannot carry -- here the real runner is pythonw.exe running '-m lib.opal_data_harvest.cycle_runner', which a bash wrapper can never be -- or exclude its own PID and its ancestry explicitly. This is the same shape as a check whose condition includes the artifact the check itself writes: carve out what YOUR act creates, not only what you expect to find. WHAT SAVED IT was not the probe: it was the silence being WRONG-SHAPED. The runner's log said 'no further cycle' at 18:33:06Z, so an exit was due within minutes; when the waiter had still not fired 27 minutes later I read the census by hand instead of trusting it. A waiter that has not fired is indistinguishable from a target that has not finished -- unless you know roughly when the target SHOULD finish. Arm a waiter with an expectation of its own latency, and treat a gross overshoot as evidence about the WAITER."
+  }
+  ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T18:05:52Z",
+  "one_line": "The DATA_CATALOG rows that name the live opal-data-bd silver tables carry the live bucket and prefix, but are entity-named *_silver_legacy, their open_items say FROZEN copy do not build a tool on this prefix, and their contract blocks describe a frozen 2026-08-21 copy (date= shape, 36 td), not the live set (dated <d>.parquet files, newest 2026-10-09).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@b56fd6ef9d lines 4233-4246 and 4300-4306: entity opal_data_assets_silver_49financial_unrealized_silver_legacy, bucket opal-data-bd, prefix silver/unrealized/, key_template silver/unrealized/<d>.parquet, contract newest_part date=2026-08-21 (70 objects), freshness 36 td, open_items FROZEN copy do not build a tool on this prefix",
+      "READ the same file at lines 3450-3451, 3813-3814 and 4172-4173: allocations, fees and transactions rows carry the same bucket and prefix under *_silver_legacy entity names",
+      "MEASURED aws s3api list-objects-v2 --bucket opal-data-bd --prefix silver/unrealized/: 77 keys, 76 dated <d>.parquet, newest dated 2026-10-09.parquet, 17 columns"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CTO ruling 4356f15f16 and the task order name the live opal-data-bd silver tables as the 49F source, read through their DATA_CATALOG rows.",
+  "world_is": "The structured fields of those rows match the live prefixes, so the adapter reads them. The prose, the frozen open_items and the date= partition shape contradict the live set. The adapter derives partitions from the file name and states each lag from the live partition.",
+  "notes": "Measured, not ruled. The issuer confirms whether the FROZEN open_items are superseded by the ruling before the release order."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T18:05:52Z",
+  "one_line": "The adapter context the protocol names (app/client_core.py, OG-cl-1) is absent from HEAD b56fd6ef9d and from every local and remote ref, and the protocol's ctx.prefix takes vendor, segment, layer and table only, so it cannot address the opal-data-bd bucket. AC2 says the probe builds the adapter's context against the real silver; the issuer ruled a probe-local ProbeCtx is acceptable (A1 2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only HEAD infra/aws/ec2/opal-gateway: no client_* or core module; the only match on client is app/integrations/ycharts/client.py",
+      "git log --all --oneline -- infra/aws/ec2/opal-gateway/app/client_core.py: empty output, rc 0",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/G2_ADAPTER_PROTOCOL.md lines 3, 26 and 30-38: the core implements ctx; prefix(vendor, segment, layer, table) has no bucket argument"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 (task order section 4): the probe builds the adapter's context against the REAL silver with the box's credentials.",
+  "world_is": "No core context exists to build. This cell's probe carries a probe-local ProbeCtx implementing the protocol's methods over the DATA_CATALOG rows (matched by bucket and key_template) and typed_scope admission. The issuer ruled this in A1 2 of G2_ADAPTER_PROTOCOL.md (2026-10-15 ~18:3xZ), so AC2 is met by the probe-local context.",
+  "notes": "Resolved as to class: the issuer's A1 2 ruling binds the probe-local ctx; the row stays as the record that the core is absent. Class OBSERVATION, hazard INERT, no disarm_owner required."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T18:05:52Z",
+  "one_line": "The live silver/unrealized/ prefix holds a non-dated sibling, unrealized_gain_loss.parquet (0 rows, 16 all-null columns), that sorts after every dated partition, so a newest-by-name read returns it instead of the 2026-10-09 partition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED aws s3api list-objects-v2 --bucket opal-data-bd --prefix silver/unrealized/, keys sorted: the last key is silver/unrealized/unrealized_gain_loss.parquet",
+      "MEASURED pyarrow footer of that key: 0 rows, 16 columns, all null-typed",
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2f_bd_live_prefixes.md section (c) note 1: the non-dated siblings are named as not partitions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Protocol: list_partitions returns sorted partition ids, dates as YYYY-MM-DD strings, and newest_partition picks the newest at or before as_of.",
+  "world_is": "A listing that keeps non-dated keys yields a non-date partition id. The adapter admits only names matching YYYY-MM-DD.parquet. The core's list_partitions must apply the same filter; the protocol does not say so.",
+  "notes": "Measured, not ruled. The same trap may apply to realized (bd_realized_agg.parquet) and prices (canonical_prices.parquet) per census note 1."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T18:05:52Z",
+  "one_line": "The contract's fee row (date, fee type, amount, source id) has no fee-type column in live silver/fees: the 34 columns carry amounts (transaction_fee, account_fee, flat_fee, basis_points) beside fee_schedule_* descriptors, and no column labels a fee's type.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED pyarrow schema of silver/fees/2026-10-13.parquet (newest dated partition, 6,764 rows, 34 columns); column names and types read, no row values"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract get_fees: each fee row with its date, fee type, amount and the source id; the source's fee-type label is carried unchanged.",
+  "world_is": "The adapter returns one row per non-null fee amount column, sets fee_type to the source column name, and carries the source fee_schedule_type and fee_schedule_description beside it, unchanged, with label_claim inferred from the column name.",
+  "notes": "Measured, not ruled. The issuer decides whether a fee-type enum is needed. This cell writes none."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T18:05:52Z",
+  "one_line": "The contract's holdings positions carry a quantity, but live silver/unrealized (tax-lot grain, 108,439 rows in the newest dated partition) has no units or quantity column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED pyarrow schema of silver/unrealized/2026-10-09.parquet: 17 columns (open_date, market_value, unit_cost, inherited_date, relationship_id, account_number, account_id, asset_id, asset_name, last_dividend, original_asset_name, asset_display_name, symbol, ticker, cusip and the two _ columns); none is a quantity or units column"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract get_holdings: positions (ticker or cusip, quantity, market value, weight within the account) and the totals of the one partition read.",
+  "world_is": "The adapter returns the lots with market_value and unit_cost, sets quantity to null with claim absent, returns cash as null with claim absent (no cash row is identified in the source), and derives each lot's weight from market_value over the account's lots in the one partition, labelled derived. Grain stays lots, not positions.",
+  "notes": "Measured, not ruled. Per-ticker positions are not summed here, and the grain of unrealized is still unmeasured (contract decision 8)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T19:27:39Z",
+  "one_line": "The task order names the proof instance NFRA_OPLGTW.TO-OG-cl-2.client_bd49f.proof_of_spec.json, but the to-pipeline gate resolves an instance by the deliverables/*/<full-stem>.proof_of_spec.json convention, where the stem is the task-order filename (client-bd49f, with a hyphen). The complete flip was refused until the instance carried that name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ .tools/to-pipeline-gate.py: the instance resolves from a <proof_of_spec> block or from the deliverables/*/<full-stem>.proof_of_spec.json pattern",
+      "safe-commit output of the flip attempt (.scratch/commit2.log in the worktree): to-pipeline-gate REFUSED, 'flips to complete ... NO proof-of-spec instance was found beside it'",
+      "The task order section 5 names W/NFRA_OPLGTW.TO-OG-cl-2.client_bd49f.proof_of_spec.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 5: write the proof instance at W/NFRA_OPLGTW.TO-OG-cl-2.client_bd49f.proof_of_spec.json.",
+  "world_is": "The gate's instance convention is the task-order filename stem. The instance is written under that stem, with the bytes that validated (proof-of-spec-check rc=0).",
+  "notes": "Measured, not ruled. The issuer may align the order's section 5 name with the gate convention on the next cut."
+}
+```
 
 ```json
 {

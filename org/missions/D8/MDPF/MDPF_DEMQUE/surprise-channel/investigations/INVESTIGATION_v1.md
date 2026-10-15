@@ -3155,6 +3155,172 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md (row MDPF_DEMQUE-D1-W51-S3, the same trap) @9b7d894bcb"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W56-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~56",
+    "surfaced_at": "2026-10-15T17:59:51Z",
+    "one_line": "The worktree's sparse checkout omits data/assets/scripts/silver/ and data/etfs/ (both tracked at HEAD), so the census cannot import p1_coverage and the real AC2 run fails at import before any S3 read; BLOCKING, not repaired.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t64 (DQ-t-64 build step 2 and its premise): the worktree carries the paths the order names, and the real census runs on the real inputs with p1_coverage.request_symbols as the symbol overlay. Invocation: python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t64_real.py, run from the worktree root, expects INACTIVE-REAL-OK.",
+    "world_is": "Branch wk-MDPF_DEMQUE-56 at 7fb4e17444 is a sparse checkout (core.sparseCheckout true; 11 folders in the cone, none of data/assets or data/etfs). Both folders are absent on disk and tracked at HEAD (data/assets/scripts/silver: 138 files, including commonwealth_signs.py; data/etfs: 233 files). p1_coverage imports card_a_slice, which inserts data/assets/scripts/silver and imports commonwealth_signs, so the census fails at import: dq_t64_real.py prints INACTIVE-REAL-BAD census rc=1 with ModuleNotFoundError: No module named 'commonwealth_signs' in 0.96 s, before any S3 read. The folder run python -m pytest data/mdpf/scripts/demque is interrupted at collection: 16 errors, the first-error lines naming commonwealth_signs (6) and data.etfs (9), plus one FileNotFoundError in test_demque_land.py. The order's refusal route applies: no importable symbol resolver for the requested CUSIPs. Not repaired: widening the sparse cone or putting another checkout on sys.path would rebuild the tree outside this order's grant, and no copy of the census or of request_symbols was made. AC1 passes (INACTIVE-OK).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/card_a_slice.py lines 58-61 (the data/assets/scripts/silver path insert and the import of commonwealth_signs) @7fb4e17444",
+        "data/mdpf/scripts/demque/p1_coverage.py line 50 (import card_a_slice) @7fb4e17444",
+        "git ls-files data/assets/scripts/silver = 138 and git ls-files data/etfs = 233 at 7fb4e17444; git config core.sparseCheckout = true; git sparse-checkout list = 11 folders, neither data/assets nor data/etfs; both folders ABSENT on disk in C:/dev/wk-demque-56",
+        "the real-check run: python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t64_real.py, rc=1, INACTIVE-REAL-BAD census rc=1 ... No module named 'commonwealth_signs' (worker run 2026-10-15)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W56-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~56",
+    "surfaced_at": "2026-10-15T18:04:54Z",
+    "one_line": "After the issuer's cone change (S1 ruled as provisioning), python -m pytest data/mdpf/scripts/demque -q gives 221 passed and 4 failed: 3 are FileNotFoundError on integrations/bloomberg paths that the sparse cone omits, and 1 is an assertion mismatch in test_demque_bbg_ledger_upload.py that this worker did not diagnose; none is in inactive_set.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t64 step 4 (the folder count for data/mdpf/scripts/demque, once) and the coordinator's ruling that the worktree now collects with no error.",
+    "world_is": "Collection is clean (225 tests), but the run reads 221 passed and 4 failed. Failing: test_demque_bbg_backfill.py::test_backfill_stops_on_a_vendor_limit_warning[field] and [response] and test_demque_bbg_ledger_upload.py::test_name_to_literal_assignment_is_resolved_before_literal_eval raise FileNotFoundError on C:/dev/wk-demque-56/integrations/bloomberg/pipeline/etf_daily_pull.py and integrations/bloomberg/mcp/blp_client.py; the folder integrations/ is absent from the sparse cone and from disk. test_demque_bbg_ledger_upload.py::test_reads_record_lines_and_converts_rows_to_cells_per_mode fails an assertion ([48, 64, 5, None, 2] == [48, 64, 5, 14, 2]) whose cause is not diagnosed here. The census (inactive_set.py) and its tests pass.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/mdpf/scripts/demque -q, worktree C:/dev/wk-demque-56 at d89ade551a, rc=1: 4 failed, 221 passed in 14.43s",
+        "git sparse-checkout list at d89ade551a: no integrations entry; ls -d integrations ABSENT in the worktree",
+        "data/mdpf/scripts/demque/test_demque_bbg_backfill.py and test_demque_bbg_ledger_upload.py (the four failing tests) @d89ade551a"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W57-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~57",
+    "surfaced_at": "2026-10-15T18:21:17Z",
+    "one_line": "DQ-t-65 asks census() to gain the key tx_symbol_only AND says the DQ-t-64 tests pass unedited, but the DQ-t-64 test test_the_census_adds_up_classes_symbols_and_stored_against_the_inactive_total compares the whole census dict for exact equality, so an always-present key fails it; the cell emits the key only when a transactions source (non-empty tx_only) is supplied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t65 build item 3: census(...) gains tx_only=() and the dict gains the integer key tx_symbol_only; every existing key, identity and call keeps its meaning (the DQ-t-64 tests pass unedited).",
+    "world_is": "With the key always present, test_demque_inactive_set.py:59 fails (pytest: 'Left contains 1 more item: tx_symbol_only'; the left dict holds 15 keys, the DQ-t-64 expected dict 14). The cell therefore sets tx_symbol_only only when tx_only is non-empty: a call with the DQ-t-64 arguments returns the DQ-t-64 dict unchanged, and the real census (tx_only supplied) carries the key with the same value that AC2 checks. Both AC1 and AC2 pass under this reading; the DQ-t-64 test file is unedited (it is outside this order's grant).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/mdpf/scripts/demque -q, worktree C:/dev/wk-demque-57 with census key always present, rc=1: 'FAILED test_demque_inactive_set.py::test_the_census_adds_up_classes_symbols_and_stored_against_the_inactive_total', 'Left contains 1 more item: tx_symbol_only: 0', at data/mdpf/scripts/demque/test_demque_inactive_set.py:59 @270e1c6175",
+        "after the conditional key: python -m pytest test_demque_inactive_set.py test_demque_inactive_symbols.py -> 6 passed, rc=0 (worktree C:/dev/wk-demque-57 on wk-MDPF_DEMQUE-57, base 270e1c6175)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W58-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~58",
+    "surfaced_at": "2026-10-15T18:51:05Z",
+    "one_line": "DQ-t-66 criterion AC2 cannot be met as written: the check reads a securities list from the extend_frontier.py --plan JSON line, and the CLI pops that list before printing (unchanged by this cell), so the check fails at its securities clause.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t66 criterion DQ9-t66-AC2 (dq_t66_real.py): extend_frontier.py --plan shows excluded_active above 0, no V2 CUSIP in the day's securities, 1 to 380 symbols, excluded_p2 and excluded_p3 both 0; the check requires the securities list on that line to be 1..380 entries equal to symbols.",
+    "world_is": "extend_frontier.py main() runs p.pop(\"securities\") before it prints the --plan line, so the line carries no securities list. The check's first clause passes on the real line (excluded_active 528, excluded_p2 0, excluded_p3 0, symbols 6) and then prints GATE-REAL-BAD 'the securities list is not 1..380 entries equal to symbols' (rc=1). Read only, in-process plan(): securities 6, V2 CUSIPs in securities 0, V2 set 3368. The CLI print is not changed by this order, so the criterion stays unmet as written; the order is left open.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "extend_frontier.py@5e62883899 line 483: p.pop(\"securities\") before print(json.dumps(p)) in main() under --plan",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t66_real.py in worktree C:/dev/wk-demque-58 (with the DQ-t-66 change): stdout 'plan symbols=6 excluded_active=528 excluded_p2=0 excluded_p3=0' then 'GATE-REAL-BAD the securities list is not 1..380 entries equal to symbols', rc=1",
+        "scratch .scratch/v2_securities_check.py (in-process plan(), counts only): symbols=6 securities=6 v2_cusips_in_securities=0 excluded_active=528 excluded_p2=0 excluded_p3=0; v2_set_size=3368"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W58-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~58",
+    "surfaced_at": "2026-10-15T18:51:05Z",
+    "one_line": "The Yahoo gate reaches only client-class requests, so an active (V2) CUSIP in a non_client request still draws on Yahoo, against the cell's 'never drawn or extended on Yahoo'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t66 cell: 'a name in V2 is never drawn or extended on Yahoo'; build item 2: the daily draw's default gate becomes pg.yahoo_excluded_for and everything else in run is unchanged.",
+    "world_is": "demand_queue.gated() returns every security of a request for which is_gated() is false, and is_gated() is false for need_class non_client, so the gate passed to draw() never reaches a non_client request. A V2 CUSIP in a non_client request (research scanner, TR comparison, positioning, pre-flight) is therefore drawn on Yahoo. The order's test name pins the client-request scope ('of a client request'), so the code follows the order; the scope question is for the issuer.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "demand_queue.py@5e62883899 lines 51-55: is_gated returns req.get(\"need_class\") != NON_CLIENT",
+        "demand_queue.py@5e62883899 lines 63-69: gated() returns list(req[\"securities\"]), [] when not excl or not is_gated(req)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W58-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~58",
+    "surfaced_at": "2026-10-15T18:51:05Z",
+    "one_line": "Once a name is active (V2) its Yahoo rows stop extending at the next standing apply, and nothing in this order places it on the Bloomberg leg, so lag_report omits it and its served history can go stale without a report.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order cell: 'Active accounts should get BBG pricing exclusively' (Andrew-direct 2026-10-15); the Yahoo leg excludes V2 names from every tier.",
+    "world_is": "The standing extension (extend_frontier._tiers) leaves each V2 name in no tier, so apply() no longer requests it on Yahoo; the existing Yahoo rows for those names keep their last valid_to. lag_report skips excluded names (excluded_active is counted, not their lag). This order does not verify that the Bloomberg leg holds a served price for every V2 name, so the staleness, if any, is unmeasured here.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "extend_frontier.py in worktree C:/dev/wk-demque-58 (uncommitted, DQ-t-66): _tiers leaves a name in excl out of known, so out of daily and rolling; lag_report continues past excl names",
+        "real plan at 2026-10-15: excluded_active 528 of the landed names, rolling_not_landed 387, symbols 6"
+      ]
+    }
+  }
+  ,
+  {
+    "id": "MDPF_DEMQUE-D1-W60-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~60",
+    "surfaced_at": "2026-10-15T18:43:13Z",
+    "one_line": "DQ-t-68 says old_columns_digest is the sha256 of the ten OLD columns and equals the DQ-t-59 value; the DQ-t-59 digest is over the nine old columns, the same order's step 1 counts the ten as INDEX_COLS including porting_verdict, and a digest over the live rows cannot equal the DQ-t-59 hash because the store grew from 483 to 538 rows; the build keeps the nine-column digest unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t68 build item 4: old_columns_digest is still the sha256 of the ten OLD columns as CSV text (so it equals the DQ-t-59 value).",
+    "world_is": "price_store.py at base 5e62883899 computes the digest over OLD_INDEX_COLS, which holds nine columns; the DQ-t-59 proof records the nine-column definition and its preview digest 5fe689fd2a76d2bb4ad5b65191ed4afb855056a408092f32952bacb3d2fdf2e9 at 483 rows. This build's real preview reads 538 rows and prints old_columns_digest 7621374ba954b05357cfa07b18722de024fc3f1afd873eb95c38400bd78a01f6, equal across two real reads. The digest is unchanged in code, so the spec's equality with the DQ-t-59 value holds only as a definition, not as a hash comparison on the live store.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/price_store.py@5e62883899 line 35: OLD_INDEX_COLS is nine columns; _index_preview digests df[OLD_INDEX_COLS]",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~51/MDPF_DEMQUE.TO-DQ-t59.porting-verdict-column.proof_of_spec.json controls.determinism: old_columns_digest 5fe689fd2a76d2bb4ad5b65191ed4afb855056a408092f32952bacb3d2fdf2e9 at 483 rows; the TO-DQ-t59 order defines the digest as sha256 of the nine old columns as CSV text",
+        "python data/mdpf/scripts/demque/price_store.py --index-preview in worktree C:/dev/wk-demque-60 (branch wk-MDPF_DEMQUE-60): rows 538, old_columns_digest 7621374ba954b05357cfa07b18722de024fc3f1afd873eb95c38400bd78a01f6, read twice (rc=0 both)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W60-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~60",
+    "surfaced_at": "2026-10-15T18:43:13Z",
+    "one_line": "DQ-t-68 names org/surprise_channel/schemas/investigation_item.schema.json as the row schema; that path is absent from this worktree and no investigation_item.schema.json exists under org/, so the row is written in the form of the existing rows of this file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t68 Surprise clause: a surprise row conforms to org/surprise_channel/schemas/investigation_item.schema.json.",
+    "world_is": "The schema path does not exist at worktree HEAD 5e62883899 (org/surprise_channel is not present) and a Glob of org/ for investigation_item.schema.json returns no file. The surprise-row gate .tools/surprise-row-gate.py is the commit-time check; its verdict is recorded in this worker's proof instance.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Glob pattern **/investigation_item.schema.json under C:/dev/wk-demque-60/org: No files found (read at 2026-10-15T18:43Z)",
+        "ls org/surprise_channel and ls org/surprise_channel/schemas in worktree C:/dev/wk-demque-60 at HEAD 5e62883899: No such file or directory"
+      ]
+    }
   }
 ]
 ```
