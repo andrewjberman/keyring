@@ -17426,3 +17426,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The measured peak of 654.5 MB was taken on a different interpreter and operating system from the Lambda runtime. The Lambda runtime's own peak is not measured. The 70 percent line of 1024 MB (716.8 MB) sits about 9 percent above the measured peak. Nothing in this order invokes the function."
 }
 ```
+
+## IRPT_DASHBD-D2-S83 -- OBSERVATION: W210-S1 and W210-S2 dispositioned, the Cottonwood landing packet carries the memory gap
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S83",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T13:20:00Z",
+  "one_line": "Rows IRPT_DASHBD-D2-W210-S1 and IRPT_DASHBD-D2-W210-S2 are dispositioned: the builder's layer-import advisory did not stop the build, and the python3.12 memory gap is gated by the first event's Max Memory Used in the landing packet",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DB126-1-AC3 run by this seat on the landed tree after merge 1e78f951eb: the build-only command exits 0 with the advisory printed, the package holds exactly the 16 declared members and its sha256 is the same in three builds",
+      "NEVER_WIDEN_PACKET_COTTONWOOD_ACCOUNT_RETURN_DAILY_LANDING.md section 6 branch D and section 9 question 2: Act 2 reads Max Memory Used against 717 MB before any Act 3 event, and the memory line is a single-line change",
+      "the function, roles, schedule and artifact are absent in AWS at packet time (read-only gets), so nothing at risk exists until the pair is applied"
+    ]
+  },
+  "spec_asserts": "Worker rows W210-S1 (ARMED, layer imports unenforced without a BUILD_MANIFEST.json) and W210-S2 (ARMED, memory measured on python3.14 against a python3.12 runtime), disarm owner this seat.",
+  "world_is": "W210-S1: the advisory is printed and the build exits 0 with every declared member present and byte-equal to its source; nothing depends on layer-import enforcement for this function. W210-S2: still true as a measurement gap; it is carried into the pair as a stated limit with a reading and a one-line remedy, and nothing is deployed to be at risk before the pair is signed. Counts, dates and words only."
+}
+```
