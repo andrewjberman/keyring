@@ -6,7 +6,8 @@ L8 by `3.0.0_SA_CVO~L` (laptop), on `2.0.0_SA_COO~C` msg 109416 (packet `deliver
 No judgment criterion this round.
 
 **Result:**
-- 18 round-19 rows dismissed with reason (C-S60).
+- 17 round-19 rows dismissed with reason (C-S60). Its `adjudicates` list holds 17: 6 BLOCKING plus 11 INERT. Its one_line says "eighteen"
+  and "twelve", a miscount by this seat; the list governs.
 - W106-S5 and W111-S1 GRADUATE ARMED to REMEDIATION_v9 (C-S61).
 - The FWD delta to this morning's re-grade is in C-S62: no grade changes tier, and FWD-7 now carries a measured split.
 
