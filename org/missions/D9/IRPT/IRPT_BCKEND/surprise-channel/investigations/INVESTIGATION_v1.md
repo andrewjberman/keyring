@@ -35235,3 +35235,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The live 49financial producer already runs the CUSIP port; Cottonwood's and Inflection's live producers do not. The port is therefore not 'its own release' for 49financial: it is live there. A per-firm pin follows from the bytes: 49financial on b1d354cfc9 (parity with live except the signed changes, 32 measured in round 196), Cottonwood and Inflection on 5fad7eaaa8 (255 and 841, the signed cash rule alone). Read from file bytes only; the live 49financial bundle's own minting commit was not found and the 12 cusip-named lines were not read line by line."
 }
 ```
+
+## IRPT_BCKEND-D2-W393-S1 -- OBSERVATION: the inflection manifest anchor in packet v2 differs from the served index version the round-197 gate read; Branch B's anchor rule needs one value
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W393-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~393",
+  "surfaced_at": "2026-10-15T02:00:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The inflection manifest anchor that packet v2 recorded (MLSPlfHHsZa7mSnXEzorRkR9zgs2Q68u) is not the publication index version that the round-197 same-state gate read for inflection (lyN4wrJr7H3goQ2h9wqLO.Z3seHkXGMD, latest_date 2026-10-13); packet v3's manifest anchor rule needs one value for inflection and the packet does not pick it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~383/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-532_V2.md section 8: 'inflection MLSPlfHHsZa7mSnXEzorRkR9zgs2Q68u' recorded as the manifest anchor (page anchor, carried from v1, not re-read)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~390/IB197-2_built_differential.json: firms.inflection.gate.served_state manifest_version lyN4wrJr7H3goQ2h9wqLO.Z3seHkXGMD, latest_date 2026-10-13; the notes name the value as the publication index version captured by begin()",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~386/IB196-2_built_differential.json: the same inflection served state (lyN4wrJr7H3goQ2h9wqLO.Z3seHkXGMD), so the two records agree and the packet's anchor is the other object",
+      "the packet's 49financial and cottonwood anchors equal the same records' served manifest_version values (daFZJt6f7G9.CXj3MJftFYV.DNUOVFQh and lQMhNnImgj0ikICMdhFeasBGJKSbl55s), so the discrepancy is specific to inflection"
+    ]
+  },
+  "spec_asserts": "Packet v2 recorded the inflection manifest anchor as a page anchor carried from v1; the packet v3 manifest anchor rule admits a newer manifest version only against the anchor the packet carries, per firm.",
+  "world_is": "The inflection publication index version read at the same served state in records 386 and 390 differs from the value packet v2 carried as the inflection anchor. Whether a page anchor and a publication index version are the same kind of object was not read by this order. Packet v3 records both values beside each other and does not choose. Hazard INERT: nothing is minted; the value is LOAD-BEARING for the inflection leg of Branch B, so the CTO rules it before any inflection fire is judged."
+}
+```
