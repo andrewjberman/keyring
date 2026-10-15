@@ -19450,3 +19450,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W158-S1 -- the AR-y-361 mutant runs by swap-and-restore in the portal path, not from a scratch copy, because the new test imports its composer relative to itself
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W158-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~158",
+  "surfaced_at": "2026-10-15T21:57:06Z",
+  "one_line": "The AR-y-361 mutant could not run from a copy outside the product tree: the new test file imports ../ProspectComposer relative to itself, so mutant_check.py swapped the as-of-null mutant into the portal path for one bun run and restored it (sha256 verified).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR361-y-AC2 and cell step 5: mutant_check.py copies ProspectComposer.tsx to a scratch folder OUTSIDE the product tree with the as-of put back to null, and runs the new test file against the copy.",
+  "world_is": "The new test file imports '../ProspectComposer' and reads its own composer source by import.meta.url, so a copy outside tests/analysis is never the module it exercises. mutant_check.py (in the deliverable folder of this worktree) copies the candidate to <worktree>/.scratch/asof_mutant/, writes the mutant there, copies the mutant over portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx for one bun test run, then restores the candidate and verifies its sha256 (restored equals candidate: True). Result: MUTANT-FIRES, bun test rc=1, the one failing case is (g). NOT read: a run in a mirror tree in which the scratch copy is the imported module.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/tests/prospect-no-price-date.test.tsx@d06fed37 line with import { ProspectComposer } from '../ProspectComposer'",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~158/mutant_check.py: swap-and-restore with sha256 check; run printed MUTANT-FIRES (bun test rc=1) and restored==candidate True",
+      "the same method is in org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~157/mutant_check.py (AR360 precedent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
