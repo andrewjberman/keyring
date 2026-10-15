@@ -17058,3 +17058,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarms when the no-overwrite guard in write_day and the 2026-07-10 floor in owed_days (and in explicit day events) are merged and tested (round 125, cell DB-b-254). No landing packet is written before then. Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W208-S1 -- OBSERVATION: the handler's dry-run results carry no account count; the count is taken by the adapter's accounts_in_partition after the timed call
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W208-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~208",
+  "surfaced_at": "2026-10-15T11:35:25Z",
+  "one_line": "The handler's dry-run results carry the day, held, reason and rows but no account count, so the measurement takes each day's account count with the adapter's accounts_in_partition, one more GET per day outside the timed call",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-255 step 2 records, per day, the accounts and rows the derivation produced, from the handler's returned results.",
+  "world_is": "lambda_handler returns {ok, days, results, held}; each results entry carries day, held, reason and rows (account-return-daily/handler.py @fe343dbc14, the return statement and _run). The entry has no account count. The measuring script counts accounts with the adapter's accounts_in_partition, the call run_day makes, after the timed handler call and inside the sampled window. The two counts equal the two row counts of the day. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py @fe343dbc14: the lambda_handler return statement and the results entry written by _run",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py @fe343dbc14: run_day (presence_hold, accounts_in_partition, the dry-run result {day, held, reason, rows})",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~208/cot_memory_r125.py (the accounts_in_partition count after each day)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and words only; no account id is quoted. Hazard INERT: the measurement is unaffected, since the extra GET runs after the timed call and inside the sampled window, which only raises the recorded peak."
+}
+```
+
+## IRPT_DASHBD-D2-W208-S2 -- OBSERVATION: on this box the trading calendar answered from its hardcoded NYSE fallback (pandas_market_calendars absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W208-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~208",
+  "surfaced_at": "2026-10-15T11:35:25Z",
+  "one_line": "The measuring run printed WARN from lib/trading_calendar.py: pandas_market_calendars is absent on this box, so the previous-trading-day answers came from the hardcoded NYSE fallback (covering 2010 to 2027)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The handler's previous trading day and owed days come from lib/trading_calendar.py, the one frontier for the trading calendar.",
+  "world_is": "A dry-run of lambda_handler on this box at fe343dbc14 printed the WARN line: trading_calendar has no pandas_market_calendars and answers from the NYSE hardcoded-fallback table (2010 to 2027), with a note that the table must be regenerated before 2028. Both measured days, 2026-07-10 and 2026-10-13, fall inside that coverage, so the answers used are the fallback's. The calendar only chooses the derivation's window; the memory measurement is not changed by it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py @fe343dbc14: the fallback path that prints the WARN line",
+      "the WARN line printed by the run of org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~208/cot_memory_r125.py on 2026-10-15",
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py @fe343dbc14: prev_trading_day and owed_days"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts and words only. Hazard INERT for this cell; the calendar owner decides whether the box should carry pandas_market_calendars."
+}
+```
