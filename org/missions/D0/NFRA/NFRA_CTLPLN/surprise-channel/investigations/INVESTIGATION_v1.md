@@ -11691,3 +11691,28 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The three flags were kept unchanged, as the face says. The --check flag's ok expression encodes the pre-release state, so it now reads ok=False by design of its own expression. The seat did not change that expression; whether the flag is retired or re-keyed is for the test's owner."
 }
 ```
+
+## NFRA_CTLPLN-W122-S5 -- the existing --fetch flag reads ok=False after the release, because its ok expression needs a wheel still held in holding and a disk hash equal to the fetch record
+
+```json
+{
+  "id": "NFRA_CTLPLN-W122-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "surfaced_at": "2026-10-15T20:40:39Z",
+  "one_line": "After the release, python .tools/tests/test_round22_journey_record.py --fetch prints 'JOURNEY-FETCH wheels=0 file=NONE device=laptop sha256=- requests=4 ok=False' and exits 1, because its ok expression requires exactly one wheel in holding and a disk hash equal to the fetch record; the wheel has moved to release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round22_journey_record.py --fetch (worktree ctlpln-122, released state, after the state-aware --check edit): 'JOURNEY-FETCH wheels=0 file=NONE device=laptop sha256=- requests=4 ok=False' and 'JOURNEY-FETCH-DETAIL box=laptop fetch_record=True disk_matches_record=False cp312_present=False' rc=1",
+      "C:/opal-intake/holding/intake-20261015-duckdb/ is empty after release; the wheel is in C:/opal-intake/release/intake-20261015-duckdb/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round-22 test keeps its flags; the --fetch flag reads the held wheel as the fetch proof of the round.",
+  "world_is": "The --fetch flag encodes the pre-release state (one held wheel), as --check did (NFRA_CTLPLN-W122-S4). The ruling from 2.0.0_SA_COO~C covered --check only, so --fetch was left unchanged; the seat reports it and does not change the flag without a ruling."
+}
+```
