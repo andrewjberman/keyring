@@ -9158,3 +9158,106 @@ round.** Never edit an existing row.
 }
 ```
 
+## ADVI_COTBKF-D1-W175-S1 -- The order's same-registration-type test has no Commonwealth registration field to read; R4 derives a class from document-name tokens and the Black Diamond side from account_registration_type
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~175",
+  "surfaced_at": "2026-10-15T19:17:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-D1-W175-S1",
+  "one_line": "The order's same-registration-type test has no Commonwealth registration field to read; R4 derives a class from document-name tokens and the Black Diamond side from account_registration_type",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver transactions, positions, document_index and account_links column lists read from S3 on 2026-10-15 (read-only): no registration column on the Commonwealth side",
+      "worktree C:/dev/wk-cotbkf-175 data/assets/scripts/silver/commonwealth_match_r4.py REG_CLASSES (uncommitted at the time of writing)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-4 item 1e: a CANDIDATE when a candidate is window_ok with the same registration type. The order names no Commonwealth registration source.",
+  "world_is": "No Commonwealth table carries a registration column. The build maps name tokens to IRA, TRUST, LLC, JOINT and otherwise PLAIN on both sides (the Black Diamond side from account_registration_type). Consequence: the 89 client-line accounts carry two document names in total, so the registration route cannot fire for them. The class map is this build's choice, stated in the module and in R4_RECORD.json; no other source was consulted.",
+  "notes": "Surfaced building TO CB-ci-4 (round 87)."
+}
+```
+
+## ADVI_COTBKF-D1-W175-S2 -- On the 471-account control, rule R4 as the order states it reaches 358 unique households with 353 right and 5 wrong, not the research's 138 right and 0 wrong; the real run gives 137 name-routed accounts in 94 households against the research's 59
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~175",
+  "surfaced_at": "2026-10-15T19:17:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-D1-W175-S2",
+  "one_line": "On the 471-account control, rule R4 as the order states it reaches 358 unique households with 353 right and 5 wrong, not the research's 138 right and 0 wrong; the real run gives 137 name-routed accounts in 94 households against the research's 59",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "research note section 4 (copy at org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/RESEARCH_20261015_COTTONWOOD_MATCHING_KEYS.copy.md, origin 4.0.0_SA_CRO~DELL2 @fb9f9bc870): 138 right, 0 wrong, 7 multi, 317 no hit over 462 pairs; 59 unmatched reach a household",
+      "R4 run on 2026-10-15 over the served 471 MATCHED accounts (own link hidden from the claims test): 358 unique, 353 right, 5 wrong, 2 multi, 111 no hit; 469 accounts carry a document name; 221 of 225 households are named by relationship_name"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-4 item 2 and the research note: the household stage is expected at 138 right and 0 wrong, and about 59 unmatched accounts reach a household now.",
+  "world_is": "The name stage reaches more households than the research measured, and 5 of its control households are wrong. No DETERMINISTIC link was wrong (341 of 341 right), so the guard did not fire. The 5 wrong households are relationship-named, so the name source is not the cause. Not established: the cause of the gap between the two runs; the stop list and token rule are as the order states.",
+  "notes": "The order's expectation is recorded here, not adjusted to fit."
+}
+```
+
+## ADVI_COTBKF-D1-W175-S3 -- The client-line route reaches 89 unmatched accounts and yields no CANDIDATE and no DETERMINISTIC link, where the research expected a candidate tier; 34 of the 89 touch a reachable account, against the research's 39
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~175",
+  "surfaced_at": "2026-10-15T19:17:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-D1-W175-S3",
+  "one_line": "The client-line route reaches 89 unmatched accounts and yields no CANDIDATE and no DETERMINISTIC link, where the research expected a candidate tier; 34 of the 89 touch a reachable account, against the research's 39",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "research note sections 4 and 5, option 4: client-line propagation then the inside step, 89 households, 39 touching unmatched active accounts, tier candidate",
+      "R4 run on 2026-10-15: 89 accounts via client_line in 56 households; 2 of the 89 carry a document name; best fingerprint against every household account: 75 at 0, 10 below 0.5, 4 between 0.5 and 0.8; all 89 NONE"
+    ]
+  },
+  "spec_asserts": "The research's option 4 is a candidate-tier route through the same inside-household step.",
+  "world_is": "The client-line accounts have no names, so no registration route, and no household account scores 0.8 with a window. Four accounts have a household account between 0.5 and 0.8 yet are NONE; the candidate pool excludes accounts that other matched Commonwealth accounts claim, and the per-account claim was not printed. Not established which way the 4 resolve.",
+  "notes": "Count of accounts (not households) whose household holds a reachable account is 34 for the client-line route and 107 for the name route."
+}
+```
+
+## ADVI_COTBKF-D1-W175-S4 -- Links land on accounts the reverse match already classes otherwise: 1 DETERMINISTIC on a near match awaiting a person, 9 CANDIDATE on near matches, 4 CANDIDATE on accounts the research says are new clients with no predecessor
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~175",
+  "surfaced_at": "2026-10-15T19:17:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-D1-W175-S4",
+  "one_line": "Links land on accounts the reverse match already classes otherwise: 1 DETERMINISTIC on a near match awaiting a person, 9 CANDIDATE on near matches, 4 CANDIDATE on accounts the research says are new clients with no predecessor",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/REVERSE_MATCH_V3.csv (sha256 0783f088aecbf29e46751aa5d80239b8aa53f16484778162e34ee1c09783c66f): 387 with no predecessor, 168 NEW_CLIENT_AFTER_MIGRATION, 13 near_match_waiting_on_a_person with a predecessor set",
+      "R4_LINKS.csv (outside the repository, 110 linked rows: 11 DETERMINISTIC, 99 CANDIDATE) joined to the reverse file by count only"
+    ]
+  },
+  "spec_asserts": "The research note: 168 of the 387 unmatched active accounts are new clients after the migration, and no predecessor exists to find for them.",
+  "world_is": "Of the 110 links, 10 DETERMINISTIC and 85 CANDIDATE point at reachable accounts (reverse reasons AMBIGUOUS, MISMATCH_NO_IDENTIFIER and OTHER). 4 CANDIDATE point at NEW_CLIENT_AFTER_MIGRATION accounts. 9 CANDIDATE and 1 DETERMINISTIC point at accounts the reverse file holds as near matches awaiting a person. 1 CANDIDATE points at an account outside the reverse file. Not established whether these are false links; the yield figures count them as the rule states.",
+  "notes": "The DETERMINISTIC near-match landing needs an owner before any link is applied (L9)."
+}
+```
