@@ -13694,3 +13694,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The fallback table equals the package for every year 2010 to 2027, so the 15 landing days and the 13 catch-up dates of round 114, answered from the fallback, are the package's answer too. NOT closed by this row: the round-114 records DB-c-1 and DB-c-3 still carry calendar_source NYSE/hardcoded-fallback-2010-2027 and calendar.ran false (history, not rewritten); the checkers run under python -I, which drops the user site, so they still answer from the fallback (equal by this test). The pair packet DB-c-5 states the calendar source it used."
 }
 ```
+
+## IRPT_DASHBD-D2-S51 -- the BD platinum advisor positions are unchanged since 2026-10-12 (as_of 2026-10-09): L3 of the classifier ledger cannot be read yet
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S51",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T02:35:58Z",
+  "one_line": "The BD gold platinum advisor positions files have not been rewritten since 2026-10-12T05:54Z and read as_of 2026-10-09 (189 of 189 files), so the first D_04 run after the 2026-10-14T12:08:39Z classifier upload (ledger leg L3) has not produced served output: the 23:00Z nightly fallback ran the chain in incremental mode and wrote nothing the L3 read can see.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Ledger bd-gold-etf-classifier-cash-type-20261014 leg L3 (COO half condition 7): after the first D_04 run following the upload, the advisor positions files show 0 of the 17 moved rows still fixed_income, with the moved count at or above the 20-position floor or the reason stated.",
+  "world_is": "Measured 2026-10-15 ~02:3xZ by this seat, S3 LIST and GET only, bucket per the firm's registry: 189 platinum advisor positions files listed, 189 read, 0 errors; LastModified newest 2026-10-12T05:54:08Z and oldest 05:54:07Z; as_of_date is 2026-10-09 in all 189; 0 files modified after the upload; 4,315 positions read, 0 with asset_class cash beside sub_asset_class_canonical cash, 0 with fixed_income beside cash (the rows that move are not in the top-25 lists read, or not yet written). The runner i-01003b035d2988dfb launched 2026-10-14T23:00:11Z (bd-gold-nightly-fallback, incremental), a price-update put at 00:11:42Z left a pending marker, both markers (trigger-pending.json, trigger-mode.json) now read 404 and the instance reads stopped. Why the chain wrote no platinum in that run is not read (no run log located).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bd-gold-trigger lambda log streams 2026/10/14 and 2026/10/15 (invoked 23:00:10Z and 00:11:44Z)",
+      "s3api head-object / list of platinum/advisors/*/positions.json: 189 files, counts above",
+      "ec2 describe-instances i-01003b035d2988dfb: stopped, launch 2026-10-14T23:00:11Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "L3 stays OPEN (window ends 2026-10-16T12:02Z; the next nightly fallback is 2026-10-15T23:00Z). Counts only, no advisor or client value. If tonight's run also leaves the files untouched, the next act is a read order for the run log to an AE CloudOps lane. Platinum as_of 2026-10-09 against a trading-day frontier of 2026-10-13 is also a freshness fact for whoever owns the BD gold chain; not this project's surface."
+}
+```
