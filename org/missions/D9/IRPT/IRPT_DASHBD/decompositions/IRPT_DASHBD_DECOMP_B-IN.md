@@ -178,6 +178,18 @@ The CTO numbered the module's flip "round 126"; round 126 was already DB-i-13 (t
 
 **fanout:** 1 of 1 chains, cap 8, reason: one cell with a disjoint write set of four existing files. Worker `0.9.0_WK_IRPT_DASHBD~314` (`DB-i-14`).
 
+## 14. ROUND 128, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-126 analysis, msg 8730)
+
+The CTO closed round 126 MAY-CLOSE with one enrichment: the read record carries `cause_claim: inferred` (the account is absent from a complete positions partition; its own status was not read). No product change follows; the verdict words stay record vocabulary. The record sits in the round-126 worker's deliverables folder, which the commit lane grants only to a worker holding a non-terminal order naming it (my own commit of the one-line edit was refused by lane TREE_DELIVERABLES), so the edit is a direct-act order.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-15` | Add the single key `cause_claim` = `inferred` to `SERIES_ENDED_CAUSE_R126.json` (the diff is one added line) | FWD-2 | LOCAL (one data record; nothing wired, served or deployed) | `DB-i-13` (merged) | I-O |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The round-126 check (`checks/r126/p126_cause.py`, the issuer's file) is amended in this issuance to require `cause_claim` = `inferred`; between the issuance and the worker's merge `DBI126-1-AC1` therefore reads FAIL on trunk, named here so it is not read as a regression. (b) The order's own criterion, `DBI128-1-AC1`, runs the same check and expects its PASS line. (c) A direct act (one cell, a one-line edit, LOCAL) runs no L2, L4-R or L8 to L10; its close is my one real run of the criterion on the landed tree.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent direct-act cell with a disjoint write set (one record); worker `0.9.0_WK_IRPT_DASHBD~315` (`DB-i-15`).
+
 ## Cells
 
 | cell id | owner |
@@ -196,3 +208,4 @@ The CTO numbered the module's flip "round 126"; round 126 was already DB-i-13 (t
 | DB-i-12 | 0.9.0_WK_IRPT_DASHBD~312 |
 | DB-i-13 | 0.9.0_WK_IRPT_DASHBD~313 |
 | DB-i-14 | 0.9.0_WK_IRPT_DASHBD~314 |
+| DB-i-15 | 0.9.0_WK_IRPT_DASHBD~315 |
