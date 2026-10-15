@@ -16536,3 +16536,334 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm owner 2.0.0_SA_COO~C2 (this row), done. The adjudication of the underlying row is the CVO's."
 }
 ```
+
+## IRPT_DASHBD-D2-W200-S1 -- the worktree does not carry the reporting-gold handler or lambda.tf on disk (sparse checkout excludes infra/aws), so DB-b-246 cannot import the handler or read memory_size and stops with the file untouched
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W200-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~200",
+  "surfaced_at": "2026-10-15T09:41:10Z",
+  "one_line": "The worktree wk-IRPT_DASHBD-200 has no infra/aws tree on disk: its sparse-checkout patterns exclude infra/aws, so the handler and lambda.tf the cell names are tracked but absent",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-246 step 1 reads the reporting-gold handler (filled_inputs, filled_day_rows, run) and step 2 imports the handler of the worktree; step 3 reads memory_size from infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf. The worktree is the grant's checkout and carries the paths the order names.",
+  "world_is": "git sparse-checkout list on the worktree names .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph and org/standards, and no infra/aws pattern. The handler and lambda.tf are tracked in the index (git ls-files) with the skip-worktree flag set (git ls-files -t shows S), and neither file exists on disk: ls on infra/aws reports no such path. Both TO-DB-b-246 criteria print FAIL with no record and no script, the checker's first clause, before any S3 call. No S3 read, no write and no vendor call was made. The sparse set was not widened, because widening it would materialise a tree the order did not name.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-246.peak-memory-and-per-day-time-of-the-hop-1-stage-on-the-real-day.md @7d5697ef1a (WORKER FACE steps 1 to 3 name the handler and lambda.tf)",
+      "git sparse-checkout list in C:/dev/wk-irpt-dashbd-200 (branch wk-IRPT_DASHBD-200 at 7d5697ef1a): patterns .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/standards",
+      "git ls-files -t infra/aws/lambda/investor-reporting/reporting-gold/handler.py in the same worktree: tag S (skip-worktree), file absent on disk",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_mem.py @7d5697ef1a (python -I ... DB122-1-AC1 and DB122-1-AC2 both print FAIL, rc 1, no record and no script)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer and the CTO: the grant's worktree needs the infra/aws/lambda/investor-reporting/reporting-gold and infra/aws/terraform/investor-reporting/reporting-gold trees materialised before DB-b-246 can run, or the order must name a checkout that carries them. The worker did not materialise them, because that is reconstructing the tree. No measurement exists yet; no memory figure is quoted. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W200-S2 -- resolves IRPT_DASHBD-D2-W200-S1: the issuer's ruling enabled the checkout (sparse checkout disabled in the worktree), and the cell ran to PASS
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W200-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~200",
+  "surfaced_at": "2026-10-15T09:53:55Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W200-S1: the issuer ruled the sparse checkout a provisioning error and disabled it in the worktree; the handler and lambda.tf are on disk, and DB-b-246 ran to PASS on the measured day",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W200-S1 (BLOCKING) recorded that the worktree carried no infra/aws tree, so TO-DB-b-246 could not import the handler or read lambda.tf.",
+  "world_is": "The issuer ruled the sparse checkout a provisioning error on the worktree and ran git sparse-checkout disable in C:/dev/wk-irpt-dashbd-200; git sparse-checkout now reports the worktree is not sparse, and the handler and lambda.tf are on disk. The order was run as written: the stage's memory script (committed at 497d6cd7af) ran once on the newest returns day, the record RD_STAGE_MEMORY_R122.json (committed at 88baff9026) carries the measured marks and the CHUNK verdict, and both criteria print PASS. S1 is left as written (append only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coordinator ruling on IRPT_DASHBD-D2-W200-S1, relayed to worker 0.9.0_WK_IRPT_DASHBD~200 in this session: sparse checkout disabled in C:/dev/wk-irpt-dashbd-200, proceed as written",
+      "git sparse-checkout state in C:/dev/wk-irpt-dashbd-200 after the ruling: 'this worktree is not sparse'; infra/aws/lambda/investor-reporting/reporting-gold/handler.py and infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf present on disk",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~200/stage_memory_r122.py @497d6cd7af",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~200/RD_STAGE_MEMORY_R122.json @88baff9026"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution note for IRPT_DASHBD-D2-W200-S1, which is left as written (append only). The measured day is not quoted here; the counts, seconds and megabytes are in the record. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W201-S1 -- BLOCKING: the worktree's sparse checkout carries no infra/aws path, so all four grant paths of TO-DB-b-247 are absent on disk and the order stops before any edit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T09:40:35Z",
+  "one_line": "TO-DB-b-247 names four infra/aws paths in its grant (handler.py, the new test file, iam.tf, locals.tf); the worktree C:/dev/wk-irpt-dashbd-201 is a sparse checkout that excludes infra/aws on disk, so the order is not executable here and the worker stopped with no edit, no commit to infra and no criterion run",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-247 <paths> names infra/aws/lambda/investor-reporting/reporting-gold/handler.py, infra/aws/lambda/investor-reporting/reporting-gold/tests/test_filled_per_day.py, infra/aws/terraform/investor-reporting/reporting-gold/iam.tf and infra/aws/terraform/investor-reporting/reporting-gold/locals.tf as the worker's write grant, and the WORKER FACE says the worktree carries them (the order's own first act: if the worktree does not carry the paths the order names, that is a BLOCKING row and a stop).",
+  "world_is": "In the worktree at HEAD 7d5697ef1a, git sparse-checkout list returns .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph and org/standards. infra/aws does not exist on disk: ls reports no such directory, and all four grant paths are ABSENT on disk. The index still tracks the paths (git ls-files -v -- infra/aws: 9191 of 9191 entries carry the skip-worktree flag), and the three repo files are tracked at HEAD (git ls-tree HEAD: 3 of 3). The base checkout C:/dev/ajb_workspace on the same commit carries handler.py on disk. The checker, the order file and the investigation file ARE present in the worktree. Per the order's first-act rule the worker did not rebuild, extract, widen the sparse scope or re-checkout the tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-dashbd-201 (HEAD 7d5697ef1a): .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/standards",
+      "git ls-files -v -- infra/aws in C:/dev/wk-irpt-dashbd-201: 9191 of 9191 entries carry the skip-worktree flag; ls -d infra/aws reports no such directory",
+      "git ls-tree HEAD infra/aws/lambda/investor-reporting/reporting-gold/handler.py infra/aws/terraform/investor-reporting/reporting-gold/iam.tf infra/aws/terraform/investor-reporting/reporting-gold/locals.tf @7d5697ef1a: 3 of 3 present",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-247.per-day-self-invoke-split-of-the-hop-1-filled-stage.md @7d5697ef1a (WORKER FACE first act and <paths> block)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer and the drain owner: the grant's infra/aws paths are not materialised in this worktree, so DB-b-247 cannot be executed here as written. The worker did not widen the sparse scope or re-check-out the tree (the order forbids rebuilding the tree to make an order executable). Order stays pending; no proof instance written; no status flip. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W201-S2 -- resolves IRPT_DASHBD-D2-W201-S1: the worktree's sparse checkout is disabled by the issuer's ruling, and infra/aws is on disk
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T09:49:10Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W201-S1: the issuer ruled the sparse checkout was a provisioning error and ran git sparse-checkout disable in the worktree; infra/aws and the four grant paths are now on disk, so TO-DB-b-247 proceeds as written",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W201-S1 (BLOCKING) recorded that TO-DB-b-247's four infra/aws grant paths were absent from the worktree C:/dev/wk-irpt-dashbd-201 because it was a sparse checkout, and that the order stops on that premise.",
+  "world_is": "The issuer (2.0.0_SA_COO~D2) ruled the sparse checkout a provisioning error (the worktree provisioner defaults to sparse and the paths were not added) and disabled it in the worktree. The worker re-measured: git config core.sparseCheckout reports false, git sparse-checkout list reports the worktree is not sparse, infra/aws is on disk, handler.py, iam.tf and locals.tf are present, and the tests directory is present. The new test file is not yet written, as the order intends. The order proceeds as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer ruling relayed to worker 0.9.0_WK_IRPT_DASHBD~201 by the coordinator on surprise row IRPT_DASHBD-D2-W201-S1: git sparse-checkout disable run in C:/dev/wk-irpt-dashbd-201 (ruling text quoted in the worker's own session, not in the repo)",
+      "git config core.sparseCheckout in C:/dev/wk-irpt-dashbd-201 (re-measured 2026-10-15T09:48:12Z): false; git sparse-checkout list: not sparse",
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf and infra/aws/lambda/investor-reporting/reporting-gold/handler.py present on disk in C:/dev/wk-irpt-dashbd-201 at HEAD 67c4202df1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution note for IRPT_DASHBD-D2-W201-S1, which is left as written (append only). The fact the surprise row recorded is now false in the worktree; the worker executes DB-b-247 as written. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W201-S3 -- BLOCKING: the 105 earlier handler tests cannot all pass after the TO's own step 2 (run() must stop calling filled_stage); 104 pass, 1 fails
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T09:51:43Z",
+  "one_line": "TO-DB-b-247 step 2 requires run() to stop calling filled_stage, and the order's own refusal clause requires that the 105 earlier handler tests all pass; they cannot both hold: after the step-2 edit 104 pass and 1 fails, test_stage_runs_after_the_class_and_lot_stages, which asserts the scheduled run appends 'filled' through the patched filled_stage. The worker stopped at this point, as the order directs.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-247 step 2: run() no longer calls filled_stage (checker DB122-2-AC1 rejects a Name call to filled_stage inside run). Refusal clause: if the 105 earlier handler tests cannot all pass after the edit, file a BLOCKING row with the numbers and stop. Step 3 names the 105 as 'must keep passing'.",
+  "world_is": "After the step-2 edit (handler.py: five functions added, run() calls owed_filled_days and run_filled_day, run() takes chain=None, lambda_handler reads filled_day_event; 114 lines added, 6 existing lines changed or removed in the handler), the directory infra/aws/lambda/investor-reporting/reporting-gold/tests runs 105 tests: 104 passed, 1 failed. The failure is FilledStageTests.test_stage_runs_after_the_class_and_lot_stages in test_filled_report_values_stage.py line 160: expected order ['returns','class','lots','filled'], got ['returns','class','lots']. That test appends 'filled' only from a patched filled_stage, which the edited run() no longer calls. The test file is outside the TO's grant, so the worker did not edit it. ruff (py39) passes on handler.py. The worker did not commit the handler change (a committed red state would break the 105); the uncommitted diff is in the worktree and saved as a patch under the worker's scratch folder. Steps 3 to 5, the Terraform, the facts record, the proof instance and the status flip were not done.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest on infra/aws/lambda/investor-reporting/reporting-gold/tests in C:/dev/wk-irpt-dashbd-201 at HEAD 88e486a113 with the step-2 edit: 1 failed, 104 passed (the failure text quoted above)",
+      "pytest on the same directory at HEAD 88e486a113 before the edit: 105 passed (baseline)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_filled_report_values_stage.py @88e486a113 lines 88-103 (the patched filled_stage appends 'filled') and line 160 (the asserted order)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_split.py @88e486a113 (check_handler_source: run() must not call filled_stage; the test-name and pytest arms of DB122-2-AC1 require 113 passing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the order cannot satisfy its step 2 and its 105-test clause together without an edit to tests/test_filled_report_values_stage.py (outside the grant) or a changed step 2. The worker has not widened the grant or edited that test. The step-2 handler diff is uncommitted in the worker's worktree. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W201-S4 -- resolves IRPT_DASHBD-D2-W201-S3: Amendment 1 (82091e0b7f) puts the one pinned test in the grant, and the step-2 handler change plus that one test update pass the whole handler directory
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T10:00:04Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W201-S3: the issuer's Amendment 1 (commit 82091e0b7f) puts tests/test_filled_report_values_stage.py in the grant for one change; the worker updated only test_stage_runs_after_the_class_and_lot_stages and the handler directory now passes 120 tests",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W201-S3 (BLOCKING) recorded that TO-DB-b-247 step 2 (run() stops calling filled_stage) and the refusal clause (the 105 earlier handler tests all pass) could not both hold, and that the worker stopped on that point.",
+  "world_is": "The issuer committed Amendment 1 as 82091e0b7f (order status stays pending): the order's paths name tests/test_filled_report_values_stage.py for ONE change, the update of test_stage_runs_after_the_class_and_lot_stages to the new behaviour, and the checker allows that file. The worker made that one change (every other test of the file is byte-identical: the file's diff is one method, 17 added and 3 removed lines), committed the handler, the new test file and iam.tf in 66b0a5a021, and the facts record in 940ec59113. The whole handler test directory passes 120 tests (105 earlier, 15 new). The three criteria DB122-2-AC1, AC2 and AC3 print PASS at the worker's HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 82091e0b7f -- org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-247.per-day-self-invoke-split-of-the-hop-1-filled-stage.md (Amendment 1 in the order's refusal clause and <paths>)",
+      "git show 82091e0b7f -- org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_split.py (OLD_TEST_REL allowed in the facts and stray-file clauses)",
+      "git diff --numstat 66b0a5a021^ 66b0a5a021 -- infra/aws/lambda/investor-reporting/reporting-gold/tests/test_filled_report_values_stage.py (the one method changed in the worker's commit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~201/RD_SPLIT_FACTS_R122.json @940ec59113 (tests: 15 new, dir_total 120; files_changed with the four hashes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution note for IRPT_DASHBD-D2-W201-S3, which is left as written (append only). The order's own criteria at the worker's HEAD are recorded in the order's proof instance. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W203-S1 -- BLOCKING premise: the worktree omits the order's named infra/aws and data paths (sparse checkout)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T09:40:58Z",
+  "one_line": "The worktree is a cone-mode sparse checkout that omits data/ and infra/aws/, so the order's adapter, gold handler, source map and function directory are not present; the three criteria FAIL at base",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-249 names its <paths> and its read inputs as present in the worktree: infra/aws/lambda/ci/lambda-source-map.json, the adapter under data/assets/scripts/gold/irpt_reporting/adapters/, the gold handler under infra/aws/lambda/investor-reporting/reporting-gold/. Its first act says that if the worktree does not carry the named paths the order is BLOCKING and the worker stops.",
+  "world_is": "Worktree C:/dev/wk-irpt-dashbd-203 (branch wk-IRPT_DASHBD-203, HEAD 7d5697ef1a) has core.sparseCheckout true in cone mode with 7 patterns (.tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/standards). Of 84917 tracked paths 81145 are skip-worktree; 11187 of those sit under data/ and infra/aws/. ls of infra/aws and of data reports no such file in the worktree; the base checkout C:/dev/ajb_workspace carries both paths. The checker at base: DB122-4-AC1 FAIL (no handler), DB122-4-AC2 FAIL (no infra/aws/lambda/ci/lambda-source-map.json), DB122-4-AC3 FAIL (no RD_CW_HANDLER_FACTS_R122.json). The worker did not change the sparse checkout and did not reconstruct the files; this row is the only write.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-249.cottonwood-landing-function-code-handler-source-map-closure.md @7d5697ef1a (paths block and the first-act refusal clause)",
+      "git -C C:/dev/wk-irpt-dashbd-203 config core.sparseCheckout = true and git sparse-checkout list = 7 cone patterns @7d5697ef1a",
+      "git ls-files -v infra/aws/lambda/ci/lambda-source-map.json and data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py both carry the S (skip-worktree) mark @7d5697ef1a",
+      "ls on infra/aws, infra/aws/lambda and data in the worktree: no such file; base checkout C:/dev/ajb_workspace holds infra/aws/lambda/ci/lambda-source-map.json and the adapter"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Worker stopped on this row under the order's refusal clause. The criteria were run at base and recorded as FAIL; no proof instance was written and the status stays pending. Resolution is for the issuer or CTO: the worktree must carry the named paths before the order can be executed. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W203-S2 -- OBSERVATION resolving W203-S1: sparse checkout disabled by the issuer, named paths on disk
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T09:52:00Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W203-S1: the issuer ruled the sparse checkout a provisioning error; sparse checkout is disabled in the worktree and the named paths are on disk",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W203-S1 (BLOCKING) recorded that the worktree omits the order's named infra/aws and data paths, so the order could not be executed as written.",
+  "world_is": "The issuer 2.0.0_SA_COO~D2 ruled, relayed to worker 0.9.0_WK_IRPT_DASHBD~203 by the coordinator, that wk-provision.sh defaults to a sparse checkout and the paths were not added; the issuer ran git sparse-checkout disable in the worktree. At 3f82fe319d core.sparseCheckout is unset, zero tracked paths carry the skip-worktree mark, and infra/aws/lambda/ci/lambda-source-map.json, the adapter and the gold handler are on disk. The order proceeds as written. W203-S1 is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coordinator relay of the issuer ruling on IRPT_DASHBD-D2-W203-S1 (sparse checkout was a wk-provision.sh default; issuer ran git sparse-checkout disable in C:/dev/wk-irpt-dashbd-203)",
+      "git -C C:/dev/wk-irpt-dashbd-203 config --get core.sparseCheckout returns no value (rc 1) and git ls-files -v shows 0 skip-worktree paths @3f82fe319d",
+      "ls of infra/aws/lambda/ci/lambda-source-map.json, data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py and infra/aws/lambda/investor-reporting/reporting-gold/handler.py succeeds in the worktree @3f82fe319d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution row for IRPT_DASHBD-D2-W203-S1, which is left as written (append only). The worker proceeds with the order as written. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W203-S3 -- BLOCKING: the naming gate refuses the source_dir literal of the new source-map entry
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T09:57:01Z",
+  "one_line": "The naming gate (LGIC_ENFORCE, ENFORCE) refuses the source_dir literal of the new source-map entry, which the order and the checker both fix at the account-return-cot path; the source-map entry is held uncommitted",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-249 step 3 requires ONE new source-map entry under functions, key irpt-cot-account-return-daily-lambda, with source_dir infra/aws/lambda/investor-reporting/account-return-cot, and the checker's stage_closure copies handler.py from that source_dir. The commit of that entry is the order's AC3 gain of at least 15 lines in the worker's own commits.",
+  "world_is": "The commit that carried the source-map entry with the handler and tests was refused by the naming gate: NAMING REFUSE at infra/aws/lambda/ci/lambda-source-map.json line 6323 (the source_dir value), reason NEW hand-kept carrier, hand-kept carrier of the firm token outside every permitted context, read it through lookup. The key line (6322) and the handler and test paths were not refused; the gate commit aborted and HEAD stayed at the commit that carried handler and tests (24b2cb7758). The source_dir literal cannot be changed while the order and the checker stand, since the checker reads handler.py from source_dir and fixes the handler path. The worker did not force, override or edit the gate. The entry is on disk and uncommitted, and the closure probe passes against it. Ruling needed from the issuer or CTO: an R20 register entry for this literal, or a directory name the naming gate admits (the checker and the order both change in that case).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output on 0.9.0_WK_IRPT_DASHBD~203 for the source-map entry: naming-gate REFUSE at infra/aws/lambda/ci/lambda-source-map.json:6323, commit aborted, files unstaged (log in the worker scratch folder)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_cothandler.py @7d5697ef1a (FN_DIR constant; stage_closure reads entry source_dir; HANDLER_REL fixed)",
+      "lib/opal_naming.py @7d5697ef1a and the naming gate rule that refuses a firm token in a new string literal outside the permitted contexts (.tools/naming-gate.py, comp-find hit at line 2356)",
+      "git log -1 --format=%H on wk-IRPT_DASHBD-203 = 24b2cb775868cec68209fa24f3122b2284b37d17 (handler and tests committed; source map uncommitted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Worker held the source-map commit under the order's refusal clause (never repaired, widened or forced). AC3 cannot be met as written until the ruling. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W203-S4 -- OBSERVATION resolving W203-S3: the function directory was renamed by Amendment 1 (90dc82c71f)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T10:06:22Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W203-S3: the issuer's Amendment 1 (90dc82c71f) renamed the function directory to account-return-daily; the handler, tests and source-map entry now carry the new path and the naming gate admitted the entry commit",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W203-S3 (BLOCKING) recorded that the naming gate refused the source_dir literal account-return-cot of the new source-map entry, which the order and the checker fixed at that path.",
+  "world_is": "The issuer ruled by Amendment 1 (commit 90dc82c71f, relayed by the coordinator): the function directory is infra/aws/lambda/investor-reporting/account-return-daily in the order and in the checker FN_DIR. The worker moved the handler and tests with git mv (commit 81d97eb30b), set source_dir to that path and committed the entry (commit 45c3e51a8b): the naming gate admitted the commit with no refusal. The facts record was refreshed (commit 2c2a1bf89d). Row S3 is left as written (append only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-249.cottonwood-landing-function-code-handler-source-map-closure.md @90dc82c71f (AMENDMENT 1 paragraph and paths block)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_cothandler.py @90dc82c71f (FN_DIR is account-return-daily)",
+      "git log of wk-IRPT_DASHBD-203: 81d97eb30b (rename), 45c3e51a8b (source-map entry, admitted by the gate), 2c2a1bf89d (facts record refresh)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution row for IRPT_DASHBD-D2-W203-S3, appended only; S3 is not edited. The entry's remaining literals were not refused. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W203-S5 -- BLOCKING: the AC3 stray clause reads the old directory from the first handler commit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T10:06:22Z",
+  "one_line": "The checker's AC3 stray clause reads the old directory path from the worker's first handler commit (24b2cb7758), so DB122-4-AC3 cannot PASS after the Amendment 1 rename without rewriting history, which this worker may not do",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB122-4-AC3 says nothing else under infra/, data/, lib/ or org/standards/ changes in the worker's own commits outside the new function directory (the checker's stray clause, FN_DIR-scoped). The order's amended FN_DIR is account-return-daily.",
+  "world_is": "The worker's commit 24b2cb7758 added infra/aws/lambda/investor-reporting/account-return-cot/handler.py and its tests, the old directory. Commit 81d97eb30b renamed them to account-return-daily. The checker's own_files lists every path a worker commit names, so the old paths are stray. Running DB122-4-AC3 gives: FAIL: this worker's commits changed files outside the grant: ['infra/aws/lambda/investor-reporting/account-return-cot/handler.py', 'infra/aws/lambda/investor-reporting/account-return-cot/tests/test_handler.py']. The other AC3 clauses pass: the record form and hashes, the closure equal to the entry, the source-map gain of 121 lines with 0 lost in worker commits, pins null. Clearing the stray clause needs one of: an issuer ruling that a rename's old path is not a stray (checker change, issuer file), or a recorded FAIL for AC3. The worker did not rewrite history, edit the checker, or force anything.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC3 run at HEAD 2c2a1bf89d: DB122-4-AC3 rc 1, FAIL line naming the two old account-return-cot paths (checks/r122/p122_cothandler.py run() stray clause)",
+      "git show --name-only --format= 24b2cb7758 lists infra/aws/lambda/investor-reporting/account-return-cot/handler.py and tests/test_handler.py; git show --stat 81d97eb30b shows the rename",
+      "task order AMENDMENT 1 @90dc82c71f (rename, git mv in one commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the order cannot be flipped to complete while AC3 is FAIL. Options are the issuer's ruling on the stray clause, or the order stays open with AC3 recorded FAIL. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W203-S6 -- OBSERVATION resolving W203-S5: the issuer's checker fix (616950e0bd) clears the stray clause
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T10:09:55Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W203-S5: the issuer's checker fix (616950e0bd) makes the stray-file clause count only paths that still exist at HEAD; DB122-4-AC3 now PASS at HEAD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W203-S5 (BLOCKING) recorded that the AC3 stray clause read the old directory from the worker's first handler commit, so AC3 could not pass after the Amendment 1 rename without a history rewrite.",
+  "world_is": "The issuer's commit 616950e0bd (2.0.0_SA_COO~D2) changed the checker's stray-file clause to ignore paths the worker moved away. At HEAD 616950e0bd the three criteria run from the worktree root: DB122-4-AC1 PASS (rc 0), DB122-4-AC2 PASS (rc 0), DB122-4-AC3 PASS (rc 0). Row S5 is left as written (append only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -1 --format=%h --author=2.0.0_SA_COO~D2 in wk-IRPT_DASHBD-203 = 616950e0bd (one file: checks/r122/p122_cothandler.py, one line changed)",
+      "checks/r122/p122_cothandler.py run at HEAD 616950e0bd: DB122-4-AC1 PASS, DB122-4-AC2 PASS, DB122-4-AC3 PASS, each rc 0",
+      "row IRPT_DASHBD-D2-W203-S5 (BLOCKING) in this channel, committed at 03e4bef65d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution row for IRPT_DASHBD-D2-W203-S5, appended only. The order's status flip follows in a later commit. Counts and words only; no client figure is quoted."
+}
+```
