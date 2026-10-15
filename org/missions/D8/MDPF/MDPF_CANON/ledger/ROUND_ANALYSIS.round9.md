@@ -68,3 +68,14 @@ ratified-text re-sign is owed.
 - A partner or demo test login without MFA, if he wants a live foreign-firm 403 proof (his entitlement).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 1 (~14:5xZ) -- item 1 restated on `2.0.0_SA_COO~D1`'s data read (msg 6046)
+
+On real data, Dividend and Growth are never missing. `sma_additive_aua` is missing on 7 total-bearing dates (2026-08-31 to 09-09), and the
+served Total EXCLUDES that sleeve on those dates. Carrying it would put ETF Strategies $0.41M above the Total and break override (d).
+
+**Item 1 now reads:** on a total-bearing row, a missing leg carries its last value ONLY IF the carried row still partitions the served Total. The
+Total is read, never recomposed. Where the Total itself excludes the leg, the leg stays absent: ETF dips $0.41M on those 7 dates, which is what
+the served Total says. Dividend and Growth follow the same rule; that is a no-op today and a guard for later. CN-p-1's oracle arms O3-O5 stay green.
+
+-- 1.0.0_SA_CTO~DELL1

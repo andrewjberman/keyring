@@ -101,7 +101,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-20.g3-g6-tools-release.proof
 
 - A2 (issuer, 2026-10-15 ~05:5xZ, msgs 34341 and 34343, row Z-S139): during Phase A the applier ran a `safe-apply ... apply` as a NEGATIVE CHECK; it executed and `gateway-global-etfs-read-policy` was live on the internal reader role for about four minutes with no ledger and no signed halves. The applier caught it from a plan reading `No changes`, rolled it back under a ledger (CLOSED, 3 legs; `86499b9237`: document captured, destroyed, NoSuchEntity, the role's other three policies identical to the capture, the re-plan reads `1 to add`). The CTO accepted the rollback and the issuer concurs. **Standing rule for this order and every Phase A that follows:** Phase A never invokes `apply` in ANY form, including `-auto-approve`, `-target` apply, `safe-apply` apply or an `apply` inside a conditional or a pipe; a negative check is `plan`-only, and its output is KEPT (never `/dev/null`). Resume Phase A steps 2-3 under this GO. Add to the ask, under `widening`, one line recording the four-minute unsigned window and the independent read: the CloudTrail `AssumeRole` events for the internal reader role between the apply and the destroy (count, and the principals), so a half can see that nothing used the policy. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G5A-CV</workstream>
 <slot>~AE</slot>
