@@ -10,16 +10,20 @@
  "subject": "COMM_ASSIST.TO-CA-l-1 -- confirm per-draft reader on dell2, run refresh once, read folder (read-only)",
  "body_path": "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-l-1.dell2-reads-the-per-draft-rows.md",
  "opened_at": "2026-10-15T07:21:47Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-15T07:27:15Z",
+  "bus_message_id": "4543cf6b-8cef-42cd-bc9e-47e364e91e68"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-15T09:25:04Z",
+  "by": "0.7.0_AE_CloudOps~CA2",
+  "bus_message_id": "63e3c0f8-9bd2-4c86-b661-40809034535e"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-15T09:26:38Z",
+  "to_by": "0.0.0_AB_MSTR~DELL2"
  }
 }

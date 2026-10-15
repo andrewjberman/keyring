@@ -215,15 +215,10 @@ refusal that never happened.
 ⛔ **DO NOT USE THE HARNESS'S `isolation: "worktree"` HERE: it bases on `origin/main` (a January tree with
 neither `org/` nor `.tools/`), so the worker finds no task order, no gate, no compiler tool.**
 
-**Make the worktree yourself, from THE BRANCH YOU ARE ON, with `.tools/wk-provision.sh provision <CODE> <n>
---path <path>`; for a PORTAL cell add `--portal-ref <ref>`, where `<ref>` is the value the issuance commit's
-`fanout:` data names as `portal_ref:` (the nested repository's `DEV` HEAD at the cut, never the gitlink
-commit, which is measured behind it -- row `AMGT_RESAPP-Z-W31-S1`, cell `AMGT-rk-60`); the drain tears a
-portal worktree down with `.tools/wk-provision.sh remove <path>` so the nested repository never carries a
-`prunable` entry. The script runs the line below and hands the worker its path:**
+**Make the worktree yourself, from THE BRANCH YOU ARE ON, with `.tools/wk-provision.sh provision <CODE> <n> --path <path> --order <order file>`: a SPARSE checkout by default (about 100 MB, not 3.6 GB); a full one needs `--full "<reason>"`. A PORTAL cell adds `--portal-ref <ref>`, the `portal_ref:` the issuance commit's `fanout:` data names (the nested repository's `DEV` HEAD at the cut, never the gitlink commit; row `AMGT_RESAPP-Z-W31-S1`); the drain tears it down with `.tools/wk-provision.sh remove <path>`. It runs:**
 
 ```bash
-git worktree add -b wk-<CODE>-<n> <path> HEAD
+git worktree add --no-checkout -b wk-<CODE>-<n> <path> HEAD   # + cone sparse-checkout
 ```
 
 ⛔ **DERIVE THE BASE (`HEAD`); NEVER HARDCODE A BRANCH NAME:** a fixed name silently misses the newest work on
