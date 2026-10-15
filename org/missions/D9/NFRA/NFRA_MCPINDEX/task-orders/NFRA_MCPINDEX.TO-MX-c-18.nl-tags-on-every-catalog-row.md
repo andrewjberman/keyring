@@ -94,3 +94,6 @@ The issuer then merges, regenerates the catalog, runs the gateway suite by faili
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-15 ~10:4xZ), on row Z-W42-S1.** The status flip is the issuer's (the order file is outside a worker's paths): ruled correct. Merged at b5372d6fe5; the issuer re-ran t1.AC1 (304 of 304), t1.AC2 (44 of 44 filled, 260 of 260 kept) and t1.AC3 (44 of 44) PASS in the worker worktree, and the regenerated catalog on the merged tree differs from the live one by exactly 44 derived-tag rows and the 24 firm fields of MX-c-19. Gate limb that graded this ruling: none (LIMB 6 does not fire on a modification).
+<status>complete</status>
