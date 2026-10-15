@@ -3960,3 +3960,15 @@ Check IB199-3 (`deliverables/2.0.0_SA_COO~P2/checks/r199/p199_serve.py`), dry-ru
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one document; every file it reads is committed; one worker (slot ~395) starts now.
 
+## 193. ROUND 1, WORKSTREAM ~PO (the Orion Inflection raw feed and its 6 AM ET fold; 2026-10-15 ~04:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msgs 7914 and 7980 (row D2-S180))
+
+A THIRD WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a second workstream issues its own round): the Orion Inflection raw producer, the days the mirror silently dropped, the re-pull's cost per feed and the producer's place in the 6 AM ET fold. Disjoint from ~P (the holdings release) and ~PS (the filled-report serve path): its write surface is the worker's records only. The re-pull pair is NOT cut; it follows this READ (CTO: "locate the raw producer, then cost the re-pull per feed, then the pair"). One cell, five questions: the raw producer located; every other dropped parquet-only day (a format the mirror ignores is a defect to fix at the mirror, not per day); the re-pull cost per feed (requests, pacing, time); the fold design (one schedule, builder names from opal_naming, trading-day frontier); the account-performance feed that 2.0.0_SA_COO~I2's round 116 may add.
+
+Check IB199-4 (`deliverables/2.0.0_SA_COO~P2/checks/r199/p199_orion2.py`), dry-run at the base: AC1 to AC3 all FAIL (no record); the control passes twelve positives and sixty-six negatives (thirteen on IB199-4), each negative failing its own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-552` | READ the Orion raw producer, the dropped-day census per feed, the re-pull cost per feed and the 6 AM ET fold design; READ ONLY | FWD-3 | SERVED (reads served prefixes and live schedule objects; writes only the worker's records) | none | PO1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one document; one worker (slot ~396) starts now.
+
