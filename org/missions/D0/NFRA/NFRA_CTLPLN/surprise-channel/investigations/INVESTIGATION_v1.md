@@ -10932,3 +10932,104 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The census is red in this tree before any edit of this order. The four remaining unclassified hits are in test_fabric_readers_dell.py, test_manager_on_every_box.py and lib/devices.py, which this order does not name; they are not edited here. Round-19 FWD-2 does not grade the census's ok, so the order's criteria are unaffected; its exit code is printed beside the BOXES-READ line."
 }
 ```
+
+## NFRA_CTLPLN-W112-S1 -- a null device is counted as unattributed, a case the order did not name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The order said a fetch record with NO device key is counted under UNATTRIBUTED. The worker also writes device null when the box cannot be named (AGENTBUS_DEVICE unset, or the register unreadable), and the reader counts a null device as unattributed too, never for a box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_fetch.py@8f5584d044: this_device() returns None on devices.RegisterError; Fetch.__init__ writes \"device\": this_device()",
+      "org/devices/intake/intake_request.py@8f5584d044: cmd_downloads counts a record when `not rec.get(\"device\")` under unattributed",
+      ".tools/tests/test_round20_fetch_device.py@2950637674: arm 7 (unnamed-box fetch writes device null) and arm 8 (unattributed=3 afterwards) PASS in the --device run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-1 step 2: a record with NO device key is counted under UNATTRIBUTED and never guessed to belong to the asking device.",
+  "world_is": "A null device is treated as unattributed as well. A box that cannot be named writes a record that no device can claim; no record is attributed to a box by guess. The issuer may rule the null form."
+}
+```
+
+## NFRA_CTLPLN-W112-S2 -- PIP_NO_INDEX=1 is never read on the kit's refusal path, because wrap refuses before any pip process starts
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The order asks for PIP_NO_INDEX=1 in the child environment as a second guard on the wrapper refusal. On the refusal path wrap returns before it starts any pip process, so the variable is set and never consulted there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_pip_no_egress.py@9cfc5f5fd8 wrap(): classify(args) returns REFUSE and wrap returns REFUSED_RC before subprocess.run([sys.executable, \"-m\", \"pip\"] ...)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~112/FWD18_LAPTOP_REFUSAL.md@2950637674: PIP_NO_INDEX=1 run exits 3, stdout 0 bytes, one REFUSED line on stderr"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-1 step 3: run the kit's wrap -- download six with PIP_NO_INDEX=1 in the child environment as a second guard.",
+  "world_is": "The variable bears only on an allowed pip verb, and no allowed verb is a download. The refusal's own guard is the classify() decision, which the kit runs before any process."
+}
+```
+
+## NFRA_CTLPLN-W112-S3 -- the worker's sparse checkout lacked org/surprise_channel/schemas, the folder that holds the row schema
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The cut's sparse set does not hold org/surprise_channel/schemas, so the row schema investigation_item.schema.json was absent from the worktree. The worker added the folder with git sparse-checkout add to read the schema before writing rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in the worktree before the add: .tools, infra/logic/registry, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards (no org/surprise_channel entry)",
+      "ls org/surprise_channel/schemas/ before the add: No such file or directory; after git sparse-checkout add org/surprise_channel/schemas: investigation_item.schema.json and remediation_row.schema.json present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker rules name org/surprise_channel/schemas/investigation_item.schema.json as the row schema a worker follows.",
+  "world_is": "The schema folder is outside the sparse set the cut provisions. The add changed no commit and no tracked file of this order."
+}
+```
+
+## NFRA_CTLPLN-W112-S4 -- intake_check.py writes intake-fetch/1 records with no device key, a second writer of the shape the reader must tell apart
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The order names intake_fetch.py as the one writer of fetch records. org/devices/intake/intake_check.py has a second writer of the same schema string, intake-fetch/1, with no device key and fetched_by set to selftest.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@9cfc5f5fd8 lines 1131-1147 write_fetch_record: rec_ carries \"schema\": \"intake-fetch/1\", \"fetched_by\": \"selftest\" and no device key; written by write_json_atomic under cfg.records_dir(batch)",
+      "org/devices/intake/intake_check.py@9cfc5f5fd8 line 1164: the selftest calls write_fetch_record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-1 premise: the fetch record is written by org/devices/intake/intake_fetch.py.",
+  "world_is": "A selftest path writes fetch-shaped records without a device key. The reader counts each as unattributed, so a selftest record can never be counted for a box. Where the selftest writes was not traced beyond cfg.records_dir."
+}
+```
