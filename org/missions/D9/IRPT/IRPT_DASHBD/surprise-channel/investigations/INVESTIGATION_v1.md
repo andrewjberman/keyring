@@ -18082,3 +18082,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Worker row: the disposition of IRPT_DASHBD-D2-W219-S1 from ARMED BLOCKING to resolved is for the CVO to make (a worker row cannot carry GRADUATED or adjudicates, gate A-1). S1 is not edited; this row is its resolution in the record."
 }
 ```
+
+## IRPT_DASHBD-D2-W220-S1 -- the mandated day re-read of the returns partition adds one GET, so one earlier count assertion moves from 2 to 3; the rest of the earlier tests are unchanged
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W220-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~220",
+  "surfaced_at": "2026-10-15T19:29:41Z",
+  "one_line": "The mandated day re-read of the built day's own returns partition (frv.read_partition) adds one GET, so the earlier test asserting exactly two returns GETs reads 3; that one assertion is moved to 3 with a comment, every other earlier test is unchanged, and 42 tests pass (33 earlier, 9 new)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q infra/aws/lambda/investor-reporting/reporting-gold-cot/tests at deaac76f02 (the base, before any edit): 33 passed",
+      "handler.py at deaac76f02 plus the worker's uncommitted read: test_the_returns_partition_before_the_floor_is_never_listed_or_opened fails with assert 3 == 2; 32 passed, 1 failed",
+      "tests/test_reporting_gold_cot.py: the GET count of that test reads len(gets) == 3 with a comment naming the built day's re-read; the rest of the test is unchanged"
+    ]
+  },
+  "spec_asserts": "DB-b-271 step 2 reads the built day's own returns partition through frv.read_partition(reader, ad, frv.RET, day, [account_id]), and the order says every earlier test stays and still passes (the handler's earlier tests included).",
+  "world_is": "The named read is one more GET of the same returns partition, so the earlier exact-count assertion (two GETs on returns data.parquet, both in the floor window) reads three. The property the test names (no returns read before the floor) holds unchanged. Counts only.",
+  "notes": "Worker row: the resolution is the one-line count change in the earlier test, made so the named read and the earlier test can both stand; the CVO and the CTO read this row to accept or refuse that edit. No other earlier assertion moved."
+}
+```
