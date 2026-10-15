@@ -91,7 +91,7 @@ DELIVERY_SENTENCE = (
     "Checks 3 and 4 shrink that case by taking only versions that have been public and in use for a while. "
     "They do not close it."
 )
-VERDICTS = ("passed", "failed", "not_applicable", "unsigned")
+VERDICTS = ("passed", "failed", "not_applicable", "unsigned", "awaiting")
 # Check 7's limit, in the words the CTO ruled (msg 106549). It travels in the check record beside check 7 and in the delivery
 # text. The brief's own "Leaves" text for check 7 (CHECK_TABLE) stays as it is, beside it.
 LIMIT_SENTENCE = (
@@ -785,7 +785,8 @@ def check_8(ctx):
         return rec("failed", "the signature file is not under the required directory %s" % (
             DEFAULT_SIGNER_REL if cfg.signer_dir is None else "<OPAL_INTAKE_SIGNER_DIR>"))
     if not rp.is_file():
-        return rec("failed", "the signature file does not exist")
+        # the CTO's signature has not been written yet: a recorded state of its own, never a failed check
+        return rec("awaiting", "check 8 awaits the signature: the signature file does not exist", signer=None, path=None)
     approved = ctx.get("approved_by")
     if approved:
         ap = pathlib.Path(approved)
@@ -952,6 +953,11 @@ def run_release(cfg, batch, file_name, out=None):
     if record is None:
         print("INTAKE-RELEASE REFUSED batch=%s file=%s reason=%s" % (batch, file_name, why), file=out)
         return 1
+    checks = record.get("checks")
+    c8 = checks[7] if isinstance(checks, list) and len(checks) == 8 and isinstance(checks[7], dict) else {}
+    if c8.get("verdict") == "awaiting":
+        print("INTAKE-RELEASE REFUSED batch=%s file=%s reason=check 8 awaits the signature" % (batch, file_name), file=out)
+        return 1
     ok, why = record_is_checked(record, batch, file_name)
     if not ok:
         print("INTAKE-RELEASE REFUSED batch=%s file=%s reason=%s" % (batch, file_name, why), file=out)
@@ -994,7 +1000,7 @@ def held_back_entry(cfg, batch, name, why):
         return row
     row["verdict"] = record.get("verdict") if isinstance(record, dict) else "unreadable"
     for c in (record.get("checks") or []) if isinstance(record, dict) else []:
-        if isinstance(c, dict) and c.get("verdict") in ("failed", "unsigned"):
+        if isinstance(c, dict) and c.get("verdict") in ("failed", "unsigned", "awaiting"):
             row["failing_checks"].append({"n": c.get("n"), "name": c.get("name"), "verdict": c.get("verdict"),
                                           "summary": ascii_clean(str((c.get("evidence") or {}).get("summary", ""))[:300])})
     return row
