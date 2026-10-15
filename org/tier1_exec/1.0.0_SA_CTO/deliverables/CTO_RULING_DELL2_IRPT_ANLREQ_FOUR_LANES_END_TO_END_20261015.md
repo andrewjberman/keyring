@@ -29,3 +29,20 @@ system done."*
 4. **No new seats.** Each lane's AE applier is the one already on that surface (`~IB2`, `~AQ2`, `~YC2`).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (~15:3xZ): the COMMENTARY lane's two scope answers (`~T2` msg 8384, read @7a5d98a2ef)
+
+**(a) Which report figures may go to Kimi (C-KIMI, "abstract fields only").** Allowed:
+- the request's variant and model names;
+- model and holdings allocations as percentages, with asset-class and sector weights;
+- period returns and benchmark returns as percentages;
+- the top holdings as tickers with their weights.
+
+Never sent: any client, household, advisor or firm name; any account number; any dollar amount; the uploaded file's raw rows. The drafter
+builds that abstract block from the produced report, and the prompt carries exactly that block, logged by field name.
+
+**(b) The precedent source stays C-SLICE's Outlook commentary gold.** It holds 0 objects today, so the first cell is a READ of why NFRA_TRNSPT's
+commentary pipeline lands none. Until it lands, C-SLICE's no-precedent branch drafts without precedent and says so in words. **Teams meeting
+transcripts (silver, 91 objects) are NOT a drafter input in this lane:** adding them would make `svc-commentary` a new reader of meeting
+content, which is a C-READERS change (NFRA_TRNSPT PRD) and not this lane's to take. This corrects the ruling's "a non-empty transcript
+source": the drafter reads the report's abstract figures and C-SLICE's precedents.

@@ -11187,3 +11187,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The battery passes 11 of 12 here, which is no fewer than 10. Whether the budget arm is timing-dependent was not measured (one run only)."
 }
 ```
+
+```json
+{
+ "id": "NFRA_CTLPLN-S9127",
+ "project": "NFRA_CTLPLN",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO~L",
+ "surfaced_at": "2026-10-15T15:20:02Z",
+ "one_line": "The comp-pulse danger map org/modules/graph/nerves-risk-edges.json is STALE (201.7h old; file written 2026-10-07 05:36Z), so the pre-commit risk reflex answers PARTIAL_OR_BLIND for every staged diff on this box, and CTaj4-AC2 (test_round20_hygiene.py --map) now reads tsx_classed=0 py_classed=0 ok=False, where the issuer read ok=True a few hours earlier.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "CVO re-run 2026-10-15 ~15:2xZ: python .tools/tests/test_round20_hygiene.py --map -> HYGIENE-MAP tsx_classed=0 py_classed=0 ok=False; again with COMP_BUDGET_S=200 -> same",
+   "python org/modules/graph/comp_pulse.py diff in a scratch repo with one staged portal .tsx -> 'danger map: 201.7h old !! STALE', 'ANSWER STATE: PARTIAL_OR_BLIND', 'NOT-DECIDABLE: danger map STALE -- the reflex CANNOT clear this diff'",
+   "ls -la org/modules/graph/nerves-risk-edges.json -> Oct 7 01:36 (-04:00); git ls-files counts it tracked (1)",
+   "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/L8_PACKET_ROUND20.md @58a0c48950 section 2 (issuer re-run HYGIENE-MAP tsx_classed=1 py_classed=1 ok=True)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTaj4-AC2: a staged portal .tsx is classed by the risk reflex's map, ok=True; the round-19/20 hygiene cells make the reflex grade portal .tsx commits.",
+ "world_is": "The criterion is clock-dependent: it passes only while the tracked danger map is younger than comp-pulse's staleness limit, and the map crossed it today. Past that, the reflex classes nothing anywhere, which is what the WARN-only reflex prints on every commit now. No commit is refused; a risky diff is simply not flagged. The remedy is a danger-map rebuild (its owner's act, comp-pulse's own rebuild path) and a test that states the map age as a precondition instead of failing on it.",
+ "notes": "Found by the CVO's L8 re-run of round 20; not changed here."
+}
+```
