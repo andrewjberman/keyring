@@ -17452,3 +17452,32 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "W210-S1: the advisory is printed and the build exits 0 with every declared member present and byte-equal to its source; nothing depends on layer-import enforcement for this function. W210-S2: still true as a measurement gap; it is carried into the pair as a stated limit with a reading and a one-line remedy, and nothing is deployed to be at risk before the pair is signed. Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-S84 -- BLOCKING: the Cottonwood landing root has no pyarrow layer, the signed pair describes a function that cannot import
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S84",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T13:45:00Z",
+  "one_line": "The Cottonwood landing root merged at round 126 builds its function with no pyarrow layer while the adapter imports pyarrow at module level: the function would fail on its first invocation, and the landing packet signed by both halves (sha256 c63702ade4df) describes that function",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Round 123 DB-b-252 and the signed landing pair: the function packages the adapter and its closure and runs on python3.12 with Terraform plan 7 add / 0 change / 0 destroy; the pair's Act 2 invokes it once.",
+  "world_is": "infra/aws/terraform/investor-reporting/account-return-daily/lambda.tf at 1e78f951eb sets no layers on the module call. cottonwood_bd_account_return_daily.py imports pyarrow and pyarrow.parquet at module level (lines 47 and 48). The python3.12 Lambda runtime carries boto3 and botocore only. The sibling irpt-cot-account-dim-lambda takes pandas and pyarrow from the existing layer irpt-performance-native-layer (version 1, python3.12) through a read-only data source. Found by this seat while writing the apply order, before any apply: the function, roles, schedule and artifact are absent in AWS, so nothing is deployed or at risk.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/account-return-daily/lambda.tf at 1e78f951eb: the module call lists handler, runtime, timeout, memory_size, reserved_concurrent_executions and no layers",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py lines 47 and 48: import pyarrow as pa; import pyarrow.parquet as pq",
+      "infra/aws/terraform/investor-reporting/account-dim/lambda.tf lines 3 to 8 and its layers line; aws lambda get-function-configuration irpt-cot-account-dim-lambda: python3.12 with one layer irpt-performance-native-layer version 1 (read by this seat)",
+      "aws lambda get-layer-version irpt-performance-native-layer 1: python3.12 listed, about 70 MB"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarms when round 127 cell DB-b-259 has merged (the layer data source and the layers line), the landing packet is revised to the new bytes and BOTH halves are re-signed at the new sha256. No apply order is staged before then. Counts, dates and words only."
+}
+```
