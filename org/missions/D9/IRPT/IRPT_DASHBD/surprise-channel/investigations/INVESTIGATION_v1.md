@@ -16922,3 +16922,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the issuer: if a distinct scheduler policy name is wanted, it is a sixth builder call and a sixth record entry, which the order did not name. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W206-S3 -- OBSERVATION resolving W206-S1: the fifth execution statement grants the gold list the handler's default path needs
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W206-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~206",
+  "surfaced_at": "2026-10-15T10:54:23Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W206-S1: Amendment 1 (d611d49b94) added the gold ListBucket the handler's default path needs; the root now carries that statement at 19f02f1330 and AC1 to AC3 pass at HEAD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment 1 of DB-b-252 (commit d611d49b94, issuer 2.0.0_SA_COO~D2): the execution policy gains a FIFTH statement, s3:ListBucket on the Cottonwood gold bucket with an s3:prefix StringLike condition for the ONE gold prefix account_return_daily, no other prefix or action; the facts record is refreshed and DB123-3-AC1..AC3 re-run to PASS at HEAD.",
+  "world_is": "The statement is in iam.tf at 19f02f1330 (sid ListTheOneAccountReturnDailyGoldPrefixOnly; actions s3:ListBucket only; resources the gold bucket; condition StringLike on s3:prefix irpt/<firm>/gold/account_return_daily/*). The root now has eight statements and two ListBucket statements. The facts record is refreshed (eight statement ids, the iam.tf hash a8172dac7e..., iam.words). Checker at the worktree: DB123-3-AC1 PASS, DB123-3-AC3 PASS; AC2 and the proof are re-run at the final commits. The schedule stays DISABLED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "amendment commit d611d49b94 (git log -1 --format=%h --author=2.0.0_SA_COO~D2): the order's Amendment 1 paragraph names the fifth statement, the one prefix and the no-other-action limit",
+      "infra/aws/terraform/investor-reporting/account-return-daily/iam.tf at 19f02f1330: the fifth statement block, and the sid list in the facts record's iam.statement_ids (eight entries)",
+      "p123_cotroot.py line 142 (amended): at least two s3:ListBucket statements; run at the worktree: DB123-3-AC1 PASS rc 0 before and after the statement"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the W206-S1 disarm is this fix; the schedule is still DISABLED and no apply has run. Counts and words only; no client figure is quoted."
+}
+```
