@@ -36177,3 +36177,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The build inclusion is not verified by this worker. The map is explicit per file, so the new file needs a map entry for each build that imports it before any deploy. No deploy is in this order; the map is outside the grant and was not edited. The disarm is the deploy leg's map entry for the new file, owned by the issuer."
 }
 ```
+
+## IRPT_BCKEND-D2-S185 -- live irpt-ycharts-generate bytes match neither IB-pr-456 digest; the only source-map record is an uncommitted release worktree
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S185",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T05:34:30Z",
+  "one_line": "Live irpt-ycharts-generate CodeSha256 reads 5TRFZf6G... (LastModified 2026-10-14T13:03:45Z), which is neither the IB-pr-456 pre-apply digest the FWD-1 run's R0f expects (tdpterTMfJl...) nor the IB-pr-456 build digest (AHxuDf7h...); the only uncommitted source-map stamp for this function (pins 83eb798a, 5be427ba) sits in the release worktree C:/dev/irpt-release-r30/w131/release, not on box/dell2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "IB-pr-456 (CTO_ROUND_ANALYSIS_IRPT_BCKEND_P_ROUND_183_20261013.md) and the FWD-1 run pair R0f (blob a45596d5f0): irpt-ycharts-generate is at its pre-apply digest until Andrew's f61b releases IB-pr-456; the trunk source map records the deployed build of every function.",
+  "world_is": "get-function-configuration (this seat, 2026-10-15 ~05:3xZ): CodeSha256 5TRFZf6Grgd9V9jWBVu2QDPRVbgfWBjsuuw8rtf8hRA=, LastModified 2026-10-14T13:03:45Z. box/dell2 HEAD's lambda-source-map.json carries 0 hits for pins 83eb798a0870 and 5be427ba7642, which the r30 release worktree's uncommitted map stamps on irpt-ycharts-generate files. Which act wrote the live bytes is not read here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration --function-name irpt-ycharts-generate (CodeSha256, LastModified)",
+      "git -C C:/dev/irpt-release-r30/w131/release diff -- infra/aws/lambda/ci/lambda-source-map.json (2 file pins, function irpt-ycharts-generate)",
+      "org/tier0_exec/0.0.0_AB_MSTR/deliverables/GC_RECEIPTS_CALL_5982_20261015.md @8c0cd89d86 (worktree held, tree not clean)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: ~P2 names the act that wrote the 2026-10-14 13:03Z bytes (its NEVER-2 ledger entry), commits that build's source-map record to box/dell2 if it is a landed release, and re-states the FWD-1 R0f expected digest to the live one, or rolls back; the worktree is kept until then (MSTR~DELL2 holds it)."
+}
+```
