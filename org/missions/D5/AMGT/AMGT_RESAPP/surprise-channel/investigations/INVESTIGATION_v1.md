@@ -27888,3 +27888,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "A citing row; the workers' rows keep their text. Ruled by amendment, not by this row: W454-S1 and W455-S1/S2/S3/S5 (AMENDMENT 1 of gr-5 and gr-6), W455-S4 (both readings confirmed), W452-S2/S3 and W454-S2 and W457-S1/S2/S3 (observations, no act). W452-S1 (a CONTRADICTED sentence records no newer source) is carried to the round-107 list with the CTO's item (g). The CVO's REMEDIATION_v44 hold on these dispositions can lift."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W472-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~472",
+  "surfaced_at": "2026-10-15T21:39:37Z",
+  "one_line": "The --open-first walker logs a fourth OPEN-FIRST line form that the order did not name: an entry whose summary matches a closed disclosure in a scope but is not expanded (a DO_NOT_CLICK word, or the time limit) logs 'not opened in <scope>'. The one walk did not reach it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order bn-2 section 1 change 3 names two OPEN-FIRST log forms only: 'OPEN-FIRST \"<text>\": opened (<n> table row(s) visible inside it)' when an entry is clicked, and 'OPEN-FIRST \"<text>\": not found in <label>' when no closed summary with that text exists in the scope.",
+  "world_is": "walk.mjs exploreScope() in C:/dev/wk-resapp-472 (branch wk-AMGT_RESAPP-472, uncommitted at filing) also prints 'OPEN-FIRST \"<text>\": not opened in <label> (refused or out of time)' for an entry whose summary matched the scope but was never expanded. Walk 20261015T213451Z (walk_seam.txt, the SHOP CN scope) opened the entry on SHOP CN-Model with 193 rows and did not print this form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-resapp-472/.claude/skills/ui-walk/walk.mjs exploreScope(): the final loop over entries that matched and were not opened",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~472/walk_seam.txt lines 13-22 (the four scopes read before the Model open)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker for the issuer's read. No act taken on the form. The fourth form is a deliberate extra line, not a change to the expansion order or to the 20-click cap."
+}
+```
