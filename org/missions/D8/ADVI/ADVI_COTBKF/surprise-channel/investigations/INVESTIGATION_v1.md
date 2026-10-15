@@ -8925,3 +8925,29 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-W170-S3 -- The post-commit account-id scan (test_cotbkf_no_account_ids.py) cannot run on this device: its account set (C:/dev/_cotbkf_private_evidence_20261009/account_set.json; env COTBKF_ACCOUNT_SET unset) is absent, so the test fails closed with rc 1 and scans no file. The worker ran a count-only substitute over the 61 committed files against the 860 V2 account keys (0 hits), reported separately; no account number was read into the repository.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W170-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~170",
+  "surfaced_at": "2026-10-15T18:31:59Z",
+  "one_line": "The post-commit account-id scan (test_cotbkf_no_account_ids.py) cannot run on this device: its account set (C:/dev/_cotbkf_private_evidence_20261009/account_set.json; env COTBKF_ACCOUNT_SET unset) is absent, so the test fails closed with rc 1 and scans no file. The worker ran a count-only substitute over the 61 committed files against the 860 V2 account keys (0 hits), reported separately; no account number was read into the repository.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py -q -s, worktree C:/dev/wk-cotbkf-170 at 885fe8dc7b (timeout 120): 1 failed in 0.20s, AssertionError 'account set absent (COTBKF_ACCOUNT_SET or default path): the test fails closed'; rc 1; no DENOMINATOR line printed",
+      "data/assets/scripts/silver/tests/_cotbkf_acct_check.py:27 ACCOUNT_SET_DEFAULT = C:/dev/_cotbkf_private_evidence_20261009/account_set.json; ls of that path: no such file; COTBKF_ACCOUNT_SET unset in the process environment",
+      "count-only substitute, not the test: 61 files in the worker's diff since 824588956e under org/missions/D8/ADVI/ADVI_COTBKF and data/assets/scripts/silver, read from the worktree; 860 V2 account_key values checked as substrings; 0 files with a hit"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-2 BOUNDS: after the last commit run env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py -q -s and give its DENOMINATOR line; the account set is held outside the repository.",
+  "world_is": "The account set is not present on dell1 (its default folder does not exist), so the scan fails closed and reports no denominator here. Nothing was read from or printed out of the set by the worker. Not established: whether the set exists on another device, or whether its owner should place it here before the scan is run.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
