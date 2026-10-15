@@ -9682,3 +9682,54 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-W183-S1 -- run_job needs a grant default
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W183-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~183",
+  "surfaced_at": "2026-10-15T22:48:19Z",
+  "one_line": "run_job needs a grant default: the eleven existing tests call it with no grant, so run_job reads the committed round-88 GRANT_RECORD.json when grant is None",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/cotbkf_crm_match_job.py@1f1b8972ef: run_job(..., grant=None) derives the target from _load_grant() when grant is None",
+      "data/assets/scripts/silver/tests/test_cotbkf_crm_match_job.py@76411079ea: the eleven existing tests call run_job with seven positional arguments and no grant; they are unchanged in 1f1b8972ef",
+      "data/assets/scripts/silver/cotbkf_crm_match_job.py@1f1b8972ef: _run always passes the grant it gated, so the default is reached only by tests"
+    ]
+  },
+  "spec_asserts": "CB-co-1: the one key and the session name come only from the grant record (items 1-3), and the eleven existing tests pass unchanged (item 4, AC2).",
+  "world_is": "The signature that keeps the seven-argument tests unchanged needs a default for the grant. I gave run_job a keyword grant=None that reads GRANT_REL (the committed round-88 CB1 grant record) when None. The tests now read that file at run time; their stubs ignore the key. GRANT_REL names the round-88 record, so no other grant path is set here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W183-S2 -- the commit-time naming gate raises on the run record's s3 address template line (a printf format string graded as a key)
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W183-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~183",
+  "surfaced_at": "2026-10-15T22:48:19Z",
+  "one_line": "the commit-time naming gate raises on the run record's s3 address template line (a printf format string graded as a key)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/cotbkf_crm_match_job.py@1f1b8972ef line 413: the record's key field is the printf template s3://%s/%s applied to the derived bucket and key",
+      "safe-commit of 1f1b8972ef printed: NAMING RAISE data/assets/scripts/silver/cotbkf_crm_match_job.py:413 s3://%s/%s -> (rule or registry defect); K1: segment 1 '%s' is neither a source nor a tier; NAMING-GATE: WARN 1 graded"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md section 4: every S3 address is opal_naming output, and the commit-time naming gate grades an S3 address literal in a pipeline tree.",
+  "world_is": "The naming gate reads the printf template s3://%s/%s as a key whose segment 1 is %s, and raises (WARN, not a refusal). The same format string sat in the round-88 record line before this change. The template is not a built address; the gate's reading is a rule or registry question for its owner.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
