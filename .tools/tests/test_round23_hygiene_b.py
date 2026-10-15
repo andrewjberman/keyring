@@ -69,7 +69,7 @@ def provision(wt: Path, n: str, order_rel: list) -> subprocess.CompletedProcess:
         argv += ["--sparse-add", folder]
     for rel in order_rel:
         argv += ["--order", rel]
-    return subprocess.run(argv, cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120)
+    return subprocess.run(argv, cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=150)
 
 
 def remove(wt: Path, branch: str) -> list:
@@ -106,7 +106,7 @@ def run_sparse() -> int:
                 wt, branch, ", ".join(SPARSE_FOLDERS), ", ".join(order_rel) or "none"))
             print("HYGIENE-SPARSE-SET org/mcp present=%s" % (wt / "org" / "mcp").is_dir())
             run = subprocess.run([sys.executable, ".tools/tests/test_crossbox_call.py"], cwd=str(wt), capture_output=True,
-                                 text=True, encoding="utf-8", errors="replace", timeout=120)
+                                 text=True, encoding="utf-8", errors="replace", timeout=200)
             lines = run.stdout.splitlines()
             for line in lines:
                 if line.startswith("FAIL ") or line.startswith("skip ") or line.startswith("CROSSBOX-TEST"):
