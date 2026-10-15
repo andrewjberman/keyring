@@ -14545,3 +14545,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-6. Form only, observed on the ytd pair that the pre-stated rule ran."
 }
 ```
+
+## IRPT_DASHBD-D2-S56 -- issuer's dispositions on W185-S1 to S5; the activity and net-gain members are absent in the table because the contract text was never amended to round 105's ruling
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S56",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T04:36:05Z",
+  "one_line": "Issuer's dispositions on worker 185's rows W185-S1 to S5 (DB-b-230): the table followed the contract text where the sample builder departs from it, and that exposes an issuer omission of mine: round 105 (DB-b-202) ruled that the activity and holdings net-gain members print the SAME folds as the value summaries (the report's figures agree across tables) and the contract text was never amended to say so, so in the QA table all 402 act.* rows and all 125 hold.net_gain_* rows of 25 households are absent (INSUFFICIENT_HISTORY: the activity table holds 5 trading days) where the sample builder printed figures. Ruled: the repair is a contract amendment plus a module change in the next issuance, before the table is scheduled or written to the cloud; nothing served moved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 105, DB-b-202 part d (the report's figures agree across tables: the last-12-month figures of the activity members are the same folds the value summaries print); equivalences ENDING_VALUE_HOUSEHOLD and ENDING_VALUE_ACCOUNT in the contract (one quantity).",
+  "world_is": "Contract 0.5.1/0.5.2 text sources act.beginning_value, act.net_gain, act.ending_value (household and account) and the four hold.net_gain_* members to ACCOUNT_ACTIVITY_DAILY folds; the QA table (RD_FILLED_REPORT_VALUES_R118.json, 25 households, as_of 2026-10-13) follows that text: act.* 402 of 402 rows absent and hold.net_gain_* 125 of 125 absent, the rest of the 29,294 rows 27,454 measured, 424 text, 1,416 absent in all; absent kinds in the whole table INSUFFICIENT_HISTORY 994, NO_SOURCE_YET 375, SOURCE_BREAK 47. The other three disagreements are dispositioned: W185-S3 (the 16 avs benchmark members are account-grain by_row in the contract and the table, a household scalar in the sample builder: the CONTRACT stands, and the reader and render of workstream ~F2 must read by_row for these 16), W185-S4 (cover.as_of_date and the inception convention are computed from gold, the client summary is outside this order's grant: accepted), W185-S5 (the order's one-id-per-run proof wording: the combined run is the verdict). Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-202.absent-kind-carrier-a-contract-042-builder-and-the-cross-table-rule.md",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~185/RD_FILLED_REPORT_VALUES_R118.json",
+      "this seat's count of the private QA parquet by member group (counts only), 2026-10-15"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer omission disclosed: DB-b-230 said the contract wins where the builder departs from it, and did not check that the builder's departure was a ruling. The repair cell (contract 0.5.4: the 10 members point at the value-summary folds the equivalences name; module follows) rides the next issuance and is thread-critical, because ~P2's publisher would otherwise compose a report whose activity summary prints absent words."
+}
+```
