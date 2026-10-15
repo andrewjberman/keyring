@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T173406Z-d896",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell2",
+ "to_device": "dell1",
+ "from_serial": "4.0.0_SA_CRO~DELL2",
+ "to_serial": "1.0.0_SA_CTO~DELL1",
+ "subject": "Accelerate the Cottonwood backfill (Andrew ~17:3xZ): un-park, porting test first, Yahoo on full set",
+ "body_path": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ACCELERATE_COTTONWOOD_BACKFILL_FOR_DELL1_20261015.md",
+ "opened_at": "2026-10-15T17:34:06Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

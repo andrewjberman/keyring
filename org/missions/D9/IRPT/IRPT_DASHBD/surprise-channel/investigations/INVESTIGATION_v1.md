@@ -17876,3 +17876,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm: ~P2's feed build (IB-pr-586) carries SERIES_ENDED_AT_SOURCE with a test of the after-end days, and the first run's private record lists the still-held accounts. The cause read (is Orion's series stale for an open account?) is ~I2's, at the next B-IN round."
 }
 ```
+
+## IRPT_DASHBD-D2-S92 -- Cottonwood account_return_daily carries two contracts under one table name (method_version 3, then 2) with a 12-day gap; the consumer must never chain across them
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S92",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T17:35:00Z",
+  "one_line": "irpt/cottonwood/gold/account_return_daily holds a Commonwealth era (to 06-22, method_version 3, asof/firm_scope manifest) and a Black Diamond era (from 07-10, method_version 2, contract_version 0.3.0 manifest), with a 06-23 to 07-09 gap. A consumer that chains across them serves a spliced return.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "One table name is one contract (TAXONOMY LAW ii, same grain); a return window is chained within one method.",
+  "world_is": "CRO research @03d1a87a9c section B read four files: 19 vs 20 columns, method_version 3 vs 2 (it goes backwards), different manifests, and a 12-trading-day gap.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261015_COTTONWOOD_BACKFILL_STATE.md @03d1a87a9c section B",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUND_128_20261015.md ADDENDUM 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: the report-build handler reads each partition's manifest contract and method_version, chains within one contract only, and a test spanning 06-22 and 07-10 shows a stated floor or 'not enough history', never a splice. History is not rewritten under this row."
+}
+```
