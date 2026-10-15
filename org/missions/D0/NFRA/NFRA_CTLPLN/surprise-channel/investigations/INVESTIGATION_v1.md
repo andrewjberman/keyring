@@ -11213,3 +11213,53 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
  "notes": "Found by the CVO's L8 re-run of round 20; not changed here."
 }
 ```
+
+## NFRA_CTLPLN-W116-S1 -- the check verb of intake_check.py writes no fetch-shaped record; the only intake-fetch/1 writer in that module is write_fetch_record, used by selftest-unsigned and the tests
+
+```json
+{
+  "id": "NFRA_CTLPLN-W116-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~116",
+  "surfaced_at": "2026-10-15T16:27:48Z",
+  "one_line": "The cell names the check step as a writer of intake-fetch/1 records. The check verb (intake_check.py check) writes only <file>.check.json, schema intake-check/1. The module's intake-fetch/1 writer is write_fetch_record, called by selftest-unsigned and by the test fixtures; no production verb calls it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@aba5a33dab run_check (writes cfg.records_dir(batch)/<file>.check.json, schema intake-check/1); main() verbs check, release, pack, selftest-unsigned, selftest-av",
+      "org/devices/intake/intake_check.py@aba5a33dab write_fetch_record (schema intake-fetch/1) called from selftest_unsigned and from test_intake_check.py Env.add_wheel"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-1 premise: the check step writes intake-fetch/1-shaped records with no device key, so the downloads reader counts them as unattributed.",
+  "world_is": "The check verb writes no fetch-shaped record. The device key was added to write_fetch_record (the fixture and selftest writer), which is the only intake-fetch/1 writer in intake_check.py. The journey's real fetch records come from intake_fetch.py, which already carried device at round 20."
+}
+```
+
+## NFRA_CTLPLN-W116-S2 -- the check record (intake-check/1) carries no device key and intake_request.py downloads reads only *.fetch.json, so a check record can never be counted for a box
+
+```json
+{
+  "id": "NFRA_CTLPLN-W116-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~116",
+  "surfaced_at": "2026-10-15T16:27:48Z",
+  "one_line": "The check verb's record, <file>.check.json (schema intake-check/1), has no device key. The downloads reader filters on the suffix .fetch.json, so no check record is counted for any box. The cell's criterion says a record written by the check step is counted for the device; that holds only for the fetch-shaped record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_request.py@aba5a33dab cmd_downloads: os.walk over <root>/records, only names ending .fetch.json are read, device taken from the fetch record",
+      "org/devices/intake/intake_check.py@aba5a33dab run_check: the record written is intake-check/1 at records_dir(batch)/<file>.check.json; no device key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-1 criterion: a record written by the check step carries the device and the reader counts it for that device.",
+  "world_is": "Only the fetch-shaped record is counted. The check record is not in the reader's denominator and was left without a device key, because the cell scopes the device key to the fetch shape. The test proves the counted fetch-shaped record; the check record's attribution is open."
+}
+```
