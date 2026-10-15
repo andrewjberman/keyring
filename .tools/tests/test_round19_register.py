@@ -169,7 +169,7 @@ def classify(pa, pb, build_outputs):
     spec = pa if len(pa) >= len(pb) else pb        # the more specific of the two overlapping paths
     if spec.startswith("org/critical_paths/.open_deploys"):
         return "SHARED", "R1 CLAUDE.md NEVER-2: a worker deploy's entry is its own file and sits on the worker's branch until the drain"
-    if spec.startswith("infra/aws/lambda/ci/"):
+    if spec == "infra/aws/lambda/ci" or spec.startswith("infra/aws/lambda/ci/"):
         return "SHARED", "R2 infra/aws/lambda/ci/lambda-source-map.json _description+_note: single source of truth, record-terraform-deploy.sh is the named updater"
     if spec in build_outputs:
         return "SHARED", "R3 infra/aws/lambda/ci/lambda-layer-map.json build_output: the one declared builder output of the layer"
