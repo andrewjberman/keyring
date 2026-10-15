@@ -87,9 +87,14 @@ This order touches none of them (the runner writes `opal-data-assets` harvest pr
 
 - **AMENDMENT 1 (issuer, 20:3xZ), from the first pass (SC1 msg 6206, rows `D1-S19`, `D1-S20`):** the stop rule fired correctly on two refusals after a refresh and the runner ended itself at 20:27:16Z, nothing stored. Cause read from the runner log and the job record, not guessed: `TokenFirstSessions.get()` demands a stored session even for a publisher whose tab never uses one, and the runner's runtime root has none (the manual jobs worked because `.runtime/opal-data-harvest/secrets/` holds the 16:1xZ bundles). The refresher's `done` in 3 s was the in-profile renew finding the profile already signed in. The seed (step 5b) is an operational unblock; the durable fix is `HVST-cb-8` (a code cell: `get()` returns a profile-store envelope for such a publisher), which lands by a re-pin under its own pair half. The first pass also proved: the registration, the pin, the env var, no console, the stop file.
 
+**COMPLETE 2026-10-15 ~20:5xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~SC1`, commit `ded03e63df` (in this tree), under the pair COO `5271f99a66` + CTO `5e75337456` and the erratum `79a5321348`. Two passes: the FIRST (T0 20:23:04Z, pin `47c623dcf8`) stopped by the account stop rule at 20:27:16Z with 0 stored (cause read: an empty saved-session directory, token_source None, no request made); the SECOND, under AMENDMENT 1 (`1c5948e37a`, CTO bound msg 6216), T0 20:32:04Z.
+- **AC1 PASS:** `WorkingDirectory` = `C:\dev\wk-harvest-runner-pin-47c623dcf8` (read here at 20:5xZ). **AC2 PASS:** the task arguments carry `--publishers wsj barrons` and `--refresh-once`, state, runtime and stop file as registered (read here). **AC3:** `cb2_windows.out` carries `NOT_MINIMISED=0` per read; HONEST LIMIT (SC1's own): the only graded runner window was minimised in 14 of 14 samples at +4 minutes, the +15 samples graded none, so the criterion's own text is met and the strong claim is not. Proof instance VALID rc 0 (re-run here). R1-R4 TRUE at +15 (log fresh, `pythonw.exe` and `--refresh-once`, no console, `done` 3 to 17, 0 errors).
+- **What this does NOT prove:** the E2 line (`s3_get_count`, `s3_get_bytes`) of a complete cycle: `HVST-cb-6`, organic. `barrons` had not started at the reads. Rows `D1-S19` (the stop rule firing) and `D1-S20` (the bucket name) are dispositioned by `D1-S22`.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>87</round>
 <workstream>RUNNER-REGISTER</workstream>
 <slot>dell1</slot>
