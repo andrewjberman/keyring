@@ -103,7 +103,7 @@ disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-rv-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/rv2.AC1.sh; echo "exit=$?"</invocation><expect>(?s)pytest rc=0; named tests passed 4 of 4; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-rv-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/rv2.AC2.sh; echo "exit=$?"</invocation><expect>(?s)rival tools B: INEQ trades window rows (\d+) vs independent \1; flows answered True; compare_peers both sections True; research notes AI-labelled True; page status newest revision True; non-Opal refused True.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-rv-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/rv2.AC2.sh; echo "exit=$?"</invocation><expect>(?s)rival tools B: top-trade fund trades window rows (\d+) vs independent \1; flows answered True; compare_peers both sections True; research notes AI-labelled True; page status newest revision True; non-Opal refused True.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the tools are built, read the newest part per date, take a fund's latest report from canonical_shape, name the weight unit and refuse non-Opal before any read.
@@ -125,7 +125,11 @@ the issuer to make at the merge.
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 - `OG-rv-1` is the sibling cell (disjoint write set); the modules may each carry their own six-line newest-part helper.
 
-<status>complete</status>
+- A1 (issuer, 2026-10-15 ~09:4xZ, worker row Z-W101-S6): rv2.AC2's trade witness was 0 against 0 (INEQ has no inferred trades in the newest part), so the non-empty trade path was witnessed by fixtures only. The probe now picks, from an independent read, the fund with the MOST rows in the newest `trade_schedule` part and requires a non-zero count equal to the tool's. Rows S1-S5 are read: the platinum row has no `key_template` (the page is found by listing its prefix, as the order said), `trade_schedule` has no `claim` column (the tool reports `claim_in_rows` and returns None), the action vocabulary is entry/exit/add/trim/below_tolerance (the filter passes the value unmapped), the projection budget is the worker's, and a fund's latest report is read from the newest partition that holds it (CGIC and SCHY are not in the newest). All accepted. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+- A2 (issuer, 2026-10-15 ~09:5xZ): with the non-zero witness of A1 the probe found that the tool answers 32 of the top fund's 49 trade rows (`truncated: true`, 50725 bytes): each row carries every column of the table (est_price_band, reasons, manifests) and the 50 KB projection cuts the list. Honest, but the fund with the most trades is the tool's main use. RULED: the `trades` rows are NARROWED to the columns a reader asks about: `fund_ticker`, `security_key`, `security_key_kind`, `key_resolved`, `action`, `date`, `window_start`, `window_end`, `shares_before`, `shares_after`, `est_price`, `est_notional`, `weight_before`, `weight_after`, and `claim` where the row has one; every other column is dropped and the answer lists the dropped names once in `columns_dropped`. The same for `etfs_get_fund_flows` rows if they near the cap. The answer for the top fund (49 rows today) must come back WHOLE: rv2.AC2 now requires `len(trades)` equal to the independent count AND `truncated` not set. Add one unit test arm to `test_ogrv2_ac01`: a fake part of 120 wide rows for one fund returns all 120 narrow rows within the cap, with `columns_dropped` named. Rows S1-S5 stay accepted. Re-seated slot ~101 on this branch (inherited commits 53cf754da6, 142858b783, 039097c1f2). Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+<status>pending</status>
 <round>37</round>
 <workstream>RIVAL-FUNDS</workstream>
 <slot>~101</slot>

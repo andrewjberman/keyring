@@ -4097,3 +4097,15 @@ Checks (`deliverables/2.0.0_SA_COO~P2/checks/r207/p207_cells.py`, `control207.py
 | `IB-pr-567` | the installed filled reader (new module, installed in entry.py) and the render-side read of the pinned object through the shared reader; one pinned filled report rendered from a fixture | FWD-2 | WORLD (path floor) | none | PS5-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two cells with disjoint write sets (the three submit-path files; entry.py, a new module and the render files); workers (slots ~410, ~411) start now. The two meet at the port name ports["filled_reader"] and its signature, fixed in both faces.
+
+## 204. ROUND 1, WORKSTREAM ~PB (the Orion pair (a) act: the one-time 33-day dated backfill; 2026-10-15 ~09:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the signed Orion pairs V3 (COO half @dd855fdea5, CTO half @b5b6db462a) and the CTO's "cut the order", msg 8195)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a workstream issues its own round): the ACT of the Orion pair (a) signed at packet V3 (sha256 03a77b33174c). The ~PO workstream's round 5 already holds its issuance (IB-pr-565, the READ), so the act issues as ~PB round 1. Disjoint from ~P, ~PS, ~PO and ~PY: its write surface is at most 33 flat bronze keys in opal-data-inf, a ledger entry and its records; the executing seat is CloudOps `0.7.0_AE_CloudOps~IB2`, whose holdings mint (IB-pr-549, 14:30Z window) takes precedence if the two meet. One cell: the dated backfill of positions 4, transactions 7, performance 22, with the performance positive control committed before any performance day.
+
+Check IB208-1 (`deliverables/2.0.0_SA_COO~P2/checks/r208/p208_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control208.py`) passes all three and twenty-three negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-568` | APPLY pair (a) of the signed Orion packet V3: the one-time dated backfill of the 33 absent flat bronze keys by the same pull code; the performance control first; read-back per key | FWD-3 | WORLD | the signed pair (done) | PB1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one act, one executing seat (CloudOps IB2); no worker subagent: the act is the seat's.

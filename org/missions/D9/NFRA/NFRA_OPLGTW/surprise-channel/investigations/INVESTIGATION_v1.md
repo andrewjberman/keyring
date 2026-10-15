@@ -16802,6 +16802,61 @@ name the one known failure instead of silently inheriting it.
 
   ```json
   {
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T09:22:54Z",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "id": "NFRA_OPLGTW-Z-S141",
+    "one_line": "ap20.AC1 CANNOT PASS AS WRITTEN -- three defects in the check script, none of them in the release. (1) the grant census is captured into `reg` on line 16 and then read from `$g` on line 27, a variable nothing in the script ever sets, so policies/wildcard/only/rival/page/put all arrive EMPTY; (2) `r`, `s` and `n` (tools registered, SAFE, NATIVE) are never computed anywhere, so it prints 'tools registered  of 6' with a hole where the number goes; (3) the put-or-delete limb greps `s3:(Put|Delete)` over the RAW .tf, and line 43 of a correct etfs_read_iam.tf is a comment saying the grant has no s3:PutObject and no s3:DeleteObject -- so that limb reads 1 on a file that is right, and would still fail after (1) is fixed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN IT, did not read it: `bash .../r37/checks/ap20.AC1.sh` at release 06cfb6db64 exits 1 and prints `tools registered  of 6; SAFE  of 6; NATIVE  of 6` and `policies  (want 1), wildcard resource  (want 0), only opal-data-etfs no, rival-funds gold prefix no, rival-funds page prefix no, put or delete actions  (want 0)` -- the empty fields are the unset variables",
+        "the two limbs that DO run both PASS: `base 1b18b94979 is the live ref before this release: yes (manifest 1b18b94979/ee23dd004c)` and `files differing 12; outside the G5A set 0 (want 0)`",
+        "defect (3) measured directly: at the release sha the ONLY line of etfs_read_iam.tf matching s3:Put or s3:Delete is line 43, `# WHAT THIS DOES NOT DO: no \"*\" resource, no bucket-wide object ARN, no s3:PutObject, no s3:DeleteObject,`; the file's two Action lines are `Action = [\"s3:GetObject\"]` and `Action   = [\"s3:ListBucket\"]`",
+        "the three ungraded limbs all HOLD at the release, measured with comments stripped and the lists read from the files that define them (SAFE_TOOLS is in app/destructive_ops.py, NATIVE_TOOLS in app/data_entitlement.py, not both in app/tools.py): tools registered 6 of 6, SAFE 6 of 6, NATIVE 6 of 6, policies 1, wildcard 0, actions exactly GetObject and ListBucket, only opal-data-etfs yes, rival-funds gold yes, rival-funds page yes, put or delete 0. Saved at W/G5A_AC1_SUBSTANCE.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "the order's WHEN YOU ARE DONE flips <status> to complete only if AC1 and AC2 PASS, so AC1 is a gradeable criterion on this release.",
+    "world_is": "AC1 fails on every input, including a correct release. The checks directory is 2.0.0_SA_COO~O's deliverable and is not in this order's <paths>, so the repair is the issuer's; the release is not held by anything in this row.",
+    "notes": "WHAT I DID INSTEAD OF EDITING SOMEONE ELSE'S GRADER: measured the same three things the criterion describes, at the release commit, and handed the numbers over. A criterion is graded by its own invocation, so my measurement is evidence for the script's owner and NOT a pass. THE THIRD DEFECT IS THE ONE WORTH KEEPING: a file that documents its own restraint ('no s3:PutObject') contains the token its checker forbids, so the checker scores a DENIAL as a HIT. My own first comparison of the .tf against its generator had exactly this bug -- it counted the comment's quoted \"*\" as a wildcard resource and printed a confident DRIFT against a correct file. STRIP COMMENTS BEFORE ANY TOKEN CENSUS OF CODE. The same read also cost me two more false negatives in one sitting: a bare `\"(s3:[A-Za-z]+)\"` census counted the CONDITION KEY s3:prefix as an action, and looking for SAFE_TOOLS only in the two files I expected it in returned null rather than 6. In all three the file was right and the instrument was wrong, and in all three the tell was the same: a verdict that disagreed with something I had already measured another way."
+  }
+  ```
+
+  ```json
+  {
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T09:22:54Z",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "id": "NFRA_OPLGTW-Z-S142",
+    "one_line": "A SPARSE RELEASE CONE SILENTLY DEMOTES THE NAMING GATE TO WARN. The same etfs_read_iam.tf was graded twice today: in the shared tree `NAMING-GATE: PASS 7 graded` under ENFORCE, and in the release worktree `NAMING-GATE: WARN 6 graded` with `4 REFUSE verdict(s) did not block`. ENFORCE is decided by the presence of the tracked sentinel org/mcp/naming-gate.enforce ON DISK, and org/mcp is not in the release cone, so the file is skip-worktree and the gate reads WARN. The commit that most needs the gate -- the WORLD-risk release commit -- is the one that gets it in WARN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "shared tree, commit f12b5d39bd: `[naming-gate] IAM-PREFIX-ADMITTED n=6 bucket=opal-data-etfs` then `[naming-gate] NAMING-GATE: PASS 7 graded`",
+        "release worktree, commit 06cfb6db64, SAME FILE: `NAMING REFUSE ... silver/holdings/* -> {source}/{scope}/silver/holdings/*  why: NEW and OUT-OF-PATTERN as S3Key: REFUSE`, then `(WARN window: 4 REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)` and `NAMING-GATE: WARN 6 graded`",
+        "the sentinel is TRACKED and IS in the base commit's tree (`git cat-file -e 1b18b94979:org/mcp/naming-gate.enforce` succeeds), so this is not a missing file in git",
+        "it is sparse-excluded in the release worktree: `git -C /c/tmp/og-rel-g5a ls-files -t org/mcp` prints `S` (skip-worktree) for every entry, the cone list holds no org/mcp, and `ls` of the worktree's org/mcp finds no naming-gate.enforce",
+        "SECOND, SEPARABLE CAUSE in the same reading: the release branch is cut at the base, which PREDATES the OG-ng-1 clause merged at c8ca06fda0, so the release tree also runs the OLD gate code that still refuses the four tier-first prefixes. Mode and code version are two different axes and both point the same way here"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "a commit-time gate in ENFORCE mode refuses a non-conformant name wherever the commit is made.",
+    "world_is": "ENFORCE is a property of the WORKING TREE's checkout, not of the repo or the commit, so any sparse worktree whose cone omits org/mcp grades in WARN and says so only in a parenthetical. Nothing was mis-landed here: the identical bytes passed the ENFORCE gate in the shared tree minutes earlier, and the four REFUSEs are the pre-clause gate's.",
+    "notes": "The general shape, which is not about this gate: A MODE SWITCH CARRIED BY A FILE ON DISK IS A MODE SWITCH THAT SPARSE CHECKOUT CAN TURN OFF. A sentinel read fails toward the permissive side here, which is the wrong side for a gate, and the only evidence is one parenthetical inside a passing commit. Row Z-S132 is the same family (a sparse release cone could not run deploy-to-ec2.sh because infra/logic was outside it) and was answered by widening the cone; widening it again would fix this instance, but the class is worth a mechanism: a gate that cannot find its own mode sentinel should say so loudly, or fail closed, rather than print WARN and continue. Not mine to change: .tools/naming-gate.py and org/mcp are outside this order's <paths>."
+  }
+  ```
+
+  ```json
+  {
     "id": "NFRA_OPLGTW-Z-W101-S1",
     "project": "NFRA_OPLGTW",
     "fabric": "site-z",
