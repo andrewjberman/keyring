@@ -9655,3 +9655,30 @@ round.** Never edit an existing row.
   "notes": "Found while listing the readers of the three modules for TO CB-cm-1. Not in that order's reader list: its definition is a Yahoo-sourced price, and this series is not established as Yahoo-sourced. No code changed."
 }
 ```
+
+## ADVI_COTBKF-D1-S7 -- dispositions D1-W173-S3 and D1-S2 as answered; D1-W181-S1 stays armed (the sechist label)
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S7",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-15T21:16:53Z",
+  "one_line": "Dispositions D1-W173-S3 and D1-S2 (the Yahoo Close cache reader and its standing statement) as ANSWERED by a test on the real code path; D1-W181-S1 (the sechist source label) STAYS ARMED as a latent hazard with its trigger named.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_ADVI_COTBKF~181/AS_TRADED_LABEL_RECORD.json (merged @978b93d557): base_result 5 of 5 passed before any production change; 14 reader lines in commonwealth_daily_valuation.py, commonwealth_fwd3_serve.py and commonwealth_sweep_regrade.py; 12 PRICE readers, all labelled in the served tables; 2 FACT readers (split ratios, dv L574 and regrade L1602) outside the guard by the CTO's ruling (msg 6175)",
+      "Andrew call 3adb (a): served Yahoo days for V2-held securities stay, labelled; the swap replaces them per security as Bloomberg lands",
+      "read_sechist (commonwealth_daily_valuation.py L164-195) labels every row it reads source 'sechist' whatever the series' origin; YAHOO_SOURCES holds only yahoo_finance and linear_interpolation; the CRO's 2026-10-15 read: MDPF_SECHIST security_series holds 0 objects"
+    ]
+  },
+  "spec_asserts": "a Yahoo-sourced price that feeds an active account's value carries a label the use_class guard recognises (CTO C3, msg 6119).",
+  "world_is": "D1-W173-S3 and D1-S2: the as-traded Yahoo close is covered. It keeps source yahoo_finance (replaced) or linear_interpolation (re-derived), both recognised, so a held V2 security's day reads NOT_FOR_ACTIVE; the proof is five tests on the real path, none needing a fix. D1-W181-S1 (STILL ARMED, latent): a price series read through --sechist is labelled sechist; if MDPF_SECHIST ever lands Yahoo-origin points (the PRD's C-SERIES plan lands Yahoo AND Bloomberg prices once per security there), they would read NOT_YAHOO and escape the guard. Trigger: the first object in the SECHIST security_series prefix. Not a live hazard today (0 objects). Remedy for its owner: the landing carries a vendor column per point, and read_sechist maps it to a source label the guard recognises (yahoo_finance for a Yahoo point).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
