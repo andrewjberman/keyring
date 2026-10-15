@@ -32,9 +32,7 @@ The batch hookup of ten tools whose builds are merged on your HEAD: `etfs_get_pe
 ## 2. BOUNDS
 
 - Code, tests and your probe only. No release, no deploy, no IAM or Terraform change, no write to any bucket, no grant written.
-- `app/tools.py`, `app/data_entitlement.py`, `app/destructive_ops.py` and the pinned-count tests are NOT yours: the issuer
-  registers every tool and re-pins the counts at the merge, in one commit. Do not edit them; name the registration you
-  expect in your report.
+- The five files of `<paths>` (`app/tools.py`, `app/data_entitlement.py`, `app/destructive_ops.py`, `tests/test_entitlement_admin.py`, `tests/test_data_entitlement_family.py`) are YOURS for this one cell, through the issuer's script and nothing else: no hand edit, no other file.
 - Never: push, `git stash`, rebase, `checkout --` or `clean`; print a person's name or a full email address, or an object's
   text body into a report, a row or a log; write the catalog file (`app/refs/DATA_CATALOG.yaml` is NFRA_MCPINDEX's alone);
   override a gate.
@@ -59,8 +57,8 @@ disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-rv-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gt12.AC1.sh; echo "exit=$?"</invocation><expect>(?s)tools registered in app/tools\.py: 10 of 10.*entitlement-admin suite \(the registry count pin is 105\): passed 9 of 9, failed lines 0, rc 0.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-rv-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gt12.AC2.sh; echo "exit=$?"</invocation><expect>(?s)classified: SAFE 10 of 10, NATIVE 10 of 10, in DATA_GRANT_TOOLS 0 \(want 0\); files outside this cell's five \(and its records\) 0 \(want 0\).*pytest rc=0; named tests passed 1 of 1; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-rv-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/rv3.AC1.sh; echo "exit=$?"</invocation><expect>(?s)tools registered in app/tools\.py: 10 of 10.*entitlement-admin suite \(the registry count pin is 105\): passed 9 of 9, failed lines 0, rc 0.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-rv-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/rv3.AC2.sh; echo "exit=$?"</invocation><expect>(?s)classified: SAFE 10 of 10, NATIVE 10 of 10, in DATA_GRANT_TOOLS 0 \(want 0\); files outside this cell's five \(and its records\) 0 \(want 0\).*pytest rc=0; named tests passed 1 of 1; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the ten tools are registered and the registry count test passes at 105.
@@ -78,14 +76,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rv-3.rival-hookup.proof_of_spec
 - Round 37, workstream RIVAL-HOOKUP (decomposition addendum R3-T.70, cell `OG-rv-3`). The gateway app files are in lane CLOUD_OPS_OR_ETL, which the COO cannot commit: a worker order grants them. Rides `OG-ap-22`.
 - Script dry-run by the issuer on a copy of the gateway tree with the org/standards files beside it before the cut: hookup applied, the two pinned suites pass (13 of 13). Pre-cut: rv3.AC1 and rv3.AC2 base FAIL as expected (0 of 10 registered, 0 of 10 classified).
 
-<status>` tag to
-`complete` only if both PASS, and report once. Your report names the signature check result and the pass and fail counts of step 3.
-
-<!-- ===================== RECORD FACE ===================== -->
-
-**ISSUER NOTES:**
-- Round 37, workstream RIVAL-HOOKUP (decomposition addendum R3-T.70). The gateway app files are in lane CLOUD_OPS_OR_ETL, which the COO cannot commit: a worker order grants them. Rides `OG-ap-20`.
-- Script dry-run by the issuer on HEAD copies of the five files before the cut. Pre-cut: gt12.AC1 and gt12.AC2 base FAIL as expected (0 of 6 registered, 0 of 6 classified).
+- A1 (issuer, 2026-10-15 ~10:4xZ, worker rows Z-W102-S1..S4, all read): the first seat BLOCKED, rightly. (S1) the provisioned worktree's sparse cone omitted `infra/aws/ec2/opal-gateway` (the provision call carried no `--order`): the ISSUER added the folder to the cone (`git sparse-checkout add infra/aws/ec2/opal-gateway`, the provisioner's own act) and the worker rebuilds nothing. (S2) the proof invocations still named the six-tool `gt12.AC1.sh` and `gt12.AC2.sh` (a template carry-over): they now name `rv3.AC1.sh` and `rv3.AC2.sh`, which grade ten of ten. (S3) accepted: rv3.AC2's outside-files zero is read AFTER your commit, against the base of the branch. (S4) the bounds bullet forbade editing the five files that step 1 directs the script to edit, and the record face carried a duplicate fragment: both repaired. The order is re-issued on the same branch (inherited commit `fac4ca01c3`, a BLOCKED proof instance and rows S1-S4: re-record the instance from the real outputs). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>
