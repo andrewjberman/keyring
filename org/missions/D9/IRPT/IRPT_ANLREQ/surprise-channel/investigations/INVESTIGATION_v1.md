@@ -18400,3 +18400,32 @@
   "notes": "Filed by the worker, not dispositioned. Does not block AR83-g-AC1 or AC2: the contract cases pass as written. Whether the spanning return should carry a split on a dropped row is for the issuer and the CTO; a correction changes the contract's formula, which is not a worker act."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-W183-S2 -- closes W183-S1: the issuer amended item 3 (af96479526, on main) so s_t is the product of the split ratios since the previous usable row; the reader is fixed at 497e911dab and checker case 11 passes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:24:37Z",
+  "one_line": "Closing row for W183-S1: the issuer's amendment af96479526 (main) makes s_t the product of the split ratios of every fetched row dated after the previous usable row up to and including t, so a split on a dropped bad-Close row counts across the gap. The reader at 497e911dab implements it; checker case 11 passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W183-S1 stands as filed and is not edited. It recorded that TO-AR-g-83 item 3 read s_t as the split ratio on t alone, which misses a split on a dropped bad-Close row for the return across the gap.",
+  "world_is": "The issuer's ruling (2.0.0_SA_COO~G2) and amendment af96479526 on main amend item 3: s_t is the product of the split ratios (as item 2 reads them) of every fetched row dated after the previous usable row's date up to and including t, 1.0 when none. The checker ar_g8x_checks.py g83 gained case 11 (D1 served 50, D2 bad Close with split 2.0, D3 served 51.51, expecting [(D1, 100.0), (D3, 103.02)]). The reader at 497e911dab implements the amended rule; the offline test test_a_split_on_a_dropped_bad_close_row_counts_for_the_return_across_the_gap passes; AC1 reads cases 11, wrong none and tests 12 passed (rc 0); AC2 reads AR-G83-HYGIENE-OK (rc 0). The issuer also ruled the judgment calls correct: a non-finite Dividends value counts as 0.0 and a bool Stock Splits value counts as 1.0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show af96479526 --stat: the amended order file (item 3 and the case count) and ar_g8x_checks.py (+3 lines, case 11)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py@497e911dab: the accrued-split loop over served rows between the previous usable row and t",
+      "ar_g8x_checks.py g83 run at the worktree after 497e911dab: 'cases 11, wrong none'; 'AR-G83-OK cases=11 tests=12', rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closing row: the finding is resolved in substance by the issuer's amendment af96479526 and the fix at 497e911dab. W183-S1 is not edited and keeps its filed text and disposition. The disposition is left UNDER_INVESTIGATION because the worker cannot transfer one: the gate refused GRADUATED from a worker (a CVO transfer at L9). The CVO's compile may close it."
+}
+```
