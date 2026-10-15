@@ -38399,3 +38399,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "On this box python cannot open the order-named instance path (MAX_PATH; LongPathsEnabled is not set), so the canonical validation cannot run. The instance content validates VALID rc=0 from a short copy. The order is left open; the instance is written untracked at the order path and not committed. Needs a shorter instance name from the issuer, or LongPathsEnabled on dell2 (a machine setting this worker does not change)."
 }
 ```
+
+## IRPT_BCKEND-D2-S201 -- Dispositions on worker 419's rows and the close of IB-pr-576; the exemption is built but inert until the household listing and the evidence loaders land
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S201",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T13:39:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 419's rows (D2-W419-S1 to S3) and the close of IB-pr-576: the absent_at_source exemption is built in the gate, but the served-snapshot household listing and the published manifest fact are not, and no evidence loader feeds the provider yet; the exemption is inert until IB-pr-577.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 05826407ad; order and instance renamed to short names (3789f88879, 447e94bee0), status flip c18ec3052e",
+      "at c18ec3052e in the main tree: pytest data/assets/scripts/gold/investor_reporting/tests/test_closed_at_source_exemption.py gives 9 passed; the proof instance reads VALID (rc=0); round-close-check --project IRPT_BCKEND --round 1 --workstream ~PG reads verdict=MAY-CLOSE",
+      "worker 419's criteria output: AC1 55/55, AC2 3 CLOSED-AT-SOURCE-A blocks removed in the difference control, AC3 8 named tests"
+    ]
+  },
+  "spec_asserts": "My IB-pr-576 order and the CTO's msgs 8290 and 8302: the gate lists an account absent at the source in its household with the words Not reported by the custodian since <date>, when a completeness condition holds, for both firms.",
+  "world_is": "DISPOSITIONS. D2-W419-S1 (the published manifest is written by publication.py, outside the grant; the fact is in the run manifest _manifest) and D2-W419-S2 (the household account node is built by holdings_49f.py, holdings_inf.py and holdings_membership.py, outside the grant) MOVE to IB-pr-577 with the per-firm evidence loaders; both stay ARMED, owner me, because until IB-pr-577 lands the served snapshot would not list the exempted account. D2-W419-S3 RESOLVED (my defect, an overlong slug; order and instance now carry short names, instance VALID). Nothing is deployed or minted by IB-pr-576: it changes holdings_snapshot.py at HEAD only, and the never-widen pair for the exemption follows IB-pr-577."
+}
+```

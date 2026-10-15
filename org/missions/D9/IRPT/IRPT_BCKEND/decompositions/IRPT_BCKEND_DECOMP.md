@@ -4194,3 +4194,16 @@ Check IB215-1 (`deliverables/2.0.0_SA_COO~P2/checks/r215/p215_cells.py`), dry-ru
 | `IB-pr-576` | BUILD closed_at_source_exempt, the gate's provider argument and the manifest record, with tests and a difference control | FWD-21 | LOCAL | none | PG1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one product file; one worker (slot ~419) starts now.
+
+## 212. ROUND 1, WORKSTREAM ~PH (the absent_at_source exemption goes live with its visible listing; the split-adjusted holdings price return for 49 Financial; 2026-10-15 ~14:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msgs 8284, 8290, 8302, 8311 and the ruling @9913bf3ed4)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). Two cells with disjoint write surfaces. IB-pr-576 built the exemption inert; worker 419's rows W419-S1 and S2 (disposition row D2-S201) named what was left. The CTO ruled (msg 8311, CVO v119) that the exemption is wired into `run_firm` ONLY together with the visible listing of the account (kept in the served snapshot, "Not reported by the custodian since <date>", no stale value as current) in ONE change, and that every remaining "closed" name becomes `absent_at_source`. The agent read of the code found that the snapshot has no household node (a household is a directory entry), so the listing is a fresh zero-value ACCOUNT node appended after the gate with the snapshot's scope and count bookkeeping brought in line; the published manifest is written by `publication.py` (a path under infra/, so the cell's class is WORLD although nothing is deployed). The second cell builds the split adjustment of the holdings price return for the 49 Financial channel from the READ IB-pr-572 (ratio = the median over accounts without other activity, clean to 0.5 percent, else SPLIT_RATIO_ABSENT and not graded). Served DELTA and the never-widen pairs are later acts from producer dry runs, not these cells.
+
+Checks IB216-1 and IB216-2 (`deliverables/2.0.0_SA_COO~P2/checks/r216/p216_cells.py`), dry-run at the base: AC1 to AC3 of both cells all FAIL; the control (`control216.py`) passes all six positives and fourteen negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-577` | WIRE the evidence loaders and the listing with the exemption, the published manifest fact, the rename of the closed names | FWD-21 | WORLD | none | PH1-a |
+| `IB-pr-578` | BUILD the split-adjusted holdings price return for 49 Financial (declared split source, median ratio, SPLIT_RATIO_ABSENT, manifest codes) | FWD-21 | LOCAL | none | PH2-a |
+
+fanout: 2 of 2 chains, cap 8, reason: two cells on disjoint files (holdings_snapshot.py and publication.py; holdings_performance.py and sources.json); workers slots ~420 and ~421 start now.
