@@ -4207,3 +4207,15 @@ Checks IB216-1 and IB216-2 (`deliverables/2.0.0_SA_COO~P2/checks/r216/p216_cells
 | `IB-pr-578` | BUILD the split-adjusted holdings price return for 49 Financial (declared split source, median ratio, SPLIT_RATIO_ABSENT, manifest codes) | FWD-21 | LOCAL | none | PH2-a |
 
 fanout: 2 of 2 chains, cap 8, reason: two cells on disjoint files (holdings_snapshot.py and publication.py; holdings_performance.py and sources.json); workers slots ~420 and ~421 start now.
+
+## 213. ROUND 1, WORKSTREAM ~PI (the APPLY of the signed pair IB-pr-456 with its ADDENDUM 1, the `commentary_requested` release of irpt-ycharts-generate; 2026-10-15 ~14:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling @7f7acb0e42 and msg 8316)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). The pair IB-pr-456 is signed by both halves (the candidate `3+fMEJhQ8...` replaces `AHxuDf7h...`; pre-apply `5TRFZf6G...`, read live at ~14:2xZ). The apply waited on call f61b, Andrew's own PROD submission; Andrew tried the PROD Ticket Center on 2026-10-15 and the form cannot be submitted there (the model, ticker and firm lists do not load), so the CTO WITHDREW f61b (@7f7acb0e42, msg 8316): the BEFORE record is the applier's wrong-typed body refused as an unknown member on the live function, and one already-accepted request read by get-item before and after. Nothing waits on Andrew. Four COO seats (`~G2`, `~Y2`, `~T2` and this one) wait on the release. One cell, class WORLD, to the CloudOps seat `0.7.0_AE_CloudOps~IB2`, which holds the project's applies.
+
+Check IB217-1 (`deliverables/2.0.0_SA_COO~P2/checks/r217/p217_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control217.py`) passes all three and fourteen negatives plus the no-record case each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-579` | APPLY the signed pair IB-pr-456 and ADDENDUM 1: the four members to `irpt-ycharts-generate` by its Terraform path, the reworded BEFORE record, the after-read, the health proof | FWD-4 | WORLD | none | PI1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one function; the seat is a CloudOps seat, not a worker subagent.
