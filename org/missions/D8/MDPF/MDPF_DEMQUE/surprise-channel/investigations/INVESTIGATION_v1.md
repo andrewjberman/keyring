@@ -3177,6 +3177,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "the real-check run: python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t64_real.py, rc=1, INACTIVE-REAL-BAD census rc=1 ... No module named 'commonwealth_signs' (worker run 2026-10-15)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W56-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~56",
+    "surfaced_at": "2026-10-15T18:04:54Z",
+    "one_line": "After the issuer's cone change (S1 ruled as provisioning), python -m pytest data/mdpf/scripts/demque -q gives 221 passed and 4 failed: 3 are FileNotFoundError on integrations/bloomberg paths that the sparse cone omits, and 1 is an assertion mismatch in test_demque_bbg_ledger_upload.py that this worker did not diagnose; none is in inactive_set.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t64 step 4 (the folder count for data/mdpf/scripts/demque, once) and the coordinator's ruling that the worktree now collects with no error.",
+    "world_is": "Collection is clean (225 tests), but the run reads 221 passed and 4 failed. Failing: test_demque_bbg_backfill.py::test_backfill_stops_on_a_vendor_limit_warning[field] and [response] and test_demque_bbg_ledger_upload.py::test_name_to_literal_assignment_is_resolved_before_literal_eval raise FileNotFoundError on C:/dev/wk-demque-56/integrations/bloomberg/pipeline/etf_daily_pull.py and integrations/bloomberg/mcp/blp_client.py; the folder integrations/ is absent from the sparse cone and from disk. test_demque_bbg_ledger_upload.py::test_reads_record_lines_and_converts_rows_to_cells_per_mode fails an assertion ([48, 64, 5, None, 2] == [48, 64, 5, 14, 2]) whose cause is not diagnosed here. The census (inactive_set.py) and its tests pass.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/mdpf/scripts/demque -q, worktree C:/dev/wk-demque-56 at d89ade551a, rc=1: 4 failed, 221 passed in 14.43s",
+        "git sparse-checkout list at d89ade551a: no integrations entry; ls -d integrations ABSENT in the worktree",
+        "data/mdpf/scripts/demque/test_demque_bbg_backfill.py and test_demque_bbg_ledger_upload.py (the four failing tests) @d89ade551a"
+      ]
+    }
   }
 ]
 ```
