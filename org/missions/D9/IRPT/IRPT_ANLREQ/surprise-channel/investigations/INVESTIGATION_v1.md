@@ -19603,3 +19603,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W161-S1 -- The Ticket Center filing form never reads a NORMALIZED answer portfolio findings, so a NOTICE for a security Opal cannot price is not shown to the filer
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W161-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~161",
+  "surfaced_at": "2026-10-15T22:44:17Z",
+  "one_line": "The Ticket Center filing form never reads a NORMALIZED answer portfolio findings, so a NOTICE for a security Opal cannot price is not shown to the filer",
+  "spec_asserts": "AR-y-364 context: a real security Opal cannot price gets a NOTICE (TICKER_DATA_NOT_ENTITLED) in answer.portfolio.findings of a NORMALIZED answer, with no filer choice. Step 5 asks where the Ticket Center form shows those findings.",
+  "world_is": "The Ticket Center reads no portfolio member: zero .portfolio reads in portal/src/pages/TicketCenter outside __tests__. fileAnalysisRequest files on NORMALIZED (analysisRequest.ts lines 376-395) and returns filed:true with the ticket only. stepLines (analysisRequest.ts lines 596-603) and the notice set in TicketCenter.tsx lines 390-397 carry no notice words. The only caller of noticeDescriptions is ProspectComposer.tsx line 356 (Investor Reporting; prospect.ts line 112). A TICKER_DATA_NOT_ENTITLED notice would not be visible to the Ticket Center filer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts@50db1eb4 lines 376-395 and 596-603",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@50db1eb4 lines 390-397",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx@a168015b line 356",
+      "portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts@a168015b line 112"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W161-S2 -- The investigation row schema the worker face names is not in this worktree or in the base checkout
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W161-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~161",
+  "surfaced_at": "2026-10-15T22:44:17Z",
+  "one_line": "The investigation row schema the worker face names is not in this worktree or in the base checkout",
+  "spec_asserts": "The worker face names org/surprise_channel/schemas/investigation_item.schema.json as the row contract.",
+  "world_is": "No file at that path. The worktree has no org/surprise_channel directory, and the base checkout path C:/dev/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json is not found. The row was written in the shape of the existing rows of INVESTIGATION_v1.md; the schema enums were not checked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-161: Glob org/surprise_channel/** reports the directory does not exist",
+      "C:/dev/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json: file not found"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
