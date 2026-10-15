@@ -1,0 +1,2482 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "ETFS_RIVALS",
+ "round": 30,
+ "written_by": "2.0.0_SA_COO~RV",
+ "written_utc": "2026-10-15T20:30Z",
+ "decomposition_ref": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md@6fd84470c7",
+ "denominators": {
+  "fwd_in_prd_header": 24,
+  "cells_in_decomposition": 146,
+  "task_orders": 156,
+  "task_orders_terminal_with_valid_proof": 136
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "one live trace per Opal ETF: Andrew selects IDVZ and reads IDVZ and its peers (TXUE, BIDD, CGIC, INEQ, SCHY) side by side, then selects PFOE and reads PFOE and its peers (WCMG, GQGU, TSEL, BASG, ETFT, PCLG) the same way: trade schedules, style reads and the FWD-6/7 views; in each group he follows one rival's trade back to the holdings reports it was inferred from and to where they came from",
+   "cells": [
+    {
+     "cell_id": "RIV-c-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-c-1.package-core-and-issuer-collector",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-c-1.package-core-and-issuer-collector.proof_of_spec.json@f1f46b5d9f"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-d-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-1.daily-run-lambdas-schedule-triggers-sweep",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-d-1.daily-run-lambdas-schedule-triggers-sweep.proof_of_spec.json@7405f0d359"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-d-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-2.live-thread-apply-deploy-backfill-fire",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-d-2.live-thread-apply-deploy-backfill-fire.proof_of_spec.json@08494e3984"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-d-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-3.live-join-deploy-enable-import-fire",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-d-3.live-join-deploy-enable-import-fire.proof_of_spec.json@914c31bf3a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-d-4",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-4.live-join-round3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-d-4.live-join-round3.proof_of_spec.json@98cfd30ba5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-d-5",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-5.live-join-round4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-d-5.live-join-round4.proof_of_spec.json@f8b371b744"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-g-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-g-1.gold-canonical-shape",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-g-1.gold-canonical-shape.proof_of_spec.json@4719c9bcc5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-g-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-g-2.gold-trade-schedule",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-g-2.gold-trade-schedule.proof_of_spec.json@263f0ea6d8"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-p-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-p-1.day-page-and-guardrails",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-p-1.day-page-and-guardrails.proof_of_spec.json@c0fae3d303"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-p-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-p-2.page-v2-grouped-by-opal-fund",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-p-2.page-v2-grouped-by-opal-fund.proof_of_spec.json@3f843b8c9e"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-r-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-r-1.aws-reachability-of-basg-issuer",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-r-1.aws-reachability-of-basg-issuer.proof_of_spec.json@b908d3252d"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-s-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-s-1.bronze-to-typed-silver",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-s-1.bronze-to-typed-silver.proof_of_spec.json@25d1657e12"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-u-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-u-1.peer-group-map-and-universe",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-u-1.peer-group-map-and-universe.proof_of_spec.json@7fe00140a6"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-5",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-5.census-and-audit-trail",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-5.census-and-audit-trail.proof_of_spec.json@0221a0f503"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-w-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-w-1.gateway-routes-and-read-grant",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-w-1.gateway-routes-and-read-grant.proof_of_spec.json@b9447adc2f"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-1 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 15 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-pg-1 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance)."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "for every fund in both groups, Andrew reads which days carry a genuinely new report, which repeat an older one, and which are gaps, back up to two years or the fund's own start",
+   "cells": [
+    {
+     "cell_id": "RIV-d-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-2.live-thread-apply-deploy-backfill-fire",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-d-2.live-thread-apply-deploy-backfill-fire.proof_of_spec.json@08494e3984"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-h-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-h-1.holdings-coverage",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-h-1.holdings-coverage.proof_of_spec.json@dd61bc2fb5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-hp-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-hp-1.home-producer-reader",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-hp-1.home-producer-reader.proof_of_spec.json@91a7fc7d94"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-m-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-m-1.home-producer-measurement",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-m-1.home-producer-measurement.proof_of_spec.json@52c8423ec2"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-we-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-we-1.canonical-report-date-is-the-claimed-as-of",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~27/ETFS_RIVALS.TO-RIV-we-1.canonical-report-date-is-the-claimed-as-of.proof_of_spec.json@201a3f977b"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-we-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-we-2.trade-windows-dated-by-as-of",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~28/ETFS_RIVALS.TO-RIV-we-2.trade-windows-dated-by-as-of.proof_of_spec.json@dabf9dc667"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wf-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wf-1.calendar-claim-vs-previous-claim",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~29/ETFS_RIVALS.TO-RIV-wf-1.calendar-claim-vs-previous-claim.proof_of_spec.json@57effcc683"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xa-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-R29.rivalfunds-packages-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-R29.rivalfunds-packages-deploy-dell1.proof_of_spec.json@3bc66645ea"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xa-1.visible-axis-line",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~36/ETFS_RIVALS.TO-RIV-xa-1.visible-axis-line.proof_of_spec.json@5f7c7efb66"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xa-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-R30.rivalfunds-packages-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~DELL1/ETFS_RIVALS.TO-APPLY-R30.rivalfunds-packages-deploy-dell1.proof_of_spec.json@fb02cae572"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xa-2.axis-sentence-beside-every-calendar",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~38/ETFS_RIVALS.TO-RIV-xa-2.axis-sentence-beside-every-calendar.proof_of_spec.json@f4aeb67b91"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-2 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 9 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "over several consecutive trading days, every fund is collected each morning by its own source policy: the IDVZ group from Bloomberg, the PFOE group from each fund's own site with Bloomberg as the fallback; the page names the source per fund and day",
+   "cells": [
+    {
+     "cell_id": "RIV-b-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-b-1.bloomberg-channel-collector-silver-leg",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-b-1.bloomberg-channel-collector-silver-leg.proof_of_spec.json@73bd46beec"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-b-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-b-2.g1-windowed-continued",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-b-2.g1-windowed-continued.proof_of_spec.json@36dde29c49"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-c-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-c-1.package-core-and-issuer-collector",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-c-1.package-core-and-issuer-collector.proof_of_spec.json@f1f46b5d9f"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-d-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-1.daily-run-lambdas-schedule-triggers-sweep",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-d-1.daily-run-lambdas-schedule-triggers-sweep.proof_of_spec.json@7405f0d359"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-d-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-3.live-join-deploy-enable-import-fire",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-d-3.live-join-deploy-enable-import-fire.proof_of_spec.json@914c31bf3a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-d-4",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-4.live-join-round3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-d-4.live-join-round3.proof_of_spec.json@98cfd30ba5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-d-5",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-5.live-join-round4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-d-5.live-join-round4.proof_of_spec.json@f8b371b744"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-dt-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-dt-1.deadline-aware-vendor-timeout",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-dt-1.deadline-aware-vendor-timeout.proof_of_spec.json@ae10d493ff"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-eb-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-eb-1.enrichment-bounds-bloomberg-session-attempts",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-eb-1.enrichment-bounds-bloomberg-session-attempts.proof_of_spec.json@51255c04b1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-l-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-l-1.v08-bloomberg-leg-inert",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-l-1.v08-bloomberg-leg-inert.proof_of_spec.json@c0067713c8"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-lg-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-lg-1.bloomberg-leg-control-sized-gate-split",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-lg-1.bloomberg-leg-control-sized-gate-split.proof_of_spec.json@c239ad01bb"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-m-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-m-2.collector-dedup-linear",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-m-2.collector-dedup-linear.proof_of_spec.json@be3e415b7d"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-pv-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-pv-1.run-path-carries-trigger",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-pv-1.run-path-carries-trigger.proof_of_spec.json@3b89b0a51a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-q-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-q-1.gqgu-issuer-route",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-q-1.gqgu-issuer-route.proof_of_spec.json@8f0bec50e9"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-r-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-r-1.aws-reachability-of-basg-issuer",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-r-1.aws-reachability-of-basg-issuer.proof_of_spec.json@b908d3252d"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-sa-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-sa-1.sweep-runs-ai-step",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-sa-1.sweep-runs-ai-step.proof_of_spec.json@a48a020aa3"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xe-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xe-1.trading-day-gate-and-queue-state-reader",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~41/ETFS_RIVALS.TO-RIV-xe-1.trading-day-gate-and-queue-state-reader.proof_of_spec.json@5a304c467b"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xf-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xf-1.acwi-iwm-removed",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~42/ETFS_RIVALS.TO-RIV-xf-1.acwi-iwm-removed.proof_of_spec.json@aa8b175416"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-3 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 18 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-cb-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema)."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "Andrew reads two funds that came from different sources side by side in the one master format, with each position's source and dates shown",
+   "cells": [
+    {
+     "cell_id": "RIV-al-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-al-1.readers-take-the-parsekey",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-al-1.readers-take-the-parsekey.proof_of_spec.json@937c8df6f5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-f-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors.proof_of_spec.json@46ee51aff0"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-g-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-g-1.gold-canonical-shape",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-g-1.gold-canonical-shape.proof_of_spec.json@4719c9bcc5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-g-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-g-3.canonical-shape-v2-multi-source",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-g-3.canonical-shape-v2-multi-source.proof_of_spec.json@b8722119d1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-g-6",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-g-6.canonical-shape-gics-join",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-g-6.canonical-shape-gics-join.proof_of_spec.json@16f0e97741"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-i-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-i-1.identity-measured-resolution",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-i-1.identity-measured-resolution.proof_of_spec.json@b74b0ec696"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-i-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-i-2.basg-issuer-alias",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-i-2.basg-issuer-alias.proof_of_spec.json@f21f66f79a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ok-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ok-1.one-key-per-security",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-ok-1.one-key-per-security.proof_of_spec.json@54148ae8d5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-pk-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-pk-1.bloomberg-key-for-cusip-isin-rows",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-pk-1.bloomberg-key-for-cusip-isin-rows.proof_of_spec.json@fc705a1bd4"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-s-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-s-1.bronze-to-typed-silver",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-s-1.bronze-to-typed-silver.proof_of_spec.json@25d1657e12"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-v-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-v-2.one-revision-contract",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-v-2.one-revision-contract.proof_of_spec.json@806d083fe0"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-4 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 11 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "for every fund Andrew reads its trades (entries, adds, trims, exits) with shares, window, estimated price and size and confidence; on a fund and window that contain a dividend, a split and a cash/currency line, none of the three appears as a trade, and a purchase funded from income reads as a trade labelled as income-funded",
+   "cells": [
+    {
+     "cell_id": "RIV-e-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-e-1.bloomberg-enrichment-corporate-actions",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-e-1.bloomberg-enrichment-corporate-actions.proof_of_spec.json@c70a943c70"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-e-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-e-2.dividend-currency",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-e-2.dividend-currency.proof_of_spec.json@0b2981d770"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-g-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-g-2.gold-trade-schedule",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-g-2.gold-trade-schedule.proof_of_spec.json@263f0ea6d8"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-g-4",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-g-4.trade-schedule-v2-income-clean",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-g-4.trade-schedule-v2-income-clean.proof_of_spec.json@af72811643"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-h-4",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-h-4.id-change-identifier-relation",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-h-4.id-change-identifier-relation.proof_of_spec.json@1c64049a6d"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-h-5",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-h-5.implausible-window-refused",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-h-5.implausible-window-refused.proof_of_spec.json@cde039aee7"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-h-6",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-h-6.key-resolution-column",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-h-6.key-resolution-column.proof_of_spec.json@b9fd212ac6"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rp-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rp-1.census-price-repair",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-rp-1.census-price-repair.proof_of_spec.json@787510e7d5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-t-5",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-t-5.own-prior-date-pairing",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-t-5.own-prior-date-pairing.proof_of_spec.json@af4e772831"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wd-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wd-1.no-trade-below-tolerance-or-on-a-repeat-day",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~26/ETFS_RIVALS.TO-RIV-wd-1.no-trade-below-tolerance-or-on-a-repeat-day.proof_of_spec.json@fa1dc46e9d"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-we-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-we-1.canonical-report-date-is-the-claimed-as-of",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~27/ETFS_RIVALS.TO-RIV-we-1.canonical-report-date-is-the-claimed-as-of.proof_of_spec.json@201a3f977b"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-we-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-we-2.trade-windows-dated-by-as-of",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~28/ETFS_RIVALS.TO-RIV-we-2.trade-windows-dated-by-as-of.proof_of_spec.json@dabf9dc667"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-x-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-x-1.full-exit-priced",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-x-1.full-exit-priced.proof_of_spec.json@c7fe14797c"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xe-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-R30.rivalfunds-packages-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~DELL1/ETFS_RIVALS.TO-APPLY-R30.rivalfunds-packages-deploy-dell1.proof_of_spec.json@fb02cae572"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xe-3.union-reader-for-corporate-actions",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~40/ETFS_RIVALS.TO-RIV-xe-3.union-reader-for-corporate-actions.proof_of_spec.json@4e4d687ae9"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-5 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 14 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-dr-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema); RIV-gd-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema); RIV-gt-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema); RIV-nf-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema); RIV-rp-2 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema)."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "for one fund and period Andrew reads which trades and trade clusters out- or under-performed afterwards, summarised by sector and by security, each with its window and denominator, including positions since sold",
+   "cells": [
+    {
+     "cell_id": "RIV-d-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-3.live-join-deploy-enable-import-fire",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-d-3.live-join-deploy-enable-import-fire.proof_of_spec.json@914c31bf3a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-d-4",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-4.live-join-round3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-d-4.live-join-round3.proof_of_spec.json@98cfd30ba5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-d-5",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-5.live-join-round4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-d-5.live-join-round4.proof_of_spec.json@f8b371b744"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-g-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-g-3.canonical-shape-v2-multi-source",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-g-3.canonical-shape-v2-multi-source.proof_of_spec.json@b8722119d1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-g-6",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-g-6.canonical-shape-gics-join",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-g-6.canonical-shape-gics-join.proof_of_spec.json@16f0e97741"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-hc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-hc-1.r30-trading-days-clipped-window-flag",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-hc-1.r30-trading-days-clipped-window-flag.proof_of_spec.json@1a3d8b60cc"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rk-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rk-2.a1-plausibility-guard",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-rk-2.a1-plausibility-guard.proof_of_spec.json@fb7c817c24"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rn-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rn-1.period-switch-r30-default-in-components",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-rn-1.period-switch-r30-default-in-components.proof_of_spec.json@280b8dc66a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-s-4",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-s-4.security-market-g4-producer",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-s-4.security-market-g4-producer.proof_of_spec.json@f53de77287"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-s-6",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard.proof_of_spec.json@3a04e3f988"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-sx-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-sx-1.unclassified-never-ranked",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-sx-1.unclassified-never-ranked.proof_of_spec.json@370c06a17a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-2.ranking-panels",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-2.ranking-panels.proof_of_spec.json@2a72bc187e"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-6 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 12 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "for one fund Andrew reads (a) its projected trading by sector and security if the observed trends persist, each with what would contradict it, and (b) a short, labelled wildcard section in which every item cites its rows and says what would disprove it; a later account grades the earlier projection against trades inferred after it",
+   "cells": [
+    {
+     "cell_id": "RIV-ab-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ab-1.ai-account-on-the-served-build-and-an-honest-badge",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-ab-1.ai-account-on-the-served-build-and-an-honest-badge.proof_of_spec.json@25d076abf1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-an-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-an-1.ai-prose-one-name",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-an-1.ai-prose-one-name.proof_of_spec.json@746eaad457"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ap-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ap-1.ai-accounts-production-stage",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-ap-1.ai-accounts-production-stage.proof_of_spec.json@13a3189ef5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-gc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-gc-1.grader-attaches-uncited-fact",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-gc-1.grader-attaches-uncited-fact.proof_of_spec.json@fbd97be4b2"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-r-6",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-r-6.ai-grader-and-prompt-repairs",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-r-6.ai-grader-and-prompt-repairs.proof_of_spec.json@623585d845"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-sa-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-sa-1.sweep-runs-ai-step",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-sa-1.sweep-runs-ai-step.proof_of_spec.json@a48a020aa3"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-st-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-st-1.a1-follows-its-inputs",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-st-1.a1-follows-its-inputs.proof_of_spec.json@7b4021426e"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-4",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-4.ai-account-cards",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-4.ai-account-cards.proof_of_spec.json@c9c8e7191c"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-7 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 8 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-ai-2 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance); RIV-ln-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema)."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a rebuild from the kept raw files reproduces the published figures for one day, and running the same day again adds no duplicate positions",
+   "cells": [
+    {
+     "cell_id": "RIV-v-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-v-2.one-revision-contract",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-v-2.one-revision-contract.proof_of_spec.json@806d083fe0"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-8 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 1 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-dr-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema); RIV-gd-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema); RIV-gt-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema); RIV-nf-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema); RIV-rp-2 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema)."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "on a day where a check is made to fail on purpose, the page either says what failed or is not published, and it never shows the failed figures as normal",
+   "cells": [
+    {
+     "cell_id": "RIV-d-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-d-2.live-thread-apply-deploy-backfill-fire",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-d-2.live-thread-apply-deploy-backfill-fire.proof_of_spec.json@08494e3984"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-f-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors.proof_of_spec.json@46ee51aff0"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-f-4",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-f-4.page-floors-headline",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-f-4.page-floors-headline.proof_of_spec.json@8d6bb9e299"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-fc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-fc-1.every-security-opens-its-modal",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-fc-1.every-security-opens-its-modal.proof_of_spec.json@47cc8c81ae"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-h-5",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-h-5.implausible-window-refused",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-h-5.implausible-window-refused.proof_of_spec.json@cde039aee7"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-p-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-p-1.day-page-and-guardrails",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-p-1.day-page-and-guardrails.proof_of_spec.json@c0fae3d303"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-r-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-r-3.repairs-retain-gate-freshness-marker",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-r-3.repairs-retain-gate-freshness-marker.proof_of_spec.json@d9067f609c"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rk-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rk-2.a1-plausibility-guard",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-rk-2.a1-plausibility-guard.proof_of_spec.json@fb7c817c24"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-9 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 8 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-eg-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema)."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "Andrew reads each fund's style read with its evidence (timing concentration, breadth of the book touched, trade size), and each group's index control (v0.8: ACWI for the IDVZ group, IWM for the PFOE group) reads as systematic on that same evidence",
+   "cells": [
+    {
+     "cell_id": "RIV-fc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-fc-1.every-security-opens-its-modal",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-fc-1.every-security-opens-its-modal.proof_of_spec.json@47cc8c81ae"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wd-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wd-1.no-trade-below-tolerance-or-on-a-repeat-day",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~26/ETFS_RIVALS.TO-RIV-wd-1.no-trade-below-tolerance-or-on-a-repeat-day.proof_of_spec.json@fa1dc46e9d"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-10 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 2 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "Andrew reads IDVZ against its peers and PFOE against its peers on the style read, the trading results and the projections, computed by the same rules",
+   "cells": [
+    {
+     "cell_id": "RIV-g-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-g-3.canonical-shape-v2-multi-source",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-g-3.canonical-shape-v2-multi-source.proof_of_spec.json@b8722119d1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-p-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-p-2.page-v2-grouped-by-opal-fund",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-p-2.page-v2-grouped-by-opal-fund.proof_of_spec.json@3f843b8c9e"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-u-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-u-1.peer-group-map-and-universe",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-u-1.peer-group-map-and-universe.proof_of_spec.json@7fe00140a6"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-2.ranking-panels",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-2.ranking-panels.proof_of_spec.json@2a72bc187e"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-3.buying-trend-card",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-3.buying-trend-card.proof_of_spec.json@21cea9df12"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-11 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 5 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance."
+  },
+  {
+   "fwd_id": "FWD-12",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a third group is added as a mapping entry (the Opal fund, its rivals, each fund's source policy) and flows through collection, the tables, the page and the archive with no code change",
+   "cells": [
+    {
+     "cell_id": "RIV-g-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-g-3.canonical-shape-v2-multi-source",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-g-3.canonical-shape-v2-multi-source.proof_of_spec.json@b8722119d1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-u-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-u-1.peer-group-map-and-universe",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-u-1.peer-group-map-and-universe.proof_of_spec.json@7fe00140a6"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xf-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xf-1.acwi-iwm-removed",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~42/ETFS_RIVALS.TO-RIV-xf-1.acwi-iwm-removed.proof_of_spec.json@aa8b175416"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-12 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 3 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance."
+  },
+  {
+   "fwd_id": "FWD-13",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "one live, signed-in read: the page opens on IDVZ's ranking for the last 30 trading days (v0.14); Andrew switches to quarter- and year-to-date (v0.15: no month-to-date) and the tables change; he picks one IDVZ rival and reads its ten best and ten worst holdings, five best and five worst sectors, its buying trend for the same period and the AI's two-part account; he follows one ranked figure back to the holdings and prices it came from",
+   "cells": [
+    {
+     "cell_id": "RIV-lg-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-lg-1.bloomberg-leg-control-sized-gate-split",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-lg-1.bloomberg-leg-control-sized-gate-split.proof_of_spec.json@c239ad01bb"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-nm-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-nm-1.names-not-tickers",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-nm-1.names-not-tickers.proof_of_spec.json@a6acc04e06"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rd-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rd-1.page-walk-remainder-render",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-rd-1.page-walk-remainder-render.proof_of_spec.json@ddb383e1ed"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rw-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rw-1.render-remainder-u07-u12-u18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-rw-1.render-remainder-u07-u12-u18.proof_of_spec.json@bf0d3887ab"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-s-6",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard.proof_of_spec.json@3a04e3f988"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-1.page-header-and-chrome",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-1.page-header-and-chrome.proof_of_spec.json@e5e6923fe1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-2.ranking-panels",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-2.ranking-panels.proof_of_spec.json@2a72bc187e"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-13 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 7 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-pg-1 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance)."
+  },
+  {
+   "fwd_id": "FWD-14",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "for every fund in both groups, Opal's own and each group's benchmark included, Andrew reads the ten holdings that added most to the fund's return and the ten that cost it most, and the five best and five worst sectors, for each of the three periods (v0.15: 30 trading days, quarter to date, year to date)",
+   "cells": [
+    {
+     "cell_id": "RIV-hc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-hc-1.r30-trading-days-clipped-window-flag",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-hc-1.r30-trading-days-clipped-window-flag.proof_of_spec.json@1a3d8b60cc"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rk-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rk-1.the-reader-keeps-a-close-only-on-its-own-trading-date",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~20/ETFS_RIVALS.TO-RIV-rk-1.the-reader-keeps-a-close-only-on-its-own-trading-date.proof_of_spec.json@22178f4423"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rk-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rk-2.a1-plausibility-guard",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-rk-2.a1-plausibility-guard.proof_of_spec.json@fb7c817c24"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rn-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rn-1.period-switch-r30-default-in-components",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-rn-1.period-switch-r30-default-in-components.proof_of_spec.json@280b8dc66a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-s-6",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard.proof_of_spec.json@3a04e3f988"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-sx-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-sx-1.unclassified-never-ranked",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-sx-1.unclassified-never-ranked.proof_of_spec.json@370c06a17a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-2.ranking-panels",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-2.ranking-panels.proof_of_spec.json@2a72bc187e"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-14 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 7 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance."
+  },
+  {
+   "fwd_id": "FWD-15",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "for every fund Andrew reads a simple table, over the page's period (the last 30 trading days by default, v0.14), in the same shape as the rankings: the ten holdings and five sectors its buying leaned into most, and the ten holdings and five sectors it leaned away from most, each line read as a tilt or a bet with a plain trend mark",
+   "cells": [
+    {
+     "cell_id": "RIV-bt-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-bt-1.buying-trend-every-period",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~7/ETFS_RIVALS.TO-RIV-bt-1.buying-trend-every-period.proof_of_spec.json@b8e9354160"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ml-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ml-1.the-month-strip-labels-each-cell-with-the-month-it-is",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~9/ETFS_RIVALS.TO-RIV-ml-1.the-month-strip-labels-each-cell-with-the-month-it-is.proof_of_spec.json@827a2bdee9"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-s-6",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard.proof_of_spec.json@3a04e3f988"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-3.buying-trend-card",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-3.buying-trend-card.proof_of_spec.json@21cea9df12"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-15 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 4 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-tb-1 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance)."
+  },
+  {
+   "fwd_id": "FWD-16",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "for every rival and both Opal funds (never a benchmark) Andrew reads the AI's account of the fund's last 30 days",
+   "cells": [
+    {
+     "cell_id": "RIV-aw-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-R28-aw1.rivalfunds-lambda-deploy-sitez",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~DELL1/ETFS_RIVALS.TO-APPLY-R28-aw1.rivalfunds-lambda-deploy-sitez.proof_of_spec.json@57110a5ed9"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-aw-1.ai-accounts-name-periods-in-words-and-cite-every-figure",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~21/ETFS_RIVALS.TO-RIV-aw-1.ai-accounts-name-periods-in-words-and-cite-every-figure.proof_of_spec.json@49e85804a4"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-gc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-gc-1.grader-attaches-uncited-fact",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-gc-1.grader-attaches-uncited-fact.proof_of_spec.json@fbd97be4b2"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-pd-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-pd-3.the-ai-accounts-are-written-on-the-three-rolling-periods",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-pd-3.the-ai-accounts-are-written-on-the-three-rolling-periods.proof_of_spec.json@1c17f040e9"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-s-6",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard.proof_of_spec.json@3a04e3f988"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wh-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wh-1.small-notional-and-unnamed-facts",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~31/ETFS_RIVALS.TO-RIV-wh-1.small-notional-and-unnamed-facts.proof_of_spec.json@796abf361c"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-16 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 5 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-ai-2 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance)."
+  },
+  {
+   "fwd_id": "FWD-17",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "for every rival and both Opal funds (never a benchmark) Andrew reads a second account, written after and building on the 30-day account: whether the rankings and trends are borne out, contradicted or added to, given whether the manager trades by system or by discretion (the FWD-10 read); what the manager is getting right and wrong; what it expects the manager to do next and what would prove that wrong; it draws on Opal's own market readings (the fear and greed measures he named, global RSI, the news scanner, the trending topics and Data Harvest) before anything outside",
+   "cells": [
+    {
+     "cell_id": "RIV-wg-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wg-1.direction-verdict-fund-specific-lead",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~30/ETFS_RIVALS.TO-RIV-wg-1.direction-verdict-fund-specific-lead.proof_of_spec.json@a5263da3d1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wh-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wh-1.small-notional-and-unnamed-facts",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~31/ETFS_RIVALS.TO-RIV-wh-1.small-notional-and-unnamed-facts.proof_of_spec.json@796abf361c"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-R29.rivalfunds-packages-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-R29.rivalfunds-packages-deploy-dell1.proof_of_spec.json@3bc66645ea"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xc-1.verdict-opening-frame",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~37/ETFS_RIVALS.TO-RIV-xc-1.verdict-opening-frame.proof_of_spec.json@a25e7abdd2"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xc-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-R30.rivalfunds-packages-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~DELL1/ETFS_RIVALS.TO-APPLY-R30.rivalfunds-packages-deploy-dell1.proof_of_spec.json@fb02cae572"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xc-2.frame-families-and-stored-reason",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~39/ETFS_RIVALS.TO-RIV-xc-2.frame-families-and-stored-reason.proof_of_spec.json@9cdb19164d"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-17 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 4 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-ai-1 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance); RIV-ai-2 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance)."
+  },
+  {
+   "fwd_id": "FWD-18",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "Andrew reads the rankings, the buying trend and the AI accounts first, without scrolling past trade-by-trade detail, holdings lists or check tables; those stay one step away, and the dated archive stays",
+   "cells": [
+    {
+     "cell_id": "RIV-as-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-as-1.audit-page-own-size-rule",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-as-1.audit-page-own-size-rule.proof_of_spec.json@fd65abc372"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-au-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-au-1.audit-trail-own-page-every-dialog-kept",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-au-1.audit-trail-own-page-every-dialog-kept.proof_of_spec.json@a71cb76ab3"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-lk-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-lk-1.audit-link-and-citations-to-audit-page",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-lk-1.audit-link-and-citations-to-audit-page.proof_of_spec.json@1a553f6e2a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rd-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rd-1.page-walk-remainder-render",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-rd-1.page-walk-remainder-render.proof_of_spec.json@ddb383e1ed"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rw-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rw-1.render-remainder-u07-u12-u18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-rw-1.render-remainder-u07-u12-u18.proof_of_spec.json@bf0d3887ab"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-s-6",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard.proof_of_spec.json@3a04e3f988"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-1.page-header-and-chrome",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-1.page-header-and-chrome.proof_of_spec.json@e5e6923fe1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-2.ranking-panels",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-2.ranking-panels.proof_of_spec.json@2a72bc187e"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-3.buying-trend-card",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-3.buying-trend-card.proof_of_spec.json@21cea9df12"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-4",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-4.ai-account-cards",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-4.ai-account-cards.proof_of_spec.json@c9c8e7191c"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ui-5",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ui-5.census-and-audit-trail",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-ui-5.census-and-audit-trail.proof_of_spec.json@0221a0f503"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wc-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wc-2.audit-exclusion-line-and-no-period-bar",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~25/ETFS_RIVALS.TO-RIV-wc-2.audit-exclusion-line-and-no-period-bar.proof_of_spec.json@5620bf56af"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-18 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 12 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-pg-1 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance)."
+  },
+  {
+   "fwd_id": "FWD-19",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "a rendered page read side by side with the portal: the same card style, the same period switch (v0.15: the last 30 trading days first and selected by default, a dividing line, then quarter, year; no month), and the same light background; a fund picker lists each Opal fund with its rivals and its benchmark; the period switch also sits inside \"What drove the return\" and \"Buying trend\", and switching it in any one place moves every one of them together",
+   "cells": [],
+   "claim": "UNCOVERED",
+   "note": "cells = the union of FWD-19 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 0 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-pg-1 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance); RIV-pt-1 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance)."
+  },
+  {
+   "fwd_id": "FWD-20",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "over several consecutive trading days, every held security's price and sector, both benchmarks and every market reading the AI uses arrive on schedule",
+   "cells": [
+    {
+     "cell_id": "RIV-cg-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-cg-1.census-reads-rankings-gics",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-cg-1.census-reads-rankings-gics.proof_of_spec.json@70b89fb150"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-cs-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-cs-1.census-header-agree-freshness",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-cs-1.census-header-agree-freshness.proof_of_spec.json@131425c35a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ic-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ic-2.census-three-states",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-ic-2.census-three-states.proof_of_spec.json@60dd2392de"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rp-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rp-1.census-price-repair",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-rp-1.census-price-repair.proof_of_spec.json@787510e7d5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-s-6",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard.proof_of_spec.json@3a04e3f988"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-20 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 5 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-ai-1 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance); RIV-ic-1 (order superseded by the 2026-10-02 FAST lease: built by the lease seat directly, no worker, no instance)."
+  },
+  {
+   "fwd_id": "FWD-21",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "on the live page, every security named in the rankings, the buying trend, the AI accounts and the detail lists opens its holding modal when clicked, and the modal shows the security's history (its price and the fund's holding over time) as far back as the store holds it",
+   "cells": [
+    {
+     "cell_id": "RIV-fc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-fc-1.every-security-opens-its-modal",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-fc-1.every-security-opens-its-modal.proof_of_spec.json@47cc8c81ae"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-fe-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-fe-1.every-mention-opens-its-funds-engagement",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-fe-1.every-mention-opens-its-funds-engagement.proof_of_spec.json@6f38fbcfac"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ks-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ks-1.a-name-in-an-account-never-opens-a-dialog-without-the-funds-section",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~13/ETFS_RIVALS.TO-RIV-ks-1.a-name-in-an-account-never-opens-a-dialog-without-the-funds-section.proof_of_spec.json@4e260752a2"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rn-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rn-1.period-switch-r30-default-in-components",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-rn-1.period-switch-r30-default-in-components.proof_of_spec.json@280b8dc66a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-tl-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-tl-1.the-trade-list-is-written-from-the-chart-objects-markers",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~8/ETFS_RIVALS.TO-RIV-tl-1.the-trade-list-is-written-from-the-chart-objects-markers.proof_of_spec.json@62a27e4207"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-21 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 5 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance. Named but not listed: RIV-ln-1 (order pending: its instance reads INVALID on the alignment limb, the cell sits in a round decomposition file, or iam-1's schema)."
+  },
+  {
+   "fwd_id": "FWD-22",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "on the live page, the security modal opened from a fund's section draws the security's price curve for the last 30d, 90d or 365d (one switch, 30d first); each of that fund's trades in the range is a hollow marker on the curve, green for a purchase and red for a sale, sized by the trade's share of the fund; pointing at a marker reads the trade's date or window, its dollar value, its size in basis points of the fund, and how many trades the range holds",
+   "cells": [
+    {
+     "cell_id": "RIV-as-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-as-1.audit-page-own-size-rule",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-as-1.audit-page-own-size-rule.proof_of_spec.json@fd65abc372"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-bf-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-bf-1.a-bloomberg-close-price-backfill-over-a-date-range-under-a-budget",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-bf-1.a-bloomberg-close-price-backfill-over-a-date-range-under-a-budget.proof_of_spec.json@56ba64837d"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-bk-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-bk-1.backfill-rows-feed-the-price-curve-only-and-carry-their-currency",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~10/ETFS_RIVALS.TO-RIV-bk-1.backfill-rows-feed-the-price-curve-only-and-carry-their-currency.proof_of_spec.json@50b9baf3a8"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-co-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-co-1.the-publisher-writes-one-chart-object-per-fund",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-co-1.the-publisher-writes-one-chart-object-per-fund.proof_of_spec.json@ca8bc8a510"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-cu-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-cu-1.sweep-continues-open-cursors",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-cu-1.sweep-continues-open-cursors.proof_of_spec.json@4dd7cfc86c"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-cu-1.the-dialog-chart-is-framed-dated-and-its-hover-is-bold",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~14/ETFS_RIVALS.TO-RIV-cu-1.the-dialog-chart-is-framed-dated-and-its-hover-is-bold.proof_of_spec.json@268cd34874"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-md-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-md-1.the-security-modal-draws-the-price-curve-with-trade-markers",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-md-1.the-security-modal-draws-the-price-curve-with-trade-markers.proof_of_spec.json@e2c46faa51"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ml-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ml-1.the-month-strip-labels-each-cell-with-the-month-it-is",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~9/ETFS_RIVALS.TO-RIV-ml-1.the-month-strip-labels-each-cell-with-the-month-it-is.proof_of_spec.json@827a2bdee9"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-mr-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-mr-1.the-read-out-names-the-marker-and-the-tooltip-never-covers-it",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~16/ETFS_RIVALS.TO-RIV-mr-1.the-read-out-names-the-marker-and-the-tooltip-never-covers-it.proof_of_spec.json@efa86d400f"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-nc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-nc-1.a-holding-with-no-stored-currency-draws-no-curve-and-says-why",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~7/ETFS_RIVALS.TO-RIV-nc-1.a-holding-with-no-stored-currency-draws-no-curve-and-says-why.proof_of_spec.json@5f8ebb0bf7"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-pc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-pc-1.an-implied-price-is-drawn-only-for-a-dollar-listing-and-the-chart-says-the-currency",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-pc-1.an-implied-price-is-drawn-only-for-a-dollar-listing-and-the-chart-says-the-currency.proof_of_spec.json@9992fcf7cd"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-pl-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-pl-1.the-month-strip-shows-every-month-and-the-trade-list-is-headed",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~11/ETFS_RIVALS.TO-RIV-pl-1.the-month-strip-shows-every-month-and-the-trade-list-is-headed.proof_of_spec.json@1bd3c3efeb"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-pm-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-pm-1.a-part-month-is-marked-no-curve-where-there-is-none-honest-markers",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~12/ETFS_RIVALS.TO-RIV-pm-1.a-part-month-is-marked-no-curve-where-there-is-none-honest-markers.proof_of_spec.json@5bd807b142"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ps-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ps-1.one-price-series-per-security-market-then-implied-then-gap",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-ps-1.one-price-series-per-security-market-then-implied-then-gap.proof_of_spec.json@5723d3d7ce"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rg-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rg-1.a-dates-market-rows-are-the-union-of-all-its-objects",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~15/ETFS_RIVALS.TO-RIV-rg-1.a-dates-market-rows-are-the-union-of-all-its-objects.proof_of_spec.json@e401fe57d1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rg-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rg-2.the-union-reads-only-timed-objects-untimed-dates-read-as-before",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~17/ETFS_RIVALS.TO-RIV-rg-2.the-union-reads-only-timed-objects-untimed-dates-read-as-before.proof_of_spec.json@63eb3d5fe5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rt-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rt-1.the-gateway-serves-a-funds-chart-object",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/ETFS_RIVALS.TO-RIV-rt-1.the-gateway-serves-a-funds-chart-object.proof_of_spec.json@9e690810de"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-tc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.proof_of_spec.json@876cfb049f"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-tc-1.a-top-up-close-is-stored-with-a-currency-and-the-owed-window-ends-on-the-page-day",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~22/ETFS_RIVALS.TO-RIV-tc-1.a-top-up-close-is-stored-with-a-currency-and-the-owed-window-ends-on-the-page-day.proof_of_spec.json@a9fc0deca9"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-tl-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-tl-1.the-trade-list-is-written-from-the-chart-objects-markers",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~8/ETFS_RIVALS.TO-RIV-tl-1.the-trade-list-is-written-from-the-chart-objects-markers.proof_of_spec.json@62a27e4207"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-tm-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-tm-1.a-funds-trades-in-a-security-as-sized-markers",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-tm-1.a-funds-trades-in-a-security-as-sized-markers.proof_of_spec.json@459ddf058c"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wa-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wa-1.split-adjusted-series",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~23/ETFS_RIVALS.TO-RIV-wa-1.split-adjusted-series.proof_of_spec.json@7bb7ed268c"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wb-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wb-1.dramatic-move-lookup",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~24/ETFS_RIVALS.TO-RIV-wb-1.dramatic-move-lookup.proof_of_spec.json@ee4faeb16d"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wc-1.trade-list-scoped-to-the-toggle",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~25/ETFS_RIVALS.TO-RIV-wc-1.trade-list-scoped-to-the-toggle.proof_of_spec.json@c193cd400d"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wi-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WI1.lookup-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WI1.lookup-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wi-1.sweep-runs-dramatic-move-lookup",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~32/ETFS_RIVALS.TO-RIV-wi-1.sweep-runs-dramatic-move-lookup.proof_of_spec.json@2209e893ad"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wj-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WI1.lookup-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WI1.lookup-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wj-1.serp-secret-grant",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~33/ETFS_RIVALS.TO-RIV-wj-1.serp-secret-grant.proof_of_spec.json@694a1501d5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-wk-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-WI1.lookup-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-WI1.lookup-deploy-dell1.proof_of_spec.json@4854e7487a"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-wk-1.corporate-action-void-path",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~34/ETFS_RIVALS.TO-RIV-wk-1.corporate-action-void-path.proof_of_spec.json@4c2150e811"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xb-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-R29.rivalfunds-packages-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-R29.rivalfunds-packages-deploy-dell1.proof_of_spec.json@3bc66645ea"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xb-1.bounded-search-retry",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~35/ETFS_RIVALS.TO-RIV-xb-1.bounded-search-retry.proof_of_spec.json@0e8f628672"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xd-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-R29.rivalfunds-packages-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV1/ETFS_RIVALS.TO-APPLY-R29.rivalfunds-packages-deploy-dell1.proof_of_spec.json@3bc66645ea"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xd-1.planted-render-same-page-find",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~35/ETFS_RIVALS.TO-RIV-xd-1.planted-render-same-page-find.proof_of_spec.json@7f8a7dce3f"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-22 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 27 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance."
+  },
+  {
+   "fwd_id": "FWD-23",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "every ranking, trend, account and modal on the live page offers exactly 30d, 90d and 365d, opens on 30d, and shows no QTD, YTD or MTD; the QTD and YTD figures are still computed and stored",
+   "cells": [
+    {
+     "cell_id": "RIV-as-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-as-1.audit-page-own-size-rule",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-as-1.audit-page-own-size-rule.proof_of_spec.json@fd65abc372"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-aw-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-R28-aw1.rivalfunds-lambda-deploy-sitez",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~DELL1/ETFS_RIVALS.TO-APPLY-R28-aw1.rivalfunds-lambda-deploy-sitez.proof_of_spec.json@57110a5ed9"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-aw-1.ai-accounts-name-periods-in-words-and-cite-every-figure",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~21/ETFS_RIVALS.TO-RIV-aw-1.ai-accounts-name-periods-in-words-and-cite-every-figure.proof_of_spec.json@49e85804a4"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-gc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-gc-1.grader-attaches-uncited-fact",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-gc-1.grader-attaches-uncited-fact.proof_of_spec.json@fbd97be4b2"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-hc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-hc-1.r30-trading-days-clipped-window-flag",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~6/ETFS_RIVALS.TO-RIV-hc-1.r30-trading-days-clipped-window-flag.proof_of_spec.json@1a3d8b60cc"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ks-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ks-1.a-name-in-an-account-never-opens-a-dialog-without-the-funds-section",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~13/ETFS_RIVALS.TO-RIV-ks-1.a-name-in-an-account-never-opens-a-dialog-without-the-funds-section.proof_of_spec.json@4e260752a2"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ml-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ml-1.the-month-strip-labels-each-cell-with-the-month-it-is",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~9/ETFS_RIVALS.TO-RIV-ml-1.the-month-strip-labels-each-cell-with-the-month-it-is.proof_of_spec.json@827a2bdee9"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-pd-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-pd-1.periods-are-30-90-365-calendar-days-in-the-tables",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-pd-1.periods-are-30-90-365-calendar-days-in-the-tables.proof_of_spec.json@d56e59422e"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-pd-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-pd-2.the-page-offers-30d-90d-365d-and-opens-on-30d",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-pd-2.the-page-offers-30d-90d-365d-and-opens-on-30d.proof_of_spec.json@2804323bd6"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-pd-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-pd-3.the-ai-accounts-are-written-on-the-three-rolling-periods",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/ETFS_RIVALS.TO-RIV-pd-3.the-ai-accounts-are-written-on-the-three-rolling-periods.proof_of_spec.json@1c17f040e9"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-pl-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-pl-1.the-month-strip-shows-every-month-and-the-trade-list-is-headed",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~11/ETFS_RIVALS.TO-RIV-pl-1.the-month-strip-shows-every-month-and-the-trade-list-is-headed.proof_of_spec.json@1bd3c3efeb"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-pm-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-pm-1.a-part-month-is-marked-no-curve-where-there-is-none-honest-markers",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~12/ETFS_RIVALS.TO-RIV-pm-1.a-part-month-is-marked-no-curve-where-there-is-none-honest-markers.proof_of_spec.json@5bd807b142"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rg-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rg-1.a-dates-market-rows-are-the-union-of-all-its-objects",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~15/ETFS_RIVALS.TO-RIV-rg-1.a-dates-market-rows-are-the-union-of-all-its-objects.proof_of_spec.json@e401fe57d1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rn-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rn-1.period-switch-r30-default-in-components",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~2/ETFS_RIVALS.TO-RIV-rn-1.period-switch-r30-default-in-components.proof_of_spec.json@280b8dc66a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-tc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.proof_of_spec.json@876cfb049f"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-tc-1.a-top-up-close-is-stored-with-a-currency-and-the-owed-window-ends-on-the-page-day",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~22/ETFS_RIVALS.TO-RIV-tc-1.a-top-up-close-is-stored-with-a-currency-and-the-owed-window-ends-on-the-page-day.proof_of_spec.json@a9fc0deca9"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-23 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 14 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance."
+  },
+  {
+   "fwd_id": "FWD-24",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "on a day's run, the sequence prints the HISTORY OWED: for every security any tracked fund held within the last 365 calendar days, the trading days of that window with no stored close, with the denominator of securities and days read; the same run asks for what is owed, inside the day's budget, and carries the rest to the next run; and a negative control shows it -- a security planted as first traded today, with no stored close, has its 365 days stored within 3 runs and the owed count for it reads 0",
+   "cells": [
+    {
+     "cell_id": "RIV-aw-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-R28-aw1.rivalfunds-lambda-deploy-sitez",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~DELL1/ETFS_RIVALS.TO-APPLY-R28-aw1.rivalfunds-lambda-deploy-sitez.proof_of_spec.json@57110a5ed9"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-aw-1.ai-accounts-name-periods-in-words-and-cite-every-figure",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~21/ETFS_RIVALS.TO-RIV-aw-1.ai-accounts-name-periods-in-words-and-cite-every-figure.proof_of_spec.json@49e85804a4"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-bk-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-bk-1.backfill-rows-feed-the-price-curve-only-and-carry-their-currency",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~10/ETFS_RIVALS.TO-RIV-bk-1.backfill-rows-feed-the-price-curve-only-and-carry-their-currency.proof_of_spec.json@50b9baf3a8"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-cu-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-cu-1.sweep-continues-open-cursors",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-cu-1.sweep-continues-open-cursors.proof_of_spec.json@4dd7cfc86c"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-cu-1.the-dialog-chart-is-framed-dated-and-its-hover-is-bold",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~14/ETFS_RIVALS.TO-RIV-cu-1.the-dialog-chart-is-framed-dated-and-its-hover-is-bold.proof_of_spec.json@268cd34874"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-ho-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-ho-1.the-history-owed-set-from-stored-tables-alone",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~18/ETFS_RIVALS.TO-RIV-ho-1.the-history-owed-set-from-stored-tables-alone.proof_of_spec.json@5d5c70ebd6"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-mr-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-mr-1.the-read-out-names-the-marker-and-the-tooltip-never-covers-it",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~16/ETFS_RIVALS.TO-RIV-mr-1.the-read-out-names-the-marker-and-the-tooltip-never-covers-it.proof_of_spec.json@efa86d400f"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rg-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rg-1.a-dates-market-rows-are-the-union-of-all-its-objects",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~15/ETFS_RIVALS.TO-RIV-rg-1.a-dates-market-rows-are-the-union-of-all-its-objects.proof_of_spec.json@e401fe57d1"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rg-2",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rg-2.the-union-reads-only-timed-objects-untimed-dates-read-as-before",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~17/ETFS_RIVALS.TO-RIV-rg-2.the-union-reads-only-timed-objects-untimed-dates-read-as-before.proof_of_spec.json@63eb3d5fe5"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-rk-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-rk-1.the-reader-keeps-a-close-only-on-its-own-trading-date",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~20/ETFS_RIVALS.TO-RIV-rk-1.the-reader-keeps-a-close-only-on-its-own-trading-date.proof_of_spec.json@22178f4423"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-tc-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.proof_of_spec.json@876cfb049f"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-tc-1.a-top-up-close-is-stored-with-a-currency-and-the-owed-window-ends-on-the-page-day",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~22/ETFS_RIVALS.TO-RIV-tc-1.a-top-up-close-is-stored-with-a-currency-and-the-owed-window-ends-on-the-page-day.proof_of_spec.json@a9fc0deca9"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-tw-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-PREFLIGHT-bbg-signin-20261009",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/ETFS_RIVALS.TO-PREFLIGHT-bbg-signin-20261009.proof_of_spec.json@876cfb049f"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-tw-1.the-daily-leg-asks-for-owed-closes-request-off-by-default",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~19/ETFS_RIVALS.TO-RIV-tw-1.the-daily-leg-asks-for-owed-closes-request-off-by-default.proof_of_spec.json@a8295b4a4a"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xe-1",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xe-1.trading-day-gate-and-queue-state-reader",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~41/ETFS_RIVALS.TO-RIV-xe-1.trading-day-gate-and-queue-state-reader.proof_of_spec.json@5a304c467b"
+      }
+     ]
+    },
+    {
+     "cell_id": "RIV-xe-3",
+     "task_orders": [
+      {
+       "id": "ETFS_RIVALS.TO-APPLY-R30.rivalfunds-packages-deploy-dell1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~DELL1/ETFS_RIVALS.TO-APPLY-R30.rivalfunds-packages-deploy-dell1.proof_of_spec.json@fb02cae572"
+      },
+      {
+       "id": "ETFS_RIVALS.TO-RIV-xe-3.union-reader-for-corporate-actions",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~40/ETFS_RIVALS.TO-RIV-xe-3.union-reader-for-corporate-actions.proof_of_spec.json@4e4d687ae9"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "cells = the union of FWD-24 named in the cell's own decomposition section and the COO's reading of cell titles (build_completion_report.py MAP); 12 cell(s) listed, each with a complete or superseded order that has a proof-of-spec instance."
+  }
+ ]
+}
