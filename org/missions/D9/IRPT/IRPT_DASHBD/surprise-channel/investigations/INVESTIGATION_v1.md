@@ -17507,3 +17507,161 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The condition is met. The apply order TO-DB-b-260 is staged to 0.7.0_AE_CloudOps~DB2 as round 128; its step 0 reads the layer live (the CTO's added condition) and STOPs if it does not carry pyarrow for python3.12. The layer's pyarrow version (14.0.2) is not compared with the version the adapter was measured with at round 125; Act 2's after-read records it. Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W413-S1 -- BLOCKING: the sparse worktree does not carry the data and infra paths DB-c-21 reads; the trace stopped at the first act
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W413-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~413",
+  "surfaced_at": "2026-10-15T14:23:13Z",
+  "one_line": "The worktree wk-IRPT_DASHBD-413 is a sparse checkout: the paths DB-c-21 reads (data/ and infra/aws/lambda/investor-reporting/) and org/surprise_channel/ are indexed but not on disk, so the trace cannot be read as written",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at worktree HEAD 2420fd102e: .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/ref, org/standards, org/modules/graph (no data/, no infra/aws/lambda/investor-reporting/)",
+      "git ls-files -v: 81394 of 85279 indexed entries carry the skip-worktree flag; data/ holds 1997 indexed entries and infra/aws/lambda/investor-reporting/ holds 717, none on disk (ls data and ls infra/aws/lambda: no such directory)",
+      "the TO first act (TREE-OK) passes on org and .tools; the paths the order reads are outside the cone; the checker p126_bcw.py loads its record first, so all three criteria print FAIL record absent with rc 1 and no S3 call (measured 2026-10-15T14:22:28Z)"
+    ]
+  },
+  "spec_asserts": "The worktree carries the paths the task order names (first act: a worktree that does not carry them is a BLOCKING row and the worker stops; the worker does not rebuild, extract or reconstruct the tree).",
+  "world_is": "The worktree carries the org and tools paths and the write grant, but not the data and infra source paths the trace reads. Widening the sparse checkout would reconstruct the tree, so the worker stopped at the first act with no record, no S3 read and no write. Counts, dates and words only."
+}
+```
+
+## IRPT_DASHBD-D2-W413-S2 -- OBSERVATION: The order names silver_locations() with no argument; the function takes one day argument a
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W413-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~413",
+  "surfaced_at": "2026-10-15T14:34:05Z",
+  "one_line": "The order names silver_locations() with no argument; the function takes one day argument and raises TypeError without it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py: def silver_locations(day) at line 78 takes one required argument",
+      "python -c silver_locations() with no argument: TypeError, missing 1 required positional argument day (local call, no AWS call, measured 2026-10-15)",
+      "silver_locations('2000-01-03') returns the bucket and key of the two silver inputs; the trace used that placeholder and kept the prefix, as the checker does"
+    ]
+  },
+  "spec_asserts": "The TO's silver step calls lambda_function.silver_locations() with no argument to obtain the bucket and prefix of fact_holdings and fact_allocations.",
+  "world_is": "The function takes a required day argument. The trace passed the placeholder 2000-01-03 and kept the prefix. The silver values are the same as the checker's own. Counts, dates and words only."
+}
+```
+
+## IRPT_DASHBD-D2-W413-S3 -- OBSERVATION: The scheduled reporting-gold build does not take the Cottonwood households from the newest
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W413-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~413",
+  "surfaced_at": "2026-10-15T14:34:05Z",
+  "one_line": "The scheduled reporting-gold build does not take the Cottonwood households from the newest Cottonwood account_dim partition: the hop BREAKS, and the build writes no Cottonwood filled output",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py run(): firm = firm_scope(source_entry(doc, declared_sources(doc)[0])); filled_inputs() builds ad = frv.FirmAdapter(firm, ard.opal_naming) and calls ad.households(reader, None) at line 722",
+      "data/assets/scripts/gold/irpt_reporting/sources.json: one custody entry (the first declared source), keyed by a registry master that resolves to a firm other than cottonwood; no cottonwood key",
+      "infra/aws/terraform/investor-reporting/reporting-gold/schedule.tf: the schedule fires only this handler; the cottonwood reader is reached only through filled_report_values.adapter_for() in the module's own main(), which the handler does not call",
+      "COTTONWOOD_FWD1_TRACE_R126.json (this folder): scheduled_for_cottonwood false, output_prefix null, output_object_count 0; the Cottonwood reader alone returns 226 households from the 2026-10-14 partition"
+    ]
+  },
+  "spec_asserts": "The reporting-gold build takes the Cottonwood households from the newest Cottonwood account_dim partition (the order's premise for hop gold_to_reporting_gold_households), and it writes a Cottonwood filled report.",
+  "world_is": "The scheduled build takes its households from the built-in firm's crosswalk and never calls the Cottonwood reader; it writes no Cottonwood filled output. Two hop verdicts are BREAKS. No action taken. Counts, dates and words only."
+}
+```
+
+## IRPT_DASHBD-D2-S86 -- the Cottonwood FWD-1 trace: silver to gold HOLDS, gold to reporting-gold BREAKS (the scheduled build is 49 Financial only); the issuer's pair claim corrected; worker 413's rows dispositioned
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S86",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T14:42:38Z",
+  "one_line": "The Cottonwood FWD-1 trace (round 126 B-CW, DB-c-21) found the silver-to-gold hops HOLD and the gold-to-reporting-gold hops BREAK: the scheduled reporting-gold build is wired for one firm (49 Financial) only and neither reads the Cottonwood account_dim nor writes a Cottonwood report; the issuer's pair statement that the next reporting-gold run takes its households from it was wrong for the scheduled build.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD-1 for Cottonwood is one live journey end to end: Black Diamond silver, the Cottonwood gold, the reporting-gold build and its Cottonwood output. The issuer's COO half and the DB-c-19 packet (Both branches) said the first landed account_dim partition changes the household source of the next reporting-gold run.",
+  "world_is": "Worker 413's record (COTTONWOOD_FWD1_TRACE_R126.json, merged ed18a47a03; all three criteria PASS, re-run by this seat on its tree and on main): silver fact_holdings and fact_allocations newest 2026-10-14 (94 and 145 partitions); Cottonwood gold holdings_performance_daily newest 2026-10-14, 1001 rows; account_dim newest 2026-10-14, 1004 rows, 226 households, 37 accounts without a household; the crosswalk to the holdings accounts overlaps 1001, 0 only in holdings, 3 only in account_dim. The Cottonwood reader's own households() would return 226 households from the 2026-10-14 partition. BUT the scheduled reporting-gold handler takes its firm from the first custody entry of data/assets/scripts/gold/irpt_reporting/sources.json (one entry, a master other than Cottonwood; re-read by this seat: schwab_08335338 only), uses the built-in firm adapter's crosswalk, never calls the Cottonwood reader, and its schedule file carries no Cottonwood event: so the build writes no Cottonwood filled report (output prefix null, 0 objects) and scheduled_for_cottonwood is false. Verdicts: silver_to_gold_holdings HOLDS, silver_to_gold_account_dim HOLDS, gold_to_reporting_gold_households BREAKS, reporting_gold_output BREAKS. Correction of the issuer's earlier claim: the pair's Both branches section (and the issuer's COO half) said the next reporting-gold run takes its household source from the new account_dim; that holds only for a run configured for Cottonwood, which the scheduled build is not. No harm followed (the act wrote one key into a table nothing scheduled reads yet), the CTO's half accepted a one-day lag at a fire that does not read the table. Dispositions of worker 413's rows: W413-S1 (BLOCKING, the sparse cone omitted the folders the order reads) is the issuer's provisioning gap, fixed by extending the cone, with a note that the provision script's sparse set should include read folders; W413-S2 (silver_locations needs a day argument): accepted; W413-S3 is the finding above. Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~413/COTTONWOOD_FWD1_TRACE_R126.json and the note beside it",
+      "data/assets/scripts/gold/irpt_reporting/sources.json (one custody entry) and infra/aws/lambda/investor-reporting/reporting-gold/handler.py line 974 (firm from the first declared source), read by this seat",
+      "merge ed18a47a03; checks/r126/p126_bcw.py (a fresh S3 recount by the checker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO: wiring Cottonwood into the reporting-gold build (a Cottonwood source in the declaration or its own scheduled invocation, and its filled-report output prefix) is a build cell by his word and may need an endpoint ruling; this row only states the measured gap. The Cottonwood account_dim and holdings gold are live and correct as ruled."
+}
+```
+
+## IRPT_DASHBD-D2-S87 -- OBSERVATION: the naming-plan gate refused the Cottonwood landing apply before any write, the scheduler policy needs its builder name
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S87",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T15:05:00Z",
+  "one_line": "The naming-plan gate refused the Cottonwood landing apply before any write: the scheduler role's inline policy takes the role's name from the role's name module, not a policy name from the builder",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~DB2 STOP on TO-DB-b-260 (msg 8351): safe-apply rc 7, NAMING-PLAN REFUSE, 6 of 7 CONFORMANT, the refused address aws_iam_role_policy.irpt_account_return_daily_scheduler at iam.tf:152; nothing written; fresh plan 7 add / 0 change / 0 destroy",
+      "this seat reproduced it: naming-apply-gate.py --plan-json on a synthetic plan: the role name on a policy REFUSES with the owed name irpt-cot-account-return-daily-scheduler-role-policy; the builder name irpt-cot-account-return-daily-scheduler-policy (opal_naming.name kind policy qualifier scheduler) is CONFORMANT as IAM_POLICY, like the execution policy",
+      "the function, both roles, the schedule and the artifact are still absent in AWS: nothing is deployed"
+    ]
+  },
+  "spec_asserts": "Round 123 DB-b-252 and its facts record: five builder names, the root applies as planned.",
+  "world_is": "The root names six resources by builder; the order and its record counted five and left the scheduler policy on the role's name module. Round 129 cell DB-b-261 gives the policy its own builder-name module; the signed pair is re-bound to the new bytes (packet revision 3) and re-signed before the apply order resumes. Counts, dates and words only."
+}
+```
+
+## IRPT_DASHBD-D2-W213-S1 -- OBSERVATION: the commit-time naming gate reads the new scheduler-policy module as BUILT-NOT-GRADED, the names were graded only in plan mode
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W213-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~213",
+  "surfaced_at": "2026-10-15T15:05:39Z",
+  "one_line": "The commit-time naming gate printed NAMING BUILT-NOT-GRADED for the one opal_name module the DB-b-261 commit added to the Cottonwood landing root, because its scope argument is a local reference, not a literal; the six names were graded by the plan-mode run only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 531bb425f7 (safe-commit of iam.tf and RD_COT_NAMES_FACTS_R129.json): the naming-gate lines read NAMING-GATE: PASS 1 graded and NAMING BUILT-NOT-GRADED infra/aws/terraform/investor-reporting/account-return-daily/iam.tf:126 opal_name module block with non-literal argument(s): scope",
+      "the plan-mode run of the real naming gate on the six names of the root, checker DB129-1-AC2 at the commit 531bb425f7 worktree: NAMING-PLAN: PASS 6 graded, six CONFORMANT lines, no REFUSE",
+      "no terraform command, no AWS call: the live resources are not read; the commit-time observation is the gate's own output, not a claim about the apply"
+    ]
+  },
+  "spec_asserts": "The order DB-b-261 grades the six names of the Cottonwood landing root with the real naming-plan gate in plan mode (criterion DB129-1-AC2) and the record's gate verdict equals that gate's last line (DB129-1-AC3).",
+  "world_is": "Both hold: plan mode grades six CONFORMANT names with no REFUSE. The commit-time gate on the added module block reports it BUILT-NOT-GRADED (non-literal scope argument), so the commit gate does not itself grade the new name; the order's criteria do not claim it does. Counts and paths only; no client value."
+}
+```

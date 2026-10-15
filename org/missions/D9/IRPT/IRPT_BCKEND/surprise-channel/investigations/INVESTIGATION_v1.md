@@ -38295,3 +38295,386 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W417-S6 RESOLVED (my check defect, AMENDMENT 1: the candidate-against-served difference is counted by kind). D2-W417-S1 and S7 stay ARMED, owner me, as the hinge of the Cottonwood pair: whether Cottonwood publishes after the IB-pr-549 mint depends on whether the minted pin-2 body of directory_marks_no_closures is HEAD's or the deployed one (the worker did not read pin 2's body; the CTO holds the Cottonwood pair until the mint and its next fire). D2-W417-S3 (no TERMINATED mark exists for the account and the writer marks only an entry the previous build carried: the account is in no directory entry and not in the directory's source client list) is the reason the closed_at_source exemption (IB-pr-576) is built instead of a mark. D2-W417-S2 (the offline rebuild gives 17,911 nodes against the refused revision's 17,904), S4 (for three days before the zero-position run the custody partition carries two no-position rows while the independent-total partition carries a nonzero value), S5 (the sparse grant widened locally): INERT, recorded. The CTO's 8290 changes the exemption's record to ABSENT_AT_SOURCE (never closed)."
 }
 ```
+
+## IRPT_BCKEND-D2-S200 -- IB-pr-549's pin bodies carry HEAD's directory_marks_no_closures; the acts that built the live bundles; what is not established
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S200",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T13:19:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Reading of IB-pr-549's pin bodies against HEAD before the mint (CTO msg 8296) and the acts that built the live bundles: both pins carry HEAD's directory_marks_no_closures body (651 characters, identical), so the mint lands the HEAD gate for the carried-forward-ignoring rule; the live 49 Financial bundle was minted by IB2's IB178 apply and the live Cottonwood bundle predates it (untouched by IB178); the live bytes match neither HEAD nor their pin because they were built from earlier trees, not from these pins.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show of data/assets/scripts/gold/investor_reporting/holdings_snapshot.py at b1d354cfc9341168a3b4c316a344876ce0049b97 (49 Financial pin), 5fad7eaaa8fb4c512190fa406b78c683c4b6ad1f (Cottonwood and Inflection pin 2) and HEAD: the directory_marks_no_closures function is byte-identical at all three (651 characters, one hash); it ignores carried-forward entries and returns True only when every source-marked entry is UNKNOWN",
+      "deliverables/0.7.0_AE_CloudOps~IB2/IB178-1_apply_record.json: the 49 Financial bundle put produced version UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD (start version fMLoOI6a...), candidate sha256 f945da68...; the same record shows Cottonwood untouched, version oyIYMVdh_l2zCg5ZWvn3ISPPS6_9Q82_ before and after; IB193-1_apply_record.json (branch B re-read) names both ids as the IsLatest versions"
+    ]
+  },
+  "spec_asserts": "CTO msg 8296: read IB-pr-549's pinned holdings_snapshot.py body against HEAD's directory_marks_no_closures before the mint, and name from the ledgers the act that built each live bundle and whether the source map recorded it.",
+  "world_is": "PREDICTION: the IB-pr-549 mint lands, for Cottonwood and Inflection (pin 2) and for 49 Financial (pin 1), the HEAD body of directory_marks_no_closures, so Cottonwood's gate lists the lost account and publishes at the first fire after the mint if its directory carries only UNKNOWN source marks besides the two carried TERMINATED entries (the HEAD offline run did exactly this); 49 Financial publishes only if its directory's 73 TERMINATED entries are all carried-forward (not source-marked), which was not read, so 49 Financial is expected to stay refused. THE MINT LANDS NO THIRD UNREAD BODY for this function; the other members are IB-pr-549's own differential. THE LIVE BUNDLES: 49 Financial UHOCIkWj was put by IB2's IB178 apply (order IB-pr-512, the minimal holdings packages); Cottonwood oyIYMVdh predates IB178 and was untouched by it (the earlier IB-pr-404 narrow-bundle apply by the same seat, IB105-1 record); the bundle objects are declared in .tools/safe_deploy_core.py, not in the lambda source map, so no source-map record exists for them; which commit built each live holdings_snapshot.py is not named by these records beyond the packet's blob 3a19dcf5 for the IB193 re-read, and the live bytes differ from that blob, so the build input of each live bundle is NOT established here (a read of the IB2 ledgers under org/critical_paths/change_management/ for the two mints is the open part)."
+}
+```
+
+## IRPT_BCKEND-D2-W419-S1 -- The order names the publication manifest, but the published .manifest.json is written by publication.py, which is outside the paths grant; the closed_at_source fact is recorded in the run manifest (snapshot _manifest, returned by run_firm) instead.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W419-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~419",
+  "surfaced_at": "2026-10-15T13:06:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the publication manifest, but the published .manifest.json is written by publication.py, which is outside the paths grant; the closed_at_source fact is recorded in the run manifest (snapshot _manifest, returned by run_firm) instead.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings/publication.py@3f7c8910898345e85873d3a1fac78e18e0e7cea1 publish() builds the published manifest dict and puts it as the revision manifest object",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@3f7c8910898345e85873d3a1fac78e18e0e7cea1 land() builds body_payload from keys not beginning with an underscore, so the run manifest _manifest is not part of the published body"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-576 change item 3: the publication manifest records each exempted account as closed_at_source with its dates, written by the same place that writes the other manifest facts.",
+  "world_is": "The published .manifest.json belongs to publication.py, outside this order's paths. This build records closed_at_source in snapshot _manifest (the run manifest that carries the other manifest facts and is returned by run_firm); a run with no exempted account leaves it byte-unchanged. Whether the served manifest should carry the fact is for the issuer: that needs a grant on publication.py. The evidence loader that feeds the provider is the next cell."
+}
+```
+
+## IRPT_BCKEND-D2-W419-S2 -- AMENDMENT 1 part (ii) needs the exempted account listed in its household in the served snapshot; the account nodes are built by holdings_49f.py, which is outside the paths grant, so that part is stopped and the words helper alone is built.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W419-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~419",
+  "surfaced_at": "2026-10-15T13:13:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 1 part (ii) needs the exempted account listed in its household in the served snapshot; the account nodes are built by holdings_49f.py, which is outside the paths grant, so that part is stopped and the words helper alone is built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py@0bd0f39b2b line 378 builds the ACCOUNT nodes of the 49 Financial snapshot with hs._node(account_id, None, 0, ACCOUNT, ...); the household listing is built from these nodes there",
+      "data/assets/scripts/gold/investor_reporting/holdings_membership.py@0bd0f39b2b lines 110 and 119 read ACCOUNT nodes to build the membership roots; the holdings_inf.py builder carries the same node construction",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@0bd0f39b2b holds only the generic _node helper and the gate; the household node placement is not in it"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-576 AMENDMENT 1 (msg 8290) part (ii): the served snapshot keeps the exempted account listed in its household, with no position nodes, the words Not reported by the custodian since <date>, and its last served value never shown as current.",
+  "world_is": "The household account node is built by holdings_49f.py (and holdings_inf.py, holdings_membership.py), none of which is in this order's paths. Built in holdings_snapshot.py: the absent_at_source manifest record and not_reported_display (the words). NOT built: the household node placement in the served snapshot. Stopped on that part per the coordinator. The issuer amends the grant (or re-cuts that part) before it can be built.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W419-S3 -- The proof instance path named by the order is too long for Python on dell2 (about 275 characters, past the Windows MAX_PATH limit with LongPathsEnabled unset): proof-of-spec-check.py returns READ-ERROR rc=2 at that path and VALID rc=0 on a short copy.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W419-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~419",
+  "surfaced_at": "2026-10-15T13:20:26Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The proof instance path named by the order is too long for Python on dell2 (about 275 characters, past the Windows MAX_PATH limit with LongPathsEnabled unset): proof-of-spec-check.py returns READ-ERROR rc=2 at that path and VALID rc=0 on a short copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~419/ holds the criteria output and the record; the instance named by the order is about 275 characters from the drive root",
+      "python -I open of the order-named instance path: FileNotFoundError on write and on read; a bash shell write of the same name succeeds, and the checker run on the same bytes from a short path returns VALID rc=0",
+      "python .tools/proof-of-spec-check.py on the order-named path: READ-ERROR (rc=2) [Errno 2] No such file or directory"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-576 proof_of_spec: the instance goes at the order-named path and is validated with python .tools/proof-of-spec-check.py before the order is reported.",
+  "world_is": "On this box python cannot open the order-named instance path (MAX_PATH; LongPathsEnabled is not set), so the canonical validation cannot run. The instance content validates VALID rc=0 from a short copy. The order is left open; the instance is written untracked at the order path and not committed. Needs a shorter instance name from the issuer, or LongPathsEnabled on dell2 (a machine setting this worker does not change)."
+}
+```
+
+## IRPT_BCKEND-D2-S201 -- Dispositions on worker 419's rows and the close of IB-pr-576; the exemption is built but inert until the household listing and the evidence loaders land
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S201",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T13:39:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 419's rows (D2-W419-S1 to S3) and the close of IB-pr-576: the absent_at_source exemption is built in the gate, but the served-snapshot household listing and the published manifest fact are not, and no evidence loader feeds the provider yet; the exemption is inert until IB-pr-577.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 05826407ad; order and instance renamed to short names (3789f88879, 447e94bee0), status flip c18ec3052e",
+      "at c18ec3052e in the main tree: pytest data/assets/scripts/gold/investor_reporting/tests/test_closed_at_source_exemption.py gives 9 passed; the proof instance reads VALID (rc=0); round-close-check --project IRPT_BCKEND --round 1 --workstream ~PG reads verdict=MAY-CLOSE",
+      "worker 419's criteria output: AC1 55/55, AC2 3 CLOSED-AT-SOURCE-A blocks removed in the difference control, AC3 8 named tests"
+    ]
+  },
+  "spec_asserts": "My IB-pr-576 order and the CTO's msgs 8290 and 8302: the gate lists an account absent at the source in its household with the words Not reported by the custodian since <date>, when a completeness condition holds, for both firms.",
+  "world_is": "DISPOSITIONS. D2-W419-S1 (the published manifest is written by publication.py, outside the grant; the fact is in the run manifest _manifest) and D2-W419-S2 (the household account node is built by holdings_49f.py, holdings_inf.py and holdings_membership.py, outside the grant) MOVE to IB-pr-577 with the per-firm evidence loaders; both stay ARMED, owner me, because until IB-pr-577 lands the served snapshot would not list the exempted account. D2-W419-S3 RESOLVED (my defect, an overlong slug; order and instance now carry short names, instance VALID). Nothing is deployed or minted by IB-pr-576: it changes holdings_snapshot.py at HEAD only, and the never-widen pair for the exemption follows IB-pr-577."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W421-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~421",
+  "surfaced_at": "2026-10-15T14:00:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-578: the 49F split_adjust declaration makes the existing 49F read-pattern test fail (test_an_own_date_source_reads_exactly_the_partitions_it_always_read); the order's refusal clause stops the cell before any commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "base 476d0ed981904ef7708b21ecabbd7b98427a6694; pytest data/assets/scripts/gold/irpt_holdings_performance/tests/ on the base gives 60 passed; with the uncommitted change in the worktree it gives 1 failed, 59 passed",
+      "tests/test_holdings_performance.py lines 940-954 assert cache.asked == [positions PREV, positions DAY, balance PREV] for the 49F entry; sources.json first entry now carries split_adjust",
+      "KeyError 'tran_srcde' is raised in _split_ratios_for_day in holdings_performance.py: _Partitions.get answers the transactions prefix with the positions frame, which carries no transaction columns"
+    ]
+  },
+  "spec_asserts": "IB-pr-578 worker face, change 1: sources.json first entry gains split_adjust. Change 4: an entry that declares split_adjust reads the day's transactions partition through the same read lambda. Bounds: every existing test stays green and no existing assertion is edited.",
+  "world_is": "The first entry is the 49F channel, and test_an_own_date_source_reads_exactly_the_partitions_it_always_read asserts the exact read list for it. Under change 4 the 49F day makes a fourth read (transactions), so that assertion cannot hold unedited, and the stub answers the read with the positions frame, so the producer raises KeyError. The refusal clause is applied: no further change, no producer commit, no new test file. Nothing is deployed and nothing is written to AWS; LOCAL only. The producer change stays uncommitted in the worktree for the issuer's ruling."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W421-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~421",
+  "surfaced_at": "2026-10-15T14:00:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The split ratio is applied by identifier and the identifier falls back to ticker_symbol when cusip is blank, so a split holding with a blank cusip would not be adjusted.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "sources.json identifier_columns for schwab_08335338 are cusip then ticker_symbol at base 476d0ed981904ef7708b21ecabbd7b98427a6694",
+      "holdings_performance.py identifier() takes the first non-empty identifier column, and _keys() keys the row by that value; the split ratio is matched on that key"
+    ]
+  },
+  "spec_asserts": "IB-pr-578 worker face, change 3: the t-1 price basis of a security key with status OK is divided by the ratio, and change 2 measures the ratio per split security (cusip).",
+  "world_is": "A holding whose cusip is blank carries its ticker as its key and is not matched to the split security, so its t-1 basis is not divided and it reads the split as a loss. NOT MEASURED: the count of such rows on a split day was not read (offline grant, no data read). The gap is visible only once the producer is released; it is not fixed in this cell."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W421-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~421",
+  "surfaced_at": "2026-10-15T14:11:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Amendment 1 reads ticker_symbol from the 49F transactions partition, but the order's measured column list for that partition omits it; the read is expected to fail loudly for that day, not to pass silently.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-578 worker face (base 476d0ed981904ef7708b21ecabbd7b98427a6694) lists the transactions columns as tran_srcde, transaction_source_code_description, cusip, account_id, quantity, business_date: no ticker_symbol",
+      "amendment commit d47a0d916e, part (2): the transactions read takes cusip AND ticker_symbol for the identifier chain",
+      "holdings_performance.py _frame_for reads the declared columns with read_partition(columns=...), and pandas raises on a requested column the parquet does not carry"
+    ]
+  },
+  "spec_asserts": "Amendment 1 part (2): the split security key is the entry's identifier chain, so the transactions read takes cusip and ticker_symbol, and a split row with a blank cusip matches by ticker.",
+  "world_is": "The measured column list of the day's transactions partition in the order's READ does not include ticker_symbol. NOT READ here: the grant has no S3 read, so the presence of the column is unverified. If it is absent, the read raises for that day and the day fails loudly; it does not return an unadjusted figure. Measure the column before release."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W421-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~421",
+  "surfaced_at": "2026-10-15T14:17:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The standing worker rule says to flip the task order status to complete with the instance, but the task order file is outside the paths grant and the AC3 checker refuses it; the flip (7fb308cd25) was reverted (2608245362) and the order stays pending.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 7fb308cd25 flipped the status line of IRPT_BCKEND.TO-IB-pr-578.split-adjust-49f.md to complete with the proof instance; commit 2608245362 reverted it to pending",
+      "p216_cells.py AC3 at HEAD 2608245362 fails: changed_paths differs from the worker's own commits since base; the task-order file is listed as a change and is not in the allowed grant",
+      "the order's <paths> block does not name the task-order file; the standing rule says flip status with the instance"
+    ]
+  },
+  "spec_asserts": "The standing worker rule: after every criterion passes and the instance validates, flip the task order status to complete and commit the instance, deliverables and flip together. The order's grant is its <paths> block, and AC3 grades the worker's own changed paths against that grant.",
+  "world_is": "The two cannot both hold: the status line is the order file, which the grant does not name, so the flip makes AC3 fail, and rewriting history to undo it is not permitted. The order is therefore left pending by a revert commit. The issuer needs to rule whether the flip is the issuer's act or whether the grant names the order file. Nothing deployed; LOCAL only."
+}
+```
+
+```json
+[
+  {
+    "id": "IRPT_BCKEND-D2-W420-S1",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~420",
+    "surfaced_at": "2026-10-15T14:13:18Z",
+    "one_line": "IB-pr-577: run_firm takes the source receipts before the publish gate, but the absent_at_source evidence is read inside the gate through the same VersionedInputs, so the prior-day and walk-day objects it pins are not in _source_objects or the source_set_revision digest.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P2 (issuer: receipts must cover the exemption's reads before the exemption is released to a firm)",
+    "spec_asserts": "Cell IB-pr-577, changes 2 to 4: the exemption reads through the inputs object run_firm holds, and the published manifest records what the exemption relied on (absent_at_source entries).",
+    "world_is": "In holdings_snapshot.py run_firm, the inputs.receipts() block sits before evaluate_publish_gate; the absent_at_source provider reads the prior-day and walk-day partitions after that point, so those objects are pinned but never listed in the manifest source objects. The manifest records the absence entries, not the objects behind them. Not reordered here: receipts placement is outside the grant.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py run_firm receipts block before evaluate_publish_gate @476d0ed981904ef7708b21ecabbd7b98427a6694",
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py _absent_provider and source_evidence_for (block ABSENT-AT-SOURCE-B) (this order's uncommitted wiring, written on base 476d0ed981)",
+        "data/assets/scripts/gold/investor_reporting/tests/test_absent_at_source_wiring.py run_firm_publishes_with_the_account_still_listed exercises the gate through the real VersionedInputs"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-D2-W420-S2",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~420",
+    "surfaced_at": "2026-10-15T14:13:18Z",
+    "one_line": "IB-pr-577 walk (step f, account column only): an account with a zero-valued row on the prior day counts as having positions in the walk but as absent in the exemption rule, so first_absent_day is null and the listing falls back to the prior day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Cell IB-pr-577, change 2 (f): read the positions table, account column only, back one trading day at a time from the prior day, and name the earliest day of the unbroken run on which none of the lost account ids has positions.",
+    "world_is": "The exemption rule (absent_at_source_exempt) counts a zero row as no position, while _absent_walk reads only the account column and so counts any row as a position. For an account with a zero row on the prior day the exemption passes and the walk stops at the prior day, recording first_absent_day as null. Built as the order states; the two readings are left to the issuer.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py _absent_walk and _absent_evidence (block ABSENT-AT-SOURCE-B) (this order's uncommitted wiring, on base 476d0ed981)",
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py absent_at_source_exempt value rule (block ABSENT-AT-SOURCE-A) @476d0ed981904ef7708b21ecabbd7b98427a6694",
+        "data/assets/scripts/gold/investor_reporting/tests/test_absent_at_source_wiring.py test_walk_names_the_earliest_absent_day_and_the_bound"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-D2-W420-S3",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~420",
+    "surfaced_at": "2026-10-15T14:13:18Z",
+    "one_line": "The investor_reporting suite in this sparse worktree has 46 failing or erroring tests outside the IB-pr-577 grant: runner modules under data/inf, data/cot and runners_49f are absent, and some names the tests call are not defined at base.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Face: the sparse checkout adds the directories the import chain of the touched files needs, and the existing tests named in the paths block pass.",
+    "world_is": "The named existing tests pass (test_holdings_publish_gate, test_absent_at_source_exemption, test_holdings_bypass_one_date) and the infra publication suite passes. The other failures raise identity-runner absence (runner_common under data/inf, data/cot and runners_49f is not in the sparse set) or call names base 476d0ed981 does not define (holdings_snapshot has no cusip_key; classify_security takes no security_id). Not fixed here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest run of data/assets/scripts/gold/investor_reporting/tests in the worktree (this order's uncommitted wiring, on base 476d0ed981): 38 failed and 8 errors, the listed causes above",
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py @476d0ed981904ef7708b21ecabbd7b98427a6694 defines no cusip_key (grep count 0)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-D2-W423-S1",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~423",
+    "surfaced_at": "2026-10-15T14:54:02Z",
+    "one_line": "The order fixes the record counter functions_invoked at 0, but the READ-ONLY run calls the producer's read path (_frame_for, _split_ratios_for_day, identifier, PartitionCache.get); the counter is recorded 0 with its write-surface meaning stated in the notes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Face: the record carries the six counters functions_invoked, sign_ins_made, aws_writes_made, rows_written, figures_written and vendor_requests_sent, all 0, for a run that reads and writes nothing.",
+    "world_is": "The run made 94 _frame_for calls (47 split days, two arms) on one shared cache and invoked no write-surface function: emit_day, stream_to_parquet, put_object and land were never called. The order does not say whether functions_invoked counts read-path calls; on that reading it would be non-zero.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~423/ib218_2_split_delta.py run of 47 days, two arms: 94 _frame_for calls, cache 286 hit(s) and 184 miss(es) (scratchpad run log)",
+        "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py@28fa4f96cf958253b0f448e553101b2a964b91fa: emit_day is the module's only writer (put_object and stream_to_parquet); the harness does not call it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-D2-W423-S2",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~423",
+    "surfaced_at": "2026-10-15T14:54:02Z",
+    "one_line": "The CTO ruling's 920 account-days changed on 2026-04-21 does not reproduce: the producer's own two-arm run changes 985 account-days against 985 that hold a split security at t-1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P2",
+    "spec_asserts": "Ruling @9913bf3ed4 and the TO face: 2026-04-21 carries 920 account-days affected by the 49 Financial split adjustment, to be printed beside this run's count.",
+    "world_is": "This run's per_day entry for 2026-04-21 reads account_days_changed 985 and account_days_holding_a_split_security 985 (3 securities adjusted, 2 ratio-absent). The READ IB-pr-572 also counted 985 accounts on that day. Neither read reproduces 920, and the record does not carry the basis of the 920.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~423/IB218-2_split_delta.json per_day entry for 2026-04-21 (counts only)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~415/IB211-1_split_adjust_read.json statement: 985 distinct accounts on 2026-04-21, the ruling states 920, not reproduced"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-D2-W423-S3",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~423",
+    "surfaced_at": "2026-10-15T14:54:02Z",
+    "one_line": "Over the 47 split days, 1,293 account-days hold a t-1 position on a split security but only 1,291 change under the adjustment; the READ's 1,291 matches the changed count, not the holding count.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "READ IB211-1 delta_projection 49financial 1291 is the count of distinct (account, day) pairs that held a split security at t-1 on the 47 split days.",
+    "world_is": "The producer's own run counts 1293 account-days with a t-1 row on a split security (identifier chain) and 1291 changed between the arms. The per-day guard (changed not above holding) holds on all 47 days. The two holding account-days that do not change, on 2026-05-08 and 2026-07-02, are not read further.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~423/IB218-2_split_delta.json totals and per_day (counts only)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~415/IB211-1_split_adjust_read.json delta_projection.49financial = 1291"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_BCKEND-D2-S202 -- Dispositions on workers 420 and 421 and the close of ~PH round 1; the exemption is wired live with its listing and the 49 Financial split adjustment is built, both at HEAD only
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S202",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T14:36:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 420's rows (D2-W420-S1 to S3) and worker 421's rows (D2-W421-S1 to S4) and the close of ~PH round 1: the absent_at_source exemption is wired live with its visible listing (IB-pr-577) and the 49 Financial split adjustment is built (IB-pr-578), both LOCAL at HEAD and neither released; the prior-day objects the exemption reads are not in the manifest's source objects.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merges 07f60f52f3 (IB-pr-578) and 95ca50c91e (IB-pr-577); flips b0f73760b5 (578) and the worker's flip carried by the merge (577); both proof instances read VALID (rc=0) in the main tree; round-close-check --project IRPT_BCKEND --round 1 --workstream ~PH reads verdict=MAY-CLOSE (2 orders, judgment 0)",
+      "criteria re-run in the workers' trees by me: IB216-1 AC1 96 passed, AC2 7 blocks removed, AC3 PASS; IB216-2 AC1 73 passed, AC2 7 blocks removed, AC3 PASS",
+      "main tree after the drain: pytest over the investor_reporting tests and the holdings lambda tests gives 639 passed and 21 failed; the SAME 21 fail at the pre-round base 476d0ed981 in a full checkout (cusip fallback, multi_asset enum, narrowed, rearm trigger, cash rule, snapshot enum), so none comes from this round"
+    ]
+  },
+  "spec_asserts": "My IB-pr-577 and IB-pr-578 orders; the CTO msgs 8311 (the exemption wired only together with the visible listing) and the ruling @9913bf3ed4.",
+  "world_is": "DISPOSITIONS. D2-W420-S3 RESOLVED (the 46 failures were the sparse worktree; in the main tree the 21 failures are identical at base). D2-W420-S2 INERT, recorded (the first-absent-day walk counts any row of the lost account while the exemption counts zero as absent, so first_absent_day can be null and the words then use the prior trading day). D2-W420-S1 stays ARMED, owner me: run_firm freezes the source receipts before the gate, so the prior-day partitions the exemption reads are not in the manifest source objects; the manifest entry carries the dates but not those object keys; it goes into the never-widen pair as a stated limit unless the CTO asks for the keys. D2-W421-S1 RESOLVED (AMENDMENT 1 @7c8acc5500), S2 RESOLVED (identifier chain, with a test), S3 RESOLVED (ticker_symbol is a column of the 49 Financial transactions partition: read by me today on one partition), S4 RESOLVED (check r216 amended @9a6cf90e04: the order file joins the allowed list). Not released: the changed gate and the new producer reach the firms only by an apply under a never-widen pair after a producer dry run (the exemption ALONE per firm, and the split adjustment before and after)."
+}
+```

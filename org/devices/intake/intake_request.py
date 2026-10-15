@@ -196,7 +196,8 @@ def cmd_downloads(a):
                 return refuse("fetch record unreadable: %s (%s)" % (f, exc))
             if str(rec.get("at") or "")[:10].replace("-", "") != a.day:
                 continue
-            if "device" not in rec:
+            if not rec.get("device"):
+                # no device key (written before the key existed) or a null device: never guessed to be the asking box
                 unattributed += 1
                 continue
             if rec["device"] != a.device:
@@ -204,9 +205,10 @@ def cmd_downloads(a):
             files += 1
             requests += len(rec.get("requests") or [])
     if unattributed:
-        print("NOTE: %d fetch record(s) on day %s carry no device field and are not counted"
+        print("NOTE: %d fetch record(s) on day %s carry no device and are not counted for any device"
               % (unattributed, a.day), file=sys.stderr)
-    print("DOWNLOADS-TODAY device=%s day=%s requests=%d files=%d" % (a.device, a.day, requests, files))
+    print("DOWNLOADS-TODAY device=%s day=%s requests=%d files=%d unattributed=%d"
+          % (a.device, a.day, requests, files, unattributed))
     return 0
 
 

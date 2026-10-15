@@ -269,3 +269,21 @@ The CTO's decision C (msg 8167) ends with "Cut the build cell and the packet": t
 | cell id | owner |
 |---|---|
 | DB-c-20 | 0.7.0_AE_CloudOps~DB2 |
+
+## 13. ROUND 126, WORKSTREAM B-CW (2026-10-15 ~14:3xZ, issuer 2.0.0_SA_COO~C2, on the CTO's analysis answering rounds 117 to 125, msg 8325 @46345ab631 section 3: ONE cell, the Cottonwood FWD-1 trace)
+
+The CTO's ruling 2: a read-only trace from Black Diamond silver to the Cottonwood gold (`holdings_performance_daily`, `account_dim`) to the reporting-gold build, which takes the NEWEST `account_dim` partition; it reads whether the next reporting-gold run builds Cottonwood households from the 2026-10-14 partition and what that run's Cottonwood output is (counts, the absent kinds in words); no write, no manual invoke. Ruling 1's condition (re-run the naming gate on the LANDED Cottonwood source-map entries and record the PASS) is the issuer's act and is recorded in this round's drain-end packet; ruling 6: the checker states its base as the branch point and scopes its diff to the worker's own commits (done in `p126`).
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-21` | The Cottonwood FWD-1 TRACE: silver and gold counts, the `account_dim` household count and the account crosswalk to the holdings gold, the reporting-gold build's households source and next-run partition, whether the build is scheduled for Cottonwood, its Cottonwood output LIST, the four absent kinds in words, and a verdict per hop | FWD-1, FWD-2 | LOCAL (a record; read-only AWS calls) | none | C-P |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The only execution allowed is the reader's own `households()` called through a read-only reader class: it is what the build calls, and it writes nothing. (b) The checker recounts the silver, gold, household and crosswalk figures from a fresh S3 read, so the record cannot disagree with the plane; the counting rules are in the order. (c) A hop that does not hold is a finding with words, never a repair; any repair is a later round by the CTO's word.
+
+**fanout:** 1 of 1 chains, cap 8, reason: a single read cell. Worker `0.9.0_WK_IRPT_DASHBD~413`.
+
+## Cells (round 126)
+
+| cell id | owner |
+|---|---|
+| DB-c-21 | 0.9.0_WK_IRPT_DASHBD~413 |

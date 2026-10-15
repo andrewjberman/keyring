@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T142001Z-b11c",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "0.0.0_AB_MSTR~Z",
+ "subject": "NFRA_CTLPLN FWD-21: read site Z broker for asks before the 23:32Z respawns, report count and paths",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD21_SITEZ_BROKER_READ.md",
+ "opened_at": "2026-10-15T14:20:01Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-15T14:23:27Z",
+  "bus_message_id": "206b3e2c-48ca-467a-9d7d-ea79236353f5"
+ },
+ "ack": {
+  "at": "2026-10-15T14:47:43Z",
+  "by": "0.0.0_AB_MSTR~Z",
+  "bus_message_id": "5262b66c-a7e0-4e8e-bd3c-b9e7551ff9e9"
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

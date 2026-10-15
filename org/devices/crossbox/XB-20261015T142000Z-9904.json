@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T142000Z-9904",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell1",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "1.0.0_SA_CTO~DELL1",
+ "subject": "NFRA_CTLPLN package journey: name ONE package a real dell1 lane needs (or say none)",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_DELL1_NAME_ONE_PACKAGE.md",
+ "opened_at": "2026-10-15T14:20:00Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-15T14:23:13Z",
+  "bus_message_id": "13c7714b-6e7e-44d2-a4de-c11bd7662483"
+ },
+ "ack": {
+  "at": "2026-10-15T14:33:44Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": "b66567db-4673-4f8e-b42b-f5b9c272e9d1"
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": "2026-10-15T14:40:31Z",
+  "to_by": "0.0.0_AB_MSTR~DELL1"
+ }
+}

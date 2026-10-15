@@ -1247,3 +1247,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_DEVPLN-S9 -- portal-merge-forward.sh has no path for a feature whose earlier approved copy is already on DEV
+
+```json
+{
+  "id": "NFRA_DEVPLN-S9",
+  "project": "NFRA_DEVPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-15T14:43:01Z",
+  "one_line": "A candidate whose earlier approved copy already sits on DEV cannot land: portal-merge-forward.sh refuses the candidate as 'conflict', and the approval tool refuses the DEV-based resolution branch as 'dev-overlap' (22 commits). MDPF_CANON round 9 passed only by a dell1 CTO waiver.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (NFRA_DEVPLN; the tool is laptop-owned)",
+  "spec_asserts": "CLAUDE.md Portal: DEV is written only by portal-merge-forward.sh on an approved row; every approved candidate has a supported path to DEV.",
+  "world_is": "The dell1 global-trend candidate (rows f411, c397) reached DEV only through a CTO waiver @f93e2f6bf8. Neither tool has a supported path for a re-approved feature that DEV already holds in an earlier, declined copy, so every such case needs a waiver.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reported by 1.0.0_SA_CTO~DELL1 msg 6040, relayed by 0.0.0_AB_MSTR msg 109427",
+      "org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round9.md @ff1e47f079 section 3 item (e)",
+      "open-calls laptop-cluster read: dell1-20261015T014350Z-c397 purpose names 'portal-merge-forward refused the approved branch with a conflict because DEV holds the earlier declined copy of the same feature'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

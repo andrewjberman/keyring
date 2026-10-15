@@ -4194,3 +4194,54 @@ Check IB215-1 (`deliverables/2.0.0_SA_COO~P2/checks/r215/p215_cells.py`), dry-ru
 | `IB-pr-576` | BUILD closed_at_source_exempt, the gate's provider argument and the manifest record, with tests and a difference control | FWD-21 | LOCAL | none | PG1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one product file; one worker (slot ~419) starts now.
+
+## 212. ROUND 1, WORKSTREAM ~PH (the absent_at_source exemption goes live with its visible listing; the split-adjusted holdings price return for 49 Financial; 2026-10-15 ~14:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msgs 8284, 8290, 8302, 8311 and the ruling @9913bf3ed4)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). Two cells with disjoint write surfaces. IB-pr-576 built the exemption inert; worker 419's rows W419-S1 and S2 (disposition row D2-S201) named what was left. The CTO ruled (msg 8311, CVO v119) that the exemption is wired into `run_firm` ONLY together with the visible listing of the account (kept in the served snapshot, "Not reported by the custodian since <date>", no stale value as current) in ONE change, and that every remaining "closed" name becomes `absent_at_source`. The agent read of the code found that the snapshot has no household node (a household is a directory entry), so the listing is a fresh zero-value ACCOUNT node appended after the gate with the snapshot's scope and count bookkeeping brought in line; the published manifest is written by `publication.py` (a path under infra/, so the cell's class is WORLD although nothing is deployed). The second cell builds the split adjustment of the holdings price return for the 49 Financial channel from the READ IB-pr-572 (ratio = the median over accounts without other activity, clean to 0.5 percent, else SPLIT_RATIO_ABSENT and not graded). Served DELTA and the never-widen pairs are later acts from producer dry runs, not these cells.
+
+Checks IB216-1 and IB216-2 (`deliverables/2.0.0_SA_COO~P2/checks/r216/p216_cells.py`), dry-run at the base: AC1 to AC3 of both cells all FAIL; the control (`control216.py`) passes all six positives and fourteen negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-577` | WIRE the evidence loaders and the listing with the exemption, the published manifest fact, the rename of the closed names | FWD-21 | WORLD | none | PH1-a |
+| `IB-pr-578` | BUILD the split-adjusted holdings price return for 49 Financial (declared split source, median ratio, SPLIT_RATIO_ABSENT, manifest codes) | FWD-21 | LOCAL | none | PH2-a |
+
+fanout: 2 of 2 chains, cap 8, reason: two cells on disjoint files (holdings_snapshot.py and publication.py; holdings_performance.py and sources.json); workers slots ~420 and ~421 start now.
+
+## 213. ROUND 1, WORKSTREAM ~PI (the APPLY of the signed pair IB-pr-456 with its ADDENDUM 1, the `commentary_requested` release of irpt-ycharts-generate; 2026-10-15 ~14:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling @7f7acb0e42 and msg 8316)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). The pair IB-pr-456 is signed by both halves (the candidate `3+fMEJhQ8...` replaces `AHxuDf7h...`; pre-apply `5TRFZf6G...`, read live at ~14:2xZ). The apply waited on call f61b, Andrew's own PROD submission; Andrew tried the PROD Ticket Center on 2026-10-15 and the form cannot be submitted there (the model, ticker and firm lists do not load), so the CTO WITHDREW f61b (@7f7acb0e42, msg 8316): the BEFORE record is the applier's wrong-typed body refused as an unknown member on the live function, and one already-accepted request read by get-item before and after. Nothing waits on Andrew. Four COO seats (`~G2`, `~Y2`, `~T2` and this one) wait on the release. One cell, class WORLD, to the CloudOps seat `0.7.0_AE_CloudOps~IB2`, which holds the project's applies.
+
+Check IB217-1 (`deliverables/2.0.0_SA_COO~P2/checks/r217/p217_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control217.py`) passes all three and fourteen negatives plus the no-record case each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-579` | APPLY the signed pair IB-pr-456 and ADDENDUM 1: the four members to `irpt-ycharts-generate` by its Terraform path, the reworded BEFORE record, the after-read, the health proof | FWD-4 | WORLD | none | PI1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one function; the seat is a CloudOps seat, not a worker subagent.
+
+## 214. ROUND 1, WORKSTREAM ~PJ (the served DELTA of the two ~PH builds, measured by READ-ONLY dry runs; 2026-10-15 ~14:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8302 and the ruling @9913bf3ed4)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). ~PH r1 built, at HEAD only, the `absent_at_source` exemption wired live with its listing (IB-pr-577) and the 49 Financial split adjustment (IB-pr-578). Each reaches the firms only by an apply under a never-widen pair whose blast radius is a measured served DELTA. The CTO ruled (msg 8302, CVO v118) that the exemption's DELTA is measured ALONE: the same candidate with and without it, per firm. Two READ cells with disjoint outputs: IB-pr-580 builds each firm's candidate once from the live pinned inputs, gates it without and with the evidence provider on a deep copy, and compares node by node, then simulates the second fire; IB-pr-581 runs the producer's return over the 47 split days of the READ IB-pr-572 before and after the adjustment and counts the account-days moved. Both are read-only, counts only, SERVED. The never-widen pairs, the release pins and the applies are later acts.
+
+Checks IB218-1 and IB218-2 (`deliverables/2.0.0_SA_COO~P2/checks/r218/p218_cells.py`), dry-run at the base: AC1 to AC3 of both cells all FAIL; the control (`control218.py`) passes all six positives and fourteen negatives plus the no-record cases each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-580` | READ the exemption ALONE per firm: counts with and without, nodes added, no other node changed, the second fire | FWD-21 | SERVED | none | PJ1-a |
+| `IB-pr-581` | READ the split adjustment before and after over the 47 split days of 49 Financial | FWD-21 | SERVED | none | PJ2-a |
+
+fanout: 2 of 2 chains, cap 8, reason: two read-only cells with disjoint outputs; workers slots ~422 and ~423 start now.
+
+## 215. ROUND 1, WORKSTREAM ~PK (two small repairs the CTO named after ~PH r1: the receipts record the exemption's evidence reads; a split row with no key is counted, never skipped; 2026-10-15 ~15:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8359)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). The CTO's msg 8359 (CVO v120) says the two ~PH builds are correct and names the next round: the two dry-run DELTAs (already cut as ~PJ), two never-widen pairs (the exemption for both firms; the 49 Financial split), and two repairs, which are these cells. IB-pr-582 (W420-S1): `run_firm` freezes the source receipts before the gate, so the prior-day partitions the exemption's evidence readers read are not in `_source_objects` nor in the revision digest; the receipts are re-taken after the gate when the provider read anything. IB-pr-583 (W421-S2): a split row whose key chain (cusip, then ticker) is empty is dropped today; it is now counted (`unkeyed_split_rows`, `days_ratio_absent`) and the day says `SPLIT_RATIO_ABSENT` in its attrs and the manifest. Two LOCAL cells on disjoint files (holdings_snapshot.py; holdings_performance.py). The DELTA reads of ~PJ measure the HEAD before these repairs; the harness is committed and is re-run on the repaired HEAD before the pairs.
+
+Checks IB219-1 and IB219-2 (`deliverables/2.0.0_SA_COO~P2/checks/r219/p219_cells.py`), dry-run at the base: AC1 to AC3 of both cells all FAIL; the control (`control219.py`) passes all six positives and fourteen negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-582` | the source receipts record the absent_at_source evidence reads (re-taken after the gate when the provider read anything) | FWD-21 | LOCAL | none | PK1-a |
+| `IB-pr-583` | a split row with no key marks the day SPLIT_RATIO_ABSENT and is counted in the attrs and the manifest | FWD-21 | LOCAL | none | PK2-a |
+
+fanout: 2 of 2 chains, cap 8, reason: two cells on disjoint files; workers slots ~424 and ~425 start now.
