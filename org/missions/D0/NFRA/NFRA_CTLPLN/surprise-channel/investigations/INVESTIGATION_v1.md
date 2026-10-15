@@ -11768,3 +11768,132 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The reader sees only the worktree or HEAD copy of the audit log. In a worktree that lacks the latest audit rows the actor reads NONE-WRITTEN although the row exists in the main checkout. The reader cannot tell a missing row from an unsynced copy."
 }
 ```
+
+## NFRA_CTLPLN-W122-S1 -- the release refused on the stored check record, which named no signature; the release went through only after the checks were re-run with the CTO's check-8 file
+
+```json
+{
+  "id": "NFRA_CTLPLN-W122-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "surfaced_at": "2026-10-15T20:31:22Z",
+  "one_line": "intake_check.py release refused duckdb-1.5.0-cp314-cp314-win_amd64.whl with 'the check record does not read checked', because the 19:28 check record predates the CTO's signature and names no signature file; release succeeded only after check was re-run with --signed-by and re-recorded all eight checks as checked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/intake/intake_check.py release --batch intake-20261015-duckdb --file duckdb-1.5.0-cp314-cp314-win_amd64.whl at worktree ctlpln-122 (HEAD bbcec1c613), before any re-run: 'INTAKE-RELEASE REFUSED ... reason=the check record does not read checked' rc=1; holding folder still held the 13575130-byte wheel",
+      "the 19:28 record (commit 972d15271d, as cited in NFRA_CTLPLN-W119-S1): check 8 verdict failed, 'the signature file does not exist'; record verdict not_checked",
+      "python org/devices/intake/intake_check.py check --batch intake-20261015-duckdb --file duckdb-1.5.0-cp314-cp314-win_amd64.whl --approved-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md --signed-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md: c1-c8 all passed, verdict=checked, rc=0; the tool rewrote the record; committed at 6dfadc6c66",
+      "then release printed 'INTAKE-RELEASE ... released sha256=11ae50aaeda2145b50294ee0247e4f11fb9448b3cc3d2aea1cfc456637dfb977' rc=0 (commit 6dfadc6c66 carries the record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-al-4 BUILD step 1: release reads the CTO's signed check-8 file, because the check record names it; if release refuses, STOP and file a BLOCKING row; re-run the checks only if the tool says it must.",
+  "world_is": "The stored record named no signature, so the signed file alone did not release the wheel. The tool said it must re-run the checks (its refusal names the record, not the file), and the seat re-ran check with --approved-by and --signed-by, letting the tool re-record. No record was edited by hand. The seat read the re-run as the face's allowance, not as a BLOCKING refusal; the CTO and the issuer decide whether that reading stands."
+}
+```
+
+## NFRA_CTLPLN-W122-S2 -- the release folder holds the wheel and a delivery text beside it, so 'exactly the one file' is not literal; the --release test counts wheels only
+
+```json
+{
+  "id": "NFRA_CTLPLN-W122-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "surfaced_at": "2026-10-15T20:31:22Z",
+  "one_line": "intake_check.py release writes <name>.delivery.txt into C:/opal-intake/release/intake-20261015-duckdb/ beside the released wheel, so that folder holds two files, not the one file the order's wording describes; the --release flag counts wheels and prints the delivery text as a detail field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la C:/opal-intake/release/intake-20261015-duckdb/ after release (2026-10-15T16:19 local): duckdb-1.5.0-cp314-cp314-win_amd64.whl (13575130 bytes) and duckdb-1.5.0-cp314-cp314-win_amd64.whl.delivery.txt (1618 bytes)",
+      "python .tools/tests/test_round22_journey_record.py --release: 'JOURNEY-RELEASE released=1 check8=SIGNED file=duckdb-1.5.0-cp314-cp314-win_amd64.whl sha256=11ae50aaeda2 ok=True' with detail 'members=[wheel, delivery.txt] delivery_text_present=True'",
+      "intake_check.py release_ writes deliv = dest_dir / (file_name + '.delivery.txt') before the move (run_release, the open-write of the delivery text)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTal4-AC1 wording: the one checked wheel is released with check 8 signed and nothing else is in the release folder for this batch.",
+  "world_is": "The release folder holds the wheel and its tool-written delivery text. The delivery text is the tool's own companion file, not a second package. Nothing was removed from the folder. The --release test counts only the wheel and reports the delivery text as a detail field, so released=1 is a wheel count."
+}
+```
+
+## NFRA_CTLPLN-W122-S3 -- three folders the worker face names for reading were outside the worktree's sparse set; each was added with git sparse-checkout add
+
+```json
+{
+  "id": "NFRA_CTLPLN-W122-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "surfaced_at": "2026-10-15T20:31:22Z",
+  "one_line": "The sparse worktree cut by wk-provision.sh for CT-al-4 did not carry .claude/skills/tdrop, org/tier1_exec/1.0.0_SA_CTO/deliverables or org/tier2_senior/0.7.0_AE_CloudOps~CT1/deliverables, which the face names as reads; the first cat calls returned 'No such file or directory' and the folders were added with git sparse-checkout add.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at worktree ctlpln-122 before the add: .tools, infra/logic/registry, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards",
+      "cat .claude/skills/tdrop/SKILL.md and cat org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md both returned 'No such file or directory' from the worktree",
+      "git sparse-checkout add .claude/skills/tdrop org/tier1_exec/1.0.0_SA_CTO/deliverables org/tier2_senior/0.7.0_AE_CloudOps~CT1/deliverables org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~8 rc=0; the files then read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: the worktree is a sparse checkout that holds the paths of the order; if a command fails because a folder is missing, run git sparse-checkout add <folder>, retry, and name the folder.",
+  "world_is": "The three named read folders were not in the set wk-provision.sh cut, so the face's first reads failed. The face's own remedy was applied and it succeeded. The sparse-set change is local to this worktree and is not committed."
+}
+```
+
+## NFRA_CTLPLN-W122-S4 -- the existing --check flag reads ok=False on the released state, because its ok expression requires the pre-release state (check8=AWAITING and released=False)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W122-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "surfaced_at": "2026-10-15T20:31:22Z",
+  "one_line": "After the release, python .tools/tests/test_round22_journey_record.py --check prints 'JOURNEY-CHECK checks_run=7 failed=0 check8=SIGNED released=True ok=False' and exits 1, because its ok expression requires check8=AWAITING and released=False; the default run includes --check and so also exits 1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round22_journey_record.py --check (worktree ctlpln-122, commit b258c7a06b, released state): 'JOURNEY-CHECK checks_run=7 failed=0 check8=SIGNED released=True ok=False' rc=1",
+      "the cmd_check ok expression in .tools/tests/test_round22_journey_record.py: 'check8 == AWAITING' and 'not released' (both now false)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-al-4 extends the round-22 test and keeps its three flags; the three flags keep the round-22 journey meaning.",
+  "world_is": "The three flags were kept unchanged, as the face says. The --check flag's ok expression encodes the pre-release state, so it now reads ok=False by design of its own expression. The seat did not change that expression; whether the flag is retired or re-keyed is for the test's owner."
+}
+```
+
+## NFRA_CTLPLN-W122-S5 -- the existing --fetch flag reads ok=False after the release, because its ok expression needs a wheel still held in holding and a disk hash equal to the fetch record
+
+```json
+{
+  "id": "NFRA_CTLPLN-W122-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "surfaced_at": "2026-10-15T20:40:39Z",
+  "one_line": "After the release, python .tools/tests/test_round22_journey_record.py --fetch prints 'JOURNEY-FETCH wheels=0 file=NONE device=laptop sha256=- requests=4 ok=False' and exits 1, because its ok expression requires exactly one wheel in holding and a disk hash equal to the fetch record; the wheel has moved to release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round22_journey_record.py --fetch (worktree ctlpln-122, released state, after the state-aware --check edit): 'JOURNEY-FETCH wheels=0 file=NONE device=laptop sha256=- requests=4 ok=False' and 'JOURNEY-FETCH-DETAIL box=laptop fetch_record=True disk_matches_record=False cp312_present=False' rc=1",
+      "C:/opal-intake/holding/intake-20261015-duckdb/ is empty after release; the wheel is in C:/opal-intake/release/intake-20261015-duckdb/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round-22 test keeps its flags; the --fetch flag reads the held wheel as the fetch proof of the round.",
+  "world_is": "The --fetch flag encodes the pre-release state (one held wheel), as --check did (NFRA_CTLPLN-W122-S4). The ruling from 2.0.0_SA_COO~C covered --check only, so --fetch was left unchanged; the seat reports it and does not change the flag without a ruling."
+}
+```

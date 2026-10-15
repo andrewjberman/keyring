@@ -19219,3 +19219,54 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W195-S1 -- the order's trace-inputs premise (every element of the priced map reads exactly [prices]) does not hold for the layout's own elements: the BUILDER_ONLY title reads no series and the classified holdings elements read the classifier's input
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W195-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~195",
+  "surfaced_at": "2026-10-15T20:45:17Z",
+  "one_line": "The order's trace-inputs premise, that every element of the priced map reads exactly [prices], does not hold for the layout's own elements: the BUILDER_ONLY title reads no series and the classified holdings elements read the classifier's input.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-93 names test_each_benchmark_price_carries_its_source_and_the_trace_inputs_stay_clean and states that every element's inputs is exactly [prices], the benchmark and risk-free series entering as plain lists so that no element gains a name it did not use.",
+  "world_is": "In a priced produce run the BUILDER_ONLY title element traces inputs [] and the opal.classified.holdings element traces inputs ['etf-classifications'], read by the CLASSIFY_METHODS elements that _opal_map adds, not by the price stage. The five OWN_SERIES elements trace ['prices'] as the order specifies. The first run of the test failed on opal.classified.holdings for this reason. The committed assertion scopes the exact-match check to the five OWN_SERIES elements, asserts the title reads [], and asserts that no element names benchmark, risk_free, SPY or BIL.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest of infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_benchmark.py on its first run, before the assertion was scoped: AssertionError opal.classified.holdings, ['etf-classifications'] == ['prices']",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_benchmark.py@a5603c58fd7517f39662e4a12073f48a1e4a5591 (test_each_benchmark_price_carries_its_source_and_the_trace_inputs_stay_clean, the scoped assertion)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_producer.py@a5603c58fd7517f39662e4a12073f48a1e4a5591 (_opal_map adds the classified elements; _price_stage gives the series elements the kept prices input)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W195-S2 -- the commit gate's client-data check could not check commit a5603c58fd: the hashed account-id list is absent on this device, the same standing condition recorded for commit 65a6fa6170 at IRPT_ANLREQ-D2-W190-S5
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W195-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~195",
+  "surfaced_at": "2026-10-15T20:45:17Z",
+  "one_line": "The commit gate's client-data check could not check commit a5603c58fd: the hashed account-id list is absent on this device, the same standing condition recorded for commit 65a6fa6170 at IRPT_ANLREQ-D2-W190-S5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "safe-commit runs the client-data check on the staged set of every commit, so a committed set is checked for client account identifiers.",
+  "world_is": "On this device the hashed account-id list is absent at C:/Users/Test/.opal/account_id_hashes.txt. The check printed WARN and reported that commit a5603c58fd (three AR-g-93 files: opal_producer.py, the new benchmark test and the prices test) was NOT checked for client account ids. This worker did not scan the staged diff for account identifiers.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for a5603c58fd: WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt (absent is not empty; this commit was NOT checked)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md: IRPT_ANLREQ-D2-W190-S5 records the same absent list for commit 65a6fa6170"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

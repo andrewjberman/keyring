@@ -18524,3 +18524,81 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S96 -- OBSERVATION: TO-DB-b-272 the handler chains the whole backfill from one {} event, the import smoke is partial, the stamp wrapper writes CHANGELOG.json
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S96",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T21:00:00Z",
+  "one_line": "TO-DB-b-272 odd finds, none blocking now: (1) the report-build handler chains every owed day from ONE {} event (chain_next recomputes owed_days from the newest landed day on each hop), 68 chained invocations to 2026-10-14 rather than the ten the packet described, so the original step 7 had no pause for its per-event after-read or stops; (2) the order's import smoke (import handler) only proves the top-level imports: removing a lazily imported adapter does not fail it, removing filled_report_values.py does; (3) the stamp wrapper again rewrote CHANGELOG.json outside the grant",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "handler.py lines 383-386 (nxt = the next owed day after the one built; chain_next self-invokes it asynchronously) and owed_days (line 134, capped at MAX_DAYS_PER_FIRE = 10 per call, recomputed from landed[-1] on each hop); a simulation with the bundle's own owed_days and trading_calendar gave 68 invocations in one chain from {}, first 2026-07-10, last 2026-10-14, 65 landed and 3 source-absent; the applier held step 7 before any backfill event (msg 8613), the issuer and the CTO amended the order to explicit {day} events (Amendment 1 @4f36450137), run as 65 events with every chain.invoked false",
+      "import smoke on the extracted bundle: rc 0 with all 19 members; rc 0 with data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_report_reader.py removed (imported inside try blocks); rc 1 (ModuleNotFoundError) with filled_report_values.py removed (top-level import, handler.py line 35)",
+      "git diff after record-terraform-deploy.sh --function: lambda-source-map.json gained last_deployed_commit, last_deployed_at, recorded_by on the one entry; infra/aws/terraform/investor-reporting/CHANGELOG.json gained an entry; the commit step was refused by the naming gate; CHANGELOG.json was restored and only the source-map stamp kept (bdc0f75e96)"
+    ]
+  },
+  "spec_asserts": "The packet's section on the backfill and the order's step 7: a `{}` event builds the oldest owed day and chains up to nine further days, one event at a time with an after-read each; the import smoke proves the bundle is importable.",
+  "world_is": "A `{}` event chains the whole backfill unpaused (the cap of ten bounds the owed list per call, not the chain), so per-event stops cannot act mid-chain; any event that names no day chains every day owed since the newest landed day, so a scheduled fire whose input names no day (its input was not read here) would chain as many days as are owed then (not measured here). The import smoke is a partial check. The explicit-day route removes the first at no cost; the second is carried by the criteria's live reads. Counts, dates and words only."
+}
+```
+
+## IRPT_DASHBD-D2-W222-S1 -- the earlier scheduled-fire test pinned the exact chain payload; it now reads the day key only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W222-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~222",
+  "surfaced_at": "2026-10-15T20:32:05Z",
+  "one_line": "The scheduled-fire test asserted the self-invoke payload as exactly {day}; the chain payload now also carries chain_left, so that assertion reads the day key only, as the order's refusal clause directs, and a new test pins the full payload.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-274, refusal clause: if an earlier test pins the exact chain payload {\"day\": <next>}, change it to read the day key only and say so in a row.",
+  "world_is": "The earlier test test_the_scheduled_fire_builds_the_oldest_owed_day_and_chains_the_next_once compared the one self-invoke payload with == {day: 2026-07-13}. The budgeted payload is {day, chain_left: 8}, so that comparison could not hold. The test now reads the day key and the function name, invocation type and count; the full payload is pinned by the new test test_the_budget_payload_is_the_day_and_chain_left_one_less.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/tests/test_reporting_gold_cot.py test_the_scheduled_fire_builds_the_oldest_owed_day_and_chains_the_next_once (base 64ae091211)",
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py chain_next payload (base 64ae091211)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Changed in the same commit as the handler edit. The day key and the single Event invoke are still asserted; the chain_left key is asserted in the new test."
+}
+```
+
+## IRPT_DASHBD-D2-W222-S2 -- a budget of zero with no context ARN keeps the present chain form; the order does not say which rule governs that case
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W222-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~222",
+  "surfaced_at": "2026-10-15T20:32:05Z",
+  "one_line": "The order states the capped chain form for a budget of zero with an owed day, and the present form otherwise; it does not settle a budget of zero with an owed day and no context ARN. chain_next returns the present form there, because no chain was possible.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-274, step 2 chain: when chain_left is 0 the day is built and nothing is invoked; the returned chain states {invoked False, day <next owed day or None>, capped True} when a next owed day exists and the budget ended it, and keeps its present form otherwise.",
+  "world_is": "The order does not say whether a missing invoked_function_arn with chain_left 0 and an owed day counts as the budget ending the chain. chain_next tests the owed day and the ARN before the budget, so that case returns the present form {invoked False, day} with no capped key. The tests cover a budget of zero with an ARN (capped form) and with nothing owed (present form); the no-ARN arm with a budget of zero is not tested.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py chain_next, the order of its three tests (base 64ae091211)",
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/tests/test_reporting_gold_cot.py test_chain_left_zero_builds_the_day_and_chains_nothing (base 64ae091211)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reading taken: a missing ARN means no chain was possible, so the budget did not end it. The issuer may rule the other reading; the change is one test-order line in chain_next."
+}
+```

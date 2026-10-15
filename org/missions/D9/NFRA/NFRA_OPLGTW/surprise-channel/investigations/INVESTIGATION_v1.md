@@ -17796,3 +17796,180 @@ name the one known failure instead of silently inheriting it.
   "notes": "Measured, not ruled. The issuer may align the order's section 5 name with the gate convention on the next cut."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T18:14:14Z",
+  "one_line": "The catalog mechanism the cell names reaches none of the Orion or Eclipse silver rows: runtime_catalog() indexes 48 portal_datasets artifacts, and the nine silver_datasets rows for these tables carry no channel artifact key, so every ctx.prefix call for them is no_catalog_row with zero reads.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:2479 (silver_datasets section start) and :6823 (entity opal_data_assets_silver_orion_inflection_fact_positions, with prefix and key_template fields and no artifact key) @fc20cfc60a",
+      "READ infra/aws/ec2/opal-gateway/app/graphql_plumbing/catalog_gate.py:57-74 @b56fd6ef9d: load_catalog indexes only the channels[*].artifacts rows, by row key",
+      "RUN scratch probe .scratch/cat_probe2.py in this worktree (runtime_catalog() from app/integrations/portal_index/integration.py): rows_by_key holds 48 rows, all portal json keys (first: json/benchmarks/model_portfolio_timeseries.json); none carries an orion or eclipse entity",
+      "READ infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py:58 @b56fd6ef9d: silver_datasets rows are documented as live-queried datasets with no S3 key",
+      "COUNT DATA_CATALOG.yaml silver_datasets section (lines 2479-18029): 221 entity rows, of which 9 are opal_data_assets_silver_orion or _eclipse (awk denominator 221)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face section 1: every bucket and key template is read at call time from the table's DATA_CATALOG row through app/integrations/portal_index/integration.py runtime_catalog() (catalog v0.5 is live); a row not found or retired is an absent_reason with zero reads.",
+  "world_is": "runtime_catalog() serves only the portal_datasets artifacts (48 keys). The Orion and Eclipse silver rows are not indexed by catalog_gate, and no gateway module reads silver_datasets for a key. ctx.prefix for any Orion or Eclipse table therefore returns no_catalog_row with zero reads, so AC2 (envelope on a real answer, independent count equal) cannot be met as written. AC1 is unaffected: its tests fake the catalog.",
+  "notes": "Measured, not dispositioned. The adapters take every prefix only through ctx.prefix, so the served index for these nine rows (or a named key mechanism) is the issuer's to add; this cell did not write DATA_CATALOG.yaml and did not read the silver through a second catalog path."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T18:14:14Z",
+  "one_line": "The named test directory is absent at the cut: infra/aws/ec2/opal-gateway/tests/ does not exist, and the gateway test file sits under app/tests/. The AC1 harness runs tests/test_og_cl3.py from the gateway directory, so the file is created at the named path and no existing test is moved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LS infra/aws/ec2/opal-gateway @b56fd6ef9d: entries ACCESS_LAYER.md, INTEGRATION_FRAMEWORK.md, IT_REQUEST.md, README.md, app/, audit.jsonl, deploy-to-ec2.sh, dev_smoke.py, identity_tool_allowlist.txt, make_diagram.py, requirements.txt; no tests entry",
+      "LS infra/aws/ec2/opal-gateway/app/tests @b56fd6ef9d: one entry (test_rivalfunds_view.py)",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/_root.sh (pytest_named): runs python -m pytest tests/<file> from infra/aws/ec2/opal-gateway and returns absent when the file is not there"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face section 3 names infra/aws/ec2/opal-gateway/tests/test_og_cl3.py as a write path, and the cell's tests sit beside the other gateway suites.",
+  "world_is": "At HEAD b56fd6ef9d the gateway carries no tests/ directory; its only test tree is app/tests/. The directory and the file are created by this cell's commit; no existing file is moved or edited.",
+  "notes": "Measured, not dispositioned. The order's path is kept because AC1's harness requires it; whether gateway suites belong under app/tests/ is a question for the issuer."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T18:14:14Z",
+  "one_line": "The contract's per-vendor bullets for client_get_transactions and client_get_fees name no Eclipse bullet, so the Eclipse adapter refuses both with the contract's own codes (vendor_no_transactions, no_fee_source) and reads nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~83/G2_CLIENT_TOOLS_CONTRACT.md lines 82-96 (transactions bullets: Black Diamond, Cottonwood, Orion, Schwab, Commonwealth, SmartX and Tax SMA; no Eclipse) and lines 120-134 (fees bullets: no Eclipse)",
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2b_orion_eclipse.md section (b) and (e): the nine Eclipse silver tables carry no transactions or fees; the Eclipse _history bronze (auditlog_model, auditlog_portfolio, trade_instances, closed_trades) is not silver and is not contracted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face section 1 and the protocol: a function a vendor does not serve raises AdapterRefusal with the contract's refusal code, never an empty body; the contract's per-vendor bullets name Orion and Eclipse.",
+  "world_is": "The contract has no Eclipse bullet under get_transactions or get_fees, and no Eclipse silver table carries account transactions or fees. The adapter refuses vendor_no_transactions and no_fee_source, both contract codes, with zero reads.",
+  "notes": "Measured, not dispositioned. The refusal is the contract's code applied by analogy; a bullet naming Eclipse would settle it."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T18:14:14Z",
+  "one_line": "The Eclipse allocation by account has no permitted account-to-portfolio bridge: fact_portfolios_full is keyed by portfolio id with no account column, and the only bridge, fact_portfolios_simple, is stated as not read for allocation. The adapter refuses the account path with account_not_resolved and serves the model path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_CLIENT_TOOLS_CONTRACT.md lines 108-112 (Eclipse allocation: fact_portfolios_full, fact_models, fact_model_composition; fact_portfolios_simple is stalled at 2 td and is not read)",
+      "READ G2b_orion_eclipse.md section (d): fact_portfolios_full fork_keys.account reads 'absent: portfolio grain; reach the account through fact_portfolios_simple.id -> accountNumber'; fact_portfolios_simple carries accountId and accountNumber (753 of 753 match)",
+      "READ G2b_orion_eclipse.md section (c): fact_models and fact_model_composition share only 1 id, so the model path needs a union, not a join"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract get_allocation for Eclipse reads fact_portfolios_full for drift, cash need, model and status, and takes a resolved account_ref or a model key.",
+  "world_is": "No Eclipse account reaches a portfolio under the contract's permitted reads: the account bridge is the one table the contract excludes. The adapter refuses the account path with account_not_resolved (detail names the missing bridge) and serves the model-grain path, which reads fact_models and fact_model_composition as the contract names, with a model never borrowed across firms.",
+  "notes": "Measured, not dispositioned. An account-level Eclipse allocation needs the contract to permit the bridge (or a bridge built for it); the adapter does not read the excluded table to get one."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T18:14:14Z",
+  "one_line": "The adapters use four refusal codes and one answer key that the contract and the protocol do not name: firm_outside_vendor_fence, no_partition_at_or_before, no_account_match and window_required, plus an _absent_reason key for an answer that carries absent_reason; Eclipse get_allocation takes a model keyword the protocol signature lacks.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_CLIENT_TOOLS_CONTRACT.md refusal lists (lines 60, 80, 98, 118, 134): firm_not_canonical covers only the three canonical values; no code names a canonical firm outside one vendor's FIRMS, a missing partition, a zero-candidate resolve or a missing window",
+      "READ G2_ADAPTER_PROTOCOL.md lines 16-20: the protocol signatures carry no model keyword and no _absent_reason key; its envelope keys are the _as_of, _partition_date, _source_keys, _denominator, _platform_label, _platform_label_source and _label_claim set"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract refusal arms are the only codes an adapter raises for a refused answer, and the protocol signatures are the seam every adapter is built against.",
+  "world_is": "The Orion and Eclipse modules raise firm_outside_vendor_fence for a canonical firm outside the vendor's FIRMS, no_partition_at_or_before for an as_of before the first partition, no_account_match for a resolve with zero candidates, and window_required for a missing date; an answer with no model assignment returns its body with _absent_reason no_model_assignment. Eclipse get_allocation accepts model=None in addition to the protocol arguments.",
+  "notes": "Measured, not dispositioned. The codes are new names, not new sources, and the keyword is additive; the issuer decides whether the contract names them before the hookup."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T14:40:00Z",
+  "one_line": "Under the A1 ruling the probe resolves prefixes from the DATA_CATALOG.yaml rows whose key_template names the table, and on that path the Orion probe answers from the real silver (AC2 PASS). The gateway runtime index still does not carry these silver rows, so the core Ctx (OG-cl-1) cannot take its prefixes from runtime_catalog() for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml key_template and bucket fields at lines 6268, 6344, 6911 and 7001 (eclipse fact_model_composition and fact_models, orion fact_positions and fact_transactions) @fc20cfc60a: the rows exist in the silver_datasets section",
+      "RUN org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~105/probe_orion.py before the ruling: refusal no_catalog_row with zero reads, because runtime_catalog() rows_by_key holds 48 portal artifacts (row NFRA_OPLGTW-Z-W105-S1)",
+      "RUN checks/cl3.AC2.sh after the ruling (ProbeCtx prefixes from the DATA_CATALOG.yaml key_template rows): probe orion: envelope_ok True; independent_count_equal True; fence_negative_arm True; account_numbers_printed 0; RESULT PASS, rc 0",
+      "EDIT app/client_adapter_orion.py and app/client_adapter_eclipse.py: the canonical firm outside FIRMS and the no-segment case raise firm_not_served (the A1 ruling's code); this row supersedes the firm_outside_vendor_fence name in row NFRA_OPLGTW-Z-W105-S5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 ruling (issuer, 2026-10-15): the catalog has the Orion and Eclipse rows, and the probe builds its own ProbeCtx from the DATA_CATALOG rows; a canonical firm outside FIRMS is refused firm_not_served with zero reads.",
+  "world_is": "The rows exist in DATA_CATALOG.yaml and the probe resolves them there, and the probe's reads of the real silver answer. The runtime index the gateway serves keys from (catalog_gate.load_catalog, channels artifacts) indexes none of them, so a core Ctx built on runtime_catalog() would still refuse every Orion and Eclipse table with no_catalog_row. Row NFRA_OPLGTW-Z-W105-S1 stays ARMED for the core; this cell did not disarm it, because its disarm owner is the issuer.",
+  "notes": "Measured, not dispositioned. Both mechanisms are true at the same commit; which one OG-cl-1's core uses is the issuer's decision. The probe's negative arm names another canonical firm and reads zero keys."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T15:10:00Z",
+  "one_line": "The order names the instance NFRA_OPLGTW.TO-OG-cl-3.client_orion.proof_of_spec.json, but the to-pipeline gate resolves an instance by the order file stem (NFRA_OPLGTW.TO-OG-cl-3.client-orion-eclipse.proof_of_spec.json, the sibling convention). The flip was refused; the instance is renamed to the stem name in this cell's deliverables folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ .tools/to-pipeline-gate.py:3178-3193 @commit c8c31dce34 (_proof_instance_candidates): the candidate names are the order stem plus .proof_of_spec.json or _PROOF_OF_SPEC.json, unless the staged order's own proof_of_spec block names an instance",
+      "RUN safe-commit of the status flip with the instance named client_orion: refused, to-pipeline-gate REFUSED 'NO proof-of-spec instance was found beside it' (.scratch/commit_b.log, line 16)",
+      "READ deliverables/0.9.0_WK_NFRA_OPLGTW~83/NFRA_OPLGTW.TO-OG-cl-0.client-roles-and-contract.proof_of_spec.json: the sibling instance carries the full stem in its name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 5: write the proof instance at W/NFRA_OPLGTW.TO-OG-cl-3.client_orion.proof_of_spec.json and validate it with the checker against the governing order.",
+  "world_is": "The checker validates the instance under any name, but the pipeline flip gate finds an instance only under the order stem name or through a proof block in the staged order, and the order's proof block names no instance. The instance is therefore saved as NFRA_OPLGTW.TO-OG-cl-3.client-orion-eclipse.proof_of_spec.json, and the order's stated name is unused.",
+  "notes": "Measured, not dispositioned. The order text and the gate disagree on the name; the issuer decides whether the order's name or the gate's convention stands. The instance content is unchanged apart from the surprise list."
+}
+```
