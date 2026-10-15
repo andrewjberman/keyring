@@ -3935,3 +3935,16 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r198/p198_cells.py`, dry-run at the b
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one document; every record it reads is committed, so one worker (slot ~393) starts now.
 
+## 191. ROUND 199, WORKSTREAM ~P (2026-10-15 ~02:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's packet-v3 half (msg 7943, "cut the per-firm apply") and ruling msg 7914 (the Orion re-pull is IRPT_BCKEND's))
+
+Round 198 closed MAY-CLOSE (close commit 9bf42e367d). Both halves of packet v3 are signed at sha256 94eca88e9071 (COO half @9bf42e367d, CTO half @513fad5add). Two chains, disjoint write surfaces: (A) the per-firm apply of the holdings-producer release (WORLD, to the CloudOps seat 0.7.0_AE_CloudOps~IB2: three mints, each from its firm's pin, between fires, then the first fire's after-read); (B) the READ the Orion Inflection re-pull needs (SERVED, a worker): the two absent days 2026-07-01 and 2026-09-28, the pull path, why the scheduled pull skipped them, and the re-pull method that writes only those days' keys. The re-pull itself and its never-widen pair are NOT cut: they follow the READ.
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r199/p199_cells.py` (with p199_apply.py), dry-run at the base: IB199-1 and IB199-2, AC1 to AC3, all six FAIL (no records); the positive control (`control199.py`, synthetic records, a synthetic packet v3 with section 2 tables, a ledger file and the trading calendar in a temp git root) passes all six and thirty-nine negatives (thirteen on IB199-1, twenty-six on IB199-2) each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-549` | apply packet v3: re-hash, both halves, per-firm pins and blobs, Branch B and the manifest anchor rule, the per-firm re-measure (32, 255, 841), the digest gate against the packet's moved members, the five-leg NEVER-2 ledger, three mints each from its pin between fires, the business date stated, the first fire's after-read per firm | FWD-3 | WORLD | none (both halves signed) | P199-a |
+| `IB-pr-550` | READ the Orion Inflection gap: target partitions empty, the pull path stage by stage, the skip cause with its claim, the re-pull method (proposed, not executed) | FWD-3 | SERVED | none | P199-b |
+
+fanout: 2 of 2 chains, cap 8, reason: chain P199-a is an order to the CloudOps seat 0.7.0_AE_CloudOps~IB2 (a seat, not a worker subagent; it waits on the mint window after today's 14:15Z fires and on the next fire), chain P199-b takes one worker now (slot ~394); one worker is spawned.
+
