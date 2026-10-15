@@ -38678,3 +38678,82 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W420-S3 RESOLVED (the 46 failures were the sparse worktree; in the main tree the 21 failures are identical at base). D2-W420-S2 INERT, recorded (the first-absent-day walk counts any row of the lost account while the exemption counts zero as absent, so first_absent_day can be null and the words then use the prior trading day). D2-W420-S1 stays ARMED, owner me: run_firm freezes the source receipts before the gate, so the prior-day partitions the exemption reads are not in the manifest source objects; the manifest entry carries the dates but not those object keys; it goes into the never-widen pair as a stated limit unless the CTO asks for the keys. D2-W421-S1 RESOLVED (AMENDMENT 1 @7c8acc5500), S2 RESOLVED (identifier chain, with a test), S3 RESOLVED (ticker_symbol is a column of the 49 Financial transactions partition: read by me today on one partition), S4 RESOLVED (check r216 amended @9a6cf90e04: the order file joins the allowed list). Not released: the changed gate and the new producer reach the firms only by an apply under a never-widen pair after a producer dry run (the exemption ALONE per firm, and the split adjustment before and after)."
 }
 ```
+
+
+## IRPT_BCKEND-D2-W422-S1 -- IB-pr-580 (49 Financial): the WITH arm exempts one lost account, but the gate still REFUSES on account_lost for other lost accounts, so run_firm applies no listing and the exemption alone adds no node; checker AC2 expects one adde
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W422-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~422",
+  "surfaced_at": "2026-10-15T15:12:00Z",
+  "one_line": "IB-pr-580 (49 Financial): the WITH arm exempts one lost account, but the gate still REFUSES on account_lost for other lost accounts, so run_firm applies no listing and the exemption alone adds no node; checker AC2 expects one added node per exempted account.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 3 and checker AC2: an exempted account is listed as a zero-value account node and no longer refuses as account_lost, and each exempted account adds exactly one account node to the candidate.",
+  "world_is": "At base 9b74f17beb on the live pinned inputs (candidate day 2026-10-14, served day 2026-10-12): the WITHOUT arm REFUSES on classified_security_lost and account_lost; the WITH arm exempts 1 account and still REFUSES on classified_security_lost and account_lost, so no listing is applied (nodes_added 0, accounts_added 0). listing_if_applied measures +1 node and +1 account, information only. The served index does not move. Checker AC2 FAILS on this firm (exempted 1, nodes added 0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py evaluate_publish_gate @9b74f17beb2d336735966146abc6b2b8d1567196 (the account_lost branch after the absent_at_source exemption)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py run_firm @9b74f17beb2d336735966146abc6b2b8d1567196 (_absent_scope_listing only when the gate is PUBLISHED)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~422/IB218-1_exemption_delta.json (harness run at base 9b74f17beb, uncommitted until this order's first commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W422-S2 -- IB-pr-580 (Cottonwood): the WITHOUT arm already PUBLISHES, because its directory marks no closures and the four lost accounts are listed as not refused, so the exemption adds four listed nodes to a publication that would publish a
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W422-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~422",
+  "surfaced_at": "2026-10-15T15:12:00Z",
+  "one_line": "IB-pr-580 (Cottonwood): the WITHOUT arm already PUBLISHES, because its directory marks no closures and the four lost accounts are listed as not refused, so the exemption adds four listed nodes to a publication that would publish anyway; checker AC2 expects the exemption to clear an account_lost refusal.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "Checker AC2: an exemption that applied was an account_lost refusal in the WITHOUT arm, and the exemption alone is the served delta the never-widen pair governs.",
+  "world_is": "At base 9b74f17beb: WITHOUT is PUBLISHED with no condition and listed_not_refused 4 (no account_lost condition). WITH is PUBLISHED with no condition, exempted 4, nodes_added 4, accounts_added 4, amount_added_usd 0, other_nodes_changed 0. The exemption is live at HEAD, so a publish of this firm on these inputs moves the served index by four zero-value account nodes. Checker AC2 FAILS on this firm (the without arm carries no account_lost).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py evaluate_publish_gate @9b74f17beb2d336735966146abc6b2b8d1567196 (the marks_no_closures branch lists a lost account as account_lost_not_refused)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py run_firm @9b74f17beb2d336735966146abc6b2b8d1567196 (the absent_at_source provider and the PUBLISHED-only listing)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~422/IB218-1_exemption_delta.json (harness run at base 9b74f17beb, uncommitted until this order's first commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W422-S3 -- IB-pr-580: the second fire as the order words it (serve the WITH candidate's account ids) is vacuous for the refusing firm, because the WITH ids carry none of the lost accounts; the run used the served set plus the WITH ids and re
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W422-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~422",
+  "surfaced_at": "2026-10-15T15:12:00Z",
+  "one_line": "IB-pr-580: the second fire as the order words it (serve the WITH candidate's account ids) is vacuous for the refusing firm, because the WITH ids carry none of the lost accounts; the run used the served set plus the WITH ids and records both readings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 5: serve the WITH candidate's account ids as the served set, gate the WITHOUT candidate again with the provider, and record exempt_again and outcome_account_lost.",
+  "world_is": "At base 9b74f17beb, for the refusing firm the literal served set (WITH ids only) gives exempt_again false and outcome_account_lost false with only classified_security_lost left, a set in which no account is lost. The served set plus the WITH ids gives exempt_again true and outcome_account_lost true, because account_lost remains for the other lost accounts. For the publishing firm both readings give exempt_again true and outcome_account_lost false. Both readings are in the record (second_fire, second_fire_literal).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-580.exemption-delta.md step 5 @9b74f17beb2d336735966146abc6b2b8d1567196",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~422/IB218-1_exemption_delta.json second_fire and second_fire_literal blocks (harness run at base 9b74f17beb)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
