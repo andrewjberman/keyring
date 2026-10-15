@@ -18205,3 +18205,169 @@
   "notes": "Closing row for IRPT_ANLREQ-D2-W178-S1. No check was weakened; the widening was done by the issuer, not by this worker."
 }
 ```
+
+## IRPT_ANLREQ-D2-W179-S1 -- AR-g-67 AC2 cannot run in this worktree: the sparse checkout excludes docs/ and infra/aws/ec2/, which the regression files read
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W179-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~179",
+  "surfaced_at": "2026-10-15T17:14:50Z",
+  "one_line": "AC2 cannot run in this worktree: the sparse checkout excludes docs/ and infra/aws/ec2/, which the seven regression files read at import or collection; 18 of the 65 required tests pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-67 AC2 (AR67-g-AC2): ar_g67_checks.py regress runs seven existing test files, one at a time, and requires each to pass and 65 or more tests in all.",
+  "world_is": "git sparse-checkout list is .tools, data/mdpf, infra/aws/lambda, infra/aws/terraform, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards, org/tier1_exec/1.0.0_SA_CTO/deliverables; docs/ and infra/aws/ec2/ are outside it (ls docs and ls infra/aws/ec2: No such file or directory) while both are tracked at HEAD 3e2bdff97e (52 files under docs/contracts/investor-reporting/v1/, 17 under infra/aws/ec2/investor-reporting-ycharts/). Measured regress output: test_acceptance_actor 4 passed; test_commentary_requested_member 7 passed; test_ready_signal_ticket_gate 1 error; test_producer_actor 1 error; test_opal_thread_integration 1 error; test_resident_installed 4 failed 3 passed 12 errors; test_generate_installed 10 failed 4 passed; AR-G67-REGRESS-FAIL passed=18 need >=65. Every failure is a FileNotFoundError on one of the two excluded paths or CONTRACT_SCHEMAS_ABSENT. None comes from the edited code, and no failure reaches the edited code. The sparse list was not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list (worktree C:/dev/wk-irpt-anlreq-179): the cone above, no docs/ and no infra/aws/ec2/",
+      "ls docs and ls infra/aws/ec2 in the worktree: No such file or directory; git ls-tree -r --name-only HEAD docs/contracts/investor-reporting/v1/ lists 52 files",
+      "ar_g67_checks.py regress at the worktree: AR-G67-REGRESS-FAIL files=[test_ready_signal_ticket_gate.py, test_producer_actor.py, test_opal_thread_integration.py, test_resident_installed.py, test_generate_installed.py] passed=18 (need >= 65)",
+      "pytest --tb=line on the five files: FileNotFoundError on docs/contracts/investor-reporting/v1/AnalysisReport.schema.json (reports/tests/test_repository.py:19 via intake/tests/test_uploads.py) and on infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh; generate_installed raises CONTRACT_SCHEMAS_ABSENT"
+    ]
+  },
+  "notes": "AC2 is unmeasured for the edited code in this tree, so the order stays open. The regress set needs a worktree whose sparse cone carries docs/ and infra/aws/ec2/. Widening the cone is an act for the issuer or the box, not this worker. Same form as IRPT_ANLREQ-D2-W153-S3.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W179-S2 -- AR-g-67 D says the ticket port is None when unnamed, but describe() counts a None-valued port as an absent producer and a pin requires the absent set empty
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W179-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~179",
+  "surfaced_at": "2026-10-15T17:14:50Z",
+  "one_line": "The cell says compose_ports yields None for the ticket port when IRPT_TICKETS_TABLE is unnamed; a None-valued key would be listed as an absent producer and fail the pin, so the key is set only when composed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-67 D: reports/generate_installed.py builds the ticket confirmation only when IRPT_TICKETS_TABLE is non-blank and a low-level client is composed, otherwise None.",
+  "world_is": "reports/generate_installed.py describe() counts a port as absent when its value is None (absent_producers = keys whose value is None). reports/tests/test_generate_installed.py:84 asserts set(d['absent_producers']) == set() for the default environment, which names no ticket table. The worker sets ports['confirm_ticket'] only when the table is named; _prospect passes p.get('confirm_ticket'), so the service receives None by default. The None-key variant was not run; the conflict is read from describe()'s code and the pin's text.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/generate_installed.py describe(): absent_producers = sorted(k for k, v in ports.items() if v is None)",
+      "reports/tests/test_generate_installed.py:84: assert set(d['absent_producers']) == set() with ENV holding no IRPT_TICKETS_TABLE",
+      "reports/generate_installed.py compose_ports (worktree): the key is written only inside the tickets_table branch"
+    ]
+  },
+  "notes": "Ruling wanted on whether an unnamed ticket port should be an explicit None (and the pin amended) or an absent key as built. The worker chose the absent key and left the pin unchanged.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W179-S3 -- AR-g-67 F: SubmissionService.submit refuses every request when artifacts.retention is None, so the service-level stamp test stubs two retained-input checks
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W179-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~179",
+  "surfaced_at": "2026-10-15T17:14:50Z",
+  "one_line": "The service-level stamp test needs a non-None retention port and stubs of the two retained-input checks, because submit refuses with RETENTION_SERVICE_REQUIRED before any accept call when retention is absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-67 F: test_ticket_stamp.py exercises the confirmation through the submission service offline; the cell names no harness for the service path.",
+  "world_is": "ycharts/generate/submission_service.py submit: getattr(self.artifacts, 'retention', None) is None raises RETENTION_SERVICE_REQUIRED (lines 107-108) before admission and before acceptance. Reaching accept with a real artifacts port needs a full retained-composition chain (_retained_input and _verify_retained_composition read head, get and require_live). The test keeps a non-None retention port and patches those two SubmissionService methods for its duration. The accept-level stamp test uses a mocked DynamoDB client with no patch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/submission_service.py:107-108 (worktree): RETENTION_SERVICE_REQUIRED when artifacts.retention is None",
+      "the first run of test_ticket_stamp.py failed three service-level tests with AcceptanceRefused RETENTION_SERVICE_REQUIRED; after the seam, 8 of 8 passed"
+    ]
+  },
+  "notes": "No offline harness exists for submit with a real retention port. The stub covers the confirm call and the ticket_confirmed keyword only, not the retained-composition checks, which are untouched by this cell.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W179-S4 -- the sparse cone widened between two regress runs (docs/ and org/surprise_channel now on disk); infra/aws/ec2/ is still outside it and alone carries AC2's remaining errors
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W179-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~179",
+  "surfaced_at": "2026-10-15T17:22:53Z",
+  "one_line": "The worktree's sparse cone changed between two regress runs without a sparse command from this worker: docs/ and org/surprise_channel are now on disk; infra/aws/ec2/ is still outside the cone and alone now carries AC2's remaining errors.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-67 Bounds and worker face: the worker makes no sparse-checkout change, and the worktree is the tree the order names; AC2 runs seven regression files that read docs/contracts and infra/aws/ec2.",
+  "world_is": "At the first regress run the cone (git sparse-checkout list) held .tools, data/mdpf, infra/aws/lambda, infra/aws/terraform, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards, org/tier1_exec/1.0.0_SA_CTO/deliverables. At the re-run at HEAD e4c3e5b008 it holds .tools, data, docs, infra/aws/lambda, infra/aws/terraform, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/missions/D9/IRPT/IRPT_YCDGEN, org/modules/graph, org/ref, org/standards, org/surprise_channel, org/tier1_exec/1.0.0_SA_CTO/deliverables (saved in the worktree's .scratch/sparse_now.txt). The diff is data/mdpf replaced by data, plus docs, org/missions/D9/IRPT/IRPT_YCDGEN and org/surprise_channel. This worker ran no sparse command in between. infra/aws/ec2/ is still not in the cone and not on disk. The re-run gives AR-G67-REGRESS-FAIL files=['test_resident_installed.py'] passed=53 (need >= 65): test_acceptance_actor 4, test_commentary_requested_member 7, test_ready_signal_ticket_gate 15, test_producer_actor 3 and 1 xfailed, test_opal_thread_integration 3, test_resident_installed 7 and 12 errors, test_generate_installed 14. The 12 errors are FileNotFoundError on infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh. This row supersedes the docs/ part of W179-S1's world_is; W179-S1 is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list read at the first regress run (saved to the session TMPDIR as sparse_list.txt): 12 entries, data/mdpf present, no docs/ and no org/surprise_channel",
+      "git sparse-checkout list at HEAD e4c3e5b008 (.scratch/sparse_now.txt): 15 entries; diff shows data/mdpf -> data, plus docs, org/missions/D9/IRPT/IRPT_YCDGEN, org/surprise_channel",
+      "ls -d infra/aws/ec2 in the worktree: No such file or directory; ar_g67_checks.py regress at e4c3e5b008 (.scratch/ac2.out): AR-G67-REGRESS-FAIL files=['test_resident_installed.py'] passed=53 (need >= 65), rc=1",
+      "pytest --tb=line on test_resident_installed.py at e4c3e5b008: 12 E FileNotFoundError 'infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Who widened the cone is not known to this worker, and the worker has not changed it back. The remaining gap, infra/aws/ec2/, is a cone question for the box or the issuer. Until it is closed, the 12 tests in test_resident_installed.py that build the package are unmeasured for this cell's edits. The direct make_opal_stores test in test_producer_for_ticket.py passes."
+}
+```
+
+## IRPT_ANLREQ-D2-W179-S5 -- resolves W179-S1: AC2 runs and passes 65 of 65 after the issuer widened the worktree sparse cone
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W179-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~179",
+  "surfaced_at": "2026-10-15T17:36:22Z",
+  "one_line": "BLOCKING row W179-S1 is resolved by the issuer's widening of this worktree to infra/, docs/, data/ and org/surprise_channel; AC2 now runs and passes 65 of 65.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W179-S1 (BLOCKING): AC2 cannot run in this worktree because the sparse cone excludes docs/ and infra/aws/ec2/, which the seven regression files read.",
+  "world_is": "Re-measured at HEAD f14c14cd88 after the issuer's ruling (2.0.0_SA_COO~G2): the sparse cone now lists .tools, data, docs, infra, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/missions/D9/IRPT/IRPT_YCDGEN, org/modules/graph, org/ref, org/standards, org/surprise_channel and org/tier1_exec/1.0.0_SA_CTO/deliverables (13 entries). infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh exists on disk. AC1 prints AR-G67-OK direct=12 named=8 passed=8 (rc=0). AC2 prints AR-G67-REGRESS-OK passed=65 (rc=0): acceptance_actor 4, commentary_requested_member 7, ready_signal_ticket_gate 15, producer_actor 3 (+1 xfail), opal_thread_integration 3, resident_installed 19, generate_installed 14. The worker ran no sparse command; the widening is the issuer's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at HEAD f14c14cd88 in C:/dev/wk-irpt-anlreq-179: 13 entries, infra and docs present, infra/aws/ec2 covered by the infra entry",
+      "ls -la infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh: present, 2918 bytes",
+      "ar_g67_checks.py g67 at f14c14cd88 (.scratch/ac1.out): AR-G67-OK direct=12 named=8 passed=8, rc=0",
+      "ar_g67_checks.py regress at f14c14cd88 (.scratch/ac2.out): AR-G67-REGRESS-OK passed=65, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closes the blocking condition of W179-S1 by the widening; S1 is not edited and keeps its filed text. S2, S3 and S4 stand as filed. S4 recorded the earlier cone (15 entries); the current cone is 13 entries after the issuer's ruling, and that change is not this worker's."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-S121 -- FWD-1 window 2: ticket and request filed, report package never attached (0 of 4), one commentary_ready message in flight
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S121",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-15T17:46:41Z",
+  "one_line": "FWD-1 window 2 filed the ticket and the request but the report package never attached: 0 of 4 on the page over 20 minutes, the job READY and SENT, the drafter ran once with no error, one message still in flight on commentary_ready, the packager secret never read.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (FWD-1 does not grade REALIZED on this window; whether to read the chain further or re-issue is the issuer's, and a third window needs a new address and a resident release per the CTO's addendum 2)",
+  "spec_asserts": "Order IRPT_ANLREQ.TO-RUN-FWD1.fwd1-staff-filing-window2-aq2 RUN2-AC2 and the FWD-1 DONE WHEN: the still-open ticket carries all four attachments (original_ref, the form answers, report_ref/pdf, commentary pdf_ref), attached by the packager svc-irpt-packager after the chain runs untouched.",
+  "world_is": "MEASURED 2026-10-15 by this seat: the driver filed TCK-20261015-944c84f8 at 17:00:32Z (201) and polled 19 times to 17:20:34Z reading 0 of 4 attachments on the page; the ticket record at 17:32Z holds attachment.input_id and upload_id and the form answers, no report_ref and no commentary pdf_ref, one created event, no client update. The accepted request analysis#REQ-d47252fe74634d0c5cdd8067#1 (accepted_at 1792083637) names the ticket, owner principal the synthetic address (OPAL_GLOBAL), commentary_requested true. The irpt-jobs row for that request reads state READY, outbox_state SENT, i3_sent_at 17:00:50Z, with checkpoint_pdf carrying a pdf_ref and checkpoint_publication carrying report_ref and opal_artifact_ref. outlook-global-commentary-draft-lambda ran once 17:00:52Z to 17:01:54Z (62545 ms), no ERROR, Traceback or Task timed out in 16:59Z to 17:40Z. The packager secret LastAccessedDate stayed 2026-10-13T20:00:00-04:00 (never read). commentary_ready read 0 visible and 1 in flight at 17:29Z and 17:38Z (0 and 0 at 16:56Z); both DLQs 0. The final page screenshot offers Retry analysis request, no Open report. The ticket-form answer add_commentary reads false while the request's commentary_requested reads true (both as read). NOT MEASURED: why the in-flight message persists, which component holds it, whether the packager was ever invoked (no packager log was read), and the resident journal; no queue was received from.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r31/A_RUN_FWD1_R2.txt and run_fwd1_r2/run_report.json @2c185e4e08",
+      "keyed reads 2026-10-15 17:21Z to 17:42Z: opal-tickets TCK-20261015-944c84f8, irpt-requests tenant 49financial (scan, denominator 2069), irpt-jobs 49financial REQ-d47252fe74634d0c5cdd8067, SQS get-queue-attributes x5, CloudWatch filter-log-events counts (opal-ticket-api 260 events; drafter 4 events)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This is IB-pr-456's live acceptance as the window graded it: the Opal producer path ran to a READY job and a stored report on this evidence, and the attach to the ticket did not happen in 20 minutes. The in-flight message may still resolve; this seat read only and did not wait beyond 17:42Z."
+}
+```
