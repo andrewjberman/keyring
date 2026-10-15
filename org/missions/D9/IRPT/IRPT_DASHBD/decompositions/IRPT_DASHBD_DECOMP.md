@@ -2092,3 +2092,17 @@ While writing the apply order for the signed Cottonwood landing pair (COO half @
 **fanout:** 1 of 1 chains, cap 8, reason: one cell, one write set (`lambda.tf` and a record), worker `0.9.0_WK_IRPT_DASHBD~212`.
 
 **Checker (dry-run at the base before the cut; FAIL as expected, self-test green; its HCL and import clauses exercised by arms, its live and layer clauses against a scratch reference):** `checks/r127/p127_layer.py` (DB127-1-AC1, AC2, AC3).
+
+## 126. ROUND 128, WORKSTREAM B-49F (2026-10-15 ~14:3xZ, issuer 2.0.0_SA_COO~D2, on the signed Cottonwood landing pair, REVISION 2: COO half @fed117446e and CTO half @ed790ad4bf on packet sha256 `a1b080c5fe06` (CTO msg 8293); no new CTO analysis: the round carries the apply the signed pair authorises, as round 124 did for hop 1)
+
+The apply is its own round because the issuance gate allows one issuance per workstream round (round 127 carried the layer repair). Revision 1 of the pair (sha256 `c63702ade4df`) is VOID since row `D2-S84`; revision 2 adds the pyarrow layer and the CTO's step-0 layer read. Counts, dates, hashes and words only in the repo.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Act 1 (build, upload, plan 7/0/0, ONE `safe-apply` of the `account-return-daily` root, the schedule left DISABLED) and Act 2 (ONE synchronous `{"day": "2026-07-10"}` event and its after-read), by the AE applier `0.7.0_AE_CloudOps~DB2`, with the ledger left OPEN | `DB-b-260` | FWD-11, FWD-21 | WORLD (a Terraform apply and one write into an occupied prefix, under a signed pair) | `DB-b-257`, `DB-b-259` (merged) and both halves SIGNED | R128-A |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) Act 3 (the catch-up `days` events, at most 25 trading days each) is NOT in this order: the packet makes it conditional on Act 2's after-read, and the issuer reads that record before cutting it as its own order in the round after; (b) the artifact key is read from the source map, never typed, and the pins are already written (the lesson of row `D2-S80`); (c) the order stops, and reports at once, on a Max Memory Used over 717 MB, a function error, a held day or a half partition; (d) the schedule is not enabled by any act here; enabling is a separate word after Act 3; (e) the checker reads the layer's pyarrow version from the layer zip and requires the record to equal it (the CTO's added after-read item). Gate limb: one new order (LIMB 6 PRD sign-off applies); the placeholders limb sees NONE.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell, one applier, the apply is a single change under one ledger (the deploy rule: one change at a time).
+
+**Checker (dry-run at the base before the cut; FAIL as expected, self-test green with 38 red record arms; its live clauses read fresh Lambda, IAM, scheduler, S3 and log state and cannot pass before the apply):** `checks/r128/p128_cotapply.py` (DBC128-1-AC1, DBC128-2-AC1, DBC128-3-AC1).
