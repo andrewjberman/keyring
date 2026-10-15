@@ -16461,3 +16461,55 @@ name the one known failure instead of silently inheriting it.
     "notes": "WHAT I DID WRONG, precisely, because the shape is more useful than the apology. I wrote a command block that ran `safe-apply ... apply -auto-approve ... > /dev/null 2>&1 && echo 'UNEXPECTED: an apply ran' || true` as a NEGATIVE CHECK -- the idea being that it should refuse and the echo would never fire. Three things made that reckless rather than clever: (1) a negative check whose failure mode is DOING THE THING is not a check, it is the act with a label on it; (2) I sent its output to /dev/null, so when it did run I had thrown away the one record of what it did -- I had to reconstruct from live IAM; (3) `-auto-approve` removed the only remaining human-shaped stop. The rule I am taking from it: NEVER write an apply, a deploy or a delete as a negative control. If the question is 'would this be refused?', the honest instruments are the plan, the gate's own --check mode, or reading the gate's source -- never the live act with a conditional echo after it. The cheap tell that saved it was a NUMBER THAT DISAGREED WITH THE STORY: the plan said No changes where the story said 1 to add, and that gap is what made me look instead of moving on. Also worth keeping: the rollback was possible and clean ONLY because the act was a single targeted resource whose prior state was absence. An apply that had moved an existing policy, or touched an object store, would not have unwound this neatly -- so the margin I got here is not a margin to count on next time."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W97-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~97",
+    "surfaced_at": "2026-10-15T05:41:46Z",
+    "one_line": "OG-cp-2 AC1 cannot be met as written: test_grant_writer_stages_the_contract_only_from_the_standard compares the staged zip member to the working standard, but build_package.py copies that member verbatim from the manifest's deployed_commit ee23dd004c, whose contract has no person_access block at all. Re-serialising the two working copies cannot change those bytes, and the cell's premise (the packager re-serialises the JSON) is not what the packager does.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/build_package.py@af1495fe17 lines 248-273: _stage() writes every closure module and data file from src.blob(rel), which is git show <commit>:<path>; no json.load/json.dump anywhere in the staging path",
+        "infra/aws/ec2/EC2_MANIFEST.json@af1495fe17: services.opal-gateway.deployed_commit = ee23dd004c985c46d479908db46d2ad9b4f3b1c8 (the commit _resolve_commit returns)",
+        "org/standards/NFRA_OPLGTW_CONTRACT.json: 10747 bytes at ee23dd004c vs 11456 bytes at af1495fe17; git diff --no-index stat 13 insertions 2 deletions, the added person_access block from d5d2fb29bd; first differing byte 7913 is line 277, which reads tenant_firm (no comma) at ee23dd004c and tenant_firm, at af1495fe17",
+        "pytest run in this worktree at af1495fe17 + the uncommitted test_admin_people_access.py fix: test_schwab_host_inputs.py:168 assert zf.read(members[0]) == _STANDARD.read_bytes() fails with 'At index 7913 diff: b'\\n' != b','' (rc=1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cp-2 cell 1: the staged contract member differs from the standard at byte ~7913 only because the person_access block is formatted differently from what the packager emits; re-serialise both contract copies to the packager's form so the standard, the deploy copy and the staged member are byte-equal, changing no value.",
+    "world_is": "The staged member's bytes are the manifest's deployed_commit ee23dd004c contract, which predates OG-cp-1 and has no person_access. The packager does not re-serialise; it copies bytes. The first difference is the trailing comma OG-cp-1 added after tenant_firm. Byte-equality with the working standard is unreachable by any edit to the two contract copies in this order's paths, and the only other routes are removing person_access from the contract (changes a value; breaks AC2) or re-pointing the manifest deployed_commit (a release act, outside paths and forbidden here).",
+    "notes": "Not fixed, by design: the two contract copies are unchanged (AC2 PASS at HEAD, as before). The second cell item is fixed: test_access_get_not_live_when_type_unknown monkeypatches acs.POLICY_RECORD_TYPES to the set without person_access, and test_admin_people_access.py passes 7 of 7. AC1 therefore reads FAIL (the grant-writer test stays red; the cp2.AC1 denominator is 1 new failing id). The issuer decides between the test's expectation and the manifest pin. No release, deploy or manifest edit was made."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W97-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~97",
+    "surfaced_at": "2026-10-15T05:41:46Z",
+    "one_line": "The manifest's released gateway commit ee23dd004c is not an ancestor of this worktree's HEAD af1495fe17, so the grant-writer packager's source commit does not contain OG-cp-1 (d5d2fb29bd).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git merge-base --is-ancestor ee23dd004c985c46d479908db46d2ad9b4f3b1c8 af1495fe17de6026f9d33d14c14a2bbfb06189d8 returned rc=1 in this worktree (measured 2026-10-15T05:41Z)",
+        "infra/aws/ec2/EC2_MANIFEST.json@af1495fe17: services.opal-gateway.deployed_commit = ee23dd004c985c46d479908db46d2ad9b4f3b1c8",
+        "git log -- infra/aws/ec2/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json@af1495fe17 lists d5d2fb29bd (OG-cp-1) on the worktree's HEAD line; the contract at ee23dd004c has no person_access key"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "test_grant_writer_stages_the_contract_only_from_the_standard (OG-rl-4) asserts that the staged package's contract equals the working-tree standard, which presumes the manifest's released commit carries the working standard.",
+    "world_is": "The manifest's released commit ee23dd004c is off this HEAD's ancestry and predates person_access. The staged member therefore cannot track the working standard while the manifest pins ee23dd004c. Recorded as the fact S1 depends on; not acted on.",
+    "notes": "OBSERVATION only. No measured harm to a served artifact was taken in this order; the grant-writer package and the deploy copy were not rebuilt or read beyond the byte comparisons above."
+  }
+  ```
