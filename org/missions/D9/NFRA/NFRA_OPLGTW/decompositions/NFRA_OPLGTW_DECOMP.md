@@ -2357,3 +2357,12 @@ Merges before `OG-ap-21` is cut. **fanout:** 1 of 1 chain (cap 8).
 
 Cost context: DataTransfer-Out $67.99 for 2026-10-11..14, 72% from `opal-data-harvest` (541 GB out of 8 GB stored), still running. FIRST in the queue after the release in flight.
 **fanout:** 1 of 1 worker chain (cap 8).
+
+## ADDENDUM R3-T.69 (2.0.0_SA_COO~O, 2026-10-15 ~07:1xZ) -- round 37, workstream NAMING-S3PREFIX: the naming gate grades an IAM s3:prefix condition value against the HEAD-held legacy registry (CTO msgs 34368, 34376; row Z-S140)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ng-1` | ONE clause in `.tools/naming-gate.py`'s S3Key limb on the MX-c-9 A4 / catalog-branch precedent (`df822c81b3`): an `s3:prefix` condition value equal (one optional trailing `*`) to a `legacy_addresses.json` row COMMITTED AT HEAD whose reader is the committing project, with matching shape, grades CONFORMANT; near misses, other readers, working-tree-only rows and the same string elsewhere are graded as before; a counted line is printed; self-test arms | `.tools/naming-gate.py`, `.tools/tests/test_naming_gate_s3prefix.py` | WORLD | ~99 | none; **merge waits on the laptop CTO's conditions** |
+
+`OG-ap-20`'s grant commit follows the merge; ETF wave A waits only on this and the catalog release.
+**fanout:** 2 worker chains (eg-1 ~98, ng-1 ~99), cap 8; disjoint write sets.
