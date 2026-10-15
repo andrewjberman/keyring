@@ -12,11 +12,12 @@ THE RULE (one class per linked worktree):
             scheduled task's Execute / Arguments / WorkingDirectory names (IN USE; row AMGT_HARVST-Z-S111: git
             idleness cannot see a scheduled runner). If that read fails, every removal candidate is SKIP.
   ACTIVE    git activity (commit, checkout, or an edited file) within --clean-hours (24 h).
-  CLEAN     HEAD is merged into the trunk, nothing modified or untracked, no ignored files beyond build caches,
-            idle >= 24 h  ->  removed by --go (`git worktree remove`). Nothing is lost: every committed byte is
-            already in the trunk.
-  MERGED    HEAD is merged, but the tree holds modified, untracked or non-cache ignored files, idle >= 24 h  ->
-            removed by --go with `git worktree remove --force`; the discarded counts are written to the audit line.
+  CLEAN     HEAD is merged into the trunk and `git status --porcelain` is empty (dirt = porcelain lines only;
+            gitignored paths are not dirt, CTO round-16 ruling 2), idle >= 24 h  ->  removed by --go
+            (`git worktree remove`). Every committed byte is already in the trunk or a box branch.
+  MERGED    HEAD is merged, but the porcelain lists modified or untracked files, idle >= 24 h  ->  --go FIRST
+            preserves those files on a new branch preserve/<branch>-<stamp> (the sha is printed), THEN removes the
+            worktree with `git worktree remove --force`. A failed preserve removes nothing (CTO round-16 ruling 1).
             Andrew-direct 2026-10-08 ~23:0xZ, VERBATIM: "Force-removing merged worktrees is mandatory, if that is
             already merged it should be gotten rid of" (record ANDREW_DIRECT_20261008_230xZ_SITEZ_AND_DELL2_OPEN_
             CALLS_ANSWERED.md @86d85ab4a5, 1.0.0_SA_CTO; relayed by 0.0.0_AB_MSTR msg 107453). A LOCKED worktree
@@ -40,10 +41,13 @@ org/mcp/agent-spawn-audit.log. State lives in <git-common-dir>/opal-worktree-gc.
 
 Usage:
   python .tools/worktree_gc.py                 # dry run: the table, nothing changed
-  python .tools/worktree_gc.py --go            # remove CLEAN, force-remove MERGED, prune PRUNABLE, log, write state
+  python .tools/worktree_gc.py --go            # remove CLEAN, preserve then force-remove MERGED, prune PRUNABLE, log, write state
+  python .tools/worktree_gc.py --go --only <path>   # the same for ONE linked worktree; every other one is untouched
+                                                   # (exit 2 when <path> is not a linked worktree); no prune, no state write
   python .tools/worktree_gc.py --selftest      # temp repo: merged+dirty -> removed, unmerged+dirty -> kept
   python .tools/worktree_gc.py --check-removable <path>   # the drain's test on ONE worktree, idle window ignored;
-                                                          # one line REMOVABLE/NOT-REMOVABLE; removes nothing
+                                                          # one line REMOVABLE / REMOVABLE-AFTER-PRESERVE / NOT-REMOVABLE;
+                                                          # removes and preserves nothing
   python .tools/worktree_gc.py --held-for S    # held/escalated worktrees owned by serial S (reads state; fast)
   python .tools/worktree_gc.py --hook-notice   # PostToolUse(register_agent) hook: stdin JSON -> notice for that serial
 """
@@ -55,8 +59,10 @@ import datetime as dt
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -179,11 +185,95 @@ def own_commits(path: str, branch: str, head: str) -> int | None:
     return int(res.stdout.strip())
 
 
+def _gx(args: list[str], cwd: str, env: dict | None = None, stdin: str | None = None) -> subprocess.CompletedProcess:
+    """git with an explicit environment and optional stdin; a git error is a return code, never an exception."""
+    return subprocess.run(["git", *args], cwd=cwd, env=env, input=stdin, capture_output=True, text=True,
+                          encoding="utf-8", errors="replace")
+
+
+def preserve_dirt(path: str, branch: str, meta: dict | None = None) -> tuple[bool, str]:
+    """Commit the worktree's porcelain dirt to a NEW branch preserve/<branch>-<stamp>; return (True, commit sha).
+
+    Plumbing on a TEMPORARY index (GIT_INDEX_FILE): no hook runs, the worktree's own index is not written, and
+    .gitignore is honoured, so ignored paths are not preserved. A sparse checkout's skip-worktree entries are copied
+    into the temporary index first, so paths outside the cone are recorded as unchanged, never as deleted. FAILS
+    CLOSED: any git error returns (False, reason) and the caller must not remove the worktree. meta, when given,
+    receives ref (short name), n (paths preserved) and stamp.
+    """
+    meta = meta if meta is not None else {}
+    if not branch or branch == "(detached)":
+        return False, "detached HEAD: no branch to preserve under"
+    stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    tmp = tempfile.mkdtemp(prefix="wtgc_preserve_")
+    try:
+        env = {**os.environ, "GIT_INDEX_FILE": os.path.join(tmp, "index")}
+        head = _gx(["rev-parse", "--verify", "-q", "HEAD"], path)
+        head_sha = head.stdout.strip()
+        if head.returncode != 0 or not SHA_RX.fullmatch(head_sha):
+            return False, "HEAD does not resolve"
+        real = _gx(["ls-files", "-t", "-z"], path)  # read-only on the worktree's own index
+        if real.returncode != 0:
+            return False, f"ls-files failed: {real.stderr.strip()[:160]}"
+        sparse = [e[2:] for e in real.stdout.split("\0") if e.startswith("S ")]
+        r = _gx(["read-tree", "HEAD"], path, env)
+        if r.returncode != 0:
+            return False, f"read-tree failed: {r.stderr.strip()[:160]}"
+        if sparse:
+            r = _gx(["update-index", "--skip-worktree", "-z", "--stdin"], path, env, "".join(p + "\0" for p in sparse))
+            if r.returncode != 0:
+                return False, f"update-index --skip-worktree failed: {r.stderr.strip()[:160]}"
+        r = _gx(["add", "-A"], path, env)
+        if r.returncode != 0:
+            return False, f"add -A failed: {r.stderr.strip()[:160]}"
+        tree = _gx(["write-tree"], path, env)
+        tree_sha = tree.stdout.strip()
+        if tree.returncode != 0 or not SHA_RX.fullmatch(tree_sha):
+            return False, f"write-tree failed: {tree.stderr.strip()[:160]}"
+        names = _gx(["diff", "--cached", "--name-only", "-z", "HEAD"], path, env)
+        if names.returncode != 0:
+            return False, f"diff --cached failed: {names.stderr.strip()[:160]}"
+        changed = [x for x in names.stdout.split("\0") if x]
+        if not changed:
+            return False, "no path differs from HEAD; no preserve branch written"
+        msg = (f"preserve: worktree dirt of {branch} at {stamp}\n\nsource branch: {branch}\npath: {path}\n"
+               f"stamp: {stamp}\npreserved paths: {len(changed)}\n")
+        ct = _gx(["-c", "user.name=worktree_gc", "-c", "user.email=worktree_gc@opal.agent",
+                  "-c", "commit.gpgsign=false", "commit-tree", tree_sha, "-p", head_sha, "-m", msg], path)
+        commit = ct.stdout.strip()
+        if ct.returncode != 0 or not SHA_RX.fullmatch(commit):
+            return False, f"commit-tree failed: {ct.stderr.strip()[:160]}"
+        ref = f"refs/heads/preserve/{branch}-{stamp}"
+        k = 1
+        while True:
+            cand = ref if k == 1 else f"{ref}-{k}"  # a name already taken gets a numeric suffix
+            if _gx(["check-ref-format", cand], path).returncode != 0:
+                return False, f"invalid preserve ref name: {cand}"
+            if _gx(["rev-parse", "--verify", "-q", cand], path).returncode != 0:
+                break
+            k += 1
+            if k > 99:
+                return False, "preserve ref names exhausted"
+        u = _gx(["update-ref", cand, commit, "0" * len(commit)], path)  # old value zero: never overwrites
+        if u.returncode != 0:
+            return False, f"update-ref {cand} failed: {u.stderr.strip()[:160]}"
+        meta.update({"ref": cand[len("refs/heads/"):], "n": len(changed), "stamp": stamp})
+        return True, commit
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def _same_path(wt: dict, want: Path) -> bool:
+    try:
+        return Path(str(wt.get("worktree", ""))).resolve() == want
+    except OSError:
+        return False
+
+
 def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str], now: float) -> dict:
     path = wt.get("worktree", "")
     branch = str(wt.get("branch", "")).replace("refs/heads/", "") or "(detached)"
     row = {"path": path, "branch": branch, "class": "", "reason": "", "owner": "", "idle_h": None,
-           "dirty": 0, "unmerged": 0, "ignored": 0, "merged": False, "own": None}
+           "dirty": 0, "unmerged": 0, "merged": False, "own": None}
     if wt.get("locked") is not None and "locked" in wt:
         row.update({"class": "SKIP", "reason": "locked (git worktree lock)"})
         return row
@@ -206,10 +296,13 @@ def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str]
         row.update({"class": "ACTIVE", "reason": "git activity within the clean window",
                     "idle_h": round((now - last) / 3600, 1)})
         return row
-    # stale by git activity: now read the working tree
-    st = git(["status", "--porcelain", "--untracked-files=all", "--ignored=matching"], cwd=path).stdout.splitlines()
-    dirty = [ln[3:] for ln in st if not ln.startswith("!!")]
-    ignored = [ln[3:] for ln in st if ln.startswith("!!") and not CACHE_RX.search(ln[3:].replace("\\", "/"))]
+    # stale by git activity: now read the working tree. DIRT = the porcelain lines only (tracked changes and untracked
+    # non-ignored files); gitignored paths are not dirt (CTO round-16 ruling 2, W100-S2). A failed read is no answer.
+    st_res = git(["status", "--porcelain", "--untracked-files=all"], cwd=path)
+    if st_res.returncode != 0:
+        row.update({"class": "SKIP", "reason": f"git status failed; not removed: {st_res.stderr.strip()[:160]}"})
+        return row
+    dirty = [ln[3:] for ln in st_res.stdout.splitlines() if ln.strip()]
     for f in dirty:  # an edited file counts as activity
         try:
             last = max(last, int((Path(path) / f.strip('"')).stat().st_mtime))
@@ -228,8 +321,7 @@ def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str]
     # commits behind and inflate the unmerged count and the owner read (dell2 2.0.0_SA_COO~Y2, msg 6850).
     base = f"origin/{trunk}"
     unmerged = 0 if merged else int((git(["rev-list", "--count", f"{base}..{head}"], cwd=path).stdout.strip() or "0"))
-    row.update({"idle_h": idle_h, "dirty": len(dirty), "unmerged": unmerged, "ignored": len(ignored),
-                "merged": merged})
+    row.update({"idle_h": idle_h, "dirty": len(dirty), "unmerged": unmerged, "merged": merged})
     if idle_raw < clean_h:
         row.update({"class": "ACTIVE", "reason": "a modified file was edited within the clean window"})
         return row
@@ -239,12 +331,12 @@ def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str]
         row.update({"class": "UNSTARTED", "reason": f"own={'unknown' if own is None else '0'}: no commit of its own "
                     f"(unstarted or in progress); never removed; idle {idle_h} h"})
         return row
-    if merged and not dirty and not ignored:
-        row.update({"class": "CLEAN", "reason": f"merged into {holders[0]}, nothing uncommitted, idle {idle_h} h"})
+    if merged and not dirty:
+        row.update({"class": "CLEAN", "reason": f"merged into {holders[0]}, porcelain empty, idle {idle_h} h"})
         return row
     if merged:
-        row.update({"class": "MERGED", "reason": f"merged into {holders[0]}; --force discards {len(dirty)} "
-                    f"uncommitted/untracked and {len(ignored)} ignored non-cache path(s); idle {idle_h} h"})
+        row.update({"class": "MERGED", "reason": f"merged into {holders[0]}; {len(dirty)} uncommitted/untracked "
+                    f"path(s) preserved to a preserve/ branch before the --force removal; idle {idle_h} h"})
         return row
     # HELD: find the owner
     owner = ""
@@ -260,8 +352,6 @@ def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str]
         why.append(f"{len(dirty)} uncommitted/untracked")
     if unmerged:
         why.append(f"{unmerged} unmerged commit(s)")
-    if ignored:
-        why.append(f"{len(ignored)} ignored non-cache path(s)")
     row["owner"] = owner or "box MSTR (owner unknown)"
     owner_live = bool(owner) and owner in live
     if idle_raw >= held_h and not owner_live:
