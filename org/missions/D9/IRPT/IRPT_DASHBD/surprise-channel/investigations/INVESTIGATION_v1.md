@@ -19103,3 +19103,153 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Resolves IRPT_DASHBD-D2-W224-S1, IRPT_DASHBD-D2-W224-S2 and IRPT_DASHBD-D2-W224-S3. The rows S1, S2 and S3 stay as written (append-only). S4, S5 and S6 are the three pinned-assertion edits and are not covered by Amendment 1; they stay OBSERVATION, INERT, UNDER_INVESTIGATION."
 }
 ```
+
+## IRPT_DASHBD-D2-W316-S1 -- the schema path the order names is not materialized in this sparse worktree
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W316-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~316",
+  "surfaced_at": "2026-10-15T23:05:02Z",
+  "one_line": "The order names the surprise schema at org/surprise_channel/schemas/investigation_item.schema.json; this sparse worktree does not materialize org/surprise_channel/, so the path is absent on disk. The schema is tracked at HEAD and was read there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The row schema org/surprise_channel/schemas/investigation_item.schema.json is readable at its tree path from the worktree (the order's BOUNDS and the row rule name it).",
+  "world_is": "core.sparseCheckout is true: 82778 index entries are skip-worktree and 4201 are materialized, and org/surprise_channel/ is among the skipped. git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json reads the schema. The surprise-row gate reads its schema from the staged index (.tools/surprise-row-gate.py _schema), so the append is still checked against it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -v: S flags on org/surprise_channel/* at 47f90050e2",
+      "git show 47f90050e2:org/surprise_channel/schemas/investigation_item.schema.json (read for the row fields)",
+      ".tools/surprise-row-gate.py _schema reads the schema from the staged index"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W316-S2 -- a listed silver with zero rows is a case the run rules do not name
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W316-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~316",
+  "surfaced_at": "2026-10-15T23:05:02Z",
+  "one_line": "run_real() meets a silver that lists partitions but whose partitions hold no rows: there is no first or last day to set the trading window, and the rules name no status for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "run_real returns RAN, NO_SILVER_YET or STOPPED_AT_CAP, each with the keys the order names; days = the sorted distinct day values of the partitions read.",
+  "world_is": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/run_scope_feed_real.py returns status NO_ROWS with partitions_listed and s3_reads, after the reads, and writes nothing. The status is outside the three named results. Covered by test_zero_row_partitions_return_no_rows_and_write_nothing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/run_scope_feed_real.py@47f90050e2 run_real days-empty branch",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/test_run_scope_feed_real.py test_zero_row_partitions_return_no_rows_and_write_nothing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W316-S3 -- chain_check over a window with no trading day inside it is not defined by the rules
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W316-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~316",
+  "surfaced_at": "2026-10-15T23:05:02Z",
+  "one_line": "chain_check() can be called over a window of 238 or more calendar days that holds no trading day; the last such trading day is then undefined, and the rules name no result for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "chain_check checks, per account, every trading day inside [start, end] and reads the silver chain to the last such trading day.",
+  "world_is": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/run_scope_feed_real.py checks no account and returns NO_COMPLETE_ACCOUNT, because the window is empty. A real feed cannot reach it, since any span of 238 days holds trading days; only a direct call does.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/run_scope_feed_real.py@47f90050e2 chain_check: the 'if not window' guard"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W316-S4 -- a RETURNED row with a null daily_factor is neither a factor nor a missing row
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W316-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~316",
+  "surfaced_at": "2026-10-15T23:05:02Z",
+  "one_line": "A RETURNED silver row whose daily_factor is null or NaN: the rules give the silver chain a factor per RETURNED row and 1.0 per missing day, and say nothing of this case.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "silver_chain is the product of the silver daily_factor of the account's RETURNED rows; a missing day counts as factor 1.0.",
+  "world_is": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/run_scope_feed_real.py counts such a row as 1.0 (no factor). The wrapper treats the same row as incomplete and drops its whole calendar day before the adapter sees it (inflection_scope_feed_run.py _is_incomplete). The two sides agree on every trading day a PRESENT row covers, because an incomplete day inside a PRESENT span would already have made that row ABSENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/run_scope_feed_real.py@47f90050e2 chain_check silver factor loop",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@47f90050e2 _is_incomplete"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W316-S5 -- trading_days_between returns datetime.date objects, not ISO strings
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W316-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~316",
+  "surfaced_at": "2026-10-15T23:05:02Z",
+  "one_line": "The order names lib/trading_calendar.py trading_days_between as the trading-day function returning ISO strings; it returns a list of datetime.date objects.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "trading_days_fn is lib/trading_calendar.py's trading_days_between, returning ISO strings.",
+  "world_is": "lib/trading_calendar.py line 259 declares trading_days_between(start, end) -> list[dt.date]. org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/run_scope_feed_real.py wraps it in _trading_days_iso and leaves lib/ unchanged. The checker's own weekday function returns ISO strings, so run_real is exercised with ISO strings only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py@47f90050e2 line 259 trading_days_between",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/run_scope_feed_real.py@47f90050e2 _trading_days_iso"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W316-S6 -- an empty dimension table is a traceback in main, not a result
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W316-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~316",
+  "surfaced_at": "2026-10-15T23:05:02Z",
+  "one_line": "main() reads the latest fact_positions and fact_assets partitions for the dimension ids; a dimension table with no partition makes latest_partition raise ValueError, which main does not catch. The order names no result for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "main builds the dimension ids from iad.build_account_dim over the latest fact_positions and fact_assets partitions and then calls run_real.",
+  "world_is": "inflection_account_dim.py InflectionSilverReader.latest_partition raises ValueError on no partition, and org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/run_scope_feed_real.py main does not catch it. main is not exercised by the checker or the tests; only its --help path was run, and it imports.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py@47f90050e2 latest_partition",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~316/run_scope_feed_real.py@47f90050e2 main"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
