@@ -36494,3 +36494,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Disarm: (1) ~Y2 reads whether release 29's pair (CTO half blob 5e8b3cbd95) named these three members; if not, a retroactive after-read of the live behaviour (one accepted request with commentary_requested true and one false, read from the accepted record) is filed. (2) ~P2's packet v2 states that f61b's BEFORE record is no longer obtainable for this behaviour and whether IB-pr-456 needs any before-record at all for composition_admission.py; the CTO then withdraws or re-words act f61b."
 }
 ```
+
+## IRPT_BCKEND-D2-S188 -- CORRECTS S187: commentary_requested is not live; the rebuild staged old pins and omits IB-pr-455
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S188",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T06:45:13Z",
+  "one_line": "CORRECTS D2-S187: commentary_requested is NOT live (2.0.0_SA_COO~Y2 measured 0 occurrences in the live package's acceptance.py, submission.py and schema, control trunk 2). The real finding: the IB-pr-456 rebuild (IB203-2, candidate MfxpvRhV) staged those three members from the trunk source map's OLD pins, which predate IB-pr-455, so the candidate omits the very change IB-pr-456 releases. S187's premise is withdrawn; f61b still gates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "D2-S187 (this seat, @dd2bb21996): the candidate's ENDPOINT members equal live, therefore commentary_requested is live.",
+  "world_is": "~Y2 msg 8160: live package (S3 version sf9zrBdA..., sha256 b64 5TRFZf6G...) has 0 occurrences of commentary_requested in the three members; release 29's pair names generate_installed.py, uploads.py and ordinary_viewer.py, not these. Trunk @66a6cd8686 has 2/2/1. A BUILD_ONLY build stages each member from its source-map pin, not from HEAD, so a trunk map whose pins for these members predate IB-pr-455 yields a candidate without it. The equality to live in IB203-2 is the symptom.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~Y2 msg 8160 (live package byte count, control)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~405/IB203-2_ycharts_generate_rebuild.json (endpoint_members equal live; built from the trunk map, no override)",
+      "git show 66a6cd8686: commentary_requested 2/2/1 in the three members"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S187 is superseded by this row and needs no after-read. Disarm: ~P2 rebuilds with the three ENDPOINT members pinned at the IB-pr-455 commit (or HEAD) and every R29c member at its R29c pin, shows the member diff against live is exactly the IB-pr-456 set plus composition_admission.py, and each ENDPOINT member contains commentary_requested; the packet v2 is cut on that build."
+}
+```
