@@ -16799,3 +16799,150 @@ name the one known failure instead of silently inheriting it.
     "notes": "Not changed: the check is the issuer's file and this worker does not edit it. Owner may add a CONFORMANT count (expected 4) to the expect line."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W101-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~101",
+    "surfaced_at": "2026-10-15T09:18:05Z",
+    "one_line": "The platinum rivalfunds_page catalog row carries a bucket and a prefix and no key_template, so etfs_get_rival_page_status finds the manifest by listing that prefix and parsing the date= and revisions/<stamp>/ layout that the row's business_meaning and the CRO contract state.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECK: infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@cf06cf8c43 lines 13754-13811: entity opal_data_etfs_platinum_rivalfunds_page has prefix rivalfunds/etfs/platinum/page/ and no key_template line; the next entity starts at line 13812.",
+        "CHECK: the seven other rival rows named by the order (trade_schedule, flow_reconciliation, buying_trend, holding_contribution, research_hypotheses, peer_group_map, canonical_shape) each carry key_template at DATA_CATALOG.yaml@cf06cf8c43.",
+        "RUN: rv2.AC2.sh at the worktree, rival tools B line 'page status newest revision True' (live bucket, box credentials)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "KEYS COME FROM THE CATALOG: each key template is read from the table's DATA_CATALOG row, and a template that cannot be filled is an absent_reason, never a guess (TO-OG-rv-2 section 1).",
+    "world_is": "The platinum page row has a prefix and no key template, so no template can be filled from the row. The module admits the row on bucket and prefix only and derives the page day and revision from the listing under that prefix.",
+    "notes": "Not changed: DATA_CATALOG.yaml is NFRA_MCPINDEX's file and the order forbids writing it. Owner to rule whether the row gains a key_template or the page layout becomes a catalog field. The listing parse is in etfs_rivals_flow.py (_MANIFEST_RE)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W101-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~101",
+    "surfaced_at": "2026-10-15T09:18:05Z",
+    "one_line": "The gold trade_schedule table carries no claim column, although the catalog row and the contract name the table INFERRED; etfs_get_fund_trades returns claim as None on every row and reports claim_in_rows false.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECK: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@cf06cf8c43, section opal-data-etfs/gold/trade_schedule: the columns list has no claim column; est_notional is described as INFERRED.",
+        "CHECK: DATA_CATALOG.yaml@cf06cf8c43 entity opal_data_etfs_gold_trade_schedule business_meaning reads 'Claim column: INFERRED'.",
+        "RUN: python read of the newest trade_schedule part (date=2026-10-13, trades-20261014T110753Z-151ac337dbc8.parquet, 51 rows, 44 columns): 'claim key in any row: False'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every row keeps its claim (INFERRED) as the table has it, and claim passes through on the inferred tables (TO-OG-rv-2 section 1, etfs_get_fund_trades).",
+    "world_is": "The table has no claim column, so there is no value to pass through. The answer says so with claim_in_rows false and a None claim per row. The row's INFERRED grain is carried in the table's own description, not as a field.",
+    "notes": "Owner to rule whether the claim is a table column to add (producer side) or a contract fact the answer states as a body field. Not changed here."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W101-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~101",
+    "surfaced_at": "2026-10-15T09:18:05Z",
+    "one_line": "The trade action vocabulary is entry, exit, add, trim and below_tolerance, not BUY and SELL as the order's optional action filter says; the tool passes action to the table unmapped.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECK: G5_etfs.md@cf06cf8c43, trade_schedule column action: 'inferred trade action: entry, exit, add, trim, below_tolerance'; no BUY or SELL value appears in that contract.",
+        "RUN: python read of the newest trade_schedule part: action values ['add', 'below_tolerance', 'entry', 'exit', 'trim']."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "etfs_get_fund_trades takes an optional action filter, 'BUY or SELL as the table spells it' (TO-OG-rv-2 section 1).",
+    "world_is": "The table spells the action in five lower-case words. A filter of BUY or SELL matches no row and answers absent_reason; the module does not map BUY to entry or add.",
+    "notes": "Owner to rule the mapping (if any) between the order's BUY and SELL and the table's five actions. The module's docstring states the table's spelling."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W101-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~101",
+    "surfaced_at": "2026-10-15T09:18:05Z",
+    "one_line": "The shared projection pops only top-level lists, so a nested peer section is nulled whole when the answer passes 50 KB, and one buying_trend row can carry a 100 KB input_manifest; the module budgets each section and returns input_manifest as a byte count.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECK: infra/aws/ec2/opal-gateway/app/harvest_typed.py@cf06cf8c43, project(): the largest-list loop reduces only top-level list fields; a non-envelope field too large is set to None.",
+        "RUN: rv2.AC2.sh before the fix, rival tools B line 'compare_peers both sections False'; diagnostic read 'buying keys: []' with truncated true after projection.",
+        "MEASURED: the live buying_trend newest part, period YTD and axis security, six fund ids: 120 matched rows; largest row 100,623 bytes, of which input_manifest 99,945 bytes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every answer is projected to 50 KB and carries its denominator; compare_peers returns the buying and contribution sections, each limited to the period, axis and fund rows (TO-OG-rv-2 section 1).",
+    "world_is": "A nested section cannot be trimmed by the shared projection. The module caps each peer section at 20,000 bytes (PEER_SECTION_BYTES), reports rows_matched and rows_not_shown, and replaces input_manifest with input_manifest_bytes in every returned row.",
+    "notes": "harvest_typed.py is not in this order's write set and was not edited. A later tool that returns a nested dict of rows meets the same rule. The live compare_peers answer now returns 30 of 120 buying rows and the matched count."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W101-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~101",
+    "surfaced_at": "2026-10-15T09:18:05Z",
+    "one_line": "The newest canonical_shape partition holds 11 of the 13 rival funds (CGIC and SCHY are absent), so etfs_get_rival_page_status takes each fund's gold latest report from the newest partition that holds that fund, scanning at most 30 partitions; the order's wording read the newest part alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECK: G5r_rivalfunds_spec.md@e1b9937129 section 1: canonical_shape 2026-10-13 holds 11 of 13 funds; section 5: CGIC and SCHY latest report 2026-10-09.",
+        "CHECK: TO-OG-rv-2 section 1, binding reading rule 2: a fund's latest report comes from gold canonical_shape, its newest part."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A fund's latest report date comes from gold canonical_shape (its newest part), never from holdings_coverage or the published page (TO-OG-rv-2 section 1, binding rule 2).",
+    "world_is": "Read literally, the newest part answers 11 funds and leaves CGIC and SCHY with no gold latest report. The module reads the newest partition that holds each fund (the fund's own report date), and returns canonical_absent_reason where no partition in the scan holds it.",
+    "notes": "The scan is bounded by CANON_SCAN_PARTITIONS (30) and reports canonical_shape_partitions_scanned. Owner to confirm the reading. The per-fund partition is named beside each value."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W101-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~101",
+    "surfaced_at": "2026-10-15T09:18:05Z",
+    "one_line": "The AC2 trade witness compares the INEQ window count with an independent read, and both are 0 on the live newest partition, so the equality holds without any trade row exercised; the non-empty trade path is witnessed only by the unit fixtures.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: rv2.AC2.sh at the worktree (rival tools B line): 'INEQ trades window rows 0 vs independent 0; ... RESULT: PASS'.",
+        "CHECK: G5r_rivalfunds_spec.md@e1b9937129 section 4: INEQ 0 inferred trades in the 2026-10-12 to 10-13 window, so the zero is the table's own answer."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2: a count equals an independent read, against the real bucket (TO-OG-rv-2 section 4).",
+    "world_is": "The witness passes on 0 equal to 0. It does not show the tool returns rows against the live bucket, because the fund chosen has none in the newest partition.",
+    "notes": "The AC2 check is the issuer's file and was not edited. Owner may name a fund with trades in the newest partition (for example one of the peer group) as the witness."
+  }
+  ```
