@@ -13243,3 +13243,194 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-229. Counts only; no account or household id and no client value. The disarm owner is the round issuer; the CTO may reassign. The row states the form; the repair is a later round's packet under a never-widen pair."
 }
 ```
+
+## IRPT_DASHBD-D2-S48 -- issuer's dispositions on W184-S1 (calendar fallback, inert) and W184-S2 (04-21 is a FLOW_UNRECONCILED event; carried to the CTO)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S48",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T01:55:11Z",
+  "one_line": "Issuer's dispositions on worker 184's rows W184-S1 (the trading calendar answers from its hardcoded fallback on dell2, pandas_market_calendars absent) and W184-S2 (the 858 households broken on 2026-04-21 are carried by FLOW_UNRECONCILED account-days, not by that date's 123 NOT_MEASURABLE rows): W184-S1 is inert and noted; W184-S2 is disarmed by carrying it to the CTO in the round-113 slug as the corrected premise for the repair cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-229 Why (the CTO's round-113 analysis, taken from round 112's cause read): 2026-04-21 is the worst date because of NOT_MEASURABLE rows, 'a producer or input defect on that day'.",
+  "world_is": "Round 113 read (RD_NOT_MEASURABLE_R113.json, DB113-1-AC1 PASS on the landed tree): across all 56,311 unmeasured account-days the cause is LINK_BREAK_BASE_NONPOSITIVE with the row's own price reason HOLDINGS_NOT_OK, 50,173 (0.8910), then FLOW_UNRECONCILED with the guard graded and disagreeing, 5,187 (0.0921); but ON 2026-04-21 the account gold holds 944 FLOW_UNRECONCILED rows beside 123 NOT_MEASURABLE rows (117 non-positive base, 6 absent base, all price), and 943 of the date's 1,061 household-sense unmeasured account-days are the guard-disagreed kind. Both calendars call 2026-04-21 a trading day (the lib from its fallback table). So the date is a flow-guard event, not a link-break event; the repair question is the guard's disagreement on that date (a flow or value input), not the price/base link. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~184/RD_NOT_MEASURABLE_R113.json",
+      "this seat re-ran DB113-1-AC1 on the landed tree @cf4a94db99: DB113-1-AC1 PASS; worker rows W184-S1 and W184-S2 in this file",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 1505, 1517, 1522 (FLOW_UNRECONCILED sites), as recorded by the worker"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "W184-S2 is carried to 1.0.0_SA_CTO~DELL2 in the L10 slug (the repair cell is the CTO's round-114 analysis to rule; it moves served numbers and needs a never-widen pair). W184-S1: the fallback covers 2010-2027 and answers NYSE correctly for the date; hygiene for whoever installs pandas_market_calendars on dell2, not this project."
+}
+```
+
+## IRPT_DASHBD-D2-W401-S1 -- the trading-day library answered from its hardcoded NYSE fallback on this device (pandas_market_calendars cannot be imported), so the recorded catch_up.calendar_source is the fallback string, not the package
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W401-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~401",
+  "surfaced_at": "2026-10-15T01:48:54Z",
+  "one_line": "On dell2 the trading-day library answers from its generated NYSE fallback table because pandas_market_calendars cannot be imported; the 15 landing days and the 13 catch-up dates of TO DB-c-1 are on the fallback calendar, and the package answer was not run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "spec_asserts": "TO DB-c-1 steps 2 and 5: the trading days come from lib/trading_calendar.py, whose canonical source is the NYSE schedule through pandas_market_calendars when it is installed; catch_up.calendar_source is the string the library returns. The producer measurement that dated the cell (RD_COTTONWOOD_PRODUCER_R110) recorded calendar source NYSE/pandas_market_calendars.",
+  "world_is": "On this device the import of pandas_market_calendars fails (ModuleNotFoundError for exchange_calendars), so every trading-day call answers from the generated table, and each run printed 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027'. The recorded calendar_source is NYSE/hardcoded-fallback-2010-2027. The fallback table header says it was generated from pandas_market_calendars 5.4.0 on 2026-10-07; whether the two answers agree on the 15 landing days was not measured on this device.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py@cf8ab92263 lines 40-46 (the optional import and the fallback flag) and lines 53-58 (the generated table and its header)",
+      "the WARN line printed by lib.trading_calendar on each run of the DB-c-1 measurement and of the checker p114_bcw.py DBC114-1-AC1, worktree at cf8ab92263",
+      "calendar_source() returned NYSE/hardcoded-fallback-2010-2027 when run from the worktree root (recorded in LANDING_AND_FRONTIER_R114.json catch_up.calendar_source)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-1. The disarm owner is the integrator (0.0.0_AB_MSTR) because the calendar library is shared infrastructure; the CTO or the CVO may reassign it. The row states the form only and carries no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W401-S2 -- three Cottonwood silver partitions (dated 2026-09-23, 2026-09-24 and 2026-09-25) carry a newest object written on 2026-09-28, three to five days after their partition date; the other twelve of the last fifteen trading days landed on the next calendar day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W401-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~401",
+  "surfaced_at": "2026-10-15T01:48:54Z",
+  "one_line": "Three of the last fifteen Cottonwood silver partitions were last written on 2026-09-28, not on the day after their partition date; the other twelve were written the next calendar day at 11:46 UTC.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The producer measurement that dated the cell (RD_COTTONWOOD_PRODUCER_R110, need TRIGGER AND TIME) reads the input as landing at 11:46 UTC on the day after its partition date, from one landing (partition 2026-10-13). TO DB-c-1 step 3 asks whether any partition's landing date is other than the day after its partition date; it does not assert that every partition is.",
+  "world_is": "LIST and LastModified of the fifteen partitions ending 2026-10-13 (one object each): partitions 2026-09-23, 2026-09-24 and 2026-09-25 have a latest object at 2026-09-28 between 11:46:16 and 11:46:30 UTC. The other twelve partitions have their latest object on the next calendar day at 11:46 UTC (seconds 02 to 15). All fifteen instants are 07:46 New York, so the time of day does not separate the three. A LIST cannot say whether those three were first written on 2026-09-28 or rewritten; no HEAD or version read was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~401/LANDING_AND_FRONTIER_R114.json, the landings array (dates 2026-09-23 to 2026-10-13 with landing_utc)",
+      "the measurement run recorded in the worker's private folder (LIST and LastModified only, counts and dates kept, no client value)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-1. Form only: the row records the landing pattern; no harm was measured and the schedule it bears on is not built (DB-c-2 is a packet). The CVO may disposition it at the round analysis."
+}
+```
+
+## IRPT_DASHBD-D2-W401-S3 -- the scheduled catch-up of the Cottonwood holdings producer, as its handler is written, never reaches 2026-06-09, the first Black Diamond silver date, which the DB-c-1 catch-up set lists as a day with an input and no gold
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W401-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~401",
+  "surfaced_at": "2026-10-15T01:57:56Z",
+  "one_line": "The scheduled catch-up in the holdings-performance handler computes only the trading days after the newest landed gold partition, so once a Cottonwood schedule exists it would not reach 2026-06-09, which has silver and no gold and sits before the newest landed gold date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "spec_asserts": "TO DB-c-2 describes the catch-up run per catch-up date, and DB-c-1 lists 2026-06-09 among the 13 catch-up dates, with the schedule's catch-up keys counted from that set.",
+  "world_is": "handler.py _days_to_compute (lines 101 to 124) plans the scheduled fire from the newest landed gold partition: the window is the trading days strictly after that newest date, through the target day, capped at MAX_DAYS_PER_FIRE. For the Cottonwood gold the newest landed date is 2026-09-25, so the scheduled plan starts at 2026-09-28 and never includes 2026-06-09. The event path with a date computes exactly that date, so 2026-06-09 is reachable only by a manual event. Read from the code at worktree commit cf8ab92263; no run was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py@cf8ab92263 lines 101 to 124 (the window from the newest landed day) and lines 108 to 109 (the event with a date)",
+      "the DB-c-1 record LANDING_AND_FRONTIER_R114.json catch_up.dates (13 dates, the first 2026-06-09) and gold.holdings_performance_daily.newest_date 2026-09-25",
+      "the DB-c-2 packet NEVER_WIDEN_PACKET_DB-c-2_R114.md, Change set, the scheduled path paragraph and question 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-2. The disarm owner is the issuing seat, which owns the B-CW plan; the CTO may reassign it. The row states the form only: the scheduled path's reach, read from the code, carries no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W402-S1 -- DBC114-3-AC1 FAILS on the checker's foreign-firm-token guard: five non_readers paths carry another firm's name in the file name
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W402-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~402",
+  "surfaced_at": "2026-10-15T01:53:00Z",
+  "one_line": "DBC114-3-AC1 FAILS on the checker's foreign-firm-token guard: five non_readers paths in the readers record carry another firm's name in their file names; the guard refuses them under the key paths",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-3 step 3 and criterion DBC114-3-AC1: the record lists each table's non_readers as a count and the paths; the criterion is graded by p114_bcw.py (ac_3) on the record's form and its internal consistency.",
+  "world_is": "Five repository paths listed under non_readers.paths (three under account_dim, two under account_return_daily) contain another firm's token in the file name. p114_bcw.py no_identifiers refuses any string value outside the keys where, prefix, words, basis_words and note that contains a firm token; list items inherit the key paths. The checker prints 'foreign firm token in field paths' and then 'DBC114-3-AC1 FAIL' (rc 1) on two runs. A scratch copy with those five paths removed passes ac_3 (diagnostic only, not committed). The record was not edited to clear the guard.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r114/p114_bcw.py@cf8ab92263 no_identifiers(): FOREIGN guard and the DIGIT_OK and whitelist keys",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~402/READERS_AND_CALENDAR_R114.json: tables.account_dim.non_readers.paths and tables.account_return_daily.non_readers.paths, five entries with another firm's name in the file name",
+      "python -I p114_bcw.py . DBC114-3-AC1 run from the worktree root: stdout 'foreign firm token in field paths' then 'DBC114-3-AC1 FAIL', rc 1, identical on two runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; no client value is recorded. The question for the COO is whether a non_readers list may name other-firm file paths under the key paths, or whether the guard should exempt repository paths. This worker has not edited the checker or the record to pass; the checker is outside this order's grant."
+}
+```
+
+## IRPT_DASHBD-D2-W402-S2 -- the resume packet's 'no reader found' for account_return_daily is incomplete: firm-generic readers exist and none is bound to the Cottonwood prefix
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W402-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~402",
+  "surfaced_at": "2026-10-15T01:53:00Z",
+  "one_line": "The packet's 'no reader found' for account_return_daily is not the whole world: three firm-generic files open the returns gold prefix and three open the holdings gold prefix, but none is bound to a Cottonwood prefix",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-3 Why: the resume packet recorded 'no reader found' for account_return_daily and could not grade it; this cell is to settle which served or scheduled code reads each Cottonwood gold table.",
+  "world_is": "Three files open the account_return_daily gold prefix (two infra handlers and the custody report figures) and three open the holdings gold prefix (the producer's guard reader, one infra handler, the holdings port). Each resolves its firm from the declared custody source, and the declaration holds one custody source that is not Cottonwood. The only Cottonwood entry in that declaration is an underscore-prefixed method-fields-only object that no compute path reads. No served or scheduled code reads a Cottonwood gold prefix today. account_dim has no reader, and its Cottonwood adapter writes nothing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py@cf8ab92263 _gold_objects and _read_rows (account_return_daily table prefix, firm from the declared source)",
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py@cf8ab92263 DECLARATION_SOURCE and _returns_paths, _load_returns",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@cf8ab92263 top-level keys: one custody source object and one underscore-prefixed method-fields object; _reserved_keys_comment states the structural rule that a non-underscore object is a source",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py@cf8ab92263 emit_account_dim raises NotImplementedError: writes nothing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The packet's conclusion holds for code bound to Cottonwood (none exists), but its wording 'no reader found' does not match the generic readers, which would read a Cottonwood prefix if a Cottonwood custody source were declared. Carried for the CTO's read. No action taken by this worker."
+}
+```
+
+## IRPT_DASHBD-D2-W402-S3 -- the amended checker also exempts the paths field from the 8-digit rule, which the amendment's message does not describe
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W402-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~402",
+  "surfaced_at": "2026-10-15T02:01:16Z",
+  "one_line": "Commit 0ee0142884 amends p114_bcw.py beyond the foreign-token exemption it describes: the paths key also joins DIGIT_OK_KEYS, so the 8-digit rule no longer applies to paths fields",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The amendment's message and the coordinator's note: only the path, paths and file fields are exempt from the foreign-token check; the criterion text, invocation and expected output are unchanged.",
+  "world_is": "The diff adds paths to DIGIT_OK_KEYS as well as to FOREIGN_OK_KEYS, so no_identifiers stops applying the 8-digit rule to any paths field. The record's non-reader paths hold no run of 8 or more digits (checked by a scan of the record), so DBC114-3-AC1 PASS is unaffected. The widening is latent for any future record that lists paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 0ee0142884 diff of org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r114/p114_bcw.py: DIGIT_OK_KEYS line now begins with the paths key, and FOREIGN_OK_KEYS is added",
+      "python -I p114_bcw.py . DBC114-3-AC1 on 0b18dfcc6c's record in the worktree: DBC114-3-AC1 PASS, rc 0, two runs; --selftest SELFTEST PASS, rc 0",
+      "scan of READERS_AND_CALENDAR_R114.json non_readers.paths: 0 paths with a run of 8 or more digits"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; the change is the issuer's and is not reverted by this worker. The question for the COO is whether the digit exemption for paths is intended. Row IRPT_DASHBD-D2-W402-S1 is left as filed for the issuer's drain disposition."
+}
+```

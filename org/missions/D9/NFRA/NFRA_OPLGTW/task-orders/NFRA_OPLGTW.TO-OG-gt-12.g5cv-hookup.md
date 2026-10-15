@@ -79,7 +79,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gt-12.g5cv-hookup.proof_of_spec
 - Round 37, workstream G5CV-HOOKUP (decomposition addendum R3-T.61). The gateway app files are in lane CLOUD_OPS_OR_ETL, which the COO cannot commit: a worker order grants them. Rides `OG-ap-20`.
 - Script dry-run by the issuer on HEAD copies of the five files before the cut. Pre-cut: gt12.AC1 and gt12.AC2 base FAIL as expected (0 of 6 registered, 0 of 6 classified).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G5CV-HOOKUP</workstream>
 <slot>~93</slot>
