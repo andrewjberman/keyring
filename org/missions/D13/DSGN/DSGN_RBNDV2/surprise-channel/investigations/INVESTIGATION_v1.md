@@ -111,6 +111,115 @@
     "spec_asserts": "Environment: the portal worktree is based on the feature branch feature/dsgn-rbndv2-light at ad7c100b5c.",
     "world_is": "The commit matches (ad7c100b, the same object). The branch name differs. The work was committed on wk-DSGN_RBNDV2-1-portal, the worker's own branch, as the bounds require.",
     "notes": "Recorded so the merge owner maps the worker branch onto the feature branch by commit, not by name."
+  },
+  {
+    "id": "DSGN_RBNDV2-W4-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~4",
+    "surfaced_at": "2026-10-15T05:46:24Z",
+    "one_line": "None of the eight F10 heat files coloured a heat cell blue at the base ad7c100b5c; the 'blue scale' premise of RV-h-1 has no target in this list.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/BenchmarkHeatmap.tsx@ad7c100b lines 258-263 (return text success/danger), 266-270 (spread text white), 276-280 (spread overlays bg-emerald-500/50, bg-red-500/50, bg-yellow-500/50), 282-286 (navy row backgrounds): no blue",
+        "portal/src/components/PerformanceHeatMap.tsx@ad7c100b line 3 (getReturnColorClass from performanceUtils.ts lines 70-75: delta tokens) and line 227 (indigo tooltip ground, a comment): no blue heat cell",
+        "portal/src/pages/Macroeconomics/utils/percentileColor.ts@ad7c100b lines 20-49 (rgba green-500 / lime-500 / yellow-500 / orange-500 / red-500), 52-65 (text-green-300..text-red-300): no blue",
+        "portal/src/pages/Valuation/panels/ValuationSummaryPanel.tsx@ad7c100b lines 32-43 (rgba red / orange / yellow / gray / green / emerald): no blue",
+        "portal/src/pages/Correlation/constants.ts@ad7c100b lines 25-33 (CORRELATION_COLORS: pink rgba(236,72,153,..) positive, green rgba(34,197,94,..) negative): no blue; Blue-token census over the base text of the 8 files returns 0 for 7 files and 2 for Correlation.tsx line 82 (focus:border-cyan-500/50, focus:ring-cyan-500/30 on a select, not a heat cell)",
+        "worktree check: git -C portal show ad7c100b5c:src/... read by rb-1-h.readers.test.ts base arm (run output: baseBlueCounts 0 x7, 2 x1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-h-1 cell and C-HEAT: 'Point each heat map at it, replacing its own blue colour logic'; 'The blue scale is gone from every heat map'. RB1H-AC2: the test lists per file 'the blue literals or blue class names that the base file coloured heat cells with' and the same absence check on base text must FAIL for every file.",
+    "world_is": "The eight files at ad7c100b5c colour heat cells with emerald/red/yellow overlays, rgba green-lime-yellow-orange-red traffic bins, pink/green diverging rgba, and text delta tokens; ReturnsHeatmap has no shading. No file holds a blue heat colour, so there is no blue logic to replace and the base difference control cannot fail for seven of eight files.",
+    "notes": "AC1 (the scale itself) is built and passes: portal/src/lib/heatScale.ts, silver #889399. The per-file repoint is not made; see the sibling rows for the decisions it needs. Routed to 2.0.0_SA_COO~RB to re-state the per-file target for round 1."
+  },
+  {
+    "id": "DSGN_RBNDV2-W4-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~4",
+    "surfaced_at": "2026-10-15T05:46:24Z",
+    "one_line": "Two heat maps shade diverging (positive vs negative) cells, and one white-to-silver scale cannot keep their sign semantics without a second hue, which the cell forbids.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/Correlation/constants.ts@ad7c100b lines 26-33: positive correlations pink rgba(236,72,153,0.08..0.7), negative green rgba(34,197,94,0.25..0.45)",
+        "portal/src/pages/Correlation/components/CorrelationMatrix.tsx@ad7c100b lines 6-8 (header: pink-to-white positive, green negative) and the legend lines 178-205",
+        "portal/src/components/BenchmarkHeatmap.tsx@ad7c100b lines 276-280: spread overlays emerald (positive), red (negative), yellow (zero) at /50"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-h-1: 'Where a file colours a heat cell as diverging (positive vs negative), keep the sign semantics of the data and shade magnitude by the scale; do not invent a new hue.' C-HEAT: ONE white-to-silver scale that every heat map reads.",
+    "world_is": "A single-hue white-to-silver ramp carries magnitude only. Sign would then rest on no colour cue, since cell text stays navy ink. Keeping sign needs a second hue, which the cell forbids, or a non-colour cue (a glyph or a sign label), which the cell does not name.",
+    "notes": "Not repointed. Needs a ruling: (a) sign carried by a non-colour cue on the white-silver ramp; (b) the diverging cells keep their own hues as a named exception to C-HEAT; or (c) another rule. The worker does not choose."
+  },
+  {
+    "id": "DSGN_RBNDV2-W4-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~4",
+    "surfaced_at": "2026-10-15T05:46:24Z",
+    "one_line": "ReturnsHeatmap.tsx has no heat shading to replace; pointing it at heatScale would invent a shading the fixture does not carry.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/reporting/ReturnsHeatmap.tsx@ad7c100b lines 116-160: data cells carry text classes only (text-[hsl(var(--palette-navy))], tabular-nums); the spread row carries bg-[hsl(var(--hairline))]/20 (a row tint, not a value scale)",
+        "A_LIGHT_FIXTURE.md (Heat maps paragraph): the board has none; C-HEAT says white to silver"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-h-1: 'replacing its own blue colour logic and keeping its data logic'; the fixture: 'invent nothing'.",
+    "world_is": "The file has no colour logic of its own to replace; it is a plain numeric table. Whether it should gain a shading is a design call the fixture does not make.",
+    "notes": "Left unchanged pending the ruling on S1."
+  },
+  {
+    "id": "DSGN_RBNDV2-W4-S4",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~4",
+    "surfaced_at": "2026-10-15T05:46:24Z",
+    "one_line": "RB1H-AC2 cannot pass as written: its presence arm needs all eight files repointed, its difference control cannot fail for seven files, and its absence arm trips on a non-heat cyan focus class in Correlation.tsx.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "rb-1-h.readers.test.ts run at the worktree portal (bun 1.3.9): presence false for 8 of 8, absence false for Correlation.tsx only, baseControl false for 7 of 8 (baseBlueCounts 0), VERDICT not printed",
+        "portal/src/pages/Correlation/Correlation.tsx@ad7c100b line 82: focus:border-cyan-500/50 focus:ring-cyan-500/30 on the ticker select (not a heat cell)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RB1H-AC2 difference control: 'the same absence check run against the base text must FAIL for every file, proving it can fail'; 'Refusal clause: do not weaken the test to pass'.",
+    "world_is": "The check is written from the criterion's text and runs honestly; it fails in three arms for the reasons in S1 to S3 and the non-heat cyan focus class. Nothing was weakened.",
+    "notes": "Criterion-level defect for the issuer: re-state the base-control arm against the real base colour logic (or drop it), and scope the absence arm to heat-cell classes. The worker does not re-scope it."
+  },
+  {
+    "id": "DSGN_RBNDV2-W4-S5",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~4",
+    "surfaced_at": "2026-10-15T05:46:24Z",
+    "one_line": "A blue percentile legend sits in a file outside this cell's grant: Valuation/tabs/ValuationTimeSeriesTab.tsx names blue as a band in its percentile colour mapping.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/Valuation/tabs/ValuationTimeSeriesTab.tsx@ad7c100b line 69: comment 'Map percentile to legend color: green(cheap) -> blue -> gray -> orange -> red(expensive)', with getPercentileColor mapping to PERCENTILE_COLORS (lines 70-76)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-h-1: 'if a heat map elsewhere in src/ also uses a blue scale, name its file in a surprise row and leave it (it is a wall: not in your <paths>).'",
+    "world_is": "This file is a valuation time-series chart with a percentile line colour, not a heat-cell map; its blue band is named in the comment. Left untouched (outside the grant). Named for the issuer to rule whether it is a heat map.",
+    "notes": "Not in <paths>; no edit made."
   }
 ]
 ```
