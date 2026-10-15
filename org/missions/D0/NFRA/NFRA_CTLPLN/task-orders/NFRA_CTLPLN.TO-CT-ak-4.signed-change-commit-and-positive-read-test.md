@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~118</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run (worker tree wk-NFRA_CTLPLN-118 @8bd7603422, merged 57f13ba60a, and in the main tree after the merge): FWD5-PRE ... differs=True others_differ=0 ok=True (68 of 68 other top-level gold scripts equal S3); AST-IDENTICAL ast_identical=True (comment-only noqa change, commit 461e3f64ee, blob 8d6f273a9e, md5 c204fd9be3bbfc43346a14b4c71051af); PARSE-OK; ruff All checks passed; proof VALID against the amended order. AC2 was amended from --docstring-only to --ast-identical (9b2702a5a5) after W118-S1: the script fails ruff at the previous commit and its line-2 string is not a module docstring.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
