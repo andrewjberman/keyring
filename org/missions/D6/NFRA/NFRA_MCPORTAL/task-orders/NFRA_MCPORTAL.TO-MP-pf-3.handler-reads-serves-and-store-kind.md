@@ -88,7 +88,7 @@ Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_
 **ISSUER NOTES:** cut from PF.7 (decomposition amendment ~22:0xZ): the CTO's ruling msg 34591 (`serves` list) and my reading of NFRA_MCPINDEX TO-MX-c-21 item 3 (`kind` `store`). pf3.AC1 dry-run at the base: FAIL as expected (named tests PASSED 0 of 5);
 pf3.AC2 is a bound (109 passed at the base). The release is 2.0.0_SA_COO~O's act, batched with MP-pe-1 and MP-pf-1.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <workstream>PF</workstream>
 <slot>~31</slot>
