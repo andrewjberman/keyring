@@ -16246,3 +16246,80 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Owner for the BLOCKING rows W410-S2, W410-S3, W411-S1, W411-S4 and W411-S5: this seat (issuer), done as above; the CVO adjudicates BLOCKING rows at L9 if it grades them. DBC123-1-AC1 re-run on the landed main tree reads FAIL by design of its base after the drain (other seats' entries changed interleaved with the merge); it was graded on the worker tree before the drain."
 }
 ```
+
+## IRPT_DASHBD-D2-W196-S1 -- the order's population wording differs from run(): the scheduled set is the holdings population unioned with the newest returns accounts, and the measurement used run()'s set
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W196-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~196",
+  "surfaced_at": "2026-10-15T08:54:05Z",
+  "one_line": "TO-DB-b-242 step (a) names the accounts of the newest account_return_daily partition 'the way run derives them'; run() derives the scheduled population from the newest holdings partition, unioned with the newest returns accounts. The measurement used run()'s set, and the record's words say so.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-242 step (a): the population is the accounts of the newest account_return_daily partition of the firm, the way run derives them.",
+  "world_is": "handler.py run() takes population_accounts(s3, firm), the account_id values of the newest holdings_performance_daily partition, and account_set() unions them with newest_accounts(), the accounts of the newest returns partition. On this measurement the holdings population is 7640 accounts and the newest returns partition holds 6935 of them; the union adds none, so the set measured is 7640. A returns-only reading would have measured 6935 accounts. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py population_accounts() and account_set() and run() population branch @f70531b2b4",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~196/RD_STAGE_MEASURED_R121.json words field @db19c5c548"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W196-S2 -- the measuring box answered the trading calendar from its hardcoded fallback, so the local build figure does not show the calendar path the Lambda package would use
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W196-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~196",
+  "surfaced_at": "2026-10-15T08:54:05Z",
+  "one_line": "The local run logged that pandas_market_calendars is absent, so trading_calendar answered from its hardcoded NYSE fallback; the stage's day build reads the calendar, so the local build seconds are not a measurement of the packaged calendar path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-242 measures the stage as the handler runs it, LOCAL, and the apply pair states that number; the record's measured_on.words carries what differs from the Lambda.",
+  "world_is": "The measuring run printed the WARN 'trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback (covers 2010-2027)'. handler.py imports trading_calendar, and filled_report_values passes the calendar module into build_document through its src, where the window functions read it. Whether the packaged Lambda ships pandas_market_calendars was not read on this box, so the calendar path of the local figure may differ from the Lambda's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py build_document window_anchor and trading_days_after read tc @f70531b2b4",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py filled_inputs src tc entry @f70531b2b4",
+      "the measuring run's stdout WARN line, kept in the private evidence folder, no client value @db19c5c548"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W197-S1 -- the order's optional sid rename of the write statement fails the issuer checker's AC1 (a renamed sid reads as a new statement), so the sid keeps its original name
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W197-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~197",
+  "surfaced_at": "2026-10-15T08:53:16Z",
+  "one_line": "The order's optional rename of the single PutObject statement sid to WriteTheSixGoldPrefixesOnly fails the issuer checker's AC1; the sid was restored to WriteTheFiveGoldPrefixesOnly, so the sid name now says five for six prefixes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r121/p121_grants.py check_hcl: a sid absent from the base iam.tf is a new statement, and a new statement may only carry s3:GetObject or s3:ListBucket (AC1 run with the rename: FAIL 'new statement WriteTheSixGoldPrefixesOnly may only read or list')",
+      "AC1 re-run with the original sid restored, on the worker tree of wk-IRPT_DASHBD-197: OK, one PutObject statement on irpt_rg_gold_write_arns, PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 3 (DB-b-243): 'you may rename its sid to WriteTheSixGoldPrefixesOnly (and fix its comment and the output description); there must remain EXACTLY ONE PutObject statement'. The criterion DB121-2-AC1 is the checker's reading of the same cell.",
+  "world_is": "The checker classes every sid absent from the base iam.tf as a NEW statement and requires each new statement to carry only s3:GetObject or s3:ListBucket, so the renamed write statement is refused and AC1 reads FAIL. The worker kept the original sid WriteTheFiveGoldPrefixesOnly (the rename is optional in the order); the write list now carries six prefixes under a five-named sid, and a comment in iam.tf cites this row.",
+  "notes": "Form only: the policy's permissions do not depend on a statement id, so hazard_standing is INERT. Owner for a decision on the checker's new-statement rule (key on the sid, or on the statement's content) is the issuer 2.0.0_SA_COO~D2; the worker does not change the checker."
+}
+```
