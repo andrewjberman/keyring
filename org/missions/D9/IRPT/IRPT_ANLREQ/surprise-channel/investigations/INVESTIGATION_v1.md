@@ -17153,3 +17153,351 @@
   "notes": "Resolves IRPT_ANLREQ-D2-S118. W150-S2 is answered: FWD1_DRIVER_RECORD.json is committed in the main tree under 0.9.0_WK_IRPT_ANLREQ~149/r41/ (read by this seat); the worker's checkout simply lacked it. Time of filing is the file's commit time."
 }
 ```
+
+## IRPT_ANLREQ-D2-W151-S1 -- docs/contracts/investor-reporting/v1/ is skip-worktree in this worktree as well as infra/aws/lambda/investor-reporting/; the contract schemas were read as base blobs with git show
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W151-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~151",
+  "surfaced_at": "2026-10-15T15:35:01Z",
+  "one_line": "The contract folder docs/contracts/investor-reporting/v1/ is not on disk in this worktree (skip-worktree), as is the backend folder the earlier row named; the schemas were read as base blobs with git show, with no checkout change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-350 cell: the response and submit wire types are read under docs/contracts/investor-reporting/v1/ of the worktree; a path the order names that is not on disk is cited from its base blob and said so in the record.",
+  "world_is": "git ls-files -t marks docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json, AnalysisUploadRequest.schema.json, AnalysisSubmissionRequest.schema.json and ComparisonCatalogue.schema.json as S (skip-worktree); the directory is absent on disk. The blobs exist at base 9c0e408601 and were read with git show. No sparse change, checkout or copy was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -t docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json at 9c0e408601 (S flag)",
+      "docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json:7 @9c0e408601 (read by git show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as an observation, not a blocker: the cell names the contract as a read, and the record cites the base blobs. The record's cite_check reads a skip-worktree file from its base blob, so the check is reproducible in this worktree."
+}
+```
+
+## IRPT_ANLREQ-D2-W151-S2 -- addendum point 2 'a kept unknown symbol files as typed' does not hold from source: an unknown ticker is an ERROR finding and the upload stays NEEDS_CORRECTION, nothing filed
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W151-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~151",
+  "surfaced_at": "2026-10-15T15:35:01Z",
+  "one_line": "The addendum's Keep clause (a kept unknown symbol files as typed and goes to the backend) cannot be met from what exists: TICKER_NOT_FOUND is severity ERROR, and any ERROR leaves the upload at NEEDS_CORRECTION with nothing filed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.12 C-FILING-HINT point 2: the filer accepts the suggestion or keeps their own; a kept unknown symbol files as typed and goes to the backend.",
+  "world_is": "intake/portfolio.py:440 defines emit with severity default ERROR; portfolio.py:501 emits TICKER_NOT_FOUND through it; portfolio.py:578 keeps the template NOT normalized when any finding is ERROR; uploads.py:569-584 then answers NEEDS_CORRECTION with the finding and no input_id. The only resolution the door accepts is a correction re-post (uploads.py:597), which replaces a symbol and does not keep it. The Keep branch therefore re-posts to the same NEEDS_CORRECTION.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:440 @9c0e408601 (read by git show)",
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:578 @9c0e408601 (read by git show)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:569 @9c0e408601 (read by git show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Decides the recommendation: BACKEND_AND_PORTAL. The accept path (Did you mean, then a corrections re-post on the same upload_token) needs no backend or wire change; the Keep path needs a backend semantics change. The CTO rules whether a Keep is a correction whose to_value equals from_value, which needs no wire member, or a new acknowledgement."
+}
+```
+
+## IRPT_ANLREQ-D2-W151-S3 -- addendum point 1 'closest entry by exact CUSIP or ISIN match first' cannot fire: neither the uploaded file nor the served catalogue carries an identifier
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W151-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~151",
+  "surfaced_at": "2026-10-15T15:35:01Z",
+  "one_line": "The uploaded holdings file has a ticker column and an amount column only, and the served comparison catalogue serves key, label, ticker and name_source only; an exact CUSIP or ISIN match is impossible from either.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.12 C-FILING-HINT point 1: the suggestion is the closest catalogue entry by exact CUSIP or ISIN match first, then the ticker edit distance, then the name.",
+  "world_is": "intake/template_reader.py:420 reads headers A and B only, and template_reader.py:451-452 builds each row from symbol, amount, basis and cells A and B; no CUSIP, ISIN or name column is read on the template lane. ycharts/generate/comparison_catalogue.py:116 drops CUSIP-namespaced classification rows, and comparison_catalogue.py:147-159 serves key, label, ticker and name_source; ComparisonCatalogue.schema.json:29 requires exactly those four members.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:420 @9c0e408601 (read by git show)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py:116 @9c0e408601 (read by git show)",
+      "docs/contracts/investor-reporting/v1/ComparisonCatalogue.schema.json:29 @9c0e408601 (read by git show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CUSIP or ISIN rank is not buildable from the current file or catalogue. A rank by name or ticker edit distance is buildable. The CTO rules whether the identifier rank is dropped or whether an identifier source is added (a new contract or a new source, not in scope of this read)."
+}
+```
+
+## IRPT_ANLREQ-D2-W151-S4 -- addendum point 1 'a holding whose symbol is not in the served catalogue' uses a membership test that the catalogue cannot support: it is five models and the named ETF tickers, not the holdings universe
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W151-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~151",
+  "surfaced_at": "2026-10-15T15:35:01Z",
+  "one_line": "The served catalogue is the five Opal model entries plus the etf-classifications tickers that carry a name; a membership test against it flags nearly every stock holding, so the trigger as written is ill-defined.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.12 C-FILING-HINT point 1: a holding whose symbol is not in the served catalogue shows ONE suggestion.",
+  "world_is": "ycharts/generate/comparison_catalogue.py:184-200 builds the list from the model catalogue (templates.json, five entries, all model_portfolio) and etf-classifications tickers that carry a name; a ticker neither names is not listed (the verbatim answer belongs to entry_for_ticker only). The served list therefore cannot stand for the holdings universe.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py:184 @9c0e408601 (read by git show)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/templates.json:96 @9c0e408601 (read by git show; five entries counted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The usable trigger is the server's own TICKER_NOT_FOUND finding (uploads.py:69, portfolio.py:501), which carries the row and the symbol. The CTO rules whether the trigger is the finding or a catalogue test."
+}
+```
+
+## IRPT_ANLREQ-D2-W151-S5 -- the 'Did you mean' the addendum asks for already exists in two places, and the form's own source differs from the addendum's: a provider-verified upload-time suggestion, rendered only by the Investor Reporting composer
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W151-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~151",
+  "surfaced_at": "2026-10-15T15:35:01Z",
+  "one_line": "A Did you mean line with an accept button already exists in the Investor Reporting prospect composer, fed by a provider-verified suggestion made during the upload; the Ticket Center filing form renders finding words only, so it has neither.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.12 C-FILING-HINT: the suggestion reads only the served catalogue the form already loads and makes no new vendor call at filing.",
+  "world_is": "intake/upload_suggestions.py:19 names the source KIMI_CHECK_PROVIDER_VERIFIED and :26 suggest_for asks the advisory and verify ports during the upload (uploads.py:578-580 calls it). The suggestion rides the finding as suggestion.symbol (prospect.ts:97). ProspectComposer.tsx:509-513 renders 'Did you mean' and a Use button that fills a proxy input, never auto-applied. TicketCenter's FileOutcome keeps finding words only (analysisRequest.ts:260 and :118), so the form cannot show the suggestion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/upload_suggestions.py:19 @9c0e408601 (read by git show)",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:509 (portal worktree HEAD e578b378)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:260 (portal worktree HEAD e578b378)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The addendum's source rule (catalogue only, no vendor call) and the existing mechanism (provider-verified, at upload) differ. Porting the existing suggestion is PORTAL_ONLY for the display and the accept; a catalogue-only suggestion is a new portal function with weak coverage. The CTO rules which source the Did you mean uses."
+}
+```
+
+## IRPT_ANLREQ-D2-W171-S1 -- the AR-g-52 contract is silent on an exception raised by classify, and on a ticker that appears on two pool rows with one row matching the class and one not
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W171-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~171",
+  "surfaced_at": "2026-10-15T15:50:49Z",
+  "one_line": "The AR-g-52 contract names no outcome for an exception raised by the classify callable, nor for a ticker that appears on two pool rows with different classes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-52 item 4 says a proposal is class-checked from the pool row for that ticker, else from classify(ticker) if given, else dropped; item 5 gives typed drop reasons for a history call that raises, and none for a classify call that raises.",
+  "world_is": "swap_replacement.py at 011f9c1245 lets an exception from classify(ticker) propagate, because the contract gives it no drop reason and the message must not enter the result. A ticker on several pool rows counts as a pool candidate when any one row matches the class, and a proposal is class-checked against the set of classes its rows give, so the answer does not depend on row order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py:109 @011f9c1245 (key = _class_of(classify(ticker)), with no try around it)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py:47 @011f9c1245 (_pool_classes collects every pool row's class key per ticker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The adapter cell reads classify and decides its exception path; the CTO rules whether a classify fault is a NOT_CLASSIFIED drop or a loud failure. No module behaviour is changed by this row."
+}
+```
+
+## IRPT_ANLREQ-D2-W170-S1 -- AR-g-51 contract item 2 names the symbols argument an iterable, and a bare str is one: resolve_prices("SPY", ...) looks up S, P and Y, with no refusal and no rejected entry
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W170-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~170",
+  "surfaced_at": "2026-10-15T15:50:18Z",
+  "one_line": "A bare str passed as symbols is iterated character by character: each one-character str is a non-empty str, so it is stripped, upper-cased and looked up as a symbol. The contract names exactly two typed refusals, so none is raised for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-51 contract item 2: symbols is an iterable; each entry that is a non-empty str is stripped and upper-cased; a non-str or blank entry goes to rejected. Item 2 names exactly two refusals, PRICE_WINDOW and PRICE_READERS.",
+  "world_is": "price_source.py:71 _normalise iterates the symbols argument directly. A str argument yields single-character entries that are each non-empty str, so resolve_prices('SPY', ...) prices three symbols S, P and Y, and rejected stays empty. Built as the contract states; no third refusal added.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_source.py:71 @5057b4dbfd (read by file)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_source.py:74 @5057b4dbfd (read by file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No caller exists yet: the adapter and compose cells are the first callers. The CTO or the issuer decides whether the contract refuses a str symbols argument (a typed refusal) or the adapter cell passes a list. Not a defect in what was built against the contract as written."
+}
+```
+
+## IRPT_ANLREQ-D2-W170-S2 -- AR-g-51 contract item 4 keeps a row whose date matches YYYY-MM-DD in shape, so a calendar-impossible date such as 2026-13-45 passes the as_of cut and is kept
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W170-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~170",
+  "surfaced_at": "2026-10-15T15:50:18Z",
+  "one_line": "The date check is the shape pattern only, so 2026-13-45 and 2026-02-30 are accepted as row dates. They sort lexically and pass the T-1 cut when they are not later than as_of.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-51 contract items 2 and 4: start, end and as_of must match ^[0-9]{4}-[0-9]{2}-[0-9]{2}$, and a row is kept only when its date is a str matching that pattern and is not later than as_of.",
+  "world_is": "price_source.py:25-27 _is_date is a fullmatch of the shape pattern and nothing else; _usable_rows (price_source.py:43) keeps a shape-valid row whatever its calendar validity. The stdlib datetime module is in the allowed import set, but no calendar check was added because the contract states the pattern.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_source.py:25 @5057b4dbfd (read by file)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_source.py:43 @5057b4dbfd (read by file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Low hazard: a vendor or store row with an impossible date is not a normal output. The CTO decides whether the chain rejects a calendar-invalid date (a datetime.date parse at the row gate) or the contract's pattern stands."
+}
+```
+
+## IRPT_ANLREQ-D2-W170-S3 -- the commit gate printed WARN that the client-data check was not run on commit 5057b4dbfd, because the hashed account-id list is absent on this device
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W170-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~170",
+  "surfaced_at": "2026-10-15T15:50:18Z",
+  "one_line": "The safe-commit path printed WARN: client-data-check: hashed account-id list ABSENT, so commit 5057b4dbfd was not checked for client account ids; the commit still passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit-time client-data check examines each commit's staged files for hashed client account ids, and a commit it cannot examine is reported as not checked.",
+  "world_is": "On this worktree's device the list is absent at C:\\Users\\Test\\.opal\\account_id_hashes.txt and OPAL_ACCOUNT_ID_HASHES is unset. The two committed files are authored from made-up tickers and numbers, and carry no account identifier. The check ran as WARN, not as a refusal.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 5057b4dbfd, client-data-check WARN line (read at commit time)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_source.py @5057b4dbfd (read by file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Environmental: the list lives on the operator's device and this worker cannot provision it. Recorded so the drain can decide whether the check must run on dell2 before a product commit lands."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-S120 -- FWD-1 run r41: the driver guard refused the directory resolve POST and the firm selector never rendered; nothing filed
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S120",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-15T16:08:07Z",
+  "one_line": "The FWD-1 run died at step 4 before any ticket was filed: the driver's route guard refused POST /api/scoped/investor-reporting/directory/resolve (not among its seven allowed POST shapes) and the firm selector never appeared; the synthetic user was removed (ABSENT x2); no retry.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (amend the driver's POST allow-list or the order, or re-issue; a second run is a new act the pair does not cover: NO RETRY is the CTO's condition 3)",
+  "spec_asserts": "Order IRPT_ANLREQ.TO-RUN-FWD1 step 5 and the driver's STEP-4: on /ticket-center, New Ticket, type Analysis Request, choose the firm, file; the guard admits GET/HEAD/OPTIONS and exactly seven POST shapes (fwd1_driver.mjs POST_ALLOWED lines 34-42). The pair's W1 to W5 and RUN1-AC2 expect a ticket with attachments n of 4.",
+  "world_is": "MEASURED 2026-10-15 16:03:30Z to 16:04:11Z (run_report.json, one attempt): mint rc=0, sign-in through the real form reached /market, then waitFor getByLabel('Choose the firm this request is filed under') timed out at 30000 ms; guard_refused lists exactly one entry, POST /api/scoped/investor-reporting/directory/resolve; the screenshot 01-signed-in.png shows loading skeleton bars and no form; ticket_id null; polls empty. The finally removed the row: remove rc=0, ABSENT GSI and ABSENT CONSISTENT. Seat's own after-reads 16:05Z: ConsistentRead get_item absent, email-index count 0, packager secret LastAccessedDate unchanged (2026-10-13T20:00:00-04:00), the five queues 0 and 0. INFERRED, NOT MEASURED: that the firm selector's population waits on the refused directory/resolve call; the portal at origin/DEV ad7c100b5c declares that operation (src/api/endpoints/investor-reporting.ts line 239, resolve-scope POST) and the label lives in src/pages/TicketCenter/AnalysisRequestParts.tsx line 114, but the page's call chain was not traced. The run is one attempt and was not repeated.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/aq2-fwd1-out-20261015/run_report.json (steps, guard_refused, absent, errors) and 01-signed-in.png, copied to org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r31/run_fwd1/",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs lines 34-42 (POST_ALLOWED) and 166-172 (guard)",
+      "portal origin/DEV ad7c100b5c: src/api/endpoints/investor-reporting.ts:239, src/pages/TicketCenter/AnalysisRequestParts.tsx:114"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The driver's selftest (29 cases) and mutant check passed on the allow-list as written, so neither could see that the page itself posts a directory call before the form renders; the allow-list was never exercised against the real page until this run. Whether adding the resolve POST (a read-shaped POST to the data plane, no write) widens the pair is the CTO's call, not this seat's."
+}
+```
+
+## IRPT_ANLREQ-D2-W172-S1 -- BLOCKING: the ticket-center source and the ticket-center Terraform the AR-g-53 cell names are skip-worktree in this worktree, so Q1 and Q2 cannot be read; the order stops
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W172-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~172",
+  "surfaced_at": "2026-10-15T15:49:52Z",
+  "one_line": "The task order names infra/aws/lambda/ticket_center/lambda_function.py and infra/aws/terraform/ticket-center/main.tf as the sources for the ticket-table reach (Q1) and the resident's ticket identity (Q2); neither path is on disk in worktree wk-IRPT_ANLREQ-172, so the worker rule stops the order.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-53 cell: Q1 reads the ticket table, its key, type and owner markers from infra/aws/lambda/ticket_center/lambda_function.py and infra/aws/terraform/ticket-center/main.tf in the worktree, and Q2 reads the resident host role from the tracked Terraform. Worker face: a worktree that does not carry the paths the order names is a BLOCKING row and a stop; never rebuild, extract or reconstruct the tree.",
+  "world_is": "git sparse-checkout list in C:/dev/wk-irpt-anlreq-172 is cone-mode and lists .tools, infra/aws/lambda/investor-reporting, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps, org/modules/graph, org/ref, org/standards; infra/aws/lambda/ticket_center (31 files) and infra/aws/terraform/ticket-center (4 files) are tracked at 5aefc342bf with skip-worktree flag S and are absent on disk. Glob '**/ticket*/**' and '**/main.tf' under infra/ return no files. The positive control infra/aws/lambda/investor-reporting is on disk (26 entries). No checkout, sparse change or copy was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-172 (cone; no infra/aws/lambda/ticket_center or infra/aws/terraform entry)",
+      "git ls-files -t infra/aws/lambda/ticket_center at 5aefc342bf: 31 S (skip-worktree), 0 on disk",
+      "git ls-files -t infra/aws/terraform/ticket-center at 5aefc342bf: 4 S, 0 on disk",
+      "Glob '**/ticket*/**' and '**/main.tf' under C:/dev/wk-irpt-anlreq-172/infra returned no files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This is the BLOCKING class the worker rule names, not a skip: the order's Q1 and Q2 have no source in this worktree. Reading the blobs with git show would be an extract to make the order executable, which the rule forbids, so none was read. The issuer decides whether to re-cut the read with a worktree that carries infra/aws/lambda/ticket_center and infra/aws/terraform, or to name the ticket-center read as a separate cell."
+}
+```
+
+## IRPT_ANLREQ-D2-W172-S2 -- the surprise-channel schema the row must match is skip-worktree here, so this row was shaped on the rows already in this file
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W172-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~172",
+  "surfaced_at": "2026-10-15T15:49:52Z",
+  "one_line": "org/surprise_channel/schemas/investigation_item.schema.json, the schema this channel row must match, is tracked at 5aefc342bf but skip-worktree and absent on disk in this worktree (org/surprise_channel is not in the sparse cone).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face: each row conforms to org/surprise_channel/schemas/investigation_item.schema.json, checked by .tools/surprise-row-gate.py at commit.",
+  "world_is": "git ls-files -t org/surprise_channel/schemas at 5aefc342bf: 2 files, both S (skip-worktree); ls org/surprise_channel returns no such directory. The field set of this row was copied from the rows already in INVESTIGATION_v1.md (W151-S5 and W150-S1), not from the schema file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -t org/surprise_channel/schemas at 5aefc342bf (S flag on investigation_item.schema.json and remediation_row.schema.json)",
+      "ls org/surprise_channel in C:/dev/wk-irpt-anlreq-172: No such file or directory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The row gate's verdict is the check that counts for this row's shape. The schema was not read, so no schema claim is made here."
+}
+```
+
+## IRPT_ANLREQ-D2-W172-S3 -- closing row: IRPT_ANLREQ-D2-W172-S1 is RESOLVED by the issuer's widening of the sparse checkout and by the completed AR-g-53 record
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W172-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~172",
+  "surfaced_at": "2026-10-15T16:02:02Z",
+  "one_line": "IRPT_ANLREQ-D2-W172-S1 (BLOCKING, ticket-center sources skip-worktree) is RESOLVED: the issuer widened the sparse checkout (infra/aws/lambda/ticket_center, infra/aws/terraform, infra/logic, data/mdpf/scripts/demque and the CTO deliverables folder), and the AR-g-53 record r7/C_SWITCH_DESIGN.json now answers Q1 to Q4 from those paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker rule: a worktree that does not carry the paths the order names is a BLOCKING row and a stop; the row S1 was the stop.",
+  "world_is": "git sparse-checkout list in C:/dev/wk-irpt-anlreq-172 now includes infra/aws/lambda/ticket_center and infra/aws/terraform; ticket_center/lambda_function.py and terraform/ticket-center/main.tf are on disk. Ruling from the issuer 2.0.0_SA_COO~G2 in the coordinator message: S1 was right and the defect was the provisioning. The record r7/C_SWITCH_DESIGN.json passes ar_g_read_checks.py shape53 (SHAPE-OK) and cite (CITES-OK 102 of 102) at 458578b8b8 plus this record's commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-172 (cone; ticket_center and terraform present)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:617 and infra/aws/terraform/ticket-center/main.tf:48 read on disk for the record",
+      "ar_g_read_checks.py cite: CITES-OK 102 of 102 on org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~172/r7/C_SWITCH_DESIGN.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S1 is closed by the widening and by the record. S2 (org/surprise_channel/schemas skip-worktree) is not addressed by this row and stays as filed. The record's recommendation is A (stamp at acceptance); the grant is the shared gate for A and B, and the CTO or CloudOps decides it."
+}
+```

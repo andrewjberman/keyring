@@ -18,7 +18,7 @@ From 2026-06-09, the first measured total, the groups partition the Cottonwood t
 A Cottonwood firm total before Black Diamond coverage is **not served anywhere**, so a true rolling 1-year chart cannot
 be filled for Oct 2025 - May 2026. The honest fix is to start Cottonwood's window at its first measured total.
 
-**One call is Andrew's:** Muni (below).
+**Muni: SETTLED 2026-10-15** -- Andrew: "Muni is in Custom Models, yes" (below).
 
 ## What makes it look uneven today (each measured)
 
@@ -100,12 +100,17 @@ needs his word, not mine.
 
 **REC:** yes, to match the Global rule; recut G8 for Muni only.
 
+**RULED (a), 2026-10-15:** "Muni is in Custom Models, yes", Cottonwood included. Opal Muni Income moves Other ->
+Custom at Cottonwood and Global. Only Muni is named; the 09-21 rule stands for other auto-classified models. It enters
+MDPF_CANON through the CTO's Cottonwood addendum. Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_152xZ_MUNI_IS_CUSTOM_MODELS_EVERYWHERE.md`.
+
 ## Where it lands
 
 - **Portal:** the Cottonwood Trend reads `partner_custody_total` for the total. It draws Other AUM as total - model on
   every total-bearing row, starts the window at the first measured total, and keeps the interpolated marking.
 - **Producer** (or portal): emit `carried` model legs on the 12 dates.
-- **Muni:** only on Andrew's word.
+- **Muni:** ruled (a); Other -> Custom at Cottonwood and Global, through the CTO's Cottonwood addendum.
 
 ## Not read
 
