@@ -68,3 +68,5 @@ Input: Andrew's fifth message (record `ANDREW_DIRECT_20261015_PANEL_TONE.md` sec
 
 All earlier round-8 orders are merged, so no sibling order writes these files. Gate limb that graded the addendum: none graded the modification.
 
+**ADDENDUM 3, amendment (2026-10-15 ~21:5xZ, before the worker was spawned):** Andrew's sixth message (record section 6) adds the Top / Bottom Performers pair (already covered by `RV-o-1`'s group rule and its performer-row class strings) and one more clause: the asset-class badges (EQ, FI, CM) read the same canonical red and green as the performance numbers. `RV-o-1` takes it as item 4 (one style prop of `PerformerCard` in the same file `ExecutiveSummary.tsx`: the badge reads `hsl(var(--delta-positive))` or `hsl(var(--delta-negative))`, a neutral return keeps its colour). Gate limb that graded the amendment: none graded the modification.
+
