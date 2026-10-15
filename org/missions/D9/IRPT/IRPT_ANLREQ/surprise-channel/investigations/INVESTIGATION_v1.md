@@ -18400,3 +18400,101 @@
   "notes": "Window design: the driver removes the synthetic user at the end of the 20-minute poll while the resident retries about every 15 minutes, so the chain gets one retry inside the window and the user row is gone for the third. Whether ReportRefused would clear with the row present is not known; it fired twice while the row existed. S121 holds the filing-side facts; this row is its located cause on the resident side."
 }
 ```
+
+## IRPT_ANLREQ-D2-W155-S1..S4 -- AR-y-357 (0.9.0_WK_IRPT_ANLREQ~155): the resident packaging refusal, read from source at f20c193dca
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W155-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~155",
+    "surfaced_at": "2026-10-15T18:40:24Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "AR-y-357 places the poll and the IRPT_RESIDENT_PACKAGE retained_for_retry print in ycharts/generate/resident_worker.py, without the infra/aws/lambda/investor-reporting/ prefix; at base the retained_for_retry print is in resident_main.py:78 and resident_worker.py prints outcome= only, and infra/ is skip-worktree so the source was read with git show",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py:78 print('IRPT_RESIDENT_PACKAGE retained_for_retry ' ...) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:1052 print(\"IRPT_RESIDENT_PACKAGE outcome=\" + code) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-357.resident-package-refusal-source-read.md (cell Q1 paths) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d"
+      ]
+    },
+    "spec_asserts": "AR-y-357 Q1 places the poll in ycharts/generate/resident_worker.py and the journal line IRPT_RESIDENT_PACKAGE retained_for_retry in that poll path; the packager module is ycharts/research/opal_packager.py; all are read from the worktree.",
+    "world_is": "At f20c193dca the resident and packager modules sit under infra/aws/lambda/investor-reporting/. resident_main.py:78 prints retained_for_retry through retained_reason (:32-35); resident_worker.py:1052 prints outcome=. infra/ is skip-worktree and absent on disk, so every read in the record is git show f20c193dca4b85c5b76436fe14fa08715f2e2b0d:<path>.",
+    "notes": "The location difference changes no answer: the cited lines are the same code under the lambda root. The record's cite_check reads every citation at the base sha."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W155-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~155",
+    "surfaced_at": "2026-10-15T18:40:24Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y2 (issuer), by the resident release that wires ANALYSIS_COMMENTARY into the resident's artifact repository",
+    "one_line": "every commentary_ready message the live resident handles is refused at the draft read: ANALYSIS_COMMENTARY is not a family of the resident's ArtifactRepository (resident_installed.py:392 wires only irpt-ycdgen-research-v1), so repository.py:392 raises ReportRefused 'unregistered artifact family'; the draft's RESERVED retention row is not the cause",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/reports/repository.py:391-392 and :471 (_get calls _binding, which refuses an unregistered family) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/lambda/investor-reporting/reports/resident_installed.py:390-392 (build_retained_repositories with additional_policy_revisions=(OPAL_RESEARCH_REVISION,)) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/logic/registry/reporting_policies.json:108 (ANALYSIS_COMMENTARY only under irpt-anlreq-x10-v1) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/lambda/investor-reporting/reports/tests/test_resident_installed.py:299 (pins the resident's revision list to the research revision) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d"
+      ]
+    },
+    "spec_asserts": "AR-y-357 Q2 asks whether reading a draft or report artifact whose retention row is RESERVED raises ReportRefused, and Q1 which packaging call raises it. The resident's read of its own commentary draft is expected to resolve the draft's family under the revision that registers it.",
+    "world_is": "The packager's read at opal_packager.py:187 reaches repository.py:471, which calls _binding and refuses 'unregistered artifact family' (repository.py:391-392): ANALYSIS_COMMENTARY is registered only in irpt-anlreq-x10-v1 (registry :108) and the resident composition opts in irpt-ycdgen-research-v1 only (resident_installed.py:392). A RESERVED row is admitted on this read because the artifact read passes accepted=False (repository.py:468; retention.py:186-189), so the RESERVED state is not the refusal. The refusal carries no code (resident_main.py:35 prints code=- for prose), which is why the journal shows code=-.",
+    "notes": "The first two journal refusals (class=ReportRefused) are the decisive site by ordering: the owner row check passed on those deliveries (opal_packager.py:256 ran before the read). The record's CAUSE is UNDETERMINED because the enum has no value for a registry refusal; the record's smallest change is resident_installed.py build_resident_runtime, rides the resident release, and updates test_resident_installed.py:299. Uncovered by the record: the live row, the deployed registry, and the DLQ body. Clock: at 2026-10-15 the RESERVED draft expires 30 days after its reserve (retention.py:233); the DLQ message ages out 14 days after DLQ entry (commentary.tf:156)."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W155-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~155",
+    "surfaced_at": "2026-10-15T18:40:24Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO (ruling on the owner row of fwd1-staff-r41a@opal.invalid, which the packager reads before any artifact read)",
+    "one_line": "the owner's user row is a second blocker, not the cause of the first two refusals: retained_package resolves the owner's authority before any artifact read, so once the family is wired the packager still stops at CurrentAuthorityRefused ACTOR_NOT_FOUND while the synthetic owner's row is absent",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:184, :256 (principal_for runs inside the retained_package step, before read_artifact at :187) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py:114-115 (user None refuses ACTOR_NOT_FOUND) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py:70-82 (get_user returns None when no opal-users-v2 row exists) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d"
+      ]
+    },
+    "spec_asserts": "AR-y-357 Q4 asks whether the first two refusals could be the authority family failing for another reason, and how the resident decides an owner's authority for a package.",
+    "world_is": "principal_for runs before the artifact read on every delivery. Deliveries 1 and 2 were journaled ReportRefused, so decide() passed on them. Delivery 3 was journaled CurrentAuthorityRefused ACTOR_NOT_FOUND, so decide() had no user row to read. The first two refusals are therefore not the authority family. Once S2 is fixed, the packager still refuses on delivery 3 while the owner's row is absent.",
+    "notes": "The record's Q4 answer is first_two_refusals_same_family = no. The third refusal is the authority family and is a separate blocker. The authority rule in full is current_authority.py:89-141 (phase principal) and resident_installed.py:241-254."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W155-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~155",
+    "surfaced_at": "2026-10-15T18:40:24Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "infra/aws/terraform/transcripts/commentary.tf names the I3 analysis-ready queue as aws_sqs_queue.commentary_ready (:122) while the I4 commentary-ready queue is aws_sqs_queue.commentary_done (:159); a reader who looks up commentary_ready in that file lands on the wrong queue",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/transcripts/commentary.tf:49 (commentary_ready_queue_name = local.commentary_names.ready_queue.name) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/terraform/transcripts/commentary.tf:122-123 (resource aws_sqs_queue.commentary_ready named by that local) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "data/transcripts/scripts/commentary/NAMES.json _provenance (ready_queue is the analysis_ready I3 queue; commentary_ready_queue is the I4 queue) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d"
+      ]
+    },
+    "spec_asserts": "commentary.tf:38-40 says the commentary-ready (I4) queue is named by NAMES.json commentary_ready_queue, and the resident consumes it; a resource named commentary_ready in the same file is then expected to be that I4 queue.",
+    "world_is": "The local commentary_ready_queue_name holds the ready_queue (I3) name (:49). The resource aws_sqs_queue.commentary_ready (:122) is therefore the I3 queue. The I4 queue is aws_sqs_queue.commentary_done (:159), with DLQ aws_sqs_queue.commentary_done_dlq (:152) and redrive maxReceiveCount 3 (:168). The resident's package poll reads the I4 queue (resident_worker.py:1035-1036).",
+    "notes": "No change is proposed in this row. The record's Q5 redrive answer names aws_sqs_queue.commentary_done for the I4 queue, which is the one the resident reads."
+  }
+]
+```
