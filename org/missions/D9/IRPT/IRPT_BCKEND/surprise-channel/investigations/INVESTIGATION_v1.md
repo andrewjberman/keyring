@@ -40467,3 +40467,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W441-S4 -- Measured at the flipped HEAD: IB235-1-AC3 FAILS on the status flip, which the record did not list.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W441-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~441",
+  "surfaced_at": "2026-10-15T21:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Measured at the flipped HEAD: IB235-1-AC3 FAILS on the status flip, which the record did not list.",
+  "spec_asserts": "The record (IB235-1_record.json) lists the repository paths the worker changed since base, deliverables and channel excluded, and IB235-1-AC3 reads that list against the worker's own commits at HEAD.",
+  "world_is": "Measured at a55b618df2: AC3 FAIL with 'changed_paths differs from the worker's own commits since base', because the flip commit changed the task order file. The record was updated to three paths (the task order included, since the worker changed it) and the three criteria were re-run at the new HEAD. The same timing conflict is in IRPT_BCKEND-D2-W441-S1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-604.account-join-49f.md@a55b618df2 status flip",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r235/p235_cells.py@e2700915d2195f8396d540796bc92a8a64c0c527 AC3 via P7.ac3",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~441/IB235-1_record.json (changed_paths, three paths after the update)"
+    ]
+  }
+}
+```
