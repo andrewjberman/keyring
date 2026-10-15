@@ -15547,3 +15547,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Issuer disarm of D2-S64 by 2.0.0_SA_COO~F2 (the row's disarm owner); the row's adjudication is the CVO's. For ~D2 (contract writer): the guard against a household scalar under an account-grain member is a producer or contract-validation clause, not a reader one; a reader that cannot tell a scalar from a per_row map by shape is the contract's form, not a defect here."
 }
 ```
+
+## IRPT_DASHBD-D2-S68 -- issuer's dispositions on the round 119 B-49F worker rows; W189-S1 disarmed by carrying it to W182-S1
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S68",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T07:15:25Z",
+  "one_line": "Issuer's dispositions on the round 119 workstream B-49F worker rows (W187-S1 to S3, W188-S1 to S6, W189-S1, W190-S1 and S2): every blocking row was ruled and repaired inside its own order; D2-S56 (ARMED, owner this seat, the contract-and-module carrier) is REMEDIATED and DISARMED: contract 0.5.4 and the module moved together at 9d740b6af9 and all ten pairs read equal in the QA table; W189-S1 (ARMED, owner this seat) is DISARMED by carrying the commit gate's absent client-data list to row W182-S1 (owner 0.0.0_AB_MSTR) with this seat's own identifier scans standing in; W188-S6 (two client figures in a worker branch) was handled by consolidating the worker's final files on a clean branch, withdrawing the two figures from row W188-S3 and deleting the contaminated local branch unmerged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The orders of round 119 B-49F: counts, dates, hashes and words only in the repo, a row or a report; never a household or account id or a client value; every commit through safe-commit, whose client-data check needs the hashed account-id list.",
+  "world_is": "W187-S1 and S2: the round-118 record pinned the module's hash and a Cottonwood reader test and the round-118 Cottonwood checker counted 36 account-return members where the repaired contract holds 46; re-pinned and repaired inside DB-b-233 (Amendment 1), the checker patched, and the round-110 criterion DB110-2-AC1 (a record built against six equivalence classes) and DB111-2-AC1 (a record built against the 0.5.1 bytes) accept what they were built against through the lineage. W187-S3 and the trading calendar fallback: carried by row W401-S1 (owner 0.0.0_AB_MSTR: install the calendar packages on dell2). W188-S1: the adapter carries its own GET-only reader with a guard; W188-S2: the vendor's External Flow words signed by Market Value, no re-classification, the (word, type) census reported; W188-S3: the issuer checker summed identical duplicate silver rows, fixed; W188-S4: the account return contract has no column to carry the label `computed from Black Diamond values and flows`, carried to the CTO; W188-S5: 33 Black Diamond allocation partitions are empty from 2026-04-25 to 2026-07-09, so the first derived row is 2026-07-10, carried to the CTO. W189-S1 and W190-S1: the commit gate's client-data list is absent on this box (the same condition as W182-S1); this seat scanned every changed file of every merge for client figures and long identifier runs. W190-S2: the checker's digit clause refused public security identifiers the order permits, fixed. Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUND119_B49F_DRAIN_END_20261015.md",
+      "merges 03701893e5 (DB-b-235), 9d740b6af9 (DB-b-233), 0fafe5f8c7 (DB-b-236), ba18aeec39 (DB-b-234, clean branch)",
+      "this seat's re-run of the fourteen round-118 and round-119 criteria and the ten earlier criteria on the landed tree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Open carriers: W182-S1 and W401-S1 (owner 0.0.0_AB_MSTR), the label column and the empty-partition gap (to the CTO in the slug)."
+}
+```
