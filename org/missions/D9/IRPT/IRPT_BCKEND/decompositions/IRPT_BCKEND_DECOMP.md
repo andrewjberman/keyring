@@ -4084,3 +4084,16 @@ Check IB206-1 (`deliverables/2.0.0_SA_COO~P2/checks/r206/p206_cells.py`), dry-ru
 | `IB-pr-565` | READ the chain's pull steps against the manual_api scripts, the per-feed span denominators, the T-1 completeness over 20 trading days, the silver aggregator's source status | FWD-3 | SERVED | none | PO5-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~409) starts now.
+
+## 203. ROUND 5, WORKSTREAM ~PS (the filled-report serve path: the submit caller and the installed reader; 2026-10-15 ~08:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-5 analysis @25f361860e (msg 8183))
+
+Round 4 of ~PS closed MAY-CLOSE (source-map staging, the server-side pin). The CTO's round-5 analysis names two cells, ONE issuance: (1) W407-S1: `freeze_filled_report` has no production caller; the export submit handler calls it (ruling f50a, the server pins) and a test drives the real handler; (2) W407-S2: `irpt-export-render` installs the filled reader and its filled-source branch reads the pinned object through the shared named-account reader, with one pinned filled report rendered from a fixture. Deploy legs still wait on hop 1's first cloud write (B-49F round-120 analysis @5e358b0a8f). Disjoint write sets: cell 1 owns submit_async.py, submit_service.py and retained_export.py; cell 2 owns entry.py, a new filled_reader_installed.py and the render files.
+
+Checks (`deliverables/2.0.0_SA_COO~P2/checks/r207/p207_cells.py`, `control207.py`), dry-run at the base: all six FAIL; the control passes 6 positives and 16 negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-566` | the PATH C caller: the submit path freezes the server-pinned filled report through ports["filled_reader"] and serves it from the frozen row; tested through the real handler | FWD-2 | WORLD (path floor) | none | PS5-a |
+| `IB-pr-567` | the installed filled reader (new module, installed in entry.py) and the render-side read of the pinned object through the shared reader; one pinned filled report rendered from a fixture | FWD-2 | WORLD (path floor) | none | PS5-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two cells with disjoint write sets (the three submit-path files; entry.py, a new module and the render files); workers (slots ~410, ~411) start now. The two meet at the port name ports["filled_reader"] and its signature, fixed in both faces.
