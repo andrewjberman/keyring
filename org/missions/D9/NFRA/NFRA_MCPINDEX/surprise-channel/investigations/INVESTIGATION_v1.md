@@ -8139,6 +8139,50 @@ carries none.
       ]
     },
     "notes": "Against the cut the same check sums 93 of 93, so the release closes 26 of the 33 gaps the base has; 7 remain (row Z-S118)."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-15T09:43:21Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-S120",
+    "one_line": "opal_discover returns a silver table row's caveats as ONE CHARACTER PER ENTRY whenever the row's never_sum_rules is the string 'NONE -- the contract states no row-count rule for this table' (a string, not a list).",
+    "spec_asserts": "integration.py _silver_answer: 'its never_sum_rules as caveats'; the catalog row schema (gen_silver_rows NONE_ROW_COUNT) writes never_sum_rules as a list OR the NONE string for a table with no row-count rule.",
+    "world_is": "Live opal_discover on 1b18b94979, 2026-10-15 ~09:4xZ, subject 'news articles mentioning a stock with sentiment': the matches dynamodb_dynamodb_opal_news_articles, opal_data_portal_v2_served_news_trending_and_sentiment and opal_data_news_v2_gold_trending_reports each return caveats ['N','O','N','E','-','-','t','h','e',...] (51 one-character entries). Cause: integration.py line 663 iterates row.get('never_sum_rules') as a list; the harvest builder (line 703) guards with isinstance(nsr, list), the silver builder does not. Every table row whose contract states no row-count rule is affected (the NONE string).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py:663 (silver) against :703 (harvest, guarded)",
+        "the live opal_discover answer for the subject above (three matches, caveats of single characters)"
+      ]
+    },
+    "notes": "Ruling (issuer): fixed as an A1 on TO-MX-c-19 in the same file the F1 cell already ships (a string never_sum_rules becomes at most one caveat, and a NONE-prefixed string none); the shipped cut then carries it. Not a gate field: caveats are text."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~42",
+    "surfaced_at": "2026-10-15T09:52:48Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W42-S1",
+    "one_line": "MX-c-18 cannot record its own status flip: step 5.2 appends <status>complete</status> to the task order, and that file is not among the order's <paths>, so the flip is left to the issuer.",
+    "spec_asserts": "TO-MX-c-18 worker face section 5 step 2: 'APPEND <status>complete</status> only if all three criteria PASS'; section 3 <paths> names five surfaces (emit_catalog_v02.py, derive_nl_tags.py, tests/, the deliverables folder, INVESTIGATION_v1.md) and the task-order file is not one of them; bounds item 1: 'You change only the files in <paths>'.",
+    "world_is": "All three criteria PASS by output on this worktree: AC1 304 of 304 rows carry a non-empty nl_tags; AC2 44 of 44 empty base rows now have tags, marked inferred, and 260 of 260 tagged rows are byte-equal with no basis key; AC3 bad 0 of 44 inferred rows. The flip would append to org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-18.nl-tags-on-every-catalog-row.md, a path outside the write grant, so the worker did not write it. The order's status therefore stays open until the issuer lands the flip.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-18.nl-tags-on-every-catalog-row.md@2d9d5c4503 (worker face section 3 <paths> and section 5 step 2)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~42/NFRA_MCPINDEX.TO-MX-c-18.nl-tags-on-every-catalog-row.proof_of_spec.json (the three criteria, PASS by output, on this worktree)"
+      ]
+    },
+    "notes": "The worker followed the write grant and left the task-order file untouched. Landing the status flip is the issuer's act, or a grant that names the task-order path; nothing served changes either way."
   }
 ]
 ```

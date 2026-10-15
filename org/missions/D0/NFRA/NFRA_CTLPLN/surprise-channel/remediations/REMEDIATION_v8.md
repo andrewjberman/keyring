@@ -23,16 +23,16 @@ Every round-16 order is terminal (three complete).
   "owner": "1.0.0_SA_CTO",
   "round": "v21",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO",
    "round": "v21"
   },
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO",
-   "at": null
+   "at": "2026-10-15T09:45Z"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
