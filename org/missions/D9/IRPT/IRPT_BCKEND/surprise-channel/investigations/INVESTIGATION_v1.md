@@ -38008,3 +38008,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The published .manifest.json belongs to publication.py, outside this order's paths. This build records closed_at_source in snapshot _manifest (the run manifest that carries the other manifest facts and is returned by run_firm); a run with no exempted account leaves it byte-unchanged. Whether the served manifest should carry the fact is for the issuer: that needs a grant on publication.py. The evidence loader that feeds the provider is the next cell."
 }
 ```
+
+## IRPT_BCKEND-D2-W419-S2 -- AMENDMENT 1 part (ii) needs the exempted account listed in its household in the served snapshot; the account nodes are built by holdings_49f.py, which is outside the paths grant, so that part is stopped and the words helper alone is built.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W419-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~419",
+  "surfaced_at": "2026-10-15T13:13:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 1 part (ii) needs the exempted account listed in its household in the served snapshot; the account nodes are built by holdings_49f.py, which is outside the paths grant, so that part is stopped and the words helper alone is built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py@0bd0f39b2b line 378 builds the ACCOUNT nodes of the 49 Financial snapshot with hs._node(account_id, None, 0, ACCOUNT, ...); the household listing is built from these nodes there",
+      "data/assets/scripts/gold/investor_reporting/holdings_membership.py@0bd0f39b2b lines 110 and 119 read ACCOUNT nodes to build the membership roots; the holdings_inf.py builder carries the same node construction",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@0bd0f39b2b holds only the generic _node helper and the gate; the household node placement is not in it"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-576 AMENDMENT 1 (msg 8290) part (ii): the served snapshot keeps the exempted account listed in its household, with no position nodes, the words Not reported by the custodian since <date>, and its last served value never shown as current.",
+  "world_is": "The household account node is built by holdings_49f.py (and holdings_inf.py, holdings_membership.py), none of which is in this order's paths. Built in holdings_snapshot.py: the absent_at_source manifest record and not_reported_display (the words). NOT built: the household node placement in the served snapshot. Stopped on that part per the coordinator. The issuer amends the grant (or re-cuts that part) before it can be built.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
