@@ -10,7 +10,7 @@
  "subject": "NFRA_CTLPLN FWD-3: acknowledge this laptop->dell1 test message (nothing else asked)",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD3_LAPTOP_TO_DELL1_ACK_ASK.md",
  "opened_at": "2026-10-15T12:17:12Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-15T12:21:40Z",
   "bus_message_id": "99af5612-4899-4bfd-a157-9e1ca3805d4c"
@@ -21,8 +21,8 @@
   "bus_message_id": "0762eaf5-10e3-4226-af2e-a8d104289446"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-15T15:27:41Z",
+  "from_by": "0.0.0_AB_MSTR",
   "to_at": "2026-10-15T12:44:10Z",
   "to_by": "0.0.0_AB_MSTR~DELL1"
  }

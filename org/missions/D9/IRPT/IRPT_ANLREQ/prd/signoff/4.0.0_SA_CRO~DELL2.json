@@ -1,12 +1,12 @@
 {
   "prd": "IRPT_ANLREQ_PRD.md",
-  "prd_version": "v0.11",
-  "prd_pin": "3f4214a3ea55834a21cbe6c994d3713dfd450625",
+  "prd_version": "v0.14",
+  "prd_pin": "81d9691b712bdce6b16b3344c8abb83b3eb8ca88",
   "half": "brief",
-  "half_hash": "c25995d9b3ce6c2aa8ded41d28156acbc04b65789d7028582d0720051ca87552",
-  "endpoint_hash": "4a11972140008a5398ee2a41672c5a45b30d230c0a07b99b9710bc30f78ac7b7",
+  "half_hash": "ed36d31b46a18de04c17435f297ceb760b0294977a4f5e280775e87aa24dedf0",
+  "endpoint_hash": "f2cdb6557373b14d6f2e68ce3d772418b3aba38cf1ef169d048ffa52bc9995b5",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_IRPT_ANLREQ_v0.10_BRIEF_HALF_20261014.md@21c46aecdf",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_IRPT_ANLREQ_v0.14_BRIEF_HALF_20261015.md@a1ef88928e",
   "signed_by": "4.0.0_SA_CRO~DELL2",
-  "signed_at": "2026-10-14T16:06:59Z"
+  "signed_at": "2026-10-15T15:30:49Z"
 }

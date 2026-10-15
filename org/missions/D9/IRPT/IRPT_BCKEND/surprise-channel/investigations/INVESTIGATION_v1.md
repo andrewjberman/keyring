@@ -38678,3 +38678,214 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W420-S3 RESOLVED (the 46 failures were the sparse worktree; in the main tree the 21 failures are identical at base). D2-W420-S2 INERT, recorded (the first-absent-day walk counts any row of the lost account while the exemption counts zero as absent, so first_absent_day can be null and the words then use the prior trading day). D2-W420-S1 stays ARMED, owner me: run_firm freezes the source receipts before the gate, so the prior-day partitions the exemption reads are not in the manifest source objects; the manifest entry carries the dates but not those object keys; it goes into the never-widen pair as a stated limit unless the CTO asks for the keys. D2-W421-S1 RESOLVED (AMENDMENT 1 @7c8acc5500), S2 RESOLVED (identifier chain, with a test), S3 RESOLVED (ticker_symbol is a column of the 49 Financial transactions partition: read by me today on one partition), S4 RESOLVED (check r216 amended @9a6cf90e04: the order file joins the allowed list). Not released: the changed gate and the new producer reach the firms only by an apply under a never-widen pair after a producer dry run (the exemption ALONE per firm, and the split adjustment before and after)."
 }
 ```
+
+
+## IRPT_BCKEND-D2-W422-S1 -- IB-pr-580 (49 Financial): the WITH arm exempts one lost account, but the gate still REFUSES on account_lost for other lost accounts, so run_firm applies no listing and the exemption alone adds no node; checker AC2 expects one adde
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W422-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~422",
+  "surfaced_at": "2026-10-15T15:12:00Z",
+  "one_line": "IB-pr-580 (49 Financial): the WITH arm exempts one lost account, but the gate still REFUSES on account_lost for other lost accounts, so run_firm applies no listing and the exemption alone adds no node; checker AC2 expects one added node per exempted account.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 3 and checker AC2: an exempted account is listed as a zero-value account node and no longer refuses as account_lost, and each exempted account adds exactly one account node to the candidate.",
+  "world_is": "At base 9b74f17beb on the live pinned inputs (candidate day 2026-10-14, served day 2026-10-12): the WITHOUT arm REFUSES on classified_security_lost and account_lost; the WITH arm exempts 1 account and still REFUSES on classified_security_lost and account_lost, so no listing is applied (nodes_added 0, accounts_added 0). listing_if_applied measures +1 node and +1 account, information only. The served index does not move. Checker AC2 FAILS on this firm (exempted 1, nodes added 0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py evaluate_publish_gate @9b74f17beb2d336735966146abc6b2b8d1567196 (the account_lost branch after the absent_at_source exemption)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py run_firm @9b74f17beb2d336735966146abc6b2b8d1567196 (_absent_scope_listing only when the gate is PUBLISHED)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~422/IB218-1_exemption_delta.json (harness run at base 9b74f17beb, uncommitted until this order's first commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W422-S2 -- IB-pr-580 (Cottonwood): the WITHOUT arm already PUBLISHES, because its directory marks no closures and the four lost accounts are listed as not refused, so the exemption adds four listed nodes to a publication that would publish a
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W422-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~422",
+  "surfaced_at": "2026-10-15T15:12:00Z",
+  "one_line": "IB-pr-580 (Cottonwood): the WITHOUT arm already PUBLISHES, because its directory marks no closures and the four lost accounts are listed as not refused, so the exemption adds four listed nodes to a publication that would publish anyway; checker AC2 expects the exemption to clear an account_lost refusal.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "Checker AC2: an exemption that applied was an account_lost refusal in the WITHOUT arm, and the exemption alone is the served delta the never-widen pair governs.",
+  "world_is": "At base 9b74f17beb: WITHOUT is PUBLISHED with no condition and listed_not_refused 4 (no account_lost condition). WITH is PUBLISHED with no condition, exempted 4, nodes_added 4, accounts_added 4, amount_added_usd 0, other_nodes_changed 0. The exemption is live at HEAD, so a publish of this firm on these inputs moves the served index by four zero-value account nodes. Checker AC2 FAILS on this firm (the without arm carries no account_lost).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py evaluate_publish_gate @9b74f17beb2d336735966146abc6b2b8d1567196 (the marks_no_closures branch lists a lost account as account_lost_not_refused)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py run_firm @9b74f17beb2d336735966146abc6b2b8d1567196 (the absent_at_source provider and the PUBLISHED-only listing)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~422/IB218-1_exemption_delta.json (harness run at base 9b74f17beb, uncommitted until this order's first commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W422-S3 -- IB-pr-580: the second fire as the order words it (serve the WITH candidate's account ids) is vacuous for the refusing firm, because the WITH ids carry none of the lost accounts; the run used the served set plus the WITH ids and re
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W422-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~422",
+  "surfaced_at": "2026-10-15T15:12:00Z",
+  "one_line": "IB-pr-580: the second fire as the order words it (serve the WITH candidate's account ids) is vacuous for the refusing firm, because the WITH ids carry none of the lost accounts; the run used the served set plus the WITH ids and records both readings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 5: serve the WITH candidate's account ids as the served set, gate the WITHOUT candidate again with the provider, and record exempt_again and outcome_account_lost.",
+  "world_is": "At base 9b74f17beb, for the refusing firm the literal served set (WITH ids only) gives exempt_again false and outcome_account_lost false with only classified_security_lost left, a set in which no account is lost. The served set plus the WITH ids gives exempt_again true and outcome_account_lost true, because account_lost remains for the other lost accounts. For the publishing firm both readings give exempt_again true and outcome_account_lost false. Both readings are in the record (second_fire, second_fire_literal).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-580.exemption-delta.md step 5 @9b74f17beb2d336735966146abc6b2b8d1567196",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~422/IB218-1_exemption_delta.json second_fire and second_fire_literal blocks (harness run at base 9b74f17beb)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W424-S1 -- The commit gate's client-data check did not run for commit 381be2ca6c: the hashed account-id list was absent on this device, so the gate printed WARN and checked nothing.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W424-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~424",
+  "surfaced_at": "2026-10-15T15:13:08Z",
+  "one_line": "The commit gate's client-data check did not run for commit 381be2ca6c: the hashed account-id list was absent on this device, so the gate printed WARN and checked nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "The worker face's client data rule and the commit gate's client-data check together keep client account ids out of tracked files on every commit.",
+  "world_is": "On this device the hashed account-id list is not at the default user path and OPAL_ACCOUNT_ID_HASHES is unset, so the check printed a WARN and did not grade commit 381be2ca6c. The worker's own new test file uses synthetic ids (1001, 1002) and holdings_snapshot opaque ids; no real account id was typed by this worker. Until the list is placed, every commit on this device is ungraded for that rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at commit 381be2ca6c: WARN: client-data-check: hashed account-id list ABSENT at the default user path -- this commit was NOT checked for client account ids",
+      "git show 381be2ca6c --stat: 3 files changed, 390 insertions (holdings_snapshot.py, tests/test_absent_at_source_receipts.py, the IB219-1 record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W425-S1 -- IB-pr-583 premise: the run manifest split_adjust block is named to sum days_ratio_absent and unkeyed_split_rows over days, but the producer has no run-level manifest; each day writes its own manifest.json.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W425-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~425",
+  "surfaced_at": "2026-10-15T15:13:35Z",
+  "one_line": "IB-pr-583 premise: the run manifest split_adjust block is named to sum days_ratio_absent and unkeyed_split_rows over days, but the producer has no run-level manifest; each day writes its own manifest.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face, Change (4): the run manifest's split_adjust block gains days_ratio_absent (the number of days with unkeyed_split_rows above zero) and unkeyed_split_rows (summed over days).",
+  "world_is": "The producer writes one manifest.json per day: emit_day() writes it, and main() maps one(day) over the day list with no run-level aggregate. The new keys are filed per day: days_ratio_absent is 0 or 1 for the day and unkeyed_split_rows is the day's count, so a run total is a sum over the day manifests, which no code in the product computes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py@5e4de60381156ab04d057ea7305c0958f31981e8 emit_day() writes one manifest per day via the split_adjust block",
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py@5e4de60381156ab04d057ea7305c0958f31981e8 main() one(day) maps emit_day over the day list; no run-level manifest"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only: no grading moves. The key names and per-day values follow the spec; a run total needs a consumer that sums the day manifests, which is the CTO's to rule."
+}
+```
+
+## IRPT_BCKEND-D2-W425-S2 -- IB-pr-583 shape: the manifest builder's return literal had to become a named block so the SPLIT-ADJUST-B merge could be hooked in; the A-block change carries no logic.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W425-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~425",
+  "surfaced_at": "2026-10-15T15:13:35Z",
+  "one_line": "IB-pr-583 shape: the manifest builder's return literal had to become a named block so the SPLIT-ADJUST-B merge could be hooked in; the A-block change carries no logic.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face, Change: all new logic inside SPLIT-ADJUST-B blocks; the module must stay importable with the blocks removed.",
+  "world_is": "_split_adjust_manifest() returned a dict literal. The B merge needed a name, so the literal became block = {...} with one B line (block.update) and return block; six A-block lines change shape. With the B blocks removed the function returns the original dict, and the difference control gave 10 failed and 0 errors.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py@5e4de60381156ab04d057ea7305c0958f31981e8 _split_adjust_manifest() return literal before the edit",
+      "tests/test_split_unkeyed.py difference control with the SPLIT-ADJUST-B blocks stripped in memory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The grant names the product file, so the shape change is inside it; no other product line moved and no existing assertion was edited."
+}
+```
+
+## IRPT_BCKEND-D2-W425-S3 -- Difference-control trap: a strip-in-memory run without PYTHONPYCACHEPREFIX loads a stale __pycache__ .pyc and reports the stripped module as green.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W425-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~425",
+  "surfaced_at": "2026-10-15T15:13:35Z",
+  "one_line": "Difference-control trap: a strip-in-memory run without PYTHONPYCACHEPREFIX loads a stale __pycache__ .pyc and reports the stripped module as green.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face, difference control: the check removes every SPLIT-ADJUST-B block in memory and runs the new test file, which must FAIL on assertions.",
+  "world_is": "A runner that patches SourceFileLoader.get_data is bypassed when a valid .pyc exists, because the loader validates the pyc before it calls get_data. My first own run passed 10 of 10 with the blocks stripped. With PYTHONPYCACHEPREFIX set to a scratch directory the same run gave 10 failed and 0 errors. The issuer's p200 build_ac2 sets that prefix, so the check is not affected; a hand-written run is.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py@5e4de60381156ab04d057ea7305c0958f31981e8 build_ac2 sets PYTHONPYCACHEPREFIX",
+      "worker run on this worktree: first strip run 10 passed; second run with the prefix 10 failed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Instrument trap, not a product defect. Any hand-written removal run should set the prefix or delete the pycache first."
+}
+```
+
+## IRPT_BCKEND-D2-S203 -- The served DELTAs measured and the two repairs built: the exemption alone does not unblock 49 Financial; Cottonwood already publishes at HEAD; the split adjustment moves 1,291 account-days
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S203",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T15:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The served DELTAs measured (~PJ r1) and the two repairs built (~PK r1): the exemption alone does NOT unblock 49 Financial (REFUSED with and without it: other lost accounts and classified_security_lost remain) and Cottonwood already PUBLISHES at HEAD without it (four lost accounts listed as not refused), so the exemption there only makes them visible; the split adjustment moves 1,291 of 266,455 account-days.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merges d1ba413cec (IB-pr-580), 2f69e24932 (IB-pr-581), df174ee533 (IB-pr-582), 18812065e6 (IB-pr-583); flips 047090f52c, acbefa3a09 and the workers' own flips of 582 and 583; all four proof instances VALID (rc=0) in the main tree; round-close-check reads MAY-CLOSE for ~PJ and ~PK",
+      "IB218-1 record (deliverables/0.9.0_WK_IRPT_BCKEND~422/IB218-1_exemption_delta.json): candidate 2026-10-14 against served 2026-10-12 (49 Financial) and 2026-10-08 (Cottonwood); 49 Financial: 156,074 nodes and 7,664 accounts with and without, REFUSED on classified_security_lost and account_lost both ways, 1 account exempted, listing not applied, 0 nodes added; Cottonwood: 17,927 nodes without (PUBLISHED, 4 lost accounts listed as not refused), 17,931 with (PUBLISHED, 4 exempted accounts listed), 4 nodes added, 0 other node changed, 0 USD added",
+      "IB218-2 record (deliverables/0.9.0_WK_IRPT_BCKEND~423/IB218-2_split_delta.json): 47 split days of 49 Financial, 266,455 account-days run, 1,291 changed, 1,293 holding a split security at t-1, 63 securities adjusted, 13 ratio-absent, returns at or below -50 percent 3 before and 2 after, no status move; 2026-04-21: 985 changed (the ruling states 920)",
+      "main tree after the drains: pytest over the investor_reporting, holdings lambda and performance tests gives 730 passed and 21 failed, the same 21 as at the pre-round base 476d0ed981"
+    ]
+  },
+  "spec_asserts": "The CTO's msg 8359: dry-run DELTA per firm with each change alone on the same candidate; W421-S2 and W420-S1 are mine.",
+  "world_is": "DISPOSITIONS AND FINDINGS. (1) 49 Financial is NOT unblocked by the exemption: besides the one exempted account the gate still refuses on account_lost for other lost accounts and on classified_security_lost; neither is read yet (a READ cell follows: the anatomy of 49 Financial's remaining refusal, counts only). (2) Cottonwood publishes at HEAD's gate without the exemption: the live bundle's refusal is the deployed-gate difference of D2-S199, which the IB-pr-549 mint removes; the exemption adds four zero-value account nodes to a publication that would publish anyway (visibility, not unblocking); its second fire exempts again. (3) The split adjustment moves 1,291 account-days (0.48 percent of those run) and leaves 2 returns at or below -50 percent; 13 of 76 split security-days are ratio-absent (not graded) and now counted; the CTO's 920 for 2026-04-21 is not reproduced (985 here, as in the READ): ARMED, owner me, a figure to read with the CTO. W422-S1 and S2 are these findings; W422-S3 resolved (both second-fire readings recorded); W423-S1 inert (read-path calls only), S3 explained (2 holding account-days sit in ratio-absent securities); W424-S1 and W425-S1 to S3 inert or resolved (the producer writes one manifest per day, so the totals are summed over days by the reader). The workers' array-form channel rows made the union merge duplicate rows twice; the issuer re-formed them as blocks on the branches (a hazard to teach the next worker face: append each row as its own block)."
+}
+```
