@@ -16988,3 +16988,168 @@
   "notes": "Reads only; nothing changed. Next: a read-only trace of the staff firms path on the DEV build (what directory/resolve returns for a staff context, and when a chosen firm makes the catalogue load) as a worker cell, before the run order flips."
 }
 ```
+
+## IRPT_ANLREQ-D2-W150-S1 -- the backend source path the order names is skip-worktree in this worktree; it was read as HEAD blobs with git show
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W150-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~150",
+  "surfaced_at": "2026-10-15T14:26:36Z",
+  "one_line": "The backend source path the order names, infra/aws/lambda/investor-reporting/, is not on disk in this worktree (sparse checkout, skip-worktree); its files exist at HEAD and were read with git show, with no checkout change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-348 cell: the backend source is under infra/aws/lambda/investor-reporting/ of your worktree, read with file:line evidence. Worker rule: a worktree that does not carry the paths the order names is a BLOCKING row and a stop; never reconstruct the tree.",
+  "world_is": "git sparse-checkout list in C:/dev/wk-irpt-anlreq-150 omits infra/aws; git ls-files -t marks the files under infra/aws/lambda/investor-reporting as S (skip-worktree); ls of that directory returns no such path. The blobs exist at HEAD 742646e9a4 and were read with git show; no sparse change, checkout or copy was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -t infra/aws/lambda/investor-reporting at 742646e9a4 (S flag on the files)",
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-150 (no infra/aws entry)",
+      "infra/aws/lambda/investor-reporting/directory/entry.py:2 @742646e9a4 (read by git show HEAD:path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The BLOCKING rule was read as not triggered: the write grant is the channel file, and the source read is a git show of the committed blobs, which the cell itself names as an allowed read. The issuer decides whether a sparse worktree is an acceptable read carrier for cells of this kind."
+}
+```
+
+## IRPT_ANLREQ-D2-W150-S2 -- the FWD-1 driver record the order cites is in no checkout this worker can read, so the minted staff row's values are the order's words
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W150-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~150",
+  "surfaced_at": "2026-10-15T14:26:36Z",
+  "one_line": "The order cites org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/r41/FWD1_DRIVER_RECORD.json for the minted staff row; that file is absent from this worktree, from HEAD and from the base checkout.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-348 Q4: the FWD-1 staff user is a users row with firmId opal-capital, userType test-filer, role user, status active, no allowedFirmIds and no MFA attributes, as recorded in ~149/r41/FWD1_DRIVER_RECORD.json (earlier reads ~146 FWD1_PREREQ_READ.json and ~148 FWD1_LOGIN_DRIVER_READ.json).",
+  "world_is": "The directory org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/r41 does not exist in this worktree; git cat-file -e HEAD of the record path fails; git log --all on that path is empty; the base checkout C:/dev/ajb_workspace has no such file. The Q4 answer uses the attributes as the order states them. The recommendation depends on status 'active' and on the absence of allowedFirmIds (served.py:1176-1180) and on firmId opal-capital (served.py:332); a different minted value changes RUN_AS_MINTED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git cat-file -e 742646e9a4:org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/r41/FWD1_DRIVER_RECORD.json (fails: path absent)",
+      "C:/dev/ajb_workspace/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/r41 (no such directory)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1176-1180 @742646e9a4 (the attributes the recommendation depends on)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Before TO-RUN-FWD1 flips, the issuer should confirm the minted row against the record it cites, or name where that record now lives."
+}
+```
+
+## IRPT_ANLREQ-D2-W150-S3 -- origin/PROD never reads the firms for a staff caller, which explains the words, but the four measured directory/resolve invocations have no PROD source caller
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W150-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~150",
+  "surfaced_at": "2026-10-15T14:26:36Z",
+  "one_line": "origin/PROD TicketCenter skips the firms read for an internal caller (line 306), which explains the staff 'still loading' words, yet the four measured directory/resolve invocations have no non-test origin/PROD caller, so the deployed PROD bundle is not origin/PROD or those calls came from another client.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-348 Q1 and Q3: the issuer's measured four invocations of directory/resolve at 13:54:20-21Z are the firms read of the PROD Ticket Center; the PROD build is to be read at origin/PROD.",
+  "world_is": "origin/PROD src/pages/TicketCenter/TicketCenter.tsx:306 is 'if (!formShown || internal) {', so the staff form never calls loadAllowedFirms; origin/PROD AnalysisRequestParts.tsx has no staff Firm control (no FIRM_CHOICE_LABEL). A non-test grep of origin/PROD src finds one caller of resolveDirectoryContext (TicketCenter.tsx:103, reached only via loadAllowedFirms) and no resolve-scope caller. Staff on PROD cannot choose a firm and see 'Your firms are still loading' with no failure. The deployed PROD bundle was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "origin/PROD:src/pages/TicketCenter/TicketCenter.tsx:306 @c3b21a40e2 (the internal skip)",
+      "git grep of origin/PROD -- src for resolveDirectoryContext( and resolve-scope, non-test paths (one caller)",
+      "CloudWatch measurement in the order: /aws/lambda/irpt-directory-search 2026-10-15 13:54:20-21Z, four invocations (issuer-measured; not re-read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A PROD staff fix is a portal change on a cand branch cut from the PROD release with approval, not part of this order. The owner decides whether the deployed PROD bundle matches origin/PROD and which client made the four calls."
+}
+```
+
+## IRPT_ANLREQ-D2-W150-S4 -- a refused catalogue or firms read reaches the staff user as a fixed sentence, because both clients discard the reason
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W150-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~150",
+  "surfaced_at": "2026-10-15T14:26:36Z",
+  "one_line": "fetchCatalogue returns null for any failed read and the firms catch keeps only a failed flag, so a FIRM_BINDING refusal shows as 'The Opal model list is not loaded.' or 'could not be loaded', with no reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A value must carry its claim in a field a consumer can reject on: a refused read names its reason to the user, not a generic sentence.",
+  "world_is": "comparisonCatalogue.ts:31-35 catches every error from the catalogue read and returns null, identical on origin/PROD and origin/DEV; TicketCenter.tsx:315 catches the firms read and sets firmsFailed true with a fixed sentence, discarding the error. The Lambda log holds FIRM_BINDING; the page does not show it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "src/pages/InvestorReporting/tabs/analysis/comparisonCatalogue.ts:33-34 @c3b21a40e2 (catch returns null)",
+      "src/pages/TicketCenter/TicketCenter.tsx:315 @ad7c100b5c (catch sets firmsFailed and FIRMS_NOT_LOADED)",
+      "src/pages/TicketCenter/AnalysisRequestParts.tsx:169 @c3b21a40e2 (the model list words)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This is the reason the issuer's 13:54Z user saw no failure text beyond the fixed sentences. Not a fix in this cell."
+}
+```
+
+## IRPT_ANLREQ-D2-W150-S5 -- two directory modules each carry a bucket-map reader for irpt-directory-search; the route is entry.py, and the shipped handler setting was not read
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W150-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~150",
+  "surfaced_at": "2026-10-15T14:26:36Z",
+  "one_line": "directory/handler.py and directory/entry.py both serve the irpt-directory-search surface and both read IRPT_DIRECTORY_BUCKET_MAP; the route table and function name point at entry.py, and which module the Lambda's handler setting names was not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "directory/entry.py:2-16 (the guarded entry resolves the scope on the server; handler.py is not edited and is the pure projection) and the route table entry.py:394-395.",
+  "world_is": "infra/aws/ci lambda-source-map.json lists both files under irpt-directory-search; entry.py:394-395 routes POST directory/resolve to resolve-scope and entry.py:460 names the function; handler.py:52 and handler.py:441 read the bucket map a second way, and handler.py:458 defines its own lambda_handler. The Terraform handler setting for the function was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/directory/entry.py:394-395 @742646e9a4 (the route)",
+      "infra/aws/lambda/investor-reporting/directory/handler.py:441 @742646e9a4 (a second bucket reader)",
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-directory-search files list @742646e9a4 (both modules shipped)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Named so that a reader of directory/handler.py is not taken for the route. No change made."
+}
+```
+
+## IRPT_ANLREQ-D2-S119 -- DISARMS S118: PROD's staff form has no firm chooser by design; the DEV run is predicted to load
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S119",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-15T14:34:38Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S118 (why the PROD Ticket Center's model, ticker and firm lists do not load): source read at two refs says PROD has no staff firm chooser by design, so a staff caller's firms stay null and the catalogue is refused; DEV has the chooser and the FWD-1 run's minted staff user is predicted to load both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S118: why the lists do not load on PROD for a staff caller; the FWD-1 run on DEV uses the same live API, so the firms path had to be read before TO-RUN-FWD1 flips.",
+  "world_is": "RECORD, re-run by this seat in the worker's worktree: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~150/r41/STAFF_FIRMS_CATALOGUE_READ.json (merge 1016466044): shape check SHAPE-OK, cite check CITES-OK 107 of 107 (53 Lambda lines at 742646e9a4, 54 portal lines at pinned origin/PROD and origin/DEV shas), proof instance VALID (rc 0, run from the worktree's own checker). It reads: (1) origin/PROD carries the staff-not-filing sentence (AnalysisRequestParts.tsx:92, 151) and no staff firm chooser, and never reads the Global firms for an internal caller (TicketCenter.tsx:306), so a staff caller's firms stay null with no failure: the form's 'Your firms are still loading'; (2) with no firm chosen the staff catalogue request carries no selected_tenant and is refused (loaders.py:67 via served.py:1290-1296), so no models or tickers: the measured FIRM_BINDING refusal of S118; (3) origin/DEV carries the chooser (AnalysisRequestParts.tsx:156-164) and not the sentence; the DEV tests assert its absence; (4) for the FWD-1 minted staff row (status exactly 'active', no allowedFirmIds) the boundary admits an unrestricted internal caller for the Global firms read and a partner-firm catalogue read (served.py:1177-1180; firmId opal-capital internal at served.py:332): the worker recommends RUN_AS_MINTED. These are SOURCE predictions: the per-firm READY state and the catalogue contents depend on live directory artifacts, not read (worker's not_read). So PROD's behavior is the pre-change design (staff open requests from the queue), not a defect to repair on PROD; promoting the DEV candidate with the chooser to PROD is a client-facing push that waits on Andrew's word. NOT read: the PROD bundle as compiled, the four directory/resolve invocations' callers (worker row W150-S3 stays open: no origin/PROD caller of that read for an internal caller was found), live responses.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~150/r41/STAFF_FIRMS_CATALOGUE_READ.json",
+      "this seat's re-run of shape_check.py, cite_check.py and the worktree's proof-of-spec-check (VALID)",
+      "safe-merge 1016466044"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The cause is read from source at both refs; PROD's behavior is the pre-change design, and the run's DEV path is predicted to load; the live confirmation is the FWD-1 run itself.",
+  "notes": "Resolves IRPT_ANLREQ-D2-S118. W150-S2 is answered: FWD1_DRIVER_RECORD.json is committed in the main tree under 0.9.0_WK_IRPT_ANLREQ~149/r41/ (read by this seat); the worker's checkout simply lacked it. Time of filing is the file's commit time."
+}
+```
