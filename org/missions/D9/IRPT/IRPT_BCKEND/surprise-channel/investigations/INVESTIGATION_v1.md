@@ -38915,3 +38915,82 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. The twin the order first named (a refused wrong-typed body before and after) could not discriminate: every event needs header-asserted edge identity before validate_public_request, so the applier stopped and the CTO ruled byte reads (msg 8364). The replay at the pin reads 3 of 17 arms different from the packet's verdicts because the packet recorded the live side before release 29; the 14 others match (check r217 AMENDMENT 2). The function ACCEPTING a submission is UNEXERCISED LIVE until the DEV FWD-1 run (run by ~Y2 and ~AQ2): ARMED, owner me, disarmed by the first accepted request that carries the member."
 }
 ```
+
+## IRPT_BCKEND-D2-W430-S1 -- The import chain of IB-pr-587 reads data/firm_registry.json at the repo root, which no named sparse directory carries; the worker used the module's own IRPT_FIRM_REGISTRY override on a scratch copy of the tracked blob.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W430-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~430",
+  "surfaced_at": "2026-10-15T16:27:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The import chain of IB-pr-587 reads data/firm_registry.json at the repo root, which no named sparse directory carries; the worker used the module's own IRPT_FIRM_REGISTRY override on a scratch copy of the tracked blob.",
+  "spec_asserts": "The worker face says to add the directory of each import error until the named test files collect, using the directories it lists; those directories are the sparse set the chain needs.",
+  "world_is": "At base a4a81b30af the chain reads data/firm_registry.json: infra/aws/lambda/investor-reporting/_ids/ids.py _find_registry (line 136) raises IdRefused when no candidate exists. The worktree is in cone mode, so the only sparse add that brings that root file is the whole data/ tree. The worker set IRPT_FIRM_REGISTRY to a scratch copy of the tracked blob (not committed) and added docs/contracts/investor-reporting, which the face names, for the currency authority. Both are local only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ids.py:136 at a4a81b30af: _find_registry raises IdRefused when no candidate path exists (read in the worktree)",
+      "data/firm_registry.json is a tracked blob at a4a81b30af and is absent from the worktree sparse tree",
+      "pytest on the existing mapping test, in order: ids not found; IdRefused at collection; CurrencyAuthorityRefused (2 failed, 2 passed); 4 passed after the two additions"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W430-S2 -- The worker's Read of the order file returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W430-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~430",
+  "surfaced_at": "2026-10-15T16:27:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The worker's Read of the order file returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker.",
+  "spec_asserts": "The worker face is the whole worker context and the RECORD FACE never travels to a worker; the worker face instructs the worker not to read the RECORD FACE.",
+  "world_is": "The Read tool returned all 94 lines of the order file, including the RECORD FACE section after the paths block. The worker had no way to read only the worker face with the tool it was given. The worker wrote its record from the worker face clauses and did not change its plan from the RECORD FACE content.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-587.orion-household-accounts.md at a4a81b30af: 94 lines, RECORD FACE at lines 83 to 93",
+      "worker face instruction at line 20 of the same file: the RECORD FACE is not part of the worker context"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W430-S3 -- After the household lift, orion_selected.py line 11 states that the mapping refuses any multi-account household, which is no longer true; the consumer guard that remains is calculate() lines 140 to 153.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W430-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~430",
+  "surfaced_at": "2026-10-15T16:27:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "After the household lift, orion_selected.py line 11 states that the mapping refuses any multi-account household, which is no longer true; the consumer guard that remains is calculate() lines 140 to 153.",
+  "spec_asserts": "The orion_selected.py module docstring (line 11) says the one-account Scope request is safe for a household holding exactly the ONE mapped account, because orion_account_mapping refuses any other. The order says the serve-path consumers are not changed by this cell.",
+  "world_is": "The lift makes that docstring false, and the orion_account_mapping.py comment at lines 76 to 79 still states the old refusal. requests_for (orion_selected.py line 67) addresses the household entity with vendor_household_id. The guard that remains is calculate() at lines 140 to 153: exactly one selected account, and exactly one Account group whose groupEntityId equals vendor_account_id, else refused. The worker did not change orion_selected.py (outside the grant) and did not run the guard against a live Orion return; the guard was read, not run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "orion_selected.py:11 at a4a81b30af: module docstring names orion_account_mapping as the refuser of any other household",
+      "orion_selected.py:140-153 at a4a81b30af: calculate() guards on one selected account and one Account group whose groupEntityId matches",
+      "orion_selected.py:67-89 at a4a81b30af: requests_for addresses the household entity with the mapped household id"
+    ]
+  }
+}
+```
