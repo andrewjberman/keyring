@@ -287,3 +287,25 @@ The CTO's ruling 2: a read-only trace from Black Diamond silver to the Cottonwoo
 | cell id | owner |
 |---|---|
 | DB-c-21 | 0.9.0_WK_IRPT_DASHBD~413 |
+
+## 14. ROUND 145, WORKSTREAM B-CW (2026-10-15 ~23:5xZ, issuer 2.0.0_SA_COO~C2, on Andrew's go for the IRPT suite parallelization through the CTO's ruling `CTO_RULING_DELL2_IRPT_PARALLELIZE_WORKSTREAM_ASSIGNMENTS_20261015.md` Move 2, msg 8741): FWD-10, Cottonwood first
+
+**The outcome (PRD FWD-10, F8, surface row S07, C-COVERAGE, C-HONESTY):** "A person can always tell what they are looking at: where the data starts, which days could not be measured, when a figure is a fallback, and how current the data is." EXERCISED, read from the screen alone: a partial-history account, a day that could not be measured, a fallback day and a window before the news data starts are each explained on screen in a sentence; no state is hidden inside an average. The CTO's order of work: Cottonwood first (the 07-10 floor, the 3 absent days, the 12-day gap, all measured), then 49 Financial and Inflection. Write surface: the coverage readers and `MethodAndSources` (S07) and the coverage vocabulary.
+
+**Measured by this seat before the cut (read-only, 2026-10-15 ~23:4xZ, so the cells can be graded against them):** Cottonwood `filled_report_values` holds 65 partitions from 2026-07-10 to 2026-10-14, written in one hour on 2026-10-15 (a backfill by another lane, not the scheduled run); 3 of the 68 trading days since 2026-07-10 are absent (2026-08-19, 2026-09-24, 2026-09-25); `account_return_daily` holds 3390 partitions from 2013-04-03 with a run of 12 absent trading days, 2026-06-23 to 2026-07-09 (the days between the last pre-July partition and the floor), plus the same 3 absent days; `holdings_performance_daily` runs 2026-06-10 to 2026-10-14 with no absent day; `account_dim` holds 2026-10-13 and 2026-10-14. The census cell re-measures all of it and adds the reasons and the account histories; the checker recounts every figure from a fresh read.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-22` | The COVERAGE CENSUS (read only): for the four Cottonwood gold tables the first and last day, the absent trading days and runs; the floor and why (the empty Black Diamond `fact_allocations` partitions); the 12-day gap; the partial-history accounts; the coverage column's values | FWD-10 | LOCAL (a record; read-only AWS calls) | none | C-Q |
+| `DB-c-23` | WHAT THE PAGE SAYS TODAY (read only): for the four ACCEPT cases and the eight C-COVERAGE members, the code path from the data to the sentence on screen (or its absence) with file and line evidence; the wrong label of S07 | FWD-10, FWD-8 | LOCAL (a record; file reads) | none | C-R |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) Round 145 is two independent read cells, one fact-finding per side of the join (what the data holds; what the page says); the BUILD cells (the coverage readers, the sentences, the label correction under the S07 write surface, a test that opens the page) are cut at the round-146 analysis from these two records, because their size and files are not known until the records exist (the spec and the decomposition freeze mid-round, so I do not cut a build cell I cannot size). (b) The records carry counts, dates and words only; the checker re-reads every cited line and recounts every S3 figure, so a record cannot disagree with the plane or the code. (c) This round reads Cottonwood only; 49 Financial and Inflection follow the CTO's order once the Cottonwood pattern is built. (d) The portal is read in the worker's own portal worktree (cut at the portal DEV head), read only.
+
+**fanout:** 2 of 2 chains, cap 8, reason: the data census and the page read are independent chains with disjoint write surfaces (two worker folders). Workers `0.9.0_WK_IRPT_DASHBD~414` (`DB-c-22`) and `0.9.0_WK_IRPT_DASHBD~415` (`DB-c-23`).
+
+## Cells (round 145)
+
+| cell id | owner |
+|---|---|
+| DB-c-22 | 0.9.0_WK_IRPT_DASHBD~414 |
+| DB-c-23 | 0.9.0_WK_IRPT_DASHBD~415 |

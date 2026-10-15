@@ -9,3 +9,7 @@ Substantive ticks of the hour, copied from the runtime tick log.
 - 2026-10-15T21:33:56Z tick: spawned worker ~27 (RV-o-1, direct act); awaiting completion, then drain. result=work
 
 - 2026-10-15T21:44:32Z tick DSGN_RBNDV2 | lease FULL | EXECUTING r8 add3 | TO RV-o-1 pending (worker ~27 live: portal commit d52fc657 made, proof and flip owed) | thread y | outcome: DRIVE FORWARD = wait on live worker, drain on report; W27-S1 (scratch path /tmp, same as W26-S1) to rule at drain
+
+- 2026-10-15T21:47:47Z next-calls --drive: FREE option = commit owed 20Z/21Z drive logs -> d1ee27f686 (local, box/laptop); remaining option = drain RV-o-1 on worker report (event-gated). result=work
+
+- 2026-10-15T21:57:34Z drained RV-o-1 (portal 4299f28a, ws e15cf1770a); tsc 0, tests 50/0, live outlines + badges read; worktree 27 removed; told Andrew. result=work

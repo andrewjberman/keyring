@@ -40593,3 +40593,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-S210 -- Owner re-point to 2.0.0_SA_COO~N2 (IRPT_BCKEND ~PN and ~PO): rows D2-W404-S4, D2-W404-S6, D2-W404-S9, D2-W409-
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S210",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T23:50:00Z",
+  "one_line": "Owner re-point to 2.0.0_SA_COO~N2 (IRPT_BCKEND ~PN and ~PO): rows D2-W404-S4, D2-W404-S6, D2-W404-S9, D2-W409-S7 and D2-W430-S3 (and D2-W409-S2, read its disposition S190 first) now have ONE live owner, 2.0.0_SA_COO~N2; in-flight order IB-pr-596 stays issued by 2.0.0_SA_COO~P2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D2-W404-S4, S6, S9 and D2-W409-S7 name 2.0.0_SA_COO~P2 as owner (S190, S191); D2-W430-S3 and D2-W409-S2 name none.",
+  "world_is": "CTO ruling msg 8739 splits IRPT_BCKEND into three issuers: ~PN and ~PO go to 2.0.0_SA_COO~N2. The hazard standing of each row is unchanged by this row (ARMED rows stay ARMED); only the owner moves. S191's single-owner rule holds with the new serial.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_PARALLELIZE_WORKSTREAM_ASSIGNMENTS_20261015.md Move 1",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/HANDOVER_IRPT_BCKEND_P2_TO_N2_20261015.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner re-point by appended row (CTO ruling msg 8739); the old rows are not edited."
+}
+```
+
+## IRPT_BCKEND-D2-S211 -- Owner re-point to 2.0.0_SA_COO~S2 (IRPT_BCKEND ~PS, IB-pr-551 and ~PI): row D2-W411-S1 (does the export functi
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S211",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T23:50:00Z",
+  "one_line": "Owner re-point to 2.0.0_SA_COO~S2 (IRPT_BCKEND ~PS, IB-pr-551 and ~PI): row D2-W411-S1 (does the export function's role hold s3:GetObject on the platinum filled object?) now has ONE live owner, 2.0.0_SA_COO~S2; it is read live as STEP 0 of the IB-pr-551 deploy legs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D2-W411-S1 names 2.0.0_SA_COO~P2 as owner (S190).",
+  "world_is": "CTO ruling msg 8739 splits IRPT_BCKEND into three issuers: ~PS, IB-pr-551 and ~PI go to 2.0.0_SA_COO~S2. The hazard standing is unchanged (ARMED stays ARMED); only the owner moves.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_PO6_PS6_20261015.md",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/HANDOVER_IRPT_BCKEND_P2_TO_S2_20261015.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner re-point by appended row (CTO ruling msg 8739); the old rows are not edited."
+}
+```
