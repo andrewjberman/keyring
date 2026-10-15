@@ -17743,3 +17743,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The face's literal and the commit-time naming gate disagree: the gate refuses a hand-kept firm literal at LGIC_ENFORCE, and the sanctioned route is lookup(). The handler reads the firm through lookup(); FLOOR_DAY stays a plain string constant, which the checker's static clause requires. The checker's AC1 names no FIRM literal, so AC1 is not affected by the change. Counts and paths only; no client value."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W216-S1 -- the commit-time naming gate refuses the order's mandated tf_file and tf_resource in the new source-map entry, so the entry cannot be committed and the build cannot run
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W216-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~216",
+  "surfaced_at": "2026-10-15T17:03:03Z",
+  "one_line": "TO-DB-b-265's source-map entry irpt-cot-reporting-gold-lambda is REFUSED at commit by the naming limb (LGIC_ENFORCE): its tf_file and tf_resource carry the firm token cot as hand-kept carriers, so the commit aborted with nothing staged; the entry must be committed before the BUILD_ONLY run, so AC2 cannot run, and the order stops there as its refusal clause directs",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit of infra/aws/lambda/ci/lambda-source-map.json on branch wk-IRPT_DASHBD-216 (base 2c6ed37df3) returned ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged. The diff was 142 insertions and 0 deletions; the entry is UNCOMMITTED in the worktree and nothing is staged",
+      "the naming-gate refusal lines, verbatim: NAMING REFUSE infra/aws/lambda/ci/lambda-source-map.json:6583 infra/aws/terraform/investor-reporting/reporting-gold-cot/lambda.tf -> lookup('cottonwood') ; NAMING REFUSE infra/aws/lambda/ci/lambda-source-map.json:6584 module.irpt_reporting_gold_cot.aws_lambda_function.this -> lookup('cottonwood') ; NAMING-GATE: REFUSE 2 graded",
+      "the two refused values are the order's mandated tf_file and tf_resource (the order names them, and the issuer checker's ROOT_DIR and tf_resource constants require them). The landing entry irpt-cot-account-return-daily-lambda carries neither token in its tf_file or tf_resource (infra/aws/terraform/investor-reporting/account-return-daily/lambda.tf and module.irpt_account_return_daily.aws_lambda_function.this), so it was never refused; the new entry's source_dir and iam_role also carry the token and were not among the two graded refusals"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-265 step 3 says to commit the new source-map entry irpt-cot-reporting-gold-lambda (tf_file infra/aws/terraform/investor-reporting/reporting-gold-cot/lambda.tf, tf_resource module.irpt_reporting_gold_cot.aws_lambda_function.this) BEFORE running the BUILD_ONLY build, and the refusal clause says that if the naming gate refuses a name the worker records the refusal line verbatim, files a BLOCKING row and stops, and never types a name to pass it.",
+  "world_is": "The commit-time naming gate refuses the two mandated carriers as hand-kept cot tokens outside every permitted context, so the entry cannot be committed, the build (which reads committed source) cannot run, and no criterion past AC1 can be measured. The gate's own suggested route, lookup('cottonwood'), exists for Python code (worker 214's handler, row IRPT_DASHBD-D2-W214-S1) and has no form inside a JSON carrier. No Terraform file of the root was written by this worker, so AC1 was not run either. The worktree keeps the uncommitted entry edit; no name was altered to pass the gate. Counts and paths only; no client value."
+}
+```
