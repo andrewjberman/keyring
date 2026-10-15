@@ -379,6 +379,7 @@ cmd_provision() {
     add_folder "org/devices"             # to-pipeline-gate reads DEVICES.json
     add_folder "infra/logic/registry"    # naming-gate reads the registry
     add_folder "org/standards"           # NAMING_SCHEMA.json
+    add_folder "org/ref"                 # safe-commit author check reads org/ref/SEAT_ROLES.json (NFRA_CTLPLN W105-S2)
     if [ "$pf_count" -eq 1 ]; then
       add_folder "$pf_hits"
     else

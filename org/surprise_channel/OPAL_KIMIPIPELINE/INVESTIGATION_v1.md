@@ -292,3 +292,29 @@ before anyone challenged it is the relayer-half of the grounding law working.*
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "OPAL_KIMIPIPELINE-D1-S2",
+    "project": "OPAL_KIMIPIPELINE",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-15T13:19Z",
+    "one_line": "Estate 2026-10-15: group A is UNMEASURED for the first time. The laptop's outset artifact (comp_heat_drift.json) was last produced 2026-10-13T14:15:09Z, 46.8 h old against a 26 h ceiling, and site-z's is ABSENT, so 0 of 2 rostered devices report.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-estate-report/manifest/2026-10-15.json ai_funnel.groups.A: stratum_status INSTRUMENT_FAILED; denominator '0 of 2 rostered device(s) reporting'; laptop SILENT STALE (produced 2026-10-13T14:15:09Z); site-z SILENT ABSENT; run_bundle kimi_detect_A NOT_FIRED_STRATUM_INSTRUMENT_FAILED; pin a0614f2da2",
+        "manifest/2026-10-14.json ai_funnel.groups.A: stratum_status OK on the laptop alone ('1 of 2 rostered'), site-z already ABSENT"
+      ]
+    },
+    "spec_asserts": "Each rostered device publishes s3://opal-estate-report/outset/<device>/comp_heat_drift.json at least every 26 h, so the estate report measures group A daily.",
+    "world_is": "The laptop missed its publish after 2026-10-13T14:15Z, and site-z's publish has not landed at all (ABSENT on 10-14 and 10-15). The report discloses group A as UNMEASURED ('NOT no drift found'), so no verdict rests on a false zero. The cause on either box is not read here; it is a cross-fabric publisher on the laptop and site-z boxes.",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO~DELL1 (holding, as for D1-S1, for the unregistered project owner 1.0.0_SA_CTO~B; the fix is the laptop and site-z outset publish)"
+  }
+]
+```

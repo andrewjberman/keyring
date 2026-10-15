@@ -56,4 +56,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # import-time behavior for why this must resolve correctly before any check runs.
 SCRIPT_DIR_WIN="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -W 2>/dev/null || printf '%s' "$SCRIPT_DIR")"
 
+# NOT GRADED (NFRA_CTLPLN W110, CT-ai-5; 1.0.0_SA_CTO msg 109393): the runner reads .py/.sh/.tf only, so a
+# staged .tsx passes through unread. Say so, one line, instead of passing silently. Adds no grade for .tsx
+# (DSGN_RBNDV2 owns .tsx grading). Prints nothing when no .tsx is in the argument set.
+_tsx_ng=0
+for _tsx_a in "$@"; do
+  case "$_tsx_a" in *.tsx) _tsx_ng=$((_tsx_ng + 1)) ;; esac
+done
+if [ "$_tsx_ng" -gt 0 ]; then
+  echo "not graded: $_tsx_ng .tsx"
+fi
+
 exec python "$SCRIPT_DIR_WIN/commit_gate_runner.py" "$@"

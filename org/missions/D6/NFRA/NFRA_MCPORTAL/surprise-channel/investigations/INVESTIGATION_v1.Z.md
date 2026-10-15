@@ -2256,3 +2256,29 @@
   "notes": "Not repaired: the status line is the issuer's to flip (or to widen the grant). The order's <status> is left as pending; the instance and deliverables are committed on wk-NFRA_MCPORTAL-pd-29."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T14:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "id": "NFRA_MCPORTAL-Z-S53",
+  "one_line": "Bare `python` fails on site Z: C:/Program Files/Python314/Lib holds only site-packages (the standard library, encodings included, is gone), so every tool and gate that shells to PATH python breaks; Python311 still works.",
+  "spec_asserts": "Every .tools script, the commit gates (safe-commit.sh runs to-pipeline-gate.py, surprise-row-gate.py and others) and org/XXX.md's tooling assume `python` on PATH runs.",
+  "world_is": "At ~14:14Z `python -c ...` printed 'Fatal Python error: Failed to import encodings module ... No module named encodings' from any directory (run in the workspace and in /tmp). C:/Program Files/Python314 has python.exe (Sep 30), DLLs, python314.dll, and a Lib directory whose only entry is site-packages, last modified Oct 15 10:02 local. C:/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311 runs (3.11.9, imports encodings). Python worked earlier today (this seat ran dozens of python commands through ~11:34Z), so the stdlib was removed between. Not caused by this seat; nothing was repaired here. A command that reads the result of a failed python call can return a clean-looking empty value (one of this seat's reads printed live=<empty> and a trunk file count), so a gate or check that swallows stderr may report a false clean.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN python from the workspace root and from /tmp at ~14:14Z: both 'Fatal Python error: Failed to import encodings module; ModuleNotFoundError: No module named encodings'",
+      "READ ls of 'C:/Program Files/Python314/Lib': 1 entry (site-packages/), mtime Oct 15 10:02; ls of '.../Lib/encodings': no such file",
+      "RAN C:/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311/python.exe -c 'import sys,encodings': OK 3.11.9"
+    ]
+  },
+  "notes": "Work-around used by this seat only, per command: PATH=<Python311 dir>:$PATH. Remedy (reinstall or restore Python314's Lib, or point PATH at a working interpreter) is the box owner's; the seat did not change the install. Gates that run `python` bare will refuse or misread until then."
+}
+```

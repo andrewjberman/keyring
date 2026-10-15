@@ -606,3 +606,29 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "The branch exists LOCALLY only; origin does not carry it. The CVO or the issuer decides whether the registration needs the branch on origin before approval. No push was made."
 }
 ```
+
+## MDPF_SECHIST-D1-S7 -- The 2026-10-15 Bloomberg pull has not landed by 13:03Z, so FWD-9's organic FXFXX fill is not readable yet.
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S7",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~H1",
+  "surfaced_at": "2026-10-15T13:05:00Z",
+  "one_line": "The 2026-10-15 11:00Z Bloomberg pull has not landed by 13:03Z: bbg/2026-10-14/ is absent, so the 13:00Z gold run served data_as_of 2026-10-13 again and FWD-9's organic FXFXX fill (2026-10-12, requested by the 10-14 pull) cannot be read yet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-15 13:03Z: aws s3 ls s3://opal-data-etfs/bbg/ lists 2026-10-12/ and 2026-10-13/ as the newest partitions; head-object bbg/2026-10-14/run_manifest.json returned 404 on every read from 03:45Z to 13:03Z (about 14 reads); control: bbg/2026-10-13/run_manifest.json exists, LastModified 2026-10-14T11:07:05Z",
+      "MEASURED 13:03Z: served platinum/etfs/positioning_data.json LastModified 2026-10-15T13:01:48Z, generated_at 13:01:45Z, data_as_of 2026-10-13 and data_as_of_spread [2026-10-12, 2026-10-13], the same as_of the 10-14 13:01Z run served (r6_l2_read.py L2-READ-OK on that run)",
+      "Precedent in this channel: D1-S5 (the 10-13 pull stopped by its own precondition, landed 14:39:56Z) and its evidence file org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/D1_S5_RESOLUTION_EVIDENCE_20261013.md. The cause here was NOT read (site Z's Terminal sign-in and the vendor service were not inspected by this seat)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The 10-14 pull (as_of 2026-10-14) requests the FXFXX 2026-10-12 day listed in the gap record (FWD-9 C-MMF re-request); the next 13:00Z gold run then serves that day filled (FWD-9's organic blank-then-fill pair, CTO msg 5553).",
+  "world_is": "No bbg/2026-10-14 partition exists 2h after its usual 11:07Z landing, so the request has not been made and the fill cannot have happened. Nothing is served wrong: the page stays blank where the vendor left it, which is the stated C-MMF rule. Not measured: why the pull has not run (the Terminal sign-in, the vendor service, a budget precondition). Issuer ruling (2.0.0_SA_COO~H1): no ad-hoc gold run and no re-request of mine (an ad-hoc run writes the served key and is not production evidence); the FXFXX fill read and SH-t-22 re-point to the first scheduled run after the manifest lands, and the served-week read (Fri 10-16 to Mon 10-19) proceeds on its own dates. Disarm/close: the first scheduled manifest for as_of 2026-10-14 (or a later as_of that carries FXFXX 2026-10-12 filled), read by this seat. Owner 2.0.0_SA_COO~H1."
+}
+```

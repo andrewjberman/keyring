@@ -10226,3 +10226,810 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not worked around: no budget edit, no one-in-one-out edit outside the cited lines, no bypass. The three acceptance criteria CTag2-AC1..AC3 do not read this file."
 }
 ```
+
+## NFRA_CTLPLN-W105-S1 -- the probe path the order names under deliverables/ is refused by the lane gate; the serial folder is the grant
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T10:41:59Z",
+  "one_line": "The cell says the throwaway probe goes under the project folder's deliverables/. The lane gate refuses a file directly under deliverables/ or under another serial's folder, so the probe was placed under deliverables/<SERIAL>/ in the throwaway sparse worktree only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh refusal text, debug run, full output at .scratch/sc_full.txt @57a46d60ca (ERROR: owned-paths lane violation(s) detected)",
+      "tool and test at .tools/tests/test_round18_batch.py (uncommitted at filing; WIP tool commit 57a46d60ca); real run exit=0 tip_moved=True folders=7 green=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 item 1: a throwaway commit of a new .txt file under the project folder's deliverables/ through safe-commit.sh must exit 0.",
+  "world_is": "owned-paths-validate (TREE_DELIVERABLES) permits deliverables/<SERIAL>/** only. The first --real run exited 1 with a lane VIOLATION on org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/r18-sparse-probe/probe.txt; the same commit under deliverables/0.9.0_WK_NFRA_CTLPLN~105/ exits 0."
+}
+```
+
+## NFRA_CTLPLN-W105-S2 -- a sparse worktree has no org/ref/: safe-commit reads SEAT_ROLES.json as unreadable and WARNs on every commit
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T10:41:59Z",
+  "one_line": "A sparse worktree cut by wk-provision.sh does not carry org/ref/, so the author check cannot read org/ref/SEAT_ROLES.json and prints WARN: names no known seat. The commit still goes green today because the check is WARN-only; the gate names an announced refusal (1.0.0_SA_CTO msg 107910).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh WARN line in the --real run: author 0.9.0_WK_NFRA_CTLPLN~105 names no known seat ... org/ref/SEAT_ROLES.json unreadable (FileNotFoundError) (.scratch/real_run3.txt)",
+      "base set read at .tools/wk-provision.sh cmd_provision (add_folder lines) @57a46d60ca"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 item 1: the sparse base set must always hold what .tools/safe-commit.sh needs; a missing folder is added to the base set and named.",
+  "world_is": "cmd_provision (.tools/wk-provision.sh) base set = .tools, lib, org/modules/graph, org/devices, infra/logic/registry, org/standards, the project folder. org/ref is not in it, and the author check reads org/ref/SEAT_ROLES.json. When the announced refusal lands, every safe-commit from a sparse worktree is refused unless org/ref is in the base set."
+}
+```
+
+## NFRA_CTLPLN-W105-S3 -- provision creates a nested portal worktree inside every sparse worktree, though the cell names one worktree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T10:41:59Z",
+  "one_line": "cmd_provision always runs cmd_portal, which adds a worktree of the nested portal repository at <worktree>/portal on branch <branch>-portal, even with --node-modules none. The --real arm therefore creates two worktrees; the test removes both in its finally.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal repository worktree list: an entry for the throwaway worktree during the run, none after the finally (.scratch/real_run2.txt, .scratch/real_run3.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 BUILD item 4(e): the --real arm creates one sparse worktree (about 100 MB) and removes it with its branch in a finally.",
+  "world_is": "wk-provision.sh provision -> cmd_portal (.tools/wk-provision.sh ~line 445) -> git -C <main>/portal worktree add -b <branch>-portal <worktree>/portal. Removal is git -C <main>/portal worktree remove --force before git worktree remove."
+}
+```
+
+## NFRA_CTLPLN-W105-S4 -- the portal repository's worktree list changed by one entry between two runs; the cause is not established
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T10:41:59Z",
+  "one_line": "The portal repository listed 8 worktrees before the second --real run and after it; it listed 7 at the final read. Each run's own nested entry netted to zero, and the entry that left was not recorded before, so the drop is not attributed to the test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree list counts recorded in this worker's run log (real_run2 before/after 8; real_run3 final 7); remaining entries: DEV, portal-5174, portal-before-rbs9, ctlpln-105/portal, ctlpln-79/portal, devpln-arch (locked), rbndv2-int"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 BUILD item 4(e) and the RULES: no worktree of another seat is touched; the sparse arm names only its own throwaway paths.",
+  "world_is": "git -C <main>/portal worktree list read 8 entries (before and after real_run2), then 7 (after real_run3). The test's remove calls name only <sparse-wt>/portal and <main>/portal worktree entries it created; the 7 remaining entries include no wk-NFRA_CTLPLN-9105 entry."
+}
+```
+
+## NFRA_CTLPLN-W105-S5 -- four fixture folders from the first test runs remain under the Windows temp folder
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T10:41:59Z",
+  "one_line": "The batch's first runs left four r18_batch_* fixture folders under the Windows temp folder: the cleanup used ignore_errors=True, which hid the read-only git object failures. The cleanup is fixed (it now reports a WARN); the four older folders are not removed by this worker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "directory listing of the four folders (sub-folders a, b, c, d, each holding a fixture main repository); the default run that followed the fix leaves no folder (.scratch/default_run3.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 RULES: a temporary repository for every arm; the tests leave no state behind.",
+  "world_is": "C:/Users/AndrewBerman/AppData/Local/Temp/r18_batch_nju4hzp1, r18_batch_t7x9_wfq, r18_batch_0u4wrwd7 and r18_batch_99nh6yxu remain. Recursive deletion of them waits for Andrew's word (CLAUDE.md Agent Autonomy)."
+}
+```
+
+## NFRA_CTLPLN-W105-S6 -- the batch's cleanup ran a repository-wide git worktree prune, removed in be6f3bb7ff
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T11:20:00Z",
+  "one_line": "The batch's sparse-arm cleanup ran git worktree prune against the box repository (an act the round-17 cmd_remove comment forbids: it clears every unrelated prunable entry). Removed in be6f3bb7ff. No prunable entry was present before or after (count 3, 0 prunable), so no collateral is measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the prune line in .tools/tests/test_round18_batch.py _remove_sparse @57c105e0a3 (removed @be6f3bb7ff)",
+      "portal repository common dir is its own .git (not ajb_workspace/.git), so this prune cannot have changed the portal entries of S4; git worktree list: 3 entries, 0 prunable, read after the runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 RULES: no worktree of another seat is touched; the sparse arm names only its own throwaway paths.",
+  "world_is": "A repository-wide prune is a side effect beyond the throwaway worktree: it can clear unrelated prunable entries of every seat on the box. The test ran it on each --real run from 57c105e0a3 until be6f3bb7ff."
+}
+```
+
+## NFRA_CTLPLN-W105-S7 -- the box worktree list lost the merged rbndv2-8 entry between two reads that bracket a pruning run
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T11:05:00Z",
+  "one_line": "The box worktree list read 3 entries after the second --real run and 2 at the last read: the rbndv2-8 worktree (wk-DSGN_RBNDV2-8, tip e09ef0f0e5, merged into box/laptop and origin/CLOUD) lost its directory, its admin entry and its branch. The batch's real run before the last read called git worktree prune (removed in be6f3bb7ff); the actor is not identified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree list at the end of the second --real run: 3 entries including C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-8 e09ef0f0e5 [wk-DSGN_RBNDV2-8]",
+      "git worktree list at the final read: 2 entries (ajb_workspace, ctlpln-105); C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-8 missing; git branch --list wk-DSGN_RBNDV2-8 empty; git branch -a --contains e09ef0f0e5 lists box/laptop and origin/CLOUD",
+      "admin folder .git/worktrees/cro-7a-cert-9eb005eec9774992af9aacfe9ae56f13 has no gitdir file and is not listed by git worktree list (another seat's; not touched)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 RULES: no worktree of another seat is touched; the sparse arm names only its own throwaway paths.",
+  "world_is": "A git worktree prune removes admin entries whose directories are missing, so it can remove the rbndv2-8 admin entry if its directory was already gone. Branch deletion is not a prune act, so the branch removal came from another actor. Which act removed the entry is not measured here; the drop lies between two reads that bracket one real run that pruned."
+}
+```
+
+## NFRA_CTLPLN-W105-S8 -- safe-commit appends a tracked audit log in the worktree on each commit by an unknown-seat author
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T11:09:57Z",
+  "one_line": "Each safe-commit of this worker appended one AUTHOR-SEAT-WARN line to the TRACKED file org/git-author-override-audit.laptop.log in the worker's worktree (eight lines, one per commit). That file is outside the worker's <paths> and is left uncommitted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff -- org/git-author-override-audit.laptop.log in the worktree: 1 file changed, 8 insertions(+), all AUTHOR-SEAT-WARN lines for 0.9.0_WK_NFRA_CTLPLN~105",
+      "the same WARN as NFRA_CTLPLN-W105-S2 (author names no known seat; WARN-only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 RULES: write surface = the <paths>; no file outside them is changed by the worker.",
+  "world_is": "safe-commit.sh's author-seat check appends to a tracked audit log on each commit by a serial the roster does not know. In a sparse worktree that file is a tracked change the worker cannot commit under its lane, so it stays dirt until the worktree is removed."
+}
+```
+
+## NFRA_CTLPLN-W111-S1 -- a fetch record carries no device field, so a downloads-today count by device cannot be attributed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W111-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~111",
+  "surfaced_at": "2026-10-15T12:40:56Z",
+  "one_line": "The fetch record (schema intake-fetch/1) names the fetching seat in fetched_by, a serial, and carries no device key. The downloads reader (intake_request.py downloads --device D) can therefore count only records that carry a device field; on the two real 20261008 records it prints requests=0 files=0 for laptop and a stderr NOTE that two records are unattributed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO (issuer of CT-ai-6): have intake_fetch.py write a device key into each fetch record, or name the device source the reader must trust; until then a zero from the downloads reader is not evidence that a box downloaded nothing",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/records/intake-20261008-a/click-8.3.1-py3-none-any.whl.fetch.json@afebfdc81a: top-level keys are schema, batch, requested, index_base, requests, published, project, attestation, held_path, outcome, reason, fetched_by, at, approval, release_files, received_sha256; no device key",
+      "org/devices/intake/intake_fetch.py@afebfdc81a line 211: \"fetched_by\": os.environ.get(\"OPAL_AGENT_SERIAL\") or \"unknown\"; no device is written",
+      "python org/devices/intake/intake_request.py downloads --device laptop --day 20261008 run read-only in the worktree: NOTE: 2 fetch record(s) on day 20261008 carry no device field and are not counted; DOWNLOADS-TODAY device=laptop day=20261008 requests=0 files=0; rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-6 / FWD-19: Andrew can ask what a box downloaded today and get an answer from a record; the reader counts the fetch records whose device is D.",
+  "world_is": "Fetch records name a serial, not a device, so no record in the intake folder can be attributed to a box. The reader counts a record only when it carries a device key; none of the 3 fetch records under org/devices/intake/records/ carries one (measured: FETCH-RECORDS read=3 with_device_key=0), so its answer for any device on the real folder is zero with a note on stderr."
+}
+```
+
+## NFRA_CTLPLN-W111-S2 -- the author-seat check cannot read its roster in the sparse worktree, so every worker commit prints an unknown-seat WARN
+
+```json
+{
+  "id": "NFRA_CTLPLN-W111-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~111",
+  "surfaced_at": "2026-10-15T12:40:56Z",
+  "one_line": "safe-commit.sh printed WARN: author 0.9.0_WK_NFRA_CTLPLN~111 names no known seat, because org/ref/SEAT_ROLES.json was unreadable (FileNotFoundError) in the sparse worktree; it also printed a client-data-check ABSENT line for the account-id list. The commit still passed every gate and was written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit e8b2dc8e33 in the worktree: 'WARN: author 0.9.0_WK_NFRA_CTLPLN~111 names no known seat (... org/ref/SEAT_ROLES.json unreadable (FileNotFoundError)). WARN-only until the announced refusal (1.0.0_SA_CTO msg 107910).'",
+      "the same commit's [msg-verify] line: MATCH len=481; [commit-gate] All checks passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md 14a: commits go through safe-commit.sh and the author seat is a known seat; the sparse worktree carries the paths the order names, so the commit path reads what the worker needs.",
+  "world_is": "The author-seat check reads a roster file outside this sparse worktree and falls back to WARN. The WARN says a refusal is announced; a worker commit in a sparse worktree would refuse under that refusal, because the roster it reads is absent."
+}
+```
+
+## NFRA_CTLPLN-W107-S1 -- a sparse worktree without org/ref/ reads every seat kind as UNKNOWN, so the reviewer reads ABSENT
+
+```json
+{
+  "id": "NFRA_CTLPLN-W107-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~107",
+  "surfaced_at": "2026-10-15T12:41:22Z",
+  "one_line": "The first seat-list write in this worktree printed kind UNKNOWN for all 10 seats and reviewer=ABSENT, and round-close-check read REVIEWER-ON-BOX state=ABSENT, while CVO seats were LIVE. The cause was the sparse set without org/ref/. After git sparse-checkout add org/ref, a second write printed kind CVO/COO/CRO/MSTR/CLOUDOPS and reviewer=present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-list.py write (before sparse add) at 2026-10-15T12:33Z: every seat row kind UNKNOWN, last line 'reviewer=ABSENT ok=True'; safe-commit WARN org/ref/SEAT_ROLES.json unreadable (FileNotFoundError)",
+      "git sparse-checkout add org/ref, then python .tools/seat-list.py write: 'reviewer=present ok=True'; python .tools/round-close-check.py --project NFRA_CTLPLN --round 18: 'REVIEWER-ON-BOX device=laptop state=present' and ROUND-CLOSE ... reviewer=present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-2 BUILD 1: python .tools/seat-list.py write refreshes the laptop list, and the record's reviewer line reads present when a CVO-kind seat is live on the box.",
+  "world_is": "The worker sparse set (the order paths plus the standing folders) omits org/ref/, where SEAT_ROLES.json lives. The seat-list kind resolver then returns UNKNOWN for every seat, so a live CVO is not counted as a reviewer. The worker added org/ref to its sparse set and re-wrote the list. Same root as NFRA_CTLPLN-W105-S2."
+}
+```
+
+## NFRA_CTLPLN-W107-S2 -- round 18 carries no judgment criterion, so round-close-check prints no GRADED line for the record to copy
+
+```json
+{
+  "id": "NFRA_CTLPLN-W107-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~107",
+  "surfaced_at": "2026-10-15T12:41:22Z",
+  "one_line": "The cell asks the record to copy two GRADED (adjudication row ...) lines from round-close-check --round 18. That run printed no GRADED line: judgment=0 graded=0, because the round's one complete order TO-CT-ah-1 has no judgment=\"true\" criterion. The record carries the ROUND-CLOSE reviewer line and states that no GRADED line exists.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project NFRA_CTLPLN --round 18 (after sparse add org/ref): ORDERS scope round=18 workstream=all: 1 order(s), 1 complete; GRADING-ROWS adjudication=59 row(s); STRICT-GRADES judgment=0; last line 'ROUND-CLOSE project=NFRA_CTLPLN device=laptop reviewer=present orders=1 judgment=0 graded=0 ungraded=0 self_graded=0 verdict=MAY-CLOSE'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-2 DONE WHEN: one finished piece of work shown with its grade, and BUILD 1: the record carries two GRADED (adjudication row ...) lines verbatim from round-close-check --round 18.",
+  "world_is": "Round 18 of NFRA_CTLPLN has no graded judgment criterion, so no GRADED line exists to copy. The DONE WHEN grade element is not met by round 18 as named. The criterion AC2 (ok=every seat named and reviewer present) does not read the GRADED lines and is unaffected."
+}
+```
+
+## NFRA_CTLPLN-W108-S1 -- the cell's fixture path data/fixture/scripts/ is not a deploy-scope path, so the hold is never written
+
+```json
+{
+  "id": "NFRA_CTLPLN-W108-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~108",
+  "surfaced_at": "2026-10-15T12:52:31Z",
+  "one_line": "The fixture path named by the cell, data/fixture/scripts/fixture_unsigned.py, is not deploy-scope: the real hook printed 'no deploy-scope file in this box's diff against origin/CLOUD; nothing to deploy' and wrote no HELD-DEPLOY row. The test therefore uses data/inf/scripts/gold/fixture_unsigned.py, the nearest declared deploy-gated home, inside a temporary repository only.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "literal-path run in a temporary repository, box/laptop pushed with AGENTBUS_DEVICE=laptop: push rc=0; stderr 'deploy gate: refs/heads/box/laptop -- no deploy-scope file in this box's diff against origin/CLOUD; nothing to deploy'; no org/safe-deploy-bypass-audit.log HELD-DEPLOY row; STUB-LOG lines=0",
+      ".tools/safe_deploy_core.py@afebfdc81a lines 666-706 (file_to_s3_target resolves only deploy_gated CODE_TREES homes) and 804-814 (detect_script_files filters on it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-3 BUILD 1: commit data/fixture/scripts/fixture_unsigned.py that no open change names, push box/laptop, require a HELD-DEPLOY record that names the script.",
+  "world_is": "data/fixture/ is not a declared deploy_gated code tree, so the literal fixture is outside the deploy scope and the hold cannot be exercised by that path. The hold is exercised by data/inf/scripts/gold/fixture_unsigned.py (run: push rc=0, deployed=0, held=1, reason=no-open-ledger-names-it)."
+}
+```
+
+## NFRA_CTLPLN-W108-S2 -- test_named_commit_deploy.py stops at case 8 with ModuleNotFoundError git_bash_resolver, not after case 7
+
+```json
+{
+  "id": "NFRA_CTLPLN-W108-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~108",
+  "surfaced_at": "2026-10-15T12:52:31Z",
+  "one_line": "python .tools/tests/test_named_commit_deploy.py prints PASS for cases 1 to 7, then raises ModuleNotFoundError: No module named 'git_bash_resolver' in case 8's open_ledger() helper. The helper runs deploy_ledger.py from a temporary ledger root that holds only that one file. The run exits 1 with no NAMED-COMMIT-TEST line. It is not a control for CT-ai-3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run on the worker worktree at HEAD 641adaa19a: PASS case 1 through PASS case 7, then Traceback ... ModuleNotFoundError: No module named 'git_bash_resolver'; rc=1; no NAMED-COMMIT-TEST line",
+      ".tools/tests/test_named_commit_deploy.py@afebfdc81a lines 83-92 (open_ledger copies only deploy_ledger.py into the temporary root)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The test's header: cases 1 to 7 call the check directly, case 8 runs the real wrappers as far as the check; the last line prints NAMED-COMMIT-TEST cases=k/8.",
+  "world_is": "The failure is in case 8's fixture setup, one step before the wrappers are exercised, so the case-8 control never runs on this box."
+}
+```
+
+## NFRA_CTLPLN-W108-S3 -- the real pre-push hook refuses a worker serial unless a tracked task order at HEAD names it; the test adds one fixture order
+
+```json
+{
+  "id": "NFRA_CTLPLN-W108-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~108",
+  "surfaced_at": "2026-10-15T12:52:31Z",
+  "one_line": "The real hook runs halt-gate-check.sh, which admits a worker serial 0.9.0_WK_<CODE>~<n> only while a tracked, non-terminal task order under <CODE> at HEAD of the pushing repository names it. In a temporary repository with no such order the push was refused (push rc=1: HALT-GATE check worker-no-order). The test commits one fixture order file that names the serial; the serial and the inbox are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run of the test, literal fixture and no order file: push rc=1, stderr 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', 'Check that failed: worker-no-order'; after the order file: push rc=0 and 'worker ... has no inbox; scanning its issuer'",
+      ".tools/halt-gate-check.sh@afebfdc81a lines 196-252 (halt_gate_worker_issuer reads git ls-files and git show HEAD:<path> under org/missions/D*/*/<CODE>/task-orders/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-3 BUILD 1: the real hook lets the push through; the cell names no worker-admission fixture for the temporary repository.",
+  "world_is": "A worker push from a repository without a tracked order is refused fail-closed by the real gate. The test's admission is a fixture order inside the temporary repository, not a change to the serial or to the gate."
+}
+```
+
+## NFRA_CTLPLN-W109-S1 -- CT-ai-4: the order's per-box login source holds no login
+
+```json
+{
+  "id": "NFRA_CTLPLN-W109-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~109",
+  "surfaced_at": "2026-10-15T12:51:26Z",
+  "one_line": "The FWD-27 laptop-side cell says the login each box accepts is in the CT-u-2 proof record and in the CVO table row 27. Neither names a per-box login, so the cell cannot pick one without guessing; the tool refuses a run with no login.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~61/NFRA_CTLPLN.TO-CT-u-2.ssh-tailnet-verify-tool.proof_of_spec.json line 40-41: the only live run uses --user probe-only (a login that exists nowhere); no per-box login is recorded",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_FWD_REGRADE_20261013.md row 27: names host names OPAL_BLOOMBERG, DESKTOP-HK1UU7N, DESKTOP-N8RJV0A and 'ssh -o BatchMode=yes' with no user; no login",
+      "the worker's run of .tools/tests/test_round19_fwd27_laptop_side.py at commit b265d96511 refused every box to the tool's 'no login' rule until the client default login was supplied"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face CT-ai-4: the login names used on 2026-10-13 are in the CT-u-2 proof record and in the CVO table; find the login each box accepts there.",
+  "world_is": "Neither record holds a login for sitez, dell1 or dell2. The worker used the client default login read by ssh -G (AzureAD+AndrewBerman), which the CVO row's no-user command implies, and that login is refused on all three (see NFRA_CTLPLN-W109-S2)."
+}
+```
+
+## NFRA_CTLPLN-W109-S2 -- CT-ai-4: the key login the CVO row 27 measured as rc 0 is DENIED today on sitez, dell1 and dell2
+
+```json
+{
+  "id": "NFRA_CTLPLN-W109-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~109",
+  "surfaced_at": "2026-10-15T12:51:26Z",
+  "one_line": "On 2026-10-15 a key login from the laptop is refused on all three site-Z/dell boxes for the client default login. The 2026-10-13 CVO row reads key login as answering on three boxes with no user given. The two readings cannot both hold for the same login.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round19_fwd27_laptop_side.py at b265d96511: BOX sitez 100.99.180.19 port22=OPEN key=DENIED; BOX dell1 100.79.95.44 port22=OPEN key=DENIED; BOX dell2 100.104.84.87 port22=OPEN key=DENIED; FWD27-LAPTOP-SIDE boxes=3 key_ok=0 password_refused=3 ok=False (rc 1)",
+      "ssh -v -o BatchMode=yes dell1 hostname (native Windows OpenSSH, login azuread\\andrewberman): 'Offering public key: C:\\Users\\AndrewBerman/.ssh/id_ed25519' then 'Permission denied (publickey,keyboard-interactive)'",
+      "the same denial for sitez with the Git ssh default login AzureAD+AndrewBerman (ssh -G user line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CVO regrade 2026-10-13 row 27: 'ssh -o BatchMode=yes -> OPAL_BLOOMBERG, DESKTOP-HK1UU7N, DESKTOP-N8RJV0A (rc 0)'; key login works on three of four boxes from the laptop.",
+  "world_is": "Key login from this laptop is refused for the client default login on sitez, dell1 and dell2 on 2026-10-15; password_arm reads KBDINT-NO-PROMPT on all three (keyboard-interactive offered, no prompt sent), so password_refused=3 by the tool's rule. FWD-27 key arm is not met by this read."
+}
+```
+
+## NFRA_CTLPLN-W106-S1 -- the sparse CT-ai worktree lists one live project, so the placement read saw 1 of 29 projects and zero overlaps
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "The worktree cut holds only the NFRA_CTLPLN project folder. The placement read then reports 1 live project and 0 cross-box overlaps with no error. The read was expanded by git sparse-checkout add over the 53 org/missions project folders that hold a project.json (and org/critical_paths, infra/aws/lambda/ci for the rule files); after that it reports 29 projects and 56 overlaps.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/placement-check.py in the worktree before the expansion: 'placement-check | live projects: 1', 'FINDINGS: 0 unplaced/unreadable, 0 cross-box write overlap(s)'",
+      "git ls-tree -r --name-only HEAD org/missions | grep project.json: 53 files; the worktree held 1 of them",
+      "python .tools/placement-check.py@23ca26093b after the expansion: 'live projects: 29', 'FINDINGS: 0 unplaced/unreadable, 56 cross-box write overlap(s)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 BUILD 2: run python .tools/placement-check.py and class every OVERLAP line; PATHS: the order's folders are in the sparse list, and a missing folder is added with git sparse-checkout add and named in the report.",
+  "world_is": "A sparse worktree cut for one project makes the placement read silently partial: it prints a clean zero-overlap result over 1 of 29 projects. The classing has no denominator unless the project folders are present in the worktree the read runs in."
+}
+```
+
+## NFRA_CTLPLN-W106-S2 -- the placement read gives 56 overlaps, not the 57 the cut recorded, and not the portal SPLIT example
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "At 23ca26093b the placement read prints 56 OVERLAP lines where the order records 57 at the cut. The SPLIT example the order names (portal/src/api/endpoints/investor-reporting.ts, shared by DSGN_IRPTV1 and AMGT_RESAPP) is not among the overlaps. org/mcp/drive_mode/ has no tracked file at HEAD, so FAST-lease write surfaces, which the read adds to each project, are absent from this worktree's read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py@23ca26093b run in the worktree: 'FINDINGS: 0 unplaced/unreadable, 56 cross-box write overlap(s)'; the FWD7 table in org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~106/FWD7_OVERLAP_CLASSES.md lists all 56",
+      "git ls-tree -r --name-only HEAD org/mcp/drive_mode: 0 files",
+      "the cut's 57 is not reproduced here and the difference is not attributed; no read of the base checkout was made"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 PREMISE: placement-check.py already prints 57 OVERLAP lines at the cut, and FWD-7 names a SPLIT example, portal/src/api/endpoints/investor-reporting.ts, shared by DSGN_IRPTV1 and AMGT_RESAPP.",
+  "world_is": "At this HEAD the read yields 56 overlaps. No overlap names that portal file, and the lease input the read globs is not tracked in this tree."
+}
+```
+
+## NFRA_CTLPLN-W106-S3 -- an overlap on .tools/tests has no rule and is UNCLASSIFIED
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "OVERLAP NFRA_CTLPLN (laptop) and IRPT_BCKEND (dell2) on .tools/tests/test_round18_batch.py (a file NFRA_CTLPLN writes) against the directory .tools/tests claimed by IRPT_BCKEND. No rule file names a single writer or merge rule for this path, so the row is UNCLASSIFIED in the FWD-7 table.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py@23ca26093b, OVERLAP line 1: 'NFRA_CTLPLN (laptop) and IRPT_BCKEND (dell2): .tools/tests/test_round18_batch.py ~ .tools/tests'",
+      ".tools/tests/test_round19_register.py --fwd7 at 23ca26093b: row 1 UNCLASSIFIED, rule 'no rule: one project claims a directory that contains the other project's specific path'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 AC2: every overlap of the placement read is classed (unclassified=0).",
+  "world_is": "The overlap is a directory-level claim by IRPT_BCKEND over a test file that NFRA_CTLPLN's order names. No SHARED rule file covers .tools/tests, and a SPLIT needs both projects to name the same file, which they do not. The class needs a rule, or a narrowed write claim from the owner of IRPT_BCKEND's order."
+}
+```
+
+## NFRA_CTLPLN-W106-S4 -- an overlap on infra/aws/lambda/bd-pipeline has no rule and is UNCLASSIFIED
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "OVERLAP NFRA_MCPINDEX (sitez) and ADVI_FIRMBKTS (dell1) on infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger, which NFRA_MCPINDEX names, against the whole infra/aws/lambda directory claimed by ADVI_FIRMBKTS. The lambda-source-map row gives the source_dir but names no writer, so the row is UNCLASSIFIED in the FWD-7 table.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py@23ca26093b, OVERLAP line for ADVI_FIRMBKTS (dell1) and NFRA_MCPINDEX (sitez): 'infra/aws/lambda ~ infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger'",
+      "infra/aws/lambda/ci/lambda-source-map.json, row bd-asset-dim-trigger: source_dir 'infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger' (the mapping, with no writer named)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 AC2: every overlap of the placement read is classed (unclassified=0).",
+  "world_is": "ADVI_FIRMBKTS claims the whole infra/aws/lambda directory, which contains a source directory NFRA_MCPINDEX names. The source map declares the source-to-function mapping and is the canonical copy, but it states no single writer for that source directory, so no SHARED rule applies."
+}
+```
+
+## NFRA_CTLPLN-W106-S5 -- .tools/safe_deploy_core.py is named by two live projects on two boxes with no single-writer or merge rule
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "Two live projects on different boxes both name .tools/safe_deploy_core.py in their write sets: MDPF_SECCLASS (dell1) and IRPT_BCKEND (dell2). The placement rule says two projects on different boxes change different files. No rule file in the tree names a single writer or merge rule for this path, so the row is classed SPLIT (R4) in the FWD-7 table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (register and placement owner)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py@23ca26093b, OVERLAP line: 'MDPF_SECCLASS (dell1) and IRPT_BCKEND (dell2): .tools/safe_deploy_core.py ~ .tools/safe_deploy_core.py'",
+      ".tools/safe_deploy_core.py@23ca26093b: header names no single writer; the file is the shared core of safe-deploy"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-7 (order C-PLACEMENT): two projects on different boxes change different files.",
+  "world_is": "Two projects on two boxes both list one shared tool file in their write sets. Two edits to that file on two boxes meet only at the drain merge, with no declared owner for the path."
+}
+```
+
+## NFRA_CTLPLN-W106-S6 -- tests/test_box_lists_from_register.py names no box, so it cannot show a register copy reached it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "The FWD-2 read lists .tools/tests/test_box_lists_from_register.py as NOT REACHED. The test can be run with OPAL_DEVICE_REGISTER set, but it prints only PASS or FAIL arms and no box name, so its output cannot name fixbox. Its two value arms are covered by the gate FABRIC_ENUM row and the box-status BOXES row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_box_lists_from_register.py@23ca26093b: output lines are PASS/FAIL arms and 'BOX-LISTS-FROM-REGISTER gate=... status_report=... ok=...' with no box name",
+      ".tools/tests/test_round19_register.py --fwd2 at 23ca26093b: 'FWD2-BOX-ADDED tools=6/8 not_reached=2 named=6 ok=True'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 FWD-2 BUILD 1: each tool that reads the box list is pointed at the register copy and must name fixbox; a tool that cannot be pointed is listed with its reason and counted not reached.",
+  "world_is": "This tool reads the register through lib/devices.py and could take OPAL_DEVICE_REGISTER, but its output carries no box name, so it cannot satisfy the naming test. It is listed, not failed."
+}
+```
+
+## NFRA_CTLPLN-W106-S7 -- tests/fabric_value_census.py reads no box list and cannot take a register copy
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "The FWD-2 read lists .tools/tests/fabric_value_census.py as NOT REACHED. It is a token census of the word site-z or sitez in tracked text, with its own path-keyed table. It reads no box list and has no register input, so no register copy can reach it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/fabric_value_census.py@23ca26093b: ROOT scan of git ls-files under .tools/, lib/, org/devices/ and related scopes; no read of lib/devices.py or the register",
+      ".tools/tests/test_round19_register.py --fwd2 at 23ca26093b: listed as not reached with that reason"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 FWD-2 BUILD 1: every tool the order names or any test named by the two list-reading tests is pointed at a register copy; a tool that cannot be pointed is listed and gets a row.",
+  "world_is": "The census is named by the order because it carries the register path in its scope table, but it does not read the box list. Listing it as not reached is the honest count."
+}
+```
+```
+
+## NFRA_CTLPLN-W110-S1 -- the risk reflex's danger map is not in .tools/safe-commit.sh; the reflex is one comp-pulse call
+
+```json
+{
+  "id": "NFRA_CTLPLN-W110-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~110",
+  "surfaced_at": "2026-10-15T13:06:00Z",
+  "one_line": "The CT-ai-5 cell asks to refresh the risk reflex's file map in .tools/safe-commit.sh; no map is held there. The reflex is one comp-pulse diff call, and comp-pulse reads its own danger map outside this order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh@afebfdc81a: grep -n -i 'risk|map' returns the reflex block at lines 940-951 (comp-pulse diff call) and no map file; the refresh target named by the cell is absent",
+      "temporary repository, real unedited safe-commit.sh @afebfdc81a, one staged portal/src/Probe.tsx: '[risk-reflex] danger map: 0.0h old', 'DENOMINATOR: 1 file(s) checked against 1662 danger node(s)', 'ANSWER STATE: PRESENT_WITH_ZERO_RESULTS' (the reflex checked the .tsx on this box; the stale-map cause in CTO msg 109393 is not reproduced here)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-5 item 1 (cell W110): 'Find the risk reflex's file map in .tools/safe-commit.sh (Grep risk and map in it) and refresh it so a portal/**/*.tsx path is known'; CTO msg 109393: the reflex used a stale map.",
+  "world_is": "No map is held in safe-commit.sh (reflex = lines 940-951, one comp-pulse call; the map is read inside comp-pulse, outside <paths>). The refresh was not made. The 'not graded: <N> .tsx' line is printed by safe-commit.sh itself (commit 08591e1c06), so it does not depend on the map."
+}
+```
+
+## NFRA_CTLPLN-W110-S2 -- the real scripts run only from a repository that carries their config; a bare temporary repository fails the gate
+
+```json
+{
+  "id": "NFRA_CTLPLN-W110-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~110",
+  "surfaced_at": "2026-10-15T13:06:00Z",
+  "one_line": "The cell asks for a temporary repository with the real safe-commit.sh and commit-gate.sh. Both take their inputs from the toplevel of the repository they run in, so a bare repository fails the gate before any check.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit-gate.sh run from a bare temporary repository (.scratch/tsx2, first attempt, before the copy): 'ERROR: config not found: ...\\.scratch\\tsx2\\comp-constants.config.yaml' rc=1, commit blocked; comp-constants.config.yaml is a root file of the worktree",
+      "safe-commit.sh @08591e1c06 writes its audit log under the toplevel of the cwd repository; the first bare attempt failed on a missing org/ directory (.scratch/tsx1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-5 item 1 (cell W110): 'test it in a temporary repository with the real two scripts, with one .tsx file and with none (no line)'.",
+  "world_is": "The temporary repository must carry copies of the wk-provision sparse set, comp-constants.config.yaml and .owned-paths.yaml. test_round19_hygiene.py --tsx builds that fixture (commit 93f41a99d5); the real scripts run from it unedited."
+}
+```
+
+## NFRA_CTLPLN-W110-S3 -- the round-18 batch already removes only its own folder in a finally; the default run leaves no new folder
+
+```json
+{
+  "id": "NFRA_CTLPLN-W110-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~110",
+  "surfaced_at": "2026-10-15T13:06:00Z",
+  "one_line": "CTai5-AC3 assumes the round-18 batch leaves r18_batch_* folders. At afebfdc81a the file removes its own fixture folder in a finally, and a default run leaves no new folder; the four folders from the first runs remain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_round18_batch.py@afebfdc81a main(): base = tempfile.mkdtemp(prefix='r18_batch_') then shutil.rmtree(base, onerror=FX._clear_readonly) in the finally; no ignore_errors in the file",
+      "measured in the worktree: r18_batch_* folders in Temp BEFORE=4 AFTER=4 for one default run; 'ROUND18-BATCH arms=3/4 skipped=1 ok=True' rc=0 (the four old folders are not touched)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTai5-AC3 base: 'the batch test leaves them'; CT-ai-5 item 3: 'make it remove only the folders IT created, in a finally, by the path it created'.",
+  "world_is": "The file already meets item 3, so no edit was made to test_round18_batch.py. The four folders named in W105-S5 remain; recursive deletion waits on Andrew. The --real arm was not run here (it creates a real sparse worktree and portal worktree)."
+}
+```
+
+## NFRA_CTLPLN-W114-S1 -- the fabric value census exits 1 at base: five unclassified hits, four of them outside this order's paths
+
+```json
+{
+  "id": "NFRA_CTLPLN-W114-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~114",
+  "surfaced_at": "2026-10-15T14:30:14Z",
+  "one_line": "fabric_value_census.py prints ok=False and exits 1 before any edit in this order (unclassified=5). Four of the five unclassified hits sit in files outside this order's paths; the fifth is removed by this order's commit 8646885c9d.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/fabric_value_census.py@9cfc5f5fd8 docstring: 'LAST line: ... ok=<True|False>   (ok only when unclassified == 0)'; CLASS_BY_PATH has no key for the four files below",
+      "measured in ctlpln-114 at 9cfc5f5fd8 before any edit: FABRIC-CENSUS files_scanned=2144 hits=48 enum_source=3 compares=0 display=26 fixture=14 unclassified=5 ok=False rc=1; UNCLASSIFIED lines: .tools/tests/test_fabric_readers_dell.py:101, .tools/tests/test_fabric_readers_dell.py:154, .tools/tests/test_manager_on_every_box.py:266, lib/devices.py:84, .tools/tests/test_round19_register.py:105",
+      "measured after commit 8646885c9d: unclassified=4 ok=False rc=1 (test_round19_register.py:105 gone; the census's own file keys re-pointed to :23 and classified)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "fabric_value_census.py docstring: ok only when unclassified == 0; CLASS_BY_PATH keys every hit by path or path:line on purpose, so a new hit stays UNCLASSIFIED until it is named.",
+  "world_is": "The census is red in this tree before any edit of this order. The four remaining unclassified hits are in test_fabric_readers_dell.py, test_manager_on_every_box.py and lib/devices.py, which this order does not name; they are not edited here. Round-19 FWD-2 does not grade the census's ok, so the order's criteria are unaffected; its exit code is printed beside the BOXES-READ line."
+}
+```
+
+## NFRA_CTLPLN-W112-S1 -- a null device is counted as unattributed, a case the order did not name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The order said a fetch record with NO device key is counted under UNATTRIBUTED. The worker also writes device null when the box cannot be named (AGENTBUS_DEVICE unset, or the register unreadable), and the reader counts a null device as unattributed too, never for a box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_fetch.py@8f5584d044: this_device() returns None on devices.RegisterError; Fetch.__init__ writes \"device\": this_device()",
+      "org/devices/intake/intake_request.py@8f5584d044: cmd_downloads counts a record when `not rec.get(\"device\")` under unattributed",
+      ".tools/tests/test_round20_fetch_device.py@2950637674: arm 7 (unnamed-box fetch writes device null) and arm 8 (unattributed=3 afterwards) PASS in the --device run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-1 step 2: a record with NO device key is counted under UNATTRIBUTED and never guessed to belong to the asking device.",
+  "world_is": "A null device is treated as unattributed as well. A box that cannot be named writes a record that no device can claim; no record is attributed to a box by guess. The issuer may rule the null form."
+}
+```
+
+## NFRA_CTLPLN-W112-S2 -- PIP_NO_INDEX=1 is never read on the kit's refusal path, because wrap refuses before any pip process starts
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The order asks for PIP_NO_INDEX=1 in the child environment as a second guard on the wrapper refusal. On the refusal path wrap returns before it starts any pip process, so the variable is set and never consulted there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_pip_no_egress.py@9cfc5f5fd8 wrap(): classify(args) returns REFUSE and wrap returns REFUSED_RC before subprocess.run([sys.executable, \"-m\", \"pip\"] ...)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~112/FWD18_LAPTOP_REFUSAL.md@2950637674: PIP_NO_INDEX=1 run exits 3, stdout 0 bytes, one REFUSED line on stderr"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-1 step 3: run the kit's wrap -- download six with PIP_NO_INDEX=1 in the child environment as a second guard.",
+  "world_is": "The variable bears only on an allowed pip verb, and no allowed verb is a download. The refusal's own guard is the classify() decision, which the kit runs before any process."
+}
+```
+
+## NFRA_CTLPLN-W112-S3 -- the worker's sparse checkout lacked org/surprise_channel/schemas, the folder that holds the row schema
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The cut's sparse set does not hold org/surprise_channel/schemas, so the row schema investigation_item.schema.json was absent from the worktree. The worker added the folder with git sparse-checkout add to read the schema before writing rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in the worktree before the add: .tools, infra/logic/registry, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards (no org/surprise_channel entry)",
+      "ls org/surprise_channel/schemas/ before the add: No such file or directory; after git sparse-checkout add org/surprise_channel/schemas: investigation_item.schema.json and remediation_row.schema.json present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker rules name org/surprise_channel/schemas/investigation_item.schema.json as the row schema a worker follows.",
+  "world_is": "The schema folder is outside the sparse set the cut provisions. The add changed no commit and no tracked file of this order."
+}
+```
+
+## NFRA_CTLPLN-W112-S4 -- intake_check.py writes intake-fetch/1 records with no device key, a second writer of the shape the reader must tell apart
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The order names intake_fetch.py as the one writer of fetch records. org/devices/intake/intake_check.py has a second writer of the same schema string, intake-fetch/1, with no device key and fetched_by set to selftest.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@9cfc5f5fd8 lines 1131-1147 write_fetch_record: rec_ carries \"schema\": \"intake-fetch/1\", \"fetched_by\": \"selftest\" and no device key; written by write_json_atomic under cfg.records_dir(batch)",
+      "org/devices/intake/intake_check.py@9cfc5f5fd8 line 1164: the selftest calls write_fetch_record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-1 premise: the fetch record is written by org/devices/intake/intake_fetch.py.",
+  "world_is": "A selftest path writes fetch-shaped records without a device key. The reader counts each as unattributed, so a selftest record can never be counted for a box. Where the selftest writes was not traced beyond cfg.records_dir."
+}
+```

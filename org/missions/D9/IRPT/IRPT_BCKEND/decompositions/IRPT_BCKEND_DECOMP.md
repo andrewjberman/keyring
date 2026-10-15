@@ -4121,3 +4121,114 @@ Check IB209-1 (`deliverables/2.0.0_SA_COO~P2/checks/r209/p209_cells.py`), dry-ru
 | `IB-pr-569` | READ why Cottonwood's account is absent from the holdings candidate; the acceptance path in the code; the other firms' refusal state | FWD-21 | SERVED | none | PC1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~412) starts now.
+
+## 206. ROUND 2, WORKSTREAM ~PC (49 Financial's refusal and the Cottonwood validator, both READ; 2026-10-15 ~11:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8248: "cut both READs now, 49 Financial's refusal FIRST")
+
+Round 1 of ~PC closed MAY-CLOSE (IB-pr-569, the S158 READ). Its finding: Cottonwood's residual lost account is listed in the source and dropped by the COT account screen (cause inferred), the first refusal named 9 lost accounts (8 closed), and 49 Financial, the P1 firm, ALSO has a refusal record (served 2026-10-12, two trading days behind T-1 at 2026-10-14). The CTO ordered two reads, 49 Financial FIRST: (1) which condition refused 49 Financial, how many accounts, which class of account or field (ids private); (2) the Cottonwood validator run OFFLINE on the dropped account's source rows to name the failing condition in `cot_screen_accounts`. The guard stays and no bypass is widened; the CTO rules the fix (a screen correction, or a custodian TERMINATED mark) on the reads. Two cells, disjoint write sets (each writes only its own record folder and the shared append-only channel), no edge between them (the order of the reads is the CTO's priority, not a data dependency).
+
+Checks (`deliverables/2.0.0_SA_COO~P2/checks/r210/p210_cells.py`, `control210.py`), dry-run at the base: all six FAIL; the control passes 6 positives and 25 negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-570` | READ 49 Financial's refusal: the condition, the count, the class of account or field, the days behind (recomputed), the acceptance path in the code | FWD-21 | SERVED | none | PC2-a |
+| `IB-pr-571` | READ the Cottonwood validator offline on the dropped account's source rows: the failing condition, the fix options in the code | FWD-21 | SERVED | none | PC2-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two READ cells with disjoint write sets; workers (slots ~413, ~414) start now (413 first by the CTO's priority).
+
+## 207. ROUND 1, WORKSTREAM ~PD (the split-adjusted holdings price return: the READ; 2026-10-15 ~12:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling @9913bf3ed4 (msg 8251) and the CRO's research @fe343dbc14)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a workstream issues its own round). The CTO ruled that the 2026-04-21 VUG IC|RO rows are a 6-for-1 STOCK SPLIT (non-flow, partition INTERNAL), that the defect is `holdings_performance_daily`'s price-only return (not split-adjusted), and that IRPT_BCKEND owns the fix: the custodian's own same-day STK "STOCK SPLIT" ratio (quantity after over quantity before for an account with no same-day trade), confirmed against the close-price ratio, with `SPLIT_RATIO_ABSENT` where it cannot be measured; the three other CUSIPs split that day are inside the fix; the other two firms are read for split days; the change moves served numbers, so it lands under a never-widen pair counting the DELTA per account-day. The build cannot be cut blind: the pure core has no split input and the custodian split rows are read from a different source. One READ cell first (this round): the producer's price contribution in the code, the custodian split rows per firm (columns, rows, split days, measurable or absent ratios, agreement with the close-price ratio), and the served DELTA projection. The build cell and the pair follow on its record.
+
+Check IB211-1 (`deliverables/2.0.0_SA_COO~P2/checks/r211/p211_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control211.py`) passes all three and eighteen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-572` | READ the split-adjusted return's inputs: the producer sites, the custodian split rows and ratios per firm, the served DELTA projection | FWD-21 | SERVED | none | PD1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~415) starts now.
+
+## 208. ROUND 1, WORKSTREAM ~PE (49 Financial's candidate screen run offline; 2026-10-15 ~11:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8256)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a workstream issues its own round); ~PC round 2 holds its issuance (IB-pr-570 and IB-pr-571), so the third read issues as ~PE round 1. The 49 Financial refusal READ (IB-pr-570, merged @a9eb88ed54) found the P1 firm served at 2026-10-12 (two trading days behind T-1), the 2026-10-13 candidate refused on `account_lost` count 1, the lost account marked ACTIVE in the directory (so the closed-account exemption cannot clear it), and the candidate builder's filter that omits it unread. The CTO ordered it measured, beside Cottonwood's validator read: run 49 Financial's candidate screen OFFLINE on the account's source rows, name the exact failing condition, and say whether it is the condition Cottonwood's IB-pr-571 finds; if both firms share it, one screen fix under one never-widen pair covers both, and the pair states the served DELTA (one account each back in the snapshot) and the dates owed per firm. The guard is untouched. One cell, READ ONLY.
+
+Check IB212-1 (`deliverables/2.0.0_SA_COO~P2/checks/r212/p212_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control212.py`) passes all three and fifteen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-573` | RUN 49 Financial's candidate screen offline on the lost ACTIVE account's rows; the failing condition; the comparison with Cottonwood's; the fix options in the code | FWD-21 | SERVED | none (the Cottonwood comparison reads IB-pr-571 if landed) | PE1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~416) starts now.
+
+## 209. ROUND 1, WORKSTREAM ~PF (how Cottonwood's EMPTY-at-the-source account is accepted as closed; 2026-10-15 ~12:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8263)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a workstream issues its own round). The Cottonwood validator READ (IB-pr-571) measured the failing condition: the account has only no-position rows in the custodian source, so the validator refuses an empty custody frame. The CTO ruled (msg 8263) that the source itself reports zero positions on three trading dates, so the account is EMPTY at the source, not silently lost: the "closed at the source" branch of his S158 ruling. The acceptance is a never-widen pair bound to the one account and the first date it is accepted from (evidence: the source rows' dates and zero position counts; blast radius one account leaving the served snapshot; rollback the prior publication; guard unchanged, no general override, no custodian contact), and the directory's missing TERMINATED mark is filed as a row for the directory's owner. The pair needs the MECHANISM: the guard exempts an account only through the directory's TERMINATED mark (`closed_account_ids`). One READ cell: who writes the mark, its shape, the precedent (2 TERMINATED entries in 271), the evidence dates, and an OFFLINE gate run with a stub closed-account provider proving the account lists as closed and not refused and no other node moves. Nothing is written. The pair packet follows on its record.
+
+Check IB213-1 (`deliverables/2.0.0_SA_COO~P2/checks/r213/p213_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control213.py`) passes all three and eighteen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-574` | READ the TERMINATED mark's writer, shape and precedent, the zero-position evidence dates for the one account, and an offline gate run with the mark stubbed | FWD-21 | SERVED | none | PF1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~417) starts now.
+
+## 210. ROUND 2, WORKSTREAM ~PE (49 Financial's lost ACTIVE account across the dim_balance partitions; 2026-10-15 ~13:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8274)
+
+Round 1 of ~PE closed MAY-CLOSE (IB-pr-573): 49 Financial (the P1 firm, served 2026-10-12, two trading days behind T-1) has a lost ACTIVE account with ONE row in the 2026-10-12 dim_balance partition and NONE in 2026-10-13, so no screen drops it: a source gap on the candidate date. The CTO ordered (msg 8274) the account's presence read across dim_balance 2026-10-08 to 2026-10-14 and the upstream writer's run for 2026-10-13 (row counts by partition; did it fail or truncate), and ruled: an account ABSENT from the source is not the zero-position case, the guard keeps refusing; if 2026-10-14 carries it again the 2026-10-14 candidate publishes cleanly and 2026-10-13 stays an unpublished day stated in words; if it is gone for good the remedy is a custodian-confirmed TERMINATED mark, a partner-firm contact the issuer drafts for Andrew. One READ cell.
+
+Check IB214-1 (`deliverables/2.0.0_SA_COO~P2/checks/r214/p214_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control214.py`) passes all three and seventeen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-575` | READ the lost account's presence across dim_balance 2026-10-08 to 2026-10-14, the upstream writer in the code and its 2026-10-13 run, whether the refusal clears | FWD-21 | SERVED | none | PE2-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~418) starts now.
+
+## 211. ROUND 1, WORKSTREAM ~PG (the closed_at_source exemption of account_lost in the holdings publish gate: the BUILD; 2026-10-15 ~13:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msgs 8268 and 8284)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a workstream issues its own round). The reads (IB-pr-569 to 575) found 49 Financial (the P1 firm, served 2026-10-12) and Cottonwood (served 2026-10-08) refused on a lost account the SOURCE shows with no positions, and the directory's TERMINATED mark cannot be written for an account absent from its source. The CTO ruled (msg 8284) one never-widen pair covering both firms for a guard exemption with a completeness condition: exempt an `account_lost` only when the source shows the account with no positions (absent or zero) in BOTH the positions and balance tables on the candidate date AND the prior trading day, each of those partitions complete (account count at least 95 percent of the prior day's), and each exempted account recorded in the publication manifest as `closed_at_source` with its dates; a reappearing account is re-included by the daily rebuild; the served DELTA is measured per firm by a producer dry run, before and after, and the pins and both branches go in the packet. This cell BUILDS the pure exemption, the gate's integration through one optional provider (default None, nothing else changes) and the manifest record, LOCAL, with the seven named tests and a difference control. The evidence loaders per firm, the dry-run DELTA and the pair packet are the next cells. Class LOCAL: the path is a data-pipeline script, not infrastructure.
+
+Check IB215-1 (`deliverables/2.0.0_SA_COO~P2/checks/r215/p215_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control215.py`) passes all three and seven negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-576` | BUILD closed_at_source_exempt, the gate's provider argument and the manifest record, with tests and a difference control | FWD-21 | LOCAL | none | PG1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one product file; one worker (slot ~419) starts now.
+
+## 212. ROUND 1, WORKSTREAM ~PH (the absent_at_source exemption goes live with its visible listing; the split-adjusted holdings price return for 49 Financial; 2026-10-15 ~14:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msgs 8284, 8290, 8302, 8311 and the ruling @9913bf3ed4)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). Two cells with disjoint write surfaces. IB-pr-576 built the exemption inert; worker 419's rows W419-S1 and S2 (disposition row D2-S201) named what was left. The CTO ruled (msg 8311, CVO v119) that the exemption is wired into `run_firm` ONLY together with the visible listing of the account (kept in the served snapshot, "Not reported by the custodian since <date>", no stale value as current) in ONE change, and that every remaining "closed" name becomes `absent_at_source`. The agent read of the code found that the snapshot has no household node (a household is a directory entry), so the listing is a fresh zero-value ACCOUNT node appended after the gate with the snapshot's scope and count bookkeeping brought in line; the published manifest is written by `publication.py` (a path under infra/, so the cell's class is WORLD although nothing is deployed). The second cell builds the split adjustment of the holdings price return for the 49 Financial channel from the READ IB-pr-572 (ratio = the median over accounts without other activity, clean to 0.5 percent, else SPLIT_RATIO_ABSENT and not graded). Served DELTA and the never-widen pairs are later acts from producer dry runs, not these cells.
+
+Checks IB216-1 and IB216-2 (`deliverables/2.0.0_SA_COO~P2/checks/r216/p216_cells.py`), dry-run at the base: AC1 to AC3 of both cells all FAIL; the control (`control216.py`) passes all six positives and fourteen negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-577` | WIRE the evidence loaders and the listing with the exemption, the published manifest fact, the rename of the closed names | FWD-21 | WORLD | none | PH1-a |
+| `IB-pr-578` | BUILD the split-adjusted holdings price return for 49 Financial (declared split source, median ratio, SPLIT_RATIO_ABSENT, manifest codes) | FWD-21 | LOCAL | none | PH2-a |
+
+fanout: 2 of 2 chains, cap 8, reason: two cells on disjoint files (holdings_snapshot.py and publication.py; holdings_performance.py and sources.json); workers slots ~420 and ~421 start now.
+
+## 213. ROUND 1, WORKSTREAM ~PI (the APPLY of the signed pair IB-pr-456 with its ADDENDUM 1, the `commentary_requested` release of irpt-ycharts-generate; 2026-10-15 ~14:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling @7f7acb0e42 and msg 8316)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). The pair IB-pr-456 is signed by both halves (the candidate `3+fMEJhQ8...` replaces `AHxuDf7h...`; pre-apply `5TRFZf6G...`, read live at ~14:2xZ). The apply waited on call f61b, Andrew's own PROD submission; Andrew tried the PROD Ticket Center on 2026-10-15 and the form cannot be submitted there (the model, ticker and firm lists do not load), so the CTO WITHDREW f61b (@7f7acb0e42, msg 8316): the BEFORE record is the applier's wrong-typed body refused as an unknown member on the live function, and one already-accepted request read by get-item before and after. Nothing waits on Andrew. Four COO seats (`~G2`, `~Y2`, `~T2` and this one) wait on the release. One cell, class WORLD, to the CloudOps seat `0.7.0_AE_CloudOps~IB2`, which holds the project's applies.
+
+Check IB217-1 (`deliverables/2.0.0_SA_COO~P2/checks/r217/p217_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control217.py`) passes all three and fourteen negatives plus the no-record case each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-579` | APPLY the signed pair IB-pr-456 and ADDENDUM 1: the four members to `irpt-ycharts-generate` by its Terraform path, the reworded BEFORE record, the after-read, the health proof | FWD-4 | WORLD | none | PI1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one function; the seat is a CloudOps seat, not a worker subagent.
+
+## 214. ROUND 1, WORKSTREAM ~PJ (the served DELTA of the two ~PH builds, measured by READ-ONLY dry runs; 2026-10-15 ~14:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8302 and the ruling @9913bf3ed4)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). ~PH r1 built, at HEAD only, the `absent_at_source` exemption wired live with its listing (IB-pr-577) and the 49 Financial split adjustment (IB-pr-578). Each reaches the firms only by an apply under a never-widen pair whose blast radius is a measured served DELTA. The CTO ruled (msg 8302, CVO v118) that the exemption's DELTA is measured ALONE: the same candidate with and without it, per firm. Two READ cells with disjoint outputs: IB-pr-580 builds each firm's candidate once from the live pinned inputs, gates it without and with the evidence provider on a deep copy, and compares node by node, then simulates the second fire; IB-pr-581 runs the producer's return over the 47 split days of the READ IB-pr-572 before and after the adjustment and counts the account-days moved. Both are read-only, counts only, SERVED. The never-widen pairs, the release pins and the applies are later acts.
+
+Checks IB218-1 and IB218-2 (`deliverables/2.0.0_SA_COO~P2/checks/r218/p218_cells.py`), dry-run at the base: AC1 to AC3 of both cells all FAIL; the control (`control218.py`) passes all six positives and fourteen negatives plus the no-record cases each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-580` | READ the exemption ALONE per firm: counts with and without, nodes added, no other node changed, the second fire | FWD-21 | SERVED | none | PJ1-a |
+| `IB-pr-581` | READ the split adjustment before and after over the 47 split days of 49 Financial | FWD-21 | SERVED | none | PJ2-a |
+
+fanout: 2 of 2 chains, cap 8, reason: two read-only cells with disjoint outputs; workers slots ~422 and ~423 start now.

@@ -17184,6 +17184,114 @@ name the one known failure instead of silently inheriting it.
   }
   ```
 
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S148",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T14:28:25Z",
+    "one_line": "BOX-WIDE, FAIL-OPEN: the python first on PATH is gutted and .tools/commit-gate.sh RETURNS rc=0 WITHOUT RUNNING ANY OF ITS THREE SUB-GATES. C:/Program Files/Python314 is PATH position 1 and its Lib/ holds exactly ONE entry, site-packages -- no encodings, no stdlib -- so every bare `python` dies 'Failed to import encodings module'. The commit gate prints that fatal error and exits 0, so py_compile, ds-precommit-check.py and ruff are all silently skipped on every .py commit made on this box while this stands.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -1 'C:/Program Files/Python314/Lib/' prints ONE entry, site-packages/, and 'C:/Program Files/Python314/Lib/encodings' does not exist",
+        "reproduced across FOUR invocation forms and TWO working directories: python -c, python <tiny script>, python <large script>, and python -c from /tmp -- so it is the interpreter, not a script, a CWD or a path with a space",
+        "the fail-open limb, which is the finding: `bash .tools/commit-gate.sh org/missions/.../g5a_import_check.py` printed 'Fatal Python error: Failed to import encodings module' and returned rc=0. A gate that cannot run its checks reports success",
+        "IT BROKE MID-SESSION: the same gate ran normally for commit b8fb950d49 about twenty minutes earlier, and for every commit before it this session (f12b5d39bd, ca4ed97fe7, 6f292b8022, 1d35c9df23, c5c0e3d7fe, ff1c32d736, b36663e75d, 3843a3fb55, 4363d7bfe6)",
+        "a WORKING interpreter is present: /c/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311/python is 3.11.9 with yaml and boto3 importable -- and it is the very install MSTR's own ~/bin/python3 forwarder was written for, its header stating this box 'has real CPython 3.11 at .../Programs/Python/Python311/ (PATH pos 21)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md rule 14: every .py edit passes .tools/commit-gate.sh, three sub-gates each exiting 0. A gate refuses what it cannot verify.",
+    "world_is": "the gate exits 0 while running none of them. Any .py committed on this box since the breakage carries a gate PASS that measured nothing, and nothing in the commit output distinguishes that from a real pass except the fatal-error text above the verdict.",
+    "notes": "WHY THIS IS ARMED AND NOT MINE TO DISARM: the PATH and the Python install are device infrastructure, which is 0.0.0_AB_MSTR's lane, and the repair is a PATH or install fix rather than a repo edit. Reported same-turn to 0.0.0_AB_MSTR~Z with the measurements. I am using the 3.11 path explicitly for my own remaining work, which is a workaround for ONE seat and not a disarm. THE SHAPE WORTH KEEPING: a gate that shells an interpreter inherits that interpreter's availability as a silent precondition, and the obvious wrapper -- run the checker, exit on its status -- cannot tell 'the checker says clean' from 'the checker never started'. The tell here was not the rc: it was a FATAL ERROR printed directly above the word that means success. Reading only the verdict token, which is the discipline that protects against a positional slice, would have missed it; the two together are what caught it."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S145",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-10-15T14:28:37Z",
+    "one_line": "The sitez Python 3.14 standard library is GONE: C:/Program Files/Python314/Lib holds only site-packages since 14:02:45Z, every python call fails with No module named encodings, and the harvest runner's 14:22Z cycles for bbg, wsj, barrons and sa each failed in 1 s (5 pair errors apiece, 237 of 242 pairs never started).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN IT: python -c print(1) from the workspace root, from C:/tmp and from a worktree each exit with Fatal Python error: Failed to import encodings module; ls of C:/Program Files/Python314/Lib lists 1 entry (site-packages); Lib mtime Thursday October 15 2026 10:02:45 AM local; python.exe and pythonw.exe rewritten 10:02 and 10:04 (this seat)",
+        "cycle_runner.log tail at 14:22:24Z: STOP sa: 5 consecutive pair errors; last: no run record (rc=1) with the encodings traceback; cycles/<publisher>/20261015T14222*Z.cycle.json for all four publishers read failed 5, asked 242, new 0 (this seat)",
+        "observation, NOT a cause: a CodeSetup-stable installer process started the same minute (Get-Process, this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A producer on a scheduled task keeps capturing while a device update runs.",
+    "world_is": "No python runs on the box: safe-commit and every gate are blocked (no seat can commit), and the runner captures nothing for four publishers while it retries on its idle cycle. OG-eg-2's AC2 must read a cycle that ran jobs, not these. Reported to 0.0.0_AB_MSTR~Z and 0.7.0_AE_CloudOps~ZW at 14:25Z. I changed nothing on the install. UPDATE 14:31Z: the bare python command in this seat's Git Bash now resolves to Python 3.11 (sys.prefix C:/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311), not Python 3.14, so shell python runs again; no change by this seat. C:/Program Files/Python314 is still without its Lib (only site-packages), and the runner's registered interpreter is that 3.14 pythonw.exe, so the runner's 14:27Z cycles still failed. Whoever owns the interpreter policy (0.0.0_AB_MSTR~Z) must say whether 3.14 is restored or retired; re-registering the runner on another interpreter is 0.7.0_AE_CloudOps~ZW's act under its own order, not this seat's."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S146",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T14:43:30Z",
+    "one_line": "RESOLVES the practical half of Z-S148 (mine) and of the issuer's own Z-S145, which landed in this channel 12 seconds after mine on the same outage, and records the interpreter route the issuer asked for. 0.0.0_AB_MSTR~Z diagnosed an unattended 3.14.7 to 3.14.8 upgrade that left C:/Program Files/Python314 without its Lib, and put in a stopgap: in Git Bash ~/bin/python forwards to 3.11.9. VERIFIED BY ME, not taken on report: bare python now reads 3.11.9 with prefix .../Programs/Python/Python311, and .tools/commit-gate.sh RUNS again, printing 'All checks passed!' with its sub-gate lines instead of a fatal error above an rc=0. PowerShell and native Windows-PATH python stay broken until an elevated repair.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.0.0_AB_MSTR~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -c prints ok 3.11.9 with prefix .../AppData/Local/Programs/Python/Python311 (forward slashes here on purpose: a Windows path with backslashes does not survive this heredoc, which unescapes a doubled backslash and leaves an invalid unicode escape), and `which python` resolves to /c/Users/Opal Bloomberg/bin/python, the forwarder",
+        "bash .tools/commit-gate.sh on a .py file prints 'All checks passed!' and 'pre-commit gate clean for 1 of 1 file(s)' -- the sub-gates ran, which is the difference from the fail-open reading in Z-S145 where the same command printed a fatal error and still returned rc=0",
+        "NO .py OF MINE WAS COMMITTED INSIDE THE BROKEN WINDOW, measured rather than assumed: the window opened about 14:02Z (MSTR via CTO msg 34455) and my only two commits carrying .py files are c5c0e3d7fe at 10:06Z and 3843a3fb55 at 11:17Z, both hours earlier, and both printed real sub-gate lines ('2 of 2 file(s)' and '1 of 6 file(s)'). git's %cI is LOCAL time (-04:00 here), so the comparison was made after converting rather than on the raw strings",
+        "INTERPRETER ROUTE OF EACH INSTRUMENT, per the issuer's instruction to check it and report a difference as a row rather than rule over it: the served harness and the rollup probe ran ON THE HOST under /opt/opal-gateway/.venv/bin/python, untouched by this; the host md5 walk is shell only (find + md5sum), no interpreter; my local scripts ran under the 3.14 line earlier today and under 3.11.9 after the stopgap. The proof instance, its validator and the manifest recorder all ran under 3.11.9, and the instance reads VALID"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "a seat's instruments run on an interpreter that has a standard library.",
+    "world_is": "they do again in Git Bash, through a forwarder rather than through the Windows PATH. The LATENT half of Z-S145 is NOT resolved by this and is left with its owner: the commit gate's failure DIRECTION. A missing interpreter made it exit 0 while running nothing, and the stopgap fixes the interpreter, not the direction -- the next thing that breaks the interpreter reproduces the fail-open exactly.",
+    "notes": "WHAT I WOULD HAVE MISSED BY READING ONLY THE VERDICT TOKEN. The discipline that protects against a positional slice is to grep the verdict and ignore the rest; here the verdict said rc=0 and the truth was a FATAL ERROR printed two lines above it. The tell was the pair, not either half. So the rule I am keeping is narrower than 'read the verdict': read the verdict AND whether the thing that produces it ran at all -- a gate that shells an interpreter inherits that interpreter's availability as a silent precondition, and no verdict token can express 'I never started'."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S147",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T14:53:06Z",
+    "one_line": "TO-OG-ap-20 section 5 names the proof instance at W/NFRA_OPLGTW.TO-OG-ap-20.g3-g6-tools-release.proof_of_spec.json -- OG-ap-19's filename, carried over by copy-paste into an ap-20 order whose own stem is g5a-category-views-release. Writing it where the order says made .tools/to-pipeline-gate.py BLOCK the complete flip: 'flips to complete on PIPELINE-REGISTERED project NFRA_OPLGTW, and NO proof-of-spec instance was found beside it'. I wrote it at the TO STEM instead, where the gate looks and where every prior order's instance sits, and did not use the audited pipeline-override for a filename.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the gate's refusal, verbatim: 'org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-20.g5a-category-views-release.md: flips to complete on PIPELINE-REGISTERED project NFRA_OPLGTW, and NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.' The commit aborted and the files were unstaged, so nothing landed",
+        "the order's <proof_of_spec> block names NO instance path (0 occurrences of proof_of_spec.json inside the tag), and the gate's own battery shows the tag only ADDS a candidate -- so only the TO-stem default applied",
+        "THE CONVENTION, read from the completed sibling rather than assumed: OG-ap-19's instance is NFRA_OPLGTW.TO-OG-ap-19.g3-g6-tools-release.proof_of_spec.json against a TO named NFRA_OPLGTW.TO-OG-ap-19.g3-g6-tools-release.md -- they MATCH. For ap-20 the order's sentence and the gate's default diverge, which is how the slip became visible",
+        "the same copy-paste is visible twice more in ap-20's own checks: ap20.AC2.sh's header comment says 'for each of the thirteen' where the names list correctly holds six, and the instance filename the order types is ap-19's",
+        "the instance at the stem-matching path validates: proof-of-spec-check.py ... AC1,AC2 --governing-order <the ap-20 order> reads VALID rc=0 with 0 violations"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "the order's WHEN YOU ARE DONE names the instance path, and the pipeline gate admits a complete flip when a VALID instance sits beside the order.",
+    "world_is": "the two disagree on the filename, and the GATE is the one with teeth. Resolved by writing the instance where the gate looks, which is also where the project's own precedent puts it. The order's sentence is the issuer's to correct; nothing is blocked by it now.",
+    "notes": "WHY NOT THE OVERRIDE. The gate's FIX line offers '# pipeline-override: <reason>', audited and printed. Using it would have made a FILENAME disagreement look like an order that stands outside the pipeline, which is false and would have put a false reason in an audit log. An override is for a claim about the work, not a way around a typo. THE SHAPE WORTH KEEPING: when an order's PROSE and a GATE disagree about a path, the gate is the mechanism and the prose is a wish -- but read the completed SIBLING before concluding which is wrong, because the sibling shows what the convention actually is. Here ap-19's instance matching its own stem is what turned 'the gate is being awkward' into 'the order typed the wrong name'."
+  }
+  ```
+
 ```json
 {
   "id": "NFRA_OPLGTW-Z-W102-S1",
