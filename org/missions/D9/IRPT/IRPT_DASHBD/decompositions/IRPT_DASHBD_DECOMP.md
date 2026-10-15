@@ -2229,3 +2229,17 @@ The CTO signed the pair on sha256 `cc5e87ff22e6` and accepted newest-`account_di
 **fanout:** 1 of 1 chains, cap 8, reason: one cell, one write surface (the handler directory), worker `0.9.0_WK_IRPT_DASHBD~220`.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green with 2 + 2 + 14 + 7 red arms; the probe validated against a scratch reference handler (green) and seven single-fault mutants (no metadata, claim not held, oldest date, dropped uncounted, no-rows zero, counts missing, an id printed: all red)):** `checks/r138/p138_households.py` (DB138-1-AC1..AC3).
+
+## 137. ROUND 139, WORKSTREAM B-49F (2026-10-15 ~20:1xZ, issuer 2.0.0_SA_COO~D2, on the signed report-build pair REVISION 2: packet sha256 `a9cdd5b207fe`, COO half @7eb94ae629, CTO half `NEVER_WIDEN_COTTONWOOD_REPORTING_GOLD_LAMBDA_R2_CTO_HALF.md` @d7e774e05d, msg 8587; round 138 merged at f25b913caf, MAY-CLOSE)
+
+Cell 4 of the report build: the apply of the signed pair by the AE applier `0.7.0_AE_CloudOps~DB2`, a WORLD act on a risk class of its own. One order, because it is one deploy under one ledger and the deploy rule allows one change at a time: the bundle build and upload, ONE `safe-apply` (plan exactly 7/0/0), ONE synchronous DRY-RUN event, then the `{}` backfill events one at a time with an after-read each, the schedule DISABLED, the ledger OPEN.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Build, upload, plan 7/0/0, `safe-apply`, read-backs; the dry run `{day 2026-10-14, dry_run true}` (writes nothing, proves the layer's pyarrow loads on python3.12 and states the three absent days and the held claim); the backfill `{}` events until NOTHING_OWED (at most 65 objects), stop conditions as the packet states; the record `COT_REPORT_APPLY_RECORD.json` | DB-b-272 | FWD-1: the Cottonwood filled report values exist in the cloud | WORLD | rounds 133, 135, 137, 138 merged; both halves SIGNED at revision 2 | chain A |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the dry run and the backfill ride in this one order, as the CTO accepted (question 1), but the backfill is a separate step with its own stop conditions and an after-read per event, so a failed dry run stops before any object exists; (b) the receipt to `1.0.0_SA_CTO~DELL1` (via `0.0.0_AB_MSTR~DELL2`, saying "deployed; the layer's pyarrow loaded and read the Black Diamond partitions on python3.12" and "NOT a page render") is the ISSUER's act after reading the dry run's record, not the applier's, so the applier's record carries no receipt field; (c) the checker holds the packet's sha256 and the build hash as constants, so a packet or bundle that differs is not graded; (d) the schedule enable stays the CTO's separate word after Act 4's after-read and the counts are read.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one applier, one ledger, one change (the deploy rule: one change at a time).
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected, no record; self-test green, one green and 55 red record arms; its live clauses read fresh Lambda, IAM, scheduler, S3 and log state):** `checks/r139/p139_reportapply.py` (DBC139-1-AC1, DBC139-2-AC1, DBC139-3-AC1).

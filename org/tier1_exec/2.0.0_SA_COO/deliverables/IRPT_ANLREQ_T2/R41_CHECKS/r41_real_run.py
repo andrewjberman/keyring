@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, ".")
 from data.transcripts.scripts.commentary import drafter, entry
 
-PLANT = ["Smith Family Trust", "12345678", "$1,250,000"]
+PLANT = ["Smith Family Trust", "12345678", "$1,250,000", "A1234567"]
 composition = {
     "browser": {"request_id": "REQ-" + "a" * 24, "variant": 2},
     "resolved": {},
@@ -14,13 +14,14 @@ composition = {
         "account_type": None, "themes": [], "household": "Smith Household",
         "holdings_category_weights": {"equity": 0.6, "fixed_income": 0.4},
         "figures": {
-            "variant": 2, "model_names": ["Core Growth", "Balanced Income"],
+            "variant": 2, "model_names": ["Core Growth", "Balanced Income", "Smith Family Trust", "12345678"],
             "allocation_pct": {"equity": 61.5, "fixed_income": 38.5, "Smith Family Trust": 99.0},
             "sector_pct": {"Technology": 22.0},
             "period_returns_pct": {"1Y": 8.4, "YTD": 5.1, "Smith": 3.0},
             "benchmark_returns_pct": {"1Y": 7.9, "YTD": 4.8},
             "top_holdings": [{"ticker": "AAPL", "weight_pct": 6.2}, {"ticker": "Acme Corp", "weight_pct": 3.0},
-                             {"ticker": "MSFT", "weight_pct": "$12,000"}],
+                             {"ticker": "MSFT", "weight_pct": "$12,000"}, {"ticker": "12345678", "weight_pct": 4.0},
+                             {"ticker": "A1234567", "weight_pct": 2.0}],
             "client_name": "Smith Family Trust", "account_number": "12345678", "balance": "$1,250,000",
         },
     },
