@@ -1,13 +1,12 @@
 {
   "prd": "IRPT_ANLREQ_PRD.md",
-  "prd_version": "v0.13",
-  "prd_pin": "43c7157f1ff6cda82b36ad6c2e47fafcb0f47551",
+  "prd_version": "v0.14",
+  "prd_pin": "81d9691b712bdce6b16b3344c8abb83b3eb8ca88",
   "half": "brief",
-  "half_hash": "ae60b7677e300a147b7fdd71021947dedc358212b728736445ee235ec096b013",
-  "endpoint_hash": "d7deb42ac854fd8ffb8c50dab76f085713c2b61c9a53d6b7500716da21cbd6fe",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_IRPT_ANLREQ_v0.13_BRIEF_HALF_20261015.md@7e209401ae",
+  "half_hash": "ed36d31b46a18de04c17435f297ceb760b0294977a4f5e280775e87aa24dedf0",
+  "endpoint_hash": "f2cdb6557373b14d6f2e68ce3d772418b3aba38cf1ef169d048ffa52bc9995b5",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_IRPT_ANLREQ_v0.14_BRIEF_HALF_20261015.md@a1ef88928e",
   "signed_by": "4.0.0_SA_CRO~DELL2",
-  "signed_at": "2026-10-15T15:26:12Z",
-  "reason": "BRIEF COVERAGE row 4 (:159) names a designated-proxy table that does not exist and 'model-proposed swap retired', against the C-SWAP replacement ruling @5deb868819, QA @30ceaa97fa and C-FILING-HINT"
+  "signed_at": "2026-10-15T15:30:49Z"
 }
