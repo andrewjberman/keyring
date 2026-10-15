@@ -82,7 +82,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gt-11.gt5-hookup.proof_of_spec.
 - Round 37, workstream GT5-HOOKUP (decomposition addendum R3-T.59). The gateway app files are in lane CLOUD_OPS_OR_ETL, which the COO cannot commit: a worker order grants them. Rides its own release after `OG-ap-19`.
 - Script dry-run by the issuer on HEAD copies of the five files before the cut. Pre-cut: gt11.AC1 and gt11.AC2 base FAIL as expected (0 of 1 registered, 0 of 1 classified).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>GT5-HOOKUP</workstream>
 <slot>~91</slot>
