@@ -18672,3 +18672,212 @@
   "notes": "Closes the blocking condition of W182-S1 by the issuer's amendment; S1 is not edited and keeps its filed text. S2 stands as filed and was ruled correct by the issuer (the order governs). The AR-g-83 case in the amended checker is not verified by this worker."
 }
 ```
+
+## IRPT_ANLREQ-D2-W183-S1 -- AR-g-83 contract: a split dated on a dropped (bad-Close) row is not applied to the spanning return, so the literal formula reports -49 percent where the true move is +2 percent
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:07:20Z",
+  "one_line": "The AR-g-83 contract applies the split ratio on the returned row only (s_t), so a 2-for-1 split dated on a dropped bad-Close row is missed by the spanning return: -49 percent is read where the true move is +2 percent. Implemented literally; not corrected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-83 item 3: r_t = (P_t + D_t) / (P_prev / s_t) - 1, where P_prev is the previous usable row's as-traded close and s_t the split ratio on t (1.0 when none); a bad row between two good rows is dropped and the next return spans the gap. Item 2: factor(d) is the product of every split ratio dated strictly after d over ALL fetched rows, including a row whose Close is unusable.",
+  "world_is": "MEASURED on the module as committed at 286cdf9f94 (run just before the one-line __future__ import was added; no behaviour change) by calling make_reader(fetch=...) on three served rows: 2024-01-02 Close 50.0 Stock Splits 0.0; 2024-01-03 Close NaN Stock Splits 2.0; 2024-01-04 Close 51.0 Stock Splits 0.0. Output [('2024-01-02', 100.0), ('2024-01-04', 51.0)]. The as-traded close for 2024-01-02 is 100, its factor 2 coming from the split on the dropped 2024-01-03 row, while s on 2024-01-04 is 1.0, so the spanning return is 51 / 100 - 1 = -0.49. The true return across the 2-for-1 split is 51 / (100 / 2) - 1 = +0.02. The spec's own daily_tr has the same shape: it reindexes splits onto the close index only, so a split on a row absent from that index is not applied (data/mdpf/scripts/demque/tr_compare.py lines 45-49 at HEAD). NOT MEASURED: how often Yahoo serves a split day with a NaN or zero Close (no live pull, no network, no AWS, per the order).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py@286cdf9f94: the factor_by_date loop (factor(d) over all served rows) and the returns loop (s_t taken from the returned row only)",
+      "python -c measurement on the committed module, three-row case: [('2024-01-02', 100.0), ('2024-01-04', 51.0)]; the spec-literal return printed as -0.49 against the true +0.02",
+      "data/mdpf/scripts/demque/tr_compare.py@HEAD lines 45-49: s = sp.reindex(close.index).fillna(1.0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker, not dispositioned. Does not block AR83-g-AC1 or AC2: the contract cases pass as written. Whether the spanning return should carry a split on a dropped row is for the issuer and the CTO; a correction changes the contract's formula, which is not a worker act."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W183-S2 -- closes W183-S1: the issuer amended item 3 (af96479526, on main) so s_t is the product of the split ratios since the previous usable row; the reader is fixed at 497e911dab and checker case 11 passes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:24:37Z",
+  "one_line": "Closing row for W183-S1: the issuer's amendment af96479526 (main) makes s_t the product of the split ratios of every fetched row dated after the previous usable row up to and including t, so a split on a dropped bad-Close row counts across the gap. The reader at 497e911dab implements it; checker case 11 passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W183-S1 stands as filed and is not edited. It recorded that TO-AR-g-83 item 3 read s_t as the split ratio on t alone, which misses a split on a dropped bad-Close row for the return across the gap.",
+  "world_is": "The issuer's ruling (2.0.0_SA_COO~G2) and amendment af96479526 on main amend item 3: s_t is the product of the split ratios (as item 2 reads them) of every fetched row dated after the previous usable row's date up to and including t, 1.0 when none. The checker ar_g8x_checks.py g83 gained case 11 (D1 served 50, D2 bad Close with split 2.0, D3 served 51.51, expecting [(D1, 100.0), (D3, 103.02)]). The reader at 497e911dab implements the amended rule; the offline test test_a_split_on_a_dropped_bad_close_row_counts_for_the_return_across_the_gap passes; AC1 reads cases 11, wrong none and tests 12 passed (rc 0); AC2 reads AR-G83-HYGIENE-OK (rc 0). The issuer also ruled the judgment calls correct: a non-finite Dividends value counts as 0.0 and a bool Stock Splits value counts as 1.0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show af96479526 --stat: the amended order file (item 3 and the case count) and ar_g8x_checks.py (+3 lines, case 11)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py@497e911dab: the accrued-split loop over served rows between the previous usable row and t",
+      "ar_g8x_checks.py g83 run at the worktree after 497e911dab: 'cases 11, wrong none'; 'AR-G83-OK cases=11 tests=12', rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closing row: the finding is resolved in substance by the issuer's amendment af96479526 and the fix at 497e911dab. W183-S1 is not edited and keeps its filed text and disposition. The disposition is left UNDER_INVESTIGATION because the worker cannot transfer one: the gate refused GRADUATED from a worker (a CVO transfer at L9). The CVO's compile may close it."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W183-S3 -- the lane gate refused the amendment fix at HEAD because the order was flipped to complete; the amended order was committed as pending first (9db088e4ad), and the fix then passed at 497e911dab
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:30:03Z",
+  "one_line": "A worker's commit to the order's own paths was refused as another lane once the order was complete at HEAD: the owned-paths gate reads only NON-TERMINAL task orders at HEAD, so an amendment fix needed the order reopened (pending) in its own commit before the module and test could land.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face commits the worker's files with safe-commit scoped to the order's <paths>, and the order's status is flipped to complete only at the close. The owned-paths lane gate admits a worker's commit only to paths named by a non-terminal task order at HEAD issued to its serial.",
+  "world_is": "MEASURED 2026-10-15 at dbb40402f8 (the closing flip): safe-commit of infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py and its test was refused in block mode with 'owned-paths lane violation ... WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. Committing the amended order file alone (status pending, 9db088e4ad) restored the grant, and the same two files then committed at 497e911dab with rc 0. NOT MEASURED: whether a complete order with an amendment on main should reopen through the issuer rather than the worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree scratch .scratch/commit_fix.out (the refusal, lines 19-20: the two VIOLATION lines with the no-non-terminal-order text)",
+      "git log: 9db088e4ad (amended order, pending) then 497e911dab (module and test) on wk-IRPT_ANLREQ-183",
+      "git log: dbb40402f8 (the closing flip to complete) is the HEAD the refusal read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker for the CVO and the issuer. No order text was widened and no override was used: the gate was not bypassed, the grant was restored by the order's own status."
+}
+```
+
+## IRPT_ANLREQ-D2-W191-S1 -- the sparse worktree lacks data/transcripts/assets, so one commentary test is red at base
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W191-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~191",
+  "surfaced_at": "2026-10-15T18:35:02Z",
+  "one_line": "The sparse worktree lacks data/transcripts/assets, so test_build_packages_keys_module is red at base before any edit of TO-AR-t-32.",
+  "class": "BLOCKING",
+  "spec_asserts": "TO-AR-t-32 Bounds: keep every existing test_commentary_*.py green; a missing folder in the sparse worktree is a row, never a stub.",
+  "world_is": "At base 169654b4a9 in worktree wk-IRPT_ANLREQ-191 the commentary suite is 66 passed, 1 failed: test_commentary_composition_port.py::test_build_packages_keys_module, because the build.sh cp step cannot stat data/transcripts/assets (tracked at HEAD, absent in this worktree). After the order's change the suite is 68 passed, 1 failed, the same test. Nothing was stubbed or reconstructed.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest data/transcripts/scripts/tests/test_commentary_*.py before the edit: 1 failed, 66 passed; failure line cp: cannot stat '/c/dev/wk-irpt-anlreq-191/data/transcripts/assets'",
+      "ls -d data/transcripts/assets: No such file or directory; git ls-files data/transcripts/assets lists ASSETS.lock.json and README.md at HEAD 169654b4a9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed for the sparse tree. Not caused by the order's change and not in the order's paths. Criterion AR32-t-AC1 is green regardless (R42-LG1-OK, 2 passed)."
+}
+```
+
+## IRPT_ANLREQ-D2-W155-S1..S4 -- AR-y-357 (0.9.0_WK_IRPT_ANLREQ~155): the resident packaging refusal, read from source at f20c193dca
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W155-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~155",
+    "surfaced_at": "2026-10-15T18:40:24Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "AR-y-357 places the poll and the IRPT_RESIDENT_PACKAGE retained_for_retry print in ycharts/generate/resident_worker.py, without the infra/aws/lambda/investor-reporting/ prefix; at base the retained_for_retry print is in resident_main.py:78 and resident_worker.py prints outcome= only, and infra/ is skip-worktree so the source was read with git show",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py:78 print('IRPT_RESIDENT_PACKAGE retained_for_retry ' ...) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:1052 print(\"IRPT_RESIDENT_PACKAGE outcome=\" + code) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-357.resident-package-refusal-source-read.md (cell Q1 paths) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d"
+      ]
+    },
+    "spec_asserts": "AR-y-357 Q1 places the poll in ycharts/generate/resident_worker.py and the journal line IRPT_RESIDENT_PACKAGE retained_for_retry in that poll path; the packager module is ycharts/research/opal_packager.py; all are read from the worktree.",
+    "world_is": "At f20c193dca the resident and packager modules sit under infra/aws/lambda/investor-reporting/. resident_main.py:78 prints retained_for_retry through retained_reason (:32-35); resident_worker.py:1052 prints outcome=. infra/ is skip-worktree and absent on disk, so every read in the record is git show f20c193dca4b85c5b76436fe14fa08715f2e2b0d:<path>.",
+    "notes": "The location difference changes no answer: the cited lines are the same code under the lambda root. The record's cite_check reads every citation at the base sha."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W155-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~155",
+    "surfaced_at": "2026-10-15T18:40:24Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Y2 (issuer), by the resident release that wires ANALYSIS_COMMENTARY into the resident's artifact repository",
+    "one_line": "every commentary_ready message the live resident handles is refused at the draft read: ANALYSIS_COMMENTARY is not a family of the resident's ArtifactRepository (resident_installed.py:392 wires only irpt-ycdgen-research-v1), so repository.py:392 raises ReportRefused 'unregistered artifact family'; the draft's RESERVED retention row is not the cause",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/reports/repository.py:391-392 and :471 (_get calls _binding, which refuses an unregistered family) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/lambda/investor-reporting/reports/resident_installed.py:390-392 (build_retained_repositories with additional_policy_revisions=(OPAL_RESEARCH_REVISION,)) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/logic/registry/reporting_policies.json:108 (ANALYSIS_COMMENTARY only under irpt-anlreq-x10-v1) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/lambda/investor-reporting/reports/tests/test_resident_installed.py:299 (pins the resident's revision list to the research revision) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d"
+      ]
+    },
+    "spec_asserts": "AR-y-357 Q2 asks whether reading a draft or report artifact whose retention row is RESERVED raises ReportRefused, and Q1 which packaging call raises it. The resident's read of its own commentary draft is expected to resolve the draft's family under the revision that registers it.",
+    "world_is": "The packager's read at opal_packager.py:187 reaches repository.py:471, which calls _binding and refuses 'unregistered artifact family' (repository.py:391-392): ANALYSIS_COMMENTARY is registered only in irpt-anlreq-x10-v1 (registry :108) and the resident composition opts in irpt-ycdgen-research-v1 only (resident_installed.py:392). A RESERVED row is admitted on this read because the artifact read passes accepted=False (repository.py:468; retention.py:186-189), so the RESERVED state is not the refusal. The refusal carries no code (resident_main.py:35 prints code=- for prose), which is why the journal shows code=-.",
+    "notes": "The first two journal refusals (class=ReportRefused) are the decisive site by ordering: the owner row check passed on those deliveries (opal_packager.py:256 ran before the read). The record's CAUSE is UNDETERMINED because the enum has no value for a registry refusal; the record's smallest change is resident_installed.py build_resident_runtime, rides the resident release, and updates test_resident_installed.py:299. Uncovered by the record: the live row, the deployed registry, and the DLQ body. Clock: at 2026-10-15 the RESERVED draft expires 30 days after its reserve (retention.py:233); the DLQ message ages out 14 days after DLQ entry (commentary.tf:156)."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W155-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~155",
+    "surfaced_at": "2026-10-15T18:40:24Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO (ruling on the owner row of fwd1-staff-r41a@opal.invalid, which the packager reads before any artifact read)",
+    "one_line": "the owner's user row is a second blocker, not the cause of the first two refusals: retained_package resolves the owner's authority before any artifact read, so once the family is wired the packager still stops at CurrentAuthorityRefused ACTOR_NOT_FOUND while the synthetic owner's row is absent",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:184, :256 (principal_for runs inside the retained_package step, before read_artifact at :187) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py:114-115 (user None refuses ACTOR_NOT_FOUND) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py:70-82 (get_user returns None when no opal-users-v2 row exists) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d"
+      ]
+    },
+    "spec_asserts": "AR-y-357 Q4 asks whether the first two refusals could be the authority family failing for another reason, and how the resident decides an owner's authority for a package.",
+    "world_is": "principal_for runs before the artifact read on every delivery. Deliveries 1 and 2 were journaled ReportRefused, so decide() passed on them. Delivery 3 was journaled CurrentAuthorityRefused ACTOR_NOT_FOUND, so decide() had no user row to read. The first two refusals are therefore not the authority family. Once S2 is fixed, the packager still refuses on delivery 3 while the owner's row is absent.",
+    "notes": "The record's Q4 answer is first_two_refusals_same_family = no. The third refusal is the authority family and is a separate blocker. The authority rule in full is current_authority.py:89-141 (phase principal) and resident_installed.py:241-254."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W155-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~155",
+    "surfaced_at": "2026-10-15T18:40:24Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "infra/aws/terraform/transcripts/commentary.tf names the I3 analysis-ready queue as aws_sqs_queue.commentary_ready (:122) while the I4 commentary-ready queue is aws_sqs_queue.commentary_done (:159); a reader who looks up commentary_ready in that file lands on the wrong queue",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/transcripts/commentary.tf:49 (commentary_ready_queue_name = local.commentary_names.ready_queue.name) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "infra/aws/terraform/transcripts/commentary.tf:122-123 (resource aws_sqs_queue.commentary_ready named by that local) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d",
+        "data/transcripts/scripts/commentary/NAMES.json _provenance (ready_queue is the analysis_ready I3 queue; commentary_ready_queue is the I4 queue) @f20c193dca4b85c5b76436fe14fa08715f2e2b0d"
+      ]
+    },
+    "spec_asserts": "commentary.tf:38-40 says the commentary-ready (I4) queue is named by NAMES.json commentary_ready_queue, and the resident consumes it; a resource named commentary_ready in the same file is then expected to be that I4 queue.",
+    "world_is": "The local commentary_ready_queue_name holds the ready_queue (I3) name (:49). The resource aws_sqs_queue.commentary_ready (:122) is therefore the I3 queue. The I4 queue is aws_sqs_queue.commentary_done (:159), with DLQ aws_sqs_queue.commentary_done_dlq (:152) and redrive maxReceiveCount 3 (:168). The resident's package poll reads the I4 queue (resident_worker.py:1035-1036).",
+    "notes": "No change is proposed in this row. The record's Q5 redrive answer names aws_sqs_queue.commentary_done for the I4 queue, which is the one the resident reads."
+  }
+]
+```

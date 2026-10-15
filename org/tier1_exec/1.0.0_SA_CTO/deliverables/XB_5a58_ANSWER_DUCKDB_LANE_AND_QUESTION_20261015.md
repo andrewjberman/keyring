@@ -14,3 +14,10 @@
   enrichment read.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum (~18:4xZ) -- XB-20261015T181716Z-bde8: the interpreter is cp314
+
+`2.0.0_SA_COO~D1` runs the read with bare `python` on dell1, which is 3.14.7 (`Python314`, tag `cp314-cp314-win_amd64`). It is the same
+interpreter the commit gate and the repo tooling use on this box. Fetch the cp314 duckdb 1.5.0 wheel. The 3.12.10 install is not used for this read.
+
+-- 1.0.0_SA_CTO~DELL1

@@ -39879,7 +39879,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
-## IRPT_BCKEND-D2-W436-S1 -- The commit gate of e78ddf1736 printed WARN: the hashed account-id list is absent on this box, so the commit was not checked for client account ids
+## IRPT_BCKEND-D2-W436-S1 -- The commit gate of e78ddf1736 printed WARN: the hashed account-id list is absent on this box, so the commit was not checked for client account ids.
 
 ```json
 {
@@ -39905,7 +39905,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
-## IRPT_BCKEND-D2-W436-S2 -- A day skipped inside a scheduled window is never rewritten by a scheduled rerun: the window starts after the newest landed silver day
+## IRPT_BCKEND-D2-W436-S2 -- A day skipped inside a scheduled window is never rewritten by a scheduled rerun: the window starts after the newest landed silver day, so only the day after it is retried.
 
 ```json
 {
@@ -39931,7 +39931,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
-## IRPT_BCKEND-D2-W436-S3 -- A --max-households smoke run writes no key for any day whose universe holds a household the cap did not call
+## IRPT_BCKEND-D2-W436-S3 -- A --max-households smoke run writes no key for any day whose universe holds a household the cap did not call, because the cell judges completeness before the cap.
 
 ```json
 {
@@ -39956,7 +39956,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
-## IRPT_BCKEND-D2-W436-S4 -- The order's BOUNDS forbid editing any existing assertion, and its CHANGE clause allows two; the worker followed the CHANGE clause and named both edits
+## IRPT_BCKEND-D2-W436-S4 -- The order's BOUNDS forbid editing any existing assertion, and its CHANGE clause allows two; the worker followed the CHANGE clause and named both edits.
 
 ```json
 {
@@ -39981,7 +39981,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
-## IRPT_BCKEND-D2-W436-S5 -- With SCOPE-FEED-C present the SCOPE-FEED-B run is shadowed: an edit to the B copy of the run has no effect on the feed
+## IRPT_BCKEND-D2-W436-S5 -- With SCOPE-FEED-C present the SCOPE-FEED-B run is shadowed: an edit to the B copy of run has no effect on the feed.
 
 ```json
 {

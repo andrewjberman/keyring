@@ -8872,3 +8872,82 @@ round.** Never edit an existing row.
   "disarm_owner": "1.0.0_SA_CTO~DELL2"
 }
 ```
+
+## ADVI_COTBKF-D1-W170-S1 -- The order's write grant (data/assets/scripts/silver/) and its named builder inputs (data/mdpf/scripts/demque/) are tracked at HEAD but outside this worktree's sparse-checkout cone, so the worktree does not carry the paths the order names; the order is not executable here. Stopped before any build (refusal clause); no file was written outside the deliverables folder.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W170-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~170",
+  "surfaced_at": "2026-10-15T18:02:56Z",
+  "one_line": "The order's write grant (data/assets/scripts/silver/) and its named builder inputs (data/mdpf/scripts/demque/) are tracked at HEAD but outside this worktree's sparse-checkout cone, so the worktree does not carry the paths the order names; the order is not executable here. Stopped before any build (refusal clause); no file was written outside the deliverables folder.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-cotbkf-170 sparse-checkout list (core.sparseCheckout=true, worktree HEAD 824588956ea188ade47ac480f1dd0b87e6c00e11): .tools, infra/logic/registry, lib, org/devices, org/missions/D8/ADVI/ADVI_COTBKF, org/modules/graph, org/ref, org/standards; no data/ entry",
+      "ls -d C:/dev/wk-cotbkf-170/data: no such file (the worktree has no data/ on disk); git status --short in the worktree: 0 entries",
+      "git -C C:/dev/wk-cotbkf-170 ls-tree -r --name-only HEAD data/mdpf/scripts/demque/ lists active_set.py, b1_request.py, bbg_quote.py, bbg_allowance.json; data/assets/scripts/silver/ is tracked at HEAD and absent on disk",
+      "base checkout C:/dev/ajb_workspace (same HEAD 824588956e) holds data/mdpf/scripts/demque/b1_request.py and the two MDPF_DEMQUE failed-14 and option-C request files on disk; the committed V2 file in the worktree hashes 5cef7ab0c9e10fe299cb757d4dba31792d069bad35f7250defa76e18773046ae, matching the order"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-2 worker face: the grant is the <paths> block (data/assets/scripts/silver/cotbkf_active_bbg_need.py and its tests); the builder inputs are read at the worktree root (data/mdpf/scripts/demque/b1_request.py); a worker whose worktree does not carry the named paths files a BLOCKING row and stops, and never rebuilds or extracts the tree.",
+  "world_is": "The worktree's sparse-checkout cone omits data/, so the named write path and the named builder inputs are tracked at HEAD but not materialised in this worktree. The order's read-first list points at the base checkout, but the write grant cannot be created in this worktree without widening the cone, which is a tree reconstruction the worker face forbids. Nothing was run against the builders, no cone or config was changed, and no checkout was run. Not established: whether the issuer intends the cone widened for this worker or the build run from the base checkout.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W170-S2 -- CB86ch2-AC2 cannot be met as written: its glob slices/ACTIVE_BBG_SLICE_*.json also matches the .quote.json files that item 5 places beside each slice, and a quote file has no securities key, so the invocation raises KeyError and exits rc 1 whatever the slices hold. Stopped at the criterion (refusal clause); the slices and quote files are written as the face says.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W170-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~170",
+  "surfaced_at": "2026-10-15T18:27:10Z",
+  "one_line": "CB86ch2-AC2 cannot be met as written: its glob slices/ACTIVE_BBG_SLICE_*.json also matches the .quote.json files that item 5 places beside each slice, and a quote file has no securities key, so the invocation raises KeyError and exits rc 1 whatever the slices hold. Stopped at the criterion (refusal clause); the slices and quote files are written as the face says.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 invocation run as written in C:/dev/wk-cotbkf-170 (timeout 120): traceback ends at json.load(open(f))['securities'] with KeyError 'securities', for slices/ACTIVE_BBG_SLICE_01.quote.json; rc 1",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~170/slices/ holds 27 ACTIVE_BBG_SLICE_NN.json and 27 ACTIVE_BBG_SLICE_NN.quote.json; the quote file keys are allowance_gap, allowance_today, basis, cells, cells_remaining, claims, finish_date, finish_date_claim, label, page, request_id (no securities key)",
+      "diagnostic, not a criterion run: with the quote files excluded from the glob the same invocation prints files=27 count=27 max_cells=5856 day=5858 sum_cells=154024 within_day=True no_dollar_column=True; its slice_cusips term counts securities entries (2238), not distinct CUSIPs (1732)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-2 item 5: one request file per slice under slices/ and a .quote.json beside each; CB86ch2-AC2 sums securities over slices/ACTIVE_BBG_SLICE_*.json and prints within_day and no_dollar_column.",
+  "world_is": "The criterion and the item-5 placement cannot both hold as written: the glob matches the quote files, and the slice_cusips term counts entries, not CUSIPs. No file was changed to meet the criterion. Not established: whether the issuer wants the quote files in another folder, or the glob narrowed to the slice .json files with the CUSIP term counted as distinct CUSIPs.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W170-S3 -- The post-commit account-id scan (test_cotbkf_no_account_ids.py) cannot run on this device: its account set (C:/dev/_cotbkf_private_evidence_20261009/account_set.json; env COTBKF_ACCOUNT_SET unset) is absent, so the test fails closed with rc 1 and scans no file. The worker ran a count-only substitute over the 61 committed files against the 860 V2 account keys (0 hits), reported separately; no account number was read into the repository.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W170-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~170",
+  "surfaced_at": "2026-10-15T18:31:59Z",
+  "one_line": "The post-commit account-id scan (test_cotbkf_no_account_ids.py) cannot run on this device: its account set (C:/dev/_cotbkf_private_evidence_20261009/account_set.json; env COTBKF_ACCOUNT_SET unset) is absent, so the test fails closed with rc 1 and scans no file. The worker ran a count-only substitute over the 61 committed files against the 860 V2 account keys (0 hits), reported separately; no account number was read into the repository.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py -q -s, worktree C:/dev/wk-cotbkf-170 at 885fe8dc7b (timeout 120): 1 failed in 0.20s, AssertionError 'account set absent (COTBKF_ACCOUNT_SET or default path): the test fails closed'; rc 1; no DENOMINATOR line printed",
+      "data/assets/scripts/silver/tests/_cotbkf_acct_check.py:27 ACCOUNT_SET_DEFAULT = C:/dev/_cotbkf_private_evidence_20261009/account_set.json; ls of that path: no such file; COTBKF_ACCOUNT_SET unset in the process environment",
+      "count-only substitute, not the test: 61 files in the worker's diff since 824588956e under org/missions/D8/ADVI/ADVI_COTBKF and data/assets/scripts/silver, read from the worktree; 860 V2 account_key values checked as substrings; 0 files with a hit"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-2 BOUNDS: after the last commit run env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py -q -s and give its DENOMINATOR line; the account set is held outside the repository.",
+  "world_is": "The account set is not present on dell1 (its default folder does not exist), so the scan fails closed and reports no denominator here. Nothing was read from or printed out of the set by the worker. Not established: whether the set exists on another device, or whether its owner should place it here before the scan is run.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
