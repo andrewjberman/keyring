@@ -72,10 +72,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Direct act: ONE cell, LOCAL, about 15 product lines; no L2, L4-R or L8-L10. Close: the merge through `safe-merge.sh` and the issuer's drain checks.
 - Slot ~143, worktree `C:/dev/wk-harvst-143`, branch `wk-AMGT_HARVST-143`. Sparse set to widen at provision: `org/tier1_exec/4.0.0_SA_CRO/scripts` (AC2's tests read it).
 
+**COMPLETE 2026-10-15 ~19:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~143` (worker-light, haiku, high), branch `wk-AMGT_HARVST-143`, head `537150ecee`, then this seat's fix `698eaad099`.
+- **Defect found in review and repaired by the issuer:** the worker's `contracts.json` edit normalised the file's mixed line endings (base 120 CRLF + 16 LF) to CRLF, a 34-line diff for a one-line change. Rewritten from base bytes: 1 insertion, 1 deletion; `git diff --stat` over `lib/` now reads 6 one-line edits and the new test.
+- **AC1 PASS:** `3 passed` (worker; this seat re-ran after the fix `3 passed in 0.05s`). **AC2 PASS:** `93 passed` (worker; this seat after the fix `93 passed in 2.45s`). Proof instance VALID rc 0 with `--governing-order`, re-run by this seat after the fix. Full suite per the worker: `845 passed, 1 failed (test_harvest_grammar, a sparse-worktree import), 3 skipped`, base `842 passed, 1 failed`.
+- **Rows:** `D1-W143-S1` and `-S2` OBSERVATION / INERT; no action.
+- **Not edited, by design:** `fixtures/challenges/bbg.provenance.json` (a recorded capture) and the PRD's 16 site Z lines (the CTO's).
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <direct_act>true</direct_act>
-<status>pending</status>
+<status>complete</status>
 <round>87</round>
 <workstream>CARRIERS</workstream>
 <slot>dell1</slot>
