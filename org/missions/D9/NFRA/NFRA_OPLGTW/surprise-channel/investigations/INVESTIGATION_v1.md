@@ -17573,3 +17573,113 @@ name the one known failure instead of silently inheriting it.
     "world_is": "The runner is healthy and counts its S3 GETs (the cycle records carry s3_get_count and s3_get_bytes, 0 here because the three cycles stopped before any silver read), but bbg, wsj and barrons capture nothing: a Bloomberg press-and-hold challenge and two expired vendor sessions are a person's sign-in, not a runner defect. Whether the expiries predate the 14:02Z Python outage is not read. The egress measurement OG-eg-2 owes is the sa cycle in progress (it reads silver per security). Routed to 1.0.0_SA_CTO~Z at 16:2xZ for the person-act list; this seat changes nothing on the runner."
   }
   ```
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W108-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~108",
+    "surfaced_at": "2026-10-15T18:49:17Z",
+    "one_line": "The contract names no refusal code for a transactions or fees window that is missing, reversed or unparseable; the adapter raises window_invalid, a code no contract table lists.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~83/G2_CLIENT_TOOLS_CONTRACT.md@b56fd6ef9d: start and end are required; the refusal arms name window_too_long and window_before_first_partition only",
+        "CODE infra/aws/ec2/opal-gateway/app/client_adapter_commonwealth.py _window() raises window_invalid; infra/aws/ec2/opal-gateway/tests/test_og_cl6.py test_ogcl6_ac07 asserts it with zero reads"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The G2 client tools contract states that start and end are required on get_transactions and get_fees, and names one refusal code per failure it foresees, but names no code for a missing, unparseable or reversed window.",
+    "world_is": "The Commonwealth adapter refuses such a window with window_invalid before any read. No contract code was reused for it. The core must carry window_invalid as an ordinary refusal code.",
+    "notes": "Measured form only. The issuer decides whether the contract gains the code."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W108-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~108",
+    "surfaced_at": "2026-10-15T18:49:17Z",
+    "one_line": "The 78-trading-day lag of the Commonwealth partition is a function of the day: on 2026-10-15 the 2026-06-23 partition is 79 trading days behind the T-1 frontier 2026-10-14.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN lib/trading_calendar.py trading_days_behind('2026-06-23','2026-10-13') = 78; trading_days_behind('2026-06-23','2026-10-14') = 79 on 2026-10-15 (NYSE/hardcoded-fallback-2010-2027, pandas_market_calendars absent)",
+        "CONTRACT org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~83/G2_CLIENT_TOOLS_CONTRACT.md@b56fd6ef9d decision 6: the 78 is measured against the 2026-10-13 frontier, read on 2026-10-14"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order and the contract say every Commonwealth answer carries 78 trading days behind T-1, read against frontier 2026-10-13.",
+    "world_is": "The number is correct for the 2026-10-13 frontier and is 79 for today's frontier. The probe computes the lag at call time through the trading calendar, and the adapter emits no literal lag, so no answer carries a stale 78.",
+    "notes": "Measured form only; the core derives freshness_td from the partition date, as the protocol states."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W108-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~108",
+    "surfaced_at": "2026-10-15T18:49:17Z",
+    "one_line": "Commonwealth transactions carry no source event id, so the contract's dedupe-on-event-id rule has no key; the 14 parts hold 3,161 row pairs identical on nine projected columns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CONTRACT org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~83/G2_CLIENT_TOOLS_CONTRACT.md@b56fd6ef9d get_transactions: 'Rows deduplicated on the source event id'",
+        "CENSUS org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/parts/G2d_schwab_and_other.md:13041-13186 lists 25 columns and no id column",
+        "MEASURED this cell, counts only: 14 parquet parts, 1,416,497 rows; distinct on Trade_Date, Account_Number, Transaction_Type, Transaction_Description, Cusip, Quantity, Amount, Settle_Date, CA_Event_Id = 1,413,336; extra identical rows 3,161 (script .scratch/measure_cw_tx.py in the worktree, uncommitted)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "get_transactions returns rows deduplicated on the source event id, so a flow summed over a window counts each real event once.",
+    "world_is": "The Commonwealth transactions table has no id column. The adapter does not dedupe, and its body states id_basis none. The 3,161 identical pairs may be real repeats or duplicates, and this cell cannot tell which. A consumer that sums the window without that field can double-count. Disarm needs the issuer's dedupe rule for a table without a key."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W108-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~108",
+    "surfaced_at": "2026-10-15T18:49:17Z",
+    "one_line": "The protocol's read_rows is written two ways, all parts of the partition and the newest part per partition only; on Commonwealth transactions the two readings return 1,416,497 rows or the 2026 trade-year part alone (73,800).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/G2_ADAPTER_PROTOCOL.md (working copy, A1 section), Context side: read_rows reads ONE partition ... '(all parts of that partition: the newest part per partition only)'",
+        "MEASURED this cell, counts only: the transactions partition date=2026-06-23 holds 14 parquet parts in trade_year=2013..2026 sub-folders; the trade_year=2026 part holds 73,800 rows (script .scratch/measure_cw_tx.py, uncommitted)",
+        "PROBE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~108/probe_commonwealth.py reads every parquet under the partition"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "read_rows returns the rows of one partition with all its parts, and also returns only the newest part of a partition.",
+    "world_is": "The two clauses conflict for any multi-part partition. The probe reads all parts. OG-cl-1's core (client_core.py) is not on this ref, so the reading it implements is unverified. If it reads the newest part only, get_transactions returns the 2026 trade-year rows with no refusal. Disarm: the issuer confirms the core's reading against this partition."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W108-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~108",
+    "surfaced_at": "2026-10-15T18:49:17Z",
+    "one_line": "account_day_value is not a full valuation: 15,993,996 of its 21,102,041 rows (75.8%) carry a null value on the 2026-06-23 partition.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED this cell, counts only: value null on 15,993,996 rows; blank_reason set on 20,597 rows; cusip null on 0 rows (script .scratch/measure_cw_adv.py, uncommitted)",
+        "TASK ORDER NFRA_OPLGTW.TO-OG-cl-6 states that account_day_value carries the values"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order states that account_day_value carries the Commonwealth values.",
+    "world_is": "Most rows carry no value, and blank_reason explains only 20,597 of the blanks. The adapter passes the null through with its blank_reason, counts valued_rows and blank_value_rows, and computes no value. Market value for most positions is therefore absent from the answer."
+  }
+]
+```
