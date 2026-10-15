@@ -15,9 +15,11 @@
                         row of infra/aws/lambda/ci/lambda-layer-map.json.
           SPLIT         both projects name the SAME file (equal paths), no rule covers it: two projects on different
                         boxes would change one file (C-PLACEMENT).
-          UNCLASSIFIED  anything else (a directory claim over another project's file, with no rule).
+          NOT-SAME-FILE R5: one path is a strict directory-prefix parent of the other and they are different files
+                        (decided mechanically by the path-prefix relation; the longer path must be a strict child).
+          UNCLASSIFIED  anything else (no rule applies).
         Writes the table to the CT-ai-1 deliverables folder.
-        LAST line: FWD7-OVERLAPS total=<n> shared=<a> split=<b> unclassified=<u> ok=<True|False>
+        LAST line: FWD7-OVERLAPS total=<n> shared=<a> split=<b> not_same_file=<c> unclassified=<u> ok=<True|False>
 
 Standard library only. No AWS, no network. Run from anywhere: python .tools/tests/test_round19_register.py --fwd2
 """
@@ -175,7 +177,13 @@ def classify(pa, pb, build_outputs):
         return "SHARED", "R3 infra/aws/lambda/ci/lambda-layer-map.json build_output: the one declared builder output of the layer"
     if pa == pb:
         return "SPLIT", "R4 both projects name the same file; no rule file covers it (two boxes change one file)"
-    return "UNCLASSIFIED", "no rule: one project claims a directory that contains the other project's specific path"
+    # R5 (CTO-issuer ruling on W106-S3/S4): one path is a strict directory-prefix parent of the other and the two are
+    # different files. Decided by the path-prefix relation alone: the longer path must be a strict child of the shorter.
+    parent, child = (pa, pb) if len(pa) < len(pb) else (pb, pa)
+    if child != parent and child.startswith(parent.rstrip("/") + "/"):
+        return "NOT-SAME-FILE", ("R5 strict directory-prefix parent: '%s' is a directory claim over '%s', a different file "
+                                 "(the two projects change different files)" % (parent, child))
+    return "UNCLASSIFIED", "no rule: no R1-R5 applies to this overlap"
 
 
 def fwd7():
@@ -190,7 +198,7 @@ def fwd7():
     lines = out.splitlines()
     found = [m for m in (OVERLAP_RE.match(x) for x in lines) if m]
     cross = [int(m.group(1)) for m in (FINDINGS_RE.search(out),) if m]
-    table, counts = [], {"SHARED": 0, "SPLIT": 0, "UNCLASSIFIED": 0}
+    table, counts = [], {"SHARED": 0, "SPLIT": 0, "NOT-SAME-FILE": 0, "UNCLASSIFIED": 0}
     for i, m in enumerate(found, 1):
         a, ba, b, bb, pa, pb = m.groups()
         cls, rule = classify(pa, pb, build_outputs)
@@ -207,21 +215,22 @@ def fwd7():
         fh.write("Denominator: %d OVERLAP lines read; the read's own FINDINGS line counts %s cross-box overlap(s) (%s).\n\n"
                  % (total, cross[0] if cross else "none", "agrees" if count_ok else "DISAGREES"))
         fh.write("Classes: SHARED = a rule file this test reads and checks (R1-R3 below); SPLIT = both projects name the same "
-                 "file, no rule; UNCLASSIFIED = no rule.\n\n")
+                 "file, no rule (R4); NOT-SAME-FILE = one path is a strict directory-prefix parent of the other and the two are "
+                 "different files (R5, decided by the path-prefix relation); UNCLASSIFIED = no rule.\n\n")
         fh.write("| # | project A (box) | project B (box) | overlapping path | class | rule |\n")
         fh.write("|---|---|---|---|---|---|\n")
         for i, a, ba, b, bb, spec, cls, rule in table:
             fh.write("| %d | %s (%s) | %s (%s) | `%s` | %s | %s |\n" % (i, a, ba, b, bb, spec, cls, rule))
         fh.write("\nRules, checked present in their files at this read: %s\n" % ", ".join(
             "%s=%s" % (k.split(" ")[0] + " " + k.split(" ")[1], v) for k, v in checks.items()))
-        fh.write("\nSummary: total=%d shared=%d split=%d unclassified=%d\n" % (total, counts["SHARED"], counts["SPLIT"],
-                                                                             counts["UNCLASSIFIED"]))
+        fh.write("\nSummary: total=%d shared=%d split=%d not_same_file=%d unclassified=%d\n" % (
+            total, counts["SHARED"], counts["SPLIT"], counts["NOT-SAME-FILE"], counts["UNCLASSIFIED"]))
     for row in table:
-        print("  %2d %-7s %-12s %s" % (row[0], row[6], row[5], row[7][:60]))
+        print("  %2d %-14s %-12s %s" % (row[0], row[6], row[5], row[7][:60]))
     ok = total > 0 and counts["UNCLASSIFIED"] == 0 and rules_ok and count_ok
     print("placement cross-check: OVERLAP lines=%d, FINDINGS count=%s, agrees=%s" % (total, cross, count_ok))
-    print("FWD7-OVERLAPS total=%d shared=%d split=%d unclassified=%d ok=%s" % (
-        total, counts["SHARED"], counts["SPLIT"], counts["UNCLASSIFIED"], ok))
+    print("FWD7-OVERLAPS total=%d shared=%d split=%d not_same_file=%d unclassified=%d ok=%s" % (
+        total, counts["SHARED"], counts["SPLIT"], counts["NOT-SAME-FILE"], counts["UNCLASSIFIED"], ok))
     return 0 if ok else 1
 
 
