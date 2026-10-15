@@ -13596,3 +13596,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-4. States the form only."
 }
 ```
+
+## IRPT_DASHBD-D2-W403-S4 -- The read prefix the order grants the principal (silver only) does not cover the scheduled path, which lists th
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W403-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~403",
+  "surfaced_at": "2026-10-15T02:53:03Z",
+  "one_line": "The read prefix the order grants the principal (silver only) does not cover the scheduled path, which lists the daily gold prefix to find the newest landed day; the handler's listing failure falls back to one day with a WARN line only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "spec_asserts": "TO DB-c-5 step 5: principal_read_prefixes is exactly the Black Diamond silver prefix; the principal writes only the two gold tables.",
+  "world_is": "The scheduled path of the handler lists the daily gold prefix (_landed_days, a list_objects_v2 under the daily table prefix) to find the newest landed day before it computes the catch-up. With only the silver read grant, that listing is refused. _days_to_compute catches the listing exception, prints a WARN, and computes only the single target day, so a scheduled fire created before the catch-up would skip the missing dates without an error.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py _landed_days and _days_to_compute (the list call and the except branch) @463b62f4da",
+      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf ListTheOwnDailyGoldPrefixForCatchUp statement (the 49 Financial principal carries the list grant) @463b62f4da",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~403/PACKET_FACTS_R115.json principal_read_prefixes @5045d0f2d8 base"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-5. The packet names the gap as question 4 and does not add the grant; the CTO's half rules it before any schedule is created. Disarm = the rule on the daily-prefix list grant, or a change to the scheduled path, before the schedule is created ENABLED."
+}
+```
