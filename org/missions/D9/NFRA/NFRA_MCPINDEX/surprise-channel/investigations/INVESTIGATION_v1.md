@@ -8644,6 +8644,28 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W54-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~54",
+    "surfaced_at": "2026-10-15T22:34:03Z",
+    "one_line": "MX-c-36's check ct_check.py grades the 'grounded in the row's text' limb against entity name + business_meaning + example_questions, so the limb is met by words the row takes from its S3 prefix and format (seeking, alpha, json) and its entity name, not only by the row's meaning.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/ct_check.py lines 79-81 (grounded set built from e + business_meaning + example_questions)",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml lines 22056-22691 (harvest_datasets rows; business_meaning of the 10 h3 rows carries 'seeking-alpha/...' and 'bronze json ...' prefix and format words)",
+        "measured at worktree HEAD b39af50e9d: 10 of 10 rows have a tag word that appears in business_meaning or example_questions, but the shared words for the Seeking Alpha rows are alpha, seeking, json, and for social_v1 data, json, social"
+      ]
+    },
+    "spec_asserts": "MX-c-36 face section 1 and criterion AC1: at least one tag shares a word of 4 or more letters with the row's own text, the text being the row's business_meaning and example_questions (face: 'Draw them from the row's own business_meaning and example_questions').",
+    "world_is": "ct_check.py adds the entity name to that text (line 79), and the business_meaning of every h3 row carries its S3 prefix (seeking-alpha, wsj, social) and format (json, html, xml). A tag can therefore clear the limb on 'seeking alpha ...' or 'raw ... json files' without grounding in what the row is for. The check returned PASS on my file, and my file's tags are also grounded in meaning words such as article, news, listing, report, symbol, store.",
+    "notes": "OBSERVATION only: the check's grounding limb is a mechanical floor, which the face states as its purpose. Filed so the issuer, reading the sample at the drain, knows the PASS does not itself show the tags are grounded in the rows' meaning. No change to ct_check.py (outside my grant).",
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
