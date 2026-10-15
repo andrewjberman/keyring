@@ -154,6 +154,18 @@ Round 124 does not close on its own: the CVO graded the landed tree NOT MAY-CLOS
 
 **fanout:** 1 of 1 chains, cap 8, reason: one cell with a disjoint write set of four existing files. Worker `0.9.0_WK_IRPT_DASHBD~312` (`DB-i-12`).
 
+## 12. ROUND 126, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-122 analysis item 3 and ADDENDUM 1 (msg 8678, open call dell2-20261015T211904Z-4255 ruled yes))
+
+The round-122 analysis left the series-ended cause read to this seat "at the next B-IN round"; rounds 123 to 125 took other analyses, so it was uncut. The CTO ruled it cut now, after round 125's drain (the call was queued during it), and ruled (msg 8679) that the TWR flip of the module rides contract 0.4.2 in the same merge window as `~D2`'s file, never ahead of it. That flip is a separate cell, cut when 0.4.2 lands, with the next round number; it is not in this issuance.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-13` | The series-ended cause read: the two saved round-122 Scope bodies against Opal's `fact_positions` silver (GET-only reader, no vendor call): for each Account series that ends before the window end, its days-before-window-end, how many positions partitions follow it, on how many the account is held, whether it is held on the newest, and the verdict STALE_AT_SOURCE / CLOSED_OR_TRANSFERRED / NOT_DETERMINED; counts and words only | FWD-2 | LOCAL (a GET-only read of Opal's own silver and private files; no vendor call, no write, nothing deployed) | none | I-M |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The CTO asked to print "its last date"; the repo carries days-before-window-end (an integer) and the account as a sha256, because a date next to a client's account would be a client fact in the repo. (b) STALE_AT_SOURCE means Opal's positions still hold the account on the newest partition after Orion's series ended; it does NOT prove a vendor fault (a position can outlive a vendor's performance record for another reason), and the basis words say so. (c) The read is bounded: LIST plus GETs under 200; a cap hit is a recorded result, not a widening. (d) The checker recomputes everything it can from the saved bodies and the worker's private extract; it cannot re-read S3, so the issuer spot-reads the newest partition at the drain. (e) The risk class is LOCAL as the CTO wrote (a GET-only read of Opal's own estate, as rounds 108 to 111 were).
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent read cell with a disjoint write set (its own worker folder and private folder); worker `0.9.0_WK_IRPT_DASHBD~313` (`DB-i-13`) runs alone; round 125's worker has already drained.
+
 ## Cells
 
 | cell id | owner |
@@ -170,3 +182,4 @@ Round 124 does not close on its own: the CVO graded the landed tree NOT MAY-CLOS
 | DB-i-10 | 0.9.0_WK_IRPT_DASHBD~310 |
 | DB-i-11 | 0.9.0_WK_IRPT_DASHBD~311 |
 | DB-i-12 | 0.9.0_WK_IRPT_DASHBD~312 |
+| DB-i-13 | 0.9.0_WK_IRPT_DASHBD~313 |
