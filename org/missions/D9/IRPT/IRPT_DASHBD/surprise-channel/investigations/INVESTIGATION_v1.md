@@ -13434,3 +13434,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only; the change is the issuer's and is not reverted by this worker. The question for the COO is whether the digit exemption for paths is intended. Row IRPT_DASHBD-D2-W402-S1 is left as filed for the issuer's drain disposition."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S49",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T02:06:32Z",
+  "one_line": "Disposition of the B-CW round-114 rows at the drain: W401-S3 disarmed (its hazard is carried by the unsigned packet, which runs 2026-06-09 by a manual event and states the scheduled path's reach); W402-S1 BLOCKING closed by the issuer's checker amendment (323883217a); W402-S3 noted; W401-S1 stays ARMED with its owner 0.0.0_AB_MSTR",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~401/NEVER_WIDEN_PACKET_DB-c-2_R114.md: the catch-up run is per date by the handler event {date, source} (covers 2026-06-09) and the scheduled path starts after the newest landed gold date; question 3 asks the CTO's half whether the 2026-06-09 gap is expected",
+      "323883217a (box/dell2) amends p114_bcw.py: the keys path, paths and file leave the foreign-firm guard (a repo file name is not another firm's data) and join the 8-digit exemption list; selftest PASS with a negative arm; DBC114-1-AC1, -2-AC1 and -3-AC1 all PASS on the merged tree bea5f1de31 and 6150170b3e",
+      "python .tools/round-close-check.py --project IRPT_DASHBD --round 114 --workstream B-CW: verdict=MAY-CLOSE (3 orders, 3 complete, 3 proofs ok, reviewer on box 3.0.0_SA_CVO~DELL2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner (CLAUDE.md section 2); a BLOCKING row is dispositioned before the round is counted finished.",
+  "world_is": "W401-S3 (disarm owner this seat) is disarmed on the packet's text. W402-S1 is closed: the defect was the issuer's checker, now fixed, and worker 402's record needed no edit. W402-S3 is correct: the amendment also added paths to the 8-digit exemption list, which the amendment's commit message does not describe; both exemptions are for repo file paths. NOT closed by this row: W401-S1 (ARMED, disarm owner 0.0.0_AB_MSTR): pandas_market_calendars is absent on dell2, so every trading-day answer in this round came from the NYSE fallback table and the package-equality test was not run (DB-c-3: ran false); W401-S2 and W402-S2 (INERT observations, carried in the drain-end packet)."
+}
+```
