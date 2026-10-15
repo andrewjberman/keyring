@@ -24,6 +24,70 @@
     "spec_asserts": "PRD C-PANEL: the panel primitives render a white surface with a 1px #C4CBDB border and 'no page file is edited for FWD-3's panel half'; FWD-3 ACCEPT: panels are white; FWD-5 expects only a FAINT red/green/signal colour on the new ground.",
     "world_is": "Page bodies inside chart/mixed panels were written for a dark ground and use text-white idioms; on a white panel those read invisible (white on white), a worse class than the 'faint' colour FWD-5 anticipates, and a page-file edit is not permitted for the panel half. No action taken beyond cutting round 1 so the token cell carries one scoped rule (inside the light panel, text-white/N reads navy ink) at the token seam; the walk re-measures.",
     "notes": "Ruled inside the COO's own decomposition (/canonical-drive obligation 7): no ENDPOINT change, no page edit. The counts are the laptop checkout's vintage; the first-issuance fetch to DEV's tip re-measures them. Not blocking the decomposition draft."
+  },
+  {
+    "id": "DSGN_RBNDV2-W3-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~3",
+    "surfaced_at": "2026-10-15T04:59:14Z",
+    "one_line": "The A-light panel header has a number slot ('01' in --rb-quiet, before the eyebrow title) that no caller can fill: PanelHeader's exported prop API is frozen by C-PANEL, and no prop carries a number.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/ui/components/panels/PanelHeader.tsx@ad7c100b5c lines 17-44: PanelHeaderProps = title, subtitle, timestamp, source, frequency, helpText, leftActions, actions, className; no number prop",
+        "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-p-1.panel-primitives.md: 'change NO prop: every exported prop interface ... stays exactly as it is'",
+        "org/missions/D13/DSGN/DSGN_RBNDV2/deliverables/2.0.0_SA_COO~RB/A_LIGHT_FIXTURE.md:21 and :39 (number '01' in quiet; section.pnl > .pnl-h (h2.pnl-t > span.num + span.eyebrow))"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-p-1 and decomposition row RV-p-1 (DSGN_RBNDV2_DECOMP.md @b475e9badc) say PanelHeader renders 'an optional number in --rb-quiet' before the title, and that the prop API of every primitive is UNCHANGED. Criterion RB1P-AC1 renders PanelHeader 'with a title, a number and one action'.",
+    "world_is": "No PanelHeader prop can carry a number, so the number slot is unreachable. The primitive is built without it, and RB1P-AC1's test renders a title and an action only; no arm asserts a number. Adding an optional prop would change the exported interface, which the order forbids. A ruling is needed: an additive optional prop, or the number dropped from the fixture.",
+    "notes": "Not resolved by the worker. Raised for the COO's ruling; RB1P-AC1 otherwise holds (its arms do not name a number)."
+  },
+  {
+    "id": "DSGN_RBNDV2-W3-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~3",
+    "surfaced_at": "2026-10-15T04:59:14Z",
+    "one_line": "PanelFooter's ground prop still defaults to 'band', the name of the navy footer strip that C-PANEL removes; 'band' and 'light' now paint the same A-light caption, so the default's name describes a band that no longer exists.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/ui/components/panels/PanelFooter.tsx@ad7c100b5c line 44 (ground?: 'band' | 'light') and line 93 (ground = 'band' default) before the edit that removed the navy strip",
+        "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-p-1.panel-primitives.md: 'every default ... stays exactly as it is' and 'no navy footer strip'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-p-1 requires every default to stay exactly as it is (the ground default is 'band') and requires PanelFooter to render no navy footer strip.",
+    "world_is": "The ground default stays 'band' and the prop stays accepted, but the value no longer changes the paint: both ground values render the A-light caption (the navy strip is gone). The worker kept the value and dropped the destructuring; the prop's name is stale.",
+    "notes": "Not resolved by the worker. Raised for the COO's ruling on whether the value is renamed in a later round (which would move call sites) or kept as a documented no-op."
+  },
+  {
+    "id": "DSGN_RBNDV2-W3-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~3",
+    "surfaced_at": "2026-10-15T04:59:14Z",
+    "one_line": "SectionCard's accent edge is written as a border-left colour on a zero-width div, so at the base it paints nothing; it predates this cell and the cell did not change it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/ui/components/panels/SectionCard.tsx@ad7c100b5c lines 28-34 (ACCENT_MAP uses border-l-[hsl(var(--...))]) and lines 51-57 (accent div: absolute left-0 top-0 bottom-0 w-1 with no border-l width class)",
+        "read from the class list only; not rendered in a browser"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-p-1 names SectionCard among the primitives to render the A-light surface and hairline; it does not name the accent.",
+    "world_is": "The accent div sets a border colour with no border width, so it has no visible paint at the base; the cell removed only the rounded-l-lg class from that div and left the accent logic as it was.",
+    "notes": "Observed while editing. Not fixed: changing the accent mechanism is outside the cell's stated change. Raised for the COO."
   }
 ]
 ```
