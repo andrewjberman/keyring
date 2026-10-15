@@ -14885,6 +14885,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+```json
+{
+  "id": "IRPT_DASHBD-D2-W407-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~407",
+  "surfaced_at": "2026-10-15T05:36:56Z",
+  "one_line": "The build-time test that DB-c-12 requires types the three registered firm tokens (49financial, inflection, cottonwood) as string literals, and the commit's naming gate printed 2 paths in its domain and PASS 0 graded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-c-12 step 2 (task order text): the test asserts that the producer's firm_scope() returns 49financial, inflection and cottonwood for the three staged channel keys. The producer's firm_scope() docstring: the naming limb refuses a new string carrying a registered firm token anywhere outside the registry files, a generated block, or the arguments of a key(), address(), name() or lookup() call.",
+  "world_is": "Measured at commit 05e7ca7b87: the new file infra/aws/lambda/investor-reporting/holdings-performance/tests/test_zip_registry_resolves.py carries the three firm tokens as string literals in _EXPECTED. The gate output printed at that commit's safe-commit reads: '[naming-gate] DENOMINATOR: 2 path(s) in this diff; declaration-tree domain = 2 ... = 2', then 'COVERAGE: 0 path(s) ... could not see; 2 seen', then 'NAMING-GATE: PASS 0 graded'. So the gate counted 2 paths in its domain and graded none, and raised no refusal. Whether a later edit of this file would be refused is not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings-performance/tests/test_zip_registry_resolves.py@05e7ca7b87 (_EXPECTED string literals)",
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py@0df19dc747 (firm_scope docstring, naming-limb statement)",
+      "commit 05e7ca7b87 safe-commit output: [naming-gate] NAMING-GATE: PASS 0 graded, with the DENOMINATOR and COVERAGE lines above it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_DASHBD~407 on IRPT_DASHBD.TO-DB-c-12 (criterion DBC119-2-AC1). No action taken: the order's required assertion is implemented as written. Counts and shapes only."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W407-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~407",
+  "surfaced_at": "2026-10-15T05:36:56Z",
+  "one_line": "The build-time test refuses when HP_ZIP_PATH and HP_REGISTRY_SCOPES_PIN are both set, a behaviour DB-c-12 does not name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-c-12 step 2 (task order text): HP_ZIP_PATH extracts a built zip INSTEAD of materializing from pins, and HP_REGISTRY_SCOPES_PIN overrides the scopes.json pin of the materialized tree. The order names no behaviour for the two variables set together.",
+  "world_is": "Measured at commit 05e7ca7b87: test_staged_registry_resolves_each_function_key calls pytest.fail when both variables are set, because the scopes override applies only to materialized pins and would otherwise be silently ignored against the zip. The refusal is the worker's own addition and is not in the order. The planted negative control (HP_REGISTRY_SCOPES_PIN=14b52ca13a, no zip) FAILS with 'registry lookup(z09) failed' as required; the run with no variables PASSES. No run in this order sets both variables.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings-performance/tests/test_zip_registry_resolves.py@05e7ca7b87 (the both-set refusal in test_staged_registry_resolves_each_function_key)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-12.second-zip-build-input-source-map-repin-and-registry-test.md@0df19dc747 (cell step 2, the environment variable contract)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by 0.9.0_WK_IRPT_DASHBD~407 on IRPT_DASHBD.TO-DB-c-12. No action taken beyond the refusal itself. Counts and shapes only."
+}
+```
+
 ## IRPT_DASHBD-D2-S62 -- issuer's dispositions on W185-S6 to S9: S8 disarmed; S9 is a Cottonwood data finding (no join key), AC3 struck
 
 ```json
@@ -14909,5 +14958,109 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "S9 carries to the CTO: Cottonwood needs a join key between its household key and its return table (and a return table wider than 12 accounts) before any Cottonwood household report; the Cottonwood account_dim apply is B-CW's pair. The QA runs return in a later order once a key exists."
+}
+```
+
+## IRPT_DASHBD-D2-W308-S1 -- The client-data check of safe-commit found its hashed account-id list absent on this box, so the commit that tracked the round-120 probe script was not checked for client account ids.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W308-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~308",
+  "surfaced_at": "2026-10-15T05:32:08Z",
+  "one_line": "The client-data check of safe-commit found its hashed account-id list absent on this box, so the commit that tracked the round-120 probe script was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "The commit step of TO IRPT_DASHBD.TO-DB-i-8 runs .tools/safe-commit.sh, whose client-data check (.tools/git-hooks/client-data-check.py) refuses a commit that carries a client account id; the check reads a hashed list at OPAL_ACCOUNT_ID_HASHES or the default path under the user profile.",
+  "world_is": "Measured on commit ee9050798e (one file, 344 insertions, the probe script): safe-commit printed a WARN that the hashed account-id list is ABSENT at the default path on this box and that the commit was NOT checked for client account ids (absent is not empty). The committed file carries no account id, household id or client value; its content was scanned by hand before the commit. Future commits on this box pass this check unchecked until the list is placed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/client-data-check.py@ee9050798e (line 78 prints the ABSENT WARN)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~308/second_household_probe.py@ee9050798e (the commit that printed the WARN)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-8 as a missing capability (the gate could not run its check). Counts and shapes only; no account id or client value. The disarm owner is the issuer's routing choice; the owner of the hashed list is not verified by this worker."
+}
+```
+
+## IRPT_DASHBD-D2-S63 -- disarm owner's evidence for W308-S1: the account-id list gap is W182-S1's, and this seat's identifier scan of DB-i-8 reads clean
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S63",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T05:40:31Z",
+  "one_line": "W308-S1 disarm evidence: the unscreened client account-id check is the same condition as W182-S1 (owner 0.0.0_AB_MSTR, infrastructure); this seat scanned the three files DB-i-8 added for identifier-length digit runs and found none outside hashes, a private path and dates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face: client data is never recorded; the commit gate screens each commit for client account ids against the hashed list.",
+  "world_is": "This seat's scan of the record, the script and the proof instance worker 308 added, at the merge 1e83135577: 0 runs of eight or more digits outside a sha256 value, a private-folder path or a date. The list's absence on dell2 is W182-S1's, owned by the integrator; until it is placed, every dell2 commit relies on the issuer's own scan (the same stand-in as D2-S52).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~308/SECOND_HOUSEHOLD_PROBE_R120.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~308/second_household_probe.py",
+      "IRPT_DASHBD-D2-W182-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S64 -- debt carrier owned by ~F2: the sixteen avs benchmark members are by_row per account in the contract and the table; the reader's handling is unverified
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S64",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T05:51:55Z",
+  "one_line": "Debt carrier owned by 2.0.0_SA_COO~F2 (CTO ROUND-119 ANALYSIS B-49F ruling 6): the sixteen avs benchmark members (avs.<qtd|ytd|last_12_months|since_inception>.benchmark_<ultra_short_term|short_term|intermediate_term|long_term>) are account-grain by_row in the contract and in the filled_report_values table (one entry per account), where the sample JSON the reader was built against held one household scalar each; the portal reader's reading of them as by_row is unverified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "Contract org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json 0.5.4 (members avs.*.benchmark_*, the per-row rule document.filled_report.per_row_member_form): a member whose grain is an account holds {by_row: {account_id: figure}}; the reader reads the filled report by member id.",
+  "world_is": "The round-118 QA table (RD_FILLED_REPORT_VALUES_R118.json, 25 households) carries each of the sixteen as one row per account (672 rows, every one with a row_key); the earlier sample JSON (build_sample.py ~169) wrote each as a household scalar. The reader of workstream ~F2 is dashboard/report/reportModel.ts on cand/dell2/irpt-default-performance-report @506a2302: its VS_ROWS list (about lines 358 to 361) names benchmark_ultra_short_term, benchmark_short_term, benchmark_intermediate_term and benchmark_long_term among the account value-summary rows; whether the value-summary reader takes them as by_row per account is not read by this seat. A scalar read of a by_row member would print nothing or the wrong figure on the account tables. Counts and paths only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~185/RD_FILLED_REPORT_VALUES_R118.json and the private QA parquet (672 rows of the sixteen members, each with a row_key)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md rows W185-S3 and D2-S56",
+      "portal git: cand/dell2/irpt-default-performance-report:src/pages/InvestorReporting/dashboard/report/reportModel.ts (VS_ROWS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner ~F2: read the reader's handling of the sixteen avs benchmark members as by_row per account against a document built from filled_report_values (rows_to_document), add a test with a by_row fixture for them, and disarm this row with the result. The contract is not changed for this: by_row is the ratified grain."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S65",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T05:52:45Z",
+  "one_line": "Drift of five registry members staged in the shared holdings-performance zip: systems.json, exemptions.json, remediations.json, resources.json and reporting_policies.json are pinned at old commits and differ from HEAD; the addendum re-pins scopes.json only (CTO half answer 3)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~406/SCOPES_PIN_READ_R118.json registry_members: systems.json (pin 03c7f7f593, 29,926 B pinned, 48,645 B at HEAD), exemptions.json (8b4c15c6ba, 35,212 vs 52,946), remediations.json (3ea3fec204, 2,586 vs 3,233), resources.json (f185873e6b, 169,583 vs 169,315), reporting_policies.json (7262571e4c, 2,691 vs 6,744) differ from HEAD; tiers.json (b282500581) equals HEAD",
+      "deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_ADDENDUM_DB-c-11_R118_CTO_HALF.md answer 3: the other six members stay at their old pins; re-pinning the five would widen the act for no reader's need; their drift is a separate later act, and this seat files ONE row naming the five"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A drift between a staged pin and HEAD that a ruling leaves in place has a carrier (CTO half answer 3 of the DB-c-11 addendum).",
+  "world_is": "The shared zip packages seven registry members at pins; after the addendum six stay at their old pins and scopes.json moves to 69679b90e3. The five named members differ from HEAD in size and content (counts above; the record carries sha256 of each). Nothing in the zip's code path needs them to move today: the full derivation of the three declared channels is identical with only scopes.json re-pinned. A later act re-pins them together with a differential on whatever the then-current producer reads from them; this row is that act's carrier. It is not an ARMED hazard: no function misbehaves on the old pins."
 }
 ```
