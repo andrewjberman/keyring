@@ -37852,3 +37852,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The Cottonwood split count is over the primary prefix only; the sibling's role is not established."
 }
 ```
+
+## IRPT_BCKEND-D2-S195 -- Dispositions on worker 415's rows; the split key exists on 49 Financial's transactions only; 17 of 75 ratios disagree with the close; 985 against 920
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S195",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T12:09:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 415's rows (D2-W415-S1 to S6) and the split-adjust READ: the ruled key (tran_srcde, tr_cd, sb_cd) exists on 49 Financial's transactions only; 17 of 75 measurable ratios disagree with the close-price ratio at 2 percent; the read counts 985 accounts on 2026-04-21 against the ruling's 920; the producer's declaration names no transactions prefix.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB211-1 AC1 to AC3 on the worker tree (all PASS) and the proof instance (VALID); merge af479072d6",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~415/IB211-1_split_adjust_read.json: the contribution is v * (p1 / p0 - 1) (holdings_performance.py line 816), neither price split-adjusted; 49 Financial: 572 transaction partitions (3,349,750 rows), 1,348 STK rows all carrying STOCK SPLIT in the source-code description, 47 split days, 76 security-days = 75 measurable + 1 SPLIT_RATIO_ABSENT, 75 = 58 agree + 17 disagree with the close-price ratio at a 0.02 tolerance, 1,291 (account, day) pairs affected; Cottonwood: no declared transactions prefix for the Black Diamond channel, 153 split-like rows by text (Corporate Action Split 70, Reverse Split 74) over the first 124 partitions; Inflection: no declared prefix, the 4.63 GB feed not classified"
+    ]
+  },
+  "spec_asserts": "The CTO ruling @9913bf3ed4: the split row is the same-day STK STOCK SPLIT row keyed (tran_srcde, tr_cd, sb_cd) for every firm; the guard grades 920 account-days on 2026-04-21 that become measurable; the other two firms are read for split days.",
+  "world_is": "DISPOSITIONS and four findings the CTO should see before the pair. (1) THE KEY: only 49 Financial's transactions carry the three columns (W415-S1, BLOCKING for the build as ruled); Cottonwood's Black Diamond feed names its splits in text types (Corporate Action Split, Reverse Split) and Inflection's Orion feed was not classifiable by this read, so the split key per firm is a declaration still to be written. (2) THE RATIO: 17 of 75 measured custodian ratios disagree with the close-price ratio at a 2 percent tolerance (the tolerance is the worker's, stated, not tuned); the build must say which ratio governs on a disagreement; the ruling takes the custodian's ratio and a control against the close. (3) THE COUNT: 985 distinct accounts held one of five split securities at t-1 on 2026-04-21 (846 held the 6-for-1 security with no same-day activity) against the ruling's 920 graded account-days; the 920 is the guard's graded set and was not reproduced (W415-S3). (4) THE INPUT: the holdings producer's declaration names no transactions prefix for any channel; 49 Financial's is declared in the irpt_reporting sources file (W415-S2), so the pure core needs a new per-(security, day) ratio table input and a declared split key per firm. D2-W415-S4 (the STOCK SPLIT text sits in the source-code description on all 1,348 STK rows and in the detail text on 36), S5 (the calendar fallback table) and S6 (a sibling Cottonwood prefix, fact_transactions_s2, not counted): INERT, recorded. D2-W415-S1 stays ARMED, owner me."
+}
+```
