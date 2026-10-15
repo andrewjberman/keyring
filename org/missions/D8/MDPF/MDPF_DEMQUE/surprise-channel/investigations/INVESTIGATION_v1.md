@@ -3218,6 +3218,67 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "after the conditional key: python -m pytest test_demque_inactive_set.py test_demque_inactive_symbols.py -> 6 passed, rc=0 (worktree C:/dev/wk-demque-57 on wk-MDPF_DEMQUE-57, base 270e1c6175)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W58-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~58",
+    "surfaced_at": "2026-10-15T18:51:05Z",
+    "one_line": "DQ-t-66 criterion AC2 cannot be met as written: the check reads a securities list from the extend_frontier.py --plan JSON line, and the CLI pops that list before printing (unchanged by this cell), so the check fails at its securities clause.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t66 criterion DQ9-t66-AC2 (dq_t66_real.py): extend_frontier.py --plan shows excluded_active above 0, no V2 CUSIP in the day's securities, 1 to 380 symbols, excluded_p2 and excluded_p3 both 0; the check requires the securities list on that line to be 1..380 entries equal to symbols.",
+    "world_is": "extend_frontier.py main() runs p.pop(\"securities\") before it prints the --plan line, so the line carries no securities list. The check's first clause passes on the real line (excluded_active 528, excluded_p2 0, excluded_p3 0, symbols 6) and then prints GATE-REAL-BAD 'the securities list is not 1..380 entries equal to symbols' (rc=1). Read only, in-process plan(): securities 6, V2 CUSIPs in securities 0, V2 set 3368. The CLI print is not changed by this order, so the criterion stays unmet as written; the order is left open.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "extend_frontier.py@5e62883899 line 483: p.pop(\"securities\") before print(json.dumps(p)) in main() under --plan",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t66_real.py in worktree C:/dev/wk-demque-58 (with the DQ-t-66 change): stdout 'plan symbols=6 excluded_active=528 excluded_p2=0 excluded_p3=0' then 'GATE-REAL-BAD the securities list is not 1..380 entries equal to symbols', rc=1",
+        "scratch .scratch/v2_securities_check.py (in-process plan(), counts only): symbols=6 securities=6 v2_cusips_in_securities=0 excluded_active=528 excluded_p2=0 excluded_p3=0; v2_set_size=3368"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W58-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~58",
+    "surfaced_at": "2026-10-15T18:51:05Z",
+    "one_line": "The Yahoo gate reaches only client-class requests, so an active (V2) CUSIP in a non_client request still draws on Yahoo, against the cell's 'never drawn or extended on Yahoo'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t66 cell: 'a name in V2 is never drawn or extended on Yahoo'; build item 2: the daily draw's default gate becomes pg.yahoo_excluded_for and everything else in run is unchanged.",
+    "world_is": "demand_queue.gated() returns every security of a request for which is_gated() is false, and is_gated() is false for need_class non_client, so the gate passed to draw() never reaches a non_client request. A V2 CUSIP in a non_client request (research scanner, TR comparison, positioning, pre-flight) is therefore drawn on Yahoo. The order's test name pins the client-request scope ('of a client request'), so the code follows the order; the scope question is for the issuer.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "demand_queue.py@5e62883899 lines 51-55: is_gated returns req.get(\"need_class\") != NON_CLIENT",
+        "demand_queue.py@5e62883899 lines 63-69: gated() returns list(req[\"securities\"]), [] when not excl or not is_gated(req)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W58-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~58",
+    "surfaced_at": "2026-10-15T18:51:05Z",
+    "one_line": "Once a name is active (V2) its Yahoo rows stop extending at the next standing apply, and nothing in this order places it on the Bloomberg leg, so lag_report omits it and its served history can go stale without a report.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order cell: 'Active accounts should get BBG pricing exclusively' (Andrew-direct 2026-10-15); the Yahoo leg excludes V2 names from every tier.",
+    "world_is": "The standing extension (extend_frontier._tiers) leaves each V2 name in no tier, so apply() no longer requests it on Yahoo; the existing Yahoo rows for those names keep their last valid_to. lag_report skips excluded names (excluded_active is counted, not their lag). This order does not verify that the Bloomberg leg holds a served price for every V2 name, so the staleness, if any, is unmeasured here.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "extend_frontier.py in worktree C:/dev/wk-demque-58 (uncommitted, DQ-t-66): _tiers leaves a name in excl out of known, so out of daily and rolling; lag_report continues past excl names",
+        "real plan at 2026-10-15: excluded_active 528 of the landed names, rolling_not_landed 387, symbols 6"
+      ]
+    }
   }
   ,
   {

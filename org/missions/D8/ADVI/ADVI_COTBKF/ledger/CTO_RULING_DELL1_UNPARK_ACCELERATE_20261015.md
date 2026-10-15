@@ -79,3 +79,51 @@ The yield is reported against the 387 unmatched active accounts, of which 168 ar
 reachable denominator is 219.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 4 (~19:0xZ) -- the Bloomberg history rate, and the finish dates it gives (answers `2.0.0_SA_COO~C1` msg 6139)
+
+- **5,858 cells is the rate per DRAWING DAY.** It is `history.ceiling` in `data/mdpf/scripts/demque/bbg_allowance.json`: the largest single-day
+  history sum on the served demand ledger (dt=2026-10-08), claim `measured`. It is a floor of the true capacity, not a vendor cap.
+- **The CRO's 23,432 is 4 x 5,858**, the four non-trading days in a 14-day window (the DQ-t-27 schedule). It was labelled "a day" in error.
+  Neither number is wrong; they are different windows.
+- **Finish dates, computed with `lib/trading_calendar.is_trading_day` from 2026-10-17 at 5,858 per drawing day:**
+
+| set | cells | drawing days | non-trading days only (today's rule) | every day (call 99be (a), upper bound) |
+|---|---|---|---|---|
+| B1 + failed-14 + porting test | 45,317 | 8 | 2026-11-08 | 2026-10-24 |
+| plus C1's 27 active slices | 199,341 | 35 | **2027-01-30** | **2026-11-20** |
+
+  C1's 11-24 / 12-04 assumed drawing every day, so they hold only if Andrew grants 99be. The "every day" column is an upper bound on speed:
+  on a trading day the history channel gets what production leaves.
+- **1,006 of the 2,739 new CUSIPs cannot be priced** by the builder (no Commonwealth window). They stay outside the slices until a window
+  exists; C1 reports them as a named gap, not a draw.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## Amendment 5 (~19:1xZ) -- call d3cc RULED (a) by Andrew: one job reads the restricted CRM zip
+
+Andrew ~19:0xZ, verbatim (laptop record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_190xZ_D3CC_A_ONE_JOB_READS_RESTRICTED_CRM_ZIP.md`
+@6e96dd543a, relayed by `0.0.0_AB_MSTR~DELL1` msg 6143): "I agree with (a), let's see what we can do with that for now."
+
+`2.0.0_SA_COO~C1` runs it as three orders, in this order:
+1. **Grant (CloudOps deploy, `safe-apply`).**
+   - ONE IAM role, named by `lib/opal_naming name()`, with `s3:GetObject` on the ONE key
+     `s3://opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/date=2026-06-23/CRM_CottonwoodCapitalAdvisors.zip`.
+   - The C-RESTRICTED bucket-policy deny gains that role as its one added exception, for that key only.
+   - The plan shows exactly those two changes. The ledger entry names the removal as its rollback.
+2. **The matching job (a worker cell).** It assumes the role and reads the zip in memory, never to disk. It joins CRM identifiers to both
+   sides and writes ONLY account-link rows (Commonwealth account id, BD account id, rule, tier) plus counts. No CRM column value leaves the
+   job: no name, tax id, date of birth or address.
+   - A criterion reads the output's column set against that allow-list and fails on any other column.
+   - The job's run record is the log: start, end, role, the one key read, and the row counts. The CloudTrail S3 data event for the GET is
+     read beside it if the trail records data events; if not, that is stated.
+3. **Withdrawal (CloudOps, the same day the job ends).** The role and the policy exception are removed, and a re-plan reads no changes. The
+   grant does not outlive the job.
+
+- Links are graded by FWD-9: deterministic only on a stable key (an old/new account number, or a tax id matched inside the job); otherwise
+  candidate.
+- **Report for Andrew's next word:** matched and unmatched counts against the 219 reachable active accounts. Option (c), asking Cottonwood,
+  is NOT sent.
+- Call `dell1-20261015T184344Z-d3cc` closes on this amendment, ruled by Andrew.
+
+-- 1.0.0_SA_CTO~DELL1

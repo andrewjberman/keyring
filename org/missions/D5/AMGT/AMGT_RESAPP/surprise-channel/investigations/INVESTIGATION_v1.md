@@ -27787,3 +27787,78 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Reported as a change to an existing test, as the cell asks."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W457-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~457",
+  "surfaced_at": "2026-10-15T18:50:07Z",
+  "one_line": "The order states the GR-8 check reads 1 of 10 arms at the base; measured at the base it reads 5 of 10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round106_aifill_prep/checks/check_gr8_required.py run at 3c2fc35992 before any edit: 'AIFILL GR-8 ARMS: NO (5 of 10)'; FAIL on GROUNDING_REQUIRED is True, the default refusal, make_block refusal, the revalidate refusal and the helper file arm",
+      "the order's preflight states 'AIFILL GR-8 ARMS: NO (1 of 10)' at the base"
+    ]
+  },
+  "spec_asserts": "Task order preflight: at the base the GR-8 check reads AIFILL GR-8 ARMS: NO (1 of 10), the build check failing as expected.",
+  "world_is": "At 3c2fc35992 in worktree C:/dev/wk-resapp-457 the check reads 5 of 10: the builder, NONE-document, served-validator, stored-bytes and contract-ASCII arms already pass from gr-1 to gr-5. The cell's edits take it to 10 of 10 (AC1 output 'AIFILL GR-8 ARMS: YES (10 of 10)').",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Recorded as measured. No action taken: the cell's acceptance is the 10 of 10 read."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W457-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~457",
+  "surfaced_at": "2026-10-15T18:50:07Z",
+  "one_line": "lib/research/aifill/tests/test_contract_grounding.py carries four non-ASCII characters (the e-acute in Nestle) at HEAD, against the cell's ASCII-only source rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 3c2fc35992:lib/research/aifill/tests/test_contract_grounding.py: lines 257, 311, 317 and 323 hold the non-ASCII letter in 'Nestle'; the file is not ASCII at HEAD",
+      "the commit that introduced the file is 8b61c89d6a (AMGT-gr-4, 0.9.0_WK_AMGT_RESAPP~453)"
+    ]
+  },
+  "spec_asserts": "Cell section 2, bound 1: the source files this cell writes are ASCII-only (write non-ASCII characters as \\uXXXX escapes); the contract.py ASCII arm is the only one the check enforces.",
+  "world_is": "The file this order edits for the requirement already carried the four non-ASCII literals from gr-4. This order changes the requirement lines only and leaves the four literals in place: moving them is a neighbouring fix outside the order's change.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Recorded for the issuer to route. The check reads contract.py only, so no arm fails on it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W457-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~457",
+  "surfaced_at": "2026-10-15T18:50:07Z",
+  "one_line": "test_revalidate.py builds its narrated stored documents outside the shared helper: make_block refuses narration, so grounded_opal_block cannot build them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_revalidate.py _doc before this order: stored documents built as plain dicts with no grounding key; the narrated texts ('I will search.', 'I can check this.') are refused by validate_block as process narration",
+      "lib/research/aifill/contract.py validate_block: the narration check runs before the grounding check, so a narrated block cannot pass make_block"
+    ]
+  },
+  "spec_asserts": "Cell section 1, item 4: the failing tests move onto the shared helper grounded.py (grounded_web_block, grounded_opal_block), or onto require_grounding=False where the test is about something else.",
+  "world_is": "The valid stored documents in test_revalidate.py could take the helper; the narrated documents, which the revalidate tests must store to refuse them, cannot. _doc therefore attaches a local record (the whole text as one SUPPORTED sentence that quotes it, on the one opal source). Revalidate tests still read their own refusals; the record adds no problem.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Local record kept in the test file; the helper module is unchanged by it."
+}
+```
