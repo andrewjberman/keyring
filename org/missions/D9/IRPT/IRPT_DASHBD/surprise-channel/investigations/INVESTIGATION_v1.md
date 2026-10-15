@@ -17194,3 +17194,110 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Armed because the served threshold values carry no claim, so a reader of the current rows cannot tell measured from held. Disarms when the CTO takes option A, B or C in the record's who_may_write. This row proposes no grant. Words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W207-S1 -- BLOCKING: the round-125 floor contradicts an earlier handler test (expects 5 owed days from 2026-06-01, the floor gives 3), so the handler suite is one failure red and DB-b-254 cannot flip complete
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W207-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~207",
+  "surfaced_at": "2026-10-15T11:31:27Z",
+  "one_line": "The start floor in owed_days contradicts an earlier handler test: test_owed_days_three_examples expects 5 owed days from 2026-06-01 and the floor gives 3, so the handler suite is one failure red and DB-b-254 cannot flip complete",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "DB-b-254 step 3 and BOUNDS: owed_days takes the later of the day after newest_landed and FLOOR_DAY 2026-07-10; the handler test file holds at least 15 tests and all pass; the earlier tests keep their meaning and only their fake S3 objects may gain a list_objects_v2 method.",
+  "world_is": "The earlier assertion of test_owed_days_three_examples (handler test file, working tree at base 945f619bbd) is len(owed_days(2026-06-01, 2026-07-15)) == 5 == MAX_DAYS_PER_FIRE. With the floor the result is 3 days (2026-07-10, 2026-07-13, 2026-07-14), so the floor and that assertion cannot both hold. The floor is in the code as the order and the DB125-1-AC2 staged probe require, and the probe part of that criterion passes. The assertion was not edited. Handler pytest: 15 passed, 1 failed. Adapter pytest: 37 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest in the worktree on infra/aws/lambda/investor-reporting/account-return-daily/tests/test_handler.py: 1 failed (test_owed_days_three_examples, assert 3 == 5), 15 passed; base 945f619bbd",
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py owed_days with FLOOR_DAY, worktree at base 945f619bbd",
+      "order IRPT_DASHBD.TO-DB-b-254.cottonwood-write-guard-and-start-floor.md step 3 and BOUNDS, and the checker p125_guard.py probe owed_gap at base 945f619bbd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the earlier assertion needs an amendment (the floor changes the answer for that input) or the reading of the floor needs settling. The worker stopped on that point and did not edit the assertion. S79 stays ARMED until this is resolved and the handler suite is green. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W207-S2 -- OBSERVATION: the handler test fake already had a list method (a page queue for newest_landed_day), so the guard's undelimited LIST branches that method rather than adding one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W207-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~207",
+  "surfaced_at": "2026-10-15T11:31:27Z",
+  "one_line": "The handler test FakeS3 already had a list_objects_v2 that pops a page queue for newest_landed_day, so the guard's undelimited LIST had to be answered by a branch on the absence of Delimiter, not by a new method",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-254 step 2 and BOUNDS: where a fake S3 object lacks list_objects_v2, give it one that lists the keys put so far; only their fake S3 objects may gain a list_objects_v2 method.",
+  "world_is": "The handler test file's FakeS3 had list_objects_v2 already, answering newest_landed_day's paged LIST (with Delimiter) from a page queue. The guard's LIST carries no Delimiter. The method now answers an undelimited LIST from the keys planted or put so far and keeps the page queue for the delimited LIST, so the newest_landed tests keep their meaning. The adapter test FakeWriter had no list method and gained one, as the order allows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/account-return-daily/tests/test_handler.py FakeS3.list_objects_v2 at base 945f619bbd (the page queue before the edit)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_bd_account_return_daily.py FakeWriter at base 945f619bbd (put_object only before the edit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the order's text did not anticipate a fake that already had the method. No client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W207-S3 -- OBSERVATION: resolves IRPT_DASHBD-D2-W207-S1 under issuer Amendment 1 (commit 1bec1bfc83); the one contradicted handler example is changed to the cap check and the handler suite is green
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W207-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~207",
+  "surfaced_at": "2026-10-15T11:41:19Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W207-S1: the floor contradicted one earlier handler example; Amendment 1 (commit 1bec1bfc83) allowed that one example to change, and it now reads the cap check on 2026-09-15; the handler suite is 16 of 16 passing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-b-254 Amendment 1 (commit 1bec1bfc83, issuer 2.0.0_SA_COO~D2): the one superseded example in test_owed_days_three_examples may change to the cap check on 2026-09-15, the first owed day being 2026-07-10; nothing else in it or in any other earlier test changes beyond the fake list method.",
+  "world_is": "test_owed_days_three_examples in the handler test file now asserts len(owed_days(2026-06-01, 2026-09-15)) == 5 == MAX_DAYS_PER_FIRE and owed_days(2026-06-01, 2026-09-15)[0] == 2026-07-10. No other assertion of an earlier test changed. The handler suite passes 16 of 16 at the worker's commit; the adapter suite passes 37 of 37.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer Amendment 1 in the order file, commit 1bec1bfc83 (git log author 2.0.0_SA_COO~D2)",
+      "infra/aws/lambda/investor-reporting/account-return-daily/tests/test_handler.py test_owed_days_three_examples at the worker's commit carrying this row: pytest 16 passed",
+      "row IRPT_DASHBD-D2-W207-S1 (BLOCKING, ARMED) in this file, which this row resolves"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolves IRPT_DASHBD-D2-W207-S1 by an appended row, citing the issuer amendment commit 1bec1bfc83; S1's ARMED standing is disarmed by the issuer's amendment and the green suite. Form only; no client figure is quoted."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S80",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T11:56:00Z",
+  "one_line": "TO-DB-b-253 odd finds, none blocking: (1) the order names the artifact key irpt-49f-reporting-gold-lambda.zip, which does not exist (the root and the source map use the scope-less investor-reporting/irpt-reporting-gold-lambda.zip); (2) the builder only VERIFIES staged_from hashes, so the three new members' pin and sha256 had to be written before the build; (3) terraform fmt -check flags alignment in reporting-gold locals.tf; (4) the statement WriteTheFiveGoldPrefixesOnly now lists six prefixes; (5) 19 of 28 worktrees carry stale copies of the CLOSED thresholds-swap marker",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object on investor-reporting/irpt-49f-reporting-gold-lambda.zip: 404 and zero versions; investor-reporting/irpt-reporting-gold-lambda.zip: 4+ versions, current UcKN2ttQ... equals the live CodeSha256 (the rollback target); lambda-source-map.json artifact_s3_key and lambda.tf artifact_key agree on the scope-less name",
+      "build-and-upload.sh TMPJS_STAGE: a staged_from entry is hash-VERIFIED (declared sha256 vs git show of the pin) and a null sha256 always mismatches; a null pin resolves to the moving HEAD; the update script writes only artifact_s3_key and artifact_sha256. The three new members were pinned at 6459608700 and 45b34c2e5d (blobs equal to HEAD and to the sha256 the signed packet names) in commit a193e096c3 before the build",
+      "terraform fmt -check -diff on infra/aws/terraform/investor-reporting/reporting-gold: locals.tf lines 84-95 alignment (4 assignments); the file's sha256 b7a293c0578c is the one the signed packet names, so it was NOT rewritten",
+      "live role policy after the apply: statement WriteTheFiveGoldPrefixesOnly, 6 resources incl. filled_report_values; the sid keeps its old count word",
+      "git ls-tree of every worktree's HEAD for org/critical_paths/.open_deploys/irpt-dashbd-thresholds-swap-20261013.json: present in 19 of 28 after the issuer's close at ce030463bd (shared tree: absent)"
+    ]
+  },
+  "spec_asserts": "The order's key spelling, its claim that the build writes the three new members' pin and sha256, and its bound on the policy statement names hold as written.",
+  "world_is": "Nothing blocked: the act ran as signed (0/2/0, no invoke, ledger open at L6). Asks, all the issuer's or the CTO's: correct the key spelling in the order text; decide whether the packet's condition 3 should say the applier writes the pins BEFORE the build (the builder cannot write them); consider renaming WriteTheFiveGoldPrefixesOnly when the next policy change lands (a rename is a policy change, not done here); the fmt alignment is a repo defect owned by the author of locals.tf; the 19 stale marker copies sit in other seats' worktrees and are named, never closed."
+}
+```

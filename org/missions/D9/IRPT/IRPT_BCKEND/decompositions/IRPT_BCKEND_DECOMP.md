@@ -4146,3 +4146,15 @@ Check IB211-1 (`deliverables/2.0.0_SA_COO~P2/checks/r211/p211_cells.py`), dry-ru
 | `IB-pr-572` | READ the split-adjusted return's inputs: the producer sites, the custodian split rows and ratios per firm, the served DELTA projection | FWD-21 | SERVED | none | PD1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~415) starts now.
+
+## 208. ROUND 1, WORKSTREAM ~PE (49 Financial's candidate screen run offline; 2026-10-15 ~11:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8256)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a workstream issues its own round); ~PC round 2 holds its issuance (IB-pr-570 and IB-pr-571), so the third read issues as ~PE round 1. The 49 Financial refusal READ (IB-pr-570, merged @a9eb88ed54) found the P1 firm served at 2026-10-12 (two trading days behind T-1), the 2026-10-13 candidate refused on `account_lost` count 1, the lost account marked ACTIVE in the directory (so the closed-account exemption cannot clear it), and the candidate builder's filter that omits it unread. The CTO ordered it measured, beside Cottonwood's validator read: run 49 Financial's candidate screen OFFLINE on the account's source rows, name the exact failing condition, and say whether it is the condition Cottonwood's IB-pr-571 finds; if both firms share it, one screen fix under one never-widen pair covers both, and the pair states the served DELTA (one account each back in the snapshot) and the dates owed per firm. The guard is untouched. One cell, READ ONLY.
+
+Check IB212-1 (`deliverables/2.0.0_SA_COO~P2/checks/r212/p212_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control212.py`) passes all three and fifteen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-573` | RUN 49 Financial's candidate screen offline on the lost ACTIVE account's rows; the failing condition; the comparison with Cottonwood's; the fix options in the code | FWD-21 | SERVED | none (the Cottonwood comparison reads IB-pr-571 if landed) | PE1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~416) starts now.
