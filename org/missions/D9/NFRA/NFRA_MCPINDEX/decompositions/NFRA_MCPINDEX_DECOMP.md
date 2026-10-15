@@ -1640,3 +1640,39 @@ Base dry-runs: `c16.AC1` FAIL as expected (all five sub-checks), `c16.AC2` PASS 
 ### R16.4 WHAT THIS CUT DOES NOT CLAIM
 
 It does not close the gateway ranking question (COO~O's), the `json-tiered/` note (Z-S114) or MX-r-13.
+
+
+## ROUND 17 (2.0.0_SA_COO~MI, 2026-10-15 ~09:2xZ) -- the rounds 12-16 analysis's enrichment list: T1 (Z-C-S57), F1 (the firm field), R1 (held)
+
+Source: `ledger/ROUND_ANALYSIS.round12-16.md` @5d69fe6298 (CTO msg 34404; PRD stays v0.16), CVO slug REMEDIATION_v10 @c697ce8ae1 (FWD-20 REALIZED, FWD-22 NOT_REALIZED Z-C-S57). Round 16 is drained and served at `1b18b94979` (catalog v0.5, 304 rows). This section is spec-frozen once issued.
+
+### R17.1 THE CELLS -- 3 in this issuance (and one held)
+
+| cell | what | write set | risk | serves |
+|---|---|---|---|---|
+| `MX-c-18` | T1. Every catalog row carries `nl_tags`. The emitter derives tags for a row whose source gives none (44 of 304: 32 harvest bronze/state rows, 2 draft silver table rows, 10 older hand-kept rows), from the row's own `business_meaning` and `example_questions` by a deterministic module `workflows/atom_decomposition/derive_nl_tags.py`, and marks them `nl_tags_basis: inferred` (a value that carries its claim). A row that already had tags is byte-equal. The two plain-words `opal_discover` reads (one G2 client table, one G6 news table) are the issuer's, after the release. | `workflows/atom_decomposition/emit_catalog_v02.py`, `derive_nl_tags.py`, `validate_catalog_v02.py`, `tests/` | LOCAL | FWD-22 (Z-C-S57) |
+| `MX-c-19` | F1. The `firm` field on the 24 firm-scoped table rows whose registry firm value is prose and names exactly one known firm (`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round17/f1_firm_map.json`: 23 `49financial`, 1 `inflection`), from the registry join; the gateway discover then shows each such row to its OWN firm's principals and to no other firm. The 25th prose row (the taxsma workbook, three firms) stays Opal-internal. Client data still needs the firm's own data grant. | `workflows/atom_decomposition/gen_silver_rows.py`, `emit_catalog_v02.py`, `catalog_entries/` (the 24 rows), `infra/logic/registry/catalog_fork_keys.json` (the `restore.firm` values), `infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py`, `infra/aws/ec2/opal-gateway/tests/test_firm_catalog_visibility.py`, `tests/` | WORLD (infra path; a per-firm visibility change) | FWD-22 |
+| `MX-r-14` | The release of MX-c-18 and MX-c-19: the regenerated catalog and the discover change onto the opal-gateway host, behind the NFRA_OPLGTW queue; both never-widen halves (CTO + COO; the F1 pair names the per-firm visibility change) before PHASE B; the censuses; the depth, partition and catalog reads on the host. | `0.7.0_AE_CloudOps~MI` deliverables, ledger, `EC2_MANIFEST.json` | WORLD | FWD-22 |
+
+**Held: R1** (rival-fund rows are done as `MX-c-17`; what is left is `read_tool` updates for the OPLGTW tools deployed since v0.5, which are NFRA_OPLGTW's `OG-ap-20` (G5 wave A, category views) and `OG-rv-1/2` (the rival-fund tools)). Not cut this tick: its dependency is unmet and held by another project (obligation 2: a cell with an unmet dependency is not cut for coverage). It is cut as an enrichment RECUT when `OG-ap-20` and the rival tools read CLOSED, with its own release order. The round does not reach ROUND_CLOSE while R1 stands open.
+
+### R17.2 CHAINS AND FAN-OUT
+
+`MX-c-18` and `MX-c-19` share no data. They both edit `emit_catalog_v02.py` in different functions (T1 the three row writers and a derive call, F1 the table-field list, its validator and the join), and each adds its OWN new test file, so the merge is hunk-disjoint; the issuer drains them in sequence and regenerates the catalog once on the merged tree. 2 chains of 2, 2 workers (~42, ~43), cap 8. `MX-r-14` waits on both draining and on the OPLGTW gateway queue.
+
+### R17.3 CHOICES THIS CUT MAKES
+
+1. **Tags are derived at EMIT time, not written into the 44 source files.** A regeneration then keeps them, a new row with no tags gets them, and the contract files (the CRO's) stay untouched. The cost: the emitter holds a small derive module.
+2. **`nl_tags_basis: inferred` is a field a consumer can reject on** (A VALUE MUST CARRY ITS CLAIM). It is present only on the 44; the rows with contract tags carry no basis field, so a reader can tell contract-given from inferred.
+3. **F1 covers the 24 that map to ONE known firm, not 25.** The 25th (`opal_data_assets_silver_gateway_global_taxsma_workbook`) holds rows of three firms, so no single `firm` is true; it stays Opal-internal by design. The other 93 single-clean-value firm-scoped rows also lack the field; widening to them is the CTO's call (a message with this cut).
+4. **The `firm` value is a firm token, so the clean row carries `firm: null` and the registry (`catalog_fork_keys.json` `restore.firm`) carries the value;** the loader join restores it exactly as it restores `fork_keys` (MX-c-15). The gateway sees the joined row.
+5. **The visibility rule** (`_silver_answer`): a firm-scoped row is shown to a non-internal principal only when the row's `firm` is a known firm AND the principal is a firm principal of that same firm; every other case still refuses. Opal-internal sees all rows as before.
+6. **Registry writer.** `infra/logic/registry/**` is lane `PLATFORM_LOGIC_DOCS`: the issuer's lane refuses it. The F1 worker writes `catalog_fork_keys.json` under its order's `<paths>` (the MX-c-14 A8 precedent); the CTO's cut-template line naming `4.0.0_SA_CRO~Z` is satisfied by that order grant, and the CRO is told in the issuance record.
+
+### R17.4 BATTERY (base HEAD cf06cf8c43 = live `1b18b94979` catalog and discover blobs; `deliverables/2.0.0_SA_COO~MI/round17/checks/`)
+
+Base dry-runs 2026-10-15: `t1.AC1` FAIL (260 of 304), `t1.AC2` FAIL, `t1.AC3` FAIL (module absent); `f1.AC1` FAIL, `f1.AC2` FAIL, `f1.AC3` FAIL (no test file); `r14.AC1` FAIL (no ledger entry), `r14.AC4` FAIL (host nl_tags 260, inferred 0, firm 0); `r13.AC2` / `r13.AC3` are graded on the host AFTER the release only. Planted arms (standing battery clause 1): `plant_t1.py` 11 of 11, `plant_f1.py` 8 of 8 (the ac3 PASS arm is not plantable in an extracted tree; the real tree runs that pytest command), `plant_r14_ac4.py` 7 of 7. `f1.AC2` is the visibility difference control: every silver row x {opal-internal, each known firm, an unknown firm, an empty firm}, old tree against new, printing the pair count, the newly-visible count and the cross-firm leak count (0 expected).
+
+### R17.5 WHAT THIS CUT DOES NOT CLAIM
+
+It does not close Z-C-S57: that needs the two plain-words discover reads on the served host after `MX-r-14`, the issuer's own acts at the close. It does not widen any DATA access (F1 changes what a catalog row shows, never a grant), does not cut R1, and does not touch the ranking question.
