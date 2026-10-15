@@ -27532,3 +27532,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "AC1 passes on its own terms (10 of 93 drawn, date 2026-10-15, the same ten as the issuer's walk_draw_20261015.json). AC2, AC3 and AC4 cannot be graded without the walker on disk; AC5 has no shots to read. Restoring the walker into the worktree (sparse-checkout widening or a copy) is an issuer decision: it is outside this order's <paths>."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W443-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~443",
+  "surfaced_at": "2026-10-15T16:26:47Z",
+  "one_line": "On the local PROD build, SHOP CN's forward P/E cells print as numbers (2026E 67.8x, 2027E 53.0x) with no withhold reason visible beside them, although the walk order names SHOP CN as one of the 20 names whose forward P/E is withheld for mixed currencies.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order s.1 preflight and round-106 change 3 (ratified FWD-40 text and CTO round-105 analysis): a forward P/E whose price and consensus-EPS currencies differ is withheld, with the reason in the dash; the Key Figures P/E row shows that reason in the forecast cell instead of the no-consensus sentence; SHOP CN is in this walk's draw and is one of the 20 withheld names.",
+  "world_is": "Read 2026-10-15 from the 1440-px shot 039-SHOP-CN-Model.png (walk A, 16:09Z run, folder tmp/ui-walk/20261015T160945Z copied to C:/dev/ui-walk-evidence/bm-5/A/). The Key Figures P/E row reads 2025 '74x-193.1x' with no price line visible beneath it, 2026E '67.8x' and 2027E '53.0x'; no withhold reason is visible beside either forward cell in the shot. The same screen prints 'Figures in USD', price CAD 250.68 and 2026E EPS 1.85 (USD), so the printed forward ratio joins two currencies. The walker in-page check for this step (findings.json lines 285-291) reports only a React duplicate-key warning on 'Financial Summary:FCF Margin', so no in-page check reads the forward P/E cell. This row records a shot read, not a DOM read; the Model-tab forward cells of the other names read as printed numbers with their own served reasons.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bm-5/A/shots/039-SHOP-CN-Model.png (read with the Read tool; Key Figures P/E row, 'Figures in USD', price CAD 250.68)",
+      "walk_A.txt line 45 (the worktree walk file, rewritten by this seat and committed with this order's deliverables): 'STEP SHOP CN-Model: 1 finding(s)'",
+      "C:/dev/ui-walk-evidence/bm-5/A/findings.json lines 285-291 (the one SHOP CN Model finding: React duplicate-key warning on 'Financial Summary:FCF Margin')",
+      "C:/dev/ui-walk-evidence/bm-5/A/shots/035-SHOP-CN-Exec-Management.png (the research-team section on the same name, read clean)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as an observation. The grade of the forward-P/E read belongs to the CVO at L9 (AC5 is judgment and is not self-graded here). The walk's own checks do not read this cell, so a DOM read of the SHOP CN P/E cell is the instrument that would settle whether the withhold is absent or only not visible at this resolution. No walker, draw or product file was changed."
+}
+```
