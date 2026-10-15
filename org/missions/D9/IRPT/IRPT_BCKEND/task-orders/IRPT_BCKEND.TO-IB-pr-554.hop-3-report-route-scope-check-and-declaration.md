@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~398</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -35,6 +35,8 @@
 
 **Run the three criteria below from your worktree root**, record each output and exit code verbatim in `IB200-2_criteria_output.txt`, write the proof instance named under proof_of_spec and validate it with `python .tools/proof-of-spec-check.py <instance>`, and commit with explicit paths (product files, tests, record and criteria output first, then set the instance's artifact rows to the hash of that commit, the instance last). Do NOT edit this order file or the check; do not flip `<status>`. If a criterion fails, fix YOUR work (never the check); a check no work can pass is the issuer's defect: file a BLOCKING row and report. Remove your scratch if you can. Report once, under 150 words.
 
+**AMENDMENT 1 (the issuer, 2026-10-15 ~04:2xZ, on your row `IRPT_BCKEND-D2-W398-S1`; my defect, the grant omitted a pinning test):** `infra/aws/lambda/investor-reporting/reporting/tests/test_reporting_entry.py` line 74 (`test_one_route_and_function_name`) pins `entry.ROUTES` to EXACTLY two keys, so the new third key makes it fail. That file is now IN your grant: update ONLY that pin so ROUTES equals the two existing keys plus the new report route key (keep every other assertion in the file as it is), and say in the record's notes that you did. Your inherited state: your two commits on this branch (the row and the failed criteria output) stay; proceed with the build from the start of the face.
+
 **Criteria (run each under `timeout 120` from your worktree root, record the output and exit code verbatim):**
 
 <criterion id="IB200-2-AC1" cell_refs="IB-pr-554"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py" . IB200-2-AC1</invocation><expect>IB200-2-AC1 PASS</expect></criterion>
@@ -52,6 +54,7 @@ What the checks grade: AC1 the new tests (at least 10) and the existing entry an
 - **Row ids** are `IRPT_BCKEND-D2-W398-S<k>` (start at 1); file a row for anything odd (a fenced json block in `INVESTIGATION_v1.md` with `grounding` and `surfaced_at` = `date -u +%FT%TZ`) and keep working.
 
 <paths>
+infra/aws/lambda/investor-reporting/reporting/tests/test_reporting_entry.py
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~398/
 infra/aws/lambda/investor-reporting/reporting/entry.py

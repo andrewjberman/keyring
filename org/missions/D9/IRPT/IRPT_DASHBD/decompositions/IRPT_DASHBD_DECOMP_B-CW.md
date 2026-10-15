@@ -116,3 +116,59 @@ Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3
 |---|---|
 | DB-c-9 | 0.7.0_AE_CloudOps~DB2 |
 | DB-c-10 | 2.0.0_SA_COO~C2 |
+
+## 5. ROUND 118, WORKSTREAM B-CW (2026-10-15 ~04:5xZ, issuer 2.0.0_SA_COO~C2, on the STOP of the apply order `DB-c-9` by `0.7.0_AE_CloudOps~DB2`, msg 8042)
+
+**What happened (measured by this seat after the STOP, read only).** `DB-c-9` steps 0 to 5 ran: the shared zip was rebuilt and landed (S3 version `vrBQAr57i...`, `handler.py` the only member that differs from the previous zip), ONE `safe-apply` read 7 to add, 2 to change, 0 to destroy, and all three functions (49 Financial, Inflection, Cottonwood) now run `CodeSha256` `OawCMaEq...`; the Cottonwood execution role, scheduler role and schedule exist, the schedule is `DISABLED`; the gold listing is unchanged (75 daily and 150 manifest objects, newest write 2026-09-29). Step 6, the first catch-up invoke (2026-09-28), was REFUSED by the producer: `registry lookup('z09') failed: KeyError`. Cause, reproduced by this seat in the extracted live zip: the zip carries `infra/logic/registry/scopes.json` at the PIN in `infra/aws/lambda/ci/lambda-source-map.json` (commit `14b52ca13a`, 15,565 bytes, 11 scope rows, no `z09` row); HEAD's `scopes.json` (20,150 bytes, 14 rows) adds `z09`. The producer derives the Cottonwood firm from the registry (`firm_scope()`, `lookup("z09")`), so the shared zip cannot serve Cottonwood until `scopes.json` is re-pinned. With ONLY `scopes.json` replaced by HEAD's blob the extracted tree resolves `blackdiamond_z09` to `cottonwood`, and `orion` and `schwab_08335338` resolve to `inflection` and `49financial` exactly as before. The signed pair covered a zip whose members differ from the live one by `handler.py` only; re-pinning a registry member is a second zip upload, so it needs a new signed act (the applier's STOP, correct). The defect is the issuer's: DB-c-7's build did not read that the Cottonwood firm derivation needs a registry row the staged pin lacked.
+
+**The state the STOP left is consistent and nothing served moved**: no Cottonwood gold key was written; the 49 Financial and Inflection functions run the loud-failure handler (they carry the listing grant) and their registry derivations are unchanged; the schedule is DISABLED; the ledger `irpt-dashbd-cottonwood-holdings-performance-20261015` is open with legs L5 to L8.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-11` | The READ and the ADDENDUM PACKET: the live zip's seven registry members against their pins and HEAD, `scopes.json`'s row diff, the differential of the producer's own firm derivation for the three declared channels in the extracted live zip tree versus the tree with the minimal re-pinned members, and the unsigned addendum packet for the second zip (member diff, the plan, the resume at the catch-up, both branches, rollback, the CTO's questions) | FWD-2, FWD-11 | LOCAL (a read and a packet; the act it prepares is WORLD under a new signed pair) | none | C-G |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) One worker cell, one chain, slot `~406`: the record and the packet come from one run. (b) The addendum is a NEW signed act; nothing here re-uses the first pair for the second upload. (c) The fix to be proven minimal is re-pinning `scopes.json` alone (the issuer's measurement); the cell tests that and any further member the producer's derivation needs, and states the smallest set. (d) The apply order that resumes at step 6 is cut after both halves of the addendum are signed, to `0.7.0_AE_CloudOps~DB2`, which holds the open ledger.
+
+**fanout:** 1 of 1 chains, cap 8, reason: the read and the packet are one chain (the packet's re-pin set is the read's output). Worker `0.9.0_WK_IRPT_DASHBD~406`.
+
+## Cells (round 118)
+
+| cell id | owner |
+|---|---|
+| DB-c-11 | 0.9.0_WK_IRPT_DASHBD~406 |
+
+## 6. ROUND 119, WORKSTREAM B-CW (2026-10-15 ~05:2xZ, issuer 2.0.0_SA_COO~C2, on the CTO's conditions for the addendum, msg 8055; round 118 closed on `DB-c-11` PASS 2 of 2, merged @ad799ad40b)
+
+**The CTO's conditions** (msg 8055): (1) re-pin `scopes.json` to HEAD's registry as the build input, not a hand edit, and add a build-time test that the zip's `scopes.json` resolves each function's registry key (49 Financial, Inflection, `z09`): one test, no monitor; (2) the plan shows only the three code updates from the same zip, and after the upload the 49 Financial and Inflection derivations are read unchanged before their next 08:15 New York fire; (3) the catch-up then resumes from date 1 under the signed DB-c-5 sequence. `DB-c-11` proved the re-pin: `scopes.json` alone, to `69679b90e3dc52b670d33fddd96d06be1deaac90` (sha256 `6ce64167c26588521fded21330dc59e0109450e9a01c92e0f6ca9aa90b53cfae`), leaves every value the 49 Financial and Inflection channels derive (firm, prefixes, gold addresses, names) identical.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-12` | The BUILD INPUT for the second zip, repo files only: the source-map re-pin (the `pin` and `sha256` of the `scopes.json` entry, in the two holdings-performance function entries, nothing else) and the build-time test that the staged registry resolves the 49 Financial, Inflection and `z09` keys, with a planted negative control. Nothing is built, uploaded, planned or applied | FWD-2, FWD-11 | WORLD by the gate's path floor (`<paths>` names the source map under `infra/`; repo files only, no deploy) | none | C-H |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The edit is a committed change to the source map the build reads, never a patch of a zip. (b) Both function entries that stage the registry for this zip (`irpt-holdings-performance-lambda`, whose entry the build uses, and `irpt-inf-holdings-performance-lambda`, which mirrors it) get the same new pin so the two entries stay equal. Other functions' entries are not touched. (c) The test reads the staged pins, materializes the zip's members at those pins into a scratch tree, and runs the producer's `firm_scope()` for the three channels in a fresh process; an environment variable `HP_REGISTRY_SCOPES_PIN` overrides the `scopes.json` pin so the planted negative control (the old pin) can be shown to FAIL. (d) The applier runs the test after the build and before the upload; a failure is a STOP. (e) The addendum packet (`DB-c-11`) is signed by both halves over this cell's merged commit as well as its own bytes; the resume order to `~DB2` follows.
+
+**fanout:** 1 of 1 chains, cap 8, reason: the re-pin and the test are one small chain on one worker (the test's expected value is the re-pin). Worker `0.9.0_WK_IRPT_DASHBD~407`.
+
+## Cells (round 119)
+
+| cell id | owner |
+|---|---|
+| DB-c-12 | 0.9.0_WK_IRPT_DASHBD~407 |
+
+## 7. ROUND 120, WORKSTREAM B-CW (2026-10-15 ~06:0xZ, issuer 2.0.0_SA_COO~C2, on the signed addendum: CTO half @05472e30fc msg 8114, COO half @bd00e9cd11 amended; rounds 118 and 119 closed MAY-CLOSE, DB-c-11 @ad799ad40b and DB-c-12 @eae8170b22 merged)
+
+**What the signed addendum covers (blob `1a7a8c68bb`):** the second upload of the shared holdings-performance zip with `scopes.json` re-pinned to `69679b90e3` (the committed re-pin and the registry test are merged), the 0-to-add 3-to-change plan on the three functions, and the resume of the open apply ledger: the registry test on the BUILT zip before upload, the printed 49 Financial and Inflection schedule states, the post-apply read that their derivations are unchanged, the first pair's twelve-date catch-up from date 1, the after-read and 1.1+1.2 reader check, then the schedule ENABLED. The CTO's condition 6 adds the Cottonwood function's source-map row (D2-S59) before the upload.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-14` | The RESUME of the apply by `0.7.0_AE_CloudOps~DB2` under the signed addendum and the first pair | FWD-2, FWD-11 | WORLD (a deploy and gold writes) | none | C-I |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) One cell for the applier: the source-map row, the build with the registry test on the built zip, the upload, the plan and apply, the catch-up, the checks and the enable are one sequential act under one continued ledger. (b) The catch-up is exactly the first pair's twelve dates; the checker pins the dates to `PACKET_FACTS_R115.json`. (c) The `account_dim` writer (the CTO's msg 8103: a scheduled producer on the 49 Financial pattern, a build cell first reading that pattern) is the next cell, cut after this order is in the applier's hands; it is not part of this act.
+
+**fanout:** 1 of 1 chains, cap 8, reason: the resume is one sequential act by one Tier-2 AE lane under one ledger.
+
+## Cells (round 120)
+
+| cell id | owner |
+|---|---|
+| DB-c-14 | 0.7.0_AE_CloudOps~DB2 |

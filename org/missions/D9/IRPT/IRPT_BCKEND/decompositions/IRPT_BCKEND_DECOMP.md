@@ -3998,3 +3998,28 @@ Check IB200-4 (`p200_orion.py`, dry-run at the base: AC1 to AC3 all FAIL; thirte
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one document; one worker (slot ~400) starts now.
 
+## 196. ROUND 3, WORKSTREAM ~PS (the filled-report serve path, the export contract and the export scope rule; 2026-10-15 ~06:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-3 analysis (@a4718eab10, msg 8058) and the CVO's L10 slug for round 2 (ADJUDICATION_v102 @6a4b9d068b))
+
+Round 2 of ~PS closed MAY-CLOSE (packet @aefc53ef3a; override 409a7f7ef2 accepted by the CTO). The CTO's two rulings: (1) the packaged ExportBundle contract gains `filled_report` as an allowed source kind for NEW bundles (a MINOR revision step; both arms tested: a new bundle validates and an existing bundle validates unchanged); (2) the export freeze uses the route's ONE named-account reader (`household.accounts` plus the account-keyed `by_row` keys), written once, with its own negative test (a freeze that scopes narrower than the route is a widening). The deploy legs and the first exercise still wait on 49 Financial gold for one date (condition 3 of the CTO half). Two cells, two independent chains by write set (two JSON schema copies and a test; a shared module, entry.py, the export freeze and tests).
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r201/p201_cells.py`, dry-run at the base: IB201-1 and IB201-2, AC1 to AC3, all six FAIL; the positive control (`control201.py`, stub files at the real relative paths in temporary git roots with a worker commit) passes all six and fifteen negatives each fail their own arm. The contract cell's difference control serves the BASE schema bytes in memory (JSON is data, not a marker block); the freeze cell's removes the FILLED-REPORT-D blocks.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-557` | the packaged and docs ExportBundle schemas gain `filled_report_source` (byte-equal copies, one minor revision step), tests for both arms | FWD-3 | WORLD (the path floor of an infrastructure path; the work edits repository files only, nothing is deployed) | none | PS3-a |
+| `IB-pr-558` | the export freeze on the shared named-account reader (one module, defined once, imported by the route and the freeze), with its negative test | FWD-3 | WORLD (same) | none | PS3-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets with no data dependency (the schema copies and their test; the shared module, entry.py, the freeze and their tests); two workers (slots ~401, ~402) start now.
+
+## 197. ROUND 3, WORKSTREAM ~PO (the Orion Inflection raw feed, the unlocated flat-key writer; 2026-10-15 ~05:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO half of the Orion pairs packet (@acaae0ff99, condition 1) and the four managers' answers (msgs 8063, 8070, 8073))
+
+Round 2 of ~PO closed MAY-CLOSE (close commit 17172025c0); both halves of the Orion pairs packet are signed at sha256 c3dcc22f02e8. The CTO's condition 1: the writer of the daily flat keys (11:39-11:56Z) is located before the scheduled handler deploys, or the handler does not deploy. The four boxes' scheduled tasks and processes were read and none runs it (dell2 195, dell1 196, laptop 211, site Z 214): the writer is in AWS or a seat's session cron. This round is ONE READ cell over AWS (object metadata, CloudTrail data events, S3 access logs, Lambda, EventBridge and Scheduler, ECS, Glue, EC2 and SSM, CodeBuild, Step Functions). The three LOCAL build slices of the packet (the port, the schedule declaration, the Scope account addendum) are NOT cut this round: the port and schedule slices wait on what the READ finds (the hand-over shape), and the Scope addendum waits on B-IN round 120's second-household probe (CTO msg 8082: the feed's reason rows take NO_START_DATE_AT_SOURCE and NO_MODEL_AT_SOURCE from accounts_v2 with claim inferred; page words neutral until measured).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r202/p202_cells.py`, dry-run at the base: IB202-1 AC1 to AC3 all FAIL (no record); the control (`control202.py`, a synthetic record in a temporary root) passes all three and eleven negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-559` | READ AWS for the writer of the daily Orion flat keys: object metadata, CloudTrail, S3 access logs, the compute inventory; its kind, name, claim, evidence and the hand-over path; READ ONLY | FWD-3 | SERVED | none | PO3-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one document; one worker (slot ~403) starts now.
+

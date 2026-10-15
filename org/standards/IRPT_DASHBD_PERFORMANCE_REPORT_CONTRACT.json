@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.5.1",
+  "contract_version": "0.5.3",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -40,6 +40,16 @@
       "contract_version": "0.5.0",
       "sha256": "72ab629a45af32f07cc5948bd4240fe80e2690ed7926dce4e61c24c3ec647363",
       "reason": "the 0.5.0 bytes, before the 0.5.1 bump: the hold.return_<window> members (the holdings overview's household return) kept source ABSENT with no firm_sources, while the pvs.<window>.return_cumulative members carried Orion's client-grain figure, so the same household return printed as a number in one cell and as an absent form in another; 0.5.1 mirrors each pvs return's firm_sources or firm_absent onto its hold twin and adds one equivalence class per window"
+    },
+    {
+      "contract_version": "0.5.1",
+      "sha256": "0b515243b310bb95de8d9bebdb0f2725b70626307adcc9f4fb80298883692df4",
+      "reason": "the 0.5.1 bytes, before the gold_table block (0.5.2): the filled report is written as the gold table filled_report_values, one row per household, member and row, each holding the value or the absent form with its kind and its words; the table's columns, grain, address rule, reader and row forms are stated in gold_table; members, document and the absent-sourced set are unchanged"
+    },
+    {
+      "contract_version": "0.5.2",
+      "sha256": "e6d52c22b14287278d3bd15d931468bff703944234098cb8fdc9598ca4d73aab",
+      "reason": "the 0.5.2 bytes, before the Cottonwood sources (0.5.3): the 36 account-return members had no firm_sources for Cottonwood, the household key of a Cottonwood account was not named, and the holdings performance tables Cottonwood holds were not stated as unread; 0.5.3 adds firm_sources.cottonwood to each account-return member (the Cottonwood account_return_daily address form, the source-ends fold), firm_households.cottonwood and unread_inputs, and changes no member id, document, gold_table or Inflection source"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -212,9 +222,46 @@
     ],
     "unheld_rule": "An asset-class entry in a by_row map (hold.allocation) that holds the text UNHELD means the household holds none of that asset class on as_of. It prints the baseline's dash, never a reason and never zero. UNHELD is not an absent form, so it carries no kind, and it may appear only as the value of an asset-class key of a by_row map."
   },
+  "gold_table": {
+    "table": "filled_report_values",
+    "columns": ["firm", "household_ref", "as_of", "member_id", "row_key", "series_name", "point_date", "value_number", "value_text", "absent_kind", "absent_reason", "contract_version", "schema_version"],
+    "address_rule": "the partition is date=<as_of business date> at lib/opal_naming.py address(\"irpt\", <firm>, \"gold\", \"filled_report_values\", \"date=<as_of>\", \"data.parquet\"), one partition per as_of business date; no bucket or prefix is typed",
+    "grain": "one row per household_ref, member_id, row_key, series_name and point_date: row_key is the account_id for an account-grain member and the asset class for hold.allocation, series_name and point_date name one chart point, and each is the empty string where it does not apply",
+    "reader": "the platinum publisher of the serve path (IRPT_BCKEND ~P2) reads this table and composes the platinum filled_report.json from it; the tab and the export read that JSON by member id and derive no figure",
+    "row_forms": "exactly one of: value_number (a finite double, with value_text, absent_kind and absent_reason null); value_text (the member's text, or UNHELD only for a hold.allocation class the household does not hold, with the others null); or the absent form (absent_kind one of document.absent_kinds and absent_reason the words, with value_number and value_text null). Absent is never zero.",
+    "reserved_member_ids": ["household.first_data_date", "account.last4", "account.first_data_date", "account.window_status.qtd", "account.window_status.ytd", "account.window_status.last_12_months", "account.window_status.since_inception"],
+    "claim": "measured"
+  },
+  "firm_households": {
+    "cottonwood": {
+      "table": "account_dim",
+      "field": "household_id",
+      "words": "the household key of a Cottonwood account is account_dim.household_id, the relationship the account belongs to (the smallest id when an account is under several relationships); a null household_id belongs to no household and carries household_id_reason"
+    }
+  },
+  "unread_inputs": [
+    {
+      "table": "holdings_performance_daily",
+      "reason": "no report member reads it: the Cottonwood holdings performance daily table ends at its own frontier and no member of the filled report names it as a source"
+    },
+    {
+      "table": "holdings_performance_manifest",
+      "reason": "no report member reads it: it is the manifest of the Cottonwood holdings performance tables, and no member of the filled report names it as a source"
+    }
+  ],
   "members": [
     {
       "id": "pvs.qtd.beginning_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of market_value_eod of this account on the window's opening anchor day (the last trading day before the first day of the calendar quarter containing as_of), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Beginning Value",
       "label": "Beginning value, quarter to date",
@@ -227,6 +274,16 @@
     },
     {
       "id": "pvs.qtd.net_additions",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "external_flow",
+          "fold": "sum over the household's accounts of the sum of external_flow (net external flow, capital-in positive) over this account's rows for the quarter to date window: the trading days after its opening anchor (the last trading day before the first day of the calendar quarter containing as_of) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Net Additions",
       "label": "Net additions, quarter to date",
@@ -239,6 +296,16 @@
     },
     {
       "id": "pvs.qtd.net_gain",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of each account's ending_value minus beginning_value minus net_additions over the quarter to date window: the trading days after its opening anchor (the last trading day before the first day of the calendar quarter containing as_of) up to and including as_of; a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Net Gain (the baseline footnote says it includes fees)",
       "label": "Net gain before advisory fees, quarter to date",
@@ -251,6 +318,16 @@
     },
     {
       "id": "pvs.qtd.ending_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Quarter To Date, row Ending Value",
       "label": "Ending value (as of the report date)",
@@ -343,6 +420,16 @@
     },
     {
       "id": "pvs.ytd.beginning_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of market_value_eod of this account on the window's opening anchor day (the last trading day before 1 January of as_of's year), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Beginning Value",
       "label": "Beginning value, year to date",
@@ -355,6 +442,16 @@
     },
     {
       "id": "pvs.ytd.net_additions",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "external_flow",
+          "fold": "sum over the household's accounts of the sum of external_flow (net external flow, capital-in positive) over this account's rows for the year to date window: the trading days after its opening anchor (the last trading day before 1 January of as_of's year) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Net Additions",
       "label": "Net additions, year to date",
@@ -367,6 +464,16 @@
     },
     {
       "id": "pvs.ytd.net_gain",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of each account's ending_value minus beginning_value minus net_additions over the year to date window: the trading days after its opening anchor (the last trading day before 1 January of as_of's year) up to and including as_of; a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Net Gain (the baseline footnote says it includes fees)",
       "label": "Net gain before advisory fees, year to date",
@@ -379,6 +486,16 @@
     },
     {
       "id": "pvs.ytd.ending_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Year To Date, row Ending Value",
       "label": "Ending value (as of the report date)",
@@ -471,6 +588,16 @@
     },
     {
       "id": "pvs.last_12_months.beginning_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of market_value_eod of this account on the window's opening anchor day (the last trading day before the calendar day one year before as_of), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Beginning Value",
       "label": "Beginning value, last 12 months",
@@ -483,6 +610,16 @@
     },
     {
       "id": "pvs.last_12_months.net_additions",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "external_flow",
+          "fold": "sum over the household's accounts of the sum of external_flow (net external flow, capital-in positive) over this account's rows for the last 12 months window: the trading days after its opening anchor (the last trading day before the calendar day one year before as_of) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Net Additions",
       "label": "Net additions, last 12 months",
@@ -495,6 +632,16 @@
     },
     {
       "id": "pvs.last_12_months.net_gain",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of each account's ending_value minus beginning_value minus net_additions over the last 12 months window: the trading days after its opening anchor (the last trading day before the calendar day one year before as_of) up to and including as_of; a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Net Gain (the baseline footnote says it includes fees)",
       "label": "Net gain before advisory fees, last 12 months",
@@ -507,6 +654,16 @@
     },
     {
       "id": "pvs.last_12_months.ending_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Last 12 Months, row Ending Value",
       "label": "Ending value (as of the report date)",
@@ -599,6 +756,16 @@
     },
     {
       "id": "pvs.since_inception.beginning_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of market_value_eod of this account on the account's first valued day (its first emitted account_return_daily row, the first day its market_value_eod exists), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Beginning Value",
       "label": "Beginning value, since inception",
@@ -611,6 +778,16 @@
     },
     {
       "id": "pvs.since_inception.net_additions",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "external_flow",
+          "fold": "sum over the household's accounts of the sum of external_flow (net external flow, capital-in positive) over this account's rows for the since-inception window: the trading days after the account's first valued day up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Net Additions",
       "label": "Net additions, since inception",
@@ -623,6 +800,16 @@
     },
     {
       "id": "pvs.since_inception.net_gain",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of each account's ending_value minus beginning_value minus net_additions over the since-inception window: the trading days after the account's first valued day up to and including as_of; a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Net Gain (the baseline footnote says it includes fees)",
       "label": "Net gain before advisory fees, since inception",
@@ -635,6 +822,16 @@
     },
     {
       "id": "pvs.since_inception.ending_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "sum over the household's accounts of market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG; a household sum is absent when any account term is absent (document.household_sum_rule), never a partial sum The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "portfolio_overview",
       "baseline": "section 1 Portfolio Overview Portfolio Value Summary, table Portfolio Value Summary, column Since <inception>, row Ending Value",
       "label": "Ending value (as of the report date)",
@@ -1133,6 +1330,16 @@
     },
     {
       "id": "avs.qtd.beginning_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "market_value_eod of this account on the window's opening anchor day (the last trading day before the first day of the calendar quarter containing as_of), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Beginning Value",
       "label": "Beginning value, quarter to date",
@@ -1145,6 +1352,16 @@
     },
     {
       "id": "avs.qtd.net_additions",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "external_flow",
+          "fold": "the sum of external_flow (net external flow, capital-in positive) over this account's rows for the quarter to date window: the trading days after its opening anchor (the last trading day before the first day of the calendar quarter containing as_of) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Net Additions",
       "label": "Net additions, quarter to date",
@@ -1157,6 +1374,16 @@
     },
     {
       "id": "avs.qtd.net_gain",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "ending_value minus beginning_value minus net_additions for this account, the three terms above read from the same rows: a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any of the three terms is absent; it is a residual and is never plugged to tie The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Net Gain (the baseline footnote says it includes fees)",
       "label": "Net gain before advisory fees, quarter to date",
@@ -1169,6 +1396,16 @@
     },
     {
       "id": "avs.qtd.ending_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Ending Value",
       "label": "Ending value (as of the report date)",
@@ -1181,6 +1418,16 @@
     },
     {
       "id": "avs.qtd.return_cumulative",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "total_return_daily",
+          "fold": "the account's cumulative return over the quarter to date window: the trading days after its opening anchor (the last trading day before the first day of the calendar quarter containing as_of) up to and including as_of: the product of (1 + total_return_daily) over the window's trading days, minus 1, read from this account's rows. Guard and day rules: a row whose total_return_daily is null (day_quality NOT_MEASURABLE or SOURCE_LAG, where the geometric link breaks) makes the window ABSENT with the gap date named, never bridged; a row whose guard_state is GRADED_DISAGREED serves no number (ruling 17), so the window is ABSENT; a row whose day_quality is FLOW_UNRECONCILED or LARGE_FLOW, or whose guard_state is NOT_GRADED_OUTSIDE_DOMAIN, NOT_GRADED_NO_NEIGHBOUR or GUARD_NOT_REACHED, compounds as served and the window carries that flag. An account with no row on its anchor day is NOT_SPANNED: its term is absent, its window prints the not-held dash, and its figure is never a compounding over the part it held The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Quarter To Date, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, quarter to date",
@@ -1254,6 +1501,16 @@
     },
     {
       "id": "avs.ytd.beginning_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "market_value_eod of this account on the window's opening anchor day (the last trading day before 1 January of as_of's year), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Beginning Value",
       "label": "Beginning value, year to date",
@@ -1266,6 +1523,16 @@
     },
     {
       "id": "avs.ytd.net_additions",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "external_flow",
+          "fold": "the sum of external_flow (net external flow, capital-in positive) over this account's rows for the year to date window: the trading days after its opening anchor (the last trading day before 1 January of as_of's year) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Net Additions",
       "label": "Net additions, year to date",
@@ -1278,6 +1545,16 @@
     },
     {
       "id": "avs.ytd.net_gain",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "ending_value minus beginning_value minus net_additions for this account, the three terms above read from the same rows: a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any of the three terms is absent; it is a residual and is never plugged to tie The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Net Gain (the baseline footnote says it includes fees)",
       "label": "Net gain before advisory fees, year to date",
@@ -1290,6 +1567,16 @@
     },
     {
       "id": "avs.ytd.ending_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Ending Value",
       "label": "Ending value (as of the report date)",
@@ -1302,6 +1589,16 @@
     },
     {
       "id": "avs.ytd.return_cumulative",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "total_return_daily",
+          "fold": "the account's cumulative return over the year to date window: the trading days after its opening anchor (the last trading day before 1 January of as_of's year) up to and including as_of: the product of (1 + total_return_daily) over the window's trading days, minus 1, read from this account's rows. Guard and day rules: a row whose total_return_daily is null (day_quality NOT_MEASURABLE or SOURCE_LAG, where the geometric link breaks) makes the window ABSENT with the gap date named, never bridged; a row whose guard_state is GRADED_DISAGREED serves no number (ruling 17), so the window is ABSENT; a row whose day_quality is FLOW_UNRECONCILED or LARGE_FLOW, or whose guard_state is NOT_GRADED_OUTSIDE_DOMAIN, NOT_GRADED_NO_NEIGHBOUR or GUARD_NOT_REACHED, compounds as served and the window carries that flag. An account with no row on its anchor day is NOT_SPANNED: its term is absent, its window prints the not-held dash, and its figure is never a compounding over the part it held The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Year To Date, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, year to date",
@@ -1375,6 +1672,16 @@
     },
     {
       "id": "avs.last_12_months.beginning_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "market_value_eod of this account on the window's opening anchor day (the last trading day before the calendar day one year before as_of), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Beginning Value",
       "label": "Beginning value, last 12 months",
@@ -1387,6 +1694,16 @@
     },
     {
       "id": "avs.last_12_months.net_additions",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "external_flow",
+          "fold": "the sum of external_flow (net external flow, capital-in positive) over this account's rows for the last 12 months window: the trading days after its opening anchor (the last trading day before the calendar day one year before as_of) up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Net Additions",
       "label": "Net additions, last 12 months",
@@ -1399,6 +1716,16 @@
     },
     {
       "id": "avs.last_12_months.net_gain",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "ending_value minus beginning_value minus net_additions for this account, the three terms above read from the same rows: a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any of the three terms is absent; it is a residual and is never plugged to tie The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Net Gain (the baseline footnote says it includes fees)",
       "label": "Net gain before advisory fees, last 12 months",
@@ -1411,6 +1738,16 @@
     },
     {
       "id": "avs.last_12_months.ending_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Ending Value",
       "label": "Ending value (as of the report date)",
@@ -1423,6 +1760,16 @@
     },
     {
       "id": "avs.last_12_months.return_cumulative",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "total_return_daily",
+          "fold": "the account's cumulative return over the last 12 months window: the trading days after its opening anchor (the last trading day before the calendar day one year before as_of) up to and including as_of: the product of (1 + total_return_daily) over the window's trading days, minus 1, read from this account's rows. Guard and day rules: a row whose total_return_daily is null (day_quality NOT_MEASURABLE or SOURCE_LAG, where the geometric link breaks) makes the window ABSENT with the gap date named, never bridged; a row whose guard_state is GRADED_DISAGREED serves no number (ruling 17), so the window is ABSENT; a row whose day_quality is FLOW_UNRECONCILED or LARGE_FLOW, or whose guard_state is NOT_GRADED_OUTSIDE_DOMAIN, NOT_GRADED_NO_NEIGHBOUR or GUARD_NOT_REACHED, compounds as served and the window carries that flag. An account with no row on its anchor day is NOT_SPANNED: its term is absent, its window prints the not-held dash, and its figure is never a compounding over the part it held The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Last 12 Months, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, last 12 months",
@@ -1496,6 +1843,16 @@
     },
     {
       "id": "avs.since_inception.beginning_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "market_value_eod of this account on the account's first valued day (its first emitted account_return_daily row, the first day its market_value_eod exists), the whole-account value at end of day with cash included; an account with no row on its anchor day did not hold a value at the window's start: its term is absent, never zero, and its window is NOT_SPANNED, so it prints the not-held dash; absent, never zero, when that row's day_quality is SOURCE_LAG The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Beginning Value",
       "label": "Beginning value, since inception",
@@ -1508,6 +1865,16 @@
     },
     {
       "id": "avs.since_inception.net_additions",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "external_flow",
+          "fold": "the sum of external_flow (net external flow, capital-in positive) over this account's rows for the since-inception window: the trading days after the account's first valued day up to and including as_of; each row's carried_days already folds the flows of a skipped closure into its trading day, so every flow is counted once; absent when any trading day of the window has no row for this account or a row there is SOURCE_LAG (that day's flow is unknown), never zero The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Net Additions",
       "label": "Net additions, since inception",
@@ -1520,6 +1887,16 @@
     },
     {
       "id": "avs.since_inception.net_gain",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "ending_value minus beginning_value minus net_additions for this account, the three terms above read from the same rows: a gain BEFORE advisory fees (convention.fee_basis_label: the baseline's Net Gain includes fees, so the two are not the same figure); absent when any of the three terms is absent; it is a residual and is never plugged to tie The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Net Gain (the baseline footnote says it includes fees)",
       "label": "Net gain before advisory fees, since inception",
@@ -1532,6 +1909,16 @@
     },
     {
       "id": "avs.since_inception.ending_value",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "market_value_eod",
+          "fold": "market_value_eod of this account on as_of, the whole-account value at end of day with cash included; absent, never zero, when there is no row on as_of or as_of's day_quality is SOURCE_LAG The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Ending Value",
       "label": "Ending value (as of the report date)",
@@ -1544,6 +1931,16 @@
     },
     {
       "id": "avs.since_inception.return_cumulative",
+      "firm_sources": {
+        "cottonwood": {
+          "input": "account_return_daily",
+          "grain": "account",
+          "table": "s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/date=<as_of>",
+          "field": "total_return_daily",
+          "fold": "the account's cumulative return over the since-inception window: the trading days after the account's first valued day up to and including as_of: the product of (1 + total_return_daily) over the window's trading days, minus 1, read from this account's rows. Guard and day rules: a row whose total_return_daily is null (day_quality NOT_MEASURABLE or SOURCE_LAG, where the geometric link breaks) makes the window ABSENT with the gap date named, never bridged; a row whose guard_state is GRADED_DISAGREED serves no number (ruling 17), so the window is ABSENT; a row whose day_quality is FLOW_UNRECONCILED or LARGE_FLOW, or whose guard_state is NOT_GRADED_OUTSIDE_DOMAIN, NOT_GRADED_NO_NEIGHBOUR or GUARD_NOT_REACHED, compounds as served and the window carries that flag. An account with no row on its anchor day is NOT_SPANNED: its term is absent, its window prints the not-held dash, and its figure is never a compounding over the part it held The source ends at its newest partition date (the frontier); a window that needs a later day is absent, kind SOURCE_BREAK, words naming the frontier date.",
+          "claim": "measured: read from the Cottonwood account_return_daily gold table, the firm-generic table the 49 Financial adapter reads; the figure is the account's own, never a household sum"
+        }
+      },
       "section": "account_overview",
       "baseline": "section 5 Account Overview Account Value Summary, table Account Value Summary, column Since <inception>, row Return (Cumulative)",
       "label": "Return, cumulative, before advisory fees, since inception",

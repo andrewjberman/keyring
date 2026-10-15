@@ -100,7 +100,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-19.g3-g6-tools-release.proof
 
 - A1 (issuer, 2026-10-15 ~00:1xZ, row Z-S132): the release worktree carries `infra/logic/` in its cone (its registry feeds `lib/opal_naming.py address()`, which `deploy-to-ec2.sh` calls for the `.env` S3 roots); prove it with a no-upload dry read of the script's naming step before Phase B. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+- A2 (issuer, 2026-10-15 ~03:5xZ, msg 34323, row Z-S137): `app/typed_scope.py` (OG-gt-6, merged `d8b0b28c32`) is the seam the portal and news modules import, and ap-18 deliberately left it out; it is in neither the base nor the take-list, and `portal_models.py` imports it, so without it the service would not start. Ruled route (a): take `app/typed_scope.py` WHOLE and its test `tests/test_og_gt6.py` WHOLE from `box/sitez` HEAD into this release (code only: no IAM, no grant, no tool of its own; it is what makes the thirteen tools' admission uniform). The ask names the two files under `diff`. ap19.AC1's allow-list gains both. Add the host-shaped import check of `app.typed_scope` itself. `app/harvest_published.py` stays out (its own ask). Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+<status>complete</status>
 <round>37</round>
 <workstream>G3G6-RELEASE</workstream>
 <slot>~AE</slot>
