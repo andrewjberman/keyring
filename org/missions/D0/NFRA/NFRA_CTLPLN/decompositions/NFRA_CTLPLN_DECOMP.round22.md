@@ -12,6 +12,10 @@
 | `CT-al-2` | `crossbox-call.py ack` refuses any serial that is not the receiving box's MSTR lane; one non-manager ack refused, one manager ack admitted. | FWD-3 | LOCAL | `0.9.0_WK_NFRA_CTLPLN~120` |
 | `CT-al-3` | ONE hygiene batch: the danger map carries its build time, the reflex refreshes it itself and never builds in a sparse worktree (`S9127`, `W117-S1/S2/S3`); the FWD-5 read test works after the ledger entry closes. | hygiene | LOCAL | `0.9.0_WK_NFRA_CTLPLN~121` |
 
+| `CT-al-4` | AMENDMENT 1 (2026-10-15 ~20:2xZ, after the CTO SIGNED check 8, @051808678b): the journey's release, pack and Taildrop to dell1 for the one checked wheel; its dependency is met, so it is cut now. The install on dell1 and the lane's read are dell1's, asked by crossbox after the delivery. | FWD-15, 16, 18, 19 | SERVED | `0.9.0_WK_NFRA_CTLPLN~122` |
+
+**Amendment 1 also:** `CT-al-2` (order amended, commit `b9d7c9bd21`): the manager rule replaces the named-seat rule for `ack`, and `test_crossbox_call.py` and `test_round13_batch.py` are added to its paths (rows `W120-S1`, `W120-S2`). `fanout` for the amendment: 1 new cell of 1 chain, cap 8 unchanged.
+
 ## Driven by the issuer in this issuance (not cells)
 
 - **FWD-3, the re-read:** the eight acknowledgements by non-manager serials in today's matrix (`4a82` by CloudOps~CA2, `5b04`, `9904`, `5a58`, `bde8`, `d896`, `e03b` by `1.0.0_SA_CTO~DELL1`, `e670` by `1.0.0_SA_CTO~Z`) each get a manager acknowledgement, asked of `0.0.0_AB_MSTR`, or are named in the packet. FWD-3 grades on that re-read after `CT-al-2` lands.
