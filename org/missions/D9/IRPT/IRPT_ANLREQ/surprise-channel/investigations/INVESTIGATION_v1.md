@@ -17715,3 +17715,82 @@
   "notes": "The source map records no owner for ycharts/research; the owner was not read."
 }
 ```
+
+## IRPT_ANLREQ-D2-W152-S1 -- the task order routes Use through fileAnalysisRequest, but the staff form files through fileAndRequestAnalysis; Use now mirrors each form's own press, so a Use that reaches NORMALIZED still requests the analysis
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W152-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~152",
+  "surfaced_at": "2026-10-15T16:07:41Z",
+  "one_line": "Use re-posts the same upload through the handler the form's own File press runs: the staff form through fileAndRequestAnalysis (upload, ticket, analysis POST, record), the partner form through fileAnalysisRequest with submitPartner. A bare fileAnalysisRequest on the staff path would file a ticket with no analysis request.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-351 step 3: Use re-posts the SAME upload through fileAnalysisRequest, so the existing polling and ticket creation apply unchanged.",
+  "world_is": "The staff File press calls fileAndRequestAnalysis (portal/src/pages/TicketCenter/TicketCenter.tsx:363 at base 33ad65ee), which runs fileAnalysisRequest (analysisRequest.ts:424 at base) and then the analysis POST and the record step (analysisRequest.ts:417-434 at base). The partner File press calls fileAnalysisRequest directly (TicketCenter.tsx:413 at base). The candidate passes the corrected upload into the same handler each press uses (a6b83f69, TicketCenter.tsx useHint), so the Use outcome has the same steps as the File outcome.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:363 @33ad65ee (read by git show; the staff File press)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:413 @33ad65ee (the partner File press)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:417-434 @33ad65ee (fileAndRequestAnalysis)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Mirroring the press is the reading that keeps the tickets I1-complete. The literal fileAnalysisRequest route is recorded so the issuer can see the deviation at L9. No criterion depends on the choice."
+}
+```
+
+## IRPT_ANLREQ-D2-W152-S2 -- the before-arm predicted (a), (c) and (e) FAIL and (f), (g) PASS on origin/PROD; the run gives 7 of 7 FAIL, because four more cases run through the new export or its words
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W152-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~152",
+  "surfaced_at": "2026-10-15T16:07:41Z",
+  "one_line": "On origin/PROD 33ad65ee with the new test file and no candidate change, all seven cases fail, not the three the order predicted: (b), (e), (f), (g) throw on AR.filingHints being undefined, (c) throws on the missing hints, and (d) finds no kept sentence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-351 step 4: run the new tests on origin/PROD WITHOUT your change: (a), (c), (e) FAIL.",
+  "world_is": "Run against a scratch copy of origin/PROD TicketCenter (.scratch/prod351): 0 pass, 7 fail. (a),(b),(e),(f),(g) fail with 'AR.filingHints is not a function'; (c) fails with 'undefined is not an object (evaluating first.hints[0])'; (d) fails because the PROD UploadFindings markup has no kept sentence. The candidate passes 7 of 7 and the mutant fails (b) and (f).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/__tests__/filing-hint.test.tsx @a6b83f69 (the fixtures call AR.filingHints in (b), (e), (f), (g))",
+      ".scratch/prod351 bun test output, 0 pass 7 fail (scratch, outside the product tree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The tests discriminate the feature's absence on the base. The narrower prediction was the order's own guess; recorded so the L9 reader sees the before-arm as run, with its reasons."
+}
+```
+
+## IRPT_ANLREQ-D2-W152-S3 -- the cell names the NEEDS_CORRECTION arm of FileOutcome, but the form reads its outcome through FilingOutcome, which carries the same arm; both arms gain hints
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W152-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~152",
+  "surfaced_at": "2026-10-15T16:07:41Z",
+  "one_line": "FileOutcome is returned unchanged through fileAndRequestAnalysis and typed FilingOutcome, so the NEEDS_CORRECTION member of FilingOutcome gains hints too; without it the form cannot read hints from the staff outcome.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-351 step 3: the NEEDS_CORRECTION arm of FileOutcome gains hints; every other arm and every existing member is unchanged.",
+  "world_is": "fileAndRequestAnalysis returns the FileOutcome false arm as FilingOutcome (analysisRequest.ts:417-425 at base 33ad65ee; FilingOutcome at :394-396). The candidate splits the NEEDS_CORRECTION member out of the multi-state arm in both types so hints exists only on that member. Every other member keeps its shape; no caller of an existing member changes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts:394-396 @33ad65ee (FilingOutcome)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:424-425 @33ad65ee (return filed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A type-only widening inside the grant's analysisRequest.ts. Recorded because the order named one union type and the form needs the other."
+}
+```
