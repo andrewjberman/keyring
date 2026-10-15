@@ -39,6 +39,7 @@ Code: `data/etfs/scripts/rivalfunds/` (run from `data/etfs/scripts`, package `ri
 - `ai_accounts.py:48` is `DEFAULT_MODEL = os.environ.get("RIVALFUNDS_AI_MODEL", "gpt-5.4")`. `ai_client.RestClient.chat` (about line 31) posts `{"model", "messages", "response_format", "temperature": 0.2}`; `ai_accounts.OpenAIClient.chat` (about line 876) calls `chat.completions.create(..., temperature=0.2, max_completion_tokens=1500)`.
 - The rule is by NAME, not by a list: send `temperature` (0.2) only when `str(model).startswith("gpt-5")`; otherwise omit the key. Do not touch `max_completion_tokens` in `OpenAIClient` and do not add one to `RestClient`.
 - Several tests may assert the request body or the default model string; run the suite, and change a test assertion only where it names `gpt-5.4` as the DEFAULT or expects `temperature` for a non-gpt-5 model; list each one you change and why.
+- AMENDMENT 1 (issuer, from your surprise row ETFS_RIVALS-D1-W44-S3): `rivalfunds/tests/test_r6ap1_ai_stage.py` is now in your `<paths>`. `test_rest_client_request_shape` (about lines 109-110) expects `"temperature": 0.2` for the model `"m"`, which is not a gpt-5 model: remove the `temperature` key from that expected dict and change nothing else in the file. Run the suite again; the failure count must return to the base's, with no new failure id.
 - Regression net: `cd data/etfs/scripts && python -m pytest -q rivalfunds/tests`; report its final line.
 
 ## 3. SURFACES AND BOUNDS
@@ -55,6 +56,7 @@ A row you file goes in the investigation file below with id `ETFS_RIVALS-D1-W44-
 data/etfs/scripts/rivalfunds/ai_accounts.py
 data/etfs/scripts/rivalfunds/ai_client.py
 data/etfs/scripts/rivalfunds/tests/test_riv_yb1_model.py
+data/etfs/scripts/rivalfunds/tests/test_r6ap1_ai_stage.py
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.dell1.md
 </paths>
 
