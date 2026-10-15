@@ -10093,3 +10093,58 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "A conservative deviation from the literal text, stated here so the CTO can rule on the wording. Refusal can only keep a worktree, never remove one, so it cannot widen what --go removes."
 }
 ```
+
+## NFRA_CTLPLN-W103-S1 -- a sparse worker checkout cannot commit until three gate folders outside its declared sparse set are added
+
+```json
+{
+  "id": "NFRA_CTLPLN-W103-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~103",
+  "surfaced_at": "2026-10-15T08:40:08Z",
+  "one_line": "The worker face says a sparse worktree holds .tools/, lib/, the project tree folder, org/ref/, docs/doctrine/ and the root files. The first safe-commit.sh of this order refused on three folders outside that set: org/modules/graph (commit-gate imports comp_constants_cli), org/devices (to-pipeline-gate reads DEVICES.json) and infra/logic/registry (naming-gate reads the registry). Each was added with git sparse-checkout add and the retry passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in worktree wk-NFRA_CTLPLN-103 (before the adds): .tools, docs/doctrine, lib, org/missions/D0/NFRA/NFRA_CTLPLN, org/ref",
+      ".tools/commit_gate_runner.py@wip commit 1 failure: ModuleNotFoundError comp_constants_cli; the index holds org/modules/graph/comp_constants_cli.py",
+      "org/devices/DEVICES.json missing -> lib/devices.py RegisterError from to-pipeline-gate.py; the retry after sparse-checkout add org/devices and infra/logic/registry committed c9b0463343",
+      "naming-gate line in the retry output: NAMING_SCHEMA.json under org/standards also absent; WARN window only, did not block"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "WORKER FACE RULES: the sparse checkout holds .tools/, lib/, the project tree folder, org/ref/, docs/doctrine/ and the root files; a missing folder is added with git sparse-checkout add and named in the report.",
+  "world_is": "A commit of a .py file through safe-commit.sh needs org/modules/graph, org/devices and infra/logic/registry in the sparse set (and org/standards is read by the naming gate, WARN only). The declared set does not cover what the commit gates read; in this worktree the first commit failed until the folders were added (one observation, one worktree).",
+  "notes": "Data for the CT-ag-2 sparse default: the default sparse set should carry the gate folders, or the gates should read from the tree they are run against. Not resolved by this worker."
+}
+```
+
+## NFRA_CTLPLN-W103-S2 -- a preserve commit records a directory junction's target content as worktree files; forced removal leaves the junction link and keeps the target
+
+```json
+{
+  "id": "NFRA_CTLPLN-W103-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~103",
+  "surfaced_at": "2026-10-15T08:40:08Z",
+  "one_line": "The preserve step runs git add -A on the worktree. A directory junction inside a dirty merged worktree is followed: its target's files are recorded under the junction path as ordinary blobs. The removal that follows keeps the junction link (the directory entry) and does not delete the target. A symbolic link could not be created on this box (WinError 1314), so its behaviour is not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratch probe .scratch/blind_probe.py at wk commit 5acfcae9a1: porcelain listed '?? junc/inner.txt'; preserve_dirt returned sha 1b23e212a18c73d731dedd0e2a1574aef337d6b0 with junc/inner.txt (blob f05648e7, 6 bytes) in the tree",
+      "scratch probe .scratch/junction_remove_probe2.py: git worktree remove --force rc=0; remaining entry in the worktree dir was the junction 'junc'; outside_dir/inner.txt survived",
+      "symlink creation in .scratch/blind_probe.py failed: WinError 1314 (privilege not held); not measured"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO NFRA_CTLPLN.TO-CT-ag-1 BUILD item 2: the preserve step commits the worktree's dirt with git add -A on a temporary index, honouring .gitignore; the cell names no junction or link case.",
+  "world_is": "A junction inside the worktree is traversed by git add -A, so content outside the worktree is copied into the preserve commit. Forced removal does not follow the junction into the target, but leaves the junction directory behind, so the worktree directory survives git worktree remove --force.",
+  "notes": "Filed for the CTO's ruling on link handling. No deletion of outside content was observed. The 51 MiB untracked file was preserved whole as one blob (53477376 bytes in the tree), with no size refusal in the preserve step."
+}
+```
