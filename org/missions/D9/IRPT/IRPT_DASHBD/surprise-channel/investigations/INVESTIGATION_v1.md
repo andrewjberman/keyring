@@ -16246,3 +16246,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Owner for the BLOCKING rows W410-S2, W410-S3, W411-S1, W411-S4 and W411-S5: this seat (issuer), done as above; the CVO adjudicates BLOCKING rows at L9 if it grades them. DBC123-1-AC1 re-run on the landed main tree reads FAIL by design of its base after the drain (other seats' entries changed interleaved with the merge); it was graded on the worker tree before the drain."
 }
 ```
+
+## IRPT_DASHBD-D2-W199-S1 -- the first non-empty fact_allocations date is not in the round-120 record (DB-b-245, FIRST_DATA_DATE)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W199-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~199",
+  "surfaced_at": "2026-10-15T09:01:35Z",
+  "one_line": "The round-120 record does not carry the first non-empty fact_allocations date that FIRST_DATA_DATE and the facts record need",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-245 step 2 defines FIRST_DATA_DATE as the earliest non-empty fact_allocations partition, from the round-120 record; step 5 requires the facts record's manifest.first_data_date in ISO form.",
+  "world_is": "RD_BD_BRONZE_AND_MAP_R120.json (silver block) carries 144 partitions, 33 empty days (2026-04-25 to 2026-07-09), 111 non-empty days, and no first non-empty date. The round-120 drain packet, the round-120 checker p120_bronze.py and the round-121 CTO analysis carry no such date either; a search of the tree found none. FIRST_DATA_DATE is None in the adapter, the facts record carries null, and check DB121-4-AC3 cannot pass its first_data_date form until the date is read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~193/RD_BD_BRONZE_AND_MAP_R120.json @58ab67f3ac (silver block: partitions, empty_days, nonempty_days)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUND120_B49F_DRAIN_END_20261015.md @58ab67f3ac (DB-b-239 bullet: 144 partitions, 33 empty, 111 non-empty)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py @a28b05edd6 (FIRST_DATA_DATE comment)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the landing cell needs the first non-empty fact_allocations date from a read of the Black Diamond silver listing (a LIST under the granted silver root, by the owner of that read). The value goes into FIRST_DATA_DATE and the facts record's manifest.first_data_date. Counts and words only; no client figure is quoted."
+}
+```
