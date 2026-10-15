@@ -36522,3 +36522,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "S187 is superseded by this row and needs no after-read. Disarm: ~P2 rebuilds with the three ENDPOINT members pinned at the IB-pr-455 commit (or HEAD) and every R29c member at its R29c pin, shows the member diff against live is exactly the IB-pr-456 set plus composition_admission.py, and each ENDPOINT member contains commentary_requested; the packet v2 is cut on that build."
 }
 ```
+
+## IRPT_BCKEND-D2-W408-S1 -- the trunk map's ENDPOINT pins hold no commentary_requested; IB203-2's note that trunk carries the R29c pins is not borne out
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W408-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~408",
+  "surfaced_at": "2026-10-15T07:01:38Z",
+  "one_line": "IB203-2 states that trunk now carries the R29c pins for the three irpt-ycharts-generate ENDPOINT members, so no override is needed. Measured at trunk 7b3c105542 the pins hold 0 commentary_requested each; the override-map candidate is the one that carries the signed bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "deliverables/0.9.0_WK_IRPT_BCKEND~405/IB203-2_ycharts_generate_rebuild.json (notes): the candidate was built from the trunk map with no BAU_SOURCE_MAP_OVERRIDE, because trunk now carries the R29c pins.",
+  "world_is": "git show at the trunk pins 1eed34a8c0 (submission.py), 2f7cc7be42 (acceptance.py) and 5be2acd7cc (AnalysisSubmissionRequest.schema.json) gives 0 occurrences of commentary_requested each (10348, 9852 and 4383 bytes). The signed bytes at e7bb7e923a (submission.py 18aba4f0, acceptance.py abbdab49, schema 1052343f) hold 3, 3 and 1 occurrences. The candidate built with the override map (CodeSha256 3+fMEJhQ8enneLH30XiiV5VYEC4kk0+hZl0SFFsyM4k=) carries the signed bytes. The trunk-map build recorded in IB203-2 (CodeSha256 MfxpvRhV) equals the live zip except composition_admission.py. Consistent with CTO row IRPT_BCKEND-D2-S188.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1eed34a8c0, 2f7cc7be42 and 5be2acd7cc (trunk 7b3c105542): commentary_requested 0 occurrences in each member",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~408/IB205-1_ycharts_generate_rebuild_v2.json (endpoint_members; candidate 3+fMEJhQ8enneLH30XiiV5VYEC4kk0+hZl0SFFsyM4k=)",
+      "IRPT_BCKEND-D2-S188 (CTO row: the rebuild staged old pins)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: 2.0.0_SA_COO~P2 cuts packet v2 on the candidate recorded in IB205-1 (CodeSha256 3+fMEJhQ8...), not on MfxpvRhV..., and treats the IB203-2 trunk-map note as superseded. No live write was made; this row records a premise the world does not hold."
+}
+```
