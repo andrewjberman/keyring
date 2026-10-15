@@ -728,6 +728,20 @@ foreach ($t in $targets) {
     if ($declaredSet.Contains([int]$d)) { $sessionBelow = $true }
   }
   if ($sessionBelow -or $protectedTree.Contains([int]$t.Id)) {
+    # SEAT BOUNDARY FIRST (S9118): a held tree that holds a FOREIGN claude.exe/codex.exe seat is REFUSED with the serial
+    # and the KILL-MAINT-REFUSED audit line, not a generic SKIP (the claude name shadowed the seat-boundary check below).
+    # Only a tree already held back is judged here; nothing is stopped by this branch.
+    $heldSerial  = Get-LaunchSerial -CommandLine $byId[[int]$t.Id].CommandLine
+    $heldForeign = @()
+    try { $heldForeign = @(Test-SeatBoundary -RootPid ([int]$t.Id) -TargetSerial $heldSerial) } catch { $heldForeign = @() }
+    if ($heldForeign.Count -gt 0) {
+      foreach ($f in $heldForeign) {
+        Write-Output ("  REFUSED: seat boundary -- PID {0,-6} {1,-22} holds foreign seat {2} at pid {3}; tree not stopped" -f $t.Id, $t.Name, $f.Serial, $f.ProcessId)
+      }
+      $heldList = (@($heldForeign) | ForEach-Object { "$($_.Serial)@$($_.ProcessId)" }) -join ','
+      Write-Audit ("{0}  KILL-MAINT-REFUSED  by {1}  pid={2}  name={3}  foreign={4}  reason=seat-boundary" -f (UtcNow), $runBy, $t.Id, $t.Name, $heldList)
+      continue
+    }
     Write-Output ("  SKIP: PID {0,-6} {1,-22} its tree holds a session PID or a declared job" -f $t.Id, $t.Name)
     continue
   }

@@ -16870,3 +16870,36 @@
   "notes": "The carrier question for the CVO: which file a dell2 worker appends to when the order names the unsuffixed path."
 }
 ```
+
+## IRPT_ANLREQ-D2-S115 -- release 31 leg L: the commentary-pdf route has no gateway route; T5 and T6 cannot read as written
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-S115",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-15T05:09:08Z",
+  "one_line": "Release 31 leg L cannot show its route: the commentary-pdf route has NO API gateway route, the api root that would create it is not in the pair, so after-reads T5 and T6 cannot read as written (and T5 cannot discriminate at all).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (amend the order and pair, or add the api-root route creation as its own signed leg, or restate T5 and T6; the CTO half W3 and condition 1 are the CTO's)",
+  "spec_asserts": "Pair 31 section 4 W3: 'a new served route GET /api/scoped/investor-reporting/analysis/requests/{requestId}/commentary-pdf'; section 5 V-L T5 'the new route with no credential answers the same refusal envelope class as analysis-request-pdf' and T6 'the new route ... as its owner: COMMENTARY_PDF_NOT_RETAINED'; the order's bounds: no route table change outside the package; CTO condition 1: a V-L failure rolls leg L back.",
+  "world_is": "Measured 2026-10-15 ~05:10Z by reads only, before any change: apigatewayv2 get-routes on the shared HTTP API (121 routes, 5 pages, the whole list) holds GET .../analysis/requests/{requestId}/pdf and .../original and .../analysis/{jobId}/sections (each integrated to irpt-status) but NO route ending /commentary-pdf. The `api` Terraform root derives its routes from docs/contracts/investor-reporting/v1/routes.json (infra/aws/terraform/investor-reporting/api/routes.tf line 28), and routes.json already declares the commentary-pdf row (note: 'the api root creates the route with the irpt-status release'); that root is not a leg of the pair. A path that matches no route goes to the $default route, which integrates to the opal-portal-data-proxy Lambda, not to irpt-status. So after leg L the new package would hold the route code with no way to reach it. T5 cannot discriminate: a credential-less GET of the new path, of the existing pdf path, of the sections path and of a made-up sibling path all answer the identical edge 401 (51 bytes, same sha256 6b4f44c2...), so 'equal class' is true whether or not the route exists. T6 (a credentialed call) would reach the data proxy, not irpt-status, so it cannot answer COMMENTARY_PDF_NOT_RETAINED. What a credentialed call to $default answers was NOT read. Nothing in AWS has been changed: leg L is on hold (HELD-PRE-APPLY), R0b read equal to section 2, the pre-window zip is saved, step 4 found no ticketed READY request (irpt-jobs 55 items scanned, 21 READY of the three firms, 21 accepted records read, 0 with a ticket_id, so L4a and L4b would be ABSENT).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws apigatewayv2 get-routes ApiId 7k3ed8px20, 5 pages, 121 routes, 2026-10-15 ~05:10Z (no /commentary-pdf; $default -> opal-portal-data-proxy)",
+      "docs/contracts/investor-reporting/v1/routes.json lines 236-246 (commentary-pdf DECLARED); infra/aws/terraform/investor-reporting/api/routes.tf line 28 (routes derived from it)",
+      "credential-less GETs through the front end: four paths, one identical 401 body hash",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release31/NEVER_WIDEN_PAIR_ANLREQ_RELEASE31_COMMENTARY_CHAIN.md sections 1, 4 (W3) and 5 (V-L)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "owner: 2.0.0_SA_COO~Y2 to re-issue; 1.0.0_SA_CTO~DELL2 for whether the gateway route (a new reachable path, a widening W3 names but the pair does not apply) joins the pair. The api root was not planned by this seat. The code change of leg L is additive and safe on its own; this seat did not apply it because the after-reads that gate leg R cannot pass."
+}
+]
+```
+
+---
