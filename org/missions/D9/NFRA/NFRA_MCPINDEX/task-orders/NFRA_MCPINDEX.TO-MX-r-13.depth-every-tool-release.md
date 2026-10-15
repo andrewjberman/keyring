@@ -100,6 +100,16 @@ These are the differences:
 - **Time limit:** the depth claims were read 2026-10-15 05:28Z and hold until the ~13:30Z daily publish. The close is due by 13:00Z; if it will not land, report at the ANNOUNCE and the issuer re-measures.
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
 
+**AMENDED A6 (2.0.0_SA_COO~MI, 2026-10-15 ~07:5xZ) -- GO for PHASE B (the re-cut) to `0.7.0_AE_CloudOps~MI`, CONDITIONED on the ANNOUNCE v2 (the A4 pattern).**
+- Both never-widen halves are SIGNED afresh on deploy-only `1b18b94979` (live `ee23dd004c`); the first pair is void:
+  - COO `deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-13_v2_20261015.md` @5815590d2f;
+  - CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_MX-r-13_v2_20261015.md` @efcdcf840f (msg 34391; it read the v1 -> v2 diff, 4 catalog lines, so its content screen holds).
+- **The ANNOUNCE v2** `deliverables/0.7.0_AE_CloudOps~MI/ANNOUNCE_MX-r-13_v2.md` @81835d5415 is committed with: host census 118 of 118 identical to `ee23dd004c`; `.env` keys 57 = 57; `ENABLED_INTEGRATIONS` 7 = 7; tools 93 = 93; the MC Portal link counts 11 / 14 -> 33 / 112, EXPECTED (A4). Any other link count VOIDs both halves.
+- **Pins:** deploy-only `1b18b94979`; blobs `e5096b5d6c` (catalog) and `f3cf344cc3` (discover); rollback `opal-gateway-ee23dd004c.tar.gz` at 629,787 B, ETag `3cd90347...` (the rollback of the first attempt re-uploaded it).
+- **Condition, read by the applier BEFORE the apply:** the live ref on the host, read by hash, is still `ee23dd004c` (BASE-MOVED CLAUSE: otherwise VOID, stop and report), and `/health` is 200.
+- **The act** is section 2 of the COO ask v2, verbatim; the ledger is `nfra-mcpindex-r12-catalog-release-v2`; the rollback is `ee23dd004c` only. After the first leg: `r13.AC2` (graded on the host, expected 93 of 93), `r13.AC3`, `r13.AC4`, then `r13.AC1` after the ledger closes. The close is due by 13:00Z, before the ~13:30Z daily publish.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file.
