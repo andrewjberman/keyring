@@ -8435,6 +8435,46 @@ carries none.
       ]
     },
     "notes": "Owner of the ranking question is 2.0.0_SA_COO~O (R16.4): a rule that orders a curated need against a servable table needs a decision on which pin wins (E-16's or E-8's). Not a gate field; no access changes."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W53-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~53",
+    "surfaced_at": "2026-10-15T22:34:00Z",
+    "one_line": "The face states the planted-arm control as 8 of 8 (preflight comp-adversary and ISSUER NOTES); the plant_ct.py on the worktree runs 12 arms and all 12 behave (PLANTED 12 of 12, rc=0). The graded criterion MX-c-35 AC1 is unaffected.",
+    "spec_asserts": "Face preflight: 'comp-adversary: ... eight planted arms (`plant_ct.py`, 8 of 8) are the control'; ISSUER NOTES: 'Planted arms: plant_ct.py 8 of 8.'",
+    "world_is": "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py at worktree HEAD b39af50e9d defines 12 arms (good file passes, plus 11 planted defects); run from the worktree root it prints PLANTED 12 of 12 and exit 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py@b39af50e9d (arms list, 12 entries)",
+        "the run in the worker worktree C:/tmp/mi2-wk53: 'PLANTED 12 of 12' and exit=0 (2026-10-15T22:3xZ)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W53-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~53",
+    "surfaced_at": "2026-10-15T22:34:00Z",
+    "one_line": "Step 5.2 and the completion rule append <status>complete</status> to the task order file, but that file is not among the order's <paths>, so the lane grant does not admit the flip; the worker leaves the order at issued and the issuer lands the flip.",
+    "spec_asserts": "Order section 3 <paths> is the write grant (the research_group_map_h2.json file, deliverables/**, and the INVESTIGATION_v1.md); section 5 step 2 says APPEND <status>complete</status> to the task order when the criterion PASSES.",
+    "world_is": "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-35.curated-tags-h2.md carries <status>issued</status> at line 94 and is not in the <paths> block (lines 63-67). Criterion AC1 PASSES (exit=0), so the flip is the one step the grant blocks.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-35.curated-tags-h2.md@b39af50e9d (lines 63-67 <paths>, line 86 step 5.2, line 94 <status>issued</status>)",
+        "the same pattern recorded for MX-c-18 as NFRA_MCPINDEX-Z-W42-S1 in deliverables/0.9.0_WK_NFRA_MCPINDEX~42/NFRA_MCPINDEX.TO-MX-c-18.nl-tags-on-every-catalog-row.proof_of_spec.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
