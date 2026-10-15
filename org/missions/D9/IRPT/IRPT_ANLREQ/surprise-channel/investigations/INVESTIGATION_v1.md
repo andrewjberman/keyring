@@ -17715,3 +17715,82 @@
   "notes": "The source map records no owner for ycharts/research; the owner was not read."
 }
 ```
+
+## IRPT_ANLREQ-D2-W190-S1 -- the outlook package drafter.py imports is tracked at HEAD but outside this worktree's sparse cone
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W190-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~190",
+  "surfaced_at": "2026-10-15T16:37:18Z",
+  "one_line": "The worktree's sparse cone omits data/transcripts/scripts/outlook, which is tracked at HEAD and which drafter.py imports; the drafter tests cannot import in this worktree, so AR31-t-AC1 cannot run here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-t-31 Build 1 and AR31-t-AC1: drafter.py is imported and its three drafter tests pass in this worktree. The order names drafter.py and the figure test file, not the outlook package that drafter.py imports at module load.",
+  "world_is": "git sparse-checkout list in C:/dev/wk-irpt-anlreq-190 names .tools, data/transcripts/scripts/commentary, data/transcripts/scripts/tests, infra/logic/registry, lib and the org paths, and not data/transcripts/scripts/outlook. git ls-tree HEAD data/transcripts/scripts/outlook/ at ccf1e9611d lists 13 entries (slicer.py blob 07d67ca82b). The directory is absent on disk. drafter.py lines 15-22 import data.transcripts.scripts.outlook.slicer and gold; both fail with ModuleNotFoundError. pytest on test_commentary_drafter.py and test_commentary_figures.py fails collection at drafter.py:18 and :22. The sparse cone was NOT widened: that is outside the write grant and would reconstruct the checkout.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in worktree C:/dev/wk-irpt-anlreq-190 (base ccf1e9611df44bd7f622d3e1908641a184ba7255) lists no data/transcripts/scripts/outlook entry",
+      "git ls-tree ccf1e9611df44bd7f622d3e1908641a184ba7255 data/transcripts/scripts/outlook/slicer.py returns blob 07d67ca82b0a7a2d976b90dde04e2e77ed872c1a",
+      "python -m pytest data/transcripts/scripts/tests/test_commentary_figures.py: 3 failed (ModuleNotFoundError: No module named 'data.transcripts.scripts.outlook') and 1 passed; r41_checks.py fg1 printed R41-FG1-FAIL, fg2 printed R41-FG2-OK"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The worker did not widen the cone. A COO or integrator decision on the sparse cone is needed before AC1 can run in this worktree. Drafter logic was exercised only under a labeled stub harness (.scratch/stub_outlook_run.py), which is sanity evidence and not criterion evidence."
+}
+```
+
+## IRPT_ANLREQ-D2-W190-S2 -- ABSTRACT_KEYS gaining figures would break an exact-tuple assertion in a test outside the grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W190-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~190",
+  "surfaced_at": "2026-10-15T16:37:18Z",
+  "one_line": "Adding figures to ABSTRACT_KEYS would fail an exact-tuple assertion in test_commentary_classification.py, which is outside the grant; figures is held in OPTIONAL_ABSTRACT_KEYS instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-t-31 Build 2: ABSTRACT_KEYS gains figures, and an absent figures leaves the request as it is today. Bounds: keep every existing test_commentary_*.py green.",
+  "world_is": "entry.py asserted tuple(out) == ABSTRACT_KEYS (base line 192). test_commentary_classification.py line 56 and test_commentary_entry.py lines 47 and 123 assert the same tuple on requests with no figures. Adding figures to ABSTRACT_KEYS fails those assertions on the absent key, which the same order requires. test_commentary_classification.py is not in the grant. Worktree resolution: OPTIONAL_ABSTRACT_KEYS = ('figures',) sits outside ABSTRACT_KEYS, and the assert accepts ABSTRACT_KEYS or ABSTRACT_KEYS + OPTIONAL_ABSTRACT_KEYS. No existing assertion was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/tests/test_commentary_classification.py:56 read in worktree C:/dev/wk-irpt-anlreq-190 asserts tuple(req) == entry.ABSTRACT_KEYS",
+      "base entry.py line 192 (ccf1e9611d) asserted tuple(out) == ABSTRACT_KEYS before the edit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Decision for the COO: keep the optional-key form, or widen the grant to test_commentary_classification.py and fold figures into ABSTRACT_KEYS."
+}
+```
+
+## IRPT_ANLREQ-D2-W190-S3 -- the figure-block key charset admits a name-shaped label as a key
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W190-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~190",
+  "surfaced_at": "2026-10-15T16:37:18Z",
+  "one_line": "The figure-block label charset admits name-shaped labels, so a client-like key with a valid 0-100 number passes the whitelist and reaches the prompt; the closed charset alone does not keep a planted name out.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-t-31 cell and C-KIMI: a planted client name never reaches the prompt; period labels and class and sector keys are strings of at most 40 characters from [A-Za-z0-9 &/_.-].",
+  "world_is": "drafter._LABEL_RX, which implements that charset, fullmatches any 1-40 character string of letters, digits, space and the characters &/_.-. A label such as 'Planted Clientname' with the number 12 under allocation_pct is kept and sent. The worker's planted test uses an out-of-range value on the name-shaped key, so it is dropped by the value rule, not by the charset. Nothing in the drafter checks these labels against an allowed set, because the table specifies none.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/commentary/drafter.py _LABEL_RX = [A-Za-z0-9 &/_.\\-]{1,40} in worktree C:/dev/wk-irpt-anlreq-190",
+      "data/transcripts/scripts/tests/test_commentary_figures.py test_prompt_carries_figures_block_and_no_planted_name_or_dollar uses value 1250000 on the name-shaped key, so the value rule drops it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. Whether a closed label set is wanted is a CTO decision on the C-COMM-FIG table."
+}
+```
