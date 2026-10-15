@@ -17286,3 +17286,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "For the issuer to settle in a re-issue; the worker did not adjudicate it. The hookup script reads and writes the five files as text; app/tools.py at HEAD bcff0f9889 has no carriage returns, so the text-mode round trip is byte-neutral for that file."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T10:56:48Z",
+  "one_line": "The commit-time author check printed WARN that serial 0.9.0_WK_NFRA_OPLGTW~102 names no known seat, because org/ref/SEAT_ROLES.json is outside this worktree's sparse cone; the commit landed WARN-only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "COMMIT: .tools/safe-commit.sh output for 6202abcec8 (C:/tmp/wk-oplgtw-102/.scratch/commit_out.txt line 1): 'WARN: author 0.9.0_WK_NFRA_OPLGTW~102 names no known seat (not in org/ref/SEAT_ROLES.json serial patterns, not a permitted_agents base in .owned-paths.yaml; org/ref/SEAT_ROLES.json unreadable (FileNotFoundError)). WARN-only until the announced refusal (1.0.0_SA_CTO msg 107910).'",
+      "SPARSE: git sparse-checkout list in C:/tmp/wk-oplgtw-102 prints .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_OPLGTW, org/modules/graph, org/standards; org/ref is not in the cone.",
+      "ABSENT: ls org/ref/SEAT_ROLES.json in C:/tmp/wk-oplgtw-102 prints 'No such file or directory'; git ls-tree HEAD org/ref/SEAT_ROLES.json prints blob 9366a0111b5ccec9aef585a1de133af3f5debaa9, so the register is tracked and outside the cone."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's step 4 says the commit-time naming gate and the non-ASCII WARN are expected to print and that neither may be overridden. It names no author-seat check and no register read for the commit author.",
+  "world_is": "The author check reads org/ref/SEAT_ROLES.json, which this worktree does not carry, so it prints WARN for a serial it cannot classify and the commit proceeds WARN-only. The gate names an announced refusal for unknown seats; a commit from a worktree without the register would then be judged against an unreadable file.",
+  "notes": "ARMED: the armed condition is the announced refusal reaching this gate while the worktree cone omits org/ref. The disarm is the issuer's to take: widen the cone to org/ref, or accept the WARN as standing. This worker did not widen the cone, edit the gate or touch the register."
+}
+```
