@@ -17286,3 +17286,31 @@
   "notes": "The addendum's source rule (catalogue only, no vendor call) and the existing mechanism (provider-verified, at upload) differ. Porting the existing suggestion is PORTAL_ONLY for the display and the accept; a catalogue-only suggestion is a new portal function with weak coverage. The CTO rules which source the Did you mean uses."
 }
 ```
+
+## IRPT_ANLREQ-D2-W173-S1 -- the worktree's sparse-checkout omits data/, org/tier1_exec/ and org/surprise_channel/: the cell's Q2 store read and its basis record are tracked at base but skip-worktree on disk
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W173-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~173",
+  "surfaced_at": "2026-10-15T15:50:44Z",
+  "one_line": "The worktree's sparse-checkout omits data/, org/tier1_exec/ and org/surprise_channel/, so the TO-AR-g-54 Q2 read of data/mdpf/scripts/demque/price_store.py and the PRICES_ARE_TOTAL_RETURN record cannot be read from this tree; the order stops at BLOCKING.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-54 worker face: if the worktree does not carry the paths the task order names, that is a BLOCKING row and the final report, and the worker STOPS without rebuilding or extracting the tree. Cell Q2 names data/mdpf/scripts/demque/price_store.py and org/tier1_exec/2.0.0_SA_COO~Q1/deliverables/ANDREW_DIRECT_20261009_054xZ_PRICES_ARE_TOTAL_RETURN_STORE_PRICE_DIVIDEND_TR_PER_DAY.md as read paths.",
+  "world_is": "git sparse-checkout list in worktree C:/dev/wk-irpt-anlreq-173 (gitdir C:/dev/ajb_workspace/.git/worktrees/wk-irpt-anlreq-173) names only .tools, infra/aws/lambda/investor-reporting, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps, org/modules/graph, org/ref and org/standards. ls data returns no such file. git ls-files -t marks data/mdpf/scripts/demque/price_store.py, the ANDREW_DIRECT_20261009_054xZ record and org/surprise_channel/schemas/investigation_item.schema.json as S (skip-worktree). The blobs exist at base 5aefc342bf (price_store.py is 17075 bytes by git cat-file -s). The product files named by Q1, Q3 and Q4 are on disk (layout_overview.py is H and present). No sparse change, checkout or git show extraction was made, and no record was built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list (worktree wk-irpt-anlreq-173, HEAD 5aefc342bf): no data/, org/tier1_exec/ or org/surprise_channel/ pattern",
+      "data/mdpf/scripts/demque/price_store.py @5aefc342bf (git ls-files -t: S; on disk: no)",
+      "org/tier1_exec/2.0.0_SA_COO~Q1/deliverables/ANDREW_DIRECT_20261009_054xZ_PRICES_ARE_TOTAL_RETURN_STORE_PRICE_DIVIDEND_TR_PER_DAY.md @5aefc342bf (git ls-files -t: S)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py @5aefc342bf (git ls-files -t: H; on disk: yes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocking premise, not a path-elsewhere: the paths are tracked at base and excluded only by this worktree's sparse set. The worker did not widen the sparse set or read the blobs with git show, because that would extract the tree to make the order executable. The issuer or the CTO rules whether the worktree is re-provisioned with those paths in scope and the order re-cut. Q1, Q3 and Q4 were not read."
+}
+```
