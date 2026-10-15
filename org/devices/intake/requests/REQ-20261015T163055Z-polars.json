@@ -1,0 +1,11 @@
+{
+  "schema": "intake-request/1",
+  "id": "REQ-20261015T163055Z-polars",
+  "name": "polars",
+  "version": "1.12.0",
+  "needed_by": "(no lane named)",
+  "why_no_approved": "(none given: no lane, no use named)",
+  "requested_by": "2.0.0_SA_COO~C",
+  "requested_at": "2026-10-15T16:30:55Z",
+  "decisions": []
+}
