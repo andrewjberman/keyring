@@ -36954,6 +36954,111 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+## IRPT_BCKEND-D2-W411-S1 -- the composed filled reader reads the platinum-tier filled object directly; the export function is designed to be fenced from that bucket
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "filled_reader_installed.py reads the filled report object with the export function's own S3 client, by VersionId. The export function is designed to be fenced out of the platinum bucket, and the filled report object is platinum tier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "export/entry.py _with_platinum_reader docstring (line 403) @f0069dd8ca: the export function's role is fenced out of the platinum bucket, and the PATH B read goes through the reporting route",
+      "export/retained_export.py lines 30-31 @f0069dd8ca: the submit and the render read-back never read S3 for the series; they call the reporting route",
+      "infra/logic/registry/reporting_policies.json FILLED_REPORT tier platinum @f0069dd8ca; reporting/entry.py _filled_uri reads that tier"
+    ]
+  },
+  "spec_asserts": "IB-pr-567 (CTO round-5 ruling, ~PS item 2): the installed reader reads the pinned filled report object through the shared named-account reader, by VersionId.",
+  "world_is": "Whether the export function's role holds s3:GetObject on the filled report object was not read (Terraform is not in this grant). If it does not, a deployed export with a filled pin answers FilledReportUnavailable (fail closed). If the role is widened to meet the read, the platinum fence the reporting route was built to keep is breached. Nothing is deployed; the first deploy of this reader decides which."
+}
+```
+
+## IRPT_BCKEND-D2-W411-S2 -- no live caller of the render-side read of a frozen filled report exists inside the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:05:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "retained_export.filled_render_read (the render's one read of a frozen filled item) and render.filled_render_package have no caller outside the tests, and nothing in export/ reads ports['filled_reader'] yet. No live path reads the pinned bytes at render. The submit-path call site is in submit_async.py or submit_service.py (IB-pr-566's files), outside this grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep of export/*.py at 95d187e535 for filled_reader, filled_render_read, read_pinned_filled and filled_report_source: the only caller of filled_render_read outside retained_export.py is render.filled_render_package (added here); nothing outside export/tests/ calls filled_render_package, and no module reads ports['filled_reader']",
+      "export/render.py filled_render_package and export/retained_export.py filled_render_read (lines 479-489) @95d187e535",
+      "export/submit_async.py line 127 @95d187e535 calls freeze_platinum on ports['platinum_series']; no filled counterpart is called there"
+    ]
+  },
+  "spec_asserts": "IB-pr-567 (3): where a bundle revision carries filled_report_source, the render reads the pinned bytes with read_pinned_filled(reader, pin); the render seam is in render.py, dispatch.py, download.py, package.py or handler.py, else file a row naming the file.",
+  "world_is": "The seam is not in those five files. render.py now carries filled_render_package, which is the render's read and checks, but nothing calls it there. The live call site belongs to the submit path (IB-pr-566's grant). Left alone, a filled export is frozen with its pin and no controller read of the pinned bytes happens at render. The issuer amends the grant or wires the call site under IB-pr-566."
+}
+```
+
+## IRPT_BCKEND-D2-W411-S3 -- the reader finds the naming builder by walking up from its own file; the deployed package layout is not read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "filled_reader_installed.py locates lib/opal_naming.py by walking up from its own file (the repository layout). Whether the deployed export package carries lib/ was not read. Where it does not, the reader answers FilledReportUnavailable, a fail-closed refusal, and never a guessed address.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "export/entry.py lines 36-51 @f0069dd8ca: the deployed layout is flat, with members beside entry.py in the function root, and the repository-only roots are added only if they exist",
+      "reporting/entry.py _root() @f0069dd8ca: the sibling reporting function probes for lib/opal_naming.py by walking up from its file"
+    ]
+  },
+  "spec_asserts": "IB-pr-567: the object address comes from lib/opal_naming.address(), never typed.",
+  "world_is": "The packaged zip layout for the export function was not read. The reader's probe mirrors the sibling reporting function; whether the export zip carries lib/ is unverified."
+}
+```
+
+## IRPT_BCKEND-D2-W411-S4 -- IB-pr-566 supplies the submit-path caller of the render read on box/dell2; my render-side function is a parallel copy with no caller
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-566's submit legs call filled_reader_or_refuse, filled_accept_read and filled_leg_read, which read the pinned bytes through retained_export.filled_render_read. That supersedes the premise of row IRPT_BCKEND-D2-W411-S2 on box/dell2. render.filled_render_package, this order's render-side function, has no caller on that path, and the named-account logic now exists twice (filled_covered_accounts in retained_export.py and filled_render_package in render.py).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "main tree export/submit_async.py:185-186 and export/submit_service.py:207-208 (read-only, box/dell2, coordinator note of IB-pr-566's merge at 2cb9105a27): filled_reader_or_refuse, filled_accept_read and filled_leg_read",
+      "main tree export/retained_export.py:543-566 (read-only): filled_accept_read and filled_leg_read read through filled_render_read, and filled_covered_accounts judges coverage on the bytes read",
+      "export/render.py filled_render_package @59729482a1 (this order): no caller outside export/tests/"
+    ]
+  },
+  "spec_asserts": "IB-pr-567 (3): the render reads the pinned bytes with read_pinned_filled, and the named accounts come from the shared reader filled_named_accounts.",
+  "world_is": "The submit-path seam now exists, and it reads through the same one read and the same shared reader, with the reader signature reader(client_id, version_id=None) returning key, version_id and body, which this order's reader matches. This order's render function is a parallel copy with no caller. Whether it is kept or the render routes through IB-pr-566's functions is for the issuer. Read-only check of the main tree; no merge and no edit of IB-pr-566's files."
+}
+```
+
 ## IRPT_BCKEND-D2-W410-S1 -- The order's named mirror for driving entry.submit_export does not call entry.submit_export
 
 ```json
