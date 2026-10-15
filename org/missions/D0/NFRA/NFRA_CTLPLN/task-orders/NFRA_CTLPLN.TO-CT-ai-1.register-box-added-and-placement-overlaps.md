@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~106</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in wk-NFRA_CTLPLN-106 @8612fc2b48 (merged 192e5b2e31): FWD2-BOX-ADDED tools=6/8 not_reached=2 named=6 ok=True; FWD7-OVERLAPS total=56 shared=53 split=1 not_same_file=2 unclassified=0 ok=True; BOX-LISTS-FROM-REGISTER ok=True; proof VALID. Issuer amendment during the cell: class NOT-SAME-FILE (rule R5, a strict directory-prefix parent versus a file inside it) ruled for W106-S3 and S4; no gate limb graded it (the criterion text is unchanged).</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
