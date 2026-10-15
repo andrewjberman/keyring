@@ -19707,3 +19707,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W210-S1 -- the task order's line range for the commentary-draft checks (1540 to 1570) is the claim route; the draft route is at 1840 to 1897
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W210-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~210",
+  "surfaced_at": "2026-10-15T23:38:00Z",
+  "one_line": "AR-tx-41 places the commentary-draft route checks near lambda_function.py lines 1540 to 1570. Those lines are the body of claim_ticket; the commentary-draft handler is commentary_draft_ticket at lines 1840 to 1897.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The AR-tx-41 worker face says the route checks the commentary-draft route makes are at infra/aws/lambda/ticket_center/lambda_function.py near the lines 1540 to 1570, per the deploy packets.",
+  "world_is": "At worktree HEAD b9ac4111f9 (branch wk-IRPT_ANLREQ-210), lambda_function.py lines 1537 to 1600 are claim_ticket (its scope test is at line 1546). commentary_draft_ticket is defined at line 1840 and its requester-firm fence (not in COMMENTARY_ALLOWED_FIRMS) is at line 1874. The route is dispatched at line 2169 of lambda_handler. The record cites the decisive lines 1840 to 1897 and does not use the 1540 to 1570 range.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py read at HEAD b9ac4111f9: lines 1537 to 1600 are the body of claim_ticket, def at line 1537",
+      "infra/aws/lambda/ticket_center/lambda_function.py read at HEAD b9ac4111f9: def commentary_draft_ticket at line 1840, COMMENTARY_ALLOWED_FIRMS fence at line 1874, router dispatch at line 2169"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
