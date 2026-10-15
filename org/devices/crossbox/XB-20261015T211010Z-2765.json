@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN FWD-14: what this box recorded of the laptop's RDP attempts, 10-10 to 10-13",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD14_LAPTOP_ATTEMPT_READ.md",
  "opened_at": "2026-10-15T21:10:10Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-15T21:13:37Z",
   "bus_message_id": "4fa734d2-fb65-4b53-91b7-3d12ca2c103f"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-15T21:22:14Z",
+  "by": "0.0.0_AB_MSTR~DELL1",
+  "bus_message_id": "72ed9a48-9505-4bcd-bea1-1a5e33ef9ce9"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

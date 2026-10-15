@@ -1,0 +1,2271 @@
+{
+ "meta": {
+  "company": "T-Mobile US, Inc.",
+  "exchange": "Nasdaq",
+  "ticker": "TMUS",
+  "industry": "Wireless Telecommunications",
+  "hq": "Bellevue, Washington, USA",
+  "author": "Adam Muller",
+  "date": "October 13, 2026",
+  "short_name": "T-Mobile US",
+  "file_date": "2026_10_13"
+ },
+ "blocks": [
+  {
+   "type": "section",
+   "text": "COMPANY FINANCIAL INFO"
+  },
+  {
+   "type": "table",
+   "widths": [
+    1782,
+    1782,
+    1782,
+    1782,
+    1782,
+    1782,
+    1782,
+    1782
+   ],
+   "header_rows": 1,
+   "size": null,
+   "header_style": "light",
+   "align": [
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Company",
+      "Ticker / listing",
+      "Share price (10/12/26)",
+      "Shares outstanding",
+      "Market cap",
+      "Net debt / (cash)",
+      "Enterprise value",
+      "YTD / 1-yr"
+     ]
+    },
+    {
+     "cells": [
+      "T-Mobile US, Inc.",
+      "TMUS US (Nasdaq; no ADR needed)",
+      "$151.87 (52-wk $147.90–$230.65)",
+      "~1.073bn",
+      "$162.9bn",
+      "$84.1bn (30-Jun-26)",
+      "$247.0bn",
+      "~−24% / −33%"
+     ],
+     "kind": "key"
+    }
+   ]
+  },
+  {
+   "type": "table",
+   "widths": [
+    2950,
+    706,
+    706,
+    706,
+    706,
+    706,
+    706,
+    706,
+    706,
+    706,
+    706,
+    706,
+    706,
+    706,
+    706,
+    706,
+    706
+   ],
+   "header_rows": 1,
+   "size": 15,
+   "align": [
+    "left",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "center",
+    "center",
+    "center"
+   ],
+   "col_styles": {
+    "14": "bold",
+    "15": "bold",
+    "16": "bold"
+   },
+   "col_fills": {
+    "11": "highlight",
+    "12": "highlight",
+    "13": "highlight"
+   },
+   "rows": [
+    {
+     "cells": [
+      "$bn / $ per share (FY Dec)",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024",
+      "2025",
+      "2026E",
+      "2027E",
+      "2028E",
+      "9y CAGR 2016–25",
+      "5y CAGR 2020–25",
+      "3y CAGR 2025–28E"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Revenue",
+       "s": "bold"
+      },
+      "37.5",
+      "40.6",
+      "43.3",
+      "45.0",
+      "68.4",
+      "80.1",
+      "79.6",
+      "78.6",
+      "81.4",
+      "88.3",
+      "94.4",
+      "98.6",
+      "102.5",
+      "10%",
+      "5%",
+      "5%"
+     ]
+    },
+    {
+     "cells": [
+      "   Revenue growth y/y",
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      "+8%",
+      "+7%",
+      "+4%",
+      "+52%¹",
+      "+17%",
+      "−1%",
+      "−1%",
+      "+4%",
+      "+8%",
+      "+7%",
+      "+4%",
+      "+4%",
+      "",
+      "",
+      ""
+     ],
+     "kind": "sub"
+    },
+    {
+     "cells": [
+      "Service revenue",
+      "27.8",
+      "30.2",
+      "32.0",
+      "34.0",
+      "50.4",
+      "58.4",
+      "61.3",
+      "63.2",
+      "66.2",
+      "71.3",
+      "77.0†",
+      "81.0‡",
+      "—",
+      "11%",
+      "7%",
+      "—"
+     ]
+    },
+    {
+     "cells": [
+      "   Service revenue growth y/y",
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      "+8%",
+      "+6%",
+      "+6%",
+      "+48%",
+      "+16%",
+      "+5%",
+      "+3%",
+      "+5%",
+      "+8%",
+      "+8%",
+      "+5%",
+      "—",
+      "",
+      "",
+      ""
+     ],
+     "kind": "sub"
+    },
+    {
+     "cells": [
+      "Operating income (GAAP EBIT)",
+      "4.0",
+      "4.9",
+      "5.3",
+      "5.7",
+      "6.6",
+      "6.9",
+      "6.5",
+      "14.3",
+      "18.0",
+      "18.3",
+      "20.4",
+      "24.2",
+      "27.6",
+      "18%",
+      "22%",
+      "15%"
+     ]
+    },
+    {
+     "cells": [
+      "   Operating margin",
+      "11%",
+      "12%",
+      "12%",
+      "13%",
+      "10%",
+      "9%",
+      "8%",
+      "18%",
+      "22%",
+      "21%",
+      "22%",
+      "25%",
+      "27%",
+      "",
+      "",
+      ""
+     ],
+     "kind": "sub"
+    },
+    {
+     "cells": [
+      {
+       "t": "Core adjusted EBITDA*",
+       "s": "bold"
+      },
+      "10.6",
+      "11.2",
+      "12.4",
+      "13.4",
+      "20.4",
+      "23.6",
+      "26.4",
+      "29.1",
+      "31.8",
+      "33.9",
+      "37.3",
+      "40.5",
+      "43.0",
+      "14%",
+      "11%",
+      "8%"
+     ]
+    },
+    {
+     "cells": [
+      "   Adj. EBITDA growth y/y",
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      "+5%",
+      "+11%",
+      "+8%",
+      "+52%",
+      "+16%",
+      "+12%",
+      "+10%",
+      "+9%",
+      "+7%",
+      "+10%",
+      "+8%",
+      "+6%",
+      "",
+      "",
+      ""
+     ],
+     "kind": "sub"
+    },
+    {
+     "cells": [
+      "   Adj. EBITDA margin (on total revenue)",
+      "28%",
+      "28%",
+      "29%",
+      "30%",
+      "30%",
+      "29%",
+      "33%",
+      "37%",
+      "39%",
+      "38%",
+      "40%",
+      "41%",
+      "42%",
+      "",
+      "",
+      ""
+     ],
+     "kind": "sub"
+    },
+    {
+     "cells": [
+      {
+       "t": "Diluted EPS ($, GAAP)",
+       "s": "bold"
+      },
+      "1.69",
+      "5.20",
+      "3.36",
+      "4.02",
+      "2.65",
+      "2.41",
+      "2.06",
+      "6.93",
+      "9.66",
+      "9.72",
+      "10.95",
+      "13.93",
+      "17.25",
+      "21%",
+      "30%",
+      "21%"
+     ]
+    },
+    {
+     "cells": [
+      "   EPS growth y/y",
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      "+208%",
+      "−35%",
+      "+20%",
+      "−34%",
+      "−9%",
+      "−15%",
+      "+236%",
+      "+39%",
+      "+1%",
+      "+13%",
+      "+27%",
+      "+24%",
+      "",
+      "",
+      ""
+     ],
+     "kind": "sub"
+    },
+    {
+     "cells": [
+      "Adjusted free cash flow",
+      "1.4²",
+      "2.7²",
+      "3.6",
+      "4.3",
+      "0.7³",
+      "5.6",
+      "7.7",
+      "13.6",
+      "17.0",
+      "18.0",
+      "18.6",
+      "20.0",
+      "21.6",
+      "n.m.",
+      "n.m.",
+      "6%"
+     ]
+    },
+    {
+     "cells": [
+      "Capex (cash, incl. capitalized interest)",
+      "4.7",
+      "5.2",
+      "5.5",
+      "6.4",
+      "11.0",
+      "12.3",
+      "14.0",
+      "9.8",
+      "8.8",
+      "10.0",
+      "10.1",
+      "9.8",
+      "10.1",
+      "9%",
+      "−2%",
+      "0%"
+     ]
+    },
+    {
+     "cells": [
+      "   Capex / revenue",
+      "13%",
+      "13%",
+      "13%",
+      "14%",
+      "16%",
+      "15%",
+      "18%",
+      "12%",
+      "11%",
+      "11%",
+      "11%",
+      "10%",
+      "10%",
+      "",
+      "",
+      ""
+     ],
+     "kind": "sub"
+    },
+    {
+     "cells": [
+      {
+       "t": "Dividend per share ($, paid)",
+       "s": "bold"
+      },
+      "—",
+      "—",
+      "—",
+      "—",
+      "—",
+      "—",
+      "—",
+      "0.65",
+      "2.83",
+      "3.66",
+      "4.23†",
+      "4.65",
+      "5.17",
+      "n.m.",
+      "n.m.",
+      "12%"
+     ]
+    },
+    {
+     "cells": [
+      "   DPS growth y/y",
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      "n.m.",
+      "+29%",
+      "+16%",
+      "+10%",
+      "+11%",
+      "",
+      "",
+      ""
+     ],
+     "kind": "sub"
+    },
+    {
+     "cells": [
+      "   Payout ratio (DPS / EPS)",
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      {
+       "t": "—",
+       "s": "grey"
+      },
+      "9%",
+      "29%",
+      "38%",
+      "39%",
+      "33%",
+      "30%",
+      "",
+      "",
+      ""
+     ],
+     "kind": "sub"
+    },
+    {
+     "cells": [
+      "Diluted shares (m)",
+      "831",
+      "872",
+      "858",
+      "863",
+      "1,155",
+      "1,255",
+      "1,255",
+      "1,200",
+      "1,173",
+      "1,131",
+      {
+       "t": "1,074",
+       "d": true
+      },
+      {
+       "t": "1,033",
+       "d": true
+      },
+      {
+       "t": "982",
+       "d": true
+      },
+      "+3.5%",
+      "−0.4%",
+      "−4.6%"
+     ]
+    },
+    {
+     "cells": [
+      "Net debt (ex tower obligations)",
+      "22.3",
+      "27.1",
+      "26.3",
+      "25.7",
+      "63.2",
+      "70.1",
+      "70.0",
+      "72.4",
+      "75.2",
+      "83.0",
+      "82.6",
+      "86.4",
+      "91.3",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cells": [
+      "   Net debt / adj. EBITDA",
+      "2.1x",
+      "2.4x",
+      "2.1x",
+      "1.9x",
+      "3.1x",
+      "3.0x",
+      "2.7x",
+      "2.5x",
+      "2.4x",
+      "2.4x",
+      "2.2x",
+      "2.1x",
+      "2.1x",
+      "",
+      "",
+      ""
+     ],
+     "kind": "sub"
+    },
+    {
+     "cells": [
+      "P/E (at $151.87)",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "13.9x",
+      "10.9x",
+      "8.8x",
+      "",
+      "",
+      ""
+     ],
+     "kind": "total",
+     "derived": true
+    },
+    {
+     "cells": [
+      "EV / EBITDA",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "6.6x",
+      "6.1x",
+      "5.7x",
+      "",
+      "",
+      ""
+     ],
+     "kind": "total",
+     "derived": true
+    },
+    {
+     "cells": [
+      "FCF yield (on market cap)",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "11.4%",
+      "12.3%",
+      "13.3%",
+      "",
+      "",
+      ""
+     ],
+     "kind": "total",
+     "derived": true
+    },
+    {
+     "cells": [
+      "Dividend yield (gross)",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "2.8%",
+      "3.1%",
+      "3.4%",
+      "",
+      "",
+      ""
+     ],
+     "kind": "total",
+     "derived": true
+    },
+    {
+     "cells": [
+      "Net yield after WHT (0% for US holder)",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "2.8%",
+      "3.1%",
+      "3.4%",
+      "",
+      "",
+      ""
+     ],
+     "kind": "total",
+     "derived": true
+    }
+   ]
+  },
+  {
+   "type": "pagebreak"
+  },
+  {
+   "type": "label",
+   "text": "Sources"
+  },
+  {
+   "type": "notes",
+   "items": [
+    "T-Mobile Q4 earnings releases and investor factbooks (8-K Ex. 99.1/99.2) for FY2017–FY2025; FY2017 and FY2018 10-Ks for FY2016–FY2017",
+    "T-Mobile Q1 and Q2 2026 factbooks and Q2 2026 10-Q (filed Jul-26); Q2 2026 earnings call (23-Jul-26)",
+    "T-Mobile Capital Markets Day update (8-K, 11-Feb-26): 2027 targets and capital plan",
+    "T-Mobile dividend announcements: Q3 2026 ($1.02) and Q4 2026 increase to $1.17 (24-Sep-26)",
+    "MarketScreener consensus (Oct-26): 2026–28E revenue, EBITDA, EBIT, net income, EPS, DPS, FCF, capex and net debt",
+    "StockAnalysis: TMUS close $151.87 (10/12/26), $148.58 (10/9/26) and $171.31 (10/8/26); 52-week range; 1-year change; analyst ratings",
+    "Deutsche Telekom interim report Q2 2026: T-Mobile US ownership and US segment share of group EBITDA"
+   ]
+  },
+  {
+   "type": "label",
+   "text": "Notes"
+  },
+  {
+   "type": "notes",
+   "items": [
+    "Per-share data: no splits since the 2013 MetroPCS combination (which included a 1-for-2 reverse split), so all per-share figures are as reported. EPS tie-out: net income ÷ diluted shares reproduces reported EPS within $0.01 in every year from 2018 (2025: $10,992m / 1,131.1m = $9.72). 2016 EPS is on income to common after preferred dividends; 2016–17 diluted shares are backed out of reported EPS.",
+    "¹ Sprint merger closed 1-Apr-2020, so 2020 includes nine months of Sprint and 2021 is the first full year; the 9y CAGRs are therefore not organic. 2016–17 revenue and operating income are as restated. UScellular wireless operations were consolidated from 1-Aug-2025 (~$4.3bn deal), which adds to 2025–26 growth.",
+    "* EBITDA splices two company definitions: Adjusted EBITDA for 2016–19 (2016–17 restated, including spectrum-sale gains of $0.8bn and $0.2bn) and Core Adjusted EBITDA from 2020, which excludes handset lease revenue ($4.2bn in 2020, $3.3bn in 2021, $1.4bn in 2022, falling to almost nil by 2025). Both exclude stock-based compensation and merger costs. Consensus 2026E EBITDA ($37.3bn) equals the midpoint of company Core Adjusted EBITDA guidance ($37.1–37.5bn).",
+    "² 2016–17 FCF is on the old definition (operating cash flow less capex) and the pre-2018 cash-flow classification of receivables securitization, so it is not comparable with later years. From 2018 Adjusted FCF = operating cash flow − capex + securitization proceeds + tower-sale proceeds − debt prepayment costs. ³ 2020 FCF ($0.7bn) is after a $2.3bn interest-rate swap settlement ($3.0bn before it). 2021–22 FCF is after ~$2.2bn and ~$3.4bn of Sprint merger-cost payments. FCF CAGRs are not meaningful.",
+    "Net debt is T-Mobile's definition: short- and long-term debt including finance leases, less cash; it excludes tower obligations ($3.5bn at 30-Jun-26) and operating lease liabilities (~$29bn). Finance leases were moved out of debt in 2019 and earlier years were not restated.",
+    "Dividends: first dividend paid Dec-2023 ($0.65). Quarterly rate raised to $0.88 (Dec-2024), $1.02 (Dec-2025) and $1.17 (declared 24-Sep-26, payable 10-Dec-26). Figures are DPS paid in each calendar year. † 2026E is company-derived (3 × $1.02 paid + $1.17 declared = $4.23). MarketScreener 2027–28E DPS ($4.65 / $5.17) predate the September raise; the $4.68 run-rate already exceeds 2027E, so consensus DPS looks low.",
+    "Consensus: MarketScreener (page last updated on the 2-Oct-26 close; analyst count not shown). StockAnalysis shows FY26 EPS of $12.39 (24 analysts), which appears to be on an adjusted basis; MarketScreener's $10.95 is consistent with GAAP (H1 2026 actual $5.26 plus Benzinga Q3–Q4 estimates ≈ $10.92) and is used. 2026–28E diluted shares are Opal-derived (consensus net income ÷ EPS).",
+    "† Service revenue 2026E is company guidance (~$77bn, Q2 call); ‡ 2027E is the midpoint of the Feb-2026 target ($80.5–81.5bn). Other 2026 guidance (23-Jul-26): Core Adjusted EBITDA $37.1–37.5bn, adjusted FCF $18.4–18.8bn (raised), capex ~$10bn, postpaid net account adds 950k–1.05m. 2027 targets: Core Adjusted EBITDA $40–41bn, adjusted FCF $19.5–20.5bn.",
+    "H1 2026: revenue $45.9bn (+9.2%), service revenue $37.8bn (+10.0%), Core Adjusted EBITDA $18.8bn, operating income $10.0bn, net income $5.7bn, diluted EPS $5.26, adjusted FCF $9.4bn, buybacks $7.1bn (34.8m shares), dividends $2.2bn. Q2 diluted EPS of $2.99 includes $0.14 of UScellular merger costs.",
+    "Market cap $162.9bn on 1,072.7m shares (10-Q cover, 17-Jul-26; slightly lower now after buybacks). EV $247.0bn using net debt of $84.1bn at 30-Jun-26. YTD is approximate: the 31-Dec-25 close is ~$200–203 depending on source (−24% to −25%). 1-year −32.7% per StockAnalysis.",
+    "_Teal italics = Opal-derived_ (growth rates, margins, payout ratios, share counts and valuation multiples computed on reported, consensus and guidance figures)."
+   ]
+  },
+  {
+   "type": "pagebreak"
+  },
+  {
+   "type": "section",
+   "text": "BALANCE SHEET SUMMARY"
+  },
+  {
+   "type": "table",
+   "widths": [
+    3200,
+    1000,
+    1000,
+    950,
+    250,
+    4256,
+    1800,
+    1800
+   ],
+   "header_rows": 1,
+   "size": null,
+   "align": [
+    "left",
+    "right",
+    "right",
+    "right",
+    "right",
+    "left",
+    "right",
+    "right"
+   ],
+   "gap_cols": [
+    4
+   ],
+   "col_styles": {
+    "5": "bold"
+   },
+   "col_fills": {
+    "5": "light",
+    "6": "light",
+    "7": "light"
+   },
+   "rows": [
+    {
+     "cells": [
+      "$bn",
+      "31-Dec-25",
+      "30-Jun-26",
+      "Change",
+      {
+       "t": "",
+       "fill": "none",
+       "align": "left"
+      },
+      {
+       "t": "Key balance sheet indicators",
+       "align": "left"
+      },
+      "Dec-25 / FY25",
+      "Jun-26 / LTM"
+     ]
+    },
+    {
+     "cells": [
+      "Cash & equivalents",
+      "5.6",
+      "2.8",
+      {
+       "t": "−2.8",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Core adj. EBITDA (FY25 / LTM Jun-26), $bn",
+      "33.9",
+      "35.9"
+     ]
+    },
+    {
+     "cells": [
+      "Equipment installment receivables",
+      "7.7",
+      "7.2",
+      {
+       "t": "−0.5",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Gross debt / EBITDA",
+      {
+       "t": "2.6x",
+       "d": true
+      },
+      {
+       "t": "2.4x",
+       "d": true
+      }
+     ]
+    },
+    {
+     "cells": [
+      "Property & equipment, net",
+      "38.3",
+      "36.6",
+      {
+       "t": "−1.7",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Net debt / EBITDA",
+      {
+       "t": "2.4x",
+       "d": true
+      },
+      {
+       "t": "2.3x",
+       "d": true
+      }
+     ]
+    },
+    {
+     "cells": [
+      "Spectrum licenses",
+      "98.0",
+      "98.2",
+      {
+       "t": "+0.1",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Net debt + towers + op. leases / EBITDA¹",
+      {
+       "t": "3.4x",
+       "d": true
+      },
+      {
+       "t": "3.2x",
+       "d": true
+      }
+     ]
+    },
+    {
+     "cells": [
+      "Goodwill & other intangibles",
+      "17.5",
+      "17.0",
+      {
+       "t": "−0.6",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "EBIT / net interest expense",
+      {
+       "t": "4.8x",
+       "d": true
+      },
+      {
+       "t": "4.5x",
+       "d": true
+      }
+     ]
+    },
+    {
+     "cells": [
+      "Operating lease ROU assets",
+      "25.7",
+      "24.6",
+      {
+       "t": "−1.1",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Core adj. EBITDA / net interest expense",
+      {
+       "t": "9.0x",
+       "d": true
+      },
+      {
+       "t": "8.9x",
+       "d": true
+      }
+     ]
+    },
+    {
+     "cells": [
+      "Other assets",
+      "26.4",
+      "27.2",
+      {
+       "t": "+0.8",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Net interest expense, $bn",
+      "3.77",
+      "4.02"
+     ]
+    },
+    {
+     "cells": [
+      "Total assets",
+      "219.2",
+      "213.6",
+      {
+       "t": "−5.7",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Effective interest rate on debt",
+      {
+       "t": "~4.2%",
+       "s": "plain"
+      },
+      {
+       "t": "4.3%",
+       "s": "plain"
+      }
+     ],
+     "kind": "total"
+    },
+    {
+     "cells": [
+      "Short-term debt (incl. finance leases)",
+      "6.3",
+      "7.3",
+      {
+       "t": "+1.0",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Fixed-rate share of debt principal",
+      "—",
+      "~97%"
+     ]
+    },
+    {
+     "cells": [
+      "Long-term debt (incl. finance leases)",
+      "82.3",
+      "79.6",
+      {
+       "t": "−2.6",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Liquidity: cash + undrawn revolver, $bn",
+      "13.1",
+      "12.8"
+     ]
+    },
+    {
+     "cells": [
+      "Total debt (ex tower obligations)",
+      "88.6",
+      "86.9",
+      {
+       "t": "−1.6",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Debt / (debt + equity)",
+      {
+       "t": "60%",
+       "s": "plain"
+      },
+      {
+       "t": "61%",
+       "s": "plain"
+      }
+     ],
+     "kind": "total"
+    },
+    {
+     "cells": [
+      "Net debt",
+      "83.0",
+      "84.1",
+      {
+       "t": "+1.1",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Net debt / market cap (at $151.87)",
+      {
+       "t": "—",
+       "s": "plain"
+      },
+      {
+       "t": "52%",
+       "s": "plain"
+      }
+     ],
+     "kind": "total"
+    },
+    {
+     "cells": [
+      "Tower obligations",
+      "3.5",
+      "3.5",
+      {
+       "t": "−0.1",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Leverage target / revolver covenant",
+      "~2.5x / —",
+      "~2.5x / 4.5x"
+     ]
+    },
+    {
+     "cells": [
+      "Operating lease liabilities",
+      "30.2",
+      "29.1",
+      {
+       "t": "−1.1",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Ratings: Moody's / S&P / Fitch",
+      "Baa1 / BBB / BBB+",
+      "Baa1 / BBB / BBB+"
+     ]
+    },
+    {
+     "cells": [
+      "Other liabilities",
+      "37.8",
+      "37.8",
+      {
+       "t": "+0.1",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      "Outlooks",
+      "Stable / Pos. / Stable",
+      "Stable / Pos. / Stable"
+     ]
+    },
+    {
+     "cells": [
+      "Total liabilities",
+      "160.0",
+      "157.3",
+      {
+       "t": "−2.7",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      {
+       "t": "",
+       "fill": "none"
+      },
+      {
+       "t": "",
+       "fill": "none"
+      },
+      {
+       "t": "",
+       "fill": "none"
+      }
+     ],
+     "kind": "total"
+    },
+    {
+     "cells": [
+      "Stockholders' equity",
+      "59.2",
+      "56.3",
+      {
+       "t": "−2.9",
+       "d": true
+      },
+      {
+       "t": "",
+       "align": "left"
+      },
+      {
+       "t": "",
+       "fill": "none"
+      },
+      {
+       "t": "",
+       "fill": "none"
+      },
+      {
+       "t": "",
+       "fill": "none"
+      }
+     ],
+     "kind": "total"
+    }
+   ]
+  },
+  {
+   "type": "subhead",
+   "text": "Debt maturities (principal, $bn)"
+  },
+  {
+   "type": "table",
+   "widths": [
+    3800,
+    1350,
+    1350,
+    1350,
+    1350,
+    1350,
+    1350,
+    1450
+   ],
+   "header_rows": 1,
+   "size": null,
+   "align": [
+    "left",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "At 30-Jun-26 unless stated",
+      "Remainder 2026",
+      "2027",
+      "2028",
+      "2029",
+      "2030",
+      "2031 and after",
+      "Total"
+     ]
+    },
+    {
+     "cells": [
+      "Principal due",
+      "0.0",
+      "5.0",
+      "6.8",
+      "7.2",
+      "8.0",
+      "57.7",
+      "84.7"
+     ],
+     "kind": "strong"
+    },
+    {
+     "cells": [
+      "% of total",
+      "0%",
+      "6%",
+      "8%",
+      "9%",
+      "9%",
+      "68%",
+      {
+       "t": "100%",
+       "s": "tealb"
+      }
+     ],
+     "derived": true
+    },
+    {
+     "cells": [
+      "Cumulative %",
+      "0%",
+      "6%",
+      "14%",
+      "22%",
+      "32%",
+      "100%",
+      ""
+     ],
+     "derived": true
+    },
+    {
+     "cells": [
+      "Due as a multiple of 2026E adj. FCF ($18.6bn)",
+      "0.0x",
+      "0.3x",
+      "0.4x",
+      "0.4x",
+      "0.4x",
+      "3.1x",
+      {
+       "t": "4.5x",
+       "s": "tealb"
+      }
+     ],
+     "derived": true
+    },
+    {
+     "cells": [
+      "Memo: principal due at 31-Dec-25",
+      "4.0",
+      "4.0",
+      "10.0",
+      "7.8",
+      "7.5",
+      "53.1",
+      {
+       "t": "86.3",
+       "s": "bold"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "subhead",
+   "text": "What the balance sheet shows"
+  },
+  {
+   "type": "findings",
+   "items": [
+    {
+     "lead": "Leverage is moderate and inside the target:",
+     "text": "Net debt is $84.1bn, 2.3x LTM Core Adjusted EBITDA (company-reported 2.3x), below the ~2.5x target and well inside the 4.5x revolver covenant. Gross debt/EBITDA has fallen from 2.6x to 2.4x in six months as EBITDA grew and debt was paid down. Moody's measures leverage more conservatively (about 3.0x net, including leases), and it upgraded T-Mobile to Baa1 in Sep-2025."
+    },
+    {
+     "lead": "Interest cover is comfortable but drifting down:",
+     "text": "LTM EBIT covers net interest 4.5x and EBITDA 8.9x, down from 5.3x and 9.3x in FY2024 as interest expense rose from $3.4bn to $4.0bn and the effective rate from 4.1% to 4.3%. About 97% of principal is fixed-rate, so the drift is slow: new bonds are priced at 5.0–5.85% in USD and 3.2–3.9% in EUR against older coupons of 1.5–4.75%."
+    },
+    {
+     "lead": "Maturities are well spread:",
+     "text": "Nothing is left to repay in 2026 after $7.8bn of redemptions and repayments in H1, and $19.0bn falls due in 2027–29, about one year of free cash flow. 68% of principal is due in 2031 or later. The largest near-term items are the $4.0bn 3.75% notes due Apr-2027 and the $1.0bn receivables facility expiring Feb-2027."
+    },
+    {
+     "lead": "The asset base is mostly spectrum:",
+     "text": "Spectrum licenses are $98.2bn, 46% of total assets and 1.7x stockholders' equity; with goodwill and intangibles, 54% of assets are intangible. Spectrum is the main collateral value behind the investment-grade ratings, and it is the asset SpaceX's purchases are designed to challenge."
+    },
+    {
+     "lead": "Liquidity is ample, cash is thin:",
+     "text": "Cash fell from $5.6bn to $2.8bn as buybacks ran ahead of free cash flow in H1, but the new $10bn revolver (to Jan-2031) is undrawn, giving $12.8bn of liquidity plus a $2bn commercial paper program. Equity fell by $2.9bn in H1 as $9.3bn of shareholder returns exceeded $5.7bn of net income."
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "text": "Sources and notes"
+  },
+  {
+   "type": "notes",
+   "items": [
+    "Sources: T-Mobile Q2 2026 10-Q (condensed consolidated balance sheet, debt note, income statement) and FY2025 10-K; Q2 2026 and Q4 2025 investor factbooks (net debt, Core Adjusted EBITDA, interest expense); T-Mobile IR 'Schedule of Debt' (Q2 2026 and Q4 2025) for maturities; T-Mobile IR fixed-income page for ratings; Moody's upgrade (Sep-2025) via Investing.com.",
+    "Long-term debt includes long-term debt to affiliates (Deutsche Telekom; $1.5bn at Dec-25, redeemed Feb-26). Other assets and other liabilities are Opal-derived residuals. Change column and all ratios are Opal-derived; LTM = Q3'25–Q2'26 (EBITDA $35.9bn, operating income $18.3bn, net interest $4.0bn). Interest income is not disclosed separately, so coverage uses interest expense, net.",
+    "¹ Conservative: Core Adjusted EBITDA is already after operating lease costs, so adding operating lease liabilities to debt double-counts leases. Shown as an upper bound; Moody's adjusted net leverage was ~3.0x at its Sep-2025 upgrade.",
+    "Maturities are principal at legal final maturity from the IR Schedule of Debt (bucket sums are Opal-derived and total $84.7bn against $84.6bn of carrying debt excluding finance leases). ABS notes are shown at legal final maturity; expected amortization is $0.1bn (2026), $1.0bn (2027), $0.8bn (2028) and $0.1bn (2029). Finance leases ($2.3bn) and tower obligations are excluded. Weighted-average maturity is not disclosed.",
+    "2026 issuance: $1.15bn 5.000% 2036s and $0.85bn 5.850% 2056s (Jan), three EUR tranches at 3.200%/3.625%/3.900% due 2032/2035/2038 (~$2.9bn, Feb), $0.5bn 4.250% ABS due 2030 (Mar) and a $1.0bn SOFR receivables facility (Feb). Repaid or redeemed: $3.0bn 4.75% 2028s (half held by DT), $4.0bn of 2026 maturities, $0.5bn ABS and $0.3bn amortization.",
+    "Ratings per T-Mobile IR. One third-party site shows S&P at BBB+; confirm with S&P. No agency comment on the Oct-2026 SpaceX news was found."
+   ]
+  },
+  {
+   "type": "section",
+   "text": "COMPANY DESCRIPTION"
+  },
+  {
+   "type": "para",
+   "text": "T-Mobile US is one of the three national US wireless networks and, since the 2020 Sprint merger, the fastest-growing of them. It was formed from the 2013 combination of T-Mobile USA (Deutsche Telekom's US subsidiary) and MetroPCS, and transformed by the April 2020 merger with Sprint, which doubled its spectrum and scale and gave it the deepest mid-band (2.5 GHz) holdings in the US. It runs one reportable segment and earns substantially all of its revenue in the US (including Puerto Rico and the US Virgin Islands). Postpaid wireless (T-Mobile brand, plans sold to consumers, small business and enterprise) is 81% of service revenue; prepaid (Metro by T-Mobile, Mint Mobile, bought in 2024) is 15%; wholesale (MVNOs) and other is 4%. Broadband is the growth adjacency: 5G fixed-wireless home internet (high-teens of millions of customers targeted by 2030) and fiber through joint ventures (Lumos with EQT and Metronet with KKR in 2025; i3 Broadband and GoNetspeed signed in April 2026). UScellular's wireless operations were acquired on 1-Aug-2025 for ~$4.3bn. At 30-Jun-26 there were 34.7m postpaid accounts (ARPA $152.91), Q2 account churn was 0.99%, total debt including finance leases was $86.9bn, cash $2.8bn and net debt $84.1bn (~2.3x core adjusted EBITDA). Deutsche Telekom owns ~54% of the shares and controls ~55% of the votes; T-Mobile US is ~67% of DT's group adjusted EBITDA."
+  },
+  {
+   "type": "table",
+   "widths": [
+    2300,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    6956
+   ],
+   "header_rows": 1,
+   "size": null,
+   "align": [
+    "left",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "left"
+   ],
+   "rows": [
+    {
+     "cells": [
+      "Revenue line",
+      "FY2025",
+      "% FY25",
+      "H1 2026",
+      "% H1 26",
+      "H1 YoY",
+      {
+       "t": "What it is",
+       "align": "left"
+      }
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Postpaid service",
+       "s": "bold"
+      },
+      "$57.9bn",
+      "66%",
+      "$31.5bn",
+      "69%",
+      "+13.8%",
+      "Phone and connected-device plans for consumers, SMB and enterprise; includes UScellular from Aug-25; ARPA +2% in Q2 (+3.7% ex acquisitions and fiber JVs); fixed-wireless broadband"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Prepaid service",
+       "s": "bold"
+      },
+      "$10.5bn",
+      "12%",
+      "$5.0bn",
+      "11%",
+      "−5.6%",
+      "Metro by T-Mobile and Mint Mobile; losing share to cable MVNOs and to migrations into postpaid"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Wholesale & other service",
+       "s": "bold"
+      },
+      "$2.9bn",
+      "3%",
+      "$1.3bn",
+      "3%",
+      "−4.5%",
+      "MVNO and roaming revenue; shrinking as legacy Sprint wholesale contracts roll off"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Equipment",
+       "s": "bold"
+      },
+      "$16.0bn",
+      "18%",
+      "$7.5bn",
+      "16%",
+      "+5.3%",
+      "Handset and device sales (near-zero margin, mostly pass-through; handset leasing has been phased out)"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Other",
+       "s": "bold"
+      },
+      "$1.0bn",
+      "1%",
+      "$0.6bn",
+      "1%",
+      "+10.2%",
+      "Interest on device receivables and other"
+     ]
+    },
+    {
+     "cells": [
+      "Total",
+      "$88.3bn",
+      "",
+      "$45.9bn",
+      "",
+      "+9.2%",
+      "Service revenue $71.3bn in FY25 (+7.7%) and $37.8bn in H1 26 (+10.0%); 2026 guide ~$77bn (+8%)"
+     ],
+     "kind": "total"
+    }
+   ]
+  },
+  {
+   "type": "section",
+   "text": "INVESTMENT THESIS"
+  },
+  {
+   "type": "bullets",
+   "items": [
+    {
+     "lead": "The best growth asset in US telecom.",
+     "text": "Service revenue grew from $50.4bn in 2020 to $71.3bn in 2025 (7.2% a year) and Core Adjusted EBITDA from $20.4bn to $33.9bn (10.7% a year) as Sprint synergies came through, while Verizon and AT&T grew low single digits. Q2 2026 postpaid service revenue rose 13% and Core Adjusted EBITDA 12%. Guidance is ~$37.3bn EBITDA in 2026 and $40–41bn in 2027, and consensus EPS rises from $9.72 in 2025 to $17.25 in 2028E (~21% a year)."
+    },
+    {
+     "lead": "Capex has peaked and cash flow has compounded.",
+     "text": "Capex fell from $14.0bn in 2022 (the Sprint network build) to ~$10bn a year (~11% of revenue), while adjusted FCF rose from $5.6bn in 2021 to $18.0bn in 2025. 2026 FCF guidance was raised to $18.4–18.8bn and the 2027 target is $19.5–20.5bn. At $151.87 that is an 11.4% FCF yield on 2026E, rising to ~13% by 2028E."
+    },
+    {
+     "lead": "Shareholder returns are large and the dividend is growing fast.",
+     "text": "The quarterly dividend has gone from $0.65 (first paid Dec-2023) to $1.17 from Dec-2026 (+15% in the latest raise, +80% in three years). T-Mobile has bought back 253m shares since late 2022 (about 20% of the post-Sprint count) and returned $54.6bn in total. The 2026 program is up to $18.2bn; with $9.3bn used in H1, roughly $6.5bn of buybacks remain for H2 at a share price ~25% below where most of H1's were done."
+    },
+    {
+     "lead": "The SpaceX selloff has reset the valuation.",
+     "text": "The stock fell 13.3% on 9-Oct-26, its worst day since 2013, and is down ~33% over a year and ~34% from its $230.65 high. At 13.9x 2026E and 10.9x 2027E EPS and 6.6x EV/EBITDA, its premium to Verizon (6.4x) and AT&T (5.8x) is now small despite 2–3x their growth. Raymond James upgraded to Outperform ($170) on 12-Oct, calling the SpaceX fears overblown; Scotiabank kept Outperform ($212); JPMorgan sees limited near-term risk to the ~$240bn US mobile service market."
+    },
+    {
+     "lead": "Network and spectrum lead, with broadband as a second engine.",
+     "text": "T-Mobile has the deepest mid-band spectrum and the highest NPS of the big three (46). Upper C-band and 2.7 GHz spectrum arrive in 2027–28. Broadband adds were in the upper-400k range in Q2, fiber JVs reach ~20% penetration within 12 months, and the target is 18–19m broadband customers by 2030. Rural and smaller markets (~40% of US population) are an under-penetrated share opportunity: T-Mobile's household share there is ~24% against ~50% in the top markets."
+    }
+   ]
+  },
+  {
+   "type": "section",
+   "text": "INVESTMENT RISKS"
+  },
+  {
+   "type": "bullets",
+   "items": [
+    {
+     "lead": "SpaceX as a fourth national carrier.",
+     "text": "SpaceX bought EchoStar's AWS-4 and H-block spectrum (~$17bn, Sep-2025) and on 8-Oct-26 agreed to buy Grain Management's nationwide 800 MHz portfolio (~$8bn per WSJ; FCC approval needed) for 'Starlink Mobile', with a mobile offer flagged for 2027. Grain bought that 800 MHz spectrum from T-Mobile for $2.9bn (closed Aug-2026), which is awkward for management. Satellite capacity is thin in dense markets, but a low-priced national plan could pressure rural and prepaid pricing. Morningstar raised its uncertainty rating on all three carriers and Bernstein cut its target to $180."
+    },
+    {
+     "lead": "Growth is slowing and competition is rising.",
+     "text": "Postpaid net account adds fell 13% to 277k in Q2, management guides ~250k for Q3, and account churn rose to 0.99% from 0.92% as the 'rate plan modernization' (moving legacy plans to new ones) drew customer backlash. T-Mobile stopped reporting phone net adds from Q1 2026, which reduces transparency. Verizon under Dan Schulman cut multi-line prices with a three-year price lock and posted its best Q2 phone adds in five years (+184k); cable MVNOs (Charter's share of switchers rose to 5.6%) and Mint/Metro price promotions pressure prepaid."
+    },
+    {
+     "lead": "Leverage and capital needs.",
+     "text": "Net debt is $84.1bn (~2.3x EBITDA), plus $3.5bn of tower obligations and ~$29bn of operating leases. The Feb-2026 plan targets ~2.5x leverage, so part of the buyback is debt-funded. Upcoming calls on cash include Upper C-band spectrum in 2027 and further fiber JV equity (~$0.7bn for i3 Broadband, ~$2.0bn for GoNetspeed), and higher rates would raise refinancing costs."
+    },
+    {
+     "lead": "Controlled company.",
+     "text": "Deutsche Telekom holds ~54% of the shares and ~55% of the votes and designates 9 of 13 directors; only 6 are independent and T-Mobile uses Nasdaq's controlled-company exemptions. DT's interests (consolidation, dividend needs, a full merger it reportedly shelved in Aug-2026) may not match minority holders'. DT made no sales in H1 2026; SoftBank sold ~$9bn of shares in 2025."
+    },
+    {
+     "lead": "Management turnover.",
+     "text": "Srini Gopalan became CEO on 1-Nov-25, Jon Freier COO in Dec-25, the technology organisation was reorganised under John Saw in Jul-26, and CFO Peter Osvaldik hands over to Jessica Uhl in Feb-2027. Several senior business leaders have also left. Execution risk is higher than during the Sievert/Osvaldik years."
+    },
+    {
+     "lead": "Cyber and regulatory.",
+     "text": "T-Mobile has had repeated data breaches (2021 cyberattack affecting ~76m people and a $350m class-action settlement; a 2023 API breach), an FCC $31.5m settlement in 2024 and an FCC fine over customer location data. Regulatory approval for deals has required concessions, including ending DEI programmes in 2025 during the UScellular and Metronet reviews."
+    }
+   ]
+  },
+  {
+   "type": "section",
+   "text": "KEY MANAGEMENT INFO"
+  },
+  {
+   "type": "bullets",
+   "items": [
+    {
+     "lead": "Srini Gopalan, President & CEO.",
+     "text": "CEO since 1-Nov-25 (Mike Sievert's contract ran to 2028) after joining as COO in Mar-2025. He was previously CEO of Telekom Deutschland and a member of DT's management board, and earlier worked at Bharti Airtel, Vodafone and Capital One. He is DT's choice and has prioritised customer experience (T-Life app, 30m+ monthly users), the rate-plan simplification and broadband, and calls the Starlink threat 'exaggerated'."
+    },
+    {
+     "lead": "Mike Sievert, Vice Chairman.",
+     "text": "CEO from Apr-2020 to Oct-2025, he ran the Sprint integration that took Core Adjusted EBITDA from $20bn to $34bn. He joined in 2012 as CMO under John Legere (the 'Un-carrier' era) and stays on the board and its Transaction Committee."
+    },
+    {
+     "lead": "Peter Osvaldik, CFO; Jessica Uhl, CFO Designate.",
+     "text": "Osvaldik joined in 2016 and has been CFO through the post-Sprint period, owning the shareholder-return framework. He remains CFO until Feb-2027 and retires in Jul-2027. Uhl, formerly CFO of Shell and later a President at GE, joined in Sep-2026 and takes over in Feb-2027."
+    },
+    {
+     "lead": "Jon Freier, COO; John Saw, CTO.",
+     "text": "Freier (COO since Dec-2025) previously ran the Consumer Group. Saw, the former Sprint CTO, took over network, technology, product engineering and cyber in Jul-2026 after Ulf Ewaldsson's retirement. Chris Sambar (ex-head of AT&T Network) joined in Oct-2026 as Chief Enterprise Officer."
+    },
+    {
+     "lead": "Governance and history.",
+     "text": "Tim Höttges, CEO of Deutsche Telekom, chairs the 13-person board; Teresa Taylor is Lead Independent Director. DT designates 9 directors under the 2020 stockholders' agreement and must approve changes to the chair/CEO structure. T-Mobile USA was a distant No. 4 before the 2013 MetroPCS deal and the Legere 'Un-carrier' strategy; the 2020 Sprint merger made it No. 2. SoftBank, Sprint's former owner, sold ~$9bn of shares in 2025. Issues include the 2021 and 2023 data breaches and FCC penalties (see Risks). There is no activist involvement given DT's control."
+    }
+   ]
+  },
+  {
+   "type": "section",
+   "text": "SALES BY REGION"
+  },
+  {
+   "type": "para",
+   "text": "T-Mobile reports a single segment and says substantially all revenue is earned in the US (including Puerto Rico and the US Virgin Islands). It discloses no regional or state revenue and no operating income by geography or segment. The closest read on mix is revenue by customer line, shown below; profitability is only disclosed at group level (Core Adjusted EBITDA margin 38.4% of revenue in 2025, operating margin 20.7%)."
+  },
+  {
+   "type": "subhead",
+   "text": "Revenue by customer line, 2023–H1 2026"
+  },
+  {
+   "type": "table",
+   "widths": [
+    2230,
+    969,
+    1163,
+    775,
+    969,
+    1163,
+    775,
+    969,
+    1163,
+    775,
+    969,
+    1163,
+    979
+   ],
+   "header_rows": 2,
+   "size": null,
+   "align": [
+    "left",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right",
+    "right"
+   ],
+   "rows": [
+    {
+     "cells": [
+      {
+       "t": "",
+       "align": "center"
+      },
+      {
+       "t": "2023",
+       "span": 3,
+       "align": "center"
+      },
+      {
+       "t": "2024",
+       "span": 3,
+       "align": "center"
+      },
+      {
+       "t": "2025",
+       "span": 3,
+       "align": "center"
+      },
+      {
+       "t": "H1 2026",
+       "span": 3,
+       "align": "center"
+      }
+     ]
+    },
+    {
+     "cells": [
+      "Line",
+      "$bn",
+      "% total",
+      "y/y",
+      "$bn",
+      "% total",
+      "y/y",
+      "$bn",
+      "% total",
+      "y/y",
+      "$bn",
+      "% total",
+      "y/y"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Postpaid service",
+       "s": "bold"
+      },
+      "48.7",
+      "62%",
+      "+6%",
+      "52.3",
+      "64%",
+      "+7%",
+      "57.9",
+      "66%",
+      "+11%",
+      "31.5",
+      "69%",
+      "+14%"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Prepaid service",
+       "s": "bold"
+      },
+      "9.8",
+      "12%",
+      "−1%",
+      "10.4",
+      "13%",
+      "+6%",
+      "10.5",
+      "12%",
+      "+1%",
+      "5.0",
+      "11%",
+      "−6%"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Wholesale & other service",
+       "s": "bold"
+      },
+      "4.8",
+      "6%",
+      "−14%",
+      "3.4",
+      "4%",
+      "−28%",
+      "2.9",
+      "3%",
+      "−16%",
+      "1.3",
+      "3%",
+      "−4%"
+     ]
+    },
+    {
+     "cells": [
+      "Total service revenue",
+      "63.2",
+      "81%",
+      "+3%",
+      "66.2",
+      "81%",
+      "+5%",
+      "71.3",
+      "81%",
+      "+8%",
+      "37.8",
+      "82%",
+      "+10%"
+     ],
+     "kind": "total"
+    },
+    {
+     "cells": [
+      {
+       "t": "Equipment",
+       "s": "bold"
+      },
+      "14.1",
+      "18%",
+      "−17%",
+      "14.3",
+      "18%",
+      "+1%",
+      "16.0",
+      "18%",
+      "+12%",
+      "7.5",
+      "16%",
+      "+5%"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Other",
+       "s": "bold"
+      },
+      "1.2",
+      "2%",
+      "+5%",
+      "1.0",
+      "1%",
+      "−19%",
+      "1.0",
+      "1%",
+      "+8%",
+      "0.6",
+      "1%",
+      "+10%"
+     ]
+    },
+    {
+     "cells": [
+      "Total revenue",
+      "78.6",
+      "100%",
+      "−1%",
+      "81.4",
+      "100%",
+      "+4%",
+      "88.3",
+      "100%",
+      "+8%",
+      "45.9",
+      "100%",
+      "+9%"
+     ],
+     "kind": "total"
+    }
+   ]
+  },
+  {
+   "type": "subhead",
+   "text": "What the data shows"
+  },
+  {
+   "type": "findings",
+   "items": [
+    {
+     "lead": "All of the business is in the US:",
+     "text": "There is no FX or emerging-market exposure, which suits a USD portfolio, but also no geographic diversification: the whole return depends on US wireless pricing and share."
+    },
+    {
+     "lead": "Postpaid is the growth engine:",
+     "text": "Postpaid rose from 77% of service revenue in 2023 to 81% in 2025 and 83% in H1 2026, growing 7.5% in 2024, 10.7% in 2025 and 13.8% in H1 2026 (helped by UScellular from Aug-2025). This is where pricing (premium plans, ARPA) and broadband show up."
+    },
+    {
+     "lead": "Prepaid and wholesale are shrinking:",
+     "text": "Prepaid fell 5.6% in H1 2026 as cable MVNOs and low-cost brands took switchers and as customers migrated to postpaid. Wholesale has almost halved since 2022 as legacy Sprint MVNO contracts roll off; a SpaceX price war would hit these lines first."
+    },
+    {
+     "lead": "Equipment is volume, not profit:",
+     "text": "Device sales are 16–18% of revenue at close to zero margin, so reported revenue growth understates service growth when upgrade activity is weak, and overstates it when handset prices rise (management expects memory-driven price increases)."
+    },
+    {
+     "lead": "Profit by region is not disclosed:",
+     "text": "Management gives only one market split: rural and smaller markets are ~40% of the US population, where T-Mobile's household share is ~24% against roughly 50% in the largest cities. These are also the markets most exposed to satellite competition."
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "text": "Sources and notes"
+  },
+  {
+   "type": "notes",
+   "items": [
+    "Sources: T-Mobile FY2023–FY2025 10-K and Q4 factbooks (revenue by category); Q2 2026 10-Q (H1 2025 and H1 2026); Q2 2026 earnings call (rural share, NPS, broadband adds). FY2023–25 lines cross-checked to StockAnalysis; every line adds to the reported totals.",
+    "2023 y/y is against FY2022 revenue on the same basis (postpaid $45.9bn, prepaid $9.9bn, wholesale & other $5.5bn, equipment $17.1bn, other $1.1bn). All percentages are Opal-derived. UScellular is in postpaid and prepaid from 1-Aug-2025."
+   ]
+  },
+  {
+   "type": "section",
+   "text": "OTHER QUESTIONS WORTH ASKING"
+  },
+  {
+   "type": "bullets",
+   "items": [
+    {
+     "lead": "SpaceX exposure:",
+     "text": "How much capacity can Starlink Mobile deliver per square mile with 800 MHz, AWS-4 and H-block, and which T-Mobile customers (rural, prepaid, second lines) are realistically at risk? Why was the 800 MHz spectrum sold to Grain for $2.9bn, and how does the carriers' satellite JV (formed 1-Oct-26) respond?"
+    },
+    {
+     "lead": "Churn after the rate-plan change:",
+     "text": "What does Q3 account churn look like against 0.99% in Q2, and how many customers left over the legacy-plan migration? Q3 results are due 28-Oct-26. With phone net adds no longer reported, is the ~2.5m 2026 phone-add expectation intact?"
+    },
+    {
+     "lead": "Capital allocation at a lower price:",
+     "text": "Will T-Mobile accelerate the ~$6.5bn of remaining 2026 buybacks or extend the program now the shares are ~$150? How does the ~2.5x leverage target interact with Upper C-band spending in 2027?"
+    },
+    {
+     "lead": "Fiber returns:",
+     "text": "What returns do the four fiber JVs earn, how much more equity is committed, and is fiber a defensive move against cable bundles or a real growth line?"
+    },
+    {
+     "lead": "Deutsche Telekom's intentions:",
+     "text": "Does DT intend to hold, buy or sell TMUS shares after the selloff, and is a full merger still off the table? How would a DT sale affect the share overhang?"
+    }
+   ]
+  },
+  {
+   "type": "section",
+   "text": "COMPARABLE COMPANY VALUATION"
+  },
+  {
+   "type": "para",
+   "text": "The peer group is the two other national US carriers (Verizon, AT&T), Comcast as the largest cable competitor and MVNO, Deutsche Telekom as T-Mobile US's parent (and the MSCI Europe way to own it), and Orange and Vodafone as the large European telcos in the benchmark. FY1 is each company's fiscal year ending in 2026 (Mar-27 for Vodafone) and FY2 the following year. USD figures are converted at the prices and FX rates in the notes. Charter is excluded because consensus does not yet reflect the Cox merger closed in Aug-2026."
+  },
+  {
+   "type": "table",
+   "widths": [
+    2050,
+    762,
+    762,
+    762,
+    762,
+    762,
+    762,
+    762,
+    762,
+    762,
+    762,
+    762,
+    762,
+    762,
+    762,
+    762,
+    762
+   ],
+   "header_rows": 2,
+   "size": null,
+   "align": [
+    "left",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center",
+    "center"
+   ],
+   "rows": [
+    {
+     "cells": [
+      {
+       "t": "",
+       "align": "center"
+      },
+      {
+       "t": "Size ($bn)",
+       "span": 2
+      },
+      {
+       "t": "P/E",
+       "span": 2
+      },
+      {
+       "t": "EV/EBITDA",
+       "span": 2
+      },
+      "EV/Sales",
+      {
+       "t": "Yield",
+       "span": 4
+      },
+      {
+       "t": "Margin FY1",
+       "span": 2
+      },
+      {
+       "t": "Growth",
+       "span": 2
+      },
+      "Debt"
+     ]
+    },
+    {
+     "cells": [
+      "Company",
+      "Mkt cap",
+      "EV",
+      "FY1",
+      "FY2",
+      "FY1",
+      "FY2",
+      "FY1",
+      "FCF FY1",
+      "Div. FY1",
+      "Treaty WHT",
+      "Div. net of WHT",
+      "EBITDA",
+      "EBIT",
+      "Rev. FY1",
+      "EPS FY2",
+      "ND/ EBITDA"
+     ]
+    },
+    {
+     "cells": [
+      "T-Mobile US\nTMUS US\n$151.87 · FY Dec-26",
+      "163",
+      "247",
+      "13.9x",
+      "10.9x",
+      "6.6x",
+      "6.1x",
+      "2.6x",
+      "11.4%",
+      "2.8%",
+      "0%",
+      "2.8%",
+      "39.5%",
+      "21.6%",
+      "+7%",
+      "+27%",
+      "2.3x"
+     ],
+     "kind": "highlight"
+    },
+    {
+     "cells": [
+      {
+       "t": "Verizon\nVZ US\n$42.78 · FY Dec-26",
+       "s": "navy"
+      },
+      "178",
+      "341",
+      "8.5x",
+      "8.1x",
+      "6.4x",
+      "6.2x",
+      "2.4x",
+      "12.4%",
+      "6.6%",
+      "0%",
+      "6.6%",
+      "37.8%",
+      "23.2%",
+      "+2%",
+      "+5%",
+      "3.1x"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "AT&T\nT US\n$22.49 · FY Dec-26",
+       "s": "navy"
+      },
+      "154",
+      "280",
+      "9.5x",
+      "8.7x",
+      "5.8x",
+      "5.6x",
+      "2.2x",
+      "11.6%",
+      "4.9%",
+      "0%",
+      "4.9%",
+      "37.3%",
+      "21.4%",
+      "+3%",
+      "+9%",
+      "2.6x¹"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Comcast\nCMCSA US\n$20.68 · FY Dec-26",
+       "s": "navy"
+      },
+      "73",
+      "156",
+      "5.9x",
+      "5.8x",
+      "4.7x",
+      "4.7x",
+      "1.3x",
+      "18.8%",
+      "6.4%",
+      "0%",
+      "6.4%",
+      "27.6%",
+      "14.9%",
+      "−3%²",
+      "+3%",
+      "2.5x"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Deutsche Telekom\nDTE GY / DTEGY\n€24.98 · FY Dec-26",
+       "s": "navy"
+      },
+      "134",
+      "325",
+      "12.0x",
+      "10.3x",
+      "6.1x³",
+      "5.7x",
+      "2.4x",
+      "15.7%³",
+      "4.5%",
+      "15%",
+      "3.8%",
+      "39.0%",
+      "23.4%",
+      "+3%",
+      "+16%",
+      "2.2x"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Orange\nORA FP / ORANY\n€13.74 · FY Dec-26",
+       "s": "navy"
+      },
+      "41",
+      "81",
+      "9.3x",
+      "11.7x",
+      "4.9x",
+      "4.5x",
+      "1.6x",
+      "11.8%",
+      "5.7%",
+      "15%",
+      "4.9%",
+      "32.7%",
+      "13.6%",
+      "+12%⁴",
+      "−21%⁴",
+      "2.4x"
+     ]
+    },
+    {
+     "cells": [
+      {
+       "t": "Vodafone\nVOD LN / VOD\n116.70p · FY Mar-27",
+       "s": "navy"
+      },
+      "36",
+      "70",
+      "14.0x",
+      "10.7x",
+      "4.8x",
+      "4.5x",
+      "1.4x",
+      "8.3%",
+      "3.5%",
+      "0%",
+      "3.5%",
+      "29.5%",
+      "12.1%",
+      "+10%⁵",
+      "+30%",
+      "2.3x"
+     ]
+    },
+    {
+     "cells": [
+      "Peer median",
+      "104",
+      "218",
+      "9.4x",
+      "9.5x",
+      "5.4x",
+      "5.1x",
+      "1.9x",
+      "12.1%",
+      "5.3%",
+      "—",
+      "4.9%",
+      "35.0%",
+      "18.1%",
+      "+3%",
+      "+7%",
+      "2.5x"
+     ],
+     "kind": "median"
+    }
+   ]
+  },
+  {
+   "type": "subhead",
+   "text": "What the comparison shows"
+  },
+  {
+   "type": "findings",
+   "items": [
+    {
+     "lead": "A growth premium that has mostly gone:",
+     "text": "TMUS trades at 13.9x FY1 and 10.9x FY2 P/E against peer medians of 9.4x and 9.5x, and at 6.6x EV/EBITDA against 5.4x. Against Verizon (6.4x) and AT&T (5.8x) the EV/EBITDA premium is only ~0.2–0.8 turns, small for FY2 EPS growth of +27% against +5% and +9%."
+    },
+    {
+     "lead": "Cash-flow yields are now in line with the slower peers:",
+     "text": "T-Mobile's FY1 FCF yield of 11.4% compares with 12.4% at Verizon and 11.6% at AT&T. Investors now pay about the same for each dollar of T-Mobile's cash flow as for the peers', even though T-Mobile's grows faster and its leverage is lower."
+    },
+    {
+     "lead": "EBITDA margin is the highest in the group:",
+     "text": "FY1 EBITDA margin of 39.5% and EBIT margin of 21.6% compare with peer medians of 35.0% and 18.1%; Verizon and DT have slightly higher EBIT margins. Revenue includes low-margin equipment sales, so service margins are higher still."
+    },
+    {
+     "lead": "Yield is the weak point for the mandate:",
+     "text": "TMUS's 2.8% FY1 yield (3.1% on the run-rate) is below the peer median of 4.9% net of withholding tax and well below Verizon (6.6%) and AT&T (4.9%). Total shareholder yield is higher: buybacks add roughly 8–9% of market cap a year at current prices."
+    },
+    {
+     "lead": "Deutsche Telekom is the listed proxy:",
+     "text": "DT trades at 12.0x FY1 P/E and 6.1x EV/EBITDA (including the T-Mobile US minorities at market value), yields 4.5% (3.8% net) and gets ~67% of its EBITDA from T-Mobile US. Its ~54% stake is worth ~$88bn, about two-thirds of DT's market cap, which implies only ~5x EBITDA for DT's German and European businesses (Opal-derived, using DT net debt less T-Mobile US's)."
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "text": "Sources and notes"
+  },
+  {
+   "type": "notes",
+   "items": [
+    "Prices at the 12-Oct-26 close (StockAnalysis; Vodafone derived from the London quote). FX: EUR/USD 1.1156, GBP/USD 1.3208 (12-Oct). On 9-Oct-26 TMUS fell 13.3%, AT&T ~10–11%, Verizon ~9–10%, DT ~7%, Vodafone ~4% and Orange ~2–3% on the SpaceX 800 MHz deal.",
+    "Consensus: MarketScreener (9–13 Oct 2026) for all companies, except Verizon and Comcast EPS, which use StockAnalysis adjusted EPS because MarketScreener's appear to be GAAP. DT's MarketScreener EPS (€2.08) may be on a reported basis; DT guides adjusted EPS of ~€2.20. TMUS FY1 DPS is $4.23 paid in 2026 (company-derived).",
+    "EV = market cap plus latest reported net debt excluding operating leases (30-Jun-26; Vodafone 31-Mar-26 pro forma for Safaricom). EBITDA is after lease costs for all companies (US GAAP, EBITDA AL, EBITDAaL), so EV/EBITDA is like-for-like. Pensions and minorities are excluded except for DT. Peer median excludes TMUS.",
+    "¹ AT&T net debt excludes the pending EchoStar spectrum purchase; pro forma EV is ~$303bn (6.3x FY1 EBITDA) and net debt/EBITDA ~3.1x. ² Comcast FY1 revenue declines because of the Versant spin-off.",
+    "³ DT EV includes the T-Mobile US minority interest at market value (€66.9bn); without it EV/EBITDA is ~4.7x. DT's FCF is consolidated and includes 100% of T-Mobile US's cash flow; on an attributable basis the FCF yield is ~9%. DT owns 54.2% of TMUS shares (55.1% of votes).",
+    "⁴ Orange consolidates 100% of MasOrange from Jun-2026, which lifts FY1 revenue growth; FY1 EPS likely includes a one-off step-up gain, hence negative FY2 EPS growth. ⁵ Vodafone FY1 includes ~9 months of Safaricom consolidation.",
+    "Withholding tax for a US investor: US 0%; Germany 15% under the treaty (26.375% statutory, excess reclaimable); France 15% under the treaty; UK 0%. ADRs: DTEGY and ORANY trade OTC; Vodafone ADS (1 = 10 shares) is on Nasdaq."
+   ]
+  }
+ ]
+}
