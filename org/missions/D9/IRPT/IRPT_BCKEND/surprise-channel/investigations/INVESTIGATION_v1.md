@@ -38889,3 +38889,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS AND FINDINGS. (1) 49 Financial is NOT unblocked by the exemption: besides the one exempted account the gate still refuses on account_lost for other lost accounts and on classified_security_lost; neither is read yet (a READ cell follows: the anatomy of 49 Financial's remaining refusal, counts only). (2) Cottonwood publishes at HEAD's gate without the exemption: the live bundle's refusal is the deployed-gate difference of D2-S199, which the IB-pr-549 mint removes; the exemption adds four zero-value account nodes to a publication that would publish anyway (visibility, not unblocking); its second fire exempts again. (3) The split adjustment moves 1,291 account-days (0.48 percent of those run) and leaves 2 returns at or below -50 percent; 13 of 76 split security-days are ratio-absent (not graded) and now counted; the CTO's 920 for 2026-04-21 is not reproduced (985 here, as in the READ): ARMED, owner me, a figure to read with the CTO. W422-S1 and S2 are these findings; W422-S3 resolved (both second-fire readings recorded); W423-S1 inert (read-path calls only), S3 explained (2 holding account-days sit in ratio-absent securities); W424-S1 and W425-S1 to S3 inert or resolved (the producer writes one manifest per day, so the totals are summed over days by the reader). The workers' array-form channel rows made the union merge duplicate rows twice; the issuer re-formed them as blocks on the branches (a hazard to teach the next worker face: append each row as its own block)."
 }
 ```
+
+## IRPT_BCKEND-D2-S204 -- IB-pr-579 applied: irpt-ycharts-generate carries commentary_requested; live acceptance is UNEXERCISED LIVE until the FWD-1 run
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S204",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T15:57:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "IB-pr-579 applied: irpt-ycharts-generate moved from 5TRFZf6G to the signed candidate 3+fMEJhQ8 (the commentary_requested release); the released function ACCEPTING a submission is UNEXERCISED LIVE until the DEV FWD-1 run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I read the live CodeSha256 myself at ~15:5xZ: 3+fMEJhQ8enneLH30XiiV5VYEC4kk0+hZl0SFFsyM4k= (LastModified 2026-10-15T15:34:08Z); the ledger irpt-ycg-commentary-requested-ib579-20261015 carried six legs, all proven, and I closed it (b8484afc22)",
+      "IB2's record (deliverables/0.7.0_AE_CloudOps~IB2/IB217-1_apply_record.json, commit a9dc587856 and the flip 4f6c15ac70): plan 0 to add, 1 to change, 0 to destroy; safe-apply rc 0; re-plan 0; the four members differ and their sha256 equal the signed ones; import census failed {}; the accepted request's item hash unchanged; composition test 6 passed; health proof 11.1 minutes, Errors 0; check r217 AC1 to AC3 PASS (I re-ran them in the main tree)"
+    ]
+  },
+  "spec_asserts": "The pair IB-pr-456 + ADDENDUM 1 and the CTO rulings @7f7acb0e42 and msg 8364: the BEFORE record is byte reads (the live zip held commentary_requested 0 times in the three ENDPOINT members), the AFTER read is the four member hashes, the census, the offline replay, the composition test and the unchanged accepted request.",
+  "world_is": "DISPOSITIONS. The twin the order first named (a refused wrong-typed body before and after) could not discriminate: every event needs header-asserted edge identity before validate_public_request, so the applier stopped and the CTO ruled byte reads (msg 8364). The replay at the pin reads 3 of 17 arms different from the packet's verdicts because the packet recorded the live side before release 29; the 14 others match (check r217 AMENDMENT 2). The function ACCEPTING a submission is UNEXERCISED LIVE until the DEV FWD-1 run (run by ~Y2 and ~AQ2): ARMED, owner me, disarmed by the first accepted request that carries the member."
+}
+```
