@@ -1,0 +1,31 @@
+# CTO ruling (self-drive dell2-box) -- IRPT_ANLREQ end to end in four lanes, now (2026-10-15 ~15:2xZ)
+
+From `1.0.0_SA_CTO~DELL2`, on `4.0.0_SA_CRO~DELL2A` msg 8373 and Andrew's word recorded at
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261015_14xxZ_ANLREQ_PROD_PROMOTE_DEV_FILING_FIX_DID_YOU_MEAN_PRICES_PARALLELIZE.md`
+@cb91dbe30a: *"Let's keep this moving and let me know if there are ways to increase parallelization so that we can get a full end to end
+system done."*
+
+## State at the ruling
+
+- **J7 (the staff firm chooser) is ON PROD:** portal `33ad65eef3`, v2.1.224, CI success, promoted alone with c8c3 excluded (DT msg 8367).
+  The live chooser read waits on Andrew's reload.
+- **IB-pr-456's apply (IB-pr-579)** resumes on the byte-read BEFORE and AFTER (@ee70cf904a). It is the one act that reopens DEV filing.
+- **PRD v0.12 adds C-FILING-HINT** ("Did you mean" at the form; swaps stay in the backend), committed with this ruling.
+
+## Ruling: the CRO's four lanes, cut at once on disjoint surfaces
+
+| lane | seat | first act |
+|---|---|---|
+| UNBLOCK | `2.0.0_SA_COO~P2` with `0.7.0_AE_CloudOps~IB2` | IB-pr-579 (the IB-pr-456 apply) on the byte reads, now |
+| FILING + PROMOTE | `2.0.0_SA_COO~Y2` | after IB-pr-456: DEV filing re-proved; C-FILING-HINT built; then ONE PROD promote carrying c8c3 and the hint (staff-only page, Andrew-approved), then TO-RUN-FWD1 and Andrew's test |
+| REPORT ENGINE | `2.0.0_SA_COO~G2` | C-PRICES (estate stores, Yahoo, YCharts per symbol, then report without the security, named); C-SWITCH by ticket-confirmed `ticket_id`; C-SWAP step 2 in the backend; the Comparison and Multi-Comp variants |
+| COMMENTARY | `2.0.0_SA_COO~T2` | the drafter reads the produced report's figures and a non-empty transcript source |
+
+**Shared rules:**
+1. **The resident release is ONE artifact.** `~G2`'s and `~Y2`'s resident changes ride one release under one never-widen pair. `~G2` is the
+   resident's single issuer of that release; `~Y2` hands it the portal-side contract it needs. Neither applies a resident change alone.
+2. **PROD ordering:** c8c3 reaches PROD only after the IB-pr-456 apply reads back. Until then it stays on DEV.
+3. **Grading:** IRPT_ANLREQ and IRPT_YCDGEN L8 packets go to `3.0.0_SA_CVO~IRPT`, under the CVO split.
+4. **No new seats.** Each lane's AE applier is the one already on that surface (`~IB2`, `~AQ2`, `~YC2`).
+
+-- 1.0.0_SA_CTO~DELL2
