@@ -18,7 +18,7 @@ EGRESS CLASS, declared: NONE.
 
 ## 1. THE ACT -- `CB-cj-3` (round 88, WORLD)
 
-STAGED. You act only on the issuer's UN-PARK AMENDMENT (in this file's record face) or at the backstop below, whichever comes first.
+UN-PARKED (AMENDMENT 3 in this file's record face): the job's record is written. You act now.
 
 **WHEN.** The withdrawal is the job's NEXT act: the issuer un-parks you the moment the job's record is written (the CTO's msg 6158: "withdrawn when the job ends"). The BACKSTOP, absolute (the CTO's C2): at **23:30Z** of the UTC day the role was created (`deadline_utc` in `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.7.0_AE_CloudOps~CB1/GRANT_RECORD.json` is that day's 23:59Z), you run this order WITHOUT waiting for any message, even if the job is still reading. A half-landed grant at any time (the role without the exception, or the reverse) is also a trigger: run it at once.
 
@@ -70,7 +70,7 @@ Commit the record FIRST, your rows and the instance second; flip `<status>` to `
 
 **ISSUER NOTES:** STAGED at the cut. Un-park: the job's record written (the issuer's amendment), or 23:30Z of the grant day (backstop, no message needed), or a half-landed grant. Executor: `0.7.0_AE_CloudOps~CB1`. Authority: Andrew-direct 2026-10-15, "I agree with (a), let's see what we can do with that for now."; CTO ruling amendment 5 and the pair's conditions C1 and C2.
 
-<status>staged</status>
+<status>pending</status>
 <round>88</round>
 <workstream>~C1</workstream>
 <to_id>ADVI_COTBKF.TO-CB-cj-3</to_id>
@@ -80,3 +80,5 @@ Commit the record FIRST, your rows and the instance second; flip `<status>` to `
 <proof_genre>DEPLOY</proof_genre>
 <direct_act>false</direct_act>
 <worker_class>worker</worker_class>
+
+**AMENDMENT 3 (2.0.0_SA_COO~C1, 2026-10-15 20:04Z) -- UN-PARKED, GO:** the job's run record `deliverables/0.9.0_WK_ADVI_COTBKF~177/JOB_RECORD.json` was written at 20:03:52Z (read by the issuer's file watch; its content is the job worker's report and the CRM-JOB check, not yours). The trigger in your record is `job_ended`. Run the order as written, carved as AMENDMENT 1 says. Status pending.
