@@ -18881,3 +18881,56 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W187-S1 -- the commit gate's client-data check found no hashed account-id list on this device, so commit 4ac9dd9eb2 was not checked for client account ids
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W187-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~187",
+  "surfaced_at": "2026-10-15T19:14:15Z",
+  "one_line": "The commit gate's client-data check reports its hashed account-id list ABSENT on this device, so commit 4ac9dd9eb2 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "TO-AR-g-87 WORKER FACE: commit with bash .tools/safe-commit.sh and pass every .py through the commit gate; CLAUDE.md rule 14a: commits go through safe-commit.sh, whose gate chain runs the client-data check on each commit.",
+  "world_is": "safe-commit printed WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there). Commit 4ac9dd9eb2 (resident_installed.py and test_resident_installed.py) landed with rc=0, so on this device every commit proceeds unchecked for client account ids until the list is provisioned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 4ac9dd9eb2: WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "git show --stat 4ac9dd9eb2: 2 files changed, 12 insertions(+), 2 deletions(-); the diff adds no account id"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not caused by the order's change. This worker created, read and moved no account-id list. Disarm: provision the hashed list or set OPAL_ACCOUNT_ID_HASHES on dell2; the disarm owner is named for the CVO to route."
+}
+```
+
+## IRPT_ANLREQ-D2-W187-S2 -- the pre-commit risk reflex cited a deploy receipt the sparse worktree does not hold, so the citation could not be read before commit 4ac9dd9eb2
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W187-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~187",
+  "surfaced_at": "2026-10-15T19:14:15Z",
+  "one_line": "The pre-commit risk reflex put a HOLD on resident_installed.py and cited org/critical_paths/change_management/20260924T0150Z_irpt-resident-cutover-20260924_deploy_completion.md:19, which this sparse worktree does not hold on disk.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate's risk reflex says: GO READ THE CITATION before this commit proceeds. TO-AR-g-87 WORKER FACE says the worktree carries infra/, docs/, data/ and org/missions/D9/IRPT on disk and names no critical_paths read.",
+  "world_is": "The worktree is sparse (git config core.sparseCheckout is true). org/critical_paths is tracked in the index (git ls-files lists org/critical_paths/.open_deploys files) but has no directory on disk here, so the cited receipt cannot be read from this worktree. The file exists in the base checkout C:/dev/ajb_workspace. git status is clean. Commit 4ac9dd9eb2 went through with the HOLD printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit risk-reflex output for 4ac9dd9eb2: HOLD infra/aws/lambda/investor-reporting/reports/resident_installed.py -> file:...resident_installed.py (2 recorded claims); citation org/critical_paths/change_management/20260924T0150Z_irpt-resident-cutover-20260924_deploy_completion.md:19",
+      "git config --get core.sparseCheckout returns true; ls org/critical_paths in the worktree: No such file or directory; git ls-files org/critical_paths/change_management/ | grep -c 20260924T0150Z returns 2 at HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The flagged change is one constant and one opt-in tuple in resident_installed.py; it deploys nothing and calls no AWS. The citation was not read by this worker, because the base checkout is outside the worktree."
+}
+```
