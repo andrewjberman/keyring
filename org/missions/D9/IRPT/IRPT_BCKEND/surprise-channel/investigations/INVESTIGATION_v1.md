@@ -36830,3 +36830,73 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The write is the flat .jsonl.gz key the order and the check require. The docstring is stale; no runtime effect was observed. The retirement in IB-pr-560 removes the write and should correct the docstring in the same change."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W406-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~406",
+  "surfaced_at": "2026-10-15T06:32:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-562 criterion AC3 cannot pass on any source map. The check's selector importing_functions() in p204_cells.py takes a function only when the strings reporting/entry.py, export/retained_export.py or export/bundle.py occur in json.dumps(entry); no entry in lambda-source-map.json contains them, because the map lists these modules as bare file names under source_dir. The selector returns zero functions and AC3 fails with 'no function in the map packages an importing module'. The staging the cell asks for is done on the worker branch; the selector is the issuer's defect and the order stays open.",
+  "spec_asserts": "WORKER FACE cell IB-pr-562 and criterion AC3: the check computes the importing functions from the map and every one of them must carry exactly one staged_from entry for the shared reader.",
+  "world_is": "The selector yields 0 functions on the base map (71c9c81b67) and on the worker commit 9892daa1dd. The packaged importers are reached only through source_dir plus files: irpt-49f-reporting-read-lambda packages reporting/entry.py, irpt-export-render packages export/retained_export.py and export/bundle.py. The worker staged both functions on that computed set; the AC3 output is recorded verbatim in IB204-1_criteria_output.txt.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~P2/checks/r204/p204_cells.py importing_functions() at worktree HEAD 71c9c81b67 (the substring selector and IMPORTERS tuple)",
+      "python -I selector run over infra/aws/lambda/ci/lambda-source-map.json at 71c9c81b67: 0 functions; packaged-path selector (source_dir plus files): 2 functions",
+      "commit 9892daa1dd (lambda-source-map.json +16 -2; test_source_map_filled_named_accounts.py added): both functions carry one staged_from entry, pin 25bac3b7ea, sha256 verified by the build"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W406-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~406",
+  "surfaced_at": "2026-10-15T06:32:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's READ FIRST names irpt-ycharts-generate as a function whose entry mentions reporting/entry.py, export/retained_export.py or export/bundle.py. It does not: its source_dir is ycharts/generate, its entry is ycharts/generate/entry.py, and it packages no importer. The worker did not stage it; the packaged-path set is irpt-49f-reporting-read-lambda and irpt-export-render.",
+  "spec_asserts": "WORKER FACE cell IB-pr-562 READ FIRST: the functions whose entries mention reporting/entry.py, export/retained_export.py or export/bundle.py include irpt-ycharts-generate.",
+  "world_is": "irpt-ycharts-generate packages ycharts/generate/entry.py only; the bare name entry.py in its files list resolves under its own source_dir. The grep of the investor-reporting tree places the shared reader's import sites only at reporting/entry.py:403 and export/retained_export.py:421.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda-source-map.json at 71c9c81b67, the irpt-ycharts-generate entry: source_dir infra/aws/lambda/investor-reporting/ycharts/generate, files entry.py",
+      "Grep of infra/aws/lambda/investor-reporting for filled_named_accounts at 71c9c81b67: reporting/entry.py:403 and export/retained_export.py:421 only"
+    ]
+  }
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W406-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~406",
+  "surfaced_at": "2026-10-15T06:32:09Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The check's importer tuple names export/bundle.py, but no module imports the shared reader there: the reader is imported by name only in reporting/entry.py and export/retained_export.py. irpt-export-render packages bundle.py and retained_export.py, so the computed function set is unchanged; the tuple member adds nothing to the set.",
+  "spec_asserts": "WORKER FACE: the importing modules are reporting/entry.py, export/retained_export.py and export/bundle.py (the check's IMPORTERS tuple).",
+  "world_is": "export/bundle.py has no import of filled_named_accounts; its only effect on the computed set is through irpt-export-render, which packages retained_export.py as well.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of infra/aws/lambda/investor-reporting for filled_named_accounts at 71c9c81b67: no hit in export/bundle.py",
+      "lambda-source-map.json irpt-export-render files list includes bundle.py and retained_export.py at 71c9c81b67"
+    ]
+  }
+}
+```
