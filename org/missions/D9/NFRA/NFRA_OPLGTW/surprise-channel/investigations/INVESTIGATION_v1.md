@@ -17727,3 +17727,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Measured, not dispositioned. Both mechanisms are true at the same commit; which one OG-cl-1's core uses is the issuer's decision. The probe's negative arm names another canonical firm and reads zero keys."
 }
 ```
+
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W105-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~105",
+  "surfaced_at": "2026-10-15T15:10:00Z",
+  "one_line": "The order names the instance NFRA_OPLGTW.TO-OG-cl-3.client_orion.proof_of_spec.json, but the to-pipeline gate resolves an instance by the order file stem (NFRA_OPLGTW.TO-OG-cl-3.client-orion-eclipse.proof_of_spec.json, the sibling convention). The flip was refused; the instance is renamed to the stem name in this cell's deliverables folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ .tools/to-pipeline-gate.py:3178-3193 @commit c8c31dce34 (_proof_instance_candidates): the candidate names are the order stem plus .proof_of_spec.json or _PROOF_OF_SPEC.json, unless the staged order's own proof_of_spec block names an instance",
+      "RUN safe-commit of the status flip with the instance named client_orion: refused, to-pipeline-gate REFUSED 'NO proof-of-spec instance was found beside it' (.scratch/commit_b.log, line 16)",
+      "READ deliverables/0.9.0_WK_NFRA_OPLGTW~83/NFRA_OPLGTW.TO-OG-cl-0.client-roles-and-contract.proof_of_spec.json: the sibling instance carries the full stem in its name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 5: write the proof instance at W/NFRA_OPLGTW.TO-OG-cl-3.client_orion.proof_of_spec.json and validate it with the checker against the governing order.",
+  "world_is": "The checker validates the instance under any name, but the pipeline flip gate finds an instance only under the order stem name or through a proof block in the staged order, and the order's proof block names no instance. The instance is therefore saved as NFRA_OPLGTW.TO-OG-cl-3.client-orion-eclipse.proof_of_spec.json, and the order's stated name is unused.",
+  "notes": "Measured, not dispositioned. The order text and the gate disagree on the name; the issuer decides whether the order's name or the gate's convention stands. The instance content is unchanged apart from the surprise list."
+}
+```
