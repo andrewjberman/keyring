@@ -18295,3 +18295,79 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm: task order DB-b-274 (round 141) makes the cap hold across the whole chain by a budget each self-invoke carries, with a probe that drives a whole chain; it lands in the repo first, then a later code-update pair deploys it, and the schedule stays DISABLED until the CTO's word after both."
 }
 ```
+
+## IRPT_DASHBD-D2-W221-S1 -- Contract 0.4.1 says an UNMAPPED_ACCOUNT row carries a source_account_id (required_when) wh
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W221-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~221",
+  "surfaced_at": "2026-10-15T20:18:25Z",
+  "one_line": "Contract 0.4.1 says an UNMAPPED_ACCOUNT row carries a source_account_id (required_when) while the same column's own rule text says an unmapped Orion account is written with no source_account_id; the two statements contradict and the order's change-nothing-else rule kept the text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-273 step 2: source_account_id gains required_when {reason_class: UNMAPPED_ACCOUNT} and nothing else changes; CTO ADDENDUM 6 item 6: an UNMAPPED_ACCOUNT ABSENT row carries a null account_id and a source_account_id.",
+  "world_is": "The optional column source_account_id still carries the 0.4.0 rule text: Set only where source is orion and the custodian account form is mapped through account_dim; an Orion account with no mapping is not written with a guessed id. A writer that follows the text writes an unmapped row with no source_account_id, and the 0.4.1 validator rejects it loudly (required_when). Left as the order said; no edit made to the rule text.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@ca3e3ded9a (optional_columns source_account_id rule)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-273.account-return-contract-041-row-status-reason-class-and-vendor-reported.md@ca3e3ded9a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W221-S2 -- The Scope adapter's absent records for unmapped accounts carry a set account_id, a null so
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W221-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~221",
+  "surfaced_at": "2026-10-15T20:18:25Z",
+  "one_line": "The Scope adapter's absent records for unmapped accounts carry a set account_id, a null source_account_id and no row_status, which is not the 0.4.1 shape for an UNMAPPED_ACCOUNT ABSENT row; a null row_status reads PRESENT. Whether a writer takes these records into the table is not measured here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract 0.4.1: an UNMAPPED_ACCOUNT ABSENT row carries a null account_id and a source_account_id; reason_class is required on every ABSENT row; a null row_status means a writer that predates the column and reads PRESENT.",
+  "world_is": "inflection_scope_feed_adapter.py _absent() (line 49) sets account_id to the Orion key string, and the unmapped branch (line 92) passes source_account_id None; the records carry no row_status key. The 0.4.1 validator is not run against these records and no adapter is edited (outside the grant). The shape is the finding; no served value is claimed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py@ca3e3ded9a (lines 49 and 92)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@ca3e3ded9a (rule24_record and optional_columns of 0.4.0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W221-S3 -- The Scope adapter writes return_basis TWR on every Orion row it builds, while contract 0.4
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W221-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~221",
+  "surfaced_at": "2026-10-15T20:18:25Z",
+  "one_line": "The Scope adapter writes return_basis TWR on every Orion row it builds, while contract 0.4.1 requires an Orion PRESENT row to carry VENDOR_REPORTED (source_requires); the adapter's rows would be read as Opal-computed TWR returns, and the 0.4.1 validator rejects them. Armed: the adapter is the Orion row producer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "Contract 0.4.1 source_requires {orion: {return_basis: VENDOR_REPORTED}}; source_rules.orion.return_basis: the Orion return is the vendor's reported measurement, not Opal's computation.",
+  "world_is": "inflection_scope_feed_adapter.py line 146 writes \"return_basis\": \"TWR\" on each Orion row (source orion, flow_claim absent, source_account_id set). Those rows fail the 0.4.1 declaration and a served row would label a vendor return as computed. The adapter is outside this order's grant and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py@ca3e3ded9a (line 146)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (source_requires, 0.4.1, uncommitted at this row)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
