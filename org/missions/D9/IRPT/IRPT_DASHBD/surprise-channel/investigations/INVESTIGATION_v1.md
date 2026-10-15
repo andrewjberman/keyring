@@ -16483,3 +16483,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Blocking on the order's read path, filed by the worker that stopped at the grant. Counts and words only; no client figure is quoted. The order stays open; the issuer decides the checkout scope. Append only."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W202-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~202",
+  "surfaced_at": "2026-10-15T09:51:29Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W202-S1: the issuer ruled that the provisioning sparse checkout was an issuer error, disabled it in this worktree, and ordered the build to proceed as written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W202-S1 (BLOCKING) recorded that the worktree carried no data/ tree, so the read source data/assets/scripts/gold/irpt_reporting/sources.json was absent and the cell could not be built.",
+  "world_is": "The issuer's ruling, relayed to this worker by the coordinator, names the cause as its own provisioning error (the worktree provisioner defaults to a sparse checkout and the paths were not added). The issuer ran git sparse-checkout disable in this worktree. Measured here: git config core.sparseCheckout is false, sources.json is on disk at data/assets/scripts/gold/irpt_reporting/sources.json, and the cell was built and its record committed at 4f99b96231 with the analysis script committed at 34501d1de8. The checker DB122-3-AC1 printed PASS at the worktree root.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer ruling relayed to worker 0.9.0_WK_IRPT_DASHBD~202 by the coordinator, on surprise row IRPT_DASHBD-D2-W202-S1",
+      "git config core.sparseCheckout false in C:/dev/wk-irpt-dashbd-202 at 4f99b96231; git sparse-checkout reports the worktree is not sparse",
+      "data/assets/scripts/gold/irpt_reporting/sources.json on disk in the worktree (test -f true)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~202/RD_CONVERSION_READ_R122.json @4f99b96231 and conversion_read_r122.py @34501d1de8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution note for IRPT_DASHBD-D2-W202-S1, which is left as written (append only). The blocking cause was the provisioning checkout scope, not the order; the issuer owns the provisioner. Counts and words only; no client figure is quoted."
+}
+```
