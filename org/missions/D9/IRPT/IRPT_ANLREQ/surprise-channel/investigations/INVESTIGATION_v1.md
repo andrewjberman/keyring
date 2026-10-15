@@ -16958,3 +16958,33 @@
   "notes": "Resolves IRPT_ANLREQ-D2-S26."
 }
 ```
+
+## IRPT_ANLREQ-D2-S118 -- why the PROD Ticket Center's model, ticker and firm lists do not load
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S118",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-15T14:20:00Z",
+  "one_line": "On the PROD Ticket Center a staff caller's New Analysis Request shows no Opal models, no tickers and 'Your firms are still loading': the comparison catalogue is refused by irpt-ycharts-generate with FIRM_BINDING because no firm is chosen and the Lambda's directory map holds no staff or Global token; why the firms list stays null is not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (reads the firms path on the DEV build before TO-RUN-FWD1 flips)",
+  "spec_asserts": "The form lists the Opal models and tickers (served comparison catalogue) and the firms the caller may file for; CTO msg 8317 asked for one row on why the PROD lists do not load.",
+  "world_is": "MEASURED by this seat 2026-10-15 ~14:15Z from CloudWatch (message heads only) and Lambda configuration: (1) At 13:54:38Z, operation comparison-catalogue on irpt-ycharts-generate (integration wtho3v4, route GET /api/scoped/investor-reporting/analysis/comparisons) logged exception_text 'BLOCKED: no directory bucket declared for firm token in IRPT_DIRECTORY_BUCKET_MAP -- a firm this function cannot map is refused, never defaulted' and public_reason_code FIRM_BINDING; the page then holds models null ('The Opal model list is not loaded.') and no tickers. (2) That Lambda's IRPT_DIRECTORY_BUCKET_MAP has the keys 49financial, cottonwood and inflection and no Global or staff token (key names read; values not). (3) In the DEV source the catalogue request carries selected_tenant only when the form has a chosen firm (TicketCenter.tsx catalogueFirm = filingForm.firm); a staff caller with no firm chosen sends none, so the Lambda sees the caller's own context, which it cannot map. (4) The firms read is POST /api/scoped/investor-reporting/directory/resolve on irpt-directory-search (integration g9302sp): four invocations at 13:54:20-21Z, no error line in the window (message heads, filter ERROR/Error/Traceback/timed out); the form's 'still loading' is the state firms null with no failure recorded. NOT read: the response bodies; the PROD portal build (the source read is the DEV working tree at HEAD); why the firms promise did not settle or did not apply; whether a firm chosen by hand would have loaded the catalogue. Consequence for this project: the FWD-1 run is on the DEV build with a staff user, which uses the same live API and the same firms read, so the firms path must be read on DEV before TO-RUN-FWD1 flips.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/irpt-ycharts-generate 2026-10-15 13:54:36-38Z (request bfa52b02): irpt_internal and irpt_error FIRM_BINDING",
+      "lambda get-function-configuration irpt-ycharts-generate and irpt-directory-search: IRPT_DIRECTORY_BUCKET_MAP keys",
+      "CloudWatch /aws/lambda/irpt-directory-search 2026-10-15 13:54:20-21Z: 4 invocations, durations 229-1443 ms, no error line",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx lines 237-332 and analysisRequest.ts line 224 (DEV working tree)",
+      "Andrew's screenshot of the PROD Ticket Center, 2026-10-15 09:56 local"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reads only; nothing changed. Next: a read-only trace of the staff firms path on the DEV build (what directory/resolve returns for a staff context, and when a chosen firm makes the catalogue load) as a worker cell, before the run order flips."
+}
+```
