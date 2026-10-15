@@ -10424,3 +10424,182 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "safe-commit.sh's author-seat check appends to a tracked audit log on each commit by a serial the roster does not know. In a sparse worktree that file is a tracked change the worker cannot commit under its lane, so it stays dirt until the worktree is removed."
 }
 ```
+
+## NFRA_CTLPLN-W106-S1 -- the sparse CT-ai worktree lists one live project, so the placement read saw 1 of 29 projects and zero overlaps
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "The worktree cut holds only the NFRA_CTLPLN project folder. The placement read then reports 1 live project and 0 cross-box overlaps with no error. The read was expanded by git sparse-checkout add over the 53 org/missions project folders that hold a project.json (and org/critical_paths, infra/aws/lambda/ci for the rule files); after that it reports 29 projects and 56 overlaps.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/placement-check.py in the worktree before the expansion: 'placement-check | live projects: 1', 'FINDINGS: 0 unplaced/unreadable, 0 cross-box write overlap(s)'",
+      "git ls-tree -r --name-only HEAD org/missions | grep project.json: 53 files; the worktree held 1 of them",
+      "python .tools/placement-check.py@23ca26093b after the expansion: 'live projects: 29', 'FINDINGS: 0 unplaced/unreadable, 56 cross-box write overlap(s)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 BUILD 2: run python .tools/placement-check.py and class every OVERLAP line; PATHS: the order's folders are in the sparse list, and a missing folder is added with git sparse-checkout add and named in the report.",
+  "world_is": "A sparse worktree cut for one project makes the placement read silently partial: it prints a clean zero-overlap result over 1 of 29 projects. The classing has no denominator unless the project folders are present in the worktree the read runs in."
+}
+```
+
+## NFRA_CTLPLN-W106-S2 -- the placement read gives 56 overlaps, not the 57 the cut recorded, and not the portal SPLIT example
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "At 23ca26093b the placement read prints 56 OVERLAP lines where the order records 57 at the cut. The SPLIT example the order names (portal/src/api/endpoints/investor-reporting.ts, shared by DSGN_IRPTV1 and AMGT_RESAPP) is not among the overlaps. org/mcp/drive_mode/ has no tracked file at HEAD, so FAST-lease write surfaces, which the read adds to each project, are absent from this worktree's read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py@23ca26093b run in the worktree: 'FINDINGS: 0 unplaced/unreadable, 56 cross-box write overlap(s)'; the FWD7 table in org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~106/FWD7_OVERLAP_CLASSES.md lists all 56",
+      "git ls-tree -r --name-only HEAD org/mcp/drive_mode: 0 files",
+      "the cut's 57 is not reproduced here and the difference is not attributed; no read of the base checkout was made"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 PREMISE: placement-check.py already prints 57 OVERLAP lines at the cut, and FWD-7 names a SPLIT example, portal/src/api/endpoints/investor-reporting.ts, shared by DSGN_IRPTV1 and AMGT_RESAPP.",
+  "world_is": "At this HEAD the read yields 56 overlaps. No overlap names that portal file, and the lease input the read globs is not tracked in this tree."
+}
+```
+
+## NFRA_CTLPLN-W106-S3 -- an overlap on .tools/tests has no rule and is UNCLASSIFIED
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "OVERLAP NFRA_CTLPLN (laptop) and IRPT_BCKEND (dell2) on .tools/tests/test_round18_batch.py (a file NFRA_CTLPLN writes) against the directory .tools/tests claimed by IRPT_BCKEND. No rule file names a single writer or merge rule for this path, so the row is UNCLASSIFIED in the FWD-7 table.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py@23ca26093b, OVERLAP line 1: 'NFRA_CTLPLN (laptop) and IRPT_BCKEND (dell2): .tools/tests/test_round18_batch.py ~ .tools/tests'",
+      ".tools/tests/test_round19_register.py --fwd7 at 23ca26093b: row 1 UNCLASSIFIED, rule 'no rule: one project claims a directory that contains the other project's specific path'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 AC2: every overlap of the placement read is classed (unclassified=0).",
+  "world_is": "The overlap is a directory-level claim by IRPT_BCKEND over a test file that NFRA_CTLPLN's order names. No SHARED rule file covers .tools/tests, and a SPLIT needs both projects to name the same file, which they do not. The class needs a rule, or a narrowed write claim from the owner of IRPT_BCKEND's order."
+}
+```
+
+## NFRA_CTLPLN-W106-S4 -- an overlap on infra/aws/lambda/bd-pipeline has no rule and is UNCLASSIFIED
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "OVERLAP NFRA_MCPINDEX (sitez) and ADVI_FIRMBKTS (dell1) on infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger, which NFRA_MCPINDEX names, against the whole infra/aws/lambda directory claimed by ADVI_FIRMBKTS. The lambda-source-map row gives the source_dir but names no writer, so the row is UNCLASSIFIED in the FWD-7 table.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py@23ca26093b, OVERLAP line for ADVI_FIRMBKTS (dell1) and NFRA_MCPINDEX (sitez): 'infra/aws/lambda ~ infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger'",
+      "infra/aws/lambda/ci/lambda-source-map.json, row bd-asset-dim-trigger: source_dir 'infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger' (the mapping, with no writer named)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 AC2: every overlap of the placement read is classed (unclassified=0).",
+  "world_is": "ADVI_FIRMBKTS claims the whole infra/aws/lambda directory, which contains a source directory NFRA_MCPINDEX names. The source map declares the source-to-function mapping and is the canonical copy, but it states no single writer for that source directory, so no SHARED rule applies."
+}
+```
+
+## NFRA_CTLPLN-W106-S5 -- .tools/safe_deploy_core.py is named by two live projects on two boxes with no single-writer or merge rule
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "Two live projects on different boxes both name .tools/safe_deploy_core.py in their write sets: MDPF_SECCLASS (dell1) and IRPT_BCKEND (dell2). The placement rule says two projects on different boxes change different files. No rule file in the tree names a single writer or merge rule for this path, so the row is classed SPLIT (R4) in the FWD-7 table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (register and placement owner)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py@23ca26093b, OVERLAP line: 'MDPF_SECCLASS (dell1) and IRPT_BCKEND (dell2): .tools/safe_deploy_core.py ~ .tools/safe_deploy_core.py'",
+      ".tools/safe_deploy_core.py@23ca26093b: header names no single writer; the file is the shared core of safe-deploy"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-7 (order C-PLACEMENT): two projects on different boxes change different files.",
+  "world_is": "Two projects on two boxes both list one shared tool file in their write sets. Two edits to that file on two boxes meet only at the drain merge, with no declared owner for the path."
+}
+```
+
+## NFRA_CTLPLN-W106-S6 -- tests/test_box_lists_from_register.py names no box, so it cannot show a register copy reached it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "The FWD-2 read lists .tools/tests/test_box_lists_from_register.py as NOT REACHED. The test can be run with OPAL_DEVICE_REGISTER set, but it prints only PASS or FAIL arms and no box name, so its output cannot name fixbox. Its two value arms are covered by the gate FABRIC_ENUM row and the box-status BOXES row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_box_lists_from_register.py@23ca26093b: output lines are PASS/FAIL arms and 'BOX-LISTS-FROM-REGISTER gate=... status_report=... ok=...' with no box name",
+      ".tools/tests/test_round19_register.py --fwd2 at 23ca26093b: 'FWD2-BOX-ADDED tools=6/8 not_reached=2 named=6 ok=True'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 FWD-2 BUILD 1: each tool that reads the box list is pointed at the register copy and must name fixbox; a tool that cannot be pointed is listed with its reason and counted not reached.",
+  "world_is": "This tool reads the register through lib/devices.py and could take OPAL_DEVICE_REGISTER, but its output carries no box name, so it cannot satisfy the naming test. It is listed, not failed."
+}
+```
+
+## NFRA_CTLPLN-W106-S7 -- tests/fabric_value_census.py reads no box list and cannot take a register copy
+
+```json
+{
+  "id": "NFRA_CTLPLN-W106-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~106",
+  "surfaced_at": "2026-10-15T13:01:52Z",
+  "one_line": "The FWD-2 read lists .tools/tests/fabric_value_census.py as NOT REACHED. It is a token census of the word site-z or sitez in tracked text, with its own path-keyed table. It reads no box list and has no register input, so no register copy can reach it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/fabric_value_census.py@23ca26093b: ROOT scan of git ls-files under .tools/, lib/, org/devices/ and related scopes; no read of lib/devices.py or the register",
+      ".tools/tests/test_round19_register.py --fwd2 at 23ca26093b: listed as not reached with that reason"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-1 FWD-2 BUILD 1: every tool the order names or any test named by the two list-reading tests is pointed at a register copy; a tool that cannot be pointed is listed and gets a row.",
+  "world_is": "The census is named by the order because it carries the register path in its scope table, but it does not read the box list. Listing it as not reached is the honest count."
+}
+```
+```
