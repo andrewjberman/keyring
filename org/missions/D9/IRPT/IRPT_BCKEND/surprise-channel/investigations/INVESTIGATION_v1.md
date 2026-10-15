@@ -38915,3 +38915,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. The twin the order first named (a refused wrong-typed body before and after) could not discriminate: every event needs header-asserted edge identity before validate_public_request, so the applier stopped and the CTO ruled byte reads (msg 8364). The replay at the pin reads 3 of 17 arms different from the packet's verdicts because the packet recorded the live side before release 29; the 14 others match (check r217 AMENDMENT 2). The function ACCEPTING a submission is UNEXERCISED LIVE until the DEV FWD-1 run (run by ~Y2 and ~AQ2): ARMED, owner me, disarmed by the first accepted request that carries the member."
 }
 ```
+
+## IRPT_BCKEND-D2-W427-S1 -- The BUILD ONLY of irpt-holdings-performance-lambda prints an ADVISORY that the package is not enforced (no BUILD_MANIFEST.json declaring layer_dependencies and vendored_modules); the build still returns rc 0.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W427-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~427",
+  "surfaced_at": "2026-10-15T16:18:05Z",
+  "one_line": "The BUILD ONLY of irpt-holdings-performance-lambda prints an ADVISORY that the package is not enforced (no BUILD_MANIFEST.json declaring layer_dependencies and vendored_modules); the build still returns rc 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh@c5c06462414832b495c243a86254a4b959ba7c9b, the BUILD_ONLY branch (lines 687-692) prints the zip and sha256 and exits without upload",
+      "build log of both candidate builds at base c5c06462414832b495c243a86254a4b959ba7c9b (kept in scratch outside the repository): the ADVISORY block lists four imports (pandas, pyarrow, stream_parquet, trading_calendar) and the line UNENFORCED IS NOT A PASS; both builds returned rc 0 and produced byte-identical zips",
+      "no BUILD_MANIFEST.json was added or edited (outside the paths block); the live function's own build log was not read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's build line produces the candidate zip for irpt-holdings-performance-lambda; the order does not name a BUILD_MANIFEST and asks for no packaging change.",
+  "world_is": "The build prints the not-enforced ADVISORY for this function on every BUILD_ONLY run at base c5c06462414832b495c243a86254a4b959ba7c9b; the candidate is built and compared as the order asks, with the advisory recorded and not resolved."
+}
+```
+
+## IRPT_BCKEND-D2-W427-S2 -- The investigation row schema the order names at org/surprise_channel/schemas/investigation_item.schema.json is not in the worktree sparse checkout; it was read from the committed blob at HEAD by git show.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W427-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~427",
+  "surfaced_at": "2026-10-15T16:18:05Z",
+  "one_line": "The investigation row schema the order names at org/surprise_channel/schemas/investigation_item.schema.json is not in the worktree sparse checkout; it was read from the committed blob at HEAD by git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at c5c06462414832b495c243a86254a4b959ba7c9b: .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_BCKEND, org/modules/graph, org/ref, org/standards (org/surprise_channel is absent; the worker face's sparse set does not add it)",
+      "Glob of C:/dev/wk-IRPT_BCKEND-427/org/surprise_channel reports the directory does not exist in the worktree",
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json rc 0 at c5c06462414832b495c243a86254a4b959ba7c9b; its required fields and enums were used for the rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face names the row schema at a path inside the worktree tree, and the sparse set it gives covers the paths the worker reads.",
+  "world_is": "The schema path is absent from the sparse worktree; the schema is present in the committed tree at HEAD and was read there; the rows here conform to its required fields and enums."
+}
+```
