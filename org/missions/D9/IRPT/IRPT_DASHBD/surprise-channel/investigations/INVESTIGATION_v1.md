@@ -18602,3 +18602,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Reading taken: a missing ARN means no chain was possible, so the budget did not end it. The issuer may rule the other reading; the change is one test-order line in chain_next."
 }
 ```
+
+## IRPT_DASHBD-D2-W223-S1 -- The Scope adapter already writes market_value_eod_claim as a row field and as a parquet column, so the claim is not only in its run record; the 0.4.1 contract declares no such column.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:11:31Z",
+  "one_line": "The Scope adapter already writes market_value_eod_claim as a row field and as a parquet column, so the claim is not only in its run record; the 0.4.1 contract declares no such column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-275, Why section: the Scope feed carries no end market value, the adapter infers it, and the claim lives only in the adapter's run record, so 0.4.1 has no field a consumer can reject on for it.",
+  "world_is": "The adapter's day rows carry market_value_eod_claim beside the contract's columns: the value is 'inferred' from the next calendar day's start value and 'measured' from the own end value (adapter lines 131 and 133, row field at line 144). The run writes it as a string column of the parquet (run line 27 names the field, line 116 appends it to the table fields). Two adapter tests pin the field and its two values, and one run test pins its string type. The claim therefore already travels as a field in the output; no contract declares it until 0.4.2 does.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py lines 131, 133 and 144 (base 198f2591f091c57df02ef8238aa1f10cff7147bb)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py lines 27 and 116 (base 198f2591f091c57df02ef8238aa1f10cff7147bb)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_adapter.py lines 173-188 and 263; data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_run.py line 189 (base 198f2591f091c57df02ef8238aa1f10cff7147bb)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found by the token census of market_value_eod_claim at the census commit (4 files, 14 hits). Only these lines were read; the adapter is outside this grant. The adapter's TABLE_FIELDS comment still says 22 sorted name:type lines, which is stale against the five optional columns of 0.4.1."
+}
+```
+
+## IRPT_DASHBD-D2-W223-S2 -- Under 0.4.2 all twelve tests of the 0.4.1 contract file fail: they build Orion rows without the claim, and that file's validator reads required_when but not required_unless_absent. The order's bounded edit covers the pinned version only, so the file does not pass whole.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:11:31Z",
+  "one_line": "Under 0.4.2 all twelve tests of the 0.4.1 contract file fail: they build Orion rows without the claim, and that file's validator reads required_when but not required_unless_absent. The order's bounded edit covers the pinned version only, so the file does not pass whole.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-275 step 4(b) and criterion DB142-1-AC3: the 0.4.0 and 0.4.1 contract tests pass once the contract reads 0.4.2, with bounded edits only where a test pins the literal contract version or a hash that 0.4.2 moves. The facts words of step 5 say every earlier writer still validates.",
+  "world_is": "The one edit the order names for the 0.4.1 file is the version pin, re-pointed at the supersedes entry (line 230). Twelve of its tests still fail, and each reports that market_value_eod_claim is required on the row. The 0.4.2 declaration requires the claim on every PRESENT Orion row and exempts an ABSENT row through required_unless_absent; the 0.4.1 file's copy of the validator does not read required_unless_absent, and its Orion fixtures carry no claim. Making the file pass needs a validator edit and a fixture edit, a route the order does not name, so the file is left failing and criterion DB142-1-AC3 is FAIL. The 0.4.0 file passes unedited, and the new 0.4.2 file passes with 22 tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_041.py row_problems, lines 58-85 (base 198f2591f091c57df02ef8238aa1f10cff7147bb; the one edit is line 230)",
+      "pytest of the 0.4.0, 0.4.1, cottonwood and 0.4.2 files in the worker worktree: 12 failed, 83 passed before the 0.4.2 file was added; all 12 failures are in the 0.4.1 file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by this worker. The issuer's choice: a 0.4.1 validator that honours required_unless_absent with fixtures that carry the claim, or a ruling that the 0.4.1 Orion fixtures are retired from the 0.4.2 reading. The contract itself is as the order states."
+}
+```
