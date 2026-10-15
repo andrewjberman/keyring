@@ -39,6 +39,108 @@ fi
 REMOTE="$1"
 REMOTE_URL="$2"
 
+# --- NFRA_CTLPLN round 20 (PRD FWD-5; row NFRA_CTLPLN-D1-S8, remedy P1) -- PINNED-ENTRY DEPLOY ---
+# A deploy-scope file named by an OPEN, pinned change-management entry is deployed by this box's push when its S3 bytes
+# differ from the pinned blob, whether or not this box's diff carries it: a file that reached CLOUD by integrate before
+# its box push is in no later box diff, so the diff-bounded logic above never sees it. Usage: pinned_entry_deploy <tip>
+# [deploy-scope paths the box diff already handled]. Pins are read by deploy-ledger-names.py --rev <tip> (it admits only a
+# pin that resolves to this build); scope by crossbox-deploy-check.py --list-deployable. The S3 object is read with ONE
+# `aws s3 cp` into a temp file: a missing object is ABSENT (differs, so deployed); an unreadable one HOLDS the file.
+# Deploys go through safe-deploy.sh, the same path a ledgered box-diff file takes. Nothing else is deployed.
+pinned_entry_deploy() {
+    local _tip="$1" _pyf _pl _k _p _slug _blob _bucket _key _tmp _err _rc _s3 _bh _ts _who _audit _pd
+    _pd=()
+    shift
+    _ts="$(date -u +%Y-%m-%dT%H:%M:%SZ)"; _who="${OPAL_AGENT_SERIAL:-UNKNOWN}"; _audit="$REPO_ROOT/org/safe-deploy-bypass-audit.log"
+    _pyf="$(mktemp)"
+    cat > "$_pyf" <<'PINNED_PY'
+import os, re, subprocess, sys
+root, tip = sys.argv[1], sys.argv[2]
+handled = set(a.replace('\\', '/') for a in sys.argv[3:])
+hook_dir = os.path.join(root, '.tools')
+BUCKETS = {'black_diamond': 'opal-data-bd', 'inf': 'opal-data-inf', 'cot': 'opal-data-cot'}
+SCRIPT = re.compile(r'^data/([^/]+)/scripts/(gold|silver|bronze)/([^/]+\.py)$')
+
+def git(*args):
+    p = subprocess.run(['git', '-C', root] + list(args), capture_output=True)
+    return p.stdout.decode('utf-8', 'replace') if p.returncode == 0 else None
+
+tree = git('ls-tree', '-r', '--name-only', tip, '--', 'data')
+if tree is None:
+    print('PINNED-UNREADABLE tree')
+    sys.exit(0)
+cands = [p for p in tree.splitlines() if SCRIPT.match(p) and p not in handled]
+named = []
+if cands:
+    led = subprocess.run([sys.executable, os.path.join(hook_dir, 'deploy-ledger-names.py'), '--repo-root', root,
+                          '--rev', tip] + cands, capture_output=True, text=True, stdin=subprocess.DEVNULL)
+    for ln in led.stdout.splitlines():
+        f = ln.split(' ')
+        if f[0] == 'LEDGERED' and len(f) >= 3:
+            named.append((f[1], f[2]))
+slug_of = dict(named)
+scope = []
+if named:
+    sc = subprocess.run([sys.executable, os.path.join(hook_dir, 'crossbox-deploy-check.py'), '--list-deployable',
+                         '--repo-root', root, '--files-from', '-'],
+                        input='\n'.join(p for p, _ in named) + '\n', capture_output=True, text=True)
+    scope = [ln[len('DEPLOYABLE '):].strip() for ln in sc.stdout.splitlines() if ln.startswith('DEPLOYABLE ')]
+for p in scope:
+    if p not in slug_of:
+        continue
+    blob = (git('rev-parse', '--verify', '-q', tip + ':' + p) or '').strip()
+    m = SCRIPT.match(p)
+    bucket = BUCKETS.get(m.group(1), '-') if m else '-'
+    key = ('code/%s/%s' % (m.group(2), m.group(3))) if (m and bucket != '-') else '-'
+    print('PIN %s %s %s %s %s' % (p, slug_of[p], blob or '-', bucket, key))
+print('PINNED-COUNT n=%d' % len(scope))
+PINNED_PY
+    _pl="$(python -I "$_pyf" "$REPO_ROOT" "$_tip" "$@" 2>/dev/null </dev/null | tr -d '\r' || true)"
+    rm -f "$_pyf"
+    case "$_pl" in
+      *"PINNED-COUNT n="*) ;;
+      *)
+        echo "deploy gate: HELD-DEPLOY -- the pinned-entry list for $REMOTE_REF could not be read; no pinned file deployed; the push goes through" >&2
+        echo "$_ts HELD-DEPLOY  $_who  ref=$REMOTE_REF  reason=pinned-list-unreadable" >> "$_audit" 2>/dev/null || true
+        return 0 ;;
+    esac
+    while IFS=' ' read -r _k _p _slug _blob _bucket _key; do
+        [ "$_k" = "PIN" ] || continue
+        if [ "$_bucket" = "-" ] || [ -z "$_blob" ] || [ "$_blob" = "-" ]; then
+            echo "deploy gate: HELD-DEPLOY $_p -- pinned by OPEN entry $_slug; no S3 bucket or pin blob resolves for it; not deployed (the push goes through)" >&2
+            echo "$_ts HELD-DEPLOY  $_who  ref=$REMOTE_REF  path=$_p  reason=pinned-s3-target-not-derivable" >> "$_audit" 2>/dev/null || true
+            continue
+        fi
+        _tmp="$(mktemp)"; _err="$(mktemp)"
+        _rc=0; aws s3 cp "s3://$_bucket/$_key" "$_tmp" >/dev/null 2>"$_err" </dev/null || _rc=$?
+        if [ "$_rc" -eq 0 ]; then
+            _s3="$(sha256sum "$_tmp" | cut -c1-64)"
+        elif grep -q -E 'NoSuchKey|Not Found|404' "$_err"; then
+            _s3="ABSENT"
+        else
+            _s3="UNREADABLE"
+        fi
+        _bh="$(git -C "$REPO_ROOT" cat-file blob "$_blob" | sha256sum | cut -c1-64)"
+        rm -f "$_tmp" "$_err"
+        if [ "$_s3" = "UNREADABLE" ]; then
+            echo "deploy gate: HELD-DEPLOY $_p -- pinned by OPEN entry $_slug; the S3 object could not be read; not deployed (the push goes through)" >&2
+            echo "$_ts HELD-DEPLOY  $_who  ref=$REMOTE_REF  path=$_p  reason=pinned-s3-read-failed" >> "$_audit" 2>/dev/null || true
+            continue
+        fi
+        if [ "$_s3" = "$_bh" ]; then
+            echo "deploy gate: $_p -- pinned by OPEN entry $_slug; S3 bytes already equal the pin; nothing to deploy" >&2
+            continue
+        fi
+        echo "deploy gate: $REMOTE_REF -- deploying $_p: pinned by OPEN entry $_slug, S3 ${_s3:0:12} differs from the pin ${_bh:0:12}" >&2
+        echo "$_ts PINNED-DEPLOY  $_who  ref=$REMOTE_REF  path=$_p  slug=$_slug  s3=${_s3:0:12}  pin=${_bh:0:12}" >> "$_audit" 2>/dev/null || true
+        _pd+=("$_p")
+    done <<< "$_pl"
+    if [ "${#_pd[@]}" -gt 0 ]; then
+        bash "$SAFE_DEPLOY" --no-pipescript "${_pd[@]}" || exit 1
+    fi
+    return 0
+}
+
 while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
     # Skip deletes (sha = 0000...)
     if [[ "$LOCAL_SHA" == "0000000000000000000000000000000000000000" ]]; then
@@ -101,7 +203,8 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
             continue
         fi
         if [ "$_dn" -eq 0 ]; then
-            echo "deploy gate: $REMOTE_REF -- no deploy-scope file in this box's diff against origin/CLOUD; nothing to deploy" >&2
+            echo "deploy gate: $REMOTE_REF -- no deploy-scope file in this box's diff against origin/CLOUD; nothing to deploy from the diff" >&2
+            pinned_entry_deploy "$LOCAL_SHA" ${_dpaths[@]+"${_dpaths[@]}"}
             continue
         fi
         _dpaths=(); while IFS= read -r _p; do [ -n "$_p" ] && _dpaths+=("$_p"); done < <(printf '%s\n' "$_dl" | sed -n 's/^DEPLOYABLE //p')
@@ -122,6 +225,7 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
             echo "deploy gate: $REMOTE_REF -- deploying ${#_led[@]} ledgered file(s) of ${_dn} deploy-scope file(s)" >&2
             bash "$SAFE_DEPLOY" --no-pipescript "${_led[@]}" || exit 1
         fi
+        pinned_entry_deploy "$LOCAL_SHA" ${_dpaths[@]+"${_dpaths[@]}"}
         continue
         ;;
       refs/heads/CLOUD)
