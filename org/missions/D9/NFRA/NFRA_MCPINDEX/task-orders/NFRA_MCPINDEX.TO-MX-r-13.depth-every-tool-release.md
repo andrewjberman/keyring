@@ -159,3 +159,4 @@ PHASE A ends at the ANNOUNCE: report, and stop. After PHASE B, write the proof i
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>
