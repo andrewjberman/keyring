@@ -69,10 +69,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Direct act: ONE cell, LOCAL, about 20 product lines; no L2, L4-R or L8-L10.
 - Slot ~144, worktree `C:/dev/wk-harvst-144`, branch `wk-AMGT_HARVST-144`. Widen the sparse set at provision with `org/tier1_exec/4.0.0_SA_CRO/scripts` (AC2's tests read it).
 
+**COMPLETE 2026-10-15 ~20:0xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~144` (worker-light, haiku, high), branch `wk-AMGT_HARVST-144`, build `42c93a7d16`, head `447ad6fa8b`. Diff read by this seat: `tab_transport.py` +15/-1 (the `minimize=True` keyword, one call before the origin `goto`, `_minimize_window` with the three protocol calls inside `try/except Exception: pass`); launch call, `LAUNCH_ARGS` and profile untouched; line endings preserved (the diff reads only changed lines).
+- **AC1 PASS:** `5 passed` (worker; this seat `5 passed in 0.10s`). **AC2 PASS:** `47 passed` (worker; this seat `47 passed in 0.56s`; base `47 passed`). Proof instance VALID rc 0, re-run by this seat. `round-close-check --round 87` before this flip: MAY-CLOSE. Full suite per the worker: `850 passed, 1 failed (the sparse-worktree import), 3 skipped`, base `845 passed, 1 failed`. No rows.
+- **What this does NOT prove:** that a REAL Chrome window stays minimised through a real publisher job. The worker's test fakes Playwright; the protocol call was measured on a scratch profile by this seat before the cut. That is AC3 (`deliverables/2.0.0_SA_COO_W1/round87/cb5_window_probe.py`), the issuer's run on the merged head.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <direct_act>true</direct_act>
-<status>pending</status>
+<status>complete</status>
 <round>87</round>
 <workstream>RUNNER</workstream>
 <slot>dell1</slot>
