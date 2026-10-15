@@ -8872,3 +8872,29 @@ round.** Never edit an existing row.
   "disarm_owner": "1.0.0_SA_CTO~DELL2"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W169-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~169",
+  "surfaced_at": "2026-10-15T18:03:47Z",
+  "one_line": "TO CB-ch-1 cannot start: worktree C:/dev/wk-cotbkf-169 is a sparse checkout whose pattern list has no data/ entry, so data/assets/scripts/silver/ (the order paths: the build script and its test folder) is absent on disk, though the folder is committed at HEAD 824588956e. Stopped at the first act (BLOCKING). Nothing written under data/, no sparse-checkout widened, no tree rebuilt from another checkout. AC1, AC2, AC3 and the account-id scan ran and failed on the missing paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-cotbkf-169 sparse-checkout list (worktree HEAD 824588956e): .tools, infra/logic/registry, lib, org/devices, org/missions/D8/ADVI/ADVI_COTBKF, org/modules/graph, org/ref, org/standards; the sparse file at C:/dev/ajb_workspace/.git/worktrees/wk-cotbkf-169/info/sparse-checkout opens /* and !/*/ and lists no data/ pattern",
+      "test -d data and test -d data/assets: both absent in C:/dev/wk-cotbkf-169; ls of the worktree root carries no data entry",
+      "git ls-tree HEAD data/assets/scripts/ lists the silver tree at 824588956e; git rev-parse HEAD:data/assets/scripts/silver/commonwealth_signs.py returns 054f8502aaaf867ab3adaf417263b4b8611e9ab6: the committed path exists and is not checked out",
+      "order ADVI_COTBKF.TO-CB-ch-1.rebuild-active-set-scripts.md, the paths block lines 64-65 name data/assets/scripts/silver/cotbkf_active_set_v2.py and data/assets/scripts/silver/tests/test_cotbkf_active_set_v2.py; the first act says a worktree lacking the named paths is a BLOCKING row and a stop",
+      "runs at 2026-10-15T18:0x UTC in the worktree: AC1 python read of deliverables/0.9.0_WK_ADVI_COTBKF~169/REBUILD_RECORD.json rc=1 FileNotFoundError; AC2 same rc=1; AC3 pytest on the test path rc=4 no tests ran; account-id scan rc=4 no tests ran"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-1 names data/assets/scripts/silver/cotbkf_active_set_v2.py and its test as the worker write grant (paths block), and its first act requires the worktree to carry the paths the order names; otherwise BLOCKING and stop.",
+  "world_is": "The worktree carries org/ and .tools/ but is sparse-checked-out with no data/ pattern, so the named data/ paths are not on disk; the paths are committed at HEAD. Whether this worktree was meant to admit data/ (the lane grant names it) or the order names the wrong worktree is not established. No file was written under data/; the order is left pending with no proof flip.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
