@@ -17507,3 +17507,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The condition is met. The apply order TO-DB-b-260 is staged to 0.7.0_AE_CloudOps~DB2 as round 128; its step 0 reads the layer live (the CTO's added condition) and STOPs if it does not carry pyarrow for python3.12. The layer's pyarrow version (14.0.2) is not compared with the version the adapter was measured with at round 125; Act 2's after-read records it. Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W413-S1 -- BLOCKING: the sparse worktree does not carry the data and infra paths DB-c-21 reads; the trace stopped at the first act
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W413-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~413",
+  "surfaced_at": "2026-10-15T14:23:13Z",
+  "one_line": "The worktree wk-IRPT_DASHBD-413 is a sparse checkout: the paths DB-c-21 reads (data/ and infra/aws/lambda/investor-reporting/) and org/surprise_channel/ are indexed but not on disk, so the trace cannot be read as written",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at worktree HEAD 2420fd102e: .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/ref, org/standards, org/modules/graph (no data/, no infra/aws/lambda/investor-reporting/)",
+      "git ls-files -v: 81394 of 85279 indexed entries carry the skip-worktree flag; data/ holds 1997 indexed entries and infra/aws/lambda/investor-reporting/ holds 717, none on disk (ls data and ls infra/aws/lambda: no such directory)",
+      "the TO first act (TREE-OK) passes on org and .tools; the paths the order reads are outside the cone; the checker p126_bcw.py loads its record first, so all three criteria print FAIL record absent with rc 1 and no S3 call (measured 2026-10-15T14:22:28Z)"
+    ]
+  },
+  "spec_asserts": "The worktree carries the paths the task order names (first act: a worktree that does not carry them is a BLOCKING row and the worker stops; the worker does not rebuild, extract or reconstruct the tree).",
+  "world_is": "The worktree carries the org and tools paths and the write grant, but not the data and infra source paths the trace reads. Widening the sparse checkout would reconstruct the tree, so the worker stopped at the first act with no record, no S3 read and no write. Counts, dates and words only."
+}
+```
