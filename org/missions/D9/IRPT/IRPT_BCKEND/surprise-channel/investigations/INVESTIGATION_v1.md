@@ -39569,3 +39569,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-S206 -- The holdings bundle candidates: a bundle from HEAD or an overlay of HEAD's whole file moves more than the exemption; the transplant candidate is in flight
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S206",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T17:45:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on workers 426 to 431 and the holdings candidate finding: a bundle built from HEAD or overlaid with HEAD's whole holdings_snapshot.py moves more than the exemption (six drifted members; the unreleased IB-pr-536 one-date bypass; the reversal of 49 Financial's CUSIP port); the exemption pair waits on the transplant candidate IB-pr-595.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-589 record (deliverables/0.9.0_WK_IRPT_BCKEND~428/IB222-1_holdings_bundles_candidate.json): 8 of 46 closure members differ from each live bundle, holdings_snapshot.py and publication.py plus six others changed by other projects since the minting pins; 138 of 138 live members equal the minting pin blob",
+      "my diff of holdings_snapshot.py at each minting pin against the overlay pin with the ABSENT-AT-SOURCE blocks removed: 104 lines for pin 1 (49 Financial) and 81 for pin 2, including allow_older_date / ONE-DATE-ASSERT (IB-pr-536) in both and the removal of cusip_key (commits 5fad7eaaa8, de08782c38) against pin 1",
+      "IB-pr-590 record (deliverables/0.9.0_WK_IRPT_BCKEND~431/IB224-1_holdings_overlay_candidate.json): the overlay changes exactly two members per firm and 104 tests pass per firm, which proves the two files need no drifted member, not that they are the exemption alone"
+    ]
+  },
+  "spec_asserts": "The CTO round analysis @57266eeb77: the exemption pair moves the exemption alone, with the blast radius per firm and per key.",
+  "world_is": "DISPOSITIONS. W426-S1 (the order named the harness file wrongly) INERT. W426-S2 (the check counts a closed account as remaining; the gate never refuses one) latent, 0 closed today: ARMED, mine, disarmed when a closed lost account appears or the check is corrected. W426-S3 (the imported build module prints ticker identifiers to the console) ARMED, mine: the identifiers are public tickers, not client data. W427-S1 and S2, W428-S1 to S3, W429-S1 and S5 to S7, W430-S1 to S3, W431-S1 and S2: INERT or resolved as recorded (S4 of 429, the runner imports, is ruled by amendment 2 of IB-pr-586; the roster column name and the cross-bucket write are apply-time checks of IB-pr-596). Every worker that read the whole order file saw the RECORD FACE; the Read tool returns the file, so the worker face tells workers where to stop reading; no act was taken on it. The holdings candidates: 589 found the drift, 590 proved sufficiency, 595 builds the exemption alone (a transplant of the exemption commits onto each minting pin, the two transplanted files committed per firm and hashed by the check)."
+}
+```
+
+## IRPT_BCKEND-D2-S207 -- D2-S204 disarmed: the deployed function accepted a live request with commentary_requested true
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S207",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T17:51:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "D2-S204 DISARMED: the deployed irpt-ycharts-generate accepted a live request carrying commentary_requested true (IRPT_ANLREQ ~Y2's FWD-1 window 2, reported msg 8515); the acceptance IB-pr-579 left UNEXERCISED LIVE is now exercised.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~Y2 msg 8515 (2.0.0_SA_COO~Y2) reports AQ2's window 2: staff filing ACCEPTED live with commentary_requested true, ledger CLOSED, the guard refused nothing; the request and ticket identifiers are in their record, not here",
+      "my S204 (hazard ARMED, disarm_owner me): disarmed by the first accepted request that carries the member; the CTO's ~PI analysis named this run as the exercise (msg 8441, CTO_ROUND_ANALYSIS_IRPT_BCKEND_PI_ROUND_1)"
+    ]
+  },
+  "spec_asserts": "IB-pr-579's UNEXERCISED LIVE statement: the released function ACCEPTING a submission is untested until the FWD-1 run.",
+  "world_is": "S204 is DISARMED on a report I did not make myself: the acceptance is read from ~Y2's and ~AQ2's record, not by a get-item of mine (the item carries a client request). The chain after acceptance (attachments, commentary_ready, the packager secret) is IRPT_ANLREQ's and is tracked there; it is not part of IB-pr-456. The PROD promote of the filing page is client-facing and stays Andrew's word under the push law; my condition for it, an accepted request carrying the member, is met."
+}
+```
