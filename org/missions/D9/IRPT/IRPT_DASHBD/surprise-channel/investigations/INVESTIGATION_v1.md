@@ -14673,3 +14673,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm: the round-119 read of Orion's account records (CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_119_20261015.md @712ede60c4) names a flag or records NOT_DETERMINED, AND ~P2's feed (IB-pr-556) carries the account as ABSENT NO_GROUP with no household-level aggregate built from the feed's account rows."
 }
 ```
+
+## IRPT_DASHBD-D2-W307-S1 -- the one GET's header names were sent re-cased by the standard request builder, not as the estate pull sends them
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W307-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~307",
+  "surfaced_at": "2026-10-15T05:00:34Z",
+  "one_line": "The one GET of DB-i-7 sent three header names re-cased by the standard request builder (AppPath as Apppath, BrowserSessionId as Browsersessionid, User-Agent as User-agent), not as the estate pull sends them; the GET returned HTTP 200.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-i-7 worker face, step 2: GET 1 is made 'with the pull's own params and headers exactly'. The pull builds its headers with the keys AppPath, BrowserSessionId and User-Agent.",
+  "world_is": "The cell's request was built with the standard library request object, which stores each header key capitalized (keys Apppath, Browsersessionid, User-agent). The values are the pull's. HTTP header names are case-insensitive, so the request means the same as the pull's, but its header names differ in bytes. The one GET returned HTTP 200 with the account rows and no further GET was made, so the cap was not affected. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/inf-accounts-v2-daily/pull_inflection_new_portfolio.py@a4718eab10 lines 52-62 (the pull's headers keys AppPath, BrowserSessionId, User-Agent)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~307/account_record_read.py@e666798a70 (get() and headers(): urllib.request.Request add_header on each key)",
+      "local probe with no request made: the request object's header keys printed as Apppath, Browsersessionid and User-agent (python -I, offline, this cell)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-7. Form only. Not repaired in this cell: the one GET is already made and the cell's order allows no second GET. A later read that must match the pull's bytes would set the header names through a raw request, the issuer's choice."
+}
+```
