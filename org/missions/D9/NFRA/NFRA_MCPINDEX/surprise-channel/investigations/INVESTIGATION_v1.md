@@ -8266,6 +8266,49 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W43-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~43",
+    "surfaced_at": "2026-10-15T10:36:42Z",
+    "one_line": "The re-seat worktree C:/tmp/wk-r17-43b is a sparse cone that does not carry the paths A1 names (workflows/atom_decomposition/, infra/aws/ec2/opal-gateway/, DATA_CATALOG.yaml), so A1 steps 1 to 8 cannot run in it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-19 A1 (re-seat, steps 1-8) and the worker face section 3 <paths>: the worker edits the named files in its own worktree; the bar says a worktree that does not carry the paths the order names is a BLOCKING row and the worker stops, never rebuilds the tree.",
+    "world_is": "HEAD is b36663e75d, which contains 73b45f7c7c. git sparse-checkout list (cone mode) = .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_MCPINDEX, org/modules/graph, org/standards. git ls-files holds 1543 entries under workflows/ and 424 under infra/aws/ec2/opal-gateway/, flagged S (skip-worktree), e.g. workflows/atom_decomposition/gen_silver_rows.py and infra/aws/ec2/opal-gateway/tests/test_opal_discover.py. Neither directory exists on disk (ls workflows: no such directory; ls infra/aws/ec2: no such path). The scratchpad scripts apply_r17_a1.py and regrade_f1_ac3.py exist. Nothing was widened, reconstructed or edited; no A1 step ran.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-19.firm-field-on-the-24-prose-firm-rows.md@b36663e75d (worker face section 3 <paths>; AMENDED A1 steps 1-8)",
+        "git sparse-checkout list and git ls-files -v -- workflows infra/aws/ec2/opal-gateway in C:/tmp/wk-r17-43b (the S skip-worktree flags) @b36663e75d",
+        "infra/aws/ec2/opal-gateway/tests/test_opal_discover.py@b36663e75d (tracked in the index; absent on disk)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W43-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~43",
+    "surfaced_at": "2026-10-15T10:48:53Z",
+    "one_line": "A1 step 6 cannot grade AC3 PASS: the instance's AC3 expect regex requires 'new tests collected: [6-9]', and the literal AC3 run prints 'new tests collected: 12', so the checker reports INVALID rc=1.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-19 section 4 AC3 expect: 'pytest rc=0 on test_firm_catalog_visibility.py, test_opal_discover.py and test_portal_index.py; new tests collected at least 6'. The proof instance encodes this as the regex 'pytest rc=0[\\s\\S]*new tests collected: [6-9][\\s\\S]*RESULT: PASS'.",
+    "world_is": "The literal AC3 invocation (f1.AC3.sh, with echo exit) run at the A1 tree prints 'pytest rc=0: 70 passed', 'new tests collected: 12', 'RESULT: PASS', 'exit=0' (saved at .scratch/ac3_a1.out). The regex [6-9] matches only a single leading digit 6 to 9, so a count of 12 (or any count of 10 or more) cannot match, and proof-of-spec-check.py reports 'VIOLATION: acceptance[AC3]: status=PASS but output_evidence does NOT match expect ... INVALID (rc=1)'. The regrade step (A1 step 6) was executed as written and its output is uncommitted in the worktree. The steps after step 6 (commits, catalog-commit) were not run; the instance was not edited beyond the regrade.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-19.firm-field-on-the-24-prose-firm-rows.md@17fc630e0a (section 4 AC3 expect; AMENDED A1 step 6)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~43/NFRA_MCPINDEX.TO-MX-c-19.firm-field-on-the-24-prose-firm-rows.proof_of_spec.json (acceptance AC3 expect; uncommitted regraded copy)",
+        ".scratch/ac3_a1.out in C:/tmp/wk-r17-43b (the literal AC3 re-run output, exit=0, new tests collected: 12)",
+        ".tools/proof-of-spec-check.py@17fc630e0a (the expect match block: re.search(expect, output_evidence))"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

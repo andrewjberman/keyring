@@ -19,7 +19,7 @@ EGRESS CLASS, declared: NONE beyond Opal's own AWS.
 
 ## 1. THE CELL -- `OG-rv-3` (decomposition addendum R3-T.70, workstream RIVAL-HOOKUP, FWD-22)
 
-The batch hookup of ten tools whose builds are merged on your HEAD: `etfs_get_peer_group`, `etfs_get_rival_fund_holdings`, `etfs_who_holds`, `etfs_get_security_reference`, `etfs_get_coverage` (OG-rv-1, `app/etfs_rivals.py`) and `etfs_get_fund_trades`, `etfs_get_fund_flows`, `etfs_compare_peers`, `etfs_get_research_notes`, `etfs_get_rival_page_status` (OG-rv-2, `app/etfs_rivals_flow.py`): the `tools.py` registrations, the `SAFE_TOOLS` and `NATIVE_TOOLS` entries, the registry count 95 -> 105 and the non-data count 86 -> 96. Registration belongs to no tool cell (CUT BY WRITE SET). Applied by the issuer's prepared script.
+The batch hookup of ten tools whose builds are merged on your HEAD: `etfs_get_peer_group_members`, `etfs_get_rival_fund_holdings`, `etfs_who_holds`, `etfs_get_security_reference`, `etfs_get_coverage` (OG-rv-1, `app/etfs_rivals.py`) and `etfs_get_fund_trades`, `etfs_get_fund_flows`, `etfs_compare_peers`, `etfs_get_research_notes`, `etfs_get_rival_page_status` (OG-rv-2, `app/etfs_rivals_flow.py`): the `tools.py` registrations, the `SAFE_TOOLS` and `NATIVE_TOOLS` entries, the registry count 95 -> 105 and the non-data count 86 -> 96. Registration belongs to no tool cell (CUT BY WRITE SET). Applied by the issuer's prepared script.
 
 1. **Apply the prepared hookup.** From your worktree root run:
    `python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/hookup_rv.py infra/aws/ec2/opal-gateway`. It makes exactly these edits and nothing else: one import line after the G5 import (`etfs_rivals as _rv1, etfs_rivals_flow as _rv2`) and ten `@mcp.tool()` registrations after `mdpf_get_category_views`, each
@@ -42,6 +42,8 @@ The batch hookup of ten tools whose builds are merged on your HEAD: `etfs_get_pe
 
 <paths>
 infra/aws/ec2/opal-gateway/app/tools.py
+infra/aws/ec2/opal-gateway/app/etfs_rivals.py
+infra/aws/ec2/opal-gateway/tests/test_og_rv1.py
 infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/app/destructive_ops.py
 infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py
@@ -78,7 +80,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rv-3.rival-hookup.proof_of_spec
 
 - A1 (issuer, 2026-10-15 ~10:4xZ, worker rows Z-W102-S1..S4, all read): the first seat BLOCKED, rightly. (S1) the provisioned worktree's sparse cone omitted `infra/aws/ec2/opal-gateway` (the provision call carried no `--order`): the ISSUER added the folder to the cone (`git sparse-checkout add infra/aws/ec2/opal-gateway`, the provisioner's own act) and the worker rebuilds nothing. (S2) the proof invocations still named the six-tool `gt12.AC1.sh` and `gt12.AC2.sh` (a template carry-over): they now name `rv3.AC1.sh` and `rv3.AC2.sh`, which grade ten of ten. (S3) accepted: rv3.AC2's outside-files zero is read AFTER your commit, against the base of the branch. (S4) the bounds bullet forbade editing the five files that step 1 directs the script to edit, and the record face carried a duplicate fragment: both repaired. The order is re-issued on the same branch (inherited commit `fac4ca01c3`, a BLOCKED proof instance and rows S1-S4: re-record the instance from the real outputs). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>complete</status>
+- A2 (issuer, 2026-10-15 ~11:1xZ, found at the issuer's verify of the first complete run): the naming gate in ENFORCE REFUSES the string `etfs_get_peer_group` (3 verdicts, `tools.py:1513`, `data_entitlement.py:148`, `destructive_ops.py:102`: NEW and OUT-OF-PATTERN as IAM_GROUP; the gate types any name ending `_group` as an IAM group). The worker's commit passed only because its sparse cone carried no `org/mcp/naming-gate.enforce` (WARN window, row Z-S142's class); the release commit and the drain are in ENFORCE. RULED: the tool is renamed `etfs_get_peer_group_members` (a probe of eight candidate names against the gate in ENFORCE: only the `_group` ending refuses). The CRO's name `etfs_get_peer_group` is retired for this tool. DO THIS, in your worktree, as the first act: replace the WHOLE WORD `etfs_get_peer_group` with `etfs_get_peer_group_members` in exactly these seven files: `app/etfs_rivals.py` (the function and its internal labels), `tests/test_og_rv1.py`, `app/tools.py`, `app/data_entitlement.py`, `app/destructive_ops.py`, and the two pinned tests only if they name it (they do not today). A word-boundary replace never touches `peer_group` the parameter or `etfs_get_peer_group_members` itself. Then re-run `rv1.AC1.sh`, `rv1.AC2.sh`, `rv3.AC1.sh` and `rv3.AC2.sh` (the issuer's copies already name the new tool) and run the naming gate over your diff by hand: `python .tools/naming-gate.py --diff <your diff vs the branch base> --staged-paths <a file listing your five files plus one path under org/missions/D9/NFRA/NFRA_OPLGTW/> --enforce` (the flag stands in for the sentinel your cone lacks): it must print no REFUSE. Re-record the proof instance. The paths of this order now also name `app/etfs_rivals.py` and `tests/test_og_rv1.py`. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+<status>pending</status>
 <round>37</round>
 <workstream>RIVAL-HOOKUP</workstream>
 <slot>~102</slot>
