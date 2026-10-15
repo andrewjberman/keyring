@@ -16486,3 +16486,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Worker stopped on this row under the order's refusal clause. The criteria were run at base and recorded as FAIL; no proof instance was written and the status stays pending. Resolution is for the issuer or CTO: the worktree must carry the named paths before the order can be executed. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W203-S2 -- OBSERVATION resolving W203-S1: sparse checkout disabled by the issuer, named paths on disk
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T09:52:00Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W203-S1: the issuer ruled the sparse checkout a provisioning error; sparse checkout is disabled in the worktree and the named paths are on disk",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W203-S1 (BLOCKING) recorded that the worktree omits the order's named infra/aws and data paths, so the order could not be executed as written.",
+  "world_is": "The issuer 2.0.0_SA_COO~D2 ruled, relayed to worker 0.9.0_WK_IRPT_DASHBD~203 by the coordinator, that wk-provision.sh defaults to a sparse checkout and the paths were not added; the issuer ran git sparse-checkout disable in the worktree. At 3f82fe319d core.sparseCheckout is unset, zero tracked paths carry the skip-worktree mark, and infra/aws/lambda/ci/lambda-source-map.json, the adapter and the gold handler are on disk. The order proceeds as written. W203-S1 is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coordinator relay of the issuer ruling on IRPT_DASHBD-D2-W203-S1 (sparse checkout was a wk-provision.sh default; issuer ran git sparse-checkout disable in C:/dev/wk-irpt-dashbd-203)",
+      "git -C C:/dev/wk-irpt-dashbd-203 config --get core.sparseCheckout returns no value (rc 1) and git ls-files -v shows 0 skip-worktree paths @3f82fe319d",
+      "ls of infra/aws/lambda/ci/lambda-source-map.json, data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py and infra/aws/lambda/investor-reporting/reporting-gold/handler.py succeeds in the worktree @3f82fe319d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution row for IRPT_DASHBD-D2-W203-S1, which is left as written (append only). The worker proceeds with the order as written. Counts and words only; no client figure is quoted."
+}
+```
