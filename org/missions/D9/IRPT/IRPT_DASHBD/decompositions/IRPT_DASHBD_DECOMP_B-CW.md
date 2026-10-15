@@ -172,3 +172,43 @@ Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3
 | cell id | owner |
 |---|---|
 | DB-c-14 | 0.7.0_AE_CloudOps~DB2 |
+
+## 8. ROUND 121, WORKSTREAM B-CW (2026-10-15 ~06:1xZ, issuer 2.0.0_SA_COO~C2, on the CTO's rulings msgs 8099 and 8103: the Cottonwood `account_dim` is a SCHEDULED producer on the 49 Financial pattern, a build cell first reading that pattern)
+
+**The CTO's ruling (msg 8103):** "A one-shot gold write is not a production producer: production must be scheduled ... account_dim changes as accounts open and close. The build cell first reads how 49 Financial's gold account_dim is written (its function, schedule and role) and copies that pattern for Cottonwood under a *-cot-* builder-named role, scheduled after its Black Diamond silver inputs. If no 49F writer exists, add an account_dim emit to the Cottonwood holdings-performance function, with one more gold write grant, by an addendum to its pair. Not a new one-shot path. Cut it the round after the addendum resumes."
+
+**Read first, build after.** The read touches no file the resume order (`DB-c-14`) edits, so it is cut now; the BUILD cell (Terraform and code in the holdings-performance root, which the applier is changing) is cut only after the resume order drains. The issuer's own LIST at the cut read 0 `account_dim` partitions at the builder address for all three firms (49 Financial, Inflection, Cottonwood), so the 49 Financial pattern may not exist where the packet assumed; the cell finds out.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-15` | The READ: each firm's gold `account_dim` state, the repo code that writes an account dimension, the function, role and schedule that run it, the Cottonwood adapter's inputs and what it lacks for a scheduled run; the verdict on the CTO's two branches | FWD-2, FWD-11, FWD-15 | LOCAL (a read) | none | C-J |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) A read cell, one worker (`~408`), no edits. (b) The BUILD cell and the refreshed pair follow this read and the drain of `DB-c-14`. (c) The 2026-10-12 partition choice of the round-104 packet is superseded by the scheduled design (the producer computes its own date).
+
+**fanout:** 1 of 1 chains, cap 8, reason: one read cell. Worker `0.9.0_WK_IRPT_DASHBD~408`.
+
+## Cells (round 121)
+
+| cell id | owner |
+|---|---|
+| DB-c-15 | 0.9.0_WK_IRPT_DASHBD~408 |
+
+## 9. ROUND 122, WORKSTREAM B-CW (2026-10-15 ~07:xxZ, issuer 2.0.0_SA_COO~C2, on the CTO's decision C, msg 8167: a firm-isolated Cottonwood `account_dim` Lambda on the Inflection pattern; round 121 closed MAY-CLOSE, DB-c-15 merged @d87a3c60cb)
+
+**The read's finding (`ACCOUNT_DIM_WRITER_PATTERN_R121.json`, verdict `PATTERN_EXISTS_FOR_49F`):** 49 Financial's account dimension is `dim_account`, written by a host runner over an SSM chain; Inflection's is a vendor-puller Lambda; Cottonwood has no writer. The CTO chose C: its own package, a `*-cot-*` role, builder names, reads only the Black Diamond silver inputs, writes only its own `account_dim` gold prefix, scheduled in America/New_York after the silver lands (about 11:46Z), trading-day frontier, first run a catch-up read ABSENT first, the pair carries both branches, no delete.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-16` | The producer CODE: the adapter's one-key upload (refuses a non-empty partition), the Lambda entry point `account-dim-cot/lambda_function.py` (T-1 trading-day frontier, fail loud on absent silver, no write when already landed), and their tests | FWD-2, FWD-11, FWD-15 | WORLD floor (a path under infra/aws/lambda; repo files only) | none | C-K |
+| `DB-c-17` | The PACKAGE: Terraform (function, `*-cot-*` role scoped to the two silver reads and the one gold prefix, schedule created DISABLED) and the source-map package entry, in the holdings-performance root or a sibling root | FWD-2, FWD-11, FWD-15 | WORLD floor (infra/), repo files only; nothing planned or applied | `DB-c-16` merged (the adapter pin) | C-K |
+| `DB-c-18` | The unsigned NEVER-widen PACKET (both branches, catch-up read ABSENT first, rollback per key, no delete) | FWD-2 | LOCAL (a record) | `DB-c-17` merged | C-K |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) One key per partition, `data.parquet`: the contract names no manifest for a dimension, so none is written (YAGNI; fewer keys in the blast radius). (b) The partition date is the T-1 trading day, the silver partition dates it reads; the Lambda computes no catch-up range, a manual or catch-up day is the event's `date`, one invoke per day, so the first-run catch-up is the applier's counted list of dates. (c) The handler writes new keys only and returns `TARGET_ALREADY_LANDED` on a landed partition (the holdings handler's rule), so a re-fire is a no-op. (d) `DB-c-17` and `DB-c-18` are cut after `DB-c-16` drains: the package pins the adapter at a commit, and the packet names the pinned bytes.
+
+**fanout:** 1 of 1 chains, cap 8, reason: the three cells are one dependency chain and only `DB-c-16` is cut this round. Worker `0.9.0_WK_IRPT_DASHBD~409`.
+
+## Cells (round 122)
+
+| cell id | owner |
+|---|---|
+| DB-c-16 | 0.9.0_WK_IRPT_DASHBD~409 |
