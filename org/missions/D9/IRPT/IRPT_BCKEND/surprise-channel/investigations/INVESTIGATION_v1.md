@@ -37339,3 +37339,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W409-S1: RESOLVED, my read grant was too narrow (AMENDMENT 1 @cee3478342, the other flattened code/ prefixes). D2-W409-S2: the performance chain copy differs from the repository script, so a positive control is owed before any performance day (the check's control-owed rule fixed @8cad619607 after the worker showed it let the record say not needed); carried into IB-pr-568. D2-W404-S3 CLOSED: no date token goes on the chain; the one-time dated run of the same code is the signed pair. D2-W404-S5 CLOSED by D2-W409-S3: the silver aggregator's source exists at infra/aws/lambda/inf-silver-aggregator and is byte-equal to the live zip member (the W404 search read only infra/aws/lambda/inf-pipeline). D2-W404-S1, S2 and D2-W409-S5: resolved by the per-span recount (33 days: positions 4, transactions 7, performance 22; each feed's own first key is its span, CTO msg 8193). D2-W409-S4 (calendar fallback table), S6 (the _meta object under two prefixes), S7 (as-of equals the pull day on all 52 present objects; T-1 completeness at 06:00 unmeasurable, the trigger keeps its measured time): INERT, recorded. D2-W404-S4 (the chain code exists only as an S3 object) and D2-W404-S6, D2-W404-S9: stay ARMED, owner me (the CTO ruled S4 is brought into the repository by a later pair). D2-W410-S1 (the PATH B route test never calls entry.submit_export; test_submit_async.py does), S2 (print query kind 'filled-report', agreed with IB-pr-567), S3 (filled_grant pins accountSetId to the report id): INERT, recorded. D2-W411-S2 and S4 RESOLVED by IB-pr-567 AMENDMENT 1 (one implementation: the render calls IB-pr-566's functions); D2-W411-S3 INERT (lib/opal_naming.py is already in irpt-export-render's files list; the new module is now named there). D2-W411-S1 stays ARMED, owner me: filled_reader_installed.py reads the filled report object with the export function's S3 client, and whether the export role holds s3:GetObject on it was not read; the deploy leg reads the role first (the export function already reads the platinum tier for PATH B, so the fence premise is checked, not assumed)."
 }
 ```
+
+## IRPT_BCKEND-D2-S191 -- owner disposition: W404-S6 and W409-S7 have one live owner, 2.0.0_SA_COO~P2
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S191",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T08:38:57Z",
+  "one_line": "Owner disposition: rows IRPT_BCKEND-D2-W404-S6 (T-1 completeness at 06:00 New York unmeasured) and D2-W409-S7 (as-of equals its own day) have ONE live owner, 2.0.0_SA_COO~P2; the base serial 1.0.0_SA_CTO named on them is superseded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W404-S6 and W409-S7 as written name base 1.0.0_SA_CTO as owner; S190 names 2.0.0_SA_COO~P2 (CVO~IRPT ADJUDICATION_v110 @e00a26e02c: two owners).",
+  "world_is": "The CTO ruled the owner in CTO_ROUND_ANALYSIS_IRPT_BCKEND_PO5_PS5_PY3_20261015.md @25f361860e (~PO item 3: 'W404-S6: owner ~P2, not the base CTO') and in the Orion V3 CTO half @b5b6db462a (the trigger keeps its measured time with that reason). The base serial has no live session that works these rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_PO5_PS5_PY3_20261015.md @25f361860e",
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v110.md @e00a26e02c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Both rows stay ARMED/carried under ~P2 until a pair that moves inf-gold-trigger measures T-1 completeness; V3 does not move the trigger."
+}
+```
