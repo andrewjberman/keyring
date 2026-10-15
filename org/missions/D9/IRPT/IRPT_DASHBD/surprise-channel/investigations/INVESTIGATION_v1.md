@@ -14964,3 +14964,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W505-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~505",
+  "surfaced_at": "2026-10-15T05:56:32Z",
+  "one_line": "The server-pins premise of call f50a does not match the server's merged parser: parse_filled_report_source requires the body's filled_report_source to carry version_id, sha256 and size and refuses a client-only body. DB-f-505's page wire is client-only as ordered, so the server would refuse it at submit (INVALID_INPUT). Read only; no live call.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 116 DB-f-505 and the CTO ruling on call f50a: the server pins the filled report's VersionId, sha256 and size at submit, so the page sends the client only, as filled_report_source {source_kind: 'filled_report', client_id} at the top level of the submitted wireBundle, with no pin field.",
+  "world_is": "infra/aws/lambda/investor-reporting/export/retained_export.py at bdf27dff29, lines 344-360: parse_filled_report_source refuses a filled_report_source without version_id ('a pin without its VersionId is refused, never defaulted') and admits only the keys source_kind, client_id, version_id, sha256, size, with sha256 (64 lowercase hex) and size required (line 321 and 353). export/bundle.py at bdf27dff29, lines 92-106 and 146-154, validates the same pin on the revision, so the pin is carried in the request and no code at HEAD fills it at submit. The page's client-only wire passes DBF116-1-AC1 and AC2 at portal e23ddb8e; the server's acceptance of that wire was not exercised (read only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py@bdf27dff29 lines 315-360 (last touched by 25bac3b7ea)",
+      "infra/aws/lambda/investor-reporting/export/bundle.py@bdf27dff29 lines 92-106 and 146-154",
+      "portal@e23ddb8e src/pages/InvestorReporting/export/submit.ts and filledReportSource.ts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
