@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~108</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-108 @15ce327a80, merged at the drain): UNSIGNED-PUSH push_rc=0 deployed=0 held=1 ok=True; STUB-CONTROL stub_saw=1; proof VALID. The signed-change arm is not run (needs an open signed change from a CloudOps seat); real hook, stubbed executors, temporary repository.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
