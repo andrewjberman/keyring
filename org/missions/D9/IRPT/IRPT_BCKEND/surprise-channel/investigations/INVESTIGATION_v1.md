@@ -36466,3 +36466,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Recorded so the CTO ruling set the COO cites can be confirmed by the issuer. No effect on the criteria, which grade the record's facts."
 }
 ```
+
+## IRPT_BCKEND-D2-S187 -- IB-pr-456's commentary_requested behaviour is already live via release 29 L3; f61b may no longer gate it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S187",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T06:39:03Z",
+  "one_line": "IB-pr-456's ENDPOINT behaviour (submission and acceptance admit commentary_requested; IB-pr-455 code) is ALREADY LIVE on irpt-ycharts-generate since IRPT_ANLREQ release 29 leg L3 (2026-10-14 13:03Z), so IB-pr-456's pair, held for Andrew's BEFORE record f61b, no longer gates that behaviour; its rebuild over MfxpvRhV moves only composition_admission.py against live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "IB-pr-456 pair and round-183 analysis: commentary_requested reaches irpt-ycharts-generate only through IB-pr-456's apply, after Andrew's BEFORE record (call f61b).",
+  "world_is": "IB203-2 rebuild record (deliverables/0.9.0_WK_IRPT_BCKEND~405/IB203-2_ycharts_generate_rebuild.json): the candidate's submission.py, acceptance.py and AnalysisSubmissionRequest.schema.json equal the LIVE zip's bytes, and trunk @66a6cd8686 carries commentary_requested in all three (2, 2 and 1 hits). Live CodeSha256 5TRFZf6G is R29c's (ledger 20261014T1246Z, CLOSED). Whether release 29's signed pair named these three members is not read here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~405/IB203-2_ycharts_generate_rebuild.json (endpoint_members: changed vs the signed build, equal to live)",
+      "git show 66a6cd8686: acceptance.py/submission.py/schema grep commentary_requested = 2/2/1",
+      "2.0.0_SA_COO~P2 msg 8149"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: (1) ~Y2 reads whether release 29's pair (CTO half blob 5e8b3cbd95) named these three members; if not, a retroactive after-read of the live behaviour (one accepted request with commentary_requested true and one false, read from the accepted record) is filed. (2) ~P2's packet v2 states that f61b's BEFORE record is no longer obtainable for this behaviour and whether IB-pr-456 needs any before-record at all for composition_admission.py; the CTO then withdraws or re-words act f61b."
+}
+```
