@@ -39204,3 +39204,368 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W429-S1 -- The order's default pull date rule ('the way the neighbouring pull step derives its date') is not T-1: the neighbour takes today in UTC; the build takes the prior trading day.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W429-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~429",
+  "surfaced_at": "2026-10-15T16:36:22Z",
+  "one_line": "The order's default pull date rule ('the way the neighbouring pull step derives its date') is not T-1: the neighbour takes today in UTC; the build takes the prior trading day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-pr-586 build item 1: --pull-date defaults to the T-1 trading day, derived the way the neighbouring pull step derives its date.",
+  "world_is": "The neighbour pull_inflection_performance_rest.py derives its pull date as today in UTC (dt.datetime.now(dt.timezone.utc).date()), which is not a trading-day T-1. The feed derives the default as lib/trading_calendar.prev_trading_day(today UTC), the estate frontier that CLAUDE.md names for T-1. The two rules differ on a weekend or a market holiday.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_performance_rest.py@a4a81b30af25e436c815e4176b65c6820d85fbb1 line 510: pull_date = args.pull_date or dt.datetime.now(dt.timezone.utc).date().isoformat()",
+      "lib/trading_calendar.py@a4a81b30af25e436c815e4176b65c6820d85fbb1 prev_trading_day(date) -> the NYSE trading day strictly before date"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Followed the estate rule (T-1 frontier), not the neighbour's today-UTC default. Whether a later release should align the neighbour is outside this order."
+}
+```
+
+## IRPT_BCKEND-D2-W429-S2 -- The accountStartDate column name at the roster source is not read in the granted tree; the feed accepts two candidate names and refuses if neither is present.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W429-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~429",
+  "surfaced_at": "2026-10-15T16:36:22Z",
+  "one_line": "The accountStartDate column name at the roster source is not read in the granted tree; the feed accepts two candidate names and refuses if neither is present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-pr-586 build item 2 and item 4: each universe account carries its roster accountStartDate; a null accountStartDate drives NO_START_DATE_AT_SOURCE.",
+  "world_is": "No file in the granted worktree (the neighbour scripts, the orion_account_mapping loader, the INF_B_00 builder constants) names the roster column accountStartDate. The feed reads accountStartDate, else account_start_date, and refuses the day when neither is a column. The name at the source is therefore unread here and must be checked at the apply against a live accounts_v2 snapshot.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/INF_B_00.canonical_holdings.py@a4a81b30af25e436c815e4176b65c6820d85fbb1 defines the roster and positions prefixes; no accountStartDate reference in the granted tree",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@a4a81b30af25e436c815e4176b65c6820d85fbb1 START_CANDIDATES (SCOPE-FEED-A block)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A refusal, not a silent null, if the column name is wrong: the run stops before any Orion call."
+}
+```
+
+## IRPT_BCKEND-D2-W429-S3 -- The feed's writes and its reads sit in two buckets: address() puts orion/inflection in opal-data-assets, while the roster and positions silver the feed reads are in opal-data-inf.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W429-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~429",
+  "surfaced_at": "2026-10-15T16:36:22Z",
+  "one_line": "The feed's writes and its reads sit in two buckets: address() puts orion/inflection in opal-data-assets, while the roster and positions silver the feed reads are in opal-data-inf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Addendum 1 section 2 rule 6: both feed prefixes are lib/opal_naming.address() output for source orion, scope inflection, tiers bronze and silver; the feed reads the roster and the positions silver.",
+  "world_is": "address('orion','inflection','bronze'|'silver',...) resolves to bucket opal-data-assets (measured by calling the builder at the base commit). The roster and positions silver the feed reads are read from opal-data-inf, the bucket INF_B_00 and the neighbour pull scripts use. The feed therefore writes to one bucket and reads from another. The build follows the builder for writes and the builder constants for reads.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@a4a81b30af25e436c815e4176b65c6820d85fbb1 address() via _home_bucket: scope inflection, tier home rule; measured output s3://opal-data-assets/orion/inflection/bronze/scope_account_returns/date=2026-10-14/scope.json.gz",
+      "data/inf/scripts/gold/INF_B_00.canonical_holdings.py@a4a81b30af25e436c815e4176b65c6820d85fbb1 line 83 S3_BUCKET = 'opal-data-inf'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect of the build: a fact the apply should confirm when the B-IN adapter is cut that reads the feed."
+}
+```
+
+## IRPT_BCKEND-D2-W429-S4 -- The chain syncs only the code/gold, code/manual_api, code/silver and code/bronze prefixes; the feed imports lib/ and the INF_B_00 builder by path, which no synced prefix carries.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W429-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~429",
+  "surfaced_at": "2026-10-15T16:36:22Z",
+  "one_line": "The chain syncs only the code/gold, code/manual_api, code/silver and code/bronze prefixes; the feed imports lib/ and the INF_B_00 builder by path, which no synced prefix carries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Addendum 1 section 4 and the order's build: the chain runner syncs scripts only; the feed script sits beside the chain's other pull scripts and imports from the estate's shared modules.",
+  "world_is": "orion-gold-dispatch.sh (line 546 at HEAD of this branch) lists the synced prefixes as code/gold/, code/manual_api/, code/silver/ and code/bronze/. The feed resolves lib/trading_calendar.py and lib/opal_naming.py at parents[2] of its own path, and loads INF_B_00.canonical_holdings.py from code/gold. The lib/ tree is not a synced prefix, so the feed's imports resolve in the repository and are not guaranteed in the chain. A missing module would fail the tolerated pull on every night after the apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/orion-gold-dispatch.sh (worktree, branch of a4a81b30af): line 546 prefixes = ['code/gold/', 'code/manual_api/', 'code/silver/', 'code/bronze/']",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py (SCOPE-FEED-A block): sys.path entries for lib and scripts/gold"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Check at the apply: either the lib/ modules reach the chain runtime, or the feed takes its calendar and naming from a synced copy. Not resolved by this build."
+}
+```
+
+## IRPT_BCKEND-D2-W429-S5 -- A 429 that persists stops the run, but the envelope of the stopped run is printed, not written: a partial bronze key would be skipped by the absent-first rule on every later run.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W429-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~429",
+  "surfaced_at": "2026-10-15T16:36:22Z",
+  "one_line": "A 429 that persists stops the run, but the envelope of the stopped run is printed, not written: a partial bronze key would be skipped by the absent-first rule on every later run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IB-pr-586 build item 3: a 429 that persists after the limiter's retries STOPS the run (exit non-zero) after recording it; item 6: each key is read ABSENT first and a key that exists is never overwritten.",
+  "world_is": "The build stops with exit 1 and prints the call envelope to stdout, and it writes no S3 key for that run. Writing the stopped envelope into the bronze key would make every later run SKIP that day (the key exists), freezing a partial day. The recording therefore lives in the run log, not in the bronze object.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py (SCOPE-FEED-A block) run(): the 429 branch prints STOP and ENVELOPE, then raises _Stopped before any write",
+      "data/inf/manual_api/test_pull_inflection_scope_account_returns.py test_persisting_429_stops_run_after_recording asserts no put"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Reading of the order's word 'recorded': the envelope is recorded in the run's log. If the CTO meant the bronze object, the skip rule and the record must be reconciled in an amendment."
+}
+```
+
+## IRPT_BCKEND-D2-W429-S6 -- The inferred claim branch of the null start-date rule cannot be reached from a production path: every absence the feed classifies comes from a successful call of the same run.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W429-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~429",
+  "surfaced_at": "2026-10-15T16:36:22Z",
+  "one_line": "The inferred claim branch of the null start-date rule cannot be reached from a production path: every absence the feed classifies comes from a successful call of the same run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Addendum 1 rule 3 and TO item 4: the claim is inferred (pattern measured on 2 households) for a null-start account NOT observed missing by this run, and measured for one the run observed missing.",
+  "world_is": "A household whose call failed writes no silver rows, and a household whose call succeeded observes every universe account in its response. So each classified absence is observed by this run and carries measured. The inferred branch exists in classify(observed=False) and is exercised only by a unit test; no production path passes observed=False.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py (SCOPE-FEED-A block) classify() and run(): observed_by_hh is True for every household whose call succeeded",
+      "data/inf/manual_api/test_pull_inflection_scope_account_returns.py test_claim_promoted_to_measured_when_the_call_misses_a_null_start_account"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the inferred wording is kept in the code for the case the addendum names. Significance is for the CTO to judge."
+}
+```
+
+## IRPT_BCKEND-D2-W429-S7 -- Amendment 2 settles the calendar and the address source; the roster and positions prefixes and the rate limiter are still loaded by path from the gold and bronze script directories, which the runner's four synced prefixes may not 
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W429-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~429",
+  "surfaced_at": "2026-10-15T17:30:00Z",
+  "one_line": "Amendment 2 settles the calendar and the address source; the roster and positions prefixes and the rate limiter are still loaded by path from the gold and bronze script directories, which the runner's four synced prefixes may not place beside the script.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment 2 (ruling on S3 and S4): the script must run with only the files beside it; it imports trading_calendar beside itself or from the repository lib/, and takes addresses from the builder or a sidecar.",
+  "world_is": "The script still loads two things by relative path: the roster and positions key prefixes from the INF_B_00 builder module under the gold scripts directory, and the AdaptiveRateLimiter from the bronze scripts directory (the neighbour pull script uses the same bronze path). The ruling named only the calendar and the addresses. Under the runner's four synced prefixes these two loads may fail at run time; the apply should confirm they resolve beside the script or move them to the sidecar.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@a8899ade92 source_prefixes() loads BUILDER_PATH = _HERE.parent / 'scripts' / 'gold' / 'INF_B_00.canonical_holdings.py'; the sys.path loop inserts scripts/bronze",
+      "data/inf/scripts/gold/orion-gold-dispatch.sh@e7d5361cf9 line 546 prefixes = ['code/gold/', 'code/manual_api/', 'code/silver/', 'code/bronze/']"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by amendment 2 (Everything else stands). Raised so the apply order checks these two loads with S2 and S3."
+}
+```
+
+## IRPT_BCKEND-D2-W431-S1 -- The Read of the order file returned the whole file, RECORD FACE included, as it did for IB-pr-587 (IRPT_BCKEND-D2-W430-S2); the worker acted on the WORKER FACE and the paths block only.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W431-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~431",
+  "surfaced_at": "2026-10-15T16:57:25Z",
+  "one_line": "The Read of the order file returned the whole file, RECORD FACE included, as it did for IB-pr-587 (IRPT_BCKEND-D2-W430-S2); the worker acted on the WORKER FACE and the paths block only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "The worker face is the whole worker context; the RECORD FACE never travels to a worker, and the worker face instructs the worker not to read it.",
+  "world_is": "The Read tool returned the order file IRPT_BCKEND.TO-IB-pr-590.holdings-overlay.md in full at base fa2502c5b1, including the RECORD FACE from line 82 to the end. The worker had no tool that reads only the WORKER FACE. The worker did not use any RECORD FACE content for an act; its record fields were taken from the WORKER FACE clauses.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-590.holdings-overlay.md@fa2502c5b116dba01a3f7b2522f5f0e6b107b821 has the heading RECORD FACE at line 82",
+      "IRPT_BCKEND-D2-W430-S2 in the same channel file records the same condition for IB-pr-587 at a4a81b30af"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only, recurring condition. The disarm rests with the issuer, who owns the order file form."
+}
+```
+
+## IRPT_BCKEND-D2-W431-S2 -- The order's scratch instruction (outside the repository) and the worker scratch rule (the worktree .scratch directory) name different places; the worker used a directory outside the repository for pin worktrees and scratch files.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W431-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~431",
+  "surfaced_at": "2026-10-15T16:57:25Z",
+  "one_line": "The order's scratch instruction (outside the repository) and the worker scratch rule (the worktree .scratch directory) name different places; the worker used a directory outside the repository for pin worktrees and scratch files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB-pr-590 worker face, Do step 2 and the scratch sentence: the pin worktree is made OUTSIDE the repository and scratch files go in a directory OUTSIDE the repository. The worker scratch rule names the worktree .scratch directory as the only scratch location.",
+  "world_is": "Both sentences cannot be met literally with the same directory. The worker placed the three pin worktrees, the downloads, the candidates, the fragments and the pytest logs in C:/dev/scratch-IB590-431, which is outside the repository and not the shared scratchpad; nothing was written to the worktree .scratch directory. Both locations are untracked and nothing from them is committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-590.holdings-overlay.md@fa2502c5b116dba01a3f7b2522f5f0e6b107b821 worker face, Do step 2 and the paragraph on scratch files",
+      ".gitignore@fa2502c5b116dba01a3f7b2522f5f0e6b107b821 line 450 ignores .scratch/ (the worker scratch location)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only. The issuer may state one location for later rounds."
+}
+```
+
+## IRPT_BCKEND-D2-S205 -- IB-pr-568 applied: the 33 absent flat Orion bronze keys are written and read back (16,768 requests)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S205",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T17:14:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-568 applied: the 33 absent flat Orion bronze keys of pair (a) are written (positions 4, transactions 7, performance 22), each read ABSENT first and read back, 16,768 requests; the Scope account feed's apply is the next executor slot.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB2's record commit 6054c0a120 (deliverables/0.7.0_AE_CloudOps~IB2/IB208-1_orion_backfill_record.json): keys_written 33, requests_made 16768 (bound 18,000 by AMENDMENT 5 @46bc11fc02), 0 throttle, eleven counters 0, the ledger irpt-orion-33day-backfill-20261015 closed; I re-ran check r208 AC1 to AC3 in the main tree: PASS; proof instance VALID",
+      "the packet gates: sha256 03a77b3317, both halves signed, no open ledger or marker, one change at a time"
+    ]
+  },
+  "spec_asserts": "The Orion pairs packet V3, pair (a): the one-time 33-day dated backfill of the absent flat bronze keys, each read ABSENT first, an empty key never written.",
+  "world_is": "Applied and read back. The three feeds now hold their previously missing days; the trigger, the catalog, the schedules and every other key are untouched. The request count 16,768 exceeded the pair's early estimate of about 2,470 and my first bound of 16,000: the real per-day cost of the performance feed (about 420 requests a day) was not in the estimate; the bound was raised once, by AMENDMENT 5, on IB2's measured need, with the persistent-429 stop unchanged. Nothing else waits on this order: the Scope account feed (pair (b) addendum 1) is built and its apply takes IB2's next slot."
+}
+```
+
+## IRPT_BCKEND-D2-W432-S1 -- The Read of the order file by path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The Read of the order file by path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker.",
+  "spec_asserts": "The order's WORKER FACE (task order IRPT_BCKEND.TO-IB-pr-592, line 20 and the worker instruction 'Do not read the RECORD FACE') says the RECORD FACE is not part of the worker context and does not travel to the worker.",
+  "world_is": "A Read of the order file in the worktree with no offset or limit returned all 96 lines, the RECORD FACE (lines 85 to 95) included. The worker saw the record preflight text before the first criterion ran. The record fields were taken from the worker face instruction at line 40, which names the same fields. This is the same instrument behaviour as the sibling row IRPT_BCKEND-D2-W430-S2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-592.split-ratio-absent-named.md at 53581d41a6: RECORD FACE at lines 85 to 95; worker face instruction at line 20 says the record face is not worker context",
+      "Read tool result for that path in C:/dev/wk-IRPT_BCKEND-432 at 53581d41a6 returned the file from line 1 to line 96 with no offset and no limit",
+      "IRPT_BCKEND-D2-W430-S2 in org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md: the same Read behaviour recorded by worker 430"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W432-S2 -- The order asks the run manifest's split_adjust block to name the ratio-absent entries of every day of the run, but the producer writes one manifest per day and has no run-level manifest.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks the run manifest's split_adjust block to name the ratio-absent entries of every day of the run, but the producer writes one manifest per day and has no run-level manifest.",
+  "spec_asserts": "Change item 3 of the worker face says the run manifest's split_adjust block gains ratio_absent holding the entries of every day of the run, sorted by day then security.",
+  "world_is": "holdings_performance.py emit_day() builds the manifest from one day's frame and writes one manifest.json per day (base 53581d41a6, emit_day at lines 1370 to 1435). main() prints one line per day and an EMIT summary, and writes no run-level manifest (main at lines 1438 to 1522). The ratio_absent list is therefore carried in the block of the day it describes. A multi-day run leaves one list per day manifest and no single block holds the run's entries. Built as specified for the day manifest; no run-level block was built, because the producer has no run manifest to add it to. The grading is unchanged either way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_performance.py at 53581d41a6 lines 1370 to 1435: emit_day builds one manifest dict per day and writes manifest.json at the day's manifest address",
+      "holdings_performance.py at 53581d41a6 lines 1438 to 1522: main() loops days through pool.map, prints per-day lines and the EMIT summary, and does not write a run-level manifest",
+      "IRPT_BCKEND.TO-IB-pr-592 worker face change item 3 at line 36: the run manifest split_adjust block gains ratio_absent for every day of the run"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W432-S3 -- The import chain of holdings_performance.py needs data/assets/scripts/lib, which the worker face's list of named sparse directories does not carry.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The import chain of holdings_performance.py needs data/assets/scripts/lib, which the worker face's list of named sparse directories does not carry.",
+  "spec_asserts": "Worker face line 24 names the sparse directories earlier workers needed: infra/aws/lambda/investor-reporting, data/mdpf/scripts/gold, data/mdpf/scripts/silver, data/assets/scripts/silver, infra/aws/lambda/v2_portal/_shared, docs/contracts/investor-reporting and lib, and says to add the directory of each import error until the tests collect.",
+  "world_is": "Collection of the existing split tests failed with ModuleNotFoundError: stream_parquet. holdings_performance.py inserts data/assets/scripts/lib into sys.path (base 53581d41a6 lines 115 to 119) and imports stream_parquet and trading_calendar from it. The directory data/assets/scripts/lib was added locally as a sparse entry, not committed, and the tests then collected and passed. The face's list does not name it, so the next worker meets the same failure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_performance.py at 53581d41a6 lines 115 to 119: sys.path inserts for lib and data/assets/scripts/lib, then import stream_parquet, trading_calendar",
+      "pytest collection of test_split_unkeyed.py and test_split_adjust.py in C:/dev/wk-IRPT_BCKEND-432 raised ModuleNotFoundError: stream_parquet before the sparse entry was added",
+      "worker face line 24 of IRPT_BCKEND.TO-IB-pr-592 at 53581d41a6: the named list of sparse directories"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W432-S4 -- The order's sequence and the standing status-flip rule cannot both hold: the criteria grade the worker's own commits, so the criteria output is recorded after the product commit, and a status flip committed by the worker would add
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's sequence and the standing status-flip rule cannot both hold: the criteria grade the worker's own commits, so the criteria output is recorded after the product commit, and a status flip committed by the worker would add a changed path the record does not list.",
+  "spec_asserts": "The worker face says to record the criteria output first, in the product commit, then commit the instance alone in a second commit. The standing worker rules say to flip the task order status to complete and commit the instance, deliverables and the flip together.",
+  "world_is": "AC3 (p207 ac3 via p200 own_changes) compares the record's changed_paths with the paths of this worker's own non-merge commits since base, excluding the deliverables prefix and the channel file. The criteria output can only be written after the product commit exists, so it is committed with the instance in the second commit. A status flip of the order file committed by this worker would be an own change outside changed_paths and would fail AC3, so the status is left pending for the issuer to flip after the proof validates.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py at 53581d41a6: own_changes lists this serial's commits since base and drops ALLOWED_PREFIX paths (the deliverables prefix and the channel file)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r207/p207_cells.py at 53581d41a6 lines 62 to 68: ac3 fails when changed_paths differs from own_changes",
+      "IRPT_BCKEND.TO-IB-pr-592 worker face line 44: criteria output first, then the instance alone in a second commit"
+    ]
+  }
+}
+```

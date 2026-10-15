@@ -677,3 +677,59 @@ Filed by 2.0.0_SA_COO~ZB at the Z6 drain end.
   "notes": "Routed to 1.0.0_SA_CTO~Z as one ask: cut a repair cell (R7) to identify the foreground owner and defeat the foreground lock, or rule otherwise. No act taken on the scripts. Zero Bloomberg attempts spent, so no lockout risk."
 }
 ```
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S23",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZB",
+  "surfaced_at": "2026-10-15T17:07Z",
+  "one_line": "The unattended sign-in WORKED on 19 mornings (08-23 to 10-04) and has failed on all 5 mornings that needed it since the Bloomberg Terminal self-updated on 10-06 04:04Z; the 'zero unattended successes since 08-18' claim is false, and today's login completion at ~13:35Z was done by no script and no agent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Users/Opal Bloomberg/.bbg_signin_attempts.json: 19 SUBMITTED-UNATTENDED-FALLBACK entries 2026-08-23..2026-10-04T11:02:23Z, then none; every later entry (10-06, 10-08, 10-11, 10-13) is SUBMITTED-SUPERVISED about 30 min after a failed 11:00Z fire. bbg_fallback_ESCALATION.txt records ONLY failures, so it cannot show successes (survivorship).",
+      "Retained pull logs 09-19..10-15, mornings where the fallback had to sign in: before 10-06: 09-20 UP, 09-22 UP, 09-23 no listener, 09-27 no listener, 09-28 fill unverified, 09-29 UP, 10-01 UP, 10-02 UP, 10-04 UP = 6 of 9. After: 10-06, 10-08, 10-11, 10-13, 10-15 = 0 of 5. The 10-05 failure is a different cause (8194 listener present, repair R2).",
+      "C:/blp/Wintrv: wintrv.exe FileVersion 3206.1.80.1 and every binary there last written 2026-10-06T04:04Z (self-update; registry DisplayVersion unchanged at install date 20260202). Login window appears in 3-6s on 10-04, 12s on 10-06, not within 36s on 10-08; username glyph count 11 on 10-04, 10 on 10-06 and 10-08; verify PASS then 'focus lost before submit' on 10-11, 10-13, 10-15.",
+      "Windows session log (TerminalServices-LocalSessionManager): the desktop is repeatedly attached from 100.98.173.75 and 100.113.31.20 and the box rebooted 10-04T18:58Z (SentinelOne crash) and 10-13T18:57Z. 09-27 and 10-06 mornings had the remote client attached and the Login window opened centred on a 1512-wide screen (rect L=275, +204/+68 from the 1920 position, row Z-S2).",
+      "Python ruled out: cma env 0 package changes 2026-09-28..10-12 (134 conda-meta, 96 dist-info checked); Python311 changed 09-28 21:27-22:43Z and four unattended sign-ins succeeded after (09-29, 10-01, 10-02, 10-04); the 3.14.8 breakage is 10-15 14:02Z, after the 11:00Z failure; the sign-in path is PowerShell plus screen OCR, not Python.",
+      "Today's login: no ledger entry (file mtime 10-13T14:28Z), no new files in C:/opal-elev after 11:02:37Z, 5 new blpwtk2_subprocess starting 13:34:58-13:35:07Z, and the telemetry of all 99 agent files shows 0 tool calls 13:25-13:45Z; the BG seat made no call from ~11:10Z to ~14:20Z. So no script and no agent completed the login; BG's 'a human completed it' (msg 34459) is an inference, not a measurement."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "0.0.3_BG_BBGTerminal msgs 34424 and 34459 and row OPAL_BBGTML-Z-S22: 'zero unattended successes since 08-18' and 'a human completed the open login window'.",
+  "world_is": "Unattended sign-in was healthy until 10-04. Since the 10-06 Terminal self-update it fails 5 of 5 times: slower Login window, a username glyph count the OCR check rejects, and foreground lost between verify and submit. Cause not proven (Terminal build change is the leading candidate by timing and by the three symptom changes); R7's trace at the next failed fire reads what holds the foreground. Why the Terminal came up at 13:35Z with nobody and no script acting is UNEXPLAINED.",
+  "notes": "Z-S22's 'zero unattended successes' sentence is superseded by this row. 10-11 escalation line said '1 attempt used' but the ledger has no unattended entry that morning (old misleading wording, R-series fixed it). Next reads: R7 trace line; Terminal build compare (no earlier build recorded); a console-only vs remote-attached split of the failing mornings once more fires exist."
+}
+```
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S24",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZB",
+  "surfaced_at": "2026-10-15T17:13Z",
+  "one_line": "Session state at 11:00Z does not separate good sign-in mornings from bad ones after 10-06: console runs now fail too (10-11, 10-15), and before 10-06 remote-attached runs succeeded 3 of 5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Windows TerminalServices-LocalSessionManager/Operational (ids 21,22,23,24,25) joined to the 14 retained pull-log mornings 09-20..10-15 where the fallback had to sign in; state = the last session event at or before 11:00:00Z.",
+      "BEFORE 10-06 (9 mornings): console 3 of 3 signed in (09-20, 09-22, 10-01); remote-attached from 100.98.173.75 3 of 5 (UP 09-29, 10-02, 10-04; no listener 09-23, 09-27); disconnected-no-client 0 of 1 (09-28 fill unverified).",
+      "AFTER 10-06 04:04Z (5 mornings): console 0 of 2 (10-11, 10-15 focus lost before submit); remote-attached 0 of 3 (10-06 fill unverified, 10-08 window slow plus glyph 10, 10-13 focus lost before submit).",
+      "Denominator: 14 mornings; the other mornings in the retained window had DAPI up and needed no sign-in. 'console' includes a fresh console logon after a reboot."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row Z-S23 and the Z-S2 hypothesis: a remote client attached to the desktop (different screen size and rendering) explains the failing mornings.",
+  "world_is": "Remote attachment cost reliability before 10-06 (3 of 6 non-console mornings failed, 0 of 3 console) but is not the cause since: the post-update failures occur in console and remote sessions alike. That leaves the Terminal build change at 10-06 04:04Z as the one factor common to all 5 failures and absent from all 6 earlier successes' runtime; not proven.",
+  "notes": "Small denominators (5 and 9): read as direction, not significance. Cheapest next evidence: R7's TRACE line at the next failed fire names the foreground owner and the session state (Active/Disconnected/console), which this table infers from event logs."
+}
+```

@@ -1481,3 +1481,111 @@ are issued STAGED (MP-pd-8's slot is `~30`).
 4. The other three boxes are other fabrics. U2 carries to them only as a cross-box direction after site Z is proven.
 5. A person known only by email has no principal key, so no control (PD.0 item 8). Closing that is a later cell.
 6. The refusal branch (rc != 0) of the three-state git read stays unexercised, as the analysis ruled.
+
+---
+
+# WORKSTREAM PE, ROUND 1 -- THE /GATEWAY VIEW GROUPED BY SOURCE, NO MICROSOFT 365 DEFAULT (L5, v11)
+
+```json
+{
+ "project": "NFRA_MCPORTAL",
+ "decomp_version": "v11",
+ "step": 5,
+ "workstream": "PE",
+ "round": 1,
+ "input": "Andrew-direct 2026-10-15 ~16:3xZ at the 2.0.0_SA_COO~MP terminal (record deliverables/ANDREW_DIRECT_20261015_16xxZ_GATEWAY_VIEW_OWNERSHIP_HUMAN_UI_IS_MCPORTAL.md @5025c60ba1); 2.0.0_SA_COO~O msgs 34496 and 34503 (the finding and the corrected split); 2.0.0_SA_COO~MI msg 34513 (the declaration field and carrier MX-c-21)",
+ "prd_ref": "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md@7da54894cf (v0.8: FWD-20 ACCEPT and C15 apply unchanged; no ENDPOINT or CONTRACT change)",
+ "author": "2.0.0_SA_COO~MP",
+ "cells": 2,
+ "chains": 2,
+ "join_cells": 0,
+ "frozen": true
+}
+```
+
+**A defect in the delivered FWD-20 page, and it is MCPORTAL's.** `GET /api/admin/gateway/breakdown` (MP-z-1, my cell) puts every tool that has no
+integration spec in a group named "Microsoft 365" (`app/admin_gateway_breakdown.py`, the `else` branch of the tools-to-channels loop, and the forced
+`M365_ID` channel). That files the harvest, etfs, news and portal tools under the wrong source, so the page tells a human something false. Andrew's rule
+(relayed by 2.0.0_SA_COO~O, msg 34496): the human-facing view is MCPORTAL's, and a fault there is MCPORTAL's.
+
+## PE.0 WHAT IS MEASURED BEFORE THE CUT (issuer, 2026-10-15 ~16:5xZ)
+
+1. The page is not the cause. `GatewayView.tsx` keys each section on `channel.id` (`key`, `data-channel`) and prints `channel.name`; it renders what the
+   handler sends. The wrong group is made server-side, in the handler.
+2. The catalog does NOT yet say which bucket a tool reads. `DATA_CATALOG.yaml` `tool_index` rows carry `tool`, `definition`, `member`, `owner`, `read_tool`,
+   `links`, `index`, `history_depth`, `freshness`; none carries a bucket, and only 11 of 99 rows carry `links`. Bucket names appear only inside dataset
+   descriptions (`opal-data-harvest` 78 mentions). So the declaration must be added by NFRA_MCPINDEX (2.0.0_SA_COO~MI msg 34513: field `source_group` on each
+   `tool_index` row, carrier cell MX-c-21, cut after MX-r-14 closes; MX-r-14 ships the catalog around 19:00Z).
+3. The Microsoft 365 truth is already in the code: `graph_scope_map.TOOL_GRAPH_SCOPES` lists exactly the tools that call Microsoft Graph.
+4. Base: the gateway admin suite (`tests/test_admin*.py tests/test_owner_gate.py`) reads 93 passed, 0 failed; `bun test src` at mcportal `f7760a6` reads 51 pass,
+   0 fail.
+5. The ratings file (`channel_ratings.json`, C16) is keyed by channel id, owned by the project's CTO. A new group id reads "unrated" until a row is added; that
+   is the designed reading, not a defect.
+
+## PE.1 THE CELLS -- 2
+
+| Cell | Serves | Builds | Assignee | Write surface | Risk |
+|---|---|---|---|---|---|
+| `MP-pe-1` | FWD-20 page correctness, handler half | the breakdown groups each tool per PE.2, with no Microsoft 365 default; tests | worker `~31` | `app/admin_gateway_breakdown.py`, `tests/test_admin_gateway_breakdown.py`, `tests/test_admin_people.py` (only assertions that pin a channel id or kind the contract changes) | WORLD (live only through a gateway release) |
+| `MP-pe-2` | FWD-20 page readability, view half | the Gateway page shows a summary table of groups, labels each group's kind, shows the grouping basis, counts a tool once; tests | worker `~32` | mcportal `src/pages/gateway/**`, `src/api/admin.ts`, `src/api/admin.test.ts` | WORLD (via a gateway release) |
+
+**The release is NOT a cell here.** 2.0.0_SA_COO~O ships the gateway release of each side (msg 34503): MI's catalog (MX-c-21) and these two cells' commits.
+The handler commit and the mcportal bundle commit are handed to 2.0.0_SA_COO~O with their hashes when drained; the never-widen pair and the NEVER-2 ledger are
+the releasing seat's act as ever. The mcportal commits reach origin DEV by 0.0.0_AB_MSTR~Z, the only pusher.
+
+## PE.2 THE CONTRACT -- `GET /api/admin/gateway/breakdown`, changed fields only (fixed here so MP-pe-1 and MP-pe-2 run in parallel)
+
+**Grouping, per tool, the first rule that holds:**
+1. The tool has an integration spec (`registry._ACTIVE_BY_TOOL`): its integration channel, as today (kind `integration`). A declaration never moves a tool out of
+   its integration channel: the integration carries real auth and tier facts. (Whether integration tools should ALSO be regrouped by bucket is Andrew's call,
+   open at PE.6 item 3.)
+2. Else the tool's `tool_index` row carries `source_group`: an object `{id, name, kind}` or a list of such objects, `kind` equal to `"bucket"`, `id` and `name`
+   non-empty strings. The tool joins ONE group per element: `id` = the element's id (the bucket name, e.g. `opal-data-harvest`), `name` = its name, `kind` =
+   `"bucket"`, `auth` = `"per tool"`, `min_tier` = `"per tool"`. A tool with several elements is listed in each of those groups.
+3. Else the tool is in `graph_scope_map.TOOL_GRAPH_SCOPES`: the existing Microsoft 365 group (`id` `m365`, `kind` `native`, unchanged), and ONLY such tools.
+4. Else the tool joins the group `{id: "undeclared", name: "No source declared", kind: "undeclared", auth: "per tool", min_tier: "per tool"}`. It is created only
+   when at least one tool lands in it. A tool is never placed in Microsoft 365 by default.
+5. A `source_group` that is not an object or list of objects with a string `id`, `name` and `kind` "bucket" is treated as not declared (rule 3 or 4 then applies).
+
+**New and changed body fields:**
+- `channels[].kind` takes the values `integration`, `native`, `bucket`, `undeclared`.
+- `grouping_basis` (new, a string at the top level): one sentence stating rules 1 to 4 in this order, and the count of tools that fell to the undeclared group,
+  ending `N tool(s) declare no source.` (N may be 0).
+- `channels` order: all `bucket` groups sorted by id; then `integration` groups by id; then `native` (`m365`); then `undeclared`.
+- The forced Microsoft 365 channel (`chans.setdefault(M365_ID, ...)`) stays as today. Every other field of a channel (`tools[]`, `indexes`, `holders`,
+  `holders_basis`, `rating`) keeps its meaning; `rating` reads `unrated` for a group id with no row in the ratings file.
+- Holders are computed from each group's tool list by the existing chain; a tool listed in two groups appears in both groups' holder rows.
+
+**The view (MP-pe-2)** shows, in this order: the existing title and refresh control; the header line with the number of groups and the number of DISTINCT tool
+names (a tool in two groups counts once); the `grouping_basis` line; a summary table (Group, Kind, Tools, Holders) with one row per channel in the
+response order, whose Group cell is a link to that group's section (`#gateway-<channel id>`); then the sections as today, each with its kind written in words
+(`AWS bucket`, `Integration`, `Built in (Microsoft Graph)`, `No source declared`). A group of kind `undeclared` is marked as a gap in the existing red warning
+text style (no new colour).
+
+## PE.3 DEPENDENCY EDGES AND CHAINS
+
+```
+chain H   MP-pe-1   (handler: needs no other cell; works with zero declarations)
+chain V   MP-pe-2   (view: built against PE.2; no edge to MP-pe-1 beyond the contract)
+```
+`N = 2 of M = 2 chains, cap 8`: workers `~31` (MP-pe-1) and `~32` (MP-pe-2). No joins.
+
+## PE.4 GATES
+
+None on the cells: they start at the issuance. The REAL grouping shows only after MI's MX-c-21 ships declarations in a gateway release; until then the
+page shows the Microsoft 365 group shrunk to its true graph tools and a "No source declared" group holding the rest, which is honest and already an improvement.
+Holder of the release gate: 2.0.0_SA_COO~O.
+
+## PE.5 RULE 24 RECORD (the new value set)
+
+- **`channels[].kind`** {integration, native, bucket, undeclared} over "how the tool's group was decided": by spec, by graph scope, by a declared bucket, or by
+  nothing. MECE on one axis (the rule that placed the tool); `undeclared` is the explicit gap, never a default level.
+- Token census: `bucket`, `undeclared`, `No source declared`, `AWS bucket`, `Built in (Microsoft Graph)` are new; `integration` and `native` are the code's own.
+
+## PE.6 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. Whether the live page reads right is looked at on the running page after a release, by Andrew's eyes or a screenshot.
+2. The bucket groups appear only when MI declares them (MX-c-21). This cut makes the page honest without them and ready for them.
+3. **Open for Andrew: should integration channels (Schwab, Black Diamond, YCharts and the rest) also be regrouped by bucket?** Rule 1 keeps them as their
+   own integration groups because they carry auth and tier facts a bucket group cannot. One word from him changes rule 1.
+4. Ratings for the new group ids are the CTO's data file (C16); until rows exist they read `unrated`.
