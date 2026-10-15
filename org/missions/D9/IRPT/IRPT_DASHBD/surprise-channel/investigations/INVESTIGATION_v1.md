@@ -15707,3 +15707,237 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For 2.0.0_SA_COO~P2 (the route and hop 5 owner under the CTO's ruling on call 076d): decide, before hop 5's window, whether a print reads the frozen filled object through this route (then add the version_id parameter, the render-delegate refusal and X-Opal-Version-Id, as the series has them) or server-side (then the portal's version query is removed by an F-SHIP amendment and the print takes its document from the render host). The portal side follows either way by an issuer amendment. Counts and paths only."
 }
 ```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W193-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~193",
+  "surfaced_at": "2026-10-15T07:59:58Z",
+  "one_line": "The commit gate's client-data check could not run on this box: its hashed account-id list is absent, so commit 06adaf402d was not checked for client account ids by the gate; the worker's own scan of the two staged files found no private history id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Worker face, client data rules: before every commit, scan what you stage for a client figure; the commit gate's client-data check is the mechanism that checks every commit for client account ids. The order names no route for a commit made while that check cannot run.",
+  "world_is": "The commit gate printed WARN client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt and stated that commit 06adaf402d was NOT checked for client account ids (absent is not empty). The worker's scan of the two staged files: 0 of 1,533 private history ids appear in either file; the one run of 8 or more digits is a private folder path, an exempt field.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit-gate output of commit 06adaf402d on box dell2: WARN client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "round 119 row IRPT_DASHBD-D2-W189-S1 (commit eab07e1ca5): the same absent list on this box, disarm owner 2.0.0_SA_COO~D2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Same condition as IRPT_DASHBD-D2-W189-S1, still open: until the hashed list is placed at the gate's path or OPAL_ACCOUNT_ID_HASHES is set, every commit on this box is unchecked for client account ids. Disarm by the disarm owner. Counts and paths only; this row carries no account id."
+}
+```
+
+## IRPT_DASHBD-D2-W192-S1 -- lib/trading_calendar.py answered prev_trading_day from its hardcoded NYSE fallback on this box (pandas_market_calendars absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W192-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~192",
+  "surfaced_at": "2026-10-15T07:54:00Z",
+  "one_line": "TO-DB-b-238 step 2 names lib/trading_calendar.py prev_trading_day for the previous trading day of the five other dates. On this box the module printed a WARN that pandas_market_calendars is absent and answered from its hardcoded NYSE fallback (covers 2010-2027). The six pairs it returned are weekday-consecutive with no holiday between them, so the read was not affected; the source of the answer was the fallback, not the library.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 120 order DB-b-238 step 2: the previous trading day of each of the five other dates is taken from lib/trading_calendar.py prev_trading_day.",
+  "world_is": "prev_trading_day(2026-07-02) = 2026-07-01, (2026-10-13) = 2026-10-12, (2026-09-22) = 2026-09-21, (2026-10-06) = 2026-10-05, (2026-09-16) = 2026-09-15 and (2026-04-21) = 2026-04-20, each printed with the warning WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027. The calendar's own note says the fallback must be regenerated before 2028.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py at bf61bc8845 (prev_trading_day line 191; _fallback_source line 141; _announce_fallback line 148), run from the worktree root on 2026-10-15",
+      "balance_lag_read_r120.py at bf61bc8845 (deliverables folder 0.9.0_WK_IRPT_DASHBD~192), its run printed the calendar WARN once and the other-date prior dates above"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as an observation of a capability that is not on this box. No repair is made by this seat; the calendar's owner decides whether the library is installed on the fabric or the fallback is the declared source."
+}
+```
+
+## IRPT_DASHBD-D2-W192-S2 -- the commit-time client-data check did not run on this box (the hashed account-id list is absent), so the client-id clause of the pre-commit scan was done by hand
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W192-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~192",
+  "surfaced_at": "2026-10-15T07:58:27Z",
+  "one_line": "The order's pre-commit scan for client figures and long identifier runs had a gate behind it, and on this box that gate could not run: safe-commit printed client-data-check WARN, the hashed account-id list is ABSENT at the operator's home .opal folder, so the commit was NOT checked for client account ids. This seat scanned the staged text by hand for long digit runs and for account-id-shaped values; it did not have the list to compare against.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 120 order DB-b-238 BOUNDS and WORKER FACE: before every commit, scan what you stage for a client figure and for long identifier runs; counts, dates and words only in the repo.",
+  "world_is": "The commit of the analysis script, the counts-only record and this row (commit e1dbfeff48) printed: WARN: client-data-check: hashed account-id list ABSENT at the operator's .opal folder -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there). The staged text carries no account identifier by construction: the script reads account ids only into memory and prints counts; the record carries counts, dates and words.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit e1dbfeff48 on wk-IRPT_DASHBD-192: the .tools/safe-commit.sh output carries the client-data-check WARN line quoted in world_is",
+      "deliverables folder 0.9.0_WK_IRPT_DASHBD~192 at e1dbfeff48: balance_lag_read_r120.py (print of counts only) and RD_BALANCE_LAG_R120.json (counts, dates and words only; a long-digit-run scan of the record returned no run, and the script's only run is inside its private folder path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed for the owner of the client-data gate on this fabric. No repair is made by this seat; the list is not copied into the worktree and no hash list is read by this seat."
+}
+```
+
+## IRPT_DASHBD-D2-W194-S1 -- the contract's supersedes is an OBJECT, so 'append an entry' became a two-element list; no other key moved
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W194-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~194",
+  "surfaced_at": "2026-10-15T07:59:23Z",
+  "one_line": "TO-DB-b-240 says append an entry to supersedes, but at base the contract's supersedes is a JSON object holding one 0.1.0 entry, not a list. The checker's supersedes clause iterates it as a list of entries, so an object cannot pass. Resolved by making supersedes a two-element list: the 0.1.0 entry verbatim, then the 0.2.0 entry the order names.",
+  "spec_asserts": "TO-DB-b-240 step 2: 'Append to supersedes an entry {contract_version 0.2.0, schema_hash unchanged, changes}. Change NOTHING else: columns, schema_hash, enums and every other key stay byte-for-byte.'",
+  "world_is": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json at base (cee3478342) carries supersedes as an object with contract_version 0.1.0, schema_hash b5fa and changes; there is no list to append to. The checker (org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r120/p120_srccol.py, check_contract) reads c.get('supersedes') as a list of dicts, so the object form raises and AC1 cannot pass. The edit: supersedes is now a list of two objects, the 0.1.0 object unchanged in its keys and values, then the 0.2.0 object (schema_hash 1b25, the 0.2.0 base hash). Only the container changed; columns, schema_hash, enums and every other key are as they were, and the other edits are the ordered ones (contract_version, optional_columns, schema_hash_with_optional).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@cee3478342: supersedes was an object (base line 189 region) with one 0.1.0 entry",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r120/p120_srccol.py@cee3478342: check_contract, supersedes clause iterates c.get('supersedes', []) and calls x.get on each entry",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json working tree after this cell: DB120-4-AC1 PASS and DB120-4-AC2 PASS under the checker"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~D2 (the issuer of the cell): confirm the list form of supersedes is the intended shape for later contract bumps, or amend the checker's supersedes clause to read an object. No served value and no hash moved. Counts and paths only."
+}
+```
+
+## IRPT_DASHBD-D2-W195-S1 -- the Cottonwood holdings-performance schedule file creates its schedule ENABLED, against the DISABLED ruling of the B-CW rounds
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W195-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~195",
+  "surfaced_at": "2026-10-15T08:07:18Z",
+  "one_line": "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf creates aws_scheduler_schedule.irpt_holdings_performance_cot with state ENABLED, while its own description and the B-CW round-115 and round-117 rulings say it is created DISABLED until the catch-up after-read",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "spec_asserts": "The schedule is created DISABLED and enabled only after the catch-up's after-read: the schedule resource's own description says CREATED DISABLED; enabled only after the catch-up's after-read; the round-117 CTO ruling (B-CW, section 1) reads 'The schedule is DISABLED'; the round-117 ruling 1 orders the one-line change to ENABLED only after the catch-up.",
+  "world_is": "At cee3478342, schedule.tf line 287 reads state = \"ENABLED\" on resource aws_scheduler_schedule.irpt_holdings_performance_cot (resource line 283, cron(15 8 ? * MON-FRI *), America/New_York). The file therefore says ENABLED and its description says DISABLED. Whether the live schedule is ENABLED was NOT read (no AWS call was allowed to this worker); the file as written would fire the Cottonwood holdings function at 08:15 before the catch-up.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf:283-288 at cee3478342: resource aws_scheduler_schedule irpt_holdings_performance_cot, description CREATED DISABLED, state = ENABLED, schedule_expression cron(15 8 ? * MON-FRI *)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-CW_ROUND_117_20261015.md section 1 (the schedule is DISABLED) and section 2 ruling 1 (ENABLED only after the catch-up's after-read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while reading the holdings-performance cot schedule as the precedent for the Cottonwood account return landing packet (DB-b-241, no build, no plan, no apply). The disarm owner is the B-CW issuer who carries the DB-c-7 schedule file; the applier 0.7.0_AE_CloudOps~DB2 is the one to hold the apply until the file reads DISABLED or the owner records why ENABLED is intended. Paths and words only; no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W195-S2 -- the dim_return_method row a landing of the Cottonwood account return writes sits outside the one-prefix write the order names
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W195-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~195",
+  "surfaced_at": "2026-10-15T08:07:18Z",
+  "one_line": "the producer's served rows point at method_version 2 whose row lives in irpt/cottonwood/gold/dim_return_method/, which the landing grant of TO-DB-b-241 (one Cottonwood gold prefix) does not reach",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The landing grant names the write of the ONE Cottonwood gold prefix (account_return_daily), and the adapter's rows carry method_version 2 (adapter line 56: the dim_return_method row 2, the custodian value).",
+  "world_is": "account_return_daily.py emit_method_row (line 2000, address at line 2016 with TABLE_METHOD dim_return_method, partition method_version=2) writes the method row under irpt/cottonwood/gold/dim_return_method/. A landing that writes only account_return_daily (data.parquet and manifest.json) leaves its method_version 2 rows pointing at a row no grant writes. Nothing is landed by this worker; INERT until a landing is cut.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:2000-2016 at cee3478342: emit_method_row and its opal_naming.address call with TABLE_METHOD (line 101 dim_return_method)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py:56 at cee3478342: METHOD_VERSION = 2, the row the rows point at"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer of DB-b-241's packet: decide whether the landing carries a second write statement for dim_return_method (a second prefix, its own grant) or writes a manifest that says the method row is not carried. Recorded as adapter_changes item 6 of RD_CW_LANDING_FACTS_R120.json. Counts and paths only."
+}
+```
+
+## IRPT_DASHBD-D2-S71 -- disarm of D2-W195-S1: the Cottonwood holdings schedule reads ENABLED by the signed pair's step 8 after the after-read, and the live schedule agrees
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S71",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T08:12:43Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W195-S1 (the Cottonwood holdings-performance schedule file reads ENABLED): ENABLED is the signed pair's step 8, applied after the catch-up's after-read; the live schedule reads ENABLED and matches the file; only the resource's description text is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The Cottonwood schedule is created DISABLED and enabled by one line only after the catch-up's after-read (pair NEVER_WIDEN_PACKET_DB-c-5_R115.md, 'Catch-up first' step 6; CTO round 117 ruling 1).",
+  "world_is": "Commit d9e46a0c1f by 0.7.0_AE_CloudOps~DB2 (DB-c-14 step 8) changed the single line state DISABLED to ENABLED in schedule.tf block irpt_holdings_performance_cot after the catch-up's after-read (36 keys, schema 1.2, 12 dates, three readers). Read by this seat at the tick time with a live scheduler get_schedule of irpt-cot-holdings-performance-daily: State ENABLED, cron(15 8 ? * MON-FRI *), America/New_York, the same as the file. The file and the live schedule agree; the sequence the row asserts (DISABLED until the after-read) was followed; the row read the file before that commit's effect was known to its worker. NOT a hazard: the 08:15 fire is the intended first scheduled fire. The one stale item is the resource description string still saying CREATED DISABLED; it changes no behaviour and is carried, not applied alone (an apply for a description is not worth a ledger).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git commit d9e46a0c1f (subject names step 8 and the after-read counts)",
+      "live scheduler get_schedule irpt-cot-holdings-performance-daily read by this seat (State ENABLED)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_DASHBD-D2-W195-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm owner 2.0.0_SA_COO~C2 (this row), done. The description text is corrected in the next change to that block, if one is ever made. For the new account_dim root (DB-c-18) the schedule is created DISABLED, enabled by the same one-line change after its catch-up after-read."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W191-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~191",
+  "surfaced_at": "2026-10-15T08:02:00Z",
+  "one_line": "The filled stage needs the full gold history, not one day of each gold table",
+  "spec_asserts": "TO-DB-b-237 step 2 says the stage reads that day's gold tables of the firm, through the same reader helpers the earlier stages use, and builds the day's rows from them.",
+  "world_is": "The module's build_document and main() take the whole history: every partition of account_return_daily, account_activity_daily, account_lot_realized and account_class_daily (read_gold_rows with every=True), the newest unrealized-lot partition, and the served model series that the windows are computed from. The stage follows the module: filled_inputs reads those partitions once per fire and builds every owed day from them. The fire's 900 s ceiling is shared with the earlier stages; the stage's duration was not measured in this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py at 69f66970b5: build_document lines 643-717; main lines 1011-1112",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py at 69f66970b5: filled_inputs and filled_stage",
+      "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf at 69f66970b5: timeout = 900"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer's packet: state the measured duration of the filled stage before the apply, or the first fire after the apply carries the timeout risk. Counts and paths only."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W191-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~191",
+  "surfaced_at": "2026-10-15T08:02:00Z",
+  "one_line": "The reporting-gold role grants no read of the served model series or of the household crosswalk",
+  "spec_asserts": "TO-DB-b-237 asks the IAM question for the write prefix only and says the stage's reads go through the handler's own reader helpers, which the role's existing read statements cover.",
+  "world_is": "iam.tf reads are the statements ListExactlyTheSixGoldPrefixes and ReadTheSixGoldPrefixesOnly, scoped by locals.tf to the irpt gold prefixes (holdings, returns, class, activity, realized, unrealized). The module reads two surfaces outside them: the served model series object (read_served_series: bucket opal-data-portal-v2, key json/benchmarks/model_portfolio_timeseries.json) and the advi household_crosswalk gold prefix (FirmAdapter.households). No statement in iam.tf grants either. At the apply those reads are denied; the stage then logs each day as FILLED_SKIPPED and the earlier tables are unaffected. The packet must add read grants for both surfaces, or the stage cannot land.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf at 69f66970b5: statements ListExactlyTheSixGoldPrefixes and ReadTheSixGoldPrefixesOnly",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf at 69f66970b5: irpt_rg_gold_read_prefixes",
+      "data/assets/scripts/gold/irpt_reporting/adapters/model_series_windows.py at 69f66970b5: SERVED_BUCKET, SERVED_KEY, read_served_series",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py at 69f66970b5: FirmAdapter.crosswalk_prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks the apply's landing of the stage, not this cell's build; nothing is deployed. The write-prefix gap (the filled prefix is not in WriteTheFiveGoldPrefixesOnly) is a fact in RD_HOP1_STAGE_FACTS_R120.json, not a row."
+}
+```
