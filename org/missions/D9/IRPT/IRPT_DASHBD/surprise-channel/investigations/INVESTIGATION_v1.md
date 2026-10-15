@@ -15140,3 +15140,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "safe-commit.sh reported the client-data check as ABSENT on this box and passed commit 14d426b8e7 without it. Left alone, every later commit from a worker on this box passes the same way, so a commit carrying a real account number would not be caught by the gate. The two committed files hold no account number or key by construction; that is not a check against the list."
 }
 ```
+
+## IRPT_DASHBD-D2-W506-S1 -- a plain household scalar under an avs benchmark member is printed as every account's figure; the order's assertion for it cannot pass against the unmodified model
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W506-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~506",
+  "surfaced_at": "2026-10-15T06:58:37Z",
+  "one_line": "TO-DB-f-506 step 3 asks the household test to add the sixteen avs benchmark members as plain household scalars and assert the account tables do NOT print that scalar as an account figure. The model prints it: a value that is not by_row is taken as the figure for every row, so all three account tables print the scalar. The by_row reading the cell pins holds (9 tests pass; a fixed-row mutant fails 6), so the scalar case is left unpinned and the test file carries a comment instead of a test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE (bun -e inline, read-only, no file written), portal head 0d58fe2c: avs.qtd.benchmark_short_term set to the plain scalar 77.7 in the synthetic document; the account_overview section prints [\"77.7%\",\"77.7%\",\"77.7%\"] for SYN-0001, SYN-0002 and SYN-0003.",
+      "CODE: portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts at 0d58fe2c, figureCell (about lines 483-495): the value is read as the figure, and only a by_row map is indexed by rowKey, so a scalar is never narrowed to one account.",
+      "PRODUCER: data/assets/scripts/gold/irpt_reporting/filled_report_values.py at c8794f1232, line 9 of the module header: the avs benchmark members are account grain (by_row); _one_document writes a by_row map for any member that carries a row key, and a scalar only for a member with no row key (a household-grain member)."
+    ]
+  },
+  "spec_asserts": "Round 117 order TO-DB-f-506 step 3 (test title word household): a by_row map under a household-grain member is never read as a household figure, and a plain household scalar under an avs benchmark member is not printed as an account's figure (the account tables print the absent words for a missing row).",
+  "world_is": "The model prints a plain scalar as the figure of every account (3 of 3 account tables print 77.7%). The first half of the assertion holds (a by_row map under the household member prints the absent words, pinned by a passing test). The second half cannot pass against the unmodified model; the test file carries a comment for that case, and the grant names no source file to change it."
+}
+```
+
+## IRPT_DASHBD-D2-W506-S2 -- the order's test.todo marker does not typecheck in this portal (TS2339), so a failing case cannot be marked as todo
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W506-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~506",
+  "surfaced_at": "2026-10-15T06:58:37Z",
+  "one_line": "TO-DB-f-506 step 5 and step 3 name test.todo as the marker for a failing case. The portal's bun:test typings do not declare test.todo: bun run typecheck (tsc -b --noEmit) fails with TS2339 at the todo line. The todo was removed in portal commit 0d58fe2c (the case is a comment instead), and typecheck then returns 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal typecheck at 609476b3 (the first commit of avs-by-row.test.tsx): tsc -b --noEmit printed avs-by-row.test.tsx(246,8): error TS2339: Property 'todo' does not exist on type 'typeof test'.; rc 2.",
+      "portal typecheck at 0d58fe2c, the same tree minus the todo line: rc 0.",
+      "the bun test run at 609476b3 reported 9 pass, 1 todo, 0 fail, so the runtime accepts test.todo while the declared types do not."
+    ]
+  },
+  "spec_asserts": "Round 117 order TO-DB-f-506 step 5: a case the model does not satisfy is kept out of the committed file, one test per failing case marked test.todo with its title.",
+  "world_is": "This portal's bun:test declarations do not carry test.todo, so the marker fails the typecheck gate (step 4). No failing case exists in the committed file, so the gate is green; a future failing case needs another marker the declarations carry, or a comment as used here."
+}
+```
