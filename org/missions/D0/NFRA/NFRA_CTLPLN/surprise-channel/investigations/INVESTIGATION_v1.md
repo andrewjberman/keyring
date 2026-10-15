@@ -11481,3 +11481,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The literal is a retired-phrase probe that decides no box value, so it is not a box list in the FWD-2 sense as this worker reads it. A reviewer who reads 'laptop|sitez' as a box-list literal should overrule the FIXTURE entry; the census would then need a different reason, not a removal of the probe."
 }
 ```
+
+## NFRA_CTLPLN-W118-S1 -- the commit gate refuses the one-line signed change to diag_sleeve_fix.py on seven ruff findings that the unmodified file already carries, so CT-ak-4 cannot commit the signed change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W118-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~118",
+  "surfaced_at": "2026-10-15T17:12:00Z",
+  "one_line": "safe-commit.sh refused the signed change (docstring line 2 of data/black_diamond/scripts/gold/diag_sleeve_fix.py) with commit-gate BLOCKED: ruff check failed (Found 7 errors: E402 x6 at lines 3,4,7,8,9,10 and F401 numpy at line 8); the same gate on the unmodified HEAD copy (blob 0e4aec8d80) also returns rc=1 with Found 7 errors, so the refusal is not caused by the one-line edit, and the file cannot be committed without a code-token change or an override.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh --author '0.9.0_WK_NFRA_CTLPLN~118 <...>' -F .scratch/msg_signed_change.txt -- data/black_diamond/scripts/gold/diag_sleeve_fix.py run 2026-10-15T17:0xZ in worktree ctlpln-118: 'ERROR: BLOCKED -- commit-gate failed (py_compile / ruff / lint). Commit aborted; files unstaged.' rc=1; HEAD stays 4d79c7c58c",
+      "control: bash .tools/commit-gate.sh .scratch/base_diag.py (git show HEAD:data/black_diamond/scripts/gold/diag_sleeve_fix.py, md5 56cb170f95c0b112a36a0ee3973d5473) run 2026-10-15T17:1xZ: 'Found 7 errors.' 'BLOCKED: ruff check failed on .scratch/base_diag.py' rc=1",
+      "python -m ruff check data/black_diamond/scripts/gold/diag_sleeve_fix.py (default config, edited file): Found 7 errors, same count as the base copy; the edited line is 76 characters and is not among the findings"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-4 BUILD step 1: commit the one-line signed change ALONE with .tools/safe-commit.sh (explicit path), py_compile and ruff stay clean; RULES: if a gate REFUSES, STOP and file a BLOCKING row; no override.",
+  "world_is": "The file carries six E402 (module-level import after the from __future__ line and the bare string on line 2, which Python does not treat as a module docstring) and one F401 (numpy unused) before this cell touched it. The commit-gate ruff step blocks any commit of this file, so the signed change cannot land on box/laptop through the gate as written. Clearing the findings needs a code-token change, which the cell forbids, or a gate or lane decision by its owner (IRPT_BCKEND or the commit-gate owner), not by this worker."
+}
+```
