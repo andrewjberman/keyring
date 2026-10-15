@@ -773,10 +773,12 @@ class Box:
                     raise Refused("both copies hold a different %s.%s (%r vs %r): resolve by hand" % (key, sub, block[sub], val))
                 block[sub] = val
             merged[key] = block
-        # validate the merged value FIRST; a refusal here leaves the file as it was (nothing is written before this)
-        check_call(json.loads(dump(dict(merged))), "%s (merged from %s)" % (self.rel(call_id), ref))
-        changed = merged != mine
-        self.save(merged)
+        # validate the WHOLE merged result in memory, then write exactly the bytes that were validated: a refusal here
+        # writes nothing, and a null bus_message_id from either copy stays null (the schema allows it)
+        text = dump(merged)
+        check_call(json.loads(text), "%s (merged from %s)" % (self.rel(call_id), ref))
+        changed = json.loads(text) != mine
+        write_text(self.path(call_id), text)
         return ["MERGED %s from %s (%s)" % (call_id, ref, "fields folded in" if changed else "nothing new")] + self.status(call_id)
 
 
@@ -876,6 +878,133 @@ def raises(kind, fn, needle: str = "") -> tuple:
     except kind as exc:
         return needle in str(exc), str(exc)
     return False, "no %s raised" % kind.__name__
+
+
+MERGE_BUS = "0a1b2c3d-0000-4000-8000-0000000000a1"
+MERGE_REPLY = "0a1b2c3d-0000-4000-8000-0000000000b2"
+
+
+def merge_cases(tmp) -> list:
+    """The merge arms (CT-am-3, S9121). A null bus_message_id folds in both ways and stays null where the other copy holds
+    null; a merge refused for ANY reason -- the other copy fails validation, the merged result fails the validator, the
+    copies conflict -- writes nothing: both copies stay byte-identical. Each arm is its own two-checkout exchange under tmp."""
+    out = []
+
+    def rec(name, ok, detail=""):
+        out.append((name, bool(ok), str(detail)[:200]))
+
+    seat = SEAT + SEAT_LANE
+
+    def fresh(arm):
+        root = Path(tmp) / "merge-arms" / arm
+        root.mkdir(parents=True)
+        return Harness(root)
+
+    def exchange(h):
+        a, b = h.a, h.b
+        cid = a.open("CALL", b.device, seat, "1.0.0_SA_CTO", "merge arm", BODY)[0].split()[1]
+        h.commit(a, a.rel(cid))
+        h.push(a.root)
+        a.sent(cid, MERGE_BUS)
+        h.commit(a, a.rel(cid))
+        h.push(a.root)
+        h.pull(b, a, ff=True)
+        b.receive(a.line(cid)[0])
+        return cid
+
+    def both_copies(h, cid):
+        """The receiving copy's bytes and the other copy's bytes (the blob FETCH_HEAD names); a missing blob reads as None."""
+        rc, other, _ = sgit(h.a.root, "show", "FETCH_HEAD:%s" % h.a.rel(cid))
+        return h.a.path(cid).read_bytes(), (other if rc == 0 else None)
+
+    # arm 1: the sending copy merges a receiving copy whose ack carries bus_message_id null
+    try:
+        h = fresh("arm1")
+        cid = exchange(h)
+        h.b.ack(cid, seat)
+        h.commit(h.b, h.b.rel(cid))
+        h.pull(h.a, h.b, ff=False)
+        h.a.merge(cid, "FETCH_HEAD")
+        got = h.a.read(cid)
+        rec("a-null-bus-id-merges-into-the-sending-copy", got["ack"]["bus_message_id"] is None and got["ack"]["by"] == seat
+            and got["sent"]["bus_message_id"] == MERGE_BUS, json.dumps(got["ack"]))
+    except Exception as exc:
+        rec("a-null-bus-id-merges-into-the-sending-copy", False, "%s: %s" % (type(exc).__name__, exc))
+
+    # arm 2: a null on the receiving copy takes the reply bus id the sending copy has recorded since
+    try:
+        h = fresh("arm2")
+        cid = exchange(h)
+        h.b.ack(cid, seat)
+        h.commit(h.b, h.b.rel(cid))
+        h.pull(h.a, h.b, ff=False)
+        h.a.merge(cid, "FETCH_HEAD")
+        h.a.acked(cid, "[x] [from %s] CROSSBOX-ACK %s READ by %s at %s" % (seat, cid, seat, stamp(now_dt())), MERGE_REPLY)
+        h.commit(h.a, h.a.rel(cid))
+        h.pull(h.b, h.a, ff=False)
+        h.b.merge(cid, "FETCH_HEAD")
+        got = h.b.read(cid)
+        rec("a-null-bus-id-on-the-receiving-copy-takes-the-reply-bus-id", got["ack"]["bus_message_id"] == MERGE_REPLY,
+            json.dumps(got["ack"]))
+    except Exception as exc:
+        rec("a-null-bus-id-on-the-receiving-copy-takes-the-reply-bus-id", False, "%s: %s" % (type(exc).__name__, exc))
+
+    # arm 3: the other copy fails validation (an unknown key in its ack): refused, and both copies stay byte-identical
+    try:
+        h = fresh("arm3")
+        cid = exchange(h)
+        h.b.ack(cid, seat)
+        doc = json.loads(h.b.path(cid).read_text(encoding="utf-8"))
+        doc["ack"]["extra"] = 1
+        h.b.path(cid).write_text(json.dumps(doc), encoding="utf-8")
+        h.commit(h.b, h.b.rel(cid))
+        h.pull(h.a, h.b, ff=False)
+        before = both_copies(h, cid)
+        ok, why = raises(Refused, lambda: h.a.merge(cid, "FETCH_HEAD"), "unknown key")
+        rec("a-merge-of-a-copy-that-fails-validation-writes-nothing", ok and both_copies(h, cid) == before and before[1] is not None, why)
+    except Exception as exc:
+        rec("a-merge-of-a-copy-that-fails-validation-writes-nothing", False, "%s: %s" % (type(exc).__name__, exc))
+
+    # arm 4: the validator refuses the MERGED result (the other copy is valid): refused after the merge is computed, nothing written
+    real_check = check_call
+
+    def refuse_merged(doc, where):
+        if "merged from" in where:
+            raise Refused("forced: the validator refuses the merged result of %s" % where)
+        return real_check(doc, where)
+
+    try:
+        h = fresh("arm4")
+        cid = exchange(h)
+        h.b.ack(cid, seat)
+        h.commit(h.b, h.b.rel(cid))
+        h.pull(h.a, h.b, ff=False)
+        before = both_copies(h, cid)
+        globals()["check_call"] = refuse_merged
+        try:
+            ok, why = raises(Refused, lambda: h.a.merge(cid, "FETCH_HEAD"), "forced")
+        finally:
+            globals()["check_call"] = real_check
+        rec("a-merged-result-the-validator-refuses-writes-nothing", ok and both_copies(h, cid) == before, why)
+    except Exception as exc:
+        rec("a-merged-result-the-validator-refuses-writes-nothing", False, "%s: %s" % (type(exc).__name__, exc))
+
+    # arm 5: the copies hold different values for one field: refused, and both copies stay byte-identical
+    try:
+        h = fresh("arm5")
+        cid = exchange(h)
+        mine = h.a.read(cid)
+        mine["ack"] = {"at": "2026-10-08T02:00:00Z", "by": seat, "bus_message_id": None}
+        h.a.path(cid).write_text(json.dumps(mine), encoding="utf-8")
+        h.b.ack(cid, seat, at="2026-10-08T01:00:00Z")
+        h.commit(h.b, h.b.rel(cid))
+        h.pull(h.a, h.b, ff=False)
+        before = both_copies(h, cid)
+        ok, why = raises(Refused, lambda: h.a.merge(cid, "FETCH_HEAD"), "different ack.at")
+        rec("a-conflicting-merge-is-refused-and-writes-nothing", ok and both_copies(h, cid) == before, why)
+    except Exception as exc:
+        rec("a-conflicting-merge-is-refused-and-writes-nothing", False, "%s: %s" % (type(exc).__name__, exc))
+    return out
 
 
 def run_cases(tmp) -> list:
@@ -1053,6 +1182,7 @@ def run_cases(tmp) -> list:
     a.path(cid).write_text(json.dumps(bad), encoding="utf-8")
     ok, why = raises(Refused, lambda: a.read(cid), "unknown key")
     rec("an-unknown-key-in-a-file-is-refused", ok, why)
+    out.extend(merge_cases(tmp))   # its own checkouts, under tmp/merge-arms; a merge arm that cannot run is a failed case
     return out
 
 
