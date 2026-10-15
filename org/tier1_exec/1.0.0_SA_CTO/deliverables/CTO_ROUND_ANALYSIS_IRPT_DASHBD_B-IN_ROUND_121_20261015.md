@@ -20,3 +20,11 @@ CVO~IRPT slug closes the books behind this round. **No PRD addendum.**
    disarm on that feed.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## Erratum (on CVO~IRPT's round-120 slug, msg 8111, ADJUDICATION_v83 @6c3bc736ea): the claim is per account, not per class
+
+Ruling 1 is corrected to the claim's grain (rule 24 i). `NO_START_DATE_AT_SOURCE` is `claim: measured` only on the 2 accounts whose absence
+the probes observed. On the other null-start accounts it is `claim: inferred (pattern measured on 2 households)`. The specific page sentence
+of ruling 3 is used only where the claim is measured, and every inferred row keeps the neutral sentence. A null-start account later observed
+missing from Scope by the feed's own call is promoted to measured by that call. The draft ask keeps its numbers, because it states a field
+value (null start date), which is measured on all 40.
