@@ -9986,3 +9986,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "A root that starts its claude.exe through Start-Process would be a descendant of the worker's own session shell and protected; WMI creation keeps the root outside every session subtree. No real seat was touched: the claude.exe count before and after was 8 and 8."
 }
 ```
+
+## NFRA_CTLPLN-W102-S1 -- CT-af-3 base reference "git show HEAD:.tools/safe-commit.sh" moves with the WIP commit; the comparison base is the issuance commit cb843928c1
+
+```json
+{
+  "id": "NFRA_CTLPLN-W102-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~102",
+  "surfaced_at": "2026-10-15T06:42:22Z",
+  "one_line": "The order's base copy of safe-commit.sh is named as git show HEAD:.tools/safe-commit.sh. HEAD is the issuance commit only until the worker's first (WIP) commit lands; after it, HEAD holds the CT-af-3 change, so the base comparison would read the fixed file and compare it with itself. The suite pins the base to the issuance commit cb843928c1 instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-af-3.placement-refusal-unstages-all.md WORKER FACE, ACCEPTANCE: 'compare against the base by running the same fixture through git show HEAD:.tools/safe-commit.sh'",
+      ".tools/tests/test_placement_unstage.py@7eac4c0a1b BASE_REV = cb843928c1 (the pre-change safe-commit.sh); the WIP commit 36d453eea0 moved HEAD past it",
+      "measured 2026-10-15: git log --oneline -2 at 36d453eea0 shows the WIP commit at HEAD and cb843928c1 as its parent; arm (b) base rc=0 and staged set identical to the new run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO NFRA_CTLPLN.TO-CT-af-3 ACCEPTANCE, CTaf3-AC1 arm (b): the base copy is git show HEAD:.tools/safe-commit.sh extracted to a temporary file.",
+  "world_is": "HEAD moves on every commit, so a base named as HEAD is the pre-change script only before the first commit of the change. The suite reads the explicit issuance commit cb843928c1 (the parent of the WIP commit), which holds the pre-change stage (the placement branch loops over NGATE_FILES).",
+  "notes": "Arm (a) control confirms the base still leaves the .md staged on the placement fixture, so the pinned base is the defect's pre-change form. No other order premise failed: the cited line numbers moved by at most a few lines and the ENFORCE branch is unchanged."
+}
+```
