@@ -17573,3 +17573,180 @@ name the one known failure instead of silently inheriting it.
     "world_is": "The runner is healthy and counts its S3 GETs (the cycle records carry s3_get_count and s3_get_bytes, 0 here because the three cycles stopped before any silver read), but bbg, wsj and barrons capture nothing: a Bloomberg press-and-hold challenge and two expired vendor sessions are a person's sign-in, not a runner defect. Whether the expiries predate the 14:02Z Python outage is not read. The egress measurement OG-eg-2 owes is the sa cycle in progress (it reads silver per security). Routed to 1.0.0_SA_CTO~Z at 16:2xZ for the person-act list; this seat changes nothing on the runner."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T19:22Z",
+  "one_line": "The worktree's sparse cone did not carry the gateway tests folder the order names, so AC1's test file had no directory; the issuer widened the cone (A1 item 1) and the worker resumed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CONE: git sparse-checkout list at worktree HEAD b56fd6ef9d lists infra/aws/ec2/opal-gateway/app and no tests folder; the directory is absent on disk, while git ls-files on the tests path counts 273 tracked files @b56fd6ef9d.",
+      "ORDER: NFRA_OPLGTW.TO-OG-cl-1 section 3 <paths> names infra/aws/ec2/opal-gateway/tests/test_og_cl1.py, and the AC1 invocation runs pytest over tests/test_og_cl1.py from the gateway root (r37/checks/cl1.AC1.sh).",
+      "RESOLUTION: the issuer's message to this worker (A1 item 1 in G2_ADAPTER_PROTOCOL.md) states tests/ is now in every cone."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worktree carries every path the order names (the worker bar's first act).",
+  "world_is": "The gateway tests folder was outside the sparse cone at b56fd6ef9d, so the named test path could not exist in the worktree until the issuer widened the cone.",
+  "notes": "Resolved by the issuer's cone change; recorded because the first act of the order was to stop on it."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T19:22Z",
+  "one_line": "No DATA_CATALOG row carries a prefix for the Schwab dim_position, dim_balance or dim_transaction tables, so every holdings, balances, allocation and transactions call refuses no_catalog_row before its first read; the amended protocol says the catalog has these rows.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CATALOG: app/refs/DATA_CATALOG.yaml @b56fd6ef9d -- a grep for a table line naming dim_position, dim_balance or dim_transaction returns no rows; the Schwab silver rows with prefix and key_template are fact_acc (lines 7292, 8619, 10026), fact_rps (7736, 9060, 10390), fact_rps_s2 (7811, 9135, 10467), fact_trn (8177, 9584, 10841), and fact_sec, fact_uln, fact_ult.",
+      "ENTRIES: the schwab_dim_balance, schwab_dim_position and schwab_dim_transaction entries (lines 17959, 17983, 18006) carry producer and tools fields but no bucket, prefix or key_template.",
+      "PROTOCOL: G2_ADAPTER_PROTOCOL.md line 26 (a table with no catalog row is AdapterRefusal no_catalog_row); A1 item 2 states the catalog HAS the rows and that the census's catalog present false is stale.",
+      "MEASURED: the probe diagnostic run (worker shell, process-local alias key, no secret read) returned absent_reason no_catalog_row for client_get_holdings with zero reads."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 item 2: the catalog has the rows, and ProbeCtx.prefix reads the DATA_CATALOG row whose bucket and key_template match (vendor, segment, layer, table); the contract names schwab/<master>/silver/dim_position/ and dim_balance/ (G2_CLIENT_TOOLS_CONTRACT.md line 72).",
+  "world_is": "At b56fd6ef9d the catalog holds fact_* rows for the Schwab masters and no dim_* row. The census's row-parity sources are fact_rps (dim_position), fact_rps_s2 (dim_balance) and fact_trn (dim_transaction). The adapter does not substitute these tables: AC2 (a) and (b) cannot pass as written until the catalog row or the table rule is ruled.",
+  "notes": "The AC2 probe result is FAIL and the order stays open; no fact table is read in place of a dim table."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T19:22Z",
+  "one_line": "The probe cannot mint an account reference in this shell: SCHWAB_ACCOUNT_REF_SECRET_ID is unset, so the alias key raises KeyUnavailable before the first holdings call, and no client tool issues a Schwab reference.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: app/account_ref.py @b56fd6ef9d -- current_keyring raises KeyUnavailable when the secret-name variable is unset (line 127 in the probe run's traceback).",
+      "ENV: the worker shell has SCHWAB_ACCOUNT_REF_SECRET_ID unset (name checked; the value is never read).",
+      "CONTRACT: G2_CLIENT_TOOLS_CONTRACT.md line 55 -- Schwab client_resolve_account refuses no_resolve_source; line 64 -- client_get_holdings takes a resolved account_ref.",
+      "PROBE: the AC2 run stops at the first keyring call: envelope_ok False, fence_negative_arm False, account_numbers_printed 0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The probe finds one real account independently and calls client_get_holdings with its account_ref (order section 1, probe; protocol: account arrives as a resolved account_ref the same adapter issued).",
+  "world_is": "The alias key is a secret named by an environment variable that the worker shell does not carry, and no client tool path issues a Schwab reference, so the probe has no route to a reference in this shell. Whether the box carries the variable is not measured from this worker.",
+  "notes": "Requires the issuer to say where the probe obtains a reference (the alias key on the probe box, or a ruled issuing route). The worker has not read or created any key."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T19:22Z",
+  "one_line": "The alias registry holds two masters (08242234, 08335338), so accounts under master 08403355 are read as a segment but no alias can be minted for them and no client tool serves them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REGISTRY: app/data_entitlement.py @b56fd6ef9d line 77 -- MASTERS = (08242234, 08335338); account_ref._check_master raises ValueError for any other master.",
+      "CATALOG: app/refs/DATA_CATALOG.yaml @b56fd6ef9d carries silver fact_acc, fact_rps and fact_trn rows for master 08403355 (lines 10026, 10390, 10841).",
+      "CONTRACT: G2_SCOPES_PROPOSAL.md (r37 deliverable) records 08403355 as admitted by the gateway IAM and not yet in the registry.",
+      "TEST: tests/test_og_cl1.py test_ogcl1_ac12 asserts the 08403355 segment is read and its accounts are counted unmintable (1 of 1 on the fixture)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Decision 2: the three masters overlap and the adapter dedupes by account across all three.",
+  "world_is": "The third master is a firm segment for the adapter (read and counted) but its accounts carry no alias, so the dedupe across three masters is exercised for two. The registry change is a gate edit owned by the registry's owner.",
+  "notes": "No criterion is blocked by this row; it bounds what the adapter serves."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T19:22Z",
+  "one_line": "The alias format carries no vendor, but the protocol routes by the vendor carried in account_ref; the worker prefixes the alias as vendor:acr_..., a form no ruling names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FORMAT: app/account_ref.py @b56fd6ef9d header -- account_ref = acr_<version>_<base32 mac>, with no vendor field.",
+      "PROTOCOL: G2_ADAPTER_PROTOCOL.md (Context and tool sections) -- the core routes by the vendor carried in account_ref.",
+      "BUILT: app/client_core.py _route parses a vendor-prefixed reference; the adapter receives the bare alias."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The core routes by the vendor carried in account_ref.",
+  "world_is": "The canonical alias has no vendor field. The worker's vendor-prefixed form is a design choice, not a ruled form; a different ruling changes the core's _route and every adapter's refusal path.",
+  "notes": "Flagged for the issuer's hookup and the other five adapter cells."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T19:22Z",
+  "one_line": "The partner roster carries no advisor-id to firm map, so the core's firm_roster has no ruled key to read; the probe does not read the roster (Schwab does not use it) and the file is outside this worker's cone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: data/mdpf/config/partner_roster.json is tracked at b56fd6ef9d; its partners rows carry firm_id, display_name, aliases, legs and channel, and no advisor-id map (keys read from HEAD, no values printed).",
+      "PROTOCOL: A1 item 4 says the probe reads that repo file to build firm_roster and the core serves a byte-equal copy under app/refs/.",
+      "BUILT: client_core.Ctx.firm_roster reads an advisor_firms object from app/refs/partner_roster.json when present; that key is assumed, not ruled."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 item 4: firm_roster returns the advisor-id to canonical-firm map (SmartX).",
+  "world_is": "The file at HEAD has no advisor-id map under any key the worker found. The assumed key is unverified and affects only SmartX (OG-cl-5); no Schwab criterion reads it.",
+  "notes": "The probe reads no roster; firm_roster returns an empty map when the file is absent or carries no map."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T19:22Z",
+  "one_line": "The Schwab adapter and core refuse with five codes the contract does not name (account_ref_unavailable, vendor_not_registered, no_partition, window_required, calendar_unavailable); firm_not_served is ruled by A1 item 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CONTRACT: G2_CLIENT_TOOLS_CONTRACT.md @b56fd6ef9d names the refusal arms per tool; none of the five codes above appears in it.",
+      "BUILT: app/client_adapter_schwab.py (account_ref_unavailable, no_partition, window_required); app/client_core.py (vendor_not_registered, window_required, calendar_unavailable)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every refusal the tools answer is a contract code (AC11 raises every contract code with its exact code).",
+  "world_is": "The five extra codes answer conditions the contract leaves unnamed. They are the worker's naming, not ruled codes, and the issuer may map them to contract codes.",
+  "notes": "No contract code is changed; AC11 passes on the contract codes it names."
+}
+```
