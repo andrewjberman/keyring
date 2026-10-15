@@ -1775,3 +1775,29 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "This commit adds only three test files and one reader file, with no account ids in the diff as far as the worker read it. The row records that the check was not run, not that a leak occurred. The disarm owner is named as the infrastructure seat (MSTR runs infrastructure) and was not contacted."
 }
 ```
+
+## COMM_ASSIST-W31-S1 -- the round-19 check's no_product_change allowlist does not admit the three sibling test repairs, so CAl3-AC3 prints ok=False arms=7 of 8
+
+```json
+{
+  "id": "COMM_ASSIST-W31-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~31",
+  "surfaced_at": "2026-10-15T07:40:26Z",
+  "one_line": "The round-19 check's no_product_change arm allows four files, so the three sibling test repairs this order requires make CAl3-AC3 print ok=False arms=7 of 8 (expected ok=True arms=8 of 8).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r19/checks/check_l3_batch.py@f28047c1f5: ALLOWED (line 25) names four paths (test_inbound_mail.py, test_inbound_mail_draft.py, test_teams_chat_natural.py, refresh.py); arm_no_product_change (lines 197-203) fails any tracked data/infra/.tools path changed against the merge-base outside ALLOWED.",
+      "measured at HEAD f28047c1f5 from the worktree root: python \"org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r19/checks/check_l3_batch.py\" printed 'L3-BATCH ok=False arms=7 of 8' and 'FAIL no_product_change: files changed outside the four allowed: data/transcripts/scripts/tests/test_teams_chat_eod_republish.py, data/transcripts/scripts/tests/test_teams_chat_jobs.py, data/transcripts/scripts/tests/test_teams_chat_stale_eod.py'; the process exit code printed rc=0 beside it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CA-l-3 CAl3-AC3: python check_l3_batch.py expect 'L3-BATCH ok=True arms=8 of 8', described as a control that passes at the base; and the cell text, which requires the three sibling files to be edited with no other change.",
+  "world_is": "Both cannot hold as written: the three files are the order's only edits, and the round-19 check's no_product_change arm grades them as stray changes. The other seven arms pass at HEAD f28047c1f5 (alone 14/12/14, combined 112 passed in pytest, AC1 6 of 6, AC2 64 passed).",
+  "notes": "Form only. The order forbids editing the check file and any path outside its <paths>, so the arm was not widened or repaired by this worker. The order stays open; the COO decides whether the criterion is re-cut against the three files. Hazard is INERT so no disarm owner is named."
+}
+```
