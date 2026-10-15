@@ -8309,6 +8309,69 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W44-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~44",
+    "surfaced_at": "2026-10-15T15:29:35Z",
+    "one_line": "Step 3 as written is REFUSED: emit_catalog_v02.py prints EMIT REFUSED (census input) because org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census is outside this worktree's sparse cone; the four census files are in HEAD and the emitter takes --census-dir.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-20 worker face step 3: 'python workflows/atom_decomposition/emit_catalog_v02.py --overlay-ref 06cfb6db64' must end with HARVEST ROWS, SILVER and a TOOL INDEX line 'N=99 served tools; a=11 b=76 c=12; sum 99' and print no EMIT REFUSED line; the <paths> do not name org/tier0_utility and the only sparse change allowed is 'workflows infra/aws/ec2/opal-gateway'.",
+    "world_is": "The step as written exits rc=2 with 'EMIT REFUSED (census input): census directory absent: C:/tmp/wk-r17-44/org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census -- NOTHING WRITTEN'. git sparse-checkout list carries no org/tier0_utility entry. Run with --census-dir set to the four files that git archive HEAD extracts into .scratch/census_src (inside the worktree), the emit exits rc=0 with the expected TOOL INDEX line, and DATA_CATALOG.yaml is the only file it changes. No sparse-checkout change was made.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/emit_catalog_v02.py@a1003e7f06 (census_problem and the EMIT REFUSED census input branch, lines 1135 and 1271)",
+        "git ls-tree -r --name-only HEAD org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census/ in C:/tmp/wk-r17-44 (4 files at a1003e7f06)",
+        "C:/tmp/wk-r17-44/.scratch/emit_step3.log (the run with --census-dir, rc=0, TOOL INDEX N=99 served tools; a=11 b=76 c=12; sum 99)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W44-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~44",
+    "surfaced_at": "2026-10-15T15:29:35Z",
+    "one_line": "Unit test test_merged_definition::test_condition_helpers_census_and_accessors fails in this worktree with CensusAbsent (ARTIFACT_CENSUS_MACRO.yaml under org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census), the same sparse-cone absence as the step 3 refusal; no criterion of this order grades it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-20 worker face step 1: 'python -m pytest -q -p no:cacheprovider workflows/atom_decomposition/tests' passes (all pass); the <paths> name workflows/atom_decomposition/tests/ and not org/tier0_utility.",
+    "world_is": "On the cell's edits, the suite reads 227 passed and 1 failed; the failure is raised from emit_catalog_v02.census_text (CensusAbsent) for a census file outside the sparse cone. The 39 test_gen_silver_rows tests and the 12 new test_tool_reads tests pass, and test_blackdiamond reads 4 passed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tests/test_merged_definition.py@a1003e7f06 (test_condition_helpers_census_and_accessors)",
+        "workflows/atom_decomposition/emit_catalog_v02.py@a1003e7f06 (census_text raises CensusAbsent, line 1129)",
+        "pytest -q -p no:cacheprovider workflows/atom_decomposition/tests in C:/tmp/wk-r17-44: 1 failed, 227 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W44-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~44",
+    "surfaced_at": "2026-10-15T15:43:02Z",
+    "one_line": "Criterion AC3 cannot pass in this worktree: the emitted DATA_CATALOG.yaml channels section differs from the base catalog only in census_ref file strings (30 occurrences), because the emitter writes the census path it read, and the census was read from a .scratch copy outside the sparse cone.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-20 section 4 AC3 expect: only the 7 rows differ from the base catalog, and the tool_index section and built_at_git_head are the only other top-level differences (r1_check.py ac3 requires top-level sections to differ only in tool_index and built_at_git_head). Section 5 step 3 commits DATA_CATALOG.yaml; the census location is outside <paths> and the sparse cone.",
+    "world_is": "r1.AC3 prints 'CHECK FAIL: top-level sections differ only in tool_index and built_at_git_head (built_at_git_head,channels,tool_index)' and RESULT: FAIL (exit=1). With the channels section's census_ref file prefix stripped, the emitted channels equal the base channels exactly (measured). The prefix is .scratch/census_src/ because the census was supplied through --census-dir (S1). The other AC3 rows pass (silver 221, portal 5, harvest 78 rows; 7 rows differ; nl_tags 304, inferred 44, firm 24; c10_discover rc=0). DATA_CATALOG.yaml is left uncommitted in the worktree; the catalog commit is withheld.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/emit_catalog_v02.py@a1003e7f06 (census_ref_for: the rel path of the census file read, relpath from REPO_ROOT, line 1158-1170)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round17/checks/r1_check.py@a1003e7f06 (ac3 top-level sections assertion)",
+        "C:/tmp/wk-r17-44/.scratch/ac3.out (the literal r1.AC3.sh run, CHECK FAIL line, RESULT: FAIL)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
