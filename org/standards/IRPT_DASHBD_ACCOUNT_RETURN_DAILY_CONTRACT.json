@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.4.1",
+  "contract_version": "0.4.2",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
   "authored_by": "0.4.0_DS_ClientPlatform~S",
@@ -204,6 +204,22 @@
       ],
       "rule": "Required when row_status is ABSENT and null otherwise: a PRESENT row carries no reason_class, and an ABSENT row without one is invalid.",
       "since_schema_version": "1.3"
+    },
+    {
+      "name": "market_value_eod_claim",
+      "type": "string",
+      "nullable": true,
+      "meaning": "for a PRESENT Orion row, whether its end market value (market_value_eod) is the vendor's own end value (measured) or is inferred from the next calendar day's start value (inferred). The claim sits beside the value it describes.",
+      "values": [
+        "measured",
+        "inferred"
+      ],
+      "rule": "Required on every PRESENT row whose source is orion, and null on an ABSENT row (an ABSENT row carries no market value, so it carries no claim about one). measured is the vendor's own end market value for the day; inferred is an end market value taken from the next calendar day's start value, because the Scope feed carries no end value. A consumer that needs a measured end value rejects a row carrying inferred and says so in words; it never treats inferred as measured.",
+      "since_schema_version": "1.4",
+      "required_when": {
+        "source": "orion"
+      },
+      "required_unless_absent": true
     }
   ],
   "enums": {
@@ -250,6 +266,10 @@
       "NOT_GRADED_OUTSIDE_DOMAIN",
       "NOT_GRADED_NO_NEIGHBOUR",
       "GUARD_NOT_REACHED"
+    ],
+    "market_value_eod_claim": [
+      "measured",
+      "inferred"
     ]
   },
   "rule24_record": {
@@ -366,10 +386,46 @@
         }
       },
       "token_census_finding": "COLLISIONS BY NAME ONLY, NOT BY MEANING: PRESENT and ABSENT each carry another meaning elsewhere in the census scope (an infra provenance state, a capability binding, a member-source sentinel), and the producer's ABSENT sentinel asks row_status's own question, which is the one overlap of intent recorded here. The eight reason values, VENDOR_REPORTED, row_status and reason_class have no other meaning in the scope; the feed's reason_class is the same field carried through unchanged. Measured by git grep -c -w at the census commit, one scan per token."
+    },
+    "v042": {
+      "i_mece_over_a_declared_domain": {
+        "market_value_eod_claim": "domain: the PRESENT Orion rows, the account-days that carry an end market value from the Scope feed (the denominator: every row with row_status PRESENT and source orion). Both values: measured (the vendor's own end value for the day) | inferred (the end value taken from the next calendar day's start value). Covered by subtraction: a PRESENT Orion end value is either the vendor's own or inferred from the next day's start value, and nothing else can produce one, so the two values cover the denominator with no third member and no null."
+      },
+      "ii_same_grain": "Same grain: market_value_eod and market_value_eod_claim are both ACCOUNT-DAY properties set on the same row. A claim describes the one end value its own row carries, so it has the grain of market_value_eod, and it adds no account-level column; history_scope stays the only account-level exception, as declared in v041.",
+      "iii_intent_coherence": "Three axes, one intent each. market_value_eod_claim answers one question: where the end market value came from (the claim on the end value). flow_claim answers one question: why the flows are null beside a vendor return (the claim beside a null flow). return_basis answers one question: whose arithmetic produced total_return_daily. None of the three overlaps another: the end-value claim does not say whether a return is computed or vendor-reported, flow_claim does not describe the end value, and return_basis does not say where an end value came from.",
+      "iv_state_coherence": "WHICH VALUES ONE REMEDY DOES NOT MOVE. When the vendor supplies its own end value for a day, that day's market_value_eod_claim moves from inferred to measured and the market_value_eod it describes becomes the vendor's figure; that remedy moves no flow, no return_basis (which stays VENDOR_REPORTED on every Orion row), no row_status and no guard_state. The measured and inferred values never change a return: VENDOR_REPORTED is read beside the claim, never inside it, and a PRESENT row keeps its claim whatever its return_basis.",
+      "token_census": {
+        "commit": "198f2591f091c57df02ef8238aa1f10cff7147bb",
+        "pathspecs": [
+          "data/assets/scripts/gold/irpt_reporting",
+          "org/standards",
+          "infra/aws/lambda/investor-reporting"
+        ],
+        "denominator_files": 920,
+        "claim": "measured",
+        "tokens": {
+          "measured": {
+            "files": 187,
+            "hits": 1312,
+            "reading": "The sampled hits (the threshold claim list in account_return_daily.py and the substrate-card and ADVI crosswalk contracts) use the claim-vocabulary sense, a value read from its own named source as against inferred or held; the 1312 hits were sampled, not each read."
+          },
+          "inferred": {
+            "files": 66,
+            "hits": 195,
+            "reading": "The sampled hits (the threshold claim list in account_return_daily.py, the Scope adapter's next-day-start rule and the substrate-card and migration contracts) use the claim-vocabulary sense, a value derived from other values by a stated rule; the 195 hits were sampled, not each read."
+          },
+          "market_value_eod_claim": {
+            "files": 4,
+            "hits": 14,
+            "reading": "The Scope adapter already writes this field name beside the contract's columns (its row dict, its parquet write through a run-level field constant, and two adapter tests), with the same two values this contract now declares; no contract declared it before this record."
+          }
+        }
+      },
+      "token_census_finding": "measured and inferred are existing words of the repo's claim vocabulary (measured / inferred / held / absent, THRESHOLD_CLAIMS in account_return_daily.py), and the sampled hits use that same meaning, so the new column adds a field and no new meaning. The one name hit, market_value_eod_claim, is the Scope adapter's own field carrying the same two values; the census was measured by git grep -c -w at the census commit, one scan per token."
     }
   },
   "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
-  "schema_hash_with_optional": "6816ef9295d214212be6ccb9ebf386a07cca38e1a4f3a5e56eac3f6c1385fce8",
+  "schema_hash_with_optional": "13bb195f137e2352b5775a2b2e4291a225079bedf8974d20e9987473470818a6",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries. The check recomputes it against the landed parquet, so contract and artifact cannot drift.",
   "firm_specific_columns": "NONE. A firm-specific column is a contract violation (C-SHAPE); no sb_cd, tr_cd or any Schwab code survives into this table -- they live only in the adapter's sources.json.",
   "supersedes": [
@@ -409,6 +465,15 @@
         "External_flow and income_received became nullable ONLY where source is orion and flow_claim is absent (nullable_when), both staying nullable false in general.",
         "The optional columns flow_claim and source_account_id were added beside source; the 19 columns, their types and schema_hash were unchanged, so every 0.3.0 writer still validates.",
         "source_rules.orion was added (flows, business_date, account_id) and served_day_rules stayed byte-identical."
+      ]
+    },
+    {
+      "contract_version": "0.4.1",
+      "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
+      "schema_hash_with_optional": "6816ef9295d214212be6ccb9ebf386a07cca38e1a4f3a5e56eac3f6c1385fce8",
+      "changes": [
+        "0.4.1 added the optional columns row_status (PRESENT | ABSENT) and reason_class (eight values, required exactly when row_status is ABSENT), and VENDOR_REPORTED as a return_basis value.",
+        "0.4.1 made account_id nullable only where reason_class is UNMAPPED_ACCOUNT (source_account_id required there), made market_value_eod and the two flow columns nullable on an ABSENT row, and required return_basis VENDOR_REPORTED on every Orion row; the 19 columns, their types and schema_hash were unchanged."
       ]
     }
   ],
