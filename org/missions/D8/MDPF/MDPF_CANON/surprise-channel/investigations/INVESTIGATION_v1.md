@@ -2641,3 +2641,55 @@
   "notes": "Blocks CN-r-1 at its first criterion. Restoring the data/mdpf paths in the worktree (a sparse-checkout widen or a fresh worktree) is the issuer's or CloudOps's call; the worker did not rebuild or reconstruct the tree. No AWS touched; the deploy-side bounds are not engaged."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W30-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~30",
+  "surfaced_at": "2026-10-15T15:15:20Z",
+  "one_line": "CN-r-2 cannot start: infra/aws/terraform/opal-assets/ is tracked at HEAD but absent from this worktree, which is a cone-mode sparse checkout that omits infra/aws.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-r-2 first act and bar: confirm the worktree carries the paths the order names, else file a BLOCKING row and stop. Section 1 STEP 1-2: read and edit infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf and read infra/aws/terraform/modules/opal_name/main.tf in the worktree.",
+  "world_is": "Worktree C:/dev/wk-canon-r10-30 (HEAD e729b642de, branch wk-MDPF_CANON-30) has core.sparseCheckout=true and core.sparseCheckoutCone=true. git sparse-checkout list gives .tools, infra/logic/registry, lib, org/devices, org/missions/D8/MDPF/MDPF_CANON, org/modules/graph, org/ref, org/standards. The directory infra/aws does not exist in the working tree (ls: cannot access 'infra/aws'), yet git ls-files lists 9204 files under infra/aws with the skip-worktree tag S and git status shows 0 changes there. The target .tf and the opal_name module are tracked at HEAD but not materialised, so neither can be read or edited here. No checkout, sparse-checkout change or rebuild was made, because the order forbids reconstruction.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --get core.sparseCheckout and core.sparseCheckoutCone both print true (worktree C:/dev/wk-canon-r10-30, read 2026-10-15T15:13Z to 15:15Z)",
+      "git sparse-checkout list (same worktree) lists 8 cone patterns and no infra/aws entry",
+      "ls -a infra/aws: No such file or directory; Read of infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf: File does not exist",
+      "git ls-tree HEAD infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf gives blob 30f8f0cefe8e1e2afce1642ae3951ab306d41d6e; git ls-tree HEAD infra/aws/terraform/modules/opal_name/main.tf gives blob 4b8c018812ef2567c63a39549666a9d9f0d9b20f",
+      "git ls-files -v infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf gives tag S (skip-worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No act taken. CN-r-2 is not built or graded here: its three criteria were not run, and the order stays open with no proof instance. Remedy belongs to the issuer or COO: a worker worktree whose cone includes infra/aws, or a re-cut of the CN-r-2 paths."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W30-S2",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~30",
+  "surfaced_at": "2026-10-15T15:21:44Z",
+  "one_line": "CN-r-2 order names a <status> flip to complete, but the worker face (lines 1-105) carries no <status> element to flip.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-r-2 section 5 (line 102): flip this order's <status> to complete in the SAME commit as the proof instance, only when every criterion passes. The worker face is lines 1-105 and the record face is never read by this worker.",
+  "world_is": "Lines 1-105 of MDPF_CANON.TO-CN-r-2.publisher-latest-json-read-grant.md carry no <status> element. The only occurrence of the word status in those lines is the instruction itself at line 102. All three criteria AC1-AC3 PASS and the proof instance validates, but there is no status field inside the worker face to write complete into.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head -105 of the order, grep -n -i status (worktree C:/dev/wk-canon-r10-30, read 2026-10-15T15:21Z): one hit, line 102, the flip instruction; no <status> tag",
+      "Read of the order lines 1-105: <paths> at lines 76-81, <proof_of_spec> at lines 88-92, the instruction block at lines 98-104; no <status> element in the face",
+      "criteria AC1 AC2 AC3 PASS by output, proof-of-spec-check rc recorded in the instance commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No act taken on the flip: the order status is NOT written to complete. The record face is out of this worker's read set, so the status element is not located here. Remedy belongs to the issuer (2.0.0_SA_COO~D1): state where the <status> element lives or flip it on the issuer's side after the proof instance is read."
+}
+```
