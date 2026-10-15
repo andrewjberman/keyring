@@ -2592,3 +2592,51 @@
   "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-1 (merged @8310672247)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T21:27:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-W31-S5",
+  "one_line": "MP-pf-1 leaves open whether a non-empty vendor or firm is stored as read or stripped; the worker stores it stripped, so ' Acme ' and 'Acme' merge into one segment.",
+  "spec_asserts": "MP-pf-1 section 1 item 1: a vendor or firm that is missing, not a string, or empty (after strip) reads as the literal string unresolved. The order does not say what a non-empty value is stored as.",
+  "world_is": "app/admin_gateway_breakdown.py _segment_fields_for stores a non-empty string STRIPPED of surrounding whitespace, so a row with vendor ' Acme ' and a row with vendor 'Acme' fall in one (vendor, firm) segment. The choice is the worker's, not the order's. No criterion depends on it: the real catalog carries no vendor or firm yet (real _compute run: no channel carries segments).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py at 8310672247 plus the MP-pf-1 edit in this commit: helper field() returns raw.strip() for a non-empty string",
+      "RAN pf1.AC1.sh in worktree C:/tmp/mp-pe-31: 'segment tests: ... 26 passed' and 'named tests PASSED 6 of 6' RESULT: PASS exit=0; no test plants a padded value, so the stripping is unpinned by the suite"
+    ]
+  },
+  "notes": "Not repaired: the stripping stands as built and is stated here for the issuer to confirm or reverse. A reversal changes one line in field() and no test."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T21:41:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-W31-S6",
+  "one_line": "A correction to S5: the real catalog's tool_index block carries no vendor or firm, but 'firm' appears 273 times on channel and silver rows with another meaning (an owning firm, e.g. opal-internal, 49financial).",
+  "spec_asserts": "MP-pf-1 section 1: the segmentation key is C-GROUP: tool_index rows carry bucket, vendor and firm on opal-data-assets and opal-data-bd rows, and the catalog carries them only after a later release.",
+  "world_is": "DATA_CATALOG.yaml, tool_index block (lines 1349-2478 at the worktree's HEAD 43f62f5be7): zero vendor lines, zero firm lines, zero source_group lines. The file holds 273 'firm:' lines outside that block: on channel artifact rows (lines 93-1206, e.g. 'firm: opal-internal', 'firm: cottonwood') and on silver and portal rows (lines 2545 onward, e.g. 'firm: 49financial', 'firm: inflection'). Those are owning-firm values. The tool_index reader reads only the tool_index block, so these never reach the segmentation. S5's world_is said the catalog carries no vendor or firm; that was too broad and is corrected here, S5 is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GREP of app/refs/DATA_CATALOG.yaml in worktree C:/tmp/mp-pe-31: pattern source_group, 0 occurrences; pattern vendor or firm at line start, 273 occurrences, all 'firm:'; top-level keys at lines 1349 (tool_index) and 2479 (silver_datasets)",
+      "READ app/refs/DATA_CATALOG.yaml lines 84-97 at 43f62f5be7: a channel artifact row carries firm: opal-internal beside entity, verdict_class and pages"
+    ]
+  },
+  "notes": "Not repaired: the catalog is the issuer's (outside this order's write surface). A future C-GROUP release that writes tool_index vendor and firm keeps the same key names as these owning-firm keys: the issuer should confirm the key is read only from tool_index, which the handler does."
+}
+```

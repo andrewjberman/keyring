@@ -90,7 +90,7 @@ Report once, with:
 `admin_gateway_breakdown.py`. AC2 reads 103 or more passed because MP-pe-1 leaves 103 and the six tests add. Dry-run at the base (the shared tree, before MP-pe-1 merged): AC1 FAIL as expected (0 of 6 named
 tests), AC2 FAIL as expected (93 passed, below 103). The release is 2.0.0_SA_COO~O's act, batched with MP-pe-1; the catalog fields arrive with MCPINDEX's first C-GROUP release.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>PF</workstream>
 <slot>~31</slot>

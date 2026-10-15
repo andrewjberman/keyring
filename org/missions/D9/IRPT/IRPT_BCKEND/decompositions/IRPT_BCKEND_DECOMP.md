@@ -4453,3 +4453,15 @@ Check IB237-1 (`deliverables/2.0.0_SA_COO~P2/checks/r237/p237_cells.py`), dry-ru
 | `IB-pr-606` | READ the 49financial addendum candidate: signed transplant plus the D spans, build only, tests, compare with live | FWD-21 | SERVED | IB-pr-604 (drained) | PL4-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one bundle build; one worker (slot ~442) starts now.
+
+## 233. ROUND 5, WORKSTREAM ~PL (the SmartX evidence is never omitted silently; 2026-10-15 ~22:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO half of the exemption ADDENDUM 1, msg 8719 condition 2)
+
+The CTO signed the addendum's CTO half (blob `835fd2886e`, candidate `32d6dfcb`) with a condition the built candidate does not meet: the SmartX read is evidence and never a gate, and a read that fails or is refused at run time must give the account's `evidence` key the value `unread` with the reason, never omitted silently; Branch A reads `smartx_map_present` or `unread`; no IAM change rides. IB-pr-604's spans omit the key on a failed read, so candidate `32d6dfcb` is void for the apply and the addendum's COO half is re-stated on a rebuilt candidate. One LOCAL build cell changes the D spans (a reason CATEGORY set, no identifier, no message) and the tests; the candidate is then rebuilt (a later read cell) and the COO half re-stated.
+
+Check IB238-1 (`deliverables/2.0.0_SA_COO~P2/checks/r238/p238_cells.py`), dry-run at the base: AC1 to AC3 all FAIL (AC2 refuses to grade until the three `unread` tests exist); the control (`control238.py`) passes the three positives and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-607` | the SmartX evidence `unread` with a reason category on a failed or refused read; decision unchanged | FWD-21 | LOCAL | IB-pr-604 (drained) | PL5-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~443) starts now.
