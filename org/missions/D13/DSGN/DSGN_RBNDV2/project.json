@@ -1,0 +1,45 @@
+{
+  "project_code": "DSGN_RBNDV2",
+  "macro_code": "DSGN",
+  "directive": "D13",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-10-15",
+  "registered_under_tree": "2026-10-15",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "DSGN_REBRND"
+  ],
+  "name": "Portal light re-skin, three targeted steps: sidebar and page ground in #EAEAF7, panels and modals in the new white fixture, white-to-silver heat maps, then a page-by-page and modal-by-modal walk darkening any faint signal colour",
+  "description": "D13 Design. Andrew-direct 2026-10-14 ~20:1xZ and addenda ~00:0xZ-00:1xZ 2026-10-15 (record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261014_201xZ_DSGN_RBNDV2_SURGICAL_SIDEBAR_AND_PANEL_RESKIN.md). Endpoint FWD-1..6 confirmed by Andrew ~03:5xZ 2026-10-15 ('Yes, confirmed, register it on the laptop'). A new project on his own order, not DSGN_REBRND resumed.",
+  "brief_ref": "docs/briefs/dsgn-rbndv2-sidebar-panel-reskin-brief-20261014.md@7c44838003 (Part I-R)",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_DSGN_RBNDV2_20261014.md@381bba5f54",
+  "prds": [
+    "org/missions/D13/DSGN/DSGN_RBNDV2/prd/DSGN_RBNDV2_PRD.md"
+  ],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "UNSEATED (laptop; at most one more COO fits the three-COO limit)",
+    "cvo": "3.0.0_SA_CVO~L",
+    "cro": "4.0.0_SA_CRO~A",
+    "workers": "0.9.0_WK_DSGN_RBNDV2~<n>, per the L6 issuance"
+  },
+  "coo_lane": null,
+  "feature_branch": {
+    "repo": "portal",
+    "branch": "feature/dsgn-rbndv2-light",
+    "box": "laptop",
+    "rule": "ALL work of this project lives on this ONE branch in the portal repo on the laptop. Every worker worktree branches FROM it and merges BACK INTO it; no cand/* branch, no merge-forward, no push to origin DEV or PROD, and no push of this branch itself, without Andrew's word. Andrew-direct ~00:0xZ 2026-10-15 'This whole light mode build needs to stay on a feature tree on this box and is only pushed when i say so' and ~03:5xZ 'keep in mind this all stays on one specific feature branch'."
+  },
+  "fabric_ruling": "laptop -- Andrew-direct ~00:1xZ 2026-10-15 'lets do this whole project on the laptop' (supersedes his ~20:1xZ DELL1 placement).",
+  "blocking": "L4 PRD next (1.0.0_SA_CTO), then a laptop COO seat for L5/L6.",
+  "thread_counter": 0,
+  "threads": [],
+  "counterpart": null
+}
