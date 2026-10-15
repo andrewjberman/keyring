@@ -166,6 +166,18 @@ The round-122 analysis left the series-ended cause read to this seat "at the nex
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent read cell with a disjoint write set (its own worker folder and private folder); worker `0.9.0_WK_IRPT_DASHBD~313` (`DB-i-13`) runs alone; round 125's worker has already drained.
 
+## 13. ROUND 127, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-125 analysis (msg 8695, 8698) and his 0.4.2-landed message; contract 0.4.2 merged by `~D2` at 6ac152c83a)
+
+The CTO numbered the module's flip "round 126"; round 126 was already DB-i-13 (the cause read), and he confirmed (msg 8698) that the flip is round 127, cut when `~D2`'s 0.4.2 lands. It has landed: `return_basis` is TWR or NOT_MEASURABLE (VENDOR_REPORTED and `source_requires` are gone; provenance is `source`), and the optional column `market_value_eod_claim` is required on a PRESENT Orion row and null on an ABSENT row. The merged module writes VENDOR_REPORTED and keeps the claim in the run record, so on trunk the r125 checker's AC3 and 4 module tests read red; the CTO asked that the count be named, not suppressed (4 failed, 58 passed across the adapter and wrapper test files, measured at the cut).
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-14` | The Scope feed adapter and run wrapper on contract 0.4.2: PRESENT rows `TWR` (disarms W221-S3); `market_value_eod_claim` a declared column of the table (the run record's `claim_placement` retires; the wrapper refuses a contract that does not declare the column); `contract_version` read from the file; the W311-S3 test line; fixtures only, no AWS | FWD-2 | LOCAL (code and tests; local files under a handed directory; nothing wired, scheduled, served or deployed) | `DB-i-12` (merged, @7a8a2f681f) | I-N |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The wrapper REFUSES a contract that does not declare the claim column (count 1, nothing written) instead of keeping the run-record placement: round 125's two-placement code existed only to bridge the gap before 0.4.2, and a writer should not run behind its contract any more than ahead of it. (b) The r127 checker is driven by the contract file at HEAD and uses the 0.4.2 test module's validator; the r125 checker graded 0.4.1 and is superseded. (c) W311-S3 was already closed in the merged wrapper (the CTO accepted this, msg 8698); it is carried as a test line only. (d) DB-i-13 (round 126) is a read cell on a separate chain; the two share no file.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell with a disjoint write set of four existing files. Worker `0.9.0_WK_IRPT_DASHBD~314` (`DB-i-14`).
+
 ## Cells
 
 | cell id | owner |
@@ -183,3 +195,4 @@ The round-122 analysis left the series-ended cause read to this seat "at the nex
 | DB-i-11 | 0.9.0_WK_IRPT_DASHBD~311 |
 | DB-i-12 | 0.9.0_WK_IRPT_DASHBD~312 |
 | DB-i-13 | 0.9.0_WK_IRPT_DASHBD~313 |
+| DB-i-14 | 0.9.0_WK_IRPT_DASHBD~314 |
