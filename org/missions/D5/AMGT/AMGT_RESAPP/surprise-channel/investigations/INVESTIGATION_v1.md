@@ -27404,3 +27404,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not changed: the order's status rule is followed literally. The issuer decides whether a record should re-record such a source as EMPTY in a later round."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W454-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~454",
+  "surfaced_at": "2026-10-15T18:26:56Z",
+  "one_line": "lib/research/aifill/tests/test_text_blocks.py is outside this order's write grant and fails under the grounding step, so the AC2 suite criterion cannot read N passed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_text_blocks.py@wk-AMGT_RESAPP-454 lines 447-460: build_document is called with the real builders, a StubModel and no fetch, and no ground=False",
+      "pytest on wk-resapp-454 after the orchestrate.py change: FAILED test_document_with_a_silent_pack_and_empty_header_fills_the_three_blocks, AssertionError 'NONE' == 'WEB_SEARCH' at line 457; 1 failed, 754 passed"
+    ]
+  },
+  "spec_asserts": "Cell section 2 bounds 1 and section 3 paths: this order writes orchestrate.py, run.py, the new grounding test module, test_contract_orchestrate.py and test_store_run.py only; existing tests that build documents from stub builders returning filled blocks pass ground=False. No other test file is named.",
+  "world_is": "test_text_blocks.py::test_document_with_a_silent_pack_and_empty_header_fills_the_three_blocks builds a WEB_SEARCH mgmt_team_view through build_document with no fetcher. Under the built grounding step (default ground=True, no usable source) the block is withheld as NONE, so the test fails. The file was not edited: it is outside the grant.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "AC2 stays FAIL on this row. The issuer decides whether that test takes ground=False in a later order or the grant widens. The grounding behaviour is the one the cell specifies; only the old test expectation conflicts."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W454-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~454",
+  "surfaced_at": "2026-10-15T18:26:56Z",
+  "one_line": "Two monkeypatched validate_document lambdas in test_store_run.py took one argument; the cell's final check passes require_grounding, so both tests raised TypeError.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_store_run.py@wk-AMGT_RESAPP-454 lines 134 and 309 before the edit: monkeypatch.setattr(contract, 'validate_document', lambda doc: ['forced problem'])",
+      "pytest before the edit: FAILED test_store_run.py::test_write_validates_through_the_contract_module and FAILED test_store_run.py::test_invalid_document_is_never_written"
+    ]
+  },
+  "spec_asserts": "Cell section 1, build_document: the final document check uses require_grounding=ground.",
+  "world_is": "The two stub lambdas now take **kwargs. The stub builders in test_store_run.py _good_doc pass ground=False so the documents keep their OPAL_SOURCE meaning. Both edits are inside the grant.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Reported as a change to an existing test, as the cell asks."
+}
+```
