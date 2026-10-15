@@ -16816,3 +16816,29 @@
   "notes": "Whether a tab click counts as a read is for L9 to rule; the driver's tab clicks are named in the record's selectors."
 }
 ```
+
+## IRPT_ANLREQ-D2-W149-S5 -- the one-writer check grades the named channel path as the laptop's and names a per-box file for dell2
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W149-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~149",
+  "surfaced_at": "2026-10-15T03:50:00Z",
+  "one_line": "The one-writer check WARNs that the unsuffixed INVESTIGATION_v1.md is the laptop's file and that a dell2 append belongs in a per-box file; the order names the unsuffixed path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-345 surprise rule: append one row to the investigation file the task order names, surprise-channel/investigations/INVESTIGATION_v1.md.",
+  "world_is": "The one-writer check graded the append as an unsuffixed-file write from dell2 (WARN until C-QUEUE) and named the per-box file <stem>.dell2.<ext>. The rows were appended to the named file and the surprise-row gate passed (4 new rows checked).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-345.fwd1-driver-and-mint-helper-build.md:67 @493aeb8805 names the unsuffixed channel path",
+      "safe-commit output of d091266946 carries the one-writer WARN for INVESTIGATION_v1.md (dell2 write to the laptop file) @d091266946"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The carrier question for the CVO: which file a dell2 worker appends to when the order names the unsuffixed path."
+}
+```
