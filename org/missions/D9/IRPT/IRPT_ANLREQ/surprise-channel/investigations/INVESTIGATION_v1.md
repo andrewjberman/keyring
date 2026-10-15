@@ -18072,3 +18072,31 @@
   "notes": "Who widened the cone is not known to this worker, and the worker has not changed it back. The remaining gap, infra/aws/ec2/, is a cone question for the box or the issuer. Until it is closed, the 12 tests in test_resident_installed.py that build the package are unmeasured for this cell's edits. The direct make_opal_stores test in test_producer_for_ticket.py passes."
 }
 ```
+
+## IRPT_ANLREQ-D2-W179-S5 -- resolves W179-S1: AC2 runs and passes 65 of 65 after the issuer widened the worktree sparse cone
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W179-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~179",
+  "surfaced_at": "2026-10-15T17:36:22Z",
+  "one_line": "BLOCKING row W179-S1 is resolved by the issuer's widening of this worktree to infra/, docs/, data/ and org/surprise_channel; AC2 now runs and passes 65 of 65.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W179-S1 (BLOCKING): AC2 cannot run in this worktree because the sparse cone excludes docs/ and infra/aws/ec2/, which the seven regression files read.",
+  "world_is": "Re-measured at HEAD f14c14cd88 after the issuer's ruling (2.0.0_SA_COO~G2): the sparse cone now lists .tools, data, docs, infra, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/missions/D9/IRPT/IRPT_YCDGEN, org/modules/graph, org/ref, org/standards, org/surprise_channel and org/tier1_exec/1.0.0_SA_CTO/deliverables (13 entries). infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh exists on disk. AC1 prints AR-G67-OK direct=12 named=8 passed=8 (rc=0). AC2 prints AR-G67-REGRESS-OK passed=65 (rc=0): acceptance_actor 4, commentary_requested_member 7, ready_signal_ticket_gate 15, producer_actor 3 (+1 xfail), opal_thread_integration 3, resident_installed 19, generate_installed 14. The worker ran no sparse command; the widening is the issuer's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at HEAD f14c14cd88 in C:/dev/wk-irpt-anlreq-179: 13 entries, infra and docs present, infra/aws/ec2 covered by the infra entry",
+      "ls -la infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh: present, 2918 bytes",
+      "ar_g67_checks.py g67 at f14c14cd88 (.scratch/ac1.out): AR-G67-OK direct=12 named=8 passed=8, rc=0",
+      "ar_g67_checks.py regress at f14c14cd88 (.scratch/ac2.out): AR-G67-REGRESS-OK passed=65, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closes the blocking condition of W179-S1 by the widening; S1 is not edited and keeps its filed text. S2, S3 and S4 stand as filed. S4 recorded the earlier cone (15 entries); the current cone is 13 entries after the issuer's ruling, and that change is not this worker's."
+}
+```
