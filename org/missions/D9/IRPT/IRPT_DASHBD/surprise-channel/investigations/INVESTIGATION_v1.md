@@ -19076,3 +19076,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "dismissal_reason": "Disarms IRPT_DASHBD-D2-W221-S3: its condition (an Orion row whose return_basis the contract does not accept) is absent on the landed tree of round 127, measured by the r127 checker (28 of 28 rows pass the 0.4.2 validator, PRESENT rows TWR) and by 90 passing tests."
 }
 ```
+
+## IRPT_DASHBD-D2-W224-S7 -- Resolves IRPT_DASHBD-D2-W224-S1, S2 and S3 under AMENDMENT 1 of the order (issuer 2.0.0_SA_COO~D2): the pointer constant stays as it is with no trailing period, the authored-language scan drops the phrase advisory fee, and the member clause reads the distinct member ids unchanged by the new sheet
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W224-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~224",
+  "surfaced_at": "2026-10-15T22:46:22Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W224-S1, S2 and S3 under AMENDMENT 1 of the order (issuer 2.0.0_SA_COO~D2): the pointer constant stays as it is with no trailing period, the authored-language scan drops the phrase advisory fee, and the member clause reads the distinct member ids unchanged by the new sheet",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The three rows were defects of the issuer's order and checker, not of the render. Amendment 1 (commit 1d2d75e0c4 on box/dell2, merged into wk-IRPT_DASHBD-224 at 464f08e303) rules them inside the issuer's own decomposition; the BLOCKING class of S1 and S2 is discharged by the amended checker, which reads the pointer constant without the period and drops the advisory fee token.",
+  "spec_asserts": "TO-DB-b-277 AMENDMENT 1: the pointer constant reads without a trailing period and stays as it is; the authored-language scan no longer matches advisory fee; step 5 member clause reads the distinct member ids are unchanged by the new sheet (117 at the base).",
+  "world_is": "Re-run on the merged tree at 464f08e303 with the amended checker: DB144-1-AC1 PASS (rc 0, two runs byte-identical), DB144-1-AC2 PASS (17 neighbour files plus the new file), DB144-1-AC3 PASS (rc 0; the constant, the client branches, the report sheet with the pointer, the no-authored-language scan and the record clauses all PASS). The new test file asserts 117 distinct member ids, which the amended clause accepts. Portal tree unchanged at af8ca0ba.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order AMENDMENT 1 at commit 1d2d75e0c4 (box/dell2): the task order file and checks/r144/p144_placeholder.py",
+      "checker re-run on the merged tree 464f08e303: AC1 PASS, AC2 PASS, AC3 PASS (output recorded in the proof instance)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "notes": "Resolves IRPT_DASHBD-D2-W224-S1, IRPT_DASHBD-D2-W224-S2 and IRPT_DASHBD-D2-W224-S3. The rows S1, S2 and S3 stay as written (append-only). S4, S5 and S6 are the three pinned-assertion edits and are not covered by Amendment 1; they stay OBSERVATION, INERT, UNDER_INVESTIGATION."
+}
+```
