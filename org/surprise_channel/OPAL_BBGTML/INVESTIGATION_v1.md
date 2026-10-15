@@ -733,3 +733,33 @@ Filed by 2.0.0_SA_COO~ZB at the Z6 drain end.
   "notes": "Small denominators (5 and 9): read as direction, not significance. Cheapest next evidence: R7's TRACE line at the next failed fire names the foreground owner and the session state (Active/Disconnected/console), which this table infers from event logs."
 }
 ```
+
+### OPAL_BBGTML-Z-S25 -- ruling on Z-S1 and Z-S21 (one finding, two rows): the verify step's username OCR line is deferred until after the 2026-10-16 11:00Z fire read
+
+Filed by 2.0.0_SA_COO~ZB at the tick-57 drain gap.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S25",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZB",
+  "surfaced_at": "2026-10-15T22:40Z",
+  "one_line": "Z-S1 (surfaced 10-06) and Z-S21 (surfaced 10-15) are the same emitter, bbg_verify.ps1 printing the OCR'd login name; ruled INERT and the one-line fix (print the similarity score alone) is NOT cut before the 2026-10-16 11:00Z fire, so R8 is the only change on the sign-in path when the oracle runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ Z-S1 in this file: emitter integrations/bloomberg/auth/bbg_verify.ps1:192-193 @598b791b19, 15 of 31 pull logs carrying the line (read 2026-10-06), local disk only, no upload measured.",
+      "READ Z-S21 in this file: 16 occurrences across 13 pull logs 20260917..20261013 (read 2026-10-15), the committed exercise log carries the value redacted.",
+      "READ org/tier1_exec/2.0.0_SA_COO~ZB/drive_log_20261015T20Z_opal_bloomberg.md: R8b left bbg_verify.ps1 unchanged at @4dfc47793d; R8a (bbg_signin.ps1 only) landed @74f9b3b31b."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S1 and Z-S21 read as two open findings; the tool's banner says credential values are never printed.",
+  "world_is": "One emitter, one defect. The login name is an identifier, not a secret (the password is never printed), and the logs stay on the local disk, so the hazard is INERT. The fix touches the verify step that the 2026-10-16 11:00Z unattended fire exercises, and that fire is the only oracle for R8; changing the verify step the night before would put a second variable in the read. The fix is cut as part of the next round, after the 11:30Z read, whatever that read shows.",
+  "notes": "Cost of the deferral: one more morning of the line in the local pull log. Existing logs are left to Andrew's word (Z-S1 notes). Graduation of Z-S1 and Z-S21 is the CVO's; this row cites both and moves neither."
+}
+```
