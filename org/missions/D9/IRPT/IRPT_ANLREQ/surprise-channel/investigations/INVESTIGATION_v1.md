@@ -19629,3 +19629,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W199-S1 -- AR-g-98: swap_pass.REQUEST_CHUNK's comment names yahoo_history_days.DEFAULT_CHUNK as its source, and that module is not in this base
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W199-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~199",
+  "surfaced_at": "2026-10-15T22:58:14Z",
+  "one_line": "AR-g-98 sets REQUEST_CHUNK = 50 and its comment says it equals yahoo_history_days.DEFAULT_CHUNK; no yahoo_history_days module exists at the base, so the equality the comment asserts cannot be read in this worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-98 cell, swap_pass.py constants: REQUEST_CHUNK = 50 (the candidates one Yahoo request carries), with a comment that it equals yahoo_history_days.DEFAULT_CHUNK.",
+  "world_is": "At base 9438a8aaab the research folder holds no yahoo_history_days module (a Glob of yahoo_history_days*.py under infra/aws/lambda/investor-reporting/ycharts/research returned no file); the figure 50 is the cell's own, and the comment's equality is unverified until the sibling AR-g-99 port lands. Not edited by this worker beyond the comment as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@d071c86041:25 comment names yahoo_history_days.DEFAULT_CHUNK as the same figure as REQUEST_CHUNK",
+      "infra/aws/lambda/investor-reporting/ycharts/research/ at 9438a8aaab holds no yahoo_history_days module (Glob read at 2026-10-15T22:58Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
