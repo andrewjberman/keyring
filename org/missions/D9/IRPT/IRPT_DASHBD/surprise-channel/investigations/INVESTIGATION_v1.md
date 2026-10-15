@@ -17327,3 +17327,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The condition is met in the repo at 4200e3415b. The landing packet still owes: first act one explicit event for 2026-07-10, memory 1024 MB from the DB-b-255 measurement, catch-up by explicit days events, never a day on or before 2026-06-22. Counts, dates and words only."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W211-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~211",
+  "surfaced_at": "2026-10-15T12:28:50Z",
+  "one_line": "The reporting-publish role holds a read grant on the dimension prefix that its handler never reads: the grant is held and unused",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep at base 4a3e3c8f8e: the six claim names and the dimension token occur in the reporting-publish terraform only at iam.tf:40 (the role description) and locals.tf:48 (the dimension table constant placed in the READ grant at locals.tf:53-54)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py reads only TABLE_GOLD (account_return_daily, lines 66 and 111-135) and publisher.py takes its GOLD_COLUMNS from the same table; no line of either names the dimension table",
+      "reporting-gold terraform (iam.tf, locals.tf) carries no dimension read grant; the two occurrences there are comments excluding the dimension (iam.tf:88, locals.tf:103)"
+    ]
+  },
+  "spec_asserts": "infra/aws/terraform/investor-reporting/reporting-publish/iam.tf:40 describes the reporting-publish function as reading exactly the reporting gold prefixes account_return_daily and dim_return_method, and locals.tf:53-54 places the dimension prefix in its READ grant.",
+  "world_is": "The reporting-publish handler reads only the gold account_return_daily table by named columns and never reads the dimension, so the dimension read grant is held and not exercised at commit 4a3e3c8f8e. The grant is outside this order's paths and is recorded, not changed. No client value is involved."
+}
+```
