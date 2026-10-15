@@ -6,6 +6,7 @@
 
 Read-only: one configuration read per function and one log filter. Prints R44-AP1-OK or R44-AP1-FAIL <reason>.
 """
+import json
 import subprocess
 import sys
 
@@ -42,13 +43,16 @@ def main():
     if live.startswith(PRE_ACT):
         return False, "a function still runs the pre-act zip (%s)" % live[:8]
     rc, so, se = aws("logs", "filter-log-events", "--log-group-name", LOG_GROUP, "--filter-pattern", '"%s"' % PATTERN,
-                     "--query", "length(events)", "--output", "text")
+                     "--output", "json")
     if rc != 0:
         return False, "log read failed rc=%d" % rc
-    n = so.strip()
-    if not n.isdigit() or int(n) < 1:
-        return False, "digest %s is live on all three, but the INFO line is absent (events=%s)" % (live[:8], n)
-    return True, "digests=1 live=%s events_with_INFO_line=%s" % (live[:8], n)
+    try:
+        n = len(json.loads(so).get("events") or [])
+    except ValueError:
+        return False, "log read unparseable"
+    if n < 1:
+        return False, "digest %s is live on all three, but the INFO line is absent (events=%d)" % (live[:8], n)
+    return True, "digests=1 live=%s events_with_INFO_line=%d" % (live[:8], n)
 
 
 if __name__ == "__main__":

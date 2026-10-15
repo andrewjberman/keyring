@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.4.0",
+  "contract_version": "0.4.1",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
   "authored_by": "0.4.0_DS_ClientPlatform~S",
@@ -19,7 +19,10 @@
       "name": "account_id",
       "type": "string",
       "nullable": false,
-      "meaning": "the custodian account id in the declaration's account form (10-char zero-padded)"
+      "meaning": "the custodian account id in the declaration's account form (10-char zero-padded)",
+      "nullable_when": {
+        "reason_class": "UNMAPPED_ACCOUNT"
+      }
     },
     {
       "name": "business_date",
@@ -31,7 +34,8 @@
       "name": "market_value_eod",
       "type": "double",
       "nullable": false,
-      "meaning": "V_t -- the custodian's own WHOLE-ACCOUNT value at end of day, cash included (C-VALUE)"
+      "meaning": "V_t -- the custodian's own WHOLE-ACCOUNT value at end of day, cash included (C-VALUE)",
+      "nullable_when_absent": true
     },
     {
       "name": "external_flow",
@@ -41,7 +45,8 @@
       "nullable_when": {
         "source": "orion",
         "flow_claim": "absent"
-      }
+      },
+      "nullable_when_absent": true
     },
     {
       "name": "income_received",
@@ -51,7 +56,8 @@
       "nullable_when": {
         "source": "orion",
         "flow_claim": "absent"
-      }
+      },
+      "nullable_when_absent": true
     },
     {
       "name": "income_return",
@@ -163,8 +169,41 @@
       "type": "int64",
       "nullable": true,
       "meaning": "Orion's integer account id for the account-day, carried beside the custodian account_id so that an Orion row can be joined to Orion's own records",
-      "rule": "Null for every non-Orion source. Set only where source is orion and the custodian account form is mapped through account_dim; an Orion account with no mapping is not written with a guessed id.",
-      "since_schema_version": "1.2"
+      "rule": "Null for every non-Orion source. For source orion it carries the raw Orion integer id and is REQUIRED when reason_class is UNMAPPED_ACCOUNT, the one case where account_id is null because the account is not a member of account_dim (no id is guessed).",
+      "since_schema_version": "1.2",
+      "required_when": {
+        "reason_class": "UNMAPPED_ACCOUNT"
+      }
+    },
+    {
+      "name": "row_status",
+      "type": "string",
+      "nullable": true,
+      "meaning": "whether this account-day row carries a value (PRESENT) or carries none (ABSENT, with a reason_class saying why). It answers one question: does this row carry a value.",
+      "values": [
+        "PRESENT",
+        "ABSENT"
+      ],
+      "rule": "A null row_status means the row was written by a writer that predates this column; such a row reads PRESENT. An ABSENT row carries a null market value, the flows where the flow rule allows, and a reason_class.",
+      "since_schema_version": "1.3"
+    },
+    {
+      "name": "reason_class",
+      "type": "string",
+      "nullable": true,
+      "meaning": "why an account-day carries no value: one of eight values, the first that applies in the precedence printed in rule24_record.v041.i_mece_over_a_declared_domain. It answers one question: why not.",
+      "values": [
+        "NO_GROUP",
+        "GROUP_NO_SERIES",
+        "NO_START_DATE_AT_SOURCE",
+        "SERIES_ENDED_AT_SOURCE",
+        "UNMAPPED_ACCOUNT",
+        "NO_FEED_ROW",
+        "INCOMPLETE_WINDOW",
+        "NO_EOD_VALUE"
+      ],
+      "rule": "Required when row_status is ABSENT and null otherwise: a PRESENT row carries no reason_class, and an ABSENT row without one is invalid.",
+      "since_schema_version": "1.3"
     }
   ],
   "enums": {
@@ -181,7 +220,22 @@
     ],
     "return_basis": [
       "TWR",
-      "NOT_MEASURABLE"
+      "NOT_MEASURABLE",
+      "VENDOR_REPORTED"
+    ],
+    "row_status": [
+      "PRESENT",
+      "ABSENT"
+    ],
+    "reason_class": [
+      "NO_GROUP",
+      "GROUP_NO_SERIES",
+      "NO_START_DATE_AT_SOURCE",
+      "SERIES_ENDED_AT_SOURCE",
+      "UNMAPPED_ACCOUNT",
+      "NO_FEED_ROW",
+      "INCOMPLETE_WINDOW",
+      "NO_EOD_VALUE"
     ],
     "fee_amount_reason": [
       "FEE_RAIL_UNUSED"
@@ -224,10 +278,98 @@
       "basis": "measured",
       "live_run": "473 rows, 83 trading days (2026-06-01..2026-09-28), the six round-1 accounts, graded against MEASURED_THRESHOLDS_R1 at tolerance 0.001244: GRADED_AGREED 152, NOT_GRADED_OUTSIDE_DOMAIN 309, GUARD_NOT_REACHED 10, GRADED_DISAGREED 2, NOT_GRADED_NO_NEIGHBOUR 0. Zero nulls, zero values outside the declared set, zero rows carrying HOLDINGS_INCOME_FALLBACK.",
       "unexercised_member_proved_by_mutant": "NOT_GRADED_NO_NEIGHBOUR is 0 on live data, and a declared member nothing produces is the exact defect SOURCE_LAG had. Proved with a sealed mutant: with the neighbour table forced empty, all 5 rows of a control window take NOT_GRADED_NO_NEIGHBOUR and stay MEASURED/TWR with a served value (correct: their flow is within the tolerance). The same window unmutated gives GRADED_AGREED 5."
+    },
+    "v041": {
+      "i_mece_over_a_declared_domain": {
+        "row_status": "domain: every account-day of the table's domain is either PRESENT (the row carries a value) or ABSENT (the row carries no value, and a reason_class says why). Both values: PRESENT | ABSENT. Covered by subtraction: a row either carries its value or it does not. A null row_status is not a third value; it reads PRESENT for a writer that predates the column.",
+        "reason_class": "domain: the account-days for which no PRESENT row can be written. the denominator, by subtraction: the account-days of the table's domain less the account-days a PRESENT row is written for. PRECEDENCE: a pair gets exactly ONE reason, the first that applies in this order: UNMAPPED_ACCOUNT (the account is not a member of account_dim) | the feed's own class where the feed gives one, one of NO_GROUP, GROUP_NO_SERIES, NO_START_DATE_AT_SOURCE, SERIES_ENDED_AT_SOURCE | NO_FEED_ROW (the feed holds no row for the account on the day, or holds one with no class of its own) | INCOMPLETE_WINDOW (the day's row is there but a calendar day folded into it is missing) | NO_EOD_VALUE (the day's factor is there but no end market value can be inferred, because the next calendar day's start value is absent). All eight values are named. Overlap test against the feed's four: NO_FEED_ROW is assigned only where the feed gives no class of its own, so it cannot overlap them; INCOMPLETE_WINDOW and NO_EOD_VALUE are assigned only after a feed row that is RETURNED with a factor, and the feed's four are assigned only on rows that are not, so they cannot overlap them either.",
+        "return_basis": "domain: which arithmetic produced total_return_daily. TWR (computed: the C-METHOD form) | NOT_MEASURABLE (no number is served) | VENDOR_REPORTED (a vendor's reported return, not Opal's computation; the Orion feed's own figure). The three are read with day_quality and guard_state on the same row, so VENDOR_REPORTED is never read as a TWR-computed day."
+      },
+      "ii_same_grain": "Same grain: row_status, reason_class and return_basis are each an ACCOUNT-DAY property, set on every account-day row beside day_quality and guard_state. row_status says whether the account-day carries a value, reason_class says why it does not, and return_basis says whose arithmetic the account-day's number is. The one deliberate account-level exception stays history_scope, as declared in the earlier ii_same_grain record; no account-level column is added here.",
+      "iii_intent_coherence": "One axis, one intent: row_status answers 'does this row carry a value', reason_class answers 'why not' and is set only where row_status is ABSENT, and return_basis answers 'whose arithmetic produced total_return_daily'. The CTO rulings call the vendor-reported mark return_method: VENDOR_REPORTED. return_method and return_basis are the SAME field under two names: VENDOR_REPORTED is a value of return_basis and no separate return_method column is added, because a second column would put one intent on two columns (rule 24, postulate iii). A later cell may add return_method if the CVO or the CTO asks for it. The producer's internal ABSENT sentinel answers row_status's question and is a recorded overlap, not a column.",
+      "iv_state_coherence": "WHICH VALUES ONE REMEDY DOES NOT MOVE. Adding an unmapped account to account_dim moves its UNMAPPED_ACCOUNT rows out of that class (to PRESENT, or to the reason the rest of the precedence gives) and moves no NO_GROUP, GROUP_NO_SERIES, NO_START_DATE_AT_SOURCE, SERIES_ENDED_AT_SOURCE, NO_FEED_ROW, INCOMPLETE_WINDOW or NO_EOD_VALUE row. MEASURED, VENDOR_REPORTED and GUARD_NOT_REACHED are read together on an Orion row: day_quality MEASURED is the vendor's own figure, return_basis VENDOR_REPORTED says whose arithmetic it is, and GUARD_NOT_REACHED says no holdings guard graded it. Only a holdings guard run on that day moves GUARD_NOT_REACHED; neither an account_dim change nor a change in the feed's classes moves any of the three.",
+      "token_census": {
+        "commit": "ca3e3ded9a1c31fe65e5b4ed4578d87ac3817955",
+        "pathspecs": [
+          "data/assets/scripts/gold/irpt_reporting",
+          "org/standards",
+          "infra/aws/lambda/investor-reporting"
+        ],
+        "denominator_files": 915,
+        "claim": "measured",
+        "tokens": {
+          "PRESENT": {
+            "files": 19,
+            "hits": 59,
+            "reading": "Collides by NAME only: a capitalised ordinary word in infra authorization and holdings comments, and a provenance state value in infra _scope/maintained_sources.py. No existing table carries a row_status column, so no value is shared with a served schema."
+          },
+          "ABSENT": {
+            "files": 81,
+            "hits": 161,
+            "reading": "Collides by NAME with three existing meanings: the producer's internal sentinel ABSENT (account_return_daily.py) for a missing factor or method version, the member-source sentinel src == ABSENT (filled_report_values.py), and the capability and projection state ABSENT (infra _scope/global.py); the rest is English in comments. The producer sentinel asks the same question as row_status ABSENT, and that overlap is recorded in rule24_record.v041.iii_intent_coherence."
+          },
+          "NO_GROUP": {
+            "files": 1,
+            "hits": 4,
+            "reading": "Appears only in the Scope adapter test fixtures as a class the feed itself gives on its row; the adapter passes a feed class through unchanged and does not write this value."
+          },
+          "GROUP_NO_SERIES": {
+            "files": 1,
+            "hits": 4,
+            "reading": "Appears only in the Scope adapter test fixtures as a class the feed itself gives on its row; the adapter passes a feed class through unchanged and does not write this value."
+          },
+          "NO_START_DATE_AT_SOURCE": {
+            "files": 0,
+            "hits": 0,
+            "reading": "No hit anywhere in the census scope: the value is named for the first time by this record, as one of the feed's own classes, and no fixture uses it yet."
+          },
+          "SERIES_ENDED_AT_SOURCE": {
+            "files": 1,
+            "hits": 4,
+            "reading": "Appears only in the Scope adapter test fixtures as a class the feed itself gives on its row; the adapter passes a feed class through unchanged and does not write this value."
+          },
+          "UNMAPPED_ACCOUNT": {
+            "files": 3,
+            "hits": 4,
+            "reading": "The Scope adapter's REASON_UNMAPPED constant for an account absent from the account map, its tests, and the 0.4.0 contract's source_rules text: the same meaning, an Orion account with no account_dim mapping."
+          },
+          "NO_FEED_ROW": {
+            "files": 2,
+            "hits": 3,
+            "reading": "The Scope adapter's REASON_NO_FEED_ROW constant, used where the feed holds no row for the account on the day or holds one with no class of its own, and its tests: the same meaning this contract now gives."
+          },
+          "INCOMPLETE_WINDOW": {
+            "files": 2,
+            "hits": 5,
+            "reading": "The Scope adapter's REASON_INCOMPLETE constant, used when a calendar day folded into a trading day has no returned row, and its tests: the same meaning."
+          },
+          "NO_EOD_VALUE": {
+            "files": 2,
+            "hits": 4,
+            "reading": "The Scope adapter's REASON_NO_EOD constant, used when the next calendar day's start market value is absent, and its tests: the same meaning."
+          },
+          "VENDOR_REPORTED": {
+            "files": 0,
+            "hits": 0,
+            "reading": "No hit anywhere in the census scope: a new value of return_basis, named for the first time by this record. The Scope adapter still writes return_basis TWR on its Orion rows (adapter line 146), which is the open surprise row, not a use of this value."
+          },
+          "row_status": {
+            "files": 0,
+            "hits": 0,
+            "reading": "No hit anywhere in the census scope: a new optional column named for the first time by this record; no writer carries it yet."
+          },
+          "reason_class": {
+            "files": 2,
+            "hits": 16,
+            "reading": "The Scope adapter's absent-record key (adapter lines 49, 98 and 167) and its tests: the same field name, carrying the feed's reason class through unchanged. No column of the 0.4.0 table had this name."
+          }
+        }
+      },
+      "token_census_finding": "COLLISIONS BY NAME ONLY, NOT BY MEANING: PRESENT and ABSENT each carry another meaning elsewhere in the census scope (an infra provenance state, a capability binding, a member-source sentinel), and the producer's ABSENT sentinel asks row_status's own question, which is the one overlap of intent recorded here. The eight reason values, VENDOR_REPORTED, row_status and reason_class have no other meaning in the scope; the feed's reason_class is the same field carried through unchanged. Measured by git grep -c -w at the census commit, one scan per token."
     }
   },
   "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
-  "schema_hash_with_optional": "74fdee3def647fd5c33ab9c07aa14106cbe66dbfe67a8e8608b68278db194154",
+  "schema_hash_with_optional": "6816ef9295d214212be6ccb9ebf386a07cca38e1a4f3a5e56eac3f6c1385fce8",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries. The check recomputes it against the landed parquet, so contract and artifact cannot drift.",
   "firm_specific_columns": "NONE. A firm-specific column is a contract violation (C-SHAPE); no sb_cd, tr_cd or any Schwab code survives into this table -- they live only in the adapter's sources.json.",
   "supersedes": [
@@ -258,15 +400,31 @@
         "The successor 0.4.0 keeps the 19 columns, their names, their types, their meanings and schema_hash unchanged, so every 0.3.0 writer still validates: no existing type changes, and a 0.3.0 row carries no flow_claim and no source_account_id, which are optional.",
         "The successor 0.4.0 adds the top-level source_rules.orion (flows, business_date, account_id) and leaves served_day_rules byte-identical."
       ]
+    },
+    {
+      "contract_version": "0.4.0",
+      "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
+      "schema_hash_with_optional": "74fdee3def647fd5c33ab9c07aa14106cbe66dbfe67a8e8608b68278db194154",
+      "changes": [
+        "External_flow and income_received became nullable ONLY where source is orion and flow_claim is absent (nullable_when), both staying nullable false in general.",
+        "The optional columns flow_claim and source_account_id were added beside source; the 19 columns, their types and schema_hash were unchanged, so every 0.3.0 writer still validates.",
+        "source_rules.orion was added (flows, business_date, account_id) and served_day_rules stayed byte-identical."
+      ]
     }
   ],
   "schema_hash_control": "THE METHOD IS CONTROLLED, not asserted: recomputing it over the same ARROW_SCHEMA with guard_state removed reproduces 0.1.0's published hash b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058 exactly. A hash whose method could not reproduce the previous published value would be unverifiable.",
   "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py -- the 19-field ARROW_SCHEMA this hash is taken from. The producer commit carrying guard_state must land WITH this contract, because the check recomputes the hash against the landed parquet.",
+  "source_requires": {
+    "orion": {
+      "return_basis": "VENDOR_REPORTED"
+    }
+  },
   "source_rules": {
     "orion": {
       "flows": "The Orion (Scope) feed carries a vendor-reported return and no flows. Where an Orion flow is absent, external_flow and income_received are null and flow_claim is set to absent beside them, so the row says why. A null flow is never zero: a consumer that needs flows rejects a row carrying flow_claim and says so in words, and never reads the null as 0.",
       "business_date": "business_date stays the TRADING day (lib/trading_calendar.py), the performance axis. Each non-trading calendar day's factor compounds (the product of the factors) into the next trading day's factor, and the run manifest states that compounding. A trading day whose own factor is ABSENT stays ABSENT; it is never filled from a neighbouring day.",
-      "account_id": "The custodian account form is mapped through account_dim. Orion's integer account id is kept in source_account_id. An Orion account with no mapping is written as an ABSENT row with reason class UNMAPPED_ACCOUNT, never dropped, and its count is recorded in the run record."
+      "account_id": "account_id is account_dim's own key form (for the Scope feed, Orion's id as a string). source_account_id keeps the raw integer. UNMAPPED_ACCOUNT means the account is not a member of account_dim: its row is ABSENT with reason_class UNMAPPED_ACCOUNT, carries a null account_id and a source_account_id, is never dropped, and its count is recorded in the run record.",
+      "return_basis": "VENDOR_REPORTED: the Orion return is the vendor's reported measurement, not Opal's computation; it is the same field the CTO rulings call return_method. Read together with it: day_quality MEASURED is the vendor's figure standing on its own, and guard_state GUARD_NOT_REACHED says no holdings guard graded the day, because the vendor return has no holdings guard."
     }
   },
   "served_day_rules": {
