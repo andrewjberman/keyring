@@ -15707,6 +15707,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For 2.0.0_SA_COO~P2 (the route and hop 5 owner under the CTO's ruling on call 076d): decide, before hop 5's window, whether a print reads the frozen filled object through this route (then add the version_id parameter, the render-delegate refusal and X-Opal-Version-Id, as the series has them) or server-side (then the portal's version query is removed by an F-SHIP amendment and the print takes its document from the render host). The portal side follows either way by an issuer amendment. Counts and paths only."
 }
 ```
+```json
+{
+  "id": "IRPT_DASHBD-D2-W193-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~193",
+  "surfaced_at": "2026-10-15T07:59:58Z",
+  "one_line": "The commit gate's client-data check could not run on this box: its hashed account-id list is absent, so commit 06adaf402d was not checked for client account ids by the gate; the worker's own scan of the two staged files found no private history id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Worker face, client data rules: before every commit, scan what you stage for a client figure; the commit gate's client-data check is the mechanism that checks every commit for client account ids. The order names no route for a commit made while that check cannot run.",
+  "world_is": "The commit gate printed WARN client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt and stated that commit 06adaf402d was NOT checked for client account ids (absent is not empty). The worker's scan of the two staged files: 0 of 1,533 private history ids appear in either file; the one run of 8 or more digits is a private folder path, an exempt field.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit-gate output of commit 06adaf402d on box dell2: WARN client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "round 119 row IRPT_DASHBD-D2-W189-S1 (commit eab07e1ca5): the same absent list on this box, disarm owner 2.0.0_SA_COO~D2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Same condition as IRPT_DASHBD-D2-W189-S1, still open: until the hashed list is placed at the gate's path or OPAL_ACCOUNT_ID_HASHES is set, every commit on this box is unchecked for client account ids. Disarm by the disarm owner. Counts and paths only; this row carries no account id."
+}
+```
 
 ## IRPT_DASHBD-D2-W192-S1 -- lib/trading_calendar.py answered prev_trading_day from its hardcoded NYSE fallback on this box (pandas_market_calendars absent)
 
