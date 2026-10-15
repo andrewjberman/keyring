@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T072147Z-4a82",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell2",
+ "from_serial": "2.0.0_SA_COO~CA",
+ "to_serial": "0.7.0_AE_CloudOps~CA2",
+ "subject": "COMM_ASSIST.TO-CA-l-1 -- confirm per-draft reader on dell2, run refresh once, read folder (read-only)",
+ "body_path": "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-l-1.dell2-reads-the-per-draft-rows.md",
+ "opened_at": "2026-10-15T07:21:47Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

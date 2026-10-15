@@ -12,6 +12,10 @@ the box where it was done.
     python .tools/round-close-check.py --project <CODE> --staged            (read the project's files from the git index)
     python .tools/round-close-check.py --selftest
 
+--round <n> SCOPES an order by the roundN of the decomposition its <decomp_doc> names (file ...roundN.md); an order that names
+no decomposition, or whose decomposition file name carries no roundN, is scoped by its <round> tag. The TREE line after the
+ORDERS line prints how many tree orders were scoped by their decomposition (CT-af-2).
+
 THREE LIMBS, each printed with its evidence:
   REVIEWER-ON-BOX  a CVO-kind seat (kind through lib/seat_roles.py, via .tools/seat-list.py's own resolver) is LIVE on the
                    box where the work was done. This box: org/mcp/liveness.json, read by .tools/seat-list.py's reader (LIVE =
@@ -65,6 +69,10 @@ LANE = re.compile(r"~([A-Za-z0-9]+)$")
 FENCE = re.compile(r"```json\s*\n(.*?)```", re.S)
 CRIT_TAG = re.compile(r"<criterion\b([^>]*?)/?>")
 ATTR = re.compile(r'([A-Za-z_]+)="([^"]*)"')
+# CT-af-2 (NFRA_CTLPLN round 16, CTO round-15 ruling 4): an order's <round> tag holds its WORKSTREAM's round, so --round is
+# matched against the issuance round its decomposition names (<decomp_doc> ...roundN.md) when there is one.
+DECOMP_DOC = re.compile(r"<decomp_doc>\s*([^<]*?)\s*</decomp_doc>")
+DECOMP_ROUND = re.compile(r"\.round(\d+)\.md$")
 # A grade needs a VERDICT (ETFS_RIVALS D1-S15, CTO~DELL1 msg 4559). Words that REACH a verdict, and words that name none.
 # Census of the 1056 criterion-then-word matches in 779 tracked adjudication files: MET 324, PASS 314, FAIL 94, NOT MET 68,
 # PASSES 20, NOT MEASURED 15, HELD 6, PARTIAL 4, UNGRADED 4. Upper case only: a grader writes the verdict in capitals.
@@ -267,6 +275,16 @@ def tag(text: str, name: str):
     return m.group(1).strip() if m else None
 
 
+def decomp_round(text: str) -> str:
+    """The issuance round the order's decomposition names: N from a <decomp_doc> whose file name ends .roundN.md; '' when
+    the order names no decomposition or its file name carries no roundN (the caller then falls back to the <round> tag)."""
+    m = DECOMP_DOC.search(text)
+    if not m:
+        return ""
+    r = DECOMP_ROUND.search(os.path.basename(m.group(1).replace("\\", "/")))
+    return r.group(1) if r else ""
+
+
 # Source: .tools/seat-list.py STATUS_WORDS (used when seat-list.py imports; this copy is the fallback).
 _STATUS_FALLBACK = {"complete", "superseded", "cancelled", "canceled", "withdrawn", "retired", "closed", "pending",
                     "staged", "open", "parked", "active", "in_progress", "in-progress", "blocked", "held", "draft",
@@ -333,11 +351,15 @@ def read_orders(src, proj_dir: str, rnd, ws) -> list:
             attrs = dict(ATTR.findall(m.group(1)))
             if "id" in attrs:
                 o["criteria"].append({"id": attrs["id"], "judgment": attrs.get("judgment", "").lower() == "true"})
-        if rnd is not None and str(o["round"]) != str(rnd):
+        # CT-af-2: the scoping round is the decomposition's roundN when the order names one, else its <round> tag (unchanged)
+        dec = decomp_round(text)
+        o["decomp_scoped"] = bool(dec)
+        o["scope_round"] = dec or o["round"]
+        if rnd is not None and str(o["scope_round"]) != str(rnd):
             # A flat-folder order with NO <round> tag cannot be scoped to any round (the TV2 APPLY/RUN orders carry
             # none). Dropping it silently is the D2-S23 hole; it is counted in every round's check and NAMED as
             # untagged, so its judgment criteria still gate the close and the issuer sees the missing tag.
-            if not (seat_dir and not str(o["round"]).strip()):
+            if not (seat_dir and not str(o["scope_round"]).strip()):
                 continue
             o["untagged"] = True
         if ws is not None and str(o["workstream"]) != str(ws):
@@ -590,6 +612,9 @@ def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, de
     lines.append("ORDERS scope round=%s workstream=%s: %d order(s), %d complete, %d not complete and outside the verdict%s" % (
         rnd if rnd is not None else "all", ws if ws is not None else "all", n_orders, len(done), len(open_),
         (" (" + ", ".join(o["id"].split(".")[-1] for o in open_) + ")") if open_ else ""))
+    tree_dec = [o for o in orders if o.get("decomp_scoped") and not o.get("seat_dir")]
+    lines.append("  TREE orders counted by decomposition round: %d (%s)" % (
+        len(tree_dec), ", ".join(o["id"].split(".")[-1] for o in tree_dec)))
     flat = [o for o in orders if o.get("seat_dir")]
     untagged = [o for o in flat if o.get("untagged")]
     if flat:

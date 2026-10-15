@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~102</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run on branch wk-NFRA_CTLPLN-102 @d4809c1fea (merged da61dea773): PLACEMENT-UNSTAGE arms=4/4 ok=True, ROUND15-BATCH arms=9/9 ok=True, SAFE-COMMIT-DERIVATION cases=17/17 ok=True; proof instance VALID; the issuer read the safe-commit.sh diff (four lines: the placement refusal builds _ng_all from IN_SCOPE and unstages every path, as the ENFORCE branch does). The worker read the override branch: IN_SCOPE is computed before the override appends its audit row, so the new loop cannot unstage that row, and _np_unwind still removes it. Row W102-S1 (INERT: the suite pins its base to the issuance commit cb843928c1 because HEAD moves) accepted. W99-S1 is closed by this cell.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
