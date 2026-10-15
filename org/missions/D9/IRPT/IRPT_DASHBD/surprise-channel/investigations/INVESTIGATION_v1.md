@@ -17875,3 +17875,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-9. Form only: counts and flags; no value, no identifier, no date. The annualization explanation was tested and rejected (the chain does not match the annualized product for either account)."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W216-S2 -- a plain git merge of box/dell2 left a merge the drain refuser will not continue, so the merge was aborted and re-run through safe-merge.sh
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W216-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~216",
+  "surfaced_at": "2026-10-15T17:40:00Z",
+  "one_line": "The coordinator's ruling said to run git merge box/dell2 in the worktree; that merge conflicted on the append-only investigation file and safe-merge.sh --continue then refused it (rc 2, the merge was not opened by the script); the merge was aborted with safe-merge.sh --abort and re-run as safe-merge.sh box/dell2, which landed 4b03c4e76a with no conflict reported and the channel holding both rows",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge box/dell2 in the worktree reported CONFLICT (content) in org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md; the conflict was two appended blocks at the end of the file, resolved by keeping both (no existing row edited)",
+      "bash .tools/safe-merge.sh --continue returned: safe-merge: REFUSED -- a merge is open but THIS script did not open it (no conflict state at the worktree safe-merge-conflict path); rc=2",
+      "bash .tools/safe-merge.sh --abort returned: safe-merge: merge aborted; tree restored and conflict state cleared; then bash .tools/safe-merge.sh box/dell2 returned: safe-merge: MERGED and committed -- 4b03c4e76a (fast lane); index check 4b03c4e76a: 0 of 149 merged path(s) differ between the index and HEAD; the channel file has 0 conflict markers and both W216-S1 and D2-S90 rows"
+    ]
+  },
+  "spec_asserts": "The coordinator's message said to run git merge box/dell2 in the worktree first, and CLAUDE.md names safe-merge.sh as the merge limb for a shared branch; the order names no merge tool.",
+  "world_is": "A plain git merge that conflicts cannot be continued by safe-merge.sh --continue, which refuses a merge it did not open; the worker aborted the merge (no commit was lost, the resolution was re-made) and landed box/dell2 through safe-merge.sh box/dell2. Counts and paths only; no client value."
+}
+```
