@@ -9254,5 +9254,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "notes": "WHAT THIS ROW DOES NOT CLAIM: why the refresh did not hold. The log does not say what the refresh did in its 16-17 s, and this seat read no session, credential or producer source; 'under --no-sign-in: no refresh' is the retry's own error text, recorded verbatim. TWO FACTS A READER OF THE PRODUCER WILL WANT, neither of them a diagnosis: the retry's error names --no-sign-in, and the refresh completed in 16-17 s, well under the ~2.7 min a single job takes -- so the first question for round 85's analysis is whether the retried job could use whatever the refresh produced at all. WHY THIS IS AN OBSERVATION AND NOT BLOCKING: nothing is degraded by the finding itself; the runner keeps cycling, each publisher stops at its first refused pair as it did before the pin, and the result is the order's own defined outcome. THE ASK FOR THE ISSUER, one line: route HVST-bz-11 as NOT_MET to the CTO's round-85 analysis and disposition Z-S119 from this row. This seat takes no further action on the line (order section 2 steps 2-3).",
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S17",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-15T16:30:00Z",
+     "one_line": "AMGT_HARVST-Z-S121 is ANSWERED: the refresh writes the bundle, a wsj/barrons tab job reads the browser profile, so a refreshed job is still refused expired; the in-profile renew cures it.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "AMGT_HARVST-Z-S121 asked whether the retried job could use whatever the refresh produced at all (site Z: refresh done in 16-17 s, next job refused expired).",
+     "world_is": "Measured on dell1 2026-10-15: SessionManager.refresh for wsj and barrons succeeded (subscriber, network auth corroborated), and the next two jobs were sign_in_refused with 0 accepted (run records 20261015T161228Z-wsj-40f3d2f737, 20261015T161250Z-barrons-3c7effd9fe; DowJones.check read /client 200 with isLoggedIn not true). Both contracts are transport tab with seed_from_bundle false, so the job reads the persistent profile and the bundle is never loaded into it. After verification.renew ran in each profile (stale true, renewed true, status 200) the same two jobs ended complete_candidates with 5 accepted each (20261015T161540Z-wsj-6e37d73e87, 20261015T161808Z-barrons-cf237cfae1). One pair of jobs per publisher within minutes of the renewal; durability unread; site Z was not yet confirmed stopped for part of it (stated in the read).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND86_FIRST_DELL1_READ_20261015.md@06d5850df2",
+       "lib/opal_data_harvest/contracts.json wsj and barrons entries (transport tab, seed_from_bundle false); lib/opal_data_harvest/publishers.py lines 393 and 1168; lib/opal_data_harvest/verification.py renew()",
+       "org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND_ANALYSIS.round85.ADDENDUM_2_R86_CODE_CELL.md (CTO: file Z-S121 as ANSWERED, citing @06d5850df2)"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-Z-S121"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "ANSWERED (the enum has no ANSWERED value): the question in Z-S121 is answered by the dell1 first read @06d5850df2 -- the refresh and the job read different stores; the fix is round 86's one code cell (CTO addendum 2)."
+    }
 ]
 ```
