@@ -2,7 +2,7 @@
   <metadata>
     <id>ETFS_RIVALS.TO-APPLY-R31.rivalfunds-packages-deploy-dell1</id>
     <issued_by>2.0.0_SA_COO~RV</issued_by>
-    <issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
+    <issued_to>0.7.0_AE_CloudOps~RV1</issued_to>
     <date>2026-10-15</date>
     <status>pending</status>
     <project_code>ETFS_RIVALS</project_code>
@@ -24,6 +24,7 @@
   </objective>
 
   <context>
+    APPLIER: `0.7.0_AE_CloudOps~RV1` (the COO half names ~DELL1; the CTO half's AMENDMENT 1 @ledger/NEVER_WIDEN_R31_DEPLOY_CTO_HALF.md names ~RV1 as the applier, msg 6284: ~DELL1 holds another project's order, one project per Tier-2 seat). Same pin, plan, conditions and rollback.
     BOTH HALVES SIGNED; read both in full before acting:
     - COO half `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round31/NEVER_WIDEN_HALF_COO_R31_DEPLOY.md` @72c4185226 (sha256 3def65d313cb33d97089fced974175b5b4ea5ad315721a846061902eff106f18);
     - CTO half `org/missions/D5/ETFS/ETFS_RIVALS/ledger/NEVER_WIDEN_R31_DEPLOY_CTO_HALF.md` @1081824c7a (SIGNED, with C7).
