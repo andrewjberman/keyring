@@ -4355,3 +4355,15 @@ Check IB229-1 (`deliverables/2.0.0_SA_COO~P2/checks/r229/p229_cells.py`, committ
 | `IB-pr-596` | APPLY the Scope account feed: the gates, the script and its beside-files, the sidecar, the dispatch row and entries, the first scheduled run | FWD-3 | WORLD | none | PO6-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
+
+## 225. ROUND 3, WORKSTREAM ~PN (the Scope account feed writes a day's keys only when the day is complete; 2026-10-15 ~18:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round analysis msg 8536, item 4)
+
+The feed (IB-pr-586, amended by IB-pr-594) calls Orion once per household and today writes every day's bronze and silver keys from the households that answered, even when some household failed. A partial day reads as a complete one: its missing accounts look like accounts with no return. The CTO's analysis orders the rule, with a test: a day's key pair is written ONLY when every household in that day's universe answered OK; the skipped days and the households that blocked them are named in the output, and the exit is non-zero. One LOCAL cell on the one script; the feed's apply (IB-pr-596) waits for it.
+
+Check IB231-1 (`deliverables/2.0.0_SA_COO~P2/checks/r231/p231_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control231.py`) passes the positives and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-599` | the feed writes a day's key pair only when the day is complete, names skipped days, exits non-zero | FWD-3 | LOCAL | none | PN4-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one script; one worker (slot ~436) starts now.
