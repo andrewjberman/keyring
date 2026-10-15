@@ -10424,3 +10424,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "safe-commit.sh's author-seat check appends to a tracked audit log on each commit by a serial the roster does not know. In a sparse worktree that file is a tracked change the worker cannot commit under its lane, so it stays dirt until the worktree is removed."
 }
 ```
+
+## NFRA_CTLPLN-W111-S1 -- a fetch record carries no device field, so a downloads-today count by device cannot be attributed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W111-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~111",
+  "surfaced_at": "2026-10-15T12:40:56Z",
+  "one_line": "The fetch record (schema intake-fetch/1) names the fetching seat in fetched_by, a serial, and carries no device key. The downloads reader (intake_request.py downloads --device D) can therefore count only records that carry a device field; on the two real 20261008 records it prints requests=0 files=0 for laptop and a stderr NOTE that two records are unattributed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO (issuer of CT-ai-6): have intake_fetch.py write a device key into each fetch record, or name the device source the reader must trust; until then a zero from the downloads reader is not evidence that a box downloaded nothing",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/records/intake-20261008-a/click-8.3.1-py3-none-any.whl.fetch.json@afebfdc81a: top-level keys are schema, batch, requested, index_base, requests, published, project, attestation, held_path, outcome, reason, fetched_by, at, approval, release_files, received_sha256; no device key",
+      "org/devices/intake/intake_fetch.py@afebfdc81a line 211: \"fetched_by\": os.environ.get(\"OPAL_AGENT_SERIAL\") or \"unknown\"; no device is written",
+      "python org/devices/intake/intake_request.py downloads --device laptop --day 20261008 run read-only in the worktree: NOTE: 2 fetch record(s) on day 20261008 carry no device field and are not counted; DOWNLOADS-TODAY device=laptop day=20261008 requests=0 files=0; rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-6 / FWD-19: Andrew can ask what a box downloaded today and get an answer from a record; the reader counts the fetch records whose device is D.",
+  "world_is": "Fetch records name a serial, not a device, so no record in the intake folder can be attributed to a box. The reader counts a record only when it carries a device key; none of the 3 fetch records under org/devices/intake/records/ carries one (measured: FETCH-RECORDS read=3 with_device_key=0), so its answer for any device on the real folder is zero with a note on stderr."
+}
+```
+
+## NFRA_CTLPLN-W111-S2 -- the author-seat check cannot read its roster in the sparse worktree, so every worker commit prints an unknown-seat WARN
+
+```json
+{
+  "id": "NFRA_CTLPLN-W111-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~111",
+  "surfaced_at": "2026-10-15T12:40:56Z",
+  "one_line": "safe-commit.sh printed WARN: author 0.9.0_WK_NFRA_CTLPLN~111 names no known seat, because org/ref/SEAT_ROLES.json was unreadable (FileNotFoundError) in the sparse worktree; it also printed a client-data-check ABSENT line for the account-id list. The commit still passed every gate and was written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit e8b2dc8e33 in the worktree: 'WARN: author 0.9.0_WK_NFRA_CTLPLN~111 names no known seat (... org/ref/SEAT_ROLES.json unreadable (FileNotFoundError)). WARN-only until the announced refusal (1.0.0_SA_CTO msg 107910).'",
+      "the same commit's [msg-verify] line: MATCH len=481; [commit-gate] All checks passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md 14a: commits go through safe-commit.sh and the author seat is a known seat; the sparse worktree carries the paths the order names, so the commit path reads what the worker needs.",
+  "world_is": "The author-seat check reads a roster file outside this sparse worktree and falls back to WARN. The WARN says a refusal is announced; a worker commit in a sparse worktree would refuse under that refusal, because the roster it reads is absent."
+}
+```
