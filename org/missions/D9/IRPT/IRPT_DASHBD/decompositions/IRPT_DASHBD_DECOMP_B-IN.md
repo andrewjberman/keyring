@@ -130,6 +130,18 @@ Contract 0.4.0 is merged, so the adapter that turns the Scope feed's rows into `
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent build cell with a disjoint write set (a new module and its test file). Worker `0.9.0_WK_IRPT_DASHBD~310` (`DB-i-10`).
 
+## 10. ROUND 124, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-118 ADDENDUM 5 (msg 8584) and ADDENDUM 6 (msg 8605))
+
+The CTO ruled (open call dell2-20261015T193100Z-cf2a) that the run wrapper is cut now, offline, and that the first real-row run stays a later cell on the feed's silver. ADDENDUM 6 carries worker row W310-S2 (a repeated key) into this round and says the wrapper writes contract 0.4.1 if it has landed by the cut, otherwise ABSENT beside the rows, and says which. Contract 0.4.1 has not landed (the file reads 0.4.0 at the cut), so ABSENT sits beside the table and the run record says `BESIDE_TABLE`.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-11` | The Scope feed run wrapper: from feed silver partitions (pandas frames) and the dimension frame, the complete-day rule, a repeated-key refusal, the account map from the dimension's own key form, `adapt()`, then contract-0.4.0 date partitions, an ABSENT-records file and a run record; a 299-day chain fixture; plus the CTO's three round-123 enrichments (a `market_value_eod_claim` row field, the 0.4.1 shape of ABSENT records with the UNMAPPED_ACCOUNT inversion fixed in the adapter, the `reason_class_status` proposed marks); fixtures only, no AWS | FWD-2 | LOCAL (code and tests; local files under a handed directory; nothing wired, scheduled, served or deployed) | `DB-i-10` (merged, @90862adf60) | I-K |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The complete-day rule is the wrapper's guard of the feed's own rule (a day's key is written only when the day is complete, round PN1 item 4): the wrapper cannot see the feed's household universe, so it grades the rows it is given: an unknown status, a RETURNED row without a factor or an ABSENT row without a reason class makes the whole calendar day incomplete, and every row of that day is dropped and counted. A dropped day then reads ABSENT through the adapter's own rules (NO_FEED_ROW / INCOMPLETE_WINDOW), never filled. (b) A repeated key is refused (ValueError carrying the count, nothing written) rather than read as "last wins". (c) The 238-to-365-day fixture (round-122 analysis item 2) is 299 calendar days, Monday to Friday, one account: the fixture's "source" is the product of its own daily factors, because the adapter stores and chains the daily factor and never reads a window summary (ADDENDUM 3); a real Orion summary comparison belongs to the real-row run. (d) The wrapper reads the dimension's key form (Orion's id as a string) as ADDENDUM 6 item 6 rules. (e) `proposed_reason_classes` in the run record names the three module-added classes while 0.4.1 has not admitted them (ADDENDUM 6 item 3). (f) The round-123 analysis (msg 8610, items 1 to 3) is in this cell and not a second one: its items edit the merged adapter, whose rows the wrapper writes, so one worker owns both files and the wrapper's golden grades the adapter's new shapes end to end. The edit supersedes the round-123 checker's shapes for an unmapped record and a row; that checker graded the closed order. (g) `market_value_eod_claim` is written beside the contract's 22 fields, outside its hash, until 0.4.1 admits it; the contract's own validator ignores an undeclared column.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent build cell with a disjoint write set (a new module and its test file). Worker `0.9.0_WK_IRPT_DASHBD~311` (`DB-i-11`).
+
 ## Cells
 
 | cell id | owner |
@@ -144,3 +156,4 @@ Contract 0.4.0 is merged, so the adapter that turns the Scope feed's rows into `
 | DB-i-8 | 0.9.0_WK_IRPT_DASHBD~308 |
 | DB-i-9 | 0.9.0_WK_IRPT_DASHBD~309 |
 | DB-i-10 | 0.9.0_WK_IRPT_DASHBD~310 |
+| DB-i-11 | 0.9.0_WK_IRPT_DASHBD~311 |

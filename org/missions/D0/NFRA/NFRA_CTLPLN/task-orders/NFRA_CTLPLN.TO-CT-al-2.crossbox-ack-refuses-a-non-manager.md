@@ -32,6 +32,7 @@ YOUR WORKTREE WAS CUT BY `.tools/wk-provision.sh` AND IS A SPARSE CHECKOUT: it h
 2. Add cases to the tool's own selftest for the refusal and the admission (so the selftest count grows from 35).
 3. A NEW test `.tools/tests/test_round22_manager_ack.py` (standard library; a temporary repository with a temporary crossbox folder; no network): arms (a) a CTO serial of the receiving box acks: REFUSED, file unchanged; (b) a CloudOps serial: REFUSED; (c) the receiving box's manager acks: ADMITTED, file shows the ack; (d) the SENDING box's manager acks: REFUSED (wrong box); (e) the base laptop manager acks a call to the laptop: ADMITTED. Last line `MANAGER-ACK arms=<k>/<n> ok=<True|False>`.
 4. Do not touch any existing crossbox file in `org/devices/crossbox/`.
+5. **AMENDMENT 1 (issuer, after rows W120-S1 and W120-S2):** the manager rule REPLACES the old named-seat rule for `ack`: the receiving box's manager (`0.0.0_AB_MSTR` lane of `to_device`) acknowledges EVERY call addressed to its box, including one whose `to_serial` names a CTO or CloudOps seat (that is what the CTO ruled and what the managers already do); no other serial may. Drop the named-seat requirement from `ack` (keep it for `receive` if `receive` has it). The two suites the change turned red, `.tools/tests/test_crossbox_call.py` (3 new fails) and `.tools/tests/test_round13_batch.py` (3 new fails), assert the old behaviour in those cases only: update exactly those cases to the new rule (a seat-addressed call acked by its box's manager is ADMITTED; the same ack by the named seat is REFUSED) and change nothing else in them; both files are added to your `<paths>`. Report the before and after counts of both suites; the after must not be lower than the before at the cut (`test_crossbox_call.py` 64 of 65 with one sparse fail that was already there; `test_round13_batch.py` 10 of 15).
 
 ### RULES FOR THIS CELL
 
@@ -62,6 +63,8 @@ Each invocation runs from the worktree root under `timeout 280`; record the crit
 <paths>
 .tools/crossbox-call.py
 .tools/tests/test_round22_manager_ack.py
+.tools/tests/test_crossbox_call.py
+.tools/tests/test_round13_batch.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
