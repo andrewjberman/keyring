@@ -97,3 +97,23 @@ The leg also needs a staged row, `IRPT_TICKETS_TABLE` and a GetItem grant.
    It covers both branches of the price date (a sent `priceDate` is ignored and logged; none sent).
 3. **Order:** r32 (the resident), then r33 (the Lambda). FWD-1 run 3 runs after BOTH have landed, because the full filing path spans them.
    c8c3 re-promotes after run 3 reads 4 of 4 attachments.
+
+## ADDENDUM 4 (~22:0xZ): the swap pass is not composed in r32; the order to run 3 (`~G2`)
+
+**Measured by `~G2`.** r32 carries `swap_replacement` but leaves it unreachable. So the Opal producer files an UNRESOLVED row without
+replacing it, and run 3's "replacement named in the report" cannot pass on r32.
+
+**RULED: as `~G2` proposes.**
+1. **r32 applies as signed** (the apply order is out to AQ2 @75160639c8).
+2. **The next ENGINE round carries two things together:**
+   - the swap compose plus its pool source: the class-matched pool of registry rows plus model proposals that pass the class match and
+     Yahoo; longest Yahoo history; ties by ticker; RECORD `proxy_for` / `method` / `confidence`;
+   - r33's door cell (`irpt-ycharts-generate`: the decision tree of PRD v0.19, the accept stamps, the derived price date).
+3. **A resident r34, under its own pair, composes the swap pass BEFORE run 3.** The swap's Yahoo reads are its own C-PRICES tier reads, for
+   ranking.
+   - They do not depend on the `opal_pricing` binding, which stays OFF.
+   - Enabling report pricing remains its own act after run 3.
+   - r34's pair states which Yahoo calls the swap makes per UNRESOLVED holding, and their bound.
+4. **Order:** r32, then r33 (Lambda) and r34 (resident) each under its own pair, then FWD-1 run 3.
+   - Run 3 reads every v0.19 branch: Yes, Replace, No, and one existing-but-unpriceable holding.
+   - It also reads the replacement named in the report for each UNRESOLVED holding.
