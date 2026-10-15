@@ -1,4 +1,4 @@
-# DSGN_RBNDV2 -- DECOMPOSITION (L5) -- ROUND 1, THE THREAD (PRD v0.1) -- DRAFT, NOT YET RATIFIED
+# DSGN_RBNDV2 -- DECOMPOSITION (L5) -- ROUND 1, THE THREAD (PRD v0.1)
 
 ```json
 {
@@ -6,24 +6,23 @@
  "directive": "D13",
  "macro": "DSGN",
  "fabric": "laptop",
- "decomp_version": "v1-draft",
+ "decomp_version": "v1",
  "step": 5,
- "prd_ref": "org/missions/D13/DSGN/DSGN_RBNDV2/prd/DSGN_RBNDV2_PRD.md@e71a48e4b0 (v0.1)",
- "prd_half_hashes": {"ratified-text": "OWED by 3.0.0_SA_CVO (prd-signoff status 2026-10-15 03:5xZ: MISSING)", "brief": "ADMITTED (auto: the CRO wrote the brief)"},
+ "prd_ref": "org/missions/D13/DSGN/DSGN_RBNDV2/prd/DSGN_RBNDV2_PRD.md@e71a48e4b0 (v0.1, RATIFIED; CTO notice 109330 @7ceb148066)",
+ "prd_half_hashes": {"ratified-text": "SIGNED by 3.0.0_SA_CVO, current (prd-signoff status 2026-10-15 04:1xZ: ADMITTED)", "brief": "ADMITTED (auto: the CRO wrote the brief)"},
  "author": "2.0.0_SA_COO~RB",
  "round": 1,
  "rectangle": "FWD-1 as ONE live thread on /market: S02 sidebar and ground, S03 panel primitives, S04 heat scale; S01 (the branch) is the COO's act at the issuance, S07 (the live /market trace) is the drain's act",
  "cells": 4,
  "chains": 4,
  "join_cells": 0,
- "portal_base": "origin DEV tip at the first issuance (ls-remote read ad7c100b at 2026-10-15 03:5xZ; the laptop checkout is at 97c66c93, 31 behind); the feature branch feature/dsgn-rbndv2-light is cut from it by the COO and every worker worktree branches from the branch",
- "frozen": false
+ "portal_base": "origin DEV ad7c100b5c (fetched 2026-10-15 04:1xZ); feature/dsgn-rbndv2-light cut from it at the same hash, local only, upstream tracking removed; every worker worktree branches from the feature branch",
+ "frozen": true
 }
 ```
 
-**Status of this file:** a DRAFT written while the ratified-text half is owed. It freezes (`frozen: true`) in the issuance
-commit and not before. Nothing here issues a task order; `.tools/to-pipeline-gate.py` LIMB 6 refuses a NEWLY-ADDED order
-against an unsigned half, and this seat does not route around it.
+**Status of this file:** FROZEN at the issuance. Both PRD halves are signed (`prd-signoff.py status DSGN_RBNDV2`: ratified-text SIGNED by
+`3.0.0_SA_CVO`, brief auto-admitted). A cell that looks wrong mid-round is a surprise row, never an edit.
 
 **Rulings reaching every cell:** PRD CONTRACTS C-BRANCH, C-SIDEBAR, C-PANEL, C-HEAT, C-LIVE; DEC-1 to DEC-5. The fixture is
 `org/missions/D13/DSGN/DSGN_RBNDV2/deliverables/2.0.0_SA_COO~RB/A_LIGHT_FIXTURE.md` (copied from the board so a worker, which has no artifact
@@ -91,7 +90,7 @@ file are added at the merge (C10). The fixture file is read-only for all four.
 ## 6. BATTERY DISPOSITION
 
 comp-iam: not applicable (no AWS surface). comp-schedule: none owed. comp-adversary: each cell names files measured on the
-laptop checkout at 97c66c93; the issuance re-measures them at the branch base (origin DEV is 31 commits ahead), and a cell
+laptop checkout at 97c66c93, and the issuance re-measured them at the branch base (the issuance re-measured them at origin DEV ad7c100b5c: every named existing file is present; `src/lib/heatScale.ts` and `src/ui/components/sidebar/` are absent, as the cells expect), and a cell
 whose named file moved gets its face recut before the spawn. The graph check (rule 20) before a frontend commit: the dependency
 graph is queried at the cut for `Panel` (96 importers) and `PanelHeader` (85); its provenance header is read.
 

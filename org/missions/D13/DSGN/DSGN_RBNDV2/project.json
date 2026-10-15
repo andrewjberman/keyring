@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "DECOMP",
   "created": "2026-10-15",
   "registered_under_tree": "2026-10-15",
   "placement": "LAPTOP",
@@ -23,8 +23,12 @@
   "prd_lineage": [
     "org/missions/D13/DSGN/DSGN_RBNDV2/prd/DSGN_RBNDV2_PRD.md@v0.1"
   ],
-  "decompositions": [],
-  "decomposition_lineage": [],
+  "decompositions": [
+    "org/missions/D13/DSGN/DSGN_RBNDV2/decompositions/DSGN_RBNDV2_DECOMP.md"
+  ],
+  "decomposition_lineage": [
+    "org/missions/D13/DSGN/DSGN_RBNDV2/decompositions/DSGN_RBNDV2_DECOMP.md@v1"
+  ],
   "leads": {
     "cto": "1.0.0_SA_CTO",
     "coo": "2.0.0_SA_COO~RB",
@@ -40,7 +44,7 @@
     "rule": "ALL work of this project lives on this ONE branch in the portal repo on the laptop. Every worker worktree branches FROM it and merges BACK INTO it; no cand/* branch, no merge-forward, no push to origin DEV or PROD, and no push of this branch itself, without Andrew's word. Andrew-direct ~00:0xZ 2026-10-15 'This whole light mode build needs to stay on a feature tree on this box and is only pushed when i say so' and ~03:5xZ 'keep in mind this all stays on one specific feature branch'."
   },
   "fabric_ruling": "laptop -- Andrew-direct ~00:1xZ 2026-10-15 'lets do this whole project on the laptop' (supersedes his ~20:1xZ DELL1 placement).",
-  "blocking": "L4-R: the CVO ratified-text half owed; then a laptop COO lane seated by 0.0.0_AB_MSTR for L5/L6.",
+  "blocking": "Round 1 decomposition v1 frozen; one issuance of 4 cells next; the live /market trace at the drain, then Andrew's read (FWD-1).",
   "thread_counter": 0,
   "threads": [],
   "counterpart": null
