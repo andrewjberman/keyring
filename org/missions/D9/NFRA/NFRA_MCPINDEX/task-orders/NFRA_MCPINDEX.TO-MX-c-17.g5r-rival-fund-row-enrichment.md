@@ -91,3 +91,6 @@ The issuer then merges and regenerates the catalog at the drain.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-15 ~01:2xZ), on rows Z-W41-S1 and Z-W41-S2.** (S1) The order's AC2 expect text said `table rows 216`; the check counts every table row in the folder, 226 (the 216 the generator writes and 10 older rows it does not), so the denominator in the order was the issuer's error. The check, not the text, is right: on the merged tree `c17.AC2` reads `DENOMINATOR table rows 226; enriched 14; rows whose bytes differ from 0f40810fa2: 14`, `CHECKS pass 15 of 15`, `RESULT: PASS`. AC2 is graded PASS by the issuer. (S2) An explicit `--g5r` path that does not exist exits 2 and an absent default file means no enrichment: ruled correct, no change. Merged at d0e04b517d. Gate limb that graded this ruling: none (LIMB 6 does not fire on a modification).
+<status>complete</status>

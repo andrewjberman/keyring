@@ -104,3 +104,6 @@ The issuer then merges, regenerates the catalog, runs the gateway suite by faili
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-15 ~01:2xZ), on rows Z-W40-S1 to S3.** (S1) The emitter's last printed line is TOOL INDEX: ruled correct, the HARVEST and SILVER lines precede it. (S2) The status flip is the issuer's at the merge: ruled correct. (S3) The `gateway_query_catalog` tool-index entry linked `ft.04.portfolios-aum-metrics`, the bearer of the row now ruled deny; the issuer removed the link from `tool_index/members.yaml` (three places) and `measured.yaml` (two depth values) at 9838864288; atom_decomposition tests 189 passed. On the merged tree (7406f93e89 plus that fix) `c16.AC1`, `c16.AC2` (390 pairs, deny->serve=0, serve->deny=1 = the aum row for opal-internal) and `c16.AC3` all PASS. Gate limb that graded this ruling: none (LIMB 6 does not fire on a modification).
+<status>complete</status>
