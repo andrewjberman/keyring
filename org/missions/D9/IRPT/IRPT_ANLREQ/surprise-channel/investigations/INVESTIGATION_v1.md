@@ -18881,3 +18881,31 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W186-S1 -- the priced Opal page prints YCharts wording and the time-budget line (layout pricing=True branch), which R8 forbids
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W186-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~186",
+  "surfaced_at": "2026-10-15T19:06:28Z",
+  "one_line": "With pricing on, the Opal page prints the layout's YCharts wording (footer 'Data: YCharts', 'YCharts' data' reasons) and the time-budget line, which the Opal page rule R8 forbids.",
+  "class": "OBSERVATION",
+  "spec_asserts": "TO-AR-g-86 step 6 builds the page with the pricing flag on a priced run and says the vendor-sourced elements keep reading NOT_IN_THIS_VERSION; layout_overview.py:1057-1064 and :953-967 print YCharts and time-budget wording for a pricing=True page, and the R8 comments at layout_overview.py:69 and :1058 say an Opal page names no vendor and no time budget.",
+  "world_is": "Probe on the priced fixture of tests/test_opal_producer_prices.py (worktree wk-IRPT_ANLREQ-186, base 089a3d3a6b plus this cell): the priced page has two footers 'Data: YCharts' (one per page), five YCharts strings (the builder-only line 'Not available from YCharts' data endpoints.', the computed line 'Not available: YCharts' data does not give this element for this portfolio. Reason: INPUT_MISSING:risk_free') and two 'outside the run's time budget' lines for the call-sourced m.info and m.bench, while run.json reads NOT_IN_THIS_VERSION for those elements. The pricing-off page is unchanged. The AR-g-86 checks grade only the count of NOT_IN_THIS_VERSION lines on the priced page, not its footer or its vendor wording.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:1057-1064 @089a3d3a6b (the outside_budget branch prints OUTSIDE_BUDGET_LINE; the R8 branch is taken only when not pricing)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:953-967 @089a3d3a6b (_reason_line prints the YCharts data wording when pricing is True)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:1140 @089a3d3a6b (the footer credit is SOURCE_CREDIT when pricing, OPAL_SOURCE_CREDIT otherwise)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_prices.py::test_package_render_uses_the_same_price_stage and the probe output in the worktree scratch (.scratch/r8_probe.py): YCharts 5, time budget 2, footer 'Data: YCharts' x2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not in this order's grant: layout_overview.py is read, not changed. Production keeps pricing off and the real readers and T-1 wiring are a later cell, which should pass pricing=False to build for the Opal page or make the layout's pricing=True branch Opal-safe. No change is proposed here."
+}
+```
