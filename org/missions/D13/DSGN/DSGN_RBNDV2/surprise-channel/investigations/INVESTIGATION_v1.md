@@ -1515,6 +1515,51 @@
     "spec_asserts": "RV-g-1 cell: the selector is body [data-panel-surface=\"light\"], deliberately not :root [data-panel-surface=\"light\"] or the bare scope, because rb-1-r2.surfaces.test.ts and rb-1-r.remap.test.ts pin the count of those exact selectors. RB8G1-AC3: bun test over dsgn-rbndv2, panels and modal reads 0 fail. Refusal clause: do not weaken a test to pass.",
     "world_is": "rb-1-t.tokens.test.ts also pins the scope-prefix form for every block whose prelude contains the scope attribute, and that pin is not in the cell's list of pinned tests, so no body-prefixed selector can pass it. The RV-g-1 edit is committed exactly as the cell writes it; the test was not edited (outside the order's paths) and no selector was substituted (the cell fixes it).",
     "notes": "For the issuer to rule on. The cell's own pin list (rb-1-r2, rb-1-r.remap) does not name rb-1-t.tokens.test.ts. Commit of the RV-g-1 change is LOCAL on wk-DSGN_RBNDV2-24-portal; the order's status stays pending."
+  },
+  {
+    "id": "DSGN_RBNDV2-W25-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~25",
+    "surfaced_at": "2026-10-15T20:39:22Z",
+    "one_line": "RB8N1-AC3 cannot pass as written: the mandated nested-ground selector has commas inside :is(), and the pinned rb-1-t.tokens.test.ts TOKENS-OK arm (c) splits every scoped prelude on commas, so the :is() pieces fail its scope-prefix pin; that test is outside the order's two named tests, so AC3 stays red and the order stays open.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@5211a15d src/index.css: the second-layer rule sits unlayered after the :root [data-panel-surface=\"light\"] inner-surface block; its selector is the scope attribute, then :is(four item-ground classes), then :is(the same four), exactly as the cell mandates",
+        "portal/src/__tests__/dsgn-rbndv2/rb-1-t.tokens.test.ts lines 98-104 (unchanged at ca146d09): scoped = blocks whose prelude includes the scope; selectorsOf(prelude) = prelude.split(',') and every piece must start with the scope or equal ':root' + scope; the failing expect is line 103",
+        "bun test src/__tests__/dsgn-rbndv2 src/ui/components/panels src/ui/components/modal (portal@5211a15d, run 3): 42 pass, 1 fail, 644 expect() calls, 43 tests across 30 files; the fail is RB1T-AC1 TOKENS-OK at rb-1-t.tokens.test.ts:103, expect(received).toBe(expected), Expected true, Received false",
+        "precedent: DSGN_RBNDV2-W24-S1 records the same rb-1-t arm blocking RV-g-1; the issuer ruling there re-authored that selector"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RB8N1-AC3: every test under src/__tests__/dsgn-rbndv2/, src/ui/components/panels/ and src/ui/components/modal/ passes: the summary line reads 0 fail. Refusal clause: if a criterion cannot be met as written, stop and write a surprise row; do not weaken the test to pass. The order names edits only to rb-1-r2 (the RB1R2-AC1 grounds) and rb-8-b1 (its arm 4).",
+    "world_is": "The mandated selector begins with the scope attribute, but its inner commas (inside :is()) are read by the rb-1-t naive comma split as separate selectors without the scope prefix, so arm (c) of TOKENS-OK fails at line 103 on the first scoped block. rb-1-t was left untouched (the order does not name it); no selector was substituted (the order fixes it).",
+    "notes": "For the issuer to rule on. Two forms the issuer may weigh: the arm splits on top-level commas only (the form the rb-1-r2 checkOldRule ruling took), or the selector is written as comma-free per-pair selectors that each begin with the scope attribute. Commit 5211a15d is LOCAL on wk-DSGN_RBNDV2-25-portal; the order's status stays open."
+  },
+  {
+    "id": "DSGN_RBNDV2-W25-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~25",
+    "surfaced_at": "2026-10-15T20:39:22Z",
+    "one_line": "RB6Y1-AC1 failed once in the AC3 suite run: a test reported 5016.00 ms and failed on a git show read; the same test passes alone and passed in the next full run, so the suite is not deterministic under load.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bun test src/__tests__/dsgn-rbndv2 src/ui/components/panels src/ui/components/modal, second run (portal@5211a15d): 41 pass, 2 fail, 43 tests across 30 files; RB6Y1-AC1 arm (a), the Trending Topics row in ExecutiveSummary.tsx holds no border-white, failed at 5016.00 ms with a git show of d0cb67d0:src/pages/MarketPerformance/tabs/types.ts reported as the failing command",
+        "bun test src/__tests__/dsgn-rbndv2/rb-6-y1.border-sweep.test.ts run alone twice (portal@5211a15d): 7 pass, 0 fail on both runs",
+        "full suite runs 3 and 4 (portal@5211a15d): RB6Y1 passed in both; the only fail in each was RB1T-AC1 (DSGN_RBNDV2-W25-S1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RB8N1-AC3: bun test over src/__tests__/dsgn-rbndv2, src/ui/components/panels and src/ui/components/modal reads 0 fail, as a re-runnable invocation with a deterministic verdict.",
+    "world_is": "One of four full suite runs failed RB6Y1-AC1 on a timed test that shells out to git show; the RB6Y1 file passed alone twice and in the other full runs. The cause of the one timeout was not measured. The invocation's verdict therefore varied between runs.",
+    "notes": "Not edited. The RB6Y1 test file and its git show reads are outside this cell's changed files and were not touched. Observed on the worktree wk-DSGN_RBNDV2-25-portal."
   }
 ]
 ```
