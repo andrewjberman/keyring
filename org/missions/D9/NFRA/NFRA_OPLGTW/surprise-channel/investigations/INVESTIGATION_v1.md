@@ -18746,3 +18746,175 @@ name the one known failure instead of silently inheriting it.
   "notes": "The issuer decides at the hookup whether the integer is a custodian number. This worker printed no account id and read none for this row."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "OG-gf-1 AC2 counts BUILT catalog rows (6) but the task order specifies the probe line one per BUILT tool (3 tools); the probe prints one line per BUILT row so the count is met.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC2.sh@b56fd6ef9d -- the probe test is pn >= nb, where nb is the BUILT count in the classification line (6 rows).",
+      "TASK ORDER: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gf-1.gf-wave-b-remainder.md@b56fd6ef9d section 1 Step 3 says print ONE line per tool; three tools are built and one of them (etfs_get_fund_bloomberg_profile) serves four BUILT rows of one table family.",
+      "RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~110/probe_built.py printed 6 probe lines, all answered True; denominator 6 BUILT catalog rows over 3 tools."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 3: the probe prints ONE line per BUILT tool; AC2 is met when the probe's answered lines cover the BUILT set.",
+  "world_is": "The check counts BUILT catalog rows, not tools. One tool answers four BUILT rows, so a strict per-tool probe prints 3 lines against a count of 6 and AC2 would fail. The worker printed one line per BUILT row (each row's section of the tool envelope). The task order's per-tool wording and the check's per-row count disagree.",
+  "notes": "Filed for FORM. Either grain is a legal reading; the classification and the probe answers are the same under both. The issuer decides the grain at the merge."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "OG-gf-1 criterion AC1 cannot be met in this cell: the CRO spec's extension of etfs_get_positioning (fund_ticker and as_of with gold book and holding history) is not built, so test_oggf1_ac04 stays red and AC1 reports FAIL.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DEF: infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py@b56fd6ef9d:398 -- def etfs_get_positioning(as_of: str = \"\") calls run('etfs_get_positioning', {}, as_of) inside the register closure; no fund_ticker parameter.",
+      "SPEC: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@b56fd6ef9d section (c) 'Existing tool verdicts' and the positioning extension row: extend with as_of history and fund_ticker, from gold book and holding for a past date.",
+      "RUN: gf1.AC1.sh printed 'pytest rc=1; named tests passed 3 of 4; failed/error lines 1' and RESULT: FAIL; the failing test is test_oggf1_ac04."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC1: the named tests pass, 4 of 4. test_oggf1_ac04: etfs_get_positioning is extended only as the G5 spec names, its existing tests still pass and its existing answer for an existing input is byte-equal.",
+  "world_is": "The extension is not built. etfs_get_positioning lives inside the register closure and calls the portal run path against the portal-v2 object; the history path reads gold book and holding, which etfs_funds already reads, but the byte-equality of the existing answer cannot be measured offline: the closure needs the portal run path and a live catalog, and no test for etfs_get_positioning exists at this HEAD. The test is red by design so the gap is not hidden.",
+  "notes": "BLOCKING for this cell only. The extension belongs to a cell that can exercise the portal run path. The three BUILT tools' named tests (ac01-ac03) pass; the probe answers 6 of 6 and refuses the non-Opal principal with zero reads on all three tools."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "The gateway tree at this HEAD has no infra/aws/ec2/opal-gateway/tests directory, and the folder sat outside the sparse cone; the order's test path was created there and the coordinator added the folder to the cone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LISTING: infra/aws/ec2/opal-gateway/ at worktree HEAD b56fd6ef9d holds app/, ACCESS_LAYER.md, README.md and related files, and no tests/ directory.",
+      "ORDER: the task order's surfaces name infra/aws/ec2/opal-gateway/tests/test_og_gf1.py, and gf1.AC1.sh runs pytest tests/test_og_gf1.py from the gateway directory."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order names infra/aws/ec2/opal-gateway/tests/test_og_gf1.py as a write surface, and the AC1 check runs that file from the gateway directory.",
+  "world_is": "The tests folder is absent at this HEAD and was outside the sparse cone. The worker wrote the test file at the named path; the coordinator then widened the cone to include the folder.",
+  "notes": "INERT: a path absent at HEAD is a cone fact, recorded so the merge reads the new folder as the order's, not as an unexplained addition."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T18:37:04Z",
+  "one_line": "The CRO spec proposes the tool name etfs_get_fund_nav_history for the snapshot table, a name the merged tool already holds for silver/netassets_daily; this cell builds etfs_get_fund_snapshot for the snapshot table instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SPEC: org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G5_etfs.md@b56fd6ef9d section for opal-data-etfs/silver/snapshots: proposed_tools names etfs_get_fund_nav_history.",
+      "DEF: infra/aws/ec2/opal-gateway/app/etfs_funds.py@b56fd6ef9d:289 -- etfs_get_fund_nav_history reads ENTITY_NAV = opal_data_etfs_silver_netassets_daily."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The snapshot table's proposed tool is etfs_get_fund_nav_history (G5 spec).",
+  "world_is": "That name is merged and reads netassets_daily. The snapshot table is served by etfs_get_fund_snapshot in etfs_silver.py, and the classification names it.",
+  "notes": "The issuer registers the three new tool names (etfs_get_new_securities, etfs_get_fund_bloomberg_profile, etfs_get_fund_snapshot) in app/tools.py and app/data_entitlement.py at the merge, and re-pins the counts. Filed for FORM; the name choice is the worker's and the issuer may rename."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T20:08:30Z",
+  "one_line": "gf1.AC1.sh names four tests, so once test_oggf1_ac04 is withdrawn (A1) it reads 'named tests passed 3 of 4' and RESULT: FAIL; the A1 statement that AC1 now reads 3 of 3 cannot be met by the script as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC1.sh@3bbdf8fbdc -- pytest_named tests/test_og_gf1.py test_oggf1_ac01 test_oggf1_ac02 test_oggf1_ac03 test_oggf1_ac04.",
+      "HELPER: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/_root.sh@3bbdf8fbdc -- pytest_named sets n=$# and passes only when p equals n.",
+      "RUN (this seat, worktree after the withdrawal): 'pytest rc=0; named tests passed 3 of 4; failed/error lines 0' then 'RESULT: FAIL', exit=1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 (issuer, 2026-10-15): test_oggf1_ac04 is withdrawn and gf1.AC1 reads 3 of 3. The order's AC1 expect regex reads 'named tests passed 3 of 3'.",
+  "world_is": "The check script still passes four names and its helper requires passed equal to four. With ac04 removed from tests/test_og_gf1.py the three named tests pass (pytest rc=0) and the script still reports FAIL. The criterion cannot read PASS as written. The check script is the issuer's file and was not edited.",
+  "notes": "Not resolved by the worker. The test-file side of A1 (ac04 withdrawn, 3 tests) is in this cell's commit. The issuer's options are to drop test_oggf1_ac04 from the script's name list, or to re-issue AC1 with its real expectation."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T20:08:30Z",
+  "one_line": "A1 ruling (3) says gf1.AC2 counts distinct BUILT tools and the probe prints one line per tool (3); the check script is unchanged and still counts BUILT rows (built 6), and the probe still prints six per-row lines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC2.sh@3bbdf8fbdc -- the classification line counts cnt BUILT over rows, and the probe pass count is grep -c of 'probe built: .* answered True'.",
+      "RUN (this seat): 'classification: assigned 15 of 15, covered 0, built 6, deferred 9; set equal True; built tools defined 6 of 6', 'built tools probed 6 (the worker's probe lines)', 'RESULT: PASS', exit=0.",
+      "PROBE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~110/probe_built.out.txt -- six 'probe built:' lines and 'probe denominator: 6 BUILT catalog rows over 3 tools; answered 6 of 6'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 (3): AC2 counts DISTINCT tools among the BUILT rows, with one probe line per BUILT tool (3).",
+  "world_is": "The check still counts rows and the probe prints per row. A per-tool probe would make the unchanged check read 'built tools probed 3' against 'built 6' and FAIL, so the probe was left per row. AC2 reads PASS as written; the distinct-tool count (3) is printed on the probe denominator line.",
+  "notes": "Repeats the gap recorded in NFRA_OPLGTW-Z-W110-S1 (prior seat). Recorded because the A1 ruling states the check change as done, and it is not in the check."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T20:08:30Z",
+  "one_line": "comp-find exits 49 with 'Python was not found' (the Windows Python alias) in the worker shell on site Z, before any search runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (worktree C:/tmp/wk-oplgtw-110): comp-find --name 'investigation_item.schema.json' . --limit 20 -> exit code 49, stderr 'Python was not found; run without arguments to install from the Microsoft Store'.",
+      "RAIL: the comp-rail denial deny_id=20261015T200535Z-29ab926b named this command as the RUN NEXT step."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "comp-find is the repo search instrument for the worker (CLAUDE.md rule 21).",
+  "world_is": "On this device the comp-find entry point fails before the search runs, so it produced no denominator. The schema lookup fell back to a native Read of a known path, which also found nothing in the worktree.",
+  "notes": "Recorded so an absent comp-find result on this device is not read as an absence in the repo."
+}
+```
