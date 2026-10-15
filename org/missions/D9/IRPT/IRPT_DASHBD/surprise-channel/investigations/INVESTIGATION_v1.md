@@ -18706,3 +18706,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Reading taken: feed-row accounts only. The issuer may rule that the parameter's ids count too."
 }
 ```
+
+## IRPT_DASHBD-D2-S97 -- disarm of W311-S1: the edge-day loss is gone on the landed tree of round 125 (W221-S3 stays ARMED: the CTO ruled return_basis back to TWR, msg 8674)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S97",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T21:25:26Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W311-S1 on the landed tree of round 125 (DB-i-12, merged @7a8a2f681f): the wrapper no longer loses a trading day when a first or last calendar day is dropped (trading_days_unaccounted reads 0 on both fixtures). W221-S3 is NOT disarmed here: the module now writes VENDOR_REPORTED as contract 0.4.1 requires, but the CTO has since ruled (msg 8674) that VENDOR_REPORTED leaves return_basis in 0.4.2, so that row's premise reverses and it waits on 0.4.2 and a round that writes TWR.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "W311-S1: the complete-day drop can silently remove an edge trading day.",
+  "world_is": "On the merged tree DBI125-1-AC1, AC2 and AC3 PASS (28 of 28 expected rows with the first day, then the last day, incomplete; each edge day reads ABSENT NO_FEED_ROW or UNMAPPED_ACCOUNT for all 7 synthetic accounts, trading_days_unaccounted 0), and 93 tests pass across the adapter, wrapper and contract-041 test files. Synthetic fixtures only; the first real-row run is a later cell and re-reads the same count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W311-S1",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r125/p125_run041.py",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-W311-S1: its condition (an edge trading day with neither a row nor an ABSENT row) is absent on the landed tree of round 125, measured by the r125 checker (first-day and last-day fixtures, 28 of 28 rows, unaccounted count 0) and by 93 passing tests."
+}
+```
