@@ -37957,3 +37957,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Read-only: git show from the branch ref into scratch, nothing committed on the worker branch. The Cottonwood record cites base bbdeae6f89, a different base from this worker's; line numbers in the Cottonwood record were checked against this worker's HEAD for the line it names (line 403) only."
 }
 ```
+
+## IRPT_BCKEND-D2-S197 -- Dispositions on worker 416's rows; 49 Financial's lost ACTIVE account is a source gap on 2026-10-13 (no row), not a screen drop
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S197",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T12:21:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 416's rows (D2-W416-S1, S2) and the 49 Financial offline gate run: the lost ACTIVE account has ONE row on the 2026-10-12 dim_balance partition and NONE on 2026-10-13, so it is a source gap on the candidate date, not a screen drop; the gate's account_lost stands (measured) and it is not Cottonwood's condition.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB212-1 AC1 to AC3 on the worker tree (all PASS) and the proof instance (VALID); merge dbfd95217d",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~416/IB212-1_49f_screen_offline_read.json: evaluate_publish_gate at HEAD called as run_firm calls it, on the 2026-10-13 candidate account keys against the 2026-10-12 served keys, outcome refused at holdings_snapshot.py line 3058 (account_lost; the exemption reads TERMINATED only and the account is ACTIVE); the 49 Financial builder (holdings_49f.py, build_49f_actual) iterates the candidate partition keys, the account is not a key on 2026-10-13 so no per-account screen sees it; one source row on 2026-10-12, zero on 2026-10-13"
+    ]
+  },
+  "spec_asserts": "My IB-pr-573 order and the CTO's msg 8256: a candidate screen drops the lost ACTIVE account and the failing condition is nameable from the screen's code.",
+  "world_is": "DISPOSITIONS. D2-W416-S1: the order's premise (a builder filter drops the account) FAILS: the account has no source row on the candidate date, so nothing in the candidate builder drops it; the refusal is the gate working on a source gap. D2-W416-S2 (the Cottonwood record existed only on box/dell2 when the worker started): INERT, the comparison was read by git show. D2-W413-S1 (the refused 49F account is ACTIVE in the directory) is RESOLVED as to cause: a SOURCE GAP on 2026-10-13 (inferred: why the custody partition omits the account, and whether it returns on later dates, are not read). The remedies differ from Cottonwood's: a source correction re-landing the account's custody row for 2026-10-13 if the account is live at the custodian, or a custodian-confirmed TERMINATED mark if it is closed. Whether the gap persists on 2026-10-14 (the candidate of today's fire) is the next read and decides whether the refusal clears on its own."
+}
+```
