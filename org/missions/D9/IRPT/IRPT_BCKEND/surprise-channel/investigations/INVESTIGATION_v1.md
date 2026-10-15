@@ -36411,3 +36411,59 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W401-S1 (the oneOf had no branch for a filled bundle): RESOLVED by IB-pr-557 AMENDMENT 1 (my defect). D2-W401-S2 (four seam tests failing at base, outside the grant): INERT, recorded. D2-W401-S3 (an existing branch admits a filled pin beside a narrative ref): INERT, recorded for the round-4 contract read. D2-W402-S1 (my order said _scope was already on the export path; it is not): INERT, my error, the freeze adds it. D2-W402-S2 (AC3 needs the worker's own commits): INERT. D2-W402-S3 (ARMED, owner me): infra/aws/lambda/ci/lambda-source-map.json lists no entry for _scope/filled_named_accounts.py, so a route or export deploy would omit it: a round-4 cell before any deploy leg. D2-W403-S1 (writer located), S2 (CloudTrail data events for opal-data-inf only from 2026-10-13 20:30Z), S4 (no StopInstances event; SendCommand hidden): INERT. D2-W403-S3 (ARMED, owner me): the flat-key pulls are steps of the gold chain that also feeds the silver transactions and performance steps, so retiring them (pair (b) as signed) couples to the gold chain; disarm condition: the CTO re-cuts pair (b) on the located writer (recommended: re-time the existing chain trigger into the 06:00 New York fold; no new producer, no port)."
 }
 ```
+
+## IRPT_BCKEND-D2-W407-S1 -- the submit path freezes no filled_report source: the server pin lives in freeze_filled_report, the submit call site drops the page pin fields
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W407-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~407",
+  "surfaced_at": "2026-10-15T06:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-563 names the submit handler as the call site of the server-side pin, and names the one place the submit path freezes sources. No submit path freezes a filled_report source, so there is no such call site to re-point.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_service.py@71c9c81b67 lines 52-55: serve_submit branches on _retained.is_platinum(body) only; every other body takes the retained path (resolve, narrative build, submit_export)",
+      "infra/aws/lambda/investor-reporting/export/submit_async.py@71c9c81b67 lines 115-135: accept/run branch on _retained.is_platinum(body) only; no filled branch",
+      "infra/aws/lambda/investor-reporting/export/handler.py@71c9c81b67 lines 208-214 and 227-236: submit_export takes already-frozen report_revisions and calls bundle_mod.freeze; it does not read a source",
+      "infra/aws/lambda/investor-reporting/export/entry.py@71c9c81b67 lines 347-368: submit_export passes the parsed body to _async.accept; no freeze",
+      "grep of infra/aws/lambda/investor-reporting for freeze_filled_report, read_pinned_filled and filled_report_source at 71c9c81b67: no caller outside export/retained_export.py, export/bundle.py, _contracts/ExportBundle.schema.json and the export tests"
+    ]
+  },
+  "spec_asserts": "The submit handler calls the server-side pin at the one place the submit path freezes sources (IB-pr-563 WORKER FACE: freeze_filled_report is called by the submit handler; entry.py submit_export and handler.py submit_export are the named call sites).",
+  "world_is": "No submit path freezes a filled_report source. freeze_filled_report has no production caller. Built at 608495b0ed: the server pin is inside freeze_filled_report (server_pinned_body, FILLED-REPORT-E), so every freeze of a filled source pins the server's read; the only submit call site changed is entry.py submit_export, which drops the page's version_id, sha256 and size before accept (_page_pins_dropped, FILLED-REPORT-E). submit_service.py and submit_async.py, which hold the branch point for a future filled branch, are outside this order's paths grant and were not edited; no route or branch was added.",
+  "notes": "Disposition for the issuer: decide whether the filled branch is wired in submit_service.py (outside this grant) before any deploy leg; the server pin is ready for it."
+}
+```
+
+## IRPT_BCKEND-D2-W407-S2 -- no composition installs a filled_report reader: the server pin is unreachable in a deployed function until one is wired
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W407-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~407",
+  "surfaced_at": "2026-10-15T06:29:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The server-side pin reads the current filled report through an injected reader, but no installed composition supplies that reader; the reader exists only as the test doubles.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/entry.py@71c9c81b67 lines 384-402: _with_platinum_reader composes only ports['platinum_series'] (the PATH B reader); no filled reader is composed",
+      "grep of infra/aws/lambda/investor-reporting for freeze_filled_report, read_pinned_filled and filled_report_source at 71c9c81b67 names no installed reader; the reader contract reader(client_id, version_id=None) -> {key, version_id, body} is exercised only by export/tests/test_filled_report_*.py via StoreStub and VersionedStore doubles",
+      "measured at 608495b0ed: the same grep, no new installed reader added"
+    ]
+  },
+  "spec_asserts": "The freeze reads the current object's VersionId, sha256 and size through the same injected reader the freeze uses (IB-pr-563 ruling: the object at the naming builder's platinum address for client=<id>, through the injected reader).",
+  "world_is": "The injected filled reader is not composed by any installed function, and the naming-builder address for the filled report object is not typed or resolved in this change (no address appears in the diff). Until a composition installs the reader, a submit with a filled source would be refused as unavailable by server_pinned_body, never frozen from client-chosen bytes. Not wired here: submit_installed.py and the reader are outside this grant.",
+  "notes": "Disposition for the issuer: name the composition that installs the filled reader, with its naming-builder address, in the round-4 cell that wires the branch (S1)."
+}
+```
