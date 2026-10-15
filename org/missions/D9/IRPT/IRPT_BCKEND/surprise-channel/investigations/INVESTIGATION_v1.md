@@ -36100,3 +36100,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W400-S1 (BLOCKING, INERT): the flat bronze keys have no address() output: SUPERSEDED by IB-pr-556 AMENDMENT 1 (they are an existing pipeline's read contract, rule 30 non-application), my defect. D2-W400-S2 (the existing schedule name grades OUT-OF-PATTERN): INERT, recorded. THE HAZARD (new, ARMED, owner me): nobody has located what writes the daily flat keys; the repository holds three manual CLIs that write exactly that key shape. Either a person or host runs a CLI by hand each morning, or another writer exists. Retiring the CLIs without finding it can stop the feed; deploying (b) beside it makes two producers of one key. COO half condition 1 makes finding and handing over that writer the releasing seat's first read-only step, and a STOP if it cannot be found. Disarm condition: the writer is located and stopped or handed to (b) in the release's ledger."
 }
 ```
+
+## IRPT_BCKEND-D2-W401-S1 -- The item-level filled_report_source property does not make a frozen filled bundle validate: the top-level oneOf admits no branch for it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W401-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~401",
+  "surfaced_at": "2026-10-15T05:17:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The cell premise fails: the packaged ExportBundle top-level oneOf admits no branch for a frozen filled_report bundle, so the item-level filled_report_source property alone does not make a bundle validate. The arm-1 bundle test fails, and IB201-1-AC1 and AC3 cannot pass within the grant; a CTO ruling on the oneOf shape is needed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/ExportBundle.schema.json@b611ec2746 lines 34-85: the top-level oneOf has four branches (narrative_packet_ref; analysis_report_ref; custody_report_ref; the PATH B branch requiring narrative_state and narrative_reason). A frozen filled bundle carries none of the three refs and no narrative_state.",
+      "infra/aws/lambda/investor-reporting/export/bundle.py@b611ec2746 freeze() lines 198-208: the filled branch sets no ref and no narrative_state; narrative_state is set only on the platinum branch.",
+      "Worker probe in scratch (nothing written, no AWS call): with the item property added, the item alone validates (0 errors); a bundle from bundle.freeze of one filled item returns exactly one error, validator oneOf, once versions and render_options use the schema's own key names."
+    ]
+  },
+  "spec_asserts": "IB-pr-557 (CTO round-3 ruling): the packaged ExportBundle contract gains filled_report as an allowed source kind so that bundle.validate accepts a frozen filled bundle, changing nothing else; the test pins a new bundle that validates.",
+  "world_is": "The item-level change is sufficient for the item and insufficient for the bundle: no top-level oneOf branch matches a bundle with no retained-report ref and no narrative_state, and the freeze emits neither. Honouring the arm as written needs a new oneOf branch or a changed branch, which is a change to a schema property other than the new one and is refused by the order's refusal clause, so the worker stopped there. The schema change as ordered is committed; the file x-contract-revision reads 1.2 in both copies. Nothing was deployed, so the served packaged copy refuses a frozen filled bundle exactly as at base (status quo). The order stays open; the test test_new_bundle_with_filled_report_item_validates fails on the oneOf and is the record of it."
+}
+```
+
+## IRPT_BCKEND-D2-W401-S2 -- Four contract-seam tests fail at the base commit with the base schema bytes served as well: not caused by IB-pr-557
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W401-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~401",
+  "surfaced_at": "2026-10-15T05:17:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Four tests in infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py fail in the worktree and fail identically with the base ExportBundle schema bytes served for both copies, so the failures are not caused by the IB-pr-557 change. They are outside the grant and were not touched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_seam_paired.py run in the worktree at HEAD b611ec2746 with the IB-pr-557 schema edit: 4 failed, 63 passed; the failing tests are test_the_consumer_fixture_source_is_named_and_non_empty, test_the_operation_map_covers_the_consumers_own_denominator, test_every_declared_route_has_a_response_contract_whose_refs_resolve, and test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-request-original].",
+      "The same file with the b611ec2746 bytes of both ExportBundle schema copies served in memory (the check's own DATA_RUNNER pattern): 4 failed, 63 passed, the same four names."
+    ]
+  },
+  "spec_asserts": "IB201-1-AC1 asks that the existing contract and export tests pass.",
+  "world_is": "Four existing seam-contract tests fail at the base commit on analysis-operation and route-contract assertions, not on the ExportBundle copies. The export folder regression set (test_export.py, test_packaged_contracts_match_docs.py) passes. Recorded for the issuer; not fixed."
+}
+```
