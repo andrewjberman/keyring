@@ -36100,3 +36100,108 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W400-S1 (BLOCKING, INERT): the flat bronze keys have no address() output: SUPERSEDED by IB-pr-556 AMENDMENT 1 (they are an existing pipeline's read contract, rule 30 non-application), my defect. D2-W400-S2 (the existing schedule name grades OUT-OF-PATTERN): INERT, recorded. THE HAZARD (new, ARMED, owner me): nobody has located what writes the daily flat keys; the repository holds three manual CLIs that write exactly that key shape. Either a person or host runs a CLI by hand each morning, or another writer exists. Retiring the CLIs without finding it can stop the feed; deploying (b) beside it makes two producers of one key. COO half condition 1 makes finding and handing over that writer the releasing seat's first read-only step, and a STOP if it cannot be found. Disarm condition: the writer is located and stopped or handed to (b) in the release's ledger."
 }
 ```
+
+## IRPT_BCKEND-D2-W402-S1 -- The order says the freeze's module already has _scope on sys.path; at base it does not
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W402-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~402",
+  "surfaced_at": "2026-10-15T05:19:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's Read-first list says retained_export.py already puts the _scope directory on sys.path so the freeze can import the shared reader; at base it puts only its own directory, _render_identity and _ids. The freeze's marked block appends the _scope directory itself.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py lines 47-51 at 37b3a966f3 insert _HERE, _render_identity and _ids only; no _scope entry",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py lines 75-76 at 37b3a966f3 insert _authz, _scope, _keys and _ids: the route side already has _scope"
+    ]
+  },
+  "spec_asserts": "IB-pr-558 order, Read-first list: retained_export.py already puts the sibling _scope, _ids, _authz and _keys directories of infra/aws/lambda/investor-reporting/ on sys.path, and entry.py does the same.",
+  "world_is": "Only entry.py puts _scope on sys.path. retained_export.py puts _HERE, _render_identity and _ids. The worker's freeze block appends the _scope directory inside FILLED-REPORT-D, so the module-level code of retained_export.py is unchanged and the block removes cleanly. Recorded; no further action."
+}
+```
+
+## IRPT_BCKEND-D2-W402-S2 -- AC3 reads the worker's own commits, so the criteria output cannot precede the product commit
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W402-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~402",
+  "surfaced_at": "2026-10-15T05:19:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says to commit product files, tests, record and criteria output in the first commit, then the instance. AC3 grades changed_paths against the worker's own commits since base_commit, so it cannot pass before the product commit exists; the criteria output is therefore committed after it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r201/p201_cells.py freeze_ac3 calls P0.own_changes(c, base), which runs git log --author=0.9.0_WK_IRPT_BCKEND~402 over base..HEAD (checks/r200/p200_cells.py own_changes)",
+      "freeze_ac3 fails 'changed_paths differs from the worker's own commits since base' when no own commit exists after base_commit 37b3a966f3"
+    ]
+  },
+  "spec_asserts": "IB-pr-558 order, Proof and commit paragraph: commit your product files, tests, record and criteria output FIRST, then set the instance's artifact rows to the hash of that commit, the instance last.",
+  "world_is": "The check cannot grade the record before the product commit exists, so the criteria output of AC3 postdates it. Order used: product commit, criteria output commit, instance commit with artifact rows naming the product commit. No check was edited. Recorded for the issuer's next cut of an order with the same record shape."
+}
+```
+
+## IRPT_BCKEND-D2-W402-S3 -- The source map lists _scope files one by one and does not list the new shared reader
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W402-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~402",
+  "surfaced_at": "2026-10-15T05:19:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "infra/aws/lambda/ci/lambda-source-map.json lists the investor-reporting _scope files by repo_path, one entry each, and does not list the new _scope/filled_named_accounts.py that the route and the export freeze now import by name; a deploy whose package omits it fails the import of the filled route.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json at 37b3a966f3 lists _scope/accepted_custody.py, _scope/custody.py, _scope/global.py, _scope/resolve.py and others by repo_path (grep of the _scope prefix)",
+      "No entry at 37b3a966f3 names _scope/filled_named_accounts.py: the file is new in this commit",
+      "Not verified: which source-map entries feed the export and reporting-read builds; the terraform source_dir note in reporting-read/lambda.tf says the zip is flat with staged blobs"
+    ]
+  },
+  "spec_asserts": "IB-pr-558 order, record notes: say whether the export package build includes the _scope directory.",
+  "world_is": "The build inclusion is not verified by this worker. The map is explicit per file, so the new file needs a map entry for each build that imports it before any deploy. No deploy is in this order; the map is outside the grant and was not edited. The disarm is the deploy leg's map entry for the new file, owned by the issuer."
+}
+```
+
+## IRPT_BCKEND-D2-S185 -- live irpt-ycharts-generate bytes match neither IB-pr-456 digest; the only source-map record is an uncommitted release worktree
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S185",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T05:34:30Z",
+  "one_line": "Live irpt-ycharts-generate CodeSha256 reads 5TRFZf6G... (LastModified 2026-10-14T13:03:45Z), which is neither the IB-pr-456 pre-apply digest the FWD-1 run's R0f expects (tdpterTMfJl...) nor the IB-pr-456 build digest (AHxuDf7h...); the only uncommitted source-map stamp for this function (pins 83eb798a, 5be427ba) sits in the release worktree C:/dev/irpt-release-r30/w131/release, not on box/dell2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "IB-pr-456 (CTO_ROUND_ANALYSIS_IRPT_BCKEND_P_ROUND_183_20261013.md) and the FWD-1 run pair R0f (blob a45596d5f0): irpt-ycharts-generate is at its pre-apply digest until Andrew's f61b releases IB-pr-456; the trunk source map records the deployed build of every function.",
+  "world_is": "get-function-configuration (this seat, 2026-10-15 ~05:3xZ): CodeSha256 5TRFZf6Grgd9V9jWBVu2QDPRVbgfWBjsuuw8rtf8hRA=, LastModified 2026-10-14T13:03:45Z. box/dell2 HEAD's lambda-source-map.json carries 0 hits for pins 83eb798a0870 and 5be427ba7642, which the r30 release worktree's uncommitted map stamps on irpt-ycharts-generate files. Which act wrote the live bytes is not read here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration --function-name irpt-ycharts-generate (CodeSha256, LastModified)",
+      "git -C C:/dev/irpt-release-r30/w131/release diff -- infra/aws/lambda/ci/lambda-source-map.json (2 file pins, function irpt-ycharts-generate)",
+      "org/tier0_exec/0.0.0_AB_MSTR/deliverables/GC_RECEIPTS_CALL_5982_20261015.md @8c0cd89d86 (worktree held, tree not clean)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: ~P2 names the act that wrote the 2026-10-14 13:03Z bytes (its NEVER-2 ledger entry), commits that build's source-map record to box/dell2 if it is a landed release, and re-states the FWD-1 R0f expected digest to the live one, or rolls back; the worktree is kept until then (MSTR~DELL2 holds it)."
+}
+```

@@ -14933,3 +14933,83 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by 0.9.0_WK_IRPT_DASHBD~407 on IRPT_DASHBD.TO-DB-c-12. No action taken beyond the refusal itself. Counts and shapes only."
 }
 ```
+
+## IRPT_DASHBD-D2-S62 -- issuer's dispositions on W185-S6 to S9: S8 disarmed; S9 is a Cottonwood data finding (no join key), AC3 struck
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S62",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T05:23:04Z",
+  "one_line": "Issuer's dispositions on worker 185's rows W185-S6 to S9 (DB-b-232): S6 (the Cottonwood gold account_dim holds no object) ruled by a private household frame for QA, then superseded by S9; S7 repaired in the module (households through the adapter, a missing sibling table is NO_SOURCE_YET); S8 (ARMED, mine) DISARMED: the empty-lot folds are the absent form, with test_empty_lot_source_is_absent_not_zero; S9 is a finding about the Cottonwood data, not a defect: the household key (Black Diamond account key, 11 characters, 999 accounts) and the return table's key (Commonwealth custodian number, 8 or 9 characters, 12 accounts at the 2026-06-22 frontier) have zero overlap, so criterion DB118-3-AC3 is struck and carried to the CTO in the slug.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-232 as issued: two QA runs of the Cottonwood reader, run 1 at the frontier holding measured account-return members; the ask of ~C2 (msg 7949): 'a Cottonwood member for each field the 49 Financial report reads from account_return_daily'.",
+  "world_is": "Drain re-run on the landed tree 17e300d554: DB118-1-AC1 to AC3, DB118-2-AC1 and DB118-3-AC1 and AC2 PASS (21 module tests, 15 reader tests, 3 test_refuses_* negatives). W185-S8 disarmed: the repair is merged and its test is required by the DB118-1-AC3 checker; the worker checked the module's other folds and found no other zero-from-empty. S9: both QA runs refuse correctly with 'no household holds an account present on as_of'. Cottonwood has, today, no account_dim in the cloud (its pair DB-b-200 is unsigned and nothing is applied), no activity, lot or class gold, and a return table of 12 accounts at its frontier from one Commonwealth delivery. Also found at the drain: DB110-2-AC1 and DB111-2-AC1 read FAIL on the contract's pinned hash after the contract moved to 0.5.3; repinned through the lineage (commit 34272a71e6), both PASS. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 185's report and rows W185-S6 to S9 (merge 17e300d554)",
+      "this seat's re-run of the six round-118 criteria on the landed tree and of the earlier ten (r110 to r113)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/ASK_D2_COTTONWOOD_MEMBER_SOURCES_R115.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S9 carries to the CTO: Cottonwood needs a join key between its household key and its return table (and a return table wider than 12 accounts) before any Cottonwood household report; the Cottonwood account_dim apply is B-CW's pair. The QA runs return in a later order once a key exists."
+}
+```
+
+## IRPT_DASHBD-D2-W308-S1 -- The client-data check of safe-commit found its hashed account-id list absent on this box, so the commit that tracked the round-120 probe script was not checked for client account ids.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W308-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~308",
+  "surfaced_at": "2026-10-15T05:32:08Z",
+  "one_line": "The client-data check of safe-commit found its hashed account-id list absent on this box, so the commit that tracked the round-120 probe script was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "The commit step of TO IRPT_DASHBD.TO-DB-i-8 runs .tools/safe-commit.sh, whose client-data check (.tools/git-hooks/client-data-check.py) refuses a commit that carries a client account id; the check reads a hashed list at OPAL_ACCOUNT_ID_HASHES or the default path under the user profile.",
+  "world_is": "Measured on commit ee9050798e (one file, 344 insertions, the probe script): safe-commit printed a WARN that the hashed account-id list is ABSENT at the default path on this box and that the commit was NOT checked for client account ids (absent is not empty). The committed file carries no account id, household id or client value; its content was scanned by hand before the commit. Future commits on this box pass this check unchecked until the list is placed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/client-data-check.py@ee9050798e (line 78 prints the ABSENT WARN)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~308/second_household_probe.py@ee9050798e (the commit that printed the WARN)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-8 as a missing capability (the gate could not run its check). Counts and shapes only; no account id or client value. The disarm owner is the issuer's routing choice; the owner of the hashed list is not verified by this worker."
+}
+```
+
+## IRPT_DASHBD-D2-S63 -- disarm owner's evidence for W308-S1: the account-id list gap is W182-S1's, and this seat's identifier scan of DB-i-8 reads clean
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S63",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T05:40:31Z",
+  "one_line": "W308-S1 disarm evidence: the unscreened client account-id check is the same condition as W182-S1 (owner 0.0.0_AB_MSTR, infrastructure); this seat scanned the three files DB-i-8 added for identifier-length digit runs and found none outside hashes, a private path and dates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face: client data is never recorded; the commit gate screens each commit for client account ids against the hashed list.",
+  "world_is": "This seat's scan of the record, the script and the proof instance worker 308 added, at the merge 1e83135577: 0 runs of eight or more digits outside a sha256 value, a private-folder path or a date. The list's absence on dell2 is W182-S1's, owned by the integrator; until it is placed, every dell2 commit relies on the issuer's own scan (the same stand-in as D2-S52).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~308/SECOND_HOUSEHOLD_PROBE_R120.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~308/second_household_probe.py",
+      "IRPT_DASHBD-D2-W182-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
