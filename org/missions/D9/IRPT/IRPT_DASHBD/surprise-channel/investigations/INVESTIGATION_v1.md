@@ -18082,3 +18082,105 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Worker row: the disposition of IRPT_DASHBD-D2-W219-S1 from ARMED BLOCKING to resolved is for the CVO to make (a worker row cannot carry GRADUATED or adjudicates, gate A-1). S1 is not edited; this row is its resolution in the record."
 }
 ```
+
+## IRPT_DASHBD-D2-W310-S1 -- The spec writes a None holdings_price_return_reason beside a null holdings_price_return; the contract says that reason column is WHY the return is null
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "Rule 6 of DB-i-10 writes holdings_price_return None and holdings_price_return_reason None on every Orion row, but contract 0.4.0 says holdings_price_return_reason is WHY holdings_price_return is null (enum NO_HOLDINGS_ROW, HOLDINGS_NOT_OK); the validator does not catch a null return with no reason, so the adapter writes the spec's None as written and a later served run would carry an unlabelled null",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@13b4cd4c68 holdings_price_return_reason meaning: why holdings_price_return is null; null when it is present; enum NO_HOLDINGS_ROW, HOLDINGS_NOT_OK",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule 6: holdings_price_return None and holdings_price_return_reason None",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_040.py@13b4cd4c68 row_problems tests no condition on a reason beside a null holdings return"
+    ]
+  },
+  "spec_asserts": "Rule 6 of DB-i-10 writes holdings_price_return None and holdings_price_return_reason None; the contract's holdings_price_return_reason meaning says it carries the reason a holdings return is null.",
+  "world_is": "The module writes the spec's None as written (no reason class is invented, per the refusal clause). Every synthetic row passes the contract validator with that None. Counts only: 0 rows refused, 0 reason values written. Not measured on the real feed (a later cell)."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S2 -- The rules do not say what a repeated (account, day) feed row means
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "The rules key each account's feed row by its calendar day but do not say what a repeated (account, day) silver row means; the module reads the LAST one given, silently, and its adapt() docstring says so",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 feed description: one row per account per CALENDAR day",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py adapt() docstring, uncommitted worktree file (last row wins)"
+    ]
+  },
+  "spec_asserts": "The feed lands one row per account per CALENDAR day, and rules 2 to 5 read the account's own row on each day.",
+  "world_is": "A repeated (account, day) silver row would be resolved by input order, with no refusal and no count. Not measured: the adapter reads no feed, and the synthetic tests contain no repeat. Counts only."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S3 -- With no feed rows the rules have no min_day or max_day, so the output domain is undefined
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "The rules define min_day and max_day over the feed rows and say nothing for an empty feed; the module returns an empty result with zero counts, and test_empty_feed_returns_an_empty_result pins that choice",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule intro: min_day and max_day are the smallest and largest day in feed_rows",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_adapter.py@13b4cd4c68 is not yet committed; the empty case is its test_empty_feed_returns_an_empty_result"
+    ]
+  },
+  "spec_asserts": "Let min_day and max_day be the smallest and largest day in feed_rows; the output domain is the trading days between them.",
+  "world_is": "An empty feed has no domain, so the module writes no row and no absent record and reports zero counts. Counts only: 0 rows, 0 absent records for an empty input. The rules do not state this case."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S4 -- accounts_mapped counts feed accounts only; the rules do not say whether a map entry with no feed account counts
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "Rule 8 defines accounts_mapped and accounts_unmapped without saying whether an account_map key with no feed account is counted; the module counts feed accounts only, so such a key appears in neither count and writes no row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule 8: the manifest counts accounts_in_feed, accounts_mapped, accounts_unmapped",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py manifest block, uncommitted worktree file (counts over by_account keys)"
+    ]
+  },
+  "spec_asserts": "The manifest carries accounts_in_feed, accounts_mapped and accounts_unmapped; an account is MAPPED when its key is present in account_map.",
+  "world_is": "A map entry with no feed rows is in neither manifest count and writes no row or absent record. The synthetic map has no such entry, so the counts are 6 in feed, 5 mapped, 1 unmapped. Counts only."
+}
+```
