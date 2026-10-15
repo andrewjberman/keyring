@@ -17154,3 +17154,32 @@ name the one known failure instead of silently inheriting it.
     "notes": "The order gave the trade list only; the flow list is the worker's choice, kept to the columns a reader asks about and the columns the tests use. Owner to confirm or name a different list. The trade rule (TRADE_COLUMNS) is as ruled in A2."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S144",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T10:17:54Z",
+    "one_line": "THE CTO HALF'S CONDITION 2 CANNOT BE MET AS WRITTEN. It asks that the release commit be graded by the naming gate in ENFORCE and not be the one commit graded in WARN. Graded in ENFORCE the release commit REFUSES 4 of 7 and exits 1 -- not because of the name, but because the S3PREFIX clause admits a legacy prefix only when the commit stages a path under org/missions/D9/NFRA/NFRA_OPLGTW/, which is how it derives the committing project, and a RELEASE commit stages release files only, BY DESIGN. The grant's bytes are conformant and were already graded PASS in ENFORCE on trunk at f12b5d39bd. The cone half of the condition is DONE.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GRADING 1 -- the grant commit f12b5d39bd, --enforce: exit 0, `NAMING-GATE: PASS 7 graded`, `IAM-PREFIX-ADMITTED n=6 bucket=opal-data-etfs`. 3 staged paths, one of them under org/missions/D9/NFRA/NFRA_OPLGTW/. This is the authoritative grading of the .tf's bytes: they entered the repo here, on trunk, with the clause present",
+        "GRADING 2 -- the release commit 06cfb6db64 as cut, --enforce: exit 1, `NAMING-GATE: REFUSE 7 graded`, the four tier-first prefixes refused as `NEW and OUT-OF-PATTERN as S3Key`. 12 staged paths, NONE under org/missions",
+        "GRADING 3, THE DISCRIMINATING CONTROL -- the SAME diff with ONE org/missions/D9/NFRA/NFRA_OPLGTW path appended to --staged-paths and nothing else changed: exit 0, `NAMING-GATE: PASS 7 graded`, `IAM-PREFIX-ADMITTED n=6`. This isolates project derivation as the entire cause of grading 2",
+        "THE CONE HALF IS DONE AND FALSIFIED: org/mcp added to the release worktree's cone, the sentinel is now on disk there, and the same REFUSE-bearing diff that previously printed `(WARN window: 4 REFUSE verdict(s) did not block)` with `WARN 6 graded` and exit 0 now reads `REFUSE 6 graded` and exit 1 in that worktree, with no WARN window. The sentinel's presence is what flipped the mode",
+        "A SECOND CAUSE THE CONE DOES NOT FIX: the release branch's .tools/naming-gate.py is the PRE-CLAUSE version (md5 7be9e4ede2760451207c8a93166cb8ac against the shared tree's 8798c2dca5ba305550dbf27418edec29) and does not accept --staged-paths at all (argparse exit 2). On the release branch the clause cannot run AT ANY MODE. The base 1b18b94979 predates the OG-ng-1 merge at c8ca06fda0. Mode and code version are two separate axes",
+        "evidence file W/G5A_NAMING_ENFORCE.json carries all five readings"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "the CTO half's condition 2: the release commit is graded by the naming gate in ENFORCE and is not the one commit graded in WARN.",
+    "world_is": "the release commit's PATH SET makes the clause's project derivation impossible, so in ENFORCE it refuses by construction rather than on the merit of the name. Three readings are offered to the condition's author and the choice between them is a ruling, not a measurement: (a) the trunk grading at f12b5d39bd already satisfies the condition in substance; (b) the control shows the same bytes pass when a project path is present; (c) the condition is restated to name the trunk commit that introduces the grant rather than the release commit that carries a copy of it.",
+    "notes": "WHY I AM NOT CHOOSING AMONG THE THREE. The condition is the CTO's and it gates the Phase B GO; picking the reading that lets me proceed would be adjudicating my own gate wider. So the measurement goes to the CTO with one ask and the release does not move until it answers. THE PART WORTH GENERALISING: a clause that keys on WHAT ELSE A COMMIT STAGES cannot be satisfied by a commit whose contents are fixed by another rule. The release commit's path set is prescribed by the order (the release's files and the one grant only) and the clause wants a path the order forbids it to carry, so the two rules are jointly unsatisfiable on that commit -- and nothing anywhere prints that, because each rule is individually fine. The tell was that the gate's REFUSE named a PATTERN ({source}/{scope}/...) while the registry row it should have matched was right there, which is a derivation failure wearing the costume of a naming failure. I also did not edit the gate, the sentinel or the clause: all three are outside this order's <paths>."
+  }
+  ```
