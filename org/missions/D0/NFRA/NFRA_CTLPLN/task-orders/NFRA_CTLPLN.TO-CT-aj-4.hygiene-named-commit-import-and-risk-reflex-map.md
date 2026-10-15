@@ -45,8 +45,8 @@ Write surface = the `<paths>` plus your own folder `org/missions/D0/NFRA/NFRA_CT
 <criterion id="CTaj4-AC2" cell_refs="CT-aj-4"><invocation>python .tools/tests/test_round20_hygiene.py --map</invocation><expect>ok=True</expect></criterion>
 `CTaj4-AC2` -- a staged portal `.tsx` is classed by the risk reflex's map (base: the file does not exist); report the whole last line.
 
-<criterion id="CTaj4-AC3" cell_refs="CT-aj-4"><invocation>python .tools/tests/test_comp_pulse_battery.py</invocation><expect>10/12 PASS</expect></criterion>
-`CTaj4-AC3` -- the comp-pulse battery passes no fewer after the map change (base: `COMP-PULSE BATTERY: 10/12 PASS (denominator 12)`, a control with two arms already failing at the cut; the count may grow, never fall); report the whole last line.
+<criterion id="CTaj4-AC3" cell_refs="CT-aj-4"><invocation>python .tools/tests/test_comp_pulse_battery.py</invocation><expect>/12 PASS (denominator 12)</expect></criterion>
+`CTaj4-AC3` -- the comp-pulse battery passes no fewer than 10 of 12 after the map change (base read 10/12 at the issuer's dry-run and 11/12 at the worker's: one arm, B1-PULSE-BUDGET-REACHED, is time-dependent; the denominator stays 12 and the count may be 10 to 12, never lower); report the whole last line.
 </proof_of_spec>
 
 <expected_criteria>CTaj4-AC1,CTaj4-AC2,CTaj4-AC3</expected_criteria>
