@@ -9327,5 +9327,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S18",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-15T17:05:00Z",
+     "one_line": "AMGT_HARVST-D1-W141-S1 (sa reached by the contract-field rule) and -S2 (sparse worktree) are both resolved: the rule now also requires a measured account check, and the worktree's sparse set was widened.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-ca-1 section 1.a and AC1: the renew set equals {wsj, barrons}; AC2 collects test_ad1_token_store.py.",
+     "world_is": "Both rows were defects of the issuer's order (it assumed sa was bundle-seeded; its sparse set omitted org/tier1_exec/4.0.0_SA_CRO/scripts). AMENDMENT 1 (f94a1a7d09) adds 'publisher in verification.ACCOUNT_CHECKS' to the rule, so sa, tab with seed_from_bundle false and no account check, keeps its existing refresh; the issuer widened the worktree's sparse set. Merged d0c48b3946: AC1 8 passed, AC2 113 passed and 4 subtests passed, re-run by the issuer on the merged head. The ARMED row S1 is disarmed: no branch carrying the literal rule was integrated.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-ca-1.wsj-barrons-refresh-is-the-in-profile-renew.md AMENDMENT 1 note and COMPLETE note @d0c48b3946",
+       "lib/opal_data_harvest/auth.py refresh() at d0c48b3946 (the ACCOUNT_CHECKS test)"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W141-S1",
+      "AMGT_HARVST-D1-W141-S2"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "Resolved by the issuer's AMENDMENT 1 (f94a1a7d09) and the sparse-set fix; both findings were defects of the order, not of the code, and the merged head passes AC1 and AC2."
+    }
 ]
 ```
