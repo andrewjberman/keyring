@@ -81,6 +81,8 @@ workflows/atom_decomposition/tests/
 infra/logic/registry/catalog_fork_keys.json
 infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py
 infra/aws/ec2/opal-gateway/tests/test_firm_catalog_visibility.py
+infra/aws/ec2/opal-gateway/tests/test_opal_discover.py
+infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~43/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -122,3 +124,28 @@ The issuer then merges, regenerates the catalog, runs the gateway suite by faili
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-15 ~10:4xZ) -- a RE-SEAT of slot ~43: rows Z-W43-S2/S3 ruled, row Z-S120 fixed, and the final catalog landed.** Your first pass is merged (`73b45f7c7c`): the generator, the emitter, the gateway rule and 24 rows. The issuer re-ran AC1 and AC2 on the merged tree and regenerated the catalog (it differs from the live one by exactly the 44 derived-tag rows of `MX-c-18` and your 24 firm fields, nothing else). Your worktree is a NEW one cut from the merged HEAD. `<paths>` above now also names `tests/test_opal_discover.py` and `DATA_CATALOG.yaml`. Do these steps IN ORDER and nothing else:
+
+1. **Row Z-W43-S2 (ruled).** In `infra/aws/ec2/opal-gateway/tests/test_opal_discover.py`, test `test_gap_need_answers_with_its_owner_and_no_tool`, replace the one line `assert od.discover("cost basis", "firm", "49financial")["matches"] == []     # fail closed: no firm sees a need` with `assert not [m for m in od.discover("cost basis", "firm", "49financial")["matches"] if "need" in m]     # fail closed: no firm sees a NEED (its own mapped catalog row may match)`. Change nothing else in that file.
+2. **Row Z-W43-S3 and row Z-S120 (ruled), in `app/integrations/opal_discover/integration.py`.** (a) Update the docstring of `_silver_answer` so it states the current rule (a firm-scoped row is shown to a non-internal principal only when the row's `firm` is a known firm and the principal is a firm principal of that same firm). (b) Add a module function just above `_silver_answer`:
+```
+def _rule_caveats(row):
+    """The caveat lines of a silver row's never_sum_rules (row Z-S120): a list gives its non-blank items; a string gives at most one line and none for the NONE marker; anything else gives none."""
+    rules = row.get("never_sum_rules")
+    if isinstance(rules, list):
+        return [str(r) for r in rules if str(r).strip()]
+    if isinstance(rules, str) and rules.strip() and not rules.startswith("NONE"):
+        return [rules.strip()]
+    return []
+```
+and in `_silver_answer` replace the one line `"caveats": [str(r) for r in (row.get("never_sum_rules") or []) if str(r).strip()],` with `"caveats": _rule_caveats(row),`. (Before: a string value such as the NONE marker was iterated as a list, one character per caveat.) Change nothing else.
+3. **Tests.** Add at least 4 tests to `tests/test_firm_catalog_visibility.py`: `_rule_caveats` on a list (non-blank items kept, blank dropped), on the NONE marker string (empty list), on a non-NONE string (one line), on a missing value (empty); and one `_silver_answer` case showing the NONE marker gives `caveats == []`.
+4. **Place the final catalog.** From your worktree root run `python C:/Users/OPALBL~1/AppData/Local/Temp/claude/C--Users-Opal-Bloomberg-Desktop-ajb-workspace/0c774c5b-0103-40e0-9257-b71087af27bc/scratchpad/apply_r17_a1.py .` It must print `copied=1 equal=1` (any other output: stop and report). It overwrites `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml`; do NOT regenerate it.
+5. **Run the criteria** AC1, AC2 and AC3 of section 4 by their literal invocations (AC3 under `timeout 290`), saving the AC3 output (CR stripped) to `.scratch/ac3_a1.out`. As spot checks, not criteria, also run `bash .../round17/checks/t1.AC1.sh`, `t1.AC2.sh`, `t1.AC3.sh` and `.../round14/checks/c14.AC2.sh` and report each result line. All of AC1 to AC3 must PASS.
+6. **Regrade the proof instance.** Run `python C:/Users/OPALBL~1/AppData/Local/Temp/claude/C--Users-Opal-Bloomberg-Desktop-ajb-workspace/0c774c5b-0103-40e0-9257-b71087af27bc/scratchpad/regrade_f1_ac3.py . .scratch/ac3_a1.out` (it prints `regraded AC3 FAIL -> PASS; acceptance rows 3`; anything else: stop and report), then `python .tools/proof-of-spec-check.py <your instance path>` and require rc=0.
+7. **Commit in three commits through `.tools/safe-commit.sh`**, message files written with the Write tool, each ending with a `Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>` line and stating push state LOCAL: (i) `integration.py`, `test_opal_discover.py`, `test_firm_catalog_visibility.py`; (ii) the proof instance (and any output files you saved under your deliverables folder); (iii) `DATA_CATALOG.yaml` alone. Commit (iii) takes up to ~10 minutes in the naming gate: start it in the BACKGROUND (`... > .scratch/catalog_commit.log 2>&1 &`) and poll the log with short waits until it prints `committed` or a REFUSE/BLOCKED line (give up after 25 minutes and report the log tail). If it REFUSES, report the first 10 REFUSE lines verbatim and stop; do not edit the catalog.
+8. **Report once:** the steps' results, the three commit shas, the AC1 to AC3 result lines, the spot-check lines, and `git diff --stat` of commit (iii) against its parent. Do NOT flip the order's status; the issuer does.
+
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it. Row Z-W43-S1 (13 names) and S4 (prose expect against a regex) are ruled correct, no change.
+<status>issued</status>
