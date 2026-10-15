@@ -23,15 +23,15 @@ terminal at HEAD d3e77d88e2: 98 complete, 4 withdrawn, 1 cancelled, 1 superseded
     "owner": "2.0.0_SA_COO~C",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~C",
       "round": "v10"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~C",
-      "at": null
+      "at": "2026-10-15T21:07Z"
     }
   },
   {
@@ -98,16 +98,16 @@ terminal at HEAD d3e77d88e2: 98 complete, 4 withdrawn, 1 cancelled, 1 superseded
     "owner": "2.0.0_SA_COO~C",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~C",
       "round": "v10"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "Andrew",
-      "at": null
+      "at": "2026-10-15T21:07Z"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
