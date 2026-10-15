@@ -191,6 +191,41 @@ def _gx(args: list[str], cwd: str, env: dict | None = None, stdin: str | None = 
                           encoding="utf-8", errors="replace")
 
 
+def _is_link(p: str) -> bool:
+    """A symbolic link or a directory junction (os.path.isjunction is Python 3.12+; absent => False)."""
+    isj = getattr(os.path, "isjunction", None)
+    return os.path.islink(p) or bool(isj is not None and isj(p))
+
+
+def link_entries(path: str) -> tuple[list[tuple[str, str]] | None, str]:
+    """Directory junctions and symbolic links in a worktree that git would walk into, as (worktree-relative path,
+    link target); (None, reason) when git fails. Found through the untracked listing: git lists a junction's target
+    files under the junction's path, so each listed path's components are tested, outermost first (only the
+    OUTERMOST link on a path is kept). A link whose target holds no untracked, non-ignored file is not listed and is
+    not recorded (the one known limit). The target is read from the link itself and never followed."""
+    res = _gx(["ls-files", "-o", "--exclude-standard", "-z"], path)
+    if res.returncode != 0:
+        return None, f"ls-files -o failed: {res.stderr.strip()[:160]}"
+    found: dict[str, str] = {}
+    for rel in res.stdout.split("\0"):
+        if not rel:
+            continue
+        comps = rel.split("/")
+        for i in range(1, len(comps) + 1):
+            d = "/".join(comps[:i])
+            if d in found:
+                break
+            full = os.path.join(path, *comps[:i])
+            if _is_link(full):
+                try:
+                    target = os.readlink(full)
+                except OSError as exc:
+                    return None, f"readlink failed for {d}: {exc}"
+                found[d] = target[4:] if target.startswith("\\\\?\\") else target
+                break
+    return sorted(found.items()), ""
+
+
 def preserve_dirt(path: str, branch: str, meta: dict | None = None) -> tuple[bool, str]:
     """Commit the worktree's porcelain dirt to a NEW branch preserve/<branch>-<stamp>; return (True, commit sha).
 
@@ -222,7 +257,21 @@ def preserve_dirt(path: str, branch: str, meta: dict | None = None) -> tuple[boo
             r = _gx(["update-index", "--skip-worktree", "-z", "--stdin"], path, env, "".join(p + "\0" for p in sparse))
             if r.returncode != 0:
                 return False, f"update-index --skip-worktree failed: {r.stderr.strip()[:160]}"
-        r = _gx(["add", "-A"], path, env)
+        # W103-S2 (CTO round-17 ruling 3): a directory junction or symlink is preserved AS THE LINK, never followed.
+        # Each link becomes a 120000 entry (its target path as the blob), and `add -A` excludes the link's path so
+        # git does not walk into the target and record the target's files under the link.
+        links, why = link_entries(path)
+        if links is None:
+            return False, why
+        for rel, target in links:
+            h = _gx(["hash-object", "-w", "--stdin"], path, env, target)
+            link_sha = h.stdout.strip()
+            if h.returncode != 0 or not SHA_RX.fullmatch(link_sha):
+                return False, f"hash-object failed for link {rel}: {h.stderr.strip()[:160]}"
+            u = _gx(["update-index", "--add", "--cacheinfo", f"120000,{link_sha},{rel}"], path, env)
+            if u.returncode != 0:
+                return False, f"update-index failed for link {rel}: {u.stderr.strip()[:160]}"
+        r = _gx(["add", "-A", "--", "."] + [f":(exclude){rel}" for rel, _ in links], path, env)
         if r.returncode != 0:
             return False, f"add -A failed: {r.stderr.strip()[:160]}"
         tree = _gx(["write-tree"], path, env)
@@ -363,22 +412,61 @@ def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str]
 
 _IN_USE_PS = (
     "$ErrorActionPreference='Stop';"
-    "Get-CimInstance Win32_Process | ForEach-Object { $_.CommandLine };"
-    "Get-ScheduledTask | ForEach-Object { $_.Actions } | ForEach-Object { $_.Execute; $_.Arguments; $_.WorkingDirectory }"
+    "$procs=@(Get-CimInstance Win32_Process | ForEach-Object { [pscustomobject]@{pid=[int]$_.ProcessId;"
+    "ppid=[int]$_.ParentProcessId;cmd=[string]$_.CommandLine} });"
+    "$tasks=@(Get-ScheduledTask | ForEach-Object { $_.Actions } | ForEach-Object { $_.Execute; $_.Arguments; "
+    "$_.WorkingDirectory } | ForEach-Object { [string]$_ });"
+    "[pscustomobject]@{procs=$procs;tasks=$tasks} | ConvertTo-Json -Compress -Depth 4"
 )
+SELF_CHAIN_DEPTH = 3  # the tool's own pid, then up to three ancestors (the shell and any wrapper such as timeout)
+
+
+def _self_chain(procs: list[tuple[int, int, str]]) -> set[int]:
+    """The tool's own pid and up to SELF_CHAIN_DEPTH ancestors. Their command lines name the path the tool was GIVEN
+    (the shell or wrapper that ran it), which is a call, not a use: they never make a worktree IN USE (S9126)."""
+    parent = {pid: ppid for pid, ppid, _ in procs}
+    chain = {os.getpid()}
+    cur = os.getpid()
+    for _ in range(SELF_CHAIN_DEPTH):
+        cur = parent.get(cur, 0)
+        if cur <= 0 or cur in chain:
+            break
+        chain.add(cur)
+    return chain
 
 
 def in_use_text() -> str | None:
-    """Every running process command line and scheduled-task action, lowercased with forward slashes.
-    None when the read failed: the caller then removes nothing."""
+    """Every running process command line and scheduled-task action, lowercased with forward slashes, EXCEPT the
+    tool's own process and its ancestor chain (_self_chain). None when the read failed: the caller then removes
+    nothing."""
+    tasks: list[str] = []
     if sys.platform != "win32":
-        res = subprocess.run(["ps", "-eo", "args"], capture_output=True, text=True, errors="replace")
+        res = subprocess.run(["ps", "-eo", "pid=,ppid=,args="], capture_output=True, text=True, errors="replace")
+        if res.returncode != 0 or not res.stdout.strip():
+            return None
+        procs: list[tuple[int, int, str]] = []
+        for ln in res.stdout.splitlines():
+            parts = ln.strip().split(None, 2)
+            if len(parts) >= 2 and parts[0].isdigit() and parts[1].isdigit():
+                procs.append((int(parts[0]), int(parts[1]), parts[2] if len(parts) > 2 else ""))
     else:
         res = subprocess.run(["powershell", "-NoProfile", "-Command", _IN_USE_PS], capture_output=True, text=True,
                              encoding="utf-8", errors="replace")
-    if res.returncode != 0 or not res.stdout.strip():
+        if res.returncode != 0 or not res.stdout.strip():
+            return None
+        try:
+            data = json.loads(res.stdout)
+            rows = data.get("procs") or []
+            rows = [rows] if isinstance(rows, dict) else rows
+            procs = [(int(p["pid"]), int(p["ppid"]), str(p.get("cmd") or "")) for p in rows]
+            tasks = [str(t) for t in (data.get("tasks") or []) if t]
+        except (ValueError, KeyError, TypeError, AttributeError):
+            return None
+    if not procs:
         return None
-    return res.stdout.replace("\\", "/").lower()
+    skip = _self_chain(procs)
+    lines = [cmd for pid, _, cmd in procs if pid not in skip and cmd] + tasks
+    return "\n".join(lines).replace("\\", "/").lower()
 
 
 def path_in_use(path: str, text: str) -> bool:
