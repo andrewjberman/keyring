@@ -4078,3 +4078,17 @@ Round 86 is drained (`d0c48b3946`, AC3 PASS at `de87f708fb`). Andrew moved ALL h
 - **Order of starting:** wsj and barrons are in the runner from cb-2; sa and bbg join by a re-registration (`-Publishers wsj,barrons,sa,bbg`) once their proofs are in. A preference, not a dependency (addendum 4).
 - **Ledger of what is NOT in this round:** FT (Andrew provides the session); the PRD's 16 lines naming site Z (the CTO's edit, the CVO's re-sign); site Z's own runner and records.
 - **Checks dry-run at the base before the cut:** cb-1 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`93 passed`). cb-2 and cb-3/4 are not cut.
+
+## 109. ROUND 87, workstream RUNNER -- the runner's browser window is minimised before the runner is registered (`1.0.0_SA_CTO~DELL1` msg 6165, CTO half `ledger/NEVER_WIDEN_ROUND87_CB2_CTO_HALF.md`), 2026-10-15 ~19:5xZ
+
+The tab transport opens a visible headful Chrome per job (`tab_transport.py:99`), so a continuous runner would keep a window on the desktop that hosts every agent terminal. The CTO half rules: a minimise cell first, measured on one real job, then register; if that fails, do not register headful. Measured by this seat before the cut: the flag `--start-minimized` leaves a plain Chrome window NOT minimised (`IsIconic` False at 4 s); minimising over the browser's debug protocol (`Browser.setWindowBounds`, `windowState: minimized`) does, the window stays minimised through a navigation, `document.visibilityState` stays `visible`, a screenshot works.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cb-5` | `cb-5` | **A `TabSession` minimises its own window at start** (`minimize=True`; the three protocol calls inside a swallow-everything `try`, before the origin `goto`); launch arguments, profile and every other method unchanged; a fake-Playwright test with a mutant. | LOCAL (direct act, about 20 lines) | worker `0.9.0_WK_AMGT_HARVST~144` | CUT, pending |
+| `HVST-cb-5` AC3 | (the issuer's run) | **One real `wsj` job with every Chrome window sampled for minimisation**: `deliverables/2.0.0_SA_COO_W1/round87/cb5_window_probe.py`; PASS needs `complete_candidates`, accepted > 0, zero samples not minimised after a 3 s launch allowance. | LOCAL (real run) | `2.0.0_SA_COO~W1` at the drain | HELD for the cb-5 merge |
+| `HVST-cb-2` | (staged) | **The dell1 runner**, after cb-5's AC3 passes and site Z's formal Disabled read-back (CTO C-g) is on file. | WORLD | seat `0.7.0_AE_CloudOps~SC1` | STAGED |
+
+- **Fan-out:** 1 worker (cb-5), 1 chain of 1, cap 8.
+- **Checks dry-run at the base before the cut:** cb-5 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`47 passed`). The probe's positive control: a plain Chrome window reads not minimised; zero Chrome windows before and after.
+- **Deviation from the CTO half (reported to him):** the half names `--start-minimized`; it was measured and does not minimise, so the cell uses the protocol call.
