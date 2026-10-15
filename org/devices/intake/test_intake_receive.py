@@ -244,6 +244,28 @@ def case_classify_import_unit():
 
 
 @case
+def case_coloured_missing_dependency_is_import_missing_dep():
+    # the message as Python 3.14 prints it with FORCE_COLOR=3: colour around the class name and the quoted module name
+    esc = "\x1b"
+    coloured = (esc + "[1;35mModuleNotFoundError" + esc + "[0m: No module named '" + esc + "[35madbc_driver_duckdb" + esc
+                + "[0m'\n")
+    cls, missing, err = ir.classify_import(1, coloured, ["duckdb"])
+    assert cls == "import_missing_dep" and missing == "adbc_driver_duckdb", (cls, missing, err)
+    assert esc not in err and "ModuleNotFoundError" in err, err
+
+
+@case
+def case_coloured_other_failure_stays_failed():
+    esc = "\x1b"
+    other = esc + "[1;35mImportError" + esc + "[0m: cannot import name '" + esc + "[35mx" + esc + "[0m'\n"
+    assert ir.classify_import(1, other, ["duckdb"])[0] == "failed"
+    syntax = esc + "[1;35mSyntaxError" + esc + "[0m: invalid syntax\n"
+    assert ir.classify_import(1, syntax, ["duckdb"])[0] == "failed"
+    own = esc + "[1;35mModuleNotFoundError" + esc + "[0m: No module named '" + esc + "[35mduckdb" + esc + "[0m'\n"
+    assert ir.classify_import(1, own, ["duckdb"])[0] == "failed"
+
+
+@case
 def case_record_defects_each_refused():
     variants = {
         "wrong_sha": {"held_sha256": "0" * 64},

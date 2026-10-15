@@ -39439,3 +39439,1107 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Visibility only. The issuer may state one location for later rounds."
 }
 ```
+
+## IRPT_BCKEND-D2-S205 -- IB-pr-568 applied: the 33 absent flat Orion bronze keys are written and read back (16,768 requests)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S205",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T17:14:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-568 applied: the 33 absent flat Orion bronze keys of pair (a) are written (positions 4, transactions 7, performance 22), each read ABSENT first and read back, 16,768 requests; the Scope account feed's apply is the next executor slot.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB2's record commit 6054c0a120 (deliverables/0.7.0_AE_CloudOps~IB2/IB208-1_orion_backfill_record.json): keys_written 33, requests_made 16768 (bound 18,000 by AMENDMENT 5 @46bc11fc02), 0 throttle, eleven counters 0, the ledger irpt-orion-33day-backfill-20261015 closed; I re-ran check r208 AC1 to AC3 in the main tree: PASS; proof instance VALID",
+      "the packet gates: sha256 03a77b3317, both halves signed, no open ledger or marker, one change at a time"
+    ]
+  },
+  "spec_asserts": "The Orion pairs packet V3, pair (a): the one-time 33-day dated backfill of the absent flat bronze keys, each read ABSENT first, an empty key never written.",
+  "world_is": "Applied and read back. The three feeds now hold their previously missing days; the trigger, the catalog, the schedules and every other key are untouched. The request count 16,768 exceeded the pair's early estimate of about 2,470 and my first bound of 16,000: the real per-day cost of the performance feed (about 420 requests a day) was not in the estimate; the bound was raised once, by AMENDMENT 5, on IB2's measured need, with the persistent-429 stop unchanged. Nothing else waits on this order: the Scope account feed (pair (b) addendum 1) is built and its apply takes IB2's next slot."
+}
+```
+
+## IRPT_BCKEND-D2-W432-S1 -- The Read of the order file by path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The Read of the order file by path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker.",
+  "spec_asserts": "The order's WORKER FACE (task order IRPT_BCKEND.TO-IB-pr-592, line 20 and the worker instruction 'Do not read the RECORD FACE') says the RECORD FACE is not part of the worker context and does not travel to the worker.",
+  "world_is": "A Read of the order file in the worktree with no offset or limit returned all 96 lines, the RECORD FACE (lines 85 to 95) included. The worker saw the record preflight text before the first criterion ran. The record fields were taken from the worker face instruction at line 40, which names the same fields. This is the same instrument behaviour as the sibling row IRPT_BCKEND-D2-W430-S2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-592.split-ratio-absent-named.md at 53581d41a6: RECORD FACE at lines 85 to 95; worker face instruction at line 20 says the record face is not worker context",
+      "Read tool result for that path in C:/dev/wk-IRPT_BCKEND-432 at 53581d41a6 returned the file from line 1 to line 96 with no offset and no limit",
+      "IRPT_BCKEND-D2-W430-S2 in org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md: the same Read behaviour recorded by worker 430"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W432-S2 -- The order asks the run manifest's split_adjust block to name the ratio-absent entries of every day of the run, but the producer writes one manifest per day and has no run-level manifest.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks the run manifest's split_adjust block to name the ratio-absent entries of every day of the run, but the producer writes one manifest per day and has no run-level manifest.",
+  "spec_asserts": "Change item 3 of the worker face says the run manifest's split_adjust block gains ratio_absent holding the entries of every day of the run, sorted by day then security.",
+  "world_is": "holdings_performance.py emit_day() builds the manifest from one day's frame and writes one manifest.json per day (base 53581d41a6, emit_day at lines 1370 to 1435). main() prints one line per day and an EMIT summary, and writes no run-level manifest (main at lines 1438 to 1522). The ratio_absent list is therefore carried in the block of the day it describes. A multi-day run leaves one list per day manifest and no single block holds the run's entries. Built as specified for the day manifest; no run-level block was built, because the producer has no run manifest to add it to. The grading is unchanged either way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_performance.py at 53581d41a6 lines 1370 to 1435: emit_day builds one manifest dict per day and writes manifest.json at the day's manifest address",
+      "holdings_performance.py at 53581d41a6 lines 1438 to 1522: main() loops days through pool.map, prints per-day lines and the EMIT summary, and does not write a run-level manifest",
+      "IRPT_BCKEND.TO-IB-pr-592 worker face change item 3 at line 36: the run manifest split_adjust block gains ratio_absent for every day of the run"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W432-S3 -- The import chain of holdings_performance.py needs data/assets/scripts/lib, which the worker face's list of named sparse directories does not carry.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The import chain of holdings_performance.py needs data/assets/scripts/lib, which the worker face's list of named sparse directories does not carry.",
+  "spec_asserts": "Worker face line 24 names the sparse directories earlier workers needed: infra/aws/lambda/investor-reporting, data/mdpf/scripts/gold, data/mdpf/scripts/silver, data/assets/scripts/silver, infra/aws/lambda/v2_portal/_shared, docs/contracts/investor-reporting and lib, and says to add the directory of each import error until the tests collect.",
+  "world_is": "Collection of the existing split tests failed with ModuleNotFoundError: stream_parquet. holdings_performance.py inserts data/assets/scripts/lib into sys.path (base 53581d41a6 lines 115 to 119) and imports stream_parquet and trading_calendar from it. The directory data/assets/scripts/lib was added locally as a sparse entry, not committed, and the tests then collected and passed. The face's list does not name it, so the next worker meets the same failure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_performance.py at 53581d41a6 lines 115 to 119: sys.path inserts for lib and data/assets/scripts/lib, then import stream_parquet, trading_calendar",
+      "pytest collection of test_split_unkeyed.py and test_split_adjust.py in C:/dev/wk-IRPT_BCKEND-432 raised ModuleNotFoundError: stream_parquet before the sparse entry was added",
+      "worker face line 24 of IRPT_BCKEND.TO-IB-pr-592 at 53581d41a6: the named list of sparse directories"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W432-S4 -- The order's sequence and the standing status-flip rule cannot both hold: the criteria grade the worker's own commits, so the criteria output is recorded after the product commit, and a status flip committed by the worker would add
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's sequence and the standing status-flip rule cannot both hold: the criteria grade the worker's own commits, so the criteria output is recorded after the product commit, and a status flip committed by the worker would add a changed path the record does not list.",
+  "spec_asserts": "The worker face says to record the criteria output first, in the product commit, then commit the instance alone in a second commit. The standing worker rules say to flip the task order status to complete and commit the instance, deliverables and the flip together.",
+  "world_is": "AC3 (p207 ac3 via p200 own_changes) compares the record's changed_paths with the paths of this worker's own non-merge commits since base, excluding the deliverables prefix and the channel file. The criteria output can only be written after the product commit exists, so it is committed with the instance in the second commit. A status flip of the order file committed by this worker would be an own change outside changed_paths and would fail AC3, so the status is left pending for the issuer to flip after the proof validates.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py at 53581d41a6: own_changes lists this serial's commits since base and drops ALLOWED_PREFIX paths (the deliverables prefix and the channel file)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r207/p207_cells.py at 53581d41a6 lines 62 to 68: ac3 fails when changed_paths differs from own_changes",
+      "IRPT_BCKEND.TO-IB-pr-592 worker face line 44: criteria output first, then the instance alone in a second commit"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-S206 -- The holdings bundle candidates: a bundle from HEAD or an overlay of HEAD's whole file moves more than the exemption; the transplant candidate is in flight
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S206",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T17:45:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on workers 426 to 431 and the holdings candidate finding: a bundle built from HEAD or overlaid with HEAD's whole holdings_snapshot.py moves more than the exemption (six drifted members; the unreleased IB-pr-536 one-date bypass; the reversal of 49 Financial's CUSIP port); the exemption pair waits on the transplant candidate IB-pr-595.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-589 record (deliverables/0.9.0_WK_IRPT_BCKEND~428/IB222-1_holdings_bundles_candidate.json): 8 of 46 closure members differ from each live bundle, holdings_snapshot.py and publication.py plus six others changed by other projects since the minting pins; 138 of 138 live members equal the minting pin blob",
+      "my diff of holdings_snapshot.py at each minting pin against the overlay pin with the ABSENT-AT-SOURCE blocks removed: 104 lines for pin 1 (49 Financial) and 81 for pin 2, including allow_older_date / ONE-DATE-ASSERT (IB-pr-536) in both and the removal of cusip_key (commits 5fad7eaaa8, de08782c38) against pin 1",
+      "IB-pr-590 record (deliverables/0.9.0_WK_IRPT_BCKEND~431/IB224-1_holdings_overlay_candidate.json): the overlay changes exactly two members per firm and 104 tests pass per firm, which proves the two files need no drifted member, not that they are the exemption alone"
+    ]
+  },
+  "spec_asserts": "The CTO round analysis @57266eeb77: the exemption pair moves the exemption alone, with the blast radius per firm and per key.",
+  "world_is": "DISPOSITIONS. W426-S1 (the order named the harness file wrongly) INERT. W426-S2 (the check counts a closed account as remaining; the gate never refuses one) latent, 0 closed today: ARMED, mine, disarmed when a closed lost account appears or the check is corrected. W426-S3 (the imported build module prints ticker identifiers to the console) ARMED, mine: the identifiers are public tickers, not client data. W427-S1 and S2, W428-S1 to S3, W429-S1 and S5 to S7, W430-S1 to S3, W431-S1 and S2: INERT or resolved as recorded (S4 of 429, the runner imports, is ruled by amendment 2 of IB-pr-586; the roster column name and the cross-bucket write are apply-time checks of IB-pr-596). Every worker that read the whole order file saw the RECORD FACE; the Read tool returns the file, so the worker face tells workers where to stop reading; no act was taken on it. The holdings candidates: 589 found the drift, 590 proved sufficiency, 595 builds the exemption alone (a transplant of the exemption commits onto each minting pin, the two transplanted files committed per firm and hashed by the check)."
+}
+```
+
+## IRPT_BCKEND-D2-S207 -- D2-S204 disarmed: the deployed function accepted a live request with commentary_requested true
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S207",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T17:51:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "D2-S204 DISARMED: the deployed irpt-ycharts-generate accepted a live request carrying commentary_requested true (IRPT_ANLREQ ~Y2's FWD-1 window 2, reported msg 8515); the acceptance IB-pr-579 left UNEXERCISED LIVE is now exercised.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~Y2 msg 8515 (2.0.0_SA_COO~Y2) reports AQ2's window 2: staff filing ACCEPTED live with commentary_requested true, ledger CLOSED, the guard refused nothing; the request and ticket identifiers are in their record, not here",
+      "my S204 (hazard ARMED, disarm_owner me): disarmed by the first accepted request that carries the member; the CTO's ~PI analysis named this run as the exercise (msg 8441, CTO_ROUND_ANALYSIS_IRPT_BCKEND_PI_ROUND_1)"
+    ]
+  },
+  "spec_asserts": "IB-pr-579's UNEXERCISED LIVE statement: the released function ACCEPTING a submission is untested until the FWD-1 run.",
+  "world_is": "S204 is DISARMED on a report I did not make myself: the acceptance is read from ~Y2's and ~AQ2's record, not by a get-item of mine (the item carries a client request). The chain after acceptance (attachments, commentary_ready, the packager secret) is IRPT_ANLREQ's and is tracked there; it is not part of IB-pr-456. The PROD promote of the filing page is client-facing and stays Andrew's word under the push law; my condition for it, an accepted request carrying the member, is met."
+}
+```
+
+## IRPT_BCKEND-D2-W433-S1 -- The calendar-day rule (3) would fail the existing --from-date test that pins trading-day rows, so the rule is applied to the scheduled window only; the issuer rules the backfill.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S1",
+  "one_line": "The calendar-day rule (3) would fail the existing --from-date test that pins trading-day rows, so the rule is applied to the scheduled window only; the issuer rules the backfill.",
+  "spec_asserts": "Change (3) and test calendar_days_include_weekends_in_the_window_and_the_rows: a non-trading calendar day takes its universe from the previous trading day's held accounts, and the rows chain by calendar day, weekends included, in the window.",
+  "world_is": "The existing test test_from_date_window_splits_series_into_per_day_rows_and_skips_existing_keys asserts that a --from-date run writes no key for 2026-10-10 or 2026-10-11 (dropped == []), and its fixture carries positions for trading days only. Applying the calendar-day rule to the --from-date path would write those weekend keys and refuse for a missing positions partition, so the existing test would fail. The build applies the rule to the scheduled window (no --from-date) and the backfill keeps its trading-day rows. Consequence: a backfill leaves weekend days unwritten, and the scheduled window starts after the newest landed day, so a later scheduled run does not refill them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/test_pull_inflection_scope_account_returns.py@2bd17b566f lines 315-337 (the --from-date test: dropped == [] and the trading-day fixture)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@2bd17b566f lines 490-492 (the --from-date candidate days are trading days only)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@77c8e46741 SCOPE-FEED-B run(): the --from-date branch keeps trading days; the scheduled branch walks calendar days"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S2 -- The order's 'capped at 10 calendar days back' is built as no earlier than 10 days before the pull date, so a capped window holds up to 11 calendar days inclusive.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S2",
+  "one_line": "The order's 'capped at 10 calendar days back' is built as no earlier than 10 days before the pull date, so a capped window holds up to 11 calendar days inclusive.",
+  "spec_asserts": "Change (4): the scheduled window takes a calendar-day window from the day after the newest landed silver partition through the pull date, capped at 10 calendar days back.",
+  "world_is": "The order does not say whether the cap is start no earlier than pull minus 10 calendar days (11 days inclusive) or a window of 10 calendar days inclusive (start no earlier than pull minus 9). The build uses pull minus 10 through SCHEDULED_LOOKBACK_DAYS = 10; the test scheduled_window_starts_after_the_newest_landed_day_and_is_capped pins 2026-10-04 for a pull date of 2026-10-14. The other reading is a one-constant change for the issuer to rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@77c8e46741 SCHEDULED_LOOKBACK_DAYS and scheduled_window_start()",
+      "data/inf/manual_api/test_scope_feed_daily_factor.py@77c8e46741 test_scheduled_window_starts_after_the_newest_landed_day_and_is_capped"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S3 -- The order's 'a Monday run also carries the weekend' cannot hold under the default pull date, the prior trading day: a run on a Monday pulls the Friday.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S3",
+  "one_line": "The order's 'a Monday run also carries the weekend' cannot hold under the default pull date, the prior trading day: a run on a Monday pulls the Friday.",
+  "spec_asserts": "Change (4) and its rationale: the window runs through the pull date, so a Monday run also carries the weekend.",
+  "world_is": "The default pull date is lib/trading_calendar.prev_trading_day(today), the T-1 trading day that the order's pull-date rule states. On a Monday that is the Friday, so the window ends on the Friday and carries no weekend. The weekend is carried by the run whose pull date is the Monday (a Tuesday run by default) or by a run given --pull-date. The build follows the stated rule; the choice of schedule and pull date is for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@2bd17b566f line 480 (the default pull date is tc.prev_trading_day(today))",
+      "lib/trading_calendar.py@2bd17b566f prev_trading_day(date): the NYSE trading day strictly before date"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S4 -- A Read of the task order by its path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker; the same as IRPT_BCKEND-D2-W432-S1.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S4",
+  "one_line": "A Read of the task order by its path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker; the same as IRPT_BCKEND-D2-W432-S1.",
+  "spec_asserts": "The worker face: do not read the RECORD FACE of the task order; the record fields are the issuer's.",
+  "world_is": "The Read tool returned the whole order file, including the RECORD FACE section, on this worker's first read of the order. The build took its values from the worker face and from the run itself, and used nothing from the RECORD FACE beyond the record fields the face names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-594.scope-feed-daily-factor.md@2bd17b566f (the file as read by the worker; the RECORD FACE section is in the same file)",
+      "IRPT_BCKEND-D2-W432-S1 in org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md (the same observation on the earlier order)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S5 -- The block redefines five SCOPE-FEED-A functions so the difference control can run; ruff F811 is suppressed per line and the A originals stay as shadowed code.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S5",
+  "one_line": "The block redefines five SCOPE-FEED-A functions so the difference control can run; ruff F811 is suppressed per line and the A originals stay as shadowed code.",
+  "spec_asserts": "Change: all new logic inside SCOPE-FEED-B blocks; the module imports with the blocks removed; removing the blocks in memory fails the new tests on assertions.",
+  "world_is": "Changing the A-block functions in place would let the removal run pass, so the block carries replacement definitions of daily_points, classify, _day_rows, _silver_frame and run. The A originals stay above it and are shadowed while the block is present. Ruff F811 (redefinition of an unused name) is raised on those five definitions and suppressed per line with a noqa comment. Retiring the A originals is a later cleanup for the issuer, after the block is adopted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@2bd17b566f lines 236, 251, 456, 469, 476 (the A originals that the block redefines)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@77c8e46741 SCOPE-FEED-B block: five redefinitions with the noqa F811 comment"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W435-S1 -- On this box the hashed account-id list the commit gate reads is absent, so safe-commit prints WARN and the commit is not checked for client account ids; a future commit carrying one would pass unchecked.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W435-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~435",
+  "surfaced_at": "2026-10-15T18:14:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "On this box the hashed account-id list the commit gate reads is absent, so safe-commit prints WARN and the commit is not checked for client account ids; a future commit carrying one would pass unchecked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 654202d757 (worker 0.9.0_WK_IRPT_BCKEND~435, branch wk-IRPT_BCKEND-435): WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt; the commit was NOT checked for client account ids",
+      "Read by name at the path, dell2 shell, 2026-10-15T18:14Z: OPAL_ACCOUNT_ID_HASHES unset; the list is absent at the default path; the directory C:\\Users\\Test\\.opal holds only _set_aside_20261011/ (dated 2026-10-11)",
+      "_set_aside_20261011/ holds account_id_hashes.txt and three vendor-split lists (49financial, cottonwood, inflection), read by name and size only; their contents were not opened by this worker"
+    ]
+  },
+  "spec_asserts": "The commit gate checks each commit for client account ids (the CLAUDE client-data rule, carried by the worker face as a rule the worker keeps: no real account id in any tracked file), so a commit that passes the gate is free of them.",
+  "world_is": "The check is ABSENT on this box, not empty: the list was set aside on 2026-10-11 and the default path is empty of it. The commit 654202d757 touched only the deliverables folder of this worker (record JSON, harness, candidate map writer, criteria output) and was written to carry counts, hashes and names only; the check did not grade it. The list is not moved back by this worker: it is outside the grant. Disarm needs the box owner's decision on where the list lives."
+}
+```
+
+## IRPT_BCKEND-D2-W434-S1 -- The safe-commit of the six transplant files printed WARN: client-data-check hashed account-id list ABSENT on this box, so the commit was not checked for client account ids; the six files are code and carry no account id by hand re
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The safe-commit of the six transplant files printed WARN: client-data-check hashed account-id list ABSENT on this box, so the commit was not checked for client account ids; the six files are code and carry no account id by hand reading.",
+  "spec_asserts": "Worker face cell IB-pr-595 (client data rule): no real account id, household id, client id or security identifier in any tracked file. The commit gate of the tree is the check that enforces it, and it reads its list from the account-id hashes file or OPAL_ACCOUNT_ID_HASHES.",
+  "world_is": "safe-commit of fa610b01b4 (six files under deliverables/0.9.0_WK_IRPT_BCKEND~434/transplant/) printed: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty). The commit then passed the other gates (pre-commit gate clean for 6 of 6 files; surprise-row gate and to-pipeline gate OK). The record was then written with counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at fa610b01b4 (this worktree): line beginning WARN: client-data-check: hashed account-id list ABSENT",
+      "commit fa610b01b4 on branch wk-IRPT_BCKEND-434: six files, 12170 insertions, all under org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~434/transplant/",
+      "the committed holdings_snapshot.py and publication.py were read by the harness for counts and hashes only; no account id appears in the harness output"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W434-S2 -- The Read of org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-595.holdings-transplant.md returned the whole file, the RECORD FACE included, though the instruction is to read only the WORKER FACE; the same surfacing
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The Read of org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-595.holdings-transplant.md returned the whole file, the RECORD FACE included, though the instruction is to read only the WORKER FACE; the same surfacing as IRPT_BCKEND-D2-W431-S1.",
+  "spec_asserts": "The order's launch instruction says to read the section headed WORKER FACE (from WORKER FACE to RECORD FACE) and not to read the RECORD FACE.",
+  "world_is": "A single Read call of the order file (no offset or limit) returned all 94 lines, the WORKER FACE and the RECORD FACE with its preflight block. No ordering of the worker's acts depended on the RECORD FACE: its record shape and the three criteria are repeated in the WORKER FACE, which was the source used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-595.holdings-transplant.md in worktree C:/dev/wk-IRPT_BCKEND-434 at base d327c250bc, first act",
+      "the WORKER FACE record shape at the order's lines 44 to 48 matches the RECORD FACE's own shape text",
+      "IRPT_BCKEND-D2-W431-S1 in INVESTIGATION_v1.md records the same whole-file return for IB-pr-590"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W434-S3 -- The order says scratch files go in a directory OUTSIDE the repository, while the worker rule says scratch lives in the worktree .scratch directory; the two rules name different places, the same conflict as IRPT_BCKEND-D2-W431-S2.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says scratch files go in a directory OUTSIDE the repository, while the worker rule says scratch lives in the worktree .scratch directory; the two rules name different places, the same conflict as IRPT_BCKEND-D2-W431-S2.",
+  "spec_asserts": "Worker face: Scratch files go in a directory OUTSIDE the repository. Worker rule: scratch is <your worktree>/.scratch/ only.",
+  "world_is": "The three pin worktrees (git worktree add) had to sit outside the repository, so they went under the session scratchpad. The harness scratch and fragments went there too. A commit message file went in the worktree .scratch directory, which is gitignored (.gitignore line 450).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree list at the pins: C:/Users/Test/AppData/Local/Temp/claude/C--dev-ajb-workspace/47eeb1ac-c959-4795-ad75-ff16a015ad46/scratchpad/ir434/pins/{49financial,cottonwood,inflection}",
+      ".gitignore:450 .scratch/ (git check-ignore of .scratch/x.txt)",
+      "IRPT_BCKEND-D2-W431-S2 in INVESTIGATION_v1.md records the same conflict for IB-pr-590"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W434-S4 -- The record commit 1b5d1ac69a printed one-writer WARN: INVESTIGATION_v1.md is the laptop's unsuffixed file written from dell2, and the gate names the per-box file <stem>.dell2.<ext> (WARN until C-QUEUE); the rows were appended to t
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The record commit 1b5d1ac69a printed one-writer WARN: INVESTIGATION_v1.md is the laptop's unsuffixed file written from dell2, and the gate names the per-box file <stem>.dell2.<ext> (WARN until C-QUEUE); the rows were appended to the named file, as the order says.",
+  "spec_asserts": "The order's BOUNDS and worker face name org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md as the channel file for this worker's rows.",
+  "world_is": "safe-commit of 1b5d1ac69a passed with the one-writer WARN on that unsuffixed path; the gate's per-box convention would put a dell2 writer in a suffixed file. The rows S1 to S3 were appended to the named file in the same commit, and the surprise-row gate reported no row problem.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at 1b5d1ac69a (this worktree): line beginning [one-writer] WARN: org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file",
+      "the surprise-row gate of commit 1b5d1ac69a: 3 new row(s) of 1526 total checked, OK: 1 file(s), all new rows carry their step-7/step-10 fields (the S4 row is appended after that commit)",
+      "the worker face channel-rows paragraph: append each row as its OWN block at the END of INVESTIGATION_v1.md"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W436-S1 -- The commit gate of e78ddf1736 printed WARN: the hashed account-id list is absent on this box, so the commit was not checked for client account ids.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W436-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~436",
+  "surfaced_at": "2026-10-15T18:49:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The commit gate of e78ddf1736 printed WARN: the hashed account-id list is absent on this box, so the commit was not checked for client account ids.",
+  "spec_asserts": "The worker face client data rule: no real account id, household id, client id, name, quantity or value in any tracked file; the commit gate is the mechanical check for it.",
+  "world_is": "safe-commit of e78ddf1736 printed a WARN that the client-data check was absent (the hashed account-id list is not at its expected profile path), and the gate did not check the commit. The commit's own diff carries only synthetic ids from the existing test fixtures (accounts 7001 to 7005, households 5001 and 5002); no account-id list was read by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of e78ddf1736 in this worktree: line beginning WARN: client-data-check: hashed account-id list ABSENT",
+      "the same WARN on the same box was filed as IRPT_BCKEND-D2-W435-S1 (ARMED, disarm owner 2.0.0_SA_COO~P2)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W436-S2 -- A day skipped inside a scheduled window is never rewritten by a scheduled rerun: the window starts after the newest landed silver day, so only the day after it is retried.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W436-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~436",
+  "surfaced_at": "2026-10-15T18:49:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "A day skipped inside a scheduled window is never rewritten by a scheduled rerun: the window starts after the newest landed silver day, so only the day after it is retried.",
+  "spec_asserts": "The task order worker face: a rerun after a failed day recomputes the window from the newest landed day (IB-pr-594), so the skipped day is written by the rerun with no new code.",
+  "world_is": "That holds when the skipped day is the day after the newest landed day. scheduled_window_start (data/inf/manual_api/pull_inflection_scope_account_returns.py, SCOPE-FEED-B, line 683 at 0a1fa2b9c4) starts the window at the later of the newest landed day plus one and the pull date minus ten. A day skipped while a later day has landed sits below that start, so no scheduled rerun reaches it; only a --from-date rerun writes it. The new test test_rerun_after_a_failed_day_writes_the_day covers the newest-day case only.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@0a1fa2b9c4 lines 656 to 690 (landed_silver_days, scheduled_window_start)",
+      "e78ddf1736 data/inf/manual_api/test_scope_feed_day_complete.py test_rerun_after_a_failed_day_writes_the_day (the newest-day case only; the interior case was reasoned from the code and not run)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W436-S3 -- A --max-households smoke run writes no key for any day whose universe holds a household the cap did not call, because the cell judges completeness before the cap.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W436-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~436",
+  "surfaced_at": "2026-10-15T18:49:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A --max-households smoke run writes no key for any day whose universe holds a household the cap did not call, because the cell judges completeness before the cap.",
+  "spec_asserts": "The module usage line in data/inf/manual_api/pull_inflection_scope_account_returns.py: a run with --pull-date and --max-households 3 and --upload is a smoke run that calls three households and writes the feed keys.",
+  "world_is": "The cell judges each day on its universe before any --max-households cap, as the order states, so a capped run skips every day whose universe holds an uncalled household and exits 1. test_max_households_cap_does_not_shrink_the_universe_the_day_is_judged_on pins this behaviour. The usage line is unchanged and now describes a run that writes nothing for a multi-household day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e78ddf1736 data/inf/manual_api/test_scope_feed_day_complete.py test_max_households_cap_does_not_shrink_the_universe_the_day_is_judged_on (passes: one call, no write, exit 1)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@0a1fa2b9c4 lines 1 to 14 (usage and exit codes)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W436-S4 -- The order's BOUNDS forbid editing any existing assertion, and its CHANGE clause allows two; the worker followed the CHANGE clause and named both edits.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W436-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~436",
+  "surfaced_at": "2026-10-15T18:49:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's BOUNDS forbid editing any existing assertion, and its CHANGE clause allows two; the worker followed the CHANGE clause and named both edits.",
+  "spec_asserts": "BOUNDS: 'Every existing test stays green and no existing assertion is edited.' CHANGE: 'The two existing test files may change ONLY the assertions that assert a partial day is written after a failed household; say which in the record.'",
+  "world_is": "The cell's rule fails two existing tests as written: test_one_call_per_household_paced_no_retry and test_failed_household_writes_no_silver_rows_for_it each asserted that a partial day was written. The worker changed those assertions only (the silver reads and the exit code of the partial day) and named them in the record notes and in the commit message of e78ddf1736.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the order file IRPT_BCKEND.TO-IB-pr-599.scope-feed-day-complete.md, sections BOUNDS and the CHANGE paragraph of the worker face",
+      "e78ddf1736 git diff of data/inf/manual_api/test_pull_inflection_scope_account_returns.py: 3 insertions, 9 deletions, both edited tests named"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W436-S5 -- With SCOPE-FEED-C present the SCOPE-FEED-B run is shadowed: an edit to the B copy of run has no effect on the feed.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W436-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~436",
+  "surfaced_at": "2026-10-15T18:49:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "With SCOPE-FEED-C present the SCOPE-FEED-B run is shadowed: an edit to the B copy of run has no effect on the feed.",
+  "spec_asserts": "The SCOPE-FEED-B header: its definitions redefine the SCOPE-FEED-A functions of the same names, and removing the block restores the earlier definition (the difference control).",
+  "world_is": "The run loop now exists twice in the module: the SCOPE-FEED-B copy (line 693) and the SCOPE-FEED-C copy (line 793), which redefines it inside the same region. Python binds the later definition at import, so the B copy is dead while C is present. A later edit to the B copy changes nothing, and the tests exercise only the C copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e78ddf1736 data/inf/manual_api/pull_inflection_scope_account_returns.py: def run at line 693 (SCOPE-FEED-B) and def run at line 793 (SCOPE-FEED-C), END SCOPE-FEED-C at line 885",
+      "e78ddf1736 test_scope_feed_day_complete.py: every test reaches run through the module attribute, so only the later definition is run"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-S208 -- IB-pr-599 drained: the worker's ARMED rows disarmed with dispositions; the middle-day skip is an operator rerun with --from-date
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S208",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T18:59:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-599 drained: W436-S1, S2 and S5 and W435-S1 disarmed with their dispositions; the middle-day skip (W436-S2) is real and is handled by the operator rerun with --from-date, written into the apply order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-599 merged @0bf8103b1e; IB231-1 AC1 to AC3 re-run PASS in the main tree; proof instance VALID; 106 tests pass (10 new)",
+      "W436-S2 is read from the code by the worker (INFERRED) and agrees with the window rule of IB-pr-594: the scheduled window starts the day after the newest landed silver partition",
+      "W435-S1 and W436-S1 are the same instrument gap: the commit gate's hashed account-id list is absent on dell2 (set aside 2026-10-11), so neither commit was checked against it"
+    ]
+  },
+  "spec_asserts": "A skipped day is written by a rerun with no new code (the cell text of IB-pr-599).",
+  "world_is": "W436-S2: true only when the skipped day is the newest day of the window. If a later day of the same window lands complete and an earlier one is skipped (the days have different universes), the scheduled window starts after the later day and never retries the earlier one. DISPOSITION: not a rider on a build; the SKIPPED line the run prints names the day, and the operator's remedy is a rerun with --from-date <that day> (the backfill path, add-only, never overwrites): written into the apply order and the first-run read, which fails the run on any SKIPPED line. W436-S5 (the B copy of run is shadowed by the C copy): INERT, a cleanliness item for a later cell; the shipped behaviour is the C copy and it is tested. W436-S1 and W435-S1 (client-data list absent): INERT for these two commits, whose records are ID-free by their own criteria (no long digit run, counts only); the list's absence is MSTR's to restore and is not chased here. W436-S3 (a --max-households smoke run writes no key) and W436-S4 (the bounds wording) are INERT observations already stated in the rows."
+}
+```
+
+## IRPT_BCKEND-D2-W438-S1 -- BLOCKING: no registry row carries the table segment scope_account_returns, so the Scope feed IAM resource cannot take every scope, bucket and prefix from the registry as IB-pr-603 Do step 1 requires
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W438-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~438",
+  "surfaced_at": "2026-10-15T19:03:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "BLOCKING: no registry row carries the table segment scope_account_returns, so the Scope feed IAM resource cannot take every scope, bucket and prefix from the registry as IB-pr-603 Do step 1 requires",
+  "spec_asserts": "IB-pr-603 worker face Do step 1 and the AC1 description: the bucket, the two object prefixes and the list prefixes are built in locals from jsondecode(file(registry)) reads, composed the way address() composes them for source orion, scope inflection, tiers bronze and silver, table scope_account_returns; the table is a key segment that comes only through the registry reads, and no table literal is hand-typed. Refusal clause: STOP and file a row when a registry row is missing.",
+  "world_is": "No file under infra/logic carries the table name: a Grep over infra/logic for scope_account_returns, account_returns and scope_account returned No files found at base 48a8e26674. infra/logic/registry/feeds.json is the bronze feed row set (its _about: each bronze table a builder writes at address(source, scope, bronze, feed, partition)) and holds one row, orion_model_composition. address('orion','inflection','bronze','scope_account_returns','date=2000-01-01','x') from lib/opal_naming.py returns s3://opal-data-assets/orion/inflection/bronze/scope_account_returns/date=2000-01-01/x, so the segment is typed by hand in every spelling. Registry row to add (CTO adds it; this worker changed nothing under infra/logic/registry): a feeds.json row feed scope_account_returns, source orion, scope inflection, vendor orion. No registry file defines a silver-tier carrier for a table name, so the silver layer may need its own row or a ruling. The worker wrote no iam.tf change and committed nothing of the product.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep over the worktree folder C:/dev/wk-IRPT_BCKEND-438/infra/logic for scope_account_returns, account_returns and scope_account: No files found (base commit 48a8e266744cc2b28f5896bd3789b9322b245ebb)",
+      "python lib/opal_naming.py address() run in the worktree: s3://opal-data-assets/orion/inflection/bronze/scope_account_returns/date=2000-01-01/x and the silver twin under opal-data-assets",
+      "infra/logic/registry/feeds.json, python json read: one feed row, orion_model_composition (source mdpf, scope inflection, vendor orion)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W438-S2 -- The naming gate grades 0 literals on a bare table-name literal in a locals block, so a hand-typed table segment outside a resource would pass the commit-time limb
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W438-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~438",
+  "surfaced_at": "2026-10-15T19:03:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The naming gate grades 0 literals on a bare table-name literal in a locals block, so a hand-typed table segment outside a resource would pass the commit-time limb",
+  "spec_asserts": "CLAUDE.md rule 30 and the naming gate (.tools/naming-gate.py): a hand-typed name or key segment in a Terraform file is refused at commit; the gate is the mechanical limb that enforces registry-only spelling.",
+  "world_is": "A probe diff (.scratch/probe_table_literal.diff, not committed) added a locals block holding scope_feed_table = scope_account_returns to infra/aws/terraform/inf-pipeline/iam.tf. python .tools/naming-gate.py --diff <probe> --enforce printed NAMING-GATE: PASS 0 graded with rc 0. tf_literals classifies a quoted string only in a typed context; a bare string in a locals block with no hint is not judged. So the gate does not refuse a hand-typed table segment there, and the only guard on it in this order is the rule text and the AC1 checker, which scans the resource block alone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "naming-gate.py run output at base 48a8e26674: DENOMINATOR 1 path(s); NAMING-GATE: PASS 0 graded; rc=0",
+      ".tools/naming-gate.py tf_literals and judge(): an unclassified literal returns None and is not graded",
+      "checks/r234/p234_cells.py ac1: the banned-literal scan is limited to the resource_block text"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W438-S3 -- The order names the packet section The exact statements, which the signed packet does not carry; the HCL sits under Root, address and plan shape
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W438-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~438",
+  "surfaced_at": "2026-10-15T19:03:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the packet section The exact statements, which the signed packet does not carry; the HCL sits under Root, address and plan shape",
+  "spec_asserts": "IB-pr-603 worker face READ FIRST: the packet section The exact statements holds the two statements to copy.",
+  "world_is": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_SIGNOFF_PACKET_SCOPE_FEED_IAM_PAIR.md has no such heading; its headings are Why, Root address and plan shape, Rollback per statement, Branch A and Branch B, Writers of the changed property, After-reads. The two statements and the policy HCL are the code block under Root, address and plan shape (lines 18 to 37), and they were read from there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep for exact statements in the packet: no match (the Grep with a NEVER_WIDEN glob matched a sibling packet only)",
+      "Read of the packet at base 48a8e26674, lines 11 to 37: the resource block with Sid S1PutAndReadScopeFeedKeysOnly and S2ListScopeFeedPrefixesOnly"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W439-S1 -- The commit gate printed WARN that the client-data check was not run: the hashed account-id list is absent on this box, so the iam.tf commit was not checked for account identifiers
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W439-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~439",
+  "surfaced_at": "2026-10-15T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The commit gate printed WARN that the client-data check was not run: the hashed account-id list is absent on this box, so the iam.tf commit was not checked for account identifiers",
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-603 worker face, Client data rule: no account, household or client identifier in any tracked file. The commit gate runs a client-data check on each commit.",
+  "world_is": "safe-commit.sh for commit 3c4d117b57 printed: WARN client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty). The commit landed. The worker checked its own 66 added lines by grep for the AWS account number used in the file: 0 matches, and 0 non-ASCII bytes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 3c4d117b57 (worktree C:/dev/wk-IRPT_BCKEND-439): the WARN line for client-data-check, then the commit line [wk-IRPT_BCKEND-439 3c4d117b57]",
+      "git show HEAD -- infra/aws/terraform/inf-pipeline/iam.tf | grep '^+' | grep -c 313476888478 printed 0; added lines counted 66",
+      "The WARN names OPAL_ACCOUNT_ID_HASHES as the override and the account_id_hashes.txt path as the expected location; neither was set or placed by this worker"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W439-S2 -- The pre-commit risk reflex printed HOLD on iam.tf against 116 recorded claims in six other roots' iam.tf files, each citing one 2026-06-16 change record; the commit proceeded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W439-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~439",
+  "surfaced_at": "2026-10-15T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pre-commit risk reflex printed HOLD on iam.tf against 116 recorded claims in six other roots' iam.tf files, each citing one 2026-06-16 change record; the commit proceeded",
+  "spec_asserts": "The pre-commit risk reflex (comp-pulse diff) asks the committer to read the citation of any HOLD before the commit proceeds. A HOLD names a node the estate has written warnings about.",
+  "world_is": "The reflex printed six HOLD lines for infra/aws/terraform/inf-pipeline/iam.tf, each pointing at a different root's iam.tf (advi/billing-read, astn-pipeline, bd-49f-auto-login, bd-pipeline, canonical-schwab-ec2, cot-pipeline), each with 116 recorded claims, and each citing the same change record org/critical_paths/change_management/20260616T153514Z_nfra-gcontr-to2-graph-contracts-table_deploy_completion.md line 17 (text: NO iam.tf change, pattern-consistent). The reflex scanned 1 of 1 file within budget. The commit gate reported OK and the commit landed. The worker read no citation beyond the printed line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 3c4d117b57: the [risk-reflex] HOLD block, six HOLD entries, each with a -> file:infra/aws/terraform/<root>/iam.tf (116 recorded claim(s)) line",
+      "The citation printed for each HOLD: org/critical_paths/change_management/20260616T153514Z_nfra-gcontr-to2-graph-contracts-table_deploy_completion.md:17",
+      "[commit-gate] OK: pre-commit gate clean for 1 of 1 file(s); the commit line [wk-IRPT_BCKEND-439 3c4d117b57] followed"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W439-S3 -- The one-writer gate printed WARN that the channel path named by the order is the laptop's unsuffixed file, written from dell2, and that the per-box file form is the expected one
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W439-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~439",
+  "surfaced_at": "2026-10-15T19:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The one-writer gate printed WARN that the channel path named by the order is the laptop's unsuffixed file, written from dell2, and that the per-box file form is the expected one",
+  "spec_asserts": "The order names org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md as the channel file to append rows to. The append-only one-writer check expects a per-box file named with the stem and the box suffix, for example INVESTIGATION_v1.dell2.md, while the C-QUEUE item is open.",
+  "world_is": "safe-commit.sh for commit 63627ce12a printed: one-writer WARN: INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell2; per-box file <stem>.dell2.<ext> (WARN until C-QUEUE). The gate graded 1 append-only path on box dell2 with 0 blocked and the commit landed on the unsuffixed path the order names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 63627ce12a: the [one-writer] WARN line naming the unsuffixed path and the per-box form, then the [one-writer] OK line with 1 path graded and 0 blocked",
+      "The AGENTBUS_DEVICE value the gate read was dell2 (process environment), as printed on the same line"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W437-S1 -- The import chain of the two harnesses needs more directories than the order names: org/standards, infra/logic/registry, the root file data/firm_registry.json, and the top-level modules of data/assets/scripts/gold.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W437-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~437",
+  "surfaced_at": "2026-10-15T19:27:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The import chain of the two harnesses needs more directories than the order names: org/standards, infra/logic/registry, the root file data/firm_registry.json, and the top-level modules of data/assets/scripts/gold.",
+  "spec_asserts": "Worker face (IB-pr-602): add the directory of each import error until the module imports; the named set was the investor-reporting gold and silver scripts, the investor-reporting Lambda, the mdpf gold and silver scripts, the v2_portal shared package, the investor-reporting contracts and lib.",
+  "world_is": "Importing holdings_snapshot and running both harnesses also raised import errors for org/standards/NAMING_SCHEMA.json (lib/opal_naming.py load_schema), infra/logic/registry/systems.json (holdings_snapshot.py SYSTEMS_REGISTRY_PATH), data/firm_registry.json (the _ids firm registry, which is a root file a cone sparse-checkout does not carry) and build_cottonwood_mdpf_slice.py (holdings_snapshot.py _cot_taxonomy_rules, reached by the cottonwood block of the DELTA harness). Each was added to the sparse checkout or copied into the scratch tree, never committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_snapshot.py@e1cbf4348918831d9deed79b716f019ed2aba6de line 1908 (_cot_taxonomy_rules imports build_cottonwood_mdpf_slice); comp-find located that module at data/assets/scripts/gold/build_cottonwood_mdpf_slice.py",
+      "lib/opal_naming.py@e1cbf4348918831d9deed79b716f019ed2aba6de load_schema reads org/standards/NAMING_SCHEMA.json (the import error named that path in the scratch tree)",
+      "infra/aws/lambda/investor-reporting/_ids/ids.py@e1cbf4348918831d9deed79b716f019ed2aba6de _find_registry walks up to data/firm_registry.json and raises IdRefused when absent",
+      "git sparse-checkout list at e1cbf43489 (worktree): the cone carries directories only, so the root file data/firm_registry.json is not carried"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W437-S2 -- The IB-pr-580 DELTA harness measures both firms (49financial and cottonwood) in one run, so a 49 Financial read carries a cottonwood block that the record does not keep.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W437-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~437",
+  "surfaced_at": "2026-10-15T19:27:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-580 DELTA harness measures both firms (49financial and cottonwood) in one run, so a 49 Financial read carries a cottonwood block that the record does not keep.",
+  "spec_asserts": "Worker face step 3: the same candidate gated WITHOUT and WITH the evidence provider, 49 Financial only.",
+  "world_is": "IB218-1_exemption_delta_harness.py selects every builder in the wanted set (build_49f_meshed and build_cot) and writes a firms block for each. The run printed OK lines for cottonwood (served day 2026-10-08, exemption alone 4 nodes, PUBLISHED). The driver keeps the 49financial block only; the cottonwood numbers are not in the record and are not read further.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB218-1_exemption_delta_harness.py@e1cbf4348918831d9deed79b716f019ed2aba6de lines 38-39 (wanted = build_49f_meshed, build_cot; firm_ids over BUILDERS)",
+      "IB218-1_exemption_delta.json@e1cbf4348918831d9deed79b716f019ed2aba6de firms block holds both 49financial and cottonwood (the IB-pr-580 record)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W437-S3 -- The scratch-location conflict of IRPT_BCKEND-D2-W434-S3 recurs: the order says scratch files go OUTSIDE the repository, the worker rule says <worktree>/.scratch/.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W437-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~437",
+  "surfaced_at": "2026-10-15T19:27:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The scratch-location conflict of IRPT_BCKEND-D2-W434-S3 recurs: the order says scratch files go OUTSIDE the repository, the worker rule says <worktree>/.scratch/.",
+  "spec_asserts": "Worker face (IB-pr-602): scratch files go in a directory OUTSIDE the repository; the BOUNDS name the scratch directory outside the repository. Worker rule: scratch is <your worktree>/.scratch/ only.",
+  "world_is": "The scratch copy of the tree, its logs and the criteria staging were placed under the session scratchpad, which is outside the repository, following the order. The worker rule would have placed them in the worktree .scratch directory. The same conflict was recorded for IB-pr-590 (IRPT_BCKEND-D2-W431-S2) and IB-pr-595 (IRPT_BCKEND-D2-W434-S3).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-602.49f-transplant-reread.md@e1cbf4348918831d9deed79b716f019ed2aba6de worker face line 28 and BOUNDS",
+      "INVESTIGATION_v1.md@e1cbf4348918831d9deed79b716f019ed2aba6de row IRPT_BCKEND-D2-W434-S3"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W437-S4 -- The anatomy and DELTA harnesses print one line per security the candidate cannot classify, and each line carries the security identifier; the recurrence of IRPT_BCKEND-D2-W426-S3 was seen again on this read.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W437-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~437",
+  "surfaced_at": "2026-10-15T19:27:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The anatomy and DELTA harnesses print one line per security the candidate cannot classify, and each line carries the security identifier; the recurrence of IRPT_BCKEND-D2-W426-S3 was seen again on this read.",
+  "spec_asserts": "Client data rule (worker face): counts, dates, hashes, commit ids and file paths only in any tracked file; no real security identifier in any tracked file. Harness output is counts only.",
+  "world_is": "The console and the scratch logs of both harness runs carried security identifier values from the classification step. The logs stayed in the scratch directory outside the repository and no identifier was copied into the record, the criteria output or the proof instance. The harnesses' printed output is therefore a hazard for any run that is pasted or committed as a log.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB220-1_49f_refusal_anatomy_harness.py@e1cbf4348918831d9deed79b716f019ed2aba6de prints counts only; the identifier lines come from the build module's classification step (the W426-S3 row)",
+      "INVESTIGATION_v1.md@e1cbf4348918831d9deed79b716f019ed2aba6de row IRPT_BCKEND-D2-W426-S3"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-S209 -- The runner started for IB-pr-600's read was not stopped by the watchdog; the stop is Andrew's act
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S209",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T20:30:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The inf gold runner, started once for IB-pr-600's read, was still running 33 minutes after the command ended: the 300 s idle watchdog did not stop it; the stop is Andrew's act (CTO ruling msg 8597).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB2 msg 8633: the runner was started once at 19:53:40Z, one read-only SSM command succeeded at 19:54:06Z, and the runner was still running at 20:27Z; no second command was sent and the runner was not stopped",
+      "the CTO ruling msg 8597 (ADDENDUM 2 @57b25f40de): if the runner is not stopped 30 minutes after the command ends, IB2 records a row and does NOT stop it; the stop becomes Andrew's act",
+      "RUNBOOK lines 119 to 129 describe the watchdog (300 s idle) as the stop path"
+    ]
+  },
+  "spec_asserts": "The RUNBOOK's watchdog stops the runner after 300 s without a matching process (the CTO's premise for authorizing the start).",
+  "world_is": "The premise did not hold on this start: the runner stayed up. Cost only (an instance-hour rate), no data path is touched; the feed's first scheduled chain starts the same instance anyway. The watchdog's regex or its heartbeat guard is a runner question for CloudOps, not read here. The stop is Andrew's act and is queued as an open call; the order IB-pr-600 records the branch the ruling named (runner_row_filed, runner_stop_left_to_andrew) and its AC3 accepts exactly that branch."
+}
+```
+
+## IRPT_BCKEND-D2-W440-S1 -- The join fix has no key to correct: the one in_source_with_positions account has no candidate-day custody row under any key form, so the 49 Financial candidate never receives it.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W440-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~440",
+  "surfaced_at": "2026-10-15T20:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The join fix has no key to correct: the one in_source_with_positions account has no candidate-day custody row under any key form, so the 49 Financial candidate never receives it.",
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-604 (cell IB-pr-604, CTO ruling 334382c7f4 item 1): the one lost account is dropped on the account join by a key-form difference (type, padding, case or a firm-scope key) that a normalization inside ACCOUNT-JOIN-A corrects. The class in_source_with_positions is read as cause join (IB-pr-602 record, conditions_detail account_lost).",
+  "world_is": "Measured read-only on the transplant tree (base bf79a649fc), counts and categories only. The account has 0 candidate-day custody balance rows and 0 candidate-day custody position rows under the text key, the pad10 key and the loose alphanumeric key. Its prior-day custody holds 1 balance row and 13 position rows, both keys equal (length 10, leading zero). The candidate-day SmartX allocation map holds 1 row for it (key length 8). The 49 Financial builder mints ACCOUNT nodes only from candidate-day custody balance rows (holdings_49f.build_49f_actual, the loop over balance.index), and counts SmartX-only accounts without emitting them (smartx_accounts_not_in_custody, holdings_49f.py line 543). The absent-at-source evidence unions the candidate and prior custody days, so the class names in_source_with_positions while the candidate day holds no row. No stage shows a key-form difference; a normalization at the join would not change this account's outcome. The CVO decides whether this is a source absence, a custody-day gap or a designed exclusion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~440/IB235-1_drop_finder.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 (stage trace run once per revision on the scratch transplant tree)",
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 build_49f_actual loop over balance.index and line 543 smartx_not_in_custody",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~437/IB233-1_49f_transplant_reread.json@bf79a649fcb422c36545d30d9dc03f58ad3e7661 conditions_detail account_lost cause_split join=1"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W440-S2 -- The 49 Financial builder and the console identifier source both sit outside the paths grant: the join and the console fix named in the cell cannot be made inside holdings_snapshot.py alone.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W440-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~440",
+  "surfaced_at": "2026-10-15T20:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The 49 Financial builder and the console identifier source both sit outside the paths grant: the join and the console fix named in the cell cannot be made inside holdings_snapshot.py alone.",
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-604 Do step 2 places the join fix inside ACCOUNT-JOIN-A blocks in holdings_snapshot.py; Do step 3 says the build module prints tickers to the console and the fix is one line in the build module; the paths block is the write grant.",
+  "world_is": "BUILDERS['49financial'] is holdings_49f.build_49f_meshed (holdings_snapshot.py BUILDERS entry), so the custody loop and the SmartX census are in holdings_49f.py, which the paths block does not name. The console line 'Classification not found for ticker' is a logger.warning at infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py line 79, outside the grant. In holdings_snapshot.py the identifier-bearing output is the final json.dumps of the results in main() (its publish_gate listed id lists and manifest refused accounts), not a print of a ticker. Worker stderr and the scratch log carried identifier lines from the logger; they were deleted and nothing was committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 BUILDERS entry (line 2669) and main() json.dumps print (line 3610)",
+      "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 line 79 logger.warning",
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_BCKEND-D2-W426-S3"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W440-S3 -- The base holdings_snapshot.py is not the transplant bytes: the account-join lines match, but the CUSIP fallback, the one-date bypass and the multi_asset class list differ.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W440-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~440",
+  "surfaced_at": "2026-10-15T20:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The base holdings_snapshot.py is not the transplant bytes: the account-join lines match, but the CUSIP fallback, the one-date bypass and the multi_asset class list differ.",
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-604 reproduces the drop on the transplant tree (IB-pr-602 record) and places the fix in holdings_snapshot.py at base; the two trees are assumed to differ only where the cell says.",
+  "world_is": "Base holdings_snapshot.py sha256 bfa62fd0 differs from the IB-pr-595 transplant sha256 b9aae27f. The transplant adds cusip_key and the CUSIP fallback in classify_security and drops the multi_asset class and the one-date bypass (ONE-DATE-ASSERT, --allow-older-date). The account-join lines of the holdings module are not in the diff; the join lives in holdings_49f.py, which is identical on both trees. The drop finder ran on the transplant copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 sha256 bfa62fd0",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~434/transplant/49financial/holdings_snapshot.py@bf79a649fcb422c36545d30d9dc03f58ad3e7661 sha256 b9aae27f"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W441-S1 -- IB235-1-AC3 reads the task order status flip as an authored change to a path the record cannot list before the flip.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W441-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~441",
+  "surfaced_at": "2026-10-15T21:21:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB235-1-AC3 reads the task order status flip as an authored change to a path the record cannot list before the flip.",
+  "spec_asserts": "IB235-1-AC3 (checks/r235/p235_cells.py, P7.ac3 with P0.own_changes): changed_paths equals the worker's own non-deliverable commits since base, and every path lies in the grant. The order sequence commits the instance, then flips the task order status to complete in the final commit.",
+  "world_is": "own_changes reads every path changed by commits authored by the worker since base (deliverables and the channel excluded). The status flip changes the task order file, a granted path, so after the flip the record's two changed_paths no longer equal the own changes and AC3 reads a difference at HEAD. Measured at 0a745b842b: AC3 PASS with two changed paths, before the flip. Not re-run after the flip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r235/p235_cells.py@e2700915d2195f8396d540796bc92a8a64c0c527 CHECKS and CELLS allowed and required sets",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py@e2700915d2195f8396d540796bc92a8a64c0c527 own_changes (git log by author, ALLOWED_PREFIX)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~441/IB235-1_record.json (changed_paths, two paths at 0a745b842b)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W441-S2 -- The 49 Financial SmartX evidence uses the snapshot overlay clock, not a re-pick at the build cutoff, because the evidence provider receives no cutoff.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W441-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~441",
+  "surfaced_at": "2026-10-15T21:21:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The 49 Financial SmartX evidence uses the snapshot overlay clock, not a re-pick at the build cutoff, because the evidence provider receives no cutoff.",
+  "spec_asserts": "TO IB-pr-604 item 1 and the cell text: read the SmartX account map partition the build read with _latest_date_partition(..., as_of=...) for the same cutoff, through the same VersionedInputs; the CTO ruling names the candidate day's SmartX map.",
+  "world_is": "run_firm hands the provider the snapshot and the custody candidate day only; the build cutoff (business_date) is not carried to the provider. The snapshot clocks carry overlay_as_of, which is the value load_49f_sources picked with _latest_date_partition, so the read is the partition the build read. Re-picking at the cutoff would change a signature outside the D spans. The overlay pick is the latest map partition at or before the cutoff, which can be older than the candidate day, so 'the candidate day's SmartX map' and the built partition can differ.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py@e2700915d2195f8396d540796bc92a8a64c0c527 lines 210-224 load_49f_sources overlay pick and read",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@e2700915d2195f8396d540796bc92a8a64c0c527 build_snapshot clocks overlay_as_of (lines 2728-2738) and run_firm business_date cutoff (line 3427)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W441-S3 -- The order record template names four negative tests; the check requires all eight named tests in negative_tests.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W441-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~441",
+  "surfaced_at": "2026-10-15T21:21:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order record template names four negative tests; the check requires all eight named tests in negative_tests.",
+  "spec_asserts": "TO IB-pr-604 record template: negative_tests lists four names. The check requires every name in CELLS 1 named to appear in negative_tests.",
+  "world_is": "checks/r235/p235_cells.py CELLS 1 named holds eight test names, and P7.ac3 tests set(named) is a subset of set(negative_tests). The worker lists all eight in negative_tests; the four template names are among them. No check was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r235/p235_cells.py@e2700915d2195f8396d540796bc92a8a64c0c527 CELLS named tuple",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-604.account-join-49f.md@e2700915d2195f8396d540796bc92a8a64c0c527 record template line 58"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W441-S4 -- Measured at the flipped HEAD: IB235-1-AC3 FAILS on the status flip, which the record did not list.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W441-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~441",
+  "surfaced_at": "2026-10-15T21:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Measured at the flipped HEAD: IB235-1-AC3 FAILS on the status flip, which the record did not list.",
+  "spec_asserts": "The record (IB235-1_record.json) lists the repository paths the worker changed since base, deliverables and channel excluded, and IB235-1-AC3 reads that list against the worker's own commits at HEAD.",
+  "world_is": "Measured at a55b618df2: AC3 FAIL with 'changed_paths differs from the worker's own commits since base', because the flip commit changed the task order file. The record was updated to three paths (the task order included, since the worker changed it) and the three criteria were re-run at the new HEAD. The same timing conflict is in IRPT_BCKEND-D2-W441-S1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-604.account-join-49f.md@a55b618df2 status flip",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r235/p235_cells.py@e2700915d2195f8396d540796bc92a8a64c0c527 AC3 via P7.ac3",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~441/IB235-1_record.json (changed_paths, three paths after the update)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W442-S1 -- A worktree added from the sparse base worktree came up sparse: the minting pin had 76354 skip-worktree entries and no infra/ tree.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W442-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~442",
+  "surfaced_at": "2026-10-15T22:08:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A worktree added from the sparse base worktree came up sparse: the minting pin had 76354 skip-worktree entries and no infra/ tree.",
+  "spec_asserts": "TO IB-pr-606 WORKER FACE: a full detached worktree of the minting pin, sparse checkout disabled in that worktree alone; the base worktree is made sparse first, and the pin is cut from it.",
+  "world_is": "git worktree add from the sparse base worktree produced a pin whose index carried 76354 skip-worktree bits of 81551 tracked files, so infra/aws/lambda was absent from the working tree. The pin's worktree config carried core.sparseCheckoutCone=true, which this worker did not set. Setting core.sparseCheckout false afterwards did not clear the bits. Repaired inside the pin only: skip bits cleared with git update-index --no-skip-worktree, then git sparse-checkout disable. No file in the base worktree changed. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-606.addendum-candidate-49f.md@e9c48c49b711bc7eb18723dad69f034547d6715f worker face step 1",
+      "git ls-files -v on the pin worktree (admin dir 49financial2) at b1d354cfc9341168a3b4c316a344876ce0049b97: 76354 S entries before the repair, 0 after"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W442-S2 -- The minting pin b1d354cfc9 lists 36 tracked files as modified before any change: CRLF index blobs against an eol=lf attribute.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W442-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~442",
+  "surfaced_at": "2026-10-15T22:08:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The minting pin b1d354cfc9 lists 36 tracked files as modified before any change: CRLF index blobs against an eol=lf attribute.",
+  "spec_asserts": "IB-pr-595's harness and this order's step 2: the pin worktree is clean before the transplant, and after it the only entries are the overlaid files.",
+  "world_is": "At b1d354cfc9 the index blobs of 36 tracked files are CRLF while .gitattributes sets eol=lf; a fresh checkout reports all 36 as modified (git status --porcelain). All 36 working-tree files are byte-equal to their HEAD blobs (36 of 36 measured), and none of them is a bundle member that moved: the live compare changed exactly the two candidate members. The candidate harness takes the status baseline before it writes and asserts that the added entries are exactly the two candidate files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files --eol at b1d354cfc9341168a3b4c316a344876ce0049b97 for infra/aws/scripts/inspect_parquet_schema.py: i/crlf w/crlf attr/text eol=lf",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~434/ib228_1_transplant_candidate.py@e9c48c49b711bc7eb18723dad69f034547d6715f transplant status check (entries equal the overlay files)"
+    ]
+  }
+}
+```

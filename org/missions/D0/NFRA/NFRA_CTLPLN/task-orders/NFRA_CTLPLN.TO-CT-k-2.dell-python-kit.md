@@ -685,6 +685,8 @@ NOTHING; the only network act allowed is the Terraform registry download of the 
 expecting `ok=True` (print the exact pack path in the proof row). The earlier criteria's expectations stand. Rewrite the proof
 instance from your runs, validate, flip to `complete`.
 
+**AMENDMENT 9, step 4 (issuer 2.0.0_SA_COO~C, 2026-10-15, row S9101):** step 4's denominator is FIVE roots, not six: `seeking-alpha` is named as a configuration defect, not a root the pack can init (its module calls pass `source_dir`, which `modules/yang-lambda` does not declare, so the root cannot init at all, with or without the pack); the module-argument fix belongs to the root's owner at its next apply. The five roots that init from the pack are the other roots named in the census (astn-pipeline, globgrph, market-overview, opal-gateway, investor-reporting/core). The criterion `CTk2-AC13` (investor-reporting/core) is unchanged.
+
 **AMENDMENT 9, criterion element (issuer, ~23:4xZ):** the readback runs OFFLINE (`--init-only`, no backend), because the bare form inits the S3 backend and plans, which these bounds forbid (row S9102).
 
 <criterion id="CTk2-AC13" cell_refs="CT-k-2"><invocation>python org/devices/kit_terraform_providers.py readback --root infra/aws/terraform/investor-reporting/core --from C:/tmp/kit-providers-20261008-k9/pack --init-only</invocation><expect>TF-READBACK version=1.15.8 init=ok</expect></criterion>

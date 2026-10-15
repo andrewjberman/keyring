@@ -118,6 +118,78 @@ This is the B-IN round after round 120 (round 121 was the CTO's analysis with no
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent probe cell with a disjoint write set (its own worker folder and private folder). Worker `0.9.0_WK_IRPT_DASHBD~309` (`DB-i-9`).
 
+## 9. ROUND 123, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on `CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_118_20261015.md` ADDENDUM 4 and `2.0.0_SA_COO~D2` msg 8574, contract 0.4.0 @ef923dab52)
+
+Contract 0.4.0 is merged, so the adapter that turns the Scope feed's rows into `account_return_daily` rows can be built now, offline, ahead of the feed's first real data (the CTO's earlier word that the adapter cell waits on the feed's first bronze and silver is kept for the RUN of the adapter on real rows, which is a later cell).
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-10` | The Scope feed adapter: a pure function (standard library only, no I/O) from the feed's silver rows, an Orion-to-dimension account map and the sorted trading-day list to contract-0.4.0 rows, with its offline tests and a mutant | FWD-2 | LOCAL (code and tests; nothing wired, scheduled, served or deployed) | none | I-J |
+
+**Decisions inside this decomposition (the issuer's, stated; each is open to the CTO at the round analysis).** (a) The dimension's `account_id` is Orion's id as a string (round 108), so "mapped through `account_dim`" is membership in an injected map `{orion id: dimension id}`; the real map is read from the dimension in the later run cell. (b) The contract has no column for an ABSENT row's reason, and `market_value_eod` and `account_id` are non-nullable, so ABSENT days are NOT written as contract rows: they are returned as `absent` records (account, trading day, reason class) beside the rows, counted in the manifest. If the CTO or `~D2` want ABSENT rows inside the table, the contract needs a reason column and a nullable value; that is their call. (c) `market_value_eod` of a trading day is the next calendar day's `start_market_value` (else the last day's `end_market_value`); the feed carries no per-day end value, so this is INFERRED and the manifest says so. (d) Three reason classes are added by the module for cases the feed's classes do not cover: `NO_FEED_ROW`, `INCOMPLETE_WINDOW` (a non-trading day inside the window has no factor, never filled with 1), `NO_EOD_VALUE`. (e) `day_quality` `MEASURED` and `guard_state` `GUARD_NOT_REACHED` are the nearest members of the 0.4.0 enums for a vendor-reported return the holdings guard never saw; the CVO grades the words at L9. (f) `history_scope` is `PARTIAL_HISTORY` on every row until the backfill is read. (g) `method_version` is an argument: no `dim_return_method` row for an Orion return exists yet.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent build cell with a disjoint write set (a new module and its test file). Worker `0.9.0_WK_IRPT_DASHBD~310` (`DB-i-10`).
+
+## 10. ROUND 124, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-118 ADDENDUM 5 (msg 8584) and ADDENDUM 6 (msg 8605))
+
+The CTO ruled (open call dell2-20261015T193100Z-cf2a) that the run wrapper is cut now, offline, and that the first real-row run stays a later cell on the feed's silver. ADDENDUM 6 carries worker row W310-S2 (a repeated key) into this round and says the wrapper writes contract 0.4.1 if it has landed by the cut, otherwise ABSENT beside the rows, and says which. Contract 0.4.1 has not landed (the file reads 0.4.0 at the cut), so ABSENT sits beside the table and the run record says `BESIDE_TABLE`.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-11` | The Scope feed run wrapper: from feed silver partitions (pandas frames) and the dimension frame, the complete-day rule, a repeated-key refusal, the account map from the dimension's own key form, `adapt()`, then contract-0.4.0 date partitions, an ABSENT-records file and a run record; a 299-day chain fixture; plus the CTO's three round-123 enrichments (a `market_value_eod_claim` row field, the 0.4.1 shape of ABSENT records with the UNMAPPED_ACCOUNT inversion fixed in the adapter, the `reason_class_status` proposed marks); fixtures only, no AWS | FWD-2 | LOCAL (code and tests; local files under a handed directory; nothing wired, scheduled, served or deployed) | `DB-i-10` (merged, @90862adf60) | I-K |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The complete-day rule is the wrapper's guard of the feed's own rule (a day's key is written only when the day is complete, round PN1 item 4): the wrapper cannot see the feed's household universe, so it grades the rows it is given: an unknown status, a RETURNED row without a factor or an ABSENT row without a reason class makes the whole calendar day incomplete, and every row of that day is dropped and counted. A dropped day then reads ABSENT through the adapter's own rules (NO_FEED_ROW / INCOMPLETE_WINDOW), never filled. (b) A repeated key is refused (ValueError carrying the count, nothing written) rather than read as "last wins". (c) The 238-to-365-day fixture (round-122 analysis item 2) is 299 calendar days, Monday to Friday, one account: the fixture's "source" is the product of its own daily factors, because the adapter stores and chains the daily factor and never reads a window summary (ADDENDUM 3); a real Orion summary comparison belongs to the real-row run. (d) The wrapper reads the dimension's key form (Orion's id as a string) as ADDENDUM 6 item 6 rules. (e) `proposed_reason_classes` in the run record names the three module-added classes while 0.4.1 has not admitted them (ADDENDUM 6 item 3). (f) The round-123 analysis (msg 8610, items 1 to 3) is in this cell and not a second one: its items edit the merged adapter, whose rows the wrapper writes, so one worker owns both files and the wrapper's golden grades the adapter's new shapes end to end. The edit supersedes the round-123 checker's shapes for an unmapped record and a row; that checker graded the closed order. (g) `market_value_eod_claim` is written beside the contract's 22 fields, outside its hash, until 0.4.1 admits it; the contract's own validator ignores an undeclared column.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent build cell with a disjoint write set (a new module and its test file). Worker `0.9.0_WK_IRPT_DASHBD~311` (`DB-i-11`).
+
+## 11. ROUND 125, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-124 analysis @e5c8b143fe, msg 8654, answering my packet @1190b13f77)
+
+Round 124 does not close on its own: the CVO graded the landed tree NOT MAY-CLOSE (contract 0.4.1 landed after the cut; AC2 and AC3 fail and 2 of 38 tests are red on trunk). The CTO accepted my proposed batch and added three items. Round 125 is cut on contract 0.4.1 (the file reads 0.4.1 at the cut; 0.4.2 has been asked of `~D2` and has not landed). It closes round 124 when it lands green on trunk, graded on the landed tree.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-12` | The Scope feed adapter and run wrapper on contract 0.4.1: Orion PRESENT rows `VENDOR_REPORTED` with `row_status` PRESENT (disarms W221-S3); ABSENT rows written INTO the table in the 0.4.1 shape with the contract's reason precedence (the `absent/` file and `BESIDE_TABLE` retire); the wrapper reads its field list and version from the contract file; refusals for a bad dimension key, a mismatched partition and a non-empty output directory; the adapter gets the full domain and account set so that a dropped first or last calendar day leaves 0 trading days unaccounted (W311-S1, S3); the 'proposed' marks removed; the end-of-day claim in the table when the contract declares it, else in the run record; fixtures only, no AWS | FWD-2 | LOCAL (code and tests; local files under a handed directory; nothing wired, scheduled, served or deployed) | `DB-i-11` (merged, @6c7b7ccb56) | I-L |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) One cell, not two: the adapter and the wrapper change together (the wrapper's golden grades the adapter's rows end to end) and one worker owns all four files. (b) The checker is driven by the contract FILE at HEAD (version, fields, hash, validator), so a 0.4.2 that declares `market_value_eod_claim` as a column changes what the checker expects, never its code, and the wrapper switches the claim from the run record to the table by reading the contract; the order names both placements. (c) An ABSENT row's unlisted columns follow `~D2`'s own `_absent` fixture in `test_account_return_contract_041.py` (`return_basis` and `day_quality` NOT_MEASURABLE, `guard_state` GUARD_NOT_REACHED); `carried_days` 0 and `flow_claim` absent are mine (the contract does not say; the validator accepts both). (d) W311-S1 is a criterion, as the CTO ruled: the wrapper passes the adapter the full domain and every account, and counts `trading_days_unaccounted` itself from the output. (e) W311-S2 is settled as: the repeated-key count is the number of distinct keys repeated. S3 is closed by the account set; S4, S5 and S6 are refusals with a count and no write. (f) The closing grade is the landed tree: at the drain I re-run all three criteria on the merged tree, not only in the worker's.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell with a disjoint write set of four existing files. Worker `0.9.0_WK_IRPT_DASHBD~312` (`DB-i-12`).
+
+## 12. ROUND 126, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-122 analysis item 3 and ADDENDUM 1 (msg 8678, open call dell2-20261015T211904Z-4255 ruled yes))
+
+The round-122 analysis left the series-ended cause read to this seat "at the next B-IN round"; rounds 123 to 125 took other analyses, so it was uncut. The CTO ruled it cut now, after round 125's drain (the call was queued during it), and ruled (msg 8679) that the TWR flip of the module rides contract 0.4.2 in the same merge window as `~D2`'s file, never ahead of it. That flip is a separate cell, cut when 0.4.2 lands, with the next round number; it is not in this issuance.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-13` | The series-ended cause read: the two saved round-122 Scope bodies against Opal's `fact_positions` silver (GET-only reader, no vendor call): for each Account series that ends before the window end, its days-before-window-end, how many positions partitions follow it, on how many the account is held, whether it is held on the newest, and the verdict STALE_AT_SOURCE / CLOSED_OR_TRANSFERRED / NOT_DETERMINED; counts and words only | FWD-2 | LOCAL (a GET-only read of Opal's own silver and private files; no vendor call, no write, nothing deployed) | none | I-M |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The CTO asked to print "its last date"; the repo carries days-before-window-end (an integer) and the account as a sha256, because a date next to a client's account would be a client fact in the repo. (b) STALE_AT_SOURCE means Opal's positions still hold the account on the newest partition after Orion's series ended; it does NOT prove a vendor fault (a position can outlive a vendor's performance record for another reason), and the basis words say so. (c) The read is bounded: LIST plus GETs under 200; a cap hit is a recorded result, not a widening. (d) The checker recomputes everything it can from the saved bodies and the worker's private extract; it cannot re-read S3, so the issuer spot-reads the newest partition at the drain. (e) The risk class is LOCAL as the CTO wrote (a GET-only read of Opal's own estate, as rounds 108 to 111 were).
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent read cell with a disjoint write set (its own worker folder and private folder); worker `0.9.0_WK_IRPT_DASHBD~313` (`DB-i-13`) runs alone; round 125's worker has already drained.
+
+## 13. ROUND 127, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-125 analysis (msg 8695, 8698) and his 0.4.2-landed message; contract 0.4.2 merged by `~D2` at 6ac152c83a)
+
+The CTO numbered the module's flip "round 126"; round 126 was already DB-i-13 (the cause read), and he confirmed (msg 8698) that the flip is round 127, cut when `~D2`'s 0.4.2 lands. It has landed: `return_basis` is TWR or NOT_MEASURABLE (VENDOR_REPORTED and `source_requires` are gone; provenance is `source`), and the optional column `market_value_eod_claim` is required on a PRESENT Orion row and null on an ABSENT row. The merged module writes VENDOR_REPORTED and keeps the claim in the run record, so on trunk the r125 checker's AC3 and 4 module tests read red; the CTO asked that the count be named, not suppressed (4 failed, 58 passed across the adapter and wrapper test files, measured at the cut).
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-14` | The Scope feed adapter and run wrapper on contract 0.4.2: PRESENT rows `TWR` (disarms W221-S3); `market_value_eod_claim` a declared column of the table (the run record's `claim_placement` retires; the wrapper refuses a contract that does not declare the column); `contract_version` read from the file; the W311-S3 test line; fixtures only, no AWS | FWD-2 | LOCAL (code and tests; local files under a handed directory; nothing wired, scheduled, served or deployed) | `DB-i-12` (merged, @7a8a2f681f) | I-N |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The wrapper REFUSES a contract that does not declare the claim column (count 1, nothing written) instead of keeping the run-record placement: round 125's two-placement code existed only to bridge the gap before 0.4.2, and a writer should not run behind its contract any more than ahead of it. (b) The r127 checker is driven by the contract file at HEAD and uses the 0.4.2 test module's validator; the r125 checker graded 0.4.1 and is superseded. (c) W311-S3 was already closed in the merged wrapper (the CTO accepted this, msg 8698); it is carried as a test line only. (d) DB-i-13 (round 126) is a read cell on a separate chain; the two share no file.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell with a disjoint write set of four existing files. Worker `0.9.0_WK_IRPT_DASHBD~314` (`DB-i-14`).
+
+## 14. ROUND 128, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-126 analysis, msg 8730)
+
+The CTO closed round 126 MAY-CLOSE with one enrichment: the read record carries `cause_claim: inferred` (the account is absent from a complete positions partition; its own status was not read). No product change follows; the verdict words stay record vocabulary. The record sits in the round-126 worker's deliverables folder, which the commit lane grants only to a worker holding a non-terminal order naming it (my own commit of the one-line edit was refused by lane TREE_DELIVERABLES), so the edit is a direct-act order.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-15` | Add the single key `cause_claim` = `inferred` to `SERIES_ENDED_CAUSE_R126.json` (the diff is one added line) | FWD-2 | LOCAL (one data record; nothing wired, served or deployed) | `DB-i-13` (merged) | I-O |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The round-126 check (`checks/r126/p126_cause.py`, the issuer's file) is amended in this issuance to require `cause_claim` = `inferred`; between the issuance and the worker's merge `DBI126-1-AC1` therefore reads FAIL on trunk, named here so it is not read as a regression. (b) The order's own criterion, `DBI128-1-AC1`, runs the same check and expects its PASS line. (c) A direct act (one cell, a one-line edit, LOCAL) runs no L2, L4-R or L8 to L10; its close is my one real run of the criterion on the landed tree.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent direct-act cell with a disjoint write set (one record); worker `0.9.0_WK_IRPT_DASHBD~315` (`DB-i-15`).
+
 ## Cells
 
 | cell id | owner |
@@ -131,3 +203,9 @@ This is the B-IN round after round 120 (round 121 was the CTO's analysis with no
 | DB-i-7 | 0.9.0_WK_IRPT_DASHBD~307 |
 | DB-i-8 | 0.9.0_WK_IRPT_DASHBD~308 |
 | DB-i-9 | 0.9.0_WK_IRPT_DASHBD~309 |
+| DB-i-10 | 0.9.0_WK_IRPT_DASHBD~310 |
+| DB-i-11 | 0.9.0_WK_IRPT_DASHBD~311 |
+| DB-i-12 | 0.9.0_WK_IRPT_DASHBD~312 |
+| DB-i-13 | 0.9.0_WK_IRPT_DASHBD~313 |
+| DB-i-14 | 0.9.0_WK_IRPT_DASHBD~314 |
+| DB-i-15 | 0.9.0_WK_IRPT_DASHBD~315 |

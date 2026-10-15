@@ -52,6 +52,9 @@ MODULE_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)*$")
 WHEEL_RE = re.compile(r"^[A-Za-z0-9_.+-]+\.whl$")
 DEVICE_RE = re.compile(r"^[A-Za-z0-9_.-]+$")
 MISSING_RE = re.compile(r"ModuleNotFoundError: No module named '([^']+)'")
+# ANSI colour and control sequences: CSI (ESC [ params intermediates final byte) and OSC (ESC ] ... BEL or ESC \)
+ANSI_RE = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]|\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)")
+COLOUR_PINS = {"PYTHON_COLORS": "0", "NO_COLOR": "1"}
 IMPORT_CODE = (
     "import sys, importlib; sys.path.insert(0, sys.argv[1]); importlib.import_module(sys.argv[2])"
 )
@@ -315,9 +318,32 @@ def build_pip_command(wheel_path, target=None, user=False, interpreter=None):
     return cmd
 
 
+def strip_ansi(text):
+    """The text with ANSI colour and control sequences removed (a coloured traceback otherwise hides its module name)."""
+    return ANSI_RE.sub("", text or "")
+
+
+def build_plain_env(base=None):
+    """A copy of the environment with colour pinned off and FORCE_COLOR removed: a Python 3.14 child started with
+    FORCE_COLOR set colours its traceback."""
+    env = dict(os.environ if base is None else base)
+    for k in list(env):
+        if k.upper() == "FORCE_COLOR":
+            del env[k]
+    env.update(COLOUR_PINS)
+    return env
+
+
+def build_import_env():
+    """Environment for the import child (the one that runs a pack module): plain output."""
+    return build_plain_env()
+
+
 def build_child_env():
-    """Environment for the pip child: no inherited PIP_* setting, no user config, no pip self-version check (a network call)."""
+    """Environment for the pip child: no inherited PIP_* setting, no user config, no pip self-version check (a network call),
+    and plain output."""
     env = {k: v for k, v in os.environ.items() if not k.upper().startswith("PIP_")}
+    env = build_plain_env(env)
     env["PIP_NO_INDEX"] = "1"
     env["PIP_DISABLE_PIP_VERSION_CHECK"] = "1"
     env["PIP_CONFIG_FILE"] = os.devnull
@@ -344,9 +370,10 @@ def classify_import(rc, stderr, own_modules):
     """Returns (class, missing_name, first_error_line). class: imported | import_missing_dep | failed."""
     if rc == 0:
         return "imported", None, ""
-    lines = [ln for ln in (stderr or "").splitlines() if ln.strip()]
+    text = strip_ansi(stderr)
+    lines = [ln for ln in text.splitlines() if ln.strip()]
     err = ascii_line(lines[-1]) if lines else "exit code %s with no stderr" % rc
-    m = MISSING_RE.search(stderr or "")
+    m = MISSING_RE.search(text)
     if m:
         missing = m.group(1)
         top = missing.split(".")[0]
@@ -359,7 +386,7 @@ def run_import(target, module, own_modules):
     cmd = [sys.executable, "-I", "-c", IMPORT_CODE, target, module]
     try:
         cp = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace",
-                            timeout=IMPORT_TIMEOUT_S, stdin=subprocess.DEVNULL)
+                            timeout=IMPORT_TIMEOUT_S, stdin=subprocess.DEVNULL, env=build_import_env())
     except subprocess.TimeoutExpired:
         return {"module": module, "rc": 124, "first_error_line": "import timed out after %ds" % IMPORT_TIMEOUT_S,
                 "class": "failed"}

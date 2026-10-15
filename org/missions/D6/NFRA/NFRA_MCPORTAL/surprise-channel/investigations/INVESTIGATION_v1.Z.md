@@ -2282,3 +2282,361 @@
   "notes": "Work-around used by this seat only, per command: PATH=<Python311 dir>:$PATH. Remedy (reinstall or restore Python314's Lib, or point PATH at a working interpreter) is the box owner's; the seat did not change the install. Gates that run `python` bare will refuse or misread until then."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W32-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~32",
+  "surfaced_at": "2026-10-15T17:25:11Z",
+  "one_line": "portal/DESIGN.md, the style authority the MP-pe-2 face names, is absent from the worker worktree (portal/ is an empty gitlink directory), so the new page could not be checked against it.",
+  "class": "OBSERVATION",
+  "spec_asserts": "MP-pe-2 face section 1 item 2: the Gateway page follows portal/DESIGN.md (light canvas, white hairline panels, navy ink, one band per page), read from portal/DESIGN.md.",
+  "world_is": "In C:/tmp/mp-pe-32, portal/ is an empty directory and git lists it as a gitlink at e0b033253b973fcc19779a3783bc4979c14c65a0; portal/DESIGN.md does not exist there, and mcportal/DESIGN.md does not exist either. The file was not read from another checkout. The change adds no colour and no font: it uses the classes and tokens already in gateway.css and reuses the existing red for the gap line.",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ ls -la C:/tmp/mp-pe-32/portal during this run, before 2026-10-15T17:25Z: total 12, only the . and .. entries",
+      "RAN git ls-files -s portal in C:/tmp/mp-pe-32: 160000 e0b033253b973fcc19779a3783bc4979c14c65a0 0 portal (a gitlink)",
+      "RAN ls C:/tmp/mp-pe-32/portal/DESIGN.md and ls C:/tmp/mp-pe-32/mcportal/DESIGN.md: both 'No such file or directory'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired: the doc is outside the write grant and was not copied in. Style conformance of the new page is unverified and no judgment is recorded on it. The issuer decides whether worker worktrees carry the doc."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W32-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~32",
+  "surfaced_at": "2026-10-15T17:25:11Z",
+  "one_line": "The MP-pe-2 task-order file delivered to the worker carries its RECORD FACE below the marker, and a whole-file Read returns that section.",
+  "class": "OBSERVATION",
+  "spec_asserts": "The worker face is the whole of the worker's context; the RECORD FACE does not travel to the worker, and the worker reads from the first line to the RECORD FACE marker and stops there.",
+  "world_is": "The file C:/tmp/mp-pe-32/org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-2.gateway-view-groups-and-reads-plainly.md holds the RECORD FACE (issuer notes, status, round, risk) after its marker line. A Read with no offset or limit returned the whole file, RECORD FACE included, and the worker had read past the marker before it stopped. No step was taken from the RECORD FACE content.",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ C:/tmp/mp-pe-32/org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-2.gateway-view-groups-and-reads-plainly.md with no offset or limit: 131 lines returned in one result",
+      "The returned text holds the marker line 116 ('RECORD FACE -- does NOT travel to the worker'), then ISSUER NOTES at line 118 and <status>pending</status> at line 124"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The worker's own Read was unbounded; the carrier file itself holds the record face, which is the subject of this row. The TO file is outside the write grant, so no status flip was made by this worker."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T19:03:28Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S54",
+  "one_line": "Z-W32-S1 is DISARMED: the style authority was read at DEV by the issuer and the page was rendered and looked at; the one break (browser-blue links) is fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W32-S1. The worktree lacked portal/DESIGN.md, so the worker could not grade style. The issuer read it from the portal repo at DEV and checked ink is navy and tokens only; Amendment 1 (@7cdca27ebd) fixed the links and the second render shows them fixed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-2.gateway-view-groups-and-reads-plainly.md Amendment 1 @7cdca27ebd",
+      "drain commit b006b05b90 message: headless Edge render, second build shows the five defects fixed"
+    ]
+  },
+  "spec_asserts": "Z-W32-S1 asserted that style conformance of the new page was unverified because portal/DESIGN.md was absent from the worktree.",
+  "world_is": "Conformance was checked by the issuer against DESIGN.md read at DEV and by rendering the page twice; the break found was fixed. Worker worktrees still do not carry the doc; no later cell depends on it.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-2."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T19:03:28Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S55",
+  "one_line": "Z-W32-S2 is DISARMED: the worker took no step from the record face and the order's own record face is the carrier the gate reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W32-S2. The worker reported it took no step from the record face below the marker; the delivered work matches the worker face (7 of 7 named tests). The order file is a single carrier by design, so the whole-file read is a property of the carrier, not a defect to repair in this round.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-2.gateway-view-groups-and-reads-plainly.md RECORD FACE marker at line 116",
+      "worker 32 report: no step taken from the record face; issuer re-ran pe2.AC1 7 of 7, 61 pass 0 fail"
+    ]
+  },
+  "spec_asserts": "Z-W32-S2 asserted that the record face does not travel to the worker.",
+  "world_is": "The spawn prompt carried the worker face only; the worker later read the order file whole and says it took no step from the record face.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-2."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T17:32:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-W31-S1",
+  "one_line": "admin_people.py keeps its own copy of the old placement (every tool with no integration spec goes to m365), so the People view and the regrouped breakdown disagree on the undeclared tools and the AC2 seam test fails (passed=100 failed=1 seam=1).",
+  "spec_asserts": "MP-pe-1 (PE round 1, decomposition v11), AC2: the admin suite stays green with seam test failures=0, because the People view reuses the breakdown's helpers and test_person_holdings_equal_breakdown_holders must still hold after the regrouping; the write surface excludes every other app/ module.",
+  "world_is": "app/admin_people.py _compute (lines 87-97) sets chan_of[tool] = bd.M365_ID for every tool without an integration spec instead of using the breakdown's placement. After the MP-pe-1 change the breakdown lists send_email and list_calendar under undeclared while the People view lists them under m365, and tests/test_admin_people.py::test_person_holdings_equal_breakdown_holders fails its _pairs equality. The People page still tells its reader that undeclared tools are Microsoft 365 tools.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN pe1.AC2.sh in worktree C:/tmp/mp-pe-31: 'admin suite: 1 failed, 100 passed, 3 warnings in 36.73s; passed=100 failed=1; seam test failures=1' RESULT: FAIL exit=1",
+      "RAN pytest tests/test_admin_gateway_breakdown.py tests/test_admin_people.py: FAILED tests/test_admin_people.py::test_person_holdings_equal_breakdown_holders, left side holds ('m365', 'list_calendar') and ('m365', 'send_email'), right side holds ('undeclared', ...)",
+      "READ infra/aws/ec2/opal-gateway/app/admin_people.py@bf3d5c9913 lines 87-97: chan_of[tool] = bd.M365_ID for every tool with no active integration spec"
+    ]
+  },
+  "notes": "Not repaired: admin_people.py is outside this order's <paths>, and the seam assertion was left unchanged because weakening it to compare tool names only would hide the divergence. AC2 is REFUSED with this measurement. The People placement must derive from the breakdown's grouping, or the seam must be re-specified; the issuer routes that."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T17:32:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-W31-S2",
+  "one_line": "Rule 3 keys Microsoft 365 on graph_scope_map.TOOL_GRAPH_SCOPES, which lacks send_email, list_calendar, find_online_meeting and copy_site_file_to_s3; these call Graph through tools._run and now read 'No source declared'.",
+  "spec_asserts": "MP-pe-1 PE.0 premise: only tools that call Microsoft Graph belong in Microsoft 365; rule 3 places a tool there only when it is a key of TOOL_GRAPH_SCOPES, and rule 4 files every other tool under undeclared.",
+  "world_is": "send_email (app/tools.py:465) and list_calendar (app/tools.py:497) run through _run, the Graph-token path, yet neither is a key of app/graph_scope_map.py TOOL_GRAPH_SCOPES (keys at lines 19-52). The rule was implemented as written, so the live breakdown files these Graph tools under 'No source declared'; the page is wrong in the other direction for them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN .scratch/pe1_real_compute.py in worktree C:/tmp/mp-pe-31: m365 tools = 11 names, none of them send_email or list_calendar; undeclared = 75",
+      "READ app/tools.py@bf3d5c9913 lines 465 and 497: send_email and list_calendar bodies return through _run(...)",
+      "GREP app/graph_scope_map.py@bf3d5c9913 TOOL_GRAPH_SCOPES keys (lines 19-52): no send_email, list_calendar, find_online_meeting or copy_site_file_to_s3 key"
+    ]
+  },
+  "notes": "Not repaired: the scope map is outside this order's <paths>, and the spec's rule 3 was implemented exactly as written. The issuer decides whether the Graph-scope map or the rule's key set is the intended source of truth."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T19:30:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-W31-S3",
+  "one_line": "AMENDMENT 1 (a) keeps send_email out of m365, so the seam assertion at tests/test_admin_people.py line 346 (m365 send_email held by BOSS) cannot pass while the seam test must stay unchanged; AC2 refused.",
+  "spec_asserts": "MP-pe-1 AMENDMENT 1: rule 3 stays as built with no hand-kept Microsoft tool list (a); test_person_holdings_equal_breakdown_holders must pass unchanged (d); AC2 reads failed=0 and seam test failures=0 (e).",
+  "world_is": "send_email is not a key of app/graph_scope_map.py TOOL_GRAPH_SCOPES and has no catalog source_group, so the amended rules place it in the undeclared group, while line 346 of tests/test_admin_people.py asserts ('m365','send_email') in the BOSS pairs. With that single line removed in a scratch probe, test_person_holdings_equal_breakdown_holders passes (1 passed): the seam equality holds for every person, and only this pinned channel differs. pe1.AC2.sh measured: 'admin suite: 1 failed, 102 passed; passed=102 failed=1; seam test failures=1' RESULT: FAIL exit=1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN bash .../pe/checks/pe1.AC2.sh in worktree C:/tmp/mp-pe-31 at 69d3842aa7 plus the uncommitted MP-pe-1 edits: 'admin suite: 1 failed, 102 passed ... seam test failures=1' RESULT: FAIL exit=1",
+      "READ infra/aws/ec2/opal-gateway/tests/test_admin_people.py (worktree) line 346: assert ('m365','send_email') in _pairs(by_who[BOSS]) and not in _pairs(by_who[POP])",
+      "RAN a scratch copy of that test with line 346 removed (tests/zz_seam_probe_tmp.py, deleted after): '1 passed'; GREP app/graph_scope_map.py (worktree): no send_email key"
+    ]
+  },
+  "notes": "Not repaired and the seam test NOT edited: the order says it must pass unchanged, and the only failing line is the pinned send_email placement that the amended rules change. Options for the issuer to rule: (i) re-state line 346 as ('undeclared','send_email') for BOSS and POP, which the order would name as a changed assertion; (ii) declare send_email with kind graph in the DATA_CATALOG tool_index (read-only for this order); (iii) add send_email to TOOL_GRAPH_SCOPES (a map outside this order's paths). AC2 is REFUSED with this measurement."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T19:50:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-W31-S4",
+  "one_line": "The amended AC1 expect 'named tests PASSED 10 of 10 -- RESULT: PASS -- exit=0' cannot match what pe1.AC1.sh prints (three lines, no ' -- '), so AC1 reads a true PASS as unmatched; AC1 refused as written.",
+  "spec_asserts": "MP-pe-1 AMENDMENT 1 (e): the AC1 expect line says what pe1.AC1.sh prints: 'named tests PASSED 10 of 10 -- RESULT: PASS -- exit=0'.",
+  "world_is": "pe1.AC1.sh prints the tally, the verdict and the exit code on three separate lines ('...; named tests PASSED 10 of 10', 'RESULT: PASS', 'exit=0'). The proof checker matches expect with re.search over the verbatim output_evidence, and the literal ' -- ' separators never occur in it, so the expect cannot match a passing run. Measured this round: 'breakdown grouping tests: ... 20 passed ...; named tests PASSED 10 of 10' / 'RESULT: PASS' / 'exit=0' at 20 of 20 file tests. The sibling instances carry the same check as '.*'-joined regexes (TO-MP-k-1 AC1).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pe1.AC1.sh in worktree C:/tmp/mp-pe-31 (HEAD 69d3842aa7 plus uncommitted MP-pe-1 edits): output three lines, RESULT: PASS, exit=0",
+      "READ .tools/proof-of-spec-check.py (expect block, re.search(exp, output_evidence, re.S|re.M)) at 69d3842aa7: the literal ' -- ' cannot match a newline-separated output",
+      "READ deliverables/0.9.0_WK_NFRA_MCPORTAL~10/NFRA_MCPORTAL.TO-MP-k-1.fabric-calls-handlers.proof_of_spec.json at 69d3842aa7: its expect is 'calls tests: .*named tests PASSED 6 of 6.*RESULT: PASS.*exit=0'"
+    ]
+  },
+  "notes": "Not repaired: the expect is the issuer's text and is kept verbatim (a criterion is never repaired). AC1 is REFUSED as written with this measurement; the substance (named tests PASSED 10 of 10, RESULT: PASS, exit 0) is measured. The issuer re-states the expect; the sibling '.*' form would match the verbatim output."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T21:30:41Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S56",
+  "one_line": "Z-W31-S1 is DISARMED: the People view no longer keeps its own placement; one function in admin_gateway_breakdown.py places every tool for both views.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W31-S1. The duplicate rule was the issuer's spec fault (it ruled the People view out of MP-pe-1's paths). Amendment 1 put admin_people.py in the paths for that only; the worker built the single function and the seam test test_person_holdings_equal_breakdown_holders passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain commit 8310672247: pe1.AC1 named tests PASSED 10 of 10, pe1.AC2 103 passed 0 failed, seam test failures 0 (re-run by the issuer on the shared tree)",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-1.breakdown-groups-by-source.md AMENDMENT 1 (@7cdca27ebd) and AMENDMENT 2 (@33932ee038)"
+    ]
+  },
+  "spec_asserts": "Z-W31-S1 asserted that admin_people.py kept its own copy of the old placement so the two views disagreed.",
+  "world_is": "The two views call one placement function; test_people_view_places_tools_in_the_breakdowns_groups and the seam test both pass.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-1 (merged @8310672247)."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T21:30:41Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S57",
+  "one_line": "Z-W31-S2 is DISARMED: TOOL_GRAPH_SCOPES is kept as a partial signal, not the Microsoft 365 list; the full classification is MCPINDEX's declaration (kind graph, MX-c-21).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W31-S2. The belief that TOOL_GRAPH_SCOPES lists every Graph tool was the issuer's error. Amendment 1 (PE.7) keeps rule 3 as a partial signal and adds the declared kind graph; until MX-c-21 ships declarations, Graph tools without a scope entry read undeclared (75 of 86 on the real registry, measured by the worker).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain commit 8310672247: pe1.AC1 named tests PASSED 10 of 10, pe1.AC2 103 passed 0 failed, seam test failures 0 (re-run by the issuer on the shared tree)",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-1.breakdown-groups-by-source.md AMENDMENT 1 (@7cdca27ebd) and AMENDMENT 2 (@33932ee038)"
+    ]
+  },
+  "spec_asserts": "Z-W31-S2 asserted that rule 3 placed only 11 of the tools that use Graph in Microsoft 365 and left others undeclared.",
+  "world_is": "True and now stated: the page shows them as No source declared (a gap, labelled so) until the catalog declares kind graph; no hand-kept list was added.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-1 (merged @8310672247)."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T21:30:41Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S58",
+  "one_line": "Z-W31-S3 is DISARMED: the seam assertion no longer names a group for send_email; the seam comparison of every person's holdings is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W31-S3. The assertion pinned the old default (m365); Amendment 2 changed that one line to say BOSS holds send_email and the population does not, under whichever group the breakdown gives it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain commit 8310672247: pe1.AC1 named tests PASSED 10 of 10, pe1.AC2 103 passed 0 failed, seam test failures 0 (re-run by the issuer on the shared tree)",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-1.breakdown-groups-by-source.md AMENDMENT 1 (@7cdca27ebd) and AMENDMENT 2 (@33932ee038)"
+    ]
+  },
+  "spec_asserts": "Z-W31-S3 asserted that the seam test could not pass while send_email was kept out of m365.",
+  "world_is": "The seam test passes with the one line changed (worker report, issuer re-run 103 passed).",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-1 (merged @8310672247)."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T21:30:41Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S59",
+  "one_line": "Z-W31-S4 is CLOSED: the AC1 and AC2 expect lines are re-cut to patterns the checker matches, and the instance validated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Closes NFRA_MCPORTAL-Z-W31-S4. The expect form was the issuer's: the script prints three lines. Amendment 2 re-cut both expects with the sibling pattern form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain commit 8310672247: pe1.AC1 named tests PASSED 10 of 10, pe1.AC2 103 passed 0 failed, seam test failures 0 (re-run by the issuer on the shared tree)",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-1.breakdown-groups-by-source.md AMENDMENT 1 (@7cdca27ebd) and AMENDMENT 2 (@33932ee038)"
+    ]
+  },
+  "spec_asserts": "Z-W31-S4 asserted the AC1 expect could not match the script's three-line output.",
+  "world_is": "proof-of-spec-check.py reads the instance VALID rc=0 with the re-cut expects.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-1 (merged @8310672247)."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T21:27:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-W31-S5",
+  "one_line": "MP-pf-1 leaves open whether a non-empty vendor or firm is stored as read or stripped; the worker stores it stripped, so ' Acme ' and 'Acme' merge into one segment.",
+  "spec_asserts": "MP-pf-1 section 1 item 1: a vendor or firm that is missing, not a string, or empty (after strip) reads as the literal string unresolved. The order does not say what a non-empty value is stored as.",
+  "world_is": "app/admin_gateway_breakdown.py _segment_fields_for stores a non-empty string STRIPPED of surrounding whitespace, so a row with vendor ' Acme ' and a row with vendor 'Acme' fall in one (vendor, firm) segment. The choice is the worker's, not the order's. No criterion depends on it: the real catalog carries no vendor or firm yet (real _compute run: no channel carries segments).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py at 8310672247 plus the MP-pf-1 edit in this commit: helper field() returns raw.strip() for a non-empty string",
+      "RAN pf1.AC1.sh in worktree C:/tmp/mp-pe-31: 'segment tests: ... 26 passed' and 'named tests PASSED 6 of 6' RESULT: PASS exit=0; no test plants a padded value, so the stripping is unpinned by the suite"
+    ]
+  },
+  "notes": "Not repaired: the stripping stands as built and is stated here for the issuer to confirm or reverse. A reversal changes one line in field() and no test."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T21:41:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-W31-S6",
+  "one_line": "A correction to S5: the real catalog's tool_index block carries no vendor or firm, but 'firm' appears 273 times on channel and silver rows with another meaning (an owning firm, e.g. opal-internal, 49financial).",
+  "spec_asserts": "MP-pf-1 section 1: the segmentation key is C-GROUP: tool_index rows carry bucket, vendor and firm on opal-data-assets and opal-data-bd rows, and the catalog carries them only after a later release.",
+  "world_is": "DATA_CATALOG.yaml, tool_index block (lines 1349-2478 at the worktree's HEAD 43f62f5be7): zero vendor lines, zero firm lines, zero source_group lines. The file holds 273 'firm:' lines outside that block: on channel artifact rows (lines 93-1206, e.g. 'firm: opal-internal', 'firm: cottonwood') and on silver and portal rows (lines 2545 onward, e.g. 'firm: 49financial', 'firm: inflection'). Those are owning-firm values. The tool_index reader reads only the tool_index block, so these never reach the segmentation. S5's world_is said the catalog carries no vendor or firm; that was too broad and is corrected here, S5 is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GREP of app/refs/DATA_CATALOG.yaml in worktree C:/tmp/mp-pe-31: pattern source_group, 0 occurrences; pattern vendor or firm at line start, 273 occurrences, all 'firm:'; top-level keys at lines 1349 (tool_index) and 2479 (silver_datasets)",
+      "READ app/refs/DATA_CATALOG.yaml lines 84-97 at 43f62f5be7: a channel artifact row carries firm: opal-internal beside entity, verdict_class and pages"
+    ]
+  },
+  "notes": "Not repaired: the catalog is the issuer's (outside this order's write surface). A future C-GROUP release that writes tool_index vendor and firm keeps the same key names as these owning-firm keys: the issuer should confirm the key is read only from tool_index, which the handler does."
+}
+```

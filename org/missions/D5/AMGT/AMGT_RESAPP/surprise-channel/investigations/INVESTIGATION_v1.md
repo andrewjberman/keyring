@@ -27611,3 +27611,477 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "A citing row. It corrects D1-S31's 'source not found' and does not rule W441-S1: the question is a meaning of ratified FWD-40 text (a CTO matter at the round-106 analysis), not an issuer amendment inside the decomposition. Two readings, for the CTO: (a) the team's own P/E is the team's figure and may stand, the reason applying only where no team figure exists; (b) the reason must print wherever the block ratio is withheld, so the team line is not to fill that cell. No code change is proposed here."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W455-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~455",
+  "surfaced_at": "2026-10-14T06:13:50Z",
+  "one_line": "The cell's required import 'from lib.research.aifill import sentences' is refused by the existing import whitelist in test_text_blocks.py, so three of the five builders (team view, thesis pillars, identity description) fail test_block_source_is_ascii_and_imports_only_re_and_contract.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_text_blocks.py@90ef5aa850:28 defines ALLOWED_IMPORTS as the three lines from __future__, import re and from lib.research.aifill import contract; the test at lines 708-718 asserts every import line of the three block files is a member",
+      "wk-AMGT_RESAPP-455 worktree, uncommitted at filing: block_mgmt_team_view.py, block_thesis_pillars.py and block_identity_description.py each import 'from lib.research.aifill import contract, sentences' (the cell's step 1)",
+      "pytest on the worktree: 6 failed, 173 passed across test_block_mgmt_bio.py, test_block_mgmt_recent.py and test_text_blocks.py; the three failures are the parametrised cases of test_block_source_is_ascii_and_imports_only_re_and_contract, each printing 'Extra items in the left set: from lib.research.aifill import contract, sentences'",
+      "Not edited at filing: the cell's bounds permit no change to an existing test except one that asserted the old cut at an abbreviation, and this test asserts no cut"
+    ]
+  },
+  "spec_asserts": "Cell section 1, step 1: each of the five builders takes 'from lib.research.aifill import sentences' and calls sentences.cut_at_sentence_end. Cell section 2, bound 1: touch no existing test except one that asserted the old cut at an abbreviation.",
+  "world_is": "The import the cell mandates is outside the import set the existing hygiene test admits for the three modules it covers. The two instructions cannot both hold without editing that test's whitelist, which the bounds forbid. No behaviour is affected; the failure is the whitelist alone.",
+  "notes": "Decision for the issuer: admit the sentences import in ALLOWED_IMPORTS (a whitelist line, no assertion changed), or re-issue the cell without the sentences import in the three modules. The worker did not choose between them."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W455-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~455",
+  "surfaced_at": "2026-10-14T06:13:50Z",
+  "one_line": "test_cut_keeps_a_sentence_end_at_exactly_the_cap (test_block_mgmt_recent.py) asserts that a full stop followed by a lowercase word is a sentence end; the shared sentences module treats that full stop as no end, so the test now gets NONE where it asserts WEB_SEARCH.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_block_mgmt_recent.py@90ef5aa850:341-345: text = 'a' * 799 + '. ' + 'b' * 50, asserting result text 'a' * 799 + '.'",
+      "lib/research/aifill/sentences.py@59236eba00, _dot_is_end rule (d): 'if nxt.islower(): return False' -- a full stop before a lowercase word is not a sentence end",
+      "pytest on the worktree: test_cut_keeps_a_sentence_end_at_exactly_the_cap fails with 'assert NONE == WEB_SEARCH' at test_block_mgmt_recent.py:344"
+    ]
+  },
+  "spec_asserts": "Cell section 2, bound 1: touch no existing test except one that asserted the old cut at an abbreviation. Cell section 1: the cut is the shared module's cut_at_sentence_end, returning the same shapes as before.",
+  "world_is": "The failing test's full stop is not an abbreviation; it is followed by a lowercase word, which rule (d) of the shared module rejects by design. So the test asserts an old cut the shared module does not make, and it is not the one test the bounds exempt. Left unedited.",
+  "notes": "Decision for the issuer: re-state the fixture with a capitalised second sentence (a test edit the bounds would need ruled), or accept the rule (d) behaviour as the spec of the shared module."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W455-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~455",
+  "surfaced_at": "2026-10-14T06:13:50Z",
+  "one_line": "Two existing bio tests assert OPAL_SOURCE for replies that the restatement rule now withholds: test_opal_path_cites_the_pack_with_no_web_search (9 of 9 tokens of its one sentence sit in the pack passage) and test_opal_officer_row_and_resolved_profile_are_cited_with_their_inputs (10 of 11 tokens in the passage).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_block_mgmt_bio.py@90ef5aa850:83-103 and 105-131: the Opal replies BIO ('Christophe Fouquet joined ASML in 2008 and is President and CEO.') and 'Christophe Fouquet joined ASML in 2008 and has been CEO since 2024.' with the fixture pack passage present",
+      "Measured on the worktree with block_mgmt_bio._tokens and _restates against the folded fixture passage: BIO 9 of 9 tokens in passage, restates True; officer reply 10 of 11 tokens in passage (only 'been' outside), restates True",
+      "pytest on the worktree: test_opal_path_cites_the_pack_with_no_web_search and test_opal_officer_row_and_resolved_profile_are_cited_with_their_inputs fail with 'assert NONE == OPAL_SOURCE'"
+    ]
+  },
+  "spec_asserts": "Cell section 1 step 2: when the supplied facts include the pack passage and at least 75 percent of the reply's sentences each have at least 80 percent of their tokens in the passage, the Opal attempt is a NONE block with the stated reason. Cell section 2, bound 1: touch no existing test except one that asserted the old cut at an abbreviation.",
+  "world_is": "Both tests were written when the Opal reply could restate the pack passage without consequence. Under the spec's rule their replies are restatements, so the rule and the two expected outcomes cannot both hold. Their replies were not edited because the bounds forbid it and the new expectation is a product decision.",
+  "notes": "Decision for the issuer: re-word the two fixture replies so they add a fact the passage lacks, or rule that restatement withholds these replies. A passage this long also carries common words ('has', 'since', 'and'), so the 80 percent token share is easy to meet on short replies; that sensitivity is recorded here, not changed."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W455-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~455",
+  "surfaced_at": "2026-10-14T06:13:50Z",
+  "one_line": "The cell's restatement rule does not say two things the implementation had to settle: the pack passage is folded (contract.fold_text) before its tokens are taken, and a sentence with no token counts as not restating while still counting in the 75 percent denominator.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/block_mgmt_bio.py in wk-AMGT_RESAPP-455 (uncommitted at filing): _pack_passage returns contract.fold_text(text); _restates skips a sentence whose token list is empty and counts it in the denominator",
+      "The reply is folded before the check, so an unfolded passage would carry 'EUR34bn' and 'they’ve'-style tokens that a folded reply never matches; the folding is the consistent reading of 'the passage'",
+      "Not a failure: no arm of check_gr6_builders.py and no existing test exercises a tokenless sentence or an accented passage"
+    ]
+  },
+  "spec_asserts": "Cell section 1 step 2: 'a token is a run of 3 or more lowercase letters or digits (re.findall over text.lower(), keeping length >= 3) and a sentence comes from sentences.split_sentences'. The cell does not state how the passage is normalised or how a tokenless sentence counts.",
+  "world_is": "The implementation folds the passage and counts a tokenless sentence as not restating. Both are the reading that keeps the token comparison like-for-like with the folded reply, and the rule is otherwise as stated.",
+  "notes": "Recorded so the issuer can confirm both readings. The worker did not add an arm or a test for either."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W455-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~455",
+  "surfaced_at": "2026-10-14T06:15:58Z",
+  "one_line": "The round-104 control check_fa3_mgmt_bio.py, which the cell's AC3 requires to stay YES, now reads NO (18 of 20): its two arms that feed the pack-restating reply BIO_TEXT expect OPAL_SOURCE and a pack citation, and the restatement rule withholds that reply.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round104_aifill_prep/checks/check_fa3_mgmt_bio.py@90ef5aa850:20 BIO_TEXT = 'Christophe Fouquet joined ASML in 2008 and is President and CEO.'; arm 'pack states management -> OPAL_SOURCE, one call, no web search' and arm 'OPAL citation is a plain-words source label' both build the bio on the served fixture with that reply",
+      "Run on the worktree: AIFILL FA-3 ARMS: NO (18 of 20); the two FAIL arms are the pack-states-management OPAL arm (block NONE, reason the restatement sentence joined with the web no-citation reason) and the citation arm (cites empty)",
+      "The other three control runs read YES: FC-3 17 of 17, FA-4 17 of 17, FA-5 25 of 25"
+    ]
+  },
+  "spec_asserts": "The cell's AC3: the earlier builder checks keep passing (controls): AIFILL FA-3 ARMS: YES (20 of 20). Cell section 1 step 2: a reply that restates the pack passage is withheld as a NONE block with the stated reason.",
+  "world_is": "The two spec statements conflict on this one reply: the round-104 control expects the restating BIO_TEXT to be kept as the pack's OPAL_SOURCE block; the round-106 rule withholds it. The check file is not in this worker's write grant and was not edited.",
+  "notes": "Same root as AMGT_RESAPP-D1-W455-S3 (the two bio tests). The issuer decides whether the control's reply changes or the rule's threshold does; the worker did not choose."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W454-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~454",
+  "surfaced_at": "2026-10-15T18:26:56Z",
+  "one_line": "lib/research/aifill/tests/test_text_blocks.py is outside this order's write grant and fails under the grounding step, so the AC2 suite criterion cannot read N passed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_text_blocks.py@wk-AMGT_RESAPP-454 lines 447-460: build_document is called with the real builders, a StubModel and no fetch, and no ground=False",
+      "pytest on wk-resapp-454 after the orchestrate.py change: FAILED test_document_with_a_silent_pack_and_empty_header_fills_the_three_blocks, AssertionError 'NONE' == 'WEB_SEARCH' at line 457; 1 failed, 754 passed"
+    ]
+  },
+  "spec_asserts": "Cell section 2 bounds 1 and section 3 paths: this order writes orchestrate.py, run.py, the new grounding test module, test_contract_orchestrate.py and test_store_run.py only; existing tests that build documents from stub builders returning filled blocks pass ground=False. No other test file is named.",
+  "world_is": "test_text_blocks.py::test_document_with_a_silent_pack_and_empty_header_fills_the_three_blocks builds a WEB_SEARCH mgmt_team_view through build_document with no fetcher. Under the built grounding step (default ground=True, no usable source) the block is withheld as NONE, so the test fails. The file was not edited: it is outside the grant.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "AC2 stays FAIL on this row. The issuer decides whether that test takes ground=False in a later order or the grant widens. The grounding behaviour is the one the cell specifies; only the old test expectation conflicts."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W454-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~454",
+  "surfaced_at": "2026-10-15T18:26:56Z",
+  "one_line": "Two monkeypatched validate_document lambdas in test_store_run.py took one argument; the cell's final check passes require_grounding, so both tests raised TypeError.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_store_run.py@wk-AMGT_RESAPP-454 lines 134 and 309 before the edit: monkeypatch.setattr(contract, 'validate_document', lambda doc: ['forced problem'])",
+      "pytest before the edit: FAILED test_store_run.py::test_write_validates_through_the_contract_module and FAILED test_store_run.py::test_invalid_document_is_never_written"
+    ]
+  },
+  "spec_asserts": "Cell section 1, build_document: the final document check uses require_grounding=ground.",
+  "world_is": "The two stub lambdas now take **kwargs. The stub builders in test_store_run.py _good_doc pass ground=False so the documents keep their OPAL_SOURCE meaning. Both edits are inside the grant.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Reported as a change to an existing test, as the cell asks."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W457-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~457",
+  "surfaced_at": "2026-10-15T18:50:07Z",
+  "one_line": "The order states the GR-8 check reads 1 of 10 arms at the base; measured at the base it reads 5 of 10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round106_aifill_prep/checks/check_gr8_required.py run at 3c2fc35992 before any edit: 'AIFILL GR-8 ARMS: NO (5 of 10)'; FAIL on GROUNDING_REQUIRED is True, the default refusal, make_block refusal, the revalidate refusal and the helper file arm",
+      "the order's preflight states 'AIFILL GR-8 ARMS: NO (1 of 10)' at the base"
+    ]
+  },
+  "spec_asserts": "Task order preflight: at the base the GR-8 check reads AIFILL GR-8 ARMS: NO (1 of 10), the build check failing as expected.",
+  "world_is": "At 3c2fc35992 in worktree C:/dev/wk-resapp-457 the check reads 5 of 10: the builder, NONE-document, served-validator, stored-bytes and contract-ASCII arms already pass from gr-1 to gr-5. The cell's edits take it to 10 of 10 (AC1 output 'AIFILL GR-8 ARMS: YES (10 of 10)').",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Recorded as measured. No action taken: the cell's acceptance is the 10 of 10 read."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W457-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~457",
+  "surfaced_at": "2026-10-15T18:50:07Z",
+  "one_line": "lib/research/aifill/tests/test_contract_grounding.py carries four non-ASCII characters (the e-acute in Nestle) at HEAD, against the cell's ASCII-only source rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 3c2fc35992:lib/research/aifill/tests/test_contract_grounding.py: lines 257, 311, 317 and 323 hold the non-ASCII letter in 'Nestle'; the file is not ASCII at HEAD",
+      "the commit that introduced the file is 8b61c89d6a (AMGT-gr-4, 0.9.0_WK_AMGT_RESAPP~453)"
+    ]
+  },
+  "spec_asserts": "Cell section 2, bound 1: the source files this cell writes are ASCII-only (write non-ASCII characters as \\uXXXX escapes); the contract.py ASCII arm is the only one the check enforces.",
+  "world_is": "The file this order edits for the requirement already carried the four non-ASCII literals from gr-4. This order changes the requirement lines only and leaves the four literals in place: moving them is a neighbouring fix outside the order's change.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Recorded for the issuer to route. The check reads contract.py only, so no arm fails on it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W457-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~457",
+  "surfaced_at": "2026-10-15T18:50:07Z",
+  "one_line": "test_revalidate.py builds its narrated stored documents outside the shared helper: make_block refuses narration, so grounded_opal_block cannot build them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/tests/test_revalidate.py _doc before this order: stored documents built as plain dicts with no grounding key; the narrated texts ('I will search.', 'I can check this.') are refused by validate_block as process narration",
+      "lib/research/aifill/contract.py validate_block: the narration check runs before the grounding check, so a narrated block cannot pass make_block"
+    ]
+  },
+  "spec_asserts": "Cell section 1, item 4: the failing tests move onto the shared helper grounded.py (grounded_web_block, grounded_opal_block), or onto require_grounding=False where the test is about something else.",
+  "world_is": "The valid stored documents in test_revalidate.py could take the helper; the narrated documents, which the revalidate tests must store to refuse them, cannot. _doc therefore attaches a local record (the whole text as one SUPPORTED sentence that quotes it, on the one opal source). Revalidate tests still read their own refusals; the record adds no problem.",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "notes": "Local record kept in the test file; the helper module is unchanged by it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S33",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-15T19:27:40Z",
+  "one_line": "The AIFILL workstream's armed rows are DISPOSITIONED: W450-S1 DISARMED (the pinned test was updated and the instance re-proved), W451-S1 DISARMED as a hazard and CARRIED to the round-107 list (a non-text 2xx rung), W456-S1 DISARMED as a tooling note; the other worker rows of gr-3, gr-5, gr-6 and gr-8 are ruled by the amendments.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "Rows AMGT_RESAPP-D1-W450-S1 (BLOCKING, ARMED: the cell's join rule and the pinned test cannot both hold), AMGT_RESAPP-D1-W451-S1 (ARMED: a 2xx image or octet-stream body reads status OK with decoded binary text) and AMGT_RESAPP-D1-W456-S1 (ARMED: the nested portal worktree's commit gate checked 0 of 2 files).",
+  "world_is": "W450-S1: lib/research/aifill/tests/test_model_final_answer.py was updated at ad9eaa7fc8 (one assertion follows the join rule), the gr-1 instance was re-run at the merged head (AC1 28 of 28, AC2 98 passed, AC3 12 of 12, merged 0cea476a94), and the aifill suite reads 813 passed: no red test remains. W451-S1: the hazard that a binary body is taken as a cited source cannot yield a false SUPPORTED, because lib/research/aifill/grounding.py _judge counts a sentence SUPPORTED only when its quote (12 or more characters) is in the normalised full text of a shown source; the mislabelled status OK is a gap in the status vocabulary, carried to the CTO's round-107 list as a non-text rung (UNSUPPORTED, note 'content type <t>'). W456-S1: the portal commit gate gap is the tooling's, the substitute instrument (the feature branch's own green check) ran in the round, and no act of this workstream depends on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log: ad9eaa7fc8 (test updated), 0cea476a94 (re-proved instance merged), 9e8272e0f6, 9d9642d362, 2d39f15e66 (gr-6, gr-5, gr-8 merged) on box/dell1 (LOCAL)",
+      "lib/research/aifill/grounding.py lines 159-173 (_judge) at HEAD: SUPPORTED needs MIN_QUOTE = 12 characters of quote found in the normalised full text of a shown source",
+      "pytest lib/research/aifill/tests plus lib/research/api/tests/test_ai_fill_serve.py at 2d39f15e66: 813 passed; python .tools/round-close-check.py --project AMGT_RESAPP --round 106 at 118a24f596: orders 12 of 12 complete, proofs ok 12, proof_bad 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A citing row; the workers' rows keep their text. Ruled by amendment, not by this row: W454-S1 and W455-S1/S2/S3/S5 (AMENDMENT 1 of gr-5 and gr-6), W455-S4 (both readings confirmed), W452-S2/S3 and W454-S2 and W457-S1/S2/S3 (observations, no act). W452-S1 (a CONTRADICTED sentence records no newer source) is carried to the round-107 list with the CTO's item (g). The CVO's REMEDIATION_v44 hold on these dispositions can lift."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W472-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~472",
+  "surfaced_at": "2026-10-15T21:39:37Z",
+  "one_line": "The --open-first walker logs a fourth OPEN-FIRST line form that the order did not name: an entry whose summary matches a closed disclosure in a scope but is not expanded (a DO_NOT_CLICK word, or the time limit) logs 'not opened in <scope>'. The one walk did not reach it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order bn-2 section 1 change 3 names two OPEN-FIRST log forms only: 'OPEN-FIRST \"<text>\": opened (<n> table row(s) visible inside it)' when an entry is clicked, and 'OPEN-FIRST \"<text>\": not found in <label>' when no closed summary with that text exists in the scope.",
+  "world_is": "walk.mjs exploreScope() in C:/dev/wk-resapp-472 (branch wk-AMGT_RESAPP-472, uncommitted at filing) also prints 'OPEN-FIRST \"<text>\": not opened in <label> (refused or out of time)' for an entry whose summary matched the scope but was never expanded. Walk 20261015T213451Z (walk_seam.txt, the SHOP CN scope) opened the entry on SHOP CN-Model with 193 rows and did not print this form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-resapp-472/.claude/skills/ui-walk/walk.mjs exploreScope(): the final loop over entries that matched and were not opened",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~472/walk_seam.txt lines 13-22 (the four scopes read before the Model open)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker for the issuer's read. No act taken on the form. The fourth form is a deliberate extra line, not a change to the expansion order or to the 20-click cap."
+}
+```
+
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W473-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~473",
+  "surfaced_at": "2026-10-15T21:53:35Z",
+  "one_line": "AMGT-bn-5 budget line: the order fixes rows as the vendor-RETURNED PX_LAST count but leaves the names= field's unit open (names requested or names returned); implemented as names requested.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order file org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-bn-5.a4-pulls-a-window-held-as-data-defaulting-to-thirty-days-and-records-its-spend-on-the-budget-ledger.md at 8342f10684: batch_id form 'calls=<number of historical_data calls>:names=<names pulled>:pull_days=<d>'",
+      "integrations/bloomberg/research/price_axis_pull.py (worktree wk-AMGT_RESAPP-473, pre-commit) main(): record_pull_budget(calls=calls, names=len(securities), rows=returned_px_obs, ...) -- securities is the requested list, one per covered ticker"
+    ]
+  },
+  "spec_asserts": "Order section 1 item 4: batch_id = 'amgt-price-axis:<stamp>:calls=<number of historical_data calls>:names=<names pulled>:pull_days=<d>:rows_unit=returned-observations', and rows = 'the total count of PX_LAST observations the vendor RETURNED'.",
+  "world_is": "The order gives the rows figure an explicit unit (returned observations) but gives names= no unit, and 'names pulled' reads both as names requested and as names that came back. The two differ only for a requested name the vendor returned no PX_LAST rows for. Implemented as names requested (len of the securities list); the returned-observations count is exact under either reading. Recorded, not acted on: the ledger line is written under the requested reading.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Filed by the L7 worker for the issuer's disposition. If the issuer wants names returned, the change is one argument at the call site and a test expectation in test_price_axis_window.py."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W471-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~471",
+  "surfaced_at": "2026-10-15T21:45:03Z",
+  "one_line": "The PBR US fixture as specified cannot show a team P/E in its 2026E and 2027E columns: its served block carries vendor BEST_PE_RATIO figures for those years, so those cells are vendor cells and the mark cannot apply to them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/teamMarkFixture.PBR_US_Equity.json at cand/dell1/amgt-sa-team-estimate-mark 844d72eb: model.forecast_figures carries BEST_PE_RATIO 2026 = 5.175920046990936, 2027 = 6.346632875243539, 2028 = 6.590950891908699 (unit RATIO); fiscal_year_figures absent; team_sheet row 25 P/E = 5.947970209865273 (2026), 6.147357016888495 (2027) as the premise states",
+      "node src/pages/SecurityAnalysis/__harness__/teamEstimateMark.harness.cjs at 844d72eb: T3a cell renders '5.2x5.175920046990936RATIO (dimensionless multiple)Bloomberg consensus', T3b renders '6.3x6.346632875243539RATIO'; T5 team P/E cells 2, source team 0; harness NO (9 of 12 checks)",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx at 844d72eb: a forecast P/E with a served block figure renders through ModelCell, not TeamModelCell, so no data-model-team-mark can attach"
+    ]
+  },
+  "spec_asserts": "Cell section 1, fixtures paragraph, and harness checks T3a, T3b and T5: PBR US 2026E prints the team's 5.9x and 2027E its 6.1x (team sheet row 25 P/E 5.95 and 6.15); with model.forecast_withheld BEST_PE_RATIO entries for 2026 and 2027 added by spec those cells are team cells in withheld columns and print the mark; with the withhold entries removed the team cells print no mark.",
+  "world_is": "The round105 PBR slice, copied as the fixture, serves vendor forecast BEST_PE_RATIO values for 2026 to 2028, so the Key Figures 2026E and 2027E cells render the vendor ratios (5.2x and 6.3x) through the vendor cell, and no team cell stands in those columns. The added forecast_withheld entries sit beside a served vendor value for the same years, which a withhold does not describe. The mark cannot apply to these cells on this fixture: T3a, T3b and T5 fail as ordered. Not patched around: the checks stand as written.",
+  "notes": "Ruling needed on the fixture: a PBR slice whose 2026E and 2027E BEST_PE_RATIO is withheld (no vendor value), or the PBR premise restated against a column the team sheet fills. The feature itself is checked on SHOP CN (T1, T2) and GOOGL US (T4, T6), which pass."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W471-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~471",
+  "surfaced_at": "2026-10-15T21:45:03Z",
+  "one_line": "The SHOP CN model slice carries no envelope fiscal_years, so the page places no 2025 column from it; the harness declares 2020 to 2025 from the slice's own fiscal_unresolved PE_RATIO years.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx at 844d72eb (line 725-734): buildModelSheet takes data.fiscal_years for the historical columns; teamMarkFixture.SHOP_CN_Equity.json top-level keys are model, security_key, source and its model keys carry no fiscal_years",
+      "teamEstimateMark.harness.cjs at 844d72eb: SHOP_DECLARED_YEARS = 2020 to 2025 set on the envelope in T1, T2 and T9"
+    ]
+  },
+  "spec_asserts": "Cell section 1 fixtures paragraph: the SHOP CN copy is the live body's model slice, and its 2025 P/E cell reads 74x-193.1x in the Key Figures.",
+  "world_is": "The slice as copied has no declared fiscal years, so the 2025 column exists only when the envelope declares it. The live envelope is not read here (no HTTP in this cell). The harness declares the years the slice names for PE_RATIO, which is a harness choice and not a served value.",
+  "notes": "The round107 prep's live read should confirm the envelope's fiscal_years carries 2025; the mark on the 2025 cell depends on that column existing."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W471-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~471",
+  "surfaced_at": "2026-10-15T21:45:03Z",
+  "one_line": "The order's 'team sheet row 24' for SHOP CN P/E is the 0-based index of the served rows; the page's cite prints the workbook row 28.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "teamMarkFixture.SHOP_CN_Equity.json: model.team_sheet.rows[24] = 'P/E', model.team_sheet.row_numbers[24] = 28",
+      "node teamEstimateMark.harness.cjs at 844d72eb, T8 title: 'Team model: SHOP CA FactSet Based ONE PAGER 2026 07 13_v1.xlsx, sheet \"Model NEW VERSION\", row 28, \"P/E\", period column O'"
+    ]
+  },
+  "spec_asserts": "Cell section 1 fixtures paragraph: the team sheet's P/E line is row 24.",
+  "world_is": "The P/E line is at served index 24 and workbook row 28. The page's cite (teamCellTitle) prints the workbook row number, which is unchanged by this cell. T8 checks the printed cite, row 28.",
+  "notes": "Wording only; no page behaviour depends on it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W471-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~471",
+  "surfaced_at": "2026-10-15T21:45:03Z",
+  "one_line": "The round103 green check's lint step reads rc 1 on the candidate branch because of one error in a TicketCenter test file this branch does not touch, so AC2 cannot read lint rc 0 at the cut.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun run lint at cand/dell1/amgt-sa-team-estimate-mark 844d72eb: '360 problems (1 error, 359 warnings)'; the error: src/pages/TicketCenter/__tests__/filing-hint.test.tsx 147:35 no-regex-spaces 'Spaces are hard to count. Use {2}'",
+      "git diff --name-only e0b43076 HEAD lists only src/pages/SecurityAnalysis/ paths, so the file is unchanged on the branch and the error is at the PROD cut"
+    ]
+  },
+  "spec_asserts": "Cell section 2 AC2 (r103_feature_green_v2.sh): lint rc 0 on the feature branch.",
+  "world_is": "The PROD release e0b43076 already carries the lint error in filing-hint.test.tsx; the branch's own files lint with no error (none listed under src/pages/SecurityAnalysis). AC2 reads NO on lint rc 1 and regressions 1 (the new harness, failing on S1).",
+  "notes": "Needs the owning page's fix or a ruling that the lint criterion is read against the feature's own files. Not patched in this cell (outside the order's paths)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W471-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~471",
+  "surfaced_at": "2026-10-15T22:08:09Z",
+  "one_line": "proof-of-spec-check cannot read the instance at its canonical path on this box: the path is 273 characters with LongPathsEnabled 0, so the checker reports READ-ERROR rc 2 there, while a byte-identical copy at a short scratch path grades VALID rc 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python os.path.exists on the canonical instance path (deliverables/0.9.0_WK_AMGT_RESAPP~471/, worktree at 229bb7b5d2) returns False while os.listdir of the same folder lists the file; the canonical path measures 273 characters; the registry value LongPathsEnabled reads 0 on this box",
+      "control: a 218-character path created and read back OK in the same interpreter; python .tools/proof-of-spec-check.py on the canonical path: READ-ERROR (rc=2) [Errno 2]",
+      "git show HEAD:<instance> written to .scratch/instance_head.json (cmp-equal to the working copy): python .tools/proof-of-spec-check.py .scratch/instance_head.json AC1,AC2,AC3: VALID (rc=0), violations=0"
+    ]
+  },
+  "spec_asserts": "Order section 5 and the proof-of-spec step: run python .tools/proof-of-spec-check.py on the committed instance and report its verdict line.",
+  "world_is": "On this Windows box the checker cannot open the instance at its canonical deliverables path, so the verdict was read on identical bytes from a short scratch path. The verdict is VALID rc 0 on those bytes; the canonical-path read itself was not made.",
+  "notes": "Worker-side workaround only: the scratch copy is byte-identical to the committed instance; no tool, path or setting was changed. Owner of the path or the checker to disposition."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S34",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-15T22:36:04Z",
+  "one_line": "PBR US's 2025 Key Figures P/E cell prints the research team's range 3.6x-5x with no source mark, because the served block carries no fiscal_unresolved entry for it; the mark follows the CTO's 'where withheld', so a team figure can still stand unmarked where the vendor ratio is absent for a reason the block does not state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-106 analysis, D1-S32 ruled (msg 6249): a team-sheet forward value stands where a withheld vendor ratio's reason would print, with a visible source mark; AMGT-bn-1 marks a team P/E cell in a column whose vendor ratio the served block states as withheld (forecast_withheld or fiscal_unresolved).",
+  "world_is": "Read 2026-10-15 ~22:1xZ on the candidate build (bb56c53d), shot 042-PBR-US-Model.png: 2025 `3.6x-5x` (a team text range) carries no `research team estimate` line while 2026E 5.9x and 2027E 6.1x do. The live PBR_US body (round107_prep/fixtures/pbr_model_slice_live.json): fiscal_unresolved is [] and forecast_withheld names 2026, 2027, 2028; the team P/E row's 2025 value is the text `3.6x-5x`. The CTO's approval record (CTO_APPROVAL_A333_TEAM_ESTIMATE_MARK_20261015.md) reads the edge as correct under the ruling: nothing is withheld there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tmp/ui-walk/20261015T221213Z/shots/042-PBR-US-Model.png (read with the Read tool; the 2025 cell and the 2026E/2027E cells)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round107_prep/fixtures/pbr_model_slice_live.json (fiscal_unresolved [], forecast_withheld 2026-2028)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_A333_TEAM_ESTIMATE_MARK_20261015.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A reader sees a team figure with no source on PBR US 2025 and with one on 2026E and 2027E. Whether every team-filled Key Figures P/E cell should carry the mark (keyed on the cell being team-filled, not on a served withhold) is a reading of the ruling for the CTO and the CVO's re-grade at the bn-4 walk; no change is proposed here."
+}
+```

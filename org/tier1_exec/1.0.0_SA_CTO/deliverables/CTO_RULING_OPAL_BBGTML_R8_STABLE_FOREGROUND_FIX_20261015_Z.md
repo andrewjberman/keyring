@@ -1,0 +1,42 @@
+# CTO ruling -- OPAL_BBGTML: fix the 07:00 sign-in tonight (R8), do not only wait for the trace, 2026-10-15 ~20:0xZ
+
+By: `1.0.0_SA_CTO~Z`. On Andrew-direct, Teams 2026-10-15T18:00:40Z, relayed verbatim by `0.0.3_BG_BBGTerminal` (msg 34555):
+**"send this log to CTO and have them fix it."** Log:
+`org/tier0_utility/0.0.3_BG_BBGTerminal/logs/2026-10-15/investigation_cron_signin_failure_two_signatures_one_binary_update.md`.
+
+## What the log establishes
+
+- It is not Python. The cron pins the `cma` interpreter, and `bbg_credentials.py` imports only the standard library.
+- There are two signatures, in sequence, after `wintrv.exe` was replaced on 10-06 at 04:04Z.
+  - **A, glyph calibration** (10-06, 10-08): fixed. But the fixture was never re-derived against the new build.
+  - **B, focus at submit** (10-11, 10-13, 10-15): still live. The fill verifies (9/9, OCR 100%), then 3 fixed foreground
+    re-asserts fail and the script aborts at zero Bloomberg attempts.
+- The contention is TRANSIENT. At 14:3xZ the foreground was the login window itself. The prime suspect is the updated
+  `wintrv.exe` spawning a second window during the fill-to-submit gap.
+- R7's foreground trace landed at 14:30Z, so tomorrow's fire names the window that takes focus.
+
+## Ruling
+
+A fix that waits for the window to be named is a wait. Andrew asked for a fix. **COO~ZB cuts R8 now, and it lands
+tonight, before the 2026-10-16 07:00 ET fire.** Executor: `0.7.0_AE_CloudOps~ZS`, the owner of R3 and R7.
+
+1. **Settle until the foreground is stable, then submit.**
+   - Replace the fixed 3-try re-assert with a bounded loop:
+     - poll the foreground every 250 ms for up to 90 s;
+     - re-assert the login window when it is lost;
+     - submit only once the login window (`BLOOMBERG: Login`, the `bplus64` process) has held the foreground for 2 s in a
+       row.
+   - If it never settles, abort exactly as today: at ZERO attempts, with R7's trace line.
+   - This works whichever window takes focus transiently, because it waits the transient out.
+2. **Re-derive signature A's glyph fixture against the current build**, in place of a widened tolerance band, so that a real
+   mis-fill still fails verification.
+3. **Unchanged:** the zero-attempt guard, the sign-in ledger and budget, the 07:30 backstop, and R7's trace.
+4. **Proof:**
+   - **Tonight:** the loop's logic is exercised offline with `-ForceDown -DrySubmit` and a planted focus thief. Both arms
+     are shown: the thief releases within 90 s, so it settles and submits; the thief holds, so it aborts at 0 attempts.
+     Nothing touches the live Terminal while it is signed in and serving.
+   - **The real proof** is the 2026-10-16 07:00 ET fire: a clean unattended sign-in, or an abort with the trace naming
+     the window, cut from on the same morning.
+5. **Change management:** on this box an edit is a deploy, because the task runs the working tree. So R8 carries a NEVER-2
+   ledger entry and lands after market close. It must not touch Positioning pipeline or ETFS view operations (Andrew
+   2026-10-14).

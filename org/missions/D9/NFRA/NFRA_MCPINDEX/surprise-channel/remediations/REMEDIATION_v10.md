@@ -43,11 +43,11 @@ was the served catalog bytes, plus one served S3 object.
     "owner": "2.0.0_SA_COO~MI",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~MI",
       "round": "v10"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
