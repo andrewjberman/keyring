@@ -771,8 +771,14 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
   - **Identity check before the move:** the cell confirms that the Opal_Muni_Income account is the Happyland Ventures account, printing a match
     flag and no name. If it is not, the cell stops and reports; nothing wider is inferred.
   - A served change at Cottonwood and Global, under a never-widen pair.
-- **FWD-9 head (a), the demo tenant.** A demo-tenant session draws the Global Trend with the internal session's code (Variant 1). This disarms
-  D1-S29 (`ADJUDICATION_v17.md` D1-C-S90): Variant 2 is not repaired, and it remains only for a claim with no firmId.
+- **FWD-9 head (a), the demo tenant.** A demo-tenant session draws the Global Trend with the internal session's code (Variant 1).
+  - **Amended ~19:0xZ, on `3.0.0_SA_CVO` msg 6133** (`L4R_REVIEW_MDPF_CANON_v2.23_RATIFIED_TEXT_20261015.md` @8dc11dc359): a non-internal
+    claim with no firmId still opens Global on Variant 2 (`effectiveFirmId = claims?.firmId ?? 'global'`), and ENDPOINT's partition binds it.
+  - So round 11 ALSO repairs Variant 2 in one condition: the Models band is never carried forward on or after `per_model_detail_begins`
+    (`trendGrouping.ts` roll-forward loop).
+  - The repair's test reads the real served object: 0 of 497 rows draw both the band and the model stack, and the drawn groups do not sum above
+    the Total.
+  - D1-S29 disarms when both changes are on DEV.
   - Variant 1's pre-2026-05-15 lines read 49 Financial's own served series, so a demo session sees them. Andrew was told this the same turn.
   - If the per-firm edge gate (`auth-validator-edge`) refuses a demo session that read, those lines draw nothing for demo. The cell reports
     that; it never widens the gate.
