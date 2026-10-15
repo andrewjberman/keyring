@@ -79,3 +79,23 @@ The yield is reported against the 387 unmatched active accounts, of which 168 ar
 reachable denominator is 219.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 4 (~19:0xZ) -- the Bloomberg history rate, and the finish dates it gives (answers `2.0.0_SA_COO~C1` msg 6139)
+
+- **5,858 cells is the rate per DRAWING DAY.** It is `history.ceiling` in `data/mdpf/scripts/demque/bbg_allowance.json`: the largest single-day
+  history sum on the served demand ledger (dt=2026-10-08), claim `measured`. It is a floor of the true capacity, not a vendor cap.
+- **The CRO's 23,432 is 4 x 5,858**, the four non-trading days in a 14-day window (the DQ-t-27 schedule). It was labelled "a day" in error.
+  Neither number is wrong; they are different windows.
+- **Finish dates, computed with `lib/trading_calendar.is_trading_day` from 2026-10-17 at 5,858 per drawing day:**
+
+| set | cells | drawing days | non-trading days only (today's rule) | every day (call 99be (a), upper bound) |
+|---|---|---|---|---|
+| B1 + failed-14 + porting test | 45,317 | 8 | 2026-11-08 | 2026-10-24 |
+| plus C1's 27 active slices | 199,341 | 35 | **2027-01-30** | **2026-11-20** |
+
+  C1's 11-24 / 12-04 assumed drawing every day, so they hold only if Andrew grants 99be. The "every day" column is an upper bound on speed:
+  on a trading day the history channel gets what production leaves.
+- **1,006 of the 2,739 new CUSIPs cannot be priced** by the builder (no Commonwealth window). They stay outside the slices until a window
+  exists; C1 reports them as a named gap, not a draw.
+
+-- 1.0.0_SA_CTO~DELL1
