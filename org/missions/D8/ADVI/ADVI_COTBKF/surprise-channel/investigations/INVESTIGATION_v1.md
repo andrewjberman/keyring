@@ -9552,3 +9552,133 @@ round.** Never edit an existing row.
   "notes": "Found by reading the existing test against item 1 before any code was written; no code was changed to resolve it."
 }
 ```
+
+## ADVI_COTBKF-D1-W180-S1 -- R3_LINKS.csv holds 90 rows, not the 88 the order names: 88 DETERMINISTIC and 2 AMBIGUOUS; the 0-to-active-accounts premise holds
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W180-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~180",
+  "surfaced_at": "2026-10-15T20:58:36Z",
+  "one_line": "R3_LINKS.csv holds 90 rows, not the 88 the order names: 88 DETERMINISTIC and 2 AMBIGUOUS; the 0-to-active-accounts premise holds",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_cotbkf_match_20261015/R3_LINKS.csv: 90 data rows; status DETERMINISTIC 88, AMBIGUOUS 2 (counts only, read by the packet builder)",
+      "TO ADVI_COTBKF.TO-CB-cl-3 Read item 3 names R3 as 88 links, 0 to active accounts, context only",
+      "REVERSE_MATCH_V3.csv (sha256 0783f088aecbf29e46751aa5d80239b8aa53f16484778162e34ee1c09783c66f): none of the 90 R3 account keys present (count only)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cl-3 Read item 3: R3_LINKS.csv (R3: 88 links, 0 to active accounts; context only)",
+  "world_is": "R3_LINKS.csv carries 90 rows, 88 DETERMINISTIC and 2 AMBIGUOUS. Not established: whether the 2 AMBIGUOUS rows were meant to be counted in the 88.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W180-S2 -- R4_LINKS.csv writes household_via as 'via name' on all 110 rows; the order's form is name or client_line; the packet reads the route word after 'via ' (form only, no value change)
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W180-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~180",
+  "surfaced_at": "2026-10-15T20:58:36Z",
+  "one_line": "R4_LINKS.csv writes household_via as 'via name' on all 110 rows; the order's form is name or client_line; the packet reads the route word after 'via ' (form only, no value change)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_cotbkf_match_20261015/R4_LINKS.csv: 110 data rows; household_via 'via name' on all 110 (count only)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~175/R4_RECORD.md: the client-line route yields no CANDIDATE"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cl-3 Item 2: r4_household_via is name, client_line or blank",
+  "world_is": "The R4 link file writes the route as a prefixed word; the packet strips the prefix. Not established: whether a client-line DETERMINISTIC link exists anywhere outside this file.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W180-S3 -- one R4 link's Black Diamond account (of 89 distinct) has no row in REVERSE_MATCH_V3, so the packet records its state as other with in_219 false; the order's four states do not name absence
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W180-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~180",
+  "surfaced_at": "2026-10-15T20:58:36Z",
+  "one_line": "one R4 link's Black Diamond account (of 89 distinct) has no row in REVERSE_MATCH_V3, so the packet records its state as other with in_219 false; the order's four states do not name absence",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_cotbkf_match_20261015/R4_LINKS.csv: 89 distinct bd_account_id values (count only)",
+      "REVERSE_MATCH_V3.csv: one R4 bd account key absent; packet bd_account_state other count 1 (counts only)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cl-3 Item 2: bd_account_state is unmatched_active, new_client, near_match_waiting or other, from the reverse match",
+  "world_is": "The reverse match omits one R4 Black Diamond account. Not established: whether that account is an active unmatched account the reverse match should carry.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W181-S1 -- the --sechist reader labels its rows "sechist", which the use_class guard does not recognise as Yahoo
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W181-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~181",
+  "surfaced_at": "2026-10-15T21:08:53Z",
+  "one_line": "read_sechist reads an operator-named price series and labels every row source 'sechist'; the use_class guard recognises only yahoo_finance and linear_interpolation, so a Yahoo-derived series read this way would be labelled NOT_YAHOO.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py@5621d85218 L59 SECHIST_STORE = \"sechist\"; L67 YAHOO_SOURCES = (yahoo_finance, linear_interpolation); L164 def read_sechist; L189 source: SECHIST_STORE; L1085 sh = read_sechist(...) under --sechist",
+      "data/assets/scripts/silver/commonwealth_fwd3_serve.py@5621d85218 L320 yahoo_priced(h, rule=dv.YAHOO_SOURCES): the mask the use class and the porting verdict share"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cm-1 reader definition and CTO C3 (msg 6119): a Yahoo-sourced price that feeds an active account's value carries a Yahoo label the use_class guard recognises.",
+  "world_is": "Not established: whether any sechist prefix holds Yahoo-derived prices, and whether any served run was given --sechist (not measured; no S3 read, no run). The label gap is a fact of the code: a sechist row cannot read as Yahoo.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while listing the readers of the three modules for TO CB-cm-1. Not in that order's reader list: its definition is a Yahoo-sourced price, and this series is not established as Yahoo-sourced. No code changed."
+}
+```
+
+## ADVI_COTBKF-D1-S7 -- dispositions D1-W173-S3 and D1-S2 as answered; D1-W181-S1 stays armed (the sechist label)
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S7",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-15T21:16:53Z",
+  "one_line": "Dispositions D1-W173-S3 and D1-S2 (the Yahoo Close cache reader and its standing statement) as ANSWERED by a test on the real code path; D1-W181-S1 (the sechist source label) STAYS ARMED as a latent hazard with its trigger named.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_ADVI_COTBKF~181/AS_TRADED_LABEL_RECORD.json (merged @978b93d557): base_result 5 of 5 passed before any production change; 14 reader lines in commonwealth_daily_valuation.py, commonwealth_fwd3_serve.py and commonwealth_sweep_regrade.py; 12 PRICE readers, all labelled in the served tables; 2 FACT readers (split ratios, dv L574 and regrade L1602) outside the guard by the CTO's ruling (msg 6175)",
+      "Andrew call 3adb (a): served Yahoo days for V2-held securities stay, labelled; the swap replaces them per security as Bloomberg lands",
+      "read_sechist (commonwealth_daily_valuation.py L164-195) labels every row it reads source 'sechist' whatever the series' origin; YAHOO_SOURCES holds only yahoo_finance and linear_interpolation; the CRO's 2026-10-15 read: MDPF_SECHIST security_series holds 0 objects"
+    ]
+  },
+  "spec_asserts": "a Yahoo-sourced price that feeds an active account's value carries a label the use_class guard recognises (CTO C3, msg 6119).",
+  "world_is": "D1-W173-S3 and D1-S2: the as-traded Yahoo close is covered. It keeps source yahoo_finance (replaced) or linear_interpolation (re-derived), both recognised, so a held V2 security's day reads NOT_FOR_ACTIVE; the proof is five tests on the real path, none needing a fix. D1-W181-S1 (STILL ARMED, latent): a price series read through --sechist is labelled sechist; if MDPF_SECHIST ever lands Yahoo-origin points (the PRD's C-SERIES plan lands Yahoo AND Bloomberg prices once per security there), they would read NOT_YAHOO and escape the guard. Trigger: the first object in the SECHIST security_series prefix. Not a live hazard today (0 objects). Remedy for its owner: the landing carries a vendor column per point, and read_sechist maps it to a source label the guard recognises (yahoo_finance for a Yahoo point).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
