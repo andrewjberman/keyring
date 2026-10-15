@@ -17963,3 +17963,30 @@
   "notes": "Issuer to rule whether the NO_CLASS answer should also list the ambiguous tickers in dropped. Ruling it yes means the ambiguity list must be built from pool_rows on that path, and a None pool_rows must then be refused or defaulted. The worker did not decide this."
 }
 ```
+
+## IRPT_ANLREQ-D2-W178-S1 -- TO-AR-g-68 AC2 cannot PASS in this worktree: docs/ is absent from the sparse checkout
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W178-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~178",
+  "surfaced_at": "2026-10-15T17:05:59Z",
+  "one_line": "TO-AR-g-68 AC2 cannot PASS in this worktree: docs/ is absent from the sparse checkout and one runner test reads a missing IRPT_YCDGEN map, so test_y5_proxy_corrections.py does not collect and the base run is 91 passed, 1 failed",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-68 AC2 (AR68-g-AC2): the regress check runs the four existing test files (108 tests today) and requires rc 0 with at least 108 passed; the order says it PASSes at base. The worker face says the worktree carries the paths the task order names.",
+  "world_is": "Worktree C:/dev/wk-irpt-anlreq-178 at 3e2bdff97e: docs/ does not exist on disk and every docs/* path is skip-worktree in the index (git ls-files -v), and git sparse-checkout list names no docs entry. Base run of the four files: test_kept_holding.py, test_normalized_input.py and test_runner.py give 91 passed and 1 failed; test_y5_proxy_corrections.py fails collection because test_y5 imports test_uploads, which imports test_repository, which reads docs/contracts/investor-reporting/v1/AnalysisReport.schema.json (FileNotFoundError). The one failure is test_runner.py::test_elements_record_an_opal_held_source_by_its_group, which reads org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json (FileNotFoundError, absent). Not repaired: the tree was not rebuilt or sparse-extended, per the worker face.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q on the four files at 3e2bdff97e: 'FAILED ...test_runner.py::test_elements_record_an_opal_held_source_by_its_group' and '1 failed, 91 passed'; test_y5_proxy_corrections.py: 'ERROR ... 1 error during collection', FileNotFoundError docs/contracts/investor-reporting/v1/AnalysisReport.schema.json",
+      "git ls-files -v docs/contracts/investor-reporting/v1/AnalysisReport.schema.json: S (skip-worktree); ls docs: no such file",
+      "ar_g68_checks.py regress at 3e2bdff97e: 'existing tests: 1 error in 4.22s', AR-G68-REGRESS-FAIL rc=2 passed=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The regress guard cannot run in this worktree as written. The product change (A to E) is not blocked by it and is verified by AC1 and by the three runnable files. The issuer or the box owner decides whether AC2 runs on a full checkout. No check was weakened and no file was added to the tree."
+}
+```
