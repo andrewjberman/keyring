@@ -11931,3 +11931,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "If Andrew closed these tabs on purpose, the respawns undo that and he can say so; this row does not assume either way."
 }
 ```
+
+## NFRA_CTLPLN-W123-S1 -- the commit gate's client-data check was not run on the two CT-am-1 commits: the hashed account-id list is absent on this box
+
+```json
+{
+  "id": "NFRA_CTLPLN-W123-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~123",
+  "surfaced_at": "2026-10-15T22:31:08Z",
+  "one_line": "Both safe-commit.sh runs on the worktree (commits f63f3f99c7 and 3e46d5b4c6) printed WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\AndrewBerman\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids. The commit gate printed all its other checks as passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh --author \"0.9.0_WK_NFRA_CTLPLN~123 <...>\" -F .scratch/msg_wip1.txt -- org/devices/intake/intake_receive.py .tools/tests/test_round23_receive_color.py: output line 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\AndrewBerman\\.opal\\account_id_hashes.txt -- this commit was NOT checked' (committed f63f3f99c7)",
+      "the second commit 3e46d5b4c6 (org/devices/intake/intake_receive.py, org/devices/intake/test_intake_receive.py) printed the same WARN line before its msg-verify MATCH",
+      "the WARN names OPAL_ACCOUNT_ID_HASHES as the alternate location; this worker did not set it and did not read the gate"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "safe-commit.sh runs a client-data check on every commit this box makes, so a commit carrying client account ids is caught before it lands.",
+  "world_is": "On this box the list the check reads is absent, so the check reports that the commit was not checked and the commit lands anyway. Absent is not empty: the two commits were not checked, and nothing in the commit output says the check was skipped by design. The diffs of both commits are the receive tool, its tests and the intake folder; none of them names an account.",
+  "notes": "Filed for the owner of the box's commit gate to disposition. This worker did not create, move or read the account-id list and did not set OPAL_ACCOUNT_ID_HASHES. The file read is outside the worker's <paths>."
+}
+```
