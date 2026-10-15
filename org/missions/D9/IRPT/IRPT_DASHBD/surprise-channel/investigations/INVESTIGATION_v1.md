@@ -16541,3 +16541,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the issuer: the order cannot satisfy its step 2 and its 105-test clause together without an edit to tests/test_filled_report_values_stage.py (outside the grant) or a changed step 2. The worker has not widened the grant or edited that test. The step-2 handler diff is uncommitted in the worker's worktree. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W201-S4 -- resolves IRPT_DASHBD-D2-W201-S3: Amendment 1 (82091e0b7f) puts the one pinned test in the grant, and the step-2 handler change plus that one test update pass the whole handler directory
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T10:00:04Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W201-S3: the issuer's Amendment 1 (commit 82091e0b7f) puts tests/test_filled_report_values_stage.py in the grant for one change; the worker updated only test_stage_runs_after_the_class_and_lot_stages and the handler directory now passes 120 tests",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W201-S3 (BLOCKING) recorded that TO-DB-b-247 step 2 (run() stops calling filled_stage) and the refusal clause (the 105 earlier handler tests all pass) could not both hold, and that the worker stopped on that point.",
+  "world_is": "The issuer committed Amendment 1 as 82091e0b7f (order status stays pending): the order's paths name tests/test_filled_report_values_stage.py for ONE change, the update of test_stage_runs_after_the_class_and_lot_stages to the new behaviour, and the checker allows that file. The worker made that one change (every other test of the file is byte-identical: the file's diff is one method, 17 added and 3 removed lines), committed the handler, the new test file and iam.tf in 66b0a5a021, and the facts record in 940ec59113. The whole handler test directory passes 120 tests (105 earlier, 15 new). The three criteria DB122-2-AC1, AC2 and AC3 print PASS at the worker's HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 82091e0b7f -- org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-247.per-day-self-invoke-split-of-the-hop-1-filled-stage.md (Amendment 1 in the order's refusal clause and <paths>)",
+      "git show 82091e0b7f -- org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_split.py (OLD_TEST_REL allowed in the facts and stray-file clauses)",
+      "git diff --numstat 66b0a5a021^ 66b0a5a021 -- infra/aws/lambda/investor-reporting/reporting-gold/tests/test_filled_report_values_stage.py (the one method changed in the worker's commit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~201/RD_SPLIT_FACTS_R122.json @940ec59113 (tests: 15 new, dir_total 120; files_changed with the four hashes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution note for IRPT_DASHBD-D2-W201-S3, which is left as written (append only). The order's own criteria at the worker's HEAD are recorded in the order's proof instance. Counts and words only; no client figure is quoted."
+}
+```
