@@ -11931,3 +11931,81 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "If Andrew closed these tabs on purpose, the respawns undo that and he can say so; this row does not assume either way."
 }
 ```
+
+## NFRA_CTLPLN-W124-S1 -- the CTO's check-8 signature sits outside the sparse set, so the journey test reads the pre-signature state on a sparse worktree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W124-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~124",
+  "surfaced_at": "2026-10-15T22:39:06Z",
+  "one_line": "On the sparse worktree ctlpln-124, python .tools/tests/test_round22_journey_record.py --check printed check8=OTHER released=True ok=False with signature_file_exists=False: the signature org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md is tracked at HEAD but is not in the cone. After 'git sparse-checkout add org/tier1_exec/1.0.0_SA_CTO/deliverables' the same command printed check8=SIGNED released=True ok=True.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only HEAD -- org/tier1_exec/1.0.0_SA_CTO/deliverables lists org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md at 4073337a9e",
+      "before the sparse-checkout add: the --check run printed JOURNEY-CHECK-DETAIL check8_verdict=passed ... signature_file_exists=False and JOURNEY-CHECK checks_run=7 failed=0 check8=OTHER released=True ok=False (rc=1)",
+      "after the sparse-checkout add: JOURNEY-CHECK checks_run=7 failed=0 check8=SIGNED released=True ok=True (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round-22 journey test reads the CTO's check-8 signature from disk and reads SIGNED once it exists beside a released wheel.",
+  "world_is": "A worktree whose cone omits the signer folder reads the signed state as OTHER. The test itself is correct; its answer depends on which folders the worktree checks out, and the test does not say so when it fails."
+}
+```
+
+## NFRA_CTLPLN-W124-S2 -- a tree path taken from __file__ can carry an 8.3 short name, so a string comparison with git's long-name output refuses a full main tree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W124-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~124",
+  "surfaced_at": "2026-10-15T22:39:06Z",
+  "one_line": "The first build-guard draft compared git rev-parse --show-toplevel of portal/ with the portal path by normalised string. In a temporary main tree the path reached through the script (C:/Users/ANDREW~1/...) and git's answer (C:/Users/AndrewBerman/...) named one folder but compared unequal, so the guard refused a full main tree with portal. The guard now compares with os.path.samefile.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round23_hygiene_a.py --guard before the samefile change: HYGIENE-GUARD-ARM full_main_admitted ok=False 'portal/ is not an initialized checkout'; arms=4/6 ok=False",
+      "after the change (commit 75cf542813 on wk-NFRA_CTLPLN-124): arms=6/6 ok=True",
+      "tree path printed by the refusal: C:/Users/ANDREW~1/AppData/Local/Temp/hygiene_guard_*/f/main"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The build guard admits a full main tree that has an initialized portal/ checkout.",
+  "world_is": "Path strings from __file__ and from git are not comparable on Windows without a filesystem identity check. Any future path equality in the graph tools carries the same hazard."
+}
+```
+
+## NFRA_CTLPLN-W124-S3 -- the laptop-seat test for the legacy fetch records has no defined source; the two records name a COO serial, so the declaration rests on seats.json
+
+```json
+{
+  "id": "NFRA_CTLPLN-W124-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~124",
+  "surfaced_at": "2026-10-15T22:39:06Z",
+  "one_line": "The order says to STOP and file BLOCKING if a fetched_by is not a laptop seat. Both real 20261008 fetch records name fetched_by 2.0.0_SA_COO~C, a COO serial with no device key. The order defines no source for 'laptop seat'. I read membership from org/devices/state/laptop/seats.json, which lists 2.0.0_SA_COO~C, and wrote DEVICE_OF_BATCH.txt as laptop on that basis; no STOP was taken.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/records/intake-20261008-a/click-8.3.1-py3-none-any.whl.fetch.json and rpds_py-2026.6.3-cp314-cp314-win_amd64.whl.fetch.json: fetched_by 2.0.0_SA_COO~C, at 2026-10-08T04:07:49Z and 04:05:39Z, no device key",
+      "org/devices/state/laptop/seats.json (the laptop state folder): entry serial 2.0.0_SA_COO~C, kind COO, liveness LIVE",
+      "python org/devices/intake/intake_request.py downloads --device laptop --day 20261008 after the declaration: DOWNLOADS-TODAY device=laptop day=20261008 requests=8 files=2 attributed_by=batch unattributed=0 (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W111-S1's done-when: downloads --device laptop counts the two real 20261008 records; a declaration may name a device only when the batch's fetches came from that device's seats.",
+  "world_is": "The record shows the serial, not the box. The laptop membership is read from a state file that lists the seat under the laptop folder; no record field or register proves the box the COO ran on at 04:05Z on 2026-10-08."
+}
+```
