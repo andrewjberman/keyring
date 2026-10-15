@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~404</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -41,7 +41,7 @@ Your workspace worktree is the absolute path your prompt names (branch `wk-IRPT_
 `DBC116-2-AC1` -- the Terraform root holds the Cottonwood name module, function module, role, policy document, role policy, scheduler role and schedule under the labels `irpt_holdings_performance_cot*`; the schedule block is `DISABLED`, `cron(15 8 ? * MON-FRI *)`, `America/New_York`, targets the Cottonwood function and names `blackdiamond_z09`; the policy document grants no delete and no wildcard action and its PutObject uses the Cottonwood write-arn local; `terraform fmt -check` reports no unformatted file when the binary is present. Base: FAIL.
 
 <criterion id="DBC116-3-AC1" cell_refs="DB-c-7"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r116/p116_bcw.py" . DBC116-3-AC1</invocation><expect>DBC116-3-AC1 PASS</expect></criterion>
-`DBC116-3-AC1` -- against the tree this round was cut on, the four `.tf` files have added lines and no removed line; `handler.py` changes only inside `_days_to_compute`; no file outside the four `.tf` files, `handler.py` and the two test files under `holdings-performance/tests/` changed in `infra/aws` or the producer's folder. Base: FAIL (no added line).
+`DBC116-3-AC1` -- against the tree this round was cut on, the four `.tf` files have added lines and no removed line; `handler.py` changes only inside `_days_to_compute`; no file outside the four `.tf` files, `handler.py` and the two test files under `holdings-performance/tests/` changed in the two `holdings-performance` folders (Terraform and Lambda) or the producer's folder, against the commit this round was issued at (`7f16db08c3`; the first cut named an earlier commit and counted other seats' later changes elsewhere under `infra/aws`, the issuer's defect, worker row `IRPT_DASHBD-D2-W404-S1`). Base: FAIL (no added line).
 
 <expected_criteria>DBC116-1-AC1, DBC116-2-AC1, DBC116-3-AC1</expected_criteria>
 

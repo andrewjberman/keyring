@@ -13961,3 +13961,293 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-4. Form only. The pull's Envision Performance Dim report is named in the record as an alternative per-account period return, not the chosen endpoint."
 }
 ```
+
+## IRPT_DASHBD-D2-W404-S1 -- The DBC116-3-AC1 surface arm measures against BASE 8f83241ac1, 35 commits behind this worktree's cut, so it reports a file this cell did not touch
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "DBC116-3-AC1 diffs the tree against BASE 8f83241ac1, but this worktree was cut at 7f16db08c3, 35 commits later; commit 530b3a3246 changed infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf after BASE, so the surface arm FAILs on a file this cell never touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBC116-3-AC1 (checker p116_bcw.py, BASE = 8f83241ac1, 'the tree this round was cut on'): no file outside the four .tf files, handler.py and the two test files changed in infra/aws or the producer's folder.",
+  "world_is": "The worktree was cut from box/dell2 at 7f16db08c3, which is 35 commits past BASE 8f83241ac1. Between them, 530b3a3246 (grant NFRA_OPLGTW OG-ap-19 G3, 0.7.0_AE_CloudOps~Z) changed infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf. The checker's surface arm lists that file and FAILs, while this cell's own changes to the four .tf files, handler.py and test_catch_up.py pass the numstat and hunk arms that run before it. Measured against the cut point, `git diff --name-only 7f16db08c3 -- infra/aws data/assets/scripts/gold/irpt_holdings_performance` lists only this cell's six tracked files. The checker was not edited, and the surface was not widened.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r116/p116_bcw.py BASE and ac_3 @7f16db08c3",
+      "git log 8f83241ac1..7f16db08c3 -- infra/aws shows 530b3a3246 (infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf) @7f16db08c3",
+      "python -I p116_bcw.py . DBC116-3-AC1 @7f16db08c3 + this cell's edits: 'files changed outside the order's surface: infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. The order's own text names the tree 'this round was cut on'; the cut the worktree was given is 7f16db08c3, not BASE. Disarm = the issuer re-bases the surface arm on the cut point, or the opal-gateway commit is excluded by name. The order stays open on DBC116-3-AC1 until then."
+}
+```
+
+## IRPT_DASHBD-D2-W404-S2 -- The packet's input-frontier hold for an absent T-1 silver (its Function item 3) is not a branch of the cell's listed steps, and the handler has no explicit hold
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "The packet's Function item 3 asks the function to HOLD, log and write nothing when the T-1 silver is absent, and calls it a build item in the function cell; the order's seven steps do not name it, so no explicit hold or absence log was built.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "NEVER_WIDEN_PACKET_DB-c-5_R115.md, Function item 3 (CTO decomposition decision (c)): when the silver partition of T-1 is absent at fire time, the function HOLDS, logs the absence, and writes no key for that day.",
+  "world_is": "TO DB-c-7 steps 1 to 7 name no such branch, and the cell changed only the refused-listing branch of _days_to_compute. The existing path already writes no key for an absent day: lambda_handler stops at the first producer rc != 0 with the print 'catch-up stops here' and never skips the day. No separate absent-silver log line or hold was added. The schedule is created DISABLED, so no fire reaches this path before the applier's order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~403/NEVER_WIDEN_PACKET_DB-c-5_R115.md Function items 3 and 4 @5045d0f2d8",
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py lambda_handler (rc != 0 break) @3c45e1522e",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-7.cottonwood-holdings-performance-function-build-repo-files-only.md steps 1 to 7 @7f16db08c3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. The packet's Function item 4 (the emission version, 1.2 against the existing 1.1 gold) is the CTO's ruling and is not restated here. Disarm = the CTO rules whether the explicit hold is a build item of this cell or of a later one, before the schedule is enabled."
+}
+```
+
+## IRPT_DASHBD-D2-W404-S3 -- No terraform binary on this worktree's shell, so the fmt arm of DBC116-2-AC1 skips and the HCL was checked by hand
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "The terraform binary is absent from the worktree's PATH, so terraform fmt -check cannot run; the checker's fmt arm is skipped and DBC116-2-AC1 PASSes on its structural arms alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBC116-2-AC1: terraform fmt -check reports no unformatted file when the terraform binary is present.",
+  "world_is": "`which terraform` returns nothing on this shell and `terraform version` is not found. The checker's arm catches FileNotFoundError and skips the fmt check. Alignment of consecutive attributes was checked by a line heuristic only (a scratch script in the worktree's .scratch folder). The new blocks were written in the existing roots' shape. No init, plan or provider call was made. The formatting must be proven with the binary before the applier's plan.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "command: which terraform (no output) and terraform version (not found) on the DB-c-7 worktree @7f16db08c3",
+      "p116_bcw.py ac_2 terraform fmt arm: FileNotFoundError -> r = None (skipped) @7f16db08c3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. Disarm = run terraform fmt -check on the four files on a box with the binary, before the applier's plan order."
+}
+```
+
+## IRPT_DASHBD-D2-W404-S4 -- The existing Inflection block in lambda.tf aligns handler and runtime apart from timeout, memory_size and layers, which terraform fmt would align as one group
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "lambda.tf lines 74 to 78 (the IB-er-501 Inflection module, pre-existing) leave handler and runtime unpadded beside timeout, memory_size and layers; a line heuristic groups them as one alignment set, so the root's terraform fmt -check may already fail before this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBC116-2-AC1: the Terraform root is terraform-fmt clean when the binary is present; the cell's new function block copies the Inflection shape.",
+  "world_is": "In the Inflection module, lines 74 to 75 (handler, runtime) are padded to their own width while lines 76 to 78 (timeout, memory_size, layers) sit in the same unbroken run. This cell's copy (lambda.tf, the irpt_holdings_performance_cot module) was written with all five aligned to memory_size, so the new block is formatted by the heuristic. The pre-existing lines were not touched: the order forbids any removed line in the four .tf files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/lambda.tf lines 74 to 78 @7f16db08c3",
+      "the cell's copy at lambda.tf lines 120 to 124 @worktree (aligned to memory_size)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. Unverified by terraform fmt (the binary is absent, see row W404-S3). Disarm = terraform fmt on the root on a box with the binary; a fmt-only change to lines 74 to 78 is the CTO's or the applier's to take."
+}
+```
+
+## IRPT_DASHBD-D2-W405-S1 -- The bronze tables are raw Excel workbooks and JSON files, not Parquet, and no bronze table has date= partitions, so the footer method reads no columns there; the raw workbooks may hold a return column that silver dropped and were not read.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "The bronze tables are raw Excel workbooks and JSON files, not Parquet, and no bronze table has date= partitions, so the footer method reads no columns there; the raw workbooks may hold a return column that silver dropped and were not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 steps 2 and 3: a table is a common prefix under a layer, its columns are the sorted names of one Parquet object in its newest date= partition, and a date-named folder under bronze/ is recorded with partition_count 0.",
+  "world_is": "The bronze/ tables hold one .xlsx workbook per business day (transactions, realized, unrealized, holdings, allocations, account_attributes), one .json per date (_retry_net), and date-named folders holding a _BRONZE_COMPLETE.json marker (two read). None has a date= partition, so the Parquet footer method has no object to read there. The workbook columns were not read, so a return column held in the raw vendor files is not ruled out by this read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (bronze entries, this commit)",
+      "s3 LIST of blackdiamond/cottonwood/ and its layers, worker private run (not committed), read at 2026-10-15T03:39:15Z",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. Form only; the raw workbooks were not opened."
+}
+```
+
+## IRPT_DASHBD-D2-W405-S2 -- Five silver tables have an _s2 twin whose only data columns are c1 and c2, so the twin's content cannot be named from its footer and the return-name test cannot see inside it.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "Five silver tables have an _s2 twin whose only data columns are c1 and c2, so the twin's content cannot be named from its footer and the return-name test cannot see inside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 steps 3 and 4: the column names of one Parquet object name each table's content, and return_like_columns is computed over those names in every table.",
+  "world_is": "silver fact_allocations_s2 (144 partitions), fact_holdings_s2 (93), fact_realized_s2 (122), fact_transactions_s2 (124) and fact_unrealized_s2 (144) carry the same partition counts as their parents plus the metadata columns and c1 and c2 only. The parents carry named columns. The twins' content was not read (footer only), so a return column held under c1 or c2 would be invisible to the name pattern.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (silver _s2 entries, this commit)",
+      "s3 LIST of blackdiamond/cottonwood/ and its layers, worker private run (not committed), read at 2026-10-15T03:39:15Z",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. Form only."
+}
+```
+
+## IRPT_DASHBD-D2-W405-S3 -- The ACCOUNT_VALUE_ONLY definition reads no return column, but the name pattern finds seven return-like columns, all dollar gain or loss at position or lot grain or a date; the verdict reads the definition as no account-grain return column.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "The ACCOUNT_VALUE_ONLY definition reads no return column, but the name pattern finds seven return-like columns, all dollar gain or loss at position or lot grain or a date; the verdict reads the definition as no account-grain return column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 step 5: ACCOUNT_VALUE_ONLY means account-grain values and flows with no return column; ACCOUNT_RETURN_SERIES needs a table with account-grain rows and a return-like column over time.",
+  "world_is": "return_like_columns holds seven entries: silver fact_realized (Long-Term Gain/Loss, Short-Term Gain/Loss, Total Gain Loss), silver fact_unrealized (the same three) and silver fact_transactions (Return Date). The gain or loss columns are dollar amounts per position or per sold lot, not returns, and Return Date is a date. Read literally, no return column fails; the record takes the account-grain reading and says so in words.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (return_like_columns and verdict, this commit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. The verdict is the worker's judgment and is not graded here."
+}
+```
+
+## IRPT_DASHBD-D2-W405-S4 -- The meta/ layer holds status JSON objects directly and also three table folders, so the order's rule for a layer holding objects directly (an empty tables list) and the order's step-2 instruction disagree; the record follows the step-2 instruction and the checker.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "The meta/ layer holds status JSON objects directly and also three table folders, so the order's rule for a layer holding objects directly (an empty tables list) and the order's step-2 instruction disagree; the record follows the step-2 instruction and the checker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 step 2 in the task-order file: a layer that holds objects directly rather than table folders is recorded with an empty tables list. The worker-face text of the same step says to record every common prefix as a tables entry.",
+  "world_is": "meta/ holds direct objects (a -complete, -missing or -result JSON per date, and backfill-status.json) and three table folders (conversions, pulls, templates). The checker DBC116-4-AC1 requires the tables to equal a fresh LIST of common prefixes, so an empty list would fail it; the record lists the three folders and words names the direct objects.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd (step 2, both texts)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (meta entries, this commit)",
+      "s3 LIST of blackdiamond/cottonwood/ and its layers, worker private run (not committed), read at 2026-10-15T03:39:15Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. Form only; the two texts of step 2 should be reconciled by the issuer."
+}
+```
+
+## IRPT_DASHBD-D2-W305-S1 -- the Scope probe POSTed the wrapped requests_for body while the estate's transport posts the inner scope, so both calls drew HTTP 400
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W305-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~305",
+  "surfaced_at": "2026-10-15T03:40:04Z",
+  "one_line": "The Scope probe POSTed the wrapped body that requests_for returns; the estate's transport posts the inner scope, so both calls drew HTTP 400 and the probe answered nothing about fees or the credential.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "TO DB-i-5 worker face, step 2: build the body with the module's own requests_for and POST it, the flag at body[\"scope\"][\"calculations\"][0][\"contextChange\"][\"performanceOption\"][\"calcGrossOfFees\"]; the estate's live Scope call (orion_selected.calculate) is the reference shape the probe must reproduce.",
+  "world_is": "requests_for returns {\"scope\": scope} (orion_selected.py line 109), and calculate() posts requests[\"scope\"], the inner dict (line 147). The probe posted the wrapper: call 1 (flag false) and call 2 (flag true) both answered HTTP 400, six seconds apart, and neither was retried because a 4xx is not retried. The 400 body is not saved by rule, so what it names is unread. Verdicts (a) REFUSED and (c) REFUSED were computed from these two non-2xx answers, so they describe a body the estate does not send. Two of four calls were used; no further call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/orion_selected.py@f240990cfd lines 109 and 146-147",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-5.orion-scope-probe-multi-account-fee-flag-credential.md@f240990cfd worker face step 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-5. Form only: no token was printed or stored, no client value is in the repo, and no call beyond the two POSTs was made. A CTO ruling is needed before any further call: whether the estate's inner-scope shape may be posted on up to two more calls under a new order. The worker did not widen the cap of four or the no-retry-on-4xx rule."
+}
+```
+
+## IRPT_DASHBD-D2-S54 -- disarm owner's evidence for W305-S1: the two 400s were the issuer's order omission, fixed by AMENDMENT 1, and the re-run drew 200 and 200
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S54",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T03:59:15Z",
+  "one_line": "W305-S1 disarm evidence: both 400s were the issuer's order omission (the wrapper dict posted instead of the inner scope); AMENDMENT 1 @1009b791fa fixed it and the re-run drew 200 and 200, DBI117-1-AC1 PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-i-5 step 2: build the body with requests_for; the estate's transport posts the inner scope (orion_selected.calculate line 147).",
+  "world_is": "requests_for returns {scope: scope}; calculate posts requests[scope]. The worker posted the wrapper (2 calls, HTTP 400, no credential answer). After AMENDMENT 1 the worker posted the inner scope (2 calls, HTTP 200, 200) and the record lists all four calls; the amended check reads (c) ACCEPTED. The 400s carried no 401 or 403.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-5.orion-scope-probe-multi-account-fee-flag-credential.md",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~305/SCOPE_PROBE_R117.json",
+      "infra/aws/lambda/investor-reporting/performance/orion_selected.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S55",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T04:03:14Z",
+  "one_line": "Disposition of the B-CW round-116 rows at the drain: W404-S1 resolved (the issuer's checker base and surface, fixed @1c3c117c0b), W404-S2 ruled (the producer's refusal of a day with no silver is the frontier hold; no build change), W404-S3 and S4 carried to the applier (terraform fmt and validate under safe-apply), W405-S1 to S4 noted; nothing ARMED remains from this round",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1c3c117c0b (box/dell2) amends p116_bcw.py: BASE 7f16db08c3, the surface arm watches the two holdings-performance folders and the producer folder; DBC116-1-AC1, -2-AC1, -3-AC1 and -4-AC1 PASS on the merged tree ce85c772f2 (DB-c-8 merged at 134beac885), re-run by the issuer",
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py and the handler's existing tests (the day in no_silver returns rc 1 and writes no key): a fire on an absent T-1 silver writes nothing and returns non-zero",
+      "python .tools/round-close-check.py --project IRPT_DASHBD --round 116 --workstream B-CW: verdict=MAY-CLOSE (2 orders, 0 judgment criteria)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A BLOCKING or ARMED row is dispositioned or carried to its owner before the round is counted finished.",
+  "world_is": "W404-S1 (BLOCKING on DBC116-3-AC1) was the issuer's defect, fixed; the worker's build needed no change. W404-S2: the packet's input-frontier hold is not a separate build; the existing producer already refuses a day with no silver (rc 1, nothing written), so a held fire fails visibly rather than stamping a stale day; the drain-end packet asks the CTO whether a distinct log line is wanted. W404-S3 (no terraform binary on dell2, the fmt arm skipped) and S4 (the existing Inflection block alignment in lambda.tf may already fail terraform fmt) are the applier's: terraform fmt, validate and plan run under safe-apply on the lane that has the binary. W405-S1 to S4 (bronze landings unread, five _s2 twins exposing only c1 and c2, the ambiguity of no return column against seven pattern-matched gain/loss and date columns, and two conflicting texts in the issuer's step 2) are noted: the verdict ACCOUNT_VALUE_ONLY stands on the checker's fresh recount. The DB-c-7 handler change is in a SHARED zip: the 49 Financial and Inflection functions carry it only when the applier rebuilds and applies; the pair's apply order names that."
+}
+```
