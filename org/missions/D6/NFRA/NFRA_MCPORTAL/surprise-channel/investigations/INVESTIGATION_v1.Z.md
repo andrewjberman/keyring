@@ -2282,3 +2282,54 @@
   "notes": "Work-around used by this seat only, per command: PATH=<Python311 dir>:$PATH. Remedy (reinstall or restore Python314's Lib, or point PATH at a working interpreter) is the box owner's; the seat did not change the install. Gates that run `python` bare will refuse or misread until then."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W32-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~32",
+  "surfaced_at": "2026-10-15T17:25:11Z",
+  "one_line": "portal/DESIGN.md, the style authority the MP-pe-2 face names, is absent from the worker worktree (portal/ is an empty gitlink directory), so the new page could not be checked against it.",
+  "class": "OBSERVATION",
+  "spec_asserts": "MP-pe-2 face section 1 item 2: the Gateway page follows portal/DESIGN.md (light canvas, white hairline panels, navy ink, one band per page), read from portal/DESIGN.md.",
+  "world_is": "In C:/tmp/mp-pe-32, portal/ is an empty directory and git lists it as a gitlink at e0b033253b973fcc19779a3783bc4979c14c65a0; portal/DESIGN.md does not exist there, and mcportal/DESIGN.md does not exist either. The file was not read from another checkout. The change adds no colour and no font: it uses the classes and tokens already in gateway.css and reuses the existing red for the gap line.",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ ls -la C:/tmp/mp-pe-32/portal during this run, before 2026-10-15T17:25Z: total 12, only the . and .. entries",
+      "RAN git ls-files -s portal in C:/tmp/mp-pe-32: 160000 e0b033253b973fcc19779a3783bc4979c14c65a0 0 portal (a gitlink)",
+      "RAN ls C:/tmp/mp-pe-32/portal/DESIGN.md and ls C:/tmp/mp-pe-32/mcportal/DESIGN.md: both 'No such file or directory'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired: the doc is outside the write grant and was not copied in. Style conformance of the new page is unverified and no judgment is recorded on it. The issuer decides whether worker worktrees carry the doc."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W32-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~32",
+  "surfaced_at": "2026-10-15T17:25:11Z",
+  "one_line": "The MP-pe-2 task-order file delivered to the worker carries its RECORD FACE below the marker, and a whole-file Read returns that section.",
+  "class": "OBSERVATION",
+  "spec_asserts": "The worker face is the whole of the worker's context; the RECORD FACE does not travel to the worker, and the worker reads from the first line to the RECORD FACE marker and stops there.",
+  "world_is": "The file C:/tmp/mp-pe-32/org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-2.gateway-view-groups-and-reads-plainly.md holds the RECORD FACE (issuer notes, status, round, risk) after its marker line. A Read with no offset or limit returned the whole file, RECORD FACE included, and the worker had read past the marker before it stopped. No step was taken from the RECORD FACE content.",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ C:/tmp/mp-pe-32/org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-2.gateway-view-groups-and-reads-plainly.md with no offset or limit: 131 lines returned in one result",
+      "The returned text holds the marker line 116 ('RECORD FACE -- does NOT travel to the worker'), then ISSUER NOTES at line 118 and <status>pending</status> at line 124"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The worker's own Read was unbounded; the carrier file itself holds the record face, which is the subject of this row. The TO file is outside the write grant, so no status flip was made by this worker."
+}
+```
