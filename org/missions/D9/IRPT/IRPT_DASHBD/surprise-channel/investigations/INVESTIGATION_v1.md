@@ -16918,3 +16918,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "One open ledger names the function. Nothing was written by this seat: no ledger opened, no upload, no plan, no apply (a worktree was cut, local only). The ledger belongs to 2.0.0_SA_COO~D2 (leg L7 is its read). Ask: close or supersede L7 on the issuer's own read of the 2026-10-14 fire, or rule that it does not block this apply; this seat resumes at step 1 on that word. My own ledger irpt-dashbd-cottonwood-holdings-performance-20261015 also contains the word reporting-gold, but only as one of three READERS checked; it changes nothing on this surface."
 }
 ```
+
+## IRPT_DASHBD-D2-S78 -- the thresholds-swap ledger's L7 asked for threshold_claims_source on the fire; the field lives on the method row the fire does not write
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S78",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T11:03:00Z",
+  "one_line": "The thresholds-swap ledger's leg L7 asked the first scheduled fire to show threshold_claims_source stated; the fire cannot: that field is a column of the dim_return_method row, which the scheduled function does not write and whose served version 2 row (2026-10-03) carries no claim columns; L7 is closed with this read and the ledger is CLOSED (it was the open ledger that stopped TO-DB-b-253 at gate 0(c), row D2-S77)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Ledger irpt-dashbd-thresholds-swap-20261013 leg L7: the first scheduled fire after the release is read by the issuer: six-key thresholds object, claims measured measured held held inferred, threshold_claims_source stated.",
+  "world_is": "The fire of 2026-10-14T11:42:20Z (manifest LastModified of date=2026-10-13) wrote a thresholds object of six keys with claims measured, measured, held, held, inferred, as L7 required. No threshold_claims_source appears in that manifest. The field is a column of the dim_return_method row (account_return_daily.py emit_method_row, CLAIM_COLUMNS); the scheduled function's role has no write grant for that prefix, and the served rows are method_version=1 (2026-10-01) and method_version=2 (2026-10-03), the latter with no claim columns. L7 was closed with this read stated in its proof, and the ledger closed with all seven legs proven.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gold manifest s3 object date=2026-10-13/manifest.json (thresholds object and threshold_claims, read 2026-10-15)",
+      "gold dim_return_method prefix listing: method_version=1 and method_version=2 only (LastModified 2026-10-01 and 2026-10-03)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row and CLAIM_COLUMNS",
+      "org/critical_paths/change_management/20261013T1228Z_irpt-dashbd-thresholds-swap-20261013_deploy_completion.md leg L7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A reader that needs the claims source must read it from the method row, which is stale for the claims. Re-writing the method row is a served write under a never-widen pair (and its prefix is outside the reporting-gold role's grant); not proposed here. Counts and words only."
+}
+```
