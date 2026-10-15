@@ -332,12 +332,19 @@ def apply_hunks(pre_text, hunks):
 
 # --------------------------------------------------------------------------- string extraction
 class Lit:
-    __slots__ = ("value", "raw", "line", "hint", "permitted", "label", "block", "built", "live_held")
+    __slots__ = ("value", "raw", "line", "hint", "permitted", "label", "block", "built", "live_held",
+                 "attr", "is_key", "s3prefix", "s3_buckets", "frame_ids", "frame_names")
 
     def __init__(self, value, raw, line, hint=None):
         self.value, self.raw, self.line, self.hint = value, raw, line, hint
         self.permitted, self.label, self.block, self.built = False, False, None, False
         self.live_held = False  # set by the live limb (FWD-8): the census LIVE plane holds this exact name, so it is not a placement candidate
+        self.attr = None         # the attribute (map key) the literal sits under, as tf_literals() read it
+        self.is_key = False      # a literal written before an = or : is a KEY, never a value (the S3PREFIX clause)
+        self.s3prefix = False    # an s3:prefix condition VALUE in an IAM statement (tf_literals sets it)
+        self.s3_buckets = None   # the buckets the enclosing statement's Resource ARNs name (tf_literals sets it, s3prefix only)
+        self.frame_ids = ()      # the open brackets around the literal, outermost first (tf_literals: the S3PREFIX frame stack)
+        self.frame_names = ()    # the key each of those brackets sits under (inherited by a list element; None when none)
 
 
 def _call_name(func):
@@ -604,11 +611,29 @@ def tf_literals(src, added):
     toks = scan(src, "tf")
     blocks, stmt, attr, bracket, out = [], [], None, 0, []
     registry_locals, ctxs = set(), []
+    # THE S3PREFIX FRAME STACK (NFRA_OPLGTW OG-ng-1): every open [ ( { gets (id, key, opener). The key is the word or literal
+    # written before its = or :, or, for a list element, the key of the list it sits in; this stack is independent of `blocks`,
+    # which resets its bracket count at every { and so loses the key of a second list element.
+    frames, hist, nid = [], (None, None), 0
     for kind, v, raw, ln in toks:
         if kind == "nl":
             if bracket == 0:
                 stmt, attr = [], None
             continue
+        prev2, prev = hist
+        hist = (prev, (kind, v))
+        if kind == "sym" and v in "[({":
+            if prev in (("sym", "="), ("sym", ":")):
+                key = prev2[1] if prev2 and prev2[0] in ("word", "str") else None  # scan() kinds: str, word, sym, nl
+            elif prev in (("sym", "["), ("sym", ","), ("sym", "{")) and frames and frames[-1][2] == "[":
+                key = frames[-1][1]
+            else:
+                key = None
+            nid += 1
+            frames.append((nid, key, v))
+        elif kind == "sym" and v in "])}":
+            if frames:
+                frames.pop()
         if kind == "sym":
             if v == "{":
                 has_eq = any(t[0] == "sym" and t[1] in "=:" for t in stmt)
@@ -636,6 +661,7 @@ def tf_literals(src, added):
                     attr = last[1]
                 elif last[0] == "lit":
                     attr = last[1].value
+                    last[1].is_key = True  # the literal before = or : is a KEY (the S3PREFIX clause never grades a key)
             stmt.append(("sym", v))
             continue
         if kind == "word":
@@ -643,6 +669,9 @@ def tf_literals(src, added):
             continue
         lit = Lit(v, raw, ln)
         lit.block = list(blocks)
+        lit.attr = attr
+        lit.frame_ids = tuple(f[0] for f in frames)
+        lit.frame_names = tuple(f[1] for f in frames)
         ctxs.append((lit, [(k, x if k != "lit" else None) for k, x in stmt[-5:]]))
         stmt.append(("lit", lit))
         inner = blocks[-1] if blocks else None
@@ -666,7 +695,50 @@ def tf_literals(src, added):
             lit.permitted = True  # lookup(local.X, "<key>") over a registry-fed local
         elif len(ctx) >= 3 and ctx[-3] == ("word", "local") and ctx[-1] == ("sym", "[") and ctx[-2][1] in registry_locals:
             lit.permitted = True  # local.X["<key>"] over a registry-fed local
+    # THE S3PREFIX CONTEXT (NFRA_OPLGTW OG-ng-1, the S3PREFIX clause): a value under s3:prefix is marked, and the buckets its
+    # OWN statement's Resource names are carried beside it. The Resource literals are read from ALL of the file's literals
+    # (ctxs), not only the added ones: a statement's Resource line may be unchanged context.
+    for lit in out:
+        if _s3prefix_value(lit):
+            lit.s3prefix = True
+            stmt_id = _s3prefix_chain(lit)[0][-3]
+            lit.s3_buckets = frozenset(_resource_bucket(r.value) for r, _c in ctxs
+                                       if r.attr == "Resource" and not r.is_key and stmt_id in r.frame_ids)
     return [lit for lit in out if not lit.label]
+
+
+def _s3prefix_chain(lit):
+    """(frame ids, frame keys) around a value under s3:prefix, with the value's own list frame (named s3:prefix) dropped, so the
+    chain ends at the operator map (StringLike, StringEquals or ForAnyValue:*), then Condition, then the Statement entry."""
+    ids, names = list(lit.frame_ids), list(lit.frame_names)
+    if names and names[-1] == "s3:prefix":
+        ids, names = ids[:-1], names[:-1]
+    return ids, names
+
+
+def _s3prefix_value(lit):
+    """True for a VALUE (never a key) under the attribute s3:prefix, whose frame chain is ... Statement > Condition > operator
+    (StringLike, StringEquals or ForAnyValue:*), in jsonencode(...) or HCL map form."""
+    if lit.attr != "s3:prefix" or lit.is_key:
+        return False
+    _ids, names = _s3prefix_chain(lit)
+    if len(names) < 3:
+        return False
+    op, cond, stmt = names[-1] or "", names[-2], names[-3]
+    if cond != "Condition" or stmt != "Statement":
+        return False
+    return op in ("StringLike", "StringEquals") or op.startswith("ForAnyValue:")
+
+
+S3_ARN_PREFIX = "arn:aws:s3:::"
+
+
+def _resource_bucket(v):
+    """The bucket an IAM Resource names: the part of an S3 ARN before its first '/'; any other Resource is its own marker, so a
+    statement with a non-S3 Resource can never match one bucket."""
+    if isinstance(v, str) and v.startswith(S3_ARN_PREFIX):
+        return v[len(S3_ARN_PREFIX):].split("/", 1)[0]
+    return "<non-s3 Resource>"
 
 
 _TF_REGISTRY_FILE = re.compile(r"(^|/)logic/registry/[A-Za-z0-9_.-]+\.json$")
@@ -2057,6 +2129,53 @@ def _legacy_own(nm, value):
     return None
 
 
+# --------------------------------------------------------------------------- the S3PREFIX clause (NFRA_OPLGTW OG-ng-1)
+# OWNER: 2.0.0_SA_COO~O. A VALUE under the s3:prefix key of an IAM policy statement's Condition (StringLike, StringEquals or
+# ForAnyValue:*), in jsonencode(...) or HCL map form, grades CONFORMANT only when ALL hold (the laptop CTO's seven conditions,
+# RULING_20261015_064xZ_NAMING_GATE_IAM_PREFIX_CLAUSE_CONDITIONS.md @bf9198273e, read by the order's A1):
+#   (a) the value is <registered key part> + EXACTLY ONE trailing "*"; the key part EQUALS the template of a legacy_addresses.json
+#       row COMMITTED AT HEAD (git show HEAD:, never the index or the working tree), whole-string. A value without the "*" is
+#       not admitted by this clause; a "*" anywhere else, a "?", an empty key part or a bare "*" is not admitted either;
+#   (b) that row's BUCKET equals the one bucket the statement's own Resource ARNs name (arn:aws:s3:::<bucket>);
+#   (c) that row's READER equals the committing project (derived from the staged paths and the diff's own paths, as the
+#       MX-c-9 branch derives it; no project derivable means the clause does not fire);
+#   (d) the row's shape is prefix when the key part ends in "/", object otherwise.
+# Anything else is graded exactly as today: the same string as a resource ARN or a code literal, or under any other key, is not
+# graded by this clause. A row staged in the same commit admits nothing (HEAD only). Every commit that uses the clause prints the
+# IAM-PREFIX-ADMITTED line (_iam_prefix_line). RETIREMENT: delete this clause when these grants' prefixes are emitted as
+# lib/opal_naming.py address() output (LGIC). SINGLE SHARED TOOL: it lands once, through CLOUD.
+_S3P = {"admitted": []}   # (row key, bucket, value) of each literal the clause admitted in this run, for the printed line
+
+
+def _s3prefix_own(lit):
+    """(row key, bucket) of the HEAD-committed legacy row that admits this s3:prefix VALUE, or None."""
+    project = _LEGACY["project"]
+    if not project or not lit.s3prefix or lit.s3_buckets is None or not lit.value.endswith("*"):
+        return None
+    part = lit.value[:-1]  # EXACTLY one trailing "*" is removed; a second "*", a "?" or an empty part matches no template below
+    if not part or "*" in part or "?" in part:
+        return None
+    shape = "prefix" if part.endswith("/") else "object"
+    for key, row in _legacy_head_rows().items():
+        if row.get("reader") != project or row.get("template") != part or row.get("shape") != shape:
+            continue
+        if row.get("bucket") and lit.s3_buckets == frozenset([row.get("bucket")]):
+            return key, row.get("bucket")
+    return None
+
+
+def _iam_prefix_line():
+    """The IAM-PREFIX-ADMITTED line of this run (A1 condition 6), or '' when the clause admitted nothing."""
+    adm = _S3P["admitted"]
+    if not adm:
+        return ""
+    buckets = sorted({b for _k, b, _v in adm})
+    rc, out, _err = git("rev-parse", "--short=12", "HEAD")
+    head = text_of(out).strip() if rc == 0 else "UNREAD"
+    return "IAM-PREFIX-ADMITTED n=%d bucket=%s prefixes=[%s] registry_head=%s" % (
+        len(adm), ",".join(buckets), ", ".join(repr(v) for _k, _b, v in adm), head)
+
+
 # --------------------------------------------------------------------------- the HEAD-HELD CATALOG LITERAL branch
 # NFRA_MCPINDEX (1.0.0_SA_CTO~Z ruling msg 34254, on the MX-c-9 A4 precedent; DRAFT, not landed until the laptop CTO states
 # conditions). The emitted runtime catalog must carry the JOINED values of its table rows (the gateway reads each S3 key
@@ -2151,6 +2270,8 @@ def judge(nm, path, lit, pre_text, waivers=None):
                 _CATALOG_NEW.append(lit.value)
             j = ("REGISTRY-HELD", j[1], "%s; the same literal is held at HEAD in %s, so this catalog copy mints nothing: WARN"
                  % (j[2], held_in), "WARN")
+    if "s3admit" in note:
+        _S3P["admitted"].append((note["s3admit"][0], note["s3admit"][1], lit.value))
     extra = []
     if "held" in note:
         extra.append(note["held"])
@@ -2174,6 +2295,13 @@ def _judge(nm, path, lit, pre_text, waivers, note):
         # ungraded; the gate then read PASS 0 graded. The registry's per-firm key rulings are the other way to know it is a key.
         return None if lit.built or lit.hint else _pattern_row(lit, path=path)
     new = pre_text is None or not _in_pre(lit, pre_text)
+    s3 = _s3prefix_own(lit) if not carr else None  # the S3PREFIX clause: a registered IAM prefix of the committing project
+    if s3:
+        note["s3admit"] = s3
+        return ("CONFORMANT", "legacy key %s" % s3[0],
+                "CONFORMANT as the registered IAM s3:prefix of legacy key %r: the value is the HEAD-committed template %r of reader %s"
+                " (the committing project) plus one trailing '*', on bucket %s, the bucket the statement's own Resource names (S3PREFIX"
+                " clause, OG-ng-1)" % (s3[0], lit.value[:-1], _LEGACY["project"], s3[1]), "PASS")
     legacy_key = _legacy_own(nm, lit.value) if typ is not None else None  # MX-c-9 A4: a registered legacy address of the committing project
     # Limb (b), LAZY: read the live plane only for a NEW literal that the branches below would REFUSE (a hand-kept carrier, or
     # an OUT-OF-PATTERN / ALIAS name). A CONFORMANT or NOT-GRADED name is never refused, so it never pays for the read.
@@ -2723,12 +2851,16 @@ def run(args):
     # --staged-paths lists (the whole index of the commit, any extension). The derivation reads these paths and nothing else.
     _LEGACY.update(project=committing_project(files + staged_entries(args.staged_paths)), rows=None)
     _CATALOG_NEW.clear()
+    _S3P["admitted"].clear()
     for f in files:
         rows += grade_file(nm, f, args.post_from_index)
     meta = domain_meta(files)
     exempt_line = catalog_exempt_line(rows)
     if exempt_line:
         meta.append(exempt_line)
+    iam_line = _iam_prefix_line()
+    if iam_line:
+        meta.append(iam_line)
     rows = place_step(rows, meta)
     return rows, meta
 
