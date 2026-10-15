@@ -13109,3 +13109,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "The packet's conclusion holds for code bound to Cottonwood (none exists), but its wording 'no reader found' does not match the generic readers, which would read a Cottonwood prefix if a Cottonwood custody source were declared. Carried for the CTO's read. No action taken by this worker."
 }
 ```
+
+## IRPT_DASHBD-D2-W402-S3 -- the amended checker also exempts the paths field from the 8-digit rule, which the amendment's message does not describe
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W402-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~402",
+  "surfaced_at": "2026-10-15T02:01:16Z",
+  "one_line": "Commit 0ee0142884 amends p114_bcw.py beyond the foreign-token exemption it describes: the paths key also joins DIGIT_OK_KEYS, so the 8-digit rule no longer applies to paths fields",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The amendment's message and the coordinator's note: only the path, paths and file fields are exempt from the foreign-token check; the criterion text, invocation and expected output are unchanged.",
+  "world_is": "The diff adds paths to DIGIT_OK_KEYS as well as to FOREIGN_OK_KEYS, so no_identifiers stops applying the 8-digit rule to any paths field. The record's non-reader paths hold no run of 8 or more digits (checked by a scan of the record), so DBC114-3-AC1 PASS is unaffected. The widening is latent for any future record that lists paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 0ee0142884 diff of org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r114/p114_bcw.py: DIGIT_OK_KEYS line now begins with the paths key, and FOREIGN_OK_KEYS is added",
+      "python -I p114_bcw.py . DBC114-3-AC1 on 0b18dfcc6c's record in the worktree: DBC114-3-AC1 PASS, rc 0, two runs; --selftest SELFTEST PASS, rc 0",
+      "scan of READERS_AND_CALENDAR_R114.json non_readers.paths: 0 paths with a run of 8 or more digits"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; the change is the issuer's and is not reverted by this worker. The question for the COO is whether the digit exemption for paths is intended. Row IRPT_DASHBD-D2-W402-S1 is left as filed for the issuer's drain disposition."
+}
+```
