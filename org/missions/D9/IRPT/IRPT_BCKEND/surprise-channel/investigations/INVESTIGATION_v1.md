@@ -39747,3 +39747,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W435-S1 -- On this box the hashed account-id list the commit gate reads is absent, so safe-commit prints WARN and the commit is not checked for client account ids; a future commit carrying one would pass unchecked.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W435-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~435",
+  "surfaced_at": "2026-10-15T18:14:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "On this box the hashed account-id list the commit gate reads is absent, so safe-commit prints WARN and the commit is not checked for client account ids; a future commit carrying one would pass unchecked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 654202d757 (worker 0.9.0_WK_IRPT_BCKEND~435, branch wk-IRPT_BCKEND-435): WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt; the commit was NOT checked for client account ids",
+      "Read by name at the path, dell2 shell, 2026-10-15T18:14Z: OPAL_ACCOUNT_ID_HASHES unset; the list is absent at the default path; the directory C:\\Users\\Test\\.opal holds only _set_aside_20261011/ (dated 2026-10-11)",
+      "_set_aside_20261011/ holds account_id_hashes.txt and three vendor-split lists (49financial, cottonwood, inflection), read by name and size only; their contents were not opened by this worker"
+    ]
+  },
+  "spec_asserts": "The commit gate checks each commit for client account ids (the CLAUDE client-data rule, carried by the worker face as a rule the worker keeps: no real account id in any tracked file), so a commit that passes the gate is free of them.",
+  "world_is": "The check is ABSENT on this box, not empty: the list was set aside on 2026-10-11 and the default path is empty of it. The commit 654202d757 touched only the deliverables folder of this worker (record JSON, harness, candidate map writer, criteria output) and was written to carry counts, hashes and names only; the check did not grade it. The list is not moved back by this worker: it is outside the grant. Disarm needs the box owner's decision on where the list lives."
+}
+```
