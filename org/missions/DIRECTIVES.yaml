@@ -597,7 +597,7 @@ directives:
       Placement attaches to the DIRECTIVE, never to a member (LD-0498, LD-0502), so a future move is one row and not N."
     members:
       subgroups: []
-      projects: [DSGN_REBRND, DSGN_IRPTV1, DSGN_AMGTV1]
+      projects: [DSGN_REBRND, DSGN_IRPTV1, DSGN_AMGTV1, DSGN_RBNDV2]
       members_note: "First member registered 2026-09-11 by 1.0.0_SA_CTO at L3 (Rule 27 L3 clause: the CTO writes every
         carrier itself): DSGN_REBRND (Portal Visual Elevation; minted DSGN_PORTALVIS at L3, renamed the same hour on Andrew's word 'DSGN_REBRND (what i would call this project)'), macro DSGN ratified on Andrew's word (LD-0552), lead
         2.0.0_SA_COO~D (promoted from 0.1.1_RD_MarketPerformance on his word ~07:5xZ). Brief
