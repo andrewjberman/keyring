@@ -38426,3 +38426,71 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W419-S1 (the published manifest is written by publication.py, outside the grant; the fact is in the run manifest _manifest) and D2-W419-S2 (the household account node is built by holdings_49f.py, holdings_inf.py and holdings_membership.py, outside the grant) MOVE to IB-pr-577 with the per-firm evidence loaders; both stay ARMED, owner me, because until IB-pr-577 lands the served snapshot would not list the exempted account. D2-W419-S3 RESOLVED (my defect, an overlong slug; order and instance now carry short names, instance VALID). Nothing is deployed or minted by IB-pr-576: it changes holdings_snapshot.py at HEAD only, and the never-widen pair for the exemption follows IB-pr-577."
 }
 ```
+
+```json
+[
+  {
+    "id": "IRPT_BCKEND-D2-W420-S1",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~420",
+    "surfaced_at": "2026-10-15T14:13:18Z",
+    "one_line": "IB-pr-577: run_firm takes the source receipts before the publish gate, but the absent_at_source evidence is read inside the gate through the same VersionedInputs, so the prior-day and walk-day objects it pins are not in _source_objects or the source_set_revision digest.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P2 (issuer: receipts must cover the exemption's reads before the exemption is released to a firm)",
+    "spec_asserts": "Cell IB-pr-577, changes 2 to 4: the exemption reads through the inputs object run_firm holds, and the published manifest records what the exemption relied on (absent_at_source entries).",
+    "world_is": "In holdings_snapshot.py run_firm, the inputs.receipts() block sits before evaluate_publish_gate; the absent_at_source provider reads the prior-day and walk-day partitions after that point, so those objects are pinned but never listed in the manifest source objects. The manifest records the absence entries, not the objects behind them. Not reordered here: receipts placement is outside the grant.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py run_firm receipts block before evaluate_publish_gate @476d0ed981904ef7708b21ecabbd7b98427a6694",
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py _absent_provider and source_evidence_for (block ABSENT-AT-SOURCE-B) (this order's uncommitted wiring, written on base 476d0ed981)",
+        "data/assets/scripts/gold/investor_reporting/tests/test_absent_at_source_wiring.py run_firm_publishes_with_the_account_still_listed exercises the gate through the real VersionedInputs"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-D2-W420-S2",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~420",
+    "surfaced_at": "2026-10-15T14:13:18Z",
+    "one_line": "IB-pr-577 walk (step f, account column only): an account with a zero-valued row on the prior day counts as having positions in the walk but as absent in the exemption rule, so first_absent_day is null and the listing falls back to the prior day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Cell IB-pr-577, change 2 (f): read the positions table, account column only, back one trading day at a time from the prior day, and name the earliest day of the unbroken run on which none of the lost account ids has positions.",
+    "world_is": "The exemption rule (absent_at_source_exempt) counts a zero row as no position, while _absent_walk reads only the account column and so counts any row as a position. For an account with a zero row on the prior day the exemption passes and the walk stops at the prior day, recording first_absent_day as null. Built as the order states; the two readings are left to the issuer.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py _absent_walk and _absent_evidence (block ABSENT-AT-SOURCE-B) (this order's uncommitted wiring, on base 476d0ed981)",
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py absent_at_source_exempt value rule (block ABSENT-AT-SOURCE-A) @476d0ed981904ef7708b21ecabbd7b98427a6694",
+        "data/assets/scripts/gold/investor_reporting/tests/test_absent_at_source_wiring.py test_walk_names_the_earliest_absent_day_and_the_bound"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-D2-W420-S3",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~420",
+    "surfaced_at": "2026-10-15T14:13:18Z",
+    "one_line": "The investor_reporting suite in this sparse worktree has 46 failing or erroring tests outside the IB-pr-577 grant: runner modules under data/inf, data/cot and runners_49f are absent, and some names the tests call are not defined at base.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Face: the sparse checkout adds the directories the import chain of the touched files needs, and the existing tests named in the paths block pass.",
+    "world_is": "The named existing tests pass (test_holdings_publish_gate, test_absent_at_source_exemption, test_holdings_bypass_one_date) and the infra publication suite passes. The other failures raise identity-runner absence (runner_common under data/inf, data/cot and runners_49f is not in the sparse set) or call names base 476d0ed981 does not define (holdings_snapshot has no cusip_key; classify_security takes no security_id). Not fixed here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest run of data/assets/scripts/gold/investor_reporting/tests in the worktree (this order's uncommitted wiring, on base 476d0ed981): 38 failed and 8 errors, the listed causes above",
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py @476d0ed981904ef7708b21ecabbd7b98427a6694 defines no cusip_key (grep count 0)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
