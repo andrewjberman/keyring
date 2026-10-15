@@ -39621,3 +39621,260 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "S204 is DISARMED on a report I did not make myself: the acceptance is read from ~Y2's and ~AQ2's record, not by a get-item of mine (the item carries a client request). The chain after acceptance (attachments, commentary_ready, the packager secret) is IRPT_ANLREQ's and is tracked there; it is not part of IB-pr-456. The PROD promote of the filing page is client-facing and stays Andrew's word under the push law; my condition for it, an accepted request carrying the member, is met."
 }
 ```
+
+## IRPT_BCKEND-D2-W433-S1 -- The calendar-day rule (3) would fail the existing --from-date test that pins trading-day rows, so the rule is applied to the scheduled window only; the issuer rules the backfill.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S1",
+  "one_line": "The calendar-day rule (3) would fail the existing --from-date test that pins trading-day rows, so the rule is applied to the scheduled window only; the issuer rules the backfill.",
+  "spec_asserts": "Change (3) and test calendar_days_include_weekends_in_the_window_and_the_rows: a non-trading calendar day takes its universe from the previous trading day's held accounts, and the rows chain by calendar day, weekends included, in the window.",
+  "world_is": "The existing test test_from_date_window_splits_series_into_per_day_rows_and_skips_existing_keys asserts that a --from-date run writes no key for 2026-10-10 or 2026-10-11 (dropped == []), and its fixture carries positions for trading days only. Applying the calendar-day rule to the --from-date path would write those weekend keys and refuse for a missing positions partition, so the existing test would fail. The build applies the rule to the scheduled window (no --from-date) and the backfill keeps its trading-day rows. Consequence: a backfill leaves weekend days unwritten, and the scheduled window starts after the newest landed day, so a later scheduled run does not refill them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/test_pull_inflection_scope_account_returns.py@2bd17b566f lines 315-337 (the --from-date test: dropped == [] and the trading-day fixture)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@2bd17b566f lines 490-492 (the --from-date candidate days are trading days only)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@77c8e46741 SCOPE-FEED-B run(): the --from-date branch keeps trading days; the scheduled branch walks calendar days"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S2 -- The order's 'capped at 10 calendar days back' is built as no earlier than 10 days before the pull date, so a capped window holds up to 11 calendar days inclusive.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S2",
+  "one_line": "The order's 'capped at 10 calendar days back' is built as no earlier than 10 days before the pull date, so a capped window holds up to 11 calendar days inclusive.",
+  "spec_asserts": "Change (4): the scheduled window takes a calendar-day window from the day after the newest landed silver partition through the pull date, capped at 10 calendar days back.",
+  "world_is": "The order does not say whether the cap is start no earlier than pull minus 10 calendar days (11 days inclusive) or a window of 10 calendar days inclusive (start no earlier than pull minus 9). The build uses pull minus 10 through SCHEDULED_LOOKBACK_DAYS = 10; the test scheduled_window_starts_after_the_newest_landed_day_and_is_capped pins 2026-10-04 for a pull date of 2026-10-14. The other reading is a one-constant change for the issuer to rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@77c8e46741 SCHEDULED_LOOKBACK_DAYS and scheduled_window_start()",
+      "data/inf/manual_api/test_scope_feed_daily_factor.py@77c8e46741 test_scheduled_window_starts_after_the_newest_landed_day_and_is_capped"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S3 -- The order's 'a Monday run also carries the weekend' cannot hold under the default pull date, the prior trading day: a run on a Monday pulls the Friday.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S3",
+  "one_line": "The order's 'a Monday run also carries the weekend' cannot hold under the default pull date, the prior trading day: a run on a Monday pulls the Friday.",
+  "spec_asserts": "Change (4) and its rationale: the window runs through the pull date, so a Monday run also carries the weekend.",
+  "world_is": "The default pull date is lib/trading_calendar.prev_trading_day(today), the T-1 trading day that the order's pull-date rule states. On a Monday that is the Friday, so the window ends on the Friday and carries no weekend. The weekend is carried by the run whose pull date is the Monday (a Tuesday run by default) or by a run given --pull-date. The build follows the stated rule; the choice of schedule and pull date is for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@2bd17b566f line 480 (the default pull date is tc.prev_trading_day(today))",
+      "lib/trading_calendar.py@2bd17b566f prev_trading_day(date): the NYSE trading day strictly before date"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S4 -- A Read of the task order by its path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker; the same as IRPT_BCKEND-D2-W432-S1.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S4",
+  "one_line": "A Read of the task order by its path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker; the same as IRPT_BCKEND-D2-W432-S1.",
+  "spec_asserts": "The worker face: do not read the RECORD FACE of the task order; the record fields are the issuer's.",
+  "world_is": "The Read tool returned the whole order file, including the RECORD FACE section, on this worker's first read of the order. The build took its values from the worker face and from the run itself, and used nothing from the RECORD FACE beyond the record fields the face names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-594.scope-feed-daily-factor.md@2bd17b566f (the file as read by the worker; the RECORD FACE section is in the same file)",
+      "IRPT_BCKEND-D2-W432-S1 in org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md (the same observation on the earlier order)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W433-S5 -- The block redefines five SCOPE-FEED-A functions so the difference control can run; ruff F811 is suppressed per line and the A originals stay as shadowed code.
+
+```json
+{
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~433",
+  "surfaced_at": "2026-10-15T17:48:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "IRPT_BCKEND-D2-W433-S5",
+  "one_line": "The block redefines five SCOPE-FEED-A functions so the difference control can run; ruff F811 is suppressed per line and the A originals stay as shadowed code.",
+  "spec_asserts": "Change: all new logic inside SCOPE-FEED-B blocks; the module imports with the blocks removed; removing the blocks in memory fails the new tests on assertions.",
+  "world_is": "Changing the A-block functions in place would let the removal run pass, so the block carries replacement definitions of daily_points, classify, _day_rows, _silver_frame and run. The A originals stay above it and are shadowed while the block is present. Ruff F811 (redefinition of an unused name) is raised on those five definitions and suppressed per line with a noqa comment. Retiring the A originals is a later cleanup for the issuer, after the block is adopted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@2bd17b566f lines 236, 251, 456, 469, 476 (the A originals that the block redefines)",
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@77c8e46741 SCOPE-FEED-B block: five redefinitions with the noqa F811 comment"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W435-S1 -- On this box the hashed account-id list the commit gate reads is absent, so safe-commit prints WARN and the commit is not checked for client account ids; a future commit carrying one would pass unchecked.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W435-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~435",
+  "surfaced_at": "2026-10-15T18:14:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "On this box the hashed account-id list the commit gate reads is absent, so safe-commit prints WARN and the commit is not checked for client account ids; a future commit carrying one would pass unchecked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 654202d757 (worker 0.9.0_WK_IRPT_BCKEND~435, branch wk-IRPT_BCKEND-435): WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt; the commit was NOT checked for client account ids",
+      "Read by name at the path, dell2 shell, 2026-10-15T18:14Z: OPAL_ACCOUNT_ID_HASHES unset; the list is absent at the default path; the directory C:\\Users\\Test\\.opal holds only _set_aside_20261011/ (dated 2026-10-11)",
+      "_set_aside_20261011/ holds account_id_hashes.txt and three vendor-split lists (49financial, cottonwood, inflection), read by name and size only; their contents were not opened by this worker"
+    ]
+  },
+  "spec_asserts": "The commit gate checks each commit for client account ids (the CLAUDE client-data rule, carried by the worker face as a rule the worker keeps: no real account id in any tracked file), so a commit that passes the gate is free of them.",
+  "world_is": "The check is ABSENT on this box, not empty: the list was set aside on 2026-10-11 and the default path is empty of it. The commit 654202d757 touched only the deliverables folder of this worker (record JSON, harness, candidate map writer, criteria output) and was written to carry counts, hashes and names only; the check did not grade it. The list is not moved back by this worker: it is outside the grant. Disarm needs the box owner's decision on where the list lives."
+}
+```
+
+## IRPT_BCKEND-D2-W434-S1 -- The safe-commit of the six transplant files printed WARN: client-data-check hashed account-id list ABSENT on this box, so the commit was not checked for client account ids; the six files are code and carry no account id by hand re
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The safe-commit of the six transplant files printed WARN: client-data-check hashed account-id list ABSENT on this box, so the commit was not checked for client account ids; the six files are code and carry no account id by hand reading.",
+  "spec_asserts": "Worker face cell IB-pr-595 (client data rule): no real account id, household id, client id or security identifier in any tracked file. The commit gate of the tree is the check that enforces it, and it reads its list from the account-id hashes file or OPAL_ACCOUNT_ID_HASHES.",
+  "world_is": "safe-commit of fa610b01b4 (six files under deliverables/0.9.0_WK_IRPT_BCKEND~434/transplant/) printed: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty). The commit then passed the other gates (pre-commit gate clean for 6 of 6 files; surprise-row gate and to-pipeline gate OK). The record was then written with counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at fa610b01b4 (this worktree): line beginning WARN: client-data-check: hashed account-id list ABSENT",
+      "commit fa610b01b4 on branch wk-IRPT_BCKEND-434: six files, 12170 insertions, all under org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~434/transplant/",
+      "the committed holdings_snapshot.py and publication.py were read by the harness for counts and hashes only; no account id appears in the harness output"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W434-S2 -- The Read of org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-595.holdings-transplant.md returned the whole file, the RECORD FACE included, though the instruction is to read only the WORKER FACE; the same surfacing
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The Read of org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-595.holdings-transplant.md returned the whole file, the RECORD FACE included, though the instruction is to read only the WORKER FACE; the same surfacing as IRPT_BCKEND-D2-W431-S1.",
+  "spec_asserts": "The order's launch instruction says to read the section headed WORKER FACE (from WORKER FACE to RECORD FACE) and not to read the RECORD FACE.",
+  "world_is": "A single Read call of the order file (no offset or limit) returned all 94 lines, the WORKER FACE and the RECORD FACE with its preflight block. No ordering of the worker's acts depended on the RECORD FACE: its record shape and the three criteria are repeated in the WORKER FACE, which was the source used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-595.holdings-transplant.md in worktree C:/dev/wk-IRPT_BCKEND-434 at base d327c250bc, first act",
+      "the WORKER FACE record shape at the order's lines 44 to 48 matches the RECORD FACE's own shape text",
+      "IRPT_BCKEND-D2-W431-S1 in INVESTIGATION_v1.md records the same whole-file return for IB-pr-590"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W434-S3 -- The order says scratch files go in a directory OUTSIDE the repository, while the worker rule says scratch lives in the worktree .scratch directory; the two rules name different places, the same conflict as IRPT_BCKEND-D2-W431-S2.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says scratch files go in a directory OUTSIDE the repository, while the worker rule says scratch lives in the worktree .scratch directory; the two rules name different places, the same conflict as IRPT_BCKEND-D2-W431-S2.",
+  "spec_asserts": "Worker face: Scratch files go in a directory OUTSIDE the repository. Worker rule: scratch is <your worktree>/.scratch/ only.",
+  "world_is": "The three pin worktrees (git worktree add) had to sit outside the repository, so they went under the session scratchpad. The harness scratch and fragments went there too. A commit message file went in the worktree .scratch directory, which is gitignored (.gitignore line 450).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree list at the pins: C:/Users/Test/AppData/Local/Temp/claude/C--dev-ajb-workspace/47eeb1ac-c959-4795-ad75-ff16a015ad46/scratchpad/ir434/pins/{49financial,cottonwood,inflection}",
+      ".gitignore:450 .scratch/ (git check-ignore of .scratch/x.txt)",
+      "IRPT_BCKEND-D2-W431-S2 in INVESTIGATION_v1.md records the same conflict for IB-pr-590"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W434-S4 -- The record commit 1b5d1ac69a printed one-writer WARN: INVESTIGATION_v1.md is the laptop's unsuffixed file written from dell2, and the gate names the per-box file <stem>.dell2.<ext> (WARN until C-QUEUE); the rows were appended to t
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The record commit 1b5d1ac69a printed one-writer WARN: INVESTIGATION_v1.md is the laptop's unsuffixed file written from dell2, and the gate names the per-box file <stem>.dell2.<ext> (WARN until C-QUEUE); the rows were appended to the named file, as the order says.",
+  "spec_asserts": "The order's BOUNDS and worker face name org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md as the channel file for this worker's rows.",
+  "world_is": "safe-commit of 1b5d1ac69a passed with the one-writer WARN on that unsuffixed path; the gate's per-box convention would put a dell2 writer in a suffixed file. The rows S1 to S3 were appended to the named file in the same commit, and the surprise-row gate reported no row problem.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at 1b5d1ac69a (this worktree): line beginning [one-writer] WARN: org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file",
+      "the surprise-row gate of commit 1b5d1ac69a: 3 new row(s) of 1526 total checked, OK: 1 file(s), all new rows carry their step-7/step-10 fields (the S4 row is appended after that commit)",
+      "the worker face channel-rows paragraph: append each row as its OWN block at the END of INVESTIGATION_v1.md"
+    ]
+  }
+}
+```

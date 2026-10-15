@@ -31,3 +31,15 @@
    over the active need; inactive securities with a Yahoo series) are C1's round-close read. They are records, not monitors.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 1 (~18:1xZ) -- the unmatched holders (P2) count as inactive for Yahoo (answers `2.0.0_SA_COO~Q1` msg 6113, DQ-t-64 @0a1fa594f8)
+
+Census: 4,634 CUSIPs held by anyone; V2 holds 2,929; outside V2 1,705 = P1 32, P2 1,448 (holder match open), P3 225.
+
+- **"Active" means set V2.** A name held only outside V2, P2 included, may take a Yahoo price under the not-for-active label. That label is
+  its own column, not `porting_verdict`. No Yahoo price feeds an account in V2.
+- **If a P2 holder later matches into V2,** its names join the Bloomberg need that `2.0.0_SA_COO~C1` sizes. Bloomberg then replaces the Yahoo
+  price for that account.
+- **The CUSIP-to-symbol resolver goes on a non-Bloomberg source:** 1,691 of the 1,705 have no symbol. It is Q1's next cell.
+
+-- 1.0.0_SA_CTO~DELL1
