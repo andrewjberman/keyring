@@ -16235,3 +16235,135 @@
   "notes": "Resolves IRPT_ANLREQ-D2-W144-S12."
 }
 ```
+
+## IRPT_ANLREQ-D2-W146-S1 -- TO-AR-y-342 names _scope/served.py for verified_internal_subject; the function lives in _authz/served.py
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W146-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~146",
+  "surfaced_at": "2026-10-15T02:03:18Z",
+  "one_line": "TO-AR-y-342 names infra/aws/lambda/investor-reporting/_scope/served.py as the home of verified_internal_subject; no such file exists and the function is defined in _authz/served.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's Q1 places verified_internal_subject in _scope/served.py and asks for its read at that path.",
+  "world_is": "The def is at infra/aws/lambda/investor-reporting/_authz/served.py:323. _scope/ has no served.py. _scope/interactive_access.py imports it as 'from served import verified_internal_subject', which resolves because intake/upload_entry.py:14 puts _authz on sys.path. The record cites the real path and says so.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:323 def verified_internal_subject(headers):",
+      "infra/aws/lambda/investor-reporting/intake/upload_entry.py:14 for _path in (_HERE, _HERE.parent / _authz ...)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Raised by the FWD-1 prerequisites read, AR-y-342 (round 40, workstream ZZ3). No source edited."
+}
+```
+
+## IRPT_ANLREQ-D2-W146-S2 -- RequestComposition.schema.json, which governs the owner shape, is not in the worktree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W146-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~146",
+  "surfaced_at": "2026-10-15T02:03:18Z",
+  "one_line": "The composition admission reads RequestComposition.schema.json from an assembly-supplied directory, and no copy of that schema exists in the worktree under infra/ or org/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's Q3 cites RequestComposition.schema.json for the owner fields, home_firm_id required for OPAL_GLOBAL only.",
+  "world_is": "ycharts/generate/composition_admission.py:36 loads directory/RequestComposition.schema.json. A Glob for **/RequestComposition.schema.json under infra/ and under org/ returned no file. The owner rule was therefore read from code (interactive_access.py home_firm_id comment, reports/request_composition.py), not from the schema.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py:36 loads RequestComposition.schema.json",
+      "Glob **/RequestComposition.schema.json under infra/ and org/ returned no file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded in the record not_read list. No source edited."
+}
+```
+
+## IRPT_ANLREQ-D2-W146-S3 -- the internal-only rule the order cites as ADDENDUM v0.6 is not in the worktree; the code rule is App.tsx
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W146-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~146",
+  "surfaced_at": "2026-10-15T02:03:18Z",
+  "one_line": "TO-AR-y-342 names Andrew's ADDENDUM v0.6 as the internal-only rule for the Ticket Center; the addendum is not in the worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's Q2 cites Andrew's ADDENDUM v0.6 for the internal-only visibility rule of the Ticket Center page.",
+  "world_is": "A Grep for ADDENDUM v0.6 over org/missions/D7 returned no match. The rule as code is portal/src/App.tsx:497-507, a comment naming D7 TO-F D7F-1 and the requireInternal guard on the /ticket-center route. The addendum was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep ADDENDUM v0.6 over org/missions/D7: no match",
+      "portal/src/App.tsx:505 ProtectedRoute requireInternal on /ticket-center"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The record states the visibility answer from the code rule and names the addendum as not located."
+}
+```
+
+## IRPT_ANLREQ-D2-W146-S4 -- a successful ticket CREATE sends SES mail to the resolved DL, so the FWD-1 filing would mail
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W146-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~146",
+  "surfaced_at": "2026-10-15T02:03:18Z",
+  "one_line": "A successful POST /api/scoped/tickets CREATE calls notify_dl_isolated, which sends an SES message to the DL resolved for the firm; the FWD-1 filing would send that mail.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "The FWD-1 run files one Analysis Request in the Ticket Center as a synthetic staff user (order AR-y-342 context, CTO msg 7767).",
+  "world_is": "ticket_center/lambda_function.py:1383 calls notify_dl_isolated(item) on the 201 path of create_ticket. notify_dl resolves recipients by firm through resolve_recipients (line 909; the '*' default row of TICKET_DL_MAP) and calls send_raw_email (line 1012). The R30 record shows refusal arms and TICKETS_COUNT_EQUAL only, so no successful CREATE was recorded by a sitting.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:1383 notify_dl_isolated(item) on the CREATE 201 path",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1012 send_raw_email(Source=EMAIL_FROM, Destinations=recipients",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r30/TICKET_ARMS_R30.txt TICKETS_COUNT_EQUAL 31"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left for the issuer to decide the run's CREATE step. The record's deciding_fact states the caveat. No call made."
+}
+```
+
+## IRPT_ANLREQ-D2-W146-S5 -- two classifiers disagree on whether a verified staff subject is OPAL_GLOBAL
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W146-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~146",
+  "surfaced_at": "2026-10-15T02:03:18Z",
+  "one_line": "classify_principal grants OPAL_GLOBAL only from the caller roster, while InteractiveAccess.current grants it to every verified internal subject; the two live in the same package.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's Q1 asks whether a staff address is admitted as INTERNAL everywhere the three hops read it, including OPAL_GLOBAL in interactive_access.py.",
+  "world_is": "_scope/resolve.py:281-282 returns OPAL_GLOBAL only when the subject is on the caller-supplied roster. _scope/interactive_access.py:83-88 returns OPAL_GLOBAL for every verified_internal_subject, with no roster. The served door and submit use current(). Which answer a staff user gets depends on the classifier that runs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/resolve.py:281 if email.lower() in roster",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:83 if subject is not None: then principal_class OPAL_GLOBAL"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded in the record q1 rows (roster branch: not_constrained; current(): admits)."
+}
+```
