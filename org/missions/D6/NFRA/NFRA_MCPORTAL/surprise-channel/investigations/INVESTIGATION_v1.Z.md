@@ -2640,3 +2640,51 @@
   "notes": "Not repaired: the catalog is the issuer's (outside this order's write surface). A future C-GROUP release that writes tool_index vendor and firm keeps the same key names as these owning-firm keys: the issuer should confirm the key is read only from tool_index, which the handler does."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T23:23:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-W31-S7",
+  "one_line": "MP-pf-3 builds the serves list and the store kind, but the real catalog carries neither: no tool_index row has serves or a store source_group, so the real breakdown shows no store group and no segment.",
+  "spec_asserts": "MP-pf-3 section 1 A and B: the catalog's tool_index carries serves lists on the opal-data-assets and opal-data-bd tools, and writes kind store for the sources that are neither S3 buckets nor Microsoft graph (YCharts, the Kuzu graph, DynamoDB).",
+  "world_is": "app/refs/DATA_CATALOG.yaml at 994447aa53 (this order does not change the catalog): from line 1349 (tool_index) on, zero serves lines, zero kind store lines and zero source_group lines. The real _compute run with an offline scan stub and an empty store lists 86 distinct tools in 2 channels: m365 (11 tools) and undeclared (75 tools). No bucket, store or integration channel exists and no channel carries segments. The new behaviour is exercised only by the planted tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GREP of app/refs/DATA_CATALOG.yaml in worktree C:/tmp/mp-pe-31 from line 1349: source_group, kind: store and '^  (vendor|firm|serves):' each 0 matches; the serves lines above line 1349 are channel descriptions, not tool_index rows",
+      "RAN .scratch/real_run.py in worktree C:/tmp/mp-pe-31: _compute(scan_client=EmptyScan(), store=EmptyStore()) printed 'tools listed (distinct): 86', 'channels: 2', 'm365 kind=native tools=11 segments_key=False', 'undeclared kind=undeclared tools=75 segments_key=False', 'any channel carries segments: False'"
+    ]
+  },
+  "notes": "Not repaired: the catalog is the issuer's, outside this order's write surface. Related to NFRA_MCPORTAL-Z-W31-S6, which records the absence of tool_index vendor and firm; this row records the absence of serves lists and of store declarations, which S6 does not cover."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T23:23:18Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-W31-S8",
+  "one_line": "MP-pf-3 closure: the task order's <status> flip to complete is not made by this worker, because the order file is outside the worker's write grant.",
+  "spec_asserts": "The standing worker rule for a passing proof: flip the task order's <status> to complete and commit the instance, the deliverables and the flip together.",
+  "world_is": "The order's <paths> (worker face, section 3) name the admin_gateway_breakdown.py and test_admin_gateway_breakdown.py files, the deliverables folder and the surprise-channel investigations folder; the task-order file is not among them. The worker face (lines 1-85) carries no <status> tag, and its section 5 names no flip. The instance is written and checked; the flip is left for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ the task order worker face, lines 1-85 (offset 1, limit 85), in worktree C:/tmp/mp-pe-31: section 3 <paths> lists four surfaces; no <status> tag appears in lines 1-85",
+      "READ section 5 of the worker face (WHEN YOU ARE DONE): write the instance, run proof-of-spec-check.py, report once; no flip is named"
+    ]
+  },
+  "notes": "Not repaired: the status is the issuer's to set. Whether a worker writes its own status flip is a decision for the issuer (2.0.0_SA_COO~MP)."
+}
+```
