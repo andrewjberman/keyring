@@ -62,6 +62,21 @@ Build:
      through the existing page (light canvas, white hairline panels, navy ink, one band per page).
 3. No new dependency, no timer, no alert, no write.
 
+**AMENDMENT 1 (issuer, after rendering your build and LOOKING at it; these are my spec's faults, not yours).** Five changes, all in `GatewayView.tsx`/`gateway.css`:
+   a. **No raw enum in the text.** Remove the `Kind: <enum>.` fragment from each section's facts line; the facts line becomes `Auth: <auth>. Min tier: <min tier>. Rating: <value>` (keep the
+      rating reason as today). The kind is said once, in plain words, under the heading.
+   b. **The plain words for `undeclared` change** to `Not declared (gap)` (summary table Kind cell and the section's kind line). The other three are unchanged (`AWS bucket`,
+      `Integration`, `Built in (Microsoft Graph)`). The red sentence `Source not declared: these tools are not tied to a bucket yet.` stays under the heading.
+      Reason: the heading `No source declared` was repeated three more times in one section.
+   c. **Links use the page ink, not the browser's blue.** The Group links in the summary table take `color: var(--color-ink, #163372)` with an underline (a new rule `.gateway-summary a`);
+      `portal/DESIGN.md` allows navy ink and the existing tokens only.
+   d. **Singular and plural.** The header line reads `1 group` or `N groups`, and `1 tool` or `N tools` (it read `1 groups` for one).
+   e. **No column of "none".** In a group's Tools table, show the `Graph scopes` column only when at least one tool in that group has graph scopes; otherwise omit the column
+      (header and cells). The `Indexes` column stays.
+   Update the assertions your existing tests make about the old text, and add tests for c to e under any names (the seven named tests below keep their names and meaning; the
+   `a group with no declared source reads as a gap` test now reads the new words). Re-run AC1 (still `pass` at 57 or more, `fail` 0), `tsc -b` and `bun run build`, and list each changed
+   assertion in your report as before.
+
 **Tests**, by these exact names (bun 1.3.x prints a name only on FAILURE, so the check reads the names from your sources; put each name as the literal first
 argument of its `test(...)`), in `src/pages/gateway/gateway.test.tsx` using `renderToStaticMarkup` and a fixture of four groups (one `bucket` named
 `opal-data-harvest`, one `integration`, one `native`, one `undeclared`):
