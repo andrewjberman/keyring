@@ -10226,3 +10226,201 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not worked around: no budget edit, no one-in-one-out edit outside the cited lines, no bypass. The three acceptance criteria CTag2-AC1..AC3 do not read this file."
 }
 ```
+
+## NFRA_CTLPLN-W105-S1 -- the probe path the order names under deliverables/ is refused by the lane gate; the serial folder is the grant
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T10:41:59Z",
+  "one_line": "The cell says the throwaway probe goes under the project folder's deliverables/. The lane gate refuses a file directly under deliverables/ or under another serial's folder, so the probe was placed under deliverables/<SERIAL>/ in the throwaway sparse worktree only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh refusal text, debug run, full output at .scratch/sc_full.txt @57a46d60ca (ERROR: owned-paths lane violation(s) detected)",
+      "tool and test at .tools/tests/test_round18_batch.py (uncommitted at filing; WIP tool commit 57a46d60ca); real run exit=0 tip_moved=True folders=7 green=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 item 1: a throwaway commit of a new .txt file under the project folder's deliverables/ through safe-commit.sh must exit 0.",
+  "world_is": "owned-paths-validate (TREE_DELIVERABLES) permits deliverables/<SERIAL>/** only. The first --real run exited 1 with a lane VIOLATION on org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/r18-sparse-probe/probe.txt; the same commit under deliverables/0.9.0_WK_NFRA_CTLPLN~105/ exits 0."
+}
+```
+
+## NFRA_CTLPLN-W105-S2 -- a sparse worktree has no org/ref/: safe-commit reads SEAT_ROLES.json as unreadable and WARNs on every commit
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T10:41:59Z",
+  "one_line": "A sparse worktree cut by wk-provision.sh does not carry org/ref/, so the author check cannot read org/ref/SEAT_ROLES.json and prints WARN: names no known seat. The commit still goes green today because the check is WARN-only; the gate names an announced refusal (1.0.0_SA_CTO msg 107910).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh WARN line in the --real run: author 0.9.0_WK_NFRA_CTLPLN~105 names no known seat ... org/ref/SEAT_ROLES.json unreadable (FileNotFoundError) (.scratch/real_run3.txt)",
+      "base set read at .tools/wk-provision.sh cmd_provision (add_folder lines) @57a46d60ca"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 item 1: the sparse base set must always hold what .tools/safe-commit.sh needs; a missing folder is added to the base set and named.",
+  "world_is": "cmd_provision (.tools/wk-provision.sh) base set = .tools, lib, org/modules/graph, org/devices, infra/logic/registry, org/standards, the project folder. org/ref is not in it, and the author check reads org/ref/SEAT_ROLES.json. When the announced refusal lands, every safe-commit from a sparse worktree is refused unless org/ref is in the base set."
+}
+```
+
+## NFRA_CTLPLN-W105-S3 -- provision creates a nested portal worktree inside every sparse worktree, though the cell names one worktree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T10:41:59Z",
+  "one_line": "cmd_provision always runs cmd_portal, which adds a worktree of the nested portal repository at <worktree>/portal on branch <branch>-portal, even with --node-modules none. The --real arm therefore creates two worktrees; the test removes both in its finally.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal repository worktree list: an entry for the throwaway worktree during the run, none after the finally (.scratch/real_run2.txt, .scratch/real_run3.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 BUILD item 4(e): the --real arm creates one sparse worktree (about 100 MB) and removes it with its branch in a finally.",
+  "world_is": "wk-provision.sh provision -> cmd_portal (.tools/wk-provision.sh ~line 445) -> git -C <main>/portal worktree add -b <branch>-portal <worktree>/portal. Removal is git -C <main>/portal worktree remove --force before git worktree remove."
+}
+```
+
+## NFRA_CTLPLN-W105-S4 -- the portal repository's worktree list changed by one entry between two runs; the cause is not established
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T10:41:59Z",
+  "one_line": "The portal repository listed 8 worktrees before the second --real run and after it; it listed 7 at the final read. Each run's own nested entry netted to zero, and the entry that left was not recorded before, so the drop is not attributed to the test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree list counts recorded in this worker's run log (real_run2 before/after 8; real_run3 final 7); remaining entries: DEV, portal-5174, portal-before-rbs9, ctlpln-105/portal, ctlpln-79/portal, devpln-arch (locked), rbndv2-int"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 BUILD item 4(e) and the RULES: no worktree of another seat is touched; the sparse arm names only its own throwaway paths.",
+  "world_is": "git -C <main>/portal worktree list read 8 entries (before and after real_run2), then 7 (after real_run3). The test's remove calls name only <sparse-wt>/portal and <main>/portal worktree entries it created; the 7 remaining entries include no wk-NFRA_CTLPLN-9105 entry."
+}
+```
+
+## NFRA_CTLPLN-W105-S5 -- four fixture folders from the first test runs remain under the Windows temp folder
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T10:41:59Z",
+  "one_line": "The batch's first runs left four r18_batch_* fixture folders under the Windows temp folder: the cleanup used ignore_errors=True, which hid the read-only git object failures. The cleanup is fixed (it now reports a WARN); the four older folders are not removed by this worker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "directory listing of the four folders (sub-folders a, b, c, d, each holding a fixture main repository); the default run that followed the fix leaves no folder (.scratch/default_run3.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 RULES: a temporary repository for every arm; the tests leave no state behind.",
+  "world_is": "C:/Users/AndrewBerman/AppData/Local/Temp/r18_batch_nju4hzp1, r18_batch_t7x9_wfq, r18_batch_0u4wrwd7 and r18_batch_99nh6yxu remain. Recursive deletion of them waits for Andrew's word (CLAUDE.md Agent Autonomy)."
+}
+```
+
+## NFRA_CTLPLN-W105-S6 -- the batch's cleanup ran a repository-wide git worktree prune, removed in be6f3bb7ff
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T11:20:00Z",
+  "one_line": "The batch's sparse-arm cleanup ran git worktree prune against the box repository (an act the round-17 cmd_remove comment forbids: it clears every unrelated prunable entry). Removed in be6f3bb7ff. No prunable entry was present before or after (count 3, 0 prunable), so no collateral is measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the prune line in .tools/tests/test_round18_batch.py _remove_sparse @57c105e0a3 (removed @be6f3bb7ff)",
+      "portal repository common dir is its own .git (not ajb_workspace/.git), so this prune cannot have changed the portal entries of S4; git worktree list: 3 entries, 0 prunable, read after the runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 RULES: no worktree of another seat is touched; the sparse arm names only its own throwaway paths.",
+  "world_is": "A repository-wide prune is a side effect beyond the throwaway worktree: it can clear unrelated prunable entries of every seat on the box. The test ran it on each --real run from 57c105e0a3 until be6f3bb7ff."
+}
+```
+
+## NFRA_CTLPLN-W105-S7 -- the box worktree list lost the merged rbndv2-8 entry between two reads that bracket a pruning run
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T11:05:00Z",
+  "one_line": "The box worktree list read 3 entries after the second --real run and 2 at the last read: the rbndv2-8 worktree (wk-DSGN_RBNDV2-8, tip e09ef0f0e5, merged into box/laptop and origin/CLOUD) lost its directory, its admin entry and its branch. The batch's real run before the last read called git worktree prune (removed in be6f3bb7ff); the actor is not identified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree list at the end of the second --real run: 3 entries including C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-8 e09ef0f0e5 [wk-DSGN_RBNDV2-8]",
+      "git worktree list at the final read: 2 entries (ajb_workspace, ctlpln-105); C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-8 missing; git branch --list wk-DSGN_RBNDV2-8 empty; git branch -a --contains e09ef0f0e5 lists box/laptop and origin/CLOUD",
+      "admin folder .git/worktrees/cro-7a-cert-9eb005eec9774992af9aacfe9ae56f13 has no gitdir file and is not listed by git worktree list (another seat's; not touched)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 RULES: no worktree of another seat is touched; the sparse arm names only its own throwaway paths.",
+  "world_is": "A git worktree prune removes admin entries whose directories are missing, so it can remove the rbndv2-8 admin entry if its directory was already gone. Branch deletion is not a prune act, so the branch removal came from another actor. Which act removed the entry is not measured here; the drop lies between two reads that bracket one real run that pruned."
+}
+```
+
+## NFRA_CTLPLN-W105-S8 -- safe-commit appends a tracked audit log in the worktree on each commit by an unknown-seat author
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T11:09:57Z",
+  "one_line": "Each safe-commit of this worker appended one AUTHOR-SEAT-WARN line to the TRACKED file org/git-author-override-audit.laptop.log in the worker's worktree (eight lines, one per commit). That file is outside the worker's <paths> and is left uncommitted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff -- org/git-author-override-audit.laptop.log in the worktree: 1 file changed, 8 insertions(+), all AUTHOR-SEAT-WARN lines for 0.9.0_WK_NFRA_CTLPLN~105",
+      "the same WARN as NFRA_CTLPLN-W105-S2 (author names no known seat; WARN-only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 RULES: write surface = the <paths>; no file outside them is changed by the worker.",
+  "world_is": "safe-commit.sh's author-seat check appends to a tracked audit log on each commit by a serial the roster does not know. In a sparse worktree that file is a tracked change the worker cannot commit under its lane, so it stays dirt until the worktree is removed."
+}
+```

@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~105</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-105 @6780e32c13, merged 3f4730b5d3): ROUND18-BATCH arms=3/4 skipped=1 ok=True (default), and arms=4/5 skipped=1 ok=True with --real; SAFE-COMMIT-SPARSE exit=0 tip_moved=True folders=7 green=True; WORKTREE-GC-PRESERVE arms=9/9 ok=True; proof instance VALID (rc=0) on the committed state. wk-provision.sh unchanged (the round-17 base set held). Skipped: symlink arm, WinError 1314.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
