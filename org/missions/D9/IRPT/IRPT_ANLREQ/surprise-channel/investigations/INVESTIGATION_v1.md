@@ -19529,3 +19529,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W198-S1 -- AR-g-96: three comments and one docstring still describe the retired proxy flow; the cell's scope (portfolio.py item 6) left them standing
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W198-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~198",
+  "surfaced_at": "2026-10-15T22:32:13Z",
+  "one_line": "After AR-g-96 the door no longer offers NAME_PROXY, but three comments (two in intake/portfolio.py, one in the docstring of intake/uploads.py _with_correction_words) still say a proxy is named or a proxy code keeps its actions; the cell scoped the edit to the code and left them as written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-96 cell, portfolio.py item 6: nothing else in portfolio.py changes; uploads.py: delete PROXY_CODES and its comment. The cell does not name the surrounding comments.",
+  "world_is": "At HEAD d62eee147d the comment above CORRECTABLE_FINDINGS (portfolio.py:362-363) says a gated fund row needs a user-named proxy, the comment at portfolio.py:512 cites a NAME_PROXY row the page cannot name, and the _with_correction_words docstring (uploads.py:190 at HEAD) says a proxy code keeps its actions, although PROXY_CODES no longer exists. Behaviour is correct (the tests pin it); only the prose is stale. Not edited by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py@d62eee147d:362-363 comment above CORRECTABLE_FINDINGS names a user-named proxy",
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py@d62eee147d:512 comment names a NAME_PROXY row",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py@d62eee147d:190 docstring of _with_correction_words says a proxy code keeps its actions; PROXY_CODES was defined at HEAD:154-155 and removed in the worktree commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
