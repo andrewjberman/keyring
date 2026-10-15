@@ -54,6 +54,7 @@ Work in your own worktree (cut from `box/sitez` after MX-c-21 merged). Every pat
 
 <paths>
 workflows/atom_decomposition/gen_silver_rows.py
+workflows/atom_decomposition/emit_catalog_v02.py
 workflows/atom_decomposition/tests/
 workflows/atom_decomposition/catalog_entries/
 infra/logic/registry/catalog_fork_keys.json
@@ -71,10 +72,11 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 ## 4. PROOF OF SPEC (literal; run from your worktree root, after step 3)
 
 <proof_of_spec>
-  <expected_criteria>AC1,AC2,AC3</expected_criteria>
+  <expected_criteria>AC1,AC2,AC3,AC4</expected_criteria>
   <criterion id="AC1" cell_refs="MX-c-23" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c23.AC1.sh; echo "exit=$?"</invocation><expect>DENOMINATOR map entities 136; rows equal to the map 136; stray rows 0; values outside the lists 0; ASSETS rows still inferred 0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MX-c-23" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c23.AC2.sh; echo "exit=$?"</invocation><expect>DENOMINATOR new rows present 12 of 12; wrong 0; table rows 228; base rows changed outside bucket/vendor/firm 0; unexpected new rows 0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="MX-c-23" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c23.AC3.sh; echo "exit=$?"</invocation><expect>DENOMINATOR silver rows 233 x principals 6 = 1398 pairs; cross-firm leaks 0; multi, none and unresolved rows visible to no firm principal -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MX-c-23" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c23.AC2.sh; echo "exit=$?"</invocation><expect>DENOMINATOR new rows present 12 of 12; wrong 0; table rows 226 (base 216 + 12 - removed 2); base rows changed outside bucket/vendor/firm 0; unexpected new rows 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="MX-c-23" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c23.AC3.sh; echo "exit=$?"</invocation><expect>DENOMINATOR silver rows 231 x principals 6 = 1386 pairs; cross-firm leaks 0; multi, none and unresolved rows visible to no firm principal -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC4" cell_refs="MX-c-23" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round18/checks/c23.AC4.sh; echo "exit=$?"</invocation><expect>DENOMINATOR tool_index entries 99; with assets or bd rows; serves wrong 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~45/NFRA_MCPINDEX.TO-MX-c-23.assets-rows-vendor-firm-and-the-twelve-schwab-dim-rows.proof_of_spec.json</instance_path>
 </proof_of_spec>
 
@@ -95,3 +97,16 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-15 ~23:3xZ) -- START: `MX-c-21` is merged (`d57f6bc02c`); you are re-seated on slot ~45 in a FRESH worktree cut from the merged HEAD.** Four changes, then the steps in order. (1) **Row counts moved**: `2.0.0_SA_COO~MI2`'s `MX-c-30` (RESEARCH scope drop) merged: the generator now writes 214 rows, so with the 12 new ones it writes **226** (not 228), and the criteria's expect lines above are corrected (AC2 `table rows 226 (base 216 + 12 - removed 2)`, AC3 `silver rows 231 x principals 6 = 1386 pairs`); `c23_check.py` computes the expected counts from the base and the removed rows, and an ASSETS row is never removed. (2) **`serves`** (the CTO's amendment of C-GROUP item 2 @5ba12d1de5, msg 34592): the emitter writes, on every `tool_index` entry that catalog rows of the `opal-data-assets` or `opal-data-bd` buckets name as `read_tool`, a `serves` list: the DISTINCT `{vendor, firm}` pairs of those rows (rows that carry both), sorted by vendor then firm, written after `source_group`; an entry with no such row carries no `serves` key. It is derived, never typed. A fourth criterion `AC4` grades it (`c23.AC4.sh`; the fourth criterion has its reason here: the CTO's amendment). `<paths>` above now also names `emit_catalog_v02.py`. (3) **A step 0 before the original steps**: regrade the `MX-c-21` proof instance. (4) The commit list below replaces section 5 item 3.
+
+Do these IN ORDER and nothing else:
+1. Run once: `git sparse-checkout add workflows infra/aws/ec2/opal-gateway org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census`.
+2. **Regrade the `MX-c-21` instance** (its AC2 recorded FAIL on the issuer's check defect, row Z-W45-S1, now fixed and ruled): run `python C:/Users/OPALBL~1/AppData/Local/Temp/claude/C--Users-Opal-Bloomberg-Desktop-ajb-workspace/0c774c5b-0103-40e0-9257-b71087af27bc/scratchpad/regrade_c21_ac2.py . C:/Users/OPALBL~1/AppData/Local/Temp/claude/C--Users-Opal-Bloomberg-Desktop-ajb-workspace/0c774c5b-0103-40e0-9257-b71087af27bc/scratchpad/c21_ac2_evidence.out` (it prints `regraded AC2 FAIL -> PASS; acceptance rows 3`; anything else: stop and report), then `python .tools/proof-of-spec-check.py org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~45/NFRA_MCPINDEX.TO-MX-c-21.c-group-bucket-on-every-row-and-tool.proof_of_spec.json AC1,AC2,AC3` and require rc=0; COMMIT 1: exactly that one file, first line `proof(NFRA_MCPINDEX.TO-MX-c-21 A1, 0.9.0_WK_NFRA_MCPINDEX~45): AC2 regraded PASS on the issuer's ruling`.
+3. Section 1's "What to build" items 1 to 3 and `serves` (item 4 below), then its Steps 1 to 3 (the pytest, the regeneration of the rows and the fork registry with the corrected count 226, the catalog regeneration with `GROUP-MAP unused: 0`).
+4. **`serves`**: in `emit_catalog_v02.py`, after the group map is applied and the tool buckets are attached, set `serves` as above on each `tool_index` entry. A NEW test file `workflows/atom_decomposition/tests/test_serves.py` with at least 5 tests (the derivation; sorted distinct pairs; a duplicate pair counted once; no `serves` for a tool no assets or bd row names; a row without vendor ignored; a `bd` row counts).
+5. Run the FOUR criteria of section 4 (AC4 is `c23.AC4.sh`), by their literal invocations.
+6. Commits through `.tools/safe-commit.sh` (message files written with the Write tool, each ending `Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>` and stating push state LOCAL), in this order: COMMIT 1 (step 2); COMMIT 2: `gen_silver_rows.py`, `emit_catalog_v02.py` and the tests; COMMIT 3: the registry file ALONE; COMMIT 4: the 12 new row files, the proof instance and your saved outputs. Never `DATA_CATALOG.yaml`.
+7. Report once, with the section 5 item 4 contents plus the AC4 DENOMINATOR line and the `serves` of the `schwab_query` entry.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
+<status>issued</status>
