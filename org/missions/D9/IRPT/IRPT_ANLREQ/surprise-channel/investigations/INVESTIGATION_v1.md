@@ -19395,3 +19395,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S128 -- DISARMS IRPT_ANLREQ-D2-W157-S1: AR360-y-AC1's folder failures are the same set on origin/PROD; the new file passes 6 of 6
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S128",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-15T21:37:00Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W157-S1: the issuer re-graded AR360-y-AC1's folder run in the worker's worktree after widening its sparse set (docs/contracts and infra/aws/lambda/investor-reporting); the failing set is the same 19 cases on the candidate and on origin/PROD, and the new file passes 6 of 6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W157-S1: the worktree is a sparse checkout, so folder cases that read docs/contracts fail with ENOENT and AR360-y-AC1 cannot print PORTAL-TESTS-OK there.",
+  "world_is": "Re-run by this seat in C:/dev/wk-irpt-anlreq-157/portal after git sparse-checkout add docs/contracts and infra/aws/lambda/investor-reporting: on candidate c22f4508, bun test over the three folders printed 535 pass, 19 fail (554 ran, 271 files); on origin/PROD e0b43076 detached, 529 pass, 19 fail (548 ran, 270 files); the failing-name lists (17 named lines plus unnamed errors) diff IDENTICAL, so the candidate adds 6 passing cases and no failure. The 19 remaining failures exist at the base (still-absent paths of a sparse worktree and a happy-dom registration error, W157-S2); they are not caused by this cell. portal_check.py as written still prints PORTAL-TESTS-BAD there because it demands 0 failed; the order's instance records AC1 as FAIL and stays as the worker wrote it. NOT read: a run in a full checkout with every contract path present. W157-S2, S3 and S4 are OBSERVATIONS the worker re-pinned or explained; W157-S5 (a null as-of reaches the header prospect card) is a judgment point and is cut as a read before any promote.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's two bun runs in C:/dev/wk-irpt-anlreq-157/portal (candidate c22f4508 and detached origin/PROD e0b43076), failing-name diff IDENTICAL",
+      "safe-merge 7ac19bb2fc (worker 157's branch drained)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The folder failures are identical at the base; the cell adds only passing cases. The live blocker for shipping is r32 and Andrew's word, not this.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W157-S1. Time of filing approximated from the re-run."
+}
+```
