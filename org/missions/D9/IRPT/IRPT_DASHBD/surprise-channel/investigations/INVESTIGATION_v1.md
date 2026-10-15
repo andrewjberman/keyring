@@ -17639,3 +17639,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The root names six resources by builder; the order and its record counted five and left the scheduler policy on the role's name module. Round 129 cell DB-b-261 gives the policy its own builder-name module; the signed pair is re-bound to the new bytes (packet revision 3) and re-signed before the apply order resumes. Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W213-S1 -- OBSERVATION: the commit-time naming gate reads the new scheduler-policy module as BUILT-NOT-GRADED, the names were graded only in plan mode
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W213-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~213",
+  "surfaced_at": "2026-10-15T15:05:39Z",
+  "one_line": "The commit-time naming gate printed NAMING BUILT-NOT-GRADED for the one opal_name module the DB-b-261 commit added to the Cottonwood landing root, because its scope argument is a local reference, not a literal; the six names were graded by the plan-mode run only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 531bb425f7 (safe-commit of iam.tf and RD_COT_NAMES_FACTS_R129.json): the naming-gate lines read NAMING-GATE: PASS 1 graded and NAMING BUILT-NOT-GRADED infra/aws/terraform/investor-reporting/account-return-daily/iam.tf:126 opal_name module block with non-literal argument(s): scope",
+      "the plan-mode run of the real naming gate on the six names of the root, checker DB129-1-AC2 at the commit 531bb425f7 worktree: NAMING-PLAN: PASS 6 graded, six CONFORMANT lines, no REFUSE",
+      "no terraform command, no AWS call: the live resources are not read; the commit-time observation is the gate's own output, not a claim about the apply"
+    ]
+  },
+  "spec_asserts": "The order DB-b-261 grades the six names of the Cottonwood landing root with the real naming-plan gate in plan mode (criterion DB129-1-AC2) and the record's gate verdict equals that gate's last line (DB129-1-AC3).",
+  "world_is": "Both hold: plan mode grades six CONFORMANT names with no REFUSE. The commit-time gate on the added module block reports it BUILT-NOT-GRADED (non-literal scope argument), so the commit gate does not itself grade the new name; the order's criteria do not claim it does. Counts and paths only; no client value."
+}
+```
