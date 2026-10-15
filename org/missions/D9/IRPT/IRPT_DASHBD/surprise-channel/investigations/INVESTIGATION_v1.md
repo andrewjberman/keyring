@@ -16513,3 +16513,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Resolution row for IRPT_DASHBD-D2-W203-S1, which is left as written (append only). The worker proceeds with the order as written. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W203-S3 -- BLOCKING: the naming gate refuses the source_dir literal of the new source-map entry
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T09:57:01Z",
+  "one_line": "The naming gate (LGIC_ENFORCE, ENFORCE) refuses the source_dir literal of the new source-map entry, which the order and the checker both fix at the account-return-cot path; the source-map entry is held uncommitted",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-249 step 3 requires ONE new source-map entry under functions, key irpt-cot-account-return-daily-lambda, with source_dir infra/aws/lambda/investor-reporting/account-return-cot, and the checker's stage_closure copies handler.py from that source_dir. The commit of that entry is the order's AC3 gain of at least 15 lines in the worker's own commits.",
+  "world_is": "The commit that carried the source-map entry with the handler and tests was refused by the naming gate: NAMING REFUSE at infra/aws/lambda/ci/lambda-source-map.json line 6323 (the source_dir value), reason NEW hand-kept carrier, hand-kept carrier of the firm token outside every permitted context, read it through lookup. The key line (6322) and the handler and test paths were not refused; the gate commit aborted and HEAD stayed at the commit that carried handler and tests (24b2cb7758). The source_dir literal cannot be changed while the order and the checker stand, since the checker reads handler.py from source_dir and fixes the handler path. The worker did not force, override or edit the gate. The entry is on disk and uncommitted, and the closure probe passes against it. Ruling needed from the issuer or CTO: an R20 register entry for this literal, or a directory name the naming gate admits (the checker and the order both change in that case).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output on 0.9.0_WK_IRPT_DASHBD~203 for the source-map entry: naming-gate REFUSE at infra/aws/lambda/ci/lambda-source-map.json:6323, commit aborted, files unstaged (log in the worker scratch folder)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r122/p122_cothandler.py @7d5697ef1a (FN_DIR constant; stage_closure reads entry source_dir; HANDLER_REL fixed)",
+      "lib/opal_naming.py @7d5697ef1a and the naming gate rule that refuses a firm token in a new string literal outside the permitted contexts (.tools/naming-gate.py, comp-find hit at line 2356)",
+      "git log -1 --format=%H on wk-IRPT_DASHBD-203 = 24b2cb775868cec68209fa24f3122b2284b37d17 (handler and tests committed; source map uncommitted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Worker held the source-map commit under the order's refusal clause (never repaired, widened or forced). AC3 cannot be met as written until the ruling. Counts and words only; no client figure is quoted."
+}
+```
