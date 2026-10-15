@@ -16273,3 +16273,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the issuer: the landing cell needs the first non-empty fact_allocations date from a read of the Black Diamond silver listing (a LIST under the granted silver root, by the owner of that read). The value goes into FIRST_DATA_DATE and the facts record's manifest.first_data_date. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W199-S2 -- resolves IRPT_DASHBD-D2-W199-S1: the first non-empty fact_allocations date is 2026-04-22 (DB-b-245, FIRST_DATA_DATE)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W199-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~199",
+  "surfaced_at": "2026-10-15T09:08:26Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W199-S1: the first non-empty fact_allocations date is 2026-04-22 by the issuer's silver partition LIST",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W199-S1 (BLOCKING) recorded that the round-120 record does not carry the first non-empty fact_allocations date, so FIRST_DATA_DATE and the facts record's manifest.first_data_date could not be set.",
+  "world_is": "The issuer listed the Cottonwood Black Diamond silver fact_allocations partitions: 144 partitions from 2026-04-22 to 2026-10-13. The first partition, 2026-04-22, is not among the 33 empty days of round 120's record (silver.empty_days starts 2026-04-25). FIRST_DATA_DATE is now 2026-04-22 in the adapter, the facts record carries it, and the test that pinned the constant pins the measured value. The worker did not run the LIST itself: no AWS call was permitted to this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer ruling relayed to worker 0.9.0_WK_IRPT_DASHBD~199 by the coordinator, on surprise row IRPT_DASHBD-D2-W199-S1: silver fact_allocations LIST, 144 partitions, first 2026-04-22",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~193/RD_BD_BRONZE_AND_MAP_R120.json @58ab67f3ac (silver.empty_days starts at 2026-04-25; 2026-04-22 is not in the list)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py @e2dd9f86e0 (FIRST_DATA_DATE comment)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution note for IRPT_DASHBD-D2-W199-S1, which is left as written (append only). The issuer owns the LIST; the worker re-read only the empty_days list. Counts and words only; no client figure is quoted."
+}
+```
