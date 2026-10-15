@@ -40006,3 +40006,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-S208 -- IB-pr-599 drained: the worker's ARMED rows disarmed with dispositions; the middle-day skip is an operator rerun with --from-date
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S208",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T18:59:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-599 drained: W436-S1, S2 and S5 and W435-S1 disarmed with their dispositions; the middle-day skip (W436-S2) is real and is handled by the operator rerun with --from-date, written into the apply order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-599 merged @0bf8103b1e; IB231-1 AC1 to AC3 re-run PASS in the main tree; proof instance VALID; 106 tests pass (10 new)",
+      "W436-S2 is read from the code by the worker (INFERRED) and agrees with the window rule of IB-pr-594: the scheduled window starts the day after the newest landed silver partition",
+      "W435-S1 and W436-S1 are the same instrument gap: the commit gate's hashed account-id list is absent on dell2 (set aside 2026-10-11), so neither commit was checked against it"
+    ]
+  },
+  "spec_asserts": "A skipped day is written by a rerun with no new code (the cell text of IB-pr-599).",
+  "world_is": "W436-S2: true only when the skipped day is the newest day of the window. If a later day of the same window lands complete and an earlier one is skipped (the days have different universes), the scheduled window starts after the later day and never retries the earlier one. DISPOSITION: not a rider on a build; the SKIPPED line the run prints names the day, and the operator's remedy is a rerun with --from-date <that day> (the backfill path, add-only, never overwrites): written into the apply order and the first-run read, which fails the run on any SKIPPED line. W436-S5 (the B copy of run is shadowed by the C copy): INERT, a cleanliness item for a later cell; the shipped behaviour is the C copy and it is tested. W436-S1 and W435-S1 (client-data list absent): INERT for these two commits, whose records are ID-free by their own criteria (no long digit run, counts only); the list's absence is MSTR's to restore and is not chased here. W436-S3 (a --max-households smoke run writes no key) and W436-S4 (the bounds wording) are INERT observations already stated in the rows."
+}
+```
