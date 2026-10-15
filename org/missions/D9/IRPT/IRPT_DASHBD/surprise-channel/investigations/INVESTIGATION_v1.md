@@ -15220,3 +15220,50 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Observation only. Regenerating the calendar is a lib/ act outside this grant; the covered span ends in 2027."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W190-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~190",
+  "surfaced_at": "2026-10-15T06:09:42Z",
+  "one_line": "The commit gate's client-data check reported its hashed account-id list ABSENT on this box, so the script commit and the record commit of the round 119 price read were not checked for account identifiers by the gate",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the safe-commit run of commit 0580161b29 printed WARN: client-data-check: hashed account-id list ABSENT at the operator home path, and the commit passed with that WARN; absent is not empty",
+      "the committed script and the record carry counts, dates and words only; neither was composed from an account identifier, and the private folder holds the counts file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A commit that may carry client data is checked against the hashed account-id list before it lands (the commit gate client-data-check).",
+  "world_is": "On this box the hashed list is absent at its default path, so the client-data check did not run for commit 0580161b29 or for the record commit; the gate printed WARN and passed. The content was written from counts only, but the gate did not measure that."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W190-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~190",
+  "surfaced_at": "2026-10-15T06:30:22Z",
+  "one_line": "DB119-4-AC1 cannot PASS as written: the checker's no-digit-run rule refuses the nine-digit numeric security identifiers that the order says may be named in the record (5 of 15 listed securities, 7 of 38 flagged pairs)",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p119_priceread.py (the issuer checker, amended on the coordinator's Amendment 1): LONG_DIGITS matches a run of eight or more digits and DIGIT_OK_KEYS exempts only sha256, path, file, key, where and vintage, so a security value is not exempt; the record check reports the run and refuses it",
+      "the order WORKER FACE states that a SECURITY identifier (a ticker or CUSIP of a listed security) with a count of accounts may be named in the record; the order and the checker disagree on the same field",
+      "the record RD_PRICE_READ_0421_R119.json names the securities as read; the checker run on it returns rc 1 with the message: a run of 8 or more digits outside the exempt fields; the five hits are all under the key security and each has nine digits"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order permits a SECURITY identifier, with a count of accounts, in the record; the criterion DB119-4-AC1 refuses any run of eight or more digits outside the exempt fields and its record clause names the exempt keys.",
+  "world_is": "The custodian dim_position partitions of 2026-04-20 and 2026-04-21 identify 5 of the 15 listed securities (7 of the 38 flagged pairs) by nine-digit numeric CUSIPs, which the checker's digit rule refuses. The record names them as read; nothing is masked, renamed or dropped, and the checker is not edited. Measured on the same run: 13968 pairs, 38 flagged (32 flat, 6 stale, none absent), 929 triangle accounts, 894 agreeing with the holdings gold and none with the account value. The order stays pending until the issuer decides whether the security key is exempt from the digit rule (a checker edit) or the identifiers are carried another way."
+}
+```
