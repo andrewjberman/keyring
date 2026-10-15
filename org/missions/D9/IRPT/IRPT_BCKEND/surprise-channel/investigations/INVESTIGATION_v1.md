@@ -36953,3 +36953,78 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W402-S3 DISARMED: the source map stages _scope/filled_named_accounts.py in irpt-49f-reporting-read-lambda and irpt-export-render (IB-pr-562 @05ea78f452, build-only import PASS for both). D2-S185 DISARMED: the live bytes are the R29c ledger (answered); the candidate keeps release 29's four members (IB-pr-564). D2-W405-S1: the composition_admission.py change (IRPT_ANLREQ cause commit 83eb798a08) still rides in the corrected candidate; stays ARMED, owner me, until the CTO rules on the packet. D2-W405-S2, D2-W406-S2 and S3 (ycharts-generate is not an importer; bundle.py imports nothing), D2-W407-S2 (no installed filled reader), D2-W408-S1 (the trunk map pins hold commentary_requested 0 times: the fact that corrected IB-pr-561): INERT, recorded. D2-W406-S1: RESOLVED, my check selector defect (fixed @c8a836b0fa, no criterion weakened). D2-W407-S1 (freeze_filled_report has no production caller): INERT, the round-5 enrichment (wire the submit branch and compose the reader). D2-W404-S1 and S2 (the 36-day denominators differ from the calendar: positions 4 of 7 are trading days without a flat key, transactions 13 trading days lack one, six of them 2026-05-04 to 2026-05-11, unlisted), S7, S8, S10 (stale comments): INERT, recorded for the re-cut. D2-W404-S3 (the chain's pull steps carry no date token and run_chain refuses --run-date, so pair (a) cannot re-run past days through them) and D2-W404-S5 (the silver aggregator has no source directory in the repository): BLOCKING for the Orion act, asked of the CTO; D2-W404-S4, S6 and S9 stay ARMED (owner me): the dispatch script is an unversioned S3 object; T-1 completeness at 06:00 NY is unmeasured and the earliest measured pull is 11:39Z; a failed pull logs WARN and the chain reports complete."
 }
 ```
+
+## IRPT_BCKEND-D2-W410-S1 -- The order's named mirror for driving entry.submit_export does not call entry.submit_export
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W410-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~410",
+  "surfaced_at": "2026-10-15T07:47:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says drive entry.submit_export the way test_export_path_b_route.py drives PATH B; that file never calls entry.submit_export: it drives submit_service.serve_submit, submit_async.accept and submit_async.run directly. The handler-level driver mirrored is test_submit_async.py, which calls entry.submit_export and entry.lambda_handler.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/tests/test_export_path_b_route.py at 941abbfa1d lines 78-106 call ss.serve_submit, sa.accept and sa.run; no entry. reference in that file",
+      "infra/aws/lambda/investor-reporting/export/tests/test_submit_async.py at 941abbfa1d line 73 defines _post as entry.submit_export(...) and line 102 calls entry.lambda_handler(invoked[0], None)"
+    ]
+  },
+  "spec_asserts": "Worker face, the test file paragraph: drive entry.submit_export the way test_export_path_b_route.py drives PATH B (stubs, synthetic ids and bytes).",
+  "world_is": "test_export_path_b_route.py does not drive the handler; the entry-level driver is test_submit_async.py. test_filled_report_submit_handler.py mirrors test_submit_async.py for the entry-level POST and async leg, and the stub world of test_submit_service.py for the ports. Nothing is deployed or invoked."
+}
+```
+
+## IRPT_BCKEND-D2-W410-S2 -- The print query of a filled export has no kind named by the order or by any consumer in the export package
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W410-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~410",
+  "surfaced_at": "2026-10-15T07:47:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks the PATH C submit to build the print query but names no kind for it. This cell writes kind 'filled-report' with report, version, bundle, tenant and revision (retained_export.filled_print_query). No consumer of that kind exists in the export package at base; the render cell (IB-pr-567) must agree with it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py at 941abbfa1d: print_query uses kinds 'analysis' and 'custody-report' and the performance window; platinum_print_query uses kind 'performance' and account, start, end, version",
+      "the worker's own retained_export.py filled_print_query block (F markers) is the only kind 'filled-report' in the export package"
+    ]
+  },
+  "spec_asserts": "Worker face, change (2): the async leg serves PATH C from the frozen row only (_serve_filled, the twin of _serve_platinum): bundle, grant written and read back, the print query, status QUEUED.",
+  "world_is": "The print query shape for a filled report is not defined in the export package. The worker chose kind 'filled-report' (a new value) and the frozen VersionId as 'version'. Unverified against the print page; the render cell owns the consumer."
+}
+```
+
+## IRPT_BCKEND-D2-W410-S3 -- A filled report has no server-issued account set; the grant's accountSetId is the report id
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W410-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~410",
+  "surfaced_at": "2026-10-15T07:47:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "platinum_grant takes its one account from the series row; a filled report covers every account its document names and has no server-issued account set (the PERFORMANCE path pins owner account_set_id, the ANALYSIS path pins the request id). filled_grant (retained_export, F markers) pins accountSetId and reportId to the report id FILLED-<client> and jobId to the export revision, with account_ids the covered accounts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py at 941abbfa1d: render_grant pins owner account_set_id for PERFORMANCE and analysis_pins uses the request id for ANALYSIS; platinum_grant pins the one account as accountSetId",
+      "infra/aws/lambda/investor-reporting/_render_identity/grant.py at 941abbfa1d: build requires pinned_ids to pin exactly accountSetId, jobId and reportId; account_ids is non-empty on the account branch"
+    ]
+  },
+  "spec_asserts": "Worker face, change (1): take the grant for the covered accounts the freeze returns (add a filled_grant modelled on platinum_grant if the existing helpers cannot take a filled row; say which in the notes).",
+  "world_is": "The existing helpers cannot take a filled row (platinum_grant reads performance_source and pins one account), so filled_grant was added. Its accountSetId convention is the report id, not an account set. The render reader of IB-pr-567 must read the grant with the same convention."
+}
+```
