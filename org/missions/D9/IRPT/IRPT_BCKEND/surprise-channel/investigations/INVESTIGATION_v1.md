@@ -38426,3 +38426,51 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W419-S1 (the published manifest is written by publication.py, outside the grant; the fact is in the run manifest _manifest) and D2-W419-S2 (the household account node is built by holdings_49f.py, holdings_inf.py and holdings_membership.py, outside the grant) MOVE to IB-pr-577 with the per-firm evidence loaders; both stay ARMED, owner me, because until IB-pr-577 lands the served snapshot would not list the exempted account. D2-W419-S3 RESOLVED (my defect, an overlong slug; order and instance now carry short names, instance VALID). Nothing is deployed or minted by IB-pr-576: it changes holdings_snapshot.py at HEAD only, and the never-widen pair for the exemption follows IB-pr-577."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W421-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~421",
+  "surfaced_at": "2026-10-15T14:00:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-578: the 49F split_adjust declaration makes the existing 49F read-pattern test fail (test_an_own_date_source_reads_exactly_the_partitions_it_always_read); the order's refusal clause stops the cell before any commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "base 476d0ed981904ef7708b21ecabbd7b98427a6694; pytest data/assets/scripts/gold/irpt_holdings_performance/tests/ on the base gives 60 passed; with the uncommitted change in the worktree it gives 1 failed, 59 passed",
+      "tests/test_holdings_performance.py lines 940-954 assert cache.asked == [positions PREV, positions DAY, balance PREV] for the 49F entry; sources.json first entry now carries split_adjust",
+      "KeyError 'tran_srcde' is raised in _split_ratios_for_day in holdings_performance.py: _Partitions.get answers the transactions prefix with the positions frame, which carries no transaction columns"
+    ]
+  },
+  "spec_asserts": "IB-pr-578 worker face, change 1: sources.json first entry gains split_adjust. Change 4: an entry that declares split_adjust reads the day's transactions partition through the same read lambda. Bounds: every existing test stays green and no existing assertion is edited.",
+  "world_is": "The first entry is the 49F channel, and test_an_own_date_source_reads_exactly_the_partitions_it_always_read asserts the exact read list for it. Under change 4 the 49F day makes a fourth read (transactions), so that assertion cannot hold unedited, and the stub answers the read with the positions frame, so the producer raises KeyError. The refusal clause is applied: no further change, no producer commit, no new test file. Nothing is deployed and nothing is written to AWS; LOCAL only. The producer change stays uncommitted in the worktree for the issuer's ruling."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W421-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~421",
+  "surfaced_at": "2026-10-15T14:00:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The split ratio is applied by identifier and the identifier falls back to ticker_symbol when cusip is blank, so a split holding with a blank cusip would not be adjusted.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "sources.json identifier_columns for schwab_08335338 are cusip then ticker_symbol at base 476d0ed981904ef7708b21ecabbd7b98427a6694",
+      "holdings_performance.py identifier() takes the first non-empty identifier column, and _keys() keys the row by that value; the split ratio is matched on that key"
+    ]
+  },
+  "spec_asserts": "IB-pr-578 worker face, change 3: the t-1 price basis of a security key with status OK is divided by the ratio, and change 2 measures the ratio per split security (cusip).",
+  "world_is": "A holding whose cusip is blank carries its ticker as its key and is not matched to the split security, so its t-1 basis is not divided and it reads the split as a loss. NOT MEASURED: the count of such rows on a split day was not read (offline grant, no data read). The gap is visible only once the producer is released; it is not fixed in this cell."
+}
+```
