@@ -17963,3 +17963,84 @@
   "notes": "Issuer to rule whether the NO_CLASS answer should also list the ambiguous tickers in dropped. Ruling it yes means the ambiguity list must be built from pool_rows on that path, and a None pool_rows must then be refused or defaulted. The worker did not decide this."
 }
 ```
+
+## IRPT_ANLREQ-D2-W179-S1 -- AR-g-67 AC2 cannot run in this worktree: the sparse checkout excludes docs/ and infra/aws/ec2/, which the regression files read
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W179-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~179",
+  "surfaced_at": "2026-10-15T17:14:50Z",
+  "one_line": "AC2 cannot run in this worktree: the sparse checkout excludes docs/ and infra/aws/ec2/, which the seven regression files read at import or collection; 18 of the 65 required tests pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-67 AC2 (AR67-g-AC2): ar_g67_checks.py regress runs seven existing test files, one at a time, and requires each to pass and 65 or more tests in all.",
+  "world_is": "git sparse-checkout list is .tools, data/mdpf, infra/aws/lambda, infra/aws/terraform, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards, org/tier1_exec/1.0.0_SA_CTO/deliverables; docs/ and infra/aws/ec2/ are outside it (ls docs and ls infra/aws/ec2: No such file or directory) while both are tracked at HEAD 3e2bdff97e (52 files under docs/contracts/investor-reporting/v1/, 17 under infra/aws/ec2/investor-reporting-ycharts/). Measured regress output: test_acceptance_actor 4 passed; test_commentary_requested_member 7 passed; test_ready_signal_ticket_gate 1 error; test_producer_actor 1 error; test_opal_thread_integration 1 error; test_resident_installed 4 failed 3 passed 12 errors; test_generate_installed 10 failed 4 passed; AR-G67-REGRESS-FAIL passed=18 need >=65. Every failure is a FileNotFoundError on one of the two excluded paths or CONTRACT_SCHEMAS_ABSENT. None comes from the edited code, and no failure reaches the edited code. The sparse list was not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list (worktree C:/dev/wk-irpt-anlreq-179): the cone above, no docs/ and no infra/aws/ec2/",
+      "ls docs and ls infra/aws/ec2 in the worktree: No such file or directory; git ls-tree -r --name-only HEAD docs/contracts/investor-reporting/v1/ lists 52 files",
+      "ar_g67_checks.py regress at the worktree: AR-G67-REGRESS-FAIL files=[test_ready_signal_ticket_gate.py, test_producer_actor.py, test_opal_thread_integration.py, test_resident_installed.py, test_generate_installed.py] passed=18 (need >= 65)",
+      "pytest --tb=line on the five files: FileNotFoundError on docs/contracts/investor-reporting/v1/AnalysisReport.schema.json (reports/tests/test_repository.py:19 via intake/tests/test_uploads.py) and on infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh; generate_installed raises CONTRACT_SCHEMAS_ABSENT"
+    ]
+  },
+  "notes": "AC2 is unmeasured for the edited code in this tree, so the order stays open. The regress set needs a worktree whose sparse cone carries docs/ and infra/aws/ec2/. Widening the cone is an act for the issuer or the box, not this worker. Same form as IRPT_ANLREQ-D2-W153-S3.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W179-S2 -- AR-g-67 D says the ticket port is None when unnamed, but describe() counts a None-valued port as an absent producer and a pin requires the absent set empty
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W179-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~179",
+  "surfaced_at": "2026-10-15T17:14:50Z",
+  "one_line": "The cell says compose_ports yields None for the ticket port when IRPT_TICKETS_TABLE is unnamed; a None-valued key would be listed as an absent producer and fail the pin, so the key is set only when composed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-67 D: reports/generate_installed.py builds the ticket confirmation only when IRPT_TICKETS_TABLE is non-blank and a low-level client is composed, otherwise None.",
+  "world_is": "reports/generate_installed.py describe() counts a port as absent when its value is None (absent_producers = keys whose value is None). reports/tests/test_generate_installed.py:84 asserts set(d['absent_producers']) == set() for the default environment, which names no ticket table. The worker sets ports['confirm_ticket'] only when the table is named; _prospect passes p.get('confirm_ticket'), so the service receives None by default. The None-key variant was not run; the conflict is read from describe()'s code and the pin's text.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/generate_installed.py describe(): absent_producers = sorted(k for k, v in ports.items() if v is None)",
+      "reports/tests/test_generate_installed.py:84: assert set(d['absent_producers']) == set() with ENV holding no IRPT_TICKETS_TABLE",
+      "reports/generate_installed.py compose_ports (worktree): the key is written only inside the tickets_table branch"
+    ]
+  },
+  "notes": "Ruling wanted on whether an unnamed ticket port should be an explicit None (and the pin amended) or an absent key as built. The worker chose the absent key and left the pin unchanged.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W179-S3 -- AR-g-67 F: SubmissionService.submit refuses every request when artifacts.retention is None, so the service-level stamp test stubs two retained-input checks
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W179-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~179",
+  "surfaced_at": "2026-10-15T17:14:50Z",
+  "one_line": "The service-level stamp test needs a non-None retention port and stubs of the two retained-input checks, because submit refuses with RETENTION_SERVICE_REQUIRED before any accept call when retention is absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-67 F: test_ticket_stamp.py exercises the confirmation through the submission service offline; the cell names no harness for the service path.",
+  "world_is": "ycharts/generate/submission_service.py submit: getattr(self.artifacts, 'retention', None) is None raises RETENTION_SERVICE_REQUIRED (lines 107-108) before admission and before acceptance. Reaching accept with a real artifacts port needs a full retained-composition chain (_retained_input and _verify_retained_composition read head, get and require_live). The test keeps a non-None retention port and patches those two SubmissionService methods for its duration. The accept-level stamp test uses a mocked DynamoDB client with no patch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/submission_service.py:107-108 (worktree): RETENTION_SERVICE_REQUIRED when artifacts.retention is None",
+      "the first run of test_ticket_stamp.py failed three service-level tests with AcceptanceRefused RETENTION_SERVICE_REQUIRED; after the seam, 8 of 8 passed"
+    ]
+  },
+  "notes": "No offline harness exists for submit with a real retention port. The stub covers the confirm call and the ticket_confirmed keyword only, not the retained-composition checks, which are untouched by this cell.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
