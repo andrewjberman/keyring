@@ -14646,3 +14646,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "Gate (e) was graded on substance (live listing grants on both roles) and recorded true. The source map's artifact_sha256 for irpt-holdings-performance-lambda and the two stamped last-deployed rows are owed to the issuer, and the Cottonwood function still needs its own row (Rule 4); until then the map's hash for the shared zip reads the OLD zip's value against a live zip that is the new one. (Row id note: the order names IRPT_DASHBD-D2-DB2-S<k>; the gate's id grammar refuses that shape, so the row takes the next free IRPT_DASHBD-D2-S<k>; surfaced by 0.7.0_AE_CloudOps~DB2.)"
 }
 ```
+
+## IRPT_DASHBD-D2-S60 -- one Inflection account holding positions has no Orion Scope group over Q3 or YTD; owner 2.0.0_SA_COO~I2
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S60",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T04:45:18Z",
+  "one_line": "One Inflection account that holds positions on every day of Q3 has no Orion Reporting/Scope Account group over Q3 or YTD (DB-i-5 and DB-i-6); the cause class is NOT_DETERMINED, and the Scope account feed must carry it as ABSENT NO_GROUP, never a zero or an Opal fill.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "CTO B-IN round-117 analysis ruling 1 and PRD FWD-2: an Inflection account's return is Orion's own account-level figure, read through Scope for each account the household holds.",
+  "world_is": "Scope returns 4 Account groups for a 5-account household in both a Q3 and a YTD window; the absent account holds positions on 87 of the quarter's days and shares its account type and registration category with the four present accounts. The cause is unread. The hazard: any consumer that sums or averages a household's account returns from the feed would silently cover 4 of 5 accounts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/IRPT_DASHBD_ROUND118_BIN_DRAIN_END_20261015.md @a75f9982df",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v79.md @1efdb79257 (CVO~IRPT: no row owned the finding)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: the round-119 read of Orion's account records (CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_119_20261015.md @712ede60c4) names a flag or records NOT_DETERMINED, AND ~P2's feed (IB-pr-556) carries the account as ABSENT NO_GROUP with no household-level aggregate built from the feed's account rows."
+}
+```
