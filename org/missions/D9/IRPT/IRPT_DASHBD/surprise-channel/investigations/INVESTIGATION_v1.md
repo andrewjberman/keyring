@@ -18814,3 +18814,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "dismissal_reason": "Disarms IRPT_DASHBD-D2-W311-S1: its condition (an edge trading day with neither a row nor an ABSENT row) is absent on the landed tree of round 125, measured by the r125 checker (first-day and last-day fixtures, 28 of 28 rows, unaccounted count 0) and by 93 passing tests."
 }
 ```
+
+## IRPT_DASHBD-D2-W223-S4 -- Resolves IRPT_DASHBD-D2-W223-S2 under AMENDMENT 2 of the order (the CTO's upheld L9 FAIL of 0.4.1 on rule 24 postulate iii): return_basis goes back to TWR and NOT_MEASURABLE, source_requires is removed, source_provenance carries who computed each source, and the 0.4.1 test is re-pointed within its 120-line bound; all 27 tests of the 0.4.2 file and 31 of the 0.4.1 file pass.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:41:53Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W223-S2 under AMENDMENT 2 of the order (the CTO's upheld L9 FAIL of 0.4.1 on rule 24 postulate iii): return_basis goes back to TWR and NOT_MEASURABLE, source_requires is removed, source_provenance carries who computed each source, and the 0.4.1 test is re-pointed within its 120-line bound; all 27 tests of the 0.4.2 file and 31 of the 0.4.1 file pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The BLOCKING row W223-S2 stays resolved: the claim requirement is the CTO's rule, and the 0.4.1 file's failures came from a superseded return_basis rule that Amendment 2 repairs in the same 0.4.2 contract.",
+  "spec_asserts": "Task order DB-b-275, Amendment 2: return_basis means which arithmetic (TWR); VENDOR_REPORTED leaves the enum; source_requires is removed; source_provenance maps each source value to who computed it; the 0.4.1 test's bound is 120 lines.",
+  "world_is": "The contract at the amended state holds return_basis TWR and NOT_MEASURABLE, a source_provenance block with three keys (orion vendor-computed; the two Black Diamond sources Opal-computed), and source_rules.orion.return_basis naming TWR with provenance read from source. The 0.4.2 file passes 27 tests, including TWR valid, VENDOR_REPORTED rejected and the provenance mapping; the 0.4.1 file passes 31 tests after re-pointing its superseded return_basis and source_requires assertions; the 0.4.0 file passes 12 and the cottonwood pair 52. AC1, AC2 and AC3 of the checker pass.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order AMENDMENT 2 of IRPT_DASHBD.TO-DB-b-275 at commit 02753bc7e3 (box/dell2), merged into the worker branch",
+      "checker p142_contract042.py amended at 02753bc7e3: return_basis enum, source_provenance, source_rules.orion.return_basis and rule24 v042.i_mece.return_basis clauses"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "notes": "W223-S2 and W223-S3 stay as written (append-only). S3 closed the S2 failure by the claim-aware 0.4.1 validator under AMENDMENT 1; AMENDMENT 2 changes the return_basis rule that the 0.4.1 file also pins. The CVO's adjudication of S2 is the CVO's carrier and is not written here."
+}
+```

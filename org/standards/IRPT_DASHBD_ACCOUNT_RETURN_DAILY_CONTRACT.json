@@ -236,8 +236,7 @@
     ],
     "return_basis": [
       "TWR",
-      "NOT_MEASURABLE",
-      "VENDOR_REPORTED"
+      "NOT_MEASURABLE"
     ],
     "row_status": [
       "PRESENT",
@@ -389,11 +388,12 @@
     },
     "v042": {
       "i_mece_over_a_declared_domain": {
-        "market_value_eod_claim": "domain: the PRESENT Orion rows, the account-days that carry an end market value from the Scope feed (the denominator: every row with row_status PRESENT and source orion). Both values: measured (the vendor's own end value for the day) | inferred (the end value taken from the next calendar day's start value). Covered by subtraction: a PRESENT Orion end value is either the vendor's own or inferred from the next day's start value, and nothing else can produce one, so the two values cover the denominator with no third member and no null."
+        "market_value_eod_claim": "domain: the PRESENT Orion rows, the account-days that carry an end market value from the Scope feed (the denominator: every row with row_status PRESENT and source orion). Both values: measured (the vendor's own end value for the day) | inferred (the end value taken from the next calendar day's start value). Covered by subtraction: a PRESENT Orion end value is either the vendor's own or inferred from the next day's start value, and nothing else can produce one, so the two values cover the denominator with no third member and no null.",
+        "return_basis": "domain: which arithmetic produced total_return_daily. TWR (the C-METHOD form; for an Orion row the vendor's chained daily factor, a time-weighted return) | NOT_MEASURABLE (no number is served). By subtraction from 0.4.1's printed domain (TWR, NOT_MEASURABLE, VENDOR_REPORTED), VENDOR_REPORTED is removed: it named who computed the figure, which is provenance read from source, not which arithmetic ran. The domain is therefore TWR and NOT_MEASURABLE, and the column is null iff the value is NOT_MEASURABLE."
       },
       "ii_same_grain": "Same grain: market_value_eod and market_value_eod_claim are both ACCOUNT-DAY properties set on the same row. A claim describes the one end value its own row carries, so it has the grain of market_value_eod, and it adds no account-level column; history_scope stays the only account-level exception, as declared in v041.",
-      "iii_intent_coherence": "Three axes, one intent each. market_value_eod_claim answers one question: where the end market value came from (the claim on the end value). flow_claim answers one question: why the flows are null beside a vendor return (the claim beside a null flow). return_basis answers one question: whose arithmetic produced total_return_daily. None of the three overlaps another: the end-value claim does not say whether a return is computed or vendor-reported, flow_claim does not describe the end value, and return_basis does not say where an end value came from.",
-      "iv_state_coherence": "WHICH VALUES ONE REMEDY DOES NOT MOVE. When the vendor supplies its own end value for a day, that day's market_value_eod_claim moves from inferred to measured and the market_value_eod it describes becomes the vendor's figure; that remedy moves no flow, no return_basis (which stays VENDOR_REPORTED on every Orion row), no row_status and no guard_state. The measured and inferred values never change a return: VENDOR_REPORTED is read beside the claim, never inside it, and a PRESENT row keeps its claim whatever its return_basis.",
+      "iii_intent_coherence": "Four things, one intent each. market_value_eod_claim answers one question: where the end market value came from (the claim on the end value). flow_claim answers one question: why the flows are null beside a vendor return (the claim beside a null flow). return_basis answers one question: which arithmetic produced total_return_daily (TWR or NOT_MEASURABLE). The provenance, who computed the figure, is read from source on its own axis; it is not a column, and the rulings' return_method is not a column either. None of the axes overlaps another.",
+      "iv_state_coherence": "WHICH VALUES ONE REMEDY DOES NOT MOVE. When the vendor supplies its own end value for a day, that day's market_value_eod_claim moves from inferred to measured and the market_value_eod it describes becomes the vendor's figure; that remedy moves no flow, no return_basis (which stays TWR on every Orion row), no row_status and no guard_state. VENDOR_REPORTED, which left return_basis, is not a value any row carries: provenance is read from source, and a PRESENT row keeps its claim whatever its return_basis.",
       "token_census": {
         "commit": "198f2591f091c57df02ef8238aa1f10cff7147bb",
         "pathspecs": [
@@ -479,17 +479,17 @@
   ],
   "schema_hash_control": "THE METHOD IS CONTROLLED, not asserted: recomputing it over the same ARROW_SCHEMA with guard_state removed reproduces 0.1.0's published hash b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058 exactly. A hash whose method could not reproduce the previous published value would be unverifiable.",
   "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py -- the 19-field ARROW_SCHEMA this hash is taken from. The producer commit carrying guard_state must land WITH this contract, because the check recomputes the hash against the landed parquet.",
-  "source_requires": {
-    "orion": {
-      "return_basis": "VENDOR_REPORTED"
-    }
+  "source_provenance": {
+    "orion": "vendor-computed: the Orion (Scope) feed's vendor computes the daily return and reports it; the return is not computed inside this book.",
+    "computed from Black Diamond values and flows": "Opal-computed: Opal computes this return from Black Diamond values and flows.",
+    "computed from custodian holdings": "Opal-computed: Opal computes this return from custodian holdings."
   },
   "source_rules": {
     "orion": {
       "flows": "The Orion (Scope) feed carries a vendor-reported return and no flows. Where an Orion flow is absent, external_flow and income_received are null and flow_claim is set to absent beside them, so the row says why. A null flow is never zero: a consumer that needs flows rejects a row carrying flow_claim and says so in words, and never reads the null as 0.",
       "business_date": "business_date stays the TRADING day (lib/trading_calendar.py), the performance axis. Each non-trading calendar day's factor compounds (the product of the factors) into the next trading day's factor, and the run manifest states that compounding. A trading day whose own factor is ABSENT stays ABSENT; it is never filled from a neighbouring day.",
       "account_id": "account_id is account_dim's own key form (for the Scope feed, Orion's id as a string). source_account_id keeps the raw integer. UNMAPPED_ACCOUNT means the account is not a member of account_dim: its row is ABSENT with reason_class UNMAPPED_ACCOUNT, carries a null account_id and a source_account_id, is never dropped, and its count is recorded in the run record.",
-      "return_basis": "VENDOR_REPORTED: the Orion return is the vendor's reported measurement, not Opal's computation; it is the same field the CTO rulings call return_method. Read together with it: day_quality MEASURED is the vendor's figure standing on its own, and guard_state GUARD_NOT_REACHED says no holdings guard graded the day, because the vendor return has no holdings guard."
+      "return_basis": "Orion rows carry return_basis TWR: the Orion feed's chained daily factor is a time-weighted return. Provenance is read from source, not from return_basis: source orion means vendor-computed (see source_provenance). day_quality MEASURED is the vendor's own figure standing on its own, and guard_state GUARD_NOT_REACHED says no holdings guard graded the day, because the vendor return has no holdings guard."
     }
   },
   "served_day_rules": {
