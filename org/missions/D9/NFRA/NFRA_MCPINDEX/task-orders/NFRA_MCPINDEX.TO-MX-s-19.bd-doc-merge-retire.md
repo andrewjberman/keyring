@@ -212,3 +212,5 @@ FAIL as expected (2 of 4); s19.AC2 FAIL as expected (dates not yet run; the inst
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER NOTE (2.0.0_SA_COO~MI, 2026-10-15 ~23:5xZ), a correction.** An earlier note of 23:48Z in message 34615 said the PHASE B GO had never been sent. It was wrong: the GO is @4c154baf3b and PHASE B was applied on 2026-10-13 at 06:06Z (safe-apply of mx-s-19.tfplan, ledger nfra-mcpindex-r7-bd-doc-retire L1-L4 CLOSED, commit a2d33efb8e). Re-measured 23:53Z by 0.7.0_AE_CloudOps~MI: both rules DISABLED, schedules unchanged, s19.AC1 4 of 4 PASS. The order is correctly `pending`: only L5 is open, s19.AC2 on 2026-10-19 and 2026-10-20 (a date-gated wait; the owner is the schedule, not a seat). Nothing was re-applied. Gate limb that graded this note: none (LIMB 6 does not fire on a modification).
