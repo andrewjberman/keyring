@@ -37904,3 +37904,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Systemic remedy (owner ~P2, its own never-widen pair, served DELTA stated): the account_lost guard exempts an account the SOURCE reports with zero positions on the candidate date AND the prior trading day, recorded per account in the publication manifest as closed_at_source with its dates; one zero day alone is still refused. The TERMINATED exemption is unchanged. The directory's missing TERMINATED mark is a separate row for the directory's owner."
 }
 ```
+
+## IRPT_BCKEND-D2-W416-S1 -- The 49 Financial candidate builder has no per-account filter that omits the lost account; the account has no row on the candidate partition
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W416-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~416",
+  "surfaced_at": "2026-10-15T12:14:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-573 asserted the candidate builder holds a filter that omits the lost ACTIVE account. The builder loop has no such filter: the account is absent from the 2026-10-13 dim_balance partition, so the builder never iterates it.",
+  "spec_asserts": "IB-pr-573 cell text: the candidate builder's filter that omits the lost account was not read, so the cause is inferred; the order asks for the failing condition of the builder's per-account screen.",
+  "world_is": "MEASURED: the 2026-10-12 dim_balance partition holds one row for the lost account and the 2026-10-13 partition holds none (no re-keyed match). build_49f_actual iterates sorted(balance.index) at holdings_49f.py line 356; the only pre-node drop is the read refusal at lines 358 to 363, which did not fire (no non-numeric or null balance value on 2026-10-13). The publish gate's account_lost at holdings_snapshot.py line 3058 is the refusing condition; offline it refuses with count 1. The reason the custodian dropped the account is not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py@8d6cf63777 lines 356 to 363 (the loop over balance.index and the read refusal) and lines 210 to 233 (load_49f_sources reads dim_balance at the latest partition at or before the as-of date)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@8d6cf63777 lines 3048 to 3058 (have = scope account ids plus ACCOUNT node ids; gone = served minus have; add account_lost)",
+      "Scratch measure of the two dim_balance partitions (counts only): 7640 keys on 2026-10-12, 7646 on 2026-10-13, one key in the first and absent from the second, seven keys new on the second; no null or non-numeric balance on 2026-10-13"
+    ]
+  },
+  "notes": "Counts only in this row; no account id, value or name is recorded. The order's premise named a filter that omits the account, which the code does not carry; the fix options in IB212-1 are read against the source-absence fact instead. The Schwab cause and the directory body were not read."
+}
+```
+
+## IRPT_BCKEND-D2-W416-S2 -- The Cottonwood validator record exists on box/dell2 but not on this worker's base
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W416-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~416",
+  "surfaced_at": "2026-10-15T12:14:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-571 Cottonwood validator record (deliverables 0.9.0_WK_IRPT_BCKEND~414) is committed on box/dell2 at 1eda0665e4 but absent from this worker's base 8d6cf63777, so the comparison was made by git show from the branch ref.",
+  "spec_asserts": "IB-pr-573 step 4: compare with the Cottonwood record if it is on box/dell2 when the step is reached.",
+  "world_is": "MEASURED: git cat-file on box/dell2 returns the record (rc 0); the worker worktree at 8d6cf63777 does not carry the deliverables folder ~414. The base is behind the branch tip by the sibling's commits, and the worker's base was cut by the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse --verify box/dell2 returns 1eda0665e4 at read time; git cat-file -e on the record path at box/dell2 returns rc 0 (positive control: the ~413 refusal record at HEAD returns rc 0)",
+      "the worktree listing of deliverables/ at HEAD 8d6cf63777 shows ~413 and no ~414"
+    ]
+  },
+  "notes": "Read-only: git show from the branch ref into scratch, nothing committed on the worker branch. The Cottonwood record cites base bbdeae6f89, a different base from this worker's; line numbers in the Cottonwood record were checked against this worker's HEAD for the line it names (line 403) only."
+}
+```
