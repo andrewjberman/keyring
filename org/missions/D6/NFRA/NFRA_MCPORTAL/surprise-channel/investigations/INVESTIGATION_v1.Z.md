@@ -2525,3 +2525,28 @@
   "notes": "Not a hazard. Recorded because the read window and the stop instruction in the spawn prompt cannot both hold; the issuer may cut the read to lines 1 to 126."
 }
 ```
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W33-S7",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~33",
+  "surfaced_at": "2026-10-15T23:07:00Z",
+  "one_line": "The AC1 check takes its root from the shell's current directory (_root.sh runs git rev-parse --show-toplevel), and the shell resets to the primary checkout between calls, so the recorded invocation reads the wrong tree unless wrapped in a cd.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "spec_asserts": "MP-pf-2 order section 4 and the amendment 2 closing line: run the AC1 invocation from the WORKSPACE worktree root C:/tmp/mp-pf-33, with no cd prefix in the recorded invocation.",
+  "world_is": "pc/checks/_root.sh cd's to git rev-parse --show-toplevel of the CURRENT directory (C:/tmp/mp-pf-33 is the root only when the shell starts there). Run from the shell's default directory (C:/Users/Opal Bloomberg/Desktop/ajb_workspace) the unchanged invocation printed 'mcportal/src/pages/gateway absent' and RESULT: FAIL, exit=1. Run with a cd to C:/tmp/mp-pf-33 wrapped around the unchanged invocation it printed 70 pass, 0 fail, 9 of 9 named tests, RESULT: PASS, exit=0. The check's verdict is therefore a function of the cwd it is started in.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pe/checks/pf2.AC1.sh from the shell default directory printed 'mcportal/src/pages/gateway absent', RESULT: FAIL, exit=1 (2026-10-15 session, amendment 2 pass)",
+      "READ C:/tmp/mp-pf-33/org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pc/checks/_root.sh lines 3-6: _R from git rev-parse --show-superproject-working-tree, else --show-toplevel, then cd \"$_R\"",
+      "RUN cd /c/tmp/mp-pf-33 && bash .../pe/checks/pf2.AC1.sh printed '9 of 9', 'pass=70; fail=0', RESULT: PASS, exit=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a fault in the mcportal change: the 70-pass run was on the committed tree 421f8fb. The recorded invocation text is unchanged; the cd is a harness wrapper, because the order's no-cd form cannot reach the worktree from a reset shell. A run from the primary checkout grades that checkout's tree, not MP-pf-2's. Disarm for the issuer: pin the check's root to the worktree it grades, or name the cwd in the invocation."
+}
+```
