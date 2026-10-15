@@ -17715,3 +17715,30 @@
   "notes": "The source map records no owner for ycharts/research; the owner was not read."
 }
 ```
+
+## IRPT_ANLREQ-D2-W177-S1 -- the cell says a ticker with two pool classes is listed once in dropped as CLASS_AMBIGUOUS, but not whether that list is built when the missing security carries no class
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W177-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~177",
+  "surfaced_at": "2026-10-15T16:41:04Z",
+  "one_line": "TO-AR-g-70 item 4 does not say whether the CLASS_AMBIGUOUS entries belong in the dropped list of the NO_CLASS answer; the repair keeps the base answer there (dropped empty) and lists them only on the classed path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-70 item 4: a ticker that appears on two or more pool_rows with DIFFERENT classes is never a candidate and is listed in dropped exactly once with reason CLASS_AMBIGUOUS. The cell names no path for a missing security that carries no class.",
+  "world_is": "At base, choose_replacement returns NO_CLASS before it reads pool_rows, with dropped []. The first cut of the repair built the ambiguity list above that early return, so choose_replacement('MISS', None, None, [], {}) raised TypeError at b88f8d90e4. Commit 1c059acec6 restores the base early return. The NO_CLASS answer now carries dropped [] even when pool_rows holds an ambiguous ticker. The classed path lists each ambiguous ticker once.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py at 1c059acec6: the NO_CLASS return sits before _pool_classes is called",
+      "python call choose_replacement('MISS', None, None, [], {}) on the worktree: printed NO_CLASS at 1c059acec6; raised TypeError at b88f8d90e4 (the first cut)",
+      "ar_g70_checks.py repair and regress both print OK at 1c059acec6 (cases 10, wrong none; AR-G70-REGRESS-OK checks=4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer to rule whether the NO_CLASS answer should also list the ambiguous tickers in dropped. Ruling it yes means the ambiguity list must be built from pool_rows on that path, and a None pool_rows must then be refused or defaulted. The worker did not decide this."
+}
+```
