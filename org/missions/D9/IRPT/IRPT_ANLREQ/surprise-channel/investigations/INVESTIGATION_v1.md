@@ -17715,3 +17715,57 @@
   "notes": "The source map records no owner for ycharts/research; the owner was not read."
 }
 ```
+
+## IRPT_ANLREQ-D2-W176-S1 -- the trust-token probe's secret ycharts/credentials is not in the resident runner role's grants, so the trust-token premise does not hold for the resident host
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W176-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~176",
+  "surfaced_at": "2026-10-15T16:50:41Z",
+  "one_line": "The CRO's trust-token probe reached YCharts with ycharts/credentials, which the resident runner role cannot read; the resident's granted session secret was measured unusable and its refresh is disabled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-69 Q1 and the decomposition (AR-g-84): YCharts is reached from the resident host through the long-term trust token's EC2-crawl / Lambda REST pattern, and the probe that measured it (ycharts/credentials) is the route the ycharts adapter would use.",
+  "world_is": "The probe's working secret is ycharts/credentials (RESEARCH notes line 120). The resident runner role names exactly ycharts/login/credentials-*, ycharts/session/current-* and astn/kimi/api-key (iam.tf lines 61-63 and 99); iam.tf line 10 calls ycharts/credentials the legacy secret the market-data Lambda reads, and iam.tf line 11 says a fourth YCharts secret is a deliberate edit. The session secret the resident is granted was measured not usable by the Lambda client and its capture and probe schedules are DISABLED (RESEARCH notes lines 119-120). No secret named 'trust token' exists in the tracked infra (the one trust-token test, lib/opal_data_harvest/test_ab1b_trust_token_and_backoff.py, is a different publisher harvest with no ycharts reference).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261014_ANALYSIS_REPORT_PRICE_COVERAGE.md:119-120 (the session/current and credentials rows of the probe table, read in the worktree at ae430dba9b)",
+      "infra/aws/terraform/investor-reporting/ycharts/iam.tf:61-63 and :99 (the three named secret ARNs and the runner read statement, read in the worktree at ae430dba9b)",
+      "native Grep of infra/aws/terraform for (?i)trust.?token|fund_data|ycharts/login: every hit is a ycharts/login or ycharts/session name or a vendor census file, none is a secret named trust token (worktree at ae430dba9b)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an AWS read: the live role policy (aws iam list-role-policies, which also sees the second root's render_host inline policy named in iam.tf lines 29-41) was not called. The grant finding rests on the tracked IAM. The adapter cell AR-g-84 should not be cut on ycharts/credentials without a CTO decision on a new grant."
+}
+```
+
+## IRPT_ANLREQ-D2-W176-S2 -- the resident package ships no data/mdpf tree and no lib/trading_calendar.py, so the store readers and the T-1 cut the adapter cells build on are not importable on the host
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W176-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~176",
+  "surfaced_at": "2026-10-15T16:50:41Z",
+  "one_line": "The adapter cells were specified to build on tr_compare, tr_column, price_store and lib/trading_calendar; the tracked package builder ships lib/opal_naming.py from lib/ and none of those.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-69 Q3 and Q4 and the round-8 AR-g-61 summary: the price adapters are read-only readers built on the demque store and Bloomberg code, and cut at the T-1 frontier from lib/trading_calendar.py, inside the resident release.",
+  "world_is": "infra/aws/lambda/investor-reporting/reports/build_resident_package.py line 90 adds lib/opal_naming.py only from lib/; its DIRS list covers the ycharts, reports, intake, ops and _scope trees and no data/mdpf path. lib/trading_calendar.py is not added. The r31 host install appends <root>/lib to sys.path and imports trading_calendar (install_r31.sh lines 80-84), which the tracked builder does not populate, so that import depends on host state that is not in the tree. ops/manifests.py line 95 says lib/trading_calendar.py is outside its own order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:90 (add of lib/opal_naming.py only, read in the worktree at ae430dba9b)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144/install_r31.sh:80-84 (sys.path append of lib and import trading_calendar, read in the worktree at ae430dba9b)",
+      "infra/aws/lambda/investor-reporting/ops/manifests.py:95 (the trading_calendar scope note, read in the worktree at ae430dba9b)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The fix is a build-cell decision (what the resident package ships, or a shared module that is shipped), owned by the release cell, not by a worker cell here. The caller can pass as_of to price_source.resolve_prices without the calendar, so the adapters do not strictly need it."
+}
+```
