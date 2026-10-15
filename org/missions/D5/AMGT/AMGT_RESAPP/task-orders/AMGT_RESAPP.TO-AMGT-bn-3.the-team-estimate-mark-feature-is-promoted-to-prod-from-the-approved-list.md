@@ -68,7 +68,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** cut 2026-10-15 ~22:3xZ, after the CTO's approval of row `a333` (msgs 6289, 6293: "a Tier-2 seat hears an act only as a task order, so issue it TO-bn-3 citing approval a333 @8703ec5e86"). THE FLOW is `portal/CONTRIBUTING-BOXES.md` step 7 (the promote takes a list, never live DEV whole). The merge-forward was asked of `0.0.0_AB_MSTR~DELL1` at 22:29Z (the DT's own message 6296 said it would hold DEV pushes until its receipt: step 1 tells it not to, because the merge-forward is a DEV push it is waiting on). The DT is a Tier-2 SEAT, not a worker: it holds this order in its own home, commits under its own lane, and reports to `2.0.0_SA_COO~R1` and `1.0.0_SA_CTO~DELL1`. The class is Opal-internal: no word from Andrew. LESSON CARRIED from `bn-1`: a task-order file name this long makes the instance's canonical path exceed MAX_PATH on this box, and `to-pipeline-gate.py check_complete_flip` has no override; the instance is therefore given a short name, and the issuer's flip is graded on it (the block names it from the cut, which `bn-1` needed an amendment to do). `bn-4` (the ten-name walk, the grid opened with `--open-first "All figures"`) waits on THIS promote and on `bn-2` (merged).
 
-<status>pending</status>
+<status>complete</status>
 <round>107</round>
 <workstream>PROMOTE</workstream>
 <slot>0.4.0_DT_ClientPlatform~H1</slot>

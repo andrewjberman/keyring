@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~123</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in worker tree wk-NFRA_CTLPLN-123 @5b9e08a865 (merged a9e9fa8b00): CTam1-AC1 RECEIVE-COLOR arms=15/15 ok=True; CTam1-AC2 INTAKE-RECEIVE-TEST cases=32/32 ok=True; diff paths inside the order; proof instance VALID in the main tree; row W123-S1 (client-data check NOT checked, hashed list absent on this box) OBSERVATION, INERT. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
