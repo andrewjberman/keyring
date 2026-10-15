@@ -4104,3 +4104,17 @@ The tab transport opens a visible headful Chrome per job (`tab_transport.py:99`)
 
 - **Fan-out:** 0 workers (a seat order), 1 chain.
 - **Checks at the cut:** cb-2's criteria are reads of dell1's scheduler and of a file the seat writes; at the base no task exists, so AC1 and AC2 FAIL as expected, and AC3's file does not exist. Not dry-run as commands (they would read a task that does not exist).
+
+## 111. ROUND 87, workstream PROFILE-STORE -- the first dell1 pass found a second defect of the same family; `HVST-cb-8` CUT, `HVST-cb-9` defined, 2026-10-15 ~20:4xZ
+
+`HVST-cb-2` registered the dell1 runner (T0 20:23:04Z, pin `47c623dcf8`) and its first pass failed: `wsj` and `barrons` each REFUSAL expired, REFRESH done (3 s), REFUSAL expired again; the stop rule fired and `0.7.0_AE_CloudOps~SC1` ended the runner by its stop file at 20:27:16Z (SC1 msg 6206; rows `D1-S19`, `D1-S20`). Read from `.runtime/harvest-cycle/state/cycle_runner.log` lines 245-252 and 502-509 and run record `20261015T202310Z-wsj-23b255623f`: `status` sign_in_refused, `detail` "SignInRefused: sign-in refused: --no-sign-in", `token_source` None, `request_attempts` empty. The job never opened its tab: `TokenFirstSessions.get()` demands a stored session, the runner's runtime root has none, and `--no-sign-in` forbids the sign-in that would create one. The refresher's 3 s `done` was the in-profile renew finding the profile already signed in. Not the account.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cb-2` | `cb-2` (amendment 1) | **Seed the runner's saved-session directory, restart, repeat the reads** (operational unblock; the pair is unchanged). | WORLD | seat `0.7.0_AE_CloudOps~SC1` | pending, amended |
+| `HVST-cb-8` | `cb-8` | **`TokenFirstSessions.get()` returns a profile-store envelope, with no refresh, for a publisher whose session lives in its browser profile** (the SAME predicate `SessionManager.refresh` uses, factored into `auth.profile_is_store`); every other publisher unchanged; a loop test with a mutant. | LOCAL (direct act, about 25 lines) | worker `0.9.0_WK_AMGT_HARVST~145` | CUT, pending |
+| `HVST-cb-8` AC3 | (the issuer's run) | **One real `wsj` job, `--no-sign-in`, from a worktree with NO saved session and a signed-in profile**: `complete_candidates`, accepted > 0, `token_source` `browser_profile`. | LOCAL (real run) | `2.0.0_SA_COO~W1` at the drain | HELD for the cb-8 merge |
+| `HVST-cb-9` | (after cb-8 merges) | **Re-pin the runner** to a head carrying cb-8, by the stop-file boundary, with a pair half (a re-pin is a new act; round 85 signed one per re-pin). | WORLD | seat `0.7.0_AE_CloudOps~SC1` | DEFINED |
+
+- **Fan-out:** 1 worker (cb-8), 1 chain of 1, cap 8.
+- **Checks dry-run at the base before the cut:** cb-8 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`144 passed, 4 subtests passed`).
