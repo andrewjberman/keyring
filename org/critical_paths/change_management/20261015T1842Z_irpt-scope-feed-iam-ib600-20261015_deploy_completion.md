@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-15T18:42:14.437727+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261015T232812Z
 **Deploy:** IRPT_BCKEND TO-IB-pr-600: ONE new resource aws_iam_role_policy.inf_gold_layer_scope_feed (scope-account-feed-assets-put) on inf-gold-layer-ec2-role, root infra/aws/terraform/inf-pipeline, packet blob cea5395ee7; rollback = the one-resource destroy (plan 0/0/1)
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -28,3 +28,4 @@
 - 20261015T194539Z LEG L4 closed: ONE safe-apply of the saved plan 19:42:19Z-19:44:25Z rc 0: 'Apply complete! Resources: 1 added, 0 changed, 0 destroyed.'
 - 20261015T194540Z LEG L5 closed: simulation on inf-gold-layer-ec2-role: ALLOWED put bronze feed key, put silver feed key, get feed key, list with prefix 
 - 20261015T202554Z LEG L6 closed: ONE start of i-0ed5afded2ebd4ed4 at 19:53:40Z by the RUNBOOK procedure (CTO ADDENDUM 2, msg 8597), SSM Online 19:54:00Z,
+- 20261015T232812Z CLOSED -- all 6 legs proven
