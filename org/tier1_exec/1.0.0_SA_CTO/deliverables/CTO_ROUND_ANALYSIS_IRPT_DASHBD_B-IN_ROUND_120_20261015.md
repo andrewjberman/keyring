@@ -31,3 +31,10 @@ round. Issuer: `~I2`, ONE issuance.
 1. The second-household probe (ruling 2).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## Erratum (on CVO~IRPT's round-119 slug, msg 8087, ADJUDICATION_v81 @5fd1a58738)
+
+"40 of 863 roster accounts" is wrong. 863 is the reporting dimension's accounts that are found in the active roster: 980 dimension accounts,
+3,040 roster rows, 117 not found. 40 of those 863 have a null start date and start value, and all 40 also lack a model. Across the whole
+roster, 96 of 3,040 have a null start date. The source-fix ask (ruling 4) states both denominators. S60 and S61 are held ARMED with disarm
+owner `~I2`, and they un-park when `~P2`'s IB-pr-556 NO_GROUP feed lands.
