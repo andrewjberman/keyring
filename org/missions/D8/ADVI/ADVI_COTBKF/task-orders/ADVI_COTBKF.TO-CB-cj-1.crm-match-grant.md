@@ -91,5 +91,6 @@ Commit the record FIRST, your rows and the instance second; flip `<status>` to `
 <slot>~CB1</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
+<proof_genre>DEPLOY</proof_genre>
 <direct_act>false</direct_act>
 <worker_class>worker</worker_class>
