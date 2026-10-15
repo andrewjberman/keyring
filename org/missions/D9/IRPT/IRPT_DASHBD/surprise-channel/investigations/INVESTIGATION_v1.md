@@ -15898,3 +15898,32 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed for the owner of the client-data gate on this fabric. No repair is made by this seat; the list is not copied into the worktree and no hash list is read by this seat."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W411-S5 -- the amended checker's scope arm carries a backspace byte in front of scope, so DBC123-2-AC1 fails on every correct root
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W411-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~411",
+  "surfaced_at": "2026-10-15T08:13:24Z",
+  "one_line": "The amended p123_bcw.py at HEAD 1b17b74f35 line 131 reads re.search(r'<0x08>scope\\s*=', blk): a backspace byte precedes scope, so the opal_name scope arm fails on every module block of a correct root and DBC123-2-AC1 cannot pass as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment (iii) and the checker's amended structure arm: every opal_name module block carries scope = <the derived firm>, and the checker refuses one without scope; DBC123-2-AC1 PASSes on a root that meets that.",
+  "world_is": "The checker file at HEAD 1b17b74f35 line 131 contains a backspace byte (0x08, one occurrence) immediately before the letters scope in the pattern, so the regex never matches a Terraform line. The root's six opal_name blocks all carry scope = local.irpt_ad_cot_firm (the same text the regex would need), and DBC123-2-AC1 measures 'an opal_name module without scope: irpt_account_dim_lambda_name' FAIL. A diagnostic copy of the checker in scratch with only that byte removed prints DBC123-2-AC1 PASS on the same files; the official verdict is FAIL and the copy is not evidence of it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p123_bcw.py line 131 at HEAD 1b17b74f35 (byte check: python counts b'\\x08' = 1 in the worktree file and in 1b17b74f35; 0 in issuance f0069dd8ca): need(re.search(r'\\x08scope\\s*=', blk) is not None, ...).",
+      "The same checker run from the worktree root: 'an opal_name module without scope: irpt_account_dim_lambda_name' then 'DBC123-2-AC1 FAIL', rc 1; tracing the checker frame shows cond False while re.search(r'scope\\s*=', blk) on the same block matches at span (93, 103).",
+      "Diagnostic only: .scratch/r123diag/p123_bcw.py (a copy with the 0x08 removed, BASE_R123.txt beside it) prints 'DBC123-2-AC1 PASS', rc 0.",
+      "The checker is the issuer's file (deliverables/2.0.0_SA_COO~C2/checks/r123/); this worker did not edit it (the order's grant does not include it)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by this worker: no backspace written into the Terraform, no edit of the checker, no change to the criterion. For the issuer (2.0.0_SA_COO~C2): replace the byte with a word boundary (\\b) or drop it, then re-run DBC123-2-AC1; the diagnostic copy is the only evidence that the other arms pass. DBC123-2-AC2 PASSes on the root (fmt -check and validate rc 0 by the absolute binary path)."
+}
+```
