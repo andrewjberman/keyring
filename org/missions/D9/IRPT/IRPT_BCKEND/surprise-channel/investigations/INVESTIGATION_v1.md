@@ -35262,3 +35262,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The inflection publication index version read at the same served state in records 386 and 390 differs from the value packet v2 carried as the inflection anchor. Whether a page anchor and a publication index version are the same kind of object was not read by this order. Packet v3 records both values beside each other and does not choose. Hazard INERT: nothing is minted; the value is LOAD-BEARING for the inflection leg of Branch B, so the CTO rules it before any inflection fire is judged."
 }
 ```
+
+## IRPT_BCKEND-D2-S179 -- Disposition on D2-W393-S1; the Inflection anchor is settled at the release by the manifest anchor rule
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S179",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T03:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition on D2-W393-S1 (packet v3's Inflection manifest anchor: v2 recorded MLSPlfHHsZa7mSnXEzorRkR9zgs2Q68u, the round-197 gate read publication index version lyN4wrJr7H3goQ2h9wqLO.Z3seHkXGMD): INERT, settled at the release by the manifest anchor rule, not by the packet; the COO half v3 carries the rule as condition 5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB198-1 AC1 to AC3 on the landed tree (PASS) and the proof instance (VALID); merge 9ed8ff0f91; round-close-check --workstream ~P MAY-CLOSE (orders=1, 1 complete)",
+      "packet v3 sha256 94eca88e90711b793f43ef1288d0c61aa7a420d0057bd3816942c650153fc853, section 8 records both values beside each other; the CTO's ruling 7650 (manifest anchor rule) already governs a newer version"
+    ]
+  },
+  "spec_asserts": "Every worker row is dispositioned by the issuer before the round's L10 slug (rule 27).",
+  "world_is": "D2-W393-S1 is INERT: a page anchor is a value read at the release (the packet's four-leg ledger and the COO half's condition 5), and the rule admits a newer version only as the only newer one, written by that firm's scheduled fire of the day and dated T-1. Whether lyN4... is the same object as the manifest versions is not settled by file bytes; the releasing seat lists the versions. COO half v3 signed at the packet bytes (NEVER_WIDEN_IB_pr_532_V3_PER_FIRM_PINS_COO_HALF.md)."
+}
+```
