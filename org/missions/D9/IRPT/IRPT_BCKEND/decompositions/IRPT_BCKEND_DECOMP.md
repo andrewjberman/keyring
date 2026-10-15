@@ -3972,3 +3972,29 @@ Check IB199-4 (`deliverables/2.0.0_SA_COO~P2/checks/r199/p199_orion2.py`), dry-r
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one document; one worker (slot ~396) starts now.
 
+## 194. ROUND 2, WORKSTREAM ~PS (the filled-report serve path, the three build slices; 2026-10-15 ~05:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 7995: CTO half of the pair signed @82183fcfaf, the document's source ruled "gold parquet by ~D2, JSON by the publisher", "build slices may start now")
+
+Round 1 of ~PS closed MAY-CLOSE (close commit 4d5dea9d59; the pair is signed at packet sha256 7daa29f0fe10). The ruling: gold is parquet and platinum is the only JSON producer; 2.0.0_SA_COO~D2 builds the gold table `filled_report_values` (hop 1); this seat's publisher reads that gold and composes the platinum JSON (hop 2); the new named-account reader with negative tests is in the pair (hop 3). The deploy legs and the first exercise wait on 49F gold for one date. The three LOCAL build slices of the packet's section 7 are cut now. They are three independent chains by WRITE SET (publisher + registry; entry.py + Terraform; export), each against the packet's fixed contract (object name `filled_report.json`, the builder's address, the contract-0.5.1 document), and no cell consumes another's output: the packet's order a to b to c named a reading order, not a data dependency. Slice a ships the publisher's PLUMBING only (the composer from gold waits for the gold table; the scheduled pass ships OFF).
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py`, dry-run at the base: IB200-1 to IB200-3, AC1 to AC3, all nine FAIL (no work, no record); the positive control (`control200.py`: stub packages at the real relative paths in temporary git roots with a worker commit, marker blocks, new tests and records) passes all nine and forty-one negatives (with the Orion cell's) each fail their own arm. The difference control removes the cell's BEGIN/END block(s) in memory and requires failed assertions, not import errors.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-553` | hop 2 publisher plumbing: `FILLED_REPORT_OBJECT`, `report_address()` from the builder, the registry family row, a validating put, a default-OFF pass with a not-yet-available gold reader; tests | FWD-3 | WORLD (the path floor of an infrastructure path; the work edits repository files only, nothing is deployed) | none | PS2-a |
+| `IB-pr-554` | hop 3: the /report route, a new named-account reader, the all-accounts scope refusal (negative tests by name), the route declaration (one new route resource) | FWD-3 | WORLD (the path floor of an infrastructure path; the work edits repository files only, nothing is deployed) | none | PS2-b |
+| `IB-pr-555` | hop 4: the `filled_report` export source kind, additive only (at most six removed lines), pinned by VersionId and sha256 | FWD-3 | WORLD (the path floor of an infrastructure path; the work edits repository files only, nothing is deployed) | none | PS2-c |
+
+fanout: 3 of 3 chains, cap 8, reason: three disjoint write sets with no data dependency between them; three workers (slots ~397, ~398, ~399) start now.
+
+## 195. ROUND 2, WORKSTREAM ~PO (the Orion pairs; 2026-10-15 ~05:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8014: cut both pairs as packets, three conditions)
+
+Round 1 of ~PO closed MAY-CLOSE (close commit 136f730225). The CTO ruled: (b) the scheduled producer in the 6 AM New York fold PORTS the manual positions CLI into the scheduled function with no second producer beside it and the CLI retired or repointed in the same pair; (a) the seven-day positions re-pull writes THROUGH (b)'s code path to the flat key the mirror reads, reading the seven keys ABSENT first and pacing the 2,240 requests; names and addresses from the builders, the trading-day frontier; the account feed of B-IN round 117 joins (b) by addendum. One packet covers both pairs, in the order b then a.
+
+Check IB200-4 (`p200_orion.py`, dry-run at the base: AC1 to AC3 all FAIL; thirteen negatives in `control200.py`).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-556` | the design record and the never-widen packet for the Orion pairs (b) and (a); both halves UNSIGNED; READ ONLY | FWD-3 | SERVED | none | PO2-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one document; one worker (slot ~400) starts now.
+
