@@ -16458,3 +16458,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Resolution note for IRPT_DASHBD-D2-W199-S1, which is left as written (append only). The issuer owns the LIST; the worker re-read only the empty_days list. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W203-S1 -- BLOCKING premise: the worktree omits the order's named infra/aws and data paths (sparse checkout)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W203-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~203",
+  "surfaced_at": "2026-10-15T09:40:58Z",
+  "one_line": "The worktree is a cone-mode sparse checkout that omits data/ and infra/aws/, so the order's adapter, gold handler, source map and function directory are not present; the three criteria FAIL at base",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-249 names its <paths> and its read inputs as present in the worktree: infra/aws/lambda/ci/lambda-source-map.json, the adapter under data/assets/scripts/gold/irpt_reporting/adapters/, the gold handler under infra/aws/lambda/investor-reporting/reporting-gold/. Its first act says that if the worktree does not carry the named paths the order is BLOCKING and the worker stops.",
+  "world_is": "Worktree C:/dev/wk-irpt-dashbd-203 (branch wk-IRPT_DASHBD-203, HEAD 7d5697ef1a) has core.sparseCheckout true in cone mode with 7 patterns (.tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/standards). Of 84917 tracked paths 81145 are skip-worktree; 11187 of those sit under data/ and infra/aws/. ls of infra/aws and of data reports no such file in the worktree; the base checkout C:/dev/ajb_workspace carries both paths. The checker at base: DB122-4-AC1 FAIL (no handler), DB122-4-AC2 FAIL (no infra/aws/lambda/ci/lambda-source-map.json), DB122-4-AC3 FAIL (no RD_CW_HANDLER_FACTS_R122.json). The worker did not change the sparse checkout and did not reconstruct the files; this row is the only write.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-249.cottonwood-landing-function-code-handler-source-map-closure.md @7d5697ef1a (paths block and the first-act refusal clause)",
+      "git -C C:/dev/wk-irpt-dashbd-203 config core.sparseCheckout = true and git sparse-checkout list = 7 cone patterns @7d5697ef1a",
+      "git ls-files -v infra/aws/lambda/ci/lambda-source-map.json and data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py both carry the S (skip-worktree) mark @7d5697ef1a",
+      "ls on infra/aws, infra/aws/lambda and data in the worktree: no such file; base checkout C:/dev/ajb_workspace holds infra/aws/lambda/ci/lambda-source-map.json and the adapter"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Worker stopped on this row under the order's refusal clause. The criteria were run at base and recorded as FAIL; no proof instance was written and the status stays pending. Resolution is for the issuer or CTO: the worktree must carry the named paths before the order can be executed. Counts and words only; no client figure is quoted."
+}
+```
