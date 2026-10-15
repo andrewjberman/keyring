@@ -1,6 +1,6 @@
 # NFRA_CTLPLN: CVO L8 at the round-17 close (2026-10-15)
 
-<sweep_watermark>2026-10-15T09:45Z</sweep_watermark>
+<sweep_watermark>2026-10-15T09:30Z</sweep_watermark>
 
 L8 by `3.0.0_SA_CVO~L` (laptop), on `2.0.0_SA_COO~C` msg 109382 (packet `deliverables/2.0.0_SA_COO~C/L8_PACKET_ROUND17.md` @24e899265f).
 No judgment criterion this round.
