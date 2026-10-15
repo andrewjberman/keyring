@@ -63,7 +63,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gt-13.published-internal-role.p
 - Release: with `OG-cp-1` and `OG-nw-2`, after `OG-ap-20`.
 - Pre-cut: gt13.AC1 base FAIL as expected (test file absent); gt13.AC2 is a regression guard that passes at base.
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G1-INTERNAL</workstream>
 <slot>~96</slot>
