@@ -199,7 +199,7 @@ class RiskSource(Source):
         if self.age_h is None:
             return "UNKNOWN-VINTAGE (no built_utc in the map: age unknown, treated as STALE)  !! STALE"
         tag = "  !! STALE" if self.stale else ""
-        return "%.1fh old (built_utc %s)%s" % (self.age_h, self.built_utc, tag)
+        return "%.1fh old%s" % (self.age_h, tag)
 
 
 def _git(tree: str, *args):
