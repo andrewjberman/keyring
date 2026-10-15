@@ -38269,3 +38269,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Read only. Nothing was written, minted or deployed."
 }
 ```
+
+## IRPT_BCKEND-D2-S199 -- The deployed-versus-HEAD gate difference and dispositions on worker 417's rows; the deployed directory_marks_no_closures refuses where HEAD publishes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S199",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T13:12:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The DEPLOYED-versus-HEAD gate difference (CTO msg 8281) and dispositions on worker 417's rows (D2-W417-S1 to S7): the live holdings bundles run a holdings_snapshot.py that matches neither HEAD nor the IB-pr-549 pins; the deployed directory_marks_no_closures has no carried-forward exclusion, so with the two carried TERMINATED entries it returns False and the deployed gate REFUSES Cottonwood's lost account where HEAD lists it and publishes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB213-1 AC1 to AC3 on the worker tree (all PASS) and the proof instance (VALID); merge 36d573701b",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~417/IB213-1_terminated_mark_read.json: live Cottonwood bundle version oyIYMVdh_l2zCg5ZWvn3ISPPS6_9Q82_ (IB-pr-549 pin 5fad7eaaa8fb4c512190fa406b78c683c4b6ad1f) and live 49 Financial bundle version UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD (pin b1d354cfc9341168a3b4c316a344876ce0049b97): neither deployed holdings_snapshot.py equals HEAD; both carry the v0.33 rule (5 marks_no_closures occurrences) but the deployed directory_marks_no_closures has no carried-forward exclusion while HEAD ignores the pipeline's own TERMINATED marks; executed on Cottonwood's directory (two carried entries): deployed REFUSED (account_lost 1), HEAD lists and PUBLISHES; the 49 Financial file is another version (3,241 lines against HEAD's 3,290) with the same body (AST comparison, not executed)"
+    ]
+  },
+  "spec_asserts": "My IB-pr-574 order and the CTO's msg 8281: the deployed gate is the IB-pr-396 v0.33 gate, so the refusal reproduces at HEAD.",
+  "world_is": "DISPOSITIONS. D2-W417-S6 RESOLVED (my check defect, AMENDMENT 1: the candidate-against-served difference is counted by kind). D2-W417-S1 and S7 stay ARMED, owner me, as the hinge of the Cottonwood pair: whether Cottonwood publishes after the IB-pr-549 mint depends on whether the minted pin-2 body of directory_marks_no_closures is HEAD's or the deployed one (the worker did not read pin 2's body; the CTO holds the Cottonwood pair until the mint and its next fire). D2-W417-S3 (no TERMINATED mark exists for the account and the writer marks only an entry the previous build carried: the account is in no directory entry and not in the directory's source client list) is the reason the closed_at_source exemption (IB-pr-576) is built instead of a mark. D2-W417-S2 (the offline rebuild gives 17,911 nodes against the refused revision's 17,904), S4 (for three days before the zero-position run the custody partition carries two no-position rows while the independent-total partition carries a nonzero value), S5 (the sparse grant widened locally): INERT, recorded. The CTO's 8290 changes the exemption's record to ABSENT_AT_SOURCE (never closed)."
+}
+```
