@@ -19154,3 +19154,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The handler refuses by printing the REFUSED line and exiting, so a caller reading only the response body cannot tell a refusal from any other exit; the log tail carries the words. The record's error_text uses the log line. Any consumer of the schedule's async failures would see Runtime.ExitError only. The crossbox check's timeout did not block the apply (mode WARN) and its cause was not read here."
 }
 ```
+
+## IRPT_DASHBD-D2-W601-S1 -- TO-DB-f-601: the gold, producer, publisher, handler and route files the cell reads are sparse-excluded from this worktree, so the FWD-3 thread read cannot be made as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W601-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~601",
+  "surfaced_at": "2026-10-15T23:34:24Z",
+  "one_line": "The worktree wk-IRPT_DASHBD-601 carries the org/ and .tools/ paths and the portal source, but not the code the cell reads: every path under data/ (2042 tracked files) and infra/aws/ (9264 tracked files) is in the index with the skip-worktree flag and is not materialized on disk, so the producer, the reporting-gold handler, the publisher, the reporting entry and the series reads of DB-f-601 steps 1-4 cannot be opened in this tree. The same holds for org/surprise_channel/ (the investigation item schema is tracked but absent).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -v data/assets/scripts/gold/irpt_reporting/account_class_daily.py prints S (skip-worktree); git ls-files -v infra/aws | grep -c '^S ' prints 9264 of 9264 tracked infra/aws paths; git ls-files -v data | grep -c '^S ' prints 2042 of 2042 tracked data paths",
+      "git sparse-checkout list (worktree wk-IRPT_DASHBD-601, HEAD fcc5e13f03) lists .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/ref, org/standards; test -d data prints no and ls infra/aws/lambda prints cannot access",
+      "ls org/surprise_channel prints cannot access; git ls-files org/surprise_channel/schemas/investigation_item.schema.json lists the file as tracked",
+      "p119_fwd3.py run at worktree root: 'reason: missing record ... RD_FWD3_THREAD_R119.json' and 'DBF119-2-AC1 FAIL' rc=1 (the checker reads no code file; the record was not written because the cell's source reads are absent)"
+    ]
+  },
+  "spec_asserts": "TO-DB-f-601 Bash bar: the worktree must carry the paths the task order names (org/ and .tools/ tested); the cell reads the producer data/assets/scripts/gold/irpt_reporting/account_class_daily.py, the publisher and handler under infra/aws/lambda/investor-reporting/ and reporting/entry.py 'from their code and records' (cell steps 1-4), and the BOUNDS say the read is a read of repository files.",
+  "world_is": "org/ and .tools/ are present and the branch is wk-IRPT_DASHBD-601, so the first test passes; the sparse checkout excludes data/ and infra/aws/ from this worktree, so steps 1-4 have no readable source here and the criterion DBF119-2-AC1 fails at base with no record. Per the bar this is a BLOCKING stop: nothing was rebuilt, extracted, reconstructed or sparse-widened, and no record was written. The cloud-side question (whether account_class_daily was applied to gold) is not answered here either way; it is absent and needs the owner's live read."
+}
+```
