@@ -11213,3 +11213,109 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
  "notes": "Found by the CVO's L8 re-run of round 20; not changed here."
 }
 ```
+
+## NFRA_CTLPLN-W117-S1 -- the cut's premises do not hold in this worktree: the danger map reads fresh and the hygiene arm reads ok=True before any edit
+
+```json
+{
+  "id": "NFRA_CTLPLN-W117-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~117",
+  "surfaced_at": "2026-10-15T16:41:44Z",
+  "one_line": "At the cut, in worktree ctlpln-117 (branch wk-NFRA_CTLPLN-117), comp-pulse diff reads 'danger map: 0.1h old' and REFLEX CLEAN, and test_round20_hygiene.py --map reads tsx_classed=1 py_classed=1 ok=True; the order's base (STALE, ok=False) is not reproduced here. The reflex's age is the file mtime, and sparse checkout wrote the tracked map at 12:20 EDT today while its content is the 2026-08-03 build (blob 84186b88 at HEAD, last touched by 52f2b8a2f2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/comp-pulse diff .tools/wk-provision.sh at 2026-10-15T16:23:46Z in ctlpln-117 (pre-edit): 'danger map: 0.1h old', 'ANSWER STATE: PRESENT_WITH_ZERO_RESULTS', 'REFLEX CLEAN'; rc=0",
+      "python .tools/tests/test_round20_hygiene.py --map before any edit: 'HYGIENE-MAP tsx_classed=1 py_classed=1 ok=True' (.scratch/base_map.txt in ctlpln-117)",
+      "org/modules/graph/comp_pulse.py Source.age_h = (now - os.path.getmtime(path)) / 3600 (file mtime, not content vintage); ls -l org/modules/graph/nerves-risk-edges.json -> 2026-10-15 12:20 -0400 before the rebuild",
+      "git log -3 -- org/modules/graph/nerves-risk-edges.json at HEAD e4848abcad: 52f2b8a2f2 (2026-08-03 19:23 -0400) is the last commit that touched the tracked map"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-2 premise (order text): at the cut comp-pulse diff prints NOT-DECIDABLE: danger map STALE, and test_round20_hygiene.py --map reads tsx_classed=0 py_classed=0 ok=False; the map was written 2026-10-07 05:36Z by nerves_lexical build.",
+  "world_is": "In this worktree the staleness test passes on mtime, not on the map's content date, so the base premise does not reproduce. The map was rebuilt anyway (commit c83dfa714c, as the cell orders). A worktree that is provisioned from a checkout reads a fresh map whatever the content age, so a CLEAN reflex answer there is not evidence about the map's content. The 2026-10-07 date is the main checkout's file mtime, not a commit."
+}
+```
+
+## NFRA_CTLPLN-W117-S2 -- a build from a sparse worktree emits a 51-node danger map with no warning, because the corpus folders are not checked out
+
+```json
+{
+  "id": "NFRA_CTLPLN-W117-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~117",
+  "surfaced_at": "2026-10-15T16:41:44Z",
+  "one_line": "python org/modules/graph/nerves_lexical.py build in the sparse worktree (only CLAUDE.md of the corpus present) printed 'nerves-lexical: 51 nodes carry claims' with docs_scanned=2 and no warning; after git sparse-checkout add of org/critical_paths, org/tier0/ledger, docs/doctrine and docs/references the same command printed 3491 nodes with docs_scanned=2709. The 51-node output was not committed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/modules/graph/nerves_lexical.py _CORPUS = CLAUDE.md, org/critical_paths, org/tier0/ledger, docs/doctrine, docs/references (+ memory dir); _iter_docs skips a missing folder silently",
+      ".scratch/build_out.txt in ctlpln-117 (first build, 16:26Z): 'nerves-lexical: 51 nodes carry claims'; written map 26439 bytes, stats docs_scanned=2",
+      ".scratch/build_out2.txt in ctlpln-117 (second build, 16:28Z): 'nerves-lexical: 3491 nodes carry claims'; stats docs_scanned=2709, total_claims=24203",
+      "the HEAD map before the rebuild had 1662 nodes (52f2b8a2f2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "nerves_lexical.py build: emits the edge file from the corpus; the danger map is the estate's HOLD/RISK memory.",
+  "world_is": "A build run where the corpus folders are absent exits 0 and writes a map that drops about 97 percent of the danger nodes, with no sign in its output. A sparse worktree that commits its build therefore replaces the tracked map with a degraded one. The build's stats block shows docs_scanned, which is the only tell."
+}
+```
+
+## NFRA_CTLPLN-W117-S3 -- nothing in the diff path rebuilds the danger map, and the tracked map is still in git after the 2026-07-22 untrack ruling
+
+```json
+{
+  "id": "NFRA_CTLPLN-W117-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~117",
+  "surfaced_at": "2026-10-15T16:41:44Z",
+  "one_line": "The producer of nerves-risk-edges.json is a manual CLI (nerves_lexical.py build). Neither comp_pulse.py nor the .tools/comp-pulse wrapper calls it or refreshes the map (grep of both: no call site). The commit 2d8609a9eb (2026-07-22, 'UNTRACK the danger map ... auto-refresh live') is not in effect at HEAD: the file is tracked (git ls-files = 1, check-ignore rc=1), last written into git by 52f2b8a2f2 (2026-08-03).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep -n 'refresh|nerves_lexical|subprocess' org/modules/graph/comp_pulse.py (measured in ctlpln-117): no refresh path; the only nerves_lexical mention is a comment in the danger-map wording",
+      ".tools/comp-pulse wrapper (470 bytes, read in full): runs comp_pulse.py and comp_log_auto.py only",
+      "git ls-tree HEAD org/modules/graph/nerves-risk-edges.json -> 100644 blob 84186b88 (tracked); git log --oneline -3 -- that path: 52f2b8a2f2, 2d8609a9eb, 472906b5d8",
+      "CVO row S9127 (INVESTIGATION_v1.md, 2026-10-15T15:20:02Z): the map was 201.7h old at the CVO's re-run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "commit 2d8609a9eb: the danger map is a derived cache with its own vintage; 'absent/stale = rebuild, 120s-capped, degrade-never-block' (auto-refresh live at consumption).",
+  "world_is": "No consumer in the diff path rebuilds a stale map, so the map's age is only ever cured by a person running the build. The 2026-07-22 untrack ruling is recorded in git but the map was re-tracked by a later commit, so the file is both a derived cache and tracked. This worktree's rebuild (commit c83dfa714c) is the one cure measured here. Owner of the rebuild path is not named in this worktree's files."
+}
+```
+
+## NFRA_CTLPLN-W117-S4 -- a judgment call on the census: the retired two-box probe literal was classed FIXTURE, not a box-list literal
+
+```json
+{
+  "id": "NFRA_CTLPLN-W117-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~117",
+  "surfaced_at": "2026-10-15T16:41:44Z",
+  "one_line": "Of the four unclassified census hits, .tools/tests/test_manager_on_every_box.py:266 holds the tuple OLD_TWO_BOX that contains the literal 'laptop|sitez' among retired-wording probes. It is used only as a negative phrase search over the skill prose (test_skills), so it was classed FIXTURE in CLASS_BY_PATH with a stated reason. The order's STOP clause (a box-list literal that FWD-2 forbids) was read against that use, and the call was not escalated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_manager_on_every_box.py:266-267 (OLD_TWO_BOX tuple) and :276 (phrases = [(p, line[:80]) for line in lines for p in OLD_TWO_BOX if p in line]), read in ctlpln-117",
+      ".tools/tests/fabric_value_census.py CLASS_BY_PATH after commit 055ed9061c: '.tools/tests/test_manager_on_every_box.py:266': FIXTURE; census reads unclassified=0 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W114-S1 and the order: a value that is truly a box-list literal FWD-2 forbids is not hidden in the table; STOP and file a BLOCKING row naming file and line.",
+  "world_is": "The literal is a retired-phrase probe that decides no box value, so it is not a box list in the FWD-2 sense as this worker reads it. A reviewer who reads 'laptop|sitez' as a box-list literal should overrule the FIXTURE entry; the census would then need a different reason, not a removal of the probe."
+}
+```
