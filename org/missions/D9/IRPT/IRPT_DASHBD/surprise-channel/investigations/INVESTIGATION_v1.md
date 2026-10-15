@@ -15114,6 +15114,33 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W189-S1 -- safe-commit's client-data check did not run for 14d426b8e7 (the hashed account-id list is absent on this box)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W189-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~189",
+  "surfaced_at": "2026-10-15T06:11:21Z",
+  "one_line": "The commit gate's client account-id check was ABSENT on this box, so commit 14d426b8e7 (two files: the key-map read script and its record) was not checked for client account ids. Its content was checked by construction only: counts, names and words, no account number or key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the round issuer: place the hashed account-id list on this box, or name the owner who will)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE: bash .tools/safe-commit.sh --author 0.9.0_WK_IRPT_DASHBD~189 -F (message file) -- the two deliverable files, run in the background; log .scratch/commit1.log of worktree wk-IRPT_DASHBD-189 records the commit line [wk-IRPT_DASHBD-189 14d426b8e7].",
+      "VERBATIM from that log: WARN: client-data-check: hashed account-id list ABSENT at the device profile .opal folder (account_id_hashes.txt) -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).",
+      "The list path named by the WARN lies outside the repo and was not opened by this worker; its absence is the gate's own report, not a measurement of the list."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face, Client data: counts, dates, hashes, column names and words only in the repo, never an account number or key; every commit goes through .tools/safe-commit.sh, whose client-data check is the mechanism that verifies it.",
+  "world_is": "safe-commit.sh reported the client-data check as ABSENT on this box and passed commit 14d426b8e7 without it. Left alone, every later commit from a worker on this box passes the same way, so a commit carrying a real account number would not be caught by the gate. The two committed files hold no account number or key by construction; that is not a check against the list."
+}
+```
+
 ## IRPT_DASHBD-D2-W408-S1 -- the 49 Financial account_dim writer sits at another prefix and token than the order names; DBC121-1-AC1's writer-naming arm cannot pass as written
 
 ```json
@@ -15166,33 +15193,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "spec_asserts": "The CTO's branch 2 (TO-DB-c-15 Ordered-by line and worker face step 5): add an account_dim emit to the Cottonwood holdings-performance function, with one more gold write grant.",
   "world_is": "That function's schedule is created DISABLED pending a catch-up after-read; its role grants no read of the allocations silver and no write of an account_dim prefix; its handler has no account_dim path.",
   "notes": "Branch 2 needs the enable decision as well as the grant and the emit path."
-}
-```
-
-## IRPT_DASHBD-D2-W189-S1 -- safe-commit's client-data check did not run for 14d426b8e7 (the hashed account-id list is absent on this box)
-
-```json
-{
-  "id": "IRPT_DASHBD-D2-W189-S1",
-  "project": "IRPT_DASHBD",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~189",
-  "surfaced_at": "2026-10-15T06:11:21Z",
-  "one_line": "The commit gate's client account-id check was ABSENT on this box, so commit 14d426b8e7 (two files: the key-map read script and its record) was not checked for client account ids. Its content was checked by construction only: counts, names and words, no account number or key.",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "2.0.0_SA_COO~D2 (the round issuer: place the hashed account-id list on this box, or name the owner who will)",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "PROBE: bash .tools/safe-commit.sh --author 0.9.0_WK_IRPT_DASHBD~189 -F (message file) -- the two deliverable files, run in the background; log .scratch/commit1.log of worktree wk-IRPT_DASHBD-189 records the commit line [wk-IRPT_DASHBD-189 14d426b8e7].",
-      "VERBATIM from that log: WARN: client-data-check: hashed account-id list ABSENT at the device profile .opal folder (account_id_hashes.txt) -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).",
-      "The list path named by the WARN lies outside the repo and was not opened by this worker; its absence is the gate's own report, not a measurement of the list."
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "Worker face, Client data: counts, dates, hashes, column names and words only in the repo, never an account number or key; every commit goes through .tools/safe-commit.sh, whose client-data check is the mechanism that verifies it.",
-  "world_is": "safe-commit.sh reported the client-data check as ABSENT on this box and passed commit 14d426b8e7 without it. Left alone, every later commit from a worker on this box passes the same way, so a commit carrying a real account number would not be caught by the gate. The two committed files hold no account number or key by construction; that is not a check against the list."
 }
 ```
 
@@ -15320,5 +15320,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "The order permits a SECURITY identifier, with a count of accounts, in the record; the criterion DB119-4-AC1 refuses any run of eight or more digits outside the exempt fields and its record clause names the exempt keys.",
   "world_is": "The custodian dim_position partitions of 2026-04-20 and 2026-04-21 identify 5 of the 15 listed securities (7 of the 38 flagged pairs) by nine-digit numeric CUSIPs, which the checker's digit rule refuses. The record names them as read; nothing is masked, renamed or dropped, and the checker is not edited. Measured on the same run: 13968 pairs, 38 flagged (32 flat, 6 stale, none absent), 929 triangle accounts, 894 agreeing with the holdings gold and none with the account value. The order stays pending until the issuer decides whether the security key is exempt from the digit rule (a checker edit) or the identifiers are carried another way."
+}
+```
+
+## IRPT_DASHBD-D2-W506-S1 -- a plain household scalar under an avs benchmark member is printed as every account's figure; the order's assertion for it cannot pass against the unmodified model
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W506-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~506",
+  "surfaced_at": "2026-10-15T06:58:37Z",
+  "one_line": "TO-DB-f-506 step 3 asks the household test to add the sixteen avs benchmark members as plain household scalars and assert the account tables do NOT print that scalar as an account figure. The model prints it: a value that is not by_row is taken as the figure for every row, so all three account tables print the scalar. The by_row reading the cell pins holds (9 tests pass; a fixed-row mutant fails 6), so the scalar case is left unpinned and the test file carries a comment instead of a test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE (bun -e inline, read-only, no file written), portal head 0d58fe2c: avs.qtd.benchmark_short_term set to the plain scalar 77.7 in the synthetic document; the account_overview section prints [\"77.7%\",\"77.7%\",\"77.7%\"] for SYN-0001, SYN-0002 and SYN-0003.",
+      "CODE: portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts at 0d58fe2c, figureCell (about lines 483-495): the value is read as the figure, and only a by_row map is indexed by rowKey, so a scalar is never narrowed to one account.",
+      "PRODUCER: data/assets/scripts/gold/irpt_reporting/filled_report_values.py at c8794f1232, line 9 of the module header: the avs benchmark members are account grain (by_row); _one_document writes a by_row map for any member that carries a row key, and a scalar only for a member with no row key (a household-grain member)."
+    ]
+  },
+  "spec_asserts": "Round 117 order TO-DB-f-506 step 3 (test title word household): a by_row map under a household-grain member is never read as a household figure, and a plain household scalar under an avs benchmark member is not printed as an account's figure (the account tables print the absent words for a missing row).",
+  "world_is": "The model prints a plain scalar as the figure of every account (3 of 3 account tables print 77.7%). The first half of the assertion holds (a by_row map under the household member prints the absent words, pinned by a passing test). The second half cannot pass against the unmodified model; the test file carries a comment for that case, and the grant names no source file to change it."
+}
+```
+
+## IRPT_DASHBD-D2-W506-S2 -- the order's test.todo marker does not typecheck in this portal (TS2339), so a failing case cannot be marked as todo
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W506-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~506",
+  "surfaced_at": "2026-10-15T06:58:37Z",
+  "one_line": "TO-DB-f-506 step 5 and step 3 name test.todo as the marker for a failing case. The portal's bun:test typings do not declare test.todo: bun run typecheck (tsc -b --noEmit) fails with TS2339 at the todo line. The todo was removed in portal commit 0d58fe2c (the case is a comment instead), and typecheck then returns 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal typecheck at 609476b3 (the first commit of avs-by-row.test.tsx): tsc -b --noEmit printed avs-by-row.test.tsx(246,8): error TS2339: Property 'todo' does not exist on type 'typeof test'.; rc 2.",
+      "portal typecheck at 0d58fe2c, the same tree minus the todo line: rc 0.",
+      "the bun test run at 609476b3 reported 9 pass, 1 todo, 0 fail, so the runtime accepts test.todo while the declared types do not."
+    ]
+  },
+  "spec_asserts": "Round 117 order TO-DB-f-506 step 5: a case the model does not satisfy is kept out of the committed file, one test per failing case marked test.todo with its title.",
+  "world_is": "This portal's bun:test declarations do not carry test.todo, so the marker fails the typecheck gate (step 4). No failing case exists in the committed file, so the gate is green; a future failing case needs another marker the declarations carry, or a comment as used here."
 }
 ```
