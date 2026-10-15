@@ -18761,3 +18761,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not a worker repair: the record keeps the path the order names, the checker is not edited, and the order stays open with DBI126-1-AC1 FAIL. Issuer choice: exempt the extract.path field in no_identifiers, or name the extract by a path with no 8-digit run. Reads on the record: 120 S3 reads (117 GETs), no write."
 }
 ```
+
+## IRPT_DASHBD-D2-W313-S2 -- the issuer ruled IRPT_DASHBD-D2-W313-S1 by amending the r126 checker; the criterion re-run on the amended check reads PASS
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W313-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~313",
+  "surfaced_at": "2026-10-15T22:11:44Z",
+  "one_line": "Reconciliation of W313-S1: the issuer ruled the no-identifier limb wrong and amended the checker, so the record's extract.path and script.file are blanked before the 8-digit scan. The order text is unchanged. DBI126-1-AC1 re-run on the amended check reads PASS; the proof instance is re-recorded on that run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W313-S1 as filed: the checker's no-identifier limb scanned the whole record, so the exempt extract.path field made DBI126-1-AC1 FAIL at its first limb.",
+  "world_is": "The amendment 7ba971b30d blanks extract.path and script.file before the 8-digit scan and keeps the rule everywhere else; its selftest gains two arms and passes (selftest PASS, rc=0). The official run on the amended check reads DBI126-1-AC1 PASS (rc=0). No S3 read, vendor call or write was made for this reconciliation; the measurements in the record stand.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W313-S1",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r126/p126_cause.py@7ba971b30d (no_identifiers, the blanked fields)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~313/SERIES_ENDED_CAUSE_R126.json@0361ddd49d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "W313-S1 is not edited here (append-only). The issuer's ruling is the amendment at 7ba971b30d, as reported by the coordinator; this row records the re-run only."
+}
+```
