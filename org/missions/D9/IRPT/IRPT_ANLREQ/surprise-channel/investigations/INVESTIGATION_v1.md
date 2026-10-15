@@ -17990,3 +17990,31 @@
   "notes": "The regress guard cannot run in this worktree as written. The product change (A to E) is not blocked by it and is verified by AC1 and by the three runnable files. The issuer or the box owner decides whether AC2 runs on a full checkout. No check was weakened and no file was added to the tree."
 }
 ```
+
+## IRPT_ANLREQ-D2-W178-S2 -- closing row: IRPT_ANLREQ-D2-W178-S1 resolved by the issuer's widening of the worktree (docs/, IRPT_YCDGEN, org/surprise_channel on disk)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W178-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~178",
+  "surfaced_at": "2026-10-15T17:19:36Z",
+  "one_line": "IRPT_ANLREQ-D2-W178-S1 is resolved by the issuer's widening: the sparse worktree now carries docs/, IRPT_YCDGEN and org/surprise_channel, and AC2 passes with 108 passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_ANLREQ-D2-W178-S1 (BLOCKING): AC2 cannot PASS in this sparse worktree, because docs/ and an IRPT_YCDGEN map were absent from the checkout.",
+  "world_is": "Ruled by 2.0.0_SA_COO~G2 (coordinator message, 2026-10-15): the issuer widened C:/dev/wk-irpt-anlreq-178 so docs/, org/missions/D9/IRPT/IRPT_YCDGEN and org/surprise_channel are on disk. Re-run at d44fbfaf40: ar_g68_checks.py regress prints AR-G68-REGRESS-OK passed=108 rc=0; test_y5_proxy_corrections.py collects. The S1 defect was the issuer's provisioning, not the tree the worker was given, and it is closed. S1's own disposition field is append-only and still reads UNDER_INVESTIGATION; this row is the closing record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ar_g68_checks.py regress at d44fbfaf40: 'existing tests: 108 passed in 4.44s', 'AR-G68-REGRESS-OK passed=108', rc=0",
+      "ar_g68_checks.py g68 at d44fbfaf40: 'AR-G68-OK direct=6 named=8 passed=9', rc=0",
+      "ls -d docs org/missions/D9/IRPT/IRPT_YCDGEN org/surprise_channel at the worktree: all three present"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolved by the issuer's widening of the worktree; S1 is closed. The CVO may adjudicate S1 formally at L9.",
+  "notes": "Closing row for IRPT_ANLREQ-D2-W178-S1. No check was weakened; the widening was done by the issuer, not by this worker."
+}
+```
