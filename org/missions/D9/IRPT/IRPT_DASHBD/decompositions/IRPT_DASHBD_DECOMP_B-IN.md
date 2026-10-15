@@ -106,6 +106,18 @@ The CTO adopted the reason classes `NO_START_DATE_AT_SOURCE` and `NO_MODEL_AT_SO
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent probe cell with a disjoint write set (its own worker folder and private folder). Worker `0.9.0_WK_IRPT_DASHBD~308` (`DB-i-8`).
 
+## 8. ROUND 122, WORKSTREAM B-IN (2026-10-15 ~16:3xZ, issuer 2.0.0_SA_COO~I2, on `CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_118_20261015.md` ADDENDUM 2 @b3e3124d72, msg 8455, answering my msg 8453)
+
+This is the B-IN round after round 120 (round 121 was the CTO's analysis with no cell). It is cut on an ADDENDUM, not on a new analysis: the CTO ruled that the Scope account feed carries a one-time history backfill (a forward-only feed leaves the QTD, YTD, last-12-month and since-inception windows without history for months), that `~I2`'s 2-call probe comes first, and that the backfill's request and time bound comes from that measurement. `~P2` has added an optional `--from-date` to IB-pr-586 (AMENDMENT 1 @7890b746be) and writes pair (b) ADDENDUM 2 after this probe lands.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-9` | The Scope history probe: two households (round 117's and round 120's), one Scope call each from the household's earliest Orion account start date to 2026-10-13, Daily, calcGrossOfFees false, inner body; the series length of every account, whether the chained daily factors reproduce Orion's period return, whether each series is as long as the trading days since the account's start, the call time and response size, and the universe bound (requests, serial seconds, bytes) | FWD-2 | WORLD (a vendor read; no write, no deploy; the output is LOCAL) | none | I-I |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The CTO named one household; two are called so that the bound rests on two calls of different size, not one, within the 2-call cap he set. (b) The chain check and the completeness check are in the cell because a backfill that lands a short or gapped daily series would let the windows print wrong figures: the series is only usable if its chained daily factors reproduce Orion's own period return and it covers the trading days since the account started. (c) The timeout is 180 s, not the transport's 60 s, because a multi-year daily series is larger than the one-day call the live path makes; a call that hits it is a result, not a retry. (d) The bound is a SERIAL upper bound (requests times the slowest call); it assumes no parallelism, no retry and no rate-limit headroom beyond what the feed's own limiter allows, which this probe does not measure. (e) No date enters the repo: the window start is a hash.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent probe cell with a disjoint write set (its own worker folder and private folder). Worker `0.9.0_WK_IRPT_DASHBD~309` (`DB-i-9`).
+
 ## Cells
 
 | cell id | owner |
@@ -118,3 +130,4 @@ The CTO adopted the reason classes `NO_START_DATE_AT_SOURCE` and `NO_MODEL_AT_SO
 | DB-i-6 | 0.9.0_WK_IRPT_DASHBD~306 |
 | DB-i-7 | 0.9.0_WK_IRPT_DASHBD~307 |
 | DB-i-8 | 0.9.0_WK_IRPT_DASHBD~308 |
+| DB-i-9 | 0.9.0_WK_IRPT_DASHBD~309 |
