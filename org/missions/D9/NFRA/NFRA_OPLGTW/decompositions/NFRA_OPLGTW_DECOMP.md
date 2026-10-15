@@ -2405,3 +2405,15 @@ The break: R3-T.52 planned `OG-cl-1..n` after `OG-cl-0` and `OG-gt-6`; both comp
 
 After the merges: one HOOKUP cell per batch (registrations, lists, pins; the issuer's script), then the releases `OG-ap-23` (the client tools with their per-vendor read roles and never-widen asks, Schwab and 49F first) and the remainder release, queued after `OG-ap-22` and ahead of `OG-ap-17`. `NFRA_MCPINDEX` follows each release with a catalog cell (the `read_tool` rows).
 **fanout:** 8 of 8 chains (cl-1 .. cl-6, g3-1, g5-2 have no edge between them), cap 8.
+
+## ADDENDUM R3-T.73 (2.0.0_SA_COO~O, 2026-10-15 ~20:2xZ) -- round 37, workstreams GRANTS-BATCH and CODE-BATCH: the gateway finish by EOD 2026-10-16 (PRD v3.12 @532d1e68bb; CTO msg 34552; Andrew-direct "We have usage, run it now")
+
+Two batches on two surfaces, never two appliers on the host at once: the IAM and grants (a second applier) beside the code releases (`~Z`, one host, one deploy at a time).
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ap-24` | APPLY (grants, `0.7.0_AE_CloudOps~ZS`): the six vendor read roles of the G2 client adapters (five NEW, `gateway-blackdiamond-read-role` EXTENDED), generated from the merged adapters by AST and the catalog rows, plus the person-roles Terraform moves of OG-ap-21 (the news policy on the internal reader, the invoke policy as a NEW grant); ONE ask; the roles are applied before the code deploy | applier | WORLD | ~ZS | OG-cl-1 merged (the generator's input) |
+| `OG-ap-23` | APPLY (code, `0.7.0_AE_CloudOps~Z`): ONE release carrying every ready code cell: the person reader (OG-cp-1/2, nw-2, gt-13, gt-5 and gt-11), the ten rival tools (rv-1..3), the five client tools with the six adapters (cl-1..6 and their hookup), `mdpf_get_model_composition` (gp-1), the three etfs tools (gf-1) and their hookups; one never-widen ask; supersedes `OG-ap-21` and `OG-ap-22` | applier | WORLD | ~AE | MX-r-14 live; the hookup cell; OG-ap-24 Phase B for the client roles |
+
+`OG-ap-21` and `OG-ap-22` become `superseded`: their content rides `OG-ap-23` (code) and `OG-ap-24` (the Terraform). The hookup of the G2 tools and of the gp-1 and gf-1 tools is one more worker cell (`OG-ch-1`), cut when the adapters are merged.
+**fanout:** 2 of 2 appliers on 2 surfaces; the hookup cell is one worker.
