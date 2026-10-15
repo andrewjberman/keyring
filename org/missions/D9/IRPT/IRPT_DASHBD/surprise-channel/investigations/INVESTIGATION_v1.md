@@ -15652,3 +15652,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Open carriers: W182-S1 and W401-S1 (owner 0.0.0_AB_MSTR), the label column and the empty-partition gap (to the CTO in the slug)."
 }
 ```
+
+## IRPT_DASHBD-D2-S69 -- issuer's dispositions on worker 409's rows W409-S1 (BLOCKING, the issuer's checker defect, fixed), S2 and S3 (carried into DB-c-17)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S69",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T07:26:16Z",
+  "one_line": "Issuer's dispositions on worker 409's rows W409-S1 (BLOCKING), S2 and S3 (round 122 B-CW, DB-c-16): S1 was the issuer's checker defect and is fixed; S2 and S3 are carried into DB-c-17's package and DB-c-18's packet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBC122-2-AC1 requires lambda_function.py to type no firm token, bucket name or silver prefix; the order mandates the import of the adapter module whose file name carries the firm token.",
+  "world_is": "W409-S1: the issuer's census counted the module name cottonwood_account_dim as a typed firm token; fixed in d2c61a1c3b (the module name is removed before the scan; every other token still refused) and db291a9d46 (the bounds arm reads the worker's own first-parent commits, so a pull-merge is not counted); both criteria PASS on the worker tree and the proof instance (AC2 row refreshed by the issuer) is VALID; the worker held the order open correctly and was right not to edit the import. W409-S2: the handler selects the one declared source by custodian instead of typing the key blackdiamond_z09; accepted as the better form, DB-c-17 and DB-c-18 read the code as landed. W409-S3: the silver resolution imports the holdings-performance producer, so the DB-c-17 package must carry its declaration (sources.json), the registry tree, NAMING_SCHEMA.json and numpy and pandas; carried into DB-c-17 as a package member list the cell must prove by unzip, not assume. Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge c4d2b97165 (DB-c-16; pytest 17 passed on the landed tree, re-run by this seat)",
+      "checks/r122/p122_bcw.py @db291a9d46",
+      "rows IRPT_DASHBD-D2-W409-S1, S2 and S3 in this channel"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner for S1 disarm: this seat (issuer), done. The CVO adjudicates the BLOCKING row at L9 if it grades it; S2 and S3 are inputs to DB-c-17 (package) and DB-c-18 (packet)."
+}
+```
