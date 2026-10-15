@@ -38035,3 +38035,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-W419-S3 -- The proof instance path named by the order is too long for Python on dell2 (about 275 characters, past the Windows MAX_PATH limit with LongPathsEnabled unset): proof-of-spec-check.py returns READ-ERROR rc=2 at that path and VALID rc=0 on a short copy.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W419-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~419",
+  "surfaced_at": "2026-10-15T13:20:26Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The proof instance path named by the order is too long for Python on dell2 (about 275 characters, past the Windows MAX_PATH limit with LongPathsEnabled unset): proof-of-spec-check.py returns READ-ERROR rc=2 at that path and VALID rc=0 on a short copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~419/ holds the criteria output and the record; the instance named by the order is about 275 characters from the drive root",
+      "python -I open of the order-named instance path: FileNotFoundError on write and on read; a bash shell write of the same name succeeds, and the checker run on the same bytes from a short path returns VALID rc=0",
+      "python .tools/proof-of-spec-check.py on the order-named path: READ-ERROR (rc=2) [Errno 2] No such file or directory"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-576 proof_of_spec: the instance goes at the order-named path and is validated with python .tools/proof-of-spec-check.py before the order is reported.",
+  "world_is": "On this box python cannot open the order-named instance path (MAX_PATH; LongPathsEnabled is not set), so the canonical validation cannot run. The instance content validates VALID rc=0 from a short copy. The order is left open; the instance is written untracked at the order path and not committed. Needs a shorter instance name from the issuer, or LongPathsEnabled on dell2 (a machine setting this worker does not change)."
+}
+```
