@@ -99,3 +99,4 @@ The issuer then merges; the ASSETS issuer's one emitter run (`MX-r-15`) uses the
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>
