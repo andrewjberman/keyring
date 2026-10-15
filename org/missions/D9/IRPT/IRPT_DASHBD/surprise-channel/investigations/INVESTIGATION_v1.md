@@ -17613,3 +17613,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the CTO: wiring Cottonwood into the reporting-gold build (a Cottonwood source in the declaration or its own scheduled invocation, and its filled-report output prefix) is a build cell by his word and may need an endpoint ruling; this row only states the measured gap. The Cottonwood account_dim and holdings gold are live and correct as ruled."
 }
 ```
+
+## IRPT_DASHBD-D2-S87 -- OBSERVATION: the naming-plan gate refused the Cottonwood landing apply before any write, the scheduler policy needs its builder name
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S87",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T15:05:00Z",
+  "one_line": "The naming-plan gate refused the Cottonwood landing apply before any write: the scheduler role's inline policy takes the role's name from the role's name module, not a policy name from the builder",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~DB2 STOP on TO-DB-b-260 (msg 8351): safe-apply rc 7, NAMING-PLAN REFUSE, 6 of 7 CONFORMANT, the refused address aws_iam_role_policy.irpt_account_return_daily_scheduler at iam.tf:152; nothing written; fresh plan 7 add / 0 change / 0 destroy",
+      "this seat reproduced it: naming-apply-gate.py --plan-json on a synthetic plan: the role name on a policy REFUSES with the owed name irpt-cot-account-return-daily-scheduler-role-policy; the builder name irpt-cot-account-return-daily-scheduler-policy (opal_naming.name kind policy qualifier scheduler) is CONFORMANT as IAM_POLICY, like the execution policy",
+      "the function, both roles, the schedule and the artifact are still absent in AWS: nothing is deployed"
+    ]
+  },
+  "spec_asserts": "Round 123 DB-b-252 and its facts record: five builder names, the root applies as planned.",
+  "world_is": "The root names six resources by builder; the order and its record counted five and left the scheduler policy on the role's name module. Round 129 cell DB-b-261 gives the policy its own builder-name module; the signed pair is re-bound to the new bytes (packet revision 3) and re-signed before the apply order resumes. Counts, dates and words only."
+}
+```

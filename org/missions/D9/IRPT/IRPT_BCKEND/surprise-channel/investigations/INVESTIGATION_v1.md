@@ -38590,3 +38590,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 ]
 ```
+
+## IRPT_BCKEND-D2-S202 -- Dispositions on workers 420 and 421 and the close of ~PH round 1; the exemption is wired live with its listing and the 49 Financial split adjustment is built, both at HEAD only
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S202",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T14:36:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 420's rows (D2-W420-S1 to S3) and worker 421's rows (D2-W421-S1 to S4) and the close of ~PH round 1: the absent_at_source exemption is wired live with its visible listing (IB-pr-577) and the 49 Financial split adjustment is built (IB-pr-578), both LOCAL at HEAD and neither released; the prior-day objects the exemption reads are not in the manifest's source objects.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merges 07f60f52f3 (IB-pr-578) and 95ca50c91e (IB-pr-577); flips b0f73760b5 (578) and the worker's flip carried by the merge (577); both proof instances read VALID (rc=0) in the main tree; round-close-check --project IRPT_BCKEND --round 1 --workstream ~PH reads verdict=MAY-CLOSE (2 orders, judgment 0)",
+      "criteria re-run in the workers' trees by me: IB216-1 AC1 96 passed, AC2 7 blocks removed, AC3 PASS; IB216-2 AC1 73 passed, AC2 7 blocks removed, AC3 PASS",
+      "main tree after the drain: pytest over the investor_reporting tests and the holdings lambda tests gives 639 passed and 21 failed; the SAME 21 fail at the pre-round base 476d0ed981 in a full checkout (cusip fallback, multi_asset enum, narrowed, rearm trigger, cash rule, snapshot enum), so none comes from this round"
+    ]
+  },
+  "spec_asserts": "My IB-pr-577 and IB-pr-578 orders; the CTO msgs 8311 (the exemption wired only together with the visible listing) and the ruling @9913bf3ed4.",
+  "world_is": "DISPOSITIONS. D2-W420-S3 RESOLVED (the 46 failures were the sparse worktree; in the main tree the 21 failures are identical at base). D2-W420-S2 INERT, recorded (the first-absent-day walk counts any row of the lost account while the exemption counts zero as absent, so first_absent_day can be null and the words then use the prior trading day). D2-W420-S1 stays ARMED, owner me: run_firm freezes the source receipts before the gate, so the prior-day partitions the exemption reads are not in the manifest source objects; the manifest entry carries the dates but not those object keys; it goes into the never-widen pair as a stated limit unless the CTO asks for the keys. D2-W421-S1 RESOLVED (AMENDMENT 1 @7c8acc5500), S2 RESOLVED (identifier chain, with a test), S3 RESOLVED (ticker_symbol is a column of the 49 Financial transactions partition: read by me today on one partition), S4 RESOLVED (check r216 amended @9a6cf90e04: the order file joins the allowed list). Not released: the changed gate and the new producer reach the firms only by an apply under a never-widen pair after a producer dry run (the exemption ALONE per firm, and the split adjustment before and after)."
+}
+```

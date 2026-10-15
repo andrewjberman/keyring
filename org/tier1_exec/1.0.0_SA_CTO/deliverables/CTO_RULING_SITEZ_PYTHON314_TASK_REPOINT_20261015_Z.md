@@ -1,3 +1,7 @@
+**SUPERSEDED (~15:1xZ, before any act): Andrew reinstalled Python 3.14.8 at about 15:03Z (MSTR~Z msg 34476). Both tasks stay on
+Python314\pythonw.exe, which exists again, and the runner cycle started 15:02:46Z with JOB lines (COO~O msg 34483). Neither task was
+re-pointed; no rollback is owed. The ruling below rested on a 15:0xZ read that had gone stale by the time it was sent.**
+
 # CTO ruling -- site Z scheduled tasks pinned to the removed Python 3.14: re-point to 3.11 now, 2026-10-15 ~15:0xZ
 
 By: `1.0.0_SA_CTO~Z`. Raised by `0.0.0_AB_MSTR~Z` msg 34465 (the 3.14.8 rollback at 14:35Z) and `2.0.0_SA_COO~O`'s drive log
