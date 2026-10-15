@@ -57,7 +57,7 @@ Andrew's rule: prices are TOTAL RETURN. The price chain (`price_source.resolve_p
 <expected_criteria>AR82-g-AC1,AR82-g-AC2</expected_criteria>
 
 - AC1 imports `price_adapter_demque`, asks it 7 direct cases with hand-computed values (the contract above, item by item), then runs your test file (0 failed, at least 6 passed). At base it FAILs (no module).
-- AC2 reads the module's bytes: ASCII only, top-level imports only the allowed standard library names and `tr_level`, nested imports only `pandas`, `pyarrow`, `yfinance`, `io`, `json`, `time`, no `open`, `print`, `exec`, `eval`. At base it FAILs (no module).
+- AC2 reads the module's bytes: ASCII only, top-level imports only the allowed standard library names and `tr_level`, nested imports only `pandas`, `pyarrow`, `yfinance`, `io`, `json`, `time`, `opal_naming`, no `open`, `print`, `exec`, `eval`. At base it FAILs (no module).
 
 ## BOUNDS
 

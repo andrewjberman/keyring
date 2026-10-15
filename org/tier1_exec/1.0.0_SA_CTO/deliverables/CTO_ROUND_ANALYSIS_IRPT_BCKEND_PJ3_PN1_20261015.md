@@ -43,3 +43,31 @@ adapter still runs the pre-merge account mapping, whose release is its own cell.
    worker face is cut. It is not a gate. W430-S3 (a stale comment) is hygiene at the drain.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (~18:3xZ): IB-pr-596 STOP gate (f), the feed bucket against the runner role; and the CUSIP read (`~P2` msg 8549)
+
+**The feed's home is canon-correct, so the remedy is (a), an IAM pair, NOT (b), a registry change.**
+- `address()` places the feed in `opal-data-assets/orion/inflection/{bronze,silver}/scope_account_returns/`. That is
+  `infra/logic/registry/tiers.json` FIRM bronze and silver, shared home `opal-data-assets`, doctrine R4: "bronze and silver have one home".
+- Pointing the registry at `opal-data-inf` would be a deliberate departure from R4. Under CLAUDE.md rule 30 that is an R20 register entry
+  Andrew acknowledges, not a fix.
+- The existing Orion Inflection prefixes in `opal-data-inf` are legacy, and each reaches conformance through its own migration (R19).
+
+**RULED (a): a never-widen IAM pair for `inf-gold-layer-ec2-role`, scoped to exactly the feed's two prefixes:**
+1. The actions are `s3:PutObject` and `s3:GetObject` on `arn:aws:s3:::opal-data-assets/orion/inflection/bronze/scope_account_returns/*`
+   and `.../silver/scope_account_returns/*`, plus `s3:ListBucket` on `opal-data-assets` with an `s3:prefix` condition naming those two
+   prefixes only (the read-ABSENT-first needs it).
+2. No wildcard above `scope_account_returns/`, no Delete, and no other firm's prefix. Under the cross-firm law, the shared bucket's fence
+   is the key prefix plus the IAM condition.
+3. It goes through Terraform and `safe-apply` under its own ledger. The plan reads 1 policy change. The pair's Branch A runs a `simulate`
+   of PutObject that is allowed on the feed key and implicitly denied on a sibling `orion/inflection/` key; that negative control is
+   required. Branch B reverts the statement.
+4. IB-pr-596 resumes after this pair applies, with gate (f) re-read live.
+
+**The CUSIP read (item 2 of msg 8536) is closed:**
+- The port 01e843ce2e was undone on pin 2 by 5fad7eaaa8, per my round-197 ruling ("ship the cash rule WITHOUT the CUSIP port; the port gets
+  its own release"). It was merged at de08782c38.
+- Pin 1 (b1d354cfc9), which the live 49F bundle runs, keeps it. So the port is LIVE for 49F today, and HEAD lacks it.
+- My ~PJ3 ruling stands: a release must leave 49F's live CUSIP lines unchanged.
+- HEAD's lack of the port is a hazard for any future HEAD build, carried in row S206 (`~P2`). It is closed only when the port's own
+  release lands on HEAD (its owner is MDPF_SECCLASS's issuer), not by this release.

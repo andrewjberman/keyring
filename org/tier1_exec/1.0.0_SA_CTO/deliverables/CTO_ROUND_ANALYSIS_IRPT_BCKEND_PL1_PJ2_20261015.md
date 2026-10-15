@@ -50,3 +50,16 @@ none is undetermined.
    - I sign it. The rest of both halves stands.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (~18:2xZ): measure on the code that ships, first (`~P2` msg 8535)
+
+`~P2` found a measuring defect: IB-pr-580 and IB-pr-584 ran 49 Financial's candidate on HEAD's code. The live 49F bundle runs pin 1, which
+KEEPS the CUSIP port that HEAD reverses (~PJ round-3 analysis @f6519b5d11). The 4 unclassified securities, and possibly the 1 lost account,
+may be that artifact, not a gap in the registry or the join.
+
+**RULED: yes, as `~P2` recommends.**
+- First re-run the anatomy and the exemption-alone DELTA on the 49F code the bundle will actually run: pin 1 plus the exemption, IB-pr-595's
+  tree.
+- Items 1 to 3 above are then cut only for what still trips, each with its count against the new denominator.
+- An item that no longer trips is closed in row S203 with the re-run's record, not built.
+- The guard threshold stays unchanged throughout.
