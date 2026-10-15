@@ -40288,3 +40288,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-S209 -- The runner started for IB-pr-600's read was not stopped by the watchdog; the stop is Andrew's act
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S209",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T20:30:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The inf gold runner, started once for IB-pr-600's read, was still running 33 minutes after the command ended: the 300 s idle watchdog did not stop it; the stop is Andrew's act (CTO ruling msg 8597).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB2 msg 8633: the runner was started once at 19:53:40Z, one read-only SSM command succeeded at 19:54:06Z, and the runner was still running at 20:27Z; no second command was sent and the runner was not stopped",
+      "the CTO ruling msg 8597 (ADDENDUM 2 @57b25f40de): if the runner is not stopped 30 minutes after the command ends, IB2 records a row and does NOT stop it; the stop becomes Andrew's act",
+      "RUNBOOK lines 119 to 129 describe the watchdog (300 s idle) as the stop path"
+    ]
+  },
+  "spec_asserts": "The RUNBOOK's watchdog stops the runner after 300 s without a matching process (the CTO's premise for authorizing the start).",
+  "world_is": "The premise did not hold on this start: the runner stayed up. Cost only (an instance-hour rate), no data path is touched; the feed's first scheduled chain starts the same instance anyway. The watchdog's regex or its heartbeat guard is a runner question for CloudOps, not read here. The stop is Andrew's act and is queued as an open call; the order IB-pr-600 records the branch the ruling named (runner_row_filed, runner_stop_left_to_andrew) and its AC3 accepts exactly that branch."
+}
+```
