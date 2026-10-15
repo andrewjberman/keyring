@@ -19219,3 +19219,128 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W157-S1 -- the worktree is a sparse checkout with no docs/ on disk, so the folder tests that read docs/contracts fail with ENOENT and AC1 cannot pass here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W157-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~157",
+  "surfaced_at": "2026-10-15T21:14:23Z",
+  "one_line": "The worktree is a sparse checkout with no docs/ or org/surprise_channel/ on disk, so 22 folder test cases outside the new file fail with ENOENT, on origin/PROD as well, and AR360-y-AC1 cannot print PORTAL-TESTS-OK in this worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR360-y-AC1 expects bun test over src/pages/InvestorReporting/tabs/analysis/tests, src/pages/TicketCenter and src/pages/InvestorReporting/__tests__/dsgn-irptv1 to report 0 failed in C:/dev/wk-irpt-anlreq-157/portal; the worker face expects org/ and .tools/ present, and a worktree that does not carry the paths is a BLOCKING row.",
+  "world_is": "git sparse-checkout list in C:/dev/wk-irpt-anlreq-157 names .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards. docs/ is absent on disk although docs/contracts/investor-reporting/v1/routes.json is tracked at HEAD, and org/surprise_channel/ is absent on disk though tracked. The folder run on origin/PROD e0b43076 with the composer reverted fails the same 22 cases (14 ENOENT on routes.json) as the candidate run on c22f4508 (cand/dell2/anlreq-no-price-date-t1; base origin/PROD e0b43076). The new file passes 6 of 6 in isolation. Not rebuilt: the tree was not reconstructed to make the criterion executable.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-157 (workspace HEAD 0bb931f5b4): .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards",
+      "folder run on candidate c22f4508: 22 failing cases outside the new file, ENOENT open C:\\dev\\wk-irpt-anlreq-157\\docs\\contracts\\investor-reporting\\v1\\routes.json (portal_check.py output, rc=1)",
+      "folder run on origin/PROD e0b43076 with the composer reverted: the same failing names apart from the new file (name-set diff of the two runs, .scratch/fail_prod.txt vs .scratch/fail_cand3.txt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W157-S2 -- dom-env registers happy-dom at module load, so in one bun process a later DOM file runs with document undefined
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W157-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~157",
+  "surfaced_at": "2026-10-15T21:14:23Z",
+  "one_line": "dom-env.ts registers happy-dom at module load, so in one bun process with other DOM files its registration is gone when a later file runs: document is not defined, and releaseDom throws Failed to unregister.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A DOM test file registers its own DOM (dom-env, released in afterAll) and passes when the folder it sits in runs as one bun process.",
+  "world_is": "In the folder run on origin/PROD e0b43076 and on the candidate, 10 cases fail with ReferenceError document is not defined and releaseDom throws Failed to unregister (prospect-suggested-swaps.test.tsx:80 among them). S60 (upload-press-did-you-mean) fails in the folder run on both. The new file avoids the ordering by registering inside its one DOM case and passes 6 of 6 in the folder run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/dom-env.ts at e0b43076: GlobalRegistrator.register() at line 25 runs at import; releaseDom at line 27 unregisters",
+      "folder run output on origin/PROD e0b43076 (.scratch/folders_prod.clean.txt): document is not defined and Failed to unregister lines, pre-existing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W157-S3 -- S55 seeds composer useState slots by call position, so removing the price-date state moved two seeded slots
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W157-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~157",
+  "surfaced_at": "2026-10-15T21:14:23Z",
+  "one_line": "S55 seeds ProspectComposer useState slots by call position, so removing the price-date state moved the upload attempt and proxies slots (#11 to #10, #16 to #15); both seeds are re-pinned and their guards hold.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-360 step 3 re-pins only the existing tests that exercised the date input or sent a price_date; the composer comment at ProspectComposer.tsx says slots declared after the seeded state do not move.",
+  "world_is": "s55.component-wiring.test.tsx seeds call #11 (uploadAttempt, expects null) and call #16 (proxies, expects an empty object). After the change, call #10 is uploadAttempt and call #15 is proxies at c22f4508. Without the re-pin S55 failed (ARM(d): the re-post did not carry the corrections). S55 does not exercise the date input, so its re-pin is collateral to the cell; it is recorded here, not as a widened scope.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/s55.component-wiring.test.tsx at c22f4508: seeds [10] and [15] with the guards in place (origin/PROD carried [11] and [16])",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx at c22f4508: useState calls 0 to 15 in call order; the price-date state is removed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W157-S4 -- in this happy-dom harness a dispatched input event does not reach the composer, so the typed-value path cannot be driven
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W157-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~157",
+  "surfaced_at": "2026-10-15T21:14:23Z",
+  "one_line": "In this bun and happy-dom harness a dispatched input event does not reach React onChange, so a typed price date cannot be driven through the composer and AR360-y-(c) carries its before-arm failure in a source assertion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-360 step 4(c): a file with a Shares column is uploaded with no price_date, and on origin/PROD the same case FAILS.",
+  "world_is": "On origin/PROD a value set through the prototype setter on the date input, then an input event, left the composer state unchanged; the same held for the notional text input. The upload body carried no price_date on origin/PROD, so the dynamic (c) passes there. (c) fails on origin/PROD through its source assertion on the upload options (priceDate: usd, ...). Recorded as measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/tests/prospect-no-price-date.test.tsx at c22f4508: case (c) reads ProspectComposer.tsx for the upload options and runs the default-state upload",
+      "instrumented bun runs on a temporary copy of the origin/PROD composer (not saved as files): onChange never fired for the date input or the notional input; the candidate composer and its tests are at c22f4508"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W157-S5 -- with no price date the composer hands the header a null as-of, so an uploaded prospect card states no as-of
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W157-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~157",
+  "surfaced_at": "2026-10-15T21:14:23Z",
+  "one_line": "The composer now sends a null as-of to the header prospect card, so an uploaded prospect card states no as-of until another source supplies one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-360 step 3: asOf becomes null where it was priceDate || null, and the page states the as-of from the report, not from a field.",
+  "world_is": "ProspectComposer.tsx at c22f4508 calls onProspectReviewed with asOf null (the effect at its header block). Not read in this order: how the header card renders a null as-of, and whether the report as-of reaches that card. This is a judgment point for L9, not graded here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx at c22f4508: onProspectReviewed({ ..., asOf: null, total: null })"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
