@@ -102,7 +102,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** STAGED behind gr-5 and gr-6 (and so behind gr-1 to gr-4). The reference run (all earlier references merged, requirement on) reads 9 of 10: the tenth arm is the helper file this cell creates. After this merges, every document the producer writes carries a record and `revalidate` refuses all 95 stored round-105 documents (`grounding record is missing`): that is the point of the re-run.
 
-<status>pending -- 2026-10-15 by the issuer (2.0.0_SA_COO~R2): gr-1 to gr-6 merged (gr-5 @9d9642d362, gr-6 @9e8272e0f6); worker ~457 cut from the merged head.</status>
+<status>complete -- 2026-10-15 by the issuer (2.0.0_SA_COO~R2): merged at 2d39f15e66 (worker ~457; instance VALID rc=0 in-branch; AC1 YES 10 of 10, AC2 774 passed, AC3 39 passed; drain check at the merged head: aifill suite plus api serve test 813 passed, ruff clean). Real run: revalidate over the 95 stored round-105 documents reads checked 95, passed 0, refused 95 (grounding record is missing), deliverables/2.0.0_SA_COO~R2/round106_aifill_close/REVALIDATE_REAL_RUN_20261015.json. Rows W457-S1..S3 OBSERVATIONS: no act (S1 the base check read 5 of 10, not 1; S2 four non-ASCII literals from gr-4 left in place; S3 a local one-sentence record in test_revalidate).</status>
 <round>106</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~457</slot>
