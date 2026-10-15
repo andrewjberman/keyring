@@ -3,8 +3,16 @@
 5-hour and weekly usage to a local snapshot (NFRA_MCPORTAL MP-pd-5, U2; PRD v0.8 FWD-22).
 
 Claude Code runs this once per status-line refresh with the status-line JSON payload on stdin. It writes
-<config dir>/usage_snapshot.json and prints ONE short line. It never prints a token, a path, an email or a
-traceback, and it exits 0 on every path.
+<config dir>/usage_snapshot.json and prints ONE short line:
+
+    <signed-in Claude account> | 5h N% wk N% | <agent serial>
+
+(Andrew-direct 2026-10-15, site Z session of 4.0.0_SA_CRO~Z: "1.) Currently logged in Claude account, then 2.) the usage
+info which is there currently, then 3.) the serial number the agent session is registered with", on every box.)
+The account is the oauthAccount emailAddress (the line now prints it, on Andrew's word); a missing account prints
+"account ?". The serial is the first line of <repo>/org/mcp/sessions/<session_id>.serial (the file every seat writes
+at startup, org/XXX.md step A.1), the repo found by walking up from the payload's workspace.project_dir; else
+$OPAL_AGENT_SERIAL; else "serial ?". It never prints a token, a path or a traceback, and it exits 0 on every path.
 
 Snapshot (schema 1): {"schema", "written_at", "rate_limits_claim", "reason", "five_hour", "seven_day",
 "account", "account_claim"}. rate_limits_claim is "measured" when at least one of rate_limits.five_hour /
@@ -33,6 +41,7 @@ SNAPSHOT_NAME = "usage_snapshot.json"
 ABSENT_REASON = ("rate_limits member not in the status-line payload "
                  "(present only for a subscription login after the first API response)")
 WINDOWS = ("five_hour", "seven_day")
+SERIAL_MAX = 64
 
 
 def _usable(member):
@@ -113,7 +122,7 @@ def write_snapshot(config_dir, snapshot):
                 pass
 
 
-def format_line(claim, five, seven):
+def format_usage(claim, five, seven):
     if claim != "measured":
         return "usage n/a"
 
@@ -125,7 +134,50 @@ def format_line(claim, five, seven):
     return "5h %s wk %s" % (pct(five), pct(seven))
 
 
-def run(stdin_text, config_dir, home, out):
+def _clean(text):
+    """One printable ASCII token, capped; anything else is treated as absent."""
+    if not isinstance(text, str):
+        return None
+    text = text.strip()
+    if not text or len(text) > SERIAL_MAX or any(ord(ch) < 33 or ord(ch) > 126 for ch in text):
+        return None
+    return text
+
+
+def read_serial(payload, environ):
+    """The agent serial this session registered: <repo>/org/mcp/sessions/<session_id>.serial, the repo found by walking
+    up from workspace.project_dir (then current_dir, then cwd); else OPAL_AGENT_SERIAL; else None."""
+    sid = _clean(payload.get("session_id")) if isinstance(payload, dict) else None
+    if sid and all(ch.isalnum() or ch in "-_" for ch in sid):
+        workspace = payload.get("workspace") if isinstance(payload.get("workspace"), dict) else {}
+        for start in (workspace.get("project_dir"), workspace.get("current_dir"), payload.get("cwd")):
+            if not isinstance(start, str) or not start:
+                continue
+            d = os.path.abspath(start)
+            while True:
+                candidate = os.path.join(d, "org", "mcp", "sessions", sid + ".serial")
+                if os.path.isfile(candidate):
+                    try:
+                        with open(candidate, encoding="utf-8") as fh:
+                            serial = _clean(fh.readline())
+                        if serial:
+                            return serial
+                    except Exception:
+                        pass
+                    break
+                parent = os.path.dirname(d)
+                if parent == d:
+                    break
+                d = parent
+    return _clean(environ.get("OPAL_AGENT_SERIAL", ""))
+
+
+def format_line(account, claim, five, seven, serial):
+    email = _clean(account.get("email")) if isinstance(account, dict) else None
+    return "%s | %s | %s" % (email or "account ?", format_usage(claim, five, seven), serial or "serial ?")
+
+
+def run(stdin_text, config_dir, home, out, environ=None):
     payload = json.loads(stdin_text)
     if not os.path.isdir(config_dir):
         return
@@ -146,10 +198,11 @@ def run(stdin_text, config_dir, home, out):
             "account_claim": account_claim,
         }
         write_snapshot(config_dir, snapshot)
-    out.write(format_line(claim, five, seven) + "\n")
+    serial = read_serial(payload, os.environ if environ is None else environ)
+    out.write(format_line(account, claim, five, seven, serial) + "\n")
 
 
-def main(stdin_text=None, config_dir=None, home=None, out=None):
+def main(stdin_text=None, config_dir=None, home=None, out=None, environ=None):
     """Return 0 always. Injected arguments exist for the tests; the status line passes none."""
     try:
         if stdin_text is None:
@@ -162,7 +215,7 @@ def main(stdin_text=None, config_dir=None, home=None, out=None):
             out = sys.stdout
         # Buffer the line so a failure anywhere prints nothing.
         buf = io.StringIO()
-        run(stdin_text, config_dir, home, buf)
+        run(stdin_text, config_dir, home, buf, environ)
         out.write(buf.getvalue())
         out.flush()
     except Exception:

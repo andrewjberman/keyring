@@ -101,7 +101,9 @@ A refused-access outcome is a complete order with branch "refused": say so in th
 - A3 (issuer, 2026-10-14 ~22:5xZ, msg 34268): step 2b WORKED (runner profile 200, main profile 200, ACCESS_HOLDS; the runner re-registered 22:23:18Z with `bbg wsj barrons sa`, Running). The first `sa` job runs behind the ~12 h `bbg` leg, about 10:45Z on 2026-10-15. Ruled: ACCEPT the wait, no re-order (a second stop and registration risks the runner for a few hours; the capture lands before Friday 2026-10-16).
   This wait is qualified on its outcome: the proof of step 5 is read after the first `sa` cycle, not before; the ledger stays OPEN until then; the applier checks at the first `sa` cycle and not on a clock poll. If no `sa` object is newer than the re-registration 2 hours after the first `sa` job ends, STOP and file the ARMED row of step 5. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+- SUPERSEDED (issuer, 2026-10-15 ~16:5xZ): Andrew moved ALL harvest operations to dell1 (~16:3xZ, relayed by msg 34493); PRD v3.11 @32b70d1b86 and the CTO's msg 34500 retire the site Z runner and close this order's ledger SUPERSEDED (its WINDOW leg NOT-EXERCISED) under `NFRA_OPLGTW.TO-OG-eg-3`. The Seeking Alpha capture moves with the rest. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+<status>superseded</status>
 <round>37</round>
 <workstream>G1-FIX2</workstream>
 <slot>~AE</slot>

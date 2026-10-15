@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.10",
+  "prd_version": "v3.11",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1410,5 +1410,41 @@ in flight**:
 - **Proof:** one cycle's GET bytes before and after at the same pair count, with the silver output equal.
 - The runner re-registration follows the bz-10 pattern (stop at a cycle boundary, `-Plan` first). It carries the G6 `sa`
   re-registration if that is still pending.
+
+CONTRACTS-side; ENDPOINT unchanged.
+
+### v3.11 addendum (2026-10-15 ~16:4xZ, 1.0.0_SA_CTO~Z) -- all harvest operations move to dell1; the site Z harvest runner retires
+
+**Andrew, verbatim (relayed by `2.0.0_SA_COO~O`, msg 34493, ~16:3xZ):** "Yeah we can move all HARVST operations to Dell1,
+including Seeking Alpha + Bloomberg as well. I will also handle FT for them soon enough. Dell1 has more capacity to run these
+kind of ops so better to just move all that to them as a function of moving all AMGT work over to that box. Let CTO and MSTR
+know that so they can communicate this and update the repo as needed." It supersedes the earlier WSJ-and-Barron's-only
+move (`ANDREW_DIRECT_20261015_160xZ_WSJ_BARRONS_OPS_RUN_ON_DELL1.md` @94086281f2) and this seat's ruling on it (@86581c31be).
+
+**Measured on site Z** (`cycle_runner.log`, ~16:3xZ): no publisher stored anything since the 14:02Z Python outage.
+- bbg: `new 0`, stopped `bot_check` at 15:22Z.
+- sa: `new 0`, last cycle 14:57Z.
+- wsj and barrons: `new 0`, `sign_in_refused` at 15:3xZ.
+Retiring the runner now therefore opens no capture gap.
+
+**Rulings:**
+1. **The site Z runner retires now.** `0.7.0_AE_CloudOps~ZW` acts on one new ledger, issued by `2.0.0_SA_COO~O`:
+   - write the STOP file so the runner ends at a job boundary (never killed);
+   - `Disable-ScheduledTask` on `Opal Data Harvest - Continuous Cycle`, and read the state back as Disabled;
+   - unregister nothing. Rollback is Enable plus Start.
+   - The pin worktrees (`wk-harvest-runner-pin-*`) stay LOCKED as the rollback source until dell1 reports its first
+     productive cycle per publisher. After that, `0.0.0_AB_MSTR~Z` may collect them.
+2. **OG-eg-2 (ledger `nfra-oplgtw-harvest-runner-silver-cache`) closes SUPERSEDED.**
+   - Its FIRSTREC leg is recorded NOT-EXERCISED: no site Z cycle ran jobs after the start.
+   - Leg 6b (the bbg,sa re-registration) is withdrawn.
+   - The E1/E2 code is in the library (pin `7662e9c016`) and goes with the runner. The before-and-after GET-bytes proof
+     binds wherever the runner runs, so it is owed on dell1, under dell1's project.
+3. **OG-sa-1 (ledger `nfra-oplgtw-harvest-runner-sa`) closes SUPERSEDED.**
+   - Its WINDOW leg is recorded NOT-EXERCISED.
+   - The runner's browser profile is per box and does not transfer. Seeking Alpha sign-in on dell1 is dell1's work.
+4. **What this project keeps:** the gateway's harvest reads (OG-hv-2 grant, OG-ap-18 typed tools) read S3 and do not care
+   which box writes it. Freshness of the harvest tables now follows dell1's writer. No gateway change.
+5. **Communication** (Andrew asked for it): `0.0.0_AB_MSTR~Z` carries his word and this addendum to `0.0.0_AB_MSTR~DELL1`,
+   MSTR to MSTR. Un-parking AMGT_HARVST, its runner and its egress proof on dell1 are dell1's CTO's calls.
 
 CONTRACTS-side; ENDPOINT unchanged.
