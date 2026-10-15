@@ -2409,3 +2409,119 @@
   "notes": "Not a hazard and no disarm is owed. The issuer may name the step; the page reads the same at either value until a second value is chosen."
 }
 ```
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W33-S2",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~33",
+  "surfaced_at": "2026-10-15T21:57:56Z",
+  "one_line": "AMENDMENT 1 (d) says the Gateway h1 renders as the browser default; App.css already sets .mcp-page h1 to the DESIGN.md page-title values and App.tsx imports it.",
+  "class": "OBSERVATION",
+  "spec_asserts": "MP-pf-2 AMENDMENT 1 (d): the Gateway h1 renders as the browser's default 2em black heading; make it use the DESIGN.md page-title style with the existing tokens.",
+  "world_is": "mcportal/src/App.css lines 11-18 (commit d6c4254, unchanged from 2fdfb60) already set .mcp-page h1 to Lato, weight 700, font-size 2.4554rem, line-height 1.2, color #000000, the DESIGN.md page-title values; mcportal/src/App.tsx line 12 imports App.css and the Gateway div carries class mcp-page. The default heading the issuer saw is therefore a render made without App.css. Built: the h1 takes class gateway-title and gateway.css .gateway-title holds the same values, so the title is the DESIGN.md style whether or not App.css loads. DESIGN.md names the style, so the navy fallback was not taken.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ C:/tmp/mp-pf-33/mcportal/src/App.css lines 11-18 at mcportal d6c4254: .mcp-page h1 carries the DESIGN.md page-title values",
+      "GREP C:/tmp/mp-pf-33/mcportal/src for App.css: C:/tmp/mp-pf-33/mcportal/src/App.tsx:12 imports './App.css'",
+      "RENDER headless Edge of the fixture page (.scratch/gw.html) showed the title in black at the top of the page"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a hazard and no disarm is owed. The issuer may confirm the render source of the default heading it reported."
+}
+```
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W33-S3",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~33",
+  "surfaced_at": "2026-10-15T21:57:56Z",
+  "one_line": "AMENDMENT 1 (b) says the summary table is the one table without a scroll box; the inherited commit 89dd5f5 already wraps it, so (b) holds and nothing changed.",
+  "class": "OBSERVATION",
+  "spec_asserts": "MP-pf-2 AMENDMENT 1 (b): the summary table sits in a div className gateway-scroll too (it is the one table that does not today).",
+  "world_is": "At the base 2fdfb60, GatewayView.tsx carries no gateway-scroll. The inherited commit 89dd5f5 SummaryTable (GatewayView.tsx line 145) already returns its table inside div className gateway-scroll. Amendment (b) holds at d6c4254 and was checked by the grep of SummaryTable, not by a change.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GREP of C:/tmp/mp-pf-33/mcportal/src/pages/gateway/GatewayView.tsx: SummaryTable returns div className gateway-scroll around table gateway-summary (line 145-146)",
+      "git show 2fdfb60:src/pages/gateway/GatewayView.tsx | grep gateway-scroll printed no line (base has no scroll box)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a hazard. The amendment's premise about today's state describes the base, not the inherited build."
+}
+```
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W33-S4",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~33",
+  "surfaced_at": "2026-10-15T21:57:56Z",
+  "one_line": "A 390 px check could not be taken: headless Edge laid the fixture out at 477 CSS px although --window-size was 390, so the horizontal-overflow reading is at 477, not 390.",
+  "class": "OBSERVATION",
+  "spec_asserts": "MP-pf-2 AMENDMENT 1 (c): check at 390 px that section and segment headings wrap between words only, and change nothing if it already holds; the page must never scroll sideways at 390 px.",
+  "world_is": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe --headless --window-size=390,2600 --dump-dom printed data-sw=477/477 (scrollWidth/clientWidth), so the viewport was 477 CSS px. The --screenshot file is 390 px wide and crops the layout at its right edge. No measurement at 390 CSS px was obtained. At 477 px the headings wrap between words and each tools table scrolls in its own box; this is an observation at 477, not a 390 px result.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN msedge --headless --window-size=390,2600 --dump-dom on file:///C:/tmp/mp-pf-33/.scratch/gw.html printed data-sw=477/477",
+      "READ C:/tmp/mp-pf-33/.scratch/gw390.png: 390 px wide, layout cropped at the right edge"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a hazard. The 390 px overflow and heading check is left to the issuer's own render; the worker's reading is recorded as a 477 px observation."
+}
+```
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W33-S5",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~33",
+  "surfaced_at": "2026-10-15T21:57:56Z",
+  "one_line": "The order names the workspace branch wk-NFRA_MCPORTAL-pf-33; the worktree is on wk-NFRA_MCPORTAL-33 and the mcportal branch is wk-NFRA_MCPORTAL-33-mcportal.",
+  "class": "OBSERVATION",
+  "spec_asserts": "MP-pf-2 section 1: the workspace worktree C:/tmp/mp-pf-33 is on branch wk-NFRA_MCPORTAL-pf-33 and the mcportal worktree on wk-NFRA_MCPORTAL-pf-33-mcportal.",
+  "world_is": "git rev-parse --abbrev-ref HEAD in C:/tmp/mp-pf-33 printed wk-NFRA_MCPORTAL-33; in C:/tmp/mp-pf-33/mcportal it printed wk-NFRA_MCPORTAL-33-mcportal. The grant is on the branch actually checked out; the order's branch name differs by the pf segment. No commit or branch was moved.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git rev-parse --abbrev-ref HEAD in C:/tmp/mp-pf-33 printed wk-NFRA_MCPORTAL-33 (first act of this re-seat)",
+      "RUN git -C C:/tmp/mp-pf-33/mcportal rev-parse --abbrev-ref HEAD printed wk-NFRA_MCPORTAL-33-mcportal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a hazard. The re-seat proceeded on the checked-out branches."
+}
+```
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W33-S6",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~33",
+  "surfaced_at": "2026-10-15T21:57:56Z",
+  "one_line": "The worker face's read window (offset 1, limit 131) reaches the RECORD FACE marker at line 127, so the read returned lines 127-131 that the instruction said not to take.",
+  "class": "OBSERVATION",
+  "spec_asserts": "The re-seat prompt: read the order file lines 1 to 131, stop at the last line before the RECORD FACE marker, and if the marker is within the first 131 lines do not read past it.",
+  "world_is": "The marker sits at line 127 of the order file, inside the 131-line window, so the window itself contains lines 127-131 (the marker and the ISSUER NOTES). The read returned them. No step was taken from them; the order's worker face was used for every act.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ C:/tmp/mp-pf-33/org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pf-2.gateway-page-segments-by-bucket-and-vendor-firm.md offset 1 limit 131: the output ends at line 131 with the ISSUER NOTES",
+      "the marker line RECORD FACE -- does NOT travel to the worker sits at line 127 of the same file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a hazard. Recorded because the read window and the stop instruction in the spawn prompt cannot both hold; the issuer may cut the read to lines 1 to 126."
+}
+```
