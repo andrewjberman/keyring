@@ -99,7 +99,11 @@ def build_refusal(tree: str = _WS):
     if not os.path.isdir(portal):
         return "portal/ absent under %s" % tree
     top = _git_out(portal, "rev-parse", "--show-toplevel")
-    if top is None or os.path.normcase(os.path.abspath(top)) != os.path.normcase(os.path.abspath(portal)):
+    try:
+        own_checkout = top is not None and os.path.samefile(top, portal)   # an 8.3 path names the same folder
+    except OSError:
+        own_checkout = False
+    if not own_checkout:
         return "portal/ is not an initialized checkout at %s (a gitlink without its tree)" % tree
     if not _git_out(portal, "ls-files"):
         return "portal/ holds no tracked files at %s" % tree
