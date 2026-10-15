@@ -4441,3 +4441,15 @@ Next cells, not yet cut (each needs the previous commit): the 49 Financial adden
 | `IB-pr-604` | ADDENDUM 1 code build: SmartX evidence read and the `smartx_map_present` key (re-cut) | FWD-21 | LOCAL | IB-pr-602 (drained) | PL3-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~441) starts now.
+
+## 232. ROUND 4, WORKSTREAM ~PL (the 49 Financial ADDENDUM 1 release candidate; 2026-10-15 ~22:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on IB-pr-604 drained and the CTO's ADDENDUM 2 @594e598878, msg 8664)
+
+IB-pr-604 is drained @f888350689 (IB235-1 AC1 to AC3 re-run PASS on the landed tree, instance VALID, 77 tests pass, three `ABSENT-AT-SOURCE-D` spans in `holdings_snapshot.py`; the exemption's decision, floor and threshold untouched). The CTO ruled 49 Financial's publishing does not wait on the evidence key (msg 8664): the signed exemption pair covers its branch (ii), and the evidence-key addendum ships after under its own candidate digest and pair, its Branch A reading the node set unchanged. This round cuts the READ cell that builds that candidate: IB-pr-595's signed transplant files for 49financial plus ONLY the D spans, BUILD ONLY, compared with the live bundle, a NEW digest; the addendum pair packet (COO half) follows it, then the CTO half and a later apply cell.
+
+Check IB237-1 (`deliverables/2.0.0_SA_COO~P2/checks/r237/p237_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control237.py`) passes the three positives and sixteen negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-606` | READ the 49financial addendum candidate: signed transplant plus the D spans, build only, tests, compare with live | FWD-21 | SERVED | IB-pr-604 (drained) | PL4-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one bundle build; one worker (slot ~442) starts now.

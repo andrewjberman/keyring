@@ -1582,6 +1582,50 @@
     "spec_asserts": "Scratch: <worktree>/.scratch/ only (worker face). RB8G2-AC2: the typecheck invocation writes to /tmp/rb8g2-tsc.txt.",
     "world_is": "The two instructions name different scratch locations. The criterion's invocation is the verdict's instrument and was run unchanged into /tmp; the worktree scratch rule was not applied to this one file. The verdict (TSC-RC=0, 0 diagnostic lines) is unaffected by the path.",
     "notes": "For the issuer to rule on whether the criterion should name the worktree scratch path. Not edited; the order stays as issued."
+  },
+  {
+    "id": "DSGN_RBNDV2-W27-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~27",
+    "surfaced_at": "2026-10-15T21:42:05Z",
+    "one_line": "The RV-o-1 criterion RB9O1-AC2 names the scratch path /tmp/rb9o1-tsc.txt, while the worker face fixes scratch to <worktree>/.scratch/ only; the criterion's invocation was run as written, into /tmp, and the order is unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-o-1.outlines.md (worker face, ACCEPTANCE, RB9O1-AC2): the invocation writes its output to /tmp/rb9o1-tsc.txt",
+        "same order, worker face, Scratch clause: scratch is <your worktree>/.scratch/ only, and sibling workers overwrite each other under the shared scratchpad",
+        "same conflict already filed for the RV-g-2 order as DSGN_RBNDV2-W26-S1 (this file, 2026-10-15T21:09:13Z); run at portal@d52fc657: the criterion invocation as written exits TSC-RC=0 with 0 diagnostic lines"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Scratch: <worktree>/.scratch/ only (worker face). RB9O1-AC2: the typecheck invocation writes to /tmp/rb9o1-tsc.txt.",
+    "world_is": "The two instructions name different scratch locations. The criterion's invocation is the verdict's instrument and was run unchanged into /tmp; the worktree scratch rule was not applied to this one file. The verdict (TSC-RC=0, 0 diagnostic lines) is unaffected by the path.",
+    "notes": "For the issuer to rule on whether the criterion should name the worktree scratch path. Not edited; the order stays as issued. Filed on the same pattern as DSGN_RBNDV2-W26-S1."
+  },
+  {
+    "id": "DSGN_RBNDV2-W27-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~27",
+    "surfaced_at": "2026-10-15T21:42:05Z",
+    "one_line": "NestedCard.tsx's header says a section has no border, no fill, no radius and no left accent bar, and that data-accent sets no visual; after RV-o-1 a light-scope rule on [data-accent] paints an outline and an accent bar, so that header is stale.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@e88ffb03 src/ui/components/panels/NestedCard.tsx header lines 4 and 6: 'no border, no fill, no radius, no left accent bar' and 'accentColor ... sets the data-accent attribute and no visual'",
+        "portal@d52fc657 src/index.css: the unlayered block after the second-layer silver rule, [data-panel-surface=\"light\"] [data-accent] { border: 1px solid hsl(var(--hairline)); border-radius: 3px } and four border-left accent selectors",
+        "the cell bounds NestedCard.tsx out of this order's write surface, so the header was not edited"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NestedCard.tsx header (e88ffb03, lines 4 and 6): a section has no border, no fill, no radius and no left accent bar; data-accent sets no visual. RV-o-1: the outline and the bars are CSS on data-accent, and NestedCard is not edited.",
+    "world_is": "The CSS on data-accent now supplies the outline and the bars on a light panel, so the component's header describes a state the light panel no longer shows. Nothing in the test suite reads that header; rb-2-i1 pins only that NestedCard carries no visual class.",
+    "notes": "Not edited (outside this order's paths). For the issuer to rule whether the header is corrected in a later cell. A future reader relying on the header to conclude that data-accent is visually inert would be misled; no present behaviour is wrong."
   }
 ]
 ```
