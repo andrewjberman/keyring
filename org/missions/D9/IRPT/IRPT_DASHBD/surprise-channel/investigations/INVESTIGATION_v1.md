@@ -16246,3 +16246,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Owner for the BLOCKING rows W410-S2, W410-S3, W411-S1, W411-S4 and W411-S5: this seat (issuer), done as above; the CVO adjudicates BLOCKING rows at L9 if it grades them. DBC123-1-AC1 re-run on the landed main tree reads FAIL by design of its base after the drain (other seats' entries changed interleaved with the merge); it was graded on the worker tree before the drain."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W197-S1 -- the order's optional sid rename of the write statement fails the issuer checker's AC1 (a renamed sid reads as a new statement), so the sid keeps its original name
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W197-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~197",
+  "surfaced_at": "2026-10-15T08:53:16Z",
+  "one_line": "The order's optional rename of the single PutObject statement sid to WriteTheSixGoldPrefixesOnly fails the issuer checker's AC1; the sid was restored to WriteTheFiveGoldPrefixesOnly, so the sid name now says five for six prefixes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r121/p121_grants.py check_hcl: a sid absent from the base iam.tf is a new statement, and a new statement may only carry s3:GetObject or s3:ListBucket (AC1 run with the rename: FAIL 'new statement WriteTheSixGoldPrefixesOnly may only read or list')",
+      "AC1 re-run with the original sid restored, on the worker tree of wk-IRPT_DASHBD-197: OK, one PutObject statement on irpt_rg_gold_write_arns, PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 3 (DB-b-243): 'you may rename its sid to WriteTheSixGoldPrefixesOnly (and fix its comment and the output description); there must remain EXACTLY ONE PutObject statement'. The criterion DB121-2-AC1 is the checker's reading of the same cell.",
+  "world_is": "The checker classes every sid absent from the base iam.tf as a NEW statement and requires each new statement to carry only s3:GetObject or s3:ListBucket, so the renamed write statement is refused and AC1 reads FAIL. The worker kept the original sid WriteTheFiveGoldPrefixesOnly (the rename is optional in the order); the write list now carries six prefixes under a five-named sid, and a comment in iam.tf cites this row.",
+  "notes": "Form only: the policy's permissions do not depend on a statement id, so hazard_standing is INERT. Owner for a decision on the checker's new-statement rule (key on the sid, or on the statement's content) is the issuer 2.0.0_SA_COO~D2; the worker does not change the checker."
+}
+```
