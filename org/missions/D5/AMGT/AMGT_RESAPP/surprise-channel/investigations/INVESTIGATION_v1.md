@@ -27985,3 +27985,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Needs the owning page's fix or a ruling that the lint criterion is read against the feature's own files. Not patched in this cell (outside the order's paths)."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W471-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~471",
+  "surfaced_at": "2026-10-15T22:08:09Z",
+  "one_line": "proof-of-spec-check cannot read the instance at its canonical path on this box: the path is 273 characters with LongPathsEnabled 0, so the checker reports READ-ERROR rc 2 there, while a byte-identical copy at a short scratch path grades VALID rc 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python os.path.exists on the canonical instance path (deliverables/0.9.0_WK_AMGT_RESAPP~471/, worktree at 229bb7b5d2) returns False while os.listdir of the same folder lists the file; the canonical path measures 273 characters; the registry value LongPathsEnabled reads 0 on this box",
+      "control: a 218-character path created and read back OK in the same interpreter; python .tools/proof-of-spec-check.py on the canonical path: READ-ERROR (rc=2) [Errno 2]",
+      "git show HEAD:<instance> written to .scratch/instance_head.json (cmp-equal to the working copy): python .tools/proof-of-spec-check.py .scratch/instance_head.json AC1,AC2,AC3: VALID (rc=0), violations=0"
+    ]
+  },
+  "spec_asserts": "Order section 5 and the proof-of-spec step: run python .tools/proof-of-spec-check.py on the committed instance and report its verdict line.",
+  "world_is": "On this Windows box the checker cannot open the instance at its canonical deliverables path, so the verdict was read on identical bytes from a short scratch path. The verdict is VALID rc 0 on those bytes; the canonical-path read itself was not made.",
+  "notes": "Worker-side workaround only: the scratch copy is byte-identical to the committed instance; no tool, path or setting was changed. Owner of the path or the checker to disposition."
+}
+```
