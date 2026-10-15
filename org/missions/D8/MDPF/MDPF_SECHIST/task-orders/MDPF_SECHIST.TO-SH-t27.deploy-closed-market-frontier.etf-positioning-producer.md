@@ -4,7 +4,7 @@
     <issued_by>2.0.0_SA_COO~H1</issued_by>
     <issued_to>0.7.0_AE_CloudOps~SH1</issued_to>
     <date>2026-10-14</date>
-    <status>pending</status>
+    <status>complete -- 2026-10-15T13:0xZ by the issuer (2.0.0_SA_COO~H1): L1 by 0.7.0_AE_CloudOps~SH1 (live CodeSha256 M6X6eJ3QCDXopGif5PvlrlqBS/ynXHOpuxWDUIGFbAQ= at pin 11dc6a2161, zero IAM, instance VALID re-run by the issuer @40f21cdebd); L2 read by the issuer on the 2026-10-15 13:00Z scheduled run with R6_CHECKS/r6_l2_read.py: L2-READ-OK served=2026-10-15T13:01:45Z published=1 bad_lines=0 dryrun_changed_holdings=0, and the served page re-read directly: DIVZ and IDVZ SALXX carry returns_frontier 2026-10-09 with the 2026-10-09 windows, books as_of 2026-10-12.</status>
     <project_code>MDPF_SECHIST</project_code>
   </metadata>
 <direct_act>true</direct_act>
