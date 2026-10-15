@@ -18,7 +18,7 @@
 #   the n-th box of org/devices/DEVICES.json (register order) at :01, :04, :07, :09 (1 + 3n, capped at 9); today laptop :01
 #   sitez :04 dell1 :07 dell2 :09. The table is computed from the register below, not listed here.
 # The task runs only while the user is logged on, never starts a second copy while one runs, and stops a run past
-# 5 minutes. Output is appended to <git common dir>\open-calls-scan-task.log.
+# 9 minutes (under the 10-minute cadence; a pass past 5 minutes was killed before its heartbeat). Output is appended to <git common dir>\open-calls-scan-task.log.
 
 param([switch]$Install, [switch]$Uninstall, [switch]$Status, [switch]$RunNow)
 
@@ -79,7 +79,7 @@ $now = Get-Date
 $first = $now.Date.AddHours($now.Hour).AddMinutes($minute)
 while ($first -le $now) { $first = $first.AddMinutes(10) }
 $trigger = New-ScheduledTaskTrigger -Once -At $first -RepetitionInterval (New-TimeSpan -Minutes 10) -RepetitionDuration (New-TimeSpan -Days 3650)
-$settings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -ExecutionTimeLimit (New-TimeSpan -Minutes 5) `
+$settings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -ExecutionTimeLimit (New-TimeSpan -Minutes 9) `
   -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 $principal = New-ScheduledTaskPrincipal -UserId "$env:USERDOMAIN\$env:USERNAME" -LogonType Interactive -RunLevel Limited
 Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Settings $settings -Principal $principal `
