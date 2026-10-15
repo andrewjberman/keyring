@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~117</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in wk-NFRA_CTLPLN-117 @6b83be9dd3 (merged 4e5affbf52): HYGIENE-MAP tsx_classed=1 py_classed=1 ok=True; HYGIENE-MAP SKIP map STALE age=100.0h (the --stale arm); FABRIC-CENSUS ... unclassified=0 ok=True; proof VALID. The danger map was rebuilt once with python org/modules/graph/nerves_lexical.py build (3491 nodes, written 2026-10-15 16:28:57Z; the generator's output as it came) so the reflex reads a fresh map in the main tree. S9127's staleness is mtime-based: it reads fresh after any checkout of the file, and the producer is not scheduled (W117-S3, carried to the CTO as the map's owner).</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
