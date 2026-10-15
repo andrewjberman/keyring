@@ -36953,3 +36953,82 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W402-S3 DISARMED: the source map stages _scope/filled_named_accounts.py in irpt-49f-reporting-read-lambda and irpt-export-render (IB-pr-562 @05ea78f452, build-only import PASS for both). D2-S185 DISARMED: the live bytes are the R29c ledger (answered); the candidate keeps release 29's four members (IB-pr-564). D2-W405-S1: the composition_admission.py change (IRPT_ANLREQ cause commit 83eb798a08) still rides in the corrected candidate; stays ARMED, owner me, until the CTO rules on the packet. D2-W405-S2, D2-W406-S2 and S3 (ycharts-generate is not an importer; bundle.py imports nothing), D2-W407-S2 (no installed filled reader), D2-W408-S1 (the trunk map pins hold commentary_requested 0 times: the fact that corrected IB-pr-561): INERT, recorded. D2-W406-S1: RESOLVED, my check selector defect (fixed @c8a836b0fa, no criterion weakened). D2-W407-S1 (freeze_filled_report has no production caller): INERT, the round-5 enrichment (wire the submit branch and compose the reader). D2-W404-S1 and S2 (the 36-day denominators differ from the calendar: positions 4 of 7 are trading days without a flat key, transactions 13 trading days lack one, six of them 2026-05-04 to 2026-05-11, unlisted), S7, S8, S10 (stale comments): INERT, recorded for the re-cut. D2-W404-S3 (the chain's pull steps carry no date token and run_chain refuses --run-date, so pair (a) cannot re-run past days through them) and D2-W404-S5 (the silver aggregator has no source directory in the repository): BLOCKING for the Orion act, asked of the CTO; D2-W404-S4, S6 and S9 stay ARMED (owner me): the dispatch script is an unversioned S3 object; T-1 completeness at 06:00 NY is unmeasured and the earliest measured pull is 11:39Z; a failed pull logs WARN and the chain reports complete."
 }
 ```
+
+## IRPT_BCKEND-D2-W411-S1 -- the composed filled reader reads the platinum-tier filled object directly; the export function is designed to be fenced from that bucket
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "filled_reader_installed.py reads the filled report object with the export function's own S3 client, by VersionId. The export function is designed to be fenced out of the platinum bucket, and the filled report object is platinum tier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "export/entry.py _with_platinum_reader docstring (line 403) @f0069dd8ca: the export function's role is fenced out of the platinum bucket, and the PATH B read goes through the reporting route",
+      "export/retained_export.py lines 30-31 @f0069dd8ca: the submit and the render read-back never read S3 for the series; they call the reporting route",
+      "infra/logic/registry/reporting_policies.json FILLED_REPORT tier platinum @f0069dd8ca; reporting/entry.py _filled_uri reads that tier"
+    ]
+  },
+  "spec_asserts": "IB-pr-567 (CTO round-5 ruling, ~PS item 2): the installed reader reads the pinned filled report object through the shared named-account reader, by VersionId.",
+  "world_is": "Whether the export function's role holds s3:GetObject on the filled report object was not read (Terraform is not in this grant). If it does not, a deployed export with a filled pin answers FilledReportUnavailable (fail closed). If the role is widened to meet the read, the platinum fence the reporting route was built to keep is breached. Nothing is deployed; the first deploy of this reader decides which."
+}
+```
+
+## IRPT_BCKEND-D2-W411-S2 -- no live caller of the render-side read of a frozen filled report exists inside the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:05:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "retained_export.filled_render_read (the render's one read of a frozen filled item) and render.filled_render_package have no caller outside the tests, and nothing in export/ reads ports['filled_reader'] yet. No live path reads the pinned bytes at render. The submit-path call site is in submit_async.py or submit_service.py (IB-pr-566's files), outside this grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep of export/*.py at 95d187e535 for filled_reader, filled_render_read, read_pinned_filled and filled_report_source: the only caller of filled_render_read outside retained_export.py is render.filled_render_package (added here); nothing outside export/tests/ calls filled_render_package, and no module reads ports['filled_reader']",
+      "export/render.py filled_render_package and export/retained_export.py filled_render_read (lines 479-489) @95d187e535",
+      "export/submit_async.py line 127 @95d187e535 calls freeze_platinum on ports['platinum_series']; no filled counterpart is called there"
+    ]
+  },
+  "spec_asserts": "IB-pr-567 (3): where a bundle revision carries filled_report_source, the render reads the pinned bytes with read_pinned_filled(reader, pin); the render seam is in render.py, dispatch.py, download.py, package.py or handler.py, else file a row naming the file.",
+  "world_is": "The seam is not in those five files. render.py now carries filled_render_package, which is the render's read and checks, but nothing calls it there. The live call site belongs to the submit path (IB-pr-566's grant). Left alone, a filled export is frozen with its pin and no controller read of the pinned bytes happens at render. The issuer amends the grant or wires the call site under IB-pr-566."
+}
+```
+
+## IRPT_BCKEND-D2-W411-S3 -- the reader finds the naming builder by walking up from its own file; the deployed package layout is not read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "filled_reader_installed.py locates lib/opal_naming.py by walking up from its own file (the repository layout). Whether the deployed export package carries lib/ was not read. Where it does not, the reader answers FilledReportUnavailable, a fail-closed refusal, and never a guessed address.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "export/entry.py lines 36-51 @f0069dd8ca: the deployed layout is flat, with members beside entry.py in the function root, and the repository-only roots are added only if they exist",
+      "reporting/entry.py _root() @f0069dd8ca: the sibling reporting function probes for lib/opal_naming.py by walking up from its file"
+    ]
+  },
+  "spec_asserts": "IB-pr-567: the object address comes from lib/opal_naming.address(), never typed.",
+  "world_is": "The packaged zip layout for the export function was not read. The reader's probe mirrors the sibling reporting function; whether the export zip carries lib/ is unverified."
+}
+```
