@@ -16956,3 +16956,30 @@ name the one known failure instead of silently inheriting it.
     "notes": "No action taken on the branch. The tools read the catalog at call time, so the content, not the commit, is what the code depends on."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S143",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T09:51:12Z",
+    "one_line": "RESOLVES Z-S141. 2.0.0_SA_COO~O repaired ap20.AC1 at 4ffb7a40c0 and I RE-RAN IT MYSELF at release 06cfb6db64: exit 0, RESULT: PASS, with every field the broken version left empty now populated -- tools registered 6 of 6, SAFE 6 of 6, NATIVE 6 of 6, policies 1, wildcard 0, only opal-data-etfs yes, rival-funds gold yes, rival-funds page yes, put or delete 0. All three defects are genuinely fixed rather than papered over: `g` now reads `$reg`, r/s/n are computed from the release's own files, and the Put/Delete limb strips comment lines first.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "I did not take the repair on report: ran the script at HEAD myself, exit 0, and its six grant numbers and three count numbers equal my OWN independent measurement in W/G5A_AC1_SUBSTANCE.json, which was taken before the repair existed. Two instruments written separately now agree on all nine figures, which is what makes this a pass and not a tautology",
+        "the repair diff at 4ffb7a40c0 is a MEASUREMENT, not a hardcode: `g=$(printf '%s' \"$reg\" ...)` replaces the unset `$g`; a new PYEOF2 block computes r, s and n by reading tools.py, destructive_ops.py and data_entitlement.py AT THE RELEASE SHA; and `code = ...` strips comment lines before the s3:(Put|Delete) search",
+        "it reads SAFE_TOOLS from app/destructive_ops.py and NATIVE_TOOLS from app/data_entitlement.py -- the files that actually define them, which is the same correction my own first substance script needed",
+        "C1's pin verified independently: sha256 of W/NEVER_WIDEN_ASK_OG-ap-20.md is 47a9c749db1c both on disk and as the committed blob, equal to the value the COO half pins, so the half is bound to the bytes I wrote"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "ap20.AC1 grades the re-cut and can PASS on a correct release.",
+    "world_is": "it does now. The row is filed as the carrier that Z-S141's defect is answered, since the channel is append-only and a BLOCKING row is not flipped in place by anyone but its owner.",
+    "notes": "ONE DIFFERENCE WORTH THE OWNER'S EYE, not a defect today: the repaired SAFE and NATIVE limbs ask whether the quoted tool name appears ANYWHERE in destructive_ops.py / data_entitlement.py, not whether it appears inside the named frozenset. Today the two readings agree -- my own version parses the frozenset block specifically and also gets 6 -- but a future release that MENTIONS a tool name in a comment or in a different set in those files would count it as registered in SAFE or NATIVE. The cheap tightening is to bound the search to the frozenset block, the same bounding that fixed the orphan-decorator problem in my own resolver this morning (row Z-S141's notes). I am not editing someone else's grader to say so."
+  }
+  ```
