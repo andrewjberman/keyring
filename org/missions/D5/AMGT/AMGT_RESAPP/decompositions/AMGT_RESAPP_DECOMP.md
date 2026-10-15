@@ -10928,3 +10928,32 @@ Cells and their classes:
 **The decision this cell takes (the issuer's, inside the CTO's rule):** the CTO's list says "states its basis ... or is withheld with a reason, the same rule as bk-4". Round 104 withheld the cross-currency FISCAL P/E (126 rows) rather than state a basis; this round does the same for the FORWARD P/E: 60 rows on 20 names are withheld with the reason `the price is in <code> and consensus EPS in <code>, and a ratio of different currencies is not shown`. Bloomberg's own forward P/E is not re-derived and the 218 same-currency rows are unchanged. If the CTO prefers the basis-statement branch the cell is re-cut before the apply.
 **A fact for the CTO's item 2:** the served fiscal figures carry NO date for the year-end price (`period_end_date` and `fiscal_period_end` are null on every PX_LAST row), so bm-1 prints the price and its currency and `at the close of fiscal year <YYYY>`, and a date only when one is served. A served date is a later addition if wanted.
 **Not this round's:** the AIFILL workstream (`~R2`, FWD-41), the Terminal sign-in (Andrew), the weekend read of bh-2.
+
+## 116. ROUND 107 -- THE CTO'S ROUND-106 ENRICHMENT LIST (`ledger/ROUND_ANALYSIS.round106.md`, msg 6249 @08a12d383e) AND THE PULL-LIMIT RULING (msgs 6262, 6265), 2026-10-15 ~21:5xZ
+
+**Frozen at the issuance commit.** Round 106 (this seat's keys bm-1..bm-5, plus `~R2`'s AIFILL workstream) closed at `aa1c618f83` on MAY-CLOSE; FWD-40 is not realized (bm-5 AC5 NOT MET, `ADJUDICATION_v131`/`v132`). The CTO ruled `D1-S32`: a team-sheet forward value stands where a withheld vendor ratio's reason would print, WITH a visible source mark; the reason prints only where no team value exists; the vendor figure never prints once withheld. A reading of the ENDPOINT, not a change to its text.
+
+| # | item | cell | what the cell is |
+|---|---|---|---|
+| 1 | the team-source mark on a Key Figures cell filled from the team sheet where the vendor P/E is withheld (SHOP CN, the PBR fixture) | `AMGT-bn-1` | ONE Opal-internal portal feature, page side only; the served block already withholds and the team sheet already carries the value |
+| 2 | the All-figures grid walk (change 2, never walked) | `AMGT-bn-2` (walker), `AMGT-bn-4` (the walk) | the walker expands at most 20 closed `<details>` in page order and the What Changed table's 26 `Full figures` use that budget, so `All figures` (the 27th) is never opened: `bn-2` adds `--open-first <text>`; `bn-4` is the walk, on the promoted build |
+| 3 | the promote of `bn-1` to PROD | `AMGT-bn-3` | a DT seat act, placed, cut when the approval row closes |
+| 4 | A4 (the research price axis) steps its history window 30 -> 90 -> 365 days, one completed good day per step, hold on the first vendor warning, the demand ledger's attributed cells read per step (CTO msg 6265, answering Andrew's "increase limits on all our pull surfaces" for this leg and G18's vendor word for this widening) | `AMGT-bn-5` | placed; cut once its face is read from `integrations/bloomberg/research/price_axis_pull.py` and the terminal box's schedule; a change at site Z is a WORLD act for CloudOps |
+| 5 | `~R2`'s W451-S1 and W452-S1 | not this workstream | that lane's round-107 items |
+
+The AI-fill hold stands: no item from it.
+
+Cells and their classes:
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bn-1` | the feature branch `cand/dell1/amgt-sa-team-estimate-mark` cut from PROD `e0b43076`, its harness and receipt; the approval row is the issuer's | `~471` | worker (portal) | LOCAL | the branch in the nested portal (`src/pages/SecurityAnalysis/` only), the receipt | change 3 on SHOP CN and PBR US |
+| `AMGT-bn-2` | `.claude/skills/ui-walk/open_first.mjs` (pure ordering helper) and `--open-first` in `walk.mjs`; one real one-name walk on a local build of PROD as the seam probe | `~472` | worker | LOCAL | `.claude/skills/ui-walk/`, the deliverables folder | change 2's walkability |
+| `AMGT-bn-3` | the promote of the approved `bn-1` feature to PROD (a DT seat act) | a DT named by the CTO | seat (DT) | SERVED | the portal release branch and PROD | change 3 |
+| `AMGT-bn-4` | the ten-name walk on a local build of PROD, FRESH draw, the grid OPENED (`--open-first "All figures"`), the CTO reads it | a worker | worker | LOCAL | the deliverables folder and `C:/dev/ui-walk-evidence/bn-4/` | the CTO's re-grade of AC5 changes 2 and 3 |
+| `AMGT-bn-5` | A4's history-window ramp (the ramp state and its reads, then the site Z apply) | to be named | worker, then seat | LOCAL, then WORLD | `integrations/bloomberg/research/price_axis_pull.py` and its tests; the site Z apply is a CloudOps order | Andrew's pull-limit word, G18 |
+
+**Edges:** bn-1 -> approval row (CTO) -> merge-forward onto DEV (box manager) -> bn-3 -> bn-4; bn-2 -> bn-4 (the walker must carry `--open-first` before the walk); bn-5 is independent of the page chain (a different tree: the Bloomberg puller). bn-1 and bn-2 are independent (disjoint write sets: the portal, and the walker folder), so both are cut now. fanout: 2 of 2 chains, cap 8, reason: the portal feature and the walker are the two independent build lines (bn-4 consumes both, as round 106's bm-5 did); the A4 ramp is a third chain, placed and issued at its own commit once its face is read.
+
+**A decision this decomposition takes (the issuer's, inside the CTO's reading).** The mark applies to a Key Figures P/E cell that the page fills from the team sheet (a team cell: a number or a text range such as SHOP CN's 2025 `74x-193.1x`) in a column whose vendor ratio is WITHHELD, read from the served block: a forecast column by `model.forecast_withheld` (mnemonic `BEST_PE_RATIO`, that fiscal year), a historical column by `model.fiscal_unresolved` (mnemonic `PE_RATIO`, that fiscal year). Measured on the live SHOP CN body (read 2026-10-15 ~21:2xZ, committed as `deliverables/2.0.0_SA_COO~R1/round107_prep/fixtures/shop_model_slice.json`): `forecast_withheld` names 2026, 2027 and 2028; `fiscal_unresolved` names PE_RATIO for 2020 to 2025; team sheet row 24 `P/E` carries `74x-193.1x`, 67.77, 53.03. The words are `research team estimate`.
+**Not this round's:** the AIFILL workstream (`~R2`, FWD-41), the Terminal sign-in (Andrew), G4 (the LLM tier's batch tasks: Andrew's gate is cleared, the CTO's list does not carry it, not cut here).
