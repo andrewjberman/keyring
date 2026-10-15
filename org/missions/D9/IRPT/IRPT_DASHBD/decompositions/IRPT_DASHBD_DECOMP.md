@@ -2078,3 +2078,31 @@ The CTO's two cells. Cell 1 is the Cottonwood landing pair's repo half: the pair
 **fanout:** 2 of 2 chains, cap 8, reason: two independent cells with disjoint write sets (`DB-b-257` the root's `lambda.tf` and the source map; `DB-b-258` the dimension contract and a record), workers `0.9.0_WK_IRPT_DASHBD~210` and `~211`.
 
 **Checkers (every one dry-run at the base before the cut; FAIL as expected, self-tests green; the landing checker's package clause validated against a scratch reference implementation through the real build-only command, the readers checker's both branches against scratch reference records):** `checks/r126/p126_landing.py` (DB126-1-AC1..AC3), `p126_readers.py` (DB126-2-AC1, AC2).
+
+## 125. ROUND 127, WORKSTREAM B-49F (2026-10-15 ~13:5xZ, issuer 2.0.0_SA_COO~D2, no new CTO analysis: this repairs the issuer's own round-123 order `DB-b-252` before its signed pair is applied; the CTO's round-126 ruling 1, the Cottonwood landing pair, stands and is re-bound to the repaired bytes)
+
+While writing the apply order for the signed Cottonwood landing pair (COO half @f1321ee057, CTO half @7934f69dad, packet sha256 `c63702ade4df`) this seat read the sibling function's Terraform and found that the landing root sets NO `layers` on its module call while the adapter imports pyarrow at module level; the python3.12 runtime carries no pyarrow, so the function would fail on its first invocation. Nothing is deployed (function, roles, schedule and artifact are absent in AWS). The ARMED row required first is filed: `IRPT_DASHBD-D2-S84` (owner this seat; it disarms when the repair is merged and both halves are re-signed on the revised packet's sha256). The error is the issuer's: `DB-b-252` named the function's packaging and IAM and never its runtime dependencies, and the round-125 memory measurement ran with pyarrow loaded locally, which hid it.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The landing root's `lambda.tf` gains the read-only data source for the EXISTING `irpt-performance-native-layer` (the sibling's form) and one `layers` line on the module call; a facts record of the layer's latest version, runtimes and the sibling's use | `DB-b-259` | FWD-11, FWD-21 | WORLD (floor of an `infra/` path; runs nothing) | none | R127-A |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the repair is the sibling's own pattern, no new layer is published and no new resource is added, so the expected plan stays 7 add / 0 change / 0 destroy (inferred; nothing is planned); (b) the layer data source resolves to the layer's LATEST version, and the checker requires the sibling function to run on that same version, so the landing function is paired with the version already proven on python3.12; (c) `DB-b-259` also proves mechanically that the bundle's third-party imports are exactly pyarrow plus the runtime's boto3/botocore and that the layer's zip holds pyarrow, so the next missing dependency is found by a check and not by a first invocation; (d) the signed pair is NOT applied: the packet changes bytes (`lambda.tf`'s hash, the plan's data source, the pins), so the packet is revised and both halves re-sign on the new sha256 (a re-sign of an unchanged ruling; the CTO's three answers stand unless the CTO says otherwise); (e) the apply order to the AE seat is its own round after the re-sign. Gate limb: one new order (LIMB 6 PRD sign-off applies); the placeholders limb sees NONE.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell, one write set (`lambda.tf` and a record), worker `0.9.0_WK_IRPT_DASHBD~212`.
+
+**Checker (dry-run at the base before the cut; FAIL as expected, self-test green; its HCL and import clauses exercised by arms, its live and layer clauses against a scratch reference):** `checks/r127/p127_layer.py` (DB127-1-AC1, AC2, AC3).
+
+## 126. ROUND 128, WORKSTREAM B-49F (2026-10-15 ~14:3xZ, issuer 2.0.0_SA_COO~D2, on the signed Cottonwood landing pair, REVISION 2: COO half @fed117446e and CTO half @ed790ad4bf on packet sha256 `a1b080c5fe06` (CTO msg 8293); no new CTO analysis: the round carries the apply the signed pair authorises, as round 124 did for hop 1)
+
+The apply is its own round because the issuance gate allows one issuance per workstream round (round 127 carried the layer repair). Revision 1 of the pair (sha256 `c63702ade4df`) is VOID since row `D2-S84`; revision 2 adds the pyarrow layer and the CTO's step-0 layer read. Counts, dates, hashes and words only in the repo.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Act 1 (build, upload, plan 7/0/0, ONE `safe-apply` of the `account-return-daily` root, the schedule left DISABLED) and Act 2 (ONE synchronous `{"day": "2026-07-10"}` event and its after-read), by the AE applier `0.7.0_AE_CloudOps~DB2`, with the ledger left OPEN | `DB-b-260` | FWD-11, FWD-21 | WORLD (a Terraform apply and one write into an occupied prefix, under a signed pair) | `DB-b-257`, `DB-b-259` (merged) and both halves SIGNED | R128-A |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) Act 3 (the catch-up `days` events, at most 25 trading days each) is NOT in this order: the packet makes it conditional on Act 2's after-read, and the issuer reads that record before cutting it as its own order in the round after; (b) the artifact key is read from the source map, never typed, and the pins are already written (the lesson of row `D2-S80`); (c) the order stops, and reports at once, on a Max Memory Used over 717 MB, a function error, a held day or a half partition; (d) the schedule is not enabled by any act here; enabling is a separate word after Act 3; (e) the checker reads the layer's pyarrow version from the layer zip and requires the record to equal it (the CTO's added after-read item). Gate limb: one new order (LIMB 6 PRD sign-off applies); the placeholders limb sees NONE.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell, one applier, the apply is a single change under one ledger (the deploy rule: one change at a time).
+
+**Checker (dry-run at the base before the cut; FAIL as expected, self-test green with 38 red record arms; its live clauses read fresh Lambda, IAM, scheduler, S3 and log state and cannot pass before the apply):** `checks/r128/p128_cotapply.py` (DBC128-1-AC1, DBC128-2-AC1, DBC128-3-AC1).

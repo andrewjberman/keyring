@@ -10424,3 +10424,179 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "safe-commit.sh's author-seat check appends to a tracked audit log on each commit by a serial the roster does not know. In a sparse worktree that file is a tracked change the worker cannot commit under its lane, so it stays dirt until the worktree is removed."
 }
 ```
+
+## NFRA_CTLPLN-W111-S1 -- a fetch record carries no device field, so a downloads-today count by device cannot be attributed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W111-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~111",
+  "surfaced_at": "2026-10-15T12:40:56Z",
+  "one_line": "The fetch record (schema intake-fetch/1) names the fetching seat in fetched_by, a serial, and carries no device key. The downloads reader (intake_request.py downloads --device D) can therefore count only records that carry a device field; on the two real 20261008 records it prints requests=0 files=0 for laptop and a stderr NOTE that two records are unattributed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO (issuer of CT-ai-6): have intake_fetch.py write a device key into each fetch record, or name the device source the reader must trust; until then a zero from the downloads reader is not evidence that a box downloaded nothing",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/records/intake-20261008-a/click-8.3.1-py3-none-any.whl.fetch.json@afebfdc81a: top-level keys are schema, batch, requested, index_base, requests, published, project, attestation, held_path, outcome, reason, fetched_by, at, approval, release_files, received_sha256; no device key",
+      "org/devices/intake/intake_fetch.py@afebfdc81a line 211: \"fetched_by\": os.environ.get(\"OPAL_AGENT_SERIAL\") or \"unknown\"; no device is written",
+      "python org/devices/intake/intake_request.py downloads --device laptop --day 20261008 run read-only in the worktree: NOTE: 2 fetch record(s) on day 20261008 carry no device field and are not counted; DOWNLOADS-TODAY device=laptop day=20261008 requests=0 files=0; rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-6 / FWD-19: Andrew can ask what a box downloaded today and get an answer from a record; the reader counts the fetch records whose device is D.",
+  "world_is": "Fetch records name a serial, not a device, so no record in the intake folder can be attributed to a box. The reader counts a record only when it carries a device key; none of the 3 fetch records under org/devices/intake/records/ carries one (measured: FETCH-RECORDS read=3 with_device_key=0), so its answer for any device on the real folder is zero with a note on stderr."
+}
+```
+
+## NFRA_CTLPLN-W111-S2 -- the author-seat check cannot read its roster in the sparse worktree, so every worker commit prints an unknown-seat WARN
+
+```json
+{
+  "id": "NFRA_CTLPLN-W111-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~111",
+  "surfaced_at": "2026-10-15T12:40:56Z",
+  "one_line": "safe-commit.sh printed WARN: author 0.9.0_WK_NFRA_CTLPLN~111 names no known seat, because org/ref/SEAT_ROLES.json was unreadable (FileNotFoundError) in the sparse worktree; it also printed a client-data-check ABSENT line for the account-id list. The commit still passed every gate and was written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit e8b2dc8e33 in the worktree: 'WARN: author 0.9.0_WK_NFRA_CTLPLN~111 names no known seat (... org/ref/SEAT_ROLES.json unreadable (FileNotFoundError)). WARN-only until the announced refusal (1.0.0_SA_CTO msg 107910).'",
+      "the same commit's [msg-verify] line: MATCH len=481; [commit-gate] All checks passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md 14a: commits go through safe-commit.sh and the author seat is a known seat; the sparse worktree carries the paths the order names, so the commit path reads what the worker needs.",
+  "world_is": "The author-seat check reads a roster file outside this sparse worktree and falls back to WARN. The WARN says a refusal is announced; a worker commit in a sparse worktree would refuse under that refusal, because the roster it reads is absent."
+}
+```
+
+## NFRA_CTLPLN-W107-S1 -- a sparse worktree without org/ref/ reads every seat kind as UNKNOWN, so the reviewer reads ABSENT
+
+```json
+{
+  "id": "NFRA_CTLPLN-W107-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~107",
+  "surfaced_at": "2026-10-15T12:41:22Z",
+  "one_line": "The first seat-list write in this worktree printed kind UNKNOWN for all 10 seats and reviewer=ABSENT, and round-close-check read REVIEWER-ON-BOX state=ABSENT, while CVO seats were LIVE. The cause was the sparse set without org/ref/. After git sparse-checkout add org/ref, a second write printed kind CVO/COO/CRO/MSTR/CLOUDOPS and reviewer=present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-list.py write (before sparse add) at 2026-10-15T12:33Z: every seat row kind UNKNOWN, last line 'reviewer=ABSENT ok=True'; safe-commit WARN org/ref/SEAT_ROLES.json unreadable (FileNotFoundError)",
+      "git sparse-checkout add org/ref, then python .tools/seat-list.py write: 'reviewer=present ok=True'; python .tools/round-close-check.py --project NFRA_CTLPLN --round 18: 'REVIEWER-ON-BOX device=laptop state=present' and ROUND-CLOSE ... reviewer=present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-2 BUILD 1: python .tools/seat-list.py write refreshes the laptop list, and the record's reviewer line reads present when a CVO-kind seat is live on the box.",
+  "world_is": "The worker sparse set (the order paths plus the standing folders) omits org/ref/, where SEAT_ROLES.json lives. The seat-list kind resolver then returns UNKNOWN for every seat, so a live CVO is not counted as a reviewer. The worker added org/ref to its sparse set and re-wrote the list. Same root as NFRA_CTLPLN-W105-S2."
+}
+```
+
+## NFRA_CTLPLN-W107-S2 -- round 18 carries no judgment criterion, so round-close-check prints no GRADED line for the record to copy
+
+```json
+{
+  "id": "NFRA_CTLPLN-W107-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~107",
+  "surfaced_at": "2026-10-15T12:41:22Z",
+  "one_line": "The cell asks the record to copy two GRADED (adjudication row ...) lines from round-close-check --round 18. That run printed no GRADED line: judgment=0 graded=0, because the round's one complete order TO-CT-ah-1 has no judgment=\"true\" criterion. The record carries the ROUND-CLOSE reviewer line and states that no GRADED line exists.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project NFRA_CTLPLN --round 18 (after sparse add org/ref): ORDERS scope round=18 workstream=all: 1 order(s), 1 complete; GRADING-ROWS adjudication=59 row(s); STRICT-GRADES judgment=0; last line 'ROUND-CLOSE project=NFRA_CTLPLN device=laptop reviewer=present orders=1 judgment=0 graded=0 ungraded=0 self_graded=0 verdict=MAY-CLOSE'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-2 DONE WHEN: one finished piece of work shown with its grade, and BUILD 1: the record carries two GRADED (adjudication row ...) lines verbatim from round-close-check --round 18.",
+  "world_is": "Round 18 of NFRA_CTLPLN has no graded judgment criterion, so no GRADED line exists to copy. The DONE WHEN grade element is not met by round 18 as named. The criterion AC2 (ok=every seat named and reviewer present) does not read the GRADED lines and is unaffected."
+}
+```
+
+## NFRA_CTLPLN-W108-S1 -- the cell's fixture path data/fixture/scripts/ is not a deploy-scope path, so the hold is never written
+
+```json
+{
+  "id": "NFRA_CTLPLN-W108-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~108",
+  "surfaced_at": "2026-10-15T12:52:31Z",
+  "one_line": "The fixture path named by the cell, data/fixture/scripts/fixture_unsigned.py, is not deploy-scope: the real hook printed 'no deploy-scope file in this box's diff against origin/CLOUD; nothing to deploy' and wrote no HELD-DEPLOY row. The test therefore uses data/inf/scripts/gold/fixture_unsigned.py, the nearest declared deploy-gated home, inside a temporary repository only.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "literal-path run in a temporary repository, box/laptop pushed with AGENTBUS_DEVICE=laptop: push rc=0; stderr 'deploy gate: refs/heads/box/laptop -- no deploy-scope file in this box's diff against origin/CLOUD; nothing to deploy'; no org/safe-deploy-bypass-audit.log HELD-DEPLOY row; STUB-LOG lines=0",
+      ".tools/safe_deploy_core.py@afebfdc81a lines 666-706 (file_to_s3_target resolves only deploy_gated CODE_TREES homes) and 804-814 (detect_script_files filters on it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-3 BUILD 1: commit data/fixture/scripts/fixture_unsigned.py that no open change names, push box/laptop, require a HELD-DEPLOY record that names the script.",
+  "world_is": "data/fixture/ is not a declared deploy_gated code tree, so the literal fixture is outside the deploy scope and the hold cannot be exercised by that path. The hold is exercised by data/inf/scripts/gold/fixture_unsigned.py (run: push rc=0, deployed=0, held=1, reason=no-open-ledger-names-it)."
+}
+```
+
+## NFRA_CTLPLN-W108-S2 -- test_named_commit_deploy.py stops at case 8 with ModuleNotFoundError git_bash_resolver, not after case 7
+
+```json
+{
+  "id": "NFRA_CTLPLN-W108-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~108",
+  "surfaced_at": "2026-10-15T12:52:31Z",
+  "one_line": "python .tools/tests/test_named_commit_deploy.py prints PASS for cases 1 to 7, then raises ModuleNotFoundError: No module named 'git_bash_resolver' in case 8's open_ledger() helper. The helper runs deploy_ledger.py from a temporary ledger root that holds only that one file. The run exits 1 with no NAMED-COMMIT-TEST line. It is not a control for CT-ai-3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run on the worker worktree at HEAD 641adaa19a: PASS case 1 through PASS case 7, then Traceback ... ModuleNotFoundError: No module named 'git_bash_resolver'; rc=1; no NAMED-COMMIT-TEST line",
+      ".tools/tests/test_named_commit_deploy.py@afebfdc81a lines 83-92 (open_ledger copies only deploy_ledger.py into the temporary root)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The test's header: cases 1 to 7 call the check directly, case 8 runs the real wrappers as far as the check; the last line prints NAMED-COMMIT-TEST cases=k/8.",
+  "world_is": "The failure is in case 8's fixture setup, one step before the wrappers are exercised, so the case-8 control never runs on this box."
+}
+```
+
+## NFRA_CTLPLN-W108-S3 -- the real pre-push hook refuses a worker serial unless a tracked task order at HEAD names it; the test adds one fixture order
+
+```json
+{
+  "id": "NFRA_CTLPLN-W108-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~108",
+  "surfaced_at": "2026-10-15T12:52:31Z",
+  "one_line": "The real hook runs halt-gate-check.sh, which admits a worker serial 0.9.0_WK_<CODE>~<n> only while a tracked, non-terminal task order under <CODE> at HEAD of the pushing repository names it. In a temporary repository with no such order the push was refused (push rc=1: HALT-GATE check worker-no-order). The test commits one fixture order file that names the serial; the serial and the inbox are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run of the test, literal fixture and no order file: push rc=1, stderr 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', 'Check that failed: worker-no-order'; after the order file: push rc=0 and 'worker ... has no inbox; scanning its issuer'",
+      ".tools/halt-gate-check.sh@afebfdc81a lines 196-252 (halt_gate_worker_issuer reads git ls-files and git show HEAD:<path> under org/missions/D*/*/<CODE>/task-orders/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-3 BUILD 1: the real hook lets the push through; the cell names no worker-admission fixture for the temporary repository.",
+  "world_is": "A worker push from a repository without a tracked order is refused fail-closed by the real gate. The test's admission is a fixture order inside the temporary repository, not a change to the serial or to the gate."
+}
+```

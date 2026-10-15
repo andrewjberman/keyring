@@ -17452,3 +17452,58 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "W210-S1: the advisory is printed and the build exits 0 with every declared member present and byte-equal to its source; nothing depends on layer-import enforcement for this function. W210-S2: still true as a measurement gap; it is carried into the pair as a stated limit with a reading and a one-line remedy, and nothing is deployed to be at risk before the pair is signed. Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-S84 -- BLOCKING: the Cottonwood landing root has no pyarrow layer, the signed pair describes a function that cannot import
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S84",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T13:45:00Z",
+  "one_line": "The Cottonwood landing root merged at round 126 builds its function with no pyarrow layer while the adapter imports pyarrow at module level: the function would fail on its first invocation, and the landing packet signed by both halves (sha256 c63702ade4df) describes that function",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Round 123 DB-b-252 and the signed landing pair: the function packages the adapter and its closure and runs on python3.12 with Terraform plan 7 add / 0 change / 0 destroy; the pair's Act 2 invokes it once.",
+  "world_is": "infra/aws/terraform/investor-reporting/account-return-daily/lambda.tf at 1e78f951eb sets no layers on the module call. cottonwood_bd_account_return_daily.py imports pyarrow and pyarrow.parquet at module level (lines 47 and 48). The python3.12 Lambda runtime carries boto3 and botocore only. The sibling irpt-cot-account-dim-lambda takes pandas and pyarrow from the existing layer irpt-performance-native-layer (version 1, python3.12) through a read-only data source. Found by this seat while writing the apply order, before any apply: the function, roles, schedule and artifact are absent in AWS, so nothing is deployed or at risk.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/account-return-daily/lambda.tf at 1e78f951eb: the module call lists handler, runtime, timeout, memory_size, reserved_concurrent_executions and no layers",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py lines 47 and 48: import pyarrow as pa; import pyarrow.parquet as pq",
+      "infra/aws/terraform/investor-reporting/account-dim/lambda.tf lines 3 to 8 and its layers line; aws lambda get-function-configuration irpt-cot-account-dim-lambda: python3.12 with one layer irpt-performance-native-layer version 1 (read by this seat)",
+      "aws lambda get-layer-version irpt-performance-native-layer 1: python3.12 listed, about 70 MB"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarms when round 127 cell DB-b-259 has merged (the layer data source and the layers line), the landing packet is revised to the new bytes and BOTH halves are re-signed at the new sha256. No apply order is staged before then. Counts, dates and words only."
+}
+```
+
+## IRPT_DASHBD-D2-S85 -- OBSERVATION: S84 disarmed, the pyarrow layer is merged and the landing pair is re-signed on revision 2
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S85",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T14:35:00Z",
+  "one_line": "Row IRPT_DASHBD-D2-S84 is disarmed: the pyarrow layer is on the Cottonwood landing root (merged) and both halves of the landing pair are re-signed on revision 2",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DB127-1-AC1, AC2 and AC3 run by this seat on the landed tree after merge 54e4a0036a: PASS (the data source and layers line only; the layer's latest version 1 lists python3.12 and is the version the sibling runs; the bundle's import-time third-party imports are pyarrow plus boto3 and botocore and the layer zip holds python/pyarrow/__init__.py)",
+      "packet revision 2 sha256 a1b080c5fe06, COO half @fed117446e and CTO half @ed790ad4bf (msg 8293), revision 1 VOID",
+      "the function, roles, schedule and artifact are still absent in AWS, so nothing was ever deployed without the layer"
+    ]
+  },
+  "spec_asserts": "Row D2-S84 disarm condition: the repair merged and both halves re-signed on the revised packet's sha256.",
+  "world_is": "The condition is met. The apply order TO-DB-b-260 is staged to 0.7.0_AE_CloudOps~DB2 as round 128; its step 0 reads the layer live (the CTO's added condition) and STOPs if it does not carry pyarrow for python3.12. The layer's pyarrow version (14.0.2) is not compared with the version the adapter was measured with at round 125; Act 2's after-read records it. Counts, dates and words only."
+}
+```

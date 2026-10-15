@@ -939,6 +939,27 @@
     "spec_asserts": "The task order names org/surprise_channel/schemas/investigation_item.schema.json as the row contract a worker reads per the surprise-channel rule, expected readable at the worktree path.",
     "world_is": "That path is absent from disk in this sparse worktree while git tracks it at HEAD. Nothing was restored or checked out; the schema was read from HEAD with git show.",
     "notes": "Filed, not fixed. The row was validated by field against the HEAD copy of the schema. The worktree was not changed."
+  },
+  {
+    "id": "DSGN_RBNDV2-W12-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~12",
+    "surfaced_at": "2026-10-15T13:04:14Z",
+    "one_line": "The proof-of-spec artifacts_produced kind enum has no member for a stylesheet, so the CSS artifact portal/src/index.css is recorded as frontend_component, the nearest member, and the checker's first run on the instance was INVALID.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/PROOF_OF_SPEC.schema.json@d0f2cf28c9 artifacts_produced kind enum: script, s3_object, terraform, config_data, schedule, iam, test, doc, frontend_component, ddb_rows, aws_resource (no stylesheet member)",
+        "python .tools/proof-of-spec-check.py on the instance (portal artifact pinned at 2426d31b) printed VIOLATION: schema: artifacts_produced/0/kind: 'stylesheet' is not one of [...] and INVALID (rc=1); the same instance with kind frontend_component is re-checked before the flip"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The proof instance carries each produced artifact with a kind the schema admits, so a worker's CSS artifact is expressible without a kind substitution.",
+    "world_is": "No kind in the enum names a stylesheet; the worker recorded the one CSS file (portal/src/index.css) as frontend_component to get a schema-valid instance. The kind is a label only, and the instance otherwise carries the pinned commit and the deploy evidence.",
+    "notes": "Filed, not fixed. The enum is the schema owner's to extend. The substitution is declared here so a consumer does not read the kind as a claim that the file is a component."
   }
 ]
 ```
