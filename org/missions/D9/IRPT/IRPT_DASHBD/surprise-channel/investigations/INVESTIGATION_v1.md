@@ -17955,3 +17955,77 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "A plain git merge that conflicts cannot be continued by safe-merge.sh --continue, which refuses a merge it did not open; the worker aborted the merge (no commit was lost, the resolution was re-made) and landed box/dell2 through safe-merge.sh box/dell2. Counts and paths only; no client value."
 }
 ```
+
+## IRPT_DASHBD-D2-W217-S1 -- the earlier handler test fixture holds returns partitions with no manifest, so the contract guard refuses the builds those tests make; the fixture gains a manifest per partition and one GET count selects data.parquet
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W217-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~217",
+  "surfaced_at": "2026-10-15T18:09:20Z",
+  "one_line": "The earlier handler test fixture holds returns partitions with no manifest.json, so the contract guard refuses the builds those tests make; the fixture gained one manifest per returns partition, and one earlier assertion that counted every account_return_daily GET now counts the data.parquet GETs only",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the round-131 probe fixture, which holds returns partitions with no manifest, measured at 0852b79ac7: the one-day build refused with 'REFUSED: the returns partition 2026-07-10 names no contract' (run of checks/r131/p131_cothandler.py, DB131-1-AC2, rc=1)",
+      "after the fixture change, 26 tests pass (21 earlier, 5 new) in infra/aws/lambda/investor-reporting/reporting-gold-cot/tests at 0852b79ac7; the selector changed in test_the_returns_partition_before_the_floor_is_never_listed_or_opened in tests/test_reporting_gold_cot.py keeps its meaning: two data.parquet reads, both at or after the floor"
+    ]
+  },
+  "spec_asserts": "The worker face says the handler change is ADDITIVE, every earlier behaviour and test stays, and all earlier tests still pass; the earlier test fixture names no manifest object for any returns partition.",
+  "world_is": "The CTO ruling requires each used returns partition to name one contract pair in its manifest, so a partition with no manifest refuses. The earlier fixture had none, so the fixture gained one manifest per returns partition (the Commonwealth partition gained its asof and firm_scope manifest) and one GET count changed its selector. No production assertion changed. Counts only; no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W217-S2 -- the round-131 checker DB131-1-AC2 measures FAIL on the committed handler: its fixture has no manifests; the round-135 checker runs only the round-131 static clauses, not its probe
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W217-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~217",
+  "surfaced_at": "2026-10-15T18:09:20Z",
+  "one_line": "Run directly at 0852b79ac7, the round-131 checker DB131-1-AC2 prints FAIL: its fixture builds returns partitions with no manifest.json, so the one-day event refuses with the contract message; the round-135 checker's header says it runs every earlier clause of the round-131 checker, but it runs only that checker's static clauses",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r131/p131_cothandler.py . DB131-1-AC2 at 0852b79ac7 printed 'FAIL: the one-day event wrote nothing: {day 2026-07-13, failed SystemExit: REFUSED: the returns partition 2026-07-10 names no contract}' and 'DB131-1-AC2 FAIL', rc=1",
+      "the round-135 checker's run() for DB135-1-AC2 and DB135-1-AC3 calls its own run_probe and check_guard; check_probe of the round-131 checker is not called (only check_static is, for DB135-1-AC1)"
+    ]
+  },
+  "spec_asserts": "The round-135 checker header says it runs every earlier clause of p131_cothandler.py, and the worker face says every earlier behaviour stays.",
+  "world_is": "The round-131 probe's fixture builds no manifest, and the guard now refuses a partition that names no contract, so that checker's AC2 is red at this commit by design of the ruling. The round-131 checker sits in the issuer's check files, outside this grant, and is not edited. Its red is recorded here, not repaired. Counts only."
+}
+```
+
+## IRPT_DASHBD-D2-W217-S3 -- the worker face names the co-author line Claude Sonnet 5.5; this worker runs as Haiku 5.5, so the commit carries the Haiku attribution line
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W217-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~217",
+  "surfaced_at": "2026-10-15T18:09:20Z",
+  "one_line": "The worker face asks for the commit's last line to be Co-Authored-By Claude Sonnet 5.5; this worker runs as Haiku 5.5 and the session attribution names Haiku 5.5, so commit 0852b79ac7 ends with the Haiku line",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -1 --format=%B 0852b79ac7 ends with 'Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>'"
+    ]
+  },
+  "spec_asserts": "The worker face says to end each commit message with the line Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>.",
+  "world_is": "The session runs claude-haiku-5-5 and the attribution the harness supplies names Haiku 5.5; the face's Sonnet line was not written, and the coordinator may correct the line on the record if it wants the face's text. Counts only."
+}
+```
