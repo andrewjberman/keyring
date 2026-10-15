@@ -78,10 +78,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~141, worktree `C:/dev/wk-harvst-141`, branch `wk-AMGT_HARVST-141`.
 - **AMENDMENT 1 (issuer, 2026-10-15 ~16:5xZ), from the worker's first report (rows `D1-W141-S1`, `D1-W141-S2`):** (1) my face assumed `sa` was bundle-seeded; the contract says `sa` is tab with `seed_from_bundle` false, so the literal rule reaches it and `verification.renew` has no account check for it. The rule now also requires `publisher in verification.ACCOUNT_CHECKS` (the CTO's ruling keys on the contract fields; this adds the capability the renew needs, and leaves `sa` on its present path until round 87's `sa` proof; the CTO is told). (2) The sparse worktree lacked `org/tier1_exec/4.0.0_SA_CRO/scripts` (test_ad1 reads `sa_rest_fetch.py`); the issuer added it to the worktree's sparse set, `test_ad1_token_store.py` now `13 passed`. The paths grant is unchanged.
 
+**COMPLETE 2026-10-15 ~17:0xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~141` (worker-light, haiku, high), branch `wk-AMGT_HARVST-141`, first report FAILED both criteria (rows `D1-W141-S1` sa scope, `D1-W141-S2` sparse set; both were defects of this order, repaired by AMENDMENT 1 `f94a1a7d09`), resumed on the same context; head `356932e3a9`.
+- **AC1 PASS:** `8 passed` (worker; this seat re-ran in the worker's worktree `8 passed in 0.19s`). **AC2 PASS:** `113 passed, 4 subtests passed` (worker; this seat `113 passed, 4 subtests passed in 3.61s`; base the same). Proof instance VALID rc 0 with `--governing-order`, re-run by this seat. `round-close-check --round 86` before this flip: MAY-CLOSE.
+- **Diff read by this seat:** `auth.py` (+38: the renew path keyed on `transport` tab, `seed_from_bundle` false and `ACCOUNT_CHECKS`; the old path byte for byte otherwise; tab session closed in `finally`), `worker.py` (+9/-3: `profile_renewal` on the result and the retry event, empty when the bundle path ran).
+- **What this does NOT prove:** a real job refused expired, renewed in the profile with no person at the keyboard, and ended complete. That is AC3 (`deliverables/2.0.0_SA_COO_W1/round86/ca1_real_job.py`), the issuer's run at the drain, held for site Z's read-back relayed by `0.0.0_AB_MSTR~DELL1`.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <direct_act>true</direct_act>
-<status>pending</status>
+<status>complete</status>
 <round>86</round>
 <workstream>PROFILE-RENEW</workstream>
 <slot>dell1</slot>
