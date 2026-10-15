@@ -1187,7 +1187,10 @@ if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
       printf '%s\n' "$NGATE_OUT" | sed 's/^/  [naming-gate] /' >&2
       exit 1
     elif [ "$NGATE_ENFORCE" -eq 1 ] && [ "$NGATE_RC" -ne 0 ]; then
-      for _nf in "${NGATE_FILES[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
+      # W93-S1 (NFRA_CTLPLN round 15, CT-ae-3): unstage EVERY path this call staged (IN_SCOPE), not only the graded extensions
+      _ng_all=()
+      while IFS= read -r _nf; do [ -n "$_nf" ] && _ng_all+=("$_nf"); done <<< "$IN_SCOPE"
+      for _nf in "${_ng_all[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
       echo "ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged." >&2
       _np_unwind
       printf '%s\n' "$NGATE_OUT" | sed 's/^/  [naming-gate] /' >&2
