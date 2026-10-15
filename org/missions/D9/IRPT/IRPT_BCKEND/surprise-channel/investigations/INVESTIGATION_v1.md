@@ -36100,3 +36100,107 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W400-S1 (BLOCKING, INERT): the flat bronze keys have no address() output: SUPERSEDED by IB-pr-556 AMENDMENT 1 (they are an existing pipeline's read contract, rule 30 non-application), my defect. D2-W400-S2 (the existing schedule name grades OUT-OF-PATTERN): INERT, recorded. THE HAZARD (new, ARMED, owner me): nobody has located what writes the daily flat keys; the repository holds three manual CLIs that write exactly that key shape. Either a person or host runs a CLI by hand each morning, or another writer exists. Retiring the CLIs without finding it can stop the feed; deploying (b) beside it makes two producers of one key. COO half condition 1 makes finding and handing over that writer the releasing seat's first read-only step, and a STOP if it cannot be found. Disarm condition: the writer is located and stopped or handed to (b) in the release's ledger."
 }
 ```
+
+## IRPT_BCKEND-D2-W403-S1 -- IB-pr-559 locates the flat-key writer: inf-gold-layer-runner runs the gold chain's Orion pulls, so the unlocated-writer premise is superseded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W403-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~403",
+  "surfaced_at": "2026-10-15T05:45:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The daily flat-key writer is located and measured: the inf-gold-layer-runner EC2 instance, started by inf-gold-trigger at about 11:32Z, runs chain:full of orion-gold-dispatch.sh, whose steps INF_API_PULL_TXN, INF_API_PULL_PERF and INF_API_PULL_POSITIONS_DAILY write the three flat keys (PutObject at 11:40:28Z, 11:48:56Z and 11:51:51Z on 2026-10-14). The S184 premise of no trigger or instance in the window is superseded; the start precedes the window and was outside the earlier search.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~403/IB202-1_flat_key_writer_read.json@14f2b2da5b: writer.kind ec2_instance, name inf-gold-layer-runner, claim measured, three PutObject events by the runner role session for bronze/transactions, bronze/performance and bronze/positions on 2026-10-14 (events_matching 3 of 3)",
+      "Gold chain log chain_full_20261014_113301 (s3 diagnostic/chain_logs on opal-data-inf): INF_API_PULL_TXN runs pull_inflection_transactions_rest.py, INF_API_PULL_PERF runs pull_inflection_performance_rest.py, INF_API_PULL_POSITIONS_DAILY runs pull_inflection_positions_daily.py; each logs its flat key at the PutObject second",
+      "SSM AWS-RunShellScript sent 2026-10-14 11:32:57Z by inf-gold-trigger to the runner, status Success exit 0; output downloads code/gold/orion-gold-dispatch.sh and starts chain:full",
+      "inf-silver-aggregator log 'FIRED gold trigger' (mode full, source aggregator) and inf-gold-trigger log (invoked 11:32:35Z, StartInstances, SendCommand 11:32:57Z) on 2026-10-14"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-D2-S184 and the COO half condition 1 (msg 8062) assert that the writer of the daily flat keys is unlocated: no trigger, log stream or instance was found in the 11:39-11:56Z window, so retiring the manual CLIs or deploying the scheduled handler could stop the feed or double it.",
+  "world_is": "The writer is measured and has three named steps (see the grounding). The manual CLIs are the same scripts as the gold chain's pull steps (the chain log collision check reads the copies as identical). The handover question is therefore a question about the gold chain, not about an unknown host; the stop and handover path is recorded in IRPT_BCKEND-D2-W403-S3."
+}
+```
+
+## IRPT_BCKEND-D2-W403-S2 -- CloudTrail records PutObject for opal-data-inf only from 2026-10-13 20:30Z, so the 2026-10-10 to 10-13 flat writes cannot be attested by write event
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W403-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~403",
+  "surfaced_at": "2026-10-15T05:45:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The org trail write-data selector for opal-data-inf was set by a PutEventSelectors call at 2026-10-13 20:30Z; before that the flat keys have GET and HEAD data events but no PutObject, so the 2026-10-10 to 10-13 writes cannot be named by event and the writer for those days rests on the host's daily start and reads.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~403/IB202-1_flat_key_writer_read.json@14f2b2da5b: cloudtrail lookup-events PutEventSelectors 2026-10-01 to 10-15 returns one event (2026-10-13 20:30Z, a named user, selector including the opal-data-inf prefix); the org trail log files for 2026-10-10 to 10-14 (869 files, 11:30-12:05Z deliveries) hold PutObject on opal-data-inf only on 2026-10-14",
+      "The same day files hold GetObject and HeadObject events for bronze/transactions, bronze/performance and bronze/positions on 2026-10-10 to 10-13 by the runner role, so the read selector was on before the write selector"
+    ]
+  },
+  "spec_asserts": "IB-pr-559 step 3 of the order assumes CloudTrail records S3 data events for opal-data-inf over 2026-10-10 to 2026-10-14, so PutObject events can name the writer on each day of the window.",
+  "world_is": "Write data events exist for 2026-10-14 only. The earlier days are attested by reads and by the daily start events of the runner (StartInstances by inf-gold-trigger on 2026-10-09 to 10-14), not by a write event; this is a coverage gap in the trail, not a negative finding about the writer."
+}
+```
+
+## IRPT_BCKEND-D2-W403-S3 -- The flat-key writer is three steps of the gold chain: stopping or handing it over starves the silver and gold steps unless the handler writes the same keys first
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W403-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~403",
+  "surfaced_at": "2026-10-15T05:45:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The writer is not a separate job that can be stopped alone: INF_API_PULL_TXN, INF_API_PULL_PERF and INF_API_PULL_POSITIONS_DAILY are CHAIN_PULL steps of orion-gold-dispatch.sh, and their outputs feed the silver transactions and performance steps and the gold compute in the same run. Retiring them without the handler writing the same keys first starves those steps; running the handler beside them makes two producers of each key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~403/IB202-1_flat_key_writer_read.json@14f2b2da5b: writer name inf-gold-layer-runner, kind ec2_instance; handover field requires the three steps to be retired in the release ledger on the handler's first enabled day",
+      "code/gold/orion-gold-dispatch.sh (read by get, 2127 lines): CHAIN_PULL names INF_API_PULL_TXN, INF_API_PULL_PERF and INF_API_PULL_POSITIONS_DAILY; the pull stage is ordered before the silver and compute stages; the dispatch arms an auto-shutdown of the runner after the chain",
+      "Chain log: INF_API_PULL_POSITIONS_DAILY and the silver steps share the chain's run; the runner stops after each run, so the stop is the runner's own shutdown, not an EC2 API call"
+    ]
+  },
+  "spec_asserts": "The COO half condition 1 and the pair (b) design (IB-pr-556, IB200-4) assume the writer can be stopped or handed over with the manual CLIs retired in the same pair, and that the scheduled handler is a clean replacement for it.",
+  "world_is": "Handover runs through orion-gold-dispatch.sh and the inf-gold-trigger path. The stop is a ledger act on the chain's pull steps, with the dispatch object kept as the rollback, and it must follow the handler's first write of the same keys. Nothing was stopped or changed by this read; the hazard is armed until the release ledger records that handover, and the disarm owner is the issuer holding condition 1."
+}
+```
+
+## IRPT_BCKEND-D2-W403-S4 -- Stop and command text are not visible in CloudTrail: no StopInstances event for the runner, and the SendCommand parameters are hidden
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W403-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~403",
+  "surfaced_at": "2026-10-15T05:45:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CloudTrail holds StartInstances for the runner on each day 2026-10-09 to 10-14 and no StopInstances; the SendCommand request parameters read HIDDEN_DUE_TO_SECURITY_REASONS, so the command text was verified only through the chain log and the dispatch script.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~403/IB202-1_flat_key_writer_read.json@14f2b2da5b: lookup-events ResourceName filter on the runner, 2026-10-09 to 10-14: StartInstances by inf-assets-trigger, inf-gold-trigger and inf-ec2-retry-launch each day, zero StopInstances events",
+      "lookup-events SendCommand 2026-10-14 11:32:57Z by inf-gold-trigger: requestParameters.parameters reads HIDDEN_DUE_TO_SECURITY_REASONS; the invocation output (status and output lines only) was read by ssm list-command-invocations"
+    ]
+  },
+  "spec_asserts": "IB-pr-559 step 6 of the order assumes the handover can name the stop or hand-over act per resource, from the control-plane events.",
+  "world_is": "The control-plane record does not show a stop act for the runner, and the command text is hidden by the service; the handover in the ledger must name the dispatch object and the trigger path as the stop surface, verified against a live read at the time of the act."
+}
+```
