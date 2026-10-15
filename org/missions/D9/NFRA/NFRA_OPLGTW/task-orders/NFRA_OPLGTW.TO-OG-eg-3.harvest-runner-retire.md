@@ -7,7 +7,7 @@
 <owned_cells>OG-eg-3</owned_cells>
 </decomp_ref>
 <to_id>NFRA_OPLGTW.TO-OG-eg-3</to_id>
-<issued_to>0.7.0_AE_CloudOps~ZW</issued_to>
+<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
 <issued_by>2.0.0_SA_COO~O</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -45,7 +45,7 @@ org/critical_paths/.open_deploys/nfra-oplgtw-harvest-runner-sa.json
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
-`W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~ZW/`. Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free; a correction is a NEW row citing the old id, never an edit), fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
+`W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/`. Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free; a correction is a NEW row citing the old id, never an edit), fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
 
 ## 4. PROOF OF SPEC (literal; run from the repo root after your commit)
 
@@ -66,6 +66,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-eg-3.harvest-runner-retire.proo
 - Round 37, workstream HARVEST-RETIRE (decomposition addendum R3-T.71). PRD v3.11 @32b70d1b86 ADMITTED; CTO msg 34500; dell1's CTO accepted all four publishers (relay 34508, ADDENDUM_4_Z_RETIRES_ALL @e6eb813524). Not a gateway release: no never-widen halves.
 - Seat: `0.7.0_AE_CloudOps~ZW` (owns the runner). The GO is the issuer's message citing this order. `OG-eg-2` and `OG-sa-1` become `superseded` in the same commit as this order (their ledgers close SUPERSEDED here).
 - Pre-cut: eg3.AC1 and eg3.AC2 base FAIL as expected (the task is Running, the ledgers are open, the proof is absent).
+
+- A1 (issuer, 2026-10-15 ~17:4xZ): the order is REASSIGNED from `0.7.0_AE_CloudOps~ZW` to `0.7.0_AE_CloudOps~Z`. ~ZW stopped at a weekly usage-limit dialog (resets Oct 18, 9am ET; screen read 17:39Z, 8 unread files, no inbox watcher) and has not read the GO of 16:56Z; `0.0.0_AB_MSTR~Z` declined to seat another instance (msg 34523: the same model policy meets the same limit) and left the reassignment to the issuer. Everything else stands: the CTO's ruling (PRD v3.11, msg 34500), the steps, the bounds and the criteria. `W` is now `~Z`'s deliverables folder, so `EG3_BEFORE.json` and `EG3_PROOF.json` are written there (eg3.AC1 and AC2 read it). The two older runner ledgers `nfra-oplgtw-harvest-runner-silver-cache` and `nfra-oplgtw-harvest-runner-sa` were OPENED by `~ZW` and are closed SUPERSEDED here by `~Z` from the measured state (the CTO's ruling names that close); say so in each close line. The surface paths are unchanged. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>pending</status>
 <round>37</round>

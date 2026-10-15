@@ -17903,3 +17903,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarm: the report-build handler reads each partition's manifest contract and method_version, chains within one contract only, and a test spanning 06-22 and 07-10 shows a stated floor or 'not enough history', never a splice. History is not rewritten under this row."
 }
 ```
+
+## IRPT_DASHBD-D2-W216-S1 -- the commit-time naming gate refuses the order's mandated tf_file and tf_resource in the new source-map entry, so the entry cannot be committed and the build cannot run
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W216-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~216",
+  "surfaced_at": "2026-10-15T17:03:03Z",
+  "one_line": "TO-DB-b-265's source-map entry irpt-cot-reporting-gold-lambda is REFUSED at commit by the naming limb (LGIC_ENFORCE): its tf_file and tf_resource carry the firm token cot as hand-kept carriers, so the commit aborted with nothing staged; the entry must be committed before the BUILD_ONLY run, so AC2 cannot run, and the order stops there as its refusal clause directs",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit of infra/aws/lambda/ci/lambda-source-map.json on branch wk-IRPT_DASHBD-216 (base 2c6ed37df3) returned ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged. The diff was 142 insertions and 0 deletions; the entry is UNCOMMITTED in the worktree and nothing is staged",
+      "the naming-gate refusal lines, verbatim: NAMING REFUSE infra/aws/lambda/ci/lambda-source-map.json:6583 infra/aws/terraform/investor-reporting/reporting-gold-cot/lambda.tf -> lookup('cottonwood') ; NAMING REFUSE infra/aws/lambda/ci/lambda-source-map.json:6584 module.irpt_reporting_gold_cot.aws_lambda_function.this -> lookup('cottonwood') ; NAMING-GATE: REFUSE 2 graded",
+      "the two refused values are the order's mandated tf_file and tf_resource (the order names them, and the issuer checker's ROOT_DIR and tf_resource constants require them). The landing entry irpt-cot-account-return-daily-lambda carries neither token in its tf_file or tf_resource (infra/aws/terraform/investor-reporting/account-return-daily/lambda.tf and module.irpt_account_return_daily.aws_lambda_function.this), so it was never refused; the new entry's source_dir and iam_role also carry the token and were not among the two graded refusals"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-265 step 3 says to commit the new source-map entry irpt-cot-reporting-gold-lambda (tf_file infra/aws/terraform/investor-reporting/reporting-gold-cot/lambda.tf, tf_resource module.irpt_reporting_gold_cot.aws_lambda_function.this) BEFORE running the BUILD_ONLY build, and the refusal clause says that if the naming gate refuses a name the worker records the refusal line verbatim, files a BLOCKING row and stops, and never types a name to pass it.",
+  "world_is": "The commit-time naming gate refuses the two mandated carriers as hand-kept cot tokens outside every permitted context, so the entry cannot be committed, the build (which reads committed source) cannot run, and no criterion past AC1 can be measured. The gate's own suggested route, lookup('cottonwood'), exists for Python code (worker 214's handler, row IRPT_DASHBD-D2-W214-S1) and has no form inside a JSON carrier. No Terraform file of the root was written by this worker, so AC1 was not run either. The worktree keeps the uncommitted entry edit; no name was altered to pass the gate. Counts and paths only; no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W216-S2 -- a plain git merge of box/dell2 left a merge the drain refuser will not continue, so the merge was aborted and re-run through safe-merge.sh
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W216-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~216",
+  "surfaced_at": "2026-10-15T17:40:00Z",
+  "one_line": "The coordinator's ruling said to run git merge box/dell2 in the worktree; that merge conflicted on the append-only investigation file and safe-merge.sh --continue then refused it (rc 2, the merge was not opened by the script); the merge was aborted with safe-merge.sh --abort and re-run as safe-merge.sh box/dell2, which landed 4b03c4e76a with no conflict reported and the channel holding both rows",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge box/dell2 in the worktree reported CONFLICT (content) in org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md; the conflict was two appended blocks at the end of the file, resolved by keeping both (no existing row edited)",
+      "bash .tools/safe-merge.sh --continue returned: safe-merge: REFUSED -- a merge is open but THIS script did not open it (no conflict state at the worktree safe-merge-conflict path); rc=2",
+      "bash .tools/safe-merge.sh --abort returned: safe-merge: merge aborted; tree restored and conflict state cleared; then bash .tools/safe-merge.sh box/dell2 returned: safe-merge: MERGED and committed -- 4b03c4e76a (fast lane); index check 4b03c4e76a: 0 of 149 merged path(s) differ between the index and HEAD; the channel file has 0 conflict markers and both W216-S1 and D2-S90 rows"
+    ]
+  },
+  "spec_asserts": "The coordinator's message said to run git merge box/dell2 in the worktree first, and CLAUDE.md names safe-merge.sh as the merge limb for a shared branch; the order names no merge tool.",
+  "world_is": "A plain git merge that conflicts cannot be continued by safe-merge.sh --continue, which refuses a merge it did not open; the worker aborted the merge (no commit was lost, the resolution was re-made) and landed box/dell2 through safe-merge.sh box/dell2. Counts and paths only; no client value."
+}
+```

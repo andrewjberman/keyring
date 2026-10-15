@@ -10,12 +10,16 @@
  "subject": "Accelerate the Cottonwood backfill (Andrew ~17:3xZ): un-park, porting test first, Yahoo on full set",
  "body_path": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ACCELERATE_COTTONWOOD_BACKFILL_FOR_DELL1_20261015.md",
  "opened_at": "2026-10-15T17:34:06Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-15T17:39:39Z",
+  "bus_message_id": "6bb7326e-7c19-4b82-af89-005fbc198312"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-15T17:45:55Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": "f82d0d28-5bd0-4e78-a9fd-c5d54eee15a1"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
