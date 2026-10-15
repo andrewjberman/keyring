@@ -18211,3 +18211,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "A map entry with no feed rows is in neither manifest count and writes no row or absent record. The synthetic map has no such entry, so the counts are 6 in feed, 5 mapped, 1 unmapped. Counts only."
 }
 ```
+
+## IRPT_DASHBD-D2-S93 -- disarm of W310-S1: a None holdings reason beside a null return is valid under contract 0.4.0 and no reason class is invented
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S93",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T19:47:07Z",
+  "one_line": "Disarm of W310-S1 (ruled by its disarm owner): the Orion adapter rows carry holdings_price_return None and holdings_price_return_reason None; that is valid under contract 0.4.0 (the reason column is nullable and its enum holds only NO_HOLDINGS_ROW and HOLDINGS_NOT_OK, neither true for a vendor-reported return the holdings guard never saw), so no reason class is invented. A consumer tells a guard-less number by source = orion and guard_state = GUARD_NOT_REACHED, which the adapter writes on every row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "W310-S1: rule 6 writes holdings_price_return_reason None beside a null holdings_price_return, though the contract calls that column the reason the return is null.",
+  "world_is": "The contract file marks holdings_price_return_reason nullable and the validator accepts the row; all 17 golden rows carry source orion, flow_claim absent and guard_state GUARD_NOT_REACHED. Whether a third enum member is wanted for a vendor return is the contract owner's and the CVO's call at L9 and is carried in the round-123 packet; nothing is served from this table yet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W310-S1",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-W310-S1: the condition (an unlabelled null) is not a defect under contract 0.4.0, whose reason column is nullable and whose enum has no member true for a vendor return; every adapter row carries source orion and guard_state GUARD_NOT_REACHED, measured by the 17 golden rows the checker grades."
+}
+```
