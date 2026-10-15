@@ -8183,6 +8183,89 @@ carries none.
       ]
     },
     "notes": "The worker followed the write grant and left the task-order file untouched. Landing the status flip is the issuer's act, or a grant that names the task-order path; nothing served changes either way."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W43-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~43",
+    "surfaced_at": "2026-10-15T10:04:21Z",
+    "one_line": "The order's step 0 says the deployed-tools builder prints 'deployed tools written: 1'; it printed 'deployed tools written: 13' and the file it wrote holds 13 names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-19 section 1 step 0: run deployed_from_rows.py into .scratch/deployed.json; it prints 'deployed tools written: 1'.",
+    "world_is": "The run printed 'deployed tools written: 13' and exited 0; json.load of .scratch/deployed.json is a list of 13 items. The number is a tool count, not a verdict, so step 1 onward ran unchanged.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-19.firm-field-on-the-24-prose-firm-rows.md@2d9d5c4503 (worker face section 1, step 0)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~43/c19.AC1.out (the step 0 builder output is not kept; the 13-name count is measured on .scratch/deployed.json in this worktree)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W43-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~43",
+    "surfaced_at": "2026-10-15T10:04:21Z",
+    "one_line": "AC3 cannot pass as written: after the firm field lands, test_opal_discover.py::test_gap_need_answers_with_its_owner_and_no_tool fails at line 868, and that file is outside the order's paths.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-c-19 section 4 AC3: pytest rc=0 on test_firm_catalog_visibility.py, test_opal_discover.py and test_portal_index.py. Section 3 <paths> grants the gateway tests folder only as tests/test_firm_catalog_visibility.py.",
+    "world_is": "Before the change the two existing files pass (58 of 58). After steps 2 and 3 (24 firm fields; regenerated app/refs/DATA_CATALOG.yaml, whose diff against HEAD is the 24 firm lines plus the generator header) the three files run 64 passed, 1 failed of 65. The failure is tests/test_opal_discover.py:868, which asserts od.discover('cost basis','firm','49financial')['matches'] == []; the answer now holds opal_data_assets_silver_49f_fact_taxsma_report, the firm's own mapped row, which is the visibility the order's rule grants. The assertion pins the pre-change no-match state. The test stops at that line, so its later assertions are unmeasured. The file is not edited: it is outside <paths>. AC3 is refused as written.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-19.firm-field-on-the-24-prose-firm-rows.md@2d9d5c4503 (section 3 <paths>; section 4 AC3)",
+        "infra/aws/ec2/opal-gateway/tests/test_opal_discover.py@2d9d5c4503 (line 868 is the asserted line at the cut; the same text in the worker tree)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~43/c19.AC3.out and c19.AC3.failing_ids.out (the run output, 1 failed of 65)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W43-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~43",
+    "surfaced_at": "2026-10-15T10:04:21Z",
+    "one_line": "The docstring of _silver_answer still states the removed rule (a silver row has no firm field, so every firm principal gets no match), because the order bounds the change to three lines.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-19 part (c): replace exactly the three lines; change nothing else in the gateway.",
+    "world_is": "The docstring at infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py lines 625-628 still reads that a silver row carries no firm field and that every firm principal gets no match. It is left as it was, per the bound, and now misstates the rule the function applies.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py@2d9d5c4503 (lines 624-628, the docstring; lines 632-636 are the replaced rule)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-19.firm-field-on-the-24-prose-firm-rows.md@2d9d5c4503 (part (c): change nothing else in the gateway)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W43-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~43",
+    "surfaced_at": "2026-10-15T10:04:21Z",
+    "one_line": "The order's expect fields are prose sentences, but proof-of-spec-check matches expect as a regex against output_evidence, so no printed output can satisfy AC1 or AC2 as written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-19 section 4: each criterion's expect is a prose sentence ending in '-- RESULT: PASS -- exit=0', recorded as the criterion's expectation.",
+    "world_is": "proof-of-spec-check.py takes expect as a regex and searches output_evidence for it. The check prints 'CHECK ok : 24 of 24 mapped rows carry their mapped firm' and 'RESULT: PASS', never the prose sentence, so the prose cannot match. The instance encodes the literal tokens the check prints for each clause of the order's expect, and records the verbatim output. The check's own verdict (RESULT: PASS, exit 0) is unchanged by this encoding; the encoding is disclosed in status_reason and is for the issuer to rule.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-19.firm-field-on-the-24-prose-firm-rows.md@2d9d5c4503 (section 4 expect fields of AC1, AC2, AC3)",
+        ".tools/proof-of-spec-check.py@2d9d5c4503 (the expect match block: re.search(expect, output_evidence))",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~43/c19.AC1.out and c19.AC2.out (the verbatim printed output)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
