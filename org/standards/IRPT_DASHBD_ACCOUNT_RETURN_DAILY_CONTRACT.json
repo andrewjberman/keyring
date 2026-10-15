@@ -169,7 +169,7 @@
       "type": "int64",
       "nullable": true,
       "meaning": "Orion's integer account id for the account-day, carried beside the custodian account_id so that an Orion row can be joined to Orion's own records",
-      "rule": "Null for every non-Orion source. Set only where source is orion and the custodian account form is mapped through account_dim; an Orion account with no mapping is not written with a guessed id.",
+      "rule": "Null for every non-Orion source. For source orion it carries the raw Orion integer id and is REQUIRED when reason_class is UNMAPPED_ACCOUNT, the one case where account_id is null because the account is not a member of account_dim (no id is guessed).",
       "since_schema_version": "1.2",
       "required_when": {
         "reason_class": "UNMAPPED_ACCOUNT"
