@@ -38087,3 +38087,211 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W418-S1 RESOLVED: the dim_balance writer was outside the sparse grant (AMENDMENT 2 of IB-pr-575). D2-W418-S3: the account's 20 dim_position rows vanish on the same days as its dim_balance row, so it is not a balance-file-only defect; the rule's class is closed_at_source (no positions on the last two days). D2-W418-S2 stays ARMED, owner me: the 2026-10-12 fact_trn partition has 81 KB and 509 rows against 563 KB and 11,906 rows the next day (a size shape a truncated write would produce; rows were counted by head and a count, not read in full), so a closing transaction on 2026-10-12 could be missing; the CTO's completeness condition (each partition at least 95 percent of the prior day's) is the guard against exactly this. The acceptance mechanism is the closed_at_source exemption of the gate (IB-pr-576, workstream ~PG), one pair for both firms (CTO msg 8284); a TERMINATED mark through the directory cannot be written for an account absent from its source (D2-W417-S3)."
 }
 ```
+
+## IRPT_BCKEND-D2-W417-S1 -- at HEAD the publish gate lists the one lost Cottonwood account as not refused and returns PUBLISHED with no mark applied
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W417-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~417",
+  "surfaced_at": "2026-10-15T12:41:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (issuer; owner of rows S158, S192 and S193)",
+  "one_line": "The IB-pr-574 premise fails: with the directory as served (no TERMINATED mark for the account) the HEAD gate lists the lost account under account_lost_not_refused and returns PUBLISHED against the 2026-10-08 served index, so the S158 refusal is not reproduced at HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@51d2aee70e lines 3004-3011 (directory_marks_no_closures: every non-carried entry UNKNOWN) and 3049-3058 (a lost account is listed, not refused, when marks_no_closures is true)",
+      "offline measurement in scratch: evaluate_publish_gate on the rebuilt 2026-10-13 candidate against the served 2026-10-08 index with the live directory: outcome PUBLISHED, conditions none, listed account_lost_not_refused count 1",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~417/IB213-1_terminated_mark_read.json (notes, line 4)"
+    ]
+  },
+  "spec_asserts": "Row D2-S158 and the IB-pr-574 order: the publish guard refuses the candidate that loses one account, so the lost account needs a directory mark or a never-widen pair to be accepted.",
+  "world_is": "STATE: the gate at HEAD does not refuse the lost account while the directory marks every non-carried entry UNKNOWN (the PRD v0.33 rule). The refusal recorded on 2026-10-14 (account_lost count 1) came from code or a directory this measurement did not reproduce; the deployed code was not read. A scheduled run on HEAD would publish a candidate that drops one account. ARMED until the owner decides which path governs.",
+  "notes": "Counts only; the account id stays in scratch."
+}
+```
+
+## IRPT_BCKEND-D2-W417-S2 -- the offline rebuild of the refused 2026-10-13 candidate does not reproduce the refusal record's revision (7 more nodes)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W417-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~417",
+  "surfaced_at": "2026-10-15T12:41:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The offline rebuild of Cottonwood's 2026-10-13 candidate (17911 nodes, 863 accounts) does not reproduce the revision the 2026-10-14 refusal record carries (17904 nodes, 863 accounts); the cause is not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the refusal record read in scratch: candidate business_date 2026-10-13, 863 accounts, 17904 nodes, refused_at 2026-10-14T14:17:41Z",
+      "the offline rebuild in scratch: 17911 nodes, revision differs; the build printed a WARN that the calendar answered from its hardcoded NYSE fallback (lib/trading_calendar.py@51d2aee70e)"
+    ]
+  },
+  "spec_asserts": "A refusal record names the candidate it refused, so a rebuild of that candidate reproduces its revision.",
+  "world_is": "A rebuild at HEAD of the same business date yields 7 more nodes than the refused candidate. Whether the source, the classifier fallback or the calendar differs is not measured."
+}
+```
+
+## IRPT_BCKEND-D2-W417-S3 -- the directory holds no TERMINATED mark for the one account, and the writer's carry-forward rule cannot write one for it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W417-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~417",
+  "surfaced_at": "2026-10-15T12:41:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The directory holds no TERMINATED mark for the one account that the Cottonwood guard must accept. The writer marks only an entry the previous build carried, and the account is in no directory entry and not in the directory's source client list (count only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the directory object read in scratch: 271 entries, 0 entries name the account, the source client list does not hold the account (boolean reads)",
+      "infra/aws/lambda/investor-reporting/directory/refresh.py@51d2aee70e lines 429-446 (carry_forward_terminated) and 1071-1107 (the carry-forward decision, from the previous build)"
+    ]
+  },
+  "spec_asserts": "The IB-pr-574 never-widen pair is bound to the directory's TERMINATED mark, as the CTO ruled (msg 8263), so the directory carries the mark for an account the source has closed.",
+  "world_is": "STATE: 0 of 271 directory entries name the one account; 2 entries are TERMINATED and both carry source_removed_on. No existing rule writes the mark for this account, so the directory owner decides how the mark is written."
+}
+```
+
+## IRPT_BCKEND-D2-W417-S4 -- the custody and independent-total partitions disagree for one account on 2026-10-06 to 2026-10-08
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W417-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~417",
+  "surfaced_at": "2026-10-15T12:41:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "For one Cottonwood account on 2026-10-06, 10-07 and 10-08, the custody partition carries two rows with no position while the independent-total partition carries a nonzero Account Market Value; from 2026-10-09 the total is absent. The IB-pr-571 read covered the candidate and served dates only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the custodian partitions read in scratch (existing objects, GET and list only): fact_holdings and fact_allocations for 2026-10-01 to 2026-10-14 (counts and booleans only)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~417/IB213-1_terminated_mark_read.json (notes, line 7)"
+    ]
+  },
+  "spec_asserts": "The custody rows and the independent totals of one Cottonwood source date describe the same positions: no-position rows come with no nonzero total.",
+  "world_is": "STATE: the two partitions disagree on three trading days before the zero-position run. Which partition is right is not decided here."
+}
+```
+
+## IRPT_BCKEND-D2-W417-S5 -- the Cottonwood builder's import chain needs five directories beyond the grant the order names
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W417-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~417",
+  "surfaced_at": "2026-10-15T12:41:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The offline candidate build for Cottonwood (build_snapshot) imports five directories beyond the grant the order names; each was added to the sparse checkout locally and never committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the import errors in sequence, measured on the worktree: mdpf_calendar_binding, rebalancer_schemas, dim_mdpf_account_distribution chain (taxsma_workbook), etf_classifications_dynamodb",
+      "the sparse grant as recorded in deliverables/0.9.0_WK_IRPT_BCKEND~417/IB213-1_terminated_mark_read.json (notes, line 8)"
+    ]
+  },
+  "spec_asserts": "Worker face line 24: the import chain of the Cottonwood sibling needed infra/aws/lambda/investor-reporting and a currency file, and the grant is limited to those.",
+  "world_is": "The build_snapshot chain for cottonwood also imports from data/mdpf/scripts/gold, data/mdpf/scripts/silver, data/assets/scripts/silver and infra/aws/lambda/v2_portal/_shared. The sparse checkout was widened by those four and by docs/contracts/investor-reporting/v1 (the currency file), locally, never committed."
+}
+```
+
+## IRPT_BCKEND-D2-W417-S6 -- IB213-1-AC3 cannot pass on a truthful record: the newest candidate and the served index are at different dates
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W417-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~417",
+  "surfaced_at": "2026-10-15T12:42:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-574 check IB213-1-AC3 requires nodes_changed_other_than_the_account 0, but an honest record of the newest candidate (2026-10-13) against the served 2026-10-08 index differs on 16912 nodes, because market values moved; the check cannot pass on a truthful record, so the defect is the check's (issuer's), and the order stays open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~417/IB213-1_criteria_output.txt (IB213-1-AC3 FAIL, rc=1: nodes_changed_other_than_the_account 0)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~417/IB213-1_terminated_mark_read.json (offline_guard.nodes_changed_other_than_the_account 16912: 16764 amount-only, 148 identity; notes, line 6)"
+    ]
+  },
+  "spec_asserts": "IB213-1-AC3 (check p213_cells.py c3): every other node unchanged, nodes_changed_other_than_the_account 0, for the offline gate run of the newest candidate against the served index.",
+  "world_is": "The candidate date and the served date differ by two trading days, so amounts move on almost every node (16764 amount-only differences) and 148 nodes appear or disappear (37 served-only, 111 candidate-only). A zero count needs an equal-date comparison, which the order does not state. Issuer to decide the comparison.",
+  "notes": "Counts only. The worker did not alter the count to pass the check."
+}
+```
+
+## IRPT_BCKEND-D2-W417-S7 -- the live Cottonwood and 49 Financial holdings bundles match neither HEAD nor the IB-pr-549 pins; the deployed Cottonwood gate refuses where HEAD publishes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W417-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~417",
+  "surfaced_at": "2026-10-15T13:03:26Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (holds the Cottonwood acceptance pair until the IB-pr-549 mint and its next fire)",
+  "one_line": "The live holdings bundles run a holdings_snapshot.py that matches neither HEAD nor the IB-pr-549 pins. Live Cottonwood (bundle version oyIYMVdh_l2zCg5ZWvn3ISPPS6_9Q82_, pin 5fad7eaaa8fb4c512190fa406b78c683c4b6ad1f) and live 49 Financial (bundle version UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD, pin b1d354cfc9341168a3b4c316a344876ce0049b97) both differ from HEAD. The deployed Cottonwood gate refuses the lost account (REFUSED, account_lost 1) where HEAD lists it and publishes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live bundles read by GET of existing objects at the IsLatest version ids (list-object-versions re-read 2026-10-15): opal-data-cottonwood irpt/cottonwood/code/gold/investor-reporting-holdings.tar.gz and opal-data-49financial irpt/49financial/code/gold/investor-reporting-holdings.tar.gz",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~417/IB213-1_terminated_mark_read.json (deployed_vs_head; notes, lines 4 to 6)",
+      "the deployed Cottonwood gate executed in scratch over HEAD helpers with the live directory: REFUSED, account_lost count 1; HEAD gate on the same candidate: PUBLISHED, account_lost_not_refused count 1"
+    ]
+  },
+  "spec_asserts": "IB-pr-574 amendment 2 and the CTO's msg 8281: the live Cottonwood and 49 Financial bundles are read so that deployed_vs_head is recorded against HEAD and the IB-pr-549 pins.",
+  "world_is": "STATE: the Cottonwood bundle's directory_marks_no_closures lacks the carried-forward exclusion that HEAD has, so it refuses the lost account; HEAD would list and publish it. Neither live file equals HEAD or its pin (sha256 prefixes: deployed Cottonwood dfa017b8, deployed 49 Financial 5651000b, HEAD fa16b2c3, pins 06de07d8 and 6c6eed90). A deploy of HEAD would change the gate's answer for the lost account. ARMED until the IB-pr-549 mint and its next fire are read.",
+  "notes": "Read only. Nothing was written, minted or deployed."
+}
+```
+
+## IRPT_BCKEND-D2-S199 -- The deployed-versus-HEAD gate difference and dispositions on worker 417's rows; the deployed directory_marks_no_closures refuses where HEAD publishes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S199",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T13:12:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The DEPLOYED-versus-HEAD gate difference (CTO msg 8281) and dispositions on worker 417's rows (D2-W417-S1 to S7): the live holdings bundles run a holdings_snapshot.py that matches neither HEAD nor the IB-pr-549 pins; the deployed directory_marks_no_closures has no carried-forward exclusion, so with the two carried TERMINATED entries it returns False and the deployed gate REFUSES Cottonwood's lost account where HEAD lists it and publishes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB213-1 AC1 to AC3 on the worker tree (all PASS) and the proof instance (VALID); merge 36d573701b",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~417/IB213-1_terminated_mark_read.json: live Cottonwood bundle version oyIYMVdh_l2zCg5ZWvn3ISPPS6_9Q82_ (IB-pr-549 pin 5fad7eaaa8fb4c512190fa406b78c683c4b6ad1f) and live 49 Financial bundle version UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD (pin b1d354cfc9341168a3b4c316a344876ce0049b97): neither deployed holdings_snapshot.py equals HEAD; both carry the v0.33 rule (5 marks_no_closures occurrences) but the deployed directory_marks_no_closures has no carried-forward exclusion while HEAD ignores the pipeline's own TERMINATED marks; executed on Cottonwood's directory (two carried entries): deployed REFUSED (account_lost 1), HEAD lists and PUBLISHES; the 49 Financial file is another version (3,241 lines against HEAD's 3,290) with the same body (AST comparison, not executed)"
+    ]
+  },
+  "spec_asserts": "My IB-pr-574 order and the CTO's msg 8281: the deployed gate is the IB-pr-396 v0.33 gate, so the refusal reproduces at HEAD.",
+  "world_is": "DISPOSITIONS. D2-W417-S6 RESOLVED (my check defect, AMENDMENT 1: the candidate-against-served difference is counted by kind). D2-W417-S1 and S7 stay ARMED, owner me, as the hinge of the Cottonwood pair: whether Cottonwood publishes after the IB-pr-549 mint depends on whether the minted pin-2 body of directory_marks_no_closures is HEAD's or the deployed one (the worker did not read pin 2's body; the CTO holds the Cottonwood pair until the mint and its next fire). D2-W417-S3 (no TERMINATED mark exists for the account and the writer marks only an entry the previous build carried: the account is in no directory entry and not in the directory's source client list) is the reason the closed_at_source exemption (IB-pr-576) is built instead of a mark. D2-W417-S2 (the offline rebuild gives 17,911 nodes against the refused revision's 17,904), S4 (for three days before the zero-position run the custody partition carries two no-position rows while the independent-total partition carries a nonzero value), S5 (the sparse grant widened locally): INERT, recorded. The CTO's 8290 changes the exemption's record to ABSENT_AT_SOURCE (never closed)."
+}
+```
