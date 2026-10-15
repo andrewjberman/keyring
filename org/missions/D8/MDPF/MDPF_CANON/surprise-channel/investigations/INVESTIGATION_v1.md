@@ -2569,3 +2569,26 @@
   "notes": "A premise mismatch only; no code path reads line endings. Kept as found."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W27-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~27",
+  "surfaced_at": "2026-10-15T01:26:11Z",
+  "one_line": "CN-p-2 amendment 2 leaves the page comment at ModelPortfolios.tsx line 560 saying the Inflection blends are rolled first; the statement it describes no longer rolls them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-p-2 amendment 2 (section 0, the page edit): 'No other line of the page changes.'",
+  "world_is": "The comment above inflectionCustom reads 'folded as the per-firm path folds them (blends rolled first)'. After the amendment-2 edit the statement builds inflectionCustom from the UNROLLED Inflection series, so the comment is inaccurate. Left as it is, because the order bounds the page to the one expression.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@500af5e8 src/pages/ModelPortfolios.tsx lines 560-562 (read in the worktree after the edit): comment line 560 unchanged, statement line 562 now groupCustomModelsSeries(inflectionByModel, ...)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Comment-only; the issuer decides whether to correct it. No code path reads the comment."
+}
+```
