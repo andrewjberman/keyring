@@ -66,12 +66,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 220.28 days old (min 14); 145 earlier releases (min 3)",
+        "summary": "release 220.31 days old (min 14); 145 earlier releases (min 3)",
         "this_release_at": "2026-03-09T12:48:39.133616Z",
         "first_release_at": "2019-05-08T11:11:29.054711Z",
         "release_count": 146,
         "earlier_releases": 145,
-        "age_days": 220.28,
+        "age_days": 220.31,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false
@@ -165,15 +165,19 @@
     {
       "n": 8,
       "name": "a person reads the result of 1 to 7 and signs the batch",
-      "verdict": "failed",
+      "verdict": "passed",
       "evidence": {
-        "summary": "the signature file does not exist"
+        "summary": "signature file names the batch and the file and carries the signing line",
+        "signer": "1.0.0_SA_CTO",
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md",
+        "signature_file_sha256": "c019ffbd1bf65875cfc51bebaf9ec22161e929cec0e0a2ba058a1d0d803606c7",
+        "signature_file_git_author": "1.0.0_SA_CTO"
       },
       "rules_out": "a tool's silent failure being read as a pass",
       "leaves": "what none of 1 to 7 can see"
     }
   ],
-  "verdict": "not_checked",
-  "checked_by": "0.9.0_WK_NFRA_CTLPLN~119",
-  "at": "2026-10-15T19:28:28Z"
+  "verdict": "checked",
+  "checked_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "at": "2026-10-15T20:19:22Z"
 }
