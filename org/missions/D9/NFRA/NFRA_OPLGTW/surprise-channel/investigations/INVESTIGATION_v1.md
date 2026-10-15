@@ -18257,3 +18257,26 @@ name the one known failure instead of silently inheriting it.
     "world_is": "The flip gate finds an instance only under the order's stem name (client-smartx). The instance is written at W/NFRA_OPLGTW.TO-OG-cl-5.client-smartx.proof_of_spec.json, the underscore file is removed, and the instance validates at rc 0 under the new name. The order's named path and the gate's rule disagree; the issuer decides the name for later orders."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S13",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T21:28:29Z",
+    "one_line": "The cl5.AC2.sh check prints 'probe rc' from a pipeline whose last stage is tr, so the printed rc is tr's status, not the probe's exit code; the PASS verdict rests on the probe's own output line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/cl5.AC2.sh line 9 @3f1dc12bfc: out=$(timeout 115 python \"$P\" 2>&1 | tr -d '\r'); rc=$? (this seat)",
+        "RAN cl5.AC2.sh @3f1dc12bfc from the worktree root: printed 'probe rc 0' with the probe line 'envelope_ok True; independent_count_equal True; fence_negative_arm True; account_numbers_printed 0' and RESULT: PASS (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The AC2 check treats the probe's exit status as part of its verdict (the rc test in cl5.AC2.sh requires rc 0 from the probe run).",
+    "world_is": "The rc captured after the pipeline is the exit status of tr, which returns 0 whatever the probe returns. A probe that exits non-zero after printing a matching line would still pass the check. The probe in this round exits 0, so the verdict is unaffected here; the issuer decides whether the check captures the probe's own status (PIPESTATUS or pipefail)."
+  }
+  ```
