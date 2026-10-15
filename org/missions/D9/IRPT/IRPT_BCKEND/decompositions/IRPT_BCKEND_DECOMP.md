@@ -4367,3 +4367,15 @@ Check IB231-1 (`deliverables/2.0.0_SA_COO~P2/checks/r231/p231_cells.py`), dry-ru
 | `IB-pr-599` | the feed writes a day's key pair only when the day is complete, names skipped days, exits non-zero | FWD-3 | LOCAL | none | PN4-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one script; one worker (slot ~436) starts now.
+
+## 226. ROUND 7, WORKSTREAM ~PO (the APPLY of the Scope account feed's IAM pair; 2026-10-15 ~19:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling msg 8553 after IB2's STOP at gate (f) of IB-pr-596, msg 8548)
+
+`address()` puts the feed in `opal-data-assets/orion/inflection/` (doctrine R4, the CTO ruled it right); the inf gold runner role reaches `opal-data-inf` only, so the feed's write simulates implicitDeny. The IAM pair (packet blob cea5395ee7; COO half @afc428c27c; CTO half @d0bf7c5ea7) grants ONE new inline policy: Put/Get on the two `scope_account_returns` prefixes, ListBucket under an `s3:prefix` condition, no Delete, no KMS. One WORLD order to `0.7.0_AE_CloudOps~IB2` applies it through `safe-apply` under its own ledger and proves it both ways (four allowed and four denied simulation arms) plus the CTO half's condition 3: the feed's own `exists()` run on the runner against a known-absent key must read ABSENT. IB-pr-596 resumes after it, amended.
+
+Check IB232-1 (`deliverables/2.0.0_SA_COO~P2/checks/r232/p232_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control232.py`) passes the three positives and fifteen negatives plus the no-record cases each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-600` | APPLY the one IAM resource for the feed's keys; the simulation arms; the exists() read on the runner | FWD-3 | WORLD | none | PO7-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
