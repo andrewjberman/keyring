@@ -262,6 +262,51 @@
     "spec_asserts": "PRD FWD-3 ACCEPT and C-PANEL: panels are white and nothing inside a panel is left unreadable by the primitives alone; FWD-1 ACCEPT: the page shows real figures and Andrew can say whether it reads as Opal's work.",
     "world_is": "Controls written with ground=band (the panel header used to be navy) spell their ink as palette tokens; inside a white panel they read as light grey on white, on the thread page itself.",
     "notes": "Ruled inside the COO's own decomposition (obligation 7): an addendum DIRECT-ACT cell, scoped token remap inside [data-panel-surface=\"light\"], no page file edited. Other token-spelled light inks inside panels are the round-3 walk's population."
+  },
+  {
+    "id": "DSGN_RBNDV2-W5-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~5",
+    "surfaced_at": "2026-10-15T06:08:36Z",
+    "one_line": "The criterion's difference-control invocation git show d2a3c2fe:portal/src/index.css does not resolve from the workspace root (rc=128): the base commit lives in the portal's own git repository, so the test reads git show d2a3c2fe:src/index.css from the portal root, which returns the same base bytes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-5/portal cat-file -t d2a3c2fe printed commit; git rev-parse --show-toplevel from the portal printed C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-5/portal (a separate repository)",
+        "git show d2a3c2fe:portal/src/index.css run at C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-5 printed 'fatal: invalid object name d2a3c2fe' and rc=128; git cat-file -t d2a3c2fe at the workspace root printed the same fatal line",
+        "bun test src/__tests__/dsgn-rbndv2/rb-1-r.remap.test.ts before the CSS edit: 0 pass, 1 fail, 'exact-scope rules outside @layer: 0'; after the edit: VERDICT: PALETTE-REMAP-OK, 1 pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RB1R-AC1 (TO RV-r-1): the difference control runs the same text checks against git show d2a3c2fe:portal/src/index.css and reports the rule absent, proving the test can fail.",
+    "world_is": "The portal is its own git repository, so the base path form in the criterion resolves only from inside the portal. The test reads the base as git show d2a3c2fe:src/index.css with cwd at the portal root; it asserts the base text carries the existing [data-panel-surface=light] .text-white rule (positive control) and that the exact-scope rule is absent there, so the control can fail.",
+    "notes": "The criterion's literal invocation was not run as written; the bytes it names are the same. No file outside the grant was touched."
+  },
+  {
+    "id": "DSGN_RBNDV2-W5-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~5",
+    "surfaced_at": "2026-10-15T06:08:36Z",
+    "one_line": "The scoped palette remap reaches every palette-white and palette-mediumGray consumer inside a light panel, not only the Segmented and Button band variants: 161 occurrences in 31 portal/src files, and 5 of them paint a status dot fill rather than ink, so an idle grey dot inside a light panel turns navy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- at the FWD-5 walk (round 3), decide whether the status dots keep the quiet ink or take a fill token; the remap cell edits no page file and does not touch them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "native Grep over C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-5/portal/src for palette-white or palette-mediumGray (base d2a3c2fe plus the RV-r-1 edit): 161 occurrences across 31 files",
+        "bg-[hsl(var(--palette-mediumGray))] status dot at portal/src/pages/AdvisorIntelligence/_partners/inflection/index.tsx:323, demo/index.tsx:263, cottonwood/index.tsx:206, 49financial/index.tsx:303, and portal/src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx:93",
+        "whether each dot sits inside a light panel was not measured; the native Grep found no bg- or fill use of palette-white"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-r-1 cell: a custom property set on the panel root is inherited by every control inside it, so nothing else needs to move; the cell edits only portal/src/index.css and its test.",
+    "world_is": "The remap is scoped to [data-panel-surface=light], so every element inside a light panel that spells palette-mediumGray now resolves to the navy ink, including the four partner-page status dots and the ExecManagementTab dot that paint a fill. An idle grey dot inside a light panel reads as navy, a change of meaning the cell did not name.",
+    "notes": "Filed, not fixed: the cell grants only index.css and its test, and the page files are outside it."
   }
 ]
 ```
