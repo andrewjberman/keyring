@@ -187,7 +187,7 @@ commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing
 
 - A1 (issuer, 2026-10-15 ~03:4xZ): ISSUED. The four open questions are decided: (1) round 37, workstream R37-PERSON, in parallel with the Friday-set releases (CTO msg 34240-era sequencing: the release is a later gateway order after `OG-ap-20`); (2) tier records stay OUT, the rosters keep the tier; (3) the sort-key literal `person_access` follows the existing hand-named tuple; (4) the record shape is sent to `2.0.0_SA_COO~MP` with the issuance (their F2 writes to it). The slot is ~94. Gate limb: GATE (viii) on the issued order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>R37-PERSON</workstream>
 <slot>~94</slot>
