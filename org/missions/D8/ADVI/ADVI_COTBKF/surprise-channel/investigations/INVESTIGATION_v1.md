@@ -8872,3 +8872,30 @@ round.** Never edit an existing row.
   "disarm_owner": "1.0.0_SA_CTO~DELL2"
 }
 ```
+
+## ADVI_COTBKF-D1-W170-S1 -- The order's write grant (data/assets/scripts/silver/) and its named builder inputs (data/mdpf/scripts/demque/) are tracked at HEAD but outside this worktree's sparse-checkout cone, so the worktree does not carry the paths the order names; the order is not executable here. Stopped before any build (refusal clause); no file was written outside the deliverables folder.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W170-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~170",
+  "surfaced_at": "2026-10-15T18:02:56Z",
+  "one_line": "The order's write grant (data/assets/scripts/silver/) and its named builder inputs (data/mdpf/scripts/demque/) are tracked at HEAD but outside this worktree's sparse-checkout cone, so the worktree does not carry the paths the order names; the order is not executable here. Stopped before any build (refusal clause); no file was written outside the deliverables folder.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-cotbkf-170 sparse-checkout list (core.sparseCheckout=true, worktree HEAD 824588956ea188ade47ac480f1dd0b87e6c00e11): .tools, infra/logic/registry, lib, org/devices, org/missions/D8/ADVI/ADVI_COTBKF, org/modules/graph, org/ref, org/standards; no data/ entry",
+      "ls -d C:/dev/wk-cotbkf-170/data: no such file (the worktree has no data/ on disk); git status --short in the worktree: 0 entries",
+      "git -C C:/dev/wk-cotbkf-170 ls-tree -r --name-only HEAD data/mdpf/scripts/demque/ lists active_set.py, b1_request.py, bbg_quote.py, bbg_allowance.json; data/assets/scripts/silver/ is tracked at HEAD and absent on disk",
+      "base checkout C:/dev/ajb_workspace (same HEAD 824588956e) holds data/mdpf/scripts/demque/b1_request.py and the two MDPF_DEMQUE failed-14 and option-C request files on disk; the committed V2 file in the worktree hashes 5cef7ab0c9e10fe299cb757d4dba31792d069bad35f7250defa76e18773046ae, matching the order"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-2 worker face: the grant is the <paths> block (data/assets/scripts/silver/cotbkf_active_bbg_need.py and its tests); the builder inputs are read at the worktree root (data/mdpf/scripts/demque/b1_request.py); a worker whose worktree does not carry the named paths files a BLOCKING row and stops, and never rebuilds or extracts the tree.",
+  "world_is": "The worktree's sparse-checkout cone omits data/, so the named write path and the named builder inputs are tracked at HEAD but not materialised in this worktree. The order's read-first list points at the base checkout, but the write grant cannot be created in this worktree without widening the cone, which is a tree reconstruction the worker face forbids. Nothing was run against the builders, no cone or config was changed, and no checkout was run. Not established: whether the issuer intends the cone widened for this worker or the build run from the base checkout.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
