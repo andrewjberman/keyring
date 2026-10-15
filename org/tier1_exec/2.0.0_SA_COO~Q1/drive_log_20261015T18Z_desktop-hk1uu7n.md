@@ -1,0 +1,15 @@
+# Drive log, 2.0.0_SA_COO~Q1, MDPF_DEMQUE, 2026-10-15 ~18Z to 19Z (the previous log is `drive_log_20261015T17Z_desktop-hk1uu7n.md`)
+
+Lease: FULL. Round 9, project `EXECUTING`. Andrew's split (CTO msgs 6105, 6114, ruling amendments 1, 2 and 4 in `org/missions/D8/ADVI/ADVI_COTBKF/ledger/CTO_RULING_DELL1_UNPARK_ACCELERATE_20261015.md`): active accounts (the V2 set) Bloomberg only, every other name may take Yahoo, P2 counts as inactive for Yahoo, the use label in its own column, the queue order B1, failed-14, porting test, ADVI_COTBKF's 27 active slices, then the seven ETFS_RIVALS requests.
+
+| time (Z) | limb | act fired |
+|---|---|---|
+| 18:0x | L7 / drain | `DQ-t-65` (symbols from Cottonwood's own transactions; with_symbol 14 to 1,071) merged @b3b9b93e2b through `safe-merge.sh`, folder 228 passed. |
+| 18:3x | L6 | Amendment 29 @5e62883899: `DQ-t-66` (Yahoo gate = V2; unenrolled landed names roll), `DQ-t-67` (backfill request builder), `DQ-t-68` (`use_class` column); six checks `FAIL` at the base; the never-widen COO half filed; fanout 3 of 3 chains. Daytime batches (ruling item 3) not cut: the pacer cap is a rate guard, 319 of 400 used on 10-14, the backfill fits in about four nights. |
+| 18:3x | ruling | CTO half signed @55b747d57c (conditions C1 folder green, C2 the stop). The 27 active slices from COO~C1 placed in `requests/` @b2c7756c7a as `ZZ-ADVI_COTBKF-ACTIVE-BBG-NN` (the draw sorts by tier, rank, file name), read back: B1, failed-14, porting test, slices 01..27, then RIVALS. |
+| 18:4x to 19:0x | L7 / drain | `DQ-t-67` @662eb4ce8b, `DQ-t-68` @34bcd8390e, `DQ-t-66` @6a557f1206 merged (the third after an issuer fix to its AC2 check, whose `--plan` CLI line omits the securities list: @4db7e177eb); folder 238 passed, compile and ruff clean. Worker rows W56-S1/S2, W57-S1, W58-S1..S3, W60-S1/S2 ruled in the worker messages (cone gap, scope, accepted). |
+| 19:0x | WORLD | Change entry `mdpf-demque-inactive-yahoo-20261015` opened (L1 and L2 closed, L3 the first nightly run's receipt OPEN) @e45ade2c32; `YAHOO-INACTIVE-BACKFILL-01..04` (1,071 names) placed in `C:/Users/Test/.opal/demque/queue`, byte-identical to the build; the queue loads 11 requests, backfill last. `extend_frontier.py --plan` read: 6 symbols, `excluded_active` 528, `excluded_p2` and `excluded_p3` 0. |
+
+**Finding for the CTO's round-9 analysis (not built):** the standing Yahoo extension is now 6 symbols a day, because 528 of the 538 stored names are V2-held; their stored prices stop at their present `valid_to` until Bloomberg replaces them (the CTO's amendment 4: 35 drawing days, 2027-01-30 on the non-trading-day rule). 634 inactive-only names have no symbol in any source read.
+
+**Open at the end of the hour:** the 22:30 ET run (02:30Z 10-16) is the window; its receipt (exit code, keys written against the store's version list, inside the pair's table) closes L3 at the 04:17Z or 05:17Z tick; stop on a non-zero exit or a write outside the table. Then `DQ-t-34` AC2 (the 10-17 fire), the L8 packet, the one slug. Call `99be` (trading-day draws) is Andrew's.

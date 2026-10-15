@@ -19144,3 +19144,53 @@
   "notes": "Form only: the rule is as ordered and the new tests are as ordered; the fixture edits are the minimum the rule forces. The CTO or COO may prefer a different fixture shape; the choice is theirs."
 }
 ```
+
+## IRPT_ANLREQ-D2-W190-S5 -- the commit gate's client-data check found no hashed account-id list on this device, so commit 65a6fa6170 was not checked for client account ids
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W190-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~190",
+  "surfaced_at": "2026-10-15T19:56:59Z",
+  "one_line": "The commit gate's client-data check found no hashed account-id list on this device, so commit 65a6fa6170 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate runs its client-data check on every commit (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6), and AR-g-90 commits its two product files through safe-commit with no exemption.",
+  "world_is": "safe-commit printed WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt, and this commit was NOT checked for client account ids. The worker scanned its own 150 added lines for a run of six or more digits (0 found) and does not claim the gate's check.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 65a6fa6170: WARN client-data-check hashed account-id list ABSENT (absent is not empty)",
+      "git show 65a6fa6170 over infra/aws/lambda/investor-reporting/reports/resident_installed.py and reports/tests/test_opal_pricing_binding.py: 150 added lines, 0 with a run of 6 or more digits (worker scan, not the gate)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W190-S6 -- the pre-commit risk reflex printed HOLD on resident_installed.py and cited a deploy receipt the sparse worktree does not hold, so the citation was not read before commit 65a6fa6170
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W190-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~190",
+  "surfaced_at": "2026-10-15T19:57:00Z",
+  "one_line": "The pre-commit risk reflex printed HOLD on resident_installed.py and cited a deploy receipt the sparse worktree does not hold, so the citation was not read before commit 65a6fa6170.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate's risk reflex says: GO READ THE CITATION before this commit proceeds. The AR-g-90 worker face names infra/ and org/missions/D9/IRPT on disk and names no critical_paths read.",
+  "world_is": "The reflex printed HOLD infra/aws/lambda/investor-reporting/reports/resident_installed.py (2 recorded claims) and cited org/critical_paths/change_management/20260924T0150Z_irpt-resident-cutover-20260924_deploy_completion.md:19. In worktree C:/dev/wk-irpt-anlreq-190, ls of org/critical_paths/change_management reports No such file or directory, so the citation was not read; the commit proceeded with the HOLD printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit risk-reflex output for commit 65a6fa6170: HOLD on resident_installed.py, citation org/critical_paths/change_management/20260924T0150Z_irpt-resident-cutover-20260924_deploy_completion.md:19",
+      "ls org/critical_paths/change_management in C:/dev/wk-irpt-anlreq-190: No such file or directory; the same condition is on record as IRPT_ANLREQ-D2-W188-S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

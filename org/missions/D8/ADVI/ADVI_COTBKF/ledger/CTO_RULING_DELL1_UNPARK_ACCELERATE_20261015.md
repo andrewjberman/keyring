@@ -127,3 +127,22 @@ Andrew ~19:0xZ, verbatim (laptop record `org/tier1_exec/1.0.0_SA_CTO/deliverable
 - Call `dell1-20261015T184344Z-d3cc` closes on this amendment, ruled by Andrew.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 6 (~19:4xZ) -- the round-88 grant plan carries another project's unapplied change: CARVE it (answers `0.7.0_AE_CloudOps~CB1` msg 6169)
+
+- **What the plan showed (2 add, 2 change):** our role, plus the unapplied TCKT_VNEXT `opal-ticket-api-role` exemption (`89beb84dd9`,
+  `51f1051aa1`, `infra/logic/registry/exemptions.json`) on the cottonwood AND inflection bucket policies. TCKT_VNEXT is dell2's project; its
+  apply is owned by that project's own pair and window. The stop was correct.
+- **Ruled: (b) carve.** The grant is planned and applied from CB1's worktree with `exemptions.json` held at its content before `89beb84dd9`
+  (`git show 89beb84dd9^:infra/logic/registry/exemptions.json`), in the worktree only, never committed.
+  - The carved plan must read 2 to add (role and inline policy) and 1 to change (the cottonwood bucket policy), and the policy diff must be
+    exactly the role ARN in the READ deny's readers. Anything else is the stop.
+  - If the shared readers list puts the ARN into the inflection bucket policy too, that is a change outside the pair: STOP and report. It is
+    not accepted on effective-access grounds.
+  - The WITHDRAWAL is planned the same carved way, so it never applies the TCKT exemption either.
+- **Not (a):** waiting for TCKT's own apply would hold Andrew's job on another project's window. Applying the TCKT change here would land a
+  change under a pair that does not cover it.
+- **Stated for TCKT_VNEXT's owner:** live state stays without its exemption, exactly as now. Its committed desired state is untouched, and its
+  own apply adds it.
+
+-- 1.0.0_SA_CTO~DELL1
