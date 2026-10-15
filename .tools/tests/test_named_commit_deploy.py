@@ -83,9 +83,19 @@ def open_ledger(ledger_root, slug):
     (ledger_root / ".tools").mkdir(parents=True, exist_ok=True)
     (ledger_root / "org" / "critical_paths" / "change_management").mkdir(parents=True, exist_ok=True)
     shutil.copy(str(TOOLS / "deploy_ledger.py"), str(ledger_root / ".tools" / "deploy_ledger.py"))
+    # deploy_ledger.py commits through safe-commit.sh, which imports git_bash_resolver from the real .tools;
+    # the temporary ledger root holds no .tools copy of it, so the child gets the real .tools on PYTHONPATH.
+    child_env = dict(os.environ)
+    child_env["PYTHONPATH"] = os.pathsep.join(p for p in (str(TOOLS), child_env.get("PYTHONPATH", "")) if p)
+    # open() also commits its two files through .tools/safe-commit.sh under WORKSPACE (this temporary root). The
+    # commit is outside case 8's scope (case 8 reads the sentinel and entry on disk), so the root gets a zero-exit
+    # test double instead of the real gate, which needs the real repository.
+    (ledger_root / ".tools" / "safe-commit.sh").write_text(
+        "#!/bin/sh\necho 'OK: fixture safe-commit double (test only; open commit not under test)'\nexit 0\n",
+        encoding="utf-8", newline="\n")
     rc, out = run([sys.executable, str(ledger_root / ".tools" / "deploy_ledger.py"), "open", "--slug", slug,
                    "--title", "named-commit fixture", "--author", SERIAL, "--leg", "L1|git|fixture|hash pushed"],
-                  cwd=str(ledger_root))
+                  cwd=str(ledger_root), env=child_env)
     if rc != 0:
         raise RuntimeError("deploy_ledger open failed rc=%s: %s" % (rc, out))
     state = json.loads((ledger_root / "org" / "critical_paths" / ".open_deploys" / (slug + ".json")).read_text("utf-8"))
