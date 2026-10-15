@@ -1560,6 +1560,28 @@
     "spec_asserts": "RB8N1-AC3: bun test over src/__tests__/dsgn-rbndv2, src/ui/components/panels and src/ui/components/modal reads 0 fail, as a re-runnable invocation with a deterministic verdict.",
     "world_is": "One of four full suite runs failed RB6Y1-AC1 on a timed test that shells out to git show; the RB6Y1 file passed alone twice and in the other full runs. The cause of the one timeout was not measured. The invocation's verdict therefore varied between runs.",
     "notes": "Not edited. The RB6Y1 test file and its git show reads are outside this cell's changed files and were not touched. Observed on the worktree wk-DSGN_RBNDV2-25-portal."
+  },
+  {
+    "id": "DSGN_RBNDV2-W26-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~26",
+    "surfaced_at": "2026-10-15T21:09:13Z",
+    "one_line": "The RV-g-2 criterion RB8G2-AC2 names the scratch path /tmp/rb8g2-tsc.txt, while the worker face fixes scratch to <worktree>/.scratch/ only; the criterion's invocation was run as written, into /tmp, and the order is unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-g-2.delta-pair.md (worker face, ACCEPTANCE, RB8G2-AC2): the invocation writes its output to /tmp/rb8g2-tsc.txt",
+        "same order, worker face, Scratch clause: scratch is <your worktree>/.scratch/ only, and sibling workers overwrite each other under the shared scratchpad",
+        "run at portal@5fcb37f5: the criterion invocation as written exits TSC-RC=0 with 0 diagnostic lines; a first run into the worktree scratch file also exited 0 and was not kept as the recorded invocation"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Scratch: <worktree>/.scratch/ only (worker face). RB8G2-AC2: the typecheck invocation writes to /tmp/rb8g2-tsc.txt.",
+    "world_is": "The two instructions name different scratch locations. The criterion's invocation is the verdict's instrument and was run unchanged into /tmp; the worktree scratch rule was not applied to this one file. The verdict (TSC-RC=0, 0 diagnostic lines) is unaffected by the path.",
+    "notes": "For the issuer to rule on whether the criterion should name the worktree scratch path. Not edited; the order stays as issued."
   }
 ]
 ```

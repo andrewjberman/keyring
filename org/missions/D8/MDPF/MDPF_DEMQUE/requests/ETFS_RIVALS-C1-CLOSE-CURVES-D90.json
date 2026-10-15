@@ -11,6 +11,7 @@
   "need_class": "non_client",
   "need_date": "2026-10-13",
   "page": "rival funds (ETFS_RIVALS)",
+  "rank": 3,
   "reason": "Andrew-direct ~18:5xZ 2026-10-14 (CTO msg 5713): the ETFS_RIVALS backfill gap, PX_LAST, in the security dialog price curves (owed close) of BACKFILL_GAPS_FOR_DEMQUE.md (org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/BACKFILL_GAPS_FOR_DEMQUE.md @c9e98081a6): PX_LAST, stage D90 = 2026-07-14..2026-09-11 (calendar days before the as-of day 2026-10-12), newest first.",
   "request_id": "ETFS_RIVALS-C1-CLOSE-CURVES-D90",
   "securities": [
