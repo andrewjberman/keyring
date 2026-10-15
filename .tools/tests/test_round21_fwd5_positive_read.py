@@ -7,13 +7,13 @@ Only `aws s3api head-object`, `list-object-versions` and `list-objects-v2` are c
 Modes:
   python .tools/tests/test_round21_fwd5_positive_read.py                 (default: post-deploy read)
   python .tools/tests/test_round21_fwd5_positive_read.py --pre           (pre-deploy state)
-  python .tools/tests/test_round21_fwd5_positive_read.py --docstring-only (AST of the last commit that
-                                                                         touched the script vs its parent)
+  python .tools/tests/test_round21_fwd5_positive_read.py --ast-identical  (ast.dump of the script at the commit
+                                                                         before the last one that touched it vs at it)
 
 LAST lines:
   default: FWD5-POSITIVE versions=<n> etag_equals_repo_md5=<True|False> other_changed=<n> audit_actor=<serial|NONE-WRITTEN|UNKNOWN> ok=<True|False>
   --pre:   FWD5-PRE target=diag_sleeve_fix.py versions=<n> repo_blob=<10 hex> repo_md5=<hex> s3_etag=<hex> differs=<True|False> others_differ=<n> ok=<True|False>
-  --docstring-only: DOCSTRING-ONLY docstring_only=<True|False>
+  --ast-identical: AST-IDENTICAL ast_identical=<True|False>
 
 Repository side is read from git objects at HEAD (a file in the worktree is never trusted for the md5).
 Pagination is explicit: --no-paginate plus the continuation/marker token, looped until IsTruncated is false,
@@ -47,7 +47,6 @@ SENTINEL_REL = "org/critical_paths/.open_deploys/ctlpln-r21-fwd5-one-script-2026
 AUDIT_REL = "org/safe-deploy-bypass-audit.log"
 AWS = str(TOOLS / "aws.cmd") if os.name == "nt" else str(TOOLS / "aws")
 READ_OPS = ("head-object", "list-object-versions", "list-objects-v2")
-DOC_NODES = (ast.Module, ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)
 
 
 def aws(*args):
@@ -261,22 +260,9 @@ def mode_default():
     return 0 if ok else 1
 
 
-def strip_docstrings(tree, broad):
-    """strict: the first statement of a module, class or function when it is a string (Python's definition).
-    broad: every bare string-expression statement in those bodies (diagnostic only; it is not the verdict)."""
-    for node in ast.walk(tree):
-        if isinstance(node, DOC_NODES):
-            kept = []
-            for i, s in enumerate(node.body):
-                is_str = isinstance(s, ast.Expr) and isinstance(s.value, ast.Constant) and isinstance(s.value.value, str)
-                if is_str and (broad or i == 0):
-                    continue
-                kept.append(s)
-            node.body = kept or [ast.Pass()]
-    return tree
-
-
-def mode_docstring_only():
+def mode_ast_identical():
+    """ast.dump (docstrings kept, comments not carried by the AST) of the file at the commit before the last
+    commit that touched the script, versus at that last commit."""
     rc, out = git_bytes("log", "-1", "--format=%H", "--", REPO_PATH)
     commit = out.decode("ascii").strip()
     if rc != 0 or not commit:
@@ -289,21 +275,17 @@ def mode_docstring_only():
     if rc1 != 0 or rc2 != 0:
         print("ERROR: cannot read %s at %s or %s" % (REPO_PATH, parent, commit))
         return 1
-    b_src = before.decode("utf-8")
-    a_src = after.decode("utf-8")
-    strict_eq = ast.dump(strip_docstrings(ast.parse(b_src), False)) == ast.dump(strip_docstrings(ast.parse(a_src), False))
-    broad_eq = ast.dump(strip_docstrings(ast.parse(b_src), True)) == ast.dump(strip_docstrings(ast.parse(a_src), True))
+    same = ast.dump(ast.parse(before.decode("utf-8"))) == ast.dump(ast.parse(after.decode("utf-8")))
     print("compared %s: before=%s (parent) at=%s (last commit touching the file)" % (REPO_PATH, parent[:10], commit[:10]))
-    print("INFO bare-string-statements-only equal=%s (diagnostic; not the verdict)" % broad_eq)
-    print("DOCSTRING-ONLY docstring_only=%s" % strict_eq)
-    return 0 if strict_eq else 1
+    print("AST-IDENTICAL ast_identical=%s" % same)
+    return 0 if same else 1
 
 
 def main(argv):
     if "--pre" in argv:
         return mode_pre()
-    if "--docstring-only" in argv:
-        return mode_docstring_only()
+    if "--ast-identical" in argv:
+        return mode_ast_identical()
     return mode_default()
 
 
