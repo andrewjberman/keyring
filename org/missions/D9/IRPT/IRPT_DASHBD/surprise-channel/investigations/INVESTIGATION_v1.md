@@ -16867,3 +16867,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Resolution row for IRPT_DASHBD-D2-W203-S5, appended only. The order's status flip follows in a later commit. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W205-S1 -- the order's "920 receipts" is the flagged count: the feed carries 972 accounts with an IC|RO receipt of the leading security, 920 of them flagged
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W205-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~205",
+  "surfaced_at": "2026-10-15T10:40:14Z",
+  "one_line": "The order and the CTO analysis speak of 920 IC|RO receipts of the leading security; measured on 2026-04-21 the feed carries 972 accounts with a positive receipt, of which 920 are flagged. The record uses the checker's definitions and carries both numbers; the verdict is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-251 step 3 defines receipt_accounts as the accounts, flagged or not, with a receipt, and the same order and the CTO analysis name 920 receipts of CUSIP 922908736 on 2026-04-21 and 920 accounts. Round 122's count of 920 was taken over the flagged accounts only.",
+  "world_is": "Measured by the tracked script inkind_flow_read_r123.py at 586bdbacb3 under python -I at the worktree root, GET only: receipt_accounts 972, flagged_with_receipt 920, cohort 920 (every flagged account with a receipt meets the cohort conditions), receipts_outside_cohort 52, which are the unflagged receipt accounts. So the 920 of the order is the flagged cohort, not the whole feed's receipt count. The checker DB123-2-AC1 recounts the same 972, 920 and 920 and prints PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~205/inkind_flow_read_r123.py @586bdbacb3 (run output: receipt_accounts=972, flagged_with_receipt=920, cohort=920)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~202/conversion_read_r122.py @34501d1de8 (transactions(t, dis) filters the receipt rows to flagged accounts before counting, which is where the 920 of round 122 comes from)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r123/p123_flow.py (the recount in receipt_accounts, cohort and check_record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker, counts only; no account identifier and no client value is quoted. The record RD_INKIND_FLOW_READ_R123.json carries receipt_accounts 972 and cohort 920 under the checker's definitions. Append only; the disposition is the issuer's."
+}
+```
