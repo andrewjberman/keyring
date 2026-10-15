@@ -18244,3 +18244,101 @@ name the one known failure instead of silently inheriting it.
   "notes": "The literals are firm keys, not S3 addresses. Whether they move behind lookup() is the issuer's call at the hookup; this cell keeps them as written so the named tests and the probe stay byte-stable."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "The catalog row opal_data_mdpf_feeds_model_composition contradicts itself: its business_meaning says client data forked by account last-4, its fork_keys say the account fork is none (model level).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml @b56fd6ef9d, row opal_data_mdpf_feeds_model_composition: business_meaning 'Client data forked by firm, account last-4 and platform'; fork_keys.account = {column: 'none -- model level, no account'}",
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md section (d), contract opal-data-mdpf/feeds/model_composition: grain one row per (firm_id, model_key, ticker, as_of_date), no account column in the column list",
+      "RUN OG-gp-1 classification (this seat): the row is BUILT as mdpf_get_model_composition with Opal-only admission and no account grain; the business_meaning reading would have classed it with the account-grain feeds instead"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The catalog row's business_meaning reads as client data forked by account last-4, which would put model_composition with the account-grain feeds that need their own role.",
+  "world_is": "The row's own fork_keys and the CRO G4 contract both say model level with no account column. This seat classed the row by the fork_keys and the contract, and named the discrepancy here rather than editing the catalog, which is not in this cell's write grant.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "Four mdpf feed rows carry retired=true in the catalog while their S3 prefixes hold live objects written in the last three trading days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml @b56fd6ef9d: rows opal_data_mdpf_feeds_model_aua_positions_49financial, opal_data_mdpf_feeds_model_aua_positions_inflection, opal_data_mdpf_feeds_non_model_aua, opal_data_mdpf_feeds_partner_held_etf_49financial all retired=True",
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md section (b): model_aua_positions/49financial 125 objects newest 2026-10-14T03:31:41Z; model_aua_positions/inflection 105 newest 2026-10-12; partner_held_etf/49financial 293 newest 2026-10-14T03:30:47Z; non_model_aua/49financial 100 newest 2026-10-12",
+      "RUN OG-gp-1 classification (this seat): all four are DEFERRED on the retired flag, so the classification rests on a flag that the bucket contradicts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A retired catalog row means its dataset is no longer written or served, so a tool over it answers absent_reason with zero reads.",
+  "world_is": "The four prefixes still receive writes, and the account-grain feed is the input that the served histograms read. Whether retired here means not-served-to-portal rather than not-written is not read; this seat relied on the flag as written.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "The gateway instance role cannot read the model_composition prefix of opal-data-mdpf, so the BUILT tool answers only under a box identity until a never-widen read grant lands at release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md section (a) row 10: iam simulate-principal-policy opal-gateway-role s3:GetObject on the feeds prefixes returns implicitDeny (simulated); positive control platinum/mdpf/global/aum-metrics.json allowed",
+      "RUN OG-gp-1 probe (this seat) with the box's own credentials: mdpf_get_model_composition answered True for scope 49financial, 130 rows; the same tool under the gateway role is not exercised here"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A BUILT typed tool over a bucket prefix is served by the gateway once its order releases.",
+  "world_is": "The tool reads correctly under box credentials, but the gateway role has no grant on this prefix, so the release order must carry a never-widen read ask for mdpf/feeds/model_composition/ before the tool can answer on the gateway. The grant is not written in this cell (no IAM change in bounds).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W109-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~109",
+  "surfaced_at": "2026-10-15T18:41:53Z",
+  "one_line": "Two catalog rows declare the same two sentiment keys: the news row names news_market_mood as its read_tool, the singleton row names none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml @b56fd6ef9d: row opal_data_portal_v2_served_news_trending_and_sentiment (read_tool news_market_mood) lists json/sentiment/{fear-greed-index,keyword-sentiments}.json; row opal_data_portal_v2_served_sentiment_singletons (read_tool empty) lists the same two keys",
+      "READ infra/aws/ec2/opal-gateway/app/news_typed.py news_market_mood: reads FEAR_GREED_KEY and KEYWORD_SENTIMENTS_KEY (json/sentiment/ prefix)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each catalogued served object has one catalog row, so one row's read_tool answers for the object.",
+  "world_is": "Two rows own the same two objects. This seat classed the singleton row COVERED by news_market_mood on the code, and left the duplicate for the catalog owner to reconcile.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

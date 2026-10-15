@@ -74,7 +74,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO msg 6249 section 2 item 2: one browser walk that opens the All-figures grid on the release build. Measured at the cut: the 2026-10-15 walk (round 106, bm-5) shows `All figures` collapsed in `040-SHOP-CN-Model-expanded.png` because `exploreScope()` caps at 20 closed `<details>` and the What Changed table's 26 `Full figures` precede it (the 27th). The walker is a shared tool (`.claude/skills/ui-walk/`); this cell changes it additively, behind a new flag, with a pure helper so the ordering is testable without a browser. `AMGT-bn-4` (the ten-name walk on the promoted build) runs the merged walker with `--open-first "All figures"`; this cell's own walk is on PROD `e0b43076`, which already carries the grid. A tool edit and the evidence walk are different cells on purpose (round 106's bm-5 bounds read "do not edit the walker"). The worktree is cut with `--sparse-add .claude/skills/ui-walk` (round 106's `W443-S1`: a sparse checkout omitted the walker folder).
 
-<status>pending</status>
+<status>complete</status>
 <round>107</round>
 <slot>0.9.0_WK_AMGT_RESAPP~472</slot>
 <fabric>dell1</fabric>
