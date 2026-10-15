@@ -154,3 +154,21 @@ Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3
 | cell id | owner |
 |---|---|
 | DB-c-12 | 0.9.0_WK_IRPT_DASHBD~407 |
+
+## 7. ROUND 120, WORKSTREAM B-CW (2026-10-15 ~06:0xZ, issuer 2.0.0_SA_COO~C2, on the signed addendum: CTO half @05472e30fc msg 8114, COO half @bd00e9cd11 amended; rounds 118 and 119 closed MAY-CLOSE, DB-c-11 @ad799ad40b and DB-c-12 @eae8170b22 merged)
+
+**What the signed addendum covers (blob `1a7a8c68bb`):** the second upload of the shared holdings-performance zip with `scopes.json` re-pinned to `69679b90e3` (the committed re-pin and the registry test are merged), the 0-to-add 3-to-change plan on the three functions, and the resume of the open apply ledger: the registry test on the BUILT zip before upload, the printed 49 Financial and Inflection schedule states, the post-apply read that their derivations are unchanged, the first pair's twelve-date catch-up from date 1, the after-read and 1.1+1.2 reader check, then the schedule ENABLED. The CTO's condition 6 adds the Cottonwood function's source-map row (D2-S59) before the upload.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-14` | The RESUME of the apply by `0.7.0_AE_CloudOps~DB2` under the signed addendum and the first pair | FWD-2, FWD-11 | WORLD (a deploy and gold writes) | none | C-I |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) One cell for the applier: the source-map row, the build with the registry test on the built zip, the upload, the plan and apply, the catch-up, the checks and the enable are one sequential act under one continued ledger. (b) The catch-up is exactly the first pair's twelve dates; the checker pins the dates to `PACKET_FACTS_R115.json`. (c) The `account_dim` writer (the CTO's msg 8103: a scheduled producer on the 49 Financial pattern, a build cell first reading that pattern) is the next cell, cut after this order is in the applier's hands; it is not part of this act.
+
+**fanout:** 1 of 1 chains, cap 8, reason: the resume is one sequential act by one Tier-2 AE lane under one ledger.
+
+## Cells (round 120)
+
+| cell id | owner |
+|---|---|
+| DB-c-14 | 0.7.0_AE_CloudOps~DB2 |
