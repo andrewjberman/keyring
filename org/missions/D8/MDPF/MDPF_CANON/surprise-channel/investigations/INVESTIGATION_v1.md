@@ -2616,3 +2616,30 @@
   "notes": "No act taken. Ledger mdpf-canon-edge-firm-gate L5 carries the same observation."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W30-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~30",
+  "surfaced_at": "2026-10-15T15:15:20Z",
+  "one_line": "CN-r-2 cannot start: infra/aws/terraform/opal-assets/ is tracked at HEAD but absent from this worktree, which is a cone-mode sparse checkout that omits infra/aws.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-r-2 first act and bar: confirm the worktree carries the paths the order names, else file a BLOCKING row and stop. Section 1 STEP 1-2: read and edit infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf and read infra/aws/terraform/modules/opal_name/main.tf in the worktree.",
+  "world_is": "Worktree C:/dev/wk-canon-r10-30 (HEAD e729b642de, branch wk-MDPF_CANON-30) has core.sparseCheckout=true and core.sparseCheckoutCone=true. git sparse-checkout list gives .tools, infra/logic/registry, lib, org/devices, org/missions/D8/MDPF/MDPF_CANON, org/modules/graph, org/ref, org/standards. The directory infra/aws does not exist in the working tree (ls: cannot access 'infra/aws'), yet git ls-files lists 9204 files under infra/aws with the skip-worktree tag S and git status shows 0 changes there. The target .tf and the opal_name module are tracked at HEAD but not materialised, so neither can be read or edited here. No checkout, sparse-checkout change or rebuild was made, because the order forbids reconstruction.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --get core.sparseCheckout and core.sparseCheckoutCone both print true (worktree C:/dev/wk-canon-r10-30, read 2026-10-15T15:13Z to 15:15Z)",
+      "git sparse-checkout list (same worktree) lists 8 cone patterns and no infra/aws entry",
+      "ls -a infra/aws: No such file or directory; Read of infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf: File does not exist",
+      "git ls-tree HEAD infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf gives blob 30f8f0cefe8e1e2afce1642ae3951ab306d41d6e; git ls-tree HEAD infra/aws/terraform/modules/opal_name/main.tf gives blob 4b8c018812ef2567c63a39549666a9d9f0d9b20f",
+      "git ls-files -v infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf gives tag S (skip-worktree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No act taken. CN-r-2 is not built or graded here: its three criteria were not run, and the order stays open with no proof instance. Remedy belongs to the issuer or COO: a worker worktree whose cone includes infra/aws, or a re-cut of the CN-r-2 paths."
+}
+```
