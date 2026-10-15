@@ -40543,3 +40543,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W443-S1 -- The order's missing-map arm (clause 1: a partition that is absent or empty sets unread) fails an existing wiring test that asserts the base manifest entry for the same case.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W443-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~443",
+  "surfaced_at": "2026-10-15T22:36:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The order's missing-map arm (clause 1: a partition that is absent or empty sets smartx_map_unread to partition_missing_or_empty, and the listing writes evidence unread) fails test_absent_at_source_wiring.py::test_published_manifest_carries_absent_at_source_never_closed, which asserts the base manifest entry with no evidence key for the same missing partition.",
+  "spec_asserts": "Order IB-pr-607 clause 1 sets smartx_map_unread to partition_missing_or_empty when the partition is absent or empty, and clause 2 writes evidence unread for every exempted account whose evidence carries it. BOUNDS: every existing test outside the one test replaced stays green and no other existing assertion is edited; refusal clause: an existing test that fails because of the change is a STOP.",
+  "world_is": "With the change applied, 78 of 79 tests pass across the six AC1 files. The one failure is test_absent_at_source_wiring.py::test_published_manifest_carries_absent_at_source_never_closed (its prepare and fire run write no SmartX map, so the reader finds a missing partition): its manifest entry now carries evidence unread and evidence_reason partition_missing_or_empty where the test asserts no evidence key. The two requirements cannot both hold for a missing partition. Nothing was edited to satisfy the test; the product change is as the order states it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/tests/test_absent_at_source_wiring.py@6651c031880c2a914cdeb3e2e078221246501726 lines 308-316 (the exact manifest assertion)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@6651c031880c2a914cdeb3e2e078221246501726 _absent_smartx_map_ids (the frame-is-None branch that the order's clause 1 maps to partition_missing_or_empty)",
+      "pytest run in the worktree at base 6651c03188 plus the change: 78 passed, 1 failed (test_published_manifest_carries_absent_at_source_never_closed)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W443-S2 -- A SmartX partition that holds rows but no usable account_number (every value null) is classed partition_missing_or_empty; the order names no category for that case.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W443-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~443",
+  "surfaced_at": "2026-10-15T22:36:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The reader gives a non-empty partition whose account_number cells are all null the category partition_missing_or_empty, which the order's category set defines as absent or empty.",
+  "spec_asserts": "Order IB-pr-607 clause 1: the category set is exactly four values, and partition_missing_or_empty means the partition is absent or empty. The order does not say how a partition with rows but no usable account id is classed.",
+  "world_is": "_absent_smartx_map_ids raises partition_missing_or_empty when the set of usable ids is empty, so a partition whose rows all carry a null account_number reads as unread with that category. No test arm covers this case; the choice is the worker's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@6651c031880c2a914cdeb3e2e078221246501726 _absent_smartx_map_ids, the final 'if not ids' branch (the worktree copy carries the change)"
+    ]
+  }
+}
+```
