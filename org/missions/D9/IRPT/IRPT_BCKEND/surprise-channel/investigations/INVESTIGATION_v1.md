@@ -40493,3 +40493,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W442-S1 -- A worktree added from the sparse base worktree came up sparse: the minting pin had 76354 skip-worktree entries and no infra/ tree.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W442-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~442",
+  "surfaced_at": "2026-10-15T22:08:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A worktree added from the sparse base worktree came up sparse: the minting pin had 76354 skip-worktree entries and no infra/ tree.",
+  "spec_asserts": "TO IB-pr-606 WORKER FACE: a full detached worktree of the minting pin, sparse checkout disabled in that worktree alone; the base worktree is made sparse first, and the pin is cut from it.",
+  "world_is": "git worktree add from the sparse base worktree produced a pin whose index carried 76354 skip-worktree bits of 81551 tracked files, so infra/aws/lambda was absent from the working tree. The pin's worktree config carried core.sparseCheckoutCone=true, which this worker did not set. Setting core.sparseCheckout false afterwards did not clear the bits. Repaired inside the pin only: skip bits cleared with git update-index --no-skip-worktree, then git sparse-checkout disable. No file in the base worktree changed. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-606.addendum-candidate-49f.md@e9c48c49b711bc7eb18723dad69f034547d6715f worker face step 1",
+      "git ls-files -v on the pin worktree (admin dir 49financial2) at b1d354cfc9341168a3b4c316a344876ce0049b97: 76354 S entries before the repair, 0 after"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W442-S2 -- The minting pin b1d354cfc9 lists 36 tracked files as modified before any change: CRLF index blobs against an eol=lf attribute.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W442-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~442",
+  "surfaced_at": "2026-10-15T22:08:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The minting pin b1d354cfc9 lists 36 tracked files as modified before any change: CRLF index blobs against an eol=lf attribute.",
+  "spec_asserts": "IB-pr-595's harness and this order's step 2: the pin worktree is clean before the transplant, and after it the only entries are the overlaid files.",
+  "world_is": "At b1d354cfc9 the index blobs of 36 tracked files are CRLF while .gitattributes sets eol=lf; a fresh checkout reports all 36 as modified (git status --porcelain). All 36 working-tree files are byte-equal to their HEAD blobs (36 of 36 measured), and none of them is a bundle member that moved: the live compare changed exactly the two candidate members. The candidate harness takes the status baseline before it writes and asserts that the added entries are exactly the two candidate files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files --eol at b1d354cfc9341168a3b4c316a344876ce0049b97 for infra/aws/scripts/inspect_parquet_schema.py: i/crlf w/crlf attr/text eol=lf",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~434/ib228_1_transplant_candidate.py@e9c48c49b711bc7eb18723dad69f034547d6715f transplant status check (entries equal the overlay files)"
+    ]
+  }
+}
+```
