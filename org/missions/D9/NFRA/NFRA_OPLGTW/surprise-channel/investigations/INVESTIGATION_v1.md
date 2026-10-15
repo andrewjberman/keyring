@@ -16357,3 +16357,28 @@ name the one known failure instead of silently inheriting it.
     "notes": "Two things worth keeping. (1) WHEN A RULING SAYS 'STANDS UNCHANGED', THE PERMISSIVE HALF OF THE SAME SENTENCE IS NOT AN INVITATION TO EDIT. 'tests/test_og_gt6.py is NOT required; the allow-list tolerates it either way' is true of the GRADER and says nothing about the SIGNATURE -- the allow-list would have passed a release with the test in it, and the COO half would not have covered that release. Read a tolerance clause against every instrument it does not mention. (2) EVIDENCE DOES NOT HAVE TO SHIP. Checking a test out, running it, and removing it is a legitimate way to learn something about a frozen artifact -- as long as the removal is verified (HEAD equal, git status empty) rather than assumed, which is the same discipline as reverting the legacy_addresses edit in Z-S136. Both times the finish was 'the tree is byte-identical to where it should be', measured."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W95-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~95",
+    "surfaced_at": "2026-10-15T04:46:32Z",
+    "one_line": "OG-nw-2 says _ddb() returns the internal-role client and that the TOOL answers an unavailable refusal when AssumeRole fails, with 'nothing else in the module changes'. _ddb() must return a client, so it cannot answer; no tool catches InternalRoleUnavailable; the refusal therefore needed a tool-layer wrapper.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/news_typed.py@d710d14824: _ddb() returns internal_role.dynamodb_client() when non-None, else the lazily created default client; it does not catch InternalRoleUnavailable",
+        "news_typed.py@d710d14824: helper _internal_role_refusal wraps news_search_articles, news_trending_topics, news_keyword_intelligence and news_for_security (the four DynamoDB tools); news_market_mood is S3-only and undecorated",
+        "tests/test_og_nw2.py@d710d14824 test_ognw2_ac03 (AssumeRole raises, news_search_articles): code news_unavailable, one AssumeRole, zero DynamoDB client builds, boto3.client never called; 4 passed of 4 in the check nw2.AC1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order section 1 item 2: _ddb() prefers the internal role, and when InternalRoleUnavailable is raised the TOOL answers an unavailable refusal with zero DynamoDB calls; 'Nothing else in the module changes.'",
+    "world_is": "The refusal is produced one layer up. Four tool bodies are unchanged; each carries a one-line decorator that converts InternalRoleUnavailable into the news_unavailable refusal. The admission order and the read paths are unchanged, and no default identity is tried. The order's text did not name this mechanism, so it is recorded here rather than presented as the literal cut.",
+    "notes": "Judgment call, not a blocker: the decorator is the smallest mechanism that meets 'the TOOL answers a refusal' without changing _ddb()'s return contract. If the issuer wants the refusal inside each tool body instead, the decorator can be unwound with no behaviour change. For news_for_security the refusal is whole-tool: the S3 mention index is read first, and its rows are discarded when the fallback DynamoDB read cannot assume the role."
+  }
+  ```
