@@ -17390,3 +17390,33 @@
   "notes": "Environmental: the list lives on the operator's device and this worker cannot provision it. Recorded so the drain can decide whether the check must run on dell2 before a product commit lands."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-S120 -- FWD-1 run r41: the driver guard refused the directory resolve POST and the firm selector never rendered; nothing filed
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S120",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-15T16:08:07Z",
+  "one_line": "The FWD-1 run died at step 4 before any ticket was filed: the driver's route guard refused POST /api/scoped/investor-reporting/directory/resolve (not among its seven allowed POST shapes) and the firm selector never appeared; the synthetic user was removed (ABSENT x2); no retry.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (amend the driver's POST allow-list or the order, or re-issue; a second run is a new act the pair does not cover: NO RETRY is the CTO's condition 3)",
+  "spec_asserts": "Order IRPT_ANLREQ.TO-RUN-FWD1 step 5 and the driver's STEP-4: on /ticket-center, New Ticket, type Analysis Request, choose the firm, file; the guard admits GET/HEAD/OPTIONS and exactly seven POST shapes (fwd1_driver.mjs POST_ALLOWED lines 34-42). The pair's W1 to W5 and RUN1-AC2 expect a ticket with attachments n of 4.",
+  "world_is": "MEASURED 2026-10-15 16:03:30Z to 16:04:11Z (run_report.json, one attempt): mint rc=0, sign-in through the real form reached /market, then waitFor getByLabel('Choose the firm this request is filed under') timed out at 30000 ms; guard_refused lists exactly one entry, POST /api/scoped/investor-reporting/directory/resolve; the screenshot 01-signed-in.png shows loading skeleton bars and no form; ticket_id null; polls empty. The finally removed the row: remove rc=0, ABSENT GSI and ABSENT CONSISTENT. Seat's own after-reads 16:05Z: ConsistentRead get_item absent, email-index count 0, packager secret LastAccessedDate unchanged (2026-10-13T20:00:00-04:00), the five queues 0 and 0. INFERRED, NOT MEASURED: that the firm selector's population waits on the refused directory/resolve call; the portal at origin/DEV ad7c100b5c declares that operation (src/api/endpoints/investor-reporting.ts line 239, resolve-scope POST) and the label lives in src/pages/TicketCenter/AnalysisRequestParts.tsx line 114, but the page's call chain was not traced. The run is one attempt and was not repeated.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/aq2-fwd1-out-20261015/run_report.json (steps, guard_refused, absent, errors) and 01-signed-in.png, copied to org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r31/run_fwd1/",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs lines 34-42 (POST_ALLOWED) and 166-172 (guard)",
+      "portal origin/DEV ad7c100b5c: src/api/endpoints/investor-reporting.ts:239, src/pages/TicketCenter/AnalysisRequestParts.tsx:114"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The driver's selftest (29 cases) and mutant check passed on the allow-list as written, so neither could see that the page itself posts a directory call before the form renders; the allow-list was never exercised against the real page until this run. Whether adding the resolve POST (a read-shaped POST to the data plane, no write) widens the pair is the CTO's call, not this seat's."
+}
+```
