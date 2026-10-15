@@ -15114,6 +15114,61 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W408-S1 -- the 49 Financial account_dim writer sits at another prefix and token than the order names; DBC121-1-AC1's writer-naming arm cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W408-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~408",
+  "surfaced_at": "2026-10-15T06:45:56Z",
+  "one_line": "DB-c-15 finds the 49F scheduled account-dimension writer at a different prefix and token than the order names: the builder address irpt/49financial/gold/account_dim/ holds 0 partitions, the live 49F dimension is gold/advi/dimensions/dim_account/ (571 partitions, newest 2026-10-13), and its writer file a00_runner.py carries no literal account_dim token, so DBC121-1-AC1's writer-naming arm cannot pass as written; the record names the writer as measured and nothing was repaired",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/runners_49f/a00_runner.py@0241caf301 lines 44-57: GOLD_BUCKET opal-data-49financial, GOLD_ROOT gold/advi, OUT_PREFIX dimensions/dim_account/; literal account_dim count in the file 0",
+      "infra/aws/terraform/opal-assets/advi_49f_floor.tf@0241caf301 lines 325-402: aws_scheduler_schedule advi_49f_gold_floor, cron(45 12 * * ? *) UTC, no state attribute",
+      "S3 LIST, read-only, private script (not committed): irpt/49financial/gold/account_dim/ 0 date partitions; gold/advi/dimensions/dim_account/ 571 date partitions, newest 2026-10-13",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r121/p121_bcw.py@0241caf301 line 42: the writer file must contain the literal account_dim"
+    ]
+  },
+  "spec_asserts": "The order's writer rule: each named writer file must name account_dim, and the 49 Financial account_dim is the pattern to copy (TO-DB-c-15 worker face steps 1 to 3, and criterion DBC121-1-AC1).",
+  "world_is": "The 49F table is named dim_account and sits at gold/advi/dimensions/dim_account/ in the 49F bucket, written by a scheduled chain step; the builder address for 49F is empty. The writer file contains no literal account_dim token, so the naming arm fails as measured for that writer.",
+  "notes": "Ask for a ruling: whether the naming arm should accept dim_account as the same table. Not repaired in the record or the checker."
+}
+```
+
+## IRPT_DASHBD-D2-W408-S2 -- the CTO's branch 2 host, the Cottonwood holdings-performance function, is created DISABLED and reads and writes less than an account_dim emit needs
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W408-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~408",
+  "surfaced_at": "2026-10-15T06:45:56Z",
+  "one_line": "The Cottonwood holdings-performance function the CTO named as the emit host (branch 2) is a scheduled source whose schedule resource is created DISABLED pending a catch-up after-read; its role reads the holdings silver only and writes two gold prefixes, and its handler carries no account_dim path, so an emit would need a fact_allocations read grant, one more write grant and an emit path",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf@0241caf301 lines 283-292: aws_scheduler_schedule irpt_holdings_performance_cot, state DISABLED, cron(15 8 ? * MON-FRI *) America/New_York",
+      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf@0241caf301 lines 283-300: role irpt_holdings_performance_cot reads the Black Diamond holdings silver and writes the two Cottonwood gold prefixes",
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py@0241caf301: native Grep for account_dim or cottonwood returns 0 matches"
+    ]
+  },
+  "spec_asserts": "The CTO's branch 2 (TO-DB-c-15 Ordered-by line and worker face step 5): add an account_dim emit to the Cottonwood holdings-performance function, with one more gold write grant.",
+  "world_is": "That function's schedule is created DISABLED pending a catch-up after-read; its role grants no read of the allocations silver and no write of an account_dim prefix; its handler has no account_dim path.",
+  "notes": "Branch 2 needs the enable decision as well as the grant and the emit path."
+}
+```
+
 ## IRPT_DASHBD-D2-W189-S1 -- safe-commit's client-data check did not run for 14d426b8e7 (the hashed account-id list is absent on this box)
 
 ```json
@@ -15268,6 +15323,85 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-W409-S1 -- DBC122-2-AC1 cannot PASS as written: the mandated adapter import types the checker's forbidden token, so the lambda file is refused
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W409-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~409",
+  "surfaced_at": "2026-10-15T07:15:54Z",
+  "one_line": "DBC122-2-AC1 FAILS as written: the order's mandated line `import cottonwood_account_dim as adapter` in lambda_function.py types the token the checker's FORBIDDEN_TOKENS refuses in that file; every other bound measures PASS",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r122/p122_bcw.py@2ee7fcf0ed FORBIDDEN_TOKENS includes the literal 'cottonwood'; ac_2 lowercases the whole lambda_function.py and refuses any token substring",
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py@c1e843142c line 48 is the only token hit (Grep -i over the file): import cottonwood_account_dim as adapter",
+      "checker run at c1e843142c: DBC122-2-AC1 FAIL with 'lambda_function.py types a forbidden token: cottonwood'; with the token list emptied for measurement only (.scratch/measure_ac2_rest.py, not committed) the rest of the arm PASSes: ASCII, no boto3 client at import, adapter frozen part identical to 05ea78f452, FileExistsError line present, and the planted control (refusal removed in a scratch copy) makes test_upload_refuses_a_non_empty_partition FAIL"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 2 of DB-c-16 names the import line `import cottonwood_account_dim as adapter`; DBC122-2-AC1 requires that lambda_function.py types no firm token, and the checker's FORBIDDEN_TOKENS holds the token 'cottonwood'.",
+  "world_is": "Both cannot hold in one file: the adapter's module name carries the token, so the mandated import types it. The import is kept exactly as written, the criterion is reported FAIL with its measurement, and the order stays open. No checker edit and no loader workaround was made; choosing between a checker change and an import form is the issuer's call."
+}
+```
+
+## IRPT_DASHBD-D2-W409-S2 -- the order's source key `blackdiamond_z09` cannot be typed in the lambda, so the handler selects the declared source by its custodian
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W409-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~409",
+  "surfaced_at": "2026-10-15T07:15:54Z",
+  "one_line": "The source entry name the order names (blackdiamond_z09) embeds a registry key the checker refuses in lambda_function.py, so the handler picks the one declared source whose custodian is the Black Diamond custodian",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json@c1e843142c declares three custody sources: schwab_08335338 (custodian schwab), orion (custodian orion), blackdiamond_z09 (custodian blackdiamond); measured by a json load of the file",
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py@c1e843142c _declared_source() selects the sources whose custodian equals the typed custodian name and refuses unless exactly one matches; no source name, bucket or silver prefix is typed in the file",
+      "checks/r122/p122_bcw.py@2ee7fcf0ed FORBIDDEN_TOKENS includes 'z09', so the entry key cannot appear in the lambda file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 2 of DB-c-16 reads the silver bucket and prefix template from the entry `blackdiamond_z09` in sources.json, and types the firm token, bucket name and silver prefix nowhere in the lambda file.",
+  "world_is": "The entry key embeds the registry key z09, which the checker's token census refuses in the lambda file. The handler therefore selects the entry by its custodian field, which is not a firm token, and it refuses unless exactly one declared source matches. The resolved bucket, firm scope and prefix still come from the declaration through the producer's own helpers."
+}
+```
+
+## IRPT_DASHBD-D2-W409-S3 -- the silver resolution imports the holdings-performance producer, so the DB-c-17 package needs its declaration, registry tree and numpy and pandas
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W409-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~409",
+  "surfaced_at": "2026-10-15T07:15:54Z",
+  "one_line": "The handler's silver locations import the holdings-performance producer, which needs more packaged files and libraries than the lambda's own lib trees; the later packaging cell must carry them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda_function.py@c1e843142c _declared_source() imports holdings_performance from data/assets/scripts/gold/irpt_holdings_performance and calls load_declaration, declared_sources, firm_scope and resolved_prefix",
+      "holdings_performance.py@c1e843142c imports boto3, numpy, pandas and pyarrow at module level, and firm_scope() reads the registry through opal_naming.load_registry()",
+      "the holdings-performance handler docstring (infra/aws/lambda/investor-reporting/holdings-performance/handler.py@c1e843142c) already records the package set this needs: the producer at its original relative path, sources.json, lib/opal_naming.py, lib/trading_calendar.py, data/assets/scripts/lib/stream_parquet.py, infra/logic/registry/*.json and org/standards/NAMING_SCHEMA.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 2 says the bucket, prefix template and firm scope come from sources.json through the producer's registry-derived helpers, and a later cell (DB-c-17) packages the function; the order's package list is not stated.",
+  "world_is": "The package for the account_dim function must carry the producer file beside sources.json, the registry tree and NAMING_SCHEMA.json, plus numpy and pandas, or the handler fails at import. Nothing was packaged or built in this cell; the tests import the producer from the repo tree."
+}
+```
+
 ```json
 {
   "id": "IRPT_DASHBD-D2-W188-S1",
@@ -15413,61 +15547,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
-## IRPT_DASHBD-D2-W408-S1 -- the 49 Financial account_dim writer sits at another prefix and token than the order names; DBC121-1-AC1's writer-naming arm cannot pass as written
-
-```json
-{
-  "id": "IRPT_DASHBD-D2-W408-S1",
-  "project": "IRPT_DASHBD",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~408",
-  "surfaced_at": "2026-10-15T06:45:56Z",
-  "one_line": "DB-c-15 finds the 49F scheduled account-dimension writer at a different prefix and token than the order names: the builder address irpt/49financial/gold/account_dim/ holds 0 partitions, the live 49F dimension is gold/advi/dimensions/dim_account/ (571 partitions, newest 2026-10-13), and its writer file a00_runner.py carries no literal account_dim token, so DBC121-1-AC1's writer-naming arm cannot pass as written; the record names the writer as measured and nothing was repaired",
-  "class": "BLOCKING",
-  "hazard_standing": "INERT",
-  "disposition": "UNDER_INVESTIGATION",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "data/assets/scripts/gold/runners_49f/a00_runner.py@0241caf301 lines 44-57: GOLD_BUCKET opal-data-49financial, GOLD_ROOT gold/advi, OUT_PREFIX dimensions/dim_account/; literal account_dim count in the file 0",
-      "infra/aws/terraform/opal-assets/advi_49f_floor.tf@0241caf301 lines 325-402: aws_scheduler_schedule advi_49f_gold_floor, cron(45 12 * * ? *) UTC, no state attribute",
-      "S3 LIST, read-only, private script (not committed): irpt/49financial/gold/account_dim/ 0 date partitions; gold/advi/dimensions/dim_account/ 571 date partitions, newest 2026-10-13",
-      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r121/p121_bcw.py@0241caf301 line 42: the writer file must contain the literal account_dim"
-    ]
-  },
-  "spec_asserts": "The order's writer rule: each named writer file must name account_dim, and the 49 Financial account_dim is the pattern to copy (TO-DB-c-15 worker face steps 1 to 3, and criterion DBC121-1-AC1).",
-  "world_is": "The 49F table is named dim_account and sits at gold/advi/dimensions/dim_account/ in the 49F bucket, written by a scheduled chain step; the builder address for 49F is empty. The writer file contains no literal account_dim token, so the naming arm fails as measured for that writer.",
-  "notes": "Ask for a ruling: whether the naming arm should accept dim_account as the same table. Not repaired in the record or the checker."
-}
-```
-
-## IRPT_DASHBD-D2-W408-S2 -- the CTO's branch 2 host, the Cottonwood holdings-performance function, is created DISABLED and reads and writes less than an account_dim emit needs
-
-```json
-{
-  "id": "IRPT_DASHBD-D2-W408-S2",
-  "project": "IRPT_DASHBD",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~408",
-  "surfaced_at": "2026-10-15T06:45:56Z",
-  "one_line": "The Cottonwood holdings-performance function the CTO named as the emit host (branch 2) is a scheduled source whose schedule resource is created DISABLED pending a catch-up after-read; its role reads the holdings silver only and writes two gold prefixes, and its handler carries no account_dim path, so an emit would need a fact_allocations read grant, one more write grant and an emit path",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "disposition": "UNDER_INVESTIGATION",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf@0241caf301 lines 283-292: aws_scheduler_schedule irpt_holdings_performance_cot, state DISABLED, cron(15 8 ? * MON-FRI *) America/New_York",
-      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf@0241caf301 lines 283-300: role irpt_holdings_performance_cot reads the Black Diamond holdings silver and writes the two Cottonwood gold prefixes",
-      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py@0241caf301: native Grep for account_dim or cottonwood returns 0 matches"
-    ]
-  },
-  "spec_asserts": "The CTO's branch 2 (TO-DB-c-15 Ordered-by line and worker face step 5): add an account_dim emit to the Cottonwood holdings-performance function, with one more gold write grant.",
-  "world_is": "That function's schedule is created DISABLED pending a catch-up after-read; its role grants no read of the allocations silver and no write of an account_dim prefix; its handler has no account_dim path.",
-  "notes": "Branch 2 needs the enable decision as well as the grant and the emit path."
-}
-```
-
 ## IRPT_DASHBD-D2-W506-S1 -- a plain household scalar under an avs benchmark member is printed as every account's figure; the order's assertion for it cannot pass against the unmodified model
 
 ```json
@@ -15519,7 +15598,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "This portal's bun:test declarations do not carry test.todo, so the marker fails the typecheck gate (step 4). No failing case exists in the committed file, so the gate is green; a future failing case needs another marker the declarations carry, or a comment as used here."
 }
 ```
-
 
 ## IRPT_DASHBD-D2-S67 -- disarm of D2-S64: the avs benchmark members are read as by_row per account and pinned by a test; a household scalar under one prints for every account, which the producer must never emit
 
