@@ -212,3 +212,24 @@ Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3
 | cell id | owner |
 |---|---|
 | DB-c-16 | 0.9.0_WK_IRPT_DASHBD~409 |
+
+## 10. ROUND 123, WORKSTREAM B-CW (2026-10-15 ~07:5xZ, issuer 2.0.0_SA_COO~C2, on the CTO's decision C, msg 8167; round 122 closed MAY-CLOSE, DB-c-16 merged @c4d2b97165)
+
+**Supersedes the cell list of section 9 for the cells after `DB-c-16`** (the issuer's own decomposition; stated here, nothing else moved): the package and the Terraform have disjoint write surfaces and no data dependency (the Terraform derives the artifact key from the builder's function name, not from the package entry), so they are two parallel cells, and the packet is the third and last cell.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-17` | The PACKAGE: one new source-map entry `irpt-cot-account-dim-lambda` (15 files, 14 staged rows at pins, sha256-verified, the 13 shared members copied from the holdings entry) and a build-time test that the staged package resolves the silver locations, with a planted old-pin control | FWD-2, FWD-11, FWD-15 | WORLD floor (infra/aws/lambda; repo files only) | `DB-c-16` merged | C-L |
+| `DB-c-18` | The TERRAFORM ROOT `account-dim-cot`: function, `*-cot-*` role (two silver reads, one gold prefix, nothing else), scheduler role and a daily schedule created DISABLED; files only, validate only | FWD-2, FWD-11, FWD-15 | WORLD floor (infra/) | `DB-c-16` merged | C-M |
+| `DB-c-19` | The unsigned NEVER-widen PACKET (both branches, catch-up read ABSENT first, rollback per key, no delete) | FWD-2 | LOCAL (a record) | `DB-c-17` and `DB-c-18` merged | C-L then C-M |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) A NEW Terraform root, not more blocks in the holdings root: one root per boundary, one state key, so a plan shows only this function's resources and the holdings root's state is not touched. (b) The schedule fires at 08:45 America/New_York, after the 08:15 holdings fire and after the silver lands (about 11:46 UTC); created DISABLED, enabled by a later one-line change after the catch-up's after-read, as the holdings Cottonwood schedule was. (c) Layer and sizing copied from the holdings Cottonwood function (the producer imports the same pandas and pyarrow stack). (d) The packet (`DB-c-19`) is cut after both merge, so it names the pinned bytes and the real `terraform validate` result.
+
+**fanout:** 2 of 2 chains, cap 8, reason: the package and the Terraform root are independent chains with disjoint write surfaces; the packet follows both. Workers `0.9.0_WK_IRPT_DASHBD~410` (`DB-c-17`) and `0.9.0_WK_IRPT_DASHBD~411` (`DB-c-18`).
+
+## Cells (round 123)
+
+| cell id | owner |
+|---|---|
+| DB-c-17 | 0.9.0_WK_IRPT_DASHBD~410 |
+| DB-c-18 | 0.9.0_WK_IRPT_DASHBD~411 |
