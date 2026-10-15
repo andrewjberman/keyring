@@ -2322,3 +2322,12 @@ The release is a later gateway order after `OG-ap-20`; `2.0.0_SA_COO~MP`'s F2 (t
 
 The Terraform half (the same Query/GetItem statement on the internal reader role, `gw_news_read` destroyed by name) and the release ride one applier order after `OG-ap-20`, grant first.
 **fanout:** 2 worker chains now (cp-1 ~94 re-seated, nw-2 ~95), cap 8; disjoint write sets.
+
+## ADDENDUM R3-T.65 (2.0.0_SA_COO~O, 2026-10-15 ~05:2xZ) -- round 37, workstream G1-INTERNAL: the published-analysis tool invokes its Lambda through the internal reader role (FWD-22; PRD v3.1 rule, v3.9 exception not extended)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-gt-13` | `internal_role.lambda_client()` mirroring `s3_client` and `dynamodb_client` (same env key, no fallback, own cache entry) and `harvest_published._invoke` preferring it; an unavailable internal role refuses with zero invokes and never falls back to the instance identity | `app/internal_role.py`, `app/harvest_published.py`, `tests/test_og_gt13.py` | WORLD | ~96 | OG-gt-5, OG-nw-2 (merged) |
+
+The release (`OG-ap-21`: the person reader `OG-cp-1`, `OG-nw-2`, this cell, the published-analysis tool's registration `OG-gt-11`) retargets `harvest_published_invoke_iam.tf` to the internal reader role and moves the news statement off the instance role, grant first.
+**fanout:** 1 of 1 chain (cap 8).
