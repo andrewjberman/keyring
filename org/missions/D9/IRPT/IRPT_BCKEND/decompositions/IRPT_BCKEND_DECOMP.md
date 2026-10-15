@@ -4047,3 +4047,16 @@ Check IB203-2 (same file), dry-run at the base: AC1 to AC3 all FAIL; the control
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~405) starts now.
 
+
+## 200. ROUND 4, WORKSTREAM ~PS (the serve path: the source map stages the shared reader, and the server pins the filled report at submit; 2026-10-15 ~07:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-4 analysis @ac865e2d91 (msg 8138) and his ruling on call f50a (msg 8104))
+
+Round 3 of ~PS closed MAY-CLOSE. The CTO's round-4 analysis names two cells, one issuance. (1) Row D2-W402-S3: `infra/aws/lambda/ci/lambda-source-map.json` is explicit per file and lists no entry for the shared named-account reader `_scope/filled_named_accounts.py`, which the filled-report route and the export freeze import by name; add a `staged_from` entry in EVERY function that packages an importing module, plus a build-only import test per function. (2) Call f50a: the SERVER pins the filled report at submit (freeze_filled_report reads the current object's VersionId, sha256 and size; the page sends the client id only; a forged client pin is ignored). Deploy legs still wait on 49 Financial gold for one date. Disjoint write sets: the map and one CI test; the export package.
+
+Checks (`deliverables/2.0.0_SA_COO~P2/checks/r204/p204_cells.py`, `control204.py`), dry-run at the base: all six FAIL; the control passes 6 positives and 16 negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-562` | the source-map `staged_from` entry for the shared reader in every importing function, a BUILD_ONLY import test per function | FWD-2 | WORLD (path floor) | none | PS4-a |
+| `IB-pr-563` | the server-side pin at submit: freeze_filled_report reads the current object, the submit handler calls it, a forged client pin is ignored | FWD-2 | WORLD (path floor) | none | PS4-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two cells with disjoint write sets; workers (slots ~406, ~407) start now.
