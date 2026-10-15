@@ -19732,3 +19732,135 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S130 -- disposition of IRPT_ANLREQ-D2-W198-S1: the stale proxy prose is left until those files next change
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T23:27:58Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S130",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The prose is stale and harmless: three comments and one docstring name a retired flow and change no behaviour. They are fixed the next time portfolio.py and uploads.py change for another reason, so a prose-only edit does not force a second re-pin of the Lambda's staged rows before r33.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W198-S1: the stale proxy prose in portfolio.py and uploads.py is left until those files next change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AR-g-96 merged @78e28b386b; ar_g96_checks g96 and regress re-run by the issuer on the merged tree: AR-G96-OK 23 cases, AR-G96-REGRESS-OK 225 tests",
+      "the worker's row W198-S1 lists the four places; none is executed code"
+    ]
+  },
+  "spec_asserts": "NAME_PROXY is retired from every filer-facing finding (PRD v0.19): a finding the door emits carries no such action or word.",
+  "world_is": "No finding or word the door emits names a proxy (AC1 case D1 and D8 dump every finding and both word tables); only source comments do."
+}
+```
+
+## IRPT_ANLREQ-D2-S131 -- disposition of IRPT_ANLREQ-D2-W199-S1: the two request sizes are equal
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T23:27:58Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S131",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Both modules are now merged and the equality the comment asserts is measured: swap_pass.REQUEST_CHUNK equals yahoo_history_days.DEFAULT_CHUNK, 50.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W199-S1: REQUEST_CHUNK equals DEFAULT_CHUNK (50), read on the merged tree after AR-g-98 and AR-g-99 landed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python import of both modules on the merged tree: swap_pass.REQUEST_CHUNK == yahoo_history_days.DEFAULT_CHUNK -> True, 50",
+      "AR-g-98 merged @8540b8449c, AR-g-99 merged @a6bcac3875; round 24's wiring test will assert the equality"
+    ]
+  },
+  "spec_asserts": "The swap's per-holding Yahoo request bound uses the history port's real request size.",
+  "world_is": "The two constants are equal; no coupling test exists yet (the wiring cell adds one)."
+}
+```
+
+## IRPT_ANLREQ-D2-S132 -- disposition of IRPT_ANLREQ-D2-W200-S1: the merged files read clean for account-id-shaped strings
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T23:27:58Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S132",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The client-account gate could not run on this box, so the issuer read the merged files for account-id-shaped strings: none present. The gate stays unmeasured; the box's hashed list is not this order's to place.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W200-S1 (ARMED, client account-id check absent on this box): the merged files hold no account-id-shaped string, read by the issuer at a6bcac3875.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Regex (?<![0-9.])[0-9]{6,}(?![0-9]) over yahoo_history_days.py (137 lines) and tests/test_yahoo_history_days.py (128 lines) at a6bcac3875: no match",
+      "The same read of swap_pass.py, build_swap_pool.py and their tests at 8540b8449c: no match"
+    ]
+  },
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned against the hashed list; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "The files are code and tests over made-up tickers and dates; the issuer's read is not the gate's check and does not claim it. The same instrument gap is on the record as W143-S2, W52-S25 and S124."
+}
+```
+
+## IRPT_ANLREQ-D2-W162-S1 -- The composer's noticeDescriptions reader lives in prospect.ts and matches every NOTICE severity, so the cell's code-exact rule could not be met by importing it; a local reader was written
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W162-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~162",
+  "surfaced_at": "2026-10-15T23:09:44Z",
+  "one_line": "noticeDescriptions is exported from prospect.ts (not the composer) and returns the description of every portfolio finding of severity NOTICE, whatever its code, so importing it cannot show only TICKER_DATA_NOT_ENTITLED; a local reader keyed on that code was written in the Ticket Center folder instead.",
+  "spec_asserts": "AR-y-365 item 1: a finding of any other code in portfolio.findings shows nothing new; import noticeDescriptions read-only if it is exported from the composer, otherwise write a small local function in src/pages/TicketCenter/. The cell places noticeDescriptions in the Investor Reporting composer.",
+  "world_is": "portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts:112 exports noticeDescriptions; it keeps an item only when item.severity === 'NOTICE' and its description is a non-empty string, with no code test. The composer ProspectComposer.tsx imports it at line 9 and calls it at line 356. Commit 7af732ee on cand/dell2/anlreq-filing-notice adds notCoveredNoticeLines in src/pages/TicketCenter/analysisRequest.ts (line 231), keyed on NOT_COVERED_NOTICE_CODE = TICKER_DATA_NOT_ENTITLED (line 225). Investor Reporting and src/api are unchanged on that branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts@50db1eb4ad lines 108-120 (noticeDescriptions, severity test only)",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx@50db1eb4ad lines 9 and 356",
+      "portal/src/pages/TicketCenter/analysisRequest.ts@7af732ee11 lines 225-240 (notCoveredNoticeLines)",
+      "git -C portal diff --name-only 50db1eb4ad cand/dell2/anlreq-filing-notice: four paths, all under src/pages/TicketCenter/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W162-S2 -- The cell's render point (TicketCenter.tsx near line 390) is the staff filing path only; the partner page is a separate return that files through the same fileAnalysisRequest, so the notice was also placed on the partner page
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W162-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~162",
+  "surfaced_at": "2026-10-15T23:09:44Z",
+  "one_line": "The cell names TicketCenter.tsx near line 390 as the place to render the notice; line 390 is the staff path's success branch. The partner page (an early return under if (partner)) files through the same fileAnalysisRequest and would have shown no notice, so the notice was rendered under its banner as well.",
+  "spec_asserts": "AR-y-365 item 1: after a filing whose upload answer carries a TICKER_DATA_NOT_ENTITLED finding, the form shows the notice under the filed outcome; the cell's render point is TicketCenter.tsx near line 390.",
+  "world_is": "At 50db1eb4 the staff success branch is TicketCenter.tsx lines 385-397 and the partner success branch lines 442-447; the partner page is the if (partner) return at line 578 of 7af732ee. Commit 7af732ee keeps one state, filedNotices, set from outcome.notices on each success and cleared at the start of each filing; it renders <FilingNotice> under the partner banner (line 619) and under the staff FilingSteps (line 709), and the two never render together because the partner return and the staff return are exclusive.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@7af732ee11 lines 394-395 (staff success: setFilingSteps, setFiledNotices)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@7af732ee11 line 453 (partner success: setFiledNotices)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@7af732ee11 lines 578 and 619 (if (partner) return; partner render)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@7af732ee11 lines 707-709 (staff FilingSteps and FilingNotice)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
