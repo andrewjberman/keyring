@@ -48,3 +48,14 @@ One chain: `RV-y-2` depends on `RV-y-1` (both write `ExecutiveSummary.tsx`; `RV-
 
 - The sweep is scoped to the Market Overview page's files because that is the page Andrew has walked; the stylesheet rule that made the borders visible is not touched, since controls and hairlines rely on it. The 622 occurrences elsewhere in the portal follow his pages as he walks them.
 - Footer casing is held by a test that reads every string literal beginning `Source: ` in non-test source, so a future lower-case source name fails the suite.
+
+## ADDENDUM 1 (2026-10-15 ~17:0xZ, 2.0.0_SA_COO~RB, issuer ruling inside its own decomposition) -- cell `RV-y-3`, a direct act
+
+Found at the round-6 drain of `RV-y-1`: (a) `tsc -p tsconfig.app.json --noEmit` from the portal root reports `TS2769` in `src/__tests__/dsgn-rbndv2/rb-5-x5.hover-resolve.test.ts:30` (`maxBuffer` is not a known option of the `execSync` type used there); the COO's merge-time typecheck for the round-4 and round-5 drains ran `tsc --noEmit -p .`, whose root `tsconfig.json` checks no source file (it holds project references), so it printed rc=0 against an empty check; the correct instrument is `tsc -p tsconfig.app.json --noEmit` (or `tsc -b`), and the COO's drain checks use it from here on; (b) `rb-6-y1.border-sweep.test.ts` reads its list from the workspace tree, so run from the portal alone it fails three arms.
+
+| cell | what it builds | serves | writes | risk | class |
+|---|---|---|---|---|---|
+| `RV-y-3` | the x5 test typechecks; the sweep list lives in a portal fixture and the y1 test reads it there; a new test holds both | FWD-3, FWD-5 | `src/__tests__/dsgn-rbndv2/` | LOCAL | worker-light (direct act, round-less, about 20 product lines) |
+
+Gate limb that graded the addendum: none graded the modification (a direct-act order is round-less; the gate's limb for a newly added order checked the order's grammar, `<decomp_ref>` and preflight). Write set disjoint from `RV-y-2` (its own new test file in the same folder, a different file). The correction of the COO's earlier typecheck claim is stated in the round-6 close record.
+

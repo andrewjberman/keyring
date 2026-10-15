@@ -1,0 +1,19 @@
+# drive log 2.0.0_SA_COO~W1 -- 2026-10-15 16Z-17Z (desktop-hk1uu7n)
+
+**archetype:** MIXED
+
+- 2026-10-15T16:0xZ | AMGT_HARVST | un-park | 86 | Andrew-direct at this terminal: WSJ and Barron's ops run on dell1, scripts first, a Chromium sign-in by him only if needed. Recorded verbatim `org/tier1_exec/2.0.0_SA_COO~W1/ANDREW_DIRECT_20261015_160xZ_WSJ_BARRONS_OPS_RUN_ON_DELL1.md` @94086281f2. CTO un-parked the project (msg 6075, addendum 1).
+- 2026-10-15T16:1xZ | AMGT_HARVST | first dell1 read | 86 | `ledger/ROUND86_FIRST_DELL1_READ_20261015.md` @06d5850df2: the sign-in scripts signed both publishers in; a job straight after was `sign_in_refused` (the bundle is never loaded into the tab profile, contracts `transport: tab`, `seed_from_bundle: false`); after `verification.renew` in each profile the same two jobs accepted 5 articles each. Z-S121 answered by row `D1-S17`. DISCLOSED: rows 1, 2 and 4 of the read ran before site Z's stop was confirmed (two short local jobs, no upload).
+- 2026-10-15T16:3xZ | AMGT_HARVST | L6 | 86 | issued `HVST-ca-1` (65c913d949, decomposition section 107): `SessionManager.refresh` of a tab publisher with `seed_from_bundle` false is the in-profile renew. Worker `~141`. AC3 (the real job) is the issuer's, not the worker's (`timeout 120` vs a 2.5 minute sign-in); CTO told.
+- 2026-10-15T16:5xZ | AMGT_HARVST | L7 | 86 | MY ERROR, corrected: the face assumed `sa` was bundle-seeded (it is tab with seed false) and the worktree's sparse set omitted `org/tier1_exec/4.0.0_SA_CRO/scripts`. Worker's first report: AC1 FAIL, AC2 FAIL (rows `D1-W141-S1`, `-S2`). AMENDMENT 1 (f94a1a7d09): the rule also requires `publisher in verification.ACCOUNT_CHECKS`; sparse set widened; same worker continued.
+- 2026-10-15T17:0xZ | AMGT_HARVST | drain | 86 | AC1 `8 passed`, AC2 `113 passed, 4 subtests passed` (worker, then this seat in the worktree and on the merged head); diff read; `round-close-check` MAY-CLOSE before the flip; merged `d0c48b3946` through `safe-merge.sh` (one conflict, the order file's close note; resolved by keeping the branch side). Full `lib/opal_data_harvest` suite on the merged head: `1 failed, 842 passed, 3 skipped`; the failure `test_bn1_names_made_whole.py::test_v_building_twice...` compares a worker-120 deliverable's bytes and reads CRLF against LF on disk: a checkout line-ending difference, not read to touch auth.py or worker.py. Row `D1-S18` dispositions the two worker rows. Worktree and branch removed.
+- Andrew widened the move to all HARVST publishers (relay 6090; CTO addendum 3 and 4): site Z retires its runner for all four; round 87 cuts the dell1 scheduled runner (at a pin carrying 39ae28559b, OPLGTW E1+E2), the sa and bbg proofs, and the repo carriers that name where harvest runs. `sa` keeps its present refresh until its own proof.
+- OWED: AC3 (`ca1_real_job.py`, from a linked worktree of the merged head) and every dell1 wsj/barrons job or renew wait for site Z's read-back, relayed by `0.0.0_AB_MSTR~DELL1`. Then round 87.
+- PUSH STATE: `2bcd85ce9a` and everything above it are LOCAL on box/dell1 (origin/box/dell1 read dc5718130394 at 17:0xZ).
+
+## Compiler Tools
+- `.tools/proof-of-spec-check.py <instance> --governing-order <order>`: VALID rc 0 (re-run by this seat in the worker worktree).
+- `.tools/round-close-check.py --project AMGT_HARVST --round 86`: MAY-CLOSE before the flip.
+- `.tools/safe-merge.sh` / `--continue`: merged d0c48b3946, 0 of 7 paths differ index vs HEAD. `.tools/wk-provision.sh provision|remove`: a sparse worktree omitted a path the AC2 tests read (fixed by `git sparse-checkout add`).
+- `.tools/safe-commit.sh`: row gate OK on D1-S17 and D1-S18; GATE (viii) graded the modified order. The comp-rail refused two Bash calls (F1 grep, R6 pipe); `comp-find ... --limit` and native Grep answered.
+- `ruff` clean on the three touched Python files; py_compile OK.

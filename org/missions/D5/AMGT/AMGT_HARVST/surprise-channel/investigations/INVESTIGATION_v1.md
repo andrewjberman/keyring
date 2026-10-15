@@ -9280,5 +9280,78 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "ANSWERED (the enum has no ANSWERED value): the question in Z-S121 is answered by the dell1 first read @06d5850df2 -- the refresh and the job read different stores; the fix is round 86's one code cell (CTO addendum 2)."
     }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W141-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~141",
+      "surfaced_at": "2026-10-15T16:40:30Z",
+      "one_line": "HVST-ca-1's contract-field rule also routes sa into the in-profile renew (sa is tab with seed_from_bundle false), and sa has no account check, so test (a)'s pin to {wsj, barrons} fails on sa; the code is kept literal and the branch is not integrated until the COO rules.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~W1",
+      "spec_asserts": "HVST-ca-1 section 1.a: SessionManager.refresh takes the in-profile renew when the contract reads transport tab AND seed_from_bundle False, and 'Any other publisher takes the existing code, byte for byte'. Section 1.d(a) and AC1: the renew set equals {wsj, barrons}.",
+      "world_is": "contracts.json sa entry reads transport tab and seed_from_bundle false (the same fields as wsj and barrons), so the rule as written also covers sa. verification.ACCOUNT_CHECKS holds wsj, barrons and bbg but not sa, so renew() raises RequestRejected for sa after TabSession has been opened. Measured in the worktree: test (a) counts are barrons 1, sa 1, wsj 1 and its second assertion fails with the extra sa. The worker added no discriminator the spec does not state; integrating this branch changes sa's refresh path until the COO rules on sa's scope.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/contracts.json sa entry (transport tab, seed_from_bundle false) @65c913d949",
+          "lib/opal_data_harvest/verification.py:210 ACCOUNT_CHECKS = wsj, barrons, bbg (no sa) @65c913d949",
+          "lib/opal_data_harvest/verification.py:474-475 renew() raises RequestRejected when the publisher has no account check @65c913d949",
+          "lib/opal_data_harvest/publishers.py:393 seed_from_bundle False read as the no-seed rule @65c913d949",
+          "worktree run: python -m pytest lib/opal_data_harvest/test_ca1_profile_renew.py -> 1 failed, 7 passed; failure 'assert {barrons, sa, wsj} == {barrons, wsj}'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W141-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~141",
+      "surfaced_at": "2026-10-15T16:40:30Z",
+      "one_line": "The worker worktree C:/dev/wk-harvst-141 is sparse-checked-out without org/tier1_exec, so AC2's test_ad1_token_store.py cannot be collected there and AC2 cannot pass as written in this worktree.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-ca-1 AC2 runs lib/opal_data_harvest/test_ad1_token_store.py and expects '113 passed, 4 subtests passed' (dry-run at base, issuer dell1, 2026-10-15).",
+      "world_is": "git sparse-checkout list in the worktree prints .tools, infra/logic/registry and lib; org/tier1_exec does not exist there. test_ad1 collection raises FileNotFoundError on org/tier1_exec/4.0.0_SA_CRO/scripts/sa_rest_fetch.py, so AC2 reads 'Interrupted: 1 error during collection' (rc 2). The base suite in this worktree reads 15 failed, 807 passed, 3 skipped, 1 error (collection), of which eleven failures are FileNotFoundError on the same missing scripts. The worker did not widen the sparse checkout, which would reconstruct the tree.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git sparse-checkout list (worktree C:/dev/wk-harvst-141) prints .tools, infra/logic/registry, lib @65c913d949",
+          "ls org/tier1_exec in the worktree: No such file or directory; the main tree holds org/tier1_exec/4.0.0_SA_CRO/scripts/sa_rest_fetch.py",
+          "python -m pytest lib/opal_data_harvest/test_ad1_token_store.py -> ERROR FileNotFoundError ... 4.0.0_SA_CRO\\scripts\\sa_rest_fetch.py"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S18",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-15T17:05:00Z",
+     "one_line": "AMGT_HARVST-D1-W141-S1 (sa reached by the contract-field rule) and -S2 (sparse worktree) are both resolved: the rule now also requires a measured account check, and the worktree's sparse set was widened.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-ca-1 section 1.a and AC1: the renew set equals {wsj, barrons}; AC2 collects test_ad1_token_store.py.",
+     "world_is": "Both rows were defects of the issuer's order (it assumed sa was bundle-seeded; its sparse set omitted org/tier1_exec/4.0.0_SA_CRO/scripts). AMENDMENT 1 (f94a1a7d09) adds 'publisher in verification.ACCOUNT_CHECKS' to the rule, so sa, tab with seed_from_bundle false and no account check, keeps its existing refresh; the issuer widened the worktree's sparse set. Merged d0c48b3946: AC1 8 passed, AC2 113 passed and 4 subtests passed, re-run by the issuer on the merged head. The ARMED row S1 is disarmed: no branch carrying the literal rule was integrated.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-ca-1.wsj-barrons-refresh-is-the-in-profile-renew.md AMENDMENT 1 note and COMPLETE note @d0c48b3946",
+       "lib/opal_data_harvest/auth.py refresh() at d0c48b3946 (the ACCOUNT_CHECKS test)"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W141-S1",
+      "AMGT_HARVST-D1-W141-S2"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "Resolved by the issuer's AMENDMENT 1 (f94a1a7d09) and the sparse-set fix; both findings were defects of the order, not of the code, and the merged head passes AC1 and AC2."
+    }
 ]
 ```

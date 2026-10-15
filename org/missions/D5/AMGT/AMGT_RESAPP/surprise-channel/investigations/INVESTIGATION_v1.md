@@ -27506,3 +27506,108 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "A citing row; the worker's three rows keep their text. A frontend change has no mechanical pre-commit check on this box (commit-gate reads .py, .sh, .tf and org/projects JSON only): the order's AC2 is the instrument and stays on every portal order; whether a pre-commit check for .tsx is built belongs to the CTO and no gate is proposed here."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W443-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~443",
+  "surfaced_at": "2026-10-15T16:01:49Z",
+  "one_line": "The ui-walk walker named by the bm-5 walk invocations is absent from the worker worktree: the worktree is a sparse checkout that excludes .claude/, so node .claude/skills/ui-walk/walk.mjs fails MODULE_NOT_FOUND on all three walks (AC2, AC3, AC4).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order s.4 AC2-AC4 run `cd C:/dev/wk-resapp-443 && MSYS_NO_PATHCONV=1 timeout 590 node \".claude/skills/ui-walk/walk.mjs\" ...`; preflight: the walker arms and disarms the dormant UI-walker account under `.claude/skills/ui-walk`; the order's <paths> names only the deliverables folder and the investigation file.",
+  "world_is": "Measured 2026-10-15 ~16:01Z in C:/dev/wk-resapp-443 (branch wk-AMGT_RESAPP-443, HEAD 9c2e5af68f). core.sparseCheckout=true with the sparse list .tools, infra/logic/registry, lib, org/devices, org/missions/D5/AMGT/AMGT_RESAPP; `.claude/` does not exist on disk (`ls .claude/skills` -> No such file or directory). HEAD tracks .claude/skills/ui-walk/{SKILL.md,signin_detect.mjs,ui_walker_account.py,walk.mjs} (walk.mjs blob 7364a6a6149df6e7f5825707b51829341651475e), and the base checkout C:/dev/ajb_workspace carries the same blob. Each of the three walk invocations exits rc=1 with 'Cannot find module ...\\.claude\\skills\\ui-walk\\walk.mjs' before any request; the walk files walk_A.txt, walk_B.txt, walk_C.txt hold only that error. No walk ran, so no UI-walker lease was armed or taken by this worker. The worker did not widen the sparse checkout or copy the walker from the base checkout: both are a path outside the order's <paths>, and the lane rule makes that a BLOCKING row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse --abbrev-ref HEAD -> wk-AMGT_RESAPP-443; test -d org && test -d .tools -> TREE-OK; git -C C:/dev/wk-resapp-443 config --get core.sparseCheckout -> true; git sparse-checkout list -> .tools, infra/logic/registry, lib, org/devices, org/missions/D5/AMGT/AMGT_RESAPP",
+      "ls .claude/skills (worktree) -> No such file or directory; git ls-tree HEAD .claude/skills/ui-walk/ -> four blobs including walk.mjs 7364a6a6149df6e7f5825707b51829341651475e",
+      "walk_A.txt / walk_B.txt / walk_C.txt (deliverables folder, committed with this row): 'Error: Cannot find module C:\\dev\\wk-resapp-443\\.claude\\skills\\ui-walk\\walk.mjs', code MODULE_NOT_FOUND, Node v24.19.0; each invocation exit=1",
+      "curl -s -o /dev/null -w %{http_code} http://localhost:5174/ -> 200 (the local PROD build was up; the failure is the walker path, not the server)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AC1 passes on its own terms (10 of 93 drawn, date 2026-10-15, the same ten as the issuer's walk_draw_20261015.json). AC2, AC3 and AC4 cannot be graded without the walker on disk; AC5 has no shots to read. Restoring the walker into the worktree (sparse-checkout widening or a copy) is an issuer decision: it is outside this order's <paths>."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W443-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~443",
+  "surfaced_at": "2026-10-15T16:26:47Z",
+  "one_line": "On the local PROD build, SHOP CN's forward P/E cells print as numbers (2026E 67.8x, 2027E 53.0x) with no withhold reason visible beside them, although the walk order names SHOP CN as one of the 20 names whose forward P/E is withheld for mixed currencies.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order s.1 preflight and round-106 change 3 (ratified FWD-40 text and CTO round-105 analysis): a forward P/E whose price and consensus-EPS currencies differ is withheld, with the reason in the dash; the Key Figures P/E row shows that reason in the forecast cell instead of the no-consensus sentence; SHOP CN is in this walk's draw and is one of the 20 withheld names.",
+  "world_is": "Read 2026-10-15 from the 1440-px shot 039-SHOP-CN-Model.png (walk A, 16:09Z run, folder tmp/ui-walk/20261015T160945Z copied to C:/dev/ui-walk-evidence/bm-5/A/). The Key Figures P/E row reads 2025 '74x-193.1x' with no price line visible beneath it, 2026E '67.8x' and 2027E '53.0x'; no withhold reason is visible beside either forward cell in the shot. The same screen prints 'Figures in USD', price CAD 250.68 and 2026E EPS 1.85 (USD), so the printed forward ratio joins two currencies. The walker in-page check for this step (findings.json lines 285-291) reports only a React duplicate-key warning on 'Financial Summary:FCF Margin', so no in-page check reads the forward P/E cell. This row records a shot read, not a DOM read; the Model-tab forward cells of the other names read as printed numbers with their own served reasons.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bm-5/A/shots/039-SHOP-CN-Model.png (read with the Read tool; Key Figures P/E row, 'Figures in USD', price CAD 250.68)",
+      "walk_A.txt line 45 (the worktree walk file, rewritten by this seat and committed with this order's deliverables): 'STEP SHOP CN-Model: 1 finding(s)'",
+      "C:/dev/ui-walk-evidence/bm-5/A/findings.json lines 285-291 (the one SHOP CN Model finding: React duplicate-key warning on 'Financial Summary:FCF Margin')",
+      "C:/dev/ui-walk-evidence/bm-5/A/shots/035-SHOP-CN-Exec-Management.png (the research-team section on the same name, read clean)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as an observation. The grade of the forward-P/E read belongs to the CVO at L9 (AC5 is judgment and is not self-graded here). The walk's own checks do not read this cell, so a DOM read of the SHOP CN P/E cell is the instrument that would settle whether the withhold is absent or only not visible at this resolution. No walker, draw or product file was changed."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S31",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-15T16:36:32Z",
+  "one_line": "Worker ~443's W443-S1 is DISARMED (the cause was the issuer's sparse provisioning, fixed, AC2 to AC4 PASS on the re-seat); W443-S2 is CONFIRMED by the issuer's own read: the live served block withholds SHOP CN's forward P/E in all three years, and the page still prints 2026E 67.8x and 2027E 53.0x.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Row AMGT_RESAPP-D1-W443-S1 (BLOCKING): 'the worktree is a sparse checkout that excludes .claude/'. Row AMGT_RESAPP-D1-W443-S2: 'SHOP CN's forward P/E cells print as numbers with no withhold reason visible'; round-106 change 3: a forward P/E of mixed currencies is withheld and the Key Figures P/E row shows the served reason in the forecast cell.",
+  "world_is": "S1: wk-provision.sh provision adds only the folders an order's <paths> names plus its base set, so the walker's folder was never put on disk; the issuer ran git sparse-checkout add .claude/skills/ui-walk in C:/dev/wk-resapp-443 and the re-seated worker ran walks A, B and C to OK: DISARMED with the post-disarm login REFUSED and walk void: no (12907ad9f5). S2: the issuer read C:/dev/ui-walk-evidence/bm-5/A/shots/039-SHOP-CN-Model.png and 040-SHOP-CN-Model-expanded.png (Key Figures P/E row: 2025 '74x-193.1x' with no price line, 2026E 67.8x, 2027E 53.0x, no reason; BNP FP's shot 012 prints its price line 'price 80.79 EUR at the close of fiscal year 2025'). The live function opal-amgt-scoped-api read at the same sitting returns for SHOP_CN_Equity status 200, no BEST_PE_RATIO forecast row, and forecast_withheld entries for 2026, 2027 and 2028 each reading 'the price is in CAD and consensus EPS in USD, and a ratio of different currencies is not shown'. So the served block is right and the page prints a forward P/E from another source on this name; ModelTab.tsx withheldPeReason reads the reason only for its own cell. The source of the printed 67.8x and 53.0x is not yet found.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-resapp-443 log: 12907ad9f5 (walks A/B/C), 688820400a (order complete); merged to box/dell1 at 23c8fe693b",
+      "C:/dev/ui-walk-evidence/bm-5/A/shots/039-SHOP-CN-Model.png and 040-SHOP-CN-Model-expanded.png; 012-BNP-FP-Model.png (issuer read with the Read tool)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round106_prep/checks/r106_fwd_pe_check.py live('SHOP_CN_Equity') read 2026-10-15 ~16:3xZ: status 200, pe_rows {}, forecast_withheld 3 entries for BEST_PE_RATIO FY2026/2027/2028",
+      "portal src/pages/SecurityAnalysis/tabs/ModelTab.tsx lines 195-200 (withheldPeReason) at origin/PROD 33ad65ee"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A citing row; the worker's two rows keep their text. S2 is a finding for the CTO's round-106 analysis (FWD-40 change 3 is not shown on this name on the PROD build) and for the CVO's AC5 grade, not an issuer verdict: no ruling here widens or narrows FWD-40. The page is Opal-internal and the served block is correct, so the standing is INERT."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S32",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-15T16:42:19Z",
+  "one_line": "The source of SHOP CN's printed forward P/E (67.8x, 53.0x) is found: it is the research team's own P/E line in the served team sheet, which fills the Key Figures P/E row once the block's BEST_PE_RATIO is withheld; this is the mechanism row W441-S1 recorded on the PBR fixture, now measured on live data, so the open question W441-S1 put to the issuer is a meaning of FWD-40 change 3 and goes to the CTO.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Row D1-S31 (this seat): 'The source of the printed 67.8x and 53.0x is not yet found.' Row W441-S1: 'once BEST_PE_RATIO is removed, the team sheet's own P/E line fills the 2026E and 2027E Key Figures cells, so no forecast dash exists for forecast_withheld to replace'; its decision for the issuer: 'whether a withheld forward P/E's reason is meant to stand in place of a team-sourced value on the P/E line'.",
+  "world_is": "Read 2026-10-15 ~16:4xZ on the live function opal-amgt-scoped-api, /thesis for SHOP_CN_Equity (status 200): model.team_sheet row_labels index 24 'P/E' carries row_values ['-44x--108.2x', ..., '74x-193.1x', 67.77309150505174, 53.031666082114356, 39.496208389135454, 35.84030384182221, 30.1150183797938]; index 108 'P/E Range' repeats the same values. The page printed 2025 '74x-193.1x', 2026E 67.8x, 2027E 53.0x: the team line, rounded to one place. The block's own BEST_PE_RATIO is absent and its forecast_withheld entries are present (D1-S31), so the withhold at the source works and the Key Figures P/E row shows the team's figure in the cell where the reason would otherwise print. That the 2025 cell is a range text explains the absent price line (no single price basis). Whether the team's own P/E figure may stand where the withheld block ratio's reason is meant to print is not decided here: W441-S1 has stood UNDER_INVESTIGATION since 2026-10-14 05:26Z, and FWD-40 change 3 reads 'the Key Figures P/E row shows THAT reason in the forecast cell'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r106_fwd_pe_check.live('SHOP_CN_Equity') read 2026-10-15 ~16:4xZ: model.team_sheet row_labels[24] 'P/E', row_values[9..14] = '74x-193.1x', 67.77309150505174, 53.031666082114356, 39.4962..., 35.8403..., 30.1150...",
+      "C:/dev/ui-walk-evidence/bm-5/A/shots/039-SHOP-CN-Model.png (page: 74x-193.1x, 67.8x, 53.0x)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md rows AMGT_RESAPP-D1-W441-S1 (PBR fixture, the same mechanism) and AMGT_RESAPP-D1-S31"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A citing row. It corrects D1-S31's 'source not found' and does not rule W441-S1: the question is a meaning of ratified FWD-40 text (a CTO matter at the round-106 analysis), not an issuer amendment inside the decomposition. Two readings, for the CTO: (a) the team's own P/E is the team's figure and may stand, the reason applying only where no team figure exists; (b) the reason must print wherever the block ratio is withheld, so the team line is not to fill that cell. No code change is proposed here."
+}
+```

@@ -232,5 +232,9 @@
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "d=\"$PWD\"; while [ ! -f \"$d/.tools/claude-usage-statusline.py\" ] && [ \"$d\" != \"/\" ] && [ -n \"$d\" ]; do d=\"$(dirname \"$d\")\"; done; exec python \"$d/.tools/claude-usage-statusline.py\""
   }
 }

@@ -1128,6 +1128,16 @@ def build_installed_fixture(site_dir, name=SYN_NAME, version=SYN_VERSION, py_byt
     return di
 
 
+def fetch_device():
+    """The device key a fetch-shaped record carries: intake_fetch.this_device(), imported and never copied, so there is one
+    derivation. No cycle: intake_fetch.py imports no module of this one. None (null) when the box cannot be named."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    if here not in sys.path:
+        sys.path.insert(0, here)
+    import intake_fetch  # noqa: E402  (stdlib-only module beside this file)
+    return intake_fetch.this_device()
+
+
 def write_fetch_record(cfg, batch, wheel_path, name=SYN_NAME, version=SYN_VERSION, tags=SYN_TAGS, attestation="absent",
                        release_age_days=60, release_count=10, outcome="held", published_sha=None):
     fn = pathlib.Path(wheel_path).name
@@ -1142,7 +1152,8 @@ def write_fetch_record(cfg, batch, wheel_path, name=SYN_NAME, version=SYN_VERSIO
                           "yanked": False, "requires_python": ">=3.9"},
             "project": {"release_count": release_count, "first_release_at": stamp(first), "this_release_at": stamp(rel)},
             "attestation": attestation, "held_path": "holding/%s/%s" % (batch, fn), "held_sha256": sha,
-            "held_bytes": os.path.getsize(wheel_path), "outcome": outcome, "reason": "", "fetched_by": "selftest", "at": stamp()}
+            "held_bytes": os.path.getsize(wheel_path), "outcome": outcome, "reason": "", "fetched_by": "selftest",
+            "device": fetch_device(), "at": stamp()}
     write_json_atomic(cfg.records_dir(batch) / (fn + ".fetch.json"), rec_)
     return rec_
 

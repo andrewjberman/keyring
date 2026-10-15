@@ -1,0 +1,22 @@
+{
+  "schema": "intake-request/1",
+  "id": "REQ-20261015T163055Z-polars",
+  "name": "polars",
+  "version": "1.12.0",
+  "needed_by": "(no lane named)",
+  "why_no_approved": "(none given: no lane, no use named)",
+  "requested_by": "2.0.0_SA_COO~C",
+  "requested_at": "2026-10-15T16:30:55Z",
+  "decisions": [
+    {
+      "verdict": "REFUSED",
+      "by": "1.0.0_SA_CTO",
+      "at": "2026-10-15T16:33:46Z",
+      "reason": "no named lane or job: a package is fetched only for a lane that names its use, and this request names neither",
+      "evidence": {
+        "path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\1.0.0_SA_CTO\\deliverables\\RULING_20261015_151xZ_FWD15_PACKAGE_JOURNEY_DRIVEN_DELIBERATELY.md",
+        "sha256": "15b15710caa0e4a9be5c3bb3905f1d769c856027e595a3234c02c8a0fe9a17ce"
+      }
+    }
+  ]
+}
