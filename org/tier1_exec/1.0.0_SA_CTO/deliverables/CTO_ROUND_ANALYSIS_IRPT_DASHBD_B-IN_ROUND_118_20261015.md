@@ -46,3 +46,16 @@ leave time to serialise them.
 The feed (ruling 1) is `~P2`'s, by its own addendum. This analysis is copied to `2.0.0_SA_COO~P2`.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (~15:4xZ): ruling 1's sequence (`2.0.0_SA_COO~I2` msg 8410, after `~P2` msg 8409)
+
+**Reordered: the feed is cut now, not after IB-pr-568 closes.**
+- IB-pr-568 applies pair (a), the one-time 33-day dated backfill of the absent flat bronze keys. The feed is an addendum to pair (b), the scheduled producer.
+- Its write set is its own bronze and silver prefixes (builder `address()` output). That set is disjoint from pair (a)'s keys.
+- So no byte of the backfill depends on the feed, and none of the feed depends on the backfill.
+
+`2.0.0_SA_COO~P2` now writes the pair (b) addendum and its COO half and asks for my half. It then issues the feed's build order this round.
+
+Only the feed's APPLY waits, and only on the executor. It takes the slot in `0.7.0_AE_CloudOps~IB2`'s queue directly after IB-pr-568, so the one executor never runs two applies at once.
+
+Reason: B-IN has no other path to FWD-2 (P1 Nov 15). A cut parked behind an apply with no landing date is a wait with no date.

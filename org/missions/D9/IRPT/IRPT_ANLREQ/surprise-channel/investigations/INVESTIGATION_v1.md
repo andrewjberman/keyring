@@ -17153,3 +17153,136 @@
   "notes": "Resolves IRPT_ANLREQ-D2-S118. W150-S2 is answered: FWD1_DRIVER_RECORD.json is committed in the main tree under 0.9.0_WK_IRPT_ANLREQ~149/r41/ (read by this seat); the worker's checkout simply lacked it. Time of filing is the file's commit time."
 }
 ```
+
+## IRPT_ANLREQ-D2-W151-S1 -- docs/contracts/investor-reporting/v1/ is skip-worktree in this worktree as well as infra/aws/lambda/investor-reporting/; the contract schemas were read as base blobs with git show
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W151-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~151",
+  "surfaced_at": "2026-10-15T15:35:01Z",
+  "one_line": "The contract folder docs/contracts/investor-reporting/v1/ is not on disk in this worktree (skip-worktree), as is the backend folder the earlier row named; the schemas were read as base blobs with git show, with no checkout change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-350 cell: the response and submit wire types are read under docs/contracts/investor-reporting/v1/ of the worktree; a path the order names that is not on disk is cited from its base blob and said so in the record.",
+  "world_is": "git ls-files -t marks docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json, AnalysisUploadRequest.schema.json, AnalysisSubmissionRequest.schema.json and ComparisonCatalogue.schema.json as S (skip-worktree); the directory is absent on disk. The blobs exist at base 9c0e408601 and were read with git show. No sparse change, checkout or copy was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -t docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json at 9c0e408601 (S flag)",
+      "docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json:7 @9c0e408601 (read by git show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as an observation, not a blocker: the cell names the contract as a read, and the record cites the base blobs. The record's cite_check reads a skip-worktree file from its base blob, so the check is reproducible in this worktree."
+}
+```
+
+## IRPT_ANLREQ-D2-W151-S2 -- addendum point 2 'a kept unknown symbol files as typed' does not hold from source: an unknown ticker is an ERROR finding and the upload stays NEEDS_CORRECTION, nothing filed
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W151-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~151",
+  "surfaced_at": "2026-10-15T15:35:01Z",
+  "one_line": "The addendum's Keep clause (a kept unknown symbol files as typed and goes to the backend) cannot be met from what exists: TICKER_NOT_FOUND is severity ERROR, and any ERROR leaves the upload at NEEDS_CORRECTION with nothing filed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.12 C-FILING-HINT point 2: the filer accepts the suggestion or keeps their own; a kept unknown symbol files as typed and goes to the backend.",
+  "world_is": "intake/portfolio.py:440 defines emit with severity default ERROR; portfolio.py:501 emits TICKER_NOT_FOUND through it; portfolio.py:578 keeps the template NOT normalized when any finding is ERROR; uploads.py:569-584 then answers NEEDS_CORRECTION with the finding and no input_id. The only resolution the door accepts is a correction re-post (uploads.py:597), which replaces a symbol and does not keep it. The Keep branch therefore re-posts to the same NEEDS_CORRECTION.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:440 @9c0e408601 (read by git show)",
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:578 @9c0e408601 (read by git show)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:569 @9c0e408601 (read by git show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Decides the recommendation: BACKEND_AND_PORTAL. The accept path (Did you mean, then a corrections re-post on the same upload_token) needs no backend or wire change; the Keep path needs a backend semantics change. The CTO rules whether a Keep is a correction whose to_value equals from_value, which needs no wire member, or a new acknowledgement."
+}
+```
+
+## IRPT_ANLREQ-D2-W151-S3 -- addendum point 1 'closest entry by exact CUSIP or ISIN match first' cannot fire: neither the uploaded file nor the served catalogue carries an identifier
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W151-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~151",
+  "surfaced_at": "2026-10-15T15:35:01Z",
+  "one_line": "The uploaded holdings file has a ticker column and an amount column only, and the served comparison catalogue serves key, label, ticker and name_source only; an exact CUSIP or ISIN match is impossible from either.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.12 C-FILING-HINT point 1: the suggestion is the closest catalogue entry by exact CUSIP or ISIN match first, then the ticker edit distance, then the name.",
+  "world_is": "intake/template_reader.py:420 reads headers A and B only, and template_reader.py:451-452 builds each row from symbol, amount, basis and cells A and B; no CUSIP, ISIN or name column is read on the template lane. ycharts/generate/comparison_catalogue.py:116 drops CUSIP-namespaced classification rows, and comparison_catalogue.py:147-159 serves key, label, ticker and name_source; ComparisonCatalogue.schema.json:29 requires exactly those four members.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/template_reader.py:420 @9c0e408601 (read by git show)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py:116 @9c0e408601 (read by git show)",
+      "docs/contracts/investor-reporting/v1/ComparisonCatalogue.schema.json:29 @9c0e408601 (read by git show)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CUSIP or ISIN rank is not buildable from the current file or catalogue. A rank by name or ticker edit distance is buildable. The CTO rules whether the identifier rank is dropped or whether an identifier source is added (a new contract or a new source, not in scope of this read)."
+}
+```
+
+## IRPT_ANLREQ-D2-W151-S4 -- addendum point 1 'a holding whose symbol is not in the served catalogue' uses a membership test that the catalogue cannot support: it is five models and the named ETF tickers, not the holdings universe
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W151-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~151",
+  "surfaced_at": "2026-10-15T15:35:01Z",
+  "one_line": "The served catalogue is the five Opal model entries plus the etf-classifications tickers that carry a name; a membership test against it flags nearly every stock holding, so the trigger as written is ill-defined.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.12 C-FILING-HINT point 1: a holding whose symbol is not in the served catalogue shows ONE suggestion.",
+  "world_is": "ycharts/generate/comparison_catalogue.py:184-200 builds the list from the model catalogue (templates.json, five entries, all model_portfolio) and etf-classifications tickers that carry a name; a ticker neither names is not listed (the verbatim answer belongs to entry_for_ticker only). The served list therefore cannot stand for the holdings universe.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py:184 @9c0e408601 (read by git show)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/templates.json:96 @9c0e408601 (read by git show; five entries counted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The usable trigger is the server's own TICKER_NOT_FOUND finding (uploads.py:69, portfolio.py:501), which carries the row and the symbol. The CTO rules whether the trigger is the finding or a catalogue test."
+}
+```
+
+## IRPT_ANLREQ-D2-W151-S5 -- the 'Did you mean' the addendum asks for already exists in two places, and the form's own source differs from the addendum's: a provider-verified upload-time suggestion, rendered only by the Investor Reporting composer
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W151-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~151",
+  "surfaced_at": "2026-10-15T15:35:01Z",
+  "one_line": "A Did you mean line with an accept button already exists in the Investor Reporting prospect composer, fed by a provider-verified suggestion made during the upload; the Ticket Center filing form renders finding words only, so it has neither.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.12 C-FILING-HINT: the suggestion reads only the served catalogue the form already loads and makes no new vendor call at filing.",
+  "world_is": "intake/upload_suggestions.py:19 names the source KIMI_CHECK_PROVIDER_VERIFIED and :26 suggest_for asks the advisory and verify ports during the upload (uploads.py:578-580 calls it). The suggestion rides the finding as suggestion.symbol (prospect.ts:97). ProspectComposer.tsx:509-513 renders 'Did you mean' and a Use button that fills a proxy input, never auto-applied. TicketCenter's FileOutcome keeps finding words only (analysisRequest.ts:260 and :118), so the form cannot show the suggestion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/upload_suggestions.py:19 @9c0e408601 (read by git show)",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx:509 (portal worktree HEAD e578b378)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:260 (portal worktree HEAD e578b378)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The addendum's source rule (catalogue only, no vendor call) and the existing mechanism (provider-verified, at upload) differ. Porting the existing suggestion is PORTAL_ONLY for the display and the accept; a catalogue-only suggestion is a new portal function with weak coverage. The CTO rules which source the Did you mean uses."
+}
+```
