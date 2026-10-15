@@ -16328,3 +16328,82 @@ name the one known failure instead of silently inheriting it.
     "notes": "Two routes for the issuer: (a) amend the take-list to include app/typed_scope.py -- it is one pure seam module, it imports only things already live, and the release is tested with it at 29 of 29; RECOMMENDED. (b) let OG-gt-6 ship its own seam first and re-cut OG-ap-19 on that release, which costs a round and gains a cleaner attribution. The general lesson is the one worth keeping, and it is the same shape as Z-S130 one order ago: A TAKE-LIST DERIVED FROM THIS RELEASE'S OWN CELLS CANNOT SEE A DEPENDENCY AN EARLIER CELL WROTE. ap-18's own ask even listed typed_scope.py as deliberately absent, which made it look settled rather than pending. The cheap tell is mechanical and belongs at CUT time: grep the taken modules' import statements for names the release does not contain, before running anything. The expensive tell is the one that caught it here -- the host-shaped import check the order mandates, which is the second time in two orders that check has paid for itself."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S138",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T03:57:28Z",
+    "one_line": "RESOLVES NFRA_OPLGTW-Z-S137. Amendment A2 @68a7d83f97 ruled route (a): app/typed_scope.py rides OG-ap-19 whole, the cut ee23dd004c stands unchanged, and ap19.AC1 now reads 'outside the G3-G6 set 0 (want 0)' RESULT: PASS. The grader's allow-list was widened to admit typed_scope and gt6. The COO half is signed at that release_sha (@bcc91e7a86); the CTO and CVO halves are owed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "amendment A2 at HEAD (68a7d83f97 is an ancestor of my HEAD): 'Z-S137 ruled route (a), app/typed_scope.py rides this release whole; your cut ee23dd004c already takes it and stands unchanged'",
+        "ap19.AC1 re-run after the ruling: 'files differing 16; outside the G3-G6 set 0 (want 0); tools registered 13 of 13; SAFE 13 of 13; NATIVE 13 of 13' and RESULT: PASS -- the single failing limb is gone",
+        "the grader's ALLOW regex now reads (portal_models|portal_macro|news_typed|typed_scope) and test_og_(pt1|pt2|nw1|gt6|gt10), where before it named neither typed_scope nor gt6",
+        "the seam cell e6f3b2b1b7 is TWO files: app/typed_scope.py (172 lines) and tests/test_og_gt6.py (205 lines); A2 rules the test not required",
+        "the seam's own suite was RUN as evidence and NOT taken: tests/test_og_gt6.py checked out uncommitted into the release worktree reads 4 passed against the typed_scope.py this release ships, then removed -- the worktree is byte-identical to ee23dd004c afterwards (git status empty, HEAD equal)",
+        "seven suites with it present: 33 passed, 0 failed, 0 errors (pt1 4, pt2 5, nw1 5, gt6 4, gt10 2, entitlement_admin 9, data_entitlement_family 4)"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "A2 says the cut stands unchanged, so the release is complete as committed and the halves sign that sha.",
+    "world_is": "It is, and the one judgment this seat had to make on top of the ruling was whether to ALSO take the seam's test. A2 left it open ('NOT required; the allow-list tolerates it either way'), and taking it would have been the obvious engineering instinct -- ship a module with its own coverage. I did not, for a reason that outranks the instinct: THE COO HALF IS SIGNED AT ee23dd004c, and adding any file moves the release_sha and voids that signature. So the test was run as EVIDENCE in the worktree and removed, which buys the coverage claim without moving the artifact a half has already signed. A signature binds a sha, not an intent.",
+    "notes": "Two things worth keeping. (1) WHEN A RULING SAYS 'STANDS UNCHANGED', THE PERMISSIVE HALF OF THE SAME SENTENCE IS NOT AN INVITATION TO EDIT. 'tests/test_og_gt6.py is NOT required; the allow-list tolerates it either way' is true of the GRADER and says nothing about the SIGNATURE -- the allow-list would have passed a release with the test in it, and the COO half would not have covered that release. Read a tolerance clause against every instrument it does not mention. (2) EVIDENCE DOES NOT HAVE TO SHIP. Checking a test out, running it, and removing it is a legitimate way to learn something about a frozen artifact -- as long as the removal is verified (HEAD equal, git status empty) rather than assumed, which is the same discipline as reverting the legacy_addresses edit in Z-S136. Both times the finish was 'the tree is byte-identical to where it should be', measured."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W94-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~94",
+    "surfaced_at": "2026-10-15T03:58:18Z",
+    "one_line": "The identity-scope floor has a second call site outside this order's paths: integrations/base.py run_integration_tool denies a scoped identity's integration tool, so a per-person widening never reaches an integration tool or an integration channel (it fails closed; narrowing is unaffected).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "app/tools.py:145-152 @a8e22ed56d -- identity_scope.check at _run, the native dispatch floor the order names (C-PERSON (c)); the widening is applied here",
+        "app/integrations/base.py:155-161 @a8e22ed56d -- a SECOND identity_scope check (_scope_check) in run_integration_tool; base.py is in neither the order's <paths> nor its read-only inputs",
+        "comp-find 'identity_scope' infra/aws/ec2/opal-gateway/app @a8e22ed56d -- DENOMINATOR 45 hit(s) across 119 file(s); the denial call sites are tools.py:149 and integrations/base.py:156"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v2.9 C-PERSON (c), as the order's worker face states it: the widening applies 'where identity_scope.check(email, tool) denies ... the call site in app/tools.py _run about line 145'; the face's <paths> and read-only inputs name no other identity-scope call site (face section 1 item 3(c); section 3).",
+    "world_is": "There are two identity_scope.check call sites on the dispatch floor: app/tools.py:149 (_run, native tools, widened by this cell) and app/integrations/base.py:156-161 (run_integration_tool, integration tools, NOT widened because base.py is outside <paths>). A scoped identity's integration-tool call is denied identity_scope_denied whatever its per-person record says. Narrowing is unaffected: base.py calls data_entitlement.tool_denial, which applies stopped, tools_deny and channels_deny to integration tools. The reader decides integration tools as served (person_widens; channel_of reads registry._ACTIVE_BY_TOOL); only the dispatch leg is missing.",
+    "notes": "Route for the issuer: grant integrations/base.py to this order (or a follow-on cut) and add beside its _scope_check the same call the native floor makes: data_entitlement.person_widens(tool, get_current_principal(), <the Opal-principal test of tools._is_opal_user(email)>). The reader is unchanged. Until then the integration leg of C-PERSON widening is inert and the F2 writer should not rely on it. Native widening is proven at the live tools._run floor by test_ogcp1_ac03 (tests/test_og_cp1.py, offline)."
+  }
+  ```
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W94-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~94",
+    "surfaced_at": "2026-10-15T04:26:45Z",
+    "one_line": "The commit gate's client-data check could not run on this device: the hashed account-id list is absent at its default path, so commit a445101400 (A2) was not checked for client account ids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of commit a445101400 (paths: infra/aws/ec2/opal-gateway/app/integrations/base.py and infra/aws/ec2/opal-gateway/tests/test_og_cp1.py): WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Opal Bloomberg/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).",
+        "the WARN is the gate's own read of that path at commit time on this device (read at a445101400; no other commit on this device was measured)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "safe-commit runs client-data-check on every commit and grades it for client account ids; the WARN names the hashed list as the input it reads.",
+    "world_is": "On this device the list is absent at its default path, so the check printed WARN and let commit a445101400 through with no verdict from it. Absent is not empty.",
+    "notes": "Not blocking this order: the commit's two paths are gateway code and its offline test, and this seat did not scan their content for client account ids. ARMED because the same absence would repeat on any later commit on this device until the list is placed or the variable is set; that act belongs to the device owner, outside this order's write surface, and was not done here."
+  }
+  ```
