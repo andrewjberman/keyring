@@ -16903,3 +16903,58 @@
 ```
 
 ---
+
+## IRPT_ANLREQ-D2-S116 -- DISARMS S115: the api-root route leg is signed, applied and read back
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S116",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-15T06:14:00Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S115 (release 31 leg L cannot show its route: no gateway route for commentary-pdf): addendum 1 added leg A, applied by 0.7.0_AE_CloudOps~AQ2 and read back by this seat.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S115: the commentary-pdf route has no API gateway route; T5 and T6 cannot read as written; disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "MEASURED by this seat 2026-10-15 ~06:07Z: apigatewayv2 get-routes on 7k3ed8px20 returns 122 items and no NextToken; one key ends in /commentary-pdf: RouteId 0bxt97o, Target integrations/8ogp332 (the irpt-status integration), AuthorizationType CUSTOM, AuthorizerId naqxlm. RECORD, re-run by this seat: both order instances VALID (rc 0); the proof-line counts equal their expectations (leg L 4 and 3, leg A 2 and 2); ledgers irpt-status-r31-20261015 and irpt-api-r31a-20261015 both read CLOSED. Addendum 1 (COO half blob 322dbb2410, CTO half signed msg 8088) restates T5 (non-discriminating, A1 decides) and T6 (ABSENT until the FWD-1 run; ABSENT is not EXERCISED). What this row does NOT do: exercise the route as an owner; the first such read is the FWD-1 run's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-routes 7k3ed8px20, 122 items, route 0bxt97o, 2026-10-15 ~06:07Z (this seat)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r31/A_AFTER_R31A.txt",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release31/NEVER_WIDEN_PAIR_ANLREQ_RELEASE31_ADDENDUM1_API_ROOT_ROUTE_COO_HALF.md"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The gateway route now exists and was read back; the pair addendum covers the gap.",
+  "notes": "Resolves IRPT_ANLREQ-D2-S115."
+}
+```
+
+## IRPT_ANLREQ-D2-S117 -- DISARMS S26: the stale commentary_ready message expired and the depth reads 0
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S117",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-15T06:14:00Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S26 (one stale commentary_ready message could reach the live packager): its retention ended and the queue reads 0, 0 and 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S26: ONE commentary_ready message sits on the queue; it disarms on a MEASURED depth of 0 (CTO msg 4257); the CTO's release-31 condition is that it never reaches the live packager.",
+  "world_is": "MEASURED by this seat 2026-10-15 06:12:11Z: get-queue-attributes on outlook-global-commentary-draft-commentary-ready-queue reads ApproximateNumberOfMessages 0, NotVisible 0, Delayed 0 (read, never received); the queue's CloudWatch ApproximateAgeOfOldestMessage read 345582 s at 06:10Z against MessageRetentionPeriod 345600 s, and the count still read 1 at 06:10:27Z, so the expiry was observed as the retention ended. No consumer was ever mapped and nothing was received or purged by any seat. What this row does NOT do: replace leg R's own R0q read, which the applier takes inside its window.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-queue-attributes 06:12:11Z: 0/0/0 (this seat)",
+      "CloudWatch ApproximateAgeOfOldestMessage 2026-10-15 06:05Z 345348 s, 06:10Z 345582 s; MessageRetentionPeriod 345600"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The depth reads 0 by measurement; the disarm condition the CTO set is met.",
+  "notes": "Resolves IRPT_ANLREQ-D2-S26."
+}
+```

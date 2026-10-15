@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_RBNDV2~4</issued_to>
 <issued_by>2.0.0_SA_COO~RB</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -21,9 +21,7 @@
 
 `RV-h-1` -- THE ONE WHITE-TO-SILVER HEAT SCALE and every heat map pointed at it (FWD-4, C-HEAT).
 
-Create `portal/src/lib/heatScale.ts`: the ONE definition of the heat colour, a white end `#FFFFFF` and a silver end you choose, and `heatColor(t: number): string` returning a hex colour for t clamped to 0..1 (0 = white = lowest, 1 = silver = highest), plus the two end constants exported. Choose the silver end so that (i) white against the silver end holds a contrast ratio of at least 3.0 (WCAG relative luminance), and (ii) navy ink `#0A1733` on the silver end holds at least 4.5, so dark cell text stays readable on the darkest cell; interpolate in a way that makes lightness strictly decreasing with t so a reader tells high from low at a glance. The blue scale is gone from every heat map.
-
-Point each heat map at it, replacing its own blue colour logic and keeping its data logic, thresholds, bins and text exactly as they are: `portal/src/components/BenchmarkHeatmap.tsx`, `portal/src/components/PerformanceHeatMap.tsx`, `portal/src/pages/InvestorReporting/tabs/reporting/ReturnsHeatmap.tsx`, `portal/src/pages/Macroeconomics/panels/MacroHeatmap.tsx`, `portal/src/pages/Macroeconomics/utils/percentileColor.ts`, `portal/src/pages/Valuation/panels/ValuationSummaryPanel.tsx`, `portal/src/pages/Correlation/components/CorrelationMatrix.tsx` and `portal/src/pages/Correlation/Correlation.tsx` (the Correlation page's heat cells). A name search (brief F10) found these and is not exhaustive: read each file, change only where it colours a heat cell, and if a heat map elsewhere in `src/` also uses a blue scale, name its file in a surprise row and leave it (it is a wall: not in your `<paths>`). Where a file colours a heat cell as diverging (positive vs negative), keep the sign semantics of the data and shade magnitude by the scale; do not invent a new hue. Cell text stays navy ink.
+Create `portal/src/lib/heatScale.ts`: the ONE definition of the heat colour, a white end `#FFFFFF` and a silver end you choose, and `heatColor(t: number): string` returning a hex colour for t clamped to 0..1 (0 = white = lowest, 1 = silver = highest), plus the two end constants exported. Choose the silver end so that (i) white against the silver end holds a contrast ratio of at least 3.0 (WCAG relative luminance), and (ii) navy ink `#0A1733` on the silver end holds at least 4.5, so dark cell text stays readable on the darkest cell; interpolate in a way that makes lightness strictly decreasing with t so a reader tells high from low at a glance.
 
 **Out of this cell:** `index.css`, the panel primitives, the sidebar, and `--ramp-*` / the sentiment scale (an ordered-scale ramp for other charts; the round-3 walk reads it).
 
@@ -36,8 +34,8 @@ Point each heat map at it, replacing its own blue colour logic and keeping its d
 <criterion id="RB1H-AC1" cell_refs="RV-h-1"><invocation>cd <WS>/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_RBNDV2~4; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/lib/__tests__/dsgn-rbndv2/rb-1-h.scale.test.ts 2>&1 | tail -25</invocation><expect>VERDICT: HEAT-SCALE-OK</expect></criterion>
 `RB1H-AC1` -- `heatColor(0)` is `#FFFFFF`; the silver end differs from white by a WCAG contrast ratio of at least 3.0 and navy `#0A1733` on it holds at least 4.5; across `heatColor(i/10)` for i in 0..10 the relative luminance is strictly decreasing; values below 0 and above 1 clamp to the ends (difference control: a deliberately reversed copy of the function inside the test must FAIL the monotonic arm, proving the arm can fail). The test prints `VERDICT: HEAT-SCALE-OK` only when every arm holds.
 
-<criterion id="RB1H-AC2" cell_refs="RV-h-1"><invocation>cd <WS>/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_RBNDV2~4; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/lib/__tests__/dsgn-rbndv2/rb-1-h.readers.test.ts 2>&1 | tail -25</invocation><expect>VERDICT: HEAT-READERS-OK</expect></criterion>
-`RB1H-AC2` -- reading the eight heat files as text: each imports from `heatScale` (or `@/lib/heatScale`) and calls `heatColor`, and none still defines the blue heat colours it held at the base (the test lists, per file, the blue literals or blue class names that the base file coloured heat cells with, taken from `git show ad7c100b5c:portal/<file>` in `<WS>/portal`, and asserts each is absent now; difference control: the same absence check run against the base text must FAIL for every file, proving it can fail). The test prints `VERDICT: HEAT-READERS-OK` only when every arm holds.
+<criterion id="RB1H-AC2" cell_refs="RV-h-1"><invocation>cd <WS>/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_RBNDV2~4; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/lib/__tests__/dsgn-rbndv2/rb-1-h.single-definition.test.ts 2>&1 | tail -25</invocation><expect>VERDICT: HEAT-SINGLE-DEF-OK</expect></criterion>
+`RB1H-AC2` -- reading every .ts and .tsx file under src (not __tests__) as text, exactly ONE file defines the constants HEAT_WHITE and HEAT_SILVER (heatScale.ts), and heatColor is exported once; difference control: the same count run on a text where the definition is duplicated must report 2. The test prints `VERDICT: HEAT-SINGLE-DEF-OK` only when every arm holds. (Amended by 2.0.0_SA_COO~RB per its ruling on DSGN_RBNDV2-W4-S1..S5; replaces the readers criterion.)
 
 <criterion id="RB1H-AC3" cell_refs="RV-h-1" judgment="true"/>
 `RB1H-AC3` -- graded at the round-1 drain by Andrew's eye on `/market` and the heat maps he opens (DEC-5), never self-graded and never by the CVO: a reader tells high from low at a glance and no heat map is left in the blue scale. RECORD; no verdict.
