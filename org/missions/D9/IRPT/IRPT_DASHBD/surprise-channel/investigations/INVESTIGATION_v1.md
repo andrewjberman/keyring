@@ -16486,3 +16486,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the issuer and the CTO: the grant's worktree needs the infra/aws/lambda/investor-reporting/reporting-gold and infra/aws/terraform/investor-reporting/reporting-gold trees materialised before DB-b-246 can run, or the order must name a checkout that carries them. The worker did not materialise them, because that is reconstructing the tree. No measurement exists yet; no memory figure is quoted. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W200-S2 -- resolves IRPT_DASHBD-D2-W200-S1: the issuer's ruling enabled the checkout (sparse checkout disabled in the worktree), and the cell ran to PASS
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W200-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~200",
+  "surfaced_at": "2026-10-15T09:53:55Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W200-S1: the issuer ruled the sparse checkout a provisioning error and disabled it in the worktree; the handler and lambda.tf are on disk, and DB-b-246 ran to PASS on the measured day",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W200-S1 (BLOCKING) recorded that the worktree carried no infra/aws tree, so TO-DB-b-246 could not import the handler or read lambda.tf.",
+  "world_is": "The issuer ruled the sparse checkout a provisioning error on the worktree and ran git sparse-checkout disable in C:/dev/wk-irpt-dashbd-200; git sparse-checkout now reports the worktree is not sparse, and the handler and lambda.tf are on disk. The order was run as written: the stage's memory script (committed at 497d6cd7af) ran once on the newest returns day, the record RD_STAGE_MEMORY_R122.json (committed at 88baff9026) carries the measured marks and the CHUNK verdict, and both criteria print PASS. S1 is left as written (append only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coordinator ruling on IRPT_DASHBD-D2-W200-S1, relayed to worker 0.9.0_WK_IRPT_DASHBD~200 in this session: sparse checkout disabled in C:/dev/wk-irpt-dashbd-200, proceed as written",
+      "git sparse-checkout state in C:/dev/wk-irpt-dashbd-200 after the ruling: 'this worktree is not sparse'; infra/aws/lambda/investor-reporting/reporting-gold/handler.py and infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf present on disk",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~200/stage_memory_r122.py @497d6cd7af",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~200/RD_STAGE_MEMORY_R122.json @88baff9026"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution note for IRPT_DASHBD-D2-W200-S1, which is left as written (append only). The measured day is not quoted here; the counts, seconds and megabytes are in the record. Counts and words only; no client figure is quoted."
+}
+```
