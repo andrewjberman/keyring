@@ -4072,3 +4072,15 @@ Check IB205-1 (`deliverables/2.0.0_SA_COO~P2/checks/r205/p205_cells.py`), dry-ru
 | `IB-pr-564` | REBUILD the irpt-ycharts-generate candidate with the candidate map: the ENDPOINT members at the signed pin carry commentary_requested, release 29's members stay at the live bytes, composition_admission.py recorded, the pre-apply digest restated | FWD-3 | SERVED | none | PY2-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~408) starts now.
+
+## 202. ROUND 5, WORKSTREAM ~PO (the Orion chain read for the backfill and the fold; 2026-10-15 ~07:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling @1dca8c9e4d (msgs 8169, 8170) on the V2 read)
+
+Round 4 of ~PO closed MAY-CLOSE with the design and packet V2 (IB-pr-560) and ten rows. The CTO ruled: no date token is added to the scheduled chain; the absent trading days are backfilled ONCE with the same pull code plus a date (if the dispatch script invokes the manual_api scripts they are the production code and are not retired; if not, a present day's key shape and bytes are compared first); the denominator is recomputed per feed span against lib/trading_calendar.py; the 06:00 New York fold does not move until Orion's T-1 completeness is read from the last 20 trading days' pulls; the silver aggregator's missing source (W404-S5) is a source-map and registry gap owned by the issuer. One READ cell: the chain read, the spans, the completeness read and the silver aggregator's source status. Packet V3 (supersedes V2) is the next cell, cut on this record.
+
+Check IB206-1 (`deliverables/2.0.0_SA_COO~P2/checks/r206/p206_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control206.py`) passes all three and twenty-three negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-565` | READ the chain's pull steps against the manual_api scripts, the per-feed span denominators, the T-1 completeness over 20 trading days, the silver aggregator's source status | FWD-3 | SERVED | none | PO5-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~409) starts now.
