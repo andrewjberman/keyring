@@ -9416,3 +9416,31 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-W177-S1 -- the CRM key the grant names resolves to a different bucket under opal_naming.address()
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W177-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~177",
+  "surfaced_at": "2026-10-15T20:02:13Z",
+  "one_line": "TO-CB-cj-2 says the zip key is built by opal_naming; opal_naming.address() returns bucket opal-data-assets for it, while the CB-cj-1 grant, the checker and the order name opal-data-cottonwood. The job uses the grant's bucket, the one the role can read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO ADVI_COTBKF.TO-CB-cj-2 Constants and Run step: 'built by opal_naming, never typed elsewhere'; the same order names s3://opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/date=2026-06-23/CRM_CottonwoodCapitalAdvisors.zip",
+      "GRANT_RECORD.json policy_resources (deliverables/0.7.0_AE_CloudOps~CB1) = arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/date=2026-06-23/CRM_CottonwoodCapitalAdvisors.zip, apply e128e60b43",
+      "lib/opal_naming.py address('commonwealth','cottonwood','bronze','crm','date=2026-06-23', object='CRM_CottonwoodCapitalAdvisors.zip') at worktree HEAD 1cd15d4b99 returns s3://opal-data-assets/... (the same call for silver crosswalk and blackdiamond fact_holdings also returns opal-data-assets)",
+      "data/assets/scripts/silver/cotbkf_crm_match_job.py at 1cd15d4b99: GRANT_BUCKET = opal-data-cottonwood, KEY = opal_naming.key(...) + object; the module refuses to run unless the grant's resource names this bucket and key"
+    ]
+  },
+  "spec_asserts": "TO-CB-cj-2 Constants: the zip key is opal_naming output (never typed); the grant bucket and the key path agree with the checker's KEY and BUCKET.",
+  "world_is": "The builder and the grant disagree on the bucket for this one key: opal_naming gives opal-data-assets, the grant and the checker give opal-data-cottonwood. The module reads the grant's bucket, the only bucket the role may GetObject from; no read was attempted against opal-data-assets. Not established: which bucket physically holds the zip Andrew landed; the single head_object on the grant's bucket is the first read that will say (landed or NOT_LANDED or refused).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
