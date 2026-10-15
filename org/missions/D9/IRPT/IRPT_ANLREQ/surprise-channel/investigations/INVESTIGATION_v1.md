@@ -17125,3 +17125,31 @@
   "notes": "Named so that a reader of directory/handler.py is not taken for the route. No change made."
 }
 ```
+
+## IRPT_ANLREQ-D2-S119 -- DISARMS S118: PROD's staff form has no firm chooser by design; the DEV run is predicted to load
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S119",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-15T14:34:38Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-S118 (why the PROD Ticket Center's model, ticker and firm lists do not load): source read at two refs says PROD has no staff firm chooser by design, so a staff caller's firms stay null and the catalogue is refused; DEV has the chooser and the FWD-1 run's minted staff user is predicted to load both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S118: why the lists do not load on PROD for a staff caller; the FWD-1 run on DEV uses the same live API, so the firms path had to be read before TO-RUN-FWD1 flips.",
+  "world_is": "RECORD, re-run by this seat in the worker's worktree: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~150/r41/STAFF_FIRMS_CATALOGUE_READ.json (merge 1016466044): shape check SHAPE-OK, cite check CITES-OK 107 of 107 (53 Lambda lines at 742646e9a4, 54 portal lines at pinned origin/PROD and origin/DEV shas), proof instance VALID (rc 0, run from the worktree's own checker). It reads: (1) origin/PROD carries the staff-not-filing sentence (AnalysisRequestParts.tsx:92, 151) and no staff firm chooser, and never reads the Global firms for an internal caller (TicketCenter.tsx:306), so a staff caller's firms stay null with no failure: the form's 'Your firms are still loading'; (2) with no firm chosen the staff catalogue request carries no selected_tenant and is refused (loaders.py:67 via served.py:1290-1296), so no models or tickers: the measured FIRM_BINDING refusal of S118; (3) origin/DEV carries the chooser (AnalysisRequestParts.tsx:156-164) and not the sentence; the DEV tests assert its absence; (4) for the FWD-1 minted staff row (status exactly 'active', no allowedFirmIds) the boundary admits an unrestricted internal caller for the Global firms read and a partner-firm catalogue read (served.py:1177-1180; firmId opal-capital internal at served.py:332): the worker recommends RUN_AS_MINTED. These are SOURCE predictions: the per-firm READY state and the catalogue contents depend on live directory artifacts, not read (worker's not_read). So PROD's behavior is the pre-change design (staff open requests from the queue), not a defect to repair on PROD; promoting the DEV candidate with the chooser to PROD is a client-facing push that waits on Andrew's word. NOT read: the PROD bundle as compiled, the four directory/resolve invocations' callers (worker row W150-S3 stays open: no origin/PROD caller of that read for an internal caller was found), live responses.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~150/r41/STAFF_FIRMS_CATALOGUE_READ.json",
+      "this seat's re-run of shape_check.py, cite_check.py and the worktree's proof-of-spec-check (VALID)",
+      "safe-merge 1016466044"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The cause is read from source at both refs; PROD's behavior is the pre-change design, and the run's DEV path is predicted to load; the live confirmation is the FWD-1 run itself.",
+  "notes": "Resolves IRPT_ANLREQ-D2-S118. W150-S2 is answered: FWD1_DRIVER_RECORD.json is committed in the main tree under 0.9.0_WK_IRPT_ANLREQ~149/r41/ (read by this seat); the worker's checkout simply lacked it. Time of filing is the file's commit time."
+}
+```
