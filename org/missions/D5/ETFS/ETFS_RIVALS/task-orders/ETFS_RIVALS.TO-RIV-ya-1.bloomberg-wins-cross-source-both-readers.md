@@ -85,7 +85,7 @@ the merge. Leave the `<status>` flip to the issuer.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>31</round>
 <workstream>1</workstream>
 <slot>~43</slot>
