@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.16",
+ "prd_version": "v0.17",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -428,5 +428,25 @@ record, field or label says "T+1".
 3. **The server derives the date and never requires it** (share quantities, `intake/portfolio.py:208-212`, AR-y-242..245). The door
    change rides `~G2`'s one resident release, with the keep-as-typed door change (v0.15). A `priceDate` a client still sends is ignored
    and logged, never honoured.
+
+This is a CONTRACTS change, so the ratified-text half re-opens. The ENDPOINT is unchanged.
+
+## v0.17 (2026-10-15 ~21:4xZ, 1.0.0_SA_CTO~DELL2) -- Andrew's PROD read: the door asks the filer for a proxy; swaps are not the filer's
+
+Authority: `ANDREW_DIRECT_20261015_214xZ_J4_PROD_FIRM_CHOOSER_WORKS_TICKER_SWAP_MISSING.md` (his PROD filing showed "Name a similar ticker
+to stand in for it (a proxy)" and filed nothing), read with his 10-15 ~14:xxZ word "swaps are not up to the filer".
+
+1. **C-FILING-HINT and C-SWAP cover EVERY holding Opal cannot price as given,** not only a kept `TICKER_NOT_FOUND`. That includes
+   `TICKER_DATA_NOT_ENTITLED` (a real security the provider does not cover).
+   - Such a holding FILES, marked UNRESOLVED, and C-SWAP's backend pass replaces it (class-matched pool, longest Yahoo history), named in
+     the report.
+   - The door never asks the filer for a proxy, and the `NAME_PROXY` action is retired from every filer-facing finding.
+2. **The words the filer sees for such a holding are informational, not a correction:** "Row N: <symbol> is not covered by our price
+   data. The analysis will use a similar security in its place and the report will say which." The filing proceeds.
+3. **Where:** the door and its finding words run in `irpt-ycharts-generate`, so this rides `2.0.0_SA_COO~G2`'s r33 with the
+   keep-as-typed and price-date changes.
+   - `2.0.0_SA_COO~Y2`'s form shows the door's words as they come and offers no proxy input; the hint candidate already never shows
+     `NAME_PROXY`.
+   - FWD-1 run 3 includes one such holding (BREIT, SREIT or KPEC) and reads that it filed, with the replacement named in the report.
 
 This is a CONTRACTS change, so the ratified-text half re-opens. The ENDPOINT is unchanged.
