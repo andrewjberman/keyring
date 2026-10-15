@@ -2304,3 +2304,12 @@ The release is `OG-ap-20` (G5 wave A + category views): one read grant on the in
 | `OG-ap-20` | APPLY: the five G5 wave A etfs tools and `mdpf_get_category_views` (merged: et-1, et-2, pt-5, hookup gt-12) released with ONE read grant on the internal reader role for `opal-data-etfs` (generated from the catalog rows of the tools' entities, plus the rival-funds gold and platinum page prefixes of PRD v3.7, one ask; ListBucket confined by prefix), three halves, served read of six tools | applier (`0.7.0_AE_CloudOps~Z`) | WORLD | ~AE | `OG-ap-18` closed; `OG-gt-12` merged |
 
 Release queue: ap-18 -> ap-19 (G3 + G6) -> ap-20 -> ap-17 (bd-3 re-cut) -> ap-21 (G2 core).
+
+## ADDENDUM R3-T.63 (2.0.0_SA_COO~O, 2026-10-15 ~03:5xZ) -- round 37, workstream R37-PERSON: the C-PERSON reader (PRD v2.9; CTO msgs 33954, 33958; NFRA_MCPORTAL F2 waits on it)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-cp-1` | the gateway reads MC Portal's per-person `person_access` record from the grant store: the record kind added to the closed POLICY set in both contract copies and `access_state.py`; `data_entitlement.person_access(principal)` (one strong `AccessStateStore.get`, fail closed `person_record_unavailable`); evaluation after the Opal-only, C2, tier and data-grant gates: STOP (`stopped: true` denies every tool, the master_admin included), NARROW (`tools_deny`, `channels_deny`; deny beats allow), WIDEN only to a SERVED tool the floor lists for some principal and only for an Opal principal; audit `person_record_rev`; no tier field | `app/data_entitlement.py`, `app/access_state.py`, `app/tools.py`, both contract copies, `tests/test_og_cp1.py`, `tests/test_access_state.py` | WORLD | ~94 | OG-bd-3 (drained) |
+
+The release is a later gateway order after `OG-ap-20`; `2.0.0_SA_COO~MP`'s F2 (the writer) and close run wait on it.
+**fanout:** 1 of 1 chain (cap 8).
