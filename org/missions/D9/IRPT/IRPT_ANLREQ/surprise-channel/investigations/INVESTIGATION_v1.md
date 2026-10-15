@@ -17501,3 +17501,217 @@
   "notes": "S1 is closed by the widening and by the record. S2 (org/surprise_channel/schemas skip-worktree) is not addressed by this row and stays as filed. The record's recommendation is A (stamp at acceptance); the grant is the shared gate for A and B, and the CTO or CloudOps decides it."
 }
 ```
+
+## IRPT_ANLREQ-D2-W173-S1 -- the worktree's sparse-checkout omits data/, org/tier1_exec/ and org/surprise_channel/: the cell's Q2 store read and its basis record are tracked at base but skip-worktree on disk
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W173-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~173",
+  "surfaced_at": "2026-10-15T15:50:44Z",
+  "one_line": "The worktree's sparse-checkout omits data/, org/tier1_exec/ and org/surprise_channel/, so the TO-AR-g-54 Q2 read of data/mdpf/scripts/demque/price_store.py and the PRICES_ARE_TOTAL_RETURN record cannot be read from this tree; the order stops at BLOCKING.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-54 worker face: if the worktree does not carry the paths the task order names, that is a BLOCKING row and the final report, and the worker STOPS without rebuilding or extracting the tree. Cell Q2 names data/mdpf/scripts/demque/price_store.py and org/tier1_exec/2.0.0_SA_COO~Q1/deliverables/ANDREW_DIRECT_20261009_054xZ_PRICES_ARE_TOTAL_RETURN_STORE_PRICE_DIVIDEND_TR_PER_DAY.md as read paths.",
+  "world_is": "git sparse-checkout list in worktree C:/dev/wk-irpt-anlreq-173 (gitdir C:/dev/ajb_workspace/.git/worktrees/wk-irpt-anlreq-173) names only .tools, infra/aws/lambda/investor-reporting, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps, org/modules/graph, org/ref and org/standards. ls data returns no such file. git ls-files -t marks data/mdpf/scripts/demque/price_store.py, the ANDREW_DIRECT_20261009_054xZ record and org/surprise_channel/schemas/investigation_item.schema.json as S (skip-worktree). The blobs exist at base 5aefc342bf (price_store.py is 17075 bytes by git cat-file -s). The product files named by Q1, Q3 and Q4 are on disk (layout_overview.py is H and present). No sparse change, checkout or git show extraction was made, and no record was built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list (worktree wk-irpt-anlreq-173, HEAD 5aefc342bf): no data/, org/tier1_exec/ or org/surprise_channel/ pattern",
+      "data/mdpf/scripts/demque/price_store.py @5aefc342bf (git ls-files -t: S; on disk: no)",
+      "org/tier1_exec/2.0.0_SA_COO~Q1/deliverables/ANDREW_DIRECT_20261009_054xZ_PRICES_ARE_TOTAL_RETURN_STORE_PRICE_DIVIDEND_TR_PER_DAY.md @5aefc342bf (git ls-files -t: S)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py @5aefc342bf (git ls-files -t: H; on disk: yes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocking premise, not a path-elsewhere: the paths are tracked at base and excluded only by this worktree's sparse set. The worker did not widen the sparse set or read the blobs with git show, because that would extract the tree to make the order executable. The issuer or the CTO rules whether the worktree is re-provisioned with those paths in scope and the order re-cut. Q1, Q3 and Q4 were not read."
+}
+```
+
+## IRPT_ANLREQ-D2-W173-S2 -- closing row: IRPT_ANLREQ-D2-W173-S1 (BLOCKING, the Q2 paths absent from the sparse checkout) is resolved by the issuer's widening; the AR-g-54 record is complete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W173-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~173",
+  "surfaced_at": "2026-10-15T16:11:51Z",
+  "one_line": "IRPT_ANLREQ-D2-W173-S1 is resolved: the issuer widened the sparse checkout, the Q2 paths are on disk, and the AR-g-54 record was written from source (Q1 to Q4). S1 stays as filed; this row closes its blocking effect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_ANLREQ-D2-W173-S1 (class BLOCKING) recorded that the worktree sparse-checkout omitted data/, org/tier1_exec/ and org/surprise_channel/, so the TO-AR-g-54 Q2 paths could not be read and the order stopped. The worker face says that stop holds until the premise is restored.",
+  "world_is": "The issuer (2.0.0_SA_COO~G2, msg after S1) widened the sparse checkout in C:/dev/wk-irpt-anlreq-173 to data/mdpf/scripts/demque, infra/logic, infra/aws/terraform, infra/aws/lambda/ticket_center, org/tier1_exec/2.0.0_SA_COO~Q1/deliverables and org/tier1_exec/1.0.0_SA_CTO/deliverables. On disk and verified in this worktree: data/mdpf/scripts/demque/price_store.py and the PRICES_ARE_TOTAL_RETURN record. org/surprise_channel/ is still outside the sparse set (the investigation_item schema is absent on disk); the row gate ran without it. The record ENGINE_COMPOSE_READ.json is committed at 80be7fd041, with 125 of 125 cites re-opened and SHAPE-OK. Q1 to Q4 were all answered from source; not_read names what stayed unread.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at worktree wk-irpt-anlreq-173 (HEAD a3f17b27b7): data/mdpf/scripts/demque, infra/logic, infra/aws/terraform, org/tier1_exec/1.0.0_SA_CTO/deliverables, org/tier1_exec/2.0.0_SA_COO~Q1/deliverables present",
+      "data/mdpf/scripts/demque/price_store.py @a3f17b27b7 (on disk: yes)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~173/r7/ENGINE_COMPOSE_READ.json @80be7fd041 (AC1 SHAPE-OK, AC2 CITES-OK 125 of 125)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closing row, not a remediation: S1 is not edited. Two read findings for the issuer sit in the record, not in new rows: (a) the three periodic-return and drawdown elements of overview_map.json (p2.e08, p2.e13, p6.e22) carry statistic null, so the layout cannot compute them at any pricing setting; (b) opal_producer._opal_map empties the map's calls, so under pricing=True every call-sourced computed element would be OUTSIDE_BUDGET unless the compose keeps the call names. The CTO or the issuer rules which cell takes each."
+}
+```
+
+## IRPT_ANLREQ-D2-W174-S1 -- the named reader intake/composition_admission.py is not at that path; the module is ycharts/generate/composition_admission.py
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W174-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~174",
+  "surfaced_at": "2026-10-15T16:12:48Z",
+  "one_line": "TO-AR-g-55 names intake/composition_admission.py as a reader of the normalized portfolio; no file exists at that path at base, and the module is ycharts/generate/composition_admission.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-55 Q3: at least intake/composition_admission.py must be read as a consumer of the normalized portfolio or the retained composition.",
+  "world_is": "No file at infra/aws/lambda/investor-reporting/intake/composition_admission.py at base 88740b81ad. The CompositionAdmission class is at infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py; it calls verify_frozen_portfolio at line 60 and validate_bindings at line 55.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py:60 read on the worktree at 88740b81ad",
+      "name search for composition_admission over infra/aws/lambda/investor-reporting excluding tests: the only definition is under ycharts/generate; intake/ has no such file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Read at the found path and named as such in DOOR_UNRESOLVED_READ.json q3. No edit was needed for the read."
+}
+```
+
+## IRPT_ANLREQ-D2-W174-S2 -- Y2's design read says a Keep is 'not a wire change' when it is a correction whose to_value equals from_value; the server refuses that pair today
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W174-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~174",
+  "surfaced_at": "2026-10-15T16:12:48Z",
+  "one_line": "The q4 change_set of Y2's FILING_HINT_DESIGN_READ says a Keep needs no wire change as an equal-value correction; the server refuses an equal pair today, so a Keep needs a server change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FILING_HINT_DESIGN_READ.json q4 change_set (intake/portfolio.py and intake/uploads.py entry): 'Not a wire change if Keep is expressed as a correction whose to_value equals from_value, but the producer semantics change.'",
+  "world_is": "intake/portfolio.py:401 refuses a correction whose from_value and to_value match after upper(), and uploads.py:249-251 turns that into CORRECTIONS_INVALID. ycharts/generate/tests/test_y5_proxy_corrections.py:99 pins the case-only equal pair as refused. The same design read's points_not_met item 2 says the Keep path needs a BACKEND change, so the two statements in the read disagree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:401 read on the worktree at 88740b81ad",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_y5_proxy_corrections.py:99 read on the worktree at 88740b81ad",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~151/r41/FILING_HINT_DESIGN_READ.json q4 change_set and points_not_met item 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "DOOR_UNRESOLVED_READ.json recommends the server change (accept an equal pair for TICKER_NOT_FOUND only). Whether a case-only pair counts as a Keep is a CTO ruling: the pinned test refuses it today."
+}
+```
+
+## IRPT_ANLREQ-D2-W174-S3 -- a kept-by-history holding (provider_receipt None) raises TypeError in the template branch of prepare_normalized_upload, which the resident handler does not catch
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W174-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~174",
+  "surfaced_at": "2026-10-15T16:12:48Z",
+  "one_line": "A KEPT_BY_HISTORY holding has no provider receipt, and prepare_normalized_upload subscripts the receipt of every holdings row, so the template branch raises TypeError rather than the declared RecipeRefused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "AR-y-293 freeze contract (intake/portfolio.py:566-568): a KEPT row keeps the client's ticker, carries no provider receipt and is priced from the checker's history; the template path must accept it.",
+  "world_is": "ycharts/generate/normalized_input.py:64 evaluates _check_for(...)['provider_receipt']['sha256'] for every holdings row. For a KEPT check, provider_receipt is None (intake/security_resolution.py:334), so the subscript raises TypeError. resident_worker.py:143 catches only recipe.RecipeRefused, and frozen_worker.py:82 has no handler in the lines read. ycharts/generate/tests has no KEPT or yfinance case (grep, zero matches). Static reading only; nothing was run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py:64 read on the worktree at 88740b81ad",
+      "infra/aws/lambda/investor-reporting/intake/security_resolution.py:334 read on the worktree at 88740b81ad",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:143 read on the worktree at 88740b81ad"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Whether the KEPT path is deployed was not read; ENGINE lane to confirm or refute by a fixture run. The disarm owner is the ~G issuer, who owns the normalized_input edit in the resident release."
+}
+```
+
+## IRPT_ANLREQ-D2-W174-S4 -- the published correction finding_code enum lists four codes; the server accepts six
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W174-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~174",
+  "surfaced_at": "2026-10-15T16:12:48Z",
+  "one_line": "The corrections finding_code enum in the upload request contract lists four TICKER codes; intake/portfolio.py accepts two more (TICKER_CHECK_FAILED, TICKER_NOT_CHECKED).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json corrections items (base blob, lines 65-96): finding_code enum TICKER_NOT_FOUND, TICKER_DATA_NOT_ENTITLED, TICKER_AMBIGUOUS, TICKER_CHECK_UNAVAILABLE.",
+  "world_is": "intake/portfolio.py:364-365 CORRECTABLE_FINDINGS also names TICKER_CHECK_FAILED and TICKER_NOT_CHECKED, and template_corrections (portfolio.py:397-402) accepts them. Whether the gateway validates the request against the published schema was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:364 read on the worktree at 88740b81ad",
+      "docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json lines 65-96 read as the base blob 88740b81ad (git show), not on disk"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Off-task for AR-g-55. A portal that follows the published enum cannot send the two extra codes; a client that follows the server can. The contract owner decides which is canonical."
+}
+```
+
+## IRPT_ANLREQ-D2-W174-S5 -- the cell's named sources are skip-worktree in this sparse checkout and absent from disk
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W174-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~174",
+  "surfaced_at": "2026-10-15T16:12:48Z",
+  "one_line": "In this sparse checkout the lambda-source-map, the upload contracts and the investigation schema are skip-worktree and not on disk; they had to be read as base blobs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-55 reads its sources from the worktree and names lambda-source-map.json for the package lists; the cite checker opens each cited file on disk.",
+  "world_is": "git ls-files -v infra reports 7896 skip-worktree entries (worktree at 88740b81ad). infra/aws/lambda/ci/ does not exist on disk, so lambda-source-map.json is absent; docs/contracts/investor-reporting/v1/ does not exist on disk; org/surprise_channel/schemas/ is listed by git ls-files but is absent on disk. git show of the base blob returns each one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -v infra | grep -c '^S' printed 7896 in the worktree C:/dev/wk-irpt-anlreq-174",
+      "git show 88740b81ad20fdb32db3a6f39f6d4fb6136526a8:infra/aws/lambda/ci/lambda-source-map.json returned 424591 bytes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "DOOR_UNRESOLVED_READ.json lists these in not_read and cites none of them, because the cite checker opens the disk."
+}
+```
+
+## IRPT_ANLREQ-D2-W174-S6 -- the research reader is in no lambda source-map row; it ships only inside the resident tarball
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W174-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~174",
+  "surfaced_at": "2026-10-15T16:12:48Z",
+  "one_line": "TO-AR-g-55 expects the changed files to ride the irpt-ycharts-generate zip, the irpt-status zip and the resident tarball; ycharts/research/runner.py and opal_producer.py ride only the resident tarball.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-55 Q4: the deployed artifacts that carry the changed files are the irpt-ycharts-generate zip, the irpt-status zip and the resident tarball, each read from lambda-source-map.json and reports/build_resident_package.py.",
+  "world_is": "No function row of lambda-source-map.json (238 rows, base blob) lists a ycharts/research member, checked by name. reports/build_resident_package.py DIRS (lines 37-38) includes ycharts/research and the whole intake, ops and reports trees, so the research reader is in the resident tarball only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:37 read on the worktree at 88740b81ad",
+      "lambda-source-map.json base blob, all 238 function rows searched for runner.py, opal_producer.py, layout_overview.py and ycharts/research: zero rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The source map records no owner for ycharts/research; the owner was not read."
+}
+```
