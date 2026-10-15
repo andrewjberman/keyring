@@ -17744,3 +17744,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-9 as a premise failure: a path the template relies on is elsewhere in this worktree. Not repaired: the sparse list was not widened and nothing was copied or reconstructed from another tree, per the order's rule. No hazard is ARMED, so no disarm owner is set; the worktree's sparse setting is for the issuer and the lane to route."
 }
 ```
+
+## IRPT_DASHBD-D2-W309-S2 -- The completeness rule counts one point per trading day, but the Scope breakdown is basedOn Calendar, so each series coun
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W309-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~309",
+  "surfaced_at": "2026-10-15T16:49:48Z",
+  "one_line": "The completeness rule counts one point per trading day, but the Scope breakdown is basedOn Calendar, so each series counts calendar days: 7 of 9 series equal the inclusive calendar-day count, and all 9 sit about 1.2 to 1.5 times the trading-day count.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-122 completeness rule: a series is complete when its points are within 1 of the NYSE trading days from the account's roster start to the end date. The request is orion_selected.requests_for with a Daily compact breakdown.",
+  "world_is": "The breakdown in requests_for carries basedOn Calendar, so the response carries one factor per calendar day. Counts for the two households: 9 series; 7 equal the inclusive calendar-day count; the trading-day rule fails for all 9.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/orion_selected.py@5bdf4f810a (RETURN_STYLE basedOn Calendar, line 43)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r122/p122_hist.py@5bdf4f810a (complete_ok, trading-day rule)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~309/SCOPE_HISTORY_PROBE_R122.json (this worktree, committed with this row; series counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-9. Form only: counts and the basis field; no value, no identifier. The rule as written is kept in the record (series_complete_all false); the issuer rules whether a calendar-day completeness rule replaces it."
+}
+```
+
+## IRPT_DASHBD-D2-W309-S3 -- Two long-history series (686 and 2228 points) fall short of their calendar-day count from the roster start by 120 and 95
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W309-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~309",
+  "surfaced_at": "2026-10-15T16:49:48Z",
+  "one_line": "Two long-history series (686 and 2228 points) fall short of their calendar-day count from the roster start by 120 and 95 days, and their chained factors do not reproduce the summary period return; the other seven series do reproduce it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The backfill assumes that each account's series spans its roster start to the end date, and that the chained daily factors reproduce Orion's period return.",
+  "world_is": "For two accounts (one per household, both over a multi-year span) the series is shorter than the roster-start calendar count and the chain does not reproduce the summary return. The probe made two calls only, so the cause is not determined here. The other seven series match both checks.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~309/scope_history_probe.py (this worktree, committed with this row; the per-account rules)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~309/SCOPE_HISTORY_PROBE_R122.json (this worktree, committed with this row; per-account states, points and chain flags, counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-9. Form only: counts and flags; no value, no identifier, no date. The annualization explanation was tested and rejected (the chain does not match the annualized product for either account)."
+}
+```
