@@ -2269,3 +2269,21 @@ Release queue: ap-18 -> yr-1 -> ap-19 -> ap-20 (G5 wave A) -> ap-17 (bd-3 re-cut
 | `OG-ec-2` | APPLY: the converter code `OG-ec-1` merged (`d2ad76dd24`) deployed through Terraform (one resource, ledger `nfra-oplgtw-eclipse-converter`), then the silver sweep driven once by the applier (not waited for) until the guard reads PASS (`expected 552 landed 547 missing 5` today); graded on the guard and the Eclipse silver freshness in trading days; two never-widen halves (CTO, COO) because the sweep writes served silver | applier (`0.7.0_AE_CloudOps~ZS`) | WORLD | ~AE | `OG-ec-1` merged |
 
 Z-S110 (49F producer OutOfMemory) follows once its cause is read. Eclipse silver tables serve G2's Orion/Inflection steps, which come after the Friday set.
+
+## ADDENDUM R3-T.59 (2.0.0_SA_COO~O, 2026-10-14 ~23:4xZ) -- round 37, workstream GT5-HOOKUP: the published-analysis tool's hookup (FWD-22; OG-gt-5 merged `640c8a55f7`)
+
+| cell | what | writes (existing files) | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-gt-11` | the hookup of `harvest_get_published_analysis`: `tools.py` registration, `SAFE_TOOLS` and `NATIVE_TOOLS`, the registry count 88 -> 89 and the non-data count 79 -> 80; applied by the issuer's prepared script (`deliverables/2.0.0_SA_COO~O/r37/hookup_gt5.py`, dry-run on HEAD copies) because the gateway app files are in lane CLOUD_OPS_OR_ETL | five existing files | WORLD | ~91 | gt-5, gt-6 (merged), pt-4 (merged) |
+
+The tool invokes the published-analysis Lambda (`AMGT_SCOPED_API_FUNCTION`), so its release carries the invoke grant (`harvest_published_invoke_iam.tf`) and its own never-widen ask: a later release order (after `OG-ap-19`).
+**fanout:** 1 of 1 chain (cap 8).
+
+## ADDENDUM R3-T.60 (2.0.0_SA_COO~O, 2026-10-15 ~00:5xZ) -- round 37, workstream G3-CATVIEWS: `mdpf_get_category_views` by its table row (replaces the superseded OG-pt-3; `~MI` msg 34293)
+
+| cell | what | writes (new files only) | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-pt-5` | G3 tool `mdpf_get_category_views(scope)` (firm-scoped, one scope per call, `global` its own object): the key template and bucket are read from the catalog table row `opal_data_portal_v2_platinum_mdpf_category_views` (c-5902fd256409, v0.5), the firm gate is the existing `portal_index`/`catalog_gate` one; no S3 literal in the code | `app/portal_mdpf.py`, `tests/test_og_pt5.py` | WORLD | ~92 | gt-6, MX-c-14 (merged) |
+
+The hookup of this tool, `etfs_*` (et-1, et-2) rides one batch hookup cell after those modules merge.
+**fanout:** 3 worker chains now (et-1 ~84, et-2 ~85, pt-5 ~92), cap 8; disjoint write sets.

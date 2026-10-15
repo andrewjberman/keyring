@@ -34,13 +34,13 @@ Since 2026-10-10 the vendor's Eclipse `portfolios_simple.json` carries one extra
 
 ### PHASE B (only on the issuer's GO, which names both halves signed)
 
-3. Ledger `nfra-oplgtw-eclipse-converter`, entry AND sentinel first (name every Lambda or task family that shares the converter code, one `describe`/`get-function` sweep). Apply the ONE resource through `safe-apply` targeted. Read the deployed hash back and compare it with the repo's.
+3. (A1) Ledger `nfra-oplgtw-eclipse-converter`, entry AND sentinel first (name every Lambda or task family that shares the converter code, one `describe`/`get-function` sweep). BEFORE the apply, build the converter package from the repo's bytes and upload it to the artifact bucket key the module reads (`data.aws_s3_object.artifact`, `s3://opal-313476888478-lambda-artifacts/opal-assets/opal-assets-silver-eclipse/...`), exactly as the prior eclipse release did; record the prior object's version id and sha256 in the ledger as the rollback. Then apply the ONE resource through `safe-apply` targeted. Read the deployed hash back and compare it with the repo's.
 4. Drive the sweep once with the recorded manual invoke. Read `eclipse/inflection/meta/backfill-status.json`. If the guard does not read PASS, STOP: do not invoke again; file an ARMED row naming `2.0.0_SA_COO~O` with the guard's own numbers and the converter's log lines (no data content).
 5. Write `W/EC2_PROOF.json` = `{"deployed_code_sha256": "<64 hex>", "sweep_driven_by_applier": true, "guard": {"verdict": "PASS", "expected": N, "landed": N, "missing": 0, "alien": 0}, "freshness_td": N}` where `freshness_td` is the Eclipse silver's newest partition in TRADING days behind T-1 (`lib/trading_calendar.py`). Close the ledger, commit, run AC2, report once to `2.0.0_SA_COO~O`.
 
 ## 2. BOUNDS
 
-- ONE resource applied (the converter's code). No IAM, schedule, queue, bucket or other Lambda change; `aws lambda update-function-code` is never used (Terraform only). No object is written by you; the sweep writes the silver it always wrote.
+- ONE resource applied (the converter's code) and ONE object written, the converter's package at its artifact key (A1); nothing else in any bucket. No IAM, schedule, queue, bucket or other Lambda change; `aws lambda update-function-code` is never used (Terraform only). No object is written by you; the sweep writes the silver it always wrote.
 - Never: push, `git stash`, rebase, `checkout --` or `clean`; bare `terraform apply`; print a person's name, an account number or an object's content.
 - REFUSE a criterion you cannot meet as written. File a BLOCKING row and keep working.
 
@@ -77,7 +77,10 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ec-2.eclipse-converter-deploy.p
 - Seat: `0.7.0_AE_CloudOps~ZS` (idle at the cut). Never-widen halves: CTO and COO (the sweep writes served silver). The GO is the issuer's message citing this order.
 - Pre-cut: ec2.AC1 and ec2.AC2 base FAIL as expected (the records are absent).
 
-<status>pending</status>
+
+- A1 (issuer, 2026-10-14 ~23:1xZ, row Z-S131, msg 34274): Phase B had no artifact-upload step, so an apply alone moves only the pin. Ruled IN: the package is built from the repo's bytes and uploaded to the module's artifact key before the apply, as the prior eclipse release did; the prior object's version and sha256 are the rollback; the ask (section order, rollback) names the upload. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+<status>complete</status>
 <round>37</round>
 <workstream>G2-ECLIPSE</workstream>
 <slot>~AE</slot>

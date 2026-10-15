@@ -97,6 +97,10 @@ A refused-access outcome is a complete order with branch "refused": say so in th
 - A2 (issuer, 2026-10-14 ~22:1xZ, CTO ruling msg 34240 on the refused result of A1): step 2b added. The account holds (HTTP 200) and the main tree's SA profile is signed in, so a profile copy is tried before Andrew is asked for a new login. The order is reopened to pending; the GO is a message citing this order.
   Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+
+- A3 (issuer, 2026-10-14 ~22:5xZ, msg 34268): step 2b WORKED (runner profile 200, main profile 200, ACCESS_HOLDS; the runner re-registered 22:23:18Z with `bbg wsj barrons sa`, Running). The first `sa` job runs behind the ~12 h `bbg` leg, about 10:45Z on 2026-10-15. Ruled: ACCEPT the wait, no re-order (a second stop and registration risks the runner for a few hours; the capture lands before Friday 2026-10-16).
+  This wait is qualified on its outcome: the proof of step 5 is read after the first `sa` cycle, not before; the ledger stays OPEN until then; the applier checks at the first `sa` cycle and not on a clock poll. If no `sa` object is newer than the re-registration 2 hours after the first `sa` job ends, STOP and file the ARMED row of step 5. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <workstream>G1-FIX2</workstream>
