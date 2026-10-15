@@ -35444,3 +35444,182 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W394-S1 (stale schedule text), S3 (no repo writer of the flat .jsonl.gz positions key; the repo pull writes parquet), S4 (14-day log retention, the gap-day logs are gone), S5 (2026-07-01 is parquet-only and before the header's stated raw stop): INERT, recorded. D2-W394-S2 (the 16:00 UTC silver sweep cannot see a feed whose bronze key never landed): stays ARMED, owner me; disarm condition: the CTO rules the re-pull route and the sweep's expected set names the missing days or the feed is covered by the 06:00 ET fold (the fold covers none of the 155 live rules for this feed). THE ANSWER TO 'WHY': inferred, not measured: no artifact states why the raw producer wrote no .jsonl.gz for the two days; measured: the source holds only parquet for positions on both days and nothing for transactions and performance. THE RE-PULL: needs a raw .jsonl.gz writer that the repo does not hold (not located), at least 640 Orion positions requests (320 households times 2 dates; transactions and performance counts not read) and the vendor JWT object by name; it is a vendor-write pair, not one lambda re-run. Recommendation: the next cell locates the raw producer of the 2,358 existing .jsonl.gz objects and costs the re-pull per feed; the pair is cut after it."
 }
 ```
+
+## IRPT_BCKEND-D2-W396-S1 -- the flat positions writer is in the repo, in data/inf/manual_api, outside the folders W394-S3 searched
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the flat positions writer is in the repo, in data/inf/manual_api, outside the folders W394-S3 searched",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_positions_daily.py:445 at commit b0ec63516810 (git show HEAD, read 2026-10-15)",
+      "data/inf/manual_api/pull_inflection_transactions_rest.py:585 and data/inf/manual_api/pull_inflection_performance_rest.py:639 at commit b0ec63516810",
+      "infra/aws/lambda/inf-pipeline/inf-api-positions/pull_inflection_positions_daily.py:437 at commit b0ec63516810 writes the parquet key"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-D2-W394-S3 records no repo writer of the flat bronze/positions/{date}.jsonl.gz key; its search covered infra/aws/lambda only.",
+  "world_is": "The writer is data/inf/manual_api/pull_inflection_positions_daily.py:445 (bronze_key f-string for the flat key, put at line 447). The same folder holds the flat writers of transactions (pull_inflection_transactions_rest.py:585) and performance (pull_inflection_performance_rest.py:639). The positions Lambda writes only the .parquet key (infra/aws/lambda/inf-pipeline/inf-api-positions/pull_inflection_positions_daily.py:437). W394-S3 is refined, not reversed: the repo does hold the writer, in a folder that search did not cover."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S2 -- the flat positions keys written today near 11:51 UTC have no EventBridge rule and no bronze-runner dim behind them
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the flat positions keys written today near 11:51 UTC have no EventBridge rule and no bronze-runner dim behind them",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object on opal-data-inf bronze/positions/2026-10-14.jsonl.gz (LastModified 11:51:52 UTC, Metadata empty), read 2026-10-15",
+      "events list-rules, scheduled rules whose expression holds ' 11 * * ': eight rules, earliest 11:02, latest 11:45, none at 11:51",
+      "data/inf/scripts/bronze/orchestrator.py:95-105 at commit b0ec63516810: DIMS holds unified_account_dim, billing, tax, accounts_v2, performance, transactions, assets, geo; no positions"
+    ]
+  },
+  "spec_asserts": "The bronze runner rule opal-inf-bronze-runner-cron (cron 11:15 UTC, target inf-bronze-trigger) runs the Inflection bronze dims; the trigger header states cron(43 12 * * ? *).",
+  "world_is": "The flat positions objects for 2026-09-27, 2026-10-13 and 2026-10-14 carry LastModified 11:51, 11:56 and 11:51 UTC (head-object, read 2026-10-15). Eight scheduled rules fire in the 11 UTC hour (list-rules, read 2026-10-15) and none fires near 11:51 UTC. The orchestrator DIMS list (data/inf/scripts/bronze/orchestrator.py:95-105) has no positions dim. The Lambda writes parquet. So the writer of the daily flat positions key is not located. Object metadata is empty, so no writer role is named. Recorded as found; the producer behind the daily flat key is the open question for the S2 release."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S3 -- the mirror header's stop account does not reach the parquet-only positions days after the 2026-08-14 raw restart
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the mirror header's stop account does not reach the parquet-only positions days after the 2026-08-14 raw restart",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-inf bronze/positions LIST, 4723 keys (read 2026-10-15): 7 days with a .parquet and no .jsonl.gz",
+      "infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:19-42 at commit b0ec63516810 (the header with the 2026-07-10 stop and the 2026-08-14 restart)",
+      "git show -s 5fdbe386377489e8bfd77f0c390db2ed8e139721: RAW LANDED 14:01:19Z on 2026-08-14"
+    ]
+  },
+  "spec_asserts": "The mirror header (infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:19-30) says the raw producer died on 2026-07-10 and the parquet-only dates from that stop are the honest holes; lines 35-37 record the raw restart on 2026-08-14 (commit 5fdbe38637).",
+  "world_is": "The seven parquet-only positions days are 2026-07-01, 2026-07-03, 2026-07-04, 2026-07-05, 2026-08-06, 2026-09-28 and 2026-09-29. Four of them (07-01, 07-03, 07-04, 07-05) predate the stop. Two (09-28, 09-29) fall after the restart, when the raw feed ran on other days. Only 2026-08-06 falls in the outage the header names. The header's count of 10 parquet-only dates is a 2026-07-14 measurement and was not re-derived here."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S4 -- transactions and performance have trading days with no object in either format, which the parquet-only census cannot see
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "transactions and performance have trading days with no object in either format, which the parquet-only census cannot see",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-inf bronze/transactions LIST, 196 keys, and bronze/performance LIST, 185 keys (read 2026-10-15)",
+      "lib/trading_calendar.py trading_days_between over the feed spans, read 2026-10-15 (a local computation, no vendor call)",
+      "the mirror copies flat keys only: infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:77 at commit b0ec63516810"
+    ]
+  },
+  "spec_asserts": "The dropped-day census counts parquet-only days with no monolith bronze key; the mirror copies only flat .jsonl.gz keys (lambda_function.py:77 and :493).",
+  "world_is": "Against the trading calendar (lib/trading_calendar.py trading_days_between) and the union of both formats: transactions have 7 trading days with no key in either format between 2026-05-12 and 2026-10-14 (2026-07-01, 07-13, 07-14, 07-15, 08-06, 09-28, 09-29); performance has 22 between 2026-05-03 and 2026-10-14. Positions has none in its span. These are upstream absences, not mirror drops, so the census reads 0 dropped for both feeds. No artifact read states why the producers wrote nothing for those days."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S5 -- the shared rate limiter docstring states a 0.5 req/s floor; the code default floor is 2.0 req/s
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the shared rate limiter docstring states a 0.5 req/s floor; the code default floor is 2.0 req/s",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/bronze/rate_limiter.py:4 at commit b0ec63516810: 'Starts at SAFE_FLOOR (default 0.5 req/sec)'",
+      "data/inf/scripts/bronze/rate_limiter.py:112 at commit b0ec63516810: safe_floor: float = 2.0"
+    ]
+  },
+  "spec_asserts": "data/inf/scripts/bronze/rate_limiter.py:4 (and the copies in the inf-api-positions and inf-api-txn folders) says the limiter starts at SAFE_FLOOR (default 0.5 req/sec).",
+  "world_is": "The signature default at rate_limiter.py:112 is safe_floor: float = 2.0, and the pull scripts construct AdaptiveRateLimiter without a floor argument (for example data/inf/manual_api/pull_inflection_positions_daily.py:363). The floor in force is therefore 2.0 req/s. The docstring is stale, or the default changed without it. The cost read uses 2.0 as the floor."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S6 -- the bronze-runner rule and the trigger header state clock times the live rule does not carry
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the bronze-runner rule and the trigger header state clock times the live rule does not carry",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "events describe-rule opal-inf-bronze-runner-cron (read 2026-10-15): cron(15 11 * * ? *), ENABLED",
+      "infra/aws/lambda/inf-pipeline/inf-bronze-trigger/lambda_function.py:4 at commit b0ec63516810"
+    ]
+  },
+  "spec_asserts": "The rule description of opal-inf-bronze-runner-cron says daily Inflection bronze pulls at 13:30 UTC; infra/aws/lambda/inf-pipeline/inf-bronze-trigger/lambda_function.py:4 says EventBridge cron(43 12 * * ? *).",
+  "world_is": "Live describe-rule reads cron(15 11 * * ? *), ENABLED (read 2026-10-15). This is the same class as IRPT_BCKEND-D2-W394-S1: the clock text is stale and nothing was changed by this read. The 06:00 New York fold (ruling 23eff24d0c) moves these schedules."
+}
+```
+
+## IRPT_BCKEND-D2-W396-S7 -- 2,259 flat positions objects share one write date, 2026-07-01, and the converter comment counts 2,265 history objects
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W396-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~396",
+  "surfaced_at": "2026-10-15T03:25:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "2,259 flat positions objects share one write date, 2026-07-01, and the converter comment counts 2,265 history objects",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-inf bronze/positions LIST with LastModified (read 2026-10-15): 2259 .jsonl.gz objects with LastModified 2026-07-01, 94 with a date on or after 2026-07-10",
+      "head-object bronze/positions/2020-04-24.jsonl.gz (read 2026-10-15): LastModified 2026-07-01T00:03:50 UTC, Metadata empty"
+    ]
+  },
+  "spec_asserts": "infra/aws/lambda/inf-pipeline/inf-silver-chain/convert_orion_api_to_silver.py:863 at commit b0ec63516810 describes a 2,265-object historical .jsonl.gz backfill.",
+  "world_is": "The source holds 2,358 flat positions objects. 2,259 carry LastModified 2026-07-01 (one batch write that day), and 94 carry dates on or after 2026-07-10 with their own write dates. The comment's 2,265 is not the measured 2,358 (read 2026-10-15). The writer of the 2026-07-01 batch is not located, and object metadata is empty. Recorded so the history's provenance is not read as per-day writes."
+}
+```
