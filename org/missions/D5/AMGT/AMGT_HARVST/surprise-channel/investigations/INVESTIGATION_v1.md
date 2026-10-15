@@ -9544,5 +9544,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "Resolved: S19 by order amendment 1 and HVST-cb-8; S20 by the ratified erratum. Neither was an account or world fault."
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S23",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-15T21:50:00Z",
+     "one_line": "One wsj job of the dell1 runner ended TargetClosedError at the browser launch (21:22:20Z); the pair was kept for retry and the publisher cooled down 15 minutes; the cause is not read.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-2 (R1-R4 at +15) and the CTO half: a pair whose window a person closes is recorded, not retried; a wsj job that passes at one launch passes at the next.",
+     "world_is": "cycle_runner.log lines 820-825 at 2026-10-15T21:22:20Z: wsj security-5c640c443b8110da status=error, DETAIL TargetClosedError: BrowserType.launch_persistent_context: Target page, context or browser has been closed (the Chrome launch line follows in the log), PAIR kept for retry (error, attempt 1 of 3), PAIR-ERROR 1 in a row of 5 allowed, COOLDOWN wsj 899 s. The 70th wsj job of this pass (run 20261015T212132Z-run-16104ce3), after 69 jobs without an error since T0 20:32:04Z; the runner went on after the cooldown. The error is at the LAUNCH of the persistent context, before any page: it is not a challenge repair. NOT READ: what closed the browser (another seat's use of Chrome or a process reaper on the box, a profile lock, a crash); this seat did not use Chrome at 21:21Z. The same class (TargetClosedError at launch) was met once in a bbg local job at 19:50Z.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "C:/dev/ajb_workspace/.runtime/harvest-cycle/state/cycle_runner.log lines 820-825 (dell1, gitignored; the lines are quoted above)",
+       "run record 20261015T212132Z-run-16104ce3 under .runtime/harvest-cycle/runtime/run_records/ (dell1, gitignored)"
+      ]
+     },
+     "notes": "WHY THIS IS AN OBSERVATION: one job in 70, the runner continued, nothing stored is wrong. If it repeats, the question for the issuer is whether something on the box closes Chrome processes (a reaper) or whether the profile is contended; five errors in a row stop the publisher's leg (the driver's own cap).",
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

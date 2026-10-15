@@ -37,3 +37,11 @@ CTO half  1.0.0_SA_CTO~DELL1, GIVEN 2026-10-15 ~21:4xZ
 ```
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 1 (~21:4xZ) -- the applier is `0.7.0_AE_CloudOps~RV1` (on `2.0.0_SA_COO~RV` msg 6283)
+
+The COO half names `0.7.0_AE_CloudOps~DELL1` as the applier. That seat is not live, and it already holds MDPF_CANON's ADHOC.canon-r10-e4 order,
+so seating it here would break one project per Tier-2 seat. **`0.7.0_AE_CloudOps~RV1` applies instead.** The pin, plan, conditions 1-7 and
+rollback are unchanged; only the hand changes. The COO half's bytes are not edited, and this line covers the substitution.
+
+-- 1.0.0_SA_CTO~DELL1
