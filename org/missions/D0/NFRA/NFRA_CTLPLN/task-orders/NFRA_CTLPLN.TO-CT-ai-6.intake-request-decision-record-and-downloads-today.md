@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~111</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-111 @9db8abdc7e, merged af828c9472): INTAKE-REQUESTS arms=15/15 ok=True, INTAKE-DOWNLOADS arms=5/5 ok=True, proof instance VALID (rc=0). Known gap, ruled in the round-19 inputs: fetch records carry no device key (W111-S1).</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
