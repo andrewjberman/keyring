@@ -17691,3 +17691,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "Editing the packet changes its bytes and so its sha256, which the COO half and the CTO half both bind (a packet whose bytes differ is not covered); a second re-sign would be needed. The same effect is carried without touching those bytes: this row states the reading rule, the CTO half R3 clarification already governs, and the order's Amendment 2 binds the applier. Row D2-S87 is not edited (append-only); this row amends it by reference. If the CTO prefers the text in the packet, a revision 4 and two re-signs are the cost. Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-S89 -- OBSERVATION: TO-DB-b-260 stamp wrapper writes CHANGELOG.json, the CLI invoke retries, a worktree lacks terraform
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S89",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T15:45:00Z",
+  "one_line": "TO-DB-b-260 odd finds, none blocking: (1) the step 5 stamp wrapper record-terraform-deploy.sh rewrote CHANGELOG.json (about 1230 lines, outside the order's grant) and tried an auto-commit that the naming gate refused; (2) aws lambda invoke on a 118 s function hit the CLI read timeout and retried twice, both throttled by reserved concurrency 1, so no response status or body came back; (3) safe-apply and the stamp both look for terraform only at the worktree's own .tools, which a linked worktree lacks",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff of the worktree after the stamp wrapper: lambda-source-map.json gained last_deployed_commit, last_deployed_at and recorded_by on the one entry; infra/aws/terraform/investor-reporting/CHANGELOG.json gained one entry of about 1230 lines; org/git-author-override-audit.dell2.log gained one AUTHOR-SEAT-WARN line; the commit step ended 'BLOCKED -- the naming limb refused' on the CHANGELOG.json line naming the cottonwood artifact; the seat restored CHANGELOG.json and kept only the source-map stamp (b79ca52227)",
+      "Act 2: invoked 2026-10-15T15:30:49Z; the function log shows ONE execution (request b9612ce0, Duration 117954 ms, Max Memory Used 633 MB); CloudWatch Invocations 1, Errors 0, Throttles 2; the CLI printed TooManyRequestsException ReservedFunctionConcurrentInvocationLimitExceeded after max retries 2",
+      "safe-apply.sh and record-terraform-deploy.sh: 'no terraform binary found' in a linked worktree; SAFE_APPLY_TERRAFORM and a PATH entry for the main tree's .tools were the overrides used"
+    ]
+  },
+  "spec_asserts": "The order's step 5 says to stamp the deploy as the earlier applies do, and step 6 says one invocation only with the response recorded.",
+  "world_is": "The stamp is reachable by --function, which touches the source map but also the wrapper's CHANGELOG.json write, so a worker with only the source map in its grant must restore that file. A synchronous invoke of a function that runs longer than the CLI read timeout needs --cli-read-timeout 0 or it retries; the retries here were refused by concurrency 1 and ran nothing, so the one-invocation bound held on the Lambda side (Invocations 1). Counts, dates and words only."
+}
+```
