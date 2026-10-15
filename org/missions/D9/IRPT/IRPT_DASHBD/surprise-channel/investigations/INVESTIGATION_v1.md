@@ -17028,3 +17028,33 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the issuer: the W206-S1 disarm is this fix; the schedule is still DISABLED and no apply has run. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-S79 -- ARMED: the merged Cottonwood landing code can overwrite the occupied gold prefix and would stall on the silver gap
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S79",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T11:20:00Z",
+  "one_line": "The merged Cottonwood landing code can overwrite an occupied gold prefix and would stall on the Black Diamond silver gap: write_day refuses nothing that exists, and owed_days owes the five trading days after the newest landed partition (2026-06-22), all of them held",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Round 120 landing facts and rounds 121 to 123 (DB-b-241, DB-b-245, DB-b-249, DB-b-252): the Cottonwood gold account_return_daily landing is additive, a first write into an empty prefix.",
+  "world_is": "The prefix irpt/cottonwood/gold/account_return_daily/ in the Cottonwood gold bucket holds 3,325 date partitions, 2013-04-03 to 2026-06-22 (LIST by this seat, 2026-10-15; the same count as row W155-S10 of 2.0.0_SA_COO~P2). The adapter's write_day (cottonwood_bd_account_return_daily.py) puts data.parquet and manifest.json for any valid ISO day and checks nothing about an existing key, so an event naming a day on or before 2026-06-22 would replace a history partition with Black Diamond rows under a different account key. The handler's owed_days (account-return-daily/handler.py) returns the trading days after the newest landed partition through T-1, at most five; the first five after 2026-06-22 fall in the silver gap (fact_allocations empty 2026-04-25 to 2026-07-09), each is held and nothing lands, so the same five are owed at every fire. Neither can happen today: the Terraform root is unapplied, the schedule is DISABLED and the function is not deployed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LIST of s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/ by this seat: 3325 partitions, first 2013-04-03, last 2026-06-22",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py write_day and infra/aws/lambda/investor-reporting/account-return-daily/handler.py owed_days @5a2a5cae50",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~193/RD_BD_BRONZE_AND_MAP_R120.json (the 33 empty silver days)",
+      "row IRPT_DASHBD-D2-W155-S10 (the stale prefix, 2.0.0_SA_COO~P2)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUND_124_20261015.md ruling 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarms when the no-overwrite guard in write_day and the 2026-07-10 floor in owed_days (and in explicit day events) are merged and tested (round 125, cell DB-b-254). No landing packet is written before then. Counts, dates and words only."
+}
+```
