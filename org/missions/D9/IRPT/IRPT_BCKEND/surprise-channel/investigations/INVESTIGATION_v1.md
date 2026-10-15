@@ -37487,3 +37487,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W412-S1: the record counts differ (9, then 1, 1); recorded per candidate, my STOP clause was too tight (AMENDMENT 1 @0f2a54c0c4). D2-W412-S2 RESOLVED: a local sparse-checkout add, never committed. D2-W412-S3 (comp-find aws blocked, the canonical address used) and S4 (the id module is outside the grant): INERT, recorded. D2-S158 stays ARMED: the cause is inferred (candidate_filter at the COT account screen), not measured; the failing validate_cot_actual_positions condition is the next read. Correction to row S158: 49 Financial DOES have a refusal record (served 2026-10-12, one refusal), so the staleness is not Cottonwood alone; whether that refusal still blocks it (its candidate for 2026-10-13 and 2026-10-14) is not read and is the next read's second question."
 }
 ```
+
+## IRPT_BCKEND-D2-W414-S1 -- The COT validator cannot be imported offline from the granted sparse checkout; the offline run of IB-pr-571 is blocked
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W414-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~414",
+  "surfaced_at": "2026-10-15T11:33:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The order's offline run (import validate_cot_actual_positions from holdings_snapshot.py) fails at the module's first infra import: the import chain lives outside the data/ sparse grant, so no offline outcome is measured in this order.",
+  "spec_asserts": "IB-pr-571 step 3: import the validator from the repository file (read-only), call it on the dropped account's rows as cot_screen_accounts calls it; the worktree sparse add is data/assets/scripts/gold/investor_reporting only, nothing wider.",
+  "world_is": "holdings_snapshot.py imports, at module level, ids (infra/aws/lambda/investor-reporting/_ids/ids.py, line 99 region), publication (infra/aws/lambda/investor-reporting/holdings/publication.py, line 103) and currency_authority (infra/aws/lambda/investor-reporting/reports/currency_authority.py, line 109). The probe loading the file from the sparse worktree stopped with ModuleNotFoundError: No module named 'ids' (rc=3, scratch outside the tree, no function called). All three files are tracked at HEAD bbdeae6f89b23308894c94e95b91951decfb9769 and absent from the worktree sparse list. The validator's own currency branch (line 386) also calls bind_report_currency from that chain. No blob was extracted into the tree to make the import work.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py at bbdeae6f89b23308894c94e95b91951decfb9769 lines 92 to 112 (the _REPO and _IDS_DIR, _HOLDINGS_DIR, _REPORTS_DIR path setup and the three infra imports); line 386 calls bind_report_currency",
+      "git ls-tree -r HEAD infra/aws/lambda/investor-reporting/ at bbdeae6f89b23308894c94e95b91951decfb9769 lists _ids/ids.py, holdings/publication.py and reports/currency_authority.py; git sparse-checkout list on the worktree names no infra path beyond infra/logic/registry",
+      "scratch import probe (python -B, PYTHONDONTWRITEBYTECODE, outside the tree): IMPORT-FAILED ModuleNotFoundError No module named 'ids', rc=3"
+    ]
+  },
+  "notes": "The order's grant names the data folder only, and the order says nothing wider. The result is a premise gap, not a guard: the validator body was read in full at line 348 to 548 and the screen at line 2266 to 2294. Criteria AC1 (offline run, source-row count) and the measured failing condition cannot be produced from this worktree under the grant. Also not read: the account's source rows, because the offline run was the reason for the rows. Counters: functions_invoked 0 (the probe failed before any function call), no AWS call made in this order. The schema file org/surprise_channel/schemas/investigation_item.schema.json is also outside the sparse grant, so this row follows the shape of the rows already in this file."
+}
+```
+
+## IRPT_BCKEND-D2-W414-S2 -- The round-210 check's accepted branch passes a record whose offline run was not performed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W414-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~414",
+  "surfaced_at": "2026-10-15T11:33:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "In p210_cells.py, v2 treats every outcome other than refused as the accepted branch, so AC2 can pass a record whose offline_run.outcome is neither refused nor accepted.",
+  "spec_asserts": "The check's v2 accepted branch is meant for an offline run that ran and accepted the rows (the cause left inferred or absent).",
+  "world_is": "v2 reads run.get outcome == refused as the only test; any other value, including a value meaning the run did not happen, takes the else branch, which only requires claim inferred or absent and a statement of 60+ characters. v1 (AC1) does require outcome in refused or accepted, so AC1 and AC2 disagree about the same record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r210/p210_cells.py at bbdeae6f89b23308894c94e95b91951decfb9769, function v2 (the if run.get outcome equal refused branch and its else branch) and function v1 (the outcome in refused or accepted test)"
+    ]
+  },
+  "notes": "Observed while writing the IB-pr-571 record: the record that honestly reports no offline run fails AC1 and passes AC2. The check is the issuer's; it is not edited here. The grader should read AC2 for this record with that in mind."
+}
+```
