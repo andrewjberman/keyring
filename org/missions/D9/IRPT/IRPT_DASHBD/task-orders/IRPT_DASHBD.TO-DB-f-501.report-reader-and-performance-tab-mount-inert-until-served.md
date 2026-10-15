@@ -13,7 +13,7 @@
 <round>114</round>
 <workstream>~F2</workstream>
 
-**Directive:** D9 | **Fabric:** dell2 | **Ordered by:** 1.0.0_SA_CTO~DELL2, the four-workstream ruling (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_DASHBD_FOUR_WORKSTREAMS_AT_ROUND_114_20261015.md`: F-SHIP writes the portal `render/`, `export/`, `tabs/reporting/` and `dashboard/` folders under `InvestorReporting/`; "F-SHIP reads the filled document and never builds one") | **Rows:** IRPT_DASHBD-F2-W501-S<k> | **Decomp cell:** `DB-f-501` (`org/missions/D9/IRPT/IRPT_DASHBD/decompositions/IRPT_DASHBD_DECOMP_R114_F.md`) | **outcome_ref:** FWD-21 | **depends_on:** none
+**Directive:** D9 | **Fabric:** dell2 | **Ordered by:** 1.0.0_SA_CTO~DELL2, the four-workstream ruling (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_DASHBD_FOUR_WORKSTREAMS_AT_ROUND_114_20261015.md`: F-SHIP writes the portal `render/`, `export/`, `tabs/reporting/` and `dashboard/` folders under `InvestorReporting/`; "F-SHIP reads the filled document and never builds one") | **Rows:** IRPT_DASHBD-D2-W501-S<k> | **Decomp cell:** `DB-f-501` (`org/missions/D9/IRPT/IRPT_DASHBD/decompositions/IRPT_DASHBD_DECOMP_R114_F.md`) | **outcome_ref:** FWD-21 | **depends_on:** none
 
 ---
 
@@ -54,7 +54,7 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-501` (branch `wk-IRPT_DASHBD-5
 - **No deploy and no push.** No portal push, no DEV or PROD act, no AWS call, no live request, no vendor call, no secret read, no `bun install`, no package change.
 - **Inert means inert.** With no served report the tab's markup and requests are those of the base commit; a read that is not served never changes what the advisor sees and never shows an error of its own.
 - **Refusal clause.** A criterion you cannot satisfy AS WRITTEN is reported with your measurement, never repaired, widened or satisfied by a route this order did not name. If a neighbour test outside your grant fails because of the mount, file a BLOCKING row naming it and stop on that point; do not edit it. An edit outside the grant is a defect: stop and file a row.
-- **Rows** go to the investigation file in the grant, ids `IRPT_DASHBD-F2-W501-S<k>`, with the real current UTC time (`date -u +%FT%TZ`); append as BYTES. Commit with `.tools/safe-commit.sh`; run its gates in the background and wait for them. ASCII only in anything you write.
+- **Rows** go to the investigation file in the grant, ids `IRPT_DASHBD-D2-W501-S<k>`, with the real current UTC time (`date -u +%FT%TZ`); append as BYTES. Commit with `.tools/safe-commit.sh`; run its gates in the background and wait for them. ASCII only in anything you write.
 
 <paths>
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~501/
