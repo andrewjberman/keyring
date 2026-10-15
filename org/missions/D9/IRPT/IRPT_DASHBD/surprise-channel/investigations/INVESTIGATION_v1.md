@@ -16458,3 +16458,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Resolution note for IRPT_DASHBD-D2-W199-S1, which is left as written (append only). The issuer owns the LIST; the worker re-read only the empty_days list. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W201-S1 -- BLOCKING: the worktree's sparse checkout carries no infra/aws path, so all four grant paths of TO-DB-b-247 are absent on disk and the order stops before any edit
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T09:40:35Z",
+  "one_line": "TO-DB-b-247 names four infra/aws paths in its grant (handler.py, the new test file, iam.tf, locals.tf); the worktree C:/dev/wk-irpt-dashbd-201 is a sparse checkout that excludes infra/aws on disk, so the order is not executable here and the worker stopped with no edit, no commit to infra and no criterion run",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-247 <paths> names infra/aws/lambda/investor-reporting/reporting-gold/handler.py, infra/aws/lambda/investor-reporting/reporting-gold/tests/test_filled_per_day.py, infra/aws/terraform/investor-reporting/reporting-gold/iam.tf and infra/aws/terraform/investor-reporting/reporting-gold/locals.tf as the worker's write grant, and the WORKER FACE says the worktree carries them (the order's own first act: if the worktree does not carry the paths the order names, that is a BLOCKING row and a stop).",
+  "world_is": "In the worktree at HEAD 7d5697ef1a, git sparse-checkout list returns .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph and org/standards. infra/aws does not exist on disk: ls reports no such directory, and all four grant paths are ABSENT on disk. The index still tracks the paths (git ls-files -v -- infra/aws: 9191 of 9191 entries carry the skip-worktree flag), and the three repo files are tracked at HEAD (git ls-tree HEAD: 3 of 3). The base checkout C:/dev/ajb_workspace on the same commit carries handler.py on disk. The checker, the order file and the investigation file ARE present in the worktree. Per the order's first-act rule the worker did not rebuild, extract, widen the sparse scope or re-checkout the tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-dashbd-201 (HEAD 7d5697ef1a): .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/standards",
+      "git ls-files -v -- infra/aws in C:/dev/wk-irpt-dashbd-201: 9191 of 9191 entries carry the skip-worktree flag; ls -d infra/aws reports no such directory",
+      "git ls-tree HEAD infra/aws/lambda/investor-reporting/reporting-gold/handler.py infra/aws/terraform/investor-reporting/reporting-gold/iam.tf infra/aws/terraform/investor-reporting/reporting-gold/locals.tf @7d5697ef1a: 3 of 3 present",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-247.per-day-self-invoke-split-of-the-hop-1-filled-stage.md @7d5697ef1a (WORKER FACE first act and <paths> block)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer and the drain owner: the grant's infra/aws paths are not materialised in this worktree, so DB-b-247 cannot be executed here as written. The worker did not widen the sparse scope or re-check-out the tree (the order forbids rebuilding the tree to make an order executable). Order stays pending; no proof instance written; no status flip. Counts and words only; no client figure is quoted."
+}
+```
