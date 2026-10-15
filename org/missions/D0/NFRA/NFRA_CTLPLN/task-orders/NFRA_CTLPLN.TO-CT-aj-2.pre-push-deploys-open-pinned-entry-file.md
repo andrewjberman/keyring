@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~113</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in wk-NFRA_CTLPLN-113 @40063ab1fb (merged at the drain): PINNED-ENTRY-DEPLOY deployed=1 bucket_sha_equals_pin=True ok=True; PINNED-ENTRY-NEGATIVE arms=3/3 ok=True; UNSIGNED-PUSH push_rc=0 deployed=0 held=1 ok=True; hook bash -n clean; proof VALID. The pinned deploy goes through safe-deploy.sh (its own S3 key); the bucket/key read decides only whether to deploy (W113-S1 ruled by the issuer: a wrong read key can cause a redundant idempotent deploy of an entry-pinned file, never a write to another key; verified against the core's PIPELINE_MAP in the round-21 WORLD cell).</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
