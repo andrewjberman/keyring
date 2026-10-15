@@ -76,11 +76,11 @@ Seven rows; three ARMED (S9122, S9119, S9120). C-S45 graduates S9119 and S9120. 
   "owner": "2.0.0_SA_COO~C",
   "round": "v15",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C",
    "round": "v15"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "NFRA_CTLPLN-W79-S2",

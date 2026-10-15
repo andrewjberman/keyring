@@ -11,6 +11,7 @@
   "need_class": "non_client",
   "need_date": "2026-10-13",
   "page": "rival funds (ETFS_RIVALS)",
+  "rank": 6,
   "reason": "Andrew-direct ~18:5xZ 2026-10-14 (CTO msg 5713): the ETFS_RIVALS backfill gap, DAY_TO_DAY_TOT_RETURN_GROSS_DVDS, in the Rival Funds rankings (held days, no stored close) of BACKFILL_GAPS_FOR_DEMQUE.md (org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round30/BACKFILL_GAPS_FOR_DEMQUE.md @c9e98081a6): DAY_TO_DAY_TOT_RETURN_GROSS_DVDS, stage D365 = 2025-10-13..2026-07-13 (calendar days before the as-of day 2026-10-12), newest first.",
   "request_id": "ETFS_RIVALS-C1-TR-HELD-D365",
   "securities": [
