@@ -960,6 +960,72 @@
     "spec_asserts": "The proof instance carries each produced artifact with a kind the schema admits, so a worker's CSS artifact is expressible without a kind substitution.",
     "world_is": "No kind in the enum names a stylesheet; the worker recorded the one CSS file (portal/src/index.css) as frontend_component to get a schema-valid instance. The kind is a label only, and the instance otherwise carries the pinned commit and the deploy evidence.",
     "notes": "Filed, not fixed. The enum is the schema owner's to extend. The substitution is declared here so a consumer does not read the kind as a claim that the file is a component."
+  },
+  {
+    "id": "DSGN_RBNDV2-W18-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~18",
+    "surfaced_at": "2026-10-15T15:09:43Z",
+    "one_line": "RV-x-6 keeps the popup's source chips as they are, but its test arm bans the text backdrop-blur in ExecutiveSummary.tsx, and the chip carries backdrop-blur-sm, so the arm cannot pass unless that one class goes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/market-performance/ExecutiveSummary.tsx@7f8731df: the DrilldownModal source chip class list carries 'bg-black/50 text-white/80 backdrop-blur-sm border border-white/10'; the only other backdrop-blur occurrence in the file is the overlay root",
+        "portal worktree wk-DSGN_RBNDV2-18-portal: backdrop-blur-sm removed from that chip only; bg-black/50, text-white/80 and border classes unchanged; rb-5-x6.trending-modal.test.ts run under bun prints DRILLDOWN-OWN-OVERLAY-BEFORE 1 DRILLDOWN-OWN-OVERLAY-AFTER 0 and VERDICT: TRENDING-MODAL-OK"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-x-6: the source chips 'bg-black/50 text-white/...' stay as they are, and the overlay's backdrop-blur is removed. RB5X6-AC1: ExecutiveSummary.tsx holds no 'backdrop-blur' text.",
+    "world_is": "The chip's backdrop-blur-sm is a blur on a chip, not on the overlay, and the file-wide text arm counts it. The worker removed backdrop-blur-sm from the chip to satisfy the arm, leaving the chip's background and text classes as the cell names them. The chip now renders without the blur over the lead image.",
+    "notes": "Filed, not fixed. The removal is the smallest change that meets the file-wide arm without weakening it. The order's author decides whether the chip blur should return with a frame-level exemption. The hero marker sits on the w-[40%] hero container, which holds the gradient block, the arrow svg and the source chips."
+  },
+  {
+    "id": "DSGN_RBNDV2-W13-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~13",
+    "surfaced_at": "2026-10-15T15:12:42Z",
+    "one_line": "The order says the Trending Topics tile carries the marker data-ink=\"on-fill\" (added by another cell), but no file under portal/src carries the marker at the base 7f8731df, so the tile-arrow context of the RV-x-1 rule matches nothing in this worktree until that cell lands.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git grep -l data-ink 7f8731df -- src (portal repo, branch wk-DSGN_RBNDV2-13-portal) prints no path: zero matches at the difference-control base",
+        "portal commit 3be788d9 adds the marker only as a selector context in portal/src/index.css (58 rules, 116 selectors) and in portal/src/__tests__/dsgn-rbndv2/rb-5-x1.on-fill.test.ts; no element in this worktree carries it",
+        "portal/src/components/DataTooltip.tsx@7f8731df:26 carries bg-[hsl(var(--palette-indigo))] and its text classes sit on child spans (lines 27, 34, 37, 60), so the descendant context reaches the tooltip text"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-x-1 world premise: the Trending Topics tile carries the marker attribute data-ink=\"on-fill\", added by another cell, so the second context of the on-fill rule reaches the tile's text-white arrow on a green or red gradient tile.",
+    "world_is": "At 7f8731df the marker is absent everywhere under portal/src, so the tile arrow is not reached by any RV-x-1 selector in this worktree. The tile is outside this order's <paths>, so this order cannot add the marker; the arrow stays navy in the live build until the marker-carrying cell lands on the tile.",
+    "notes": "Filed, not fixed: the marker belongs to the other cell and the tile file is outside this order's grant. The indigo context reaches the text of DataTooltip and of the Daily Cloud tooltip, whose text-white classes sit on child spans. The generic Tooltip is the exception and has its own row, DSGN_RBNDV2-W13-S2. The COO's drain-end live read (RB5X1-AC3) is where the tile shows."
+  },
+  {
+    "id": "DSGN_RBNDV2-W13-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~13",
+    "surfaced_at": "2026-10-15T15:12:42Z",
+    "one_line": "The generic Tooltip puts text-white on the indigo box itself (portal/src/components/Tooltip.tsx:195), and the RV-x-1 indigo context is a descendant selector, so that text stays navy under the light-panel rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- disarm by a rule that also reaches the element carrying the indigo fill (a compound selector such as [data-panel-surface=\"light\"] .bg-\\[hsl\\(var\\(--palette-indigo\\)\\)\\].text-white), or by moving the text class to a child, in a cell whose paths name Tooltip.tsx.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/Tooltip.tsx@7f8731df:195 className 'fixed ... px-3 py-2 text-sm text-white bg-[hsl(var(--palette-indigo))] rounded-[3px] ...': text-white and the indigo fill are on one element",
+        "portal/src/components/HelperTip.tsx@7f8731df:20 passes !text-white on the same element as !bg-[hsl(var(--palette-indigo))]; the !-prefixed token is not the class text-white, so neither the legibility rule nor the RV-x-1 rule matches it",
+        "portal commit 3be788d9: the RV-x-1 indigo context is [data-panel-surface=\"light\"] .bg-\\[hsl\\(var\\(--palette-indigo\\)\\)\\] .text-white, a descendant selector"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-x-1 spec: every text-white inside a solid indigo box keeps white ink in a light panel, reached by the descendant context of the indigo box.",
+    "world_is": "A text-white class on the indigo box itself is not a descendant of it, so the specified context does not reach it and the legibility rule turns that text navy on indigo. Whether a light panel renders this Tooltip was not measured in this worktree; the reach is unverified.",
+    "notes": "Filed, not fixed: Tooltip.tsx is outside this order's <paths>, and the order names the three tooltips that are descendant-shaped. The fix belongs to the owner of the tooltip surface."
   }
 ]
 ```

@@ -158,7 +158,7 @@ Report once: the diff (one line per file), the output line of every criterion, t
 - **Not in this cell:** the portal (`trendGrouping.ts` already rolls a null forward on `carried_dates`; the issuer confirms at the render); the publisher IAM (item 2); the readback print (done, 48c40b2375); the Cottonwood Trend; the deploy; the pair.
 - **UNVERIFIED by the drafter:** the lambda runtime (pure Python, no new import; ruff py39 clean); the actual N and blast radius; `build_all`'s whole-run behaviour on the reference tree (only the pure function and `apply_global_trend_groups` were run); whether the 497-date object is the one the first fire will see.
 
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <to_id>MDPF_CANON.TO-CN-r-1</to_id>
 <slot>~29</slot>

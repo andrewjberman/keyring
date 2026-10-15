@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.12",
+ "prd_version": "v0.14",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -73,15 +73,16 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
          ACCEPT     an Opal person finishes an unusual request by hand from the Analysis tab, and the ticket ends up the same as an automatic one
          SOURCE     Andrew ("frontend work on the actual Analysis tab will be completed after the fact ... only for unusual cases")
 
-  FWD-7  An Analysis Request runs end to end on Opal's data, with at most ONE YCharts data call for prices
+  FWD-7  An Analysis Request runs end to end on Opal's data, with prices taken from Yahoo first and YCharts second, per symbol
          DONE WHEN  EXERCISED -- FWD-1's request is traced hop by hop: the typo check, the swap, the report and the overlays come from Opal's own data;
-                    prices come from Opal's verified stores first, and the securities still missing a price are priced by AT MOST ONE YCharts
-                    data call for the whole request (no signed-in browser session, no YCharts report, figure or PDF), with yfinance and Bloomberg
-                    as named fallbacks after it
-         ACCEPT     the finished package's trace shows zero or one YCharts data call, for prices only, and each price carries its source; a figure
-                    Opal could not source says so
+                    each security's price comes from, in order: the estate's own stores where they hold it; Yahoo (yfinance, cut at T-1); YCharts
+                    through the stored session, one symbol per call; then the backend replacement (C-SWAP); else the report runs without that
+                    security and says so in words. Bloomberg is not in this chain. No YCharts report, figure or PDF is used
+         ACCEPT     the finished package's trace shows each price with its source as a claim field (estate store, yfinance, ycharts or
+                    replaced), every YCharts call is for a price only, and a security Opal could not price is named in the report
          SOURCE     Andrew 2026-10-09 ~04:4xZ ("I do not think we actually need YCHARTS for anything"); relaxed for pricing data by Andrew-direct
-                    2026-10-14 ~15:5xZ ("I am ok with a single data call to YCharts for pricing data.")
+                    2026-10-14 ~15:5xZ ("I am ok with a single data call to YCharts for pricing data."), SUPERSEDED by Andrew-direct
+                    2026-10-14 ~17:5xZ ("we use Yahoo as first round pick, we use Ycharts as second round pick")
 ```
 
 ## 1. What exists (the CRO's nine-hop trace @9076346655, plus this session's measured changes)
@@ -107,8 +108,9 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 | C-PACKAGER: one principal attaches the package | this project | The package is four STANDALONE items: the original holdings upload, the form selections as filed, the Opal report, and the AI commentary as a standalone branded Opal PDF marked DRAFT. Its last hop attaches them after the commentary. The combined package PDF (the report with a commentary page inside) is never posted as an attachment. That hop's principal is the ONE `package_principal` named in the type definition. It is firm-bound by its PROFILE row (internal-caller narrowing, IB-pr-387), and never ALL. |
 | C-FIRM: firm reach | consumed | Every principal on the journey reaches exactly the request's firm: svc-commentary by tenant-bound `get()`; the packager by its row. FWD-1's filer, an Opal staff principal, CHOOSES the firm from the served partner tenants, and the choice must be in its explicit `allowedFirmIds` (the CREATE path's server check); every hop binds to that choice. A partner-firm user's firm is the signed-in user's and is never a choice. ALL never admits and never substitutes for the choice. |
 | C-ABSORB: what MOVES into this project (the brief's "compress into ONE project") | this project | **Moves in, owned and issued here.** (a) IRPT_BCKEND `~Y2`'s Analysis lane: the upload door and resolution `infra/aws/lambda/investor-reporting/intake/{uploads,upload_resolution,upload_suggestions,resolution_kimi}.py`, the security swap (today `KIMI_WEB_SEARCH_UNVERIFIED`, `resolution_kimi.py:159-165`; candidates from `etf-classifications`, ex-IRPT_YCDGEN FWD-16), and generation submit. (b) IRPT_YCDGEN whole: the Opal engine and brand `ycharts/generate/{resident_worker,durable_job,comparison_catalogue,publication_worker}.py`, `ycharts/research/{opal_producer,layout_overview}.py`, report types and vendor retirement. (c) NFRA_TRNSPT FWD-10 and FWD-11: the commentary drafter `data/transcripts/scripts/commentary/*` and its Lambda `commentary.tf`. (d) The READY event H1 (from `~P2`'s queue). (e) TCKT_VNEXT's Analysis Request scope: the `analysis_request` type definition, `POST /tickets/{id}/package`, `portal/src/pages/TicketCenter/` Analysis Request parts. **Keeps the remainder:** IRPT_BCKEND (`~P2`: auth, routes, directory, holdings, `irpt-export-render` as the shared renderer); NFRA_TRNSPT (FWD-1..9: transcripts, company read, mail); TCKT_VNEXT (non-analysis types). **Lanes:** `~Y2` is the ONE driver, issuing the FWD-1 thread and the round analysis. `~G2` (engine and brand), `~T2` (commentary) and `~V2` (ticket) continue as this project's workstreams with disjoint write surfaces, each issuing only into its own workstream scope (rule 27). No hop of FWD-1 parks on another project's cell. Each source PRD gains a one-line addendum pointing here at its next round boundary; in-flight orders and signed pairs complete where they are. |
-| C-SWAP: the security swap, one pass per unknown holding (Andrew ~04:4xZ; CRO research @9ae5d353d1 section 2) | this project | (1) KNOWN: the ticker or CUSIP in `etf-classifications` and MDPF_SECHIST; a typo suggestion is verified against the registry and yfinance, never YCharts. (2) YFINANCE CHECKER: one paced call; if it has history, the holding is KEPT, a registry row is added and its prices land in MDPF_SECHIST. (3) CLASSIFY only if yfinance has nothing: SECCLASS's classifier with a web-search tool, output bound to the live (class, sub-class) vocabulary, below 0.80 confidence FLAGGED. (4) PROXY, deterministic, no model: the designated registry ETF for that pair, else the class default, and it must have prices. (5) RECORD: the holding keeps the client's name, with `proxy_for`, `proxy`, `method`, `confidence`, `low_confidence` and `sources`. `resolution_kimi`'s model-proposed swap is retired. The designated-proxy table is MDPF_SECCLASS's (dell1), a pre-arranged input. |
-| C-PRICES: where prices come from | this project | MDPF_SECHIST's per-security series first; then AT MOST ONE YCharts data call per request, batched for every security still missing a price, prices only; then yfinance (paced, labelled UNVERIFIED); then Bloomberg only when all of these lack it (through its queue, CLAUDE.md). Every price carries its source as a claim field. The performance overlays of variants 2 and 3 use IRPT_DASHBD's daily TWR engine, ported with zero flows. No YCharts figure, report or PDF, and no signed-in browser session. |
+| C-SWAP: the security swap, one pass per unknown holding (Andrew ~04:4xZ; CRO research @9ae5d353d1 section 2; restated v0.14 to the CTO replacement ruling @5deb868819) | this project | (1) KNOWN: the ticker or CUSIP in `etf-classifications` and MDPF_SECHIST; the form's typo hint is C-FILING-HINT, verified against the registry and yfinance, never YCharts. (2) PRICED: Yahoo, then YCharts per symbol (C-PRICES); if either has history, the holding is KEPT, a registry row is added and its prices land in MDPF_SECHIST. (3) CLASSIFY only if neither has prices: SECCLASS's classifier on kimi-k2.6 with a web-search tool and the tool-call loop, output bound to the live (class, sub-class) vocabulary, below 0.80 confidence FLAGGED. (4) REPLACE: from the class-matched pool (registry rows plus model proposals that pass the class match and have Yahoo history), the longest Yahoo history wins, ties by ticker. (5) RECORD: the holding keeps the client's name, with `proxy_for`, `proxy`, `method`, `confidence`, `low_confidence` and `sources`, and the report names the replacement. No designated-proxy table exists (provider QA @30ceaa97fa, finding 9). |
+| C-PRICES: where prices come from (restated v0.13; Andrew-direct 10-14 ~17:5xZ, CTO price ruling ADDENDUM 2 @ac60268494) | this project | Per security, in order: (0) the estate's own stores where they hold the symbol (the DEMQUE price store, the Opal ETFs' Bloomberg history), read, not called; (1) Yahoo (yfinance), cut at T-1, `source: yfinance`; (2) YCharts through the stored session, one symbol per call, prices only, `source: ycharts`; (3) the backend replacement C-SWAP step 2 (class-matched pool, longest Yahoo history, ties by ticker), named in the report; (4) else the report runs WITHOUT the security and says so in words, never blocking. Bloomberg is OUT of this chain. Every price carries its source as a claim field. The performance overlays of variants 2 and 3 use IRPT_DASHBD's daily TWR engine, ported with zero flows. No YCharts report, figure or PDF. |
+| C-FILING-HINT: "Did you mean" at the filing point (v0.12; Andrew-direct 10-15 ~14:xxZ) | this project | On the Ticket Center form, a holding whose symbol is not in the served catalogue shows ONE suggestion, 'Did you mean <symbol> (<name>)?', chosen by exact CUSIP or ISIN match first, then ticker edit distance, then name. The filer accepts it or keeps their own; nothing is replaced without the filer's click, and a kept unknown symbol files as typed. Swaps are never offered on the form: C-SWAP runs only in the backend. The hint reads only the catalogue the form already loads (no new vendor call at filing) and works for the staff filer after a firm is chosen. |
 | C-NAMES: rule 30 | consumed; LGIC | Every new S3 address and resource name is `lib/opal_naming.py` `address()` / `name()` output, printed in the order that writes it. |
 
 ## 2. THREAD -- FWD-1, round 1
@@ -155,7 +157,7 @@ on its own artifact.
 | 1 | the type of analysis | FWD-2. The form offers the report types the engine serves (Overview, Comparison, Multi-Comp; `ycharts/generate/comparison_catalogue.py`). S1 |
 | 2 | Opal-model checkboxes and an other-ETF input | FWD-2. Model checkboxes from the comparison catalogue; free ETF tickers, each resolved before filing. S1 and S3 |
 | 3 | the holdings Excel attached | FWD-1. Through the upload door (C-ONE-DOOR, TCKT_VNEXT); the ticket stores the handle, never the bytes. S3 |
-| 4 | typo check and swap, frontend and backend | FWD-2. A mistyped ETF gets a correction offer verified against the registry and yfinance. An unknown or unpriceable holding takes C-SWAP's one pass: KNOWN, then the yfinance check (KEEP), then classify, then a deterministic proxy from the designated-proxy table (MDPF_SECCLASS, dell1, a pre-arranged input), then RECORD with `proxy_for` / `method` / `confidence`. The model-proposed swap is retired. The frontend is S1. Proof gap: the C-SWAP path exercised on one unknown holding |
+| 4 | typo check and swap, frontend and backend | FWD-2. The form shows one catalogue "Did you mean" hint (C-FILING-HINT); swaps are never offered on the form. In the backend an unknown or unpriceable holding takes C-SWAP's one pass: KNOWN, then Yahoo, then YCharts, then classify with web search (kimi-k2.6, with the tool-call loop), then the replacement from the class-matched pool (registry rows plus model proposals that pass the class match and Yahoo), longest Yahoo history, ties by ticker, then RECORD with `proxy_for` / `method` / `confidence`, named in the report. The frontend is S1. Proof gap: one unknown holding (BREIT, SREIT or KPEC) through that pass |
 | 5 | a ticket in the open Ticket Center page | FWD-1. An `analysis_request` ticket, open until the package lands, filed by an Opal staff user who chooses the partner firm (the Ticket Center is shown to Opal users only; ADDENDUM v0.6). The driven arm is a synthetic Opal staff user; `2e30` stays SUPERSEDED. S2. Proof gap: the synthetic staff user's filing end to end; that identity is never minted or left live outside its never-widen pair |
 | 6 | the backend generates the full report | FWD-1. Generation submit and the Opal engine (C-ABSORB a, b). S3 and S4 |
 | 7 | commentary from the report's key surfaces | FWD-3. The drafter reads the report's composition through `get()`, tenant-bound, with abstract fields only (C-KIMI). S5 |
@@ -380,3 +382,19 @@ are not up to the filer."*
 **Prices (unchanged, restated):** C-PRICES as ruled at hop 9: the estate stores, then Yahoo (yfinance, cut at T-1), then YCharts per symbol,
 then C-SWAP, else the report runs without the security and names it.
 
+## v0.13 (2026-10-15 ~15:2xZ, 1.0.0_SA_CTO~DELL2) -- on `3.0.0_SA_CVO~DELL2`'s review of v0.12 (msg 8382)
+
+1. **FWD-7 and the C-PRICES row are restated** to the price order Andrew set on 10-14 (~17:5xZ: "we use Yahoo as first round pick, we use
+   Ycharts as second round pick"), as the CTO price ruling's ADDENDUM 2 (@ac60268494) already stated. The old text (at most ONE YCharts
+   call, BEFORE yfinance, Bloomberg as a fallback) is superseded. This is an ENDPOINT change, so the ratified-text half re-opens for
+   `3.0.0_SA_CVO~DELL2`.
+2. **C-FILING-HINT now has its table row** (from ADDENDUM v0.12).
+
+## v0.14 (2026-10-15 ~15:4xZ, 1.0.0_SA_CTO~DELL2) -- on the CRO's brief-half refusal (msg 8388, @7e209401ae) and the CVO's owed SOURCE line (msg 8389)
+
+1. **BRIEF COVERAGE row 4 carries the current swap path**, in the CRO's correction text: the form's one "Did you mean" hint; the backend
+   pass KNOWN, Yahoo, YCharts, classify with web search, the class-matched pool (the CTO replacement ruling @5deb868819). The
+   designated-proxy table is gone: none exists (provider QA @30ceaa97fa, finding 9).
+2. **FWD-7's SOURCE adds Andrew's ~17:5xZ quote** and marks the ~15:5xZ single-call quote superseded. The DONE WHEN text is unchanged.
+3. **The C-SWAP contract row is restated the same way** (it carried the same retired proxy-table text). This is a CONTRACTS change, so
+   the ratified-text half re-opens for `3.0.0_SA_CVO~DELL2`.

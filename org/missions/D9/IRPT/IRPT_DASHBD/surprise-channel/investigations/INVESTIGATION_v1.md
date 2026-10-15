@@ -17665,3 +17665,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "Both hold: plan mode grades six CONFORMANT names with no REFUSE. The commit-time gate on the added module block reports it BUILT-NOT-GRADED (non-literal scope argument), so the commit gate does not itself grade the new name; the order's criteria do not claim it does. Counts and paths only; no client value."
 }
 ```
+
+## IRPT_DASHBD-D2-S88 -- OBSERVATION: packet revision 3 condition 2 read with the CTO half R3: the stopped attempt's equal artifact is reused
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S88",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T15:40:00Z",
+  "one_line": "Reading rule for the Cottonwood landing packet revision 3: its condition 2 and section 3 say the artifact is absent; with the CTO half R3's clarification the artifact may be present when its sha256 equals the pinned rebuild; the packet is not edited because its bytes are what both halves bind",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 8393 (Re 8385): if the stopped attempt uploaded the artifact, step 0 reads that object; the apply proceeds if its sha256 equals the rebuild from the pinned tree; any other sha256 is a STOP; no delete either way; the upload at 13:23:43Z matches the pin; the R3 CTO half @d80e4d3f61 governs",
+      "packet revision 3 sha256 31f8e1620b90 section 3 (the artifact reads ABSENT at packet time) and condition 2 (live state equal to section 3)",
+      "TO-DB-b-260 Amendment 2 @5a44ab587e carries the rule into the order and its checker (before.artifact_version_id; a pre-existing artifact is reused, never uploaded again)"
+    ]
+  },
+  "spec_asserts": "The CTO asked the issuer to amend the packet's condition 2 to read artifact absent, or present with the pinned sha256, and row D2-S87 to match, both text only with the halves standing.",
+  "world_is": "Editing the packet changes its bytes and so its sha256, which the COO half and the CTO half both bind (a packet whose bytes differ is not covered); a second re-sign would be needed. The same effect is carried without touching those bytes: this row states the reading rule, the CTO half R3 clarification already governs, and the order's Amendment 2 binds the applier. Row D2-S87 is not edited (append-only); this row amends it by reference. If the CTO prefers the text in the packet, a revision 4 and two re-signs are the cost. Counts, dates and words only."
+}
+```
