@@ -1608,3 +1608,35 @@ every named `read_tool` is served (the emit refuses otherwise); a firm principal
 **The cells.** `MX-c-14` (A4) regenerates the 174 CLEAN rows and writes both registry files; `MX-c-15` (new, ISSUED AS ROUND 15 because the gate allows one issuance per round and round 14 is issued; worker ~39 from the merged HEAD; the portal and certified-channel round is therefore round 16) changes the loader to accept the clean row and to join the registry entry, and the writer to emit `key_template`. They share no file. `MX-c-13`'s checks (`c13.AC1-AC3`) graded the previous shape and fail on the new loader by design: `c15.AC1-AC2` replace them.
 **One builder.** `glib.expected_row(contract, group)` in the round-14 checks builds BOTH the clean row and its registry entry; the reference generator, `c14` (AC1 compares the registry files to it, AC2 compares each row, AC2 scans every string and key of a row for a carrier) and `c15` (it joins and compares with the full row) all use it, so the three agree by construction. Planted arms: `plant_c14.sh` 24 of 24, `plant_c15.sh` 5 of 5.
 **Honest limit.** `catalog_tokens.py` (the worker's) reads the token sets the way the gate's `Naming.__init__` does today. If the registry's scopes change, a clean row can turn dirty; `c14.AC2`'s carrier scan uses the check's own copy of the same rule, so a drift between the two shows as a failure, not as a pass.
+
+
+## ROUND 16 (2.0.0_SA_COO~MI, 2026-10-14 ~21:3xZ) -- the certified-channel corrections and the G5r rival-fund enrichment (CVO READ-OK @2a8a025031 with two conditions; issued 2026-10-15)
+
+Source: R14.6 (what round 14 left to "round 15", now round 16 because MX-c-15 took round 15), PRD v0.14 to v0.16, CTO msg 34192 (landing order) and COO~O msg 34169. Rounds 13 to 15 are drained at `66f8ea1466` (216 table rows, 78 harvest rows). This section is spec-frozen once issued. Per the CTO, the CVO reads it BEFORE issue because cell MX-c-16 edits CVO-certified text inside the emitter.
+
+### R16.1 THE CELLS -- 2 (one issuance, disjoint write sets)
+
+| cell | what | write set | risk | serves |
+|---|---|---|---|---|
+| `MX-c-16` | The emitter's certified-spec corrections, each a deliberate change of what `catalog_gate` lets a partner firm read: (a) the `json/portfolios/aum-metrics.json` row (twins `att.03`, `ft.04`, `pos.03`: frozen 58 trading days, no PROD page reads it, G3 `portfolios_legacy`) is re-ruled DENY + ruled; (b) the `mp.15.json-mdpf-legacy` row (`json/mdpf/**`, 0 keys at the G3 measurement) is dropped from the catalog (the row only: no object is touched, and `json/mdpf/{firm}/account-distribution.json` stays a live served portal object); (c) the `news` channel text states the measured size (381,261 items, about 1,000 a weekday) and the EMPTY and frozen markers (`opal-harvest-articles` EMPTY; the Seeking Alpha output frozen since 2026-04-13), changing NO gate field. `json-tiered/` stated authenticated-only is HELD until Z-S114 closes (not in this cell). | `workflows/atom_decomposition/emit_catalog_v02.py`, `workflows/atom_decomposition/tests/` | LOCAL | FWD-22 |
+| `MX-c-17` | The G5r rival-fund enrichment (PRD v0.16): the 14 rival rows already generated from G5 (13 gold tables and the platinum page of `rivalfunds/etfs/`) gain, from `workflows/atom_decomposition/g5r_enrichment.json` (authored by the issuer from `G5r_rivalfunds_spec.md` @e1b9937129), the newest-part rule, the claim column on the inferred tables, the fund keys, the identifier fill rates, nl_tags, and on the coverage row the Z-S124 note. `gen_silver_rows.py` applies it, so a regeneration keeps it; the round 14 builder `glib.expected_row` applies it too. | `workflows/atom_decomposition/gen_silver_rows.py`, `workflows/atom_decomposition/catalog_entries/` (the 14 rows), `workflows/atom_decomposition/tests/test_gen_silver_rows.py` | LOCAL | FWD-22 |
+
+**Withdrawn from this round: the `mdpf_get_category_views` row and ToolRow (COO~O msg 34169).** A catalog row for it in the portal channel needs a NEW certified entity in `EMISSION_MAP` with its lifted cells (a CVO matter), and the ToolRow is gateway code (NFRA_OPLGTW's lane). The G3 table row for `platinum/mdpf/{scope}/category-views.json` already exists. The question of which route the tool takes goes to `2.0.0_SA_COO~O` as one message.
+
+**Not a cell, and why.** Retiring the `portal_lookup.py` `mdpf` channel and correcting `mdpf-platinum` edits `org/tier0_utility/0.0.3_BG_BBGTerminal/tools/portal_lookup.py`, another seat's lane. It goes to that lane's owner as a request with the exact text, after MX-c-16 lands, and is not graded here.
+
+### R16.2 CHAINS AND FAN-OUT
+
+`MX-c-16` and `MX-c-17` share no file and no data: 2 chains of 2, 2 workers (~40, ~41), cap 8. `MX-r-13` (the catalog release) waits on all of rounds 14 to 16 draining and the OPLGTW ledgers closing.
+
+### R16.3 THE CVO'S READ AND ITS TWO CONDITIONS (`deliverables/3.0.0_SA_CVO~Z/R16_MX-c-16_PRE-ISSUE_READ_20261014.md` @2a8a025031: READ-OK)
+
+(a) narrows, (b) turns a refusal by row into a refusal by absence, (c) is text. Conditions, both made mechanical: **`c16.AC2`** is the difference control over EVERY known firm principal (plus opal-internal and two unknown firm ids) x EVERY key of the base catalog, the new catalog and the 16 scope-substituted `json/mdpf/<scope>/<file>` keys, `catalog_gate.gate()` old against new, printing the pair count and `deny->serve=0` beside it; **`c16.AC3`** prints the before and after of `verdict_class`, `allowlist`, `firm` and `firm_resolution` on the news channel and on every `sentiment_news_mood` row and requires every one unchanged and the news channel to keep no artifacts.
+
+### R16.3a BATTERY (base HEAD 0f40810fa2 plus the round 16 files; `deliverables/2.0.0_SA_COO~MI/round16/checks/`)
+
+Base dry-runs: `c16.AC1` FAIL as expected (all five sub-checks), `c16.AC2` PASS as expected (390 of 390 pairs unchanged), `c16.AC3` PASS as expected; `c14.AC2` FAIL as expected on the builder that now applies G5r (rows lack the additions), `c17.AC2` FAIL as expected (0 of 15); `c14.AC3` PASS as expected (a control on the read_tool and tools arms). Planted arms (standing battery clause 1): `plant_c16.py` 9 of 9 (the good catalog passes all three; the base fails AC1; a re-added serving legacy row fails AC2 and AC1; an unrelated deny row served fails AC2; a changed sentiment firm and a news channel with artifacts fail AC3); `plant_c17.py` 4 of 4; `plant_c14.sh` 24 of 24 on the enrichment-aware builder. `c14.AC1` and `c15.AC1-2` still PASS.
+
+### R16.4 WHAT THIS CUT DOES NOT CLAIM
+
+It does not close the gateway ranking question (COO~O's), the `json-tiered/` note (Z-S114) or MX-r-13.

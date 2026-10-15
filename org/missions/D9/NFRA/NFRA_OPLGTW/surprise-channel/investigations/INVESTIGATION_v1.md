@@ -15617,3 +15617,90 @@ name the one known failure instead of silently inheriting it.
     "notes": "FOR THE ISSUER: the order is complete on branch 'refused' (AC1 and AC2 PASS). The open act is the sign-in in the runner's sa profile; once someone has done it, step 1 is re-read (profile half only, no vendor request needed: cookie names suffice) and, if it then reads HOLDS, steps 3-5 follow under the same order or a re-cut. Not done by this seat: no sign-in, no seeding, no copy between profiles, no change to the task."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S130",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T22:12:20Z",
+    "one_line": "A4 tells me to take tests/test_og_gt8.py but NOT app/news_typed.py, and two of that suite's three tests assert on BOTH modules -- so test_oggt8_ac01 and ac02 cannot pass in this release by construction. The harvest_identity half of each PASSES; only the news_typed half fails, with ModuleNotFoundError. Nothing that ships is defective: gt-8's test suite spans two modules the order split across two releases (news_typed rides OG-ap-19).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tests/test_og_gt8.py in the v2 cut 7521aee725: 2 failed, 1 passed",
+        "test_oggt8_ac01 asserts res['harvest_identity'] == {'import': 'ok', 'calendar': True} AND res['news_typed'] == {'import': 'ok', 'calendar': True}; the first holds, the second reads {'import': 'ModuleNotFoundError', 'calendar': None}",
+        "test_oggt8_ac02 is the no-lib arm and behaves identically: harvest_identity {'import': 'ok', 'calendar': False} holds, news_typed is the ModuleNotFoundError",
+        "A4 verbatim: 'app/news_typed.py is NOT in this release (it rides OG-ap-19); take the harvest_identity.py hunk only' -- and, separately, 'tests/test_og_gt8.py'",
+        "gt-8's own commit 43e5e0383e touches app/harvest_identity.py (+11-5) AND app/news_typed.py (+11-5) with the same fix, plus deploy-to-ec2.sh and tests/test_og_gt8.py",
+        "the rest of the suite set is clean: 49 passed, 2 failed, 0 errors over ten suites, and ap18.AC1 reads RESULT: PASS with 18 files and 0 outside the G1 set"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A4's take-list includes tests/test_og_gt8.py and excludes app/news_typed.py, which implies the test can be satisfied without the module it half-covers.",
+    "world_is": "It cannot. One cell fixed the same defect in two modules and wrote one suite over both; the release boundary runs between them. The useful half of that suite still earns its place here -- its harvest_identity assertions are an INDEPENDENT corroboration of the host-shaped import check, written by the cell's own author rather than by me, and they pass in both the lib-present and lib-absent arms. What it cannot do is go green.",
+    "notes": "Three routes and this seat picked none, because the choice changes what the halves are signing: (a) take app/news_typed.py as well -- it widens this release beyond A4 and pulls OG-ap-19's cell forward; (b) accept test_oggt8_ac01/ac02 as unmeetable in this release and say so in the criterion, which is what the ask does today; (c) let tests/test_og_gt8.py ride OG-ap-19 with the module it covers, which costs this release the corroboration but leaves no red. The general shape is worth more than the instance: a cell that fixes one defect across TWO modules writes ONE suite over both, and any release boundary drawn between those modules inherits a test that cannot pass. The tell is cheap -- read the test's assertions for module names outside the take-list BEFORE cutting, not after the suite runs red."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S131",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+    "surfaced_at": "2026-10-14T23:00:30Z",
+    "one_line": "OG-ec-2 Phase B cannot satisfy its own AC2 as written: it applies one Terraform resource but has no step that puts the new package into S3, and the module reads the code hash from the S3 object, so the apply changes the OPAL_BUILD_COMMIT pin alone and the deployed code stays at the old digest.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/modules/yang-lambda/main.tf:19,37-39 -- the function takes s3_object_version and source_code_hash from data.aws_s3_object.artifact (key opal-assets/opal-assets-silver-eclipse.zip), not from the repo",
+        "Targeted plan in worktree C:/tmp/og-rel-ec2 (branch rel-nfra-oplgtw-ec2 @4fd05be0d3) at 2026-10-14T22:41Z: 0 to add, 1 to change, 0 to destroy, the change being environment OPAL_BUILD_COMMIT b915719f25 -> 8929c5f16d ONLY; source_code_hash and s3_object_version unchanged",
+        "S3 artifact latest version 9KbX3Ee84D5n9e2hNtWsRkg6pk40yYcW, 37461 bytes, content-sha256 clrUz/ikqSMgd5Edtx7gJFceLH2LSjow7c6Vfqtw64g= equals the live CodeSha256; the repo package builds to GxWRZhTMvkSWAXuBQHuzjZcAwQ3mJg3C0da8/ZoD6zU= (control: the deployed tree rebuilds to the live digest)",
+        "Prior eclipse release uploaded first: ledger nfra-oplgtw-fd2-eclipse-drain L2 and commit 83b77e13d3 ('artifact uploaded and stamped'), then applied",
+        "TO-OG-ec-2 section 2: 'No object is written by you'; Phase B steps 3-5 list ledger, apply, sweep, proof and no upload"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-ec-2 Phase B step 3 and AC2: applying the ONE converter resource through safe-apply deploys the repo's converter, with the deployed hash read back equal to the repo's.",
+    "world_is": "The apply carries the pin and nothing of the code until the artifact object in S3 is replaced. The replacement is one object write to opal-313476888478-lambda-artifacts (the bound 'no object is written by you' was written about silver, and this seat reads it that way, but the issuer's word decides). Phase A is complete and unaffected: the plan, the counts and the ask are all measured. Phase B is blocked on this ruling, not on any defect in the converter or the fix.",
+    "notes": "Two routes: (a) amend the order so Phase B step 3 reads 'build-and-upload.sh opal-assets opal-assets-silver-eclipse (BUILD, verified by head-object), then the targeted apply' and the bound reads 'no silver object is written by you' -- recommended, it is how the previous eclipse release landed; (b) re-cut the order. The ask (section 3, item 3) carries the same question so the two halves sign knowing it. Rollback for the upload is the artifact's current latest version above."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S132",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-14T23:42:40Z",
+    "one_line": "A SPARSE release worktree cannot run deploy-to-ec2.sh. The script resolves two .env S3 roots through lib/opal_naming.py address(), which loads every file in infra/logic/registry/; those 7 files were IN the release commit but not in the worktree's sparse cone, so address() raised FileNotFoundError and the deploy refused in Step 2/3 -- before any artifact was built or uploaded. Same class as cloud-ops trap (4) for safe-apply, but on the DEPLOY path, which that trap does not name.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First deploy attempt 2026-10-14T22:58:39Z-22:58:47Z, rc=1: FileNotFoundError [Errno 2] No such file or directory: 'C:\\\\tmp\\\\og-rel-yr2\\\\infra\\\\logic\\\\registry\\\\systems.json' in lib/opal_naming.py _read_text, reached from address() <- key() <- _registry() <- load_registry()",
+        "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:94 and :103 -- ADVI_FEE_STATEMENT_S3_ROOT and ADVI_MARKET_UPDATE_S3_ROOT are each `cd $WORKSPACE_ROOT && python -c 'from lib.opal_naming import address; ...'` (LGIC R30: every S3 address is builder output, never hand-typed)",
+        "git ls-tree -r --name-only HEAD -- infra/logic/registry read 7 files AT the release commit, while `ls -A infra/logic/registry` in the same worktree read 'No such file or directory' -- in the commit, absent from the checkout",
+        "git sparse-checkout list before the fix: .tools, data/transcripts/scripts/teams, infra/aws/ec2/opal-gateway, lib, org/modules/graph, org/standards, org/tier2_senior/0.7.0_AE_CloudOps~Z -- `lib` IS in the cone, which is why the import itself succeeded and the failure landed one layer deeper, at the registry the module reads at call time",
+        "Step 3/3 never ran: 'ERROR: Deployment script failed. Manifest not updated.' and no object appeared under s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/ for this release until the second run",
+        "Fix: git sparse-checkout add infra/logic (7 files materialised). HEAD did not move -- rev-parse read bf7ffb62f4ae5af8298d3c24960c63d2965542d9 before and after -- and the A1 guard plus the page's checked-out md5 (0d828b51d433a24f7e2ef2e6ea7967ee) were both re-read AFTER the widening, not carried over",
+        "Second attempt 23:03:38Z-23:05:14Z rc=0, SSM 768a6366-ab1a-4220-aea9-b8e7b2cfcda3 Success"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's Phase B step 4 says to deploy from the release worktree through safe-ec2-deploy.sh, which presupposes that a worktree cut narrowly enough to hold the gateway source can run the deploy script.",
+    "world_is": "It cannot, and the dependency is invisible from the order: the deploy script's need for infra/logic/registry/ is not in its source_path, not in EC2_MANIFEST, and not in the artifact's member list (app deploy requirements.txt identity_tool_allowlist.txt). It is reached only at RUN time through a builder call that exists precisely because LGIC R30 forbids typing the address. The cone was sized for what the ARTIFACT contains; the script reads more than it ships.",
+    "notes": "The general shape, which outlives this instance: a sparse cone sized from the FILES AN ACT SHIPS is too narrow for the act's TOOLING, and the gap shows up only at run time, because the tooling reaches its inputs through a resolver rather than a path you can see in the order. cloud-ops trap (4) banks exactly this for safe-apply (it names lib and the agent home folder) and the deploy path needs the same sentence with infra/logic/registry/ added -- these two roots are not interchangeable: `lib` was already in the cone here and the deploy still refused. The cheap tell, worth more than the list: the failure is LOUD and lands before any upload, so the cost is one round trip and never a half-landed deploy -- which is why the right fix is to widen the cone, never to hand-type the resolved root to get past it (that would put a typed S3 address into a release and breach LGIC R30 silently). UNDER_INVESTIGATION is the disposition because the INSTANCE is resolved but the DECISION is not mine: the recommendation is that the issuer add one line to the release orders' Phase B -- cut the release worktree with `infra/logic` in the cone, or cut it full -- and until the issuer rules, nothing stops the next release worktree being cut the same way. There is no enum value for 'the instance is fixed and the standing question is open', so this says it in words rather than inventing one (the gate refused RESOLVED_IN_FLIGHT, correctly). Nothing about this release is affected: the guard was re-read after the widening and the deploy that landed is the signed release_sha."
+  }
+  ```

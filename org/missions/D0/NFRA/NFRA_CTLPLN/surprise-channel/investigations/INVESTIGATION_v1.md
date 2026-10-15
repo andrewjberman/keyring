@@ -9530,6 +9530,183 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+```json
+{
+  "id": "NFRA_CTLPLN-W93-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~93",
+  "surfaced_at": "2026-10-14T22:04:44Z",
+  "one_line": "On an ENFORCE refusal the naming stage of safe-commit.sh unstages only the eight graded extensions, so the non-graded paths of the same commit (a .md deliverable) stay in the shared index.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CT-ad-2 BUILD rule: keep the stage fail-closed in ENFORCE mode, the commit aborted and the files unstaged. The order does not say which staged paths the refusal unstages.",
+  "world_is": "The refusal branch of the naming stage runs 'git reset -q HEAD -- \"${NGATE_FILES[@]}\"' (the eight graded extensions only), so a refused commit leaves its non-graded staged paths in the index. Measured in the derivation test arm (S), ENFORCE with a stub REFUSE: rc 1, STAGE-REACHED absent, index after the stage = the two .md paths, the .json paths unstaged. The base copy behaves the same (pre-existing, not changed by CT-ad-2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh@868b773335 lines 1185-1190 (ENFORCE refusal: git reset over NGATE_FILES only)",
+      ".tools/tests/test_safe_commit_derivation.py arm (S) ENFORCE, run in worktree wk-NFRA_CTLPLN-93, 2026-10-14 ~22:0xZ: 'CHECK PASS (S) ENFORCE ... rc=1 still=[...a.md, ...my notes.md]'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while testing CT-ad-2; the change does not alter it. Whether the leftover staged deliverables matter is for the CTO or the MSTR lane; no hazard was measured."
+}
+```
+
+## NFRA_CTLPLN-W95-S1 -- the --check-fresh checkpoint file is covered by no ignore rule
+
+```json
+{
+  "id": "NFRA_CTLPLN-W95-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~95",
+  "surfaced_at": "2026-10-14T21:44:29Z",
+  "one_line": "The --check-fresh checkpoint reached_roles_census.fresh_checkpoint.json is covered by no ignore rule, so a PARTIAL run leaves an untracked file beside the census; the ignore rule sits outside this order's write surface, so none was added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CT-ad-4 BUILD 1: the checkpoint is gitignored if the folder's ignore rules do not already cover it, and the worker says what it found.",
+  "world_is": "git check-ignore --no-index on infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.fresh_checkpoint.json returns rc=1 (no rule). The only rule that reaches this folder's files is infra/.gitignore:41 (__pycache__/). The positive control, tests/__pycache__/x.pyc, returns infra/.gitignore:41 with rc=0. The checkpoint is deleted when a check completes, so it persists only across a PARTIAL run. Adding the rule needs infra/.gitignore or a tests-folder ignore, neither in the order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git check-ignore --no-index infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.fresh_checkpoint.json, worktree wk-NFRA_CTLPLN-95 at 868b773335, 2026-10-14 ~21:4xZ: rc=1",
+      "git check-ignore -v infra/aws/terraform/nfra-ctlpln-identity/tests/__pycache__/x.pyc (control): infra/.gitignore:41 __pycache__/, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_CTLPLN-W95-S2 -- the order's Python 3.11 is not installed on this box
+
+```json
+{
+  "id": "NFRA_CTLPLN-W95-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~95",
+  "surfaced_at": "2026-10-14T21:44:29Z",
+  "one_line": "The order names Python 3.11, but this box has no 3.11 interpreter: python is 3.12.10 and py -3.11 finds no runtime, so the new test and the AC2 control ran on 3.12.10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CT-ad-4 RULES: ASCII only; Python 3.11.",
+  "world_is": "python --version prints Python 3.12.10; py -3.11 reports No suitable Python runtime found; python3.11 is not on PATH. The code uses no 3.10+ syntax; Path.write_text(newline=) is 3.10+ and the file's existing lines already use it. A 3.12.10 run is not a 3.11 run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python --version (worktree wk-NFRA_CTLPLN-95, 2026-10-14 ~21:3xZ): Python 3.12.10",
+      "py -3.11 --version: No suitable Python runtime found; python3.11: command not found"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_CTLPLN-W94-S1 -- CT-ad-3: two mdpf Lambdas hold inline NYSE holiday sets that the copy measure does not read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W94-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~94",
+  "surfaced_at": "2026-10-14T21:40:45Z",
+  "one_line": "The mdpf-daily-trigger and mdpf-freshness-checker Lambdas each hand-type a 2026-2027 NYSE holiday set and their own is_trading_day; they are not vendored copies of lib/trading_calendar.py, so CALENDAR-COPIES does not count or compare them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of infra/aws/lambda for the library's holiday-set name (NYSE_HOLIDAYS_FALLBACK definitions) returned exactly the 4 vendored copies that CALENDAR-COPIES reads; Grep for 'NYSE_HOLIDAYS = {' returned infra/aws/lambda/mdpf-pipeline/mdpf-freshness-checker/lambda_function.py:144 and infra/aws/lambda/mdpf-pipeline/mdpf-daily-trigger/lambda_function.py:179",
+      "infra/aws/lambda/mdpf-pipeline/mdpf-freshness-checker/lambda_function.py:161-162 and infra/aws/lambda/mdpf-pipeline/mdpf-daily-trigger/lambda_function.py:192-193: def is_trading_day(d) with d.weekday() < 5 and d.isoformat() not in NYSE_HOLIDAYS; the holiday sets were not read against lib/trading_calendar.py",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~94/CALENDAR_COPIES_MEASURE_20261014.txt: found=4, discovery rule = file named trading_calendar.py or a .py defining NYSE_HOLIDAYS_FALLBACK"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ad-3 cell text: enumerate every file named trading_calendar.py or a clearly renamed vendored copy of the library's holiday set, and print the denominator.",
+  "world_is": "Two more holiday sets live in deployed Lambda code as hand-typed 2026-2027 tables with their own is_trading_day, not as vendored copies of the library. They sit outside the measured count of 4, and whether they equal the library's 2026-2027 closures was not read in this cell. A mistyped closure in either would mis-count trading days in that Lambda with no CALENDAR-COPIES line showing it. Disarm and sync are the issuer's call."
+}
+```
+
+## NFRA_CTLPLN-W92-S1 -- the fence check cannot run inside the batch test without AWS
+
+```json
+{
+  "id": "NFRA_CTLPLN-W92-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~92",
+  "surfaced_at": "2026-10-14T21:53:15Z",
+  "one_line": "The batch test's arm 2, which runs check_fence_scoped_rows.py on its saved inputs, cannot run under the cell's no-AWS rule, because the check calls sts get-caller-identity and iam simulate-custom-policy on every run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py@868b773335 line 37 docstring: 'AWS calls: sts get-caller-identity and iam simulate-custom-policy only'",
+      ".tools/tests/test_round14_batch.py arm 2b: executable code (docstring removed, AST) equal to the base copy read by git show into a temporary directory -- passes",
+      "CTad1-AC3 run of the check after the edits: FENCE-SCOPED rows_today=45 unchanged_today=True scoped_rendered=38/38 sim_ok=31/31 refusals_ok=5/5 ok=True (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ad-1 BUILD item 5 (2): the batch test runs check_fence_scoped_rows.py on its saved inputs and compares its result lines with the base copy. RULES: no aws call in the test.",
+  "world_is": "The check reads AWS on every run, so arm 2 cannot execute it under the no-AWS rule. The arm proves the executable code equals the base, which fixes the printed result lines on the same inputs; the check's own result line is read at CTad1-AC3 (ok=True, rc=0)."
+}
+```
+
+## NFRA_CTLPLN-W92-S2 -- the coverage frame is printed only beside a coverage violation, so the all-expected fixture carries no NOTE line
+
+```json
+{
+  "id": "NFRA_CTLPLN-W92-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~92",
+  "surfaced_at": "2026-10-14T21:53:15Z",
+  "one_line": "The batch test's arm 3 asks for the all-expected fixture to print the coverage-frame line beginning NOTE:; the base code prints the frame only when a coverage violation exists, so the arm asserts NOTE: on the one-unexpected fixture and no VIOLATION frame on the clean one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/proof-of-spec-check.py@868b773335 coverage_check: 'v.insert(0, coverage-frame ...) if v else None' -- the frame exists only when v is non-empty",
+      "worktree probe after the edit: predecessor instance NFRA_CTLPLN.TO-CT-ac-1 with CTac1-AC1,CTac1-AC2,CTac1-AC3 -> violations=0 and no coverage line; plus one extra row X9 -> violations=1 and '  NOTE: coverage-frame: expected=3 carried=4 matched=3'",
+      ".tools/tests/test_round14_batch.py arms 3a and 3b pass on that basis"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ad-1 BUILD item 5 (3): a fixture whose acceptance rows are all expected prints violations=0 and the coverage-frame line begins NOTE:. The frame is informational, not a refusal.",
+  "world_is": "A clean instance prints no coverage-frame line at all, so a NOTE: line cannot appear on the all-expected fixture. The frame is kept conditional (no change to clean output); the NOTE: assertion is made on the one-unexpected fixture."
+}
+```
+
+## NFRA_CTLPLN-W92-S3 -- the proof checker refuses an instance outside its tree, so the coverage fixtures live under the ignored .scratch/
+
+```json
+{
+  "id": "NFRA_CTLPLN-W92-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~92",
+  "surfaced_at": "2026-10-14T21:53:15Z",
+  "one_line": "The batch test's coverage fixtures cannot sit in the system temp directory: proof-of-spec-check refuses an instance outside its own tree with CHECKER-SCOPE, so they are written to a temporary directory under the worktree's ignored .scratch/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "probe 2026-10-14 ~21:5xZ: proof-of-spec-check.py <copy of the committed predecessor instance in the system temp directory> CTac1-AC1,CTac1-AC2,CTac1-AC3 -> 'VIOLATION: artifact-resolution/CHECKER-SCOPE ... OUTSIDE that tree' and violations=1",
+      "same copy under <worktree>/.scratch/ -> violations=0; the batch test's arms 3a and 3b run under .scratch/ and remove it afterwards (r14-* directories: 0 left)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ad-1 BUILD: the batch test uses temporary directories only and writes no file in the repository.",
+  "world_is": "The only tree the proof checker grades is its own, so a fixture outside it is refused as a tool-scope finding, not graded. The fixture is therefore a temporary directory inside the checkout's git-ignored .scratch/, created and removed by the test."
+}
+```
+
 ## NFRA_CTLPLN-Z-S11 -- Z-S8 remedy: per-seat log sink landed; stderr + exit code, not stdout (departure accepted)
 
 ```json
@@ -9558,5 +9735,69 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "spec_asserts": "REMEDIATION_v7 Z-S8 remedy: each headless seat's stdout and stderr captured to a file per seat, a log sink, never an alert.",
   "world_is": "stderr plus START/EXIT with claude.exe's exit code is captured; stdout is not, because the seat is an interactive TUI and redirecting its stdout detaches it from the console (measured: stderr-only keeps IsOutputRedirected=False). A missing EXIT line means the window was killed; rc separates clean exit from crash. READ half armed: on the next unexplained ending, read that file's last lines and record the cause here. Seats spawned before 3529599505 have no log and are respawned on death.",
   "notes": "Z-S8 stands as written (append-only). Done when a cause is read from a captured log, or a week passes with no unexplained ending on site Z."
+}
+```
+
+## NFRA_CTLPLN-Z-S12 -- four more unrecorded CloudOps endings; respawned with both spawn fixes verified live
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-14T23:35Z",
+  "one_line": "Four more site Z CloudOps seats (~MQ, ~ZQ, ~ZW, ~MI) ended unrecorded between 22:2xZ and 23:25Z on 2026-10-14; cause unreadable (spawned before 3529599505); all four respawned 23:32Z and both spawn fixes verified live on them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "adjudicates": [
+    "NFRA_CTLPLN-Z-S8"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "seat-liveness 22:2xZ seats=15 (~ZQ and ~MI peeked idle, ~MQ and ~ZW listed); 23:25Z seats=11; Win32_Process claude.exe 0 hits and spawn-marker windows 0 for each of the four",
+      "org/mcp/agent-spawn-audit.log since 22:20Z: no KILL, FORCE-KILL or KILL-MAINT target line for any of the four",
+      "System log since 21:2xZ: no event 41, 6008, 2004 or 1074 (positive control: 50 System events read); Application log: no error naming claude, node or powershell",
+      "candidate, NOT a cause: Claude Code auto-updated 2026-10-14 02:49Z (2.1.299) and 18:24Z (2.1.300) per ~/.local/share/claude/versions; the 22:2xZ peeks showed 'Update installed - Restart to update', but surviving seats (~Z, ~ZS) showed the same banner, and the endings were 4-5 h after the update",
+      "respawn 23:32Z by 0.0.0_AB_MSTR~Z on current orders (OG-sa-1 + open deploy nfra-oplgtw-harvest-runner-sa; MP-pd-7; DQ-t34; MX-r-13, MX-s-19), MP-20261010 sonnet-5-5 high",
+      ".runtime/spawn-logs/ holds 4 START lines (23:32:27Z-23:32:45Z) and 4 new main <uuid>.jsonl transcripts appeared 23:33Z (25567e8f, 3e8b364a, c6e6b5dd, 605a1151): Z-S10 and Z-S11 fixes verified live"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S8 READ half: on the next unexplained ending, read the cause from the seat's captured output.",
+  "world_is": "These four endings predate the log sink, so no cause can be read; the class recurs (10 site Z CloudOps endings in ~28 h, all idle or near-idle seats). Every site Z seat spawned from 23:32Z on has a log and a transcript, so the next ending is readable.",
+  "notes": "Z-S8 stands as written. The update correlation is recorded as a candidate to test against the next readable ending, not as a finding."
+}
+```
+
+## NFRA_CTLPLN-Z-S13 -- dell1 shows the same unrecorded-ending class without the 2.1.300 update
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z",
+  "surfaced_at": "2026-10-14T23:44Z",
+  "one_line": "Disconfirming datum for Z-S12's update candidate: dell1 lost 6 seats the same unrecorded way since 20:15Z while running Claude Code 2.1.293, which never took the 2.1.300 auto-update.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "adjudicates": [
+    "NFRA_CTLPLN-Z-S12"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL1 bus b5a82604 (23:43Z): AE~SC1, COO~B1, ~M1, ~R1, ~V1, CVO~RV1 gone since 20:15Z; no fabric KILL since 20:00Z; 0 claude/bun/node crash or hang events; 0 low-memory events in 5h; claude on dell1 is 2.1.293",
+      "dell1's own caveat: those seats may have parked for the 21:00Z restart Andrew then held, so dell1's instance is confounded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S12 recorded the 18:24Z auto-update to 2.1.300 as a candidate cause.",
+  "world_is": "The class appears on a box without that update, so the update does not explain it on dell1 (confounded by the planned restart). The candidate is weakened, not ruled out for site Z. The next site Z ending is readable from .runtime/spawn-logs/.",
+  "notes": "Recorded because a disconfirming number leads the sentence. No act follows from it."
 }
 ```
