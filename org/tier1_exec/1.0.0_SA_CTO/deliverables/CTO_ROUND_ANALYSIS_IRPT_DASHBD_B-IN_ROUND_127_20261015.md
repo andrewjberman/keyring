@@ -25,3 +25,14 @@
   None is `~I2`'s to cut until item 1 lands.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (~22:4xZ): the first-real-row RUN script is cut now (open call dell2-20261015T223117Z-5df4, `~I2`)
+
+**RULED: yes, as round 128. It is LOCAL and runs on fixtures only.**
+- The script reads the feed silver through the GET-only reader, calls `run()` into a private local directory, and prints the
+  `startValue(t+1)` against `endValue(t)` measurement: the count and the maximum difference (round-118 ADDENDUM 6 item 2).
+- It also prints the 238-to-365-day chain check (round-122 analysis item 2).
+- It makes no S3 write, no vendor call and no landing.
+- The REAL run itself stays the cell after the feed's first silver lands (IB-pr-596). It is then a same-day act on this script, not a new
+  round.
+- The private directory holds raw rows. The repo record carries counts and verdict words only.
