@@ -1,6 +1,6 @@
 """MDPF_DEMQUE round 9, DQ-t-66 criterion AC2 (REAL S3 price index and the V2 active set: READ ONLY, NO vendor call, writes nothing).
 
-`extend_frontier.py --plan` (the day's standing request over the store's landed names) must now leave every V2-held name out: its JSON line carries the integer key excluded_active > 0,
+`extend_frontier.plan()` (the day's standing request over the store's landed names; read in-process because the `--plan` CLI line omits the securities list) must now leave every V2-held name out: its dict carries the integer key excluded_active > 0,
 a securities list of 1..380 entries none of whose CUSIPs is in the V2 active set, symbols == len(securities), and excluded_p2 == 0 and excluded_p3 == 0 (the Yahoo gate no longer uses P2/P3).
 `extend_frontier.py --plan-week --from 2026-10-19 --days 10` must print max_requests <= 380 and excluded_active > 0.
 GATE-REAL-OK; else GATE-REAL-BAD <why>.
@@ -35,9 +35,15 @@ def main() -> int:
     sys.path.insert(0, D)
     import active_set  # noqa: E402
     v2 = set(active_set.load().keys())
-    p, e = _run("--plan")
-    if p is None:
-        return _bad("--plan " + e)
+    # `extend_frontier.py --plan` pops the securities list before it prints (main), so the list is read in-process from plan() (read only).
+    sys.path.insert(0, os.getcwd())
+    try:
+        import extend_frontier as xf  # noqa: E402
+        p = xf.plan()
+    except SystemExit as exc:
+        return _bad("plan() refused: %s" % str(exc)[:200])
+    except Exception as exc:
+        return _bad("plan() raised %s" % type(exc).__name__)
     secs = p.get("securities")
     ea = p.get("excluded_active")
     print("plan symbols=%s excluded_active=%s excluded_p2=%s excluded_p3=%s" % (p.get("symbols"), ea, p.get("excluded_p2"), p.get("excluded_p3")))
