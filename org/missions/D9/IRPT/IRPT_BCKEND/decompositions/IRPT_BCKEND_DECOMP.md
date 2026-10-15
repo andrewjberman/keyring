@@ -4245,3 +4245,15 @@ Checks IB219-1 and IB219-2 (`deliverables/2.0.0_SA_COO~P2/checks/r219/p219_cells
 | `IB-pr-583` | a split row with no key marks the day SPLIT_RATIO_ABSENT and is counted in the attrs and the manifest | FWD-21 | LOCAL | none | PK2-a |
 
 fanout: 2 of 2 chains, cap 8, reason: two cells on disjoint files; workers slots ~424 and ~425 start now.
+
+## 216. ROUND 1, WORKSTREAM ~PL (why 49 Financial still refuses after the exemption: a READ; 2026-10-15 ~15:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the READ IB-pr-580 and the CTO's msg 8359)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). The served-DELTA read of the exemption alone (IB-pr-580, row S203) found that the exemption exempts ONE lost account of 49 Financial and the gate still refuses on `account_lost` (other lost accounts) and on `classified_security_lost`; the exemption therefore does not unblock the firm, while Cottonwood already publishes at HEAD. Before the never-widen pair for the exemption is written, the CTO and the CVO need what else holds 49 Financial back. One READ cell, counts only: the lost accounts classified by evidence (exempted; closed by the directory; still reported by the source with positions, so dropped by the build; evidence incomplete; other), and what `classified_security_lost` counts.
+
+Check IB220-1 (`deliverables/2.0.0_SA_COO~P2/checks/r220/p220_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control220.py`) passes the three positives and nine negatives plus the no-record case each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-584` | READ the anatomy of 49 Financial's remaining refusal: lost accounts by class, classified_security_lost, the conditions that remain | FWD-21 | SERVED | none | PL1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one read-only cell; one worker (slot ~426) starts now.
