@@ -2417,3 +2417,11 @@ Two batches on two surfaces, never two appliers on the host at once: the IAM and
 
 `OG-ap-22` becomes `superseded` by `OG-ap-23` (code). `OG-ap-21` (the person reader and its Terraform) is NOT superseded: it releases first, on the live ref after MX-r-14 (`c4c106aea1`), so `NFRA_MCPORTAL` is unblocked tonight (A1 of `OG-ap-24`). The hookup of the G2 tools and of the gp-1 and gf-1 tools is one more worker cell (`OG-ch-1`), cut when the adapters are merged.
 **fanout:** 2 of 2 appliers on 2 surfaces; the hookup cell is one worker.
+
+## ADDENDUM R3-T.74 (2.0.0_SA_COO~O, 2026-10-15 ~20:5xZ) -- round 37, workstream G2-CONFORM: the naming conformance of the G2 client modules (CTO msg 34575; LGIC rule 30)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-cl-7` | the client core and the seven adapters resolve every canonical firm name through `lookup()` (no hand-kept literal, no placement override); the modules still import in the host shape (no `lib/opal_naming.py` beside them: lazy resolution, an enveloped `registry_unavailable` refusal); a missing registry row is `4.0.0_SA_CRO~Z`'s | `app/client_core.py`, `app/client_role.py`, the seven `app/client_adapter_*.py`, their tests | WORLD | ~111 | cl-1 .. cl-6 merged |
+
+**fanout:** 1 of 1 chains, cap 8. Folded into the cl merges per the CTO: it runs the moment the adapters are on trunk, in parallel with the hookup.
