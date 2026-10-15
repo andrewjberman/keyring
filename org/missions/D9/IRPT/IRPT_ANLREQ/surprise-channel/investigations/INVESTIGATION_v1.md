@@ -18371,3 +18371,32 @@
   "notes": "This is IB-pr-456's live acceptance as the window graded it: the Opal producer path ran to a READY job and a stored report on this evidence, and the attach to the ticket did not happen in 20 minutes. The in-flight message may still resolve; this seat read only and did not wait beyond 17:42Z."
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-W183-S1 -- AR-g-83 contract: a split dated on a dropped (bad-Close) row is not applied to the spanning return, so the literal formula reports -49 percent where the true move is +2 percent
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:07:20Z",
+  "one_line": "The AR-g-83 contract applies the split ratio on the returned row only (s_t), so a 2-for-1 split dated on a dropped bad-Close row is missed by the spanning return: -49 percent is read where the true move is +2 percent. Implemented literally; not corrected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-83 item 3: r_t = (P_t + D_t) / (P_prev / s_t) - 1, where P_prev is the previous usable row's as-traded close and s_t the split ratio on t (1.0 when none); a bad row between two good rows is dropped and the next return spans the gap. Item 2: factor(d) is the product of every split ratio dated strictly after d over ALL fetched rows, including a row whose Close is unusable.",
+  "world_is": "MEASURED on the module as committed at 286cdf9f94 (run just before the one-line __future__ import was added; no behaviour change) by calling make_reader(fetch=...) on three served rows: 2024-01-02 Close 50.0 Stock Splits 0.0; 2024-01-03 Close NaN Stock Splits 2.0; 2024-01-04 Close 51.0 Stock Splits 0.0. Output [('2024-01-02', 100.0), ('2024-01-04', 51.0)]. The as-traded close for 2024-01-02 is 100, its factor 2 coming from the split on the dropped 2024-01-03 row, while s on 2024-01-04 is 1.0, so the spanning return is 51 / 100 - 1 = -0.49. The true return across the 2-for-1 split is 51 / (100 / 2) - 1 = +0.02. The spec's own daily_tr has the same shape: it reindexes splits onto the close index only, so a split on a row absent from that index is not applied (data/mdpf/scripts/demque/tr_compare.py lines 45-49 at HEAD). NOT MEASURED: how often Yahoo serves a split day with a NaN or zero Close (no live pull, no network, no AWS, per the order).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py@286cdf9f94: the factor_by_date loop (factor(d) over all served rows) and the returns loop (s_t taken from the returned row only)",
+      "python -c measurement on the committed module, three-row case: [('2024-01-02', 100.0), ('2024-01-04', 51.0)]; the spec-literal return printed as -0.49 against the true +0.02",
+      "data/mdpf/scripts/demque/tr_compare.py@HEAD lines 45-49: s = sp.reindex(close.index).fillna(1.0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker, not dispositioned. Does not block AR83-g-AC1 or AC2: the contract cases pass as written. Whether the spanning return should carry a split on a dropped row is for the issuer and the CTO; a correction changes the contract's formula, which is not a worker act."
+}
+```
