@@ -16367,3 +16367,213 @@
   "notes": "Recorded in the record q1 rows (roster branch: not_constrained; current(): admits)."
 }
 ```
+
+## IRPT_ANLREQ-D2-W147-S1 -- the FWD-1 DONE WHEN says on DEV, but no DEV deploy target is tracked: CI on DEV only builds, and the one deploy workflow is on PROD
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W147-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~147",
+  "surfaced_at": "2026-10-15T02:43:29Z",
+  "one_line": "the FWD-1 DONE WHEN says on DEV, but no DEV deploy target is tracked: CI on DEV only builds, and the one deploy workflow is on PROD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IRPT_ANLREQ_PRD.md line 29 has the FWD-1 run EXERCISED on DEV, and NFRA_DEVPLN_PRD.md line 166 (DEC-8) names the DEV site as the way to look at a feature.",
+  "world_is": "portal/.github/workflows/ci.yml line 5 runs on DEV and only builds and validates. portal/.github/workflows/deploy.yml line 5 is the only deploy and runs on PROD (S3 sync to the opalinvest-portal bucket, CloudFront EVTSA9VEHNZVH). No DEV site URL and no DEV deploy target is tracked, so the run can only be the local dev:live build on port 5174 over the shared CloudFront origin.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/.github/workflows/ci.yml:5 branches: [DEV]",
+      "portal/.github/workflows/deploy.yml:5 branches: [PROD]",
+      "org/missions/D0/NFRA/NFRA_DEVPLN/prd/NFRA_DEVPLN_PRD.md:166 is the DEV site or a screenshot walk"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The record's q1 answers dev_is local_dev_build. The issuer decides what on DEV means for the run. No call made."
+}
+```
+
+## IRPT_ANLREQ-D2-W147-S2 -- commentary.tf says NOT APPLIED, but the drafter Lambda, its five queues and its analysis_ready mapping are live, with KIMI_STANDING_WORD_REF set
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W147-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~147",
+  "surfaced_at": "2026-10-15T02:43:29Z",
+  "one_line": "commentary.tf says NOT APPLIED, but the drafter Lambda, its five queues and its analysis_ready mapping are live, with KIMI_STANDING_WORD_REF set",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "infra/aws/terraform/transcripts/commentary.tf line 2 says NOT APPLIED, plan only, and an empty KIMI_STANDING_WORD_REF means no model.",
+  "world_is": "LIVE_STATE_R31.txt, read 2026-10-14 by 0.7.0_AE_CloudOps~AQ2, records the drafter Lambda outlook-global-commentary-draft-lambda Active, its KIMI_STANDING_WORD_REF env name SET, and its analysis_ready mapping ENABLED. Its own ODD note says the drafter can reach a model call and a ticket write on its first analysis_ready message. Nothing sends to analysis_ready today (depth 0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/commentary.tf:2 NOT APPLIED -- plan only",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r31/LIVE_STATE_R31.txt:6 LAMBDA commentary_drafter MAPPING analysis_ready ENABLED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: left alone, the drafter harms through its future normal operation on the first analysis_ready message. The disarm owner is the issuer, who holds release 31 and the run. This read-only worker did not disarm it and made no call."
+}
+```
+
+## IRPT_ANLREQ-D2-W147-S3 -- the order names the reader as a17932990a, a test commit; the reader feature is 284e54d2 (AR-y-332), and both are on origin/DEV
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W147-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~147",
+  "surfaced_at": "2026-10-15T02:43:29Z",
+  "one_line": "the order names the reader as a17932990a, a test commit; the reader feature is 284e54d2 (AR-y-332), and both are on origin/DEV",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The TO-AR-y-343 face names the reader as commit a17932990a.",
+  "world_is": "a17932990a's subject is test(IRPT_ANLREQ AR-y-332): mirror analysis-request-pdf for analysis-request-commentary-pdf in the InvestorReporting pins. The feature commit is 284e54d2, feat(IRPT_ANLREQ AR-y-332): the Ticket Center's Commentary item opens the standalone commentary PDF. Both are ancestors of origin/DEV ad7c100b.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal log -1 a17932990a: subject test(IRPT_ANLREQ AR-y-332) mirror analysis-request-pdf",
+      "git -C portal log origin/PROD..origin/DEV: 284e54d2 feat(IRPT_ANLREQ AR-y-332) Commentary item opens the standalone commentary PDF"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The record cites both shas. The issuer should name the feature commit if the reader is meant."
+}
+```
+
+## IRPT_ANLREQ-D2-W147-S4 -- the local DEV ref e578b378 is behind origin/DEV ad7c100b, so the run's DEV head is the remote-tracking ref, not the local branch
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W147-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~147",
+  "surfaced_at": "2026-10-15T02:43:29Z",
+  "one_line": "the local DEV ref e578b378 is behind origin/DEV ad7c100b, so the run's DEV head is the remote-tracking ref, not the local branch",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's Q4 asks for the DEV head sha against the AR-y-317 and J7 commits and names no ref.",
+  "world_is": "refs/heads/DEV is e578b378; refs/remotes/origin/DEV is ad7c100b; e578b378 is an ancestor of ad7c100b, and ad7c100b is not an ancestor of e578b378. J7 and AR-y-317 are ancestors of origin/DEV. The remote was not fetched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal rev-parse DEV returned e578b378d332ad1505018be3801466dac7aeeade",
+      "git -C portal rev-parse origin/DEV returned ad7c100b5cca9020f18a2957112361f4b9083272"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The record names origin/DEV as the head. No fetch or ls-remote was run."
+}
+```
+
+## IRPT_ANLREQ-D2-W147-S5 -- DEV still renders the Add commentary checkbox, though AR-y-317 removed the checkbox and the analysis submit always sends commentary_requested true
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W147-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~147",
+  "surfaced_at": "2026-10-15T02:43:29Z",
+  "one_line": "DEV still renders the Add commentary checkbox, though AR-y-317 removed the checkbox and the analysis submit always sends commentary_requested true",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The AR-y-317 commit on DEV (406345bc) says the submit ALWAYS sends commentary_requested true, with no checkbox and no firm flag.",
+  "world_is": "origin/DEV AnalysisRequestParts.tsx line 208 still renders the label Add commentary bound to form.add_commentary. analysisRequest.ts line 386 sends commentary_requested true regardless of that box, so the checkbox has no effect on the submit body.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx:208 (origin/DEV) Add commentary",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:386 (origin/DEV) commentary_requested: true,"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A control that does nothing on a staff form. The record lists it as a field and marks its effect. No call made."
+}
+```
+
+## IRPT_ANLREQ-D2-W147-S6 -- no tracked synthetic holdings CSV or XLSX exists; the R29 upload bytes are an inline constant in the sitting script
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W147-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~147",
+  "surfaced_at": "2026-10-15T02:43:29Z",
+  "one_line": "no tracked synthetic holdings CSV or XLSX exists; the R29 upload bytes are an inline constant in the sitting script",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The TO-AR-y-343 face asks for the tracked synthetic holdings CSV or XLSX of the earlier sittings, with its path.",
+  "world_is": "A native Glob over portal/tests for holding, synthetic and xlsx files returns no file, and the R29 folder holds no CSV. FILE_D1 at sitting_r29.py line 42 is inline bytes; its column header is Ticker, Dollars, Acct Market Value. The contents are not reproduced here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r29/sitting_r29.py:42 FILE_D1 constant",
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r29/sitting_r29.py:252 upload of FILE_D1 for firm 49financial"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The run needs a holdings file written from these bytes outside the tree. The issuer decides whether a tracked fixture is wanted."
+}
+```
+
+## IRPT_ANLREQ-D2-W147-S7 -- the sign-in handler sits at infra/aws/opalinvest_dev/lambda/auth-handler/, not at the path the order names
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W147-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~147",
+  "surfaced_at": "2026-10-15T02:43:29Z",
+  "one_line": "the sign-in handler sits at infra/aws/opalinvest_dev/lambda/auth-handler/, not at the path the order names; infra/aws/users/lambda holds only the two portal authorizers",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The TO-AR-y-343 bounds name opalinvest_dev/lambda/auth-handler/ and infra/aws/users/ as the sign-in code.",
+  "world_is": "opalinvest_dev/lambda/auth-handler/ does not exist at the worktree root. It is at infra/aws/opalinvest_dev/lambda/auth-handler/, which infra/aws/auth/ARCHITECTURE.md line 397 names. infra/aws/users/lambda holds portal-authorizer and portal-rest-authorizer only, and no login handler.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/auth/ARCHITECTURE.md:397 names infra/aws/opalinvest_dev/lambda/auth-handler/",
+      "infra/aws/users/lambda holds portal-authorizer/ and portal-rest-authorizer/ (directory listing)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The record cites the handler at its real path and says so."
+}
+```
+
+## IRPT_ANLREQ-D2-W147-S8 -- the code uploads the holdings file before it creates the ticket, which differs from the order's listing of ticket, upload, then analysis
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W147-S8",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~147",
+  "surfaced_at": "2026-10-15T02:43:29Z",
+  "one_line": "the code uploads the holdings file before it creates the ticket, which differs from the order's listing of ticket, upload, then analysis",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The TO-AR-y-343 Q3 asks for the order of the calls on Submit, listed as ticket create, upload door, analysis submit.",
+  "world_is": "origin/DEV analysisRequest.ts line 245 calls uploadAnalysisInput first and line 279 calls createTicket second, because the ticket's attachment carries the upload's input_id. Then line 446 submits the analysis and line 465 records the report on the ticket.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts:245 (origin/DEV) uploadAnalysisInput first",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:279 (origin/DEV) createTicket second"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The record gives the code's order, upload then ticket then analysis then record. The run order must follow the code."
+}
+```
