@@ -39878,3 +39878,80 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W438-S1 -- BLOCKING: no registry row carries the table segment scope_account_returns, so the Scope feed IAM resource cannot take every scope, bucket and prefix from the registry as IB-pr-603 Do step 1 requires
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W438-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~438",
+  "surfaced_at": "2026-10-15T19:03:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "BLOCKING: no registry row carries the table segment scope_account_returns, so the Scope feed IAM resource cannot take every scope, bucket and prefix from the registry as IB-pr-603 Do step 1 requires",
+  "spec_asserts": "IB-pr-603 worker face Do step 1 and the AC1 description: the bucket, the two object prefixes and the list prefixes are built in locals from jsondecode(file(registry)) reads, composed the way address() composes them for source orion, scope inflection, tiers bronze and silver, table scope_account_returns; the table is a key segment that comes only through the registry reads, and no table literal is hand-typed. Refusal clause: STOP and file a row when a registry row is missing.",
+  "world_is": "No file under infra/logic carries the table name: a Grep over infra/logic for scope_account_returns, account_returns and scope_account returned No files found at base 48a8e26674. infra/logic/registry/feeds.json is the bronze feed row set (its _about: each bronze table a builder writes at address(source, scope, bronze, feed, partition)) and holds one row, orion_model_composition. address('orion','inflection','bronze','scope_account_returns','date=2000-01-01','x') from lib/opal_naming.py returns s3://opal-data-assets/orion/inflection/bronze/scope_account_returns/date=2000-01-01/x, so the segment is typed by hand in every spelling. Registry row to add (CTO adds it; this worker changed nothing under infra/logic/registry): a feeds.json row feed scope_account_returns, source orion, scope inflection, vendor orion. No registry file defines a silver-tier carrier for a table name, so the silver layer may need its own row or a ruling. The worker wrote no iam.tf change and committed nothing of the product.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep over the worktree folder C:/dev/wk-IRPT_BCKEND-438/infra/logic for scope_account_returns, account_returns and scope_account: No files found (base commit 48a8e266744cc2b28f5896bd3789b9322b245ebb)",
+      "python lib/opal_naming.py address() run in the worktree: s3://opal-data-assets/orion/inflection/bronze/scope_account_returns/date=2000-01-01/x and the silver twin under opal-data-assets",
+      "infra/logic/registry/feeds.json, python json read: one feed row, orion_model_composition (source mdpf, scope inflection, vendor orion)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W438-S2 -- The naming gate grades 0 literals on a bare table-name literal in a locals block, so a hand-typed table segment outside a resource would pass the commit-time limb
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W438-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~438",
+  "surfaced_at": "2026-10-15T19:03:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The naming gate grades 0 literals on a bare table-name literal in a locals block, so a hand-typed table segment outside a resource would pass the commit-time limb",
+  "spec_asserts": "CLAUDE.md rule 30 and the naming gate (.tools/naming-gate.py): a hand-typed name or key segment in a Terraform file is refused at commit; the gate is the mechanical limb that enforces registry-only spelling.",
+  "world_is": "A probe diff (.scratch/probe_table_literal.diff, not committed) added a locals block holding scope_feed_table = scope_account_returns to infra/aws/terraform/inf-pipeline/iam.tf. python .tools/naming-gate.py --diff <probe> --enforce printed NAMING-GATE: PASS 0 graded with rc 0. tf_literals classifies a quoted string only in a typed context; a bare string in a locals block with no hint is not judged. So the gate does not refuse a hand-typed table segment there, and the only guard on it in this order is the rule text and the AC1 checker, which scans the resource block alone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "naming-gate.py run output at base 48a8e26674: DENOMINATOR 1 path(s); NAMING-GATE: PASS 0 graded; rc=0",
+      ".tools/naming-gate.py tf_literals and judge(): an unclassified literal returns None and is not graded",
+      "checks/r234/p234_cells.py ac1: the banned-literal scan is limited to the resource_block text"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W438-S3 -- The order names the packet section The exact statements, which the signed packet does not carry; the HCL sits under Root, address and plan shape
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W438-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~438",
+  "surfaced_at": "2026-10-15T19:03:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the packet section The exact statements, which the signed packet does not carry; the HCL sits under Root, address and plan shape",
+  "spec_asserts": "IB-pr-603 worker face READ FIRST: the packet section The exact statements holds the two statements to copy.",
+  "world_is": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_SIGNOFF_PACKET_SCOPE_FEED_IAM_PAIR.md has no such heading; its headings are Why, Root address and plan shape, Rollback per statement, Branch A and Branch B, Writers of the changed property, After-reads. The two statements and the policy HCL are the code block under Root, address and plan shape (lines 18 to 37), and they were read from there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep for exact statements in the packet: no match (the Grep with a NEVER_WIDEN glob matched a sibling packet only)",
+      "Read of the packet at base 48a8e26674, lines 11 to 37: the resource block with Sid S1PutAndReadScopeFeedKeysOnly and S2ListScopeFeedPrefixesOnly"
+    ]
+  }
+}
+```
