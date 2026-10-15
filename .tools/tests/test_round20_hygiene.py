@@ -7,9 +7,9 @@ Run: python .tools/tests/test_round20_hygiene.py --map
      (LAST line: HYGIENE-MAP SKIP map STALE age=<h>h, exit 0)
 
 Run: python .tools/tests/test_round20_hygiene.py --stale
-     Proves the SKIP arm: comp-pulse runs on a COPY of the tracked map whose mtime is set 100 h back, and the
-     arm passes (exit 0, LAST line HYGIENE-MAP SKIP map STALE age=<h>h) only when comp-pulse reports the copy STALE.
-     The copy lives in a temporary tree; the tracked map is never touched.
+     Proves the SKIP arm: comp-pulse runs on a COPY of the tracked map whose embedded built_utc (the map's age,
+     never its mtime) is set 100 h back, and the arm passes (exit 0, LAST line HYGIENE-MAP SKIP map STALE age=<h>h)
+     only when comp-pulse reports the copy STALE. The copy lives in a temporary tree; the tracked map is never touched.
 
 Builds a temporary repository, stages paths in it, and runs the REAL org/modules/graph/comp_pulse.py diff with that
 repository as the caller's working directory (the script is run at its own path). The danger map is the tracked
@@ -19,8 +19,11 @@ prints a hit line "  [HOLD|RISK] <path>" for it. Nothing is written into the rea
 Required: one staged portal .tsx that the tracked map holds, and one staged .py that the tracked map holds, are both
 classed. Control (printed, not required): a staged portal .tsx with NO map entry is reported as it is measured.
 A stale map is a precondition not met (comp-pulse prints "danger map: <h>h old !! STALE"), not a defect of the
-map edit: the arm prints the SKIP line and exits 0 without grading the classes.
+map edit: the arm prints the SKIP line and exits 0 without grading the classes. A stale tracked map is rebuilt
+in place by the reflex (once, NFRA_CTLPLN round 22); a sparse tree never builds.
 """
+import datetime as dt
+import json
 import os
 import re
 import shutil
@@ -73,6 +76,12 @@ def stale_tree(work):
     shutil.copy2(str(TOOLS / "_compbudget.py"), str(ws / ".tools" / "_compbudget.py"))
     copy = graph / "nerves-risk-edges.json"
     shutil.copy2(str(SCRIPT.parent / "nerves-risk-edges.json"), str(copy))
+    # The age is the map's own built_utc; the copy's mtime is set back too, so only the embedded time can
+    # make it stale when a reader wrongly takes the mtime.
+    doc = json.loads(copy.read_text(encoding="utf-8"))
+    aged = dt.datetime.now(dt.timezone.utc) - dt.timedelta(hours=STALE_COPY_AGE_H)
+    doc["built_utc"] = aged.strftime("%Y-%m-%dT%H:%M:%SZ")
+    copy.write_text(json.dumps(doc), encoding="utf-8")
     past = time.time() - STALE_COPY_AGE_H * 3600
     os.utime(str(copy), (past, past))
     return graph / "comp_pulse.py"
