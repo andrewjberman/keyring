@@ -129,7 +129,7 @@ the issuer to make at the merge.
 
 - A2 (issuer, 2026-10-15 ~09:5xZ): with the non-zero witness of A1 the probe found that the tool answers 32 of the top fund's 49 trade rows (`truncated: true`, 50725 bytes): each row carries every column of the table (est_price_band, reasons, manifests) and the 50 KB projection cuts the list. Honest, but the fund with the most trades is the tool's main use. RULED: the `trades` rows are NARROWED to the columns a reader asks about: `fund_ticker`, `security_key`, `security_key_kind`, `key_resolved`, `action`, `date`, `window_start`, `window_end`, `shares_before`, `shares_after`, `est_price`, `est_notional`, `weight_before`, `weight_after`, and `claim` where the row has one; every other column is dropped and the answer lists the dropped names once in `columns_dropped`. The same for `etfs_get_fund_flows` rows if they near the cap. The answer for the top fund (49 rows today) must come back WHOLE: rv2.AC2 now requires `len(trades)` equal to the independent count AND `truncated` not set. Add one unit test arm to `test_ogrv2_ac01`: a fake part of 120 wide rows for one fund returns all 120 narrow rows within the cap, with `columns_dropped` named. Rows S1-S5 stay accepted. Re-seated slot ~101 on this branch (inherited commits 53cf754da6, 142858b783, 039097c1f2). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>RIVAL-FUNDS</workstream>
 <slot>~101</slot>
