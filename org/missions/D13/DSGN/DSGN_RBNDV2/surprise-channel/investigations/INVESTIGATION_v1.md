@@ -371,6 +371,117 @@
     "spec_asserts": "RV-h-1: 'if a heat map elsewhere in src/ also uses a blue scale, name its file in a surprise row and leave it (it is a wall: not in your <paths>).'",
     "world_is": "This file is a valuation time-series chart with a percentile line colour, not a heat-cell map; its blue band is named in the comment. Left untouched (outside the grant). Named for the issuer to rule whether it is a heat map.",
     "notes": "Not in <paths>; no edit made."
+  },
+  {
+    "id": "DSGN_RBNDV2-W5-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~5",
+    "surfaced_at": "2026-10-15T06:08:36Z",
+    "one_line": "The criterion's difference-control invocation git show d2a3c2fe:portal/src/index.css does not resolve from the workspace root (rc=128): the base commit lives in the portal's own git repository, so the test reads git show d2a3c2fe:src/index.css from the portal root, which returns the same base bytes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-5/portal cat-file -t d2a3c2fe printed commit; git rev-parse --show-toplevel from the portal printed C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-5/portal (a separate repository)",
+        "git show d2a3c2fe:portal/src/index.css run at C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-5 printed 'fatal: invalid object name d2a3c2fe' and rc=128; git cat-file -t d2a3c2fe at the workspace root printed the same fatal line",
+        "bun test src/__tests__/dsgn-rbndv2/rb-1-r.remap.test.ts before the CSS edit: 0 pass, 1 fail, 'exact-scope rules outside @layer: 0'; after the edit: VERDICT: PALETTE-REMAP-OK, 1 pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RB1R-AC1 (TO RV-r-1): the difference control runs the same text checks against git show d2a3c2fe:portal/src/index.css and reports the rule absent, proving the test can fail.",
+    "world_is": "The portal is its own git repository, so the base path form in the criterion resolves only from inside the portal. The test reads the base as git show d2a3c2fe:src/index.css with cwd at the portal root; it asserts the base text carries the existing [data-panel-surface=light] .text-white rule (positive control) and that the exact-scope rule is absent there, so the control can fail.",
+    "notes": "The criterion's literal invocation was not run as written; the bytes it names are the same. No file outside the grant was touched."
+  },
+  {
+    "id": "DSGN_RBNDV2-W5-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~5",
+    "surfaced_at": "2026-10-15T06:08:36Z",
+    "one_line": "The scoped palette remap reaches every palette-white and palette-mediumGray consumer inside a light panel, not only the Segmented and Button band variants: 161 occurrences in 31 portal/src files, and 5 of them paint a status dot fill rather than ink, so an idle grey dot inside a light panel turns navy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- at the FWD-5 walk (round 3), decide whether the status dots keep the quiet ink or take a fill token; the remap cell edits no page file and does not touch them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "native Grep over C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-5/portal/src for palette-white or palette-mediumGray (base d2a3c2fe plus the RV-r-1 edit): 161 occurrences across 31 files",
+        "bg-[hsl(var(--palette-mediumGray))] status dot at portal/src/pages/AdvisorIntelligence/_partners/inflection/index.tsx:323, demo/index.tsx:263, cottonwood/index.tsx:206, 49financial/index.tsx:303, and portal/src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx:93",
+        "whether each dot sits inside a light panel was not measured; the native Grep found no bg- or fill use of palette-white"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-r-1 cell: a custom property set on the panel root is inherited by every control inside it, so nothing else needs to move; the cell edits only portal/src/index.css and its test.",
+    "world_is": "The remap is scoped to [data-panel-surface=light], so every element inside a light panel that spells palette-mediumGray now resolves to the navy ink, including the four partner-page status dots and the ExecManagementTab dot that paint a fill. An idle grey dot inside a light panel reads as navy, a change of meaning the cell did not name.",
+    "notes": "Filed, not fixed: the cell grants only index.css and its test, and the page files are outside it."
+  },
+  {
+    "id": "DSGN_RBNDV2-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~RB",
+    "surfaced_at": "2026-10-15T06:50:00Z",
+    "one_line": "On /market with live data inside the white panels, the heat tables and tiles keep dark navy grounds (the old --bg-header, --bg-medium, --bg-card and --semantic-background-contentPanel tokens) while the light-panel ink rule turned their white text to navy: names read navy on navy, 141 text elements under 3:1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- disarmed when the scoped surface-token remap (addendum cell RV-r-2) lands and /market reads in the COO's close run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ui-walk of /market on the merged feature branch via dev:live on 5174, signed in as the walker, 2026-10-15 06:33Z: finding design:contrast 141 text element(s) under 3:1; first sample text 'Trump Announces $80B Taiwan LNG Deal' ratio 1.44, color rgb(10, 23, 51) on background rgb(37, 52, 86) (walk folder tmp/ui-walk/20261015T063315Z, gitignored)",
+        "portal/src/components/PerformanceHeatMap.tsx lines 114, 161, 173, 245, 296 and BenchmarkHeatmap.tsx lines 284-286: grounds spelled bg-[hsl(var(--semantic-background-contentPanel))], --bg-header, --bg-medium, --semantic-background-hover; ExecutiveSummary.tsx lines 673, 776, 794, 959, 992, 1110: --bg-medium, --bg-card, --bg-header",
+        "portal/src/index.css: --bg-header, --bg-medium, --bg-card, --bg-dark, --bg-medium-alt all alias --bg-band (the dark field)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD FWD-4 ACCEPT: heat maps shade white to silver, none left in the old blue scale; FWD-3 ACCEPT: no stacked dark strips, panels read white; FWD-1: the page shows real figures and reads as Opal's work.",
+    "world_is": "The 'blue scale' is the navy ground of the heat tables (PerformanceHeatMap, BenchmarkHeatmap) and the dark tiles, not a hue ramp in the eight F10 files, which is why the RV-h-1 worker found no blue literal. The ink rule (RV-t-1 c) flips their white text to navy while their ground stays navy.",
+    "notes": "Ruled inside the COO's own decomposition (obligation 7): addendum 2, DIRECT-ACT cell RV-r-2, scoped token remap of the old dark surface tokens inside [data-panel-surface=\"light\"] to white and silver, no page file edited. Heat cell premise finding goes to the CTO in the drain-end message."
+  },
+  {
+    "id": "DSGN_RBNDV2-W6-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~6",
+    "surfaced_at": "2026-10-15T06:58:10Z",
+    "one_line": "The acceptance invocation for RB1R2-AC1 names the literal placeholder <WS> in its cd path, which no shell resolves as written; the worker ran it with <WS> replaced by its worktree path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-r-2.inner-surface-token-remap.md worker face, ACCEPTANCE: invocation of RB1R2-AC1 begins 'cd <WS>/portal'; header declares <placeholders>WS</placeholders>",
+        "worktree /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-6 at portal HEAD f96f2d60 (branch wk-DSGN_RBNDV2-6-portal, equal to feature/dsgn-rbndv2-light)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RB1R2-AC1 invocation: 'cd <WS>/portal && ... bun test src/__tests__/dsgn-rbndv2/rb-1-r2.surfaces.test.ts' runs as written and prints VERDICT: INNER-SURFACES-OK.",
+    "world_is": "The invocation is not runnable verbatim because <WS> is an undeclared-expansion placeholder. The worker ran it with <WS> replaced by /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-6, the worktree the order names; bun test then printed VERDICT: INNER-SURFACES-OK with rc=0 (1 pass, 0 fail, 7 expect() calls).",
+    "notes": "No criterion was weakened. The substitution changes only the path prefix, not the command or the expectation."
+  },
+  {
+    "id": "DSGN_RBNDV2-W6-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~6",
+    "surfaced_at": "2026-10-15T06:58:10Z",
+    "one_line": "The task order file in the worker's worktree carries the RECORD FACE header and its preflight block below the WORKER FACE, although the worker face is the worker's whole context and the record face never travels.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- the issuer cuts the worker's copy of the order without the RECORD FACE, or rules where the record face is placed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-r-2.inner-surface-token-remap.md after the REPORT line: a '---' separator, then '## RECORD FACE' and a '<preflight>' block (read at worktree HEAD f96f2d60 by a sed of lines 1-80)",
+        "the worker rules this face is built on: the WORKER FACE is the worker's whole context; the RECORD FACE never travels (L7)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "L7: the WORKER FACE is the worker's whole context and the RECORD FACE never travels to the worker.",
+    "world_is": "The order file at the worker's worktree path contains the RECORD FACE header and its preflight block. The worker read them in passing while locating the criteria and took no action from them; the criteria, invocations and expectations used are the WORKER FACE's.",
+    "notes": "Observed only; the worker did not open the rest of the RECORD FACE section."
   }
 ]
 ```
