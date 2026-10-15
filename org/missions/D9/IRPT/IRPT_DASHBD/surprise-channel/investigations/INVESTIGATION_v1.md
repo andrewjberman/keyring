@@ -13054,3 +13054,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-227. The disarm owner is the integrator (0.0.0_AB_MSTR) because the commit gate is infrastructure; the CTO may reassign it. The row states the form only; it carries no client value."
 }
 ```
+
+## IRPT_DASHBD-D2-W301-S1 -- the criterion DBI114-1-AC1 refuses the cell's script for the write token write_table, while step 3 of the order has the cell write its private variant parquet
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W301-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~301",
+  "surfaced_at": "2026-10-15T01:32:56Z",
+  "one_line": "The checker of DBI114-1-AC1 refuses the tracked script for the write token write_table, while step 3 of the order has the same cell write the private variant parquet; the criterion and the order conflict on that one local write. The worker did not rename or route around the token.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 3 of the order: write the private variant file QTD_BASIS_VARIANTS.parquet. Step 4: the tracked script holds no S3 write call. The criterion expects the script with no write call, and the checker refuses any script text containing write_table or to_parquet.",
+  "world_is": "The script writes the private variant file with the pyarrow table writer. That is a local write into the private folder, not an S3 write, and no S3, DynamoDB or vendor call is made. The checker stops at 'write token in script: write_table' and the criterion is FAIL. A diagnostic run of the same checker arms with the token list emptied, in a scratch harness and not a verdict, found every other arm holding: the control matched on 0 households and the bins, the moved-down recount and the record fields all agree. The order does not say which API writes the file, so the conflict is for the issuer and the CTO to rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r114/p114_bin.py at 1cb46e909b (WRITE_TOKENS and script_clean)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~301/tieout_basis_variants.py (its final write call), in the worker worktree at the commit that lands this row",
+      "the checker output on the worker record: 'DBI114-1-AC1 FAIL: write token in script: write_table'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-1. The row states the form only. The criterion stays FAIL until the issuer rules the token list or the write path; the worker edited neither the checker nor the script to pass."
+}
+```
+
+## IRPT_DASHBD-D2-W301-S2 -- the order's performance axis, the sorted trading days in the cache, is not what the cache holds: the cache carries calendar-daily partition dates
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W301-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~301",
+  "surfaced_at": "2026-10-15T01:32:56Z",
+  "one_line": "The cache's dates are calendar-daily, weekends included, and the cache has no partition for the two NYSE trading days 2026-07-01 and 2026-09-28; the tie-out therefore takes the axis as the NYSE trading days of the range, which is the module's t-1 definition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 1 of the cell defines the performance axis as the sorted trading days in the cache, with the as-of day the cache's newest date.",
+  "world_is": "The cache holds 2328 distinct partition dates with every weekday present, so weekend dates are on the cache, and it has no partition for 2026-07-01 or 2026-09-28. The axis used is the NYSE trading days from the base day 2026-09-30 to the as-of day 2026-10-14, from lib/trading_calendar.py. Every trading day of the quarter-to-date window is in the cache, and the control matched on every household, so the qtd figures do not depend on the reading here. The other windows, which hold the two missing days, are not run by this cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py at 1cb46e909b (the header's t-1 definition: the previous NYSE trading day)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~174/TWR_TIEOUT_R109.json at 1cb46e909b (basis_words CALENDAR entry and the two-missing-days entry)",
+      "the worker's read of the round-109 cache's date column (counts only): 2328 distinct dates, all seven weekdays present, no partition for the two trading days"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-1. The row states the form only."
+}
+```
