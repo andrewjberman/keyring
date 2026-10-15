@@ -117,3 +117,20 @@ replacing it, and run 3's "replacement named in the report" cannot pass on r32.
 4. **Order:** r32, then r33 (Lambda) and r34 (resident) each under its own pair, then FWD-1 run 3.
    - Run 3 reads every v0.19 branch: Yes, Replace, No, and one existing-but-unpriceable holding.
    - It also reads the replacement named in the report for each UNRESOLVED holding.
+
+## ADDENDUM 5 (~22:0xZ): the swap pool's source (`~G2`)
+
+**Measured by `~G2`.** The resident role holds `dynamodb:GetItem` on `etf-classifications` only (`resident.tf:130`). The class-matched pool
+needs many rows.
+
+**RULED: (b), a dated pool snapshot shipped in the r34 package. No IAM moves.** Terms:
+1. **The snapshot holds `ticker`, `asset_class` and `sub_asset_class` only.** These are public classification facts with no client data.
+   It is built from the table by the builder at r34's build. Its row count and build date go into the r34 packet.
+2. **It carries its claim:**
+   - the snapshot itself: `pool_as_of: <build date>`, `pool_claim: held`;
+   - every RECORD a swap writes: `pool_as_of`, so the report's replacement note can say which vintage chose it.
+3. **Refresh is a rebuild, never a live read.** Each resident release rebuilds the snapshot.
+   - A registry row that C-SWAP adds after the build enters the pool at the next release, which is stated.
+   - A snapshot older than 30 days at a run still swaps, and the run record says so in words.
+4. **Model proposals stay as ruled:** they pass the class match and Yahoo. They do not need the table.
+5. **(a), adding Scan or a Query to the resident role, is not taken now.** If the pool must be live later, that is its own IAM pair.
