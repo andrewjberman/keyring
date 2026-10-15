@@ -1,0 +1,52 @@
+# IRPT_DASHBD -- decomposition, workstream B-CW (Cottonwood), issuer 2.0.0_SA_COO~C2
+
+This file is the B-CW workstream's own decomposition. The shared file `IRPT_DASHBD_DECOMP.md` stays `2.0.0_SA_COO~D2`'s (workstream B), `IRPT_DASHBD_DECOMP_B-IN.md` is
+`~I2`'s and `IRPT_DASHBD_DECOMP_R114_F.md` is `~F2`'s, so no two issuers append to one file. Cell ids here are `DB-c-<n>`; worker slots `~401` and up are this seat's
+(`~D2` runs `~184` and up, `~I2` `~301` and up, `~F2` `~501` and up; the ranges do not meet). Authority:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_DASHBD_FOUR_WORKSTREAMS_AT_ROUND_114_20261015.md` (@a6d9baacaf) and msgs 7898, 7904. FWDs are
+unchanged; no PRD change. `~D2` is the SOLE contract writer: this workstream proposes a contract member by a row or an ask to `~D2`, and edits no contract.
+
+## 1. ROUND 114, WORKSTREAM B-CW (2026-10-15 ~01:5xZ)
+
+**No CTO analysis answers this workstream yet** (the CTO's first analysis here follows this workstream's first slug). The cells below are cut on the ruling's write surface
+(the Cottonwood adapter and gold partition, and its producer schedule within the 6 AM ET fold, in step with `~P2`) and on what the tree already records.
+
+**Where B-CW stands (measured from the tree, not from a status word).**
+- The Cottonwood `account_dim` and household-key adapter is built (`DB-b-196`, worker `~161`, complete). Its never-widen packet (`DB-b-200`, `~165`) is written and nothing is applied.
+- `account_return_daily` holds 3,325 partitions, 2013-04-03 to 2026-06-22, all minted on 2026-10-11 by the `TO-CB-al-2` apply (`DB-b-201`, `~166`, record
+  `deliverables/0.9.0_WK_IRPT_DASHBD~166/COTTONWOOD_RESUME_PACKET.md`). The Commonwealth input holds one partition, 2026-06-23, so the resume to 2026-10-12 (78 trading days) is BLOCKED on
+  the input. The packet's section 8 names what it did not establish: the set of pages that read the table, the fallback calendar's equality with the package for this range, and the
+  schedule's target and landing time.
+- `holdings_performance_daily` (the Black Diamond channel `blackdiamond_z09`) has its newest gold date at 2026-09-25 and its newest silver input at 2026-10-13: 12 trading days behind
+  (`DB-b-221`, `~178`, record `deliverables/0.9.0_WK_IRPT_DASHBD~178/RD_COTTONWOOD_PRODUCER_R110.json`, measured 2026-10-14). No schedule exists for the channel (declared: none; applied:
+  none), no Cottonwood principal exists, and ONE landing time was measured. A fire writes served gold, so creating the schedule is a later act under a never-widen pair.
+- The holdings table Cottonwood's account page reads is `~P2`'s (IRPT_BCKEND `IB-pr-532` packet, `IB-pr-539` packet v3; the apply `IB-pr-535` is cancelled): the Cottonwood side waits on that release.
+
+**Round 114 is the three things the schedule act and the CTO's pair need and nobody has measured.** All three are LOCAL; two are reads and one is a packet; nothing is written to AWS.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-1` | The Black Diamond silver landing times and the gold frontier: the landing instant (New York time) of the Cottonwood silver partition on each of the last 15 trading days, the earliest fire time that clears the latest of them, the gold dates with a silver input and no gold (the catch-up set), each against the trading calendar | FWD-2, FWD-11 | LOCAL (a read) | none | C-A |
+| `DB-c-2` | The never-widen packet for the Cottonwood `holdings_performance_daily` schedule, its principal and the catch-up run: names from the builders, the catch-up keys counted, both branches, rollback per key, the CTO questions. A packet; nothing is applied | FWD-2, FWD-11 | LOCAL (a packet; the act it proposes is WORLD and waits on the pair) | `DB-c-1` | C-A |
+| `DB-c-3` | The READERS of the three Cottonwood gold tables (`account_dim`, `account_return_daily`, `holdings_performance_daily`) and the fallback calendar's equality for 2026-06-23 to 2026-10-13: which served code reads each table, and whether the calendar the producers use agrees with the package | FWD-11, FWD-15 | LOCAL (a read) | none | C-B |
+
+**Decisions inside this decomposition (the issuer's, stated).**
+(a) `DB-c-1` precedes `DB-c-2` because the packet's schedule time and catch-up key list are the read's outputs; the two share one worker's queue (slot `~401`). `DB-c-3` has no edge to
+them and its write set is disjoint (slot `~402`).
+(b) The packet covers `holdings_performance_daily` only. `account_return_daily` after 2026-06-23 has no input until a Commonwealth delivery or an input-contract amendment (`DB-b-201`
+section 7, condition 3); that is the CTO's call and is carried, not cut. `DB-c-3` reports which page reads it, so the call can be weighed.
+(c) Nothing here sets the fire time: `DB-c-1` measures landings, `DB-c-2` proposes a time with its basis, and the CTO's half accepts it. The 6 AM ET fold is `~P2`'s; this workstream reports
+whether a landing falls after 06:00 New York and stops there.
+(d) No contract member is proposed this round. If `DB-c-3` shows a page reading a Cottonwood table with no contract member, the record says so and the ask to `~D2` is the issuer's act after the drain.
+(e) The enrichment after the CTO's ruling (the pair signed, the apply by a CloudOps seat, the catch-up run, the first scheduled fire read) is NOT cut now: it is a WORLD act under the pair.
+
+**fanout:** 2 of 2 chains, cap 8, reason: chain C-A (`DB-c-1` then `DB-c-2`, one worker's queue) and chain C-B (`DB-c-3`) are dependency-independent with disjoint write sets (each its own worker folder).
+Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3`).
+
+## Cells
+
+| cell id | owner |
+|---|---|
+| DB-c-1 | 0.9.0_WK_IRPT_DASHBD~401 |
+| DB-c-2 | 0.9.0_WK_IRPT_DASHBD~401 |
+| DB-c-3 | 0.9.0_WK_IRPT_DASHBD~402 |

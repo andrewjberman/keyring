@@ -2287,3 +2287,12 @@ The tool invokes the published-analysis Lambda (`AMGT_SCOPED_API_FUNCTION`), so 
 
 The hookup of this tool, `etfs_*` (et-1, et-2) rides one batch hookup cell after those modules merge.
 **fanout:** 3 worker chains now (et-1 ~84, et-2 ~85, pt-5 ~92), cap 8; disjoint write sets.
+
+## ADDENDUM R3-T.61 (2.0.0_SA_COO~O, 2026-10-15 ~01:4xZ) -- round 37, workstream G5CV-HOOKUP: the batch hookup of the G5 wave A tools and `mdpf_get_category_views` (FWD-22)
+
+| cell | what | writes (existing files) | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-gt-12` | the hookup of `etfs_get_partner_ownership`, `etfs_get_ownership_rollup`, `etfs_get_monthly_report` (et-1 `13979abd45`), `etfs_get_fund_nav_history`, `etfs_get_fund_holdings` (et-2 `9a16c77a6a`) and `mdpf_get_category_views` (pt-5 `00e2b960ea`): `tools.py` registrations, `SAFE_TOOLS` and `NATIVE_TOOLS`, the registry count 89 -> 95 and the non-data count 80 -> 86; applied by the issuer's prepared script (`deliverables/2.0.0_SA_COO~O/r37/hookup_g5cv.py`, dry-run on HEAD copies) | five existing files | WORLD | ~93 | et-1, et-2, pt-5, gt-11 (merged) |
+
+The release is `OG-ap-20` (G5 wave A + category views): one read grant on the internal reader role generated from the catalog rows of the named entities, plus the rival-funds gold and platinum page prefixes of PRD v3.7, one ask.
+**fanout:** 1 of 1 chain (cap 8).
