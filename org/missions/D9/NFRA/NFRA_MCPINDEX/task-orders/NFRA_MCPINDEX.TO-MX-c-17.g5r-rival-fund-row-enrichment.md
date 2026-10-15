@@ -65,7 +65,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 <proof_of_spec>
   <expected_criteria>AC1,AC2,AC3</expected_criteria>
   <criterion id="AC1" cell_refs="MX-c-17" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round14/checks/c14.AC2.sh; echo "exit=$?"</invocation><expect>ROWS graded 216 of 216; failing fields: none -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MX-c-17" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round16/checks/c17.AC2.sh; echo "exit=$?"</invocation><expect>the DENOMINATOR line (table rows 216; enriched 14; rows differing from the base 14) and CHECKS pass 15 of 15 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MX-c-17" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round16/checks/c17.AC2.sh; echo "exit=$?"</invocation><expect>the DENOMINATOR line (table rows 226; enriched 14; rows differing from the base 14) and CHECKS pass 15 of 15 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-c-17" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round14/checks/c14.AC3.sh; echo "exit=$?"</invocation><expect>ARMS pass 5 of 5; rows graded right 1080 of 1080 -- RESULT: PASS -- exit=0</expect></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~41/NFRA_MCPINDEX.TO-MX-c-17.g5r-rival-fund-row-enrichment.proof_of_spec.json</instance_path>
 </proof_of_spec>
