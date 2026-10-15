@@ -11,7 +11,51 @@ using some kind of blend of the hextech and opal website fixtures."
 
 ---
 
-## PART I -- THE OUTCOME TERRITORY
+## PART I-R -- THE OUTCOME TERRITORY AS ANDREW CUT IT (2026-10-15; SUPERSEDES PART I AND PART II WHERE THEY DIFFER)
+
+**Andrew, verbatim, ~00:1xZ 2026-10-15:** "lets do this whole project on the laptop. it should be extremely targeted, I think
+its just 3 steps. 1.) Sidebar flip to this color + background same color #EAEAF7. 2.) Panels flip to this fixture type,
+including solution for modals. 3.) White-&-silver-scaling for heat maps instead of the blue scaling. Once these three are done
+we just look page by page, modal by modal, and point out if reds/greens etc have to be darker."
+
+**Placement:** the whole project runs on the LAPTOP. This replaces DELL1. The work is on a feature branch there, pushed only
+on Andrew's word (ruling ~00:0xZ).
+
+**"This fixture type"** is read as the Opal-led light panel: the "A light" board Andrew edited on
+https://claude.ai/artifact/WVqCCv8SPkiBz8byz4ZpLh. It has a white surface and a 1px `#C4CBDB` border, square corners, a
+numbered small-caps title with a violet underline, hairline rules, and a source caption. The PRD confirms this reading
+against the board.
+
+### R1 -- A viewer sees the sidebar and the page ground in `#EAEAF7`
+Andrew's step 1. The sidebar and the page background are both `#EAEAF7`, with navy ink. The sidebar keeps the A-light
+grammar: text-led, small-caps section labels with a violet underline, and the current page marked by an underline.
+
+### R2 -- A viewer sees every default panel AND every modal in the new fixture
+Andrew's step 2, modals included.
+- **Panels** change through the panel primitives (old O2 and O3).
+- **Modals have no single frame today** (Part IV, F9). The "solution for modals" is one shared modal frame carrying the
+  same fixture, and every modal reaching it.
+
+### R3 -- A viewer reads a heat map on a white-to-silver scale, not a blue one
+Andrew's step 3. Heat-map cells run from white to silver instead of the current blue scale. The scale is defined once and
+read by every heat map (Part IV, F10).
+
+### R4 -- Andrew walks the product page by page and modal by modal, and sees which semantic colours need darkening
+Andrew's closing pass, after R1-R3. Reds, greens and other status or semantic colours are checked on the new light
+ground, and the ones that must be darker are named. This outcome is a WALK WITH FINDINGS; fixing each named colour follows
+from it.
+
+**What carries over from Part I:**
+- The candidate thread still opens on `/market`.
+- O5 is satisfied by the branch and no-push rule.
+- O6 (the design law records the new grammar) still holds.
+- O4 (naming the pages that bypass the primitives) feeds R4's walk.
+
+**Part II boundary changes:** modals, heat-map scales and the page ground are now OWNED. They were previously "does not own".
+
+**Superseded:** call 2 (direction A, B or mix) is settled by "this fixture type": A light.
+
+## PART I -- THE OUTCOME TERRITORY (original; read with Part I-R above)
 
 ### Candidate thread (becomes FWD-1)
 
@@ -184,6 +228,23 @@ state; shape is unaffected).
 - `DSGN_REBRND` established the 2/3/4px radius ladder, no shadows, Lato, and one band per page (`portal/DESIGN.md` C3, C11).
 - `HeroGraphic.tsx` and `PhilosophyPillars.tsx` already borrow the site's indigo-underlined eyebrow and numbered rules.
 - So the Opal half of the blend has prior art in the estate. It has never been applied to the sidebar or the panel frame.
+
+**F9. Modals have no shared frame.** Measured on portal DEV @97c66c93 with the native Grep tool, 2026-10-15:
+- 10 files import or reference `catalyst/dialog`.
+- 32 files hold a `fixed inset-0`, `role="dialog"` or `aria-modal` overlay; most of these build their own modal.
+  Examples: `PortfolioManagement/components/*Modal.tsx`, `TradeSubmission/components/*Modal.tsx`,
+  `components/market-performance/*Modal.tsx`.
+- So R2's modal half is NOT reached by the panel primitives. It needs one frame that each modal adopts. That is a
+  per-modal edit and the one place this project cannot be fully surgical.
+- The two counts overlap; the number of distinct modals was not de-duplicated.
+
+**F10. Heat maps have no shared scale.**
+- A name search finds heat-map colouring in several separate places: `components/BenchmarkHeatmap.tsx`,
+  `pages/InvestorReporting/tabs/reporting/ReturnsHeatmap.tsx`, `pages/Macroeconomics/utils/percentileColor.ts`,
+  `pages/Valuation/panels/ValuationSummaryPanel.tsx`, the Correlation page, and `Panel variant="heatmap"`.
+- `index.css` defines no heat or ramp token.
+- R3 therefore means one shared white-to-silver scale and each heat map pointed at it.
+- Inferred, not exhaustive: the list comes from a name search.
 
 **Angles for the blend (findings, not a design decision):**
 - **Sidebar.**
