@@ -13961,3 +13961,715 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-4. Form only. The pull's Envision Performance Dim report is named in the record as an alternative per-account period return, not the chosen endpoint."
 }
 ```
+
+## IRPT_DASHBD-D2-W404-S1 -- The DBC116-3-AC1 surface arm measures against BASE 8f83241ac1, 35 commits behind this worktree's cut, so it reports a file this cell did not touch
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "DBC116-3-AC1 diffs the tree against BASE 8f83241ac1, but this worktree was cut at 7f16db08c3, 35 commits later; commit 530b3a3246 changed infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf after BASE, so the surface arm FAILs on a file this cell never touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBC116-3-AC1 (checker p116_bcw.py, BASE = 8f83241ac1, 'the tree this round was cut on'): no file outside the four .tf files, handler.py and the two test files changed in infra/aws or the producer's folder.",
+  "world_is": "The worktree was cut from box/dell2 at 7f16db08c3, which is 35 commits past BASE 8f83241ac1. Between them, 530b3a3246 (grant NFRA_OPLGTW OG-ap-19 G3, 0.7.0_AE_CloudOps~Z) changed infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf. The checker's surface arm lists that file and FAILs, while this cell's own changes to the four .tf files, handler.py and test_catch_up.py pass the numstat and hunk arms that run before it. Measured against the cut point, `git diff --name-only 7f16db08c3 -- infra/aws data/assets/scripts/gold/irpt_holdings_performance` lists only this cell's six tracked files. The checker was not edited, and the surface was not widened.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r116/p116_bcw.py BASE and ac_3 @7f16db08c3",
+      "git log 8f83241ac1..7f16db08c3 -- infra/aws shows 530b3a3246 (infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf) @7f16db08c3",
+      "python -I p116_bcw.py . DBC116-3-AC1 @7f16db08c3 + this cell's edits: 'files changed outside the order's surface: infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. The order's own text names the tree 'this round was cut on'; the cut the worktree was given is 7f16db08c3, not BASE. Disarm = the issuer re-bases the surface arm on the cut point, or the opal-gateway commit is excluded by name. The order stays open on DBC116-3-AC1 until then."
+}
+```
+
+## IRPT_DASHBD-D2-W404-S2 -- The packet's input-frontier hold for an absent T-1 silver (its Function item 3) is not a branch of the cell's listed steps, and the handler has no explicit hold
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "The packet's Function item 3 asks the function to HOLD, log and write nothing when the T-1 silver is absent, and calls it a build item in the function cell; the order's seven steps do not name it, so no explicit hold or absence log was built.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "NEVER_WIDEN_PACKET_DB-c-5_R115.md, Function item 3 (CTO decomposition decision (c)): when the silver partition of T-1 is absent at fire time, the function HOLDS, logs the absence, and writes no key for that day.",
+  "world_is": "TO DB-c-7 steps 1 to 7 name no such branch, and the cell changed only the refused-listing branch of _days_to_compute. The existing path already writes no key for an absent day: lambda_handler stops at the first producer rc != 0 with the print 'catch-up stops here' and never skips the day. No separate absent-silver log line or hold was added. The schedule is created DISABLED, so no fire reaches this path before the applier's order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~403/NEVER_WIDEN_PACKET_DB-c-5_R115.md Function items 3 and 4 @5045d0f2d8",
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py lambda_handler (rc != 0 break) @3c45e1522e",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-7.cottonwood-holdings-performance-function-build-repo-files-only.md steps 1 to 7 @7f16db08c3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. The packet's Function item 4 (the emission version, 1.2 against the existing 1.1 gold) is the CTO's ruling and is not restated here. Disarm = the CTO rules whether the explicit hold is a build item of this cell or of a later one, before the schedule is enabled."
+}
+```
+
+## IRPT_DASHBD-D2-W404-S3 -- No terraform binary on this worktree's shell, so the fmt arm of DBC116-2-AC1 skips and the HCL was checked by hand
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "The terraform binary is absent from the worktree's PATH, so terraform fmt -check cannot run; the checker's fmt arm is skipped and DBC116-2-AC1 PASSes on its structural arms alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBC116-2-AC1: terraform fmt -check reports no unformatted file when the terraform binary is present.",
+  "world_is": "`which terraform` returns nothing on this shell and `terraform version` is not found. The checker's arm catches FileNotFoundError and skips the fmt check. Alignment of consecutive attributes was checked by a line heuristic only (a scratch script in the worktree's .scratch folder). The new blocks were written in the existing roots' shape. No init, plan or provider call was made. The formatting must be proven with the binary before the applier's plan.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "command: which terraform (no output) and terraform version (not found) on the DB-c-7 worktree @7f16db08c3",
+      "p116_bcw.py ac_2 terraform fmt arm: FileNotFoundError -> r = None (skipped) @7f16db08c3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. Disarm = run terraform fmt -check on the four files on a box with the binary, before the applier's plan order."
+}
+```
+
+## IRPT_DASHBD-D2-W404-S4 -- The existing Inflection block in lambda.tf aligns handler and runtime apart from timeout, memory_size and layers, which terraform fmt would align as one group
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "lambda.tf lines 74 to 78 (the IB-er-501 Inflection module, pre-existing) leave handler and runtime unpadded beside timeout, memory_size and layers; a line heuristic groups them as one alignment set, so the root's terraform fmt -check may already fail before this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBC116-2-AC1: the Terraform root is terraform-fmt clean when the binary is present; the cell's new function block copies the Inflection shape.",
+  "world_is": "In the Inflection module, lines 74 to 75 (handler, runtime) are padded to their own width while lines 76 to 78 (timeout, memory_size, layers) sit in the same unbroken run. This cell's copy (lambda.tf, the irpt_holdings_performance_cot module) was written with all five aligned to memory_size, so the new block is formatted by the heuristic. The pre-existing lines were not touched: the order forbids any removed line in the four .tf files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/lambda.tf lines 74 to 78 @7f16db08c3",
+      "the cell's copy at lambda.tf lines 120 to 124 @worktree (aligned to memory_size)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. Unverified by terraform fmt (the binary is absent, see row W404-S3). Disarm = terraform fmt on the root on a box with the binary; a fmt-only change to lines 74 to 78 is the CTO's or the applier's to take."
+}
+```
+
+## IRPT_DASHBD-D2-W405-S1 -- The bronze tables are raw Excel workbooks and JSON files, not Parquet, and no bronze table has date= partitions, so the footer method reads no columns there; the raw workbooks may hold a return column that silver dropped and were not read.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "The bronze tables are raw Excel workbooks and JSON files, not Parquet, and no bronze table has date= partitions, so the footer method reads no columns there; the raw workbooks may hold a return column that silver dropped and were not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 steps 2 and 3: a table is a common prefix under a layer, its columns are the sorted names of one Parquet object in its newest date= partition, and a date-named folder under bronze/ is recorded with partition_count 0.",
+  "world_is": "The bronze/ tables hold one .xlsx workbook per business day (transactions, realized, unrealized, holdings, allocations, account_attributes), one .json per date (_retry_net), and date-named folders holding a _BRONZE_COMPLETE.json marker (two read). None has a date= partition, so the Parquet footer method has no object to read there. The workbook columns were not read, so a return column held in the raw vendor files is not ruled out by this read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (bronze entries, this commit)",
+      "s3 LIST of blackdiamond/cottonwood/ and its layers, worker private run (not committed), read at 2026-10-15T03:39:15Z",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. Form only; the raw workbooks were not opened."
+}
+```
+
+## IRPT_DASHBD-D2-W405-S2 -- Five silver tables have an _s2 twin whose only data columns are c1 and c2, so the twin's content cannot be named from its footer and the return-name test cannot see inside it.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "Five silver tables have an _s2 twin whose only data columns are c1 and c2, so the twin's content cannot be named from its footer and the return-name test cannot see inside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 steps 3 and 4: the column names of one Parquet object name each table's content, and return_like_columns is computed over those names in every table.",
+  "world_is": "silver fact_allocations_s2 (144 partitions), fact_holdings_s2 (93), fact_realized_s2 (122), fact_transactions_s2 (124) and fact_unrealized_s2 (144) carry the same partition counts as their parents plus the metadata columns and c1 and c2 only. The parents carry named columns. The twins' content was not read (footer only), so a return column held under c1 or c2 would be invisible to the name pattern.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (silver _s2 entries, this commit)",
+      "s3 LIST of blackdiamond/cottonwood/ and its layers, worker private run (not committed), read at 2026-10-15T03:39:15Z",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. Form only."
+}
+```
+
+## IRPT_DASHBD-D2-W405-S3 -- The ACCOUNT_VALUE_ONLY definition reads no return column, but the name pattern finds seven return-like columns, all dollar gain or loss at position or lot grain or a date; the verdict reads the definition as no account-grain return column.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "The ACCOUNT_VALUE_ONLY definition reads no return column, but the name pattern finds seven return-like columns, all dollar gain or loss at position or lot grain or a date; the verdict reads the definition as no account-grain return column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 step 5: ACCOUNT_VALUE_ONLY means account-grain values and flows with no return column; ACCOUNT_RETURN_SERIES needs a table with account-grain rows and a return-like column over time.",
+  "world_is": "return_like_columns holds seven entries: silver fact_realized (Long-Term Gain/Loss, Short-Term Gain/Loss, Total Gain Loss), silver fact_unrealized (the same three) and silver fact_transactions (Return Date). The gain or loss columns are dollar amounts per position or per sold lot, not returns, and Return Date is a date. Read literally, no return column fails; the record takes the account-grain reading and says so in words.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (return_like_columns and verdict, this commit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. The verdict is the worker's judgment and is not graded here."
+}
+```
+
+## IRPT_DASHBD-D2-W405-S4 -- The meta/ layer holds status JSON objects directly and also three table folders, so the order's rule for a layer holding objects directly (an empty tables list) and the order's step-2 instruction disagree; the record follows the step-2 instruction and the checker.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W405-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~405",
+  "surfaced_at": "2026-10-15T03:39:15Z",
+  "one_line": "The meta/ layer holds status JSON objects directly and also three table folders, so the order's rule for a layer holding objects directly (an empty tables list) and the order's step-2 instruction disagree; the record follows the step-2 instruction and the checker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-8 step 2 in the task-order file: a layer that holds objects directly rather than table folders is recorded with an empty tables list. The worker-face text of the same step says to record every common prefix as a tables entry.",
+  "world_is": "meta/ holds direct objects (a -complete, -missing or -result JSON per date, and backfill-status.json) and three table folders (conversions, pulls, templates). The checker DBC116-4-AC1 requires the tables to equal a fresh LIST of common prefixes, so an empty list would fail it; the record lists the three folders and words names the direct objects.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-8.black-diamond-cottonwood-layers-and-account-return-series-read.md@f240990cfd (step 2, both texts)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~405/BD_RETURNS_READ_R116.json (meta entries, this commit)",
+      "s3 LIST of blackdiamond/cottonwood/ and its layers, worker private run (not committed), read at 2026-10-15T03:39:15Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. Form only; the two texts of step 2 should be reconciled by the issuer."
+}
+```
+
+## IRPT_DASHBD-D2-W305-S1 -- the Scope probe POSTed the wrapped requests_for body while the estate's transport posts the inner scope, so both calls drew HTTP 400
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W305-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~305",
+  "surfaced_at": "2026-10-15T03:40:04Z",
+  "one_line": "The Scope probe POSTed the wrapped body that requests_for returns; the estate's transport posts the inner scope, so both calls drew HTTP 400 and the probe answered nothing about fees or the credential.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "TO DB-i-5 worker face, step 2: build the body with the module's own requests_for and POST it, the flag at body[\"scope\"][\"calculations\"][0][\"contextChange\"][\"performanceOption\"][\"calcGrossOfFees\"]; the estate's live Scope call (orion_selected.calculate) is the reference shape the probe must reproduce.",
+  "world_is": "requests_for returns {\"scope\": scope} (orion_selected.py line 109), and calculate() posts requests[\"scope\"], the inner dict (line 147). The probe posted the wrapper: call 1 (flag false) and call 2 (flag true) both answered HTTP 400, six seconds apart, and neither was retried because a 4xx is not retried. The 400 body is not saved by rule, so what it names is unread. Verdicts (a) REFUSED and (c) REFUSED were computed from these two non-2xx answers, so they describe a body the estate does not send. Two of four calls were used; no further call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/orion_selected.py@f240990cfd lines 109 and 146-147",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-5.orion-scope-probe-multi-account-fee-flag-credential.md@f240990cfd worker face step 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-5. Form only: no token was printed or stored, no client value is in the repo, and no call beyond the two POSTs was made. A CTO ruling is needed before any further call: whether the estate's inner-scope shape may be posted on up to two more calls under a new order. The worker did not widen the cap of four or the no-retry-on-4xx rule."
+}
+```
+
+## IRPT_DASHBD-D2-S54 -- disarm owner's evidence for W305-S1: the two 400s were the issuer's order omission, fixed by AMENDMENT 1, and the re-run drew 200 and 200
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S54",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T03:59:15Z",
+  "one_line": "W305-S1 disarm evidence: both 400s were the issuer's order omission (the wrapper dict posted instead of the inner scope); AMENDMENT 1 @1009b791fa fixed it and the re-run drew 200 and 200, DBI117-1-AC1 PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-i-5 step 2: build the body with requests_for; the estate's transport posts the inner scope (orion_selected.calculate line 147).",
+  "world_is": "requests_for returns {scope: scope}; calculate posts requests[scope]. The worker posted the wrapper (2 calls, HTTP 400, no credential answer). After AMENDMENT 1 the worker posted the inner scope (2 calls, HTTP 200, 200) and the record lists all four calls; the amended check reads (c) ACCEPTED. The 400s carried no 401 or 403.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-5.orion-scope-probe-multi-account-fee-flag-credential.md",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~305/SCOPE_PROBE_R117.json",
+      "infra/aws/lambda/investor-reporting/performance/orion_selected.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S55",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T04:03:14Z",
+  "one_line": "Disposition of the B-CW round-116 rows at the drain: W404-S1 resolved (the issuer's checker base and surface, fixed @1c3c117c0b), W404-S2 ruled (the producer's refusal of a day with no silver is the frontier hold; no build change), W404-S3 and S4 carried to the applier (terraform fmt and validate under safe-apply), W405-S1 to S4 noted; nothing ARMED remains from this round",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1c3c117c0b (box/dell2) amends p116_bcw.py: BASE 7f16db08c3, the surface arm watches the two holdings-performance folders and the producer folder; DBC116-1-AC1, -2-AC1, -3-AC1 and -4-AC1 PASS on the merged tree ce85c772f2 (DB-c-8 merged at 134beac885), re-run by the issuer",
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py and the handler's existing tests (the day in no_silver returns rc 1 and writes no key): a fire on an absent T-1 silver writes nothing and returns non-zero",
+      "python .tools/round-close-check.py --project IRPT_DASHBD --round 116 --workstream B-CW: verdict=MAY-CLOSE (2 orders, 0 judgment criteria)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A BLOCKING or ARMED row is dispositioned or carried to its owner before the round is counted finished.",
+  "world_is": "W404-S1 (BLOCKING on DBC116-3-AC1) was the issuer's defect, fixed; the worker's build needed no change. W404-S2: the packet's input-frontier hold is not a separate build; the existing producer already refuses a day with no silver (rc 1, nothing written), so a held fire fails visibly rather than stamping a stale day; the drain-end packet asks the CTO whether a distinct log line is wanted. W404-S3 (no terraform binary on dell2, the fmt arm skipped) and S4 (the existing Inflection block alignment in lambda.tf may already fail terraform fmt) are the applier's: terraform fmt, validate and plan run under safe-apply on the lane that has the binary. W405-S1 to S4 (bronze landings unread, five _s2 twins exposing only c1 and c2, the ambiguity of no return column against seven pattern-matched gain/loss and date columns, and two conflicting texts in the issuer's step 2) are noted: the verdict ACCOUNT_VALUE_ONLY stands on the checker's fresh recount. The DB-c-7 handler change is in a SHARED zip: the 49 Financial and Inflection functions carry it only when the applier rebuilds and applies; the pair's apply order names that."
+}
+```
+
+## IRPT_DASHBD-D2-W503-S1 -- The FE-s-31 export gate reads a report's availability, and a served FILLED report carries none, so the gate would hold a filled export closed; the gate is opened on the reader's served answer instead, which the order does not name.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W503-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~503",
+  "surfaced_at": "2026-10-15T04:22:22Z",
+  "one_line": "The FE-s-31 export gate reads a report's availability, and a served FILLED report carries none, so the gate would hold a filled export closed; the gate is opened on the reader's served answer instead, which the order does not name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "TO DB-f-503 step 4: the submit names filledReportSource(clientId) when a client is named; step 5: the preview resolves through the reader. The order is silent on the export gate (FE-s-31, exportGateFor over the resolved report's availability, which closes the submit when no report is resolved).",
+  "world_is": "FilledReport (dashboard/report/reportModel.ts) has no availability field, so exportGateFor(null) keeps a filled export closed forever. The branch added: Preview reports bundle.filledReport through onFilledResolved, and ExportButton opens the gate with FILLED_REPORT_GATE_OPEN (chrome null; ExportGate open chrome widened to nullable). A route that serves a report whose answer is not answer-bearing would therefore be exportable through the gate. Disarm for the issuer to decide: whether a served filled report must carry an availability before the gate opens.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/export/ExportButton.tsx@476f8388dd",
+      "portal/src/pages/InvestorReporting/export/submit.ts@476f8388dd (exportGateFor, ExportGate)",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts@d3c379663f (FilledReport, lines 68-76)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-503 (round 115). Inert while no route serves a report; ARMED because the open gate would reach a route that serves one."
+}
+```
+
+## IRPT_DASHBD-D2-W503-S2 -- A print naming only a client never reached resolveBundle: the print window gate refused it for want of a selection or an account, so the entry admits client as a window key.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W503-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~503",
+  "surfaced_at": "2026-10-15T04:22:22Z",
+  "one_line": "A print naming only a client never reached resolveBundle: the print window gate refused it for want of a selection or an account, so the entry admits client as a window key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-503 step 6: the print entry reads the optional query keys client and version and, for a Performance print naming client, calls resolveBundle with clientId. The order does not name the print window gate.",
+  "world_is": "render/PrintEntry.tsx parsePrintWindow refused any print with neither a selection nor an account before any request ('names no selection'). The change admits client as an alternative key there, and resolveBundle waives its selection requirement only when clientId is set. The print of a served filled report therefore needs start and end on the URL and no selection.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/PrintEntry.tsx@476f8388dd (parsePrintWindow, the client read)",
+      "portal/src/pages/InvestorReporting/export/resolveBundle.ts@476f8388dd (printWindowAttempted, the clientId waiver)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-503. The print URL contract for the FILLED_REPORT print is the issuer's to name (BUILD_R115.json print_query)."
+}
+```
+
+## IRPT_DASHBD-D2-W503-S3 -- The order says nothing else in the code spells FILLED_REPORT, but the issuer's checker requires export/submit.ts to carry that token; the token sits in a doc comment there, not in code.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W503-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~503",
+  "surfaced_at": "2026-10-15T04:22:22Z",
+  "one_line": "The order says nothing else in the code spells FILLED_REPORT, but the issuer's checker requires export/submit.ts to carry that token; the token sits in a doc comment there, not in code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-503 step 2: nothing else in the code spells FILLED_REPORT or client_id for this purpose. Checker DBF115-1-AC1 (EXPORT_TOKENS) requires export/submit.ts to contain FILLED_REPORT.",
+  "world_is": "Both cannot hold literally for submit.ts. FILLED_REPORT is named in a doc comment on the performanceSource parameter; the code path uses filledReportSource() from export/filledReportSource.ts. The criterion passes on the comment.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/export/submit.ts@476f8388dd (performanceSource doc comment)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r115/p115_export.py (EXPORT_TOKENS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-503. Form only."
+}
+```
+
+## IRPT_DASHBD-D2-W503-S4 -- The print has no refusal worded for an unreadable source; a client print whose report is not served reaches the document's missing-payload panel, which names a missing performanceReport.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W503-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~503",
+  "surfaced_at": "2026-10-15T04:22:22Z",
+  "one_line": "The print has no refusal worded for an unreadable source; a client print whose report is not served reaches the document's missing-payload panel, which names a missing performanceReport.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-503 step 6: a print naming client whose report is not served shows the print's existing refusal for an unreadable source, never a blank page.",
+  "world_is": "No refusal worded for an unreadable source exists in the print. The reachable existing refusal is PerformanceDocument's error panel (data-error missing-payload, carries no performanceReport), reached because resolveBundle skips PATH A for a client print with no selection. The page is not blank; its words name the missing payload.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/performance/PerformanceDocument.tsx@476f8388dd (missing-payload panel)",
+      "portal/src/pages/InvestorReporting/export/resolveBundle.ts@476f8388dd (client print, no PATH A)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-503. A wording question for the issuer; the refusal is not blank."
+}
+```
+
+## IRPT_DASHBD-D2-W185-S1 -- The contract names six activity-table folds for act.beginning_value, act.net_gain and act.ending_value (household and account); the sample builder folds the same six from the return table. The table follows the contract.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:13:49Z",
+  "one_line": "The contract names six activity-table folds for act.beginning_value, act.net_gain and act.ending_value (household and account); the sample builder folds the same six from the return table. The table follows the contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json 0.5.1: members act.beginning_value.household and .account (source ACCOUNT_ACTIVITY_DAILY beginning_value on the last-12-months opening anchor), act.net_gain.household and .account (source ACCOUNT_ACTIVITY_DAILY realized; fold: realized plus unrealized_change plus income across the last-12-months trading days), act.ending_value.household and .account (source ACCOUNT_ACTIVITY_DAILY ending_value on as_of).",
+  "world_is": "The builder org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py (build_values, the act branch and its round 105 note) folds these six from the account_return_daily window terms (the value summaries' folds) and says the activity table is not a second source for them. The module data/assets/scripts/gold/irpt_reporting/filled_report_values.py follows the contract text: the six are folded from the account_activity_daily window terms, and the return-table figures are not copied. The disagreement is on the source table.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@485629a40e (members act.* source and fold text)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py@485629a40e (build_values act branch)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (member_value act branch, this worker's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-230 under the order's contract-wins rule. Form only; the sample builder's source for these members is for the issuer to reconcile."
+}
+```
+
+## IRPT_DASHBD-D2-W185-S2 -- The contract folds hold.net_gain_last_12_months, _ytd, _qtd and _since_inception from the activity table; the sample builder reads the household value summary's return-table net gain for the same four.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:13:49Z",
+  "one_line": "The contract folds hold.net_gain_last_12_months, _ytd, _qtd and _since_inception from the activity table; the sample builder reads the household value summary's return-table net gain for the same four.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json 0.5.1: members hold.net_gain_last_12_months, hold.net_gain_ytd, hold.net_gain_qtd and hold.net_gain_since_inception (source ACCOUNT_ACTIVITY_DAILY realized; fold: the sum over the household's accounts of realized plus unrealized_change plus income across the window's trading days, before advisory fees).",
+  "world_is": "The builder org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py (build_values hold.net_gain_ branch, round 106 note) writes the household value summary's pvs.<window>.net_gain for these four, which is the return-table residual. The module follows the contract's activity fold; a window the activity table does not open is the absent form INSUFFICIENT_HISTORY in words, never zero.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@485629a40e (members hold.net_gain_* source and fold text)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py@485629a40e (build_values hold.net_gain_ branch)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (member_value hold.net_gain_ branch, this worker's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-230 under the order's contract-wins rule. Form only; the sample builder's source for these members is for the issuer to reconcile."
+}
+```
+
+## IRPT_DASHBD-D2-W185-S3 -- The sixteen avs benchmark members are account-grain by the contract's per-row rule; the sample builder writes each as one household scalar. The table writes one by_row entry per account.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:13:49Z",
+  "one_line": "The sixteen avs benchmark members are account-grain by the contract's per-row rule; the sample builder writes each as one household scalar. The table writes one by_row entry per account.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json 0.5.1, document.filled_report.per_row_member_form: a member whose grain is an account (the account value summaries) holds {by_row: {account_id: figure}}. The sixteen avs.<window>.benchmark_* members are account value summary members sourced to the served model series.",
+  "world_is": "The builder org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py tests the model-input branch before the avs branch, so each avs benchmark member is one household scalar and the account grain never applies. The module writes one by_row entry per account carrying the same served window figure (or its absent form). The figure does not vary by account, so the entries agree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@485629a40e (document.filled_report.per_row_member_form and the avs benchmark sources)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py@485629a40e (build_values, model branch before the avs branch)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (member_value model branch, this worker's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-230 under the order's contract-wins rule. Form only; the sample builder's source for these members is for the issuer to reconcile."
+}
+```
+
+## IRPT_DASHBD-D2-W185-S4 -- The contract sources cover.as_of_date and convention.inception_per_household_and_account to the client summary, which this build does not read; the sample builder computes both from gold account rows.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:13:49Z",
+  "one_line": "The contract sources cover.as_of_date and convention.inception_per_household_and_account to the client summary, which this build does not read; the sample builder computes both from gold account rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json 0.5.1: cover.as_of_date (source CLIENT_SUMMARY field as_of; fold: the newest as_of among the account entries) and convention.inception_per_household_and_account (source CLIENT_SUMMARY field first_data_date; fold: per household the earliest first_data_date among its accounts). The client summary is not read by this build.",
+  "world_is": "The builder org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py computes both from the newest account_return_daily rows and the account first dates, while its own docstring writes client-summary members absent. The module computes the same two values from the gold rows under the fold text (the report date, and the earliest account first_data_date); no client-summary field is read. The disagreement is on the source naming, and the figure follows the fold.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@485629a40e (cover.as_of_date and convention.inception_per_household_and_account source and fold)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py@485629a40e (build_values cover.as_of_date and inception branches)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (member_value client-summary branch, this worker's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-230 under the order's contract-wins rule. Form only; the sample builder's source for these members is for the issuer to reconcile."
+}
+```
+
+## IRPT_DASHBD-D2-W185-S5 -- The order validates the proof one criterion id per run; the checker takes the TO's full expected set, so a one-id run refuses rc 1 on coverage and only the combined run is VALID.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:26:00Z",
+  "one_line": "The order validates the proof one criterion id per run; the checker takes the TO's full expected set, so a one-id run refuses rc 1 on coverage and only the combined run is VALID.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-b-230, the proof_of_spec paragraph: validate with python .tools/proof-of-spec-check.py <instance> DB118-1-AC1, then AC2 and AC3 (one id per run).",
+  "world_is": "The checker takes the TO's expected criteria set as its id list; a one-id run on this three-row instance returns rc 1 with a coverage violation for each other acceptance row (unexpected addition). Only the combined run with the three ids returns rc 0, VALID. The instance itself is unchanged by the choice of run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-230.filled-report-values-gold-table-hop-1.md@485629a40e (proof_of_spec paragraph)",
+      ".tools/proof-of-spec-check.py@485629a40e (coverage limb: expected set equals the id list)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~185/IRPT_DASHBD.TO-DB-b-230.filled-report-values-gold-table-hop-1.proof_of_spec.json (the three acceptance rows)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-230. Form only; the combined run is the verdict and is recorded in the instance; the per-id wording of the order is for the issuer to reconcile."
+}
+```
+
+## IRPT_DASHBD-D2-W306-S1 -- The fee rule tests feeAmount above 0, but the vendor's feeAmount sums on the fee-bearing accounts are negative, so the stated rule reads NO_FEE_IN_WINDOW for both pairs while a signed reading ties the gap.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W306-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~306",
+  "surfaced_at": "2026-10-15T04:23:28Z",
+  "one_line": "The fee rule tests feeAmount above 0, but the vendor's feeAmount sums on the fee-bearing accounts are negative, so the stated rule reads NO_FEE_IN_WINDOW for both pairs while a signed reading ties the gap.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "TO DB-i-6 step 5 rule (b) and the verdict_b rule of the round-117 checker: the tie population is the accounts with fee above 0, obs = perf_true - perf_false must equal fee over startv, and accounts_with_fee counts feeAmount above 0.",
+  "world_is": "The feeAmount sums on the fee-bearing accounts are negative: in the q3 flag-false body 2 of 4 groups carry a negative sum and none a positive one; in the ytd flag-false body 3 of 4 carry a negative sum and none a positive one. A signed reading (a negative feeAmount is a charge, expected gap = minus fee over startValue) ties 2 of 2 q3 fee-bearing accounts and 1 of 3 ytd fee-bearing accounts; the other 2 ytd accounts have a startValue of zero. Both pairs read NO_FEE_IN_WINDOW by the rule, so false is not shown to be net by the rule. Counts only; no value is written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r117/p117_scope.py@0057ad8e6e lines 105-123 (verdict_b tests fee above 0)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~306/SCOPE_PROBE2_R118.json (b_fee_basis and coverage; lands in this cell's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-6. Form only: the rule was not changed and no verdict was re-graded; the signed reading is a count, not a verdict. A ruling is needed on the sign convention before any tie-out relies on fee above 0."
+}
+```
+
+## IRPT_DASHBD-D2-W306-S2 -- Two of the three ytd fee-bearing accounts carry a startValue of zero, so the tie to the fee sum is undefined for them, and the stated rule has no branch for a zero start on a negative fee.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W306-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~306",
+  "surfaced_at": "2026-10-15T04:23:28Z",
+  "one_line": "Two of the three ytd fee-bearing accounts carry a startValue of zero, so the tie to the fee sum is undefined for them, and the stated rule has no branch for a zero start on a negative fee.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-i-6 step 5 rule (b): NET_WHEN_FALSE needs fee over startv for each fee-bearing account; the rule presumes a positive start value.",
+  "world_is": "In the ytd window two accounts carry a nonzero feeAmount sum and a startValue of zero, and their returns differ across the flags. Every q3 account that differs across the flags carries a start value. The rule does not define a tie for a zero start. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r117/p117_scope.py@0057ad8e6e lines 105-123 (verdict_b, start value handling)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~306/SCOPE_PROBE2_R118.json (b_fee_basis and coverage; lands in this cell's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-6. Form only, observed on the ytd pair that the pre-stated rule ran."
+}
+```
+
+## IRPT_DASHBD-D2-S56 -- issuer's dispositions on W185-S1 to S5; the activity and net-gain members are absent in the table because the contract text was never amended to round 105's ruling
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S56",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T04:36:05Z",
+  "one_line": "Issuer's dispositions on worker 185's rows W185-S1 to S5 (DB-b-230): the table followed the contract text where the sample builder departs from it, and that exposes an issuer omission of mine: round 105 (DB-b-202) ruled that the activity and holdings net-gain members print the SAME folds as the value summaries (the report's figures agree across tables) and the contract text was never amended to say so, so in the QA table all 402 act.* rows and all 125 hold.net_gain_* rows of 25 households are absent (INSUFFICIENT_HISTORY: the activity table holds 5 trading days) where the sample builder printed figures. Ruled: the repair is a contract amendment plus a module change in the next issuance, before the table is scheduled or written to the cloud; nothing served moved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 105, DB-b-202 part d (the report's figures agree across tables: the last-12-month figures of the activity members are the same folds the value summaries print); equivalences ENDING_VALUE_HOUSEHOLD and ENDING_VALUE_ACCOUNT in the contract (one quantity).",
+  "world_is": "Contract 0.5.1/0.5.2 text sources act.beginning_value, act.net_gain, act.ending_value (household and account) and the four hold.net_gain_* members to ACCOUNT_ACTIVITY_DAILY folds; the QA table (RD_FILLED_REPORT_VALUES_R118.json, 25 households, as_of 2026-10-13) follows that text: act.* 402 of 402 rows absent and hold.net_gain_* 125 of 125 absent, the rest of the 29,294 rows 27,454 measured, 424 text, 1,416 absent in all; absent kinds in the whole table INSUFFICIENT_HISTORY 994, NO_SOURCE_YET 375, SOURCE_BREAK 47. The other three disagreements are dispositioned: W185-S3 (the 16 avs benchmark members are account-grain by_row in the contract and the table, a household scalar in the sample builder: the CONTRACT stands, and the reader and render of workstream ~F2 must read by_row for these 16), W185-S4 (cover.as_of_date and the inception convention are computed from gold, the client summary is outside this order's grant: accepted), W185-S5 (the order's one-id-per-run proof wording: the combined run is the verdict). Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-202.absent-kind-carrier-a-contract-042-builder-and-the-cross-table-rule.md",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~185/RD_FILLED_REPORT_VALUES_R118.json",
+      "this seat's count of the private QA parquet by member group (counts only), 2026-10-15"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer omission disclosed: DB-b-230 said the contract wins where the builder departs from it, and did not check that the builder's departure was a ruling. The repair cell (contract 0.5.4: the 10 members point at the value-summary folds the equivalences name; module follows) rides the next issuance and is thread-critical, because ~P2's publisher would otherwise compose a report whose activity summary prints absent words."
+}
+```
+
+## IRPT_DASHBD-D2-S57 -- disarm owner's evidence for W306-S1: the fee sign was the issuer's assumption, fixed by AMENDMENT 1, and the Q3 gap ties by magnitude
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S57",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T04:37:18Z",
+  "one_line": "W306-S1 disarm evidence: the fee rule tested feeAmount above 0 and the source sums fees negative (the issuer's sign assumption); AMENDMENT 1 @7fcdeb1a2c ties the gap to abs(fee), the worker recomputed from its saved bodies with no new call, and DBI118-1-AC1 reads PASS with b_fee_basis NET_WHEN_FALSE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-i-6 step 5 rule (ii) as first written: an account with a fee has fee above 0.",
+  "world_is": "The saved Q3 and YTD bodies carry negative feeAmount sums on every fee-bearing account (2 of 2 in Q3, 3 of 3 in YTD, 0 positive). By magnitude the Q3 gap ties on 2 of 2 accounts with 0 untied and 0 in the wrong direction; in YTD 1 ties, 2 have a zero start value. The amended check and the worker's record agree (NET_WHEN_FALSE, pair q3, 3 compared, 2 with a fee).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-6.orion-scope-probe-two-q3-fee-tie-and-short-account-cause.md",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~306/SCOPE_PROBE2_R118.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r117/p117_scope.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T04:40:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-S58",
+  "one_line": "TO-DB-c-9 STOP at step 6, catch-up date 1 (2026-09-28): the Cottonwood function refuses with registry lookup('z09') KeyError because the shared zip packages scopes.json from an older pin (15565 bytes, 0 z09 rows) while HEAD's scopes.json (20150 bytes) carries the z09 row; zero keys written, schedule DISABLED, nothing further done",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "invoke irpt-cot-holdings-performance-lambda {date 2026-09-28, source blackdiamond_z09} 2026-10-15T04:34:38Z: StatusCode 200, FunctionError Unhandled, Runtime.ExitError exit status 1; log line: REFUSED: registry lookup('z09') failed: KeyError: 'z09'",
+      "built zip and live zip (downloaded by Lambda Code.Location, sha256 equals CodeSha256 DaDtnTCq...) both carry infra/logic/registry/scopes.json sha256 a4e0637257b6.. 15565 bytes with 0 occurrences of z09; worktree HEAD 789677569c scopes.json sha256 6ce64167c265.. 20150 bytes, 6 occurrences; the source map files list names infra/logic/registry/scopes.json and the entry carries staged_from pins",
+      "gold listing after the invoke, both Cottonwood prefixes: 75 and 150 objects, 0 with LastModified at or after 2026-10-15T04:34:00Z (unchanged from the before-read)"
+    ]
+  },
+  "spec_asserts": "The signed packet's catch-up runs the Cottonwood function on the shared zip built from HEAD, which carries the registry row that reaches Cottonwood through lookup('z09'); the zip differs from live by handler.py only.",
+  "world_is": "The zip differs from live by handler.py only (as signed) and that is why it cannot work: the packaged registry is the live zip's older copy and has no z09 row, so the Cottonwood producer cannot resolve its firm. State left as it is: shared zip VersionId vrBQAr57i.p3TMhjdSld3c_E5HMqX8iy live on all THREE functions (CodeSha256 OawCMaEqqo8SifvrVSY06yLTeKKCF8Nw51HceVDh66g=), 7 resources added and 2 functions changed by the one safe-apply, replan No changes, Cottonwood schedule irpt-cot-holdings-performance-daily DISABLED, ledger irpt-dashbd-cottonwood-holdings-performance-20261015 OPEN (legs L5 to L8). The 49F and INF functions now run the loud-failure handler (signed). Rollback of the code is the prior S3 version S7DO3mEXQ2zsk0pkiJB127d_VSHCksbh; nothing was written to a gold prefix, so no delete is needed. A rebuild that refreshes the staged registry members is a new act and needs its own signed pair. (Row id note: the order names IRPT_DASHBD-D2-DB2-S<k>; the gate's id grammar refuses that shape, so the row takes the next free IRPT_DASHBD-D2-S<k>; surfaced by 0.7.0_AE_CloudOps~DB2.)"
+}
+```
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T04:40:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-S59",
+  "one_line": "TO-DB-c-9 odd finds: the Inflection execution role's listing statement is named ListTheOwnInflectionDailyGoldPrefixForCatchUp (the order's gate (e) names ListTheOwnDailyGoldPrefixForCatchUp); the new Cottonwood function has no lambda-source-map.json row (Rule 4) so record-deploy-scope refuses it, and the map is outside the order's paths",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live get-role-policy: irpt-49f-holdings-performance-role carries Sid ListTheOwnDailyGoldPrefixForCatchUp (prefix irpt/49financial/gold/holdings_performance_daily/*); irpt-inf-holdings-performance-role carries Sid ListTheOwnInflectionDailyGoldPrefixForCatchUp (prefix irpt/inflection/gold/holdings_performance_daily/*); both ListBucket on the own daily gold prefix, so the gate's purpose holds",
+      "python infra/aws/lambda/ci/record-deploy-scope.py investor-reporting/holdings-performance --plan <saved plan> --dry-run: REFUSE, module.irpt_holdings_performance_cot.aws_lambda_function.this has NO source-map row; rerun with --function stamped the other 2 of 2 rows (3c45e1522e -> cb5edd65f1)",
+      "build-and-upload.sh rewrote artifact_sha256 on irpt-holdings-performance-lambda to OawCMaEqqo8SifvrVSY06yLTeKKCF8Nw51HceVDh66g=; the map is not among the order's paths, so no map edit is committed; the one-file patch is deliverables/0.7.0_AE_CloudOps~DB2/lambda-source-map.OWED_PATCH_DB-c-9.diff"
+    ]
+  },
+  "spec_asserts": "Gate (e) reads the listing statement by one name on both execution roles; the order's paths cover the apply, not the source map.",
+  "world_is": "Gate (e) was graded on substance (live listing grants on both roles) and recorded true. The source map's artifact_sha256 for irpt-holdings-performance-lambda and the two stamped last-deployed rows are owed to the issuer, and the Cottonwood function still needs its own row (Rule 4); until then the map's hash for the shared zip reads the OLD zip's value against a live zip that is the new one. (Row id note: the order names IRPT_DASHBD-D2-DB2-S<k>; the gate's id grammar refuses that shape, so the row takes the next free IRPT_DASHBD-D2-S<k>; surfaced by 0.7.0_AE_CloudOps~DB2.)"
+}
+```
+
+## IRPT_DASHBD-D2-S60 -- one Inflection account holding positions has no Orion Scope group over Q3 or YTD; owner 2.0.0_SA_COO~I2
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S60",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T04:45:18Z",
+  "one_line": "One Inflection account that holds positions on every day of Q3 has no Orion Reporting/Scope Account group over Q3 or YTD (DB-i-5 and DB-i-6); the cause class is NOT_DETERMINED, and the Scope account feed must carry it as ABSENT NO_GROUP, never a zero or an Opal fill.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "CTO B-IN round-117 analysis ruling 1 and PRD FWD-2: an Inflection account's return is Orion's own account-level figure, read through Scope for each account the household holds.",
+  "world_is": "Scope returns 4 Account groups for a 5-account household in both a Q3 and a YTD window; the absent account holds positions on 87 of the quarter's days and shares its account type and registration category with the four present accounts. The cause is unread. The hazard: any consumer that sums or averages a household's account returns from the feed would silently cover 4 of 5 accounts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/IRPT_DASHBD_ROUND118_BIN_DRAIN_END_20261015.md @a75f9982df",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v79.md @1efdb79257 (CVO~IRPT: no row owned the finding)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: the round-119 read of Orion's account records (CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_119_20261015.md @712ede60c4) names a flag or records NOT_DETERMINED, AND ~P2's feed (IB-pr-556) carries the account as ABSENT NO_GROUP with no household-level aggregate built from the feed's account rows."
+}
+```

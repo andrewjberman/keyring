@@ -1,0 +1,12 @@
+{
+  "prd": "DSGN_RBNDV2_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "e71a48e4b08836669b7b0187b8638d8c69ec2581",
+  "half": "ratified-text",
+  "half_hash": "b1eded27a1d5d7aa278a4f2a03491e1e7cf6cc628e2dc2c741ba41eec52cfbec",
+  "endpoint_hash": "3e9f7264c24e50444ce35e12e7f42392da2df0b8178225db68d83b68702c5f75",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvo_DSGN_RBNDV2_PRD_v0.1_RATIFIED_TEXT_REVIEW_20261015.md@d2006d5be6",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-15T04:05:47Z"
+}

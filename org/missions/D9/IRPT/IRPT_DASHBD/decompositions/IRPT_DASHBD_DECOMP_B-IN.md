@@ -70,6 +70,30 @@ The CTO's one cell is cut as ONE order. The ruling: Scope (not ExcelReports) is 
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent probe cell with a disjoint write set (its own worker folder and private folder). Worker `0.9.0_WK_IRPT_DASHBD~305` (`DB-i-5`).
 
+## 5. ROUND 118, WORKSTREAM B-IN (2026-10-15 ~04:1xZ, issuer 2.0.0_SA_COO~I2, on `CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_118_20261015.md`, msg 8034 @103b76689f, answering the round-117 drain-end packet @577b13ddad: 1 of 1 PASS, 0 judgment criteria)
+
+The CTO ruled BOTH options in parallel: `~P2` cuts the Scope account feed now by addendum to its pair (b), with a coverage rule inside the feed (each account-day carries Orion's return or an ABSENT row with `NO_GROUP` or `GROUP_NO_SERIES`, never a zero or an Opal fill) and `fee_basis` UNPROVEN until a fee window ties; this lane runs ONE more probe. The feed is `~P2`'s and is not a cell here.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-6` | The second Scope probe: the same household as round 117, the quarter that ended 2026-09-30, the fee flag false then true, the INNER scope body; at most 4 calls (a second pair over 2026-01-01 to 2026-09-30 only if the Q3 pair held no fee); (i) coverage of the short accounts, (ii) the fee tie, (iii) the cause class of each short account from the position cache and a category column of the newest `fact_positions` partition | FWD-2 | WORLD (a vendor read; no write, no deploy; the output is LOCAL) | none | I-F |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The CTO's "cap 4 calls ... flag false then true" needs two calls; the other two are spent only on a fallback the order states (a longer span when the Q3 pair holds no fee, since a fee tie needs a fee), never as a retry. (b) The inner-scope body is stated in the order and the checker's posture: round 117 lost two of its four calls to a wrapper dict. (c) The verdict words follow round 117's amended rule (a 400 is `REQUEST_REJECTED`, never `REFUSED`) and add `NO_FEE_IN_WINDOW`, so a window with no fee cannot read as a failed tie. (d) The short accounts are named by digest, and their cause class is read from the position cache (a count) and a coded category column of Orion's own positions, never a name or an account number. (e) The checker recounts coverage, the fee verdict, the short list and the position days from the saved bodies and the cache; it never calls the vendor.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent probe cell with a disjoint write set (its own worker folder and private folder). Worker `0.9.0_WK_IRPT_DASHBD~306` (`DB-i-6`).
+
+## 6. ROUND 119, WORKSTREAM B-IN (2026-10-15 ~04:5xZ, issuer 2.0.0_SA_COO~I2, on `CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_119_20261015.md`, msg 8048 @712ede60c4, answering the round-118 drain-end packet @a75f9982df: 1 of 1 PASS, 0 judgment criteria)
+
+The CTO's rulings: `fee_basis` is NET (the feed's, `~P2`'s, with the sample note); the missing account is a coverage fact the feed carries as ABSENT `NO_GROUP`; before anyone contacts Orion, ONE cell reads Orion's own account record for the missing account against a present one (WORLD read, cap 3 GETs, paced, no retry). The adapter cell waits on `~P2`'s feed landing its first bronze and silver.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-7` | The Orion account-record read: the missing account, the series-less account and one present account of the round-117 household, found in the roster the pull already reads (`GET /api/v1/Portfolio/Accounts/NewPortfolio`, then, only while the missing account is still not found, the same with `isActive=false`, then `GET /api/v1/Portfolio/Accounts`), every performance-relevant field path compared, the differing field names reported as verdict words | FWD-2 | WORLD (a vendor read; no write, no deploy; the output is LOCAL) | none | I-G |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The estate's own account pull (`pull_inflection_new_portfolio.py`) asks for `isActive=true`, so the roster it lands holds ACTIVE accounts only: an account Scope omits may simply be inactive in Orion's record. The GET order is built on that: the pull's own request first, the same request for inactive accounts only if the missing account is not found, the base roster last, and NO GET after the account is found. That is the "cap 3" used as a decision tree, not as three calls spent by default. (b) "Every performance-relevant flag" is made mechanical: a field path is relevant by a stated regular expression and exclusion-type by a second, both applied by the checker to the saved bodies; only field NAMES and booleans enter the repo, never a date, a string or a number. (c) The roster is whole-firm client data: private folder only; if it carries any other firm's accounts the worker records the row count and nothing else. (d) No vendor contact is made or drafted here; that is the CTO's, for Andrew, after this read.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent read cell with a disjoint write set (its own worker folder and private folder). Worker `0.9.0_WK_IRPT_DASHBD~307` (`DB-i-7`).
+
 ## Cells
 
 | cell id | owner |
@@ -79,3 +103,5 @@ The CTO's one cell is cut as ONE order. The ruling: Scope (not ExcelReports) is 
 | DB-i-3 | 0.9.0_WK_IRPT_DASHBD~303 |
 | DB-i-4 | 0.9.0_WK_IRPT_DASHBD~304 |
 | DB-i-5 | 0.9.0_WK_IRPT_DASHBD~305 |
+| DB-i-6 | 0.9.0_WK_IRPT_DASHBD~306 |
+| DB-i-7 | 0.9.0_WK_IRPT_DASHBD~307 |

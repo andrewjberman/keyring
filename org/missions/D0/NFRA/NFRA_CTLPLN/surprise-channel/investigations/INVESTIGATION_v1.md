@@ -9801,3 +9801,134 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Recorded because a disconfirming number leads the sentence. No act follows from it."
 }
 ```
+
+## NFRA_CTLPLN-W98-S1 -- CT-ae-2: the tree holds six inline holiday sets, not the two the cell names
+
+```json
+{
+  "id": "NFRA_CTLPLN-W98-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~98",
+  "surfaced_at": "2026-10-14T23:02:01Z",
+  "one_line": "The cell and row W94-S1 name two Lambdas with hand-typed NYSE holiday sets; at cd1e04765b the Lambda tree holds six inline sets (five named NYSE_HOLIDAYS, one named MARKET_HOLIDAYS) and the measure reads all six.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Native Grep of infra/aws/lambda at cd1e04765b for NYSE_HOLIDAYS or is_trading_day: 'NYSE_HOLIDAYS = {' at bd-pipeline/bd-49f-freshness-probe/lambda_function.py:153, cot-pipeline/bd-cot-freshness-probe/lambda_function.py:146, mdpf-pipeline/mdpf-daily-trigger/lambda_function.py:179, mdpf-pipeline/mdpf-freshness-checker/lambda_function.py:144, opal-assets/opal-assets-daily-emitter/lambda_function.py:186; 'MARKET_HOLIDAYS = frozenset({' at inf-pipeline/inf-gold-freshness-guard/lambda_function.py:54",
+      "deliverables/0.9.0_WK_NFRA_CTLPLN~98/INLINE_HOLIDAY_SETS_MEASURE_20261014.txt line 25: INLINE-HOLIDAY-SETS found=6 same_2026_2027=5 differs_2026_2027=1 unreadable=0 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ae-2 cell and row W94-S1: two Lambdas (mdpf-freshness-checker and mdpf-daily-trigger) hold hand-typed NYSE holiday sets; the W94-S1 grounding says the Grep for 'NYSE_HOLIDAYS = {' returned exactly those two.",
+  "world_is": "At cd1e04765b there are six inline sets: four further Lambdas (bd-49f-freshness-probe, bd-cot-freshness-probe, opal-assets-daily-emitter, inf-gold-freshness-guard) hold their own sets, and one of them is named MARKET_HOLIDAYS, which a grep for the NYSE_HOLIDAYS name alone misses. Of the six, five equal the library for 2026-2027 and one differs (row NFRA_CTLPLN-W98-S2)."
+}
+```
+
+## NFRA_CTLPLN-W98-S2 -- CT-ae-2: inf-gold-freshness-guard holds 2026 closures only; 2027 closures are absent
+
+```json
+{
+  "id": "NFRA_CTLPLN-W98-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~98",
+  "surfaced_at": "2026-10-14T23:02:01Z",
+  "one_line": "inf-gold-freshness-guard's MARKET_HOLIDAYS holds the ten 2026 NYSE closures and none of the ten 2027 closures, so its is_trading_day counts 2027 holidays as trading days. The set is INF's, not MDPF's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_NFRA_CTLPLN~98/INLINE_HOLIDAY_SETS_MEASURE_20261014.txt line 13: path=infra/aws/lambda/inf-pipeline/inf-gold-freshness-guard/lambda_function.py set=MARKET_HOLIDAYS dates_2026_2027=10 DIFFERS-2026-2027 only_in_lambda=none only_in_lib=2027-01-01,...,2027-12-24",
+      "infra/aws/lambda/inf-pipeline/inf-gold-freshness-guard/lambda_function.py@cd1e04765b:54 'MARKET_HOLIDAYS = frozenset({', comment lines 50-52: 'EXTEND this set each calendar year'; :72-73 _is_trading_day returns d.weekday() < 5 and d.isoformat() not in MARKET_HOLIDAYS",
+      "lib/trading_calendar.py@cd1e04765b: the weekday closures for 2026-2027 are 20 dates (measure line 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ae-2 cell: measure each hand-typed set against the library for 2026 and 2027; a mismatch is fixed by importing the library at the function's next deploy, and the fix is MDPF's.",
+  "world_is": "The differing set is in INF's Lambda (inf-pipeline/inf-gold-freshness-guard), not MDPF's. Its 2026 entries match the library, and no 2027 closure is listed, so any 2027 trading-day count there is wrong; the first 2027 closure is 2027-01-01. The hazard is inert until that Lambda evaluates a 2027 date. This cell changes no Lambda; routing to the owning fabric is the CTO's call."
+}
+```
+
+## NFRA_CTLPLN-W98-S3 -- CT-ae-2: the cell's literal_eval read does not cover a frozenset-wrapped literal; the tool unwraps one call
+
+```json
+{
+  "id": "NFRA_CTLPLN-W98-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~98",
+  "surfaced_at": "2026-10-14T23:02:01Z",
+  "one_line": "The cell reads each set with ast.literal_eval of the assigned value; MARKET_HOLIDAYS is a frozenset({...}) call that literal_eval refuses. The tool unwraps one frozenset or set call around a literal and reports it as form=frozenset-wrapped-literal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/inf-gold-freshness-guard/lambda_function.py@cd1e04765b:54 'MARKET_HOLIDAYS = frozenset({'",
+      ".tools/measure_inline_holiday_sets.py@a781351eda function _literal: one frozenset/set call with one argument unwrapped, then ast.literal_eval of the argument",
+      "deliverables/0.9.0_WK_NFRA_CTLPLN~98/INLINE_HOLIDAY_SETS_MEASURE_20261014.txt line 13: form=frozenset-wrapped-literal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ae-2 cell BUILD step 1: reads each Lambda's NYSE_HOLIDAYS assignment through ast (ast.literal_eval of the assigned value; the set holds ISO date strings).",
+  "world_is": "A literal_eval-only read would report MARKET_HOLIDAYS UNREADABLE and count it as differing, with a different reason than the real 2027 gap in NFRA_CTLPLN-W98-S2. The unwrap is an extension of the cell's read rule made by this worker; the CTO may ratify or narrow it. The arithmetic and the verdict on this file are unchanged by the wrapper choice."
+}
+```
+
+## NFRA_CTLPLN-W99-S1 -- the placement refusal branch of the naming stage unstages only the graded files, as W93-S1 did in ENFORCE
+
+```json
+{
+  "id": "NFRA_CTLPLN-W99-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~99",
+  "surfaced_at": "2026-10-14T23:05:32Z",
+  "one_line": "The PLACEMENT refusal branch of the naming stage in safe-commit.sh (naming-place.enforce present) unstages only NGATE_FILES, the same shape as W93-S1 that CT-ae-3 repaired in the ENFORCE branch; the placement branch is left as it was.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CT-ae-3 names only the ENFORCE refusal for the unstage (W93-S1). The placement refusal at about line 1185 of .tools/safe-commit.sh says 'files unstaged' and runs git reset over NGATE_FILES only.",
+  "world_is": "The placement branch's refusal loop is 'for _nf in \"${NGATE_FILES[@]}\"; do git reset -q HEAD -- \"$_nf\"', so a non-graded path staged beside the graded ones (a .md deliverable) stays in the index after a placement refusal. Read from the source at HEAD cd1e04765b and the CT-ae-3 worktree; NOT exercised: the branch needs org/mcp/naming-place.enforce, which the batch test does not create.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh@cd1e04765b lines 1183-1188 (placement refusal: git reset over NGATE_FILES only, then exit 1)",
+      "NFRA_CTLPLN-W93-S1 (same shape, ENFORCE branch), repaired in worktree wk-NFRA_CTLPLN-99 by CT-ae-3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by CT-ae-3 as a neighbouring instance of W93-S1. Not changed here: the order names the ENFORCE refusal only. Whether the placement branch should unstage the same set is for the CTO or the COO."
+}
+```
+
+## NFRA_CTLPLN-S9125 -- the INF gold freshness guard lacks the 2027 closures; owner dell1, due before 2026-12-31
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9125",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-15T04:25:21Z",
+  "one_line": "inf-gold-freshness-guard holds a hand-typed MARKET_HOLIDAYS set with none of the ten 2027 closures; its fix is dell1's (ADVI owns the INF pipelines): import lib/trading_calendar at the function's next deploy, before 2026-12-31.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "NFRA_CTLPLN-W98-S2 (CT-ae-2): INLINE-HOLIDAY-SETS found=6 same_2026_2027=5 differs_2026_2027=1; the differing set is infra/aws/lambda/inf-pipeline/inf-gold-freshness-guard/lambda_function.py, first miss 2027-01-01",
+      "1.0.0_SA_CTO msg 109290 (2026-10-15T01:11:45Z): owner dell1, due before 2026-12-31; the CTO relays it to 1.0.0_SA_CTO~DELL1 to name the project",
+      "TO-CT-ae-2 closed complete (d531251edb), cell merged 833f1d7bb7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling (round-14 analysis ruling 2, msg 109290): a hand-typed holiday set that differs from the library is fixed by importing lib/trading_calendar at the function's next deploy, never by correcting the copy; this Lambda's fix is dell1's.",
+  "world_is": "The Lambda is deployed with a 2026-only set, so any 2027 trading-day count in it is wrong from 2027-01-01. Inert until then. This project changes no Lambda; the owner is dell1 and the condition that un-parks it is its next deploy of that function, which must land before 2026-12-31.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1",
+  "notes": "Filed by the issuer on the CTO's instruction (msg 109290) once the CT-ae-2 measure merged."
+}
+```
