@@ -35891,3 +35891,107 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The submit wiring and the production reader that resolves the key through lib/opal_naming.address() are not in this cell's grant, so the freeze helpers are callable but not called. The key reaches the freeze only through the injected reader. Wiring the submit and building that reader is a later cell in the same window."
 }
 ```
+
+## IRPT_BCKEND-D2-W398-S1 -- IB-pr-554 cannot add its route key to ROUTES: test_reporting_entry.py pins ROUTES to exactly two keys and is outside the grant (worker stopped at the refusal clause)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W398-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~398",
+  "surfaced_at": "2026-10-15T04:11:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-554 orders one new key in entry.py ROUTES and that the existing tests still pass, but the existing test_one_route_and_function_name pins ROUTES to exactly the two summary-era keys, and that test file is not in the paths grant; the worker stopped at the refusal clause and changed no product file",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/tests/test_reporting_entry.py:74 at commit e056f8fd97006cf33b1861e93001a36591e0237d reads: assert entry.ROUTES == {entry.ROUTE_KEY: entry.OPERATION, entry.SUMMARY_ROUTE_KEY: \"reporting-summary-read\"} (exact two-key equality)",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py:373 at commit e056f8fd97006cf33b1861e93001a36591e0237d reads: ROUTES = {ROUTE_KEY: OPERATION, SUMMARY_ROUTE_KEY: SUMMARY_OPERATION}",
+      "run by 0.9.0_WK_IRPT_BCKEND~398 at commit e056f8fd97 (base, no edit): python -m pytest test_reporting_entry.py test_reporting_summary.py, rc 0, 21 passed (the base is green)",
+      "IRPT_BCKEND.TO-IB-pr-554 paths block grants entry.py, api.tf, locals.tf and the new test file only; test_reporting_entry.py is not granted"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-554 WORKER FACE: build one new key in ROUTES beside SUMMARY_ROUTE_KEY; existing behaviour unchanged and the existing tests must still pass; the refusal clause stops the worker on a change that breaks an existing entry or summary test and cannot be made additive.",
+  "world_is": "Adding the route key to ROUTES makes the ROUTES dict three keys, so the existing assertion at test_reporting_entry.py:74 fails; AC1 runs that file as a regress test, so AC1 cannot pass with the route built as ordered. The only additive alternatives (a side mapping merged into the Entry constructor, or leaving ROUTES unchanged) keep the test green by evading the one-route table the test pins, and were not built. Needed from the issuer: widen the grant to test_reporting_entry.py to update its two-key assertion to three keys, or re-cut the route placement. At this base AC1, AC2 and AC3 FAIL (no new test file, no FILLED-REPORT-B block, no record); the criteria output is recorded in IB200-2_criteria_output.txt."
+}
+```
+
+## IRPT_BCKEND-D2-W398-S2 -- the filled document carries no firm key, so the other-firm refusal rests on firm-keyed account ids and the firm-keyed address
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W398-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~398",
+  "surfaced_at": "2026-10-15T04:24:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "the contract 0.5.1 filled report has exactly two keys (household, values) and no firm or client_id, so the summary's firm check cannot be copied; the route refuses another firm's document through account coverage and the firm-keyed address",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at commit e056f8fd97006cf33b1861e93001a36591e0237d: document.filled_report.top_level_keys is [household, values]; household_fields is [household_ref, as_of, first_data_date, accounts]",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py _filled_named_accounts at the working tree of 0.9.0_WK_IRPT_BCKEND~398 (the two-key check and the named-account walk); _summary_named_accounts reads the summary's firm and client_id keys",
+      "infra/aws/lambda/investor-reporting/_ids/ids.py _mint: opaque_account(firm, raw) is a pure function of (firm, raw) and refuses a firm that is not an enabled client firm"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-554 WORKER FACE: an object of another firm is refused; the summary's firm and client_id checks are the model.",
+  "world_is": "The filled document carries no firm key at any level the contract names, so a document cannot be checked for its firm by content. The worker built the other-firm refusal as account coverage (a document naming another firm's opaque account ids is never covered by this firm's scope) plus the firm-keyed address (another tenant's request reads only its own key). Both are tested. A contract change that adds a firm key would let the route check it directly. Recorded so the other-firm arm is read as coverage-based, not as a firm check."
+}
+```
+
+## IRPT_BCKEND-D2-W398-S3 -- the filled-report route reads by_row keys that mix account ids and asset-class names; the reader classifies a key as an account by its issued-id form
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W398-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~398",
+  "surfaced_at": "2026-10-15T04:24:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "a by_row key is an account only by its issued account id form; asset-class keys (hold.allocation) name no account, and a raw account number in a by_row map is refused rather than passed through",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json at commit e056f8fd97006cf33b1861e93001a36591e0237d, document.filled_report.per_row_member_form: a by_row map is keyed by an account_id or by an asset class; the asset-class vocabulary is not enumerated in the contract",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py _filled_named_accounts at the working tree of 0.9.0_WK_IRPT_BCKEND~398: is_issued(account) keys are named; any other key matching a run of six or more digits is named as None and refused; any other key names no account"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-554 WORKER FACE: every account key of each values member's by_row map that is keyed by an account is checked; every account the document names is checked.",
+  "world_is": "The contract does not name the asset-class keys, so the reader cannot enumerate them. The worker classifies a key as an account only by the issued id form, which is the form the route accepts on the wire. A key that is neither an issued id nor an asset class is not provable from the contract; the worker refuses a key that looks like a raw account number (a run of six or more digits) and lets any other non-account key through as an asset class. Recorded so that the asset-class vocabulary can be enumerated by the contract owner."
+}
+```
+
+## IRPT_BCKEND-D2-W398-S4 -- the grant for IB-pr-554 is internally inconsistent: the amended paths block grants test_reporting_entry.py, but the check's allowed set for cell IB200-2 does not
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W398-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~398",
+  "surfaced_at": "2026-10-15T04:24:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "after AMENDMENT 1 the paths block grants test_reporting_entry.py, which is the pin the worker must update, but the check's allowed set for IB200-2 (checks/r200/p200_cells.py CELLS 2) omits it, so AC3 refuses the amended change as a stray path",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-554.hop-3-report-route-scope-check-and-declaration.md at commit d1a9a93041: AMENDMENT 1 and the paths block line for infra/aws/lambda/investor-reporting/reporting/tests/test_reporting_entry.py",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py at the worktree: CELLS['2'] allowed = {entry.py, api.tf, locals.tf, test_reporting_filled_report.py}; AC3 fails any changed path outside allowed as a stray path",
+      "the worker changed test_reporting_entry.py line 74 (the two-key pin, now three keys) as AMENDMENT 1 directs; AC1 needs that change; read from the check's source, AC3 will then refuse it as a stray path (the AC3 run is recorded in IB200-2_criteria_output.txt)"
+    ]
+  },
+  "spec_asserts": "The order's grant (paths block, as amended) and the check's allowed set for cell IB200-2 name the same files, and the record's changed_paths must equal the worker's own changes.",
+  "world_is": "They do not name the same files. The amended grant and AC1 both require the pin change; the check's allowed set does not list it, so AC3 cannot pass on a worker who follows the amendment. The worker did not edit the check. Needed from the issuer: add test_reporting_entry.py to the cell's allowed set in the check (or re-issue the check), since the check is the issuer's defect and no work can pass it as written."
+}
+```
