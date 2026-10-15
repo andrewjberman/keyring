@@ -16297,3 +16297,29 @@ name the one known failure instead of silently inheriting it.
     "notes": "Three routes for the issuer, and this seat picked none. (a) 4.0.0_SA_CRO~Z commits the row -- it is the registry's stated owner, the lane's permitted writer, and it is LIVE; I have sent it the exact row and the measured evidence, so this is a handoff and not a request to re-derive anything. RECOMMENDED. (b) enumerate 0.7.0_AE_CloudOps~Z (or an AE lane) in PLATFORM_LOGIC_DOCS, which is what that lane's own doctrine prescribes for a standing role-authorized action, and is the issuer's or MSTR's call rather than mine. (c) rule the row unnecessary: the pair (opal-data-portal-v2, json-tiered/market-overview/) ALREADY carries catalog-opal-data-portal-v2-served-market-overview-tiered, and legacy_address() matches on KEY alone with reader playing no part in resolution, so the address is already reachable through the builder -- the second row records WHO reads it, not WHETHER it resolves. The general lesson: an order can direct a seat to write a path a lane reserves for another, and the two instruments disagree silently until the commit -- the cheap tell is to check the lane for every path in <paths> AT CUT TIME, not at commit time, because by then the edit exists and has to be unwound from a shared tree."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W94-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~94",
+    "surfaced_at": "2026-10-15T03:58:18Z",
+    "one_line": "The identity-scope floor has a second call site outside this order's paths: integrations/base.py run_integration_tool denies a scoped identity's integration tool, so a per-person widening never reaches an integration tool or an integration channel (it fails closed; narrowing is unaffected).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "app/tools.py:145-152 @a8e22ed56d -- identity_scope.check at _run, the native dispatch floor the order names (C-PERSON (c)); the widening is applied here",
+        "app/integrations/base.py:155-161 @a8e22ed56d -- a SECOND identity_scope check (_scope_check) in run_integration_tool; base.py is in neither the order's <paths> nor its read-only inputs",
+        "comp-find 'identity_scope' infra/aws/ec2/opal-gateway/app @a8e22ed56d -- DENOMINATOR 45 hit(s) across 119 file(s); the denial call sites are tools.py:149 and integrations/base.py:156"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v2.9 C-PERSON (c), as the order's worker face states it: the widening applies 'where identity_scope.check(email, tool) denies ... the call site in app/tools.py _run about line 145'; the face's <paths> and read-only inputs name no other identity-scope call site (face section 1 item 3(c); section 3).",
+    "world_is": "There are two identity_scope.check call sites on the dispatch floor: app/tools.py:149 (_run, native tools, widened by this cell) and app/integrations/base.py:156-161 (run_integration_tool, integration tools, NOT widened because base.py is outside <paths>). A scoped identity's integration-tool call is denied identity_scope_denied whatever its per-person record says. Narrowing is unaffected: base.py calls data_entitlement.tool_denial, which applies stopped, tools_deny and channels_deny to integration tools. The reader decides integration tools as served (person_widens; channel_of reads registry._ACTIVE_BY_TOOL); only the dispatch leg is missing.",
+    "notes": "Route for the issuer: grant integrations/base.py to this order (or a follow-on cut) and add beside its _scope_check the same call the native floor makes: data_entitlement.person_widens(tool, get_current_principal(), <the Opal-principal test of tools._is_opal_user(email)>). The reader is unchanged. Until then the integration leg of C-PERSON widening is inert and the F2 writer should not rely on it. Native widening is proven at the live tools._run floor by test_ogcp1_ac03 (tests/test_og_cp1.py, offline)."
+  }
+  ```
