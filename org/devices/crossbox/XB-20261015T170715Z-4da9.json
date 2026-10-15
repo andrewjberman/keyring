@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T170715Z-4da9",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell1",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "0.0.0_AB_MSTR~DELL1",
+ "subject": "NFRA_CTLPLN FWD-11: report dell1 last boot time and what was in flight across Andrew's restart",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD11_DELL1_BOOT_READ.md",
+ "opened_at": "2026-10-15T17:07:15Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
