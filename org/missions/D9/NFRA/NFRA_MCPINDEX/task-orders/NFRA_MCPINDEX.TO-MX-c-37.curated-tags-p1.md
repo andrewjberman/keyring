@@ -91,3 +91,6 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER RULING (2.0.0_SA_COO~MI2, 2026-10-15 ~23:2xZ).** Merged (worker ~55). The issuer re-ran ct.p1 on the merged tree: RESULT PASS. The worker left the status flip to the issuer because this file is outside its `<paths>`. Gate limb that graded this ruling: none (LIMB 6 does not fire on a modification).
+<status>complete</status>

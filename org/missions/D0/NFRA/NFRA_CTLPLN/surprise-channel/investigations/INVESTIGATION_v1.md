@@ -12061,3 +12061,108 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The record shows the serial, not the box. The laptop membership is read from a state file that lists the seat under the laptop folder; no record field or register proves the box the COO ran on at 04:05Z on 2026-10-08."
 }
 ```
+
+## NFRA_CTLPLN-W125-S1 -- the S9121 null-bus merge drop does not reproduce at HEAD: the merge keeps the null and validates before it writes
+
+```json
+{
+  "id": "NFRA_CTLPLN-W125-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~125",
+  "surfaced_at": "2026-10-15T22:47:42Z",
+  "one_line": "The cell's premise (S9121: merge drops a null bus_message_id, then refuses after a copy is rewritten) reads false at the cell's base 4073337a9e: a receiving copy with bus_message_id null merges MERGED with the null kept, and the merged result is validated before any write.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-call.py@4073337a9e merge(): the null-keeping line block.setdefault(sub, None) and the validation before the save were already present; the cell changed the tail to dump, validate and write the same bytes (commit 02284ff0be)",
+      "scratch experiment ctlpln-125/.scratch/exp_null_bus.py (not committed): the receiving box's ack reads bus_message_id None, then a.merge(cid, FETCH_HEAD) returns 'MERGED ... (fields folded in)' rc=0 and the sending copy's ack keeps bus_message_id None",
+      "python .tools/tests/test_round23_hygiene_b.py --merge -> HYGIENE-MERGE arms=5/5 ok=True (arms 1, 2 cover both null directions; arms 3-5 cover the refused merges and their byte-identity)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S9121 (REMEDIATION_v6): merge drops a null bus_message_id from the receiving box's ack, and its validator refuses the result after the sending box's copy was rewritten, leaving a written invalid ack; seen once, merge --ref origin/box/dell1. Remedy P2: merge keeps the null; a refusal writes nothing.",
+  "world_is": "At 4073337a9e and at 02284ff0be the merge keeps the null and validates before any write; the drop was not reproduced in this tree. The row's dell1 origin ref was not read by this cell, so the seen-once event may come from a different tool version on that box; the cell pins the current behaviour with five merge arms rather than repairing a reproduced defect.",
+  "notes": "The order's build step 1 asked for a change to merge; the change made is the in-memory write (validated bytes are the bytes written), which the order's wording allows. Whether S9121 closes on this read is the CVO's call."
+}
+```
+
+## NFRA_CTLPLN-W125-S2 -- the W79-S2 failing case reads a missing folder (org/mcp), not origin state: the suite reads 64/65 in a sparse worktree at the base
+
+```json
+{
+  "id": "NFRA_CTLPLN-W125-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~125",
+  "surfaced_at": "2026-10-15T22:47:42Z",
+  "one_line": "W79-S2 names five origin refusals ('is not on origin yet') as the failing cases; in a sparse worktree at the base 4073337a9e the suite reads CROSSBOX-TEST cases=64/65 ok=False with ONE failing case, 'writer and watcher comparison ran', a FileNotFoundError on org/mcp/server.py, because org/mcp is outside the sparse set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_crossbox_call.py in a temporary sparse worktree cut by wk-provision.sh at base 4073337a9e: 'FAIL writer and watcher comparison ran  -- FileNotFoundError: ... org\\mcp\\server.py' then 'CROSSBOX-TEST cases=64/65 ok=False' rc=1 (no origin refusal line in the output)",
+      "the same suite in ctlpln-125 at 02284ff0be: 'skip writer and watcher comparison (7 checks) -- SKIPPED ... absent: org/mcp/server.py, org/mcp/inbox-watch.sh' then 'CROSSBOX-TEST cases=70/70 ok=True'; python .tools/tests/test_round23_hygiene_b.py --sparse -> HYGIENE-SPARSE crossbox_cases=69/70 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W79-S2 (REMEDIATION_v6): the five failing cases are refusals 'is not on origin yet'; done when the suite reads 50/50 on two boxes whose origin refs differ. ADJUDICATION_v27 restates the done-when as 50/50 on two boxes.",
+  "world_is": "The suite's origin refusals pass at HEAD (fixture origin, see Harness). The one failing case in a sparse worktree is the writer-and-watcher check reading org/mcp, a folder outside the sparse set. The denominator is now 70 (the 50 in the row predates the round-13 cases), and only one box was measured, so the two-box done-when is not met by this cell.",
+  "notes": "The cell makes that case skip with a printed reason naming org/mcp, the route the order's rule allows; it does not weaken an assertion. The main-tree count was not re-run from this worktree."
+}
+```
+
+## NFRA_CTLPLN-W125-S3 -- the order's provision invocation (n = 125) names this worker's own branch; the test takes a distinct serial for its temporary worktree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W125-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~125",
+  "surfaced_at": "2026-10-15T22:47:42Z",
+  "one_line": "The order says to cut the sparse temporary worktree with 'wk-provision.sh provision NFRA_CTLPLN 125 --path <tmp>' and remove its branch in a finally; wk-provision names the branch wk-NFRA_CTLPLN-<n>, which for n=125 is this worktree's own branch, so the literal invocation would collide with it and its removal would delete it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/wk-provision.sh@4073337a9e provision: local branch=\"wk-${code}-${n}\" (line 421 at the base; `git worktree add -b`)",
+      "git branch --list 'wk-NFRA_CTLPLN-125' in ctlpln-125 shows the branch checked out here (the * line); the literal invocation was NOT run",
+      "python .tools/tests/test_round23_hygiene_b.py --sparse -> HYGIENE-SPARSE-PROVISION rc=0 worktree=... branch=wk-NFRA_CTLPLN-125s21796; HYGIENE-SPARSE-CLEANUP branch -D wk-NFRA_CTLPLN-125s21796 rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The sparse criterion's temporary worktree is cut with provision NFRA_CTLPLN 125 and its branch removed in a finally (the order's build step 2 and its --sparse flag).",
+  "world_is": "The branch name derives from n, and wk-NFRA_CTLPLN-125 is the branch of this worker's own worktree. The test cuts its temporary worktree with serial 125s<pid> so that only its own temporary branch is created and removed; the removal refuses any name other than that pattern.",
+  "notes": "The literal n=125 invocation was not run, so the collision is read from the branch name and the provision code, not measured. The order's <paths> and the provisioning behaviour are otherwise as the order describes."
+}
+```
+
+## NFRA_CTLPLN-S9135 -- a box's broker reads another box's live seats as "not live", and seats act on it
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9135",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-15T23:31:00Z",
+  "one_line": "Twice on 2026-10-15 a seat declared a seat on another box not live from its own box's broker: dell1 read 0.7.0_AE_CloudOps~IB2 (live on dell2) as not live, and the laptop MSTR read 2.0.0_SA_COO~Y2 (live on dell2, pid 11564) as not registered. Each led to an ask built on a false premise (a stand-in reader; a fourth laptop COO).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD-23: the seat list is readable, each seat named with its role; a liveness verdict names the plane it read.",
+  "world_is": "get_agent_status / get_live_agents answer for the local box's broker only, and the answer carries no box scope, so 'not registered here' reads as 'not live anywhere'; seat-list.py show --all exists but neither seat used it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR relay msg 109525 (IB2 live on dell2, against dell1's read)",
+      "0.0.0_AB_MSTR correction msg 109538 (Y2 live on dell2, against its own 23:21Z read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
