@@ -23,7 +23,7 @@ Never-widen pair: COO half @9c0ab8819a (amended @aef0e063b4), CTO half @2b58d0ca
 | read | instrument | when | result |
 |---|---|---|---|
 | SH-t-27 L2: the first scheduled gold run after the apply | `R6_CHECKS/r6_l2_read.py` | 2026-10-15 13:03Z | **DONE: `L2-READ-OK`** (see the orders table) |
-| FWD-9 organic fill: FXFXX 2026-10-12 requested by the 10-14 pull, served filled | `R5_CHECKS/r5_fwd9_read.py filled 2026-10-12` | after the pull (~2026-10-15 11:07Z) and the 13:00Z run | PENDING: `bbg/2026-10-14` still absent at 13:03Z, row D1-S7 filed @01c5f72d02; reads on the first scheduled run after the manifest lands. The CTO's FWD-9 grade rests on the replay and the served week (ADDENDUM 1), so this read is added evidence, not a gate |
+| FWD-9 organic fill: FXFXX 2026-10-12 requested by the 10-14 pull, served filled | `R5_CHECKS/r5_fwd9_read.py filled 2026-10-12` | after the pull (~2026-10-15 11:07Z) and the 13:00Z run | INPUT half DONE: the 2026-10-14 manifest landed 14:33:58Z (about 3h27m late, row D1-S7); `history_gap_fill` requested FXFXX 2026-10-12 (1 row) and the pull returned 0.0000 non-null ([D1_S7_LANDING_EVIDENCE_20261015.md](file:///C:/dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/D1_S7_LANDING_EVIDENCE_20261015.md)). SERVED half PENDING: read after the 2026-10-16 13:00Z run. Added evidence, not a gate (ADDENDUM 1 grades on the replay and the served week) |
 | FWD-9 served week, Fri 2026-10-16 to Mon 2026-10-19 and the run after Monday | `R6_CHECKS/r6_week_read.py <as_of ...>` | 2026-10-16 to 2026-10-20 | PENDING |
 | AC4 (judgment): the labelled cells and the note | evidence `R6_AC4/` @e729d5e3bc (3 screenshots, README with the issuer's reading and three points to weigh) | the CVO | UNGRADED |
 

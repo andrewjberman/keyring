@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.21",
+ "prd_version": "v2.22",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -212,7 +212,10 @@ CONTRACTS changed, so both halves are owed again.
          carries its last known value as point class `carried` (claim
          held), forward only, never before the group's first value;
          (d) for an internal session the groups sum to the Total to the
-         cent on every dated row. Firm scopes are unchanged by (a)-(d).
+         cent on every dated row. Firm scopes are unchanged by (a)-(d),
+         except that at a firm scope the Client chips draw on the
+         as-of date only, and the dated category-views history route
+         has no required reader until the Cottonwood Trend addendum.
          DONE WHEN  EXERCISED -- on Model Portfolios > AUA TREND ANALYSIS > Trend (the
                     period-end bars, the daily area chart, the legend and the
                     tooltip), read on `bun run dev:live --port 5174` (portal
@@ -725,5 +728,14 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
 - The SMA strategies are Opal products, which FWD-3's fold already reads as held at no firm (the fe9b ruling). They therefore draw for EVERY session, not only internal ones.
 - **Where it lands, added:** a new SMArtX read in `mdpf_gold_consolidator`. Its key is checked against the naming gate and the registry before the commit; a refusal is a registry row (the XA-ad15 precedent). The category tree drops "Muni SMA" from `SMA > ALT Strategies`. That is a served change to category-views, under the same never-widen pair.
 - ENDPOINT text moves again before the CVO's signature, so one re-sign covers v2.20 and v2.21.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.22 (2026-10-15 ~14:4xZ), on the CVO's round-9 L10 slug (msg 6035; `ADJUDICATION_v15.md` @f0bdabc5c2, `ADJUDICATION_v16.md` @fbbe2b1283):**
+- CN-j-1 AC4 graded NOT MET (C-S83): no portal code reads `category-views-history`, so the Client chips draw on the as-of date only.
+- **Ruled: the reader requirement is retired, not built.** v2.19-v2.21 already removed the Global reader: Client Supervised comes from the Global difference, and Client Unsupervised and the chips are retired at Global. CN-j-2 was withdrawn on a reader census of 0 across base, DEV and PROD.
+- At the firm scopes, Andrew approved the as-shown view ("49 Financial View: No comments, everything is good to go"; "Inflection view: No need to touch these"; record `ANDREW_DIRECT_20261014_201xZ_PORTFOLIOS_SMOKE_TREND_FULL_HISTORY_COTTONWOOD_SPEC.md` @caf5dc7d73), and that view draws the chips on the as-of date only. His Cottonwood Trend upgrade decides any firm-scope history design.
+- **The history leaf stays served** (read-only, no reader) until that addendum keeps it or retires it under its own pair. FWD-9's head states this. CN-j-1 AC4 is closed by this amendment.
+- ENDPOINT text moves (FWD-9 head), so the ratified-text half is re-owed to `3.0.0_SA_CVO`.
 
 -- 1.0.0_SA_CTO~DELL1
