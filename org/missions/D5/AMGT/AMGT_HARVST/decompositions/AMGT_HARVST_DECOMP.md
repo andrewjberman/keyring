@@ -4118,3 +4118,16 @@ The tab transport opens a visible headful Chrome per job (`tab_transport.py:99`)
 
 - **Fan-out:** 1 worker (cb-8), 1 chain of 1, cap 8.
 - **Checks dry-run at the base before the cut:** cb-8 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`144 passed, 4 subtests passed`).
+
+## 112. ROUND 87, workstream RUNNER-REREGISTER -- `HVST-cb-2` COMPLETE, `HVST-cb-8` merged; `HVST-cb-9` (with `HVST-cb-7`) CUT, STAGED; `HVST-cb-6` still organic, 2026-10-15 ~21:0xZ
+
+`HVST-cb-2` complete (second pass live since 20:32:04Z, R1-R4 TRUE at +15). `HVST-cb-8` merged `a879d12881`; its real-job criterion MOVES: the issuer's separate job (section 111) cannot run, because the production runner holds the publisher browser profiles and a second Chrome on one would collide. The first pass after the cb-9 re-pin, with the seed to be deleted, is its real run (cb-9 step 5, AC2).
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cb-7` + `HVST-cb-9` | `cb-9` | **One re-registration** from a locked pin Q carrying `a879d12881` with `wsj,barrons,sa,bbg`, at a stop-file boundary, the seeded copies deleted only after a job reads `token_source=browser_profile`; reads at +3 and +15 minutes; signed rollback; stop rules incl. CTO C-j. | WORLD | seat `0.7.0_AE_CloudOps~SC1` | CUT, STAGED: waits on the first complete `wsj` and `barrons` cycle records (C-b2) |
+| `HVST-cb-6` | (read) | **The first productive cycle per publisher**: `.cycle.json`, accepted count, `s3_get_count`, `s3_get_bytes` (CTO C-h); reported to the CTO and, through MSTR, to site Z (which unlocks its pin worktrees). | LOCAL (read) | `2.0.0_SA_COO~W1` and SC1 | ORGANIC |
+
+- **Fan-out:** 0 workers (a seat order), 1 chain.
+- **Pair:** COO addendum 2 `deliverables/2.0.0_SA_COO_W1/round87/NEVER_WIDEN_HALF_COO_CB9_REPIN_AND_JOIN.md` (sha256 `3df7917cb98b4bd8872f56b3f0ba2d1f1d66e323da8101d74f2ef3af4c6edfbb`); CTO addendum 2 `ledger/NEVER_WIDEN_ROUND87_CB2_CTO_HALF_ADDENDUM_2_REPIN.md` @21dc90d6b5.
+- **Checks at the cut:** cb-9 AC1 base reads `--publishers wsj barrons` (FAIL as expected); AC2 and AC3 files do not exist (FAIL as expected). Reads of dell1's scheduler; not command-dry-runnable beyond that.

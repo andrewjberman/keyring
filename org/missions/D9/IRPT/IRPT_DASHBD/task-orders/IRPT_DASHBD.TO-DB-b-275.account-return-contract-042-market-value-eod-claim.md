@@ -1,0 +1,87 @@
+# TO IRPT_DASHBD.TO-DB-b-275 -- the account_return_daily CONTRACT 0.4.2 (round 142): ONE optional nullable column, market_value_eod_claim (measured | inferred), required on a PRESENT Orion row, with its rule-24 record and token census; the 19 columns, every enum and every earlier optional column unmoved
+
+<to_id>IRPT_DASHBD.TO-DB-b-275</to_id>
+<project>IRPT_DASHBD</project>
+<issued_to>0.9.0_WK_IRPT_DASHBD~223</issued_to>
+<issued_by>2.0.0_SA_COO~D2</issued_by>
+<issued_date>2026-10-15</issued_date>
+<status>pending</status>
+<direct_act>false</direct_act>
+<risk>LOCAL</risk>
+<worker_class>worker</worker_class>
+<placeholders>NONE</placeholders>
+<round>142</round>
+<workstream>B-49F</workstream>
+
+**Directive:** D9 | **Fabric:** dell2 | **Workstream:** B-49F + contract, round 142 | **Ordered by:** 1.0.0_SA_CTO~DELL2, org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_124_20261015.md @e5c8b143fe addition 2 (msg 8655) ("`market_value_eod_claim` goes into the CONTRACT, not only the module. A claim a consumer rejects on has to be a contract field (A VALUE MUST CARRY ITS CLAIM). `~D2` writes 0.4.2: one nullable column, `market_value_eod_claim`, enum `measured | inferred`, required on Orion rows. It comes with its rule-24 record and token census.") | **Decomp cell:** `DB-b-275` (decomposition section 140).
+
+**Risk class LOCAL**: one JSON standard, one new test file and two bounded edits of earlier tests; no AWS, no Terraform, no deploy. The change is a shared standard and the CVO grades it at L9.
+
+---
+
+## WORKER FACE
+
+Your workspace worktree is `C:/dev/wk-irpt-dashbd-223` (branch `wk-IRPT_DASHBD-223`); run everything from its root. Your folder is `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~223/`. Never push; never commit the workspace `portal` gitlink. Client data lives ONLY under `C:/dev/_irpt_private_evidence_20261009/`: counts, dates, hashes and words only in the repo, a row, a commit message or your report; never a household or account id or a client value (a public security identifier with a count of accounts is not a client value). Your private output folder is `C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~223/` (create it if absent). **A commit message, a row, a record or a report that quotes a client figure is a defect even if it is later removed: your branch is merged whole, history included. Before every commit, scan what you stage for a client figure and for long identifier runs.** The commit gate's client-data list is absent on this box, so that scan is yours. **Commit order: the artifacts first, then the proof instance, then the status flip to complete as the LAST commit; once the order is complete your grant ends, so do every edit before the flip.**
+
+**Why.** The Scope (Orion) feed carries no end market value: the adapter infers a day's end value from the next calendar day's start value, and the manifest says `inferred`. Contract 0.4.1 has no field a consumer can reject on for that, so the claim lives only in the adapter's run record. A value must carry its claim in a field a consumer can reject on, so 0.4.2 adds ONE optional column that says whether each end value is `measured` (the vendor's own end value) or `inferred`.
+
+**The cell (`DB-b-275`).**
+1. **Read first, whole:** the issuer's checker `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r142/p142_contract042.py` (your three criteria; its constants and its reference validator `row_problems` are the behavioural spec; it builds on `checks/r140/p140_contract041.py`); the current contract file (0.4.1) and its `rule24_record` (including `v041`, the shape your `v042` follows); the 0.4.1 order `org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-273.account-return-contract-041-row-status-reason-class-and-vendor-reported.md` and its facts record `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~221/RD_CONTRACT_041_FACTS_R140.json`; the earlier tests that read the contract: `test_account_return_contract_040.py`, `test_account_return_contract_041.py`, `test_cottonwood_bd_account_return_daily.py`, `test_cottonwood_report_reader.py` (the last two you do not edit).
+2. **The contract (edit the one JSON file, ONE commit with the test of step 4).** Set `contract_version` to `0.4.2`. ALL 19 `columns` are byte-identical to 0.4.1 and `schema_hash` is unchanged. `enums` gains `market_value_eod_claim` = `["measured", "inferred"]`; every earlier enum is byte-identical. `optional_columns` keeps its five entries byte-identical and gains a sixth, `market_value_eod_claim`: `type` string, `nullable` true, `values` `["measured", "inferred"]`, `since_schema_version` "1.4", `required_when` `{"source": "orion"}`, `required_unless_absent` true (a PRESENT Orion row must carry it; an ABSENT row, which has no market value, carries none), a `meaning`, and a `rule` that says in words: required on every PRESENT Orion row; null on an ABSENT row; `measured` is the vendor's own end value and `inferred` is an end value taken from the next calendar day's start value; a consumer that needs a measured value rejects `inferred` and says so in words, and never treats `inferred` as measured. Recompute `schema_hash_with_optional` over the 19 columns plus `source:string`, `flow_claim:string`, `source_account_id:int64`, `row_status:string`, `reason_class:string`, `market_value_eod_claim:string`. `supersedes` keeps its four entries byte-identical and gains a fifth: `contract_version` "0.4.1", its `schema_hash`, `schema_hash_with_optional` (the 0.4.1 file's own value, read from the file at your base) and `changes` in words. `served_day_rules`, `source_requires` and `source_rules` stay byte-identical. Change nothing else in the file.
+3. **The rule-24 record (`rule24_record.v042`; every other key of `rule24_record`, including `v041`, stays byte-identical).** Exactly these keys: `i_mece_over_a_declared_domain` (an object with exactly `market_value_eod_claim`), `ii_same_grain`, `iii_intent_coherence`, `iv_state_coherence`, `token_census`, `token_census_finding`. Each text is a real record of 120 or more characters. **MECE:** `market_value_eod_claim` prints its DENOMINATOR (every PRESENT Orion row, the rows that carry an end market value from the Scope feed), names both values and says they cover it by subtraction (a PRESENT Orion end value is either the vendor's own or inferred from the next day's start value; nothing else can produce one). **Same grain** names ACCOUNT-DAY and `market_value_eod`. **Intent coherence** names `market_value_eod_claim`, `flow_claim` and `return_basis` and says each answers one question (the claim on the end value, the claim beside a null flow, whose arithmetic) and that none overlaps another. **State coherence** names the words `measured`, `inferred` and `VENDOR_REPORTED` and the values one remedy does not move (a measured end value for a day moves `inferred` to `measured` for that day and moves no other column). **`token_census`** is an object with exactly `commit`, `pathspecs`, `denominator_files`, `claim` and `tokens`: take `commit` as `git rev-parse HEAD` of your worktree BEFORE you edit anything (a full 40-hex id); `pathspecs` exactly `["data/assets/scripts/gold/irpt_reporting", "org/standards", "infra/aws/lambda/investor-reporting"]`; `denominator_files` the number of files `git ls-tree -r --name-only <commit> -- <the pathspecs>` lists; `claim` "measured"; `tokens` holds exactly `measured`, `inferred` and `market_value_eod_claim`, each `{"files", "hits", "reading"}` where `files` and `hits` are what `git grep -c -w -I -e <TOKEN> <commit> -- <the pathspecs>` reports (the checker recounts exactly this) and `reading` is one sentence on what the existing hits mean. **`measured` and `inferred` are already words of the repo's claim vocabulary (`measured / inferred / held / absent`, the rule A VALUE MUST CARRY ITS CLAIM), so the census will show many hits: say in `token_census_finding` (80 or more characters, containing the words "claim vocabulary") that the existing hits use the same meaning, so the new column adds a field and no new meaning.**
+4. **The tests.** (a) `data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_042.py`, at least eight passing tests (parametrised cases count), driven only by the contract file's declarations (read `required_when`, `required_unless_absent`, `values`, `nullable_when_absent`, `source_requires` generically; never hard-code which source needs the claim): a 0.3.0 Black Diamond row (no claim) validates; a Black Diamond row carrying `measured` validates; a PRESENT Orion row validates with `measured` and with `inferred`; an ABSENT Orion row validates with no claim; a PRESENT Orion row with no claim is rejected; a claim outside the two values is rejected; an ABSENT row carrying a claim is rejected; and the hash invariants (`schema_hash` equals its earlier value, `schema_hash_with_optional` equals the recomputation, the 0.4.1 entry is in `supersedes`). The file defines its own small validator over a dict row and names no real account or client value. (b) **Two bounded edits.** Your grant gains `test_account_return_contract_040.py` and `test_account_return_contract_041.py`, only where each pins the literal contract version or a hash that 0.4.2 moves (the contract's top-level `schema_hash_with_optional`, and for the 0.4.1 test the supersedes length or the rule-24 key set): re-point each assertion at the matching entry of `supersedes` or at a recomputation from the contract's own optional columns. At most 14 changed lines in EACH file (`DB142-1-AC1` measures it); every test of both files still passes.
+5. **Facts record** `RD_CONTRACT_042_FACTS_R142.json` in your folder with EXACTLY these fields: `contract_version` ("0.4.2"); `schema_hash` and `hash_with_optional` (equal to the contract's); `optional_columns` (["source", "flow_claim", "source_account_id", "row_status", "reason_class", "market_value_eod_claim"]); `enum` (an object `{"market_value_eod_claim": ["measured", "inferred"]}`); `census_commit` (equal to the contract's `token_census.commit`); `words` (one paragraph, 80 to 1800 characters: what changed, what did not move, that every earlier writer still validates, and what is NOT proven: that the Scope adapter writes the claim this way).
+
+<criterion id="DB142-1-AC1" cell_refs="DB-b-275"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r142/p142_contract042.py" . DB142-1-AC1</invocation><expect>DB142-1-AC1 PASS</expect></criterion>
+`DB142-1-AC1` -- the contract file holds every declaration of steps 2 and 3 (version, all 19 columns and the hash unmoved, every earlier enum and the five earlier optional columns byte-identical, the new column and its enum, the recomputed hash, the supersedes entries, `served_day_rules`, `source_requires` and `source_rules` unmoved, the rule-24 record) and the worker's commits change only the contract, its three tests, its folder, the investigation file and task-order files, the contract and the new test together in ONE commit, each earlier test by at most 14 lines.
+<criterion id="DB142-1-AC2" cell_refs="DB-b-275"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r142/p142_contract042.py" . DB142-1-AC2</invocation><expect>DB142-1-AC2 PASS</expect></criterion>
+`DB142-1-AC2` -- a reference validator driven only by the contract's declarations (the 0.4.1 rules and the one new rule) accepts six rows (a 0.3.0 row, a Black Diamond row with a claim, a PRESENT Orion row with each claim, an ABSENT Orion row with no claim, a null-row-status Orion row with a claim) and rejects five (an Orion row with no claim, a claim outside its values, an ABSENT row carrying a claim, a null-row-status Orion row with no claim, a TWR-labelled Orion row), and the checker recounts the token census (3 tokens over the pathspecs at the recorded commit) exactly.
+<criterion id="DB142-1-AC3" cell_refs="DB-b-275"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r142/p142_contract042.py" . DB142-1-AC3</invocation><expect>DB142-1-AC3 PASS</expect></criterion>
+`DB142-1-AC3` -- your new test file holds at least eight passing tests, the four earlier contract-reading test files still pass, and the facts record equals the contract.
+
+<expected_criteria>DB142-1-AC1,DB142-1-AC2,DB142-1-AC3</expected_criteria>
+
+## BOUNDS
+
+- **Grant.** The `<paths>` block below. Everything else is read, never edited: the producer, the adapters (including the Scope adapter), the handler, `filled_report_values.py`, the report contract, the Cottonwood tests, the issuer's check files and the portal.
+- **Reads and writes.** Reads: repo files. No network, no AWS call, no Terraform command, no deploy, no push. Writes: the repo files of the grant and your private folder.
+- **Client data.** None is involved; fixtures are synthetic.
+- **Refusal clause.** A criterion you cannot satisfy AS WRITTEN is reported with your measurement, never repaired, widened or satisfied by a route this order did not name. If an earlier contract-reading test other than the 0.4.0 and 0.4.1 tests fails once the contract reads 0.4.2, record it as a BLOCKING row and stop: those files are not in your grant.
+- **Rows** go to the investigation file in the grant, ids `IRPT_DASHBD-D2-W223-S<k>` (start at S1), with the real current UTC time (`date -u +%FT%TZ`); append as BYTES. Commit with `.tools/safe-commit.sh`; run its gates in the background and wait for them. ASCII only in anything you write; every `.py` passes ruff (target py39, no semicolon-joined statements).
+
+<paths>
+org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json
+data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_042.py
+data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_041.py
+data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_040.py
+org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~223/
+org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md
+org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-275.account-return-contract-042-market-value-eod-claim.md
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/IRPT/IRPT_DASHBD/decompositions/IRPT_DASHBD_DECOMP.md</decomp_doc> section 140 (round 142, workstream B-49F + contract), cell `DB-b-275`.
+<owned_cells>DB-b-275</owned_cells>
+</decomp_ref>
+
+<proof_of_spec>
+Criterion ids: DB142-1-AC1, DB142-1-AC2, DB142-1-AC3 (mechanical). The instance goes at
+`org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~223/IRPT_DASHBD.TO-DB-b-275.account-return-contract-042-market-value-eod-claim.proof_of_spec.json`.
+Validate it with `python .tools/proof-of-spec-check.py <instance> DB142-1-AC1,DB142-1-AC2,DB142-1-AC3` BEFORE the flip (the ids as ONE comma-joined argument); pin each artifact row to the commit that carried it (a PENDING-THIS-COMMIT pin that predates the instance commit makes it INVALID).
+</proof_of_spec>
+
+**REPORT:** your final message, once: each criterion's last line; the contract's changed keys in one line; the test count; the census commit; what is NOT proven. Counts, paths and words only.
+
+---
+
+## RECORD FACE
+
+<preflight>
+comp-blast: DECLARED-NOT-APPLICABLE -- reason: a JSON standard and three test files in a branch; nothing reads the new column yet and no emitter changes.
+comp-iam: DECLARED-NOT-APPLICABLE -- reason: no grant is changed in AWS; no AWS is read or written and no grant changes.
+comp-routes: DECLARED-NOT-APPLICABLE -- reason: no route is changed; nothing is deployed.
+comp-schedule: DECLARED-NOT-APPLICABLE -- reason: no schedule is touched.
+comp-cache: DECLARED-NOT-APPLICABLE -- reason: no cache surface is touched; nothing is deployed.
+comp-adversary: DECLARED-NOT-APPLICABLE -- reason: not run by the issuer as a tool; the criteria FAIL at base and the checker's clauses are exercised by its self-test (green and red arms); its clauses were validated by the issuer against a scratch reference contract (green) and 26 single-fault mutants of it (all red) and the census recount against a tampered count (red), and its behaviour, grant and facts clauses by the self-test.
+lane: the <paths> block IS the grant.
+</preflight>
