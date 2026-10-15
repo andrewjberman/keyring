@@ -18481,3 +18481,56 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W154-S1 -- the Keep button was offered past the twenty-correction cap, where its equal pair would be dropped
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W154-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~154",
+  "surfaced_at": "2026-10-15T18:04:17Z",
+  "one_line": "AR-y-354 added a cap gate to Keep that the cell did not state: Keep is now offered only while the cap allows, as Use is.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Cell AR-y-354 step 3 says Keep re-posts through the same path Use takes and that the correction list is capped at 20 with the 21st not built. The cell does not say the Keep button is hidden at the cap.",
+  "world_is": "At the hint candidate a6b83f692084 the UploadFindings Keep button had no cap gate, while Use was hidden once the filer had named twenty symbols. A Keep past the twentieth symbol would make correctionsFor build nothing for that symbol, so the page would re-post without its correction and show it kept. The candidate commit f78ea50e gates Keep with the same useFull test as Use (AnalysisRequestParts.tsx, the onKeep button). The gate is a choice the order did not state; the CVO may rule on it at L9.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@a6b83f692084 src/pages/TicketCenter/AnalysisRequestParts.tsx: the Keep button was rendered as {onKeep && (...)} with no useFull test, and the Use button as {onUse && !useFull && (...)}",
+      "portal@f78ea50ef87d src/pages/TicketCenter/AnalysisRequestParts.tsx: the Keep button is rendered as {onKeep && !useFull && (...)}; the 21st symbol is not built by correctionsFor (filing-hint-keep.test.tsx, cases a to g, passes 7 of 7 at f78ea50ef87d)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed under the one-line-form rule: a worker's off-spec choice is a row, not a stop. The gate is a single attribute; reverting it restores the candidate's behaviour and makes the cap silent for a twenty-first Keep."
+}
+```
+
+## IRPT_ANLREQ-D2-W154-S2 -- the scratch copy cannot resolve react without a node_modules link, so the checker links one
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W154-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~154",
+  "surfaced_at": "2026-10-15T18:04:17Z",
+  "one_line": "A bun test run from a scratch folder outside the portal tree cannot find react: bun 1.4.2 ignores NODE_PATH, so the mutant checker links node_modules with a junction.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Cell AR-y-354 AC2 runs the keep test file against a copy in a scratch folder outside the product tree, and the bounds say scratch goes outside the product tree.",
+  "world_is": "The portal test files import react and react-dom/server, and bun resolves a bare package only through a node_modules reachable from the importing file. A copy outside the portal finds none. NODE_PATH is not honoured by bun 1.4.2. mutant_check.py therefore creates a Windows junction from the scratch folder to portal/node_modules (a symlink to the workspace's portal/node_modules), runs the control and the mutant, and removes the junction with a non-recursive rmdir before the scratch folder is deleted. The target held its 313 entries after the run.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test from .scratch/before_arm with no node_modules: 'Cannot find package react' (rc 1), measured before the junction was made",
+      "bun test from .scratch/before_arm with NODE_PATH set to portal/node_modules: the same 'Cannot find package react' error (rc 1)",
+      "after mklink /J and rmdir of the link: ls of C:/dev/ajb_workspace/portal/node_modules lists 313 entries (rc 0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The junction is removed by rmdir, which never recurses into its target. A crashed run would leave a link in .scratch; mutant_check.py removes a leftover link before it builds a new copy."
+}
+```
