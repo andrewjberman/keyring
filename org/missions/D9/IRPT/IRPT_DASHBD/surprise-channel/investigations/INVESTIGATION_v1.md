@@ -13748,3 +13748,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-3. The row states the form only. The commit stands: the worker's scan of its files found no account id, and the record carries digests only. The disarm is the placing of the hashed list on this device, which the issuer routes to the box owner."
 }
 ```
+
+## IRPT_DASHBD-D2-S52 -- disarm owner's evidence for W303-S1: the account-id list gap is W182-S1's, and this seat's identifier scan of DB-i-3 reads clean
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S52",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T03:05:00Z",
+  "one_line": "W303-S1 disarm evidence: the unscreened client account-id check is the same condition as W182-S1 (owner 0.0.0_AB_MSTR, infrastructure); this seat scanned every file DB-i-3 added for identifier-length digit runs and found none outside hashes, a private path and dates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face: client data is never recorded; the commit gate screens each commit for client account ids against the hashed list.",
+  "world_is": "This seat's scan of the three files worker 303 added (the record, the script, the proof instance) at the merge 5540cb2803: 0 runs of eight or more digits outside a sha256 value, a private-folder path or a date. The list's absence on dell2 is W182-S1's, owned by the integrator; until it is placed, every dell2 commit relies on the issuer's own scan.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~303/GAP_DECOMPOSITION_R115.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~303/gap_decomposition.py",
+      "IRPT_DASHBD-D2-W182-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
