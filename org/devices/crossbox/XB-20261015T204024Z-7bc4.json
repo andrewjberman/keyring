@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN duckdb journey: receive, verify, prove, install and the lane read on dell1",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_DELL1_RECEIVE_INSTALL_AND_READ.md",
  "opened_at": "2026-10-15T20:40:24Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-15T20:42:23Z",
   "bus_message_id": "aa504921-4119-44c2-8ca2-ac27010d0e71"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-15T21:17:32Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": "51641e5f-7aca-4028-af4d-43367ebb0349"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
