@@ -3155,6 +3155,28 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md (row MDPF_DEMQUE-D1-W51-S3, the same trap) @9b7d894bcb"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W56-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~56",
+    "surfaced_at": "2026-10-15T17:59:51Z",
+    "one_line": "The worktree's sparse checkout omits data/assets/scripts/silver/ and data/etfs/ (both tracked at HEAD), so the census cannot import p1_coverage and the real AC2 run fails at import before any S3 read; BLOCKING, not repaired.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t64 (DQ-t-64 build step 2 and its premise): the worktree carries the paths the order names, and the real census runs on the real inputs with p1_coverage.request_symbols as the symbol overlay. Invocation: python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t64_real.py, run from the worktree root, expects INACTIVE-REAL-OK.",
+    "world_is": "Branch wk-MDPF_DEMQUE-56 at 7fb4e17444 is a sparse checkout (core.sparseCheckout true; 11 folders in the cone, none of data/assets or data/etfs). Both folders are absent on disk and tracked at HEAD (data/assets/scripts/silver: 138 files, including commonwealth_signs.py; data/etfs: 233 files). p1_coverage imports card_a_slice, which inserts data/assets/scripts/silver and imports commonwealth_signs, so the census fails at import: dq_t64_real.py prints INACTIVE-REAL-BAD census rc=1 with ModuleNotFoundError: No module named 'commonwealth_signs' in 0.96 s, before any S3 read. The folder run python -m pytest data/mdpf/scripts/demque is interrupted at collection: 16 errors, the first-error lines naming commonwealth_signs (6) and data.etfs (9), plus one FileNotFoundError in test_demque_land.py. The order's refusal route applies: no importable symbol resolver for the requested CUSIPs. Not repaired: widening the sparse cone or putting another checkout on sys.path would rebuild the tree outside this order's grant, and no copy of the census or of request_symbols was made. AC1 passes (INACTIVE-OK).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/card_a_slice.py lines 58-61 (the data/assets/scripts/silver path insert and the import of commonwealth_signs) @7fb4e17444",
+        "data/mdpf/scripts/demque/p1_coverage.py line 50 (import card_a_slice) @7fb4e17444",
+        "git ls-files data/assets/scripts/silver = 138 and git ls-files data/etfs = 233 at 7fb4e17444; git config core.sparseCheckout = true; git sparse-checkout list = 11 folders, neither data/assets nor data/etfs; both folders ABSENT on disk in C:/dev/wk-demque-56",
+        "the real-check run: python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R9_CHECKS/dq_t64_real.py, rc=1, INACTIVE-REAL-BAD census rc=1 ... No module named 'commonwealth_signs' (worker run 2026-10-15)"
+      ]
+    }
   }
 ]
 ```
