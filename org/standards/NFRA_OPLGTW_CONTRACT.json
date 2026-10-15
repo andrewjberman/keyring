@@ -274,7 +274,8 @@
       "oauth_pending_authorization",
       "operator_audit",
       "email_deny",
-      "tenant_firm"
+      "tenant_firm",
+      "person_access"
     ],
     "consistency": "strong_reads_and_conditional_transactions",
     "ttl": "cleanup_only_never_authorization",
@@ -282,7 +283,17 @@
       "POLICY": "profile/grant/approval/operator audit, and denial-only email_deny (POLICY#EMAILDENY#<sha256hex(\"og-email-deny/v1|\" + email.strip().lower())>; routes and operator writer compute the same function), and the tenant-to-firm row tenant_firm (POLICY#TENANT#<tid>, one Microsoft tenant id -> one firm_id; written ONLY by the NFRA_MCPORTAL grant writer's register_tenant op, read by the gateway; NFRA_MCPMSP C2, amended 2026-09-30 by 1.0.0_SA_CTO~O as OPLGTW CTO under Andrew's G-OPLGTW \"lift fully\" of 2026-09-26); operator writes only; no TTL or ordinary delete",
       "RUNTIME": "client/pending-auth/code/refresh/ticket/catalog; runtime conditional writes and expiring records"
     },
-    "runtime_policy_access": "strong read only; write actions require all LeadingKeys match RUNTIME#*"
+    "runtime_policy_access": "strong read only; write actions require all LeadingKeys match RUNTIME#*",
+    "person_access": {
+      "key": "POLICY#<tid>#<oid> / person_access",
+      "writer": "the one grant writer (NFRA_MCPORTAL C18); Andrew-only writes (C2)",
+      "fields": {"status": "active | revoked", "revision": "int >= 1", "stopped": "bool (default false)",
+                 "tools_allow": "[tool name]", "tools_deny": "[tool name]",
+                 "channels_allow": "[channel id]", "channels_deny": "[channel id]",
+                 "updated_at": "ISO-8601 UTC", "updated_by": "principal hash"},
+      "channel": "the tool's integration id from app/integrations/registry (_ACTIVE_BY_TOOL); 'native' for a tool defined in app/tools.py",
+      "rule": "PRD v2.9 C-PERSON"
+    }
   },
   "reader_role": "gateway-schwab-read-role",
   "catalog_role": "gateway-schwab-catalog-read-role",

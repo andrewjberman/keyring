@@ -96,3 +96,23 @@ Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3
 |---|---|
 | DB-c-7 | 0.9.0_WK_IRPT_DASHBD~404 |
 | DB-c-8 | 0.9.0_WK_IRPT_DASHBD~405 |
+
+## 4. ROUND 117, WORKSTREAM B-CW (2026-10-15 ~04:3xZ, issuer 2.0.0_SA_COO~C2, on `CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-CW_ROUND_117_20261015.md` @14dad61fa3, msg 8038; round 116 closed MAY-CLOSE, the CTO's exercised read of DB-c-7 PASS)
+
+**The CTO's rulings this round cuts on:** (1) the apply order to `0.7.0_AE_CloudOps~DB2` in the signed pair's sequence (blob `ad049d506c`): step 0 the planned execution role's name matches `role/*-cot-*` (else the bucket's `DenyForeignFirmPrincipals` refuses the producer's writes) and the 49 Financial and Inflection roles already carry the gold-listing grant; `terraform fmt`, `validate` and `plan` under `safe-apply`; the plan reads only the Cottonwood adds and code updates on the 49 Financial and Inflection functions (they share the zip), anything else a STOP; the shared zip is named in the NEVER-2 ledger; then the 12-date catch-up (36 keys read ABSENT first), the after-read, the 1.1+1.2 reader check, and only then the one-line change to ENABLED; rollback deletes are Andrew's, registered as one call only if needed. (2) No frontier log change (W404-S2). (3) Cottonwood's `account_return_daily` after 2026-06-22 is computed from Black Diamond values and flows by the one estate method; it is an ASK from this seat to `~D2` (the writer), not a B-CW cell.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-9` | The APPLY of the signed pair: build and upload the shared zip, plan, one `safe-apply`, the 12-date catch-up by the handler event, the after-read, the 1.1+1.2 reader check, the planted listing test, then the schedule ENABLED. Applier `0.7.0_AE_CloudOps~DB2` under its own NEVER-2 ledger | FWD-2, FWD-11 | WORLD (a deploy; the CTO class SERVED for the new gold, the gate floor and the act read WORLD) | none | C-F |
+| `DB-c-10` | The ASK to `~D2`: Cottonwood `account_return_daily` after 2026-06-22 from Black Diamond values and flows, with the DB-c-8 table list. The issuer's own direct act (a file and one message), no worker | FWD-11, FWD-15 | LOCAL | none | issuer |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The order's surface is the applier's: its deliverables folder, the change-management ledger and sentinel, the investigation file and one repo file, `schedule.tf`, edited once (the `state` line) for the ENABLE step. No other repo file moves. (b) The role count: the CTO's analysis says three new roles; the build declares two roles (the execution role and the scheduler role) with two role policies, one function module, one DISABLED schedule; the order grades the plan by the Cottonwood labels, not by that count, and a third role or any add outside `irpt_holdings_performance_cot*` is a STOP. (c) `terraform fmt -check` on the root reports two PRE-EXISTING misformats in the Inflection copy (`lambda.tf` lines 74 and 75, `locals.tf` lines 114 and 115; read by this seat before the cut); none is in the Cottonwood additions, so the order names those two hunks as expected and any other hunk as a STOP. The applier does not run `fmt` to rewrite. (d) The catch-up covers silver trading days to the packet's as-of date 2026-10-13 less 2026-06-09; the 2026-10-14 day lands at 07:46 New York and is the first scheduled fire's, so a later silver day is NOT written by this order. (e) The CVO-graded limbs: none (0 judgment criteria); the CTO's exercised read of the live state is the act's close read.
+
+**fanout:** 1 of 1 chains, cap 8, reason: the apply is one sequential act under one ledger, with `DB-c-10` the issuer's own direct act. The applier is a Tier-2 seat (`0.7.0_AE_CloudOps~DB2`), not a worker slot.
+
+## Cells (round 117)
+
+| cell id | owner |
+|---|---|
+| DB-c-9 | 0.7.0_AE_CloudOps~DB2 |
+| DB-c-10 | 2.0.0_SA_COO~C2 |
