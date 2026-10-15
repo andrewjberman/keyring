@@ -27938,3 +27938,150 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by the L7 worker for the issuer's disposition. If the issuer wants names returned, the change is one argument at the call site and a test expectation in test_price_axis_window.py."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W471-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~471",
+  "surfaced_at": "2026-10-15T21:45:03Z",
+  "one_line": "The PBR US fixture as specified cannot show a team P/E in its 2026E and 2027E columns: its served block carries vendor BEST_PE_RATIO figures for those years, so those cells are vendor cells and the mark cannot apply to them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/__harness__/teamMarkFixture.PBR_US_Equity.json at cand/dell1/amgt-sa-team-estimate-mark 844d72eb: model.forecast_figures carries BEST_PE_RATIO 2026 = 5.175920046990936, 2027 = 6.346632875243539, 2028 = 6.590950891908699 (unit RATIO); fiscal_year_figures absent; team_sheet row 25 P/E = 5.947970209865273 (2026), 6.147357016888495 (2027) as the premise states",
+      "node src/pages/SecurityAnalysis/__harness__/teamEstimateMark.harness.cjs at 844d72eb: T3a cell renders '5.2x5.175920046990936RATIO (dimensionless multiple)Bloomberg consensus', T3b renders '6.3x6.346632875243539RATIO'; T5 team P/E cells 2, source team 0; harness NO (9 of 12 checks)",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx at 844d72eb: a forecast P/E with a served block figure renders through ModelCell, not TeamModelCell, so no data-model-team-mark can attach"
+    ]
+  },
+  "spec_asserts": "Cell section 1, fixtures paragraph, and harness checks T3a, T3b and T5: PBR US 2026E prints the team's 5.9x and 2027E its 6.1x (team sheet row 25 P/E 5.95 and 6.15); with model.forecast_withheld BEST_PE_RATIO entries for 2026 and 2027 added by spec those cells are team cells in withheld columns and print the mark; with the withhold entries removed the team cells print no mark.",
+  "world_is": "The round105 PBR slice, copied as the fixture, serves vendor forecast BEST_PE_RATIO values for 2026 to 2028, so the Key Figures 2026E and 2027E cells render the vendor ratios (5.2x and 6.3x) through the vendor cell, and no team cell stands in those columns. The added forecast_withheld entries sit beside a served vendor value for the same years, which a withhold does not describe. The mark cannot apply to these cells on this fixture: T3a, T3b and T5 fail as ordered. Not patched around: the checks stand as written.",
+  "notes": "Ruling needed on the fixture: a PBR slice whose 2026E and 2027E BEST_PE_RATIO is withheld (no vendor value), or the PBR premise restated against a column the team sheet fills. The feature itself is checked on SHOP CN (T1, T2) and GOOGL US (T4, T6), which pass."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W471-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~471",
+  "surfaced_at": "2026-10-15T21:45:03Z",
+  "one_line": "The SHOP CN model slice carries no envelope fiscal_years, so the page places no 2025 column from it; the harness declares 2020 to 2025 from the slice's own fiscal_unresolved PE_RATIO years.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx at 844d72eb (line 725-734): buildModelSheet takes data.fiscal_years for the historical columns; teamMarkFixture.SHOP_CN_Equity.json top-level keys are model, security_key, source and its model keys carry no fiscal_years",
+      "teamEstimateMark.harness.cjs at 844d72eb: SHOP_DECLARED_YEARS = 2020 to 2025 set on the envelope in T1, T2 and T9"
+    ]
+  },
+  "spec_asserts": "Cell section 1 fixtures paragraph: the SHOP CN copy is the live body's model slice, and its 2025 P/E cell reads 74x-193.1x in the Key Figures.",
+  "world_is": "The slice as copied has no declared fiscal years, so the 2025 column exists only when the envelope declares it. The live envelope is not read here (no HTTP in this cell). The harness declares the years the slice names for PE_RATIO, which is a harness choice and not a served value.",
+  "notes": "The round107 prep's live read should confirm the envelope's fiscal_years carries 2025; the mark on the 2025 cell depends on that column existing."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W471-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~471",
+  "surfaced_at": "2026-10-15T21:45:03Z",
+  "one_line": "The order's 'team sheet row 24' for SHOP CN P/E is the 0-based index of the served rows; the page's cite prints the workbook row 28.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "teamMarkFixture.SHOP_CN_Equity.json: model.team_sheet.rows[24] = 'P/E', model.team_sheet.row_numbers[24] = 28",
+      "node teamEstimateMark.harness.cjs at 844d72eb, T8 title: 'Team model: SHOP CA FactSet Based ONE PAGER 2026 07 13_v1.xlsx, sheet \"Model NEW VERSION\", row 28, \"P/E\", period column O'"
+    ]
+  },
+  "spec_asserts": "Cell section 1 fixtures paragraph: the team sheet's P/E line is row 24.",
+  "world_is": "The P/E line is at served index 24 and workbook row 28. The page's cite (teamCellTitle) prints the workbook row number, which is unchanged by this cell. T8 checks the printed cite, row 28.",
+  "notes": "Wording only; no page behaviour depends on it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W471-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~471",
+  "surfaced_at": "2026-10-15T21:45:03Z",
+  "one_line": "The round103 green check's lint step reads rc 1 on the candidate branch because of one error in a TicketCenter test file this branch does not touch, so AC2 cannot read lint rc 0 at the cut.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun run lint at cand/dell1/amgt-sa-team-estimate-mark 844d72eb: '360 problems (1 error, 359 warnings)'; the error: src/pages/TicketCenter/__tests__/filing-hint.test.tsx 147:35 no-regex-spaces 'Spaces are hard to count. Use {2}'",
+      "git diff --name-only e0b43076 HEAD lists only src/pages/SecurityAnalysis/ paths, so the file is unchanged on the branch and the error is at the PROD cut"
+    ]
+  },
+  "spec_asserts": "Cell section 2 AC2 (r103_feature_green_v2.sh): lint rc 0 on the feature branch.",
+  "world_is": "The PROD release e0b43076 already carries the lint error in filing-hint.test.tsx; the branch's own files lint with no error (none listed under src/pages/SecurityAnalysis). AC2 reads NO on lint rc 1 and regressions 1 (the new harness, failing on S1).",
+  "notes": "Needs the owning page's fix or a ruling that the lint criterion is read against the feature's own files. Not patched in this cell (outside the order's paths)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W471-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~471",
+  "surfaced_at": "2026-10-15T22:08:09Z",
+  "one_line": "proof-of-spec-check cannot read the instance at its canonical path on this box: the path is 273 characters with LongPathsEnabled 0, so the checker reports READ-ERROR rc 2 there, while a byte-identical copy at a short scratch path grades VALID rc 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python os.path.exists on the canonical instance path (deliverables/0.9.0_WK_AMGT_RESAPP~471/, worktree at 229bb7b5d2) returns False while os.listdir of the same folder lists the file; the canonical path measures 273 characters; the registry value LongPathsEnabled reads 0 on this box",
+      "control: a 218-character path created and read back OK in the same interpreter; python .tools/proof-of-spec-check.py on the canonical path: READ-ERROR (rc=2) [Errno 2]",
+      "git show HEAD:<instance> written to .scratch/instance_head.json (cmp-equal to the working copy): python .tools/proof-of-spec-check.py .scratch/instance_head.json AC1,AC2,AC3: VALID (rc=0), violations=0"
+    ]
+  },
+  "spec_asserts": "Order section 5 and the proof-of-spec step: run python .tools/proof-of-spec-check.py on the committed instance and report its verdict line.",
+  "world_is": "On this Windows box the checker cannot open the instance at its canonical deliverables path, so the verdict was read on identical bytes from a short scratch path. The verdict is VALID rc 0 on those bytes; the canonical-path read itself was not made.",
+  "notes": "Worker-side workaround only: the scratch copy is byte-identical to the committed instance; no tool, path or setting was changed. Owner of the path or the checker to disposition."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S34",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-15T22:36:04Z",
+  "one_line": "PBR US's 2025 Key Figures P/E cell prints the research team's range 3.6x-5x with no source mark, because the served block carries no fiscal_unresolved entry for it; the mark follows the CTO's 'where withheld', so a team figure can still stand unmarked where the vendor ratio is absent for a reason the block does not state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-106 analysis, D1-S32 ruled (msg 6249): a team-sheet forward value stands where a withheld vendor ratio's reason would print, with a visible source mark; AMGT-bn-1 marks a team P/E cell in a column whose vendor ratio the served block states as withheld (forecast_withheld or fiscal_unresolved).",
+  "world_is": "Read 2026-10-15 ~22:1xZ on the candidate build (bb56c53d), shot 042-PBR-US-Model.png: 2025 `3.6x-5x` (a team text range) carries no `research team estimate` line while 2026E 5.9x and 2027E 6.1x do. The live PBR_US body (round107_prep/fixtures/pbr_model_slice_live.json): fiscal_unresolved is [] and forecast_withheld names 2026, 2027, 2028; the team P/E row's 2025 value is the text `3.6x-5x`. The CTO's approval record (CTO_APPROVAL_A333_TEAM_ESTIMATE_MARK_20261015.md) reads the edge as correct under the ruling: nothing is withheld there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tmp/ui-walk/20261015T221213Z/shots/042-PBR-US-Model.png (read with the Read tool; the 2025 cell and the 2026E/2027E cells)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round107_prep/fixtures/pbr_model_slice_live.json (fiscal_unresolved [], forecast_withheld 2026-2028)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_A333_TEAM_ESTIMATE_MARK_20261015.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A reader sees a team figure with no source on PBR US 2025 and with one on 2026E and 2027E. Whether every team-filled Key Figures P/E cell should carry the mark (keyed on the cell being team-filled, not on a served withhold) is a reading of the ruling for the CTO and the CVO's re-grade at the bn-4 walk; no change is proposed here."
+}
+```
