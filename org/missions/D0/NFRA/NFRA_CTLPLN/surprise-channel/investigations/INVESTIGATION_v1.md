@@ -11560,3 +11560,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Nothing was written to S3 by this seat. The OPEN entry pins the build, so the next scheduled Opal box-sync push of box/laptop (serial 0.0.0_AB_MSTR, every 10 minutes) will run the hook and deploy the one ledgered script; the deploy will then be MSTR's act, not the CloudOps seat's. The positive arm's outcome (one script deployed, nothing else) can still be read; the order's actor claim (CloudOps seat) cannot be met without an Andrew word or an integrator-coordinated override."
 }
 ```
+
+## NFRA_CTLPLN-W119-S1 -- intake_check.py records check 8 as verdict "failed" (reason "the signature file does not exist"), not as an awaiting state; the wheel is held and unreleased, the test maps it to AWAITING
+
+```json
+{
+  "id": "NFRA_CTLPLN-W119-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~119",
+  "surfaced_at": "2026-10-15T19:35:55Z",
+  "one_line": "intake_check.py check on duckdb-1.5.0-cp314-cp314-win_amd64.whl ran checks 1-7 (all passed) and recorded check 8 as verdict failed with reason 'the signature file does not exist'; the record verdict is not_checked and the wheel is not released. The order says check 8 must await; the tool has no awaiting state. The journey test reads 'failed' plus an absent signature file as AWAITING.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cd <worktree ctlpln-119> && python org/devices/intake/intake_check.py check --batch intake-20261015-duckdb --file duckdb-1.5.0-cp314-cp314-win_amd64.whl --approved-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md --signed-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md printed 'c8 failed the signature file does not exist' and 'INTAKE-CHECK batch=intake-20261015-duckdb file=duckdb-1.5.0-cp314-cp314-win_amd64.whl c1=passed c2=passed c3=passed c4=passed c5=passed c6=passed c7=passed c8=failed verdict=not_checked' rc=0 (run 2026-10-15T19:28Z)",
+      "record org/devices/intake/records/intake-20261015-duckdb/duckdb-1.5.0-cp314-cp314-win_amd64.whl.check.json at commit 972d15271d: checks[7] verdict failed, evidence.summary 'the signature file does not exist'; record verdict not_checked",
+      "org/devices/intake/intake_check.py check_8() (line 788, at commit 972d15271d) returns rec('failed', 'the signature file does not exist'); a case-insensitive grep for 'awaiting' and 'AWAIT' in intake_check.py returns no verdict string",
+      "ls /c/opal-intake/release/ lists only intake-20261008-a; /c/opal-intake/holding/intake-20261015-duckdb/ holds the one wheel (13575130 bytes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-al-1 BUILD step 3: pass --signed-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md (not yet written); the tool must then leave the wheel UNRELEASED with check 8 AWAITING. CTLPLN-AC2 expects check8=AWAITING.",
+  "world_is": "The wheel is unreleased (record verdict not_checked; no release folder for the batch) and checks 1-7 passed with 0 failed. Check 8 is the tool's 'failed' verdict with reason 'the signature file does not exist', not a separate awaiting state. This seat did not write the check-8 file, did not run release or pack. The test .tools/tests/test_round22_journey_record.py prints check8=AWAITING only when check 8 is not passed AND the signature file is absent on disk; a signed file would print SIGNED only when check 8 also passes. The CTO's check-8 reading is unaffected: no signature file exists to be read."
+}
+```
