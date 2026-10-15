@@ -19091,3 +19091,29 @@
   "notes": "The same instrument gap as IRPT_ANLREQ-D2-W187-S2. The flagged change adds one pure function, a column branch and a milliseconds-per-day constant; it deploys nothing and calls no AWS. The citation stays unread by this worker."
 }
 ```
+
+## IRPT_ANLREQ-D2-S126 -- disposition of IRPT_ANLREQ-D2-W188-S1: the added lines read clean for account-id-shaped strings
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S126",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T19:38:55Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client-account gate could not run on this box, so the issuer read the lines the commit added for account-id-shaped strings: the only run of six or more digits is the milliseconds-per-day constant 86400000 in the test file. The gate stays unmeasured; the box's hashed list is not this order's to place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W188-S1 (ARMED, client account-id check absent on this box): the lines commit 61457ec92a added hold no account-id-shaped string, read by the issuer at 0a3720ff89.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 61457ec92a over ycharts/research/: 158 added lines, one with a run of 6 or more digits (86400000, a day in milliseconds, in tests/test_layout_own_series_columns.py)",
+      "the change is a statistic loop and its labels over invented series values"
+    ]
+  },
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned against the hashed list; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "The issuer's read is not the gate's check and does not claim it. The same instrument gap is on the record as W143-S2, W52-S25, S123, S124 and S125."
+}
+```
