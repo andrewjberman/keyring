@@ -16297,3 +16297,34 @@ name the one known failure instead of silently inheriting it.
     "notes": "Three routes for the issuer, and this seat picked none. (a) 4.0.0_SA_CRO~Z commits the row -- it is the registry's stated owner, the lane's permitted writer, and it is LIVE; I have sent it the exact row and the measured evidence, so this is a handoff and not a request to re-derive anything. RECOMMENDED. (b) enumerate 0.7.0_AE_CloudOps~Z (or an AE lane) in PLATFORM_LOGIC_DOCS, which is what that lane's own doctrine prescribes for a standing role-authorized action, and is the issuer's or MSTR's call rather than mine. (c) rule the row unnecessary: the pair (opal-data-portal-v2, json-tiered/market-overview/) ALREADY carries catalog-opal-data-portal-v2-served-market-overview-tiered, and legacy_address() matches on KEY alone with reader playing no part in resolution, so the address is already reachable through the builder -- the second row records WHO reads it, not WHETHER it resolves. The general lesson: an order can direct a seat to write a path a lane reserves for another, and the two instruments disagree silently until the commit -- the cheap tell is to check the lane for every path in <paths> AT CUT TIME, not at commit time, because by then the edit exists and has to be unwound from a shared tree."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S137",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T03:37:36Z",
+    "one_line": "OG-ap-19's take-list omits app/typed_scope.py, and the release CANNOT IMPORT without it: portal_models.py:33 does `from . import typed_scope as ts` and all three taken modules reference it (3, 3, 4). The order mentions it zero times. app/tools.py imports portal_models at start-up, so the release as listed would have stopped the service from coming back.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the first run of the six suites: 9 passed, 2 FAILED, 4 ERRORS -- every one 'ImportError: cannot import name typed_scope from app'",
+        "after taking the one file: 29 passed, 0 failed, 0 errors over the same six suites",
+        "git cat-file: app/typed_scope.py is PRESENT at box/sitez and ABSENT at this base 047f11aa99",
+        "introduced by e6f3b2b1b7, cell OG-gt-6, 'the scope seam over harvest_typed'; 8093 bytes",
+        "reference counts in the taken modules: portal_models 3, portal_macro 3, news_typed 4",
+        "reference counts in OG-ap-18's five modules: 0, 0, 0, 0, 0 -- which is why ap-18 excluding it was correct and why this gap did not surface until now",
+        "typed_scope.py imports only harvest_read and harvest_typed, both present at this base, so taking it adds no further dependency",
+        "the order's text mentions typed_scope 0 times"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step 4's take-list is complete: taking the three modules, four test files, the hookup hunks, the .env keys and the two grants yields a release that imports and serves.",
+    "world_is": "It does not import. The take-list enumerates the files the CELLS wrote and the files the HOOKUP touched, and typed_scope.py is neither -- it is a seam another cell (OG-gt-6) wrote that these three modules were later built on top of, so it is invisible to a list derived from this release's own cells. I have TAKEN it so the halves rule on a release that works rather than one that cannot start, and named it in the commit message, the ask's diff section and the ask's widening section.",
+    "notes": "Two routes for the issuer: (a) amend the take-list to include app/typed_scope.py -- it is one pure seam module, it imports only things already live, and the release is tested with it at 29 of 29; RECOMMENDED. (b) let OG-gt-6 ship its own seam first and re-cut OG-ap-19 on that release, which costs a round and gains a cleaner attribution. The general lesson is the one worth keeping, and it is the same shape as Z-S130 one order ago: A TAKE-LIST DERIVED FROM THIS RELEASE'S OWN CELLS CANNOT SEE A DEPENDENCY AN EARLIER CELL WROTE. ap-18's own ask even listed typed_scope.py as deliberately absent, which made it look settled rather than pending. The cheap tell is mechanical and belongs at CUT time: grep the taken modules' import statements for names the release does not contain, before running anything. The expensive tell is the one that caught it here -- the host-shaped import check the order mandates, which is the second time in two orders that check has paid for itself."
+  }
+  ```
