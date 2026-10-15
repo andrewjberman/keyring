@@ -19038,3 +19038,30 @@
   "world_is": "The issuer's read is not the gate's check and does not claim it. The same instrument gap is on the record as W143-S2, W52-S25 and, for adapters 81 and 84, S123 and S124."
 }
 ```
+
+## IRPT_ANLREQ-D2-W192-S1 -- TO-AR-t-33 says leave the other four figure tests alone, but the model-name rule also forces fixture edits beyond the ticker-only allowance
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W192-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~192",
+  "surfaced_at": "2026-10-15T19:38:25Z",
+  "one_line": "The model-name rule (keep a model_names entry only if it is a comparison key) also fails the shared clean_block fixture in test_commentary_figures.py, so test_prompt and test_provenance needed fixture edits that the order's ticker-only refusal clause does not name; made, and listed here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-t-33 BOUNDS: 'do not touch the other four there' (the four existing tests in test_commentary_figures.py). Refusal clause: if an existing figures test fails because of the new rule, change the test's fixture to a ticker in the table (and say which) rather than loosening the rule.",
+  "world_is": "Four existing tests are touched, not one. (1) clean_block(): top_holdings ZZQ1 -> AAPL (the ticker fixture the clause names); model_names ['Figure Model Zeta','Figure Model Eta'] -> ['Model Alpha'], the request's own comparison key, which the clause does not name. (2) test_figures_whitelist_drops_unknown_members_and_bad_tickers: expected ZZQ4 -> MSFT (ticker clause). (3) test_provenance_lists_prompt_fields_by_name_only: assertion figures.model_names == 2 -> == 1 (follows from the model-name fixture). test_prompt_carries_figures_block_and_no_planted_name_or_dollar needed no body edit. In test_provenance the 'ZZQ1 not in blob' check is now vacuous (kept, not edited). Rule itself unchanged. Commentary tests: the figures file had 4 passing tests at base and 7 after; test_commentary_*.py had 69 passing at base and 72 after.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest data/transcripts/scripts/tests/test_commentary_figures.py at base 218aa64619 (worktree before edits): 4 passed; after the rule and fixture edits: 7 passed; test_commentary_*.py: 69 passed at base, 72 passed after",
+      "git diff -- data/transcripts/scripts/tests/test_commentary_figures.py in worktree wk-IRPT_ANLREQ-192 lists the clean_block, test_figures_whitelist and test_provenance hunks",
+      "r43_checks.py cn1 at base: R43-CN1-FAIL missing (three test names); after: R43-CN1-OK 7 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the rule is as ordered and the new tests are as ordered; the fixture edits are the minimum the rule forces. The CTO or COO may prefer a different fixture shape; the choice is theirs."
+}
+```
