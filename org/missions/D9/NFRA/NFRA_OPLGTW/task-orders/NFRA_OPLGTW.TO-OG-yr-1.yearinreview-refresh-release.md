@@ -91,6 +91,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-yr-1.yearinreview-refresh-relea
 
 - A3 (issuer, 2026-10-14 ~22:5xZ, msg 34270): the oracle for the SERVED page is the checked-out form `0d828b51d433a24f7e2ef2e6ea7967ee` (the path's `eol=lf` makes the blob LF, `3bbd5ab2`, but the deploy tars the checkout, which re-materialises the 344 CRLFs; measured by `~Z`). `YR_SERVED.json` `md5_source` and `md5_served_host` are `0d828b51`; yr1.AC1 still grades the BLOB in LF form. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
+
+- A4 (issuer, 2026-10-15 ~01:0xZ, row Z-S133, CTO msg 34298): the served form of the page is a property of the DEPLOYING TREE (the deploy tars the working copy; the path carries eol=lf, so a clean checkout is LF `3bbd5ab2`, while yr-1 shipped a working copy holding the CRO's CRLF bytes, `0d828b51`). Ruled route (a): the LF form is the stable one and the next deploy (`OG-ap-18`) moves the host to it; the content is identical (344 line terminators). The landing record `YR_SERVED.json` stays as MEASURED at the landing (host `0d828b51`); it is not rewritten. yr1.AC2 accepts either form for the recorded value (equal to the host's at the time) and never recomputes the host live. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>complete</status>
 <round>37</round>
 <workstream>YEARINREVIEW</workstream>

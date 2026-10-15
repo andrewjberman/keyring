@@ -1,0 +1,12 @@
+# 2.0.0_SA_COO~O drive log -- 2026-10-14 21:3xZ to 2026-10-15 01:1xZ (opal_bloomberg): yr-1 live, ec-2 done, G3/G6/gt-5 hookups merged, G5 wave A merged, ap-18 v3 half signed
+
+| time | act | evidence |
+|---|---|---|
+| 21:5xZ | OG-gt-9 merged (the silver join, not the sentiment read, dominates; pruned no-window call 38-48 s on this box's link, bound 50 s after A1) and OG-gt-10 merged (the same `parents[5]` in the two portal modules). OG-ap-18 Phase A re-opened (A4/A5) | @73804a2c4a, @d7aec6640c |
+| 22:0xZ | OG-sa-1: SA access read through the main tree's profile = HTTP 200 (account active); runner profile had no login. CTO ruled a profile copy before any new login (msg 34240); step 2b WORKED at 22:24Z, runner Running with `sa`; first `sa` cycle expected ~10:45Z 2026-10-15 (wait accepted, A3) | @13f6bb6c7f, @070606dc45, @6adc238924 |
+| 22:1xZ-23:0xZ | OG-yr-1 (Andrew-direct "live now"): ONE actor settled (`~Z`, CTO msg 34259); widened to the viewer gate for all non-guest Opal identities (A2); both halves signed (CTO @64be1ff690, COO @99efc692a1); LIVE at `bf7ffb62f4` 23:04:51Z; issuer re-ran AC1/AC2 PASS | @99efc692a1, `~Z` msg 34289 |
+| 23:1xZ-23:4xZ | OG-ec-2 (Eclipse converter): artifact-upload step ruled in (Z-S131); both halves signed (CTO @66d3d8efc5, COO @3557faf779); guard PASS 552/552, Eclipse silver 0 trading days stale; Z-S117 resolves on this | @c0c760f4e7, `~ZS` msg 34286 |
+| 23:2xZ-00:5xZ | Cut and merged: OG-gt-11 (`harvest_get_published_analysis` hookup, pins 89/80) `a03a9d2fa2`; OG-ap-19 (G3+G6 release with two grants) staged; OG-et-1 `13979abd45` and OG-et-2 `9a16c77a6a` merged after the catalog commit (`0f40810fa2`, v0.5, 216 table rows) made them readable by row (no S3 literal in the code); OG-pt-5 (`mdpf_get_category_views` by its row) cut and running | @a44f88128b, @2fd2951d3b, @cd23ff4f60 |
+| 00:5xZ | OG-ap-18 v3 (release `047f11aa99` on `bf7ffb62f4`, 17 files): issuer re-ran AC1 PASS, patch-id `f032a4d7388a` equals OG-gt-7's, the five module blobs equal trunk. Z-S133 (page moves to its LF form) ruled route (a) with the CTO; registry held at +10 on two instruments. COO half signed; CVO half owed | @fed52f5cf1, CTO @b0a59f65f3 |
+
+State at 01:1xZ: owed: CVO half of ap-18 v3, then its Phase B GO; the batch hookup of et-1/et-2/pt-5 after pt-5 merges, then OG-ap-20 (G5 wave A grant + release, with the rival-funds prefixes of PRD v3.7); row dispositions (Z-S117 after this, Z-S125 and Z-S126 at the ap-18 close, Z-S131, Z-S132, Z-S133).
