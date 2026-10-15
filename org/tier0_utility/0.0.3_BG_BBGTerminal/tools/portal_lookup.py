@@ -65,10 +65,8 @@ CHANNELS: dict = {
                         "note": "latest.json: bullish[10]/bearish[10] with analysis+tickers (semantic-trending is FROZEN -- not served)"},
     "benchmarks":      {"prefix": "json/benchmarks/",       "date_field": "data_as_of",
                         "note": "6 JSON views incl. model_portfolio_benchmarks; NEVER the top-level benchmarks/*.pkl"},
-    "mdpf":            {"prefix": "json/mdpf/",             "date_field": "period",
-                        "note": "per-firm 49financial/cottonwood/inflection/global; account-distribution.json is LIVE SERVED -- read-only"},
     "mdpf-platinum":   {"prefix": "platinum/mdpf/",         "date_field": "as_of_date",
-                        "note": "richest MDPF surface: per-firm mirrors + aggregate_aua/YYYY-MM-DD.json daily snapshots since 2024-11"},
+                        "note": "richest MDPF surface: per-firm mirrors; aggregate_aua daily snapshots (2024-11 on) now sit only under archive/. The legacy json/mdpf/ channel is retired: 0 keys at the G3 measurement 2026-10-14"},
     "pipeline-status": {"prefix": "json/latest/",           "date_field": "generated_at",
                         "note": "manifest.json: last Yang pipeline run + inputs"},
 }
