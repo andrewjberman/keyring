@@ -70,3 +70,16 @@ All earlier round-8 orders are merged, so no sibling order writes these files. G
 
 **ADDENDUM 3, amendment (2026-10-15 ~21:5xZ, before the worker was spawned):** Andrew's sixth message (record section 6) adds the Top / Bottom Performers pair (already covered by `RV-o-1`'s group rule and its performer-row class strings) and one more clause: the asset-class badges (EQ, FI, CM) read the same canonical red and green as the performance numbers. `RV-o-1` takes it as item 4 (one style prop of `PerformerCard` in the same file `ExecutiveSummary.tsx`: the badge reads `hsl(var(--delta-positive))` or `hsl(var(--delta-negative))`, a neutral return keeps its colour). Gate limb that graded the amendment: none graded the modification.
 
+## ADDENDUM 4 (2026-10-15 ~22:5xZ, 2.0.0_SA_COO~RB, issuer ruling inside its own decomposition) -- cells `RV-q-1`, `RV-r-1` and `RV-s-1`, direct acts
+
+Input: Andrew's seventh, eighth and ninth messages (record `ANDREW_DIRECT_20261015_PANEL_TONE.md` sections 7, 8 and 9, verbatim). The ninth asks for the same on the Trending Topic drilldown modal ("Do this one too"). The seventh asks for what `RV-o-1` did on the Global RSI modal's Spotlight tab; the eighth names the help icon directly after the panel title text as the pattern for the whole platform and so answers open call `002b`.
+
+| cell | what it builds | serves | writes | risk | class |
+|---|---|---|---|---|---|
+| `RV-q-1` | `PanelHeader.tsx`: the help icon (when `helpText` is given) moves from the right-hand group into the title element, directly after the title text; the right-hand group renders only when `actions` is given | FWD-3, FWD-5 | `src/ui/components/panels/PanelHeader.tsx`, `src/__tests__/dsgn-rbndv2/` | LOCAL | worker-light (direct act) |
+| `RV-r-1` | `RSIModal.tsx`: `SpotlightCard` `border-transparent` -> `border-[hsl(var(--hairline))]`; the HOTTEST and COLDEST labels (`SpotlightCard` and `RankedSection`) read `--delta-positive` and `--delta-negative` | FWD-3, FWD-5 | `src/components/market-performance/RSIModal.tsx`, `src/__tests__/dsgn-rbndv2/` | LOCAL | worker-light (direct act) |
+
+| `RV-s-1` | `ExecutiveSummary.tsx` `DrilldownModal` only (Andrew's ninth message): the topic score, the pill, the 1-2-3 circles and each source-article score read `--delta-positive` / `--delta-negative`; each source-article row gets the `--hairline` outline | FWD-3, FWD-5 | `src/components/market-performance/ExecutiveSummary.tsx`, `src/__tests__/dsgn-rbndv2/` | LOCAL | worker-light (direct act) |
+
+The three cells write disjoint files. The disk limit is two worktrees at once, so `RV-q-1` and `RV-r-1` run side by side and `RV-s-1` is spawned when the first of them drains. Call `002b` is answered by his eighth message and closed. Gate limb that graded the addendum: none graded the modification.
+

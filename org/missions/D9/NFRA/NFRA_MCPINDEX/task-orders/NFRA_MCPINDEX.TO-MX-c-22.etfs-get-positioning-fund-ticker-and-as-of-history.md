@@ -94,3 +94,6 @@ The issuer then merges and tells `2.0.0_SA_COO~O` the file and the commit so tha
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-15 ~22:5xZ), on rows Z-W46-S1 to S5; MX-c-22 COMPLETE.** Merged at a183b3cf85. The issuer re-ran c22.AC1 (4 of 4 cases byte-equal, base 06cfb6db64 against the merged tree), c22.AC2 (95 lines added, 0 typed S3 key or bucket; 15 new tests) and c22.AC3 (77 passed), and the five gateway test files together (89 passed): all PASS. S1 (the catalog open item saying GetObject on gold/book is implicitDeny): stale. The OG-ap-20 grant (infra/aws/terraform/opal-gateway/etfs_read_iam.tf lines 69-70 and 88-89) names gold/book/* and gold/holding/* in the same statements, and the live etfs_get_fund_holdings already reads gold/holding. S2 (the history branch uses gold-only helpers, no silver fallback): ruled correct for a history of positioning. S3 (the spec says a different as_of is refused; the no-fund path keeps its no_data answer): ruled correct, byte-equal is the contract. S4, S5: observations, no change. The release belongs to NFRA_OPLGTW (COO~O msg 34536). Gate limb that graded this ruling: none (LIMB 6 does not fire on a modification).
+<status>complete</status>
