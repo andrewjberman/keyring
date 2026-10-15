@@ -4170,3 +4170,15 @@ Check IB213-1 (`deliverables/2.0.0_SA_COO~P2/checks/r213/p213_cells.py`), dry-ru
 | `IB-pr-574` | READ the TERMINATED mark's writer, shape and precedent, the zero-position evidence dates for the one account, and an offline gate run with the mark stubbed | FWD-21 | SERVED | none | PF1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~417) starts now.
+
+## 210. ROUND 2, WORKSTREAM ~PE (49 Financial's lost ACTIVE account across the dim_balance partitions; 2026-10-15 ~13:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8274)
+
+Round 1 of ~PE closed MAY-CLOSE (IB-pr-573): 49 Financial (the P1 firm, served 2026-10-12, two trading days behind T-1) has a lost ACTIVE account with ONE row in the 2026-10-12 dim_balance partition and NONE in 2026-10-13, so no screen drops it: a source gap on the candidate date. The CTO ordered (msg 8274) the account's presence read across dim_balance 2026-10-08 to 2026-10-14 and the upstream writer's run for 2026-10-13 (row counts by partition; did it fail or truncate), and ruled: an account ABSENT from the source is not the zero-position case, the guard keeps refusing; if 2026-10-14 carries it again the 2026-10-14 candidate publishes cleanly and 2026-10-13 stays an unpublished day stated in words; if it is gone for good the remedy is a custodian-confirmed TERMINATED mark, a partner-firm contact the issuer drafts for Andrew. One READ cell.
+
+Check IB214-1 (`deliverables/2.0.0_SA_COO~P2/checks/r214/p214_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control214.py`) passes all three and seventeen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-575` | READ the lost account's presence across dim_balance 2026-10-08 to 2026-10-14, the upstream writer in the code and its 2026-10-13 run, whether the refusal clears | FWD-21 | SERVED | none | PE2-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~418) starts now.

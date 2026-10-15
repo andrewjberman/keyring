@@ -1,12 +1,13 @@
 {
   "prd": "NFRA_CTLPLN_PRD.md",
-  "prd_version": "v0.29",
-  "prd_pin": "aca7293eed21f6b85ff8c9071472944daf210a71",
+  "prd_version": "v0.31",
+  "prd_pin": "947811fd1e63ee9e3a89ba7f4ddb2b81dc8db9db",
   "half": "ratified-text",
-  "half_hash": "b443719459b6dd09474c1b5cd0d3b650fbe45691cd38d412b30c000fb4246503",
-  "endpoint_hash": "464a40a796ef50327953ed02e1034e8b011b05ee545c00d4a64a7e4557d26053",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_PRD_V029_RATIFIED_TEXT_REVIEW_20261013.md@e741de2215",
+  "half_hash": "46ffb85ea4f5308e364001943d0e0937674a739542ae4fa467a9fd594c883333",
+  "endpoint_hash": "a5625ff1f3a4589ab57d42a1028ed6cfdbe6fb8e8fdd213c8e328ba5bdce6fba",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_PRD_V031_RATIFIED_TEXT_REVIEW_20261015.md@dd145b832e",
   "signed_by": "3.0.0_SA_CVO~L",
-  "signed_at": "2026-10-13T14:30:48Z"
+  "signed_at": "2026-10-15T12:36:20Z",
+  "reason": "ENDPOINT right; C-ROLES still says Dells never change access (and per-use vendor word is stale), C-IDENTITY still states the IAM deny beside its withdrawal"
 }

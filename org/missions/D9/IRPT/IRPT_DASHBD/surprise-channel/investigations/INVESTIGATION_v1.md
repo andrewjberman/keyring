@@ -17327,3 +17327,128 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The condition is met in the repo at 4200e3415b. The landing packet still owes: first act one explicit event for 2026-07-10, memory 1024 MB from the DB-b-255 measurement, catch-up by explicit days events, never a day on or before 2026-06-22. Counts, dates and words only."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W211-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~211",
+  "surfaced_at": "2026-10-15T12:28:50Z",
+  "one_line": "The reporting-publish role holds a read grant on the dimension prefix that its handler never reads: the grant is held and unused",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep at base 4a3e3c8f8e: the six claim names and the dimension token occur in the reporting-publish terraform only at iam.tf:40 (the role description) and locals.tf:48 (the dimension table constant placed in the READ grant at locals.tf:53-54)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py reads only TABLE_GOLD (account_return_daily, lines 66 and 111-135) and publisher.py takes its GOLD_COLUMNS from the same table; no line of either names the dimension table",
+      "reporting-gold terraform (iam.tf, locals.tf) carries no dimension read grant; the two occurrences there are comments excluding the dimension (iam.tf:88, locals.tf:103)"
+    ]
+  },
+  "spec_asserts": "infra/aws/terraform/investor-reporting/reporting-publish/iam.tf:40 describes the reporting-publish function as reading exactly the reporting gold prefixes account_return_daily and dim_return_method, and locals.tf:53-54 places the dimension prefix in its READ grant.",
+  "world_is": "The reporting-publish handler reads only the gold account_return_daily table by named columns and never reads the dimension, so the dimension read grant is held and not exercised at commit 4a3e3c8f8e. The grant is outside this order's paths and is recorded, not changed. No client value is involved."
+}
+```
+
+## IRPT_DASHBD-D2-S82 -- the first scheduled Cottonwood holdings_performance fire landed T-1 (2026-10-14) clean
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S82",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T12:27:26Z",
+  "one_line": "The first scheduled Cottonwood holdings_performance fire (08:15 New York, 12:15Z) landed T-1 = 2026-10-14 clean: 3 objects at 12:15:34Z, 1001 rows, schema 1.2, 0 days not computed; read by this seat from S3 and the function log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The signed pair (blob ad049d506c) ends with the schedule ENABLED and the first scheduled fire landing a gold partition for T-1 at the frontier, or a named hold when T-1's silver is absent; the ledger leg closes only after that fire reads clean.",
+  "world_is": "Read at 12:20Z, read-only. S3: holdings_performance_daily holds date=2026-10-14/data.parquet (LastModified 12:15:34Z, 39239 bytes) and holdings_performance_manifest holds date=2026-10-14/data.parquet (12:15:34Z) and manifest.json (12:15:34Z); 88 daily and 176 manifest objects, the newest gold date moved from 2026-10-13 to 2026-10-14; the manifest reads schema_version 1.2 and 1001 rows. CloudWatch log of irpt-cot-holdings-performance-lambda: invocation ab6ad0c3, computing date=2026-10-14 upload=True, EMIT 1 day(s) landed 1001 row(s), 0 day(s) not computed, census OK 827 / NON-POSITIVE-BASE 160 / ALL-HOLDINGS-EXCLUDED 14, Duration 1540 ms, no error. The fire is clean; no rollback. 0.7.0_AE_CloudOps~DB2 re-read it independently (msg 8271) and holds its ledger leg L8 open until the Inflection 14:00Z read, which step 9 of TO-DB-c-14 names. Counts, dates and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live S3 LIST and manifest.json read of opal-data-cottonwood irpt/cottonwood/gold/holdings_performance_{daily,manifest}/date=2026-10-14",
+      "CloudWatch log group /aws/lambda/irpt-cot-holdings-performance-lambda, invocation ab6ad0c3-c49b-4bd1-ae7a-70a45d5fb008",
+      "0.7.0_AE_CloudOps~DB2 msg 8271 (independent re-read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Evidence row for the drain-end addendum (B-CW rounds 117 to 125); nothing to disarm."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W210-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~210",
+  "surfaced_at": "2026-10-15T12:32:01Z",
+  "one_line": "The BUILD_ONLY build of the Cottonwood landing function printed an advisory that its layer imports are unenforced, because the package carries no BUILD_MANIFEST.json",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BUILD_ONLY=1 build-and-upload.sh investor-reporting irpt-cot-account-return-daily-lambda at commit 805874f275 exited 0 and printed ADVISORY (not enforced) naming cottonwood_bd_account_return_daily, opal_naming, pyarrow and trading_calendar as undeclared imports",
+      "infra/aws/lambda/investor-reporting/account-return-daily/ holds handler.py and tests/ only at HEAD 8d0b56b1b3; no BUILD_MANIFEST.json exists in that source dir"
+    ]
+  },
+  "spec_asserts": "Order DB-b-257 asks for a BUILD_ONLY build that proves the package holds exactly the declared members. It does not address layer dependencies; the builder's own text reads UNENFORCED IS NOT A PASS.",
+  "world_is": "The build exited 0 and the zip holds the 16 declared members byte for byte (checker AC3 PASS), but no gate checks the package's import layers until a BUILD_MANIFEST.json declares layer_dependencies and vendored_modules. A later edit adding a cross-layer import would build clean."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W210-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~210",
+  "surfaced_at": "2026-10-15T12:32:01Z",
+  "one_line": "The round-125 memory measurement for the Cottonwood landing function ran under Python 3.14 on a Windows box; the function runtime is python3.12 on Lambda and that runtime was not measured",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RD_COT_MEMORY_R125.json (deliverables 0.9.0_WK_IRPT_DASHBD~208) records one local run with the Python 3.14 interpreter and states its peak as the whole resident set, nothing subtracted",
+      "infra/aws/terraform/investor-reporting/account-return-daily/lambda.tf at commit 8d0b56b1b3 declares runtime python3.12 and memory_size 1024"
+    ]
+  },
+  "spec_asserts": "Order DB-b-257 step 2: memory is set from this function's own round-125 measurement, and the sizing comment states the measured peak.",
+  "world_is": "The measured peak of 654.5 MB was taken on a different interpreter and operating system from the Lambda runtime. The Lambda runtime's own peak is not measured. The 70 percent line of 1024 MB (716.8 MB) sits about 9 percent above the measured peak. Nothing in this order invokes the function."
+}
+```
+
+## IRPT_DASHBD-D2-S83 -- OBSERVATION: W210-S1 and W210-S2 dispositioned, the Cottonwood landing packet carries the memory gap
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S83",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T13:20:00Z",
+  "one_line": "Rows IRPT_DASHBD-D2-W210-S1 and IRPT_DASHBD-D2-W210-S2 are dispositioned: the builder's layer-import advisory did not stop the build, and the python3.12 memory gap is gated by the first event's Max Memory Used in the landing packet",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DB126-1-AC3 run by this seat on the landed tree after merge 1e78f951eb: the build-only command exits 0 with the advisory printed, the package holds exactly the 16 declared members and its sha256 is the same in three builds",
+      "NEVER_WIDEN_PACKET_COTTONWOOD_ACCOUNT_RETURN_DAILY_LANDING.md section 6 branch D and section 9 question 2: Act 2 reads Max Memory Used against 717 MB before any Act 3 event, and the memory line is a single-line change",
+      "the function, roles, schedule and artifact are absent in AWS at packet time (read-only gets), so nothing at risk exists until the pair is applied"
+    ]
+  },
+  "spec_asserts": "Worker rows W210-S1 (ARMED, layer imports unenforced without a BUILD_MANIFEST.json) and W210-S2 (ARMED, memory measured on python3.14 against a python3.12 runtime), disarm owner this seat.",
+  "world_is": "W210-S1: the advisory is printed and the build exits 0 with every declared member present and byte-equal to its source; nothing depends on layer-import enforcement for this function. W210-S2: still true as a measurement gap; it is carried into the pair as a stated limit with a reading and a one-line remedy, and nothing is deployed to be at risk before the pair is signed. Counts, dates and words only."
+}
+```
