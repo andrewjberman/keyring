@@ -18603,6 +18603,86 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W223-S1 -- The Scope adapter already writes market_value_eod_claim as a row field and as a parquet column, so the claim is not only in its run record; the 0.4.1 contract declares no such column.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:11:31Z",
+  "one_line": "The Scope adapter already writes market_value_eod_claim as a row field and as a parquet column, so the claim is not only in its run record; the 0.4.1 contract declares no such column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-275, Why section: the Scope feed carries no end market value, the adapter infers it, and the claim lives only in the adapter's run record, so 0.4.1 has no field a consumer can reject on for it.",
+  "world_is": "The adapter's day rows carry market_value_eod_claim beside the contract's columns: the value is 'inferred' from the next calendar day's start value and 'measured' from the own end value (adapter lines 131 and 133, row field at line 144). The run writes it as a string column of the parquet (run line 27 names the field, line 116 appends it to the table fields). Two adapter tests pin the field and its two values, and one run test pins its string type. The claim therefore already travels as a field in the output; no contract declares it until 0.4.2 does.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py lines 131, 133 and 144 (base 198f2591f091c57df02ef8238aa1f10cff7147bb)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py lines 27 and 116 (base 198f2591f091c57df02ef8238aa1f10cff7147bb)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_adapter.py lines 173-188 and 263; data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_run.py line 189 (base 198f2591f091c57df02ef8238aa1f10cff7147bb)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found by the token census of market_value_eod_claim at the census commit (4 files, 14 hits). Only these lines were read; the adapter is outside this grant. The adapter's TABLE_FIELDS comment still says 22 sorted name:type lines, which is stale against the five optional columns of 0.4.1."
+}
+```
+
+## IRPT_DASHBD-D2-W223-S2 -- Under 0.4.2 all twelve tests of the 0.4.1 contract file fail: they build Orion rows without the claim, and that file's validator reads required_when but not required_unless_absent. The order's bounded edit covers the pinned version only, so the file does not pass whole.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:11:31Z",
+  "one_line": "Under 0.4.2 all twelve tests of the 0.4.1 contract file fail: they build Orion rows without the claim, and that file's validator reads required_when but not required_unless_absent. The order's bounded edit covers the pinned version only, so the file does not pass whole.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Task order DB-b-275 step 4(b) and criterion DB142-1-AC3: the 0.4.0 and 0.4.1 contract tests pass once the contract reads 0.4.2, with bounded edits only where a test pins the literal contract version or a hash that 0.4.2 moves. The facts words of step 5 say every earlier writer still validates.",
+  "world_is": "The one edit the order names for the 0.4.1 file is the version pin, re-pointed at the supersedes entry (line 230). Twelve of its tests still fail, and each reports that market_value_eod_claim is required on the row. The 0.4.2 declaration requires the claim on every PRESENT Orion row and exempts an ABSENT row through required_unless_absent; the 0.4.1 file's copy of the validator does not read required_unless_absent, and its Orion fixtures carry no claim. Making the file pass needs a validator edit and a fixture edit, a route the order does not name, so the file is left failing and criterion DB142-1-AC3 is FAIL. The 0.4.0 file passes unedited, and the new 0.4.2 file passes with 22 tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_041.py row_problems, lines 58-85 (base 198f2591f091c57df02ef8238aa1f10cff7147bb; the one edit is line 230)",
+      "pytest of the 0.4.0, 0.4.1, cottonwood and 0.4.2 files in the worker worktree: 12 failed, 83 passed before the 0.4.2 file was added; all 12 failures are in the 0.4.1 file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by this worker. The issuer's choice: a 0.4.1 validator that honours required_unless_absent with fixtures that carry the claim, or a ruling that the 0.4.1 Orion fixtures are retired from the 0.4.2 reading. The contract itself is as the order states."
+}
+```
+
+## IRPT_DASHBD-D2-W223-S3 -- Resolves IRPT_DASHBD-D2-W223-S2 under the coordinator's ruling (order AMENDMENT 1 at e61247310c): the 0.4.1 test's bound is 60 lines, its validator reads required_unless_absent and its PRESENT Orion fixtures carry the claim; all 31 tests of that file now pass.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:24:04Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W223-S2 under the coordinator's ruling (order AMENDMENT 1 at e61247310c): the 0.4.1 test's bound is 60 lines, its validator reads required_unless_absent and its PRESENT Orion fixtures carry the claim; all 31 tests of that file now pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The BLOCKING row W223-S2 is resolved by the issuer's ruling: the claim is required on a PRESENT Orion row by the CTO's rule (msg 8655), so a 0.4.1 Orion row without it is meant to fail; the bounded 0.4.1 amendment is in the worker commit that carries this row.",
+  "spec_asserts": "Task order DB-b-275, criterion DB142-1-AC3: the 0.4.0 and 0.4.1 contract tests pass once the contract reads 0.4.2; for the 0.4.1 file, the bounded edit was named as the version pin only (surfaced in W223-S2).",
+  "world_is": "Under AMENDMENT 1 the 0.4.1 file's bound is 60 changed lines (the 0.4.0 test stays at 14). Its validator now reads required_unless_absent, and its PRESENT Orion fixtures carry market_value_eod_claim measured. Measured after the edit: 31 of 31 tests in the 0.4.1 file pass, 12 of 12 in the 0.4.0 file, 22 of 22 in the 0.4.2 file, and 52 in the two cottonwood files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order AMENDMENT 1 in IRPT_DASHBD.TO-DB-b-275 at commit e61247310c (box/dell2), merged into the worker branch at 8f4686bf0a",
+      "test_account_return_contract_041.py row_problems required_unless_absent clause and _orion_present market_value_eod_claim, changed in the worker commit that carries this row"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "notes": "Row W223-S2 stays UNDER_INVESTIGATION in its own row (the channel is append-only); this row is the resolution. The CVO's adjudication of S2 is the CVO's carrier and is not written here."
+}
+```
+
 ## IRPT_DASHBD-D2-W312-S1 -- the complete-day rule counts dropped days, but the run record names no key for dropped rows; the record was kept as the order lists it
 
 ```json
@@ -18732,5 +18812,32 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   },
   "disposition": "DISMISSED_WITH_REASON",
   "dismissal_reason": "Disarms IRPT_DASHBD-D2-W311-S1: its condition (an edge trading day with neither a row nor an ABSENT row) is absent on the landed tree of round 125, measured by the r125 checker (first-day and last-day fixtures, 28 of 28 rows, unaccounted count 0) and by 93 passing tests."
+}
+```
+
+## IRPT_DASHBD-D2-W223-S4 -- Resolves IRPT_DASHBD-D2-W223-S2 under AMENDMENT 2 of the order (the CTO's upheld L9 FAIL of 0.4.1 on rule 24 postulate iii): return_basis goes back to TWR and NOT_MEASURABLE, source_requires is removed, source_provenance carries who computed each source, and the 0.4.1 test is re-pointed within its 120-line bound; all 27 tests of the 0.4.2 file and 31 of the 0.4.1 file pass.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W223-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~223",
+  "surfaced_at": "2026-10-15T21:41:53Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W223-S2 under AMENDMENT 2 of the order (the CTO's upheld L9 FAIL of 0.4.1 on rule 24 postulate iii): return_basis goes back to TWR and NOT_MEASURABLE, source_requires is removed, source_provenance carries who computed each source, and the 0.4.1 test is re-pointed within its 120-line bound; all 27 tests of the 0.4.2 file and 31 of the 0.4.1 file pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The BLOCKING row W223-S2 stays resolved: the claim requirement is the CTO's rule, and the 0.4.1 file's failures came from a superseded return_basis rule that Amendment 2 repairs in the same 0.4.2 contract.",
+  "spec_asserts": "Task order DB-b-275, Amendment 2: return_basis means which arithmetic (TWR); VENDOR_REPORTED leaves the enum; source_requires is removed; source_provenance maps each source value to who computed it; the 0.4.1 test's bound is 120 lines.",
+  "world_is": "The contract at the amended state holds return_basis TWR and NOT_MEASURABLE, a source_provenance block with three keys (orion vendor-computed; the two Black Diamond sources Opal-computed), and source_rules.orion.return_basis naming TWR with provenance read from source. The 0.4.2 file passes 27 tests, including TWR valid, VENDOR_REPORTED rejected and the provenance mapping; the 0.4.1 file passes 31 tests after re-pointing its superseded return_basis and source_requires assertions; the 0.4.0 file passes 12 and the cottonwood pair 52. AC1, AC2 and AC3 of the checker pass.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order AMENDMENT 2 of IRPT_DASHBD.TO-DB-b-275 at commit 02753bc7e3 (box/dell2), merged into the worker branch",
+      "checker p142_contract042.py amended at 02753bc7e3: return_basis enum, source_provenance, source_rules.orion.return_basis and rule24 v042.i_mece.return_basis clauses"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "notes": "W223-S2 and W223-S3 stay as written (append-only). S3 closed the S2 failure by the claim-aware 0.4.1 validator under AMENDMENT 1; AMENDMENT 2 changes the return_basis rule that the 0.4.1 file also pins. The CVO's adjudication of S2 is the CVO's carrier and is not written here."
 }
 ```
