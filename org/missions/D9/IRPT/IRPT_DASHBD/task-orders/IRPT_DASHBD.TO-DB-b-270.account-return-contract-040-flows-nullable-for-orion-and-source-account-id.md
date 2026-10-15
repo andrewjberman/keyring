@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~219</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -48,9 +48,14 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-219` (branch `wk-IRPT_DASHBD-2
 - **Refusal clause.** A criterion you cannot satisfy AS WRITTEN is reported with your measurement, never repaired, widened or satisfied by a route this order did not name. If an earlier contract-reading test fails once the contract reads 0.4.0 and the cause is a hard-coded `0.3.0` in that test, record it as a BLOCKING row and stop: those test files are not in your grant.
 - **Rows** go to the investigation file in the grant, ids `IRPT_DASHBD-D2-W219-S<k>` (start at S1), with the real current UTC time (`date -u +%FT%TZ`); append as BYTES. Commit with `.tools/safe-commit.sh`; run its gates in the background and wait for them. ASCII only in anything you write; every `.py` passes ruff (target py39, no semicolon-joined statements).
 
+## AMENDMENT 1 (2026-10-15 ~19:0xZ, 2.0.0_SA_COO~D2, on row IRPT_DASHBD-D2-W219-S1): ONE assertion of an earlier test moves with the contract
+
+Contract 0.4.0 moves the top-level `schema_hash_with_optional` (the 0.3.0 value is in the contract's `supersedes` entry for 0.3.0). The Cottonwood adapter stays a 0.3.0 writer (its constant `CONTRACT_VERSION` is "0.3.0" and it emits the 20-field table with `source` only), so its hash is the 0.3.0 value, not the contract's new top-level one. **The grant gains** `data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_bd_account_return_daily.py`. **Do exactly this and nothing else in that file:** in `test_the_two_hashes_equal_the_contract_and_match_a_recomputation`, replace the line asserting `m.schema_hash_with_optional() == contract["schema_hash_with_optional"]` with an assertion that it equals the `schema_hash_with_optional` of the entry of `contract["supersedes"]` whose `contract_version` is "0.3.0" (a one-line comment may say why). The file may change by at most 8 lines in all (`DB137-2-AC1` measures it). Add the file to your commit; the 52 earlier tests then all pass (`DB137-2-AC3`). Gate limb that graded this amendment: none (the order carries no `<placeholders>`; a grant path and a criterion bound were added to an order already complete in its other parts); the CTO reads it at the round-N analysis.
+
 <paths>
 org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json
 data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_040.py
+data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_bd_account_return_daily.py
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~219/
 org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-270.account-return-contract-040-flows-nullable-for-orion-and-source-account-id.md

@@ -18881,3 +18881,266 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W156-S1..S2 -- AR-y-359 (0.9.0_WK_IRPT_ANLREQ~156): the amended FWD-1 driver self-test case and a stale self-test count in the r41 record
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W156-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~156",
+    "surfaced_at": "2026-10-15T19:00:52Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "AR-y-359 asks for one self-test case that names the retired producer address, while AC2 requires that address to occur in neither amended driver file; the case asserts that the driver EMAIL equals the mint helper EMAIL constant instead (the cell's assert-the-constant fallback), so neither file carries the retired address.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs:26 (const EMAIL = 'fwd1-staff-r41a@opal.invalid' at the base) @3514aeecc6ad6be52977aaf06b0946f47f4b9814",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_mint.py:22 (EMAIL = \"fwd1-staff-r41a@opal.invalid\" at the base) @3514aeecc6ad6be52977aaf06b0946f47f4b9814",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~156/address_check.py (AC2: r41a in neither file, r41b exactly once in each)"
+      ]
+    },
+    "spec_asserts": "AR-y-359 cell item 1: add ONE self-test case that the old address fwd1-staff-r41a@opal.invalid is NOT the run's address; AC2: the token r41a occurs in neither amended file and the r41b address occurs exactly once in each.",
+    "world_is": "A case that spells the old address puts the token r41a into fwd1_driver.mjs, so AC2 fails; a case that spells the r41b address puts a second copy of it into the driver, so AC2 fails. The added case compares EMAIL with the EMAIL constant read at runtime from fwd1_mint.py, so neither literal appears in the case. The mutant that restores the r41a address in the driver fails that case (MUTANT-FIRES).",
+    "notes": "Form only. The conflict is between two instructions of the order, not an open question about the driver. Disposition left for the CVO at L9."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W156-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~156",
+    "surfaced_at": "2026-10-15T19:00:52Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The r41 folder's FWD1_DRIVER_RECORD.json reports SELFTEST-OK 29 cases, while the driver at the AR-y-359 base carries 36 self-test cases (measured by node --selftest at 3514aeecc6).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/r41/FWD1_DRIVER_RECORD.json:241 (\"SELFTEST-OK 29 cases\") @3514aeecc6ad6be52977aaf06b0946f47f4b9814",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs (base self-test prints SELFTEST-OK 36 cases) @3514aeecc6ad6be52977aaf06b0946f47f4b9814"
+      ]
+    },
+    "spec_asserts": "AR-y-359 cell: selftest_cases_before is 36, and the record is the instrument that reports the driver's self-test.",
+    "world_is": "The r41 record in the ~149 folder reports 29 cases; the driver at base reports 36. The cause of the difference is not measured here.",
+    "notes": "Not touched by AR-y-359: the record is outside the grant. Recorded so the CVO can read the count against the driver's history."
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W186-S1 -- the priced Opal page prints YCharts wording and the time-budget line (layout pricing=True branch), which R8 forbids
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W186-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~186",
+  "surfaced_at": "2026-10-15T19:06:28Z",
+  "one_line": "With pricing on, the Opal page prints the layout's YCharts wording (footer 'Data: YCharts', 'YCharts' data' reasons) and the time-budget line, which the Opal page rule R8 forbids.",
+  "class": "OBSERVATION",
+  "spec_asserts": "TO-AR-g-86 step 6 builds the page with the pricing flag on a priced run and says the vendor-sourced elements keep reading NOT_IN_THIS_VERSION; layout_overview.py:1057-1064 and :953-967 print YCharts and time-budget wording for a pricing=True page, and the R8 comments at layout_overview.py:69 and :1058 say an Opal page names no vendor and no time budget.",
+  "world_is": "Probe on the priced fixture of tests/test_opal_producer_prices.py (worktree wk-IRPT_ANLREQ-186, base 089a3d3a6b plus this cell): the priced page has two footers 'Data: YCharts' (one per page), five YCharts strings (the builder-only line 'Not available from YCharts' data endpoints.', the computed line 'Not available: YCharts' data does not give this element for this portfolio. Reason: INPUT_MISSING:risk_free') and two 'outside the run's time budget' lines for the call-sourced m.info and m.bench, while run.json reads NOT_IN_THIS_VERSION for those elements. The pricing-off page is unchanged. The AR-g-86 checks grade only the count of NOT_IN_THIS_VERSION lines on the priced page, not its footer or its vendor wording.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:1057-1064 @089a3d3a6b (the outside_budget branch prints OUTSIDE_BUDGET_LINE; the R8 branch is taken only when not pricing)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:953-967 @089a3d3a6b (_reason_line prints the YCharts data wording when pricing is True)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:1140 @089a3d3a6b (the footer credit is SOURCE_CREDIT when pricing, OPAL_SOURCE_CREDIT otherwise)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer_prices.py::test_package_render_uses_the_same_price_stage and the probe output in the worktree scratch (.scratch/r8_probe.py): YCharts 5, time budget 2, footer 'Data: YCharts' x2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not in this order's grant: layout_overview.py is read, not changed. Production keeps pricing off and the real readers and T-1 wiring are a later cell, which should pass pricing=False to build for the Opal page or make the layout's pricing=True branch Opal-safe. No change is proposed here."
+}
+```
+
+## IRPT_ANLREQ-D2-W187-S1 -- the commit gate's client-data check found no hashed account-id list on this device, so commit 4ac9dd9eb2 was not checked for client account ids
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W187-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~187",
+  "surfaced_at": "2026-10-15T19:14:15Z",
+  "one_line": "The commit gate's client-data check reports its hashed account-id list ABSENT on this device, so commit 4ac9dd9eb2 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "TO-AR-g-87 WORKER FACE: commit with bash .tools/safe-commit.sh and pass every .py through the commit gate; CLAUDE.md rule 14a: commits go through safe-commit.sh, whose gate chain runs the client-data check on each commit.",
+  "world_is": "safe-commit printed WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there). Commit 4ac9dd9eb2 (resident_installed.py and test_resident_installed.py) landed with rc=0, so on this device every commit proceeds unchecked for client account ids until the list is provisioned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 4ac9dd9eb2: WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "git show --stat 4ac9dd9eb2: 2 files changed, 12 insertions(+), 2 deletions(-); the diff adds no account id"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not caused by the order's change. This worker created, read and moved no account-id list. Disarm: provision the hashed list or set OPAL_ACCOUNT_ID_HASHES on dell2; the disarm owner is named for the CVO to route."
+}
+```
+
+## IRPT_ANLREQ-D2-W187-S2 -- the pre-commit risk reflex cited a deploy receipt the sparse worktree does not hold, so the citation could not be read before commit 4ac9dd9eb2
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W187-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~187",
+  "surfaced_at": "2026-10-15T19:14:15Z",
+  "one_line": "The pre-commit risk reflex put a HOLD on resident_installed.py and cited org/critical_paths/change_management/20260924T0150Z_irpt-resident-cutover-20260924_deploy_completion.md:19, which this sparse worktree does not hold on disk.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate's risk reflex says: GO READ THE CITATION before this commit proceeds. TO-AR-g-87 WORKER FACE says the worktree carries infra/, docs/, data/ and org/missions/D9/IRPT on disk and names no critical_paths read.",
+  "world_is": "The worktree is sparse (git config core.sparseCheckout is true). org/critical_paths is tracked in the index (git ls-files lists org/critical_paths/.open_deploys files) but has no directory on disk here, so the cited receipt cannot be read from this worktree. The file exists in the base checkout C:/dev/ajb_workspace. git status is clean. Commit 4ac9dd9eb2 went through with the HOLD printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit risk-reflex output for 4ac9dd9eb2: HOLD infra/aws/lambda/investor-reporting/reports/resident_installed.py -> file:...resident_installed.py (2 recorded claims); citation org/critical_paths/change_management/20260924T0150Z_irpt-resident-cutover-20260924_deploy_completion.md:19",
+      "git config --get core.sparseCheckout returns true; ls org/critical_paths in the worktree: No such file or directory; git ls-files org/critical_paths/change_management/ | grep -c 20260924T0150Z returns 2 at HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The flagged change is one constant and one opt-in tuple in resident_installed.py; it deploys nothing and calls no AWS. The citation was not read by this worker, because the base checkout is outside the worktree."
+}
+```
+
+## IRPT_ANLREQ-D2-S125 -- disposition of IRPT_ANLREQ-D2-W187-S1: the added lines read clean for account-id-shaped strings
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S125",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T19:20:22Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client-account gate could not run on this box, so the issuer read the lines the commit added for account-id-shaped strings: none. The gate stays unmeasured; the box's hashed list is not this order's to place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W187-S1 (ARMED, client account-id check absent on this box): the lines commit 4ac9dd9eb2 added hold no account-id-shaped string, read by the issuer at 38620fe9f2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 4ac9dd9eb2 over reports/resident_installed.py and reports/tests/test_resident_installed.py: no added line carries a run of 6 or more digits (0 of the added lines); the two digit runs in the first file and the 12-digit run in the second predate the commit",
+      "the change is one constant, one tuple and two test edits over invented values"
+    ]
+  },
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned against the hashed list; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "The issuer's read is not the gate's check and does not claim it. The same instrument gap is on the record as W143-S2, W52-S25 and, for adapters 81 and 84, S123 and S124."
+}
+```
+
+## IRPT_ANLREQ-D2-W188-S1 -- the commit gate's client-data check found no hashed account-id list on this device, so commit 61457ec92a was not checked for client account ids
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W188-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~188",
+  "surfaced_at": "2026-10-15T19:33:25Z",
+  "one_line": "The commit gate's client-data check reports its hashed account-id list ABSENT on this device, so commit 61457ec92a was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "TO-AR-g-88 WORKER FACE: commit with bash .tools/safe-commit.sh and pass every .py through the commit gate; CLAUDE.md rule 14a: commits go through safe-commit.sh, whose gate chain runs the client-data check on each commit.",
+  "world_is": "safe-commit printed WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty). Commit 61457ec92a (layout_overview.py and tests/test_layout_own_series_columns.py) landed with rc=0, so on this device every commit proceeds unchecked for client account ids until the list is provisioned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 61457ec92a: WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "git show 61457ec92a -- infra/ | grep '^+' | grep -E '[0-9]{6,}' returns one line, the milliseconds-per-day constant 86400000; no account id is added"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The same instrument gap as IRPT_ANLREQ-D2-W187-S1, on this device; not caused by the order's change. This worker created, read and moved no account-id list. Disarm: provision the hashed list or set OPAL_ACCOUNT_ID_HASHES on dell2; the disarm owner is named for the CVO to route."
+}
+```
+
+## IRPT_ANLREQ-D2-W188-S2 -- the pre-commit risk reflex cited a deploy receipt the sparse worktree does not hold, so the citation could not be read before commit 61457ec92a
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W188-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~188",
+  "surfaced_at": "2026-10-15T19:33:25Z",
+  "one_line": "The pre-commit risk reflex cited a deploy receipt the sparse worktree does not hold, so the citation could not be read before commit 61457ec92a.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate's risk reflex says: GO READ THE CITATION before this commit proceeds. TO-AR-g-88 WORKER FACE says the worktree carries infra/, docs/, data/ and org/missions/D9/IRPT on disk and names no critical_paths read.",
+  "world_is": "The worktree is sparse: org/critical_paths/change_management/ does not exist on disk here (ls reports no such file or directory). The reflex on commit 61457ec92a printed HOLD infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py (2 recorded claims) and cited org/critical_paths/change_management/20261009T0050Z_irpt-ycdgen-f1-st26-20261008_deploy_completion.md:15. The citation was not read; the commit proceeded with the HOLD printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit risk-reflex output for commit 61457ec92a: HOLD infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py, citation org/critical_paths/change_management/20261009T0050Z_irpt-ycdgen-f1-st26-20261008_deploy_completion.md:15",
+      "ls org/critical_paths/change_management/ in the worktree: No such file or directory; the same condition is on record as IRPT_ANLREQ-D2-W187-S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The same instrument gap as IRPT_ANLREQ-D2-W187-S2. The flagged change adds one pure function, a column branch and a milliseconds-per-day constant; it deploys nothing and calls no AWS. The citation stays unread by this worker."
+}
+```
+
+## IRPT_ANLREQ-D2-S126 -- disposition of IRPT_ANLREQ-D2-W188-S1: the added lines read clean for account-id-shaped strings
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S126",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T19:38:55Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client-account gate could not run on this box, so the issuer read the lines the commit added for account-id-shaped strings: the only run of six or more digits is the milliseconds-per-day constant 86400000 in the test file. The gate stays unmeasured; the box's hashed list is not this order's to place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W188-S1 (ARMED, client account-id check absent on this box): the lines commit 61457ec92a added hold no account-id-shaped string, read by the issuer at 0a3720ff89.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 61457ec92a over ycharts/research/: 158 added lines, one with a run of 6 or more digits (86400000, a day in milliseconds, in tests/test_layout_own_series_columns.py)",
+      "the change is a statistic loop and its labels over invented series values"
+    ]
+  },
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned against the hashed list; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "The issuer's read is not the gate's check and does not claim it. The same instrument gap is on the record as W143-S2, W52-S25, S123, S124 and S125."
+}
+```
+
+## IRPT_ANLREQ-D2-W192-S1 -- TO-AR-t-33 says leave the other four figure tests alone, but the model-name rule also forces fixture edits beyond the ticker-only allowance
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W192-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~192",
+  "surfaced_at": "2026-10-15T19:38:25Z",
+  "one_line": "The model-name rule (keep a model_names entry only if it is a comparison key) also fails the shared clean_block fixture in test_commentary_figures.py, so test_prompt and test_provenance needed fixture edits that the order's ticker-only refusal clause does not name; made, and listed here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-t-33 BOUNDS: 'do not touch the other four there' (the four existing tests in test_commentary_figures.py). Refusal clause: if an existing figures test fails because of the new rule, change the test's fixture to a ticker in the table (and say which) rather than loosening the rule.",
+  "world_is": "Four existing tests are touched, not one. (1) clean_block(): top_holdings ZZQ1 -> AAPL (the ticker fixture the clause names); model_names ['Figure Model Zeta','Figure Model Eta'] -> ['Model Alpha'], the request's own comparison key, which the clause does not name. (2) test_figures_whitelist_drops_unknown_members_and_bad_tickers: expected ZZQ4 -> MSFT (ticker clause). (3) test_provenance_lists_prompt_fields_by_name_only: assertion figures.model_names == 2 -> == 1 (follows from the model-name fixture). test_prompt_carries_figures_block_and_no_planted_name_or_dollar needed no body edit. In test_provenance the 'ZZQ1 not in blob' check is now vacuous (kept, not edited). Rule itself unchanged. Commentary tests: the figures file had 4 passing tests at base and 7 after; test_commentary_*.py had 69 passing at base and 72 after.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest data/transcripts/scripts/tests/test_commentary_figures.py at base 218aa64619 (worktree before edits): 4 passed; after the rule and fixture edits: 7 passed; test_commentary_*.py: 69 passed at base, 72 passed after",
+      "git diff -- data/transcripts/scripts/tests/test_commentary_figures.py in worktree wk-IRPT_ANLREQ-192 lists the clean_block, test_figures_whitelist and test_provenance hunks",
+      "r43_checks.py cn1 at base: R43-CN1-FAIL missing (three test names); after: R43-CN1-OK 7 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the rule is as ordered and the new tests are as ordered; the fixture edits are the minimum the rule forces. The CTO or COO may prefer a different fixture shape; the choice is theirs."
+}
+```

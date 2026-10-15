@@ -43,3 +43,87 @@ Census: 4,634 CUSIPs held by anyone; V2 holds 2,929; outside V2 1,705 = P1 32, P
 - **The CUSIP-to-symbol resolver goes on a non-Bloomberg source:** 1,691 of the 1,705 have no symbol. It is Q1's next cell.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 2 (~18:4xZ) -- Cottonwood's 27 active Bloomberg slices go AHEAD of the ETFS_RIVALS backfill (answers `2.0.0_SA_COO~Q1` msg 6121)
+
+- **Queue order on the Bloomberg queue:** B1, failed-14, the porting test, then COO~C1's 27 active slices (154,024 cells, tier 2, finish about
+  2026-11-24), then the seven ETFS_RIVALS requests (tier 3, about 213,000 units). This amends this seat's msg 5778, which placed RIVALS behind
+  B1 and failed-14 only.
+- **Why:** Andrew's 10-15 word accelerates Cottonwood's active-account need ("We need to pick up the pace on this"; "Active accounts should get
+  BBG pricing exclusively"). ETFS_RIVALS parks after round 30 on his 10-13 word. His 10-14 word devotes dell1 to ADVI/MDPF work.
+- **Cost, stated to Andrew:** the RIVALS backfill starts about 27 days later, around 2026-11-24. Call 99be (trading-day draws) would shorten
+  both if he grants it.
+- Placement is Q1's act; no quota or budget changes.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## Amendment 3 (~18:5xZ) -- account matching (answers crossbox ORDER `XB-20261015T182453Z-e03b`, `4.0.0_SA_CRO~DELL2` research `RESEARCH_20261015_COTTONWOOD_MATCHING_KEYS.md`)
+
+Andrew, verbatim (dell2 record `ANDREW_DIRECT_20261015_175xZ_BETTER_MATCHING_CRM_KEY_AND_COLUMN_RUN.md` @628b6102dc): "No we need to do better
+at matching. ... im wondering if there could be an intermediary key fashioned from something in there." Follow-up: "The name is also a very
+obvious match mechanism if nobody tried that already to push stuff over the line."
+
+FWD-9 stands: a link is never guessed. `2.0.0_SA_COO~C1` cuts, in its next round:
+1. **R3, custodian-number equality** (BD `fact_holdings."Account Number"`): deterministic, control 2 of 2. It yields 87 forward links, none
+   active. It is cheap and certain, so it is cut.
+2. **R4, name to a unique BD household, then a narrowed holdings fingerprint inside that household, within the date window.** A link is
+   DETERMINISTIC only when the fingerprint passes; otherwise it is a CANDIDATE. Name plus registration class alone is never deterministic (15
+   wrong picks in the control). Client-line propagation (89 households) feeds the same inside-household step and is graded the same way.
+3. **Exact account name 1:1 with a corroborating date window and registration class** is how Andrew's "push stuff over the line" is answered:
+   a REVIEW LIST of candidate links for a person to confirm, never an automatic link. The list carries no PII values: it shows link ids and
+   corroboration flags only.
+4. **The CRM zip** (C-RESTRICTED, Andrew's own rule) and **a mapping-file request to Cottonwood** are Andrew's. They are carried as open call
+   `dell1-20261015T184344Z-d3cc` on this box. No cell reads the zip.
+
+The yield is reported against the 387 unmatched active accounts, of which 168 are post-migration new clients with no predecessor, so the
+reachable denominator is 219.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## Amendment 4 (~19:0xZ) -- the Bloomberg history rate, and the finish dates it gives (answers `2.0.0_SA_COO~C1` msg 6139)
+
+- **5,858 cells is the rate per DRAWING DAY.** It is `history.ceiling` in `data/mdpf/scripts/demque/bbg_allowance.json`: the largest single-day
+  history sum on the served demand ledger (dt=2026-10-08), claim `measured`. It is a floor of the true capacity, not a vendor cap.
+- **The CRO's 23,432 is 4 x 5,858**, the four non-trading days in a 14-day window (the DQ-t-27 schedule). It was labelled "a day" in error.
+  Neither number is wrong; they are different windows.
+- **Finish dates, computed with `lib/trading_calendar.is_trading_day` from 2026-10-17 at 5,858 per drawing day:**
+
+| set | cells | drawing days | non-trading days only (today's rule) | every day (call 99be (a), upper bound) |
+|---|---|---|---|---|
+| B1 + failed-14 + porting test | 45,317 | 8 | 2026-11-08 | 2026-10-24 |
+| plus C1's 27 active slices | 199,341 | 35 | **2027-01-30** | **2026-11-20** |
+
+  C1's 11-24 / 12-04 assumed drawing every day, so they hold only if Andrew grants 99be. The "every day" column is an upper bound on speed:
+  on a trading day the history channel gets what production leaves.
+- **1,006 of the 2,739 new CUSIPs cannot be priced** by the builder (no Commonwealth window). They stay outside the slices until a window
+  exists; C1 reports them as a named gap, not a draw.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## Amendment 5 (~19:1xZ) -- call d3cc RULED (a) by Andrew: one job reads the restricted CRM zip
+
+Andrew ~19:0xZ, verbatim (laptop record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_190xZ_D3CC_A_ONE_JOB_READS_RESTRICTED_CRM_ZIP.md`
+@6e96dd543a, relayed by `0.0.0_AB_MSTR~DELL1` msg 6143): "I agree with (a), let's see what we can do with that for now."
+
+`2.0.0_SA_COO~C1` runs it as three orders, in this order:
+1. **Grant (CloudOps deploy, `safe-apply`).**
+   - ONE IAM role, named by `lib/opal_naming name()`, with `s3:GetObject` on the ONE key
+     `s3://opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/date=2026-06-23/CRM_CottonwoodCapitalAdvisors.zip`.
+   - The C-RESTRICTED bucket-policy deny gains that role as its one added exception, for that key only.
+   - The plan shows exactly those two changes. The ledger entry names the removal as its rollback.
+2. **The matching job (a worker cell).** It assumes the role and reads the zip in memory, never to disk. It joins CRM identifiers to both
+   sides and writes ONLY account-link rows (Commonwealth account id, BD account id, rule, tier) plus counts. No CRM column value leaves the
+   job: no name, tax id, date of birth or address.
+   - A criterion reads the output's column set against that allow-list and fails on any other column.
+   - The job's run record is the log: start, end, role, the one key read, and the row counts. The CloudTrail S3 data event for the GET is
+     read beside it if the trail records data events; if not, that is stated.
+3. **Withdrawal (CloudOps, the same day the job ends).** The role and the policy exception are removed, and a re-plan reads no changes. The
+   grant does not outlive the job.
+
+- Links are graded by FWD-9: deterministic only on a stable key (an old/new account number, or a tax id matched inside the job); otherwise
+  candidate.
+- **Report for Andrew's next word:** matched and unmatched counts against the 219 reachable active accounts. Option (c), asking Cottonwood,
+  is NOT sent.
+- Call `dell1-20261015T184344Z-d3cc` closes on this amendment, ruled by Andrew.
+
+-- 1.0.0_SA_CTO~DELL1

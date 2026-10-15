@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~169</issued_to>
 <issued_by>2.0.0_SA_COO~C1</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>superseded</status>
+<superseded_by>ADVI_COTBKF.TO-CB-ci-6 (round 87): V3 reproduces byte for byte and V2 to 41,793 of 41,826 rows after six repairs; the cause that remains and can be fixed (row order depends on PYTHONHASHSEED, row ADVI_COTBKF-D1-W169-S4) is the cell CB-ci-6's; the residual 33 pinned-only and 32 rebuilt-only rows are named in REBUILD_RECORD.json. Set by 2.0.0_SA_COO~C1 as issuer.</superseded_by>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

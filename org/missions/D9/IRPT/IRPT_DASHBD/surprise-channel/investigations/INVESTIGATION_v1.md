@@ -18029,3 +18029,185 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The session runs claude-haiku-5-5 and the attribution the harness supplies names Haiku 5.5; the face's Sonnet line was not written, and the coordinator may correct the line on the record if it wants the face's text. Counts only."
 }
 ```
+
+## IRPT_DASHBD-D2-W219-S1 -- the earlier Cottonwood test pins the 0.3.0 top-level hash, so it is red once the contract reads 0.4.0; AC3 stops here, the test file is outside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W219-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~219",
+  "surfaced_at": "2026-10-15T18:50:30Z",
+  "one_line": "Contract 0.4.0 moves the top-level schema_hash_with_optional (the 0.3.0 value is bc70..., the 0.4.0 value is 74fd..., as the spec requires) and the earlier Cottonwood test asserts the contract top-level value equals its 20-field 0.3.0 hash, so test_the_two_hashes_equal_the_contract_and_match_a_recomputation fails: 1 failed, 51 passed; the test file is outside the grant, so AC3 stops here",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I -m pytest -q data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_bd_account_return_daily.py at 5f91315a60: 1 failed, 51 passed (the failure is line 263 of that file)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_bd_account_return_daily.py:263@5f91315a60 asserts m.schema_hash_with_optional() == contract[schema_hash_with_optional]; the adapter hash is over 20 fields, so it equals the 0.3.0 value bc70ee2f2e, and the 0.4.0 contract value is 74fdee3def"
+    ]
+  },
+  "spec_asserts": "DB-b-270 criterion DB137-2-AC3 and the refusal clause: the two earlier contract-reading test files still pass once the contract reads 0.4.0; a failure caused by a hard-coded 0.3.0 in those files is a BLOCKING row and a stop, because they are not in the grant.",
+  "world_is": "The earlier test pins the contract top-level hash to the 0.3.0 value. The 0.4.0 contract recomputes the top-level hash over 19 columns plus source, flow_claim and source_account_id, as the spec requires, so the earlier assertion is red at 5f91315a60. The test is not repaired here (outside the grant). The contract and its test commit 5f91315a60 are unaffected. Counts only."
+}
+```
+
+## IRPT_DASHBD-D2-W219-S2 -- Amendment 1 resolves row S1 in the record: the one hash assertion of the Cottonwood test moves to the 0.3.0 supersedes entry; AC1, AC2 and AC3 PASS
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W219-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~219",
+  "surfaced_at": "2026-10-15T19:06:17Z",
+  "one_line": "Row IRPT_DASHBD-D2-W219-S1 is resolved in the record by the issuer's Amendment 1 (f8c18a0e87, carried by a merge of box/dell2): the one hash assertion at line 263 of the Cottonwood test now compares with the 0.3.0 entry of contract supersedes; 3 lines changed (2 added, 1 removed) at 131b4189c3; AC1 PASS, AC2 PASS, AC3 PASS (12 new tests, 52 earlier tests)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show f8c18a0e87 -- the order file: AMENDMENT 1 adds the Cottonwood test to the grant and bounds the edit to 8 lines",
+      "test_cottonwood_bd_account_return_daily.py at 131b4189c3: 3 lines changed (2 added, 1 removed), the assertion at line 263 now reads the 0.3.0 supersedes entry",
+      "python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r137/p137_contract040.py . DB137-2-AC3 at 131b4189c3: DB137-2-AC3 PASS (12 new tests, 52 earlier tests)"
+    ]
+  },
+  "spec_asserts": "Amendment 1 (f8c18a0e87): ONE assertion of the earlier Cottonwood test moves to the 0.3.0 supersedes entry; the file may change by at most 8 lines; then AC1, AC2 and AC3 are re-run.",
+  "world_is": "The assertion is replaced in 3 changed lines; the 52 earlier tests pass; the three criteria PASS; the contract's top-level schema_hash_with_optional is unchanged by the edit. The ARMED hazard of row IRPT_DASHBD-D2-W219-S1 is disarmed by this edit. Counts only.",
+  "notes": "Worker row: the disposition of IRPT_DASHBD-D2-W219-S1 from ARMED BLOCKING to resolved is for the CVO to make (a worker row cannot carry GRADUATED or adjudicates, gate A-1). S1 is not edited; this row is its resolution in the record."
+}
+```
+
+## IRPT_DASHBD-D2-W220-S1 -- the mandated day re-read of the returns partition adds one GET, so one earlier count assertion moves from 2 to 3; the rest of the earlier tests are unchanged
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W220-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~220",
+  "surfaced_at": "2026-10-15T19:29:41Z",
+  "one_line": "The mandated day re-read of the built day's own returns partition (frv.read_partition) adds one GET, so the earlier test asserting exactly two returns GETs reads 3; that one assertion is moved to 3 with a comment, every other earlier test is unchanged, and 42 tests pass (33 earlier, 9 new)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q infra/aws/lambda/investor-reporting/reporting-gold-cot/tests at deaac76f02 (the base, before any edit): 33 passed",
+      "handler.py at deaac76f02 plus the worker's uncommitted read: test_the_returns_partition_before_the_floor_is_never_listed_or_opened fails with assert 3 == 2; 32 passed, 1 failed",
+      "tests/test_reporting_gold_cot.py: the GET count of that test reads len(gets) == 3 with a comment naming the built day's re-read; the rest of the test is unchanged"
+    ]
+  },
+  "spec_asserts": "DB-b-271 step 2 reads the built day's own returns partition through frv.read_partition(reader, ad, frv.RET, day, [account_id]), and the order says every earlier test stays and still passes (the handler's earlier tests included).",
+  "world_is": "The named read is one more GET of the same returns partition, so the earlier exact-count assertion (two GETs on returns data.parquet, both in the floor window) reads three. The property the test names (no returns read before the floor) holds unchanged. Counts only.",
+  "notes": "Worker row: the resolution is the one-line count change in the earlier test, made so the named read and the earlier test can both stand; the CVO and the CTO read this row to accept or refuse that edit. No other earlier assertion moved."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S1 -- The spec writes a None holdings_price_return_reason beside a null holdings_price_return; the contract says that reason column is WHY the return is null
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "Rule 6 of DB-i-10 writes holdings_price_return None and holdings_price_return_reason None on every Orion row, but contract 0.4.0 says holdings_price_return_reason is WHY holdings_price_return is null (enum NO_HOLDINGS_ROW, HOLDINGS_NOT_OK); the validator does not catch a null return with no reason, so the adapter writes the spec's None as written and a later served run would carry an unlabelled null",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@13b4cd4c68 holdings_price_return_reason meaning: why holdings_price_return is null; null when it is present; enum NO_HOLDINGS_ROW, HOLDINGS_NOT_OK",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule 6: holdings_price_return None and holdings_price_return_reason None",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_040.py@13b4cd4c68 row_problems tests no condition on a reason beside a null holdings return"
+    ]
+  },
+  "spec_asserts": "Rule 6 of DB-i-10 writes holdings_price_return None and holdings_price_return_reason None; the contract's holdings_price_return_reason meaning says it carries the reason a holdings return is null.",
+  "world_is": "The module writes the spec's None as written (no reason class is invented, per the refusal clause). Every synthetic row passes the contract validator with that None. Counts only: 0 rows refused, 0 reason values written. Not measured on the real feed (a later cell)."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S2 -- The rules do not say what a repeated (account, day) feed row means
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "The rules key each account's feed row by its calendar day but do not say what a repeated (account, day) silver row means; the module reads the LAST one given, silently, and its adapt() docstring says so",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 feed description: one row per account per CALENDAR day",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py adapt() docstring, uncommitted worktree file (last row wins)"
+    ]
+  },
+  "spec_asserts": "The feed lands one row per account per CALENDAR day, and rules 2 to 5 read the account's own row on each day.",
+  "world_is": "A repeated (account, day) silver row would be resolved by input order, with no refusal and no count. Not measured: the adapter reads no feed, and the synthetic tests contain no repeat. Counts only."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S3 -- With no feed rows the rules have no min_day or max_day, so the output domain is undefined
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "The rules define min_day and max_day over the feed rows and say nothing for an empty feed; the module returns an empty result with zero counts, and test_empty_feed_returns_an_empty_result pins that choice",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule intro: min_day and max_day are the smallest and largest day in feed_rows",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_adapter.py@13b4cd4c68 is not yet committed; the empty case is its test_empty_feed_returns_an_empty_result"
+    ]
+  },
+  "spec_asserts": "Let min_day and max_day be the smallest and largest day in feed_rows; the output domain is the trading days between them.",
+  "world_is": "An empty feed has no domain, so the module writes no row and no absent record and reports zero counts. Counts only: 0 rows, 0 absent records for an empty input. The rules do not state this case."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S4 -- accounts_mapped counts feed accounts only; the rules do not say whether a map entry with no feed account counts
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "Rule 8 defines accounts_mapped and accounts_unmapped without saying whether an account_map key with no feed account is counted; the module counts feed accounts only, so such a key appears in neither count and writes no row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule 8: the manifest counts accounts_in_feed, accounts_mapped, accounts_unmapped",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py manifest block, uncommitted worktree file (counts over by_account keys)"
+    ]
+  },
+  "spec_asserts": "The manifest carries accounts_in_feed, accounts_mapped and accounts_unmapped; an account is MAPPED when its key is present in account_map.",
+  "world_is": "A map entry with no feed rows is in neither manifest count and writes no row or absent record. The synthetic map has no such entry, so the counts are 6 in feed, 5 mapped, 1 unmapped. Counts only."
+}
+```

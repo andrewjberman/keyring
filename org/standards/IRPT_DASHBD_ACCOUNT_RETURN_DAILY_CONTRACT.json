@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.3.0",
+  "contract_version": "0.4.0",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
   "authored_by": "0.4.0_DS_ClientPlatform~S",
@@ -37,13 +37,21 @@
       "name": "external_flow",
       "type": "double",
       "nullable": false,
-      "meaning": "F_t -- net EXTERNAL flow, capital-in positive, summed over every custodian partition day strictly after t-1 up to and including t (the skipped-day rule, row IRPT_BCKEND-S237)"
+      "meaning": "F_t -- net EXTERNAL flow, capital-in positive, summed over every custodian partition day strictly after t-1 up to and including t (the skipped-day rule, row IRPT_BCKEND-S237)",
+      "nullable_when": {
+        "source": "orion",
+        "flow_claim": "absent"
+      }
     },
     {
       "name": "income_received",
       "type": "double",
       "nullable": false,
-      "meaning": "income recognised on CASH RECEIPT over the same window as external_flow; a declared departure from GIPS accrual"
+      "meaning": "income recognised on CASH RECEIPT over the same window as external_flow; a declared departure from GIPS accrual",
+      "nullable_when": {
+        "source": "orion",
+        "flow_claim": "absent"
+      }
     },
     {
       "name": "income_return",
@@ -137,6 +145,26 @@
       ],
       "rule": "An ABSENT or null source means the table was written before this column existed, or its emitter has not adopted the column yet; a page states NO source for such a table and never infers one from the other columns. A null is never a value of source.",
       "since_schema_version": "1.1"
+    },
+    {
+      "name": "flow_claim",
+      "type": "string",
+      "nullable": true,
+      "meaning": "the reason an account-day carries no external flow and no income flow: the row's flows are not built from custodian transactions. Present only where a flow column is null.",
+      "values": [
+        "absent"
+      ],
+      "reason": "vendor-reported return, not built from flows",
+      "rule": "Required exactly when external_flow or income_received is null, and only where source is orion; a row with a null flow and no claim is invalid, and a row carrying the claim with both flows set is invalid. A consumer that needs flows rejects a row carrying this claim and says so in words; it never treats a null flow as zero.",
+      "since_schema_version": "1.2"
+    },
+    {
+      "name": "source_account_id",
+      "type": "int64",
+      "nullable": true,
+      "meaning": "Orion's integer account id for the account-day, carried beside the custodian account_id so that an Orion row can be joined to Orion's own records",
+      "rule": "Null for every non-Orion source. Set only where source is orion and the custodian account form is mapped through account_dim; an Orion account with no mapping is not written with a guessed id.",
+      "since_schema_version": "1.2"
     }
   ],
   "enums": {
@@ -199,7 +227,7 @@
     }
   },
   "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
-  "schema_hash_with_optional": "bc70ee2f2e0b54fd13e3b11fedae943003d4172199a561a4923c3e1a1ad59a27",
+  "schema_hash_with_optional": "74fdee3def647fd5c33ab9c07aa14106cbe66dbfe67a8e8608b68278db194154",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries. The check recomputes it against the landed parquet, so contract and artifact cannot drift.",
   "firm_specific_columns": "NONE. A firm-specific column is a contract violation (C-SHAPE); no sb_cd, tr_cd or any Schwab code survives into this table -- they live only in the adapter's sources.json.",
   "supersedes": [
@@ -218,10 +246,29 @@
         "0.2.0 is the base of this minor bump; the 19 columns, their types and schema_hash are unchanged in 0.3.0.",
         "0.3.0 adds the OPTIONAL column source (string, nullable, values as words) under optional_columns, with its own schema_hash_with_optional; source is NOT added to columns, so schema_hash and every 19-column check stay as they were."
       ]
+    },
+    {
+      "contract_version": "0.3.0",
+      "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
+      "schema_hash_with_optional": "bc70ee2f2e0b54fd13e3b11fedae943003d4172199a561a4923c3e1a1ad59a27",
+      "changes": [
+        "The successor 0.4.0 makes external_flow and income_received nullable ONLY where source is orion: each carries nullable_when {source: orion, flow_claim: absent}. Both stay nullable false in general, so a null flow on any other source is still invalid.",
+        "The successor 0.4.0 adds the OPTIONAL column flow_claim (string, nullable, values [absent], reason 'vendor-reported return, not built from flows') beside source; it is the row's own statement that a flow is absent and why.",
+        "The successor 0.4.0 adds the OPTIONAL column source_account_id (int64, nullable), Orion's integer account id, null for every non-Orion source.",
+        "The successor 0.4.0 keeps the 19 columns, their names, their types, their meanings and schema_hash unchanged, so every 0.3.0 writer still validates: no existing type changes, and a 0.3.0 row carries no flow_claim and no source_account_id, which are optional.",
+        "The successor 0.4.0 adds the top-level source_rules.orion (flows, business_date, account_id) and leaves served_day_rules byte-identical."
+      ]
     }
   ],
   "schema_hash_control": "THE METHOD IS CONTROLLED, not asserted: recomputing it over the same ARROW_SCHEMA with guard_state removed reproduces 0.1.0's published hash b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058 exactly. A hash whose method could not reproduce the previous published value would be unverifiable.",
   "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py -- the 19-field ARROW_SCHEMA this hash is taken from. The producer commit carrying guard_state must land WITH this contract, because the check recomputes the hash against the landed parquet.",
+  "source_rules": {
+    "orion": {
+      "flows": "The Orion (Scope) feed carries a vendor-reported return and no flows. Where an Orion flow is absent, external_flow and income_received are null and flow_claim is set to absent beside them, so the row says why. A null flow is never zero: a consumer that needs flows rejects a row carrying flow_claim and says so in words, and never reads the null as 0.",
+      "business_date": "business_date stays the TRADING day (lib/trading_calendar.py), the performance axis. Each non-trading calendar day's factor compounds (the product of the factors) into the next trading day's factor, and the run manifest states that compounding. A trading day whose own factor is ABSENT stays ABSENT; it is never filled from a neighbouring day.",
+      "account_id": "The custodian account form is mapped through account_dim. Orion's integer account id is kept in source_account_id. An Orion account with no mapping is written as an ABSENT row with reason class UNMAPPED_ACCOUNT, never dropped, and its count is recorded in the run record."
+    }
+  },
   "served_day_rules": {
     "authority": "1.0.0_SA_CTO~DELL2 msg 7330 (2026-10-13), a clarification that changes no column, no enum and no hash; it states what the served columns already carry for a reader that folds this table into a window.",
     "graded_disagreed": "A GRADED_DISAGREED day serves no number (ruling 17): a window that contains one reads ABSENT, with its reason and the count of such days, and is never compounded around the gap.",

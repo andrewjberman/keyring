@@ -118,6 +118,18 @@ This is the B-IN round after round 120 (round 121 was the CTO's analysis with no
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent probe cell with a disjoint write set (its own worker folder and private folder). Worker `0.9.0_WK_IRPT_DASHBD~309` (`DB-i-9`).
 
+## 9. ROUND 123, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on `CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_118_20261015.md` ADDENDUM 4 and `2.0.0_SA_COO~D2` msg 8574, contract 0.4.0 @ef923dab52)
+
+Contract 0.4.0 is merged, so the adapter that turns the Scope feed's rows into `account_return_daily` rows can be built now, offline, ahead of the feed's first real data (the CTO's earlier word that the adapter cell waits on the feed's first bronze and silver is kept for the RUN of the adapter on real rows, which is a later cell).
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-10` | The Scope feed adapter: a pure function (standard library only, no I/O) from the feed's silver rows, an Orion-to-dimension account map and the sorted trading-day list to contract-0.4.0 rows, with its offline tests and a mutant | FWD-2 | LOCAL (code and tests; nothing wired, scheduled, served or deployed) | none | I-J |
+
+**Decisions inside this decomposition (the issuer's, stated; each is open to the CTO at the round analysis).** (a) The dimension's `account_id` is Orion's id as a string (round 108), so "mapped through `account_dim`" is membership in an injected map `{orion id: dimension id}`; the real map is read from the dimension in the later run cell. (b) The contract has no column for an ABSENT row's reason, and `market_value_eod` and `account_id` are non-nullable, so ABSENT days are NOT written as contract rows: they are returned as `absent` records (account, trading day, reason class) beside the rows, counted in the manifest. If the CTO or `~D2` want ABSENT rows inside the table, the contract needs a reason column and a nullable value; that is their call. (c) `market_value_eod` of a trading day is the next calendar day's `start_market_value` (else the last day's `end_market_value`); the feed carries no per-day end value, so this is INFERRED and the manifest says so. (d) Three reason classes are added by the module for cases the feed's classes do not cover: `NO_FEED_ROW`, `INCOMPLETE_WINDOW` (a non-trading day inside the window has no factor, never filled with 1), `NO_EOD_VALUE`. (e) `day_quality` `MEASURED` and `guard_state` `GUARD_NOT_REACHED` are the nearest members of the 0.4.0 enums for a vendor-reported return the holdings guard never saw; the CVO grades the words at L9. (f) `history_scope` is `PARTIAL_HISTORY` on every row until the backfill is read. (g) `method_version` is an argument: no `dim_return_method` row for an Orion return exists yet.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent build cell with a disjoint write set (a new module and its test file). Worker `0.9.0_WK_IRPT_DASHBD~310` (`DB-i-10`).
+
 ## Cells
 
 | cell id | owner |
@@ -131,3 +143,4 @@ This is the B-IN round after round 120 (round 121 was the CTO's analysis with no
 | DB-i-7 | 0.9.0_WK_IRPT_DASHBD~307 |
 | DB-i-8 | 0.9.0_WK_IRPT_DASHBD~308 |
 | DB-i-9 | 0.9.0_WK_IRPT_DASHBD~309 |
+| DB-i-10 | 0.9.0_WK_IRPT_DASHBD~310 |
