@@ -39,3 +39,11 @@ sidebar background changed to `#EAEAF7`.
 
 **Reading:** this is a stated preference, not a ruling. Moving the page canvas off `#F4F6FA` would supersede Andrew's own
 2026-09-11 ruling, recorded in `portal/CLAUDE.md` and `DESIGN.md` C3, and that needs his explicit word.
+
+## Addendum, ~23:5xZ (same channel), verbatim
+
+> "i like my EAEAF7 lavender silver better frankly"
+
+**Reading:** Andrew prefers `#EAEAF7`, a lavender silver, over the brand silver-white `#E8ECF5` as the light-mode ground for the
+page and sidebar. `#EAEAF7` is not one of the brand file's values. This is still a preference, not a ruling that replaces the
+2026-09-11 `#F4F6FA` canvas; that supersession stays open call 1.

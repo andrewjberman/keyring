@@ -194,6 +194,11 @@ The choice among these angles belongs to the PRD and to Andrew's eye (O5).
 ## PART V -- WHAT MUST BE TRUE (named, not sequenced)
 
 - Andrew's word on panel ground colour in or out of scope (Part II), given the 2026-10-06 light-panel hold.
+  - On 2026-10-14 ~23:5xZ he leaned light, on the light-mode canvas https://claude.ai/artifact/WVqCCv8SPkiBz8byz4ZpLh: white
+    panels with a 1px `#C4CBDB` border, on a page and sidebar ground of `#EAEAF7`. His words: "i like my EAEAF7 lavender silver
+    better frankly".
+  - That is a preference, not yet a ruling. Adopting it would supersede his own 2026-09-11 `#F4F6FA` canvas ruling
+    (`portal/DESIGN.md` C3).
 - Andrew's pick of a direction from the option canvas https://claude.ai/artifact/K67YcR7n63uBakFbnNKUBG. Its boards:
   today; A, Opal-led; B, Opal + Hex blend. The CRO recommends A's sidebar with B's panel.
 - A way for Andrew to see old and new on one page (O5). The no-shadow-pipeline law (CLAUDE.md section 5) is written for
