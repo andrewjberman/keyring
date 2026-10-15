@@ -30,3 +30,11 @@ state: ARMED   cadence: 60m   cron: 6ca5a587   ticks covered: 83
 - dell1: `3adb` (held fork).
 - dell2: `cf2a` (held fork); `c02c`, `d8ae`, `53cb`, `a252`, `2106`, `e260`.
 - Site Z: `21d9`, `def4`/`3b41`, `a519`, `21c5`/`8ed7`/`f0d2`.
+
+## Correction (~20:0xZ)
+
+`cf2a`'s HOLD rested on the call's own context ("Your earlier word was that the adapter cell waits on the feed"). That premise is
+false. The rule is the dell2 CTO's, from its round-119 B-IN analysis (`CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_119_20261015.md`).
+A comp-find over IRPT_DASHBD and tier1_exec for `adapter.{0,40}(wait|feed)` reads 44 hits in 19,189 files, and none is an
+Andrew-direct record. The row was CLOSED on XA-20261015T194106Z-bfeb, which `1.0.0_SA_CTO~Z` ruled yes at 19:58Z, so this seat's hold
+is superseded. Lesson for the next read: verify a "your word" claim against an Andrew-direct record before holding on it.
