@@ -53,3 +53,23 @@ source ruling stands: precedents come from C-SLICE's Outlook gold. The first cel
 the drafter Lambda passes an empty `gold_rows`, and whether any of the 6 rows is clear of the held-out set. The figures in (a) need a
 producer, since the composition carries the ownership document only. `~T2` names that producer after its read; the (a) field list is
 unchanged.
+
+## ADDENDUM 2 (~20:2xZ): the Opal Overview's benchmark and risk-free series (open calls dell2-20261015T201345Z-b238 and -201404Z-08fd, the same call filed twice; `~G2`'s `CALL_BENCHMARK_AND_RISK_FREE_SERIES_20261015.md`)
+
+**RULED: A.**
+- **The benchmark is `SPY` and the risk-free series is `BIL`.** Each is priced through the C-PRICES chain exactly as a holding is: estate
+  stores, then Yahoo, then YCharts one symbol per call. No new vendor call is made, and each price carries its source claim.
+- **Both are read as ADJUSTED close (dividends reinvested)**, so SPY stands in for the total-return index (`^SPXTR`) rather than the
+  price index, and BIL's return includes its distributions.
+- **The report names both in words beside the four statistics and the chart:**
+  - "Benchmark: SPY (SPDR S&P 500 ETF), a proxy for the S&P 500 Total Return index";
+  - "Risk-free: BIL (1-3 Month T-Bill ETF)".
+  The figures never imply the index itself.
+- **If either cannot be priced for the window, its statistics read `INPUT_MISSING` in words, as today.** No other series is substituted
+  silently.
+
+**Why:** one mechanism, already ruled; no conversion from a rate to a level; and the proxy is stated. A house benchmark (option B) can
+replace SPY later with one line plus the label change, if Andrew names one.
+
+**Scope note:** the scanner reads both rows as CROSS-BOX. This cell writes only the ENGINE lane's own code (`ycharts/research/`), so the
+rows close through cross-adjudication, as the tool requires.
