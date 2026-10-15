@@ -39071,3 +39071,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Form only: the inferred wording is kept in the code for the case the addendum names. Significance is for the CTO to judge."
 }
 ```
+
+## IRPT_BCKEND-D2-W429-S7 -- Amendment 2 settles the calendar and the address source; the roster and positions prefixes and the rate limiter are still loaded by path from the gold and bronze script directories, which the runner's four synced prefixes may not place beside the script.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W429-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~429",
+  "surfaced_at": "2026-10-15T17:30:00Z",
+  "one_line": "Amendment 2 settles the calendar and the address source; the roster and positions prefixes and the rate limiter are still loaded by path from the gold and bronze script directories, which the runner's four synced prefixes may not place beside the script.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment 2 (ruling on S3 and S4): the script must run with only the files beside it; it imports trading_calendar beside itself or from the repository lib/, and takes addresses from the builder or a sidecar.",
+  "world_is": "The script still loads two things by relative path: the roster and positions key prefixes from the INF_B_00 builder module under the gold scripts directory, and the AdaptiveRateLimiter from the bronze scripts directory (the neighbour pull script uses the same bronze path). The ruling named only the calendar and the addresses. Under the runner's four synced prefixes these two loads may fail at run time; the apply should confirm they resolve beside the script or move them to the sidecar.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_scope_account_returns.py@a8899ade92 source_prefixes() loads BUILDER_PATH = _HERE.parent / 'scripts' / 'gold' / 'INF_B_00.canonical_holdings.py'; the sys.path loop inserts scripts/bronze",
+      "data/inf/scripts/gold/orion-gold-dispatch.sh@e7d5361cf9 line 546 prefixes = ['code/gold/', 'code/manual_api/', 'code/silver/', 'code/bronze/']"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not changed by amendment 2 (Everything else stands). Raised so the apply order checks these two loads with S2 and S3."
+}
+```
