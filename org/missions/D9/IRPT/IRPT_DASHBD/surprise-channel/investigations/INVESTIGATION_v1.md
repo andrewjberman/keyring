@@ -15840,3 +15840,299 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed for the owner of the client-data gate on this fabric. No repair is made by this seat; the list is not copied into the worktree and no hash list is read by this seat."
 }
 ```
+
+## IRPT_DASHBD-D2-W411-S1 -- the worktree carries no .tools/terraform.exe: init, fmt and validate cannot run in it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W411-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~411",
+  "surfaced_at": "2026-10-15T07:49:14Z",
+  "one_line": "The worktree C:/dev/wk-IRPT_DASHBD-411 has no .tools/terraform.exe, so the order's init, fmt and validate step cannot run there (rc=127) and DBC123-2-AC2 cannot pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 6 of the order and criterion DBC123-2-AC2: run .tools/terraform.exe -chdir=infra/aws/terraform/investor-reporting/account-dim-cot init -backend=false -input=false, then fmt and validate, from the repo root.",
+  "world_is": "The worktree has no .tools/terraform.exe; the order's init returned rc=127 'No such file or directory'. The file is gitignored (.gitignore:193 .tools/*.exe), so it does not travel with a worktree. The base checkout C:/dev/ajb_workspace/.tools/terraform.exe exists. fmt and validate were not run; DBC123-2-AC2 measured FAIL with 'terraform.exe absent'. The base binary was neither copied nor invoked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-IRPT_DASHBD-411 at HEAD e88884b630 on branch wk-IRPT_DASHBD-411: the order's init command returned 'No such file or directory', rc=127; ls of .tools/terraform.exe returned no such file.",
+      ".gitignore:193 '.tools/*.exe' matches .tools/terraform.exe; git ls-files .tools | grep -i terraform returned nothing.",
+      "C:/dev/ajb_workspace/.tools/terraform.exe exists in the base checkout (119,934,088 bytes); no terraform on PATH.",
+      "p123_bcw.py ac_2_2 printed 'terraform.exe absent' and DBC123-2-AC2 FAIL, rc=1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by this worker. fmt was not run, so the HCL was aligned by hand and checked with a heuristic against the holdings root's layout; it is unverified by terraform fmt. For the CVO and the COO: the order's terraform step needs a worktree that carries the gitignored binary, or a tool path the order names that resolves inside the worktree."
+}
+```
+
+## IRPT_DASHBD-D2-W411-S2 -- the Cottonwood holdings trigger's header says it is created DISABLED, while its state value reads ENABLED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W411-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~411",
+  "surfaced_at": "2026-10-15T07:49:14Z",
+  "one_line": "The holdings-performance Cottonwood schedule block says CREATED DISABLED in its comments, but its state line reads ENABLED; the order told this worker to mirror that block.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face item 5 and the order's instruction to copy the Cottonwood blocks: the Cottonwood holdings trigger is 'created DISABLED' (holdings-performance/schedule.tf comments, lines 225-228 and 285).",
+  "world_is": "holdings-performance/schedule.tf line 287 at HEAD e88884b630 reads state = \"ENABLED\" in aws_scheduler_schedule.irpt_holdings_performance_cot. Commit d9e46a0c1f (TO-DB-c-14 step 8) changed that single line from DISABLED to ENABLED after the catch-up's after-read; its comments and the output description at line 309 still say DISABLED. This root's schedule is written DISABLED as the order requires.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf at HEAD e88884b630: line 287 state = ENABLED; comment lines 225-228 and 285 and output description line 309 say DISABLED.",
+      "git log -- holdings-performance/schedule.tf: d9e46a0c1f 'enable(IRPT_DASHBD TO-DB-c-14 step 8, 0.7.0_AE_CloudOps~DB2): ... the single line state DISABLED -> ENABLED, after the catch-up's after-read'.",
+      "cb5edd65f1 is the build that created the schedule DISABLED (row IRPT_DASHBD-D2-W403-S4)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stale comment in an existing root, not edited (the order forbids editing any other Terraform file). The DB-c-18 schedule is written DISABLED as the order requires. Whoever next touches the holdings root may correct its comments; this worker did not."
+}
+```
+
+## IRPT_DASHBD-D2-W411-S3 -- the scheduler role, its policy and the schedule are named without the firm scope token, where the Cottonwood holdings blocks carry it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W411-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~411",
+  "surfaced_at": "2026-10-15T07:49:14Z",
+  "one_line": "The order gives builder arguments for the scheduler role, its policy and the schedule with no scope, so the names carry no cot token, unlike the Cottonwood holdings blocks it says to copy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face item 5: the scheduler role and policy are named by the builder with qualifier scheduler, and the schedule is named by the builder with function account-dim and kind daily; no scope is listed. Item 3 gives scope as the derived firm for the function only.",
+  "world_is": "lib/opal_naming.py name() returns irpt-account-dim-scheduler-role, irpt-account-dim-scheduler-policy and irpt-account-dim-daily for those arguments. The Cottonwood holdings scheduler role, policy and schedule (holdings-performance/schedule.tf lines 236-281) pass scope = the derived firm and print irpt-cot-holdings-performance-* names. This root follows the order's argument list as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The order, worker face item 5 (scheduler role and policy with qualifier scheduler; schedule with function account-dim and kind daily); item 3 gives scope for the function only.",
+      "lib/opal_naming.py name() at HEAD e88884b630, read-only: (irpt, None, account-dim, role, scheduler) gives irpt-account-dim-scheduler-role; (irpt, None, account-dim, policy, scheduler) gives irpt-account-dim-scheduler-policy; (irpt, None, account-dim, daily) gives irpt-account-dim-daily. With scope cottonwood the same calls give irpt-cot-account-dim-scheduler-role and irpt-cot-account-dim-daily.",
+      "holdings-performance/schedule.tf lines 236-281 pass scope = local.irpt_hp_cot_firm to the Cottonwood scheduler role, policy and schedule names."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A scheduler role and a schedule are not S3 bucket principals, so no grant in this root depends on the token and the bucket fence is not involved. If the CVO or COO wants the holdings form, scope = local.irpt_ad_cot_firm is added to three module blocks in schedule.tf before any apply; no other file moves."
+}
+```
+
+## IRPT_DASHBD-D2-W411-S4 -- the naming limb refuses the state key the order mandates for the new root, so the five files cannot be committed as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W411-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~411",
+  "surfaced_at": "2026-10-15T07:53:42Z",
+  "one_line": "The naming limb (LGIC_ENFORCE DEC-6, ENFORCE) refuses main.tf:27 at commit because the order's backend key investor-reporting/account-dim-cot/tfstate types the registry token cot outside a permitted context, so DB-c-18's five files cannot land on the branch.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face item 1 and criterion DBC123-2-AC1 require the backend key investor-reporting/account-dim-cot/tfstate in main.tf; the order says to commit the five files with safe-commit.",
+  "world_is": "The naming limb refuses main.tf:27 at commit: NAMING REFUSE investor-reporting/account-dim-cot/tfstate -> lookup(cottonwood), NEW hand-kept carrier (context rule). safe-commit aborted and unstaged (.scratch/commit_tf.log lines 49 and 65). A Terraform backend block cannot interpolate, so the key cannot be built by name() in the file. The five files stay uncommitted in the worktree; the order stays open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-IRPT_DASHBD-411/.scratch/commit_tf.log lines 49 and 65: 'ERROR: BLOCKED -- the naming limb refused ... Commit aborted; files unstaged.' and 'NAMING REFUSE ... main.tf:27 investor-reporting/account-dim-cot/tfstate -> lookup(cottonwood): NEW hand-kept carrier (context rule); hand-kept carrier of cot outside every permitted context'. Graded total 'NAMING-GATE: REFUSE 10 graded': 1 REFUSE, 6 CONFORMANT, 3 BUILT-NOT-GRADED.",
+      "The same log: 'NAMING PLACE-NOTICE UNMAPPED ... an unmapped root is not ratcheted' for infra/aws/terraform/investor-reporting/account-dim-cot.",
+      "infra/aws/terraform/investor-reporting/account-dim-cot/main.tf line 27 (worktree, uncommitted) carries the key; DBC123-2-AC1's structure check requires it (p123_bcw.py line 126) and PASSES on the working bytes.",
+      "infra/aws/terraform/investor-reporting/holdings-performance/main.tf line 29 carries no firm token in its key; infra/aws/terraform/cot-pipeline/main.tf:24 and infra/aws/terraform/compdiff-cot-value-parity/_root.tf:16 carry cot in theirs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not overridden: no GIT_COMMIT_AUTHOR_OVERRIDE, no --force, no edit of the key (the order and the checker both pin it), and no rename of the root (the order names the directory). The gate's own remedy (read through lookup) is a Python-only context. Decision needed from the CVO (the naming gate's owner) or the CTO: an accepted key form for a new root's state, or a recorded exemption for this one key, before DB-c-18 can commit."
+}
+```
+
+## IRPT_DASHBD-D2-W411-S5 -- the amended checker's scope arm carries a backspace byte in front of scope, so DBC123-2-AC1 fails on every correct root
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W411-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~411",
+  "surfaced_at": "2026-10-15T08:13:24Z",
+  "one_line": "The amended p123_bcw.py at HEAD 1b17b74f35 line 131 reads re.search(r'<0x08>scope\\s*=', blk): a backspace byte precedes scope, so the opal_name scope arm fails on every module block of a correct root and DBC123-2-AC1 cannot pass as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment (iii) and the checker's amended structure arm: every opal_name module block carries scope = <the derived firm>, and the checker refuses one without scope; DBC123-2-AC1 PASSes on a root that meets that.",
+  "world_is": "The checker file at HEAD 1b17b74f35 line 131 contains a backspace byte (0x08, one occurrence) immediately before the letters scope in the pattern, so the regex never matches a Terraform line. The root's six opal_name blocks all carry scope = local.irpt_ad_cot_firm (the same text the regex would need), and DBC123-2-AC1 measures 'an opal_name module without scope: irpt_account_dim_lambda_name' FAIL. A diagnostic copy of the checker in scratch with only that byte removed prints DBC123-2-AC1 PASS on the same files; the official verdict is FAIL and the copy is not evidence of it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p123_bcw.py line 131 at HEAD 1b17b74f35 (byte check: python counts b'\\x08' = 1 in the worktree file and in 1b17b74f35; 0 in issuance f0069dd8ca): need(re.search(r'\\x08scope\\s*=', blk) is not None, ...).",
+      "The same checker run from the worktree root: 'an opal_name module without scope: irpt_account_dim_lambda_name' then 'DBC123-2-AC1 FAIL', rc 1; tracing the checker frame shows cond False while re.search(r'scope\\s*=', blk) on the same block matches at span (93, 103).",
+      "Diagnostic only: .scratch/r123diag/p123_bcw.py (a copy with the 0x08 removed, BASE_R123.txt beside it) prints 'DBC123-2-AC1 PASS', rc 0.",
+      "The checker is the issuer's file (deliverables/2.0.0_SA_COO~C2/checks/r123/); this worker did not edit it (the order's grant does not include it)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by this worker: no backspace written into the Terraform, no edit of the checker, no change to the criterion. For the issuer (2.0.0_SA_COO~C2): replace the byte with a word boundary (\\b) or drop it, then re-run DBC123-2-AC1; the diagnostic copy is the only evidence that the other arms pass. DBC123-2-AC2 PASSes on the root (fmt -check and validate rc 0 by the absolute binary path)."
+}
+```
+
+## IRPT_DASHBD-D2-W194-S1 -- the contract's supersedes is an OBJECT, so 'append an entry' became a two-element list; no other key moved
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W194-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~194",
+  "surfaced_at": "2026-10-15T07:59:23Z",
+  "one_line": "TO-DB-b-240 says append an entry to supersedes, but at base the contract's supersedes is a JSON object holding one 0.1.0 entry, not a list. The checker's supersedes clause iterates it as a list of entries, so an object cannot pass. Resolved by making supersedes a two-element list: the 0.1.0 entry verbatim, then the 0.2.0 entry the order names.",
+  "spec_asserts": "TO-DB-b-240 step 2: 'Append to supersedes an entry {contract_version 0.2.0, schema_hash unchanged, changes}. Change NOTHING else: columns, schema_hash, enums and every other key stay byte-for-byte.'",
+  "world_is": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json at base (cee3478342) carries supersedes as an object with contract_version 0.1.0, schema_hash b5fa and changes; there is no list to append to. The checker (org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r120/p120_srccol.py, check_contract) reads c.get('supersedes') as a list of dicts, so the object form raises and AC1 cannot pass. The edit: supersedes is now a list of two objects, the 0.1.0 object unchanged in its keys and values, then the 0.2.0 object (schema_hash 1b25, the 0.2.0 base hash). Only the container changed; columns, schema_hash, enums and every other key are as they were, and the other edits are the ordered ones (contract_version, optional_columns, schema_hash_with_optional).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@cee3478342: supersedes was an object (base line 189 region) with one 0.1.0 entry",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r120/p120_srccol.py@cee3478342: check_contract, supersedes clause iterates c.get('supersedes', []) and calls x.get on each entry",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json working tree after this cell: DB120-4-AC1 PASS and DB120-4-AC2 PASS under the checker"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 2.0.0_SA_COO~D2 (the issuer of the cell): confirm the list form of supersedes is the intended shape for later contract bumps, or amend the checker's supersedes clause to read an object. No served value and no hash moved. Counts and paths only."
+}
+```
+
+## IRPT_DASHBD-D2-W195-S1 -- the Cottonwood holdings-performance schedule file creates its schedule ENABLED, against the DISABLED ruling of the B-CW rounds
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W195-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~195",
+  "surfaced_at": "2026-10-15T08:07:18Z",
+  "one_line": "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf creates aws_scheduler_schedule.irpt_holdings_performance_cot with state ENABLED, while its own description and the B-CW round-115 and round-117 rulings say it is created DISABLED until the catch-up after-read",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "spec_asserts": "The schedule is created DISABLED and enabled only after the catch-up's after-read: the schedule resource's own description says CREATED DISABLED; enabled only after the catch-up's after-read; the round-117 CTO ruling (B-CW, section 1) reads 'The schedule is DISABLED'; the round-117 ruling 1 orders the one-line change to ENABLED only after the catch-up.",
+  "world_is": "At cee3478342, schedule.tf line 287 reads state = \"ENABLED\" on resource aws_scheduler_schedule.irpt_holdings_performance_cot (resource line 283, cron(15 8 ? * MON-FRI *), America/New_York). The file therefore says ENABLED and its description says DISABLED. Whether the live schedule is ENABLED was NOT read (no AWS call was allowed to this worker); the file as written would fire the Cottonwood holdings function at 08:15 before the catch-up.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf:283-288 at cee3478342: resource aws_scheduler_schedule irpt_holdings_performance_cot, description CREATED DISABLED, state = ENABLED, schedule_expression cron(15 8 ? * MON-FRI *)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-CW_ROUND_117_20261015.md section 1 (the schedule is DISABLED) and section 2 ruling 1 (ENABLED only after the catch-up's after-read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while reading the holdings-performance cot schedule as the precedent for the Cottonwood account return landing packet (DB-b-241, no build, no plan, no apply). The disarm owner is the B-CW issuer who carries the DB-c-7 schedule file; the applier 0.7.0_AE_CloudOps~DB2 is the one to hold the apply until the file reads DISABLED or the owner records why ENABLED is intended. Paths and words only; no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W195-S2 -- the dim_return_method row a landing of the Cottonwood account return writes sits outside the one-prefix write the order names
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W195-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~195",
+  "surfaced_at": "2026-10-15T08:07:18Z",
+  "one_line": "the producer's served rows point at method_version 2 whose row lives in irpt/cottonwood/gold/dim_return_method/, which the landing grant of TO-DB-b-241 (one Cottonwood gold prefix) does not reach",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The landing grant names the write of the ONE Cottonwood gold prefix (account_return_daily), and the adapter's rows carry method_version 2 (adapter line 56: the dim_return_method row 2, the custodian value).",
+  "world_is": "account_return_daily.py emit_method_row (line 2000, address at line 2016 with TABLE_METHOD dim_return_method, partition method_version=2) writes the method row under irpt/cottonwood/gold/dim_return_method/. A landing that writes only account_return_daily (data.parquet and manifest.json) leaves its method_version 2 rows pointing at a row no grant writes. Nothing is landed by this worker; INERT until a landing is cut.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:2000-2016 at cee3478342: emit_method_row and its opal_naming.address call with TABLE_METHOD (line 101 dim_return_method)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py:56 at cee3478342: METHOD_VERSION = 2, the row the rows point at"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer of DB-b-241's packet: decide whether the landing carries a second write statement for dim_return_method (a second prefix, its own grant) or writes a manifest that says the method row is not carried. Recorded as adapter_changes item 6 of RD_CW_LANDING_FACTS_R120.json. Counts and paths only."
+}
+```
+
+## IRPT_DASHBD-D2-S71 -- disarm of D2-W195-S1: the Cottonwood holdings schedule reads ENABLED by the signed pair's step 8 after the after-read, and the live schedule agrees
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S71",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T08:12:43Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W195-S1 (the Cottonwood holdings-performance schedule file reads ENABLED): ENABLED is the signed pair's step 8, applied after the catch-up's after-read; the live schedule reads ENABLED and matches the file; only the resource's description text is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The Cottonwood schedule is created DISABLED and enabled by one line only after the catch-up's after-read (pair NEVER_WIDEN_PACKET_DB-c-5_R115.md, 'Catch-up first' step 6; CTO round 117 ruling 1).",
+  "world_is": "Commit d9e46a0c1f by 0.7.0_AE_CloudOps~DB2 (DB-c-14 step 8) changed the single line state DISABLED to ENABLED in schedule.tf block irpt_holdings_performance_cot after the catch-up's after-read (36 keys, schema 1.2, 12 dates, three readers). Read by this seat at the tick time with a live scheduler get_schedule of irpt-cot-holdings-performance-daily: State ENABLED, cron(15 8 ? * MON-FRI *), America/New_York, the same as the file. The file and the live schedule agree; the sequence the row asserts (DISABLED until the after-read) was followed; the row read the file before that commit's effect was known to its worker. NOT a hazard: the 08:15 fire is the intended first scheduled fire. The one stale item is the resource description string still saying CREATED DISABLED; it changes no behaviour and is carried, not applied alone (an apply for a description is not worth a ledger).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git commit d9e46a0c1f (subject names step 8 and the after-read counts)",
+      "live scheduler get_schedule irpt-cot-holdings-performance-daily read by this seat (State ENABLED)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_DASHBD-D2-W195-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm owner 2.0.0_SA_COO~C2 (this row), done. The description text is corrected in the next change to that block, if one is ever made. For the new account_dim root (DB-c-18) the schedule is created DISABLED, enabled by the same one-line change after its catch-up after-read."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W191-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~191",
+  "surfaced_at": "2026-10-15T08:02:00Z",
+  "one_line": "The filled stage needs the full gold history, not one day of each gold table",
+  "spec_asserts": "TO-DB-b-237 step 2 says the stage reads that day's gold tables of the firm, through the same reader helpers the earlier stages use, and builds the day's rows from them.",
+  "world_is": "The module's build_document and main() take the whole history: every partition of account_return_daily, account_activity_daily, account_lot_realized and account_class_daily (read_gold_rows with every=True), the newest unrealized-lot partition, and the served model series that the windows are computed from. The stage follows the module: filled_inputs reads those partitions once per fire and builds every owed day from them. The fire's 900 s ceiling is shared with the earlier stages; the stage's duration was not measured in this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py at 69f66970b5: build_document lines 643-717; main lines 1011-1112",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py at 69f66970b5: filled_inputs and filled_stage",
+      "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf at 69f66970b5: timeout = 900"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer's packet: state the measured duration of the filled stage before the apply, or the first fire after the apply carries the timeout risk. Counts and paths only."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W191-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~191",
+  "surfaced_at": "2026-10-15T08:02:00Z",
+  "one_line": "The reporting-gold role grants no read of the served model series or of the household crosswalk",
+  "spec_asserts": "TO-DB-b-237 asks the IAM question for the write prefix only and says the stage's reads go through the handler's own reader helpers, which the role's existing read statements cover.",
+  "world_is": "iam.tf reads are the statements ListExactlyTheSixGoldPrefixes and ReadTheSixGoldPrefixesOnly, scoped by locals.tf to the irpt gold prefixes (holdings, returns, class, activity, realized, unrealized). The module reads two surfaces outside them: the served model series object (read_served_series: bucket opal-data-portal-v2, key json/benchmarks/model_portfolio_timeseries.json) and the advi household_crosswalk gold prefix (FirmAdapter.households). No statement in iam.tf grants either. At the apply those reads are denied; the stage then logs each day as FILLED_SKIPPED and the earlier tables are unaffected. The packet must add read grants for both surfaces, or the stage cannot land.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf at 69f66970b5: statements ListExactlyTheSixGoldPrefixes and ReadTheSixGoldPrefixesOnly",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf at 69f66970b5: irpt_rg_gold_read_prefixes",
+      "data/assets/scripts/gold/irpt_reporting/adapters/model_series_windows.py at 69f66970b5: SERVED_BUCKET, SERVED_KEY, read_served_series",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py at 69f66970b5: FirmAdapter.crosswalk_prefix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks the apply's landing of the stage, not this cell's build; nothing is deployed. The write-prefix gap (the filled prefix is not in WriteTheFiveGoldPrefixesOnly) is a fact in RD_HOP1_STAGE_FACTS_R120.json, not a row."
+}
+```
