@@ -1,0 +1,13 @@
+# Drive log 2026-10-15 20Z -- 2.0.0_SA_COO~O, NFRA_OPLGTW (site Z, round 37)
+
+Ticks covered: 14:5xZ to 20:5xZ. Lease FULL; keep-driving ON. Every commit LOCAL on box/sitez (box-sync pushes).
+
+- **OG-ap-20 live (06cfb6db64)**, then **MX-r-14 live (`c4c106aea1`, 19:50Z)**; OG-ap-21 step 3 (re-cut on `c4c106aea1`) released to `~Z` at 20:18Z; OG-ap-22 (ten rival tools) and the hookup rv-3 are on trunk.
+- **Harvest runner RETIRED (OG-eg-3, `~Z`; `~ZW` yielded):** Andrew moved all harvest to dell1 (~16:3xZ); stopped at a job boundary 18:33:06Z, task Disabled 19:04:24Z, nothing unregistered, pins locked; OG-eg-2 and OG-sa-1 closed SUPERSEDED (FIRSTREC and WINDOW NOT-EXERCISED); read-back to MSTR for dell1 at 20:03Z. Z-S151: the PRD v3.11 line "no publisher stored since 14:02Z" was wrong for `sa` (stored 2 at 18:25Z); recorded as an erratum by the CTO.
+- **Python 3.14.8** broke at 14:02Z (unattended MSP upgrade) and was reinstalled by Andrew at ~15:03Z; MSTR's 3.11 stopgap was removed. `~ZW` hit a weekly usage limit (resets Oct 18) and recovered with credits at ~18:2xZ.
+- **Gateway view grouping (Andrew):** the "Microsoft 365" default is MCPORTAL's `MP-z-1` (admin_gateway_breakdown.py:227-230); split agreed: `~MI` declares source_group per tool (MX-c-21), `~MP` groups the view (MP-pe-1/2), I ship the gateway release.
+- **G2 and remainders (CTO ruling @4356f15f16, PRD v3.12 @532d1e68bb, "We have usage, run it now"):** issuance `6fc29c2dbf` cut OG-cl-1..6, OG-gp-1, OG-gf-1 (8 of 8). Seam file `G2_ADAPTER_PROTOCOL.md` with A1 (tests in the cone, ProbeCtx, `firm_not_served`, `ctx.firm_roster`). Merged on trunk: cl-2 `e5ce4e6fb4`, cl-3 `d2429c6898`, cl-4 `b6f00da541`; cl-6 and gp-1 verifying/merging; gf-1 passes trunk checks (A1: positioning extension withdrawn to `~MI` as MX-c-22; `_profile` rename); cl-1 (core + Schwab) re-seated on A2 (Schwab dim_* tables exist but the catalog lacks the rows: MX-c-23/MX-r-15); cl-5 (SmartX) passes and gets A2 (firm map by NAME via the roster alias, CRO msg 34577). **OG-cl-7** cut (`3bd32e9f1b`): the naming gate refuses hand-kept firm literals; firms resolve through `lookup()` (CTO 34575).
+- **Releases (plan accepted by the CTO, msg 34575):** `OG-ap-24` (six vendor read roles, second applier `~ZS`, GO when cl-1 merges; the person-roles Terraform stays in OG-ap-21) cut `a6ab4b2ef2`/`007e7a937c`; code batch `OG-ap-23` follows the hookup `OG-ch-1`; each never-widen ask goes out the moment its plan reads.
+- Worker note: haiku workers hit the account weekly limit once (14:5xZ); later spawns ran.
+
+Waits: workers ~103 (cl-1), ~107 (cl-5 A2 after its sync); merges of cl-6, gp-1, gf-1; `~Z` ap-21 Phase A ask; `~MI` MX-c-21/22/23.
