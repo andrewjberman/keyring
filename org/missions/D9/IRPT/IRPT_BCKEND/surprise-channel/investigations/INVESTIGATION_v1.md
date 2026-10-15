@@ -37539,3 +37539,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Observed while writing the IB-pr-571 record: the record that honestly reports no offline run fails AC1 and passes AC2. The check is the issuer's; it is not edited here. The grader should read AC2 for this record with that in mind."
 }
 ```
+
+## IRPT_BCKEND-D2-W414-S3 -- A second directory beyond the import chain was added to the local sparse grant: the currency authority file, read at call time
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W414-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~414",
+  "surfaced_at": "2026-10-15T11:47:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "After the amended import chain loaded, the validator's currency branch refused with 'currency authority not installed': bind_report_currency reads docs/contracts/investor-reporting/v1/CurrencyAuthorities.json at call time, which is not an import. The worker added that one directory, local and never committed.",
+  "spec_asserts": "AMENDMENT 1 step 0: add the directories the import chain resolves to, nothing else; the chain is the imports.",
+  "world_is": "reports/currency_authority.py resolves the authority file under the repository root at docs/contracts/investor-reporting/v1 (candidate parents[5]); the file is tracked at HEAD bbdeae6f89 and was absent from the worktree sparse list. The worker added exactly docs/contracts/investor-reporting/v1 (read-only use, never committed). No other directory was added beyond infra/aws/lambda/investor-reporting.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/currency_authority.py at bbdeae6f89 lines 18 to 28 (candidate paths, parents[5], CurrencyAuthorityRefused 'currency authority not installed')",
+      "git ls-tree HEAD docs/contracts/investor-reporting/ lists v1/CurrencyAuthorities.json; scratch run after the add: the validator call returned a custody refusal (no currency-authority refusal)"
+    ]
+  },
+  "notes": "The row is an observation for the issuer: a call-time data read is not an import, so the amendment's wording may not reach it. Decide whether the grant should name the contracts folder. No account value was read from that file."
+}
+```
+
+## IRPT_BCKEND-D2-W414-S4 -- The counter functions_invoked: the order's own step 3 calls the validator in the same process, so the bound cannot mean any local call
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W414-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~414",
+  "surfaced_at": "2026-10-15T11:47:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The record's six bound counters are all required to read 0 by the check, but the offline run is a local call of the validator and of cot_screen_accounts, which the order requires. The worker reads functions_invoked as deployed AWS functions invoked (0) and states the local calls in notes.",
+  "spec_asserts": "The order's six counters (functions_invoked, sign_ins_made, aws_writes_made, rows_written, figures_written, vendor_requests_sent) at 0; the run calls the validator from the repository file, which is a function.",
+  "world_is": "No counter definition is written in the check or the order. The worker recorded functions_invoked 0 on the reading that it counts AWS (deployed) function invocations; no Lambda was invoked, no AWS write was made, and the validator and screen were called in a scratch process. If the issuer means any function call, the offline run cannot satisfy the bound and the order is internally inconsistent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-571 (worker face, step 3 and the counter list in step 5)",
+      "checks/r196/p196_cells.py at bbdeae6f89 line 45 (BOUND tuple, equality to 0 checked by counters())"
+    ]
+  },
+  "notes": "Ask the issuer to define functions_invoked in the next amendment. Until then the record states the reading in its notes, so the grader sees it."
+}
+```
