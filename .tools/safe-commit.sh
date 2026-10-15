@@ -952,6 +952,18 @@ if command -v comp-pulse >/dev/null 2>&1 && [ -n "$IN_SCOPE" ]; then
   fi
 fi
 
+# NOT GRADED (NFRA_CTLPLN W110, CT-ai-5; 1.0.0_SA_CTO msg 109393): a staged .tsx gets no syntax or lint grade
+# from commit-gate.sh (it reads .py/.sh/.tf only), so a portal .tsx commit must say how many it did not grade
+# instead of passing with 0 checked. Printed here, outside the comp-pulse guard, so the line holds whether or
+# not the risk reflex is installed. Adds no grade for .tsx. Prints nothing when no .tsx is staged.
+_tsx_ng=0
+if [ -n "$IN_SCOPE" ]; then
+  _tsx_ng="$(printf '%s\n' "$IN_SCOPE" | grep -c '\.tsx$' || true)"
+fi
+if [ "${_tsx_ng:-0}" -gt 0 ]; then
+  echo "not graded: $_tsx_ng .tsx"
+fi
+
 # BLOCKING comp-coverage-check gate (COMPUNIFY S2). Flipped advisory->blocking 2026-07-28
 # (3.0.0_SA_CVO, Andrew-direct) on a measured basis: 538ms fixed cost, does NOT scale with commit
 # size, tri-state with an honest UNVERIFIABLE, and its own selfcheck demonstrates it FAILS on
