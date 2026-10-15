@@ -960,6 +960,27 @@
     "spec_asserts": "The proof instance carries each produced artifact with a kind the schema admits, so a worker's CSS artifact is expressible without a kind substitution.",
     "world_is": "No kind in the enum names a stylesheet; the worker recorded the one CSS file (portal/src/index.css) as frontend_component to get a schema-valid instance. The kind is a label only, and the instance otherwise carries the pinned commit and the deploy evidence.",
     "notes": "Filed, not fixed. The enum is the schema owner's to extend. The substitution is declared here so a consumer does not read the kind as a claim that the file is a component."
+  },
+  {
+    "id": "DSGN_RBNDV2-W18-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~18",
+    "surfaced_at": "2026-10-15T15:09:43Z",
+    "one_line": "RV-x-6 keeps the popup's source chips as they are, but its test arm bans the text backdrop-blur in ExecutiveSummary.tsx, and the chip carries backdrop-blur-sm, so the arm cannot pass unless that one class goes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/market-performance/ExecutiveSummary.tsx@7f8731df: the DrilldownModal source chip class list carries 'bg-black/50 text-white/80 backdrop-blur-sm border border-white/10'; the only other backdrop-blur occurrence in the file is the overlay root",
+        "portal worktree wk-DSGN_RBNDV2-18-portal: backdrop-blur-sm removed from that chip only; bg-black/50, text-white/80 and border classes unchanged; rb-5-x6.trending-modal.test.ts run under bun prints DRILLDOWN-OWN-OVERLAY-BEFORE 1 DRILLDOWN-OWN-OVERLAY-AFTER 0 and VERDICT: TRENDING-MODAL-OK"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-x-6: the source chips 'bg-black/50 text-white/...' stay as they are, and the overlay's backdrop-blur is removed. RB5X6-AC1: ExecutiveSummary.tsx holds no 'backdrop-blur' text.",
+    "world_is": "The chip's backdrop-blur-sm is a blur on a chip, not on the overlay, and the file-wide text arm counts it. The worker removed backdrop-blur-sm from the chip to satisfy the arm, leaving the chip's background and text classes as the cell names them. The chip now renders without the blur over the lead image.",
+    "notes": "Filed, not fixed. The removal is the smallest change that meets the file-wide arm without weakening it. The order's author decides whether the chip blur should return with a frame-level exemption. The hero marker sits on the w-[40%] hero container, which holds the gradient block, the arrow svg and the source chips."
   }
 ]
 ```
