@@ -1722,3 +1722,56 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Recorded as a claim-versus-world mismatch of the refusal message. Not repaired here: git reset and restore are outside this order."
 }
 ```
+
+## COMM_ASSIST-W29-S1 -- the scan log line needed the source name, so scan_table took a source argument (the order said two text lines)
+
+```json
+{
+  "id": "COMM_ASSIST-W29-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~29",
+  "surfaced_at": "2026-10-15T01:25:16Z",
+  "one_line": "The order's cell (c) said the reader repair was two text lines; naming the source in the scan log needed scan_table to receive the source, a signature change plus two call-site edits in refresh.py. Behaviour is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 8454482177 on wk-COMM_ASSIST-29: data/transcripts/scripts/muse_reader/refresh.py, def scan_table(source: str) at the nested reader scope; print line now READ %s table=%s rows_scanned=%d pages=%d; callers scan_table('drafts') in read_drafts and scan_table(list_key) in read_state_lists",
+      "check_l3_batch.py arm refresh_same passes at 8454482177 (folder byte-identical to the merge-base text on a fixed stub); arm scan_log_truth passes; the drafts line text is unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CA-k-3 cell (c): 'Make the help name the sources from refresh.SOURCES and make the scan log line name the source actually read'; the same cell and the order's RULES say NO product code changes, only the test files and the two reader text lines.",
+  "world_is": "The scan log line is printed inside scan_table(), which received no source; naming the source read required passing it in. That is one parameter and two call-site edits in refresh.py, not a text-only change. The output bytes of the folder are unchanged.",
+  "notes": "Done as the cell asks, with the minimum signature change. Form only: the order's 'two text lines' undercounts the edit. No behaviour changed; the refresh_same arm is the bound."
+}
+```
+
+## COMM_ASSIST-W29-S2 -- the commit gate's client-data check did not run: the hashed account-id list is absent on this box
+
+```json
+{
+  "id": "COMM_ASSIST-W29-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~29",
+  "surfaced_at": "2026-10-15T01:25:16Z",
+  "one_line": "Every safe-commit on this worktree prints WARN client-data-check: the hashed account-id list is ABSENT, so the commit is not checked for client account ids; the check cannot run here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 8454482177: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\AndrewBerman\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).'",
+      "measured at filing: test -f on C:/Users/AndrewBerman/.opal/account_id_hashes.txt rc=1 (absent); OPAL_ACCOUNT_ID_HASHES unset in the worker shell"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CA-k-3 says: 'Commit with .tools/safe-commit.sh as your serial'; the commit gate is the mechanism the order relies on for the commit step.",
+  "world_is": "The gate ran and passed its other checks, but its client-data leg reported the list absent and therefore did not check this commit for client account ids. Absent is not empty.",
+  "notes": "This commit adds only three test files and one reader file, with no account ids in the diff as far as the worker read it. The row records that the check was not run, not that a leak occurred. The disarm owner is named as the infrastructure seat (MSTR runs infrastructure) and was not contacted."
+}
+```
