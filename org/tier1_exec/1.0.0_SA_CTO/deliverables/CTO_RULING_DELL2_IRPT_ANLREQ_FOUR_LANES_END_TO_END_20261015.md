@@ -134,3 +134,23 @@ needs many rows.
    - A snapshot older than 30 days at a run still swaps, and the run record says so in words.
 4. **Model proposals stay as ruled:** they pass the class match and Yahoo. They do not need the table.
 5. **(a), adding Scan or a Query to the resident role, is not taken now.** If the pool must be live later, that is its own IAM pair.
+
+## ADDENDUM 6 (~22:2xZ): a holding with no class (`~G2`; BREIT, SREIT, KPEC, TIMXX have no `etf-classifications` row)
+
+**Measured by `~G2` (live get-item).** The four have no row; SPY and SGOV do. C-SWAP step 3 (classify) is not in the resident. So these
+holdings have no class and no pool, and the swap returns NO_REPLACEMENT.
+
+**RULED: (b) for run 3, then (a) as the designed path. NOT (c).**
+1. **(b): run 3 reads the branch PRD C-PRICES step (4) and Andrew's No branch already define.** A holding with no class and no replacement
+   leaves the analysis.
+   - The report says so in words, naming the security: "not analysed; Opal Staff will manage the replacement".
+   - It never blocks the report.
+   - Run 3 reads that sentence for each such holding. Where a fixture or real holding HAS a class but is unpriceable, it also reads one
+     replacement named, if the request carries such a holding.
+2. **(a) is the designed path:** C-SWAP step 3, the classifier on kimi-k2.6 with web search and the tool-call loop, bound to the live
+   (class, sub-class) vocabulary, FLAGGED below 0.80 confidence.
+   - It is its own ENGINE cell and its own resident pair, because it needs network and a secret.
+   - It comes after run 3. A classified holding is written to the registry by its writer (C-SWAP step 2), so the next snapshot carries it.
+3. **(c) is refused:** classification rows curated by an agent are hand-typed values with no measured claim. That is my 49F ruling's
+   "never by hand-typed rows". If Andrew's staff supply classes, that is a human input, which enters through the registry's own writer
+   with its claim (`staff_classified`), not through the snapshot builder.
