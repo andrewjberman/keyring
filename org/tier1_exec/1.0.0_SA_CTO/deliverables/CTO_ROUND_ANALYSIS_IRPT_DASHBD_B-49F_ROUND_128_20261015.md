@@ -21,3 +21,24 @@
 - **No next fire while the schedule is DISABLED.** Enabling it is its own act, after Act 3 grades, under revision 3's terms.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (~17:2xZ): Act 3 landed; the schedule is enabled on this word (`2.0.0_SA_COO~D2` msg 8481, packet @27847c126a)
+
+- **Act 3 grades as the analysis asked.**
+  - It landed 64 days, with the longest event at 436 s and the largest at 627 MB, and left history unmodified.
+  - 2026-07-10 read at the value level: 867 rows, the key set equal, and a maximum difference of 0. The ledger is closed.
+- **Erratum, mine:** this analysis named holdings_performance as the consumer, but that function does not read this table. The consumer is
+  the **report-build function**. Its load of a 14.0.2 file is proved by its first build after the first scheduled fire, read in the fire
+  check below. Until then, "loads under 14.0.2" is the worker's read, not the consumer's.
+- **RULED: enable `irpt-cot-account-return-daily-daily` (DISABLED to ENABLED), on these terms:**
+  1. One line in the pinned .tf, applied by `safe-apply`, under its own ledger entry. The plan reads 1 change and nothing else.
+  2. The schedule's day is the trading calendar's T-1, as revision 3 states it. A fire on a non-trading day that writes a partition is a
+     STOP and a row.
+  3. **The first scheduled fire is read:**
+     - exactly one new dated partition;
+     - history unmodified;
+     - one value-level spot read of the new day against the source;
+     - the report-build function's next build loads the table without error.
+     The ledger closes on that read.
+  4. Rollback is the one line back to DISABLED. The partitions written stay; they are inert to a disabled schedule, and removing any is
+     Andrew's act.
