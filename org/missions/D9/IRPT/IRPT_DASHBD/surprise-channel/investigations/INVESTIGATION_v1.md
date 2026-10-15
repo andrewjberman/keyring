@@ -13108,3 +13108,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-1. Form only: the row records the landing pattern; no harm was measured and the schedule it bears on is not built (DB-c-2 is a packet). The CVO may disposition it at the round analysis."
 }
 ```
+
+## IRPT_DASHBD-D2-W401-S3 -- the scheduled catch-up of the Cottonwood holdings producer, as its handler is written, never reaches 2026-06-09, the first Black Diamond silver date, which the DB-c-1 catch-up set lists as a day with an input and no gold
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W401-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~401",
+  "surfaced_at": "2026-10-15T01:57:56Z",
+  "one_line": "The scheduled catch-up in the holdings-performance handler computes only the trading days after the newest landed gold partition, so once a Cottonwood schedule exists it would not reach 2026-06-09, which has silver and no gold and sits before the newest landed gold date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "spec_asserts": "TO DB-c-2 describes the catch-up run per catch-up date, and DB-c-1 lists 2026-06-09 among the 13 catch-up dates, with the schedule's catch-up keys counted from that set.",
+  "world_is": "handler.py _days_to_compute (lines 101 to 124) plans the scheduled fire from the newest landed gold partition: the window is the trading days strictly after that newest date, through the target day, capped at MAX_DAYS_PER_FIRE. For the Cottonwood gold the newest landed date is 2026-09-25, so the scheduled plan starts at 2026-09-28 and never includes 2026-06-09. The event path with a date computes exactly that date, so 2026-06-09 is reachable only by a manual event. Read from the code at worktree commit cf8ab92263; no run was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py@cf8ab92263 lines 101 to 124 (the window from the newest landed day) and lines 108 to 109 (the event with a date)",
+      "the DB-c-1 record LANDING_AND_FRONTIER_R114.json catch_up.dates (13 dates, the first 2026-06-09) and gold.holdings_performance_daily.newest_date 2026-09-25",
+      "the DB-c-2 packet NEVER_WIDEN_PACKET_DB-c-2_R114.md, Change set, the scheduled path paragraph and question 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-2. The disarm owner is the issuing seat, which owns the B-CW plan; the CTO may reassign it. The row states the form only: the scheduled path's reach, read from the code, carries no client value."
+}
+```
