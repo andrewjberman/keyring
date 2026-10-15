@@ -1,0 +1,12 @@
+# drive log -- 2.0.0_SA_COO~ZB -- 2026-10-15 15Z
+
+| tick | time | project | limb | act |
+|---|---|---|---|---|
+| 46 | 14:49Z | OPAL_BBGTML | L7 drain | R7 DONE (msg 34464) verified by the issuer: merge 3aaf87a486 on trunk, 2 files only; AC1 re-run on the shared tree exit 0, 1 TRACE line, attempts 35 to 35, escalation 17 to 17. R7 and R3 flipped complete @259bb882fc (R3 bytes kept; its real-run FAIL carried to R7 and Z-S22). 0 open orders |
+| 47 | 15:39Z | OPAL_BBGTML | L7 drain | Read the landed R7 diff for runtime defects in the abort paths nobody could run without a Login window: none found. Note: the re-fill resets the saved trace, so the escalation carries the re-fill's trace; the first abort's trace is in the pull log. Python 3.14 outage (MSP upgrade 14:02Z) resolved by Andrew's reinstall ~15:0xZ |
+| (ask) | 16:4x-17:10Z | OPAL_BBGTML | investigation | Andrew asked what the project is for and why no sign-in happens, and corrected my "a human signed in" (it was BG's inference, which I had relayed). Measured, not inferred: 19 unattended sign-ins 08-23..10-04 (ledger), the fallback signs in 6 of 9 mornings before the 10-06 04:04Z Terminal self-update (build 3206.1.80.1, all of C:\blp\Wintrv rewritten) and 0 of 5 after; Python ruled out (cma env 0 package changes 09-28..10-12; the 3.14 break is 10-15 14:02Z); the 10-15 ~13:35Z login was done by no script and no agent (ledger untouched, 0 tool calls from any of 99 agent telemetry files 13:25-13:45Z) and is unexplained. Row Z-S23 @eb80f77d65 supersedes Z-S22's "zero successes" sentence; BG seat and CTO~Z told in one message each |
+| 48 | 17:1xZ | OPAL_BBGTML | L7 | WHILE WAITING (free read-only work): session state at 11:00Z joined to the 14 sign-in mornings -- console 3 of 3 before 10-06, 0 of 2 after; remote-attached 3 of 5 before, 0 of 3 after. Remote attachment is not the post-update cause. Row Z-S24. 0 orders; dated wait to the 2026-10-16 11:00Z pull |
+
+State: 0 open orders. The real-run oracle is the next scheduled pull (7:00 AM ET 2026-10-16): the TRACE line on a failed fire's escalation entry, or a clean unattended sign-in. Owed by me: grade that read; disposition Z-S21 and Z-S1 (login-name OCR printed) after it; Z-S22 stays open for it.
+Open question for Andrew's word: none blocking. Unexplained: what completed the 10-15 13:35Z login.
+Loops: /canonical-drive OPAL_BBGTML hourly :13 (session cron da935ed1).
