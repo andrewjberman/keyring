@@ -15707,6 +15707,121 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For 2.0.0_SA_COO~P2 (the route and hop 5 owner under the CTO's ruling on call 076d): decide, before hop 5's window, whether a print reads the frozen filled object through this route (then add the version_id parameter, the render-delegate refusal and X-Opal-Version-Id, as the series has them) or server-side (then the portal's version query is removed by an F-SHIP amendment and the print takes its document from the render host). The portal side follows either way by an issuer amendment. Counts and paths only."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W411-S1 -- the worktree carries no .tools/terraform.exe: init, fmt and validate cannot run in it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W411-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~411",
+  "surfaced_at": "2026-10-15T07:49:14Z",
+  "one_line": "The worktree C:/dev/wk-IRPT_DASHBD-411 has no .tools/terraform.exe, so the order's init, fmt and validate step cannot run there (rc=127) and DBC123-2-AC2 cannot pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 6 of the order and criterion DBC123-2-AC2: run .tools/terraform.exe -chdir=infra/aws/terraform/investor-reporting/account-dim-cot init -backend=false -input=false, then fmt and validate, from the repo root.",
+  "world_is": "The worktree has no .tools/terraform.exe; the order's init returned rc=127 'No such file or directory'. The file is gitignored (.gitignore:193 .tools/*.exe), so it does not travel with a worktree. The base checkout C:/dev/ajb_workspace/.tools/terraform.exe exists. fmt and validate were not run; DBC123-2-AC2 measured FAIL with 'terraform.exe absent'. The base binary was neither copied nor invoked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-IRPT_DASHBD-411 at HEAD e88884b630 on branch wk-IRPT_DASHBD-411: the order's init command returned 'No such file or directory', rc=127; ls of .tools/terraform.exe returned no such file.",
+      ".gitignore:193 '.tools/*.exe' matches .tools/terraform.exe; git ls-files .tools | grep -i terraform returned nothing.",
+      "C:/dev/ajb_workspace/.tools/terraform.exe exists in the base checkout (119,934,088 bytes); no terraform on PATH.",
+      "p123_bcw.py ac_2_2 printed 'terraform.exe absent' and DBC123-2-AC2 FAIL, rc=1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by this worker. fmt was not run, so the HCL was aligned by hand and checked with a heuristic against the holdings root's layout; it is unverified by terraform fmt. For the CVO and the COO: the order's terraform step needs a worktree that carries the gitignored binary, or a tool path the order names that resolves inside the worktree."
+}
+```
+
+
+## IRPT_DASHBD-D2-W411-S2 -- the Cottonwood holdings trigger's header says it is created DISABLED, while its state value reads ENABLED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W411-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~411",
+  "surfaced_at": "2026-10-15T07:49:14Z",
+  "one_line": "The holdings-performance Cottonwood schedule block says CREATED DISABLED in its comments, but its state line reads ENABLED; the order told this worker to mirror that block.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face item 5 and the order's instruction to copy the Cottonwood blocks: the Cottonwood holdings trigger is 'created DISABLED' (holdings-performance/schedule.tf comments, lines 225-228 and 285).",
+  "world_is": "holdings-performance/schedule.tf line 287 at HEAD e88884b630 reads state = \"ENABLED\" in aws_scheduler_schedule.irpt_holdings_performance_cot. Commit d9e46a0c1f (TO-DB-c-14 step 8) changed that single line from DISABLED to ENABLED after the catch-up's after-read; its comments and the output description at line 309 still say DISABLED. This root's schedule is written DISABLED as the order requires.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf at HEAD e88884b630: line 287 state = ENABLED; comment lines 225-228 and 285 and output description line 309 say DISABLED.",
+      "git log -- holdings-performance/schedule.tf: d9e46a0c1f 'enable(IRPT_DASHBD TO-DB-c-14 step 8, 0.7.0_AE_CloudOps~DB2): ... the single line state DISABLED -> ENABLED, after the catch-up's after-read'.",
+      "cb5edd65f1 is the build that created the schedule DISABLED (row IRPT_DASHBD-D2-W403-S4)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stale comment in an existing root, not edited (the order forbids editing any other Terraform file). The DB-c-18 schedule is written DISABLED as the order requires. Whoever next touches the holdings root may correct its comments; this worker did not."
+}
+```
+
+
+## IRPT_DASHBD-D2-W411-S3 -- the scheduler role, its policy and the schedule are named without the firm scope token, where the Cottonwood holdings blocks carry it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W411-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~411",
+  "surfaced_at": "2026-10-15T07:49:14Z",
+  "one_line": "The order gives builder arguments for the scheduler role, its policy and the schedule with no scope, so the names carry no cot token, unlike the Cottonwood holdings blocks it says to copy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face item 5: the scheduler role and policy are named by the builder with qualifier scheduler, and the schedule is named by the builder with function account-dim and kind daily; no scope is listed. Item 3 gives scope as the derived firm for the function only.",
+  "world_is": "lib/opal_naming.py name() returns irpt-account-dim-scheduler-role, irpt-account-dim-scheduler-policy and irpt-account-dim-daily for those arguments. The Cottonwood holdings scheduler role, policy and schedule (holdings-performance/schedule.tf lines 236-281) pass scope = the derived firm and print irpt-cot-holdings-performance-* names. This root follows the order's argument list as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The order, worker face item 5 (scheduler role and policy with qualifier scheduler; schedule with function account-dim and kind daily); item 3 gives scope for the function only.",
+      "lib/opal_naming.py name() at HEAD e88884b630, read-only: (irpt, None, account-dim, role, scheduler) gives irpt-account-dim-scheduler-role; (irpt, None, account-dim, policy, scheduler) gives irpt-account-dim-scheduler-policy; (irpt, None, account-dim, daily) gives irpt-account-dim-daily. With scope cottonwood the same calls give irpt-cot-account-dim-scheduler-role and irpt-cot-account-dim-daily.",
+      "holdings-performance/schedule.tf lines 236-281 pass scope = local.irpt_hp_cot_firm to the Cottonwood scheduler role, policy and schedule names."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A scheduler role and a schedule are not S3 bucket principals, so no grant in this root depends on the token and the bucket fence is not involved. If the CVO or COO wants the holdings form, scope = local.irpt_ad_cot_firm is added to three module blocks in schedule.tf before any apply; no other file moves."
+}
+```
+
+
+## IRPT_DASHBD-D2-W411-S4 -- the naming limb refuses the state key the order mandates for the new root, so the five files cannot be committed as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W411-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~411",
+  "surfaced_at": "2026-10-15T07:53:42Z",
+  "one_line": "The naming limb (LGIC_ENFORCE DEC-6, ENFORCE) refuses main.tf:27 at commit because the order's backend key investor-reporting/account-dim-cot/tfstate types the registry token cot outside a permitted context, so DB-c-18's five files cannot land on the branch.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face item 1 and criterion DBC123-2-AC1 require the backend key investor-reporting/account-dim-cot/tfstate in main.tf; the order says to commit the five files with safe-commit.",
+  "world_is": "The naming limb refuses main.tf:27 at commit: NAMING REFUSE investor-reporting/account-dim-cot/tfstate -> lookup(cottonwood), NEW hand-kept carrier (context rule). safe-commit aborted and unstaged (.scratch/commit_tf.log lines 49 and 65). A Terraform backend block cannot interpolate, so the key cannot be built by name() in the file. The five files stay uncommitted in the worktree; the order stays open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-IRPT_DASHBD-411/.scratch/commit_tf.log lines 49 and 65: 'ERROR: BLOCKED -- the naming limb refused ... Commit aborted; files unstaged.' and 'NAMING REFUSE ... main.tf:27 investor-reporting/account-dim-cot/tfstate -> lookup(cottonwood): NEW hand-kept carrier (context rule); hand-kept carrier of cot outside every permitted context'. Graded total 'NAMING-GATE: REFUSE 10 graded': 1 REFUSE, 6 CONFORMANT, 3 BUILT-NOT-GRADED.",
+      "The same log: 'NAMING PLACE-NOTICE UNMAPPED ... an unmapped root is not ratcheted' for infra/aws/terraform/investor-reporting/account-dim-cot.",
+      "infra/aws/terraform/investor-reporting/account-dim-cot/main.tf line 27 (worktree, uncommitted) carries the key; DBC123-2-AC1's structure check requires it (p123_bcw.py line 126) and PASSES on the working bytes.",
+      "infra/aws/terraform/investor-reporting/holdings-performance/main.tf line 29 carries no firm token in its key; infra/aws/terraform/cot-pipeline/main.tf:24 and infra/aws/terraform/compdiff-cot-value-parity/_root.tf:16 carry cot in theirs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not overridden: no GIT_COMMIT_AUTHOR_OVERRIDE, no --force, no edit of the key (the order and the checker both pin it), and no rename of the root (the order names the directory). The gate's own remedy (read through lookup) is a Python-only context. Decision needed from the CVO (the naming gate's owner) or the CTO: an accepted key form for a new root's state, or a recorded exemption for this one key, before DB-c-18 can commit."
+}
+```
+
 ```json
 {
   "id": "IRPT_DASHBD-D2-W193-S1",
@@ -15781,6 +15896,35 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Filed for the owner of the client-data gate on this fabric. No repair is made by this seat; the list is not copied into the worktree and no hash list is read by this seat."
+}
+```
+
+
+## IRPT_DASHBD-D2-W411-S5 -- the amended checker's scope arm carries a backspace byte in front of scope, so DBC123-2-AC1 fails on every correct root
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W411-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~411",
+  "surfaced_at": "2026-10-15T08:13:24Z",
+  "one_line": "The amended p123_bcw.py at HEAD 1b17b74f35 line 131 reads re.search(r'<0x08>scope\\s*=', blk): a backspace byte precedes scope, so the opal_name scope arm fails on every module block of a correct root and DBC123-2-AC1 cannot pass as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment (iii) and the checker's amended structure arm: every opal_name module block carries scope = <the derived firm>, and the checker refuses one without scope; DBC123-2-AC1 PASSes on a root that meets that.",
+  "world_is": "The checker file at HEAD 1b17b74f35 line 131 contains a backspace byte (0x08, one occurrence) immediately before the letters scope in the pattern, so the regex never matches a Terraform line. The root's six opal_name blocks all carry scope = local.irpt_ad_cot_firm (the same text the regex would need), and DBC123-2-AC1 measures 'an opal_name module without scope: irpt_account_dim_lambda_name' FAIL. A diagnostic copy of the checker in scratch with only that byte removed prints DBC123-2-AC1 PASS on the same files; the official verdict is FAIL and the copy is not evidence of it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p123_bcw.py line 131 at HEAD 1b17b74f35 (byte check: python counts b'\\x08' = 1 in the worktree file and in 1b17b74f35; 0 in issuance f0069dd8ca): need(re.search(r'\\x08scope\\s*=', blk) is not None, ...).",
+      "The same checker run from the worktree root: 'an opal_name module without scope: irpt_account_dim_lambda_name' then 'DBC123-2-AC1 FAIL', rc 1; tracing the checker frame shows cond False while re.search(r'scope\\s*=', blk) on the same block matches at span (93, 103).",
+      "Diagnostic only: .scratch/r123diag/p123_bcw.py (a copy with the 0x08 removed, BASE_R123.txt beside it) prints 'DBC123-2-AC1 PASS', rc 0.",
+      "The checker is the issuer's file (deliverables/2.0.0_SA_COO~C2/checks/r123/); this worker did not edit it (the order's grant does not include it)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by this worker: no backspace written into the Terraform, no edit of the checker, no change to the criterion. For the issuer (2.0.0_SA_COO~C2): replace the byte with a word boundary (\\b) or drop it, then re-run DBC123-2-AC1; the diagnostic copy is the only evidence that the other arms pass. DBC123-2-AC2 PASSes on the root (fmt -check and validate rc 0 by the absolute binary path)."
 }
 ```
 
