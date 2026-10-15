@@ -9076,3 +9076,30 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-W174-S1 -- The R3 custodian number is not in the granted Black Diamond holdings prefix: 0 of 137 parts carry the column, and the accounts dimension has none, so CB87ci3-AC1 and AC2 cannot be met as written
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W174-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~174",
+  "surfaced_at": "2026-10-15T19:08:10Z",
+  "one_line": "The order says the Black Diamond holdings parts under current_locations() carry the custodian column 'Account Number' beside account_id. They do not: 137 of 137 parts listed and read carry no such column, and gold/dimensions/accounts_dimension_latest.parquet (1,005 rows, 27 columns) carries none either. The research places the custodian number in the Black Diamond fact_holdings silver table (blackdiamond/cottonwood/silver/fact_holdings/), which the order does not grant. R3 cannot link on its custodian number from the granted reads; the module is built and its three stub tests pass; the R3 run stopped BLOCKED (rc 2) and wrote no file. No read was made outside the grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python run of data/assets/scripts/silver/commonwealth_match_r3.py --out C:/dev/_cotbkf_match_20261015, worktree C:/dev/wk-cotbkf-174 at the commit carrying this row's parent: HOLDINGS s3://opal-data-cot/gold/canonical/holdings/ listed=137 parquet_read=137 parts_with_custodian_column=0; BLOCKED rc=2; the output folder was not created",
+      "column names over the 137 parts: 3 distinct schemas (47, 51, 39 parts); the union holds account_id and no column named 'Account Number' (the only ccount-like names are account_id and account_supervised)",
+      "gold/dimensions/accounts_dimension_latest.parquet read schema only: 1,005 rows, 27 columns, no custodian-like column",
+      "comp-find 'fact_holdings' (corpus all): data/served_freshness_config.yaml:102 s3_key_prefix s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/ ; org/standards/MDPF_TAXSMA_DATA_CONTRACT.json:155 'fact_holdings (Account Number identity, SUM(Market Value) per account per date)'; the research copy section 3 names fact_holdings Account Number (1,001 distinct)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-3 WORKER FACE grant and item 1: the Black Diamond holdings parts under current_locations() carry the column Account Number beside account_id, which the module projects; AWS reads are limited to the accounts key and holdings prefix current_locations() names. CB87ci3-AC1 and AC2 require the R3 record and the outside links file built from that column.",
+  "world_is": "The granted holdings prefix (opal-data-cot gold/canonical/holdings/) holds 137 daily parts and none carries 'Account Number'. The accounts dimension carries no custodian number. The custodian column sits in blackdiamond/cottonwood/silver/fact_holdings/, outside the grant, so the criteria are not met as written. Not established: whether that silver table is reachable under this worker's grant, or which grant Andrew or the issuer would name for it. Not read: that prefix (listing it would be outside the grant).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
