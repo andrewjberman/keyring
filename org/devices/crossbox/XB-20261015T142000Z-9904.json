@@ -10,7 +10,7 @@
  "subject": "NFRA_CTLPLN package journey: name ONE package a real dell1 lane needs (or say none)",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_DELL1_NAME_ONE_PACKAGE.md",
  "opened_at": "2026-10-15T14:20:00Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-15T14:23:13Z",
   "bus_message_id": "13c7714b-6e7e-44d2-a4de-c11bd7662483"
@@ -21,8 +21,8 @@
   "bus_message_id": "b66567db-4673-4f8e-b42b-f5b9c272e9d1"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-15T15:27:42Z",
+  "from_by": "0.0.0_AB_MSTR",
   "to_at": "2026-10-15T14:40:31Z",
   "to_by": "0.0.0_AB_MSTR~DELL1"
  }

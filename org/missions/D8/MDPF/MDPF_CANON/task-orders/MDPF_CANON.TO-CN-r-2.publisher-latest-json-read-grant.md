@@ -116,7 +116,7 @@ Report once: the diff (one line per file), the output line of every criterion, t
 - **Pre-cut dry run (base box/dell1 @ccb162ba19):** AC1 0 of 5, AC2 4 of 4 (controls), AC3 3 of 5 (E3, E4, E5 controls). Reference tree 5/4/5. `worker-light` was considered: the cell is about 25 product lines, but the blocks are byte-exact and the arms are strict; class `worker-light` is acceptable (issuer's call).
 - **Fanout:** one cell, one chain, slot ~30, no edge to the other round-10 cells. Base box/dell1.
 
-<status>pending</status>
+<status>complete</status>
 <round>10</round>
 <to_id>MDPF_CANON.TO-CN-r-2</to_id>
 <slot>~30</slot>
