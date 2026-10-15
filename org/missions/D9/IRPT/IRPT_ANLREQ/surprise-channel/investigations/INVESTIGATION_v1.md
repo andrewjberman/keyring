@@ -16712,3 +16712,31 @@
   "notes": "Do not loosen the walker. The driver needs its own allow-list and an explicit Submit selector."
 }
 ```
+
+## IRPT_ANLREQ-D2-S114 -- DISARMS W148-S1: the tracked test-login file is a sanctioned fixture, already ruled
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S114",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-15T03:24:01Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W148-S1 (a tracked .claude/skills/frontend-dev/portal-test-login.env may hold a credential): it is a sanctioned fixture, already ruled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row W148-S1: a tracked test-login file named like a credential was not opened by the worker; disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "RELAYED by 1.0.0_SA_CTO~DELL2 (msg 7990, who read its key names only): the file is tracked on purpose, restored under Andrew-direct 2026-08-06 (commit 12f4336258), and site Z's CTO dispositioned it as the sanctioned fixture in row NFRA_OPSEC202609-Z-S50 (disarm 60bdb15654), which also names its second home. This seat did not open the file and takes no act on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 7990",
+      "commit 12f4336258",
+      "row NFRA_OPSEC202609-Z-S50 and commit 60bdb15654 (cited by the CTO, not re-read by this seat)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The file is a sanctioned, already-dispositioned fixture; no act on it is owed by this project.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W148-S1."
+}
+```
