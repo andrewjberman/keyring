@@ -1,0 +1,110 @@
+{
+  "schema": "intake-fetch/1",
+  "batch": "intake-20261015-duckdb",
+  "requested": {
+    "name": "duckdb",
+    "version": "1.5.0",
+    "python_tag": "cp314",
+    "abi_tag": "cp314",
+    "platform_tag": "win_amd64",
+    "file_name": "duckdb-1.5.0-cp314-cp314-win_amd64.whl"
+  },
+  "index_base": "https://pypi.org",
+  "requests": [
+    {
+      "url": "https://pypi.org/pypi/duckdb/1.5.0/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 34887,
+      "at": "2026-10-15T19:23:54Z"
+    },
+    {
+      "url": "https://pypi.org/pypi/duckdb/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 4211456,
+      "at": "2026-10-15T19:23:55Z"
+    },
+    {
+      "url": "https://pypi.org/integrity/duckdb/1.5.0/duckdb-1.5.0-cp314-cp314-win_amd64.whl/provenance",
+      "method": "GET",
+      "status": 200,
+      "bytes": 9572,
+      "at": "2026-10-15T19:24:09Z"
+    },
+    {
+      "url": "https://files.pythonhosted.org/packages/93/a4/a90f2901cc0a1ce7ca4f0564b8492b9dbfe048a6395b27933d46ae9be473/duckdb-1.5.0-cp314-cp314-win_amd64.whl",
+      "method": "GET",
+      "status": 200,
+      "bytes": 13575130,
+      "at": "2026-10-15T19:24:10Z"
+    }
+  ],
+  "published": {
+    "sha256": "11ae50aaeda2145b50294ee0247e4f11fb9448b3cc3d2aea1cfc456637dfb977",
+    "size": 13575130,
+    "upload_time": "2026-03-09T12:50:19.716145Z",
+    "yanked": false,
+    "requires_python": ">=3.10.0"
+  },
+  "project": {
+    "release_count": 146,
+    "first_release_at": "2019-05-08T11:11:29.054711Z",
+    "this_release_at": "2026-03-09T12:48:39.133616Z"
+  },
+  "attestation": "present",
+  "attestation_url": "https://pypi.org/integrity/duckdb/1.5.0/duckdb-1.5.0-cp314-cp314-win_amd64.whl/provenance",
+  "held_path": "holding/intake-20261015-duckdb/duckdb-1.5.0-cp314-cp314-win_amd64.whl",
+  "held_sha256": "11ae50aaeda2145b50294ee0247e4f11fb9448b3cc3d2aea1cfc456637dfb977",
+  "held_bytes": 13575130,
+  "outcome": "held",
+  "reason": "digest and size equal the published values",
+  "fetched_by": "0.9.0_WK_NFRA_CTLPLN~119",
+  "device": "laptop",
+  "at": "2026-10-15T19:23:54Z",
+  "approval": {
+    "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md",
+    "sha256": "9c832dc4577e485fe02e7037be9021b627edb0e1555a9002b4bef02f1427a5dc",
+    "matched": true
+  },
+  "release_files": [
+    "duckdb-1.5.0-cp310-cp310-macosx_10_9_universal2.whl",
+    "duckdb-1.5.0-cp310-cp310-macosx_10_9_x86_64.whl",
+    "duckdb-1.5.0-cp310-cp310-macosx_11_0_arm64.whl",
+    "duckdb-1.5.0-cp310-cp310-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+    "duckdb-1.5.0-cp310-cp310-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl",
+    "duckdb-1.5.0-cp310-cp310-win_amd64.whl",
+    "duckdb-1.5.0-cp311-cp311-macosx_10_9_universal2.whl",
+    "duckdb-1.5.0-cp311-cp311-macosx_10_9_x86_64.whl",
+    "duckdb-1.5.0-cp311-cp311-macosx_11_0_arm64.whl",
+    "duckdb-1.5.0-cp311-cp311-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+    "duckdb-1.5.0-cp311-cp311-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl",
+    "duckdb-1.5.0-cp311-cp311-win_amd64.whl",
+    "duckdb-1.5.0-cp311-cp311-win_arm64.whl",
+    "duckdb-1.5.0-cp312-cp312-macosx_10_13_universal2.whl",
+    "duckdb-1.5.0-cp312-cp312-macosx_10_13_x86_64.whl",
+    "duckdb-1.5.0-cp312-cp312-macosx_11_0_arm64.whl",
+    "duckdb-1.5.0-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+    "duckdb-1.5.0-cp312-cp312-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl",
+    "duckdb-1.5.0-cp312-cp312-win_amd64.whl",
+    "duckdb-1.5.0-cp312-cp312-win_arm64.whl",
+    "duckdb-1.5.0-cp313-cp313-macosx_10_13_universal2.whl",
+    "duckdb-1.5.0-cp313-cp313-macosx_10_13_x86_64.whl",
+    "duckdb-1.5.0-cp313-cp313-macosx_11_0_arm64.whl",
+    "duckdb-1.5.0-cp313-cp313-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+    "duckdb-1.5.0-cp313-cp313-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl",
+    "duckdb-1.5.0-cp313-cp313-win_amd64.whl",
+    "duckdb-1.5.0-cp313-cp313-win_arm64.whl",
+    "duckdb-1.5.0-cp314-cp314-macosx_10_15_universal2.whl",
+    "duckdb-1.5.0-cp314-cp314-macosx_10_15_x86_64.whl",
+    "duckdb-1.5.0-cp314-cp314-macosx_11_0_arm64.whl",
+    "duckdb-1.5.0-cp314-cp314-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+    "duckdb-1.5.0-cp314-cp314-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl",
+    "duckdb-1.5.0-cp314-cp314-win_amd64.whl",
+    "duckdb-1.5.0-cp314-cp314-win_arm64.whl",
+    "duckdb-1.5.0.tar.gz"
+  ],
+  "index_file_name": "duckdb-1.5.0-cp314-cp314-win_amd64.whl",
+  "received_sha256": "11ae50aaeda2145b50294ee0247e4f11fb9448b3cc3d2aea1cfc456637dfb977",
+  "received_bytes": 13575130
+}

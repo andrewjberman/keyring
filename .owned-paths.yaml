@@ -697,7 +697,8 @@ lanes:
     permitted_agents:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO~C
-    description: "CTO grantor, 2026-10-07 (2.0.0_SA_COO~C msg 105946): ADVI_COTBKF C-RESTRICTED, the restricted prefix in opal-data-cottonwood for the Commonwealth CRM zip. Two exact files; PLAN and SIMULATE only -- the apply stays with the file's owner (CLOUD_OPS_OR_ETL) under a never-widen pair."
+      - 0.7.0_AE_CloudOps~CB1
+    description: "CTO grantor, 2026-10-07 (2.0.0_SA_COO~C msg 105946): ADVI_COTBKF C-RESTRICTED, the restricted prefix in opal-data-cottonwood for the Commonwealth CRM zip. Two exact files; PLAN and SIMULATE only -- the apply stays with the file's owner (CLOUD_OPS_OR_ETL) under a never-widen pair. + 0.7.0_AE_CloudOps~CB1, CTO grantor 2026-10-15 (1.0.0_SA_CTO~DELL1 on 2.0.0_SA_COO~C1 msg 6178): the round-88 CRM-match grant commit and its withdrawal revert on s3-lgic-firm-buckets.tf only (pair NEVER_WIDEN_R88_CRM_MATCH_GRANT); struck when the withdrawal lands."
 
   NFRA_CTLPLN_FAST_C:
     permitted_agents:

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~174</issued_to>
 <issued_by>2.0.0_SA_COO~C1</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -26,7 +26,7 @@
 
 **Read first (under the repository root):**
 1. `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/RESEARCH_20261015_COTTONWOOD_MATCHING_KEYS.copy.md` (the CRO's research; sections 3 and 4).
-2. `data/assets/scripts/silver/commonwealth_crosswalk.py`: read its docstring, `normalize_account`, `current_locations`, `_fetch_inputs`, `load_inputs` and the R1/R2 code, to reuse the loaders by `import` (do not copy and do not edit the file). The Black Diamond side: `current_locations()` names the bucket, the accounts key and the holdings prefix; the holdings parquet parts carry the column `Account Number` beside `account_id`, which `HOLD_COLS` there does not project: you project it yourself.
+2. `data/assets/scripts/silver/commonwealth_crosswalk.py`: read its docstring, `normalize_account`, `current_locations`, `_fetch_inputs`, `load_inputs` and the R1/R2 code, to reuse the loaders by `import` (do not copy and do not edit the file). The Black Diamond side. **AMENDMENT 1 (2.0.0_SA_COO~C1, after your first report; my defect at the cut): the custodian column is NOT in the holdings parts `current_locations()` names (you measured 0 of 137). It is `Account Number`, beside `AccountID`, in the Black Diamond silver `fact_holdings` table: `opal_naming.address('blackdiamond','cottonwood','silver','fact_holdings')` (`s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/`; the contract `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` names it `blackdiamond/cottonwood/silver/fact_holdings (Account Number identity)`). Read it with the builder's address, never typed; list the prefix once (state the denominator) and read ONLY the columns `AccountID` and `Account Number` of the most recent three dated partitions (the custodian number does not change by date); state the partitions read and how `AccountID` relates to the `account_id` of `REVERSE_MATCH_V3.csv` (same values, or the mapping you found).** The accounts key from `current_locations()` stays as before.
 3. The committed reverse match `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/REVERSE_MATCH_V3.csv` (sha256 `0783f088aecbf29e46751aa5d80239b8aa53f16484778162e34ee1c09783c66f`; columns `account_key,predecessor_key,match_basis,reason`; raw ids; 860 rows). Its `none` rows with a reason other than `NEW_CLIENT_AFTER_MIGRATION` are the reachable unmatched active accounts: 387 `none` less 168 new clients = 219.
 4. The crosswalk as served: `s3://opal-data-assets/commonwealth/cottonwood/silver/crosswalk/date=2026-06-23/crosswalk.csv` (1,533 rows: each Commonwealth account, its status MATCHED or NOT_MATCHED, its `current_account`). Read it with the loader the crosswalk module's `opal_naming.address` form gives (never type the key by hand).
 
@@ -54,7 +54,7 @@
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below and the folder `C:/dev/_cotbkf_match_20261015/` (only the file `R3_LINKS.csv`). You change no other file; you do not edit `commonwealth_crosswalk.py`, `REVERSE_MATCH_V3.csv`, any existing script or test, or the scan test.
-- **AWS: READ-ONLY, through the `.tools/aws` shim,** of the Commonwealth silver crosswalk and transactions/positions as the crosswalk module reads them, and the Black Diamond accounts key and holdings prefix `current_locations()` names. State each listing's denominator. No write, delete or serve; no other bucket or prefix; NOT the restricted CRM prefix or the CRM zip under any name (open call d3cc is Andrew's). Do not run `aws sts get-caller-identity`.
+- **AWS: READ-ONLY, through the `.tools/aws` shim,** of the Commonwealth silver crosswalk and transactions/positions as the crosswalk module reads them, the Black Diamond accounts key and holdings prefix `current_locations()` names, and (AMENDMENT 1) the Black Diamond silver `fact_holdings` prefix named above (columns `AccountID` and `Account Number` only). State each listing's denominator. No write, delete or serve; no other bucket or prefix; NOT the restricted CRM prefix or the CRM zip under any name (open call d3cc is Andrew's). Do not run `aws sts get-caller-identity`.
 - **No name of a person or an account is read into any output.** This cell needs numbers only. Account numbers appear only in the one outside file. Counts, dates, rule names and statuses only in the record, the report and any message.
 - After your last commit run `env -u COTBKF_SWEEPS_CONFIG python -m pytest data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py -q -s`. On this box it may fail closed because the pinned account set is on another machine: then report the exact error and do NOT look for the set; the issuer runs a count-only substitute at the drain.
 - **NEVER** `--apply`, an S3 write or delete, `--refresh`, or any edit of the served crosswalk. No vendor call. No push. No gate override and no `--force`. Do not weaken, delete, xfail or skip any test. Scratch under the worktree `.scratch/`, never committed.
