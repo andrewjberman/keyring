@@ -402,7 +402,14 @@ def load_state() -> dict:
 def run(args: argparse.Namespace) -> int:
     now = time.time()
     live = live_serials()
-    rows = [classify(w, args.trunk, args.clean_hours, args.held_hours, live, now) for w in worktrees()[1:]]
+    wts = worktrees()[1:]
+    if args.only:  # ONE linked worktree: every other one is neither classified nor touched
+        want = Path(args.only).resolve()
+        wts = [w for w in wts if _same_path(w, want)]
+        if not wts:
+            print(f"ERROR: --only path is not a linked worktree of this repository: {args.only}")
+            return 2
+    rows = [classify(w, args.trunk, args.clean_hours, args.held_hours, live, now) for w in wts]
     if any(r["class"] in ("CLEAN", "MERGED") for r in rows):
         text = in_use_text()
         for r in rows:
@@ -414,8 +421,9 @@ def run(args: argparse.Namespace) -> int:
                 r.update({"class": "SKIP", "reason": "IN USE: a running process or scheduled task names this path"})
     prev = load_state().get("held", {})
     held_out = {}
-    print(f"=== worktree_gc {'GO' if args.go else 'DRY-RUN'} -- trunk {args.trunk}, clean {args.clean_hours} h, "
-          f"held {args.held_hours} h, {len(rows)} linked worktree(s), {len(live)} live serial(s) ===")
+    print(f"=== worktree_gc {'GO' if args.go else 'DRY-RUN'}{' --only' if args.only else ''} -- trunk {args.trunk}, "
+          f"clean {args.clean_hours} h, held {args.held_hours} h, {len(rows)} linked worktree(s), "
+          f"{len(live)} live serial(s) ===")
     for r in sorted(rows, key=lambda x: (x["class"], x["path"])):
         print(f"  {r['class']:<9} {r['path']}  [{r['branch']}]  {r['reason']}"
               + (f"  owner={r['owner']}" if r["owner"] else ""))
@@ -427,34 +435,50 @@ def run(args: argparse.Namespace) -> int:
     removed = failed = 0
     if args.go:
         for r in rows:
-            if r["class"] in ("CLEAN", "MERGED"):
-                force = ["--force"] if r["class"] == "MERGED" else []
-                res = git(["worktree", "remove", *force, r["path"]], cwd=str(ws_root()))
-                if res.returncode == 0:
-                    removed += 1
-                    audit(f"REMOVED{'-FORCE' if force else ''}  path={r['path']}  branch={r['branch']}  reason={r['reason']}")
-                else:
+            if r["class"] not in ("CLEAN", "MERGED"):
+                continue
+            preserved = ""
+            if r["class"] == "MERGED":  # the dirt is preserved FIRST; a failed preserve removes nothing
+                meta: dict = {}
+                ok, val = preserve_dirt(r["path"], r["branch"], meta)
+                if not ok:
                     failed += 1
-                    print(f"  WARN: git worktree remove refused {r['path']}: {res.stderr.strip()[:200]}")
-        if any(r["class"] == "PRUNABLE" for r in rows):
-            git(["worktree", "prune"], cwd=str(ws_root()))
-        try:
-            state_path().write_text(json.dumps({"written": now, "held": held_out}, indent=1), encoding="utf-8")
-        except OSError as exc:
-            print(f"WARN: state write failed: {exc}", file=sys.stderr)
+                    print(f"PRESERVE-FAILED {val}  path={r['path']}")
+                    audit(f"PRESERVE-FAILED  path={r['path']}  branch={r['branch']}  reason={val}")
+                    continue
+                print(f"PRESERVED {r['branch']} -> {meta['ref']} {val} ({meta['n']} path(s))")
+                preserved = f"  preserved={meta['ref']}@{val}"
+            force = ["--force"] if r["class"] == "MERGED" else []
+            res = git(["worktree", "remove", *force, r["path"]], cwd=str(ws_root()))
+            if res.returncode == 0:
+                removed += 1
+                audit(f"REMOVED{'-FORCE' if force else ''}  path={r['path']}  branch={r['branch']}"
+                      f"{preserved}  reason={r['reason']}")
+            else:
+                failed += 1
+                print(f"  WARN: git worktree remove refused {r['path']}: {res.stderr.strip()[:200]}")
+        if args.only:
+            print("NOTE: --only: no prune and no state write (both are repository-wide)")
+        else:
+            if any(r["class"] == "PRUNABLE" for r in rows):
+                git(["worktree", "prune"], cwd=str(ws_root()))
+            try:
+                state_path().write_text(json.dumps({"written": now, "held": held_out}, indent=1), encoding="utf-8")
+            except OSError as exc:
+                print(f"WARN: state write failed: {exc}", file=sys.stderr)
     counts = {c: sum(1 for r in rows if r["class"] == c)
               for c in ("CLEAN", "MERGED", "HELD", "ESCALATE", "ACTIVE", "SKIP", "PRUNABLE", "UNSTARTED")}
-    print("SUMMARY: " + "  ".join(f"{k}={v}" for k, v in counts.items())
+    print(("SUMMARY --only: " if args.only else "SUMMARY: ") + "  ".join(f"{k}={v}" for k, v in counts.items())
           + (f"  removed={removed} failed={failed}" if args.go else "  (dry run: nothing removed)"))
     return 0
 
 
 def check_removable(args: argparse.Namespace) -> int:
     """--check-removable PATH: the drain's test on ONE linked worktree, the idle window ignored (the drain calls it the
-    moment a merge lands). Prints one line and removes nothing. 0 = REMOVABLE, 1 = NOT-REMOVABLE, 2 = not a linked
-    worktree of this repository. REMOVABLE only when own >= 1, HEAD is contained in the trunk or a box branch, the
-    tree holds nothing uncommitted (and no non-cache ignored file: `git worktree remove` would delete it silently),
-    and the path is not locked, not drain-*, not named by a running process."""
+    moment a merge lands). Prints one line and removes nothing. 0 = REMOVABLE or REMOVABLE-AFTER-PRESERVE, 1 =
+    NOT-REMOVABLE, 2 = not a linked worktree of this repository. REMOVABLE only when own >= 1, HEAD is contained in
+    the trunk or a box branch, the porcelain is empty, and the path is not locked, not drain-*, not named by a running
+    process. A merged worktree with porcelain dirt reads REMOVABLE-AFTER-PRESERVE: --go preserves the dirt first."""
     want = Path(args.check_removable).resolve()
     match = None
     for w in worktrees()[1:]:  # [0] is the main worktree, never a candidate
@@ -478,14 +502,14 @@ def check_removable(args: argparse.Namespace) -> int:
         return not_removable("UNSTARTED", f"own={'unknown' if r['own'] is None else 0}; no commit of its own")
     if not r["merged"]:
         return not_removable(r["class"], f"own={r['own']}; HEAD is not in the trunk or a box branch; {r['reason']}")
-    if r["dirty"] or r["ignored"]:
-        return not_removable(r["class"], f"own={r['own']}; dirty: {r['dirty']} uncommitted/untracked, "
-                             f"{r['ignored']} ignored non-cache path(s); {r['reason']}")
     text = in_use_text()
     if text is None:
         return not_removable("SKIP", "in-use read failed (process/scheduled-task list); not removable")
     if path_in_use(r["path"], text):
         return not_removable("SKIP", "IN USE: a running process or scheduled task names this path")
+    if r["dirty"]:  # the same verdict --go reaches: the dirt is preserved on a preserve/ branch before removal
+        print(f"REMOVABLE-AFTER-PRESERVE MERGED own={r['own']}; {r['dirty']} path(s) would be preserved")
+        return 0
     print(f"REMOVABLE CLEAN own={r['own']}; {r['reason']}")
     return 0
 
@@ -552,7 +576,7 @@ def selftest() -> int:
             (t / "f.txt").write_text("edited\n", encoding="ascii")
             (t / "scratch.tmp").write_text("u\n", encoding="ascii")
         _REPO = str(main_tree)
-        ns = argparse.Namespace(go=True, trunk="CLOUD", clean_hours=0.0, held_hours=48.0)
+        ns = argparse.Namespace(go=True, trunk="CLOUD", clean_hours=0.0, held_hours=48.0, only="")
         run(ns)
         ok.append(("merged+dirty -> removed", not wa.exists()))
         ok.append(("unmerged+dirty -> kept (HELD)", wb.is_dir() and (wb / "scratch.tmp").exists()))
@@ -581,6 +605,8 @@ def main() -> int:
     ap.add_argument("--selftest", action="store_true", help="exercise MERGED (force-removed) and HELD (kept) on a temp repo")
     ap.add_argument("--check-removable", default="", metavar="PATH",
                     help="the drain's removable test on one linked worktree (idle window ignored); removes nothing")
+    ap.add_argument("--only", default="", metavar="PATH",
+                    help="restrict the dry run or --go to the ONE linked worktree at PATH (exit 2 if it is not one)")
     ap.add_argument("--repo", default="", help="operate on this repository (exercise); default: the one holding this script")
     args = ap.parse_args()
     global _REPO

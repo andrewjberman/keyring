@@ -113,8 +113,9 @@ def run_arms(mod, base: Path) -> list[tuple[str, bool]]:
          and (t["b"] / "dirty.txt").is_file()),
         ("(c) one own commit merged, clean: REMOVABLE CLEAN rc 0; --go removes the directory",
          v["c"][0] == 0 and v["c"][1].startswith("REMOVABLE CLEAN") and go_rc == 0 and not alive["c"]),
-        ("(d) one own commit merged, dirty: NOT-REMOVABLE MERGED rc 1 (the dirty test, check-removable only)",
-         v["d"][0] == 1 and v["d"][1].startswith("NOT-REMOVABLE MERGED") and "dirty:" in v["d"][1]),
+        ("(d) one own commit merged, dirty: REMOVABLE-AFTER-PRESERVE rc 0 (CT-ag-1: --go preserves the dirt first)",
+         v["d"][0] == 0 and v["d"][1].startswith("REMOVABLE-AFTER-PRESERVE MERGED")
+         and "1 path(s) would be preserved" in v["d"][1]),
         ("(e) one own commit NOT in the trunk, clean: NOT-REMOVABLE HELD rc 1; --go keeps the directory",
          v["e"][0] == 1 and v["e"][1].startswith("NOT-REMOVABLE HELD") and alive["e"]),
         ("(f) detached HEAD at a trunk commit: NOT-REMOVABLE UNSTARTED own=unknown rc 1; --go keeps it",
