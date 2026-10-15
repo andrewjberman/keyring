@@ -13671,3 +13671,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-501. The test file is outside the grant and was not edited. The owner of the colour-dependent parse is the suite's owner; the issuer may route it."
 }
 ```
+
+## IRPT_DASHBD-D2-W303-S1 -- the commit gate's client account-id check did not run for the DB-i-3 commit: the hashed account-id list is absent on this device
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W303-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~303",
+  "surfaced_at": "2026-10-15T02:43:44Z",
+  "one_line": "The client account-id check of the commit gate did not run for the DB-i-3 commit 7301ed804a: the hashed account-id list is absent on this device, and the gate says the commit was NOT checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "The worker face: client data is never recorded (an account number is never written to the repo). The commit gate screens each commit for client account ids against the hashed list (safe-commit.sh, client-data-check).",
+  "world_is": "On this device the hashed account-id list is absent at its default path (existence tested, contents not read) and OPAL_ACCOUNT_ID_HASHES is unset. The commit gate printed WARN: client-data-check: hashed account-id list ABSENT, and that this commit was NOT checked for client account ids; it committed 7301ed804a anyway. The worker scanned its files for runs of eight or more digits: the record carries digests and shares, and the one long run outside a hash is the private folder path. Any later commit from this device passes the same unscreened check until the list is placed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of commit 7301ed804a (DB-i-3, 2026-10-15 about 02:44 Z): 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there).'",
+      "measured 2026-10-15T02:43:44Z: the default path is absent (existence test only, no read of contents) and the environment variable OPAL_ACCOUNT_ID_HASHES is unset"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-3. The row states the form only. The commit stands: the worker's scan of its files found no account id, and the record carries digests only. The disarm is the placing of the hashed list on this device, which the issuer routes to the box owner."
+}
+```
