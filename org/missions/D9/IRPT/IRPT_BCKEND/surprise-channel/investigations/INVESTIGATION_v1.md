@@ -39439,3 +39439,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Visibility only. The issuer may state one location for later rounds."
 }
 ```
+
+## IRPT_BCKEND-D2-S205 -- IB-pr-568 applied: the 33 absent flat Orion bronze keys are written and read back (16,768 requests)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S205",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T17:14:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-568 applied: the 33 absent flat Orion bronze keys of pair (a) are written (positions 4, transactions 7, performance 22), each read ABSENT first and read back, 16,768 requests; the Scope account feed's apply is the next executor slot.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB2's record commit 6054c0a120 (deliverables/0.7.0_AE_CloudOps~IB2/IB208-1_orion_backfill_record.json): keys_written 33, requests_made 16768 (bound 18,000 by AMENDMENT 5 @46bc11fc02), 0 throttle, eleven counters 0, the ledger irpt-orion-33day-backfill-20261015 closed; I re-ran check r208 AC1 to AC3 in the main tree: PASS; proof instance VALID",
+      "the packet gates: sha256 03a77b3317, both halves signed, no open ledger or marker, one change at a time"
+    ]
+  },
+  "spec_asserts": "The Orion pairs packet V3, pair (a): the one-time 33-day dated backfill of the absent flat bronze keys, each read ABSENT first, an empty key never written.",
+  "world_is": "Applied and read back. The three feeds now hold their previously missing days; the trigger, the catalog, the schedules and every other key are untouched. The request count 16,768 exceeded the pair's early estimate of about 2,470 and my first bound of 16,000: the real per-day cost of the performance feed (about 420 requests a day) was not in the estimate; the bound was raised once, by AMENDMENT 5, on IB2's measured need, with the persistent-429 stop unchanged. Nothing else waits on this order: the Scope account feed (pair (b) addendum 1) is built and its apply takes IB2's next slot."
+}
+```
