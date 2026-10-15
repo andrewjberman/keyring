@@ -28,6 +28,12 @@ THE RULE (one class per linked worktree):
             brings the owner online to assess it (/mstr-spawn with that one task), or assesses it itself if the seat
             is retired.
   PRUNABLE  the directory is gone; --go runs `git worktree prune` (admin data only).
+  UNSTARTED a worktree whose branch carries NO commit of its own (own=0: HEAD is still the branch's creation point)
+            or whose own count cannot be read (own=unknown: detached HEAD, a missing or empty branch reflog, any git
+            error). Unstarted or in progress, never merged: --go NEVER removes it, clean or dirty (CTO round-15 ruling 1,
+            CT-af-1). own = commits reachable from HEAD and not from the creation point, which is the new-value of the
+            OLDEST entry of `git reflog show <branch>` (`git worktree add -b` writes `branch: Created from <sha>`).
+            CLEAN and MERGED also require own >= 1. ACTIVE is decided first, so a recently active worktree reads ACTIVE.
 
 Every REMOVED worktree, and every first sighting of a HELD or ESCALATE worktree, is one WORKTREE-GC line in
 org/mcp/agent-spawn-audit.log. State lives in <git-common-dir>/opal-worktree-gc.json (per box, never committed).
@@ -36,6 +42,8 @@ Usage:
   python .tools/worktree_gc.py                 # dry run: the table, nothing changed
   python .tools/worktree_gc.py --go            # remove CLEAN, force-remove MERGED, prune PRUNABLE, log, write state
   python .tools/worktree_gc.py --selftest      # temp repo: merged+dirty -> removed, unmerged+dirty -> kept
+  python .tools/worktree_gc.py --check-removable <path>   # the drain's test on ONE worktree, idle window ignored;
+                                                          # one line REMOVABLE/NOT-REMOVABLE; removes nothing
   python .tools/worktree_gc.py --held-for S    # held/escalated worktrees owned by serial S (reads state; fast)
   python .tools/worktree_gc.py --hook-notice   # PostToolUse(register_agent) hook: stdin JSON -> notice for that serial
 """
@@ -140,11 +148,42 @@ def worktrees() -> list[dict]:
     return rows
 
 
+SHA_RX = re.compile(r"[0-9a-f]{40}|[0-9a-f]{64}")
+
+
+def creation_point(branch: str, cwd: str) -> str | None:
+    """The commit a branch was created at: the new-value of the OLDEST entry of its reflog. None when the branch is
+    detached, its reflog is missing or empty, or git fails (fail closed). Forms this reads: `worktree add -b`,
+    `git branch`, `checkout -b`, `worktree add <path> <existing-branch>`. An orphan branch reads its first commit
+    as the creation point (own undercounts by one: safe, it can only refuse). An expired reflog reads a later
+    entry (undercount: safe)."""
+    if not branch or branch == "(detached)":
+        return None
+    res = git(["reflog", "show", "--format=%H", f"refs/heads/{branch}"], cwd=cwd)
+    if res.returncode != 0:
+        return None
+    shas = [ln.strip() for ln in res.stdout.splitlines() if ln.strip()]
+    if not shas or not SHA_RX.fullmatch(shas[-1]):
+        return None
+    return shas[-1]
+
+
+def own_commits(path: str, branch: str, head: str) -> int | None:
+    """Commits reachable from HEAD and not from the branch's creation point; None = unknown (fail closed)."""
+    start = creation_point(branch, path)
+    if start is None or not SHA_RX.fullmatch(head):
+        return None
+    res = git(["rev-list", "--count", f"{start}..{head}"], cwd=path)
+    if res.returncode != 0 or not res.stdout.strip().isdigit():
+        return None
+    return int(res.stdout.strip())
+
+
 def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str], now: float) -> dict:
     path = wt.get("worktree", "")
     branch = str(wt.get("branch", "")).replace("refs/heads/", "") or "(detached)"
     row = {"path": path, "branch": branch, "class": "", "reason": "", "owner": "", "idle_h": None,
-           "dirty": 0, "unmerged": 0}
+           "dirty": 0, "unmerged": 0, "ignored": 0, "merged": False, "own": None}
     if wt.get("locked") is not None and "locked" in wt:
         row.update({"class": "SKIP", "reason": "locked (git worktree lock)"})
         return row
@@ -189,9 +228,16 @@ def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str]
     # commits behind and inflate the unmerged count and the owner read (dell2 2.0.0_SA_COO~Y2, msg 6850).
     base = f"origin/{trunk}"
     unmerged = 0 if merged else int((git(["rev-list", "--count", f"{base}..{head}"], cwd=path).stdout.strip() or "0"))
-    row.update({"idle_h": idle_h, "dirty": len(dirty), "unmerged": unmerged})
+    row.update({"idle_h": idle_h, "dirty": len(dirty), "unmerged": unmerged, "ignored": len(ignored),
+                "merged": merged})
     if idle_raw < clean_h:
         row.update({"class": "ACTIVE", "reason": "a modified file was edited within the clean window"})
+        return row
+    own = own_commits(path, branch, head)
+    row["own"] = own
+    if own is None or own < 1:  # CT-af-1: no commit of its own is not merged, whatever the trunk says
+        row.update({"class": "UNSTARTED", "reason": f"own={'unknown' if own is None else '0'}: no commit of its own "
+                    f"(unstarted or in progress); never removed; idle {idle_h} h"})
         return row
     if merged and not dirty and not ignored:
         row.update({"class": "CLEAN", "reason": f"merged into {holders[0]}, nothing uncommitted, idle {idle_h} h"})
@@ -307,9 +353,50 @@ def run(args: argparse.Namespace) -> int:
         except OSError as exc:
             print(f"WARN: state write failed: {exc}", file=sys.stderr)
     counts = {c: sum(1 for r in rows if r["class"] == c)
-              for c in ("CLEAN", "MERGED", "HELD", "ESCALATE", "ACTIVE", "SKIP", "PRUNABLE")}
+              for c in ("CLEAN", "MERGED", "HELD", "ESCALATE", "ACTIVE", "SKIP", "PRUNABLE", "UNSTARTED")}
     print("SUMMARY: " + "  ".join(f"{k}={v}" for k, v in counts.items())
           + (f"  removed={removed} failed={failed}" if args.go else "  (dry run: nothing removed)"))
+    return 0
+
+
+def check_removable(args: argparse.Namespace) -> int:
+    """--check-removable PATH: the drain's test on ONE linked worktree, the idle window ignored (the drain calls it the
+    moment a merge lands). Prints one line and removes nothing. 0 = REMOVABLE, 1 = NOT-REMOVABLE, 2 = not a linked
+    worktree of this repository. REMOVABLE only when own >= 1, HEAD is contained in the trunk or a box branch, the
+    tree holds nothing uncommitted (and no non-cache ignored file: `git worktree remove` would delete it silently),
+    and the path is not locked, not drain-*, not named by a running process."""
+    want = Path(args.check_removable).resolve()
+    match = None
+    for w in worktrees()[1:]:  # [0] is the main worktree, never a candidate
+        try:
+            if Path(str(w.get("worktree", ""))).resolve() == want:
+                match = w
+        except OSError:
+            pass
+    if match is None:
+        print(f"ERROR: not a linked worktree of this repository: {args.check_removable}")
+        return 2
+
+    def not_removable(cls: str, why: str) -> int:
+        print(f"NOT-REMOVABLE {cls} {why}")
+        return 1
+
+    r = classify(match, args.trunk, 0.0, args.held_hours, live_serials(), time.time())
+    if r["class"] in ("SKIP", "PRUNABLE"):
+        return not_removable(r["class"], r["reason"])
+    if r["own"] is None or r["own"] < 1:
+        return not_removable("UNSTARTED", f"own={'unknown' if r['own'] is None else 0}; no commit of its own")
+    if not r["merged"]:
+        return not_removable(r["class"], f"own={r['own']}; HEAD is not in the trunk or a box branch; {r['reason']}")
+    if r["dirty"] or r["ignored"]:
+        return not_removable(r["class"], f"own={r['own']}; dirty: {r['dirty']} uncommitted/untracked, "
+                             f"{r['ignored']} ignored non-cache path(s); {r['reason']}")
+    text = in_use_text()
+    if text is None:
+        return not_removable("SKIP", "in-use read failed (process/scheduled-task list); not removable")
+    if path_in_use(r["path"], text):
+        return not_removable("SKIP", "IN USE: a running process or scheduled task names this path")
+    print(f"REMOVABLE CLEAN own={r['own']}; {r['reason']}")
     return 0
 
 
@@ -360,6 +447,14 @@ def selftest() -> int:
         g("worktree", "add", "-q", "-b", "wk-c", str(wc), "CLOUD")
         # a live process whose command line names wk-in-use, as a scheduled runner's would
         holder = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(120)", str(wc)])
+        # CT-af-1: a "merged" worktree carries one own commit and that commit lands in the trunk (a branch at its
+        # creation point is UNSTARTED, never MERGED or CLEAN)
+        for t, name in ((wa, "a.txt"), (wc, "c.txt")):
+            (t / name).write_text("z\n", encoding="ascii")
+            g("add", name, cwd=t)
+            g("commit", "-q", "-m", "own", cwd=t)
+        g("merge", "-q", "--no-ff", "--no-edit", "wk-a")
+        g("merge", "-q", "--no-ff", "--no-edit", "wk-c")
         (wb / "g.txt").write_text("y\n", encoding="ascii")
         g("add", "g.txt", cwd=wb)
         g("commit", "-q", "-m", "unlanded", cwd=wb)
@@ -394,12 +489,16 @@ def main() -> int:
     ap.add_argument("--held-for", default="")
     ap.add_argument("--hook-notice", action="store_true")
     ap.add_argument("--selftest", action="store_true", help="exercise MERGED (force-removed) and HELD (kept) on a temp repo")
+    ap.add_argument("--check-removable", default="", metavar="PATH",
+                    help="the drain's removable test on one linked worktree (idle window ignored); removes nothing")
     ap.add_argument("--repo", default="", help="operate on this repository (exercise); default: the one holding this script")
     args = ap.parse_args()
     global _REPO
     _REPO = args.repo or None
     if args.selftest:
         return selftest()
+    if args.check_removable:
+        return check_removable(args)
     if args.hook_notice:
         return hook_notice()
     if args.held_for:

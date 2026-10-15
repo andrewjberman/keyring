@@ -16543,6 +16543,104 @@ name the one known failure instead of silently inheriting it.
   }
   ```
 
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W98-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~98",
+  "surfaced_at": "2026-10-15T07:06:18Z",
+  "one_line": "The cycle record's s3_get_count and s3_get_bytes count only the GETs that store.py issues; the cycle path also issues GETs outside store.py, and those are not counted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_data_harvest/harvest_grammar.py@ad2abec9c5 lines 135-136: get_listing_bronze calls client.get_object directly and reads the body, outside lib/research/harvest/store.py.",
+      "lib/opal_data_harvest/publishers.py@ad2abec9c5 lines 630, 857, 933 and 1050: each publisher calls get_listing_bronze(self.pub, ..., client=harvest_client) on the cycle path.",
+      "lib/research/harvest/bloomberg.py@ad2abec9c5 line 362 and lib/opal_data_harvest/uploads.py@ad2abec9c5 lines 185 and 552 also call get_object outside store.py; whether each is reached in a cycle was not traced."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell OG-eg-1 section 1, E2: store.py counts every S3 get_object it issues, and the cycle record gains s3_get_count and s3_get_bytes as the count of its S3 GETs (goal: the cycle record counts its S3 GETs).",
+  "world_is": "The counter sits inside store.py only. GETs made by harvest_grammar.get_listing_bronze, which the publishers call on the cycle path, and by other modules' own get_object calls are not in the cycle record. So s3_get_bytes is a lower bound on the cycle's S3 GET bytes, not the total. The OG-eg-2 live proof reads s3_get_bytes against the CUR baseline.",
+  "notes": "Not changed here: the cell confines the counting to store.py, and the criteria as written pass. Covering those GETs means routing them through store, which touches harvest_grammar and other modules; that scope call belongs to the issuer."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W98-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~98",
+  "surfaced_at": "2026-10-15T07:06:18Z",
+  "one_line": "Adding s3_get_count and s3_get_bytes to the cycle record needed RECORD_KEYS extended, and two runner suites outside the criteria pin that tuple exactly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_data_harvest/test_br2_cycle_runner.py@ad2abec9c5 line 102 asserts tuple(record) == cr.RECORD_KEYS, and line 227 repeats the check.",
+      "lib/opal_data_harvest/test_bx3_failure_reason_kept.py@ad2abec9c5 line 220 asserts list(record.keys()) == list(cr.RECORD_KEYS)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell OG-eg-1 section 1, E2: the cycle record gains two integer fields, s3_get_count and s3_get_bytes; section 2 bounds the change to the files and fields the cell names.",
+  "world_is": "RECORD_KEYS in lib/opal_data_harvest/cycle_runner.py@ad2abec9c5 is the exact field tuple of the cycle record, and two suites pin it. I appended the two names to RECORD_KEYS, in the same order as the record dict, so both suites pass unchanged.",
+  "notes": "The change is the two fields plus the tuple that pins them. Nothing else in the record moved."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W98-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~98",
+  "surfaced_at": "2026-10-15T07:06:18Z",
+  "one_line": "The cached silver fold needs a key-order tie clause beside supersedes, because supersedes alone is order-dependent on an exact fetched_at and run_stamp tie between two part keys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/harvest/store.py (this worktree, uncommitted) _cache_wins: supersedes, plus an exact (fetched_at, part_order_key) tie resolved by the smaller part key.",
+      "store.part_order_key maps part-X.parquet and part-X-r0.parquet to the same (X, 0) at lib/research/harvest/store.py@ad2abec9c5; test_eg1_ac01 plants that tie and fails when the clause is removed (negative control run)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell OG-eg-1 section 1, E1: the cached read folds in only the parts not yet seen, using the SAME supersedes rule, and its result equals a full scan EXACTLY.",
+  "world_is": "supersedes returns False on an exact tie of fetched_at and part_order_key, so the first row folded wins. A full scan folds in key order, so the smaller key wins. An incremental fold can meet the same tie in the other order. The cached path therefore also prefers the smaller part key on that exact tie. The uncached full scan is unchanged and still uses supersedes alone.",
+  "notes": "No production instance measured. The tie needs an exact fetched_at match across two part keys, and the clause only decides that case."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W98-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~98",
+  "surfaced_at": "2026-10-15T07:06:18Z",
+  "one_line": "test_o3_silver_tie_break mutates silver_latest by the literal text of its supersedes call, so the uncached full scan has to stay inline in silver_latest.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/harvest/tests/test_o3_silver_tie_break.py@ad2abec9c5 line 162 asserts the call text is present in inspect.getsource(store.silver_latest) before it builds a mutant.",
+      "First attempt moved the full scan into a helper: the o3 suite then reported 1 failed, 106 passed, with 'mutation anchor missing'. The scan was restored inline and the suite passes."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell OG-eg-1 section 1, E1: outside the context silver_latest behaves exactly as today. The cell names no required structure for the uncached path.",
+  "world_is": "A suite in the AC2 set reads the source text of silver_latest and needs the uncached supersedes call written inside that function. silver_latest now holds the uncached scan inline and delegates only the cached path to _cached_scan.",
+  "notes": "A future edit that moves the uncached scan out of silver_latest breaks that suite by design, so the mutant check still has to read the same text."
+}
+```
+
   ```json
   {
     "id": "NFRA_OPLGTW-Z-W99-S1",

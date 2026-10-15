@@ -4047,3 +4047,53 @@ Check IB203-2 (same file), dry-run at the base: AC1 to AC3 all FAIL; the control
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~405) starts now.
 
+
+## 200. ROUND 4, WORKSTREAM ~PS (the serve path: the source map stages the shared reader, and the server pins the filled report at submit; 2026-10-15 ~07:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-4 analysis @ac865e2d91 (msg 8138) and his ruling on call f50a (msg 8104))
+
+Round 3 of ~PS closed MAY-CLOSE. The CTO's round-4 analysis names two cells, one issuance. (1) Row D2-W402-S3: `infra/aws/lambda/ci/lambda-source-map.json` is explicit per file and lists no entry for the shared named-account reader `_scope/filled_named_accounts.py`, which the filled-report route and the export freeze import by name; add a `staged_from` entry in EVERY function that packages an importing module, plus a build-only import test per function. (2) Call f50a: the SERVER pins the filled report at submit (freeze_filled_report reads the current object's VersionId, sha256 and size; the page sends the client id only; a forged client pin is ignored). Deploy legs still wait on 49 Financial gold for one date. Disjoint write sets: the map and one CI test; the export package.
+
+Checks (`deliverables/2.0.0_SA_COO~P2/checks/r204/p204_cells.py`, `control204.py`), dry-run at the base: all six FAIL; the control passes 6 positives and 16 negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-562` | the source-map `staged_from` entry for the shared reader in every importing function, a BUILD_ONLY import test per function | FWD-2 | WORLD (path floor) | none | PS4-a |
+| `IB-pr-563` | the server-side pin at submit: freeze_filled_report reads the current object, the submit handler calls it, a forged client pin is ignored | FWD-2 | WORLD (path floor) | none | PS4-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two cells with disjoint write sets; workers (slots ~406, ~407) start now.
+
+## 201. ROUND 2, WORKSTREAM ~PY (the IB-pr-456 candidate rebuilt WITH THE CANDIDATE MAP; 2026-10-15 ~07:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on ~Y2's live count (msg 8161) and CTO row D2-S187)
+
+Round 1 of ~PY closed MAY-CLOSE on a candidate (`MfxpvRhV`, IB-pr-561) that is WRONG: the issuer's cell said "rebuild from current trunk", but the trunk source map pins the three ENDPOINT members of irpt-ycharts-generate at commits that predate commentary_requested, so the build dropped the feature and equals the live zip except for composition_admission.py. ~Y2 counted the live zip (commentary_requested 0 times in the three members); the issuer confirmed the pins (0 at the pins, 3/3/1 at HEAD). The IB-pr-456 method re-pins exactly those three members with make_candidate_map.py at the signed commit e7bb7e923a and builds with BAU_SOURCE_MAP_OVERRIDE; release 29's pins (uploads.py, interactive_access.py) stay. One cell: the rebuild and its record; read-only, nothing uploaded. The pair's re-sign question waits on this record.
+
+Check IB205-1 (`deliverables/2.0.0_SA_COO~P2/checks/r205/p205_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control205.py`) passes all three and fifteen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-564` | REBUILD the irpt-ycharts-generate candidate with the candidate map: the ENDPOINT members at the signed pin carry commentary_requested, release 29's members stay at the live bytes, composition_admission.py recorded, the pre-apply digest restated | FWD-3 | SERVED | none | PY2-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~408) starts now.
+
+## 202. ROUND 5, WORKSTREAM ~PO (the Orion chain read for the backfill and the fold; 2026-10-15 ~07:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling @1dca8c9e4d (msgs 8169, 8170) on the V2 read)
+
+Round 4 of ~PO closed MAY-CLOSE with the design and packet V2 (IB-pr-560) and ten rows. The CTO ruled: no date token is added to the scheduled chain; the absent trading days are backfilled ONCE with the same pull code plus a date (if the dispatch script invokes the manual_api scripts they are the production code and are not retired; if not, a present day's key shape and bytes are compared first); the denominator is recomputed per feed span against lib/trading_calendar.py; the 06:00 New York fold does not move until Orion's T-1 completeness is read from the last 20 trading days' pulls; the silver aggregator's missing source (W404-S5) is a source-map and registry gap owned by the issuer. One READ cell: the chain read, the spans, the completeness read and the silver aggregator's source status. Packet V3 (supersedes V2) is the next cell, cut on this record.
+
+Check IB206-1 (`deliverables/2.0.0_SA_COO~P2/checks/r206/p206_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control206.py`) passes all three and twenty-three negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-565` | READ the chain's pull steps against the manual_api scripts, the per-feed span denominators, the T-1 completeness over 20 trading days, the silver aggregator's source status | FWD-3 | SERVED | none | PO5-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~409) starts now.
+
+## 203. ROUND 5, WORKSTREAM ~PS (the filled-report serve path: the submit caller and the installed reader; 2026-10-15 ~08:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-5 analysis @25f361860e (msg 8183))
+
+Round 4 of ~PS closed MAY-CLOSE (source-map staging, the server-side pin). The CTO's round-5 analysis names two cells, ONE issuance: (1) W407-S1: `freeze_filled_report` has no production caller; the export submit handler calls it (ruling f50a, the server pins) and a test drives the real handler; (2) W407-S2: `irpt-export-render` installs the filled reader and its filled-source branch reads the pinned object through the shared named-account reader, with one pinned filled report rendered from a fixture. Deploy legs still wait on hop 1's first cloud write (B-49F round-120 analysis @5e358b0a8f). Disjoint write sets: cell 1 owns submit_async.py, submit_service.py and retained_export.py; cell 2 owns entry.py, a new filled_reader_installed.py and the render files.
+
+Checks (`deliverables/2.0.0_SA_COO~P2/checks/r207/p207_cells.py`, `control207.py`), dry-run at the base: all six FAIL; the control passes 6 positives and 16 negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-566` | the PATH C caller: the submit path freezes the server-pinned filled report through ports["filled_reader"] and serves it from the frozen row; tested through the real handler | FWD-2 | WORLD (path floor) | none | PS5-a |
+| `IB-pr-567` | the installed filled reader (new module, installed in entry.py) and the render-side read of the pinned object through the shared reader; one pinned filled report rendered from a fixture | FWD-2 | WORLD (path floor) | none | PS5-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two cells with disjoint write sets (the three submit-path files; entry.py, a new module and the render files); workers (slots ~410, ~411) start now. The two meet at the port name ports["filled_reader"] and its signature, fixed in both faces.

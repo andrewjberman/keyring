@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~101</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run on the merged tree (branch wk-NFRA_CTLPLN-101 @4131ad8b77, merged c9424f396f): ROUND-CLOSE-DECOMP-ROUND arms=6/6 ok=True, ROUND-CLOSE-SELFTEST cases=30/30 ok=True, and --round 15 prints TREE orders counted by decomposition round: 3 (TO-CT-ae-1, TO-CT-ae-2, TO-CT-ae-3) with verdict=MAY-CLOSE; proof instance VALID; the diff touches only the order's paths. Reading: an order is scoped by the round its decomposition names, falling back to its tag. The worker's blind measure: 144 orders read, 46 change scoping round, all 16 round verdicts stay MAY-CLOSE before and after. Row W101-S1 ruled by the issuer: 8 untagged seat-folder orders (TO-APPLY-3, 4, 5, 6, 7, 8, 10, TO-DELL-1) that name a decomposition now scope to its round instead of counting in every round; that is the CTO's intent (scope by decomposition), so the order's 'seat-folder rule unchanged' is read as applying to orders with no scoping round, which keep the every-round count. Accepted; no amendment.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>

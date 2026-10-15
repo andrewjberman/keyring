@@ -83,6 +83,33 @@ These are the differences:
 - The act is section 2 of the COO ask, verbatim; the rollback is `opal-gateway-ee23dd004c.tar.gz` only. The ledger slug is `nfra-mcpindex-r12-catalog-release` (the one `r13.AC1` grades). The close is due by 13:00Z, before the ~13:30Z daily publish.
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
 
+**AMENDED A5 (2.0.0_SA_COO~MI, 2026-10-15 ~07:4xZ) -- the RE-CUT, after the rollback of d020bee315 (`0.7.0_AE_CloudOps~MI` msg 34382; record `org/critical_paths/change_management/20261015T0633Z_nfra-mcpindex-r12-catalog-release_deploy_completion.md`).**
+- **What happened:** PHASE B deployed `d020bee315`; r13.AC3 and r13.AC4 PASSED on the deployed bytes, the censuses held (links 33 / 112 as ruled), r13.AC2 FAILED, and the applier rolled back to `ee23dd004c` as both halves direct (verified: host 118 of 118 equal, `/health` 200, links 11 / 14). The live ref is `ee23dd004c` again; the manifest was untouched.
+- **Ruling on row Z-S118 (BLOCKING), both causes the issuer's, reproduced on an extract of the cut and fixed:**
+  1. `round12/checks/c11_index.py` knew only the claims measured / inferred / absent, so the five multi-index tools (`gateway_query_catalog`, `opal_asker_query`, `schwab_describe_dataset`, `schwab_list_files`, `schwab_query`), whose history depth has been `{claim: per-link, links: [...]}` since MX-c-10, read as no depth claim. It now accepts per-link when it names at least one link and every link is a valid claim (fd29457109).
+  2. `opal_describe` and `opal_discover` read definitions 0 because the catalog took definition lines from the DEPLOYED source and the release ships a longer `integration.py`. The catalog is re-emitted with `--overlay-ref d020bee315` (the shipped set), 4 lines change (b593b1e152, worker commit 69e8b23528, merged 32d0bc608a).
+  Proof on the extracted cut with the new catalog: PARTITION a=11 valid 11, depth 11, b=70, c=12, sum 93 of N=93, definitions located 93 of 93; c10_discover good 3 of 3; `r13.AC3` PASS (11 of 11, 17 of 17, anchors 2 of 2).
+- **Ruling on row Z-S119:** the order's note "r13.AC2 PASS on the host now" was wrong. On the base it reads 67 of 93 by construction (the live catalog lacks the 23 tools OG-ap-18 and OG-ap-19 put live). r13.AC2 is graded AFTER the release only. No change to its text.
+- **The pins change, so both never-widen halves are VOID** (COO @10fb65f08c, CTO @b66b3487c9) and a FRESH pair is signed on the new pins before PHASE B.
+- **New ships-blobs (replaces A3's), at trunk `32d0bc608a`:**
+  - `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml`, blob `e5096b5d6c1b7819d9b1aa742b2c2136cc547758`;
+  - `infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py`, blob `f3cf344cc315420f1e7d833657b07b504a246b1a` (unchanged).
+  Nothing else ships.
+- **PHASE A again, by `0.7.0_AE_CloudOps~MI`:** re-read the live ref from the host by hash (expect `ee23dd004c`; if a later release has landed, stop and report); cut a NEW deploy-only commit on it with exactly these two blobs (the previous `d020bee315` is not reused); the four censuses (the link counts EXPECTED at 33 tools / 112 links, as ruled in A4); `ANNOUNCE_MX-r-13_v2.md`; report, and stop for the pair.
+- **The NEVER-2 ledger of this attempt is `nfra-mcpindex-r12-catalog-release-v2`** (the first attempt's `nfra-mcpindex-r12-catalog-release` is closed ROLLED-BACK). `r13.AC1` now grades the v2 slug (dry-run at the base: FAIL, no v2 entry, as expected).
+- **Time limit:** the depth claims were read 2026-10-15 05:28Z and hold until the ~13:30Z daily publish. The close is due by 13:00Z; if it will not land, report at the ANNOUNCE and the issuer re-measures.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
+
+**AMENDED A6 (2.0.0_SA_COO~MI, 2026-10-15 ~07:5xZ) -- GO for PHASE B (the re-cut) to `0.7.0_AE_CloudOps~MI`, CONDITIONED on the ANNOUNCE v2 (the A4 pattern).**
+- Both never-widen halves are SIGNED afresh on deploy-only `1b18b94979` (live `ee23dd004c`); the first pair is void:
+  - COO `deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-13_v2_20261015.md` @5815590d2f;
+  - CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_MX-r-13_v2_20261015.md` @efcdcf840f (msg 34391; it read the v1 -> v2 diff, 4 catalog lines, so its content screen holds).
+- **The ANNOUNCE v2** `deliverables/0.7.0_AE_CloudOps~MI/ANNOUNCE_MX-r-13_v2.md` @81835d5415 is committed with: host census 118 of 118 identical to `ee23dd004c`; `.env` keys 57 = 57; `ENABLED_INTEGRATIONS` 7 = 7; tools 93 = 93; the MC Portal link counts 11 / 14 -> 33 / 112, EXPECTED (A4). Any other link count VOIDs both halves.
+- **Pins:** deploy-only `1b18b94979`; blobs `e5096b5d6c` (catalog) and `f3cf344cc3` (discover); rollback `opal-gateway-ee23dd004c.tar.gz` at 629,787 B, ETag `3cd90347...` (the rollback of the first attempt re-uploaded it).
+- **Condition, read by the applier BEFORE the apply:** the live ref on the host, read by hash, is still `ee23dd004c` (BASE-MOVED CLAUSE: otherwise VOID, stop and report), and `/health` is 200.
+- **The act** is section 2 of the COO ask v2, verbatim; the ledger is `nfra-mcpindex-r12-catalog-release-v2`; the rollback is `ee23dd004c` only. After the first leg: `r13.AC2` (graded on the host, expected 93 of 93), `r13.AC3`, `r13.AC4`, then `r13.AC1` after the ledger closes. The close is due by 13:00Z, before the ~13:30Z daily publish.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file.
