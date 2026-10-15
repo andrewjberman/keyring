@@ -17794,3 +17794,30 @@
   "notes": "Form only. Whether a closed label set is wanted is a CTO decision on the C-COMM-FIG table."
 }
 ```
+
+## IRPT_ANLREQ-D2-W190-S4 -- 24 existing commentary tests stay red in this worktree on infra/aws, which the sparse cone does not carry
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W190-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~190",
+  "surfaced_at": "2026-10-15T17:20:00Z",
+  "one_line": "With the outlook package now in the cone, 24 tests in four existing test_commentary_*.py files still fail: the infra/aws keys module and infra Terraform files are outside the cone. The core commentary suites pass (40 of 40).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-t-31 Bounds: keep every existing test_commentary_*.py green.",
+  "world_is": "pytest over data/transcripts/scripts/tests/test_commentary_*.py in the worktree at 36a56617cb plus the worker's code: 24 failed, 43 passed. The 24 sit in test_commentary_composition_port.py, test_commentary_live_ports.py, test_commentary_ready_queue.py and test_commentary_route_switch.py, with RuntimeError KEYS_MODULE_UNAVAILABLE (lambda_handler.py:180 searches infra/aws/lambda/investor-reporting/_keys/keys.py) and FileNotFoundError on infra/ paths. infra/aws is absent from the worktree; git sparse-checkout list names only infra/logic/registry under infra. The drafter, entry, figures, classification, lambda, seam and ticket-client suites pass (40 of 40).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest data/transcripts/scripts/tests/test_commentary_*.py at worktree C:/dev/wk-irpt-anlreq-190: 24 failed, 43 passed; all 24 in the four named files",
+      "data/transcripts/scripts/commentary/lambda_handler.py:155-180 read at the worktree: _load_keys raises KEYS_MODULE_UNAVAILABLE when no keys.py is found on the bounded walk",
+      "ls infra/aws in the worktree: no such directory; git sparse-checkout list names infra/logic/registry only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The failure signatures are infra-only; the base commit was not re-run (no checkout in a worktree). Whether these four files need infra/aws in the cone is a COO or integrator decision."
+}
+```
