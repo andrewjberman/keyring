@@ -40645,3 +40645,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Owner re-point by appended row (CTO ruling msg 8739); the old rows are not edited."
 }
 ```
+
+## IRPT_BCKEND-D2-S212 -- D2-W411-S1 pre-read live: the export role irpt-export-render-role holds NO s3:GetObject on any filled_report.json object
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S212",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-15T23:30:43Z",
+  "one_line": "D2-W411-S1 pre-read live: the export role irpt-export-render-role holds NO s3:GetObject on any filled_report.json object; none of its 10 inline policies names the platinum reporting family.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~S2",
+  "spec_asserts": "IB-pr-567 reads the pinned filled report object by VersionId with the export function's own S3 client; the IB-pr-551 CTO half (condition 1) re-reads both grants live at STEP 0 of the deploy legs, and a gap is a STOP.",
+  "world_is": "Read-only live get of all 10 inline policies on irpt-export-render-role (list-role-policies printed 10; attached managed policies 0). S3 object grants: opal-data-irpt irpt/{49financial,inflection,cottonwood}/platinum/custody_reports/* (Put/Get/GetVersion) and state/request_compositions/* (Get/GetVersion), platinum/performance_reports/* (Get/GetVersion); opal-data-ycharts exports/receipt/render_grant keys; opal-data-{bd,inf,cot} directory and ownership_map keys. No statement covers a platinum/reporting/client=*/filled_report.json address. So a deployed export with a filled pin answers FilledReportUnavailable (fail closed) until the grant lands. This is a PRE-READ only: the STEP 0 re-read at the deploy leg stays owed. If the gap holds then, the deploy packet adds exactly one object-scoped grant under an addendum to the IB-pr-551 pair, no wildcard (CTO PO6/PS6 analysis). Whether the platinum fence should be breached for the export function at all is the CTO's, not read here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/aws iam list-role-policies / get-role-policy on irpt-export-render-role, 2026-10-15, 10 of 10 policies read",
+      "comp-iam service irpt-export-render: tf source infra/aws/terraform/investor-reporting/export/iam.tf",
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_BCKEND-D2-W411-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Nothing deployed, nothing written. Row S211 moved the owner; this row is the first measurement under the new owner."
+}
+```
