@@ -27558,3 +27558,56 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed as an observation. The grade of the forward-P/E read belongs to the CVO at L9 (AC5 is judgment and is not self-graded here). The walk's own checks do not read this cell, so a DOM read of the SHOP CN P/E cell is the instrument that would settle whether the withhold is absent or only not visible at this resolution. No walker, draw or product file was changed."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S31",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-15T16:36:32Z",
+  "one_line": "Worker ~443's W443-S1 is DISARMED (the cause was the issuer's sparse provisioning, fixed, AC2 to AC4 PASS on the re-seat); W443-S2 is CONFIRMED by the issuer's own read: the live served block withholds SHOP CN's forward P/E in all three years, and the page still prints 2026E 67.8x and 2027E 53.0x.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Row AMGT_RESAPP-D1-W443-S1 (BLOCKING): 'the worktree is a sparse checkout that excludes .claude/'. Row AMGT_RESAPP-D1-W443-S2: 'SHOP CN's forward P/E cells print as numbers with no withhold reason visible'; round-106 change 3: a forward P/E of mixed currencies is withheld and the Key Figures P/E row shows the served reason in the forecast cell.",
+  "world_is": "S1: wk-provision.sh provision adds only the folders an order's <paths> names plus its base set, so the walker's folder was never put on disk; the issuer ran git sparse-checkout add .claude/skills/ui-walk in C:/dev/wk-resapp-443 and the re-seated worker ran walks A, B and C to OK: DISARMED with the post-disarm login REFUSED and walk void: no (12907ad9f5). S2: the issuer read C:/dev/ui-walk-evidence/bm-5/A/shots/039-SHOP-CN-Model.png and 040-SHOP-CN-Model-expanded.png (Key Figures P/E row: 2025 '74x-193.1x' with no price line, 2026E 67.8x, 2027E 53.0x, no reason; BNP FP's shot 012 prints its price line 'price 80.79 EUR at the close of fiscal year 2025'). The live function opal-amgt-scoped-api read at the same sitting returns for SHOP_CN_Equity status 200, no BEST_PE_RATIO forecast row, and forecast_withheld entries for 2026, 2027 and 2028 each reading 'the price is in CAD and consensus EPS in USD, and a ratio of different currencies is not shown'. So the served block is right and the page prints a forward P/E from another source on this name; ModelTab.tsx withheldPeReason reads the reason only for its own cell. The source of the printed 67.8x and 53.0x is not yet found.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-resapp-443 log: 12907ad9f5 (walks A/B/C), 688820400a (order complete); merged to box/dell1 at 23c8fe693b",
+      "C:/dev/ui-walk-evidence/bm-5/A/shots/039-SHOP-CN-Model.png and 040-SHOP-CN-Model-expanded.png; 012-BNP-FP-Model.png (issuer read with the Read tool)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round106_prep/checks/r106_fwd_pe_check.py live('SHOP_CN_Equity') read 2026-10-15 ~16:3xZ: status 200, pe_rows {}, forecast_withheld 3 entries for BEST_PE_RATIO FY2026/2027/2028",
+      "portal src/pages/SecurityAnalysis/tabs/ModelTab.tsx lines 195-200 (withheldPeReason) at origin/PROD 33ad65ee"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A citing row; the worker's two rows keep their text. S2 is a finding for the CTO's round-106 analysis (FWD-40 change 3 is not shown on this name on the PROD build) and for the CVO's AC5 grade, not an issuer verdict: no ruling here widens or narrows FWD-40. The page is Opal-internal and the served block is correct, so the standing is INERT."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S32",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-15T16:42:19Z",
+  "one_line": "The source of SHOP CN's printed forward P/E (67.8x, 53.0x) is found: it is the research team's own P/E line in the served team sheet, which fills the Key Figures P/E row once the block's BEST_PE_RATIO is withheld; this is the mechanism row W441-S1 recorded on the PBR fixture, now measured on live data, so the open question W441-S1 put to the issuer is a meaning of FWD-40 change 3 and goes to the CTO.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Row D1-S31 (this seat): 'The source of the printed 67.8x and 53.0x is not yet found.' Row W441-S1: 'once BEST_PE_RATIO is removed, the team sheet's own P/E line fills the 2026E and 2027E Key Figures cells, so no forecast dash exists for forecast_withheld to replace'; its decision for the issuer: 'whether a withheld forward P/E's reason is meant to stand in place of a team-sourced value on the P/E line'.",
+  "world_is": "Read 2026-10-15 ~16:4xZ on the live function opal-amgt-scoped-api, /thesis for SHOP_CN_Equity (status 200): model.team_sheet row_labels index 24 'P/E' carries row_values ['-44x--108.2x', ..., '74x-193.1x', 67.77309150505174, 53.031666082114356, 39.496208389135454, 35.84030384182221, 30.1150183797938]; index 108 'P/E Range' repeats the same values. The page printed 2025 '74x-193.1x', 2026E 67.8x, 2027E 53.0x: the team line, rounded to one place. The block's own BEST_PE_RATIO is absent and its forecast_withheld entries are present (D1-S31), so the withhold at the source works and the Key Figures P/E row shows the team's figure in the cell where the reason would otherwise print. That the 2025 cell is a range text explains the absent price line (no single price basis). Whether the team's own P/E figure may stand where the withheld block ratio's reason is meant to print is not decided here: W441-S1 has stood UNDER_INVESTIGATION since 2026-10-14 05:26Z, and FWD-40 change 3 reads 'the Key Figures P/E row shows THAT reason in the forecast cell'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r106_fwd_pe_check.live('SHOP_CN_Equity') read 2026-10-15 ~16:4xZ: model.team_sheet row_labels[24] 'P/E', row_values[9..14] = '74x-193.1x', 67.77309150505174, 53.031666082114356, 39.4962..., 35.8403..., 30.1150...",
+      "C:/dev/ui-walk-evidence/bm-5/A/shots/039-SHOP-CN-Model.png (page: 74x-193.1x, 67.8x, 53.0x)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md rows AMGT_RESAPP-D1-W441-S1 (PBR fixture, the same mechanism) and AMGT_RESAPP-D1-S31"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A citing row. It corrects D1-S31's 'source not found' and does not rule W441-S1: the question is a meaning of ratified FWD-40 text (a CTO matter at the round-106 analysis), not an issuer amendment inside the decomposition. Two readings, for the CTO: (a) the team's own P/E is the team's figure and may stand, the reason applying only where no team figure exists; (b) the reason must print wherever the block ratio is withheld, so the team line is not to fill that cell. No code change is proposed here."
+}
+```
