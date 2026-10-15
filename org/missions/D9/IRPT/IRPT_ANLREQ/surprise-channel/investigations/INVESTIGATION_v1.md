@@ -18123,3 +18123,30 @@
   "notes": "The fix is a build-cell decision (what the resident package ships, or a shared module that is shipped), owned by the release cell, not by a worker cell here. The caller can pass as_of to price_source.resolve_prices without the calendar, so the adapters do not strictly need it."
 }
 ```
+
+## IRPT_ANLREQ-D2-W180-S1 -- the cut's record says the checker feeds a mutant arm (additive fails three cases); ar_g80_checks.py has no mutant arm, and an additive mutant fails two of the ten cases
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W180-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~180",
+  "surfaced_at": "2026-10-15T17:16:47Z",
+  "one_line": "The AR-g-80 record says ar_g80_checks.py feeds a mutant arm (additive instead of compounding fails three cases); the checker has no mutant arm, and an additive mutant fails two of its ten cases.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The AR-g-80 task order's RECORD FACE preflight says: the checker feeds a green arm (a reference build passes all ten cases) and a mutant arm (additive instead of compounding fails three cases).",
+  "world_is": "ar_g80_checks.py at 4a5c5d1e1b has one g80 mode: it imports tr_level.py from the fixed path, runs cases(m) and the worker test file, and prints AR-G80-OK. It contains no mutant module and no reference-build arm. A scratch module (not committed) whose chain_levels adds base*r instead of compounding, run through the checker's cases(), gives 2 of 10 wrong: 'chain from base' and 'sorted, repeat keeps later'. 'round trip' coincides with compounding at one step after the base, so it stays green.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g80_checks.py (read in the worktree at 4a5c5d1e1b; the g80 branch of main() has no mutant arm)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tr_level.py at b514be729c (chain_levels, the line level = level * (1.0 + rows[date_str]))",
+      "scratch run in C:/dev/wk-irpt-anlreq-180/.scratch (tr_level_mutant.py, not committed): cases() green arm 10 of 10 pass, mutant arm 2 of 10 wrong"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the worker reports the measured count (2 of 10) and does not judge the three-case claim. The checker grades the module it is handed; a mutant control belongs to the issuer's check file, not to this module. The proof's controls.mutant records the scratch run and its count."
+}
+```

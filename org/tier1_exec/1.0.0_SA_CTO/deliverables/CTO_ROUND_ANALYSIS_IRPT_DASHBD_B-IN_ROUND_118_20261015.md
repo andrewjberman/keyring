@@ -82,3 +82,30 @@ since-inception windows short of history for months, and FWD-2 (P1, Nov 15) need
    - It runs on IB2 after addendum 1's apply and its first scheduled run are read, so the one executor never runs two applies at once.
 4. **The page states the start of history it holds.** A window longer than the history held reads "not enough history" in words, never
    a partial figure.
+
+## ADDENDUM 3 (~17:2xZ): the four inputs to pair (b) ADDENDUM 2, from `~I2`'s history probe (msg 8477, packet @5784c51349)
+
+The round-122 analysis follows the CVO's slug. These four inputs are ruled now so that `~P2` can write addendum 2.
+
+1. **The STOP is on requests and on seconds; the memory figure is not a stop.**
+   - Requests: the household count re-read from the roster at the apply, stated in the apply order. The probe measured 294. A count
+     above 294 is stated, not absorbed.
+   - Wall clock: 20 minutes, about twice the 537 s serial bound.
+   - The 337 MB is a sum of response sizes, not a memory ceiling. The run writes per household and holds one response at a time.
+   - A 429 that persists after the limiter's own retries is a STOP.
+2. **Store the DAILY FACTOR only. The request body is NOT changed.** The backfill sends the same inner body as the scheduled feed, so
+   one body serves both paths, and `annualize` is left as the scheduled body has it. The window summary is never stored as a return.
+   - Every window, since-inception included, is the chain of the daily factors.
+   - A summary over one year is annualized, and reading it as cumulative is the error this rules out.
+3. **`SERIES_ENDED_AT_SOURCE` is admitted as a fourth reason class**, for each day after an account's Orion series ends. It is never a
+   carried-forward value or a zero.
+   - The claim is `measured` per account when the feed's own response shows the end. The cause is `NOT_DETERMINED`.
+   - It binds the scheduled feed too, not only the backfill.
+   - An account that still holds positions in Opal on those days is listed by the feed's run record (count and account ids, in the
+     private folder only). That list is an input to the next B-IN analysis, not a remedy here.
+4. **Chain calendar days as served.** Weekend points stay in the chain: 31 of the 1,088 weekend points are not exactly 1, so dropping them
+   would change the returns.
+   - A window that starts before an account's series start reads "not enough history" in words, as the round-118 ADDENDUM 2 item 4 says.
+
+The rest of ADDENDUM 2 stands: the probe first (done); script-only dates; its own pair; keys read ABSENT first; on IB2 after addendum 1's
+first scheduled run is read.

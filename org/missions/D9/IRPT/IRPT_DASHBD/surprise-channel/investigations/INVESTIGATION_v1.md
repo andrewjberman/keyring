@@ -17849,3 +17849,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-9. Form only: counts and flags; no value, no identifier, no date. The annualization explanation was tested and rejected (the chain does not match the annualized product for either account)."
 }
 ```
+
+## IRPT_DASHBD-D2-S91 -- two Inflection Orion account series end 95 and 120 days before the pull date; the feed carries the days after as ABSENT SERIES_ENDED_AT_SOURCE (owner for the ruled reason class)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S91",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T17:25:00Z",
+  "one_line": "Two of nine Orion Scope Daily series in the B-IN history probe end 95 and 120 days before 2026-10-13. Row D2-W309-S3 is INERT and has no owner, so this row owns the ruled reason class SERIES_ENDED_AT_SOURCE until the feed carries it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "CTO round-118 ADDENDUM 3 item 3 (@9418ec7e4e): each day after an account's Orion series ends is ABSENT SERIES_ENDED_AT_SOURCE, never a carried-forward value or a zero, in the scheduled feed and the backfill alike.",
+  "world_is": "The probe (round 122, @5784c51349) measured the two early ends. The cause is unread. Whether either account still holds positions in Opal on those days is not established. The hazard: a feed that carries forward the last factor, or writes a zero, would serve a fabricated flat return for months.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/IRPT_DASHBD_ROUND122_BIN_DRAIN_END_20261015.md @5784c51349",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v95.md @21df5c47c2 (CVO~IRPT item 3: the early-end row has no owner)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: ~P2's feed build (IB-pr-586) carries SERIES_ENDED_AT_SOURCE with a test of the after-end days, and the first run's private record lists the still-held accounts. The cause read (is Orion's series stale for an open account?) is ~I2's, at the next B-IN round."
+}
+```
