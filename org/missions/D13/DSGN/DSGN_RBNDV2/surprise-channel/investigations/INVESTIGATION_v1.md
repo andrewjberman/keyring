@@ -852,6 +852,50 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO RV-m-6 worker face: each adopted modal keeps its width (the export panel 75rem; the satellite sheet without a factsheet 56rem).",
     "world_is": "The frame's cn() merge keeps the className's important sm:max-w and the later max-w, so the intended widths should hold. Not walked: no server, no browser, no rendered width measured."
+  },
+  {
+    "id": "DSGN_RBNDV2-W10-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~10",
+    "surfaced_at": "2026-10-15T11:23:59Z",
+    "one_line": "IndexPerformanceModal.tsx holds the same literal white chart props as the two named modals (grid, axis and tick rgba(255,255,255,...) at lines 456, 460, 461, 472, 473 and 479); it is outside RV-c-1's grant, so it is left untouched.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- the owner of the round-3 chart-chrome follow-on decides whether IndexPerformanceModal takes the same token mapping as RV-c-1 (grid var(--rb-rule), axis var(--rb-quiet), tick var(--rb-ink-3)); the drain's live read of the modals is the place it shows.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/market-performance/IndexPerformanceModal.tsx at portal HEAD 826551e2 lines 456 (CartesianGrid stroke rgba(255,255,255,0.1)), 460 and 472 (axis stroke rgba(255,255,255,0.4)), 461 and 473 (tick fill rgba(255,255,255,0.6)), 479 (fill rgba(255,255,255,0.5)); read by native Grep and sed at workspace HEAD 795eaa2bf3",
+        "native Grep of portal/src/components/market-performance for rgba(255,255,255 returned 0 hits in KeywordSentimentModal.tsx, so that modal holds none of these props"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-c-1 Part 1 and the cell's Out-of-this-cell clause: the other three market modals (RSIModal, IndexPerformanceModal, KeywordSentimentModal) that hold the same literal white chart props are named by file and line numbers in a surprise row and left as they are.",
+    "world_is": "IndexPerformanceModal.tsx carries the same white-on-dark chart chrome as FearGreedModal and MarketRegimeModal before this cell, at six lines. The file is not in the grant, so the chrome stays white on the white A-light surface; the axes stay unreadable there, the same class of defect the CVO graded NOT MET under RB2M4-AC3.",
+    "notes": "Filed, not fixed. The cell's bounds name this file as a wall. KeywordSentimentModal holds none of the literals."
+  },
+  {
+    "id": "DSGN_RBNDV2-W10-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~10",
+    "surfaced_at": "2026-10-15T11:23:59Z",
+    "one_line": "RSIModal.tsx holds the same literal white chart props as the two named modals (grid, axis and tick rgba(255,255,255,...) at lines 229, 334, 351, 370, 375 and 376); it is outside RV-c-1's grant, so it is left untouched.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- the owner of the round-3 chart-chrome follow-on decides whether RSIModal takes the same token mapping as RV-c-1 (grid var(--rb-rule), axis var(--rb-quiet), tick var(--rb-ink-3)); the drain's live read of the modals is the place it shows.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/market-performance/RSIModal.tsx at portal HEAD 826551e2: line 229 (axis stroke rgba(255,255,255,0.3)), 334 (CartesianGrid stroke rgba(255,255,255,0.05)), 351 and 375 (tick fill rgba(255,255,255,0.5)), 370 and 376 (axis stroke rgba(255,255,255,0.1)); read by native Grep and sed at workspace HEAD 795eaa2bf3",
+        "RSIModal's literal set is wider than RV-c-1's arm: it also uses rgba(255,255,255,0.3), 0.5 and 0.05 (lines 229, 351, 375 and 334), which the RV-c-1 literal arm does not name, so a fix that only swapped the three named alphas would pass that arm on this file while leaving these"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-c-1 Part 1 and the cell's Out-of-this-cell clause: the other three market modals that hold the same literal white chart props are named by file and line numbers in a surprise row and left as they are.",
+    "world_is": "RSIModal.tsx carries white-on-dark chart chrome at six lines on the white A-light surface, so its axis and tick text stays unreadable there. The file is not in the grant and was not edited.",
+    "notes": "Filed, not fixed. The cell's bounds name this file as a wall. A follow-on that maps this file must cover all four of its alpha values, not the three RV-c-1 names."
   }
 ]
 ```
