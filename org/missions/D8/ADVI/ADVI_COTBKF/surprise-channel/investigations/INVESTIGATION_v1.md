@@ -8898,3 +8898,53 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W169-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~169",
+  "surfaced_at": "2026-10-15T18:26:21Z",
+  "one_line": "CB-ch-1 build from the committed script (blob 867a2cf1daa21dc46432d523cf8cc29beca1b990, after repair 3 at 68ffc04bc9): REVERSE_MATCH_V3.csv reproduces its pin byte for byte (860 rows); ACTIVE_COTTONWOOD_SET_V2.csv does not (41,808 rows against 41,826; sha256 differs). The record rules do not reproduce the V2 file on ticker (285 paired rows) and held_to (48 paired rows) and on 339 pinned-only and 321 rebuilt-only rows. Three repairs used; file left as built, not forced. AC1 FAIL.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REBUILD_RECORD.json and the two outside files in C:/dev/_cotbkf_rebuild_20261015/ (rows, sha256 and counts in the worker report; no account value recorded here)",
+      "pinned file org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ACTIVE_COTTONWOOD_SET_V2.csv (committed, sha256 5cef7ab0c9e10fe299cb757d4dba31792d069bad35f7250defa76e18773046ae): joined pairs carry only their both row; CW-only, BD-only and joined pair sets are disjoint (counts measured)",
+      "repairs: 8cd4c0a81f (type read as stored, 164 rows), 9f617f4fd9 (candidate id before its description; near 0 to 13, AMBIGUOUS 0 to 27), 68ffc04bc9 (joined pair one row: 62,754 to 41,808 rows)",
+      "the record rule for ticker of a window not established by key: the ticker key of a not_established window is the (ticker,name) pair in the pinned file and the name alone here; row counts on not_established differ 818 against 834"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ch-1 (AC1, CB86ch1-AC1): the two rebuilt files, hashed now, equal the two committed pins; a file that does not reproduce is not forced and not edited to match.",
+  "world_is": "The reverse match reproduces; the window file does not, on the ticker of a window and on its held_to and on the structure of the not_established and joined rows. Not established: which of the record rules differ from the round-85 script (the round-85 script is lost; the record names the rules, not the code).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W169-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~169",
+  "surfaced_at": "2026-10-15T18:26:21Z",
+  "one_line": "Source listings have moved past the record: silver/holdings lists 90 dated keys (record: 88 through 2026-10-12) and gold/canonical/holdings lists 137 (record: 135); the two later keys in each (2026-10-13, 2026-10-14) are excluded by the snapshot pin. The Commonwealth crosswalk prefix also lists crosswalk.parquet beside crosswalk.csv; the record names the csv and the build reads the csv.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "listing by boto3 ListObjectsV2 paginated, bucket opal-data-cot prefix silver/holdings/: 90 objects, first 2026-06-08, last 2026-10-14 (denominator 90)",
+      "listing opal-data-cot prefix gold/canonical/holdings/: 137 objects, last 2026-10-14 (denominator 137)",
+      "listing opal-data-assets prefix commonwealth/cottonwood/silver/crosswalk/date=2026-06-23/: 2 objects, crosswalk.csv and crosswalk.parquet",
+      "ACTIVE_SET_V2_RECORD.json sources: 88 silver keys to 2026-10-12, 135 gold keys to 2026-10-12 (the record figures)"
+    ]
+  },
+  "spec_asserts": "ACTIVE_SET_V2_RECORD.json sources: the silver and gold listings name 88 and 135 dated keys, 2026-06-08..2026-10-12 and 2026-04-22..2026-10-12.",
+  "world_is": "The prefixes now hold two later dated keys each. The build pins the snapshot at 2026-10-12 and reads only keys dated on or before it, so the listing growth does not enter the rebuilt files. Not established: whether a later write altered a key the record already read; the record names no checksums for its keys.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
