@@ -9,9 +9,17 @@ Flags (each prints one line; exit 0 only when every requested line says ok=True)
   --fetch   JOURNEY-FETCH wheels=<n> file=<name> device=<d> sha256=<12 hex> requests=<r> ok=<True|False>
   --check   JOURNEY-CHECK checks_run=<n> failed=<f> check8=<AWAITING|SIGNED|OTHER> released=<True|False> ok=<True|False>
   --tag     JOURNEY-TAG recorded=<tag> wheel=<tag> ok=<True|False>
+  --release JOURNEY-RELEASE released=<n> check8=<SIGNED|OTHER> file=<name> sha256=<12 hex> ok=<True|False>
+  --pack    JOURNEY-PACK files=<n> manifest_ok=<True|False> verify=<INTAKE-VERIFY last line> ok=<True|False>
+  --taildrop JOURNEY-TAILDROP files_sent=<n> failed=<f> target=dell1 ok=<True|False>
+The three new flags run only when named; the default run is the original three. --release is read-only (it reads the
+release folder, the fetch and check records, and the CTO's signature file). --pack re-runs `intake_receive.py verify`
+locally on the pack and sends nothing. --taildrop reads ONLY TAILDROP_RECORD.md and never calls Tailscale.
 
 Paths: records  OPAL_INTAKE_RECORDS (a base; batch folder under it), else org/devices/intake/records beside this repo.
        holding  OPAL_INTAKE_ROOT (a root; holding/<batch>/ under it), else <drive of this repo>/opal-intake.
+       release  the same root, release/<batch>/.
+       pack     <home>/tdrop/out/<batch> (the staging folder; outside every git tree).
 Standard library only; Python 3.12; ASCII output.
 """
 from __future__ import annotations
@@ -22,6 +30,7 @@ import json
 import os
 import pathlib
 import re
+import subprocess
 import sys
 
 BATCH = "intake-20261015-duckdb"
@@ -174,13 +183,119 @@ def cmd_tag() -> bool:
     return ok
 
 
+TIME_RE = re.compile(r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$")
+TAILDROP_RECORD_NAME = "TAILDROP_RECORD.md"
+PACK_FILE_COUNT = 4
+
+
+def pack_dir() -> pathlib.Path:
+    return pathlib.Path(os.path.expanduser("~")) / "tdrop" / "out" / BATCH
+
+
+def cmd_release() -> bool:
+    folder = release_dir()
+    members = sorted(p for p in folder.iterdir() if p.is_file()) if folder.is_dir() else []
+    wheels_here = [p for p in members if not p.name.endswith(".delivery.txt")]
+    released = len(wheels_here)
+    name = wheels_here[0].name if released == 1 else "NONE"
+    delivery_here = (folder / (WHEEL_NAME + ".delivery.txt")).is_file()
+    check_path = records_dir() / (WHEEL_NAME + ".check.json")
+    check = read_json(check_path) if check_path.is_file() else {}
+    fetch_path = records_dir() / (WHEEL_NAME + ".fetch.json")
+    fetch = read_json(fetch_path) if fetch_path.is_file() else {}
+    by_n = {c.get("n"): c for c in check.get("checks", []) if isinstance(c, dict)}
+    c8 = by_n.get(8) or {}
+    sig_exists = (REPO_ROOT / CHECK8_SIGNATURE_REL).is_file()
+    check8 = "SIGNED" if (c8.get("verdict") == "passed" and sig_exists
+                          and (c8.get("evidence") or {}).get("path") == CHECK8_SIGNATURE_REL) else "OTHER"
+    seven_passed = all((by_n.get(n) or {}).get("verdict") == "passed" for n in range(CHECKS_FIRST, CHECKS_LAST + 1))
+    sha = sha256_of(wheels_here[0]) if released == 1 else "-"
+    sha_matches = (released == 1 and sha == fetch.get("held_sha256") and sha == check.get("held_sha256")
+                   and name == WHEEL_NAME)
+    ok = (
+        released == 1
+        and name == WHEEL_NAME
+        and sha_matches
+        and check8 == "SIGNED"
+        and seven_passed
+        and check.get("verdict") == "checked"
+    )
+    print("JOURNEY-RELEASE released=%d check8=%s file=%s sha256=%s ok=%s" % (released, check8, name, sha[:12], ok))
+    print("JOURNEY-RELEASE-DETAIL release_folder=%s members=%s delivery_text_present=%s sha_equals_fetch_and_check=%s "
+          "checks_1_to_7_passed=%s check_verdict=%s check8_path=%s signature_file_exists=%s"
+          % (folder.name, [p.name for p in members], delivery_here, sha_matches, seven_passed, check.get("verdict"),
+             (c8.get("evidence") or {}).get("path"), sig_exists))
+    return ok
+
+
+def cmd_pack() -> bool:
+    folder = pack_dir()
+    files = sorted(p.name for p in folder.iterdir() if p.is_file()) if folder.is_dir() else []
+    manifest_ok = False
+    man_path = folder / "MANIFEST.json"
+    if man_path.is_file():
+        try:
+            man = read_json(man_path)
+            entries = man.get("files", [])
+            e = entries[0] if len(entries) == 1 and isinstance(entries[0], dict) else {}
+            manifest_ok = (
+                man.get("schema") == "intake-manifest/1"
+                and man.get("batch") == BATCH
+                and len(entries) == 1
+                and e.get("name") == WHEEL_NAME
+                and e.get("sha256") == sha256_of(folder / WHEEL_NAME)
+                and e.get("check_record") == WHEEL_NAME + ".check.json"
+                and e.get("check_record_sha256") == sha256_of(folder / e["check_record"])
+                and e.get("delivery") == WHEEL_NAME + ".delivery.txt"
+                and e.get("delivery_sha256") == sha256_of(folder / e["delivery"])
+            )
+        except (OSError, ValueError, KeyError, TypeError):
+            manifest_ok = False
+    verify_script = REPO_ROOT / "org" / "devices" / "intake" / "intake_receive.py"
+    env = dict(os.environ, AGENTBUS_DEVICE="laptop")
+    proc = subprocess.run([sys.executable, str(verify_script), "verify", "--from", str(folder)],
+                          capture_output=True, text=True, env=env, timeout=120)
+    vlines = [ln for ln in proc.stdout.splitlines() if ln.startswith("INTAKE-VERIFY")]
+    verify_last = vlines[-1] if vlines else "NONE"
+    verify_ok = (proc.returncode == 0
+                 and re.search(r"wheels=1 verified=1 checked=1 stray=0 ok=True$", verify_last) is not None)
+    ok = len(files) == PACK_FILE_COUNT and manifest_ok and verify_ok
+    print("JOURNEY-PACK files=%d manifest_ok=%s verify=%s ok=%s" % (len(files), manifest_ok, verify_last, ok))
+    print("JOURNEY-PACK-DETAIL pack=%s names=%s verify_rc=%d" % (folder.name, files, proc.returncode))
+    return ok
+
+
+def cmd_taildrop() -> bool:
+    path = records_dir() / TAILDROP_RECORD_NAME
+    text = path.read_text(encoding="utf-8") if path.is_file() else ""
+    rows = []
+    for line in text.splitlines():
+        if not line.startswith("|"):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) == 4 and TIME_RE.match(cells[0]) and "tailscale file cp" in cells[1]:
+            rows.append(cells)
+    sent = sum(1 for r in rows if r[2] == "0")
+    failed = len(rows) - sent
+    to_dell1 = bool(rows) and all(r[1].rstrip("`").endswith("dell1:") for r in rows)
+    distinct = len(set(r[1] for r in rows)) == len(rows)
+    ok = sent == PACK_FILE_COUNT and failed == 0 and to_dell1 and distinct and len(rows) == PACK_FILE_COUNT
+    print("JOURNEY-TAILDROP files_sent=%d failed=%d target=dell1 ok=%s" % (sent, failed, ok))
+    print("JOURNEY-TAILDROP-DETAIL record=%s rows=%d exit_codes=%s to_dell1=%s distinct_commands=%s"
+          % (path.name, len(rows), [r[2] for r in rows], to_dell1, distinct))
+    return ok
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--fetch", action="store_true")
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--tag", action="store_true")
+    ap.add_argument("--release", action="store_true")
+    ap.add_argument("--pack", action="store_true")
+    ap.add_argument("--taildrop", action="store_true")
     args = ap.parse_args()
-    run_all = not (args.fetch or args.check or args.tag)
+    run_all = not (args.fetch or args.check or args.tag or args.release or args.pack or args.taildrop)
     results = []
     if args.fetch or run_all:
         results.append(cmd_fetch())
@@ -188,6 +303,12 @@ def main() -> int:
         results.append(cmd_check())
     if args.tag or run_all:
         results.append(cmd_tag())
+    if args.release:
+        results.append(cmd_release())
+    if args.pack:
+        results.append(cmd_pack())
+    if args.taildrop:
+        results.append(cmd_taildrop())
     return 0 if results and all(results) else 1
 
 

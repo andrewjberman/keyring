@@ -21,4 +21,18 @@ it holds no file content. The payload itself travelled by Taildrop from the lapt
 
 ## Send log
 
-SEND-LOG-PENDING (rewritten below in the same commit as the send results)
+Commands run, in this order, each once. Time is UTC from `date -u` before the call. Exit code is the `tailscale file cp`
+exit code. Printed output was empty on every call.
+
+| time (UTC) | command | exit code | outcome |
+|---|---|---|---|
+| 2026-10-15T20:24:27Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261015-duckdb\MANIFEST.json" dell1:` | 0 | sent (row 1) |
+| 2026-10-15T20:24:27Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261015-duckdb\duckdb-1.5.0-cp314-cp314-win_amd64.whl" dell1:` | 0 | sent (row 2) |
+| 2026-10-15T20:24:28Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261015-duckdb\duckdb-1.5.0-cp314-cp314-win_amd64.whl.check.json" dell1:` | 0 | sent (row 3) |
+| 2026-10-15T20:24:28Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261015-duckdb\duckdb-1.5.0-cp314-cp314-win_amd64.whl.delivery.txt" dell1:` | 0 | sent (row 4) |
+
+Files sent: 4 of 4. Files failed: 0. Target: dell1.
+
+Delivery status: NOT YET PROVEN. Taildrop gave exit 0 for each send, which means the file reached dell1's Taildrop inbox. It
+does not show that dell1 has read it. The issuer asks dell1's manager to run `tailscale file get` and
+`intake_receive.py verify --from <folder>` on dell1 and to report the result back.
