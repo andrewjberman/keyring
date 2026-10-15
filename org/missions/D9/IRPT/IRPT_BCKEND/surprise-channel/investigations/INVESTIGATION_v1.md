@@ -36151,3 +36151,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Four existing seam-contract tests fail at the base commit on analysis-operation and route-contract assertions, not on the ExportBundle copies. The export folder regression set (test_export.py, test_packaged_contracts_match_docs.py) passes. Recorded for the issuer; not fixed."
 }
 ```
+
+## IRPT_BCKEND-D2-W401-S3 -- An existing ExportBundle oneOf branch admits a filled pin beside a narrative ref; the freeze refuses it, the schema does not
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W401-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~401",
+  "surfaced_at": "2026-10-15T06:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The packaged ExportBundle schema accepts a bundle whose authorized_report_revisions carries a filled_report_source item beside narrative_packet_ref, through the existing branch 1, which does not exclude filled pins. bundle.freeze refuses that shape. The existing branches are frozen by AMENDMENT 1, so the looseness is recorded, not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json at the worker commit: the first oneOf branch requires narrative_packet_ref and carries no item constraint; a probe with one filled item plus narrative_packet_ref validates (True) against the packaged schema.",
+      "infra/aws/lambda/investor-reporting/export/bundle.py@b611ec2746 freeze() lines 150-152 refuse any filled pin beside a narrative, analysis, custody ref or performance pin."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 of IB-pr-557: the new oneOf branch must not make any bundle that was refused before validate unless it carries a well-formed filled_report_source, and every existing branch stays byte-for-byte.",
+  "world_is": "The amendment's rule is met: the new branch admits only filled bundles. The schema is looser than the freeze on a shape that predates the change: branch 1 and the other ref branches do not forbid filled items. Tightening them would change existing branches, which the amendment forbids. A CTO ruling is needed if the schema is to refuse what the freeze refuses. Nothing is served from this yet."
+}
+```
