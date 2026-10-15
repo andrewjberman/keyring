@@ -151,7 +151,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-18.g1-typed-tools-release.pr
 
 - A8 (issuer, 2026-10-15 ~01:0xZ, msgs 34296 and 34298; rows Z-S133, Z-S132): Phase A v3 is read: release `047f11aa991e5c7ed188876f07a8599447cf2849` on live `bf7ffb62f4`, 17 files; the issuer re-ran ap18.AC1 (PASS), the hookup hunks' patch-id equals OG-gt-7's `f032a4d7388a`, and the five module blobs equal trunk's. Z-S133 ruled route (a) (CTO msg 34298): this deploy ships the page in its LF form `3bbd5ab2` (identical content); Phase B records the host's page md5 in `GT_SERVED.json` as `yearinreview_md5` and the ask names the change. The registry instruments are two and each holds +10: the REPO side (`tests/test_entitlement_admin.py` pin, 65 -> 75, which counts the registered tool names the unit test builds) and the HOST side (the app's own registry read on the host, `registry_before` 46 -> 56); Phase B names both in `GT_SERVED.json` and, if the host's 46 is not what the live base's own tests predict, reads why first (the CTO's condition). Mention in the ask of any future release cone: add `org/missions/DIRECTIVES.yaml` so the commit-time naming limb grades instead of reading vacuous. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G1-TYPED</workstream>
 <slot>~AE</slot>

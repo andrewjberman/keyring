@@ -13671,3 +13671,26 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-501. The test file is outside the grant and was not edited. The owner of the colour-dependent parse is the suite's owner; the issuer may route it."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S50",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T02:28:23Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W401-S1 (disarm owner 0.0.0_AB_MSTR, recorded by this seat as the issuer): MSTR installed exchange_calendars on dell2, pandas_market_calendars imports, and lib/tests/test_nyse_fallback_equals_package.py now runs and reads equal for all 18 years (2010 to 2027)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 msg 7958 (2026-10-15 ~02:27Z): pandas_market_calendars 5.4.0 imports after exchange_calendars 4.13.2 was installed on dell2's Python 3.14.7 (user site); pandas 3.0.6 and numpy 2.5.3 unchanged",
+      "this seat's run of python lib/tests/test_nyse_fallback_equals_package.py (not under -I, which drops the user site): last line 'NYSE-FALLBACK years=18 equal=18/18 first=2010 last=2027 closures=170 ok=True', rc 0; lib.trading_calendar.calendar_source() now reads NYSE/pandas_market_calendars"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner (CLAUDE.md section 2); the CTO's round-115 analysis (@d514312c6d section 2) ruled W401-S1 closes when the packages are installed and the equality test is re-run.",
+  "world_is": "The fallback table equals the package for every year 2010 to 2027, so the 15 landing days and the 13 catch-up dates of round 114, answered from the fallback, are the package's answer too. NOT closed by this row: the round-114 records DB-c-1 and DB-c-3 still carry calendar_source NYSE/hardcoded-fallback-2010-2027 and calendar.ran false (history, not rewritten); the checkers run under python -I, which drops the user site, so they still answer from the fallback (equal by this test). The pair packet DB-c-5 states the calendar source it used."
+}
+```
