@@ -19450,3 +19450,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S129 -- disposition of IRPT_ANLREQ-D2-W197-S1: the verifier's expected list was stale; the build is right (15 changed, 284 identical)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S129",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T21:41:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row's premise held and the issuer acted on it: the verifier's expected CHANGED list, cut at the trial pin cbf05a6afa, lacked intake/uploads.py, which AR-g-95 changed afterwards. The build was right. The list is corrected at 6cce05f41a, the order prose amended, and the verifier re-run on the worker's own record passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W197-S1 (BLOCKING): the delta at pin 26d720a980 is 15 changed and 284 identical; the issuer's list was stale, not the build; AR92-g-AC1 now passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AR-G92-OK members=310 changed=15 added=11 removed=0 builds_identical=310 scripts=4 gates=ok tar=3338a5c73c8bf0bb050850507ba9707a079055e803858321c8864ee8bb3a3f1f, run by the issuer on the merged record at 1e3b13e677",
+      "amendment 6cce05f41a; worker proof 126c258da5 (AC1 and AC2 PASS); merge 1e3b13e677"
+    ]
+  },
+  "spec_asserts": "TO-AR-g-92 AC1: the delta is exactly the changed and added members of the merged ENGINE cells, every one equal to git show at the pin.",
+  "world_is": "The delta at the pin includes intake/uploads.py (an r31 member that AR-g-95 changed), so 15 changed and 284 identical; each changed member equals its blob at the pin."
+}
+```
