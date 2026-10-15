@@ -4319,3 +4319,15 @@ Check IB227-1 (`deliverables/2.0.0_SA_COO~P2/checks/r227/p227_cells.py`), dry-ru
 | `IB-pr-594` | the feed stores the daily factor only, SERIES_ENDED_AT_SOURCE, calendar-day rows, the scheduled window from the newest landed day | FWD-3 | LOCAL | none | PN3-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one script; one worker (slot ~433) starts now.
+
+## 222. ROUND 4, WORKSTREAM ~PJ (the TRANSPLANT candidates of the three holdings bundles: the exemption alone; 2026-10-15 ~18:0xZ, issuer 2.0.0_SA_COO~P2 on dell2)
+
+IB-pr-590's overlay candidate (merged @53d1153a4b) overlaid HEAD's whole `holdings_snapshot.py` on each firm's minting pin. Reading the file against each pin with the exemption blocks removed showed that HEAD's file is NOT the pin plus the exemption: it also carries (a) the unreleased one-date bypass of IB-pr-536 (`allow_older_date`, the `ONE-DATE-ASSERT` block, a manual-path flag whose sign-off is not part of the exemption pair) for all three firms, and (b) for 49 Financial the REVERSAL of the CUSIP port (pin 1 keeps it live on purpose; pin 2 reversed it for Cottonwood and Inflection) and a `multi_asset` list change. The never-widen pair must move the exemption ALONE. This cell builds the TRANSPLANT candidate: each firm's minting-pin file with ONLY the exemption commits (IB-pr-576, 577, 582) applied, verified by stripping the exemption blocks and diffing against the pin, with the two transplanted files committed per firm so the check recomputes their hashes, BUILD ONLY, the offline tests on each transplant tree, and the live comparison. The exemption pair's COO half waits on it.
+
+Check IB228-1 (`deliverables/2.0.0_SA_COO~P2/checks/r228/p228_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control228.py`) passes all and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-595` | READ the transplant release candidates (exemption alone) of the three holdings bundles, BUILD ONLY, tested, against the live bundles | FWD-21 | SERVED | none | PJ6-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one read-only build cell; one worker (slot ~434) starts now.

@@ -18150,3 +18150,58 @@
   "notes": "Form only: the worker reports the measured count (2 of 10) and does not judge the three-case claim. The checker grades the module it is handed; a mutant control belongs to the issuer's check file, not to this module. The proof's controls.mutant records the scratch run and its count."
 }
 ```
+
+## IRPT_ANLREQ-D2-W178-S1 -- TO-AR-g-68 AC2 cannot PASS in this worktree: docs/ is absent from the sparse checkout
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W178-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~178",
+  "surfaced_at": "2026-10-15T17:05:59Z",
+  "one_line": "TO-AR-g-68 AC2 cannot PASS in this worktree: docs/ is absent from the sparse checkout and one runner test reads a missing IRPT_YCDGEN map, so test_y5_proxy_corrections.py does not collect and the base run is 91 passed, 1 failed",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-68 AC2 (AR68-g-AC2): the regress check runs the four existing test files (108 tests today) and requires rc 0 with at least 108 passed; the order says it PASSes at base. The worker face says the worktree carries the paths the task order names.",
+  "world_is": "Worktree C:/dev/wk-irpt-anlreq-178 at 3e2bdff97e: docs/ does not exist on disk and every docs/* path is skip-worktree in the index (git ls-files -v), and git sparse-checkout list names no docs entry. Base run of the four files: test_kept_holding.py, test_normalized_input.py and test_runner.py give 91 passed and 1 failed; test_y5_proxy_corrections.py fails collection because test_y5 imports test_uploads, which imports test_repository, which reads docs/contracts/investor-reporting/v1/AnalysisReport.schema.json (FileNotFoundError). The one failure is test_runner.py::test_elements_record_an_opal_held_source_by_its_group, which reads org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json (FileNotFoundError, absent). Not repaired: the tree was not rebuilt or sparse-extended, per the worker face.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q on the four files at 3e2bdff97e: 'FAILED ...test_runner.py::test_elements_record_an_opal_held_source_by_its_group' and '1 failed, 91 passed'; test_y5_proxy_corrections.py: 'ERROR ... 1 error during collection', FileNotFoundError docs/contracts/investor-reporting/v1/AnalysisReport.schema.json",
+      "git ls-files -v docs/contracts/investor-reporting/v1/AnalysisReport.schema.json: S (skip-worktree); ls docs: no such file",
+      "ar_g68_checks.py regress at 3e2bdff97e: 'existing tests: 1 error in 4.22s', AR-G68-REGRESS-FAIL rc=2 passed=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The regress guard cannot run in this worktree as written. The product change (A to E) is not blocked by it and is verified by AC1 and by the three runnable files. The issuer or the box owner decides whether AC2 runs on a full checkout. No check was weakened and no file was added to the tree."
+}
+```
+
+## IRPT_ANLREQ-D2-W178-S2 -- closing row: IRPT_ANLREQ-D2-W178-S1 resolved by the issuer's widening of the worktree (docs/, IRPT_YCDGEN, org/surprise_channel on disk)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W178-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~178",
+  "surfaced_at": "2026-10-15T17:19:36Z",
+  "one_line": "IRPT_ANLREQ-D2-W178-S1 is resolved by the issuer's widening: the sparse worktree now carries docs/, IRPT_YCDGEN and org/surprise_channel, and AC2 passes with 108 passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_ANLREQ-D2-W178-S1 (BLOCKING): AC2 cannot PASS in this sparse worktree, because docs/ and an IRPT_YCDGEN map were absent from the checkout.",
+  "world_is": "Ruled by 2.0.0_SA_COO~G2 (coordinator message, 2026-10-15): the issuer widened C:/dev/wk-irpt-anlreq-178 so docs/, org/missions/D9/IRPT/IRPT_YCDGEN and org/surprise_channel are on disk. Re-run at d44fbfaf40: ar_g68_checks.py regress prints AR-G68-REGRESS-OK passed=108 rc=0; test_y5_proxy_corrections.py collects. The S1 defect was the issuer's provisioning, not the tree the worker was given, and it is closed. S1's own disposition field is append-only and still reads UNDER_INVESTIGATION; this row is the closing record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ar_g68_checks.py regress at d44fbfaf40: 'existing tests: 108 passed in 4.44s', 'AR-G68-REGRESS-OK passed=108', rc=0",
+      "ar_g68_checks.py g68 at d44fbfaf40: 'AR-G68-OK direct=6 named=8 passed=9', rc=0",
+      "ls -d docs org/missions/D9/IRPT/IRPT_YCDGEN org/surprise_channel at the worktree: all three present"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolved by the issuer's widening of the worktree; S1 is closed. The CVO may adjudicate S1 formally at L9.",
+  "notes": "Closing row for IRPT_ANLREQ-D2-W178-S1. No check was weakened; the widening was done by the issuer, not by this worker."
+}
+```
