@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN FWD-14: read this box RDP history for sessions from rc (100.98.173.75), report counts and times",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD14_RDP_HISTORY_READ.md",
  "opened_at": "2026-10-15T17:07:14Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-15T17:09:48Z",
   "bus_message_id": "4df24f06-2573-40f6-8b55-191e340c1b37"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-15T17:25:59Z",
+  "by": "0.0.0_AB_MSTR~DELL1",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
