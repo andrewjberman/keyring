@@ -2215,3 +2215,17 @@ Two cells with disjoint write surfaces, both cut from the base that carries roun
 **fanout:** 2 of 2 chains, cap 8, reason: two cells, two write surfaces (the handler directory; the contract file and its test), no shared file; workers `0.9.0_WK_IRPT_DASHBD~218` and `~219`.
 
 **Checkers (dry-run at the base before the cut; all FAIL as expected, self-tests green):** `checks/r137/p137_unreported.py` (DB137-1-AC1..AC3; probe validated against a scratch reference handler (green) and the round-135 handler (red), 15 + 3 + 2 + 7 red arms) and `checks/r137/p137_contract040.py` (DB137-2-AC1..AC3; validated against a scratch reference contract (green) and 15 single-fault mutants (all red), 2 + 3 + 8 self-test red arms).
+
+## 136. ROUND 138, WORKSTREAM B-49F (2026-10-15 ~19:3xZ, issuer 2.0.0_SA_COO~D2, on the CTO half of the report-build pair, `NEVER_WIDEN_COTTONWOOD_REPORTING_GOLD_LAMBDA_CTO_HALF.md` @063567b63d question 3, msg 8573; round 137 merged at ef923dab52, MAY-CLOSE)
+
+The CTO signed the pair on sha256 `cc5e87ff22e6` and accepted newest-`account_dim` households for the backfill on one condition that the handler must carry: each backfilled day's object states `households_as_of` and `households_claim: held`, and each built day counts the accounts the membership drops and the households with no rows (counts only, no id). The handler's bytes change, so the signed packet's pin (`handler.py` `e36e3155acb2`, the build-only hash) is void and the pair is re-issued as revision 2 once this cell merges; the CTO half is asked again on the new sha256.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The handler states `households_as_of` (newest `account_dim` date), `households_claim` held, `accounts_dropped` and `households_no_rows` in a built day's result, carries the two claim keys in the day's one object's parquet schema metadata (columns unchanged), prints counts only; tests; a facts record | DB-b-271 | B-49F report-build handler (FWD-1 hop: the filled report), the CTO's condition on the backfill | WORLD | round 137 merged (same file) | chain A |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the claim lives in the object's parquet SCHEMA metadata, not in a second manifest object, so the day stays ONE `put_object` and the packet's "no half-partition" branch (section 6 Branch C) stays true; (b) `accounts_dropped` is read from the day's own returns partition (one more GET on an object the role already reads), because the rows the handler already holds are filtered to the households' accounts and cannot show what was dropped; (c) a count above 0 is not a stop, as the CTO rules: it is the input to the reader's ruling; (d) the pair is re-pinned rather than amended, since a packet whose bytes differ is not covered and both halves bind to the sha256.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell, one write surface (the handler directory), worker `0.9.0_WK_IRPT_DASHBD~220`.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green with 2 + 2 + 14 + 7 red arms; the probe validated against a scratch reference handler (green) and seven single-fault mutants (no metadata, claim not held, oldest date, dropped uncounted, no-rows zero, counts missing, an id printed: all red)):** `checks/r138/p138_households.py` (DB138-1-AC1..AC3).
