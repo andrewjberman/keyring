@@ -16854,3 +16854,105 @@ name the one known failure instead of silently inheriting it.
     "notes": "The general shape, which is not about this gate: A MODE SWITCH CARRIED BY A FILE ON DISK IS A MODE SWITCH THAT SPARSE CHECKOUT CAN TURN OFF. A sentinel read fails toward the permissive side here, which is the wrong side for a gate, and the only evidence is one parenthetical inside a passing commit. Row Z-S132 is the same family (a sparse release cone could not run deploy-to-ec2.sh because infra/logic was outside it) and was answered by widening the cone; widening it again would fix this instance, but the class is worth a mechanism: a gate that cannot find its own mode sentinel should say so loudly, or fail closed, rather than print WARN and continue. Not mine to change: .tools/naming-gate.py and org/mcp are outside this order's <paths>."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W100-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~100",
+    "surfaced_at": "2026-10-15T09:18:55Z",
+    "one_line": "The 50 KB envelope projection trims a 106-position holdings answer to 99 rows; the tool keeps every row only with a narrower position row, and funds larger than INEQ are unmeasured.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: python .scratch/rv1_debug2.py in the worktree before the narrowing edit (uncommitted; sixteen position fields plus weight_unit): raw body holdings 106; out holdings 99, truncated True, projected_to_bytes 51149.",
+        "RUN: same script after narrowing POSITION_FIELDS to ten fields and dropping the per-row weight_unit: out holdings 106, truncated None.",
+        "RUN: bash rv1.AC2.sh after the narrowing: 'INEQ holdings 106 rows vs independent 106, report_date equal True ... RESULT: PASS exit=0'.",
+        "CHECK: infra/aws/ec2/opal-gateway/app/typed_scope.py and harvest_typed.py envelope/project: PROJECT_LIMIT 51200, holdings is the largest list and is popped first."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Answers carry the full envelope projected to 50 KB (G5r section 3, common rules); etfs_get_rival_fund_holdings returns the fund's position rows (AC2: INEQ 106 rows equal the independent read).",
+    "world_is": "A 106-position fund answered with the sixteen-field position row projects past the cap and is trimmed to 99 rows, flagged truncated only in the envelope. The ten-field row returns 106 rows for INEQ. No other fund's position count was measured, so a larger fund may still trim.",
+    "notes": "Owner to decide whether the rival holdings tool should page or raise its own cap. Disarm: measure the largest rival fund's position count against the projection, or confirm the cap for this tool.",
+    "disarm_owner": "2.0.0_SA_COO~O"
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W100-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~100",
+    "surfaced_at": "2026-10-15T09:18:55Z",
+    "one_line": "Binding rule 5 says never none for a missing identifier; the holdings tool returns null for an empty identifier column of a position, because the rule is phrased for a matched-ticker lookup.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: G5r reading rule 5 (task order OG-rv-1 section 1, and G5r spec section 5): Never none for a missing identifier: an identifier column that is empty for a matched ticker answers not_held_for_this_security.",
+        "CHECK: infra/aws/ec2/opal-gateway/app/etfs_rivals.py, _position() passes the identifier columns through unchanged; _holder() (who-holds only) applies _ident().",
+        "RUN: the AC2 probe answers INEQ with cash-line positions whose CUSIP and ISIN are empty, as null in holdings."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Reading rule 5: never none for a missing identifier; an identifier column empty for a matched ticker answers not_held_for_this_security.",
+    "world_is": "The who-holds tool labels an empty holder identifier not_held_for_this_security. The holdings tool keeps the table's null for an empty identifier, since a holding has no ticker lookup and the label would read as a claim about a held security. Applying the label to holdings was not measured against the 50 KB cap.",
+    "notes": "The reading of rule 5 for holdings is a judgment the CRO or COO should rule on; the code applies the label only where a lookup matched a ticker."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W100-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~100",
+    "surfaced_at": "2026-10-15T09:18:55Z",
+    "one_line": "The who-holds clause for an empty requested identifier does not say which identifier column a ticker query asks for; the tool labels all five identifier columns of each holder.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER: task order OG-rv-1 section 1, etfs_who_holds: A matched ticker whose requested identifier column is empty answers not_held_for_this_security for that identifier (never none).",
+        "CHECK: infra/aws/ec2/opal-gateway/app/etfs_rivals.py _holder(): every column in IDENTIFIER_FIELDS passes through _ident().",
+        "RUN: cd infra/aws/ec2/opal-gateway && python -m pytest tests/test_og_rv1.py: 5 passed; test_ogrv1_ac03 asserts the CUSIP label and the ISIN value for one holder of a ticker query."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A matched ticker whose requested identifier column is empty answers not_held_for_this_security for that identifier.",
+    "world_is": "The clause does not name the requested column for a ticker query, so each holder carries the label on every empty identifier column (ticker, Bloomberg, CUSIP, ISIN, SEDOL). A CUSIP or ISIN query, which the order does name, is not separately narrowed.",
+    "notes": "The CRO or CTO should confirm whether the label belongs on all identifier columns or on the one the query used. The fix is a one-line narrowing in _holder() if the narrow reading is ruled."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W100-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~100",
+    "surfaced_at": "2026-10-15T09:18:55Z",
+    "one_line": "The order says the branch carries the v0.5 catalog; the branch HEAD does not descend from the live catalog commit, although the catalog bytes are identical.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: git rev-list --left-right --count 1b18b94979...HEAD in the worktree: 40 left (catalog commit only), 35909 right; git merge-base --is-ancestor 1b18b94979 HEAD: not an ancestor.",
+        "RUN: git rev-parse HEAD:infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml and git rev-parse 1b18b94979:infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml: both e5096b5d6c1b7819d9b1aa742b2c2136cc547758.",
+        "RUN: grep of the catalog file at HEAD: version 0.5 with the eight rival entities (peer_group_map, canonical_shape, security_universe, security_market, corporate_actions, security_names, input_census, holdings_coverage) present, retired false."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Your branch carries the committed catalog (v0.5) (task order OG-rv-1, KEYS COME FROM THE CATALOG).",
+    "world_is": "The catalog content is present at HEAD, byte-identical to the live commit, so the premise holds by content. The commit itself is not an ancestor of the worker branch, which was cut from an older base.",
+    "notes": "No action taken on the branch. The tools read the catalog at call time, so the content, not the commit, is what the code depends on."
+  }
+  ```
