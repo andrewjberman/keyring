@@ -1026,6 +1026,69 @@
     "spec_asserts": "TO RV-x-1 spec: every text-white inside a solid indigo box keeps white ink in a light panel, reached by the descendant context of the indigo box.",
     "world_is": "A text-white class on the indigo box itself is not a descendant of it, so the specified context does not reach it and the legibility rule turns that text navy on indigo. Whether a light panel renders this Tooltip was not measured in this worktree; the reach is unverified.",
     "notes": "Filed, not fixed: Tooltip.tsx is outside this order's <paths>, and the order names the three tooltips that are descendant-shaped. The fix belongs to the owner of the tooltip surface."
+  },
+  {
+    "id": "DSGN_RBNDV2-W15-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~15",
+    "surfaced_at": "2026-10-15T15:35:26Z",
+    "one_line": "safe-commit's commit-gate checked 0 of 3 .tsx files on the RV-x-3 portal commit cbb6b041 and printed NOTHING WAS CHECKED; the frontend change was graded by bun test only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal commit cbb6b041 on branch wk-DSGN_RBNDV2-15-portal, made via bash ../.tools/safe-commit.sh: commit-gate output 'checked 0 of 3 file(s) -- NOTHING WAS CHECKED' and 'not graded: 2 .tsx' (the third file was the test .ts)",
+        "the gate banner states it reads only .py / .sh / .tf / org/projects/*.json and says to use the language-appropriate instrument (tsc -b, eslint, a read render) for a frontend artifact"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A commit of frontend files is gated by safe-commit's commit-gate, so a passing gate line is evidence the staged files were checked.",
+    "world_is": "On cbb6b041 commit-gate checked none of the three staged files (RSIBars.tsx, RSIModal.tsx, rb-5-x3.rsi-ink.test.ts). The only instrument run on the .tsx changes is bun test src/__tests__/dsgn-rbndv2 (8 pass, 0 fail); no typecheck was run by the worker.",
+    "notes": "Filed, not fixed: commit-gate and the commit tooling are outside this order's <paths>. The RV-x-3 criteria are graded by the order's own test (RB5X3-AC1, RB5X3-AC2), which is the instrument the order names."
+  },
+  {
+    "id": "DSGN_RBNDV2-W15-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~15",
+    "surfaced_at": "2026-10-15T15:35:26Z",
+    "one_line": "The row contract the worker face names, org/surprise_channel/schemas/investigation_item.schema.json, is absent from this worktree, so the row was shaped from the sibling rows of this file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worktree /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-15 (branch wk-DSGN_RBNDV2-15): no org/surprise_channel/ directory exists (ls of the schemas folder fails)",
+        "INVESTIGATION_v1.md in this worktree carries 48 rows whose field set and enum values (class OBSERVATION or BLOCKING, hazard_standing INERT or ARMED, disposition UNDER_INVESTIGATION) were read from the file itself"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Each new investigation row is validated against org/surprise_channel/schemas/investigation_item.schema.json before it is appended.",
+    "world_is": "That schema file is not present in the worktree the order runs in, so the row's fields could not be checked against it; the row follows the field set of the existing rows and the .tools/surprise-row-gate.py check at commit is the remaining validator.",
+    "notes": "Filed, not fixed: the schema location belongs to the surprise-channel owner. The row here is appended without modifying any existing row."
+  },
+  {
+    "id": "DSGN_RBNDV2-W16-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~16",
+    "surfaced_at": "2026-10-15T15:36:39Z",
+    "one_line": "RV-x-4 says the portal worktree is branched from feature/dsgn-rbndv2-light at 7f8731df, but the worktree HEAD is 9027a72d, a descendant of 7f8731df that carries the RV-x-1 merge; 7f8731df is an ancestor of HEAD, not its tip.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal worktree wk-DSGN_RBNDV2-16-portal: git rev-parse HEAD = 9027a72d at the start of the order; git merge-base --is-ancestor 7f8731df HEAD printed ANCESTOR-YES",
+        "git -C portal log -1 9027a72d: 'drain(DSGN_RBNDV2.TO-RV-x-1): merge worker 0.9.0_WK_DSGN_RBNDV2~13 ... into feature/dsgn-rbndv2-light'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-x-4 environment block: the portal worktree is branched from feature/dsgn-rbndv2-light at 7f8731df, the difference-control base.",
+    "world_is": "7f8731df is an ancestor of the worktree HEAD 9027a72d, which carries the RV-x-1 merge. The difference-control arms read the base by git show 7f8731df and are unaffected. The worker's commit 140f474f touches only the three RV-x-4 paths, so the descendant commits were not edited by this cell.",
+    "notes": "Filed, not fixed. The order's branch premise is stale relative to the live branch; the cut point is the drain's merge commit, not the base named in the order. Whether the RV-x-1 merge changes the light-panel render of the Fear and Greed panel was not measured here; the arms are text arms."
   }
 ]
 ```
