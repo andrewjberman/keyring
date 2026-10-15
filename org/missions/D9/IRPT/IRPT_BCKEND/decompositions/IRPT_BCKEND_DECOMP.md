@@ -4343,3 +4343,15 @@ Check IB230-1 (`deliverables/2.0.0_SA_COO~P2/checks/r230/p230_cells.py`), dry-ru
 | `IB-pr-597` | READ the REBUILT performance function candidate (with the named ratio-absent list), BUILD ONLY, against the live package | FWD-21 | SERVED | none | PJ7-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one read-only build cell; one worker (slot ~435) starts now.
+
+## 223. ROUND 6, WORKSTREAM ~PO (the APPLY of the Orion pair (b) ADDENDUM 1, the Scope account feed; 2026-10-15 ~18:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the signed halves and the CTO's msgs 8499 and 8496)
+
+Pair (b) ADDENDUM 1 is signed by both halves (blob 1e138cbeea; CTO half @74aa15de73). The builds are merged: IB-pr-586 (the pull step and its catalog row), IB-pr-587 (the one-account limit lifted) and IB-pr-594 (the daily factor, `SERIES_ENDED_AT_SOURCE`, calendar days, the scheduled window; the CTO's ADDENDUM-2 condition 1 gates BOTH applies on it). IB-pr-568 closed on the same executor, so the feed's apply takes IB2's next slot (the CTO's round analysis msg 8499). One WORLD order to `0.7.0_AE_CloudOps~IB2`: the gates (halves signed, builds complete, the live dispatch object equal to the repository copy, the roster column, the runner role's grants incl. the cross-bucket write, the LIVE notification filter, the bound equal to the household count read at the apply, the Inflection-only write set), the writes (script and trading calendar beside it, the address sidecar generated from `address()`, the dispatch object edited by the one row and its chain entries, the saved copy named first), and the FIRST SCHEDULED RUN read (coverage equals the denominator, no zero, the daily factor stored, within the bound). The account mapping's release (IB-pr-587) and the history backfill (ADDENDUM 2) are separate acts.
+
+Check IB229-1 (`deliverables/2.0.0_SA_COO~P2/checks/r229/p229_cells.py`, committed @f9d2f4541b), dry-run at the base: AC1 to AC3 all FAIL; the control (`control229.py`) passes the three positives and seventeen negatives plus the no-record cases each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-596` | APPLY the Scope account feed: the gates, the script and its beside-files, the sidecar, the dispatch row and entries, the first scheduled run | FWD-3 | WORLD | none | PO6-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).

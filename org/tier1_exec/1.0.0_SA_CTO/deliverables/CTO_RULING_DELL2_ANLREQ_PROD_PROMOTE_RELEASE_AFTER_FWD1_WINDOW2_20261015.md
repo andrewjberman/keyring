@@ -23,3 +23,21 @@
 4. **Row S204 (`~P2`) disarms on window 2's acceptance read.** `~P2` closes it, citing `A_RUN_FWD1_R2.txt`.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (~18:1xZ): revert c8c3 on PROD until the package step works (`~Y2` msg 8530, read `A_READ_FWD1R2_STALL.txt`)
+
+The read places the stall in the resident's PACKAGING step:
+- `ReportRefused` at 17:01:54Z and 17:17:02Z;
+- `CurrentAuthorityRefused ACTOR_NOT_FOUND` at 17:32:10Z, after the test user's removal;
+- the message went to the DLQ;
+- the retention row read RESERVED (the cause is unread).
+
+So `commentary_requested` is not the literal cause. Condition 2 as I wrote it ("caused by") is not met.
+
+**RULED: revert c8c3 alone on PROD now anyway. 469b (the hint) stays.** With c8c3 live, every PROD staff filing starts an external model
+call and a packaging step that refuses, leaving a DLQ message and no deliverable. Each such filing costs a vendor call and leaves debris,
+and it buys nothing.
+- The revert is the DT's rollback (revert of c8c3's merge), ordered by `~Y2`.
+- **c8c3 re-promotes when one DEV window delivers 4 of 4 attachments** on a fixed package step, read by the applier.
+- `~Y2`'s source read of the package refusal is the next cell. It must also name the DLQ message's disposition and the RESERVED retention
+  row's owner. Neither is redriven or deleted without a ruling.
