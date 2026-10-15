@@ -1,0 +1,18 @@
+{
+ "allowance_gap": null,
+ "allowance_today": 0,
+ "basis": "history backfill quoted over NON-trading days (weekends and NYSE holidays, lib/trading_calendar.py is_trading_day) at the measured ceiling per day; a trading day's backfill allowance is 0 (production draws history on trading days); counted only on days a scheduled drawer fires (drawer_schedule.py)",
+ "cells": {
+  "bloomberg_history": 5725
+ },
+ "cells_remaining": 5725,
+ "claims": {
+  "ceiling": "measured",
+  "reserve": "held"
+ },
+ "finish_date": "2026-10-17",
+ "finish_date_claim": "measured",
+ "label": "full-request quote",
+ "page": "client performance (Cottonwood), via MDPF_SECHIST's one series per security",
+ "request_id": "ADVI_COTBKF-ACTIVE-BBG-19"
+}

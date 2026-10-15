@@ -21,9 +21,9 @@ Every round-20 order is terminal (four complete).
   "remedy": "P3. The round-21 cell (issuer's ruling) reads every deploy-scope path's key from PIPELINE_MAP and compares it with the hook's mapping. Done when the two agree for every PIPELINE_MAP entry, or the hook reads PIPELINE_MAP itself.",
   "owner": "2.0.0_SA_COO~C",
   "round": "v25",
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~C", "round": "v25"},
-  "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~C", "at": null},
-  "closed": false
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~C", "round": "v25"},
+  "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~C", "at": "2026-10-15T18:31Z"},
+  "closed": true
  },
  {
   "id": "NFRA_CTLPLN-S9127",
@@ -39,8 +39,8 @@ Every round-20 order is terminal (four complete).
   "remedy": "P2. 1.0.0_SA_CTO (the danger map's owner, per its git history) has it rebuilt on its own path, and test_round20_hygiene.py states the map's age as a precondition (SKIP stale) instead of failing on it. Done when comp-pulse diff prints a non-STALE map age and test_round20_hygiene.py --map reads ok=True.",
   "owner": "1.0.0_SA_CTO",
   "round": "v25",
-  "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v25"},
-  "closed": false
+  "remediation": {"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v25"},
+  "closed": true
  }
 ]
 ```

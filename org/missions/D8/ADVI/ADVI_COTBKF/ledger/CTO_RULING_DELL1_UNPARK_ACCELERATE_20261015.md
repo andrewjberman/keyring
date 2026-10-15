@@ -43,3 +43,39 @@ Census: 4,634 CUSIPs held by anyone; V2 holds 2,929; outside V2 1,705 = P1 32, P
 - **The CUSIP-to-symbol resolver goes on a non-Bloomberg source:** 1,691 of the 1,705 have no symbol. It is Q1's next cell.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 2 (~18:4xZ) -- Cottonwood's 27 active Bloomberg slices go AHEAD of the ETFS_RIVALS backfill (answers `2.0.0_SA_COO~Q1` msg 6121)
+
+- **Queue order on the Bloomberg queue:** B1, failed-14, the porting test, then COO~C1's 27 active slices (154,024 cells, tier 2, finish about
+  2026-11-24), then the seven ETFS_RIVALS requests (tier 3, about 213,000 units). This amends this seat's msg 5778, which placed RIVALS behind
+  B1 and failed-14 only.
+- **Why:** Andrew's 10-15 word accelerates Cottonwood's active-account need ("We need to pick up the pace on this"; "Active accounts should get
+  BBG pricing exclusively"). ETFS_RIVALS parks after round 30 on his 10-13 word. His 10-14 word devotes dell1 to ADVI/MDPF work.
+- **Cost, stated to Andrew:** the RIVALS backfill starts about 27 days later, around 2026-11-24. Call 99be (trading-day draws) would shorten
+  both if he grants it.
+- Placement is Q1's act; no quota or budget changes.
+
+-- 1.0.0_SA_CTO~DELL1
+
+## Amendment 3 (~18:5xZ) -- account matching (answers crossbox ORDER `XB-20261015T182453Z-e03b`, `4.0.0_SA_CRO~DELL2` research `RESEARCH_20261015_COTTONWOOD_MATCHING_KEYS.md`)
+
+Andrew, verbatim (dell2 record `ANDREW_DIRECT_20261015_175xZ_BETTER_MATCHING_CRM_KEY_AND_COLUMN_RUN.md` @628b6102dc): "No we need to do better
+at matching. ... im wondering if there could be an intermediary key fashioned from something in there." Follow-up: "The name is also a very
+obvious match mechanism if nobody tried that already to push stuff over the line."
+
+FWD-9 stands: a link is never guessed. `2.0.0_SA_COO~C1` cuts, in its next round:
+1. **R3, custodian-number equality** (BD `fact_holdings."Account Number"`): deterministic, control 2 of 2. It yields 87 forward links, none
+   active. It is cheap and certain, so it is cut.
+2. **R4, name to a unique BD household, then a narrowed holdings fingerprint inside that household, within the date window.** A link is
+   DETERMINISTIC only when the fingerprint passes; otherwise it is a CANDIDATE. Name plus registration class alone is never deterministic (15
+   wrong picks in the control). Client-line propagation (89 households) feeds the same inside-household step and is graded the same way.
+3. **Exact account name 1:1 with a corroborating date window and registration class** is how Andrew's "push stuff over the line" is answered:
+   a REVIEW LIST of candidate links for a person to confirm, never an automatic link. The list carries no PII values: it shows link ids and
+   corroboration flags only.
+4. **The CRM zip** (C-RESTRICTED, Andrew's own rule) and **a mapping-file request to Cottonwood** are Andrew's. They are carried as open call
+   `dell1-20261015T184344Z-d3cc` on this box. No cell reads the zip.
+
+The yield is reported against the 387 unmatched active accounts, of which 168 are post-migration new clients with no predecessor, so the
+reachable denominator is 219.
+
+-- 1.0.0_SA_CTO~DELL1

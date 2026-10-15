@@ -3219,5 +3219,47 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       ]
     }
   }
+  ,
+  {
+    "id": "MDPF_DEMQUE-D1-W60-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~60",
+    "surfaced_at": "2026-10-15T18:43:13Z",
+    "one_line": "DQ-t-68 says old_columns_digest is the sha256 of the ten OLD columns and equals the DQ-t-59 value; the DQ-t-59 digest is over the nine old columns, the same order's step 1 counts the ten as INDEX_COLS including porting_verdict, and a digest over the live rows cannot equal the DQ-t-59 hash because the store grew from 483 to 538 rows; the build keeps the nine-column digest unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t68 build item 4: old_columns_digest is still the sha256 of the ten OLD columns as CSV text (so it equals the DQ-t-59 value).",
+    "world_is": "price_store.py at base 5e62883899 computes the digest over OLD_INDEX_COLS, which holds nine columns; the DQ-t-59 proof records the nine-column definition and its preview digest 5fe689fd2a76d2bb4ad5b65191ed4afb855056a408092f32952bacb3d2fdf2e9 at 483 rows. This build's real preview reads 538 rows and prints old_columns_digest 7621374ba954b05357cfa07b18722de024fc3f1afd873eb95c38400bd78a01f6, equal across two real reads. The digest is unchanged in code, so the spec's equality with the DQ-t-59 value holds only as a definition, not as a hash comparison on the live store.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/price_store.py@5e62883899 line 35: OLD_INDEX_COLS is nine columns; _index_preview digests df[OLD_INDEX_COLS]",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~51/MDPF_DEMQUE.TO-DQ-t59.porting-verdict-column.proof_of_spec.json controls.determinism: old_columns_digest 5fe689fd2a76d2bb4ad5b65191ed4afb855056a408092f32952bacb3d2fdf2e9 at 483 rows; the TO-DQ-t59 order defines the digest as sha256 of the nine old columns as CSV text",
+        "python data/mdpf/scripts/demque/price_store.py --index-preview in worktree C:/dev/wk-demque-60 (branch wk-MDPF_DEMQUE-60): rows 538, old_columns_digest 7621374ba954b05357cfa07b18722de024fc3f1afd873eb95c38400bd78a01f6, read twice (rc=0 both)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W60-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~60",
+    "surfaced_at": "2026-10-15T18:43:13Z",
+    "one_line": "DQ-t-68 names org/surprise_channel/schemas/investigation_item.schema.json as the row schema; that path is absent from this worktree and no investigation_item.schema.json exists under org/, so the row is written in the form of the existing rows of this file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t68 Surprise clause: a surprise row conforms to org/surprise_channel/schemas/investigation_item.schema.json.",
+    "world_is": "The schema path does not exist at worktree HEAD 5e62883899 (org/surprise_channel is not present) and a Glob of org/ for investigation_item.schema.json returns no file. The surprise-row gate .tools/surprise-row-gate.py is the commit-time check; its verdict is recorded in this worker's proof instance.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Glob pattern **/investigation_item.schema.json under C:/dev/wk-demque-60/org: No files found (read at 2026-10-15T18:43Z)",
+        "ls org/surprise_channel and ls org/surprise_channel/schemas in worktree C:/dev/wk-demque-60 at HEAD 5e62883899: No such file or directory"
+      ]
+    }
+  }
 ]
 ```
