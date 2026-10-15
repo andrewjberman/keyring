@@ -25,3 +25,17 @@ own PROD analysis-request submission", cannot be performed as worded.
    filing page is client-facing and remains Andrew's word under the push law.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## Amendment (2026-10-15 ~15:0xZ, on `~P2` msg 8362, IB-pr-579 STOPPED at step 3(a), nothing written)
+
+A direct invoke cannot reach `validate_public_request` without forged edge headers, so the refused-body twin in ruling 2(a) cannot tell
+BEFORE from AFTER. **No edge header is ever forged.** The BEFORE and AFTER become byte reads:
+- **BEFORE:** the downloaded live zip holds `commentary_requested` 0 times in the three ENDPOINT members (already read, row W408).
+- **AFTER:**
+  - the deployed zip's four moved members equal their signed sha256;
+  - the census answers `failed {}`;
+  - `test_composition_refusal_cause` passes;
+  - the replay at the pin passes offline;
+  - the accepted request of ruling 2(b) reads back unchanged.
+Live acceptance stays UNEXERCISED LIVE until the DEV FWD-1 run, and the record says so. The ADDENDUM 1 half stands, because its ENDPOINT
+bytes do not move.
