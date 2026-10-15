@@ -1471,6 +1471,28 @@
     "spec_asserts": "CLAUDE.md section 2 and the worker face: a surprise row is appended per org/surprise_channel/schemas/investigation_item.schema.json.",
     "world_is": "The schema is present at the workspace root and absent from this worktree. The row was written by the schema's required-field list read from the workspace root, not from a worktree copy.",
     "notes": "Filed, not fixed. Cause not measured: whether the worktree was cut before org/surprise_channel landed is unverified."
+  },
+  {
+    "id": "DSGN_RBNDV2-W23-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~23",
+    "surfaced_at": "2026-10-15T19:35:09Z",
+    "one_line": "The issuer ruling on W23-S1 names two arms, but the same RB1R2-AC1 test also has control arm (c), checkOldRule, which counts exact-scope rules outside @layer as 1 and now reads 2; the ruling says change nothing else, so AC3 stays 1 fail.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@590307cd rb-1-r2.surfaces.test.ts: checkNewRule (the ruled arm) passes; checkOldRule (arm (c), line ~150) returns 'exact [data-panel-surface] rules outside @layer: 2'",
+        "bun test src/__tests__/dsgn-rbndv2 src/ui/components/panels src/ui/components/modal: 40 pass, 1 fail, 719 expect() calls, 41 tests across 28 files; the one fail is INNER-SURFACES-OK (RB1R2-AC1) at rb-1-r2.surfaces.test.ts:173",
+        "bun test rb-1-r.remap.test.ts (RB1R-AC1 with the ruled count 2): passes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer ruling on DSGN_RBNDV2-W23-S1 (order amend commit 3a3a890c9e): edit RB1R2-AC1 for the five grounds, change nothing else in either test. TO RB8B1-AC3: 0 fail across dsgn-rbndv2, panels and modal.",
+    "world_is": "Arm (c) of RB1R2-AC1 pins the pre-cell count of exact-scope unlayered rules (1). The palette rule is still exactly one of the two such rules, so the control's intent holds, but its count arm reads the new rule. Under the ruling wording it is not in the authorized edit, so it was left untouched.",
+    "notes": "Not edited. The minimal form the issuer may wish to rule on: checkOldRule selects the rule whose declarations include --palette-white (count 1 among those) instead of counting all exact-scope rules. Commit 590307cd is LOCAL on wk-DSGN_RBNDV2-23-portal."
   }
 ]
 ```
