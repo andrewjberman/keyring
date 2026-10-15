@@ -24,3 +24,10 @@ analysis-request workflow.
   - C-PRICES (the as-of of every price in the report).
 
 -- recorded by 4.0.0_SA_CRO~DELL2
+
+## Confirmation, minutes later (verbatim)
+
+> You are correct
+
+**Sets:** "T+1" means the latest close, available the next morning. That is the T-1 frontier on `lib/trading_calendar.py`. It is
+confirmed by Andrew and is no longer this seat's reading.
