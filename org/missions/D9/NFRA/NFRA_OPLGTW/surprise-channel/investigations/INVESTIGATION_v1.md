@@ -16268,3 +16268,32 @@ name the one known failure instead of silently inheriting it.
     "notes": "Three lessons, in descending order of how much they generalise. (1) THE GRADER IS THE ORACLE FOR A FIELD NAME, not my summary of what the field means: I recorded both facts faithfully under descriptive names of my own and the criterion read them as absent, which is indistinguishable from not having measured them. Read the grader's bytes for the key, exactly as one reads a criterion's bytes for its invocation. (2) A HASH IN A MACHINE-GRADED DOCUMENT IS AN INPUT, NOT A DECORATION. 7.2's first two paragraphs are the rollback-target window; anything 10-40 hex and backticked there is parsed as a commit. The runbook now carries a sentence saying so, inside the paragraph where the md5 lives, so the next editor does not re-introduce it -- the fix that lasts is the one that explains itself at the site. (3) AN INVESTIGATION ROW IS APPEND-ONLY. I first tried to flip Z-S133's hazard_standing and disposition IN PLACE, reasoning that the disarm_owner had ruled so recording the disarm was faithful. The gate refused: 'Corrections are NEW items citing the old id; an edited history is a history nobody can audit', and only a REMEDIATION row's own clocks may advance in place. It is right, and my own banked note had the cases the wrong way round. Z-S133 keeps its ARMED/UNDER_INVESTIGATION bytes exactly as written, and this row is what resolves it."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S136",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T02:56:39Z",
+    "one_line": "OG-ap-19 step 2 tells me to commit the legacy_addresses.json row FIRST and on its own, and this seat mechanically CANNOT: infra/logic/** is lane PLATFORM_LOGIC_DOCS, whose permitted agents are 4.0.0_SA_CRO and its laptop tilde lanes only. safe-commit refused in block mode. The row itself is written and verified -- it resolves through lib/opal_naming.legacy_address() -- so what is blocked is the COMMIT, not the content; I have handed the exact row to 4.0.0_SA_CRO~Z, the registry's owner.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh, block mode: 'VIOLATION: infra/logic/registry/legacy_addresses.json -- lane=PLATFORM_LOGIC_DOCS ...; agent=0.7.0_AE_CloudOps~Z not in permitted_agents' and 'ERROR: safe-commit did NOT commit (rc=1)'",
+        "the lane's own description: 'SCOPE HELD DELIBERATELY NARROW: 4.0.0_SA_CRO and its laptop tilde lanes only' and 'A CRO lane that appears later is REFUSED until enumerated, which is the correct failure direction for an allow-list'",
+        "the same description forecloses the override route: 'A repeat override for a STANDING role-authorized action = a coverage gap to close', 'Andrew ruled ENUMERATE over bless-the-override', and of the one escape Andrew authorised for the CRO: 'This one carries exactly one, and stops there'",
+        "legacy_addresses.json's own _about agrees on authority: 'rows are written by 4.0.0_SA_CRO, the registry's owner' -- so the lane is not an accident of path layout, it matches the file's stated owner",
+        "the row content IS verified: appended locally, lib/opal_naming.legacy_address('gateway-portal-tiered-market-overview') returned s3://opal-data-portal-v2/json-tiered/market-overview/, with the sibling key resolving to the same address as a positive control; then REVERSED so the shared tree is byte-identical to HEAD (169 rows) rather than carrying an uncommittable edit a peer might sweep",
+        "the store is measured: 375 objects under the prefix (IsTruncated null, a count, no content read), json-tiered/market-overview/summary/all-returns.json at LastModified 2026-10-14T11:06:54Z and ContentLength 51553, and 157 objects under timeseries/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step 2: 'commit the legacy_addresses.json row(s) (reader NFRA_OPLGTW) FIRST, on their own, then the .tf together with ONE file under org/missions/D9/NFRA/NFRA_OPLGTW/ (the generator)' -- addressed to 0.7.0_AE_CloudOps~Z, which implies this seat can write infra/logic/.",
+    "world_is": "It cannot, by a deliberate allow-list that names another seat and whose doctrine says the remedy is ENUMERATION rather than an override. Using GIT_COMMIT_AUTHOR_OVERRIDE here would be exactly the failure the lane's description warns about -- turning a singular escape Andrew granted to the CRO into a de-facto lane for a different seat -- so I did not. NOTHING ELSE IN PHASE A IS BLOCKED BY THIS: the ruling's requirement is an ORDERING (row before .tf), so the .tf is written and planned in the release worktree and its COMMIT waits. The G6 grant is merged and unaffected.",
+    "notes": "Three routes for the issuer, and this seat picked none. (a) 4.0.0_SA_CRO~Z commits the row -- it is the registry's stated owner, the lane's permitted writer, and it is LIVE; I have sent it the exact row and the measured evidence, so this is a handoff and not a request to re-derive anything. RECOMMENDED. (b) enumerate 0.7.0_AE_CloudOps~Z (or an AE lane) in PLATFORM_LOGIC_DOCS, which is what that lane's own doctrine prescribes for a standing role-authorized action, and is the issuer's or MSTR's call rather than mine. (c) rule the row unnecessary: the pair (opal-data-portal-v2, json-tiered/market-overview/) ALREADY carries catalog-opal-data-portal-v2-served-market-overview-tiered, and legacy_address() matches on KEY alone with reader playing no part in resolution, so the address is already reachable through the builder -- the second row records WHO reads it, not WHETHER it resolves. The general lesson: an order can direct a seat to write a path a lane reserves for another, and the two instruments disagree silently until the commit -- the cheap tell is to check the lane for every path in <paths> AT CUT TIME, not at commit time, because by then the edit exists and has to be unwound from a shared tree."
+  }
+  ```
