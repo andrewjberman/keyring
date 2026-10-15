@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.30",
+ "prd_version": "v0.31",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27", "FWD-28"],
@@ -106,16 +106,18 @@
          SOURCE     brief O8
 
   FWD-10 The record shows which box did each act; a Dell can deploy its own committed work without
-         waiting on another box, and can never change who has access
+         waiting on another box, and can never alter the audit trail or delete production data
          DONE WHEN  EXERCISED -- one deploy from a Dell of a committed candidate it names, succeeding
-                    before any other box has merged that work, and one attempt to change access, refused
+                    before any other box has merged that work; one attempt to delete production data,
+                    refused; one attempt to alter the audit trail, refused
          ACCEPT     every act in the record names its box; a Dell puts code or data live only through the
                     deploy tools, from a commit it names in its own record of the deploy, and waits on no
-                    other box to do so; its attempts to change access, the audit trail or to delete
-                    production data are refused
+                    other box to do so; its attempts to alter the audit trail, or to delete production
+                    files, tables or databases, are refused
          SOURCE     brief O9; Andrew's card 5; Andrew-direct 2026-10-07 ~00:5xZ, "they should have deploy
                     ability"; Andrew-direct 2026-10-07 ~07:0xZ, "Definitely drop one lane cap and
-                    shared-branch wait for the dells"
+                    shared-branch wait for the dells"; Andrew-direct 2026-10-13 ~16:5xZ, "Sure let's do
+                    rec b" (his access, keeping three refusals; v0.31)
 
   FWD-11 A box can restart in the middle of a round and nothing is lost
          DONE WHEN  EXERCISED -- one box restarted mid-round, and the round finished
@@ -376,7 +378,7 @@
 | C-PLACEMENT: one project, one box (FWD-7) | the laptop; `org/missions/DIRECTIVES.yaml`, `org/missions/SEQUENCE.yaml` | A project's row names its box (`fabric`: `laptop`, `site-z`, `dell1`, `dell2`). A project is never split. Two projects go to different boxes only if their write surfaces do not overlap, checked as `.tools/owned-paths-validate.py` checks a worker, one level up. Andrew's first allocation (card 6) is the starting point; each move is his when it happens, and nothing moves until a Dell is standing. |
 | C-ONE-WRITER: files (FWD-8) | this project | Registers (`DIRECTIVES.yaml`, `SEQUENCE.yaml`, `LIVE_ARMS.md`, project rows, missions-tree carriers, the law files): the laptop only. A project's own tree: its box only. Append-only files (surprise channels, audit logs, session logs): one file per box, `<name>.<device>.md`, the pattern `org/surprise_channel/ETFS_INGEST/INVESTIGATION_v1.Z.md` already uses. The surprise-row gate and the readers that compile a channel learn to read every per-box file of a channel. |
 | C-LEASE: scarce accounts (FWD-9) | this project; the laptop holds the register | One lease register on the laptop: resource, holder box, expiry. Covered: the walker account, the YCharts session, the portal `DEV` push, the Bloomberg daily quota. A lease expires by itself; a dead box's leases lapse. The Dells take no vendor lease (vendor pulls stay scheduled on their existing homes). |
-| C-IDENTITY: per-box cloud identity (FWD-10) | this project; cloud IAM (IAM-creating applies at site Z only) | Andrew-direct ~00:5xZ 2026-10-07 (relayed by `0.0.0_AB_MSTR` msg 105876): "I am cool with this but they should have deploy ability" -- one IAM group and one IAM user per Dell, never `Andrew_Berman`'s keys. **Scope (this seat's ruling):** ALLOW code and data deploys through `.tools/safe-deploy.sh` and `safe-apply` for non-IAM resources, each with the box's own ledger entry; a Dell deploys a commit it names in its own ledger entry, from its own committed work, and waits on no other box's merge or push (v0.9, Andrew-direct ~07:0xZ; v0.6's "only commits already on origin CLOUD" is withdrawn); C-TRUNK-DEPLOY still holds for a PUBLISH, which deploys nothing; DENY IAM user, key, role and policy changes, CloudTrail changes and production data deletes, by policy, so the cloud refuses them. **v0.7 (Andrew-direct ~06:3xZ 2026-10-07, 'they should be allowed to create resources though'):** the policy GRANTS create, update and tag on the non-IAM resource kinds the Dell-placed projects' Terraform declares, so `safe-apply` of a non-IAM resource succeeds from a Dell and waits on no other box; the IAM deny is unchanged. Never-widen halves still bind every served move. Keys live in each Dell's own credential store and are rotated by site Z. **Names** (builder output, shared resources so scope None; NAMING_SCHEMA v1.13 @01c56eda2b added kinds `user` and `group`): users `cloudops-dell1-agent-user` and `cloudops-dell2-agent-user`; group `cloudops-dell-agents-group`, tagged DisplayName=DellBoxes (Andrew's name for it); policy `cloudops-dell-agent-deploy-policy`. The IAM traps in `/cloud-ops` apply. |
+| C-IDENTITY: per-box cloud identity (FWD-10) | this project; cloud IAM (IAM-creating applies at site Z only) | Andrew-direct ~00:5xZ 2026-10-07 (relayed by `0.0.0_AB_MSTR` msg 105876): "I am cool with this but they should have deploy ability" -- one IAM group and one IAM user per Dell, never `Andrew_Berman`'s keys. **Scope (this seat's ruling):** ALLOW code and data deploys through `.tools/safe-deploy.sh` and `safe-apply` for non-IAM resources, each with the box's own ledger entry; a Dell deploys a commit it names in its own ledger entry, from its own committed work, and waits on no other box's merge or push (v0.9, Andrew-direct ~07:0xZ; v0.6's "only commits already on origin CLOUD" is withdrawn); C-TRUNK-DEPLOY still holds for a PUBLISH, which deploys nothing; DENY IAM user, key, role and policy changes, CloudTrail changes and production data deletes, by policy, so the cloud refuses them. **v0.31 (Andrew-direct 2026-10-13 ~16:5xZ, "Sure let's do rec b"):** both Dell users join `AdministratorAccessOpalCapital`, and only three Deny classes remain: CloudTrail and audit-trail writes, production S3 object deletes, and table and database deletes. The IAM deny in this row and in v0.7 is withdrawn. **v0.7 (Andrew-direct ~06:3xZ 2026-10-07, 'they should be allowed to create resources though'):** the policy GRANTS create, update and tag on the non-IAM resource kinds the Dell-placed projects' Terraform declares, so `safe-apply` of a non-IAM resource succeeds from a Dell and waits on no other box; the IAM deny is unchanged. Never-widen halves still bind every served move. Keys live in each Dell's own credential store and are rotated by site Z. **Names** (builder output, shared resources so scope None; NAMING_SCHEMA v1.13 @01c56eda2b added kinds `user` and `group`): users `cloudops-dell1-agent-user` and `cloudops-dell2-agent-user`; group `cloudops-dell-agents-group`, tagged DisplayName=DellBoxes (Andrew's name for it); policy `cloudops-dell-agent-deploy-policy`. The IAM traps in `/cloud-ops` apply. |
 | C-RESTART: rounds survive a box restart (FWD-11) | this project | A lane on any box publishes its work-in-progress branch at each cell close, so a disk loss loses at most one cell. The round's state is read from the published branches and the ledger, never from one box's memory. Proposal 5.9 lists the cases (a Dell, site Z or the laptop down; a box whose bus consumer is not running). |
 | C-ATTENTION: one decision list (FWD-12) | this project | A box records each decision it needs from Andrew as a file on its own tree plus one bus line to the laptop; the laptop shows one list of every box's open decisions; his answer is recorded on the laptop and reaches the asking box as a file and one bus line. No lane on an unattended box blocks on a prompt at that box. |
 | C-SERIALS: one fabric manager per box | Andrew, "agreed on all points go ahead" | `0.0.0_AB_MSTR` (laptop), `0.0.0_AB_MSTR~SITEZ`, `0.0.0_AB_MSTR~DELL1`, `0.0.0_AB_MSTR~DELL2`, each with its own tier-0 folder. Site Z's `~Z` stays as an ALIAS in the device register so every past record still resolves; the rename lands at a site-Z restart. Only these seats talk across boxes (FWD-3). |
@@ -1099,3 +1101,36 @@ Row S9112 this can be done programmatically, i shouldnt need to be involved dire
 - **Card 2, the `firmAccess.ts` carrier `53506d49`:** cherry-picked alone onto portal PROD by a DT through `/prod-deploy`, no
   whole-DEV promote. For NFRA_DEVPLN FWD-6 this one commit leaves the backlog by Andrew's word rather than by the settlement.
 - No outcome card changed; the ratified half owed from v0.29 is unchanged by this addendum. Header stays v0.30 for citation.
+
+## ADDENDUM v0.31 (1.0.0_SA_CTO, 2026-10-15 ~12:3xZ) -- an ENDPOINT change on Andrew's word of 2026-10-13 ~16:5xZ: FWD-10's refusal arm re-worded to the three kept refusals; C-IDENTITY amended
+
+On the CVO's re-grade `org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_FWD_REGRADE_20261015.md` @e3297f2394, finding 1. Record
+of his word: `org/tier1_exec/2.0.0_SA_COO~C/deliverables/ANDREW_DIRECT_20261013_165xZ_DELL_USERS_ADMIN_GROUP_KEEP_THREE_DENIES.md`.
+VERBATIM: "Sure let's do rec b". Rec (b) was to join the admin group and keep three denies: no CloudTrail writes, no production S3
+deletes, and no table or database deletes.
+
+- **FWD-10 was WRONG as written and is amended in place, keeping its id.** Its "can never change who has access" arm described a
+  deny that Andrew withdrew on 10-13. CloudTrail shows all 34 Dell IAM writes since 10-11 succeeded. The arm now names the three
+  kept refusals: the audit trail, production data deletes, and table and database deletes. The DONE WHEN is re-tested, not
+  inherited:
+  - the deploy arm is unchanged;
+  - the refusal arm is one production-data delete, refused (the CVO reads this as already exercised), plus one audit-trail write,
+    refused (not yet exercised).
+- **What the project no longer promises:** that a Dell cannot change who has access to the cloud. That promise left on Andrew's
+  10-13 word, not on this seat's.
+- **C-IDENTITY was amended in place** (the v0.31 sentence in its row).
+- **Sign-off:** an ENDPOINT change, so the CVO re-signs the ratified-text half. The brief half is unchanged.
+
+Rulings on the re-grade's other findings. None of them changes an ENDPOINT byte.
+- **FWD-3, the managers acknowledge.** The ACCEPT line "no other seat talks across boxes" stands. The round-19 FWD-3 cell is
+  driven by the managers: each crossbox acknowledgement is run by the receiving box's manager seat, never by a worker. A worker
+  read relayed by its manager does not meet the outcome.
+- **FWD-12: where f411 and c397 were answered.** Both are dell1 client-facing portal approvals. Andrew approved both on 2026-10-15
+  ~01:xxZ, and both closed as "approved by andrew". The record is
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261015_01xxZ_COO_D1_TREND_LOOKS_GOOD_CUSTOM_ROLLFORWARD_THEN_PROD.md`.
+  They are Andrew's to answer by law (a client-facing page), so no seat answered them. The CVO grades the clause on this.
+- **FWD-21: the U7 respawn does not count.** It was asked for. Round 19 cuts one cell: read site Z's broker for any ask before its
+  23:32Z respawns. If there was none, those respawns are the exercise, read with that box's audit and one MSTR day record. If there
+  was an ask, the cell drives an unasked respawn on a box nobody is watching.
+- **The stray committer `t <a@b.c>` on 552e0e03ad** goes to the round-19 hygiene batch as an investigation row for the integrator.
+  It is not a cell.
