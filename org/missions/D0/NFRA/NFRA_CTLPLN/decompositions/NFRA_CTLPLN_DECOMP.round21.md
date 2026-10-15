@@ -12,6 +12,10 @@
 | `CT-ak-2` | ONE hygiene batch: rebuild the stale comp-pulse danger map and make its test SKIP on a stale map (`S9127`); classify the four census values (`W114-S1`). | hygiene | LOCAL | `0.9.0_WK_NFRA_CTLPLN~117` |
 | `CT-ak-3` | One signed change that names one script (`diag_sleeve_fix.py`) deploys exactly that script, in a real push from `box/laptop`, through the CloudOps seat, with its own NEVER-2 entry; step one is the `W113-S1` read of the hook's key map against the core's. Research owed and delivered (CRO). | FWD-5 | WORLD | `0.7.0_AE_CloudOps~U7` (spawned by the issuer, order named in its first message) |
 
+| `CT-ak-4` | AMENDMENT 1 (2026-10-15 ~17:0xZ, after row `S9130`): the one-line signed change to `diag_sleeve_fix.py` and the positive-arm read test, committed by a worker serial because the registry lanes POD4 and TOOL_BATTERIES admit no CloudOps seat. `CT-ak-3` depends on it. | FWD-5 | LOCAL | `0.9.0_WK_NFRA_CTLPLN~118` |
+
+**Amendment 1 to `CT-ak-3`:** re-pointed from `0.7.0_AE_CloudOps~U7` (dead, and holding an unrelated IRPT_ANLREQ order, so not seated over a second project) to the lane `0.7.0_AE_CloudOps~CT2`; its `<paths>` cut to the files a CloudOps seat is admitted to; its steps 3 and 7 become verifications of `CT-ak-4`'s commits. Chains: `CT-ak-4` then `CT-ak-3` (one chain, two links), `CT-ak-1`/`CT-ak-2` done. `fanout` for the amendment: 1 new cell, cap 8 unchanged.
+
 ## Driven by the issuer in this issuance (not cells)
 
 - **FWD-3, the five manager pairs** (dell1 -> laptop, dell2 -> dell1, dell2 -> sitez, sitez -> dell1, sitez -> dell2): each sending box's manager opens a call to the receiving manager and the receiving manager acknowledges it; `0.0.0_AB_MSTR` asks each sending box's MSTR (a laptop seat cannot send from another box). The issuer reads `crossbox-matrix.py` afterwards. One message to MSTR.
