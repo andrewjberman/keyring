@@ -18400,3 +18400,56 @@
   "notes": "Window design: the driver removes the synthetic user at the end of the 20-minute poll while the resident retries about every 15 minutes, so the chain gets one retry inside the window and the user row is gone for the third. Whether ReportRefused would clear with the row present is not known; it fired twice while the row existed. S121 holds the filing-side facts; this row is its located cause on the resident side."
 }
 ```
+
+## IRPT_ANLREQ-D2-W181-S1 -- the commit gate's client account-id check did not run on 2ebf90bf43: the hashed list is absent on this box
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W181-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~181",
+  "surfaced_at": "2026-10-15T18:07:48Z",
+  "one_line": "The commit gate printed WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, so commit 2ebf90bf43 was NOT checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2 (the issuer routes the list placement or OPAL_ACCOUNT_ID_HASHES to the dell2 device owner; placing the list is not a worker act, and this worker did not disarm it)",
+  "spec_asserts": "The commit gate runs the client-data check on every commit (the worker face says commit via .tools/safe-commit.sh); the check reads the hashed account-id list named by OPAL_ACCOUNT_ID_HASHES or at the default path.",
+  "world_is": "MEASURED 2026-10-15 18:07Z in C:/dev/wk-irpt-anlreq-181: the probe ls C:/Users/Test/.opal/account_id_hashes.txt returned rc=2 (no such file). safe-commit.sh for 2ebf90bf43 printed 'WARN: client-data-check: hashed account-id list ABSENT ... this commit was NOT checked for client account ids (absent is not empty ...)' and still committed (2 files, 288 insertions). The two committed files are new code only; no account id was typed into them. NOT MEASURED: whether the device owner holds the list elsewhere.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit 2ebf90bf43 on branch wk-IRPT_ANLREQ-181 (worker 0.9.0_WK_IRPT_ANLREQ~181), 2026-10-15 18:06Z",
+      "ls C:/Users/Test/.opal/account_id_hashes.txt in the worker worktree at 2026-10-15T18:07:48Z: rc=2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as a capability gap, not a commit fault. Every commit on this box carries the same unchecked state until the list is present or the env var is set, so the hazard is ARMED."
+}
+```
+
+## IRPT_ANLREQ-D2-W181-S2 -- the order says pyarrow is absent from the tests and the host; it imports here, and the S3 test ran rather than skipping
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W181-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~181",
+  "surfaced_at": "2026-10-15T18:07:48Z",
+  "one_line": "TO-AR-g-81 says pyarrow is not installed in the tests or on the host today; on this worktree pyarrow 25.0.1 imports, and the importorskip-guarded S3 test ran (10 passed, 0 skipped).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-81 cell text: 'pyarrow is not installed in the tests or on the host today' (and the worker face: pyarrow may be absent from this box; a test that needs one skips).",
+  "world_is": "MEASURED 2026-10-15 18:07Z in C:/dev/wk-irpt-anlreq-181: python -c 'import pyarrow' printed pyarrow 25.0.1, rc=0; python -c 'import pandas' printed pandas 3.0.6, rc=0. timeout 120 python -m pytest on test_price_adapter_bbg.py: '10 passed in 0.86s', rc=0, the S3 test not skipped. The acceptance check ar_g8x_checks.py g81 printed 'worker tests: 10 passed' and AR-G81-OK. The order's premise is off by the host state; the behaviour is unaffected because the S3 test is guarded either way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c import pyarrow in C:/dev/wk-irpt-anlreq-181 at 2026-10-15T18:07Z: pyarrow 25.0.1 rc=0",
+      "timeout 120 python -m pytest -q infra/aws/lambda/investor-reporting/ycharts/research/tests/test_price_adapter_bbg.py at 2ebf90bf43: 10 passed in 0.86s rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as a premise mismatch. The product is unaffected; the S3 path was exercised with a real pyarrow parquet round trip here."
+}
+```
