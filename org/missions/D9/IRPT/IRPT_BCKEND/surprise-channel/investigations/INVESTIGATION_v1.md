@@ -38861,3 +38861,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Instrument trap, not a product defect. Any hand-written removal run should set the prefix or delete the pycache first."
 }
 ```
+
+## IRPT_BCKEND-D2-S203 -- The served DELTAs measured and the two repairs built: the exemption alone does not unblock 49 Financial; Cottonwood already publishes at HEAD; the split adjustment moves 1,291 account-days
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S203",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T15:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The served DELTAs measured (~PJ r1) and the two repairs built (~PK r1): the exemption alone does NOT unblock 49 Financial (REFUSED with and without it: other lost accounts and classified_security_lost remain) and Cottonwood already PUBLISHES at HEAD without it (four lost accounts listed as not refused), so the exemption there only makes them visible; the split adjustment moves 1,291 of 266,455 account-days.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merges d1ba413cec (IB-pr-580), 2f69e24932 (IB-pr-581), df174ee533 (IB-pr-582), 18812065e6 (IB-pr-583); flips 047090f52c, acbefa3a09 and the workers' own flips of 582 and 583; all four proof instances VALID (rc=0) in the main tree; round-close-check reads MAY-CLOSE for ~PJ and ~PK",
+      "IB218-1 record (deliverables/0.9.0_WK_IRPT_BCKEND~422/IB218-1_exemption_delta.json): candidate 2026-10-14 against served 2026-10-12 (49 Financial) and 2026-10-08 (Cottonwood); 49 Financial: 156,074 nodes and 7,664 accounts with and without, REFUSED on classified_security_lost and account_lost both ways, 1 account exempted, listing not applied, 0 nodes added; Cottonwood: 17,927 nodes without (PUBLISHED, 4 lost accounts listed as not refused), 17,931 with (PUBLISHED, 4 exempted accounts listed), 4 nodes added, 0 other node changed, 0 USD added",
+      "IB218-2 record (deliverables/0.9.0_WK_IRPT_BCKEND~423/IB218-2_split_delta.json): 47 split days of 49 Financial, 266,455 account-days run, 1,291 changed, 1,293 holding a split security at t-1, 63 securities adjusted, 13 ratio-absent, returns at or below -50 percent 3 before and 2 after, no status move; 2026-04-21: 985 changed (the ruling states 920)",
+      "main tree after the drains: pytest over the investor_reporting, holdings lambda and performance tests gives 730 passed and 21 failed, the same 21 as at the pre-round base 476d0ed981"
+    ]
+  },
+  "spec_asserts": "The CTO's msg 8359: dry-run DELTA per firm with each change alone on the same candidate; W421-S2 and W420-S1 are mine.",
+  "world_is": "DISPOSITIONS AND FINDINGS. (1) 49 Financial is NOT unblocked by the exemption: besides the one exempted account the gate still refuses on account_lost for other lost accounts and on classified_security_lost; neither is read yet (a READ cell follows: the anatomy of 49 Financial's remaining refusal, counts only). (2) Cottonwood publishes at HEAD's gate without the exemption: the live bundle's refusal is the deployed-gate difference of D2-S199, which the IB-pr-549 mint removes; the exemption adds four zero-value account nodes to a publication that would publish anyway (visibility, not unblocking); its second fire exempts again. (3) The split adjustment moves 1,291 account-days (0.48 percent of those run) and leaves 2 returns at or below -50 percent; 13 of 76 split security-days are ratio-absent (not graded) and now counted; the CTO's 920 for 2026-04-21 is not reproduced (985 here, as in the READ): ARMED, owner me, a figure to read with the CTO. W422-S1 and S2 are these findings; W422-S3 resolved (both second-fire readings recorded); W423-S1 inert (read-path calls only), S3 explained (2 holding account-days sit in ratio-absent securities); W424-S1 and W425-S1 to S3 inert or resolved (the producer writes one manifest per day, so the totals are summed over days by the reader). The workers' array-form channel rows made the union merge duplicate rows twice; the issuer re-formed them as blocks on the branches (a hazard to teach the next worker face: append each row as its own block)."
+}
+```
