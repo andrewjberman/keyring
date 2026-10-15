@@ -11534,3 +11534,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The ruled text exists only on box/laptop at 9b2702a5a5. The worker branch was cut earlier, so the checker, which resolves the governing order from the instance's decomp_ref.to_ref inside the worktree, reads the pre-amendment order. The worker may not merge, rebase, or edit the order file (outside <paths>), so the committed instance cannot validate on this branch until the amendment is on the worker's branch or the branch is re-cut. The instance records the ruled invocation; its validation is INVALID here."
 }
 ```
+
+## NFRA_CTLPLN-S9132 -- the shared-branch push gate refuses the CloudOps seat's push of box/laptop, which CT-ak-3 step 5 names as the act under test
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9132",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT2",
+  "surfaced_at": "2026-10-15T17:58:25Z",
+  "one_line": "CT-ak-3 step 5 cannot be done as written: the shared-branch push gate (LD-0367/0368, never-rules-gate.sh PreToolUse) REFUSES a git push of box/laptop by any serial except 0.0.0_AB_MSTR, so the CloudOps seat cannot make the push that the order names as the act under test.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git push origin box/laptop by 0.7.0_AE_CloudOps~CT2 at 2026-10-15T17:56Z and 17:57Z: 'BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch box/laptop): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z may push or pull the shared branch'; the audited override '# never-override: <reason>' is for an Andrew-directed push or a rare case coordinated with the integrator first; neither holds here, so it was NOT used",
+      "the entry ctlpln-r21-fwd5-one-script-20261015 is OPEN and committed (deploy_ledger.py open committed it itself, 2026-10-15T17:55Z); pre-state: S3 key 1 version VersionId 3.yZFEuxxfxUOEMd.NRY7bZucaDccGX. ETag 56cb170f95c0b112a36a0ee3973d5473; 357 top-level deploy-scope scripts, 0 LEDGERED before the open; test --pre ok=True others_differ=0",
+      "CLAUDE.md Agent Autonomy ('agents push at will' box/*) and the LD-0367 gate disagree; the gate is mechanical and wins at the call"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-3 step 5: the CloudOps seat pushes box/laptop with AGENTBUS_DEVICE=laptop and OPAL_AGENT_SERIAL set so the audit row names it; RULES: if a gate REFUSES, STOP and file a BLOCKING row.",
+  "world_is": "Nothing was written to S3 by this seat. The OPEN entry pins the build, so the next scheduled Opal box-sync push of box/laptop (serial 0.0.0_AB_MSTR, every 10 minutes) will run the hook and deploy the one ledgered script; the deploy will then be MSTR's act, not the CloudOps seat's. The positive arm's outcome (one script deployed, nothing else) can still be read; the order's actor claim (CloudOps seat) cannot be met without an Andrew word or an integrator-coordinated override."
+}
+```
