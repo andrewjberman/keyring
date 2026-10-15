@@ -72,7 +72,18 @@ this project. The front-end verification skill checks the new grammar rather tha
 - typography beyond the sidebar and panel title;
 - the hero and graphic cards (`HeroGraphic.tsx`, `PhilosophyPillars.tsx`), which already borrow opalinvest.com.
 
-**OPEN FOR ANDREW:** whether panel ground colour is in scope. Andrew's 2026-10-06 hold keeps the light-panel experiment off
+**RULED 2026-10-15 ~00:0xZ (Andrew, verbatim):** "This whole light mode build needs to stay on a feature tree on this box and
+is only pushed when i say so.  also yes, i like EAEAF7".
+
+- **Ground colour is IN scope.** The light-mode build sets the page and sidebar ground to `#EAEAF7`. Panels are white with a
+  1px `#C4CBDB` border.
+- **The build lives on a feature branch on the laptop.** Nothing is pushed, and nothing merges to portal DEV or PROD,
+  without Andrew's word.
+- **Still open:** DELL1 versus the laptop for the rest of the project. The record holds the question.
+
+The paragraph below is the pre-ruling text, kept for history.
+
+**(Superseded) OPEN FOR ANDREW:** whether panel ground colour is in scope. Andrew's 2026-10-06 hold keeps the light-panel experiment off
 the main branch: "the light `/market` is an experiment kept off the main branch without his explicit approval". The record
 is `org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20261006_1414Z_LIGHT_MARKET_EXPERIMENT_OFF_MAIN_BRANCH.md`.
 This brief treats SHAPE and FRAME as in scope and GROUND COLOUR as out, until he says otherwise.
@@ -194,6 +205,11 @@ The choice among these angles belongs to the PRD and to Andrew's eye (O5).
 ## PART V -- WHAT MUST BE TRUE (named, not sequenced)
 
 - Andrew's word on panel ground colour in or out of scope (Part II), given the 2026-10-06 light-panel hold.
+  - On 2026-10-14 ~23:5xZ he leaned light, on the light-mode canvas https://claude.ai/artifact/WVqCCv8SPkiBz8byz4ZpLh: white
+    panels with a 1px `#C4CBDB` border, on a page and sidebar ground of `#EAEAF7`. His words: "i like my EAEAF7 lavender silver
+    better frankly".
+  - That is a preference, not yet a ruling. Adopting it would supersede his own 2026-09-11 `#F4F6FA` canvas ruling
+    (`portal/DESIGN.md` C3).
 - Andrew's pick of a direction from the option canvas https://claude.ai/artifact/K67YcR7n63uBakFbnNKUBG. Its boards:
   today; A, Opal-led; B, Opal + Hex blend. The CRO recommends A's sidebar with B's panel.
 - A way for Andrew to see old and new on one page (O5). The no-shadow-pipeline law (CLAUDE.md section 5) is written for
