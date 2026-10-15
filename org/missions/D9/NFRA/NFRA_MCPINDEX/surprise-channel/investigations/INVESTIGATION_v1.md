@@ -8561,6 +8561,49 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~52",
+    "surfaced_at": "2026-10-15T22:26:38Z",
+    "disarm_owner": "2.0.0_SA_COO~MI2",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W52-S1",
+    "one_line": "The 11 slice-h1 harvest rows carry no topic text to draw curated tags from: business_meaning is a format/table/prefix line ending '(plumbing / raw store)' and the only example question is 'Where is the <table> bronze table of the harvest bucket?'.",
+    "spec_asserts": "MX-c-34 cell (order section 1): the tags are drawn from the row's own business_meaning and example_questions, and invent no fact the row does not state; a good tag is a topic in plain language (e.g. 'wall street journal articles').",
+    "world_is": "For harvest_amgt_harvest_bronze_research_report, harvest_amgt_harvest_state_pull_log, harvest_barrons_harvest_bronze_article, harvest_bloomberg_harvest_bronze_news_listing and the other 7 slice-h1 rows (DATA_CATALOG.yaml harvest_datasets, lines 18730-19986 at HEAD of the worktree), business_meaning reads only 'bronze <format> table <table> at <prefix> in bucket opal-data-harvest; grain: not read by this census (plumbing / raw store).' and example_questions holds one 'Where is the <table> table' line. No topic word exists in the row text, so the tags were written from the layer, format, publisher, table name and the stated raw-store/plumbing fact, not from a topic. The check passes (7 of 7 ok, exit 0) because the entity name supplies the grounding word; the tags are not a topic reading of the data.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@HEAD lines 18730-18781 (research_report), 19268-19318 (barrons article), 19485-19513 (bloomberg article), 19783-19812 (bloomberg news_listing) -- business_meaning and example_questions read at the worktree",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~52/research_group_map_h1.json (the tags written)"
+      ]
+    },
+    "notes": "Form only: the cell's premise (topic text on the row) does not hold for these 11 rows. Whether plain topic tags exist for raw-store plumbing tables is for the issuer and the CTO at the Z-C-S61 close. Not a gate field; no access changes."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~52",
+    "surfaced_at": "2026-10-15T22:26:38Z",
+    "disarm_owner": "2.0.0_SA_COO~MI2",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W52-S2",
+    "one_line": "The order says the tag check has eight planted arms; the script carries twelve, and all twelve pass when run.",
+    "spec_asserts": "MX-c-34 face (preflight and section 2 control): 'eight planted arms (plant_ct.py, 8 of 8) are the control'.",
+    "world_is": "plant_ct.py at the worktree (round18/checks/plant_ct.py) defines 12 arms (good file passes; fewer than 4 tags; more than 6; symbol; uppercase; one-word; missing entity; extra entity; extra key; repeated tag; copied derived tags; no word from the row). Run at the worktree root with TMPDIR set to the worker scratch: 'PLANTED 12 of 12', exit=0. The count in the order is stale against the script; the script's own result was not changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py (the arms list, the final PLANTED line)"
+      ]
+    },
+    "notes": "Form only: the control count in the face is 8, the script's is 12; the 12-of-12 result is recorded as the mutant control in the proof instance. Not a gate field; no access changes."
   }
 ]
 ```
