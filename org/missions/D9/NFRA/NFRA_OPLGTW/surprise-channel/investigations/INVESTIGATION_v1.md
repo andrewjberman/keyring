@@ -17671,3 +17671,77 @@ name the one known failure instead of silently inheriting it.
   "notes": "The issuer registers the three new tool names (etfs_get_new_securities, etfs_get_fund_bloomberg_profile, etfs_get_fund_snapshot) in app/tools.py and app/data_entitlement.py at the merge, and re-pins the counts. Filed for FORM; the name choice is the worker's and the issuer may rename."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T20:08:30Z",
+  "one_line": "gf1.AC1.sh names four tests, so once test_oggf1_ac04 is withdrawn (A1) it reads 'named tests passed 3 of 4' and RESULT: FAIL; the A1 statement that AC1 now reads 3 of 3 cannot be met by the script as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC1.sh@3bbdf8fbdc -- pytest_named tests/test_og_gf1.py test_oggf1_ac01 test_oggf1_ac02 test_oggf1_ac03 test_oggf1_ac04.",
+      "HELPER: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/_root.sh@3bbdf8fbdc -- pytest_named sets n=$# and passes only when p equals n.",
+      "RUN (this seat, worktree after the withdrawal): 'pytest rc=0; named tests passed 3 of 4; failed/error lines 0' then 'RESULT: FAIL', exit=1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 (issuer, 2026-10-15): test_oggf1_ac04 is withdrawn and gf1.AC1 reads 3 of 3. The order's AC1 expect regex reads 'named tests passed 3 of 3'.",
+  "world_is": "The check script still passes four names and its helper requires passed equal to four. With ac04 removed from tests/test_og_gf1.py the three named tests pass (pytest rc=0) and the script still reports FAIL. The criterion cannot read PASS as written. The check script is the issuer's file and was not edited.",
+  "notes": "Not resolved by the worker. The test-file side of A1 (ac04 withdrawn, 3 tests) is in this cell's commit. The issuer's options are to drop test_oggf1_ac04 from the script's name list, or to re-issue AC1 with its real expectation."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T20:08:30Z",
+  "one_line": "A1 ruling (3) says gf1.AC2 counts distinct BUILT tools and the probe prints one line per tool (3); the check script is unchanged and still counts BUILT rows (built 6), and the probe still prints six per-row lines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC2.sh@3bbdf8fbdc -- the classification line counts cnt BUILT over rows, and the probe pass count is grep -c of 'probe built: .* answered True'.",
+      "RUN (this seat): 'classification: assigned 15 of 15, covered 0, built 6, deferred 9; set equal True; built tools defined 6 of 6', 'built tools probed 6 (the worker's probe lines)', 'RESULT: PASS', exit=0.",
+      "PROBE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~110/probe_built.out.txt -- six 'probe built:' lines and 'probe denominator: 6 BUILT catalog rows over 3 tools; answered 6 of 6'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 (3): AC2 counts DISTINCT tools among the BUILT rows, with one probe line per BUILT tool (3).",
+  "world_is": "The check still counts rows and the probe prints per row. A per-tool probe would make the unchanged check read 'built tools probed 3' against 'built 6' and FAIL, so the probe was left per row. AC2 reads PASS as written; the distinct-tool count (3) is printed on the probe denominator line.",
+  "notes": "Repeats the gap recorded in NFRA_OPLGTW-Z-W110-S1 (prior seat). Recorded because the A1 ruling states the check change as done, and it is not in the check."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W110-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~110",
+  "surfaced_at": "2026-10-15T20:08:30Z",
+  "one_line": "comp-find exits 49 with 'Python was not found' (the Windows Python alias) in the worker shell on site Z, before any search runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (worktree C:/tmp/wk-oplgtw-110): comp-find --name 'investigation_item.schema.json' . --limit 20 -> exit code 49, stderr 'Python was not found; run without arguments to install from the Microsoft Store'.",
+      "RAIL: the comp-rail denial deny_id=20261015T200535Z-29ab926b named this command as the RUN NEXT step."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "comp-find is the repo search instrument for the worker (CLAUDE.md rule 21).",
+  "world_is": "On this device the comp-find entry point fails before the search runs, so it produced no denominator. The schema lookup fell back to a native Read of a known path, which also found nothing in the worktree.",
+  "notes": "Recorded so an absent comp-find result on this device is not read as an absence in the repo."
+}
+```
