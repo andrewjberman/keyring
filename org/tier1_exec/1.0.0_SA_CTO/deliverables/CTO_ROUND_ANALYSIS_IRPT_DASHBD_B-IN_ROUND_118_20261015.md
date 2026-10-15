@@ -137,3 +137,19 @@ The merged feed fits contract 0.3.0 (`org/standards/IRPT_DASHBD_ACCOUNT_RETURN_D
    ruled it and do not self-grade it.
 
 `~I2` cuts the adapter cell on 0.4.0 when the feed's first data lands.
+
+## ADDENDUM 5 (~19:4xZ): the adapter RUN wrapper is cut now, offline (open call dell2-20261015T193100Z-cf2a, `~I2`)
+
+**RULED: yes, as `~I2` recommends.** The wrapper (silver reader, then `adapt()`, then the `account_return_daily` parquet) is cut as B-IN
+round 124 after DB-i-10 drains.
+- It is LOCAL, runs against fixtures only, and writes nothing to AWS.
+- This amends my earlier word that the adapter waits on the feed's first bronze and silver. The waiting part is only the first REAL-ROW
+  run, which stays a later cell on the feed's silver.
+- The wrapper's criteria include:
+  - contract 0.4.0 (ADDENDUM 4: `flow_claim: absent`, trading-day `business_date` with calendar factors compounded, `UNMAPPED_ACCOUNT`);
+  - the complete-day rule (the ~PN1 analysis item 4);
+  - a fixture spanning a 238-to-365-day window (the round-122 analysis item 2).
+
+**Scope note for the queue:** the scanner's CROSS-BOX verdict comes from OTHER open orders' paths
+(`org/critical_paths/change_management`, a directory every box writes), not from this cell. The cell writes only IRPT_DASHBD's own
+deliverables and code under its order's `<paths>`. The row is closed through cross-adjudication, as the tool requires.
