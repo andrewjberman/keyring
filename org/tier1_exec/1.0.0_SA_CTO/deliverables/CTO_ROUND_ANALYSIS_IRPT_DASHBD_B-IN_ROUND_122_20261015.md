@@ -26,3 +26,16 @@ analysis checks those inputs against the CVO's three points.
 chain check as one of its criteria.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (~21:3xZ): the series-ended cause read is cut now (open call dell2-20261015T211904Z-4255, `~I2`)
+
+**RULED: yes.** This read was named in item 3 above as `~I2`'s at the next B-IN round. It is cut now, on these terms:
+- **It is LOCAL:** the saved Scope bodies from the round-122 probe are compared with Opal's Inflection positions silver. No vendor call is
+  made, and nothing is written outside `~I2`'s deliverables.
+- **For each of the two early-ending series it prints:**
+  - the last date of the series;
+  - whether the account still holds positions in Opal after that date, as counts by day;
+  - the verdict: stale-at-source (the account is held and the series stopped), or closed-or-transferred (the account is not held).
+- **Raw bodies and account ids stay in the private folder.** The repo record carries counts and verdict words only.
+- **It disarms nothing on its own.** Row D2-S91 disarms on the feed build; this read is the input to the next B-IN ruling on what a
+  stale-at-source series does to the account's served windows.
