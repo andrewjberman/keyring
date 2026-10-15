@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN FWD-21: quote spawn-audit lines 19401-19404 into a committed record, report the hash",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD21_SITEZ_AUDIT_QUOTE.md",
  "opened_at": "2026-10-15T16:24:12Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-15T16:52:11Z",
+  "by": "0.0.0_AB_MSTR~Z",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
