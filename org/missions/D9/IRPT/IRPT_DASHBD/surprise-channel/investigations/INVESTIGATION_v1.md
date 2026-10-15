@@ -15013,3 +15013,54 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S64 -- debt carrier owned by ~F2: the sixteen avs benchmark members are by_row per account in the contract and the table; the reader's handling is unverified
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S64",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T05:51:55Z",
+  "one_line": "Debt carrier owned by 2.0.0_SA_COO~F2 (CTO ROUND-119 ANALYSIS B-49F ruling 6): the sixteen avs benchmark members (avs.<qtd|ytd|last_12_months|since_inception>.benchmark_<ultra_short_term|short_term|intermediate_term|long_term>) are account-grain by_row in the contract and in the filled_report_values table (one entry per account), where the sample JSON the reader was built against held one household scalar each; the portal reader's reading of them as by_row is unverified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "Contract org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json 0.5.4 (members avs.*.benchmark_*, the per-row rule document.filled_report.per_row_member_form): a member whose grain is an account holds {by_row: {account_id: figure}}; the reader reads the filled report by member id.",
+  "world_is": "The round-118 QA table (RD_FILLED_REPORT_VALUES_R118.json, 25 households) carries each of the sixteen as one row per account (672 rows, every one with a row_key); the earlier sample JSON (build_sample.py ~169) wrote each as a household scalar. The reader of workstream ~F2 is dashboard/report/reportModel.ts on cand/dell2/irpt-default-performance-report @506a2302: its VS_ROWS list (about lines 358 to 361) names benchmark_ultra_short_term, benchmark_short_term, benchmark_intermediate_term and benchmark_long_term among the account value-summary rows; whether the value-summary reader takes them as by_row per account is not read by this seat. A scalar read of a by_row member would print nothing or the wrong figure on the account tables. Counts and paths only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~185/RD_FILLED_REPORT_VALUES_R118.json and the private QA parquet (672 rows of the sixteen members, each with a row_key)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md rows W185-S3 and D2-S56",
+      "portal git: cand/dell2/irpt-default-performance-report:src/pages/InvestorReporting/dashboard/report/reportModel.ts (VS_ROWS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner ~F2: read the reader's handling of the sixteen avs benchmark members as by_row per account against a document built from filled_report_values (rows_to_document), add a test with a by_row fixture for them, and disarm this row with the result. The contract is not changed for this: by_row is the ratified grain."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S65",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T05:52:45Z",
+  "one_line": "Drift of five registry members staged in the shared holdings-performance zip: systems.json, exemptions.json, remediations.json, resources.json and reporting_policies.json are pinned at old commits and differ from HEAD; the addendum re-pins scopes.json only (CTO half answer 3)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~406/SCOPES_PIN_READ_R118.json registry_members: systems.json (pin 03c7f7f593, 29,926 B pinned, 48,645 B at HEAD), exemptions.json (8b4c15c6ba, 35,212 vs 52,946), remediations.json (3ea3fec204, 2,586 vs 3,233), resources.json (f185873e6b, 169,583 vs 169,315), reporting_policies.json (7262571e4c, 2,691 vs 6,744) differ from HEAD; tiers.json (b282500581) equals HEAD",
+      "deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_ADDENDUM_DB-c-11_R118_CTO_HALF.md answer 3: the other six members stay at their old pins; re-pinning the five would widen the act for no reader's need; their drift is a separate later act, and this seat files ONE row naming the five"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A drift between a staged pin and HEAD that a ruling leaves in place has a carrier (CTO half answer 3 of the DB-c-11 addendum).",
+  "world_is": "The shared zip packages seven registry members at pins; after the addendum six stay at their old pins and scopes.json moves to 69679b90e3. The five named members differ from HEAD in size and content (counts above; the record carries sha256 of each). Nothing in the zip's code path needs them to move today: the full derivation of the three declared channels is identical with only scopes.json re-pinned. A later act re-pins them together with a differential on whatever the then-current producer reads from them; this row is that act's carrier. It is not an ARMED hazard: no function misbehaves on the old pins."
+}
+```
