@@ -46,3 +46,10 @@ commentary pipeline lands none. Until it lands, C-SLICE's no-precedent branch dr
 transcripts (silver, 91 objects) are NOT a drafter input in this lane:** adding them would make `svc-commentary` a new reader of meeting
 content, which is a C-READERS change (NFRA_TRNSPT PRD) and not this lane's to take. This corrects the ruling's "a non-empty transcript
 source": the drafter reads the report's abstract figures and C-SLICE's precedents.
+
+**ADDENDUM 1 erratum (~15:3xZ, `~T2` msg 8404).** "Outlook gold holds 0 objects" was a census of the wrong prefix. Under
+`outlook/transcripts/` the gold tier holds 6 `analysis_commentary` partitions, written 2026-10-09 (read @fcb85ff151, counts and names only). The
+source ruling stands: precedents come from C-SLICE's Outlook gold. The first cell changes from "why does none land" to two reads: why
+the drafter Lambda passes an empty `gold_rows`, and whether any of the 6 rows is clear of the held-out set. The figures in (a) need a
+producer, since the composition carries the ownership document only. `~T2` names that producer after its read; the (a) field list is
+unchanged.
