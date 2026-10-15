@@ -10348,3 +10348,28 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "C:/Users/AndrewBerman/AppData/Local/Temp/r18_batch_nju4hzp1, r18_batch_t7x9_wfq, r18_batch_0u4wrwd7 and r18_batch_99nh6yxu remain. Recursive deletion of them waits for Andrew's word (CLAUDE.md Agent Autonomy)."
 }
 ```
+
+## NFRA_CTLPLN-W105-S6 -- the batch's cleanup ran a repository-wide git worktree prune, removed in be6f3bb7ff
+
+```json
+{
+  "id": "NFRA_CTLPLN-W105-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~105",
+  "surfaced_at": "2026-10-15T11:20:00Z",
+  "one_line": "The batch's sparse-arm cleanup ran git worktree prune against the box repository (an act the round-17 cmd_remove comment forbids: it clears every unrelated prunable entry). Removed in be6f3bb7ff. No prunable entry was present before or after (count 3, 0 prunable), so no collateral is measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the prune line in .tools/tests/test_round18_batch.py _remove_sparse @57c105e0a3 (removed @be6f3bb7ff)",
+      "portal repository common dir is its own .git (not ajb_workspace/.git), so this prune cannot have changed the portal entries of S4; git worktree list: 3 entries, 0 prunable, read after the runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ah-1 RULES: no worktree of another seat is touched; the sparse arm names only its own throwaway paths.",
+  "world_is": "A repository-wide prune is a side effect beyond the throwaway worktree: it can clear unrelated prunable entries of every seat on the box. The test ran it on each --real run from 57c105e0a3 until be6f3bb7ff."
+}
+```
