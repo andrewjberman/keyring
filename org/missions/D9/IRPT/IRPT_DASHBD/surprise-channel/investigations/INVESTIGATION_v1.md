@@ -15707,3 +15707,59 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For 2.0.0_SA_COO~P2 (the route and hop 5 owner under the CTO's ruling on call 076d): decide, before hop 5's window, whether a print reads the frozen filled object through this route (then add the version_id parameter, the render-delegate refusal and X-Opal-Version-Id, as the series has them) or server-side (then the portal's version query is removed by an F-SHIP amendment and the print takes its document from the render host). The portal side follows either way by an issuer amendment. Counts and paths only."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W410-S1 -- the builder name is not a CLI verb: lib/opal_naming.py has no name subcommand, so name() was called through an import
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W410-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~410",
+  "surfaced_at": "2026-10-15T07:46:52Z",
+  "spec_asserts": "TO-DB-c-17 step 1 says: run lib/opal_naming.py name(\"irpt\", \"cottonwood\", \"account-dim\", \"lambda\") and confirm it prints exactly irpt-cot-account-dim-lambda.",
+  "world_is": "lib/opal_naming.py at dd6f93be8c has an argparse CLI whose only subcommands are validate, generate, vectors, targets and census (python lib/opal_naming.py name ... exits rc=2 with invalid choice 'name'). name() is a Python function; it was invoked by importing the module from lib/ and calling name('irpt','cottonwood','account-dim','lambda'), which returned irpt-cot-account-dim-lambda (rc=0). The checker p123_bcw.py also reads it by importlib, not by the CLI.",
+  "one_line": "The builder name check in TO-DB-c-17 step 1 cannot run as a CLI verb; the name was confirmed by calling name() through an import instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@dd6f93be8c: CLI subcommand choices are validate, generate, vectors, targets, census (argparse usage line of the module)",
+      "python lib/opal_naming.py name irpt cottonwood account-dim lambda -> rc=2, invalid choice: 'name'",
+      "python -c importing lib/opal_naming.py and calling name('irpt','cottonwood','account-dim','lambda') -> irpt-cot-account-dim-lambda, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No effect on the source-map entry: the key was typed from the function's return value and the checker DBC123-1-AC1 confirms it. For the issuer: a TO that names a CLI verb for a Python function should say how it is called."
+}
+```
+
+
+## IRPT_DASHBD-D2-W410-S2 -- the naming gate refuses the cot literals of the new source-map entry, so DBC123-1-AC1 is BLOCKED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W410-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~410",
+  "surfaced_at": "2026-10-15T07:49:54Z",
+  "spec_asserts": "TO-DB-c-17 step 1 and checker DBC123-1-AC1 require the new source-map entry to carry the exact values tf_file = infra/aws/terraform/investor-reporting/account-dim-cot/lambda.tf, tf_resource = module.irpt_account_dim_cot.aws_lambda_function.this and artifact_s3_key = investor-reporting/irpt-cot-account-dim-lambda.zip, committed with .tools/safe-commit.sh.",
+  "world_is": "The naming gate (.tools/naming-gate.py, LGIC_ENFORCE DEC-6) REFUSES three NEW literals that carry the firm token cot by hand: lambda-source-map.json line 7143 (tf_file), line 7144 (tf_resource) and line 7148 (artifact_s3_key) in the uncommitted worktree file. safe-commit.sh aborted with NAMING-GATE: REFUSE 3 graded, exit 1, and unstaged the files. The gate's message reads such a carrier through lookup('cottonwood'), a registry route outside this order's paths (infra/logic/registry/). Checker AC1 requires these exact strings, so AC1 cannot pass while the gate refuses them; no commit of the entry was made and the gate was not bypassed.",
+  "one_line": "The naming gate refuses the cot literals of the new source-map entry (tf_file, tf_resource, artifact_s3_key), so DBC123-1-AC1 is BLOCKED",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of .scratch/msg_A.txt: naming-gate NAMING REFUSE at lines 7143, 7144, 7148 of infra/aws/lambda/ci/lambda-source-map.json; 'NAMING-GATE: REFUSE 3 graded'; EXIT=1 (worker .scratch/commit_A.log)",
+      ".tools/naming-gate.py:2184 and :2201: NEW hand-kept carrier of the firm token outside every permitted context, read it through lookup(<firm>)",
+      "infra/aws/lambda/ci/lambda-source-map.json@dd6f93be8c: 19 tf_file/tf_resource/artifact_s3_key lines already carry the cot token (for example line 2216 and 2217); the gate grades those EXISTING (WARN), and the three new lines NEW (REFUSE)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Worker did not edit the naming registry, the gate, the Terraform files or the holdings entry. The entry and the package test are left UNCOMMITTED in the worktree for the issuer. Routes for the issuer or CTO: a registry row or an R20 register entry for the cottonwood account-dim names, in a grant that names infra/logic/registry/; or a ruling that these three literals are exempt. DBC123-1-AC2 is measured separately and is not blocked by this row."
+}
+```
