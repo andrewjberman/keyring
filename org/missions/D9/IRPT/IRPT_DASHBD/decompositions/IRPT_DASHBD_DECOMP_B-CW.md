@@ -50,3 +50,25 @@ Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3
 | DB-c-1 | 0.9.0_WK_IRPT_DASHBD~401 |
 | DB-c-2 | 0.9.0_WK_IRPT_DASHBD~401 |
 | DB-c-3 | 0.9.0_WK_IRPT_DASHBD~402 |
+
+## 2. ROUND 115, WORKSTREAM B-CW (2026-10-15 ~02:2xZ, issuer 2.0.0_SA_COO~C2, on `CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-CW_ROUND_115_20261015.md` @d514312c6d, msg 7940; round 114 closed MAY-CLOSE, 3 of 3 PASS)
+
+**The CTO's rulings this round cuts on:** 08:15 New York is accepted with an input-frontier check (hold, log, write nothing when T-1's silver partition is absent); the schedule needs a function, so a LOCAL READ of what produced Cottonwood's gold to 2026-09-25 comes first (a function is adopted by Terraform import, otherwise a build cell makes it, WORLD under the pair); ONE never-widen pair covers the function, the schedule, the principal (write only the two gold tables' prefixes) and the catch-up, and the schedule starts ENABLED only after the catch-up's after-read; 2026-06-09 and the rewritten partitions 2026-09-23 to 09-25 are read, not re-run; the Cottonwood reader is `~D2`'s builder (sole contract writer), and this workstream asks `~D2` with the member sources; `account_return_daily` after 2026-06-22 is carried; W401-S1 is MSTR's (install the packages, then this seat re-runs the equality test).
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-4` | The PRODUCER READ: what wrote Cottonwood's `holdings_performance_daily` gold to 2026-09-25 (a function, a host job or an ad-hoc run), its code path and last run, the manifest fields that say so; the 2026-06-09 prior-day input; the rewrite times of the silver partitions 2026-09-23 to 09-25 against the gold objects of those dates | FWD-2, FWD-11 | LOCAL (a read) | none | C-C |
+| `DB-c-5` | The PAIR PACKET, finalized on `DB-c-4`: the function (adopted or to build), the schedule at 08:15 New York with the frontier check, the principal's write-only grants on the two tables, the 13-date-plus catch-up first and ENABLED after its after-read, both branches, rollback per key. A packet; nothing is applied | FWD-2, FWD-11 | LOCAL (a packet; the act is WORLD under the pair) | `DB-c-4` | C-C |
+| `DB-c-6` | The ASK to `~D2`: the Cottonwood member sources the reader needs (the gold tables, their prefixes, the firm key, the readers found by `DB-c-3`), as a file and one line to `~D2`. The issuer's own direct act, no worker | FWD-11 | LOCAL (a file and a message) | none | issuer |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) `DB-c-4` and `DB-c-5` are one chain on one worker slot (`~403`): the packet's function section is the read's output. (b) `DB-c-5` supersedes `DB-c-2`'s packet for the pair: it carries the as-of date of its catch-up set, which grows by a trading day each day silver lands, and the checker recomputes the set to that date. (c) The ENABLED-after-catch-up order and the frontier hold are written into the packet as the CTO ruled; the hold's code is a build item in the function cell the pair covers, not a change this round. (d) `DB-c-6` is mine: a worker cannot send, and the ask is a message plus a file. (e) The package install (W401-S1) is MSTR's; the equality re-run waits on it and is not cut.
+
+**fanout:** 1 of 1 chains, cap 8, reason: `DB-c-5` consumes `DB-c-4`'s record, so the two are one chain on one worker's queue; `DB-c-6` is the issuer's direct act. Worker `0.9.0_WK_IRPT_DASHBD~403` (`DB-c-4`, then `DB-c-5`).
+
+## Cells (round 115)
+
+| cell id | owner |
+|---|---|
+| DB-c-4 | 0.9.0_WK_IRPT_DASHBD~403 |
+| DB-c-5 | 0.9.0_WK_IRPT_DASHBD~403 |
+| DB-c-6 | 2.0.0_SA_COO~C2 |
