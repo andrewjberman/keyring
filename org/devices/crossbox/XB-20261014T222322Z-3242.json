@@ -10,7 +10,7 @@
  "subject": "MDPF_CANON CN-q-1: deploy auth-validator-edge with the per-firm MDPF leaf gate -- build, upload, plan, apply, prove (lap",
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~U7/task_orders/ADHOC.canon-q1-edge-firm-gate-deploy.md",
  "opened_at": "2026-10-14T22:23:22Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-14T22:25:22Z",
   "bus_message_id": "f634ddfe-b36f-48d9-820a-710c5b72fcb6"
@@ -21,8 +21,8 @@
   "bus_message_id": "17261193-84fb-447c-ba23-4f5fe1db68c1"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-15T02:50:54Z",
+  "from_by": "0.0.0_AB_MSTR~DELL1",
   "to_at": "2026-10-15T02:47:42Z",
   "to_by": "0.0.0_AB_MSTR"
  }
