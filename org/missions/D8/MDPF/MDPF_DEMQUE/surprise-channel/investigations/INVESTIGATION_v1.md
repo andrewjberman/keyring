@@ -3198,6 +3198,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/test_demque_bbg_backfill.py and test_demque_bbg_ledger_upload.py (the four failing tests) @d89ade551a"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W57-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~57",
+    "surfaced_at": "2026-10-15T18:21:17Z",
+    "one_line": "DQ-t-65 asks census() to gain the key tx_symbol_only AND says the DQ-t-64 tests pass unedited, but the DQ-t-64 test test_the_census_adds_up_classes_symbols_and_stored_against_the_inactive_total compares the whole census dict for exact equality, so an always-present key fails it; the cell emits the key only when a transactions source (non-empty tx_only) is supplied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t65 build item 3: census(...) gains tx_only=() and the dict gains the integer key tx_symbol_only; every existing key, identity and call keeps its meaning (the DQ-t-64 tests pass unedited).",
+    "world_is": "With the key always present, test_demque_inactive_set.py:59 fails (pytest: 'Left contains 1 more item: tx_symbol_only'; the left dict holds 15 keys, the DQ-t-64 expected dict 14). The cell therefore sets tx_symbol_only only when tx_only is non-empty: a call with the DQ-t-64 arguments returns the DQ-t-64 dict unchanged, and the real census (tx_only supplied) carries the key with the same value that AC2 checks. Both AC1 and AC2 pass under this reading; the DQ-t-64 test file is unedited (it is outside this order's grant).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/mdpf/scripts/demque -q, worktree C:/dev/wk-demque-57 with census key always present, rc=1: 'FAILED test_demque_inactive_set.py::test_the_census_adds_up_classes_symbols_and_stored_against_the_inactive_total', 'Left contains 1 more item: tx_symbol_only: 0', at data/mdpf/scripts/demque/test_demque_inactive_set.py:59 @270e1c6175",
+        "after the conditional key: python -m pytest test_demque_inactive_set.py test_demque_inactive_symbols.py -> 6 passed, rc=0 (worktree C:/dev/wk-demque-57 on wk-MDPF_DEMQUE-57, base 270e1c6175)"
+      ]
+    }
   }
 ]
 ```
