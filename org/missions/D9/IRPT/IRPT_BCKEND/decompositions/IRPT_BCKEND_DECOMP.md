@@ -4379,3 +4379,15 @@ Check IB232-1 (`deliverables/2.0.0_SA_COO~P2/checks/r232/p232_cells.py`), dry-ru
 | `IB-pr-600` | APPLY the one IAM resource for the feed's keys; the simulation arms; the exists() read on the runner | FWD-3 | WORLD | none | PO7-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
+
+## 227. ROUND 2, WORKSTREAM ~PL (49 Financial's refusal anatomy and the exemption-alone DELTA, re-measured on the TRANSPLANT tree; 2026-10-15 ~19:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling ADDENDUM 1 @334382c7f4, msg 8538)
+
+IB-pr-584 (anatomy) and IB-pr-580 (DELTA) were measured on HEAD's `holdings_snapshot.py`, which reverses the CUSIP port that 49 Financial's live bundle keeps (pin 1). IB-pr-595 (merged @5bf120faa2) built the 49 Financial transplant tree: pin 1 plus the exemption alone. The CTO orders both measurements repeated on that tree before the join, classification and dry-run cells (msg 8527 items 1 to 3) are cut, each only for what still trips against the new denominator. One READ cell, counts only; the harnesses are IB-pr-580's and IB-pr-584's, run with the two transplant files in place of the repository's.
+
+Check IB233-1 (`deliverables/2.0.0_SA_COO~P2/checks/r233/p233_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control233.py`) passes the three positives and fifteen negatives plus the no-record case each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-602` | READ the anatomy and the exemption-alone DELTA of 49 Financial on IB-pr-595's transplant tree | FWD-21 | SERVED | IB-pr-595 (drained) | PL2-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one read-only cell; one worker (slot ~437) starts now.
