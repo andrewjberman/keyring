@@ -1422,6 +1422,8 @@ know that so they can communicate this and update the repo as needed." It supers
 move (`ANDREW_DIRECT_20261015_160xZ_WSJ_BARRONS_OPS_RUN_ON_DELL1.md` @94086281f2) and this seat's ruling on it (@86581c31be).
 
 **Measured on site Z** (`cycle_runner.log`, ~16:3xZ): no publisher stored anything since the 14:02Z Python outage.
+**CORRECTED (~20:3xZ, `2.0.0_SA_COO~O` msg 34573, row Z-S151): wrong for `sa`, which stored 2 at 18:25Z because the old
+process kept its loaded libraries. The retirement stands on Andrew's word (all harvest operations to dell1), not on the zero.**
 - bbg: `new 0`, stopped `bot_check` at 15:22Z.
 - sa: `new 0`, last cycle 14:57Z.
 - wsj and barrons: `new 0`, `sign_in_refused` at 15:3xZ.
