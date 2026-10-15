@@ -14176,3 +14176,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-230 under the order's contract-wins rule. Form only; the sample builder's source for these members is for the issuer to reconcile."
 }
 ```
+
+## IRPT_DASHBD-D2-W185-S5 -- The order validates the proof one criterion id per run; the checker takes the TO's full expected set, so a one-id run refuses rc 1 on coverage and only the combined run is VALID.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:26:00Z",
+  "one_line": "The order validates the proof one criterion id per run; the checker takes the TO's full expected set, so a one-id run refuses rc 1 on coverage and only the combined run is VALID.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-b-230, the proof_of_spec paragraph: validate with python .tools/proof-of-spec-check.py <instance> DB118-1-AC1, then AC2 and AC3 (one id per run).",
+  "world_is": "The checker takes the TO's expected criteria set as its id list; a one-id run on this three-row instance returns rc 1 with a coverage violation for each other acceptance row (unexpected addition). Only the combined run with the three ids returns rc 0, VALID. The instance itself is unchanged by the choice of run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-230.filled-report-values-gold-table-hop-1.md@485629a40e (proof_of_spec paragraph)",
+      ".tools/proof-of-spec-check.py@485629a40e (coverage limb: expected set equals the id list)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~185/IRPT_DASHBD.TO-DB-b-230.filled-report-values-gold-table-hop-1.proof_of_spec.json (the three acceptance rows)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-230. Form only; the combined run is the verdict and is recorded in the instance; the per-id wording of the order is for the issuer to reconcile."
+}
+```
