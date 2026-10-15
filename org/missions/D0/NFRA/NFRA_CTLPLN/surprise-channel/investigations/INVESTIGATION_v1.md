@@ -11481,3 +11481,82 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The literal is a retired-phrase probe that decides no box value, so it is not a box list in the FWD-2 sense as this worker reads it. A reviewer who reads 'laptop|sitez' as a box-list literal should overrule the FIXTURE entry; the census would then need a different reason, not a removal of the probe."
 }
 ```
+
+## NFRA_CTLPLN-W118-S1 -- the commit gate refuses the one-line signed change to diag_sleeve_fix.py on seven ruff findings that the unmodified file already carries, so CT-ak-4 cannot commit the signed change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W118-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~118",
+  "surfaced_at": "2026-10-15T17:12:00Z",
+  "one_line": "safe-commit.sh refused the signed change (docstring line 2 of data/black_diamond/scripts/gold/diag_sleeve_fix.py) with commit-gate BLOCKED: ruff check failed (Found 7 errors: E402 x6 at lines 3,4,7,8,9,10 and F401 numpy at line 8); the same gate on the unmodified HEAD copy (blob 0e4aec8d80) also returns rc=1 with Found 7 errors, so the refusal is not caused by the one-line edit, and the file cannot be committed without a code-token change or an override.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh --author '0.9.0_WK_NFRA_CTLPLN~118 <...>' -F .scratch/msg_signed_change.txt -- data/black_diamond/scripts/gold/diag_sleeve_fix.py run 2026-10-15T17:0xZ in worktree ctlpln-118: 'ERROR: BLOCKED -- commit-gate failed (py_compile / ruff / lint). Commit aborted; files unstaged.' rc=1; HEAD stays 4d79c7c58c",
+      "control: bash .tools/commit-gate.sh .scratch/base_diag.py (git show HEAD:data/black_diamond/scripts/gold/diag_sleeve_fix.py, md5 56cb170f95c0b112a36a0ee3973d5473) run 2026-10-15T17:1xZ: 'Found 7 errors.' 'BLOCKED: ruff check failed on .scratch/base_diag.py' rc=1",
+      "python -m ruff check data/black_diamond/scripts/gold/diag_sleeve_fix.py (default config, edited file): Found 7 errors, same count as the base copy; the edited line is 76 characters and is not among the findings"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-4 BUILD step 1: commit the one-line signed change ALONE with .tools/safe-commit.sh (explicit path), py_compile and ruff stay clean; RULES: if a gate REFUSES, STOP and file a BLOCKING row; no override.",
+  "world_is": "The file carries six E402 (module-level import after the from __future__ line and the bare string on line 2, which Python does not treat as a module docstring) and one F401 (numpy unused) before this cell touched it. The commit-gate ruff step blocks any commit of this file, so the signed change cannot land on box/laptop through the gate as written. Clearing the findings needs a code-token change, which the cell forbids, or a gate or lane decision by its owner (IRPT_BCKEND or the commit-gate owner), not by this worker."
+}
+```
+
+## NFRA_CTLPLN-W118-S2 -- the amended CT-ak-4 order (ast-identical, comment-only) is on box/laptop at 9b2702a5a5 and is not in this worktree branch, so the proof checker grades the instance against the pre-amendment order
+
+```json
+{
+  "id": "NFRA_CTLPLN-W118-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~118",
+  "surfaced_at": "2026-10-15T17:36:04Z",
+  "one_line": "proof-of-spec-check.py on the committed proof instance of CT-ak-4 returns INVALID (rc=1): invocation-alignment[CTak4-AC2] names --ast-identical, but the order file in this worktree (cut at 4d79c7c58c) still records --docstring-only; the amendment that changes it is commit 9b2702a5a5 on box/laptop, which this branch does not contain.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <instance> CTak4-AC1,CTak4-AC2,CTak4-AC3 run 2026-10-15T17:3xZ on worktree HEAD 7b95bf924a: 'VIOLATION: invocation-alignment[CTak4-AC2]: the RECORDED invocation is NOT the criterion's invocation'; 'INVALID (rc=1)'",
+      "grep -c 'ast-identical' on the worktree copy of NFRA_CTLPLN.TO-CT-ak-4.signed-change-commit-and-positive-read-test.md = 0; grep -c 'docstring-only' = 3",
+      "git merge-base --is-ancestor 9b2702a5a5 HEAD -> not an ancestor; git branch --contains 9b2702a5a5 -> box/laptop only; commit 9b2702a5a5 amend(NFRA_CTLPLN round 21, 2.0.0_SA_COO~C): TO-CT-ak-4 signed change becomes comment-only (noqa) and CTak4-AC2 becomes --ast-identical",
+      "--governing-order bound to a read copy of 9b2702a5a5 (.scratch) -> 'VIOLATION: governing-binding: the order being flipped ... but the instance's decomp_ref.to_ref names org/missions/...' (the binding requires the in-tree path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-4 RULING (issuer, after W118-S1): the proof instance's CTak4-AC2 row takes the new invocation and expect ast_identical=True; validate with proof-of-spec-check on the committed state.",
+  "world_is": "The ruled text exists only on box/laptop at 9b2702a5a5. The worker branch was cut earlier, so the checker, which resolves the governing order from the instance's decomp_ref.to_ref inside the worktree, reads the pre-amendment order. The worker may not merge, rebase, or edit the order file (outside <paths>), so the committed instance cannot validate on this branch until the amendment is on the worker's branch or the branch is re-cut. The instance records the ruled invocation; its validation is INVALID here."
+}
+```
+
+## NFRA_CTLPLN-S9132 -- the shared-branch push gate refuses the CloudOps seat's push of box/laptop, which CT-ak-3 step 5 names as the act under test
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9132",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT2",
+  "surfaced_at": "2026-10-15T17:58:25Z",
+  "one_line": "CT-ak-3 step 5 cannot be done as written: the shared-branch push gate (LD-0367/0368, never-rules-gate.sh PreToolUse) REFUSES a git push of box/laptop by any serial except 0.0.0_AB_MSTR, so the CloudOps seat cannot make the push that the order names as the act under test.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git push origin box/laptop by 0.7.0_AE_CloudOps~CT2 at 2026-10-15T17:56Z and 17:57Z: 'BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch box/laptop): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z may push or pull the shared branch'; the audited override '# never-override: <reason>' is for an Andrew-directed push or a rare case coordinated with the integrator first; neither holds here, so it was NOT used",
+      "the entry ctlpln-r21-fwd5-one-script-20261015 is OPEN and committed (deploy_ledger.py open committed it itself, 2026-10-15T17:55Z); pre-state: S3 key 1 version VersionId 3.yZFEuxxfxUOEMd.NRY7bZucaDccGX. ETag 56cb170f95c0b112a36a0ee3973d5473; 357 top-level deploy-scope scripts, 0 LEDGERED before the open; test --pre ok=True others_differ=0",
+      "CLAUDE.md Agent Autonomy ('agents push at will' box/*) and the LD-0367 gate disagree; the gate is mechanical and wins at the call"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-3 step 5: the CloudOps seat pushes box/laptop with AGENTBUS_DEVICE=laptop and OPAL_AGENT_SERIAL set so the audit row names it; RULES: if a gate REFUSES, STOP and file a BLOCKING row.",
+  "world_is": "Nothing was written to S3 by this seat. The OPEN entry pins the build, so the next scheduled Opal box-sync push of box/laptop (serial 0.0.0_AB_MSTR, every 10 minutes) will run the hook and deploy the one ledgered script; the deploy will then be MSTR's act, not the CloudOps seat's. The positive arm's outcome (one script deployed, nothing else) can still be read; the order's actor claim (CloudOps seat) cannot be met without an Andrew word or an integrator-coordinated override."
+}
+```

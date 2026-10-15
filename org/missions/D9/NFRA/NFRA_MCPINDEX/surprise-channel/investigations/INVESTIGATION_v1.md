@@ -8413,6 +8413,28 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-15T17:47:12Z",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-S121",
+    "one_line": "Once a table row names a live read_tool it outranks a curated need on an overlap tie in opal_discover: 'account counts by partner' (the example of SERVED need E-16, mdpf_get_aggregate_aua) returns the ETF partner-ownership table first and the need second.",
+    "spec_asserts": "test_opal_discover.py::test_gap_need_answers_with_its_owner_and_no_tool (MX-d-8): a SERVED need whose tool reads a catalogued dataset ranks first. integration.py _rank: a need is (False, -overlap, 0), a servable row (False, -overlap, -slug_overlap).",
+    "world_is": "After MX-c-20 (7 rows now name the OG-ap-20 tools), discover('account counts by partner') as opal-internal returns opal_data_etfs_gold_daily_partner_ownership first (servable, etfs_get_partner_ownership) and need:E-16 second (servable, mdpf_get_aggregate_aua). The need and the row tie on word overlap (3); the row wins on the slug tie-break. A tie rule 'a need wins an overlap tie' was measured on the extract and breaks test_silver_row_is_read_and_answers_as_itself (a silver row must win its tie with need E-8), so no one-line fix exists. MX-c-20 A3 relaxed the E-16 pin to 'the need is still answered (among the matches)' and left ranking unchanged. Both answers are returned; only the order differs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py _rank (the need key vs the row key)",
+        "the live-shape discover run on the merged tree (matches order above) and the worker's measurement, row NFRA_MCPINDEX-Z-W44-S4"
+      ]
+    },
+    "notes": "Owner of the ranking question is 2.0.0_SA_COO~O (R16.4): a rule that orders a curated need against a servable table needs a decision on which pin wins (E-16's or E-8's). Not a gate field; no access changes."
   }
 ]
 ```
