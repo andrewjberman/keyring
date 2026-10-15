@@ -650,3 +650,30 @@ Filed by 2.0.0_SA_COO~ZB at the Z6 drain end.
   "notes": "No act owed here and nothing was changed. If the reading is that it is a credential, the fix is one line in the verify step (print the similarity only). This seat redacted its own copy and committed only the redacted log."
 }
 ```
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S22",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZB",
+  "surfaced_at": "2026-10-15T11:25Z",
+  "one_line": "R3's focus re-assert and bounded re-fill RAN at the 11:00Z fire and recovered nothing: the re-assert took 0 of 3, and the re-fill's own fill phase then failed the same focus check, so the pull ended rc=50 at zero Bloomberg attempts (13th fallback escalation; 0 unattended successes since 08-18).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Users/Opal Bloomberg/opal_bbg_logs/bbg_tplus1_20261015_070001.log lines 15, 27-31, 35-36: 'focus VERIFIED' at the first fill; then 'focus re-assert 1/3, 2/3, 3/3 did not take', 'ABORT: focus lost before submit', 'rc=4 -- one bounded re-fill (1/1), no attempt spent', 'ABORT: focus did not take (fg=32116010 != 266432)', 're-fill produced no login window'.",
+      "C:/opal-elev/bbg_fallback_ESCALATION.txt last line 2026-10-15T11:02:37Z: 'rc=4 re-fill did not verify -- aborting at ZERO Bloomberg attempts after ONE bounded re-fill (1/1). Human sign-in needed.'",
+      "R3 merged @3dad54c56f at 05:53Z; the log's re-assert and re-fill lines exist only in that code, so the fire ran R3's bytes. Also line 8 prints the 'transport sustained-down' line on the $absent=3 path, so TO-Z6-R3 AC3 stayed NOT-EXERCISED (the 8194-listening arm was not reached).",
+      "0.0.3_BG_BBGTerminal msg 34424 / MSTR~Z relay 34426: served data_as_of 2026-10-13, frontier 2026-10-15, 2 trading days behind; Andrew told on Teams 11:14Z."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-Z6-R3 step 1: re-asserting foreground up to 3 times, then one bounded re-fill, recovers a focus loss at submit so the unattended fallback signs in.",
+  "world_is": "On this box the foreground never moves to the Login window from the fallback's context (fg=32116010 holds it), so SetForegroundWindow retries and a re-fill cannot help. R3 is necessary for the safe abort but not sufficient for sign-in. A human sign-in is the only unblock today; the cause of the foreground owner (and any foreground-lock bypass) is not yet read.",
+  "notes": "Routed to 1.0.0_SA_CTO~Z as one ask: cut a repair cell (R7) to identify the foreground owner and defeat the foreground lock, or rule otherwise. No act taken on the scripts. Zero Bloomberg attempts spent, so no lockout risk."
+}
+```
