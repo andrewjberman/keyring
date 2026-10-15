@@ -18371,3 +18371,156 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W311-S1 -- A trading day at the edge of the feed that loses its day to the complete-day drop vanishes from the table: no row and no ABSENT record
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "The complete-day drop (rule 2) removes every row of an incomplete calendar day before adapt() runs, and adapt() takes its output domain from the first and last calendar day of the rows it is given; a trading day at either edge that falls outside the kept span therefore gets neither a row nor an ABSENT record, so the table silently omits it. Interior drops also move a trading day's end value to NO_EOD_VALUE, because rule 5 reads the next calendar day's start.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "Rule 2 drops every row of an incomplete day before adapt(); the round-123 adapter covers every trading day of a mapped account as a row or an ABSENT record (test_every_trading_day_of_every_account_is_in_rows_or_absent_exactly_once).",
+  "world_is": "Measured by a scratch probe on synthetic frames (not committed): with the first calendar day incomplete, its trading day reads in neither the partitions nor the absent file; with the last calendar day incomplete, the last trading day reads in neither. An interior incomplete day turns the prior trading day into NO_EOD_VALUE. Kept as written: the wrapper does not re-add the day or invent a fill. Not measured on real silver (later cell).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() steps 2 and 3",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py@uncommitted worktree file, adapt() min_day/max_day domain",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 rule 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~I2"
+}
+```
+
+## IRPT_DASHBD-D2-W311-S2 -- The repeated-key refusal's COUNT is ambiguous when a key repeats more than twice
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "Rule 1 asks for the COUNT of repeated keys in the ValueError message but does not say whether a key seen three times counts once (as a key) or twice (as its extra rows). The wrapper counts keys seen more than once, so a key seen three times and one seen twice read as 2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Rule 1: a key seen twice is a repeat; raise ValueError whose message carries the COUNT of repeated keys as a number, and write nothing.",
+  "world_is": "Probe: three rows of one (account, day) and two of another gave the message 'repeated (account, day) feed keys: 2' (3 extra rows). The refusal fires and nothing is written either way; only the number's meaning is open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() repeated-key block",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 rule 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W311-S3 -- Account counts in the run record leave out an account whose every row sat on an incomplete day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "accounts_in_feed, accounts_mapped and accounts_unmapped come from the adapter's manifest, which counts only the rows the wrapper passes in after the complete-day drop. An account whose rows all fall on incomplete days therefore disappears from all three counts. The rules do not say whether such an account is still in the feed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The run record takes accounts_in_feed, accounts_mapped and accounts_unmapped from the manifest (run record item 5).",
+  "world_is": "Probe: an input of two accounts, one with its only row on an incomplete day, gave accounts_in_feed 1 and accounts_mapped 1. The dropped day is still counted in calendar_days_incomplete. Counts only; not measured on real silver.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() record block",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py@uncommitted worktree file, adapt() manifest",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 rule 5 record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W311-S4 -- A duplicate or non-canonical dimension key collapses silently in the account map
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "The account map is {str(int(a)): str(a)} over the dimension column, so two dimension keys with one integer value (for example '3001' and '03001') become one entry, the later one winning, with no refusal and no count. The rules do not say which key a duplicate dimension entry must carry. Mapped ABSENT records take the integer-string form while rows take the dimension string, so the two agree only when the dimension key is canonical.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The cell DB-i-11 text: build the account map from the dimension's own key form.",
+  "world_is": "Read from the account-map line of the wrapper and probed: dimension ['3001', '03001'] gave accounts_mapped 1 with no error. Not measured on the real dimension (later cell).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() account-map block",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 run() function"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W311-S5 -- The silver partition key is not checked against the rows it names
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "The silver dict's keys ('date=YYYY-MM-DD') are sorted and then ignored: rows are read from each frame whatever its key says, and no row's day or pull_date is compared with the key. A frame filed under the wrong partition is read as if it were right.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "silver is { 'date=YYYY-MM-DD': DataFrame }, each frame carrying the feed columns including pull_date and day.",
+  "world_is": "Read from run(): the partition name is used only for ordering. No comparison exists in the wrapper or the adapter. Not measured on real silver.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() silver loop",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 run() function"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W311-S6 -- A rerun into the same out_dir leaves the earlier run's partitions and absent file beside the new run record
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W311-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~311",
+  "surfaced_at": "2026-10-15T20:21:42Z",
+  "one_line": "run() creates and overwrites date= partitions, the absent file and run_record.json under out_dir but removes nothing already there. A rerun over fewer dates, or one with no absent records, leaves the earlier run's partitions or absent file in place beside the new run record, which then no longer describes the directory. The rules say to write under out_dir and say nothing of a previous run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Write under out_dir (create it; touch nothing outside it) for each business date with rows, plus absent/ when there are absent records and run_record.json (run record item 4).",
+  "world_is": "Read from run(): no removal step exists, and every test uses a fresh temporary directory, so the rerun case is not exercised. Not measured on real output (later cell).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_run.py@uncommitted worktree file, run() write block",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-11.inflection-scope-feed-run-wrapper-silver-frames-to-contract-040-parquet.md@057e7995b6 rule 4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
