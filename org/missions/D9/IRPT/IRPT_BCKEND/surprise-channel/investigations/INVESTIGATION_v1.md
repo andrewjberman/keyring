@@ -36411,3 +36411,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W401-S1 (the oneOf had no branch for a filled bundle): RESOLVED by IB-pr-557 AMENDMENT 1 (my defect). D2-W401-S2 (four seam tests failing at base, outside the grant): INERT, recorded. D2-W401-S3 (an existing branch admits a filled pin beside a narrative ref): INERT, recorded for the round-4 contract read. D2-W402-S1 (my order said _scope was already on the export path; it is not): INERT, my error, the freeze adds it. D2-W402-S2 (AC3 needs the worker's own commits): INERT. D2-W402-S3 (ARMED, owner me): infra/aws/lambda/ci/lambda-source-map.json lists no entry for _scope/filled_named_accounts.py, so a route or export deploy would omit it: a round-4 cell before any deploy leg. D2-W403-S1 (writer located), S2 (CloudTrail data events for opal-data-inf only from 2026-10-13 20:30Z), S4 (no StopInstances event; SendCommand hidden): INERT. D2-W403-S3 (ARMED, owner me): the flat-key pulls are steps of the gold chain that also feeds the silver transactions and performance steps, so retiring them (pair (b) as signed) couples to the gold chain; disarm condition: the CTO re-cuts pair (b) on the located writer (recommended: re-time the existing chain trigger into the 06:00 New York fold; no new producer, no port)."
 }
 ```
+
+## IRPT_BCKEND-D2-W405-S1 -- The rebuilt irpt-ycharts-generate candidate moves composition_admission.py, a member neither the order nor the R29c ledger names
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W405-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~405",
+  "surfaced_at": "2026-10-15T06:23:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The candidate built locally from current trunk (base 66a6cd8686) differs from the live R29c zip in exactly one member, composition_admission.py, which the order's step 5 does not name and the R29c ledger does not list; the three ENDPOINT members are equal to the live bytes and differ from the IB-pr-456 signed build.",
+  "spec_asserts": "IB-pr-561 steps 4 and 5: rebuild the candidate from current trunk source, record the moved members against the live zip, and the candidate must not move release 29's members (generate_installed.py, uploads.py, ordinary_viewer.py, interactive_access.py). The R29c ledger names those four as the release 29 L3 members.",
+  "world_is": "The four release 29 members are byte-identical to the live zip (r29c_members_preserved true). The one moved member is composition_admission.py (live sha256 prefix 50f5d11c, candidate prefix 8d9b7aad; 2791 vs 3330 bytes). Trunk last changed it at commit 83eb798a08 (2026-10-14 10:13 -0400, after the R29c deploy completion at 13:08:47Z). Releasing the candidate as built would also release that change; the live R29c package does not carry it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_scratch405/cmp_out.json (scratch, outside the repository): moved_members [composition_admission.py], moved_count 1, total_members 106 on both zips, four release 29 members identical",
+      "build: BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-ycharts-generate at base 66a6cd8686, rc 0, import-closure OK, nothing uploaded",
+      "git log -- infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py: 83eb798a08 (2026-10-14 10:13:26 -0400) is the newest commit touching it",
+      "infra/aws/lambda/ci/lambda-source-map.json line 4030 lists composition_admission.py in the irpt-ycharts-generate files array (native member, read from the worktree)"
+    ]
+  },
+  "notes": "Not a blocker for this order (the order grades no-silent-revert of the four release 29 members, which holds). The apply scope of the candidate is the COO's call."
+}
+```
+
+## IRPT_BCKEND-D2-W405-S2 -- The CTO rulings the order cites for step 2 (msgs 8116, 8130, 8133) are not readable from the worktree; no broker read tool is in this worker's face
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W405-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~405",
+  "surfaced_at": "2026-10-15T06:23:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 2 asks the worker to read CTO msgs 8116 and 8133; the worktree carries no copy of broker messages and this worker has no read tool for them, so the rulings were taken as the order quotes them (msg 8116 and the msg 8130 facts), and msg 8133 was not read.",
+  "spec_asserts": "IB-pr-561 step 2: read the IB-pr-456 packet and record, the ledger, and CTO msgs 8116 and 8133.",
+  "world_is": "Packet ~312, its record IB152-1_release_read.json and the R29c ledger were read from the worktree. Messages 8116 and 8133 are not in the worktree and are not reachable from this worker's face; the order's own text carries the msg 8116 ruling and the msg 8130 facts, which were used as quoted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-561.rebuild-the-ib-pr-456-ycharts-generate-candidate-on-the-live-r29c-bytes.md (worker face, cell IB-pr-561 text)",
+      "worktree listing of org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~312/ (packet and record present, no message files)"
+    ]
+  },
+  "notes": "Recorded so the CTO ruling set the COO cites can be confirmed by the issuer. No effect on the criteria, which grade the record's facts."
+}
+```
