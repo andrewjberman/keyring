@@ -2616,3 +2616,28 @@
   "notes": "No act taken. Ledger mdpf-canon-edge-firm-gate L5 carries the same observation."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W29-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~29",
+  "surfaced_at": "2026-10-15T15:14:53Z",
+  "one_line": "The worker worktree C:/dev/wk-canon-r10-29 is a sparse checkout with no data/ tree on disk, so the two files CN-r-1 names as its write surface (data/mdpf/scripts/gold/mdpf_gold_consolidator.py and data/mdpf/tests/canon/test_global_trend_groups.py) are absent and the order cannot be executed in this tree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO CN-r-1 section 3 (paths) and the bar's first act: the worktree carries the paths the task order names; the order's write surface includes data/mdpf/scripts/gold/mdpf_gold_consolidator.py and data/mdpf/tests/canon/test_global_trend_groups.py.",
+  "world_is": "Worktree wk-MDPF_CANON-29 at HEAD e729b642de has core.sparseCheckout=true with sparse-checkout list .tools, infra/logic/registry, lib; org/ and .tools/ are present on disk (first-act check passes); 82846 index entries carry skip-worktree; the data/ directory does not exist on disk although data/ holds 1999 tracked files at HEAD. Both named files are tracked at HEAD but absent on disk. The base checkout C:/dev/ajb_workspace tracks the consolidator at 7e0e6011ad (an ancestor of this HEAD). No criterion was run, no proof instance was written, and no sparse-checkout or other tree change was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-canon-r10-29 HEAD e729b642de: git config core.sparseCheckout = true; git sparse-checkout list = .tools, infra/logic/registry, lib; git ls-files -v skip-worktree count = 82846; test -d data = absent",
+      "C:/dev/wk-canon-r10-29 HEAD e729b642de: git ls-tree HEAD data/ = 27 entries; git ls-files data = 1999; git status --short -- data = 0 lines; the consolidator and test paths are present in git ls-files and absent on disk",
+      "C:/dev/ajb_workspace (base, box/dell1 e729b642de): git log -1 -- data/mdpf/scripts/gold/mdpf_gold_consolidator.py = 7e0e6011ad, which is an ancestor of worktree HEAD (merge-base --is-ancestor = YES)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks CN-r-1 at its first criterion. Restoring the data/mdpf paths in the worktree (a sparse-checkout widen or a fresh worktree) is the issuer's or CloudOps's call; the worker did not rebuild or reconstruct the tree. No AWS touched; the deploy-side bounds are not engaged."
+}
+```
