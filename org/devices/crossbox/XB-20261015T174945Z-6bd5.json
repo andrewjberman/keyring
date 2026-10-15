@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN duckdb journey: read the Python tag of the lane D1 interpreter on dell1, report",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_DELL1_PYTHON_TAG.md",
  "opened_at": "2026-10-15T17:49:45Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-15T17:52:03Z",
   "bus_message_id": "a5a23b8c-3859-42a4-a3d2-ee45ce358ef6"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-15T18:12:34Z",
+  "by": "0.0.0_AB_MSTR~DELL1",
+  "bus_message_id": "14136f50-32d0-4d6d-8615-743cd6006c8f"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

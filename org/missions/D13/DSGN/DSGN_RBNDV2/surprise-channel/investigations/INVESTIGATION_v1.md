@@ -1365,6 +1365,69 @@
     "spec_asserts": "RV-y-2 order environment: the portal worktree branched from the feature branch at d0cb67d0, the difference-control base.",
     "world_is": "HEAD is one drain past d0cb67d0. The cell's edits sit on 86db3d1b; the difference against d0cb67d0 is the control only and does not change the verdict.",
     "notes": "No action taken; recorded so the drain reads the base correctly."
+  },
+  {
+    "id": "DSGN_RBNDV2-W22-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~22",
+    "surfaced_at": "2026-10-15T17:58:48Z",
+    "one_line": "The order states the feature branch holds about 45 non-merge commits over ad7c100b; the measured count is 39 non-merge (59 total).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C ajb_wk/rbndv2-22/portal rev-list --count --no-merges ad7c100b..feature/dsgn-rbndv2-light = 39; rev-list --count ad7c100b..feature/dsgn-rbndv2-light = 59; feature tip 3509eae8",
+        "git diff --name-only ad7c100b feature/dsgn-rbndv2-light = 89 files and git diff --name-only origin/PROD ad7c100b = 22 files, both as the order states"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RV-z-1 facts measured at the cut: the feature branch holds about 45 non-merge commits (git rev-list --reverse --no-merges ad7c100b..feature/dsgn-rbndv2-light).",
+    "world_is": "39 non-merge commits. All 39 replayed in order onto origin/PROD @33ad65ee with zero conflicts and zero empty picks; the candidate is 39 commits over PROD. The 89-file and 22-file figures match; the about-45 figure does not.",
+    "notes": "Filed, not fixed. REHEARSAL_RECORD.md states the measured 39."
+  },
+  {
+    "id": "DSGN_RBNDV2-W22-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~22",
+    "surfaced_at": "2026-10-15T17:58:48Z",
+    "one_line": "git worktree add of the PROD scratch worktree left a full bun install as a directory in node_modules, so the order's step-2 link was never in place.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -ld ajb_wk/rbndv2-22/prod-baseline/node_modules showed a directory (drwx, 13:48) holding .bin and .tmp stamped 13:46 with 313 entries; ln -s to the shared install created no node_modules/node_modules link",
+        "ajb_wk/rbndv2-22/portal/node_modules is a junction to ajb_workspace/portal/node_modules (cmd dir /AL)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RV-z-1 step 2: link the scratch worktree node_modules the way the portal worktree has it (a junction to the shared one).",
+    "world_is": "The worktree add left a real install. The install was renamed to node_modules.scratch-install (a move, no delete) and a junction to the shared install was made with mklink /J. The shared install was checked intact after the baseline run and after the junction was removed. The baseline typecheck ran against the shared install.",
+    "notes": "Filed, not fixed. Cause not measured: whether a portal hook runs bun install on worktree add is unverified."
+  },
+  {
+    "id": "DSGN_RBNDV2-W22-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~22",
+    "surfaced_at": "2026-10-15T17:58:48Z",
+    "one_line": "git worktree remove --force on the PROD scratch worktree failed with Filename too long after unregistering it; the directory stays untracked at ajb_wk/rbndv2-22/prod-baseline.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C ajb_wk/rbndv2-22/portal worktree remove --force ../prod-baseline returned: error: failed to delete .../prod-baseline: Filename too long; git worktree list then shows no baseline entry",
+        "ls ajb_wk/rbndv2-22/prod-baseline shows the PROD source tree plus node_modules.scratch-install (286 top-level entries)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RV-z-1 step 2: remove that scratch worktree (git worktree remove --force) after the baseline typecheck.",
+    "world_is": "The residue is an untracked copy of PROD at 33ad65ee plus a bun install, and no git worktree tracks it. Deleting it is a recursive delete, which the autonomy rule holds for Andrew's word, so this worker did not delete it.",
+    "notes": "Disposition for Andrew or the drain: remove the directory. Not blocking the rehearsal; no criterion reads it."
   }
 ]
 ```
