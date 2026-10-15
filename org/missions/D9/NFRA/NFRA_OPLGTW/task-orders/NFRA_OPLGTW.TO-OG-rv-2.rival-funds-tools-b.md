@@ -125,7 +125,7 @@ the issuer to make at the merge.
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests and probe absent).
 - `OG-rv-1` is the sibling cell (disjoint write set); the modules may each carry their own six-line newest-part helper.
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>RIVAL-FUNDS</workstream>
 <slot>~101</slot>
