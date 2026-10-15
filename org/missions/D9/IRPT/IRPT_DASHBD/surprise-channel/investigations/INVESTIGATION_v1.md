@@ -13054,3 +13054,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-227. The disarm owner is the integrator (0.0.0_AB_MSTR) because the commit gate is infrastructure; the CTO may reassign it. The row states the form only; it carries no client value."
 }
 ```
+
+## IRPT_DASHBD-D2-W401-S1 -- the trading-day library answered from its hardcoded NYSE fallback on this device (pandas_market_calendars cannot be imported), so the recorded catch_up.calendar_source is the fallback string, not the package
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W401-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~401",
+  "surfaced_at": "2026-10-15T01:48:54Z",
+  "one_line": "On dell2 the trading-day library answers from its generated NYSE fallback table because pandas_market_calendars cannot be imported; the 15 landing days and the 13 catch-up dates of TO DB-c-1 are on the fallback calendar, and the package answer was not run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "spec_asserts": "TO DB-c-1 steps 2 and 5: the trading days come from lib/trading_calendar.py, whose canonical source is the NYSE schedule through pandas_market_calendars when it is installed; catch_up.calendar_source is the string the library returns. The producer measurement that dated the cell (RD_COTTONWOOD_PRODUCER_R110) recorded calendar source NYSE/pandas_market_calendars.",
+  "world_is": "On this device the import of pandas_market_calendars fails (ModuleNotFoundError for exchange_calendars), so every trading-day call answers from the generated table, and each run printed 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027'. The recorded calendar_source is NYSE/hardcoded-fallback-2010-2027. The fallback table header says it was generated from pandas_market_calendars 5.4.0 on 2026-10-07; whether the two answers agree on the 15 landing days was not measured on this device.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py@cf8ab92263 lines 40-46 (the optional import and the fallback flag) and lines 53-58 (the generated table and its header)",
+      "the WARN line printed by lib.trading_calendar on each run of the DB-c-1 measurement and of the checker p114_bcw.py DBC114-1-AC1, worktree at cf8ab92263",
+      "calendar_source() returned NYSE/hardcoded-fallback-2010-2027 when run from the worktree root (recorded in LANDING_AND_FRONTIER_R114.json catch_up.calendar_source)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-1. The disarm owner is the integrator (0.0.0_AB_MSTR) because the calendar library is shared infrastructure; the CTO or the CVO may reassign it. The row states the form only and carries no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W401-S2 -- three Cottonwood silver partitions (dated 2026-09-23, 2026-09-24 and 2026-09-25) carry a newest object written on 2026-09-28, three to five days after their partition date; the other twelve of the last fifteen trading days landed on the next calendar day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W401-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~401",
+  "surfaced_at": "2026-10-15T01:48:54Z",
+  "one_line": "Three of the last fifteen Cottonwood silver partitions were last written on 2026-09-28, not on the day after their partition date; the other twelve were written the next calendar day at 11:46 UTC.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The producer measurement that dated the cell (RD_COTTONWOOD_PRODUCER_R110, need TRIGGER AND TIME) reads the input as landing at 11:46 UTC on the day after its partition date, from one landing (partition 2026-10-13). TO DB-c-1 step 3 asks whether any partition's landing date is other than the day after its partition date; it does not assert that every partition is.",
+  "world_is": "LIST and LastModified of the fifteen partitions ending 2026-10-13 (one object each): partitions 2026-09-23, 2026-09-24 and 2026-09-25 have a latest object at 2026-09-28 between 11:46:16 and 11:46:30 UTC. The other twelve partitions have their latest object on the next calendar day at 11:46 UTC (seconds 02 to 15). All fifteen instants are 07:46 New York, so the time of day does not separate the three. A LIST cannot say whether those three were first written on 2026-09-28 or rewritten; no HEAD or version read was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~401/LANDING_AND_FRONTIER_R114.json, the landings array (dates 2026-09-23 to 2026-10-13 with landing_utc)",
+      "the measurement run recorded in the worker's private folder (LIST and LastModified only, counts and dates kept, no client value)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-1. Form only: the row records the landing pattern; no harm was measured and the schedule it bears on is not built (DB-c-2 is a packet). The CVO may disposition it at the round analysis."
+}
+```
