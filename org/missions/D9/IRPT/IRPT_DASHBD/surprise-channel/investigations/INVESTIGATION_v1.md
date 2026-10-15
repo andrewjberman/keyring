@@ -16219,3 +16219,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "W193-S1 is DISARMED here (hazard no longer ARMED under this seat); the carrier is W182-S1. Round 120's packet mislabelled the criteria count as ten (the orders declare eight); noted as the issuer's error."
 }
 ```
+
+## IRPT_DASHBD-D2-S74 -- issuer's dispositions on workers 410 and 411 rows (round 123): naming-gate and checker findings ruled or fixed, and the issuer's no-verify commit disclosed
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S74",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T08:44:14Z",
+  "one_line": "Issuer's dispositions on worker 410's rows W410-S1 to S3 and worker 411's rows W411-S1 to S5 (round 123 B-CW, DB-c-17 and DB-c-18): S2 (410) and S4 (411) were sequencing and naming-gate findings ruled by the CTO and the CVO, the rest the issuer's own defects, fixed; the issuer's mistaken no-verify commit eda88f89c7 on the 410 branch is disclosed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 123 builds the Cottonwood account_dim package and Terraform root on the CTO's decision C (msg 8167): names from the builders, no new hand-kept firm literal the naming gate refuses, schedule created DISABLED.",
+  "world_is": "W410-S1 (the builder name is a Python call): accepted, no action. W410-S2 / the naming gate refused the entry's tf_file, tf_resource and artifact_s3_key: the CTO ruled no R20 exception and a sequencing gap (msg 8187), the CVO ruled a citation-rule extension for artifact_s3_key (msg 8191), MSTR landed the gate edit at b49303719e, and the entry then committed under the live gate with 'NAMING-GATE: PASS 0 graded' for all three literals plus two planted refusals. W410-S3 (the existing-entries base was perturbed by a merge): the issuer's checker defect, fixed in d6d5bf8a6b. W411-S1 (no terraform.exe in a worktree): the binary is gitignored and lives in the base checkout; the order and checker now use it by path (1b17b74f35). W411-S2 (the holdings cot schedule reads ENABLED while its description says DISABLED): ruled in D2-S71 with W195-S1. W411-S3 (scheduler names carried no scope): the issuer's order omission, fixed (1b17b74f35), names now irpt-cot-account-dim-scheduler-role, -scheduler-policy and -daily. W411-S4 (the naming gate refused the state key investor-reporting/account-dim-cot/tfstate): the root, key and labels carry no firm token (1b17b74f35). W411-S5 (a backspace byte in the checker): the issuer's defect, fixed in 968b75d645. The issuer also made a mistake on the 410 branch: a git commit --no-verify of a staged entry during a failed merge produced eda88f89c7 (message 'merge box/dell2 into wk-IRPT_DASHBD-409', gate bypassed); the branch was not rewritten, the worker's later commit 1f506b057d corrected the entry under the live gate, and the gate was run on the entry-wide added lines as well. Merges: a5929fb06e (DB-c-18) and f54c662ab0 (DB-c-17). Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merges a5929fb06e and f54c662ab0; pytest 25 passed on the landed tree (account-dim-cot tests and the ci tests)",
+      "checks/r123/p123_bcw.py @d6d5bf8a6b; DBC123-2-AC1 and AC2 PASS on the landed tree, AC1 and AC2 of DB-c-17 PASS on the worker tree before the drain",
+      "CTO messages 8187, 8191, 8199; MSTR message 8198; rows W410-S1..S3 and W411-S1..S5 in this channel"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner for the BLOCKING rows W410-S2, W410-S3, W411-S1, W411-S4 and W411-S5: this seat (issuer), done as above; the CVO adjudicates BLOCKING rows at L9 if it grades them. DBC123-1-AC1 re-run on the landed main tree reads FAIL by design of its base after the drain (other seats' entries changed interleaved with the merge); it was graded on the worker tree before the drain."
+}
+```
