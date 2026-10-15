@@ -2271,3 +2271,17 @@ The handler caps the owed LIST at `MAX_DAYS_PER_FIRE` (10) but each hop recomput
 **fanout:** 1 of 1 chains, cap 8, reason: one cell, one write surface (the handler directory), worker `0.9.0_WK_IRPT_DASHBD~222`.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected, the probe reproducing the defect: an empty event over 32 owed days builds more than ten; self-test green with 2 + 2 + 17 + 7 red arms; the probe validated against a scratch reference handler (green) and seven single-fault mutants (no cap, budget not decremented, no budget in the payload, default one too many, bool accepted, no upper bound, budget inflated: all red)):** `checks/r141/p141_chaincap.py` (DB141-1-AC1..AC3).
+
+## 140. ROUND 142, WORKSTREAM B-49F + CONTRACT (2026-10-15 ~21:1xZ, issuer 2.0.0_SA_COO~D2, on the CTO's ROUND-124 ANALYSIS B-IN @e5c8b143fe addition 2, msg 8655; rounds 138, 139, 140 and 141 merged, each MAY-CLOSE)
+
+The Scope adapter infers each Orion end market value from the next calendar day's start value and keeps the claim only in its run record. The CTO rules that a claim a consumer rejects on must be a contract field: 0.4.2 adds ONE optional nullable column, `market_value_eod_claim` (`measured` | `inferred`), required on a PRESENT Orion row, with its rule-24 record and token census.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Contract 0.4.2: the one optional column and its enum, `required_when {source: orion}` with `required_unless_absent` (an ABSENT row has no market value, so no claim), the recomputed hash, a 0.4.1 supersedes entry, the rule-24 record `v042` and a token census; one commit with an 8-test file; two bounded edits of the 0.4.0 and 0.4.1 tests; a facts record | DB-b-275 | the Scope adapter cell of `2.0.0_SA_COO~I2` (round 125 writes to 0.4.2 if it has landed by the cut) | LOCAL | contract 0.4.1 merged (754702eb15) | chain A |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the requirement is a declaration (`required_when` plus `required_unless_absent`) read generically by the validator, not a hard-coded source, so a later source is one more entry; (b) a claim on an ABSENT row is rejected (there is no value to claim about), and an ABSENT row carries none; (c) `measured` and `inferred` are existing words of the repo's claim vocabulary, so the census is expected to show many hits and the finding states that the meaning is the same, so the column adds a field and no new meaning; (d) the 0.4.1 checker `p140_contract041.py` is red on a 0.4.2 file by design (its version pin), like `p137_contract040.py` before it; I amended its generic validator to honour `required_unless_absent` so that both chains read the same rule; (e) the 0.4.0 and 0.4.1 tests are in the grant for a 14-line bound each because they pin the version literal and the contract's top-level optional hash.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell, one write surface (the contract file and its tests), worker `0.9.0_WK_IRPT_DASHBD~223`.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; validated against a scratch reference contract (green) and 26 single-fault mutants of it (all red), the census recount against a tampered count (red)):** `checks/r142/p142_contract042.py` (DB142-1-AC1..AC3).
