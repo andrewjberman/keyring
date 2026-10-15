@@ -416,6 +416,29 @@
     "spec_asserts": "RV-r-1 cell: a custom property set on the panel root is inherited by every control inside it, so nothing else needs to move; the cell edits only portal/src/index.css and its test.",
     "world_is": "The remap is scoped to [data-panel-surface=light], so every element inside a light panel that spells palette-mediumGray now resolves to the navy ink, including the four partner-page status dots and the ExecManagementTab dot that paint a fill. An idle grey dot inside a light panel reads as navy, a change of meaning the cell did not name.",
     "notes": "Filed, not fixed: the cell grants only index.css and its test, and the page files are outside it."
+  },
+  {
+    "id": "DSGN_RBNDV2-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~RB",
+    "surfaced_at": "2026-10-15T06:50:00Z",
+    "one_line": "On /market with live data inside the white panels, the heat tables and tiles keep dark navy grounds (the old --bg-header, --bg-medium, --bg-card and --semantic-background-contentPanel tokens) while the light-panel ink rule turned their white text to navy: names read navy on navy, 141 text elements under 3:1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- disarmed when the scoped surface-token remap (addendum cell RV-r-2) lands and /market reads in the COO's close run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ui-walk of /market on the merged feature branch via dev:live on 5174, signed in as the walker, 2026-10-15 06:33Z: finding design:contrast 141 text element(s) under 3:1; first sample text 'Trump Announces $80B Taiwan LNG Deal' ratio 1.44, color rgb(10, 23, 51) on background rgb(37, 52, 86) (walk folder tmp/ui-walk/20261015T063315Z, gitignored)",
+        "portal/src/components/PerformanceHeatMap.tsx lines 114, 161, 173, 245, 296 and BenchmarkHeatmap.tsx lines 284-286: grounds spelled bg-[hsl(var(--semantic-background-contentPanel))], --bg-header, --bg-medium, --semantic-background-hover; ExecutiveSummary.tsx lines 673, 776, 794, 959, 992, 1110: --bg-medium, --bg-card, --bg-header",
+        "portal/src/index.css: --bg-header, --bg-medium, --bg-card, --bg-dark, --bg-medium-alt all alias --bg-band (the dark field)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD FWD-4 ACCEPT: heat maps shade white to silver, none left in the old blue scale; FWD-3 ACCEPT: no stacked dark strips, panels read white; FWD-1: the page shows real figures and reads as Opal's work.",
+    "world_is": "The 'blue scale' is the navy ground of the heat tables (PerformanceHeatMap, BenchmarkHeatmap) and the dark tiles, not a hue ramp in the eight F10 files, which is why the RV-h-1 worker found no blue literal. The ink rule (RV-t-1 c) flips their white text to navy while their ground stays navy.",
+    "notes": "Ruled inside the COO's own decomposition (obligation 7): addendum 2, DIRECT-ACT cell RV-r-2, scoped token remap of the old dark surface tokens inside [data-panel-surface=\"light\"] to white and silver, no page file edited. Heat cell premise finding goes to the CTO in the drain-end message."
   }
 ]
 ```

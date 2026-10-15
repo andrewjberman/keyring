@@ -119,3 +119,13 @@ graded the amendment (the L6 gate grades newly-added orders; the coverage limb i
 | cell | what it builds | serves | writes | reads (never writes) | risk |
 |---|---|---|---|---|---|
 | `RV-r-1` | DIRECT-ACT: ONE unlayered rule block in `portal/src/index.css`, selector `[data-panel-surface="light"]`, that redefines `--palette-white` to the navy ink `#0A1733` and `--palette-mediumGray` to the quiet ink `#4A5878`, each as an `H S% L%` triple like the theme's own, so every control inside a light panel that spells its ink with those two tokens reads navy and quiet-navy; nothing outside the scope changes | FWD-3, FWD-1 | `src/index.css`, `src/__tests__/dsgn-rbndv2/rb-1-r.*` | `src/ui/components/Controls.tsx`, `design/themes/opal-capital.css` | LOCAL |
+
+**Addendum 2 (issuer, 2026-10-15 ~06:5xZ):** one more DIRECT-ACT cell, from surprise row `DSGN_RBNDV2-S3`, found in the COO's live-data walk of
+`/market` on the merged branch. The heat tables and tiles inside the white panels keep dark navy grounds spelled with the old surface tokens, and
+the cell-t legibility rule turned their white text navy (141 text elements under 3:1). This is also where the 'blue scaling' of FWD-4 lives. Gate
+limb: none graded the amendment.
+
+| cell | what it builds | serves | writes | reads (never writes) | risk |
+|---|---|---|---|---|---|
+| `RV-r-2` | DIRECT-ACT: ONE unlayered rule block in `portal/src/index.css`, selector exactly `:root [data-panel-surface="light"]`, redefining inside a light panel: `--semantic-background-contentPanel`, `--bg-medium`, `--bg-card`, `--bg-dark` and `--bg-medium-alt` to white `#FFFFFF`; `--bg-header` to the silver tint `#EEF1F6`; `--semantic-background-hover` to `#E6EBF4`; each as an `H S% L%` triple. Every dark inner ground then reads white or silver and its (now navy) ink reads on it; nothing outside the panel changes | FWD-4, FWD-3, FWD-1 | `src/index.css`, `src/__tests__/dsgn-rbndv2/rb-1-r2.*` | `portal/src/components/PerformanceHeatMap.tsx`, `portal/src/components/BenchmarkHeatmap.tsx` | LOCAL |
+
