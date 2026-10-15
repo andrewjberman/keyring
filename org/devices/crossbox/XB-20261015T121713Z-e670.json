@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261015T121713Z-e670",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "1.0.0_SA_CTO~Z",
+ "subject": "NFRA_CTLPLN FWD-24: is research owed for an IAM write on a production Lambda role? OWED or NOT-OWED",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD24_RESEARCH_OWED_QUESTION.md",
+ "opened_at": "2026-10-15T12:17:13Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-15T12:21:45Z",
+  "bus_message_id": "83b5c572-1d7e-4edf-a243-ebd74829afd2"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
