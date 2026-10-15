@@ -9376,5 +9376,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W143-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~143",
+     "surfaced_at": "2026-10-15T19:21:27Z",
+     "one_line": "The pre-commit risk reflex held contracts.json and requirements.txt against deploy records I could not read in this sparse worktree, so the cited line was not read.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "TO section 1 edit e: 'No code reads this key (checked); the file must still parse as JSON.' The commit gate's risk reflex says: GO READ THE CITATION before this commit proceeds.",
+     "world_is": "safe-commit 25474a3d61 printed [risk-reflex] HOLD for lib/opal_data_harvest/contracts.json pointing at org/critical_paths/change_management/20261001T0938Z_amgt-resapp-r58-ah2-name-fix-redeploy_deploy_completion.md:15, and for requirements.txt pointing at four infra requirements.txt citations (d7-gateway-html-send-act3-20260821.md:96). That deploy-completion file is absent from this sparse worktree because org/critical_paths is outside the sparse cone, so the citation was not read. The hit may be a path-token match rather than a coupling; this is unverified. The commit landed; this cell ran no deploy or publish.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "safe-commit output at 25474a3d61: [risk-reflex] HOLD lib/opal_data_harvest/contracts.json -> org/critical_paths/change_management/20261001T0938Z_amgt-resapp-r58-ah2-name-fix-redeploy_deploy_completion.md:15",
+       "sed -n 12,17p of that path in C:/dev/wk-harvst-143 prints: No such file or directory (org/critical_paths is outside the sparse cone)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
