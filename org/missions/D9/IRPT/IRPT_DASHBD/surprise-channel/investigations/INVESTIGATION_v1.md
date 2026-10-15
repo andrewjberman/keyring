@@ -13054,3 +13054,58 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-227. The disarm owner is the integrator (0.0.0_AB_MSTR) because the commit gate is infrastructure; the CTO may reassign it. The row states the form only; it carries no client value."
 }
 ```
+
+## IRPT_DASHBD-D2-W402-S1 -- DBC114-3-AC1 FAILS on the checker's foreign-firm-token guard: five non_readers paths carry another firm's name in the file name
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W402-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~402",
+  "surfaced_at": "2026-10-15T01:53:00Z",
+  "one_line": "DBC114-3-AC1 FAILS on the checker's foreign-firm-token guard: five non_readers paths in the readers record carry another firm's name in their file names; the guard refuses them under the key paths",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-3 step 3 and criterion DBC114-3-AC1: the record lists each table's non_readers as a count and the paths; the criterion is graded by p114_bcw.py (ac_3) on the record's form and its internal consistency.",
+  "world_is": "Five repository paths listed under non_readers.paths (three under account_dim, two under account_return_daily) contain another firm's token in the file name. p114_bcw.py no_identifiers refuses any string value outside the keys where, prefix, words, basis_words and note that contains a firm token; list items inherit the key paths. The checker prints 'foreign firm token in field paths' and then 'DBC114-3-AC1 FAIL' (rc 1) on two runs. A scratch copy with those five paths removed passes ac_3 (diagnostic only, not committed). The record was not edited to clear the guard.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r114/p114_bcw.py@cf8ab92263 no_identifiers(): FOREIGN guard and the DIGIT_OK and whitelist keys",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~402/READERS_AND_CALENDAR_R114.json: tables.account_dim.non_readers.paths and tables.account_return_daily.non_readers.paths, five entries with another firm's name in the file name",
+      "python -I p114_bcw.py . DBC114-3-AC1 run from the worktree root: stdout 'foreign firm token in field paths' then 'DBC114-3-AC1 FAIL', rc 1, identical on two runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; no client value is recorded. The question for the COO is whether a non_readers list may name other-firm file paths under the key paths, or whether the guard should exempt repository paths. This worker has not edited the checker or the record to pass; the checker is outside this order's grant."
+}
+```
+
+## IRPT_DASHBD-D2-W402-S2 -- the resume packet's 'no reader found' for account_return_daily is incomplete: firm-generic readers exist and none is bound to the Cottonwood prefix
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W402-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~402",
+  "surfaced_at": "2026-10-15T01:53:00Z",
+  "one_line": "The packet's 'no reader found' for account_return_daily is not the whole world: three firm-generic files open the returns gold prefix and three open the holdings gold prefix, but none is bound to a Cottonwood prefix",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-3 Why: the resume packet recorded 'no reader found' for account_return_daily and could not grade it; this cell is to settle which served or scheduled code reads each Cottonwood gold table.",
+  "world_is": "Three files open the account_return_daily gold prefix (two infra handlers and the custody report figures) and three open the holdings gold prefix (the producer's guard reader, one infra handler, the holdings port). Each resolves its firm from the declared custody source, and the declaration holds one custody source that is not Cottonwood. The only Cottonwood entry in that declaration is an underscore-prefixed method-fields-only object that no compute path reads. No served or scheduled code reads a Cottonwood gold prefix today. account_dim has no reader, and its Cottonwood adapter writes nothing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py@cf8ab92263 _gold_objects and _read_rows (account_return_daily table prefix, firm from the declared source)",
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py@cf8ab92263 DECLARATION_SOURCE and _returns_paths, _load_returns",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@cf8ab92263 top-level keys: one custody source object and one underscore-prefixed method-fields object; _reserved_keys_comment states the structural rule that a non-underscore object is a source",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py@cf8ab92263 emit_account_dim raises NotImplementedError: writes nothing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The packet's conclusion holds for code bound to Cottonwood (none exists), but its wording 'no reader found' does not match the generic readers, which would read a Cottonwood prefix if a Cottonwood custody source were declared. Carried for the CTO's read. No action taken by this worker."
+}
+```
