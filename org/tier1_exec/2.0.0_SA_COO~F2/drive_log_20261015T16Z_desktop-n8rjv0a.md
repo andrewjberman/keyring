@@ -11,5 +11,5 @@ Every F-SHIP round (114-118) is closed and slugged; the only acts of these hours
 
 ## State
 - Candidate `cand/dell2/irpt-default-performance-report` = portal 65f2e543 (30 commits over origin/PROD 5d646418; current PROD c3b21a40): local, not pushed, not registered.
-- Push state: origin/box/dell2 carried my commits through `ee359d687f` at the last read (ls-remote 09:2xZ); later commits LOCAL until the next box-sync.
+- Push state (measured 16:4xZ by `git merge-base --is-ancestor` against a fetched origin/box/dell2, f840c2bdef): `ee359d687f`, `16ec8e1fdf`, `31c164f492` and the row `3ba6251d8c` are ON origin; this log's own commit is LOCAL until the next box-sync.
 - Next: 2026-10-16 ~12:00Z re-check (hop 1's first fire, ~P2's pair, S70); then the first real run on DEV, the re-cut onto the current PROD and the registration.
