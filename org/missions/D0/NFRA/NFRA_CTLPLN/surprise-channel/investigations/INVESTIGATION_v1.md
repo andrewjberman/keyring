@@ -10093,3 +10093,136 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "A conservative deviation from the literal text, stated here so the CTO can rule on the wording. Refusal can only keep a worktree, never remove one, so it cannot widen what --go removes."
 }
 ```
+
+## NFRA_CTLPLN-W103-S1 -- a sparse worker checkout cannot commit until three gate folders outside its declared sparse set are added
+
+```json
+{
+  "id": "NFRA_CTLPLN-W103-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~103",
+  "surfaced_at": "2026-10-15T08:40:08Z",
+  "one_line": "The worker face says a sparse worktree holds .tools/, lib/, the project tree folder, org/ref/, docs/doctrine/ and the root files. The first safe-commit.sh of this order refused on three folders outside that set: org/modules/graph (commit-gate imports comp_constants_cli), org/devices (to-pipeline-gate reads DEVICES.json) and infra/logic/registry (naming-gate reads the registry). Each was added with git sparse-checkout add and the retry passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in worktree wk-NFRA_CTLPLN-103 (before the adds): .tools, docs/doctrine, lib, org/missions/D0/NFRA/NFRA_CTLPLN, org/ref",
+      ".tools/commit_gate_runner.py@wip commit 1 failure: ModuleNotFoundError comp_constants_cli; the index holds org/modules/graph/comp_constants_cli.py",
+      "org/devices/DEVICES.json missing -> lib/devices.py RegisterError from to-pipeline-gate.py; the retry after sparse-checkout add org/devices and infra/logic/registry committed c9b0463343",
+      "naming-gate line in the retry output: NAMING_SCHEMA.json under org/standards also absent; WARN window only, did not block"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "WORKER FACE RULES: the sparse checkout holds .tools/, lib/, the project tree folder, org/ref/, docs/doctrine/ and the root files; a missing folder is added with git sparse-checkout add and named in the report.",
+  "world_is": "A commit of a .py file through safe-commit.sh needs org/modules/graph, org/devices and infra/logic/registry in the sparse set (and org/standards is read by the naming gate, WARN only). The declared set does not cover what the commit gates read; in this worktree the first commit failed until the folders were added (one observation, one worktree).",
+  "notes": "Data for the CT-ag-2 sparse default: the default sparse set should carry the gate folders, or the gates should read from the tree they are run against. Not resolved by this worker."
+}
+```
+
+## NFRA_CTLPLN-W103-S2 -- a preserve commit records a directory junction's target content as worktree files; forced removal leaves the junction link and keeps the target
+
+```json
+{
+  "id": "NFRA_CTLPLN-W103-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~103",
+  "surfaced_at": "2026-10-15T08:40:08Z",
+  "one_line": "The preserve step runs git add -A on the worktree. A directory junction inside a dirty merged worktree is followed: its target's files are recorded under the junction path as ordinary blobs. The removal that follows keeps the junction link (the directory entry) and does not delete the target. A symbolic link could not be created on this box (WinError 1314), so its behaviour is not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratch probe .scratch/blind_probe.py at wk commit 5acfcae9a1: porcelain listed '?? junc/inner.txt'; preserve_dirt returned sha 1b23e212a18c73d731dedd0e2a1574aef337d6b0 with junc/inner.txt (blob f05648e7, 6 bytes) in the tree",
+      "scratch probe .scratch/junction_remove_probe2.py: git worktree remove --force rc=0; remaining entry in the worktree dir was the junction 'junc'; outside_dir/inner.txt survived",
+      "symlink creation in .scratch/blind_probe.py failed: WinError 1314 (privilege not held); not measured"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO NFRA_CTLPLN.TO-CT-ag-1 BUILD item 2: the preserve step commits the worktree's dirt with git add -A on a temporary index, honouring .gitignore; the cell names no junction or link case.",
+  "world_is": "A junction inside the worktree is traversed by git add -A, so content outside the worktree is copied into the preserve commit. Forced removal does not follow the junction into the target, but leaves the junction directory behind, so the worktree directory survives git worktree remove --force.",
+  "notes": "Filed for the CTO's ruling on link handling. No deletion of outside content was observed. The 51 MiB untracked file was preserved whole as one blob (53477376 bytes in the tree), with no size refusal in the preserve step."
+}
+```
+
+## NFRA_CTLPLN-S9126 -- worktree_gc reads its own command line as an in-use process when given an absolute path
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9126",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-15T09:00:37Z",
+  "one_line": "worktree_gc.py reads its own command line as a process that names the worktree: --check-removable and --only with an ABSOLUTE path report SKIP IN USE for every worktree; a relative path reads correctly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer run 2026-10-15 ~08:55Z on the merged worktree ctlpln-103: `python .tools/worktree_gc.py --check-removable C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-103` printed `NOT-REMOVABLE SKIP IN USE: a running process or scheduled task names this path`, rc 1; the same worktree with `../ajb_wk/ctlpln-103` printed `REMOVABLE-AFTER-PRESERVE MERGED own=5; 1 path(s) would be preserved`, rc 0",
+      ".tools/worktree_gc.py in_use_text() (about :235-250) lists every process command line, which includes the running gc process's own argument"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ag-1: --check-removable and --go --only take a worktree path and decide from the tree; a path alone does not make a worktree IN USE.",
+  "world_is": "The in-use scan matches the path against all process command lines, and the invoking process is one of them when the path is absolute and written in the same form the scan normalises to. The real --go on 2026-10-15 ran with a relative path and worked. Any caller that passes an absolute path (a drain script, MSTR) gets SKIP for every worktree, so nothing is removed and nothing is wrong beyond that. The fix is to exclude the tool's own pid (and its parent shell's command line) from the scan; a round-18 candidate.",
+  "notes": "Found by the issuer on the CT-ag-1 real run; not changed here."
+}
+```
+
+## NFRA_CTLPLN-W104-S1 -- the arm (a) fixture layout org/missions/D0/X/Y/CODE/task-orders/ cannot satisfy the project-folder rule org/missions/D*/*/<CODE>
+
+```json
+{
+  "id": "NFRA_CTLPLN-W104-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~104",
+  "surfaced_at": "2026-10-15T08:44:13Z",
+  "one_line": "The CT-ag-2 order's worker face names the temporary fixture layout org/missions/D0/X/Y/CODE/task-orders/ and the project-folder rule org/missions/D*/*/<CODE> in the same build; the rule matches one directory level under the macro and the fixture puts CODE two levels below D0, so no fixture of the stated shape can pass arm (a) with the rule as written. The worker built the fixture as org/missions/D0/X/CODE/task-orders/ (the shape the real tree uses) and kept the rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO NFRA_CTLPLN.TO-CT-ag-2 worker face, THE CELL and BUILD item 1: the project folder is the one directory org/missions/D*/*/<CODE> that exists at HEAD",
+      "TO NFRA_CTLPLN.TO-CT-ag-2 worker face, BUILD item 6 arm (a): mimics the layout org/missions/D0/X/Y/CODE/task-orders/",
+      "measured at 803d0303ef: .tools/wk-provision.sh cmd_provision project_folder check uses grep -E on org/missions/D[^/]*/[^/]+/<CODE>; the real tree holds org/missions/D0/NFRA/NFRA_CTLPLN"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BUILD item 6 arm (a): a temporary repository that mimics org/missions/D0/X/Y/CODE/task-orders/, with .tools/, lib/ and the project folder checked out by default; BUILD item 1: the project folder is the one org/missions/D*/*/<CODE> directory at HEAD.",
+  "world_is": "The two statements cannot both hold for one fixture: under D0/X/Y/CODE the glob finds no project folder. The test uses org/missions/D0/NFRA/PROJX (the real tree shape), so the rule is exercised as written; the stated fixture depth is not used."
+}
+```
+
+## NFRA_CTLPLN-W104-S2 -- BUILD item 5 (dispatch SKILL.md lines 216-227) cannot land: safe-commit's byte-budget gate refuses the growth the item needs
+
+```json
+{
+  "id": "NFRA_CTLPLN-W104-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~104",
+  "surfaced_at": "2026-10-15T08:51:40Z",
+  "one_line": "The CT-ag-2 build item 5 edit to .claude/skills/dispatch/SKILL.md grows the file by 580 bytes (33198 to 33778). safe-commit's byte-budget gate refuses any growth of a file already over its budget (SKILL.md budget 25600 bytes; it is 33198 at HEAD) and says a file over budget may only shrink. The item's text needs net growth inside that file, and the order forbids any change outside lines 216-227, so the item is not committed; the working copy was restored to HEAD and the proposed text is kept in the worker's scratch folder. The dispatch skill therefore still states the full-checkout recipe until this is ruled.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of 0.9.0_WK_NFRA_CTLPLN~104 on wk-NFRA_CTLPLN-104 (attempt over the HEAD 803d0303ef): BLOCKED: byte budget -- .claude/skills/dispatch/SKILL.md(33778>25600 bytes; HEAD 33198). A file over its budget may only shrink; one in, one out (report 3 section 5).",
+      "TO NFRA_CTLPLN.TO-CT-ag-2 worker face, BUILD item 5: edit .claude/skills/dispatch/SKILL.md lines 216-227 ONLY; change nothing else in that file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BUILD item 5: say the worktree is sparse by default, show the --order form, say a full checkout needs --full \"<reason>\", keep the HEAD derivation warning and the portal sentences; change nothing else in .claude/skills/dispatch/SKILL.md.",
+  "world_is": "The additions the item requires are net growth (+580 bytes) in a file already over its 25600-byte budget; the gate refuses growth of such a file, and the only in-scope way to offset the growth would be to shrink text outside lines 216-227, which the order forbids. Neither the order nor the gate names who may rule this; disarm owner for the ruling is the issuer.",
+  "notes": "Not worked around: no budget edit, no one-in-one-out edit outside the cited lines, no bypass. The three acceptance criteria CTag2-AC1..AC3 do not read this file."
+}
+```

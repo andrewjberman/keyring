@@ -75,3 +75,16 @@ Placing the list would make the check BLOCK, against that word.
 - The list copy pulled into the laptop's Downloads is deleted. dell1's live list makes its own check block, against the same
   word, so dell1 moves it aside as dell2 did on 10-11, unless Andrew says otherwise.
 - This seat's error: ruling 1 was written without reading the standing record.
+
+## ADDENDUM 2 (~08:5xZ 2026-10-15): ruling 2's premise was false
+
+Read by `2.0.0_SA_COO~CA`: `mail_poll.py:132` sends each mail as `ldo.send("mail:<message id>")`, so every mail is its own state
+object. The live table holds 59 distinct mail objects, and each real considered mail has `draft_seq` 1. A newer mail never
+overwrote an older draft; `mail:owner` existed only in a test fixture. The defect that round 19's pending-drafts list fixed
+(CA-k-1, deployed CA-k-4) never existed live. This seat ruled on that premise without reading the producer.
+
+- **The deployed `pending_list` stays.** It is harmless, at one entry per object. Removing it now would cost a deploy for no
+  benefit, so it is removed only as part of the next deploy that already touches `mail_requests.py`, never as its own act.
+- FWD-13 is unaffected: `mail_log` and one drafts row per object serve it.
+- **The lesson for this seat:** a ruling that cuts a product fix reads the producer that creates the state first, not only the
+  call's description of it.
