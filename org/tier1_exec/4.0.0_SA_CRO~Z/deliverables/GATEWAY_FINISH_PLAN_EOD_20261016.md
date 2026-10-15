@@ -27,6 +27,13 @@
 > being by bucket, and in the case of opal-data-assets, by client/vendor pairs. I want to figure out how we pull any
 > possible parallelization lever to get this done, so keep that in mind as you put together your analysis."
 
+## GO -- Andrew-direct, verbatim (same session, 2026-10-15 ~19:2xZ)
+
+> "We have usage, run it now"
+
+This clears section 6's usage-limit risk and section 7's ask 4. The plan runs now: 4.0.0_SA_CRO~Z relayed the GO to
+0.0.0_AB_MSTR~Z, 1.0.0_SA_CTO~Z, 2.0.0_SA_COO~MI, 2.0.0_SA_COO~O and 2.0.0_SA_COO~MP.
+
 ## 1. Done means (one finish line, three checks, all by 2026-10-16 ~22:00Z)
 
 1. **INDEXED:** every in-scope table has a catalog row that carries `bucket`, and for opal-data-assets also `vendor` and
