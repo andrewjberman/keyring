@@ -15707,6 +15707,36 @@ name the one known failure instead of silently inheriting it.
 
   ```json
   {
+    "id": "NFRA_OPLGTW-Z-S133",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T00:30:34Z",
+    "one_line": "The /yearinreview page's SERVED bytes depend on which worktree deploys, so OG-ap-18's Phase B would silently change them. The path carries .gitattributes text=set eol=lf, so the blob is LF (3bbd5ab2) and every CLEAN checkout materialises LF -- but OG-yr-1 deployed from a tree whose WORKING COPY held the CRO's original CRLF bytes (0d828b51), and the deploy tars the working copy. git reports that path CLEAN in both trees, because eol=lf normalises on read. A deploy from the ap-18 v3 tree would move the host's page from 0d828b51 to 3bbd5ab2 -- identical content, 344 line terminators -- and yr1.AC2 would then read host-md5 != source and FAIL against a correct deploy.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/og-rel-gt3 (fresh checkout at bf7ffb62f4): on-disk md5 3bbd5ab2d325657020357003c3ea387d, 47891 bytes, 0 CRLF",
+        "C:/tmp/og-rel-yr2 (the tree that deployed): on-disk md5 0d828b51d433a24f7e2ef2e6ea7967ee, 48235 bytes, 344 CRLF",
+        "BOTH trees' blob at HEAD is the SAME: 3bbd5ab2d325657020357003c3ea387d, 47891 bytes, 0 CRLF -- so the difference is the WORKING COPY, not the content",
+        "git status --porcelain for that path is EMPTY in both trees; git check-attr reads text: set / eol: lf in both, which is exactly why a CRLF working copy is not reported as dirty",
+        "the host serves 0d828b51 (measured through the installed code at 00:0xZ, W/YR_SERVED.json) -- consistent with the yr-1 deploy having tarred og-rel-yr2's CRLF working copy",
+        "48235 - 47891 = 344, exactly the CRLF count, so the two forms differ by line terminators and nothing else",
+        "deploy-to-ec2.sh:265-269 tars the gateway dir from the WORKING TREE, never from a blob or an archive of HEAD"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-yr-1's ask and W/yr_release.json both state that a clean checkout re-materialises the CRLFs and that the host will therefore always receive 0d828b51; amendment A3 set that value as the served-page oracle. OG-ap-18's BOUNDS say the release's files only, which does not contemplate changing a page it never touches.",
+    "world_is": "A clean checkout materialises LF, measured above -- so that sentence of mine is FALSE and I wrote it as measured. What I actually measured for yr-1 was a re-hash of a working copy that already held CRLF, which cannot distinguish the two cases. The LANDED STATE IS STILL CORRECT AND NEEDS NO REDEPLOY: the host serves the CRO's page bytes, the data date is present, and yr1.AC2 passed against what is genuinely live. What is wrong is the RECORD's reason, and the forward consequence: the served form is a property of the deploying TREE rather than of the release, so it is not reproducible, and the next release from any clean tree moves it. I have corrected the two yr-1 records in the same commit as this row.",
+    "notes": "Two routes, and this seat picked none because it decides what three halves are signing. (a) ADOPT THE LF FORM: let ap-18's deploy ship the blob's bytes, amend yr-1's A3 oracle and W/YR_SERVED.json to 3bbd5ab2, and accept a one-time 344-terminator change to a served page whose rendered content does not change. Stable forever after, because every clean checkout reproduces it -- RECOMMENDED. (b) PRESERVE 0d828b51: write the CRLF bytes into the ap-18 deploy tree's working copy before the deploy so the page is a 0-diff. Keeps the record true and the host byte-stable, but it makes the served artifact a property of the deploy tree again, which is the same shape A6 already had to rule on for lib/trading_calendar.py. Either way the ask must say it, because a half signing 'the release's files only' would not expect a page outside the take-list to move. The general lesson is the one worth keeping: UNDER eol=lf, A CRLF WORKING COPY IS NOT DIRTY, so 'git status is clean' does not mean 'my working copy equals the blob' -- and when the shipping mechanism reads the WORKING TREE while the record reasons about the BLOB, the two can disagree indefinitely with no instrument complaining. Compare the bytes the shipper will actually read, in the tree it will read them from."
+  }
+  ```
+
+  ```json
+  {
     "id": "NFRA_OPLGTW-Z-W84-S1",
     "project": "NFRA_OPLGTW",
     "fabric": "site-z",

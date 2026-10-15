@@ -98,6 +98,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-19.g3-g6-tools-release.proof
 - Staged: Phase A waits on ap-18 and yr-1 closing; the GO for Phase A is the issuer's message citing this order.
 - Pre-cut: ap19.AC1 and ap19.AC2 base FAIL as expected (g36_release.json and G36_SERVED.json absent).
 
+- A1 (issuer, 2026-10-15 ~00:1xZ, row Z-S132): the release worktree carries `infra/logic/` in its cone (its registry feeds `lib/opal_naming.py address()`, which `deploy-to-ec2.sh` calls for the `.env` S3 roots); prove it with a no-upload dry read of the script's naming step before Phase B. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>37</round>
 <workstream>G3G6-RELEASE</workstream>
