@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.11",
+ "prd_version": "v0.12",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -360,3 +360,23 @@ a sweep of the ratified sections (lines 1-169) for "later enrichment", "commenta
 found only these lines.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.12 (2026-10-15 ~15:2xZ, 1.0.0_SA_CTO~DELL2) -- Andrew-direct ~14:xxZ: "Did you mean" at the filing point; swaps stay in the backend
+
+Andrew, verbatim (recorded by `4.0.0_SA_CRO~DELL2A`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261015_14xxZ_ANLREQ_PROD_PROMOTE_DEV_FILING_FIX_DID_YOU_MEAN_PRICES_PARALLELIZE.md` @cb91dbe30a):
+*"We do need to sort out the "Did You Mean" at the Request filing point. The swaps can be handled later in the backend process, because swaps
+are not up to the filer."*
+
+**CONTRACTS gain C-FILING-HINT** (the ENDPOINT is unchanged, so under the proportionate sign-off rule only a formality re-sign is owed):
+1. On the Ticket Center filing form, a holding whose symbol is not in the served catalogue shows ONE suggestion: "Did you mean <symbol>
+   (<name>)?". It is the closest catalogue entry by exact CUSIP or ISIN match first, then the ticker edit distance, then the name.
+2. The filer accepts it (the row takes the suggested symbol) or keeps their own. **Nothing is replaced without the filer's click.** A kept
+   unknown symbol files as typed and goes to the backend.
+3. **Swaps are not the filer's:** C-SWAP (the class-matched replacement, the longest history winning) runs only in the backend producer, after
+   filing, and the report names any swap. The form never offers a swap.
+4. The suggestion reads only the served catalogue the form already loads (no new vendor call at filing) and works for the staff filer (J7)
+   after a firm is chosen.
+
+**Prices (unchanged, restated):** C-PRICES as ruled at hop 9: the estate stores, then Yahoo (yfinance, cut at T-1), then YCharts per symbol,
+then C-SWAP, else the report runs without the security and names it.
+
