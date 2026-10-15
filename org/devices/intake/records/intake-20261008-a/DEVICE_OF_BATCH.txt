@@ -1,0 +1,2 @@
+laptop
+Route rule C-INTAKE: the laptop alone fetches, so this batch's two fetch records (intake-20261008-a, written 2026-10-08 before the device key existed, both fetched_by 2.0.0_SA_COO~C, a seat listed in org/devices/state/laptop/seats.json) are declared to the laptop.
