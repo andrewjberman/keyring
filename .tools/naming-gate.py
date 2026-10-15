@@ -1146,6 +1146,48 @@ def _row_tf_file(post_text, line_no):
     return None
 
 
+_LAMBDA_SRC_PREFIX = "infra/aws/lambda/"
+
+
+def _row_of_line(post_text, line_no):
+    """(row key, row dict) of the source-map row that holds line `line_no` (1-based), or (None, None) when it cannot be placed."""
+    lines = post_text.split("\n")
+    for i in range(min(line_no, len(lines)) - 1, -1, -1):
+        m = re.match(r'^ {4}"([^"]+)"\s*:\s*\{', lines[i])
+        if m:
+            try:
+                row = json.loads(post_text).get("functions", {}).get(m.group(1))
+            except (ValueError, AttributeError):
+                return None, None
+            return (m.group(1), row) if isinstance(row, dict) else (None, None)
+    return None, None
+
+
+def _artifact_key_cited(mod, post_text, line_no, line_text, value):
+    """3.0.0_SA_CVO third follow-on (CVO_RULING_NAMING_LIMB_SOURCE_MAP_CITATION_NOT_MINT_20261004.md, row IRPT_DASHBD-D2-W410-S2): the
+    row's own `artifact_s3_key` line CITES `<P>/<K>.zip` iff (a) the value is exactly that, (b) K is the row's own key and
+    _builder_reproduces(K), (c) P equals the row's `pipeline` AND the first segment of its `source_dir` after infra/aws/lambda/, and
+    (d) P carries no firm token. Any limb failing leaves the literal graded."""
+    if not re.match(r'^\s*"artifact_s3_key"\s*:\s*%s\s*,?\s*$' % re.escape(json.dumps(value)), line_text):
+        return False
+    key, row = _row_of_line(post_text, line_no)
+    if key is None or not value.endswith("/%s.zip" % key):
+        return False
+    prefix = value[:-len("/%s.zip" % key)]
+    src = row.get("source_dir")
+    if not prefix or "/" in prefix or not isinstance(src, str) or not src.startswith(_LAMBDA_SRC_PREFIX):
+        return False
+    if row.get("pipeline") != prefix or src[len(_LAMBDA_SRC_PREFIX):].split("/")[0] != prefix:
+        return False
+    for tok in re.split(r"[-_/]", prefix):
+        try:
+            if (mod.lookup(tok) or {}).get("class") == "FIRM":
+                return False
+        except Exception:  # noqa: BLE001 -- an unreadable lookup is a miss
+            continue
+    return _builder_reproduces(mod, key)
+
+
 _CHANGELOG_RE = re.compile(r"^infra/aws/terraform/[^/]+/CHANGELOG\.json$")
 _CHANGELOG_ARRAYS = ("functions_updated", "functions_with_source_changes")
 
@@ -1228,6 +1270,8 @@ def _source_map_name_citations(mod, path, added, lits, post_text=""):
         elif re.match(r'^\s*"tf_resource"\s*:\s*%s\s*,?\s*$' % re.escape(json.dumps(lit.value)), line_text) \
                 and _tf_address_cited(_row_tf_file(post_text, lit.line), lit.value):
             lit.permitted = True  # the follow-on ruling: a tf_resource whose module and resource are declared at HEAD
+        elif _artifact_key_cited(mod, post_text, lit.line, line_text, lit.value):
+            lit.permitted = True  # the third follow-on: <pipeline>/<own row key>.zip, the key builder-reproduced
 
 
 _GITATTR_BINARY_TOKENS = ("binary", "-diff")
