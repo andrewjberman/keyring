@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~124</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in worker tree wk-NFRA_CTLPLN-124 @621ed1cfcb (merged 0efcd4e8c0): CTam2-AC1 HYGIENE-GUARD arms=6/6 ok=True; CTam2-AC2 HYGIENE-CHECK8 awaiting=True release_refused=True ok=True; CTam2-AC3 HYGIENE-LEGACY device=laptop requests=8 files=2 attributed_by=batch unattributed=0 ok=True; diff paths inside the order; proof instance VALID in the main tree. Rows W124-S1/S2/S3 OBSERVATION, INERT. The committed nerves-risk-edges.json keeps its old header until the next main-tree build. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
