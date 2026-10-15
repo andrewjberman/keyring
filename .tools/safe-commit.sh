@@ -1181,7 +1181,10 @@ if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
     fi
     rm -f "$NGATE_DIFF" "$NGATE_DIFF.err" "$NGATE_STAGED" 2>/dev/null || true
     if [ "$NGATE_PLACE_HIT" -eq 1 ] && [ "$NGATE_ENFORCE" -ne 1 ]; then
-      for _nf in "${NGATE_FILES[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
+      # W99-S1 (NFRA_CTLPLN round 16, CT-af-3): unstage EVERY path this call staged (IN_SCOPE), as the ENFORCE branch does
+      _ng_all=()
+      while IFS= read -r _nf; do [ -n "$_nf" ] && _ng_all+=("$_nf"); done <<< "$IN_SCOPE"
+      for _nf in "${_ng_all[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
       echo "ERROR: BLOCKED -- the naming limb's placement step refused (LGIC_BLANKFIX FWD-6, org/mcp/naming-place.enforce present). Commit aborted; files unstaged." >&2
       _np_unwind
       printf '%s\n' "$NGATE_OUT" | sed 's/^/  [naming-gate] /' >&2
