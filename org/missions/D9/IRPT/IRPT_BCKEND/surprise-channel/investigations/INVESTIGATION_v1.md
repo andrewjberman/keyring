@@ -35418,3 +35418,125 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The 2026-07-01 positions hole predates the stated stop and is not explained by it. No artifact read gives another cause for that date. The 2026-09-28 positions hole is after the stop, when the raw feed ran on other days, so the stop alone does not explain it either."
 }
 ```
+
+## IRPT_BCKEND-D2-S180 -- Dispositions on worker 394's rows and the answer on W302-S2: the two Orion days never reached the mirror (parquet only; transactions and performance absent at the source)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S180",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T03:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 394's rows (D2-W394-S1 to S5) and the answer to the CTO's ask on W302-S2: the two days never reached the mirror because the Inflection source bucket holds only a .parquet positions object for them and no transactions or performance object at all, and the mirror copies .jsonl.gz only; the re-pull is not a re-run of one lambda.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB199-1 AC1 to AC3 on the worker's tree (PASS) and the proof instance (VALID); merge d3bbb5dd46; deliverables/0.9.0_WK_IRPT_BCKEND~394/IB199-1_orion_gap_read.json",
+      "the record: 12 of 12 target-partition counts read 0; source LIST (opal-data-inf bronze): positions 2026-07-01 and 2026-09-28 hold 1 key each, a .parquet, and 0 .jsonl.gz; transactions and performance hold 0 keys for either day; the mirror copies only .jsonl.gz (opal-assets-ingest-mirror lambda_function.py:77 and :493); the silver sweep builds its expected set from the bronze listing (mirror_conversion.py:875)"
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 7914: the Orion pull belongs to IRPT_BCKEND under the 6 AM ET fold; re-pull the two dates under a never-widen pair, and ask why the scheduled pull skipped them.",
+  "world_is": "DISPOSITIONS. D2-W394-S1 (stale schedule text), S3 (no repo writer of the flat .jsonl.gz positions key; the repo pull writes parquet), S4 (14-day log retention, the gap-day logs are gone), S5 (2026-07-01 is parquet-only and before the header's stated raw stop): INERT, recorded. D2-W394-S2 (the 16:00 UTC silver sweep cannot see a feed whose bronze key never landed): stays ARMED, owner me; disarm condition: the CTO rules the re-pull route and the sweep's expected set names the missing days or the feed is covered by the 06:00 ET fold (the fold covers none of the 155 live rules for this feed). THE ANSWER TO 'WHY': inferred, not measured: no artifact states why the raw producer wrote no .jsonl.gz for the two days; measured: the source holds only parquet for positions on both days and nothing for transactions and performance. THE RE-PULL: needs a raw .jsonl.gz writer that the repo does not hold (not located), at least 640 Orion positions requests (320 households times 2 dates; transactions and performance counts not read) and the vendor JWT object by name; it is a vendor-write pair, not one lambda re-run. Recommendation: the next cell locates the raw producer of the 2,358 existing .jsonl.gz objects and costs the re-pull per feed; the pair is cut after it."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W395-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~395",
+  "surfaced_at": "2026-10-15T03:09:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-551 hop 3: the premise that the new route reuses the summary's named-account reader (_summary_named_accounts) does not hold; the filled document nests its accounts and carries no firm or client_id key, so the pair needs a new reader.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/entry.py@2a914408b8 lines 317-329 read by 0.9.0_WK_IRPT_BCKEND~395: the reader refuses unless the document's firm and client_id match the request and names accounts from accounts and unpublished_account_ids",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@2a914408b8 lines 110-122: document.shape and filled_report.top_level_keys (household and values only; accounts nested under household)"
+    ]
+  },
+  "spec_asserts": "The new route reuses the summary's named-account reader, _summary_named_accounts, and _check_covered, for its scope check (RD_REPORT_SERVE_PATH_R114.json proposed_route.words).",
+  "world_is": "At HEAD _summary_named_accounts (entry.py lines 317-329) reads the summary's own firm, client_id, accounts and unpublished_account_ids keys. The filled document carries household and values only, with its accounts at household.accounts and no firm or client_id key. A reuse as written refuses every filled document (it fails safe), so the reader is a new function in the pair. _check_covered itself is reusable as the design states.",
+  "notes": "Recorded in IB199-3_serve_path_design.json (scope_rule and hops 3) and SERVE_PATH_PAIR_PACKET_V1.md section 3."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W395-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~395",
+  "surfaced_at": "2026-10-15T03:09:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-551 hop 3: the premise that the route owner must add an IAM read on the new key does not hold at HEAD; the reporting-read role already reads the whole platinum reporting prefix and the API invoke grant already covers the path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-read/locals.tf@2a914408b8 lines 46-47 (irpt_rr_platinum_prefix and irpt_rr_platinum_read_arns) and lines 72-75 (the route keys)",
+      "infra/aws/terraform/investor-reporting/reporting-read/iam.tf@2a914408b8 lines 71-77 (s3:GetObject and s3:GetObjectVersion on local.irpt_rr_platinum_read_arns); infra/aws/terraform/investor-reporting/reporting-read/api.tf@2a914408b8 lines 44-50 (source_arn ends in GET/api/scoped/investor-reporting/reporting/*)"
+    ]
+  },
+  "spec_asserts": "The route owner must add an IAM read on the new key (RD_REPORT_SERVE_PATH_R114.json proposed_route.words).",
+  "world_is": "At HEAD the reporting-read role's read grant covers the whole platinum reporting prefix, which a new client=<id>/filled_report.json key falls under, and the API invoke grant covers every GET under reporting/ including the new path. The design therefore records new_iam false with these file lines. Whether the existing grant is the intended scope of the new object is for the CTO's signature, not for this worker.",
+  "notes": "Recorded in IB199-3_serve_path_design.json (blast_radius.new_iam false) and SERVE_PATH_PAIR_PACKET_V1.md section 4."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W395-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~395",
+  "surfaced_at": "2026-10-15T03:09:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-551 hop 2: the publisher is to publish the filled report, but no production writer of the document exists and no landing address for it is named; the input contract's source is absent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@2a914408b8 line 53 (writer: the sample builder only, no other writer)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~141/build_sample.py@2a914408b8 line 7 (WRITES private folder only: HOUSEHOLD_SAMPLE.json)"
+    ]
+  },
+  "spec_asserts": "Hop 2 publishes the filled report as a platinum object (order hop 2; RD_REPORT_SERVE_PATH_R114.json hop 2), so the publisher has a filled-report document to publish.",
+  "world_is": "At HEAD the only writers of document.filled_report are the private-folder sample builders (~141 build_sample.py line 7; ~175 build_sample_inflection_r110.py line 25). The publisher, the handler and the export read no filled document, and no landing address for one is named in the repository. The design records the input claim as absent and asks the CTO who writes the document and where it lands before the pair is signed.",
+  "notes": "Recorded in IB199-3_serve_path_design.json (input_contract claim absent) and SERVE_PATH_PAIR_PACKET_V1.md section 2."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W395-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~395",
+  "surfaced_at": "2026-10-15T03:09:43Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-551 hop 2: the order says a builder refusal is the trigger for a missing registry row; at HEAD the naming builder accepts the new object name without refusal, so the registry need rests on the closed family set in reporting_policies.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@2a914408b8 address() at line 2515, run by 0.9.0_WK_IRPT_BCKEND~395 with client=PLACEHOLDER and object filled_report.json: returned the address with no refusal",
+      "infra/logic/registry/reporting_policies.json@2a914408b8 lines 48-52 (family set of irpt-dashbd-served-reporting: SERVED_MANIFEST, SERVED_SERIES, CLIENT_SUMMARY); scopes.json@2a914408b8 line 340 (reporting_policies.json closes the family set)"
+    ]
+  },
+  "spec_asserts": "A builder REFUSAL is the signal for a missing registry row (the order's hop 2 and the CLAUDE.md rule 30 pattern), so registry_row_needed is read off the builder's answer.",
+  "world_is": "lib/opal_naming.py address() accepts the proposed object name filled_report.json and returns the address with no refusal. The registry need therefore rests on the closed family set in reporting_policies.json, not on a builder refusal. The design records registry_row_needed true on that basis and does not type any address.",
+  "notes": "Recorded in IB199-3_serve_path_design.json (hops 2 address_builder_output and registry_row_needed) and SERVE_PATH_PAIR_PACKET_V1.md section 1."
+}
+```

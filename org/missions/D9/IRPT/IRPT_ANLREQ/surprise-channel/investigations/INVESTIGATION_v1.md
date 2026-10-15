@@ -16577,3 +16577,166 @@
   "notes": "The record gives the code's order, upload then ticket then analysis then record. The run order must follow the code."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W148-S1 -- a tracked file named portal-test-login.env sits in the frontend-dev skill folder, and this read did not open it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W148-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~148",
+  "surfaced_at": "2026-10-15T03:10:44Z",
+  "one_line": ".claude/skills/frontend-dev/portal-test-login.env is tracked in git (not ignored); the name suggests a login credential. This read listed it and did NOT open it, so whether it holds a live secret is UNKNOWN from this read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "The FWD-1 driver read (TO-AR-y-344) asks which tracked page drivers already sign in; the TO's read is bounded to source and forbids printing any key, token or password.",
+  "world_is": "git ls-files on this worktree lists both .claude/skills/frontend-dev/SKILL.md and .claude/skills/frontend-dev/portal-test-login.env. git check-ignore reports no ignore rule for the env file. Its contents were not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files .claude/skills/frontend-dev/ @cad248d9f8 lists portal-test-login.env (this worktree)",
+      "git check-ignore finds no rule for .claude/skills/frontend-dev/portal-test-login.env @cad248d9f8",
+      ".claude/skills/frontend-dev/SKILL.md:68 describes a stubbed-auth pattern and does not name the env file's contents @cad248d9f8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "notes": "Form only. The owner must read the file's key names (not values) and decide whether it is a credential in git. Nothing was opened or printed by 0.9.0_WK_IRPT_ANLREQ~148."
+}
+```
+
+## IRPT_ANLREQ-D2-W148-S2 -- the walker's disarm login check counts HTTP 403 as refused, and so does the origin gate, so the proof cannot tell an origin refusal from a password refusal
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W148-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~148",
+  "surfaced_at": "2026-10-15T03:10:44Z",
+  "one_line": "ui_walker_account.py treats HTTP 401 or 403 from /auth/login as REFUSED. The origin gate answers 403 to any request without the verify header, so the disarm proof cannot separate an origin refusal from a password refusal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ui_walker_account.py disarm proves a login with the old password is refused (module docstring: the stored password is dead once the row's hash is unusable).",
+  "world_is": "_login returns refused for (401, 403) (ui_walker_account.py:171). auth-handler index.ts:220-222 returns 403 Forbidden for any request whose origin header fails, before any password is checked. Through the distribution the header is injected, so the live proof is not wrong today; the test simply cannot tell the two refusals apart.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/ui-walk/ui_walker_account.py:171 @cad248d9f8 returns e.code in (401, 403) as refused",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/index.ts:222 @cad248d9f8 returns 403 Forbidden before the credential is checked",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/index.ts:220 @cad248d9f8 is the origin gate branch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Hash replacement (ui_walker_account.py:185-189) is the real disarm; the login proof is a second check. The FWD-1 driver must require 401 if it reuses this check."
+}
+```
+
+## IRPT_ANLREQ-D2-W148-S3 -- a disabled row with the right password returns HTTP 500 Internal server error, not a 401 or a 403
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W148-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~148",
+  "surfaced_at": "2026-10-15T03:10:44Z",
+  "one_line": "login() throws Account disabled for a non-active row, and index.ts has no branch for that message, so the caller gets HTTP 500 Internal server error instead of a refusal the client can read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The walker's safety model says a disabled account refuses login (ui_walker_account.py docstring: auth-handler refuses login AND refresh on status != active).",
+  "world_is": "auth.ts:106-107 throws Account disabled after the password check. index.ts:497-510 maps only the messages containing Unauthorized, Invalid email or password, required, Invalid, not found and already exists; Account disabled matches none, so the default 500 applies (index.ts:510). The refusal is still a refusal (no session is minted), but it reads as a server fault.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/auth.ts:107 @cad248d9f8 throws Account disabled",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/index.ts:510 @cad248d9f8 returns errorResponse(500, 'Internal server error')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No session is minted on this path, so no access is granted. The oddity is the status code and the message the client sees."
+}
+```
+
+## IRPT_ANLREQ-D2-W148-S4 -- the R29 IV form writes tier internal on the user row, and login never reads that attribute
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W148-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~148",
+  "surfaced_at": "2026-10-15T03:10:44Z",
+  "one_line": "The R29 recipe writes a tier internal attribute on the synthetic user row and says the JWT carries the same. The auth handler computes the token tier from firmId and never maps a tier attribute from the row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD1_PREREQ_READ.json (AR-y-342 record) states the R29 IV form: tier internal on the row, and the JWT carries the same.",
+  "world_is": "jwt.ts:168 sets tier from user.firmId === opal-capital, and getUser (db.ts:139-169) maps no tier attribute. A row written with tier internal and a firmId other than opal-capital would get an advisor tier; a row with firmId opal-capital gets internal whatever its tier attribute says.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts:168 @cad248d9f8 computes tier from firmId",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~146/r41/FWD1_PREREQ_READ.json:506 @cad248d9f8 records tier internal as an attribute of the row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The row's tier attribute is decorative for login. The firmId is what decides the tier."
+}
+```
+
+## IRPT_ANLREQ-D2-W148-S5 -- the walker's read-only invariant forbids the writes the FWD-1 filing needs, so the walker cannot be reused as it stands
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W148-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~148",
+  "surfaced_at": "2026-10-15T03:10:44Z",
+  "one_line": "The UI walker is read-only by construction: its guard admits five POST paths and its DO_NOT_CLICK list refuses submit, upload, create and save. The FWD-1 filing needs four POSTs and a file upload, so the filing driver must be a separate script with its own flag.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The walker SKILL says it is read-only by construction and that a guarded write stays out of reach by design (SKILL.md Read-only by construction; Known limits).",
+  "world_is": "walk.mjs:138 admits /auth/login, /auth/refresh, /auth/logout, directory/resolve and selections only; walk.mjs:140 refuses button text matching submit, upload, create, send and save. The filing POSTs (analysis/inputs, tickets, analysis, tickets/<id>/report) and the Submit control are therefore outside the walker's reach.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/ui-walk/walk.mjs:138 @cad248d9f8 lists the five admitted POST paths",
+      ".claude/skills/ui-walk/walk.mjs:140 @cad248d9f8 DO_NOT_CLICK includes submit, upload, create, send and save",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:245 @e578b378 posts the upload to analysis/inputs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Do not loosen the walker. The driver needs its own allow-list and an explicit Submit selector."
+}
+```
+
+## IRPT_ANLREQ-D2-S114 -- DISARMS W148-S1: the tracked test-login file is a sanctioned fixture, already ruled
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S114",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-15T03:24:01Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W148-S1 (a tracked .claude/skills/frontend-dev/portal-test-login.env may hold a credential): it is a sanctioned fixture, already ruled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row W148-S1: a tracked test-login file named like a credential was not opened by the worker; disarm owner 2.0.0_SA_COO~Y2.",
+  "world_is": "RELAYED by 1.0.0_SA_CTO~DELL2 (msg 7990, who read its key names only): the file is tracked on purpose, restored under Andrew-direct 2026-08-06 (commit 12f4336258), and site Z's CTO dispositioned it as the sanctioned fixture in row NFRA_OPSEC202609-Z-S50 (disarm 60bdb15654), which also names its second home. This seat did not open the file and takes no act on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 7990",
+      "commit 12f4336258",
+      "row NFRA_OPSEC202609-Z-S50 and commit 60bdb15654 (cited by the CTO, not re-read by this seat)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The file is a sanctioned, already-dispositioned fixture; no act on it is owed by this project.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W148-S1."
+}
+```
