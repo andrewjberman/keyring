@@ -60,7 +60,7 @@ filled documents.
 | **D. CloudOps squad "shotgun"** | small | medium (never-widen pairs, one applier per resource) | Most remaining cells are LOCAL (contract, builder, reads, render). AE work is real only for Cottonwood's producer schedule and the household-series schedule. One or two AE seats are enough; `~AQ2` and `~CA2` are idle. IAM edits are the laptop AE's (CTO correction, 2026-10-09). |
 | **E. Open the untouched FWDs** (FWD-3, 7, 10 feed P1; FWD-5 and 6 do not) | new scope, not speed | low | Second. Each needs the ship lane landed first, or it renders nowhere. |
 
-## 4. The recommended shape (B, at the round-111 boundary)
+## 4. The recommended shape (B, at the next round boundary (round 114, per ADDENDUM 1))
 
 | workstream | issuer | write surface (disjoint) | first cells |
 |---|---|---|---|
@@ -97,3 +97,13 @@ Andrew picks an angle. The CTO rules the workstream split as a round-111 addendu
 the new COO lanes (MSTR spawns them). Each lane then cuts its first issuance from the cells above.
 
 -- 4.0.0_SA_CRO~DELL2A
+
+## ADDENDUM 1 -- Andrew's go (2026-10-15 ~01:0xZ)
+
+**Andrew, verbatim, in this terminal, answering "Say go and I'll send this to the CTO":**
+
+> "Go on"
+
+**Re-measured at the go (01:05Z):** IRPT_DASHBD has reached round 113. That round is ONE order (DB-b-229), issued by `~D2`,
+still workstream B. Rounds 111 to 113 confirm that the round loop is the limit. The split lands at the next round boundary, round
+114, by the CTO's ruling. The relay to `1.0.0_SA_CTO~DELL2` is this file's path.
