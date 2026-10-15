@@ -17183,3 +17183,106 @@ name the one known failure instead of silently inheriting it.
     "notes": "WHY I AM NOT CHOOSING AMONG THE THREE. The condition is the CTO's and it gates the Phase B GO; picking the reading that lets me proceed would be adjudicating my own gate wider. So the measurement goes to the CTO with one ask and the release does not move until it answers. THE PART WORTH GENERALISING: a clause that keys on WHAT ELSE A COMMIT STAGES cannot be satisfied by a commit whose contents are fixed by another rule. The release commit's path set is prescribed by the order (the release's files and the one grant only) and the clause wants a path the order forbids it to carry, so the two rules are jointly unsatisfiable on that commit -- and nothing anywhere prints that, because each rule is individually fine. The tell was that the gate's REFUSE named a PATTERN ({source}/{scope}/...) while the registry row it should have matched was right there, which is a derivation failure wearing the costume of a naming failure. I also did not edit the gate, the sentinel or the clause: all three are outside this order's <paths>."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T10:32:45Z",
+  "one_line": "The worktree does not carry the gateway tree the order names: infra/aws/ec2 is outside the sparse-checkout cone, so every gateway app and test file in the order's paths is absent on disk though tracked in the index. BLOCKING; the cone was not widened and nothing was reconstructed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SPARSE: git sparse-checkout list in C:/tmp/wk-oplgtw-102 prints .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_OPLGTW, org/modules/graph, org/standards; git config core.sparseCheckout prints true",
+      "ABSENT: ls infra/aws and ls infra/aws/ec2 both fail with No such file or directory; the criterion runs print grep errors for infra/aws/ec2/opal-gateway/app/tools.py and cd errors for infra/aws/ec2/opal-gateway",
+      "INDEXED: git ls-files lists infra/aws/ec2/opal-gateway/app/tools.py and tests/test_entitlement_admin.py at HEAD bcff0f9889, so the gap is the checkout cone, not the history",
+      "MEMORY: the device memory entry on sparse cones for worktrees (a full worktree checkout OOMs under memory pressure) explains why the cone is narrow here"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 3 <paths> and section 1 step 1 name infra/aws/ec2/opal-gateway app and test files that the worker edits and runs inside its worktree; the worker bar says a worktree that does not carry the named paths is a BLOCKING row and a STOP.",
+  "world_is": "The worktree checkout excludes infra/aws, so the hookup script, the five gateway files and the two pinned suites cannot be run here, and the rv-1 and rv-2 modules (app/etfs_rivals.py, app/etfs_rivals_flow.py) are absent from disk as well. Restoring the cone is a rebuild of the tree to make the order executable, which the bar forbids.",
+  "notes": "STOPPED AT THE PREFLIGHT: step 1 (the hookup script) was not run, step 3 (the pytest suites) was not run, and no tool, test or pin file was edited. The criteria were run as written and recorded as FAIL on the absent tree. The cell needs a worktree whose checkout carries infra/aws/ec2/opal-gateway."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T10:32:45Z",
+  "one_line": "The order's proof_of_spec invocations run gt12.AC1.sh and gt12.AC2.sh, which grade the six OG-gt-12 tools and print of 6, not the ten OG-rv-3 tools; as written their output can never match the expect lines. BLOCKING for both criteria as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ORDER: NFRA_OPLGTW.TO-OG-rv-3.rival-hookup.md section 4 at HEAD bcff0f9889 names checks/gt12.AC1.sh and checks/gt12.AC2.sh, with expect lines for 10 of 10, pin 105 and SAFE 10 of 10",
+      "CHECK: r37/checks/gt12.AC1.sh names six tools and prints tools registered in app/tools.py: N of 6 with pin 95 (path@bcff0f9889)",
+      "CHECK: r37/checks/rv3.AC1.sh and rv3.AC2.sh name the ten tools and print of 10 with pins 105 and 96, matching the order expect lines (path@bcff0f9889)",
+      "RUN on the absent tree: gt12.AC1 printed 'tools registered in app/tools.py: 0 of 6' rc=1; gt12.AC2 printed 'classified: SAFE 0 of 6, NATIVE 0 of 6' rc=1; rv3.AC1 printed '0 of 10' rc=1; rv3.AC2 printed 'SAFE 0 of 10, NATIVE 0 of 10' rc=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 4: AC1 invokes r37/checks/gt12.AC1.sh and expects 'tools registered in app/tools.py: 10 of 10' and 'the registry count pin is 105'; AC2 invokes gt12.AC2.sh and expects 'SAFE 10 of 10, NATIVE 10 of 10'.",
+  "world_is": "The invoked scripts grade the six OG-gt-12 tools (etfs_get_partner_ownership through mdpf_get_category_views) against pins 95 and 86, so no tree state can print the expected ten-of-ten lines from them. The ten-tool scripts that do match the expect lines are r37/checks/rv3.AC1.sh and rv3.AC2.sh, in the same folder.",
+  "notes": "The worker ran the invocations as written (recorded FAIL) and also ran rv3.AC1.sh and rv3.AC2.sh to record their output beside them. The order's invocation text was not edited. A proof instance that names the invocation actually run is the honest record until the issuer re-points the invocation."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T10:32:45Z",
+  "one_line": "rv3.AC2's outside-files bound reads 0 before any worker commit by construction: its base is merge-base(HEAD, box/sitez), which equals HEAD while the cut commit sits on box/sitez, so the bound passes on an empty branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: r37/checks/rv3.AC2.sh sets base=$(git merge-base HEAD box/sitez) and counts git diff --name-only base HEAD outside the five cell files (path@bcff0f9889)",
+      "GIT: git merge-base HEAD box/sitez prints bcff0f98893a12178ad14a79dc4d3f554c8403cf; git rev-parse box/sitez prints bf89afe1026422add31d6721e19b3fa8a3df7daf, which contains the cut commit",
+      "RUN: rv3.AC2 printed 'files outside this cell's five (and its records) 0 (want 0)' before any worker commit, so the zero is an empty diff, not a measured bound",
+      "RUN: the same run printed an empty grant count ('in DATA_GRANT_TOOLS  (want 0)') after a python FileNotFoundError, so the echo does not separate a failed read from a zero"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "rv3.AC2 states that the five cell files are the only files that differ from the base of this branch, and its outside count is the evidence for that bound.",
+  "world_is": "Before the worker commits, base equals HEAD and the diff is empty, so the bound holds for any tree state. The bound can fail only after a commit lands on this branch, and a pass on an uncommitted branch is not evidence about the files the cell touched.",
+  "notes": "Form-only observation for the issuer: the echo of an empty grant read reads as a zero. No edit was made to the check."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T10:32:45Z",
+  "one_line": "Task order section 2 forbids editing app/tools.py, app/data_entitlement.py, app/destructive_ops.py and the pinned-count tests, while step 1 runs hookup_rv.py to edit exactly those files; the RECORD FACE also repeats a worker-face fragment and gives two Rides lines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ORDER: NFRA_OPLGTW.TO-OG-rv-3.rival-hookup.md section 2 bullets at lines 34-37 (the five files are NOT yours; do not edit them) at HEAD bcff0f9889",
+      "ORDER: section 1 step 1 at lines 24-27 and section 3 <paths> at lines 45-54 grant the same five files to the hookup script run",
+      "ORDER: lines 77-84 hold a stray <status> tag fragment and a repeated worker-face sentence; the first ISSUER NOTES block at line 78 says Rides OG-ap-22 and the second at line 87 says Rides OG-ap-20"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 2 says the five files are not the worker's and must not be edited; section 1 step 1 and section 3 grant the worker a script run that edits exactly those five files.",
+  "world_is": "The two statements cannot both bind the same five files. The worker read the grant as the script run and the bound as forbidding a hand edit; the script was not run here because the tree is absent, so the reading was not acted on. The RECORD FACE carries a duplicate fragment and two conflicting Rides lines.",
+  "notes": "For the issuer to settle in a re-issue; the worker did not adjudicate it. The hookup script reads and writes the five files as text; app/tools.py at HEAD bcff0f9889 has no carriage returns, so the text-mode round trip is byte-neutral for that file."
+}
+```
