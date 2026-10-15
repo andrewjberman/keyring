@@ -219,3 +219,4 @@ corrections are not in this order: they edit CVO-certified channel specs (decomp
 <status>complete</status>
 <status>issued</status>
 <status>issued</status>
+<status>complete</status>
