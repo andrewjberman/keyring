@@ -18895,3 +18895,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "W313-S1 is not edited here (append-only). The issuer's ruling is the amendment at 7ba971b30d, as reported by the coordinator; this row records the re-run only."
 }
 ```
+
+## IRPT_DASHBD-D2-S98 -- disarm of W221-S3: the Scope adapter writes TWR as contract 0.4.2 requires
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S98",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T22:26:37Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W221-S3 (the Orion adapter's return_basis against the contract), on the landed tree of round 127 (DB-i-14, merged @c7d980af1b): contract 0.4.2 takes VENDOR_REPORTED out of return_basis and removes source_requires, and the Scope adapter now writes TWR with provenance in source and the end-of-day claim in its declared column, so no Orion row disagrees with the contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "W221-S3: the Orion adapter writes a return_basis the contract does not accept for an Orion present row.",
+  "world_is": "On the merged tree DBI127-1-AC1, AC2 and AC3 PASS (28 of 28 rows validated by the 0.4.2 test module's row_problems; 4 partitions; 25 declared fields hashing to schema_hash_with_optional) and 90 tests pass across the adapter, wrapper and contract-042 test files. Synthetic fixtures only; no real run has happened and nothing is served from the module.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W221-S3",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r127/p127_run042.py",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-W221-S3: its condition (an Orion row whose return_basis the contract does not accept) is absent on the landed tree of round 127, measured by the r127 checker (28 of 28 rows pass the 0.4.2 validator, PRESENT rows TWR) and by 90 passing tests."
+}
+```
