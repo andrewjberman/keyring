@@ -2301,3 +2301,17 @@ Cell 2 of the chain-cap repair (row `IRPT_DASHBD-D2-S95`, ARMED): the apply of t
 **fanout:** 1 of 1 chains, cap 8, reason: one applier, one ledger, one change (the deploy rule: one change at a time).
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected, no record; self-test green, one green and 47 red record arms; its live clauses read fresh Lambda, S3 (artifact versions and the filled prefix), scheduler and log state):** `checks/r143/p143_codeupdate.py` (DBC143-1-AC1, DBC143-2-AC1, DBC143-3-AC1).
+
+## 142. ROUND 144, WORKSTREAM B-49F (2026-10-15 ~22:3xZ, issuer 2.0.0_SA_COO~D2, on Andrew's word via the CTO, row 90ef, `ANDREW_DIRECT_20261015_213xZ_90EF_PLACEHOLDER_...` @cf8764df23, msg 8686; round 142, contract 0.4.2, merged at 6ac152c83a)
+
+Andrew, verbatim: "We will deal with this later, should just be placeholder for now." The CTO's act: render the `disclosure_text` slot as a VISIBLE placeholder ("Disclosure page pending"), never empty, never invented; the disclosure composition is no longer gated on the file (my read of the file Andrew named, `RD_49F_TEMPLATE_DISCLOSURE_READ_A252.json`, found no disclosure page in it: only the pointer line).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. One shared constant `Disclosure page pending`; the custody `ClientReportDocument`'s two status pages print it in an unfilled disclosure slot; the 49 Financial default performance report document gains a LAST `disclosures` sheet whose slot prints it while no text is supplied (the firm's text, when supplied, prints verbatim), every `Page n of N` counts it, the pointer line is unchanged; tests, a mutant, a record | DB-b-277 | FWD-21 (the 49 Financial default performance report, complete except its disclosure page) | LOCAL (portal branch only, never pushed) | none | chain A |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the slot lives in two renderers and BOTH read the one constant, so the words cannot drift; the FE-s-4 `Disclosures.tsx` (the export-bundle path, with its own suppressed, absent and present states) is NOT touched, because its absent state names a different fact (the bundle carries no text) and Andrew's word is about the 49 Financial report's page; (b) the performance report document has no disclosure page today, so the page is a new last sheet, and the pointer line "incomplete without the accompanying disclosure page" stays on the eight sections' sheets and is not printed on the page it points to; (c) the document takes the firm's text as an optional prop and authors nothing, so the later word that supplies the text needs no renderer change; (d) the portal branch is cut from `wk-IRPT_DASHBD-180-portal` (commit `c81d54ff`, the report render lineage, not merged to DEV), not from DEV and not from another seat's later branch; (e) no PDF re-render is demanded of the worker (the CVO's next render check reads the page), so the order's gates are the tests, the lint, the typecheck and the checker's static clauses.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell, one write surface (the render directories and their tests), worker `0.9.0_WK_IRPT_DASHBD~224`.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; self-test green with 10 + 4 + 3 + 6 + 1 + 13 red arms):** `checks/r144/p144_placeholder.py` (DB144-1-AC1..AC3).

@@ -17,13 +17,14 @@ Issuer `2.0.0_SA_COO~G2`, 2026-10-15.
 | cell | what is produced | write set | risk |
 |---|---|---|---|
 | `AR-g-92` | the r32 resident tarball, its four host scripts and `RESIDENT_R32_BUILD.json`, in a stage folder outside the repo; the record in the worker's folder | the worker's `deliverables` folder, the order, the channel file | WORLD (floor of an infrastructure path; nothing deployed) |
+| `AR-g-97` | the APPLY of release 32 to the resident host (leg R): three S3 objects, the pre-read, the signed install, the after-reads and a census, one record, the ledger closed | the applier's `deliverables/irpt_anlreq_r32/` folder and ledger; one host root | WORLD (a host install under a signed never-widen pair) |
 
 ## Edges and chains
 
-- ONE chain. Depends on every ENGINE source cell, merged (the last is `AR-g-95`). Feeds the issuer's pair packet (`make_packet_r32.py`), which refuses unless the verifier passes.
+- ONE chain. `AR-g-92` depends on every ENGINE source cell, merged (the last is `AR-g-95`). It feeds the issuer's pair packet (`make_packet_r32.py`), which refuses unless the verifier passes. `AR-g-97` depends on `AR-g-92` and on both halves of the pair signed (CTO half msg 8693, applier `0.7.0_AE_CloudOps~AQ2`); it is an APPLY order to a Tier-2 applier, not a worker cell, and is issued under `# pipeline-override` as `TO-APPLY-R31L` was.
 
 ## Four-postulate record
 
-(i) Domain: the members of the resident package, 310 in r32 against 285 identical to r31, 14 changed, 11 added. (ii) One build, one pin, one record. (iii) One intent: a verifiable artifact for the pair to bind. (iv) What this cut does NOT move: any deployed byte, the Lambda leg (r33), the host, the producer list on the host, the DLQ message.
+(i) Domain: the members of the resident package, 310 in r32: 284 identical to r31, 15 changed, 11 added. (ii) One build, one pin, one record. (iii) One intent: a verifiable artifact for the pair to bind. (iv) What this cut does NOT move: any deployed byte, the Lambda leg (r33), the host, the producer list on the host, the DLQ message.
 
 fanout: 1 of 1 chain, cap 8, reason: one build artifact and its record; slot 197.
