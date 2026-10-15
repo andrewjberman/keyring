@@ -17378,3 +17378,51 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Evidence row for the drain-end addendum (B-CW rounds 117 to 125); nothing to disarm."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W210-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~210",
+  "surfaced_at": "2026-10-15T12:32:01Z",
+  "one_line": "The BUILD_ONLY build of the Cottonwood landing function printed an advisory that its layer imports are unenforced, because the package carries no BUILD_MANIFEST.json",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BUILD_ONLY=1 build-and-upload.sh investor-reporting irpt-cot-account-return-daily-lambda at commit 805874f275 exited 0 and printed ADVISORY (not enforced) naming cottonwood_bd_account_return_daily, opal_naming, pyarrow and trading_calendar as undeclared imports",
+      "infra/aws/lambda/investor-reporting/account-return-daily/ holds handler.py and tests/ only at HEAD 8d0b56b1b3; no BUILD_MANIFEST.json exists in that source dir"
+    ]
+  },
+  "spec_asserts": "Order DB-b-257 asks for a BUILD_ONLY build that proves the package holds exactly the declared members. It does not address layer dependencies; the builder's own text reads UNENFORCED IS NOT A PASS.",
+  "world_is": "The build exited 0 and the zip holds the 16 declared members byte for byte (checker AC3 PASS), but no gate checks the package's import layers until a BUILD_MANIFEST.json declares layer_dependencies and vendored_modules. A later edit adding a cross-layer import would build clean."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W210-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~210",
+  "surfaced_at": "2026-10-15T12:32:01Z",
+  "one_line": "The round-125 memory measurement for the Cottonwood landing function ran under Python 3.14 on a Windows box; the function runtime is python3.12 on Lambda and that runtime was not measured",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RD_COT_MEMORY_R125.json (deliverables 0.9.0_WK_IRPT_DASHBD~208) records one local run with the Python 3.14 interpreter and states its peak as the whole resident set, nothing subtracted",
+      "infra/aws/terraform/investor-reporting/account-return-daily/lambda.tf at commit 8d0b56b1b3 declares runtime python3.12 and memory_size 1024"
+    ]
+  },
+  "spec_asserts": "Order DB-b-257 step 2: memory is set from this function's own round-125 measurement, and the sizing comment states the measured peak.",
+  "world_is": "The measured peak of 654.5 MB was taken on a different interpreter and operating system from the Lambda runtime. The Lambda runtime's own peak is not measured. The 70 percent line of 1024 MB (716.8 MB) sits about 9 percent above the measured peak. Nothing in this order invokes the function."
+}
+```
