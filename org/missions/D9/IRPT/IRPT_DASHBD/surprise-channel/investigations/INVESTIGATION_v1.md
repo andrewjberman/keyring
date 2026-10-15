@@ -14727,3 +14727,112 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W185-S6 -- The Cottonwood household source account_dim has no objects under its gold prefix, so the filled-report entry for cottonwood stops before any QA run; the two QA runs of DB-b-232 cannot be made on this point.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:42:31Z",
+  "one_line": "The Cottonwood household source account_dim has no objects under its gold prefix, so the filled-report entry for cottonwood stops before any QA run; the two QA runs of DB-b-232 cannot be made on this point.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-b-232.cottonwood-reader-into-the-filled-report-builder.md step 5 and its context: the household key comes from the newest account_dim partition's household_id, the Cottonwood gold table account_dim read through address(); two LOCAL QA runs are written by the filled_report_values entry for --firm cottonwood.",
+  "world_is": "One LIST of the account_dim prefix that address('irpt', 'cottonwood', 'gold', 'account_dim', ...) names returns zero common prefixes and zero objects (not truncated); no date= partition exists. The entry raises at its household step (the maximum of zero partitions) before any parquet is written. The account_return_daily frontier is confirmed by the checker's own LIST at 2026-06-22 across 3325 date= partitions, so only the household source is missing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-232.cottonwood-reader-into-the-filled-report-builder.md@d30ac36cc3 (step 1 and step 5: the household source and the two runs)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_DIM_CONTRACT.json@d30ac36cc3 (partition and table rule)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (main household step: xw_parts and max, this worker's commit f1ef7f64cb)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-232 under the order's refusal clause: a Cottonwood source that cannot be read is recorded absent with the refusal named, the criterion is reported with its measurement, and the work stops on this point. Counts only; no client value."
+}
+```
+
+## IRPT_DASHBD-D2-W185-S7 -- filled_report_values.py reads the household crosswalk with 49 Financial's column names and reads the four sibling tables Cottonwood lacks without a presence test, so even a populated account_dim cannot complete a Cottonwood run without a change to that module, which is outside this grant.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:42:31Z",
+  "one_line": "filled_report_values.py reads the household crosswalk with 49 Financial's column names and reads the four sibling tables Cottonwood lacks without a presence test, so even a populated account_dim cannot complete a Cottonwood run without a change to that module, which is outside this grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-b-232.cottonwood-reader-into-the-filled-report-builder.md step 5 (the runs go through the filled_report_values entry for --firm cottonwood) and step 2 (a member whose sibling table Cottonwood lacks reads NO_SOURCE_YET with words).",
+  "world_is": "main() reads the crosswalk with the columns schwab_account_number and opal_relationship_id; account_dim carries account_id and household_id. main() also reads account_activity_daily, account_lot_realized, account_lot_unrealized_daily and account_class_daily unconditionally; the reader's guard refuses those four tables, so main() raises at the first of them. The module has no hook for a missing table, and the change it needs sits in filled_report_values.py, which is not in this grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (main: crosswalk columns and read_gold_rows for the four sibling tables, commit f1ef7f64cb)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_report_reader.py (guard: refuses any table outside the four Cottonwood tables, this worker's commit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-232.cottonwood-reader-into-the-filled-report-builder.md@d30ac36cc3 (grant: filled_report_values.py is not in <paths>)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-232. The reader and the contract are complete; the runs need the module's household and missing-table handling, which is for the issuer to route."
+}
+```
+
+## IRPT_DASHBD-D2-W185-S8 -- filled_report_values.py folds glr.cost_basis and glr.total_unrealized_gl as sums over an empty lot table, so a missing lot source reads zero where the contract requires the absent form.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:42:31Z",
+  "one_line": "filled_report_values.py folds glr.cost_basis and glr.total_unrealized_gl as sums over an empty lot table, so a missing lot source reads zero where the contract requires the absent form.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "CONTRACT org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json document.absent_rule: absent is never zero; a figure with no value is the absent form; and DB-b-230 step 3: a member whose source is missing is absent, never zero and never partial.",
+  "world_is": "glr_value sums the account's open lot rows on as_of. With no lot rows (the source absent, as for Cottonwood) the sum is zero: measured on the committed module, glr.cost_basis and glr.total_unrealized_gl both return 0 for an account with no lot rows. The lot_u fold has no source-presence test (lot_r has one through its partition dates), so an absent unrealized-lot source is served as a zero figure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (glr_value cost_basis and total_unrealized_gl, commit f1ef7f64cb)",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@d30ac36cc3 (document.absent_rule)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-232.cottonwood-reader-into-the-filled-report-builder.md@d30ac36cc3 (the Cottonwood sibling tables: no unrealized-lot gold)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-232. ARMED: the zero would be served by any run for a firm without an unrealized-lot table; disarm by a source-presence test in the lot folds, owned by the issuer.",
+  "disarm_owner": "2.0.0_SA_COO~D2"
+}
+```
+
+## IRPT_DASHBD-D2-W185-S9 -- The QA household frame's account ids match no account of the Cottonwood account_return_daily newest partition: zero of 999 frame accounts are present on as_of, so both QA runs refuse and no run is made.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:59:50Z",
+  "one_line": "The QA household frame's account ids match no account of the Cottonwood account_return_daily newest partition: zero of 999 frame accounts are present on as_of, so both QA runs refuse and no run is made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json: account_id is the custodian account id in the declaration form (10-character zero-padded); TO IRPT_DASHBD.TO-DB-b-232 Amendment 1 S6: the QA household frame is the Cottonwood account_dim adapter's own dry run, its account ids the account_return_daily keys.",
+  "world_is": "Measured read only. The frame carries 999 accounts, every id 11 characters (one letter and ten digits). The newest account_return_daily partition (2026-06-22, the frontier) carries 12 accounts, every id 8 or 9 characters, none in the 10-character form. The overlap is 0 of 999. With no household present on as_of, filled_report_values.py refuses in both runs (as_of 2026-06-22 and 2026-10-13) before any parquet is written; neither run wrote a row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@e44b45003f (account_id meaning)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-232.cottonwood-reader-into-the-filled-report-builder.md@e44b45003f (Amendment 1, S6)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (main: presence on as_of and the refusal, this worker's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-232 under the refusal clause: the criterion is reported with its measurement and the runs stop on this point. Counts and shapes only; no account id or client value."
+}
+```
