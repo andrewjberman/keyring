@@ -70,7 +70,7 @@ Commit the record FIRST, your rows and the instance second; flip `<status>` to `
 
 **ISSUER NOTES:** STAGED at the cut. Un-park: the job's record written (the issuer's amendment), or 23:30Z of the grant day (backstop, no message needed), or a half-landed grant. Executor: `0.7.0_AE_CloudOps~CB1`. Authority: Andrew-direct 2026-10-15, "I agree with (a), let's see what we can do with that for now."; CTO ruling amendment 5 and the pair's conditions C1 and C2.
 
-<status>pending</status>
+<status>complete</status>
 <round>88</round>
 <workstream>~C1</workstream>
 <to_id>ADVI_COTBKF.TO-CB-cj-3</to_id>
