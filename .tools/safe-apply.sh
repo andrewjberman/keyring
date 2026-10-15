@@ -75,6 +75,62 @@ if [ -n "${DEPLOY_COMMIT:-}" ]; then
   [ "${SAFE_NAMED_COMMIT_CHECK_ONLY:-}" = "1" ] && exit 0
 fi
 
+# COMM_ASSIST CA-k-2 (round 19) -- THE MODE-DEFAULT GATE for module.ldo_001 (a gate, not an alert). A covered apply
+# REFUSES when the trunk's chat_assist_ingress_mark_mode default differs from the live INGRESS_MARK_MODE. An apply covers
+# the module when a -target names module.ldo_001 or below (-target=X or -target X, after the apply word), or when it has
+# no -target and the -chdir tree declares module "ldo_001". Runs BEFORE the seat gates; an apply that does not cover the
+# module runs nothing of this and prints no [ldo001-mode] line. LDO001_MODE_OVERRIDE="reason" lets a refused apply go on
+# and writes ONE audit line to $GAO_REL. SAFE_LDO001_MODE_CHECK_ONLY=1 exits 0 after a covered check. LDO001_MODE_LIVE_JSON
+# feeds the live JSON to the check (the test seam). Exit 10 is this block's only exit code.
+LDO_TREE="."; LDO_ANY_T=0; LDO_COVER=0; ldo_seen=0; ldo_skip=0; ldo_tgt=0
+for ldo_a in "$@"; do
+  case "$ldo_a" in -chdir=*) LDO_TREE="${ldo_a#-chdir=}" ;; esac
+  if [ "$ldo_seen" -eq 0 ]; then [ "$ldo_a" = "apply" ] && ldo_seen=1; continue; fi
+  if [ "$ldo_skip" -eq 1 ]; then ldo_skip=0; continue; fi
+  if [ "$ldo_tgt" -eq 1 ]; then
+    ldo_tgt=0; LDO_ANY_T=1
+    case "$ldo_a" in module.ldo_001|module.ldo_001.*|module.ldo_001\[*) LDO_COVER=1 ;; esac
+    continue
+  fi
+  case "$ldo_a" in
+    -target|--target) ldo_tgt=1 ;;
+    -target=*|--target=*)
+      LDO_ANY_T=1
+      case "${ldo_a#*=}" in module.ldo_001|module.ldo_001.*|module.ldo_001\[*) LDO_COVER=1 ;; esac ;;
+    -var|--var|-var-file|--var-file|-replace|--replace|-parallelism|--parallelism|-lock-timeout|--lock-timeout|-state|--state|-state-out|--state-out|-backup|--backup)
+      ldo_skip=1 ;;
+  esac
+done
+LDO_COVERED=0
+if [ "$LDO_COVER" -eq 1 ]; then
+  LDO_COVERED=1
+elif [ "$LDO_ANY_T" -eq 0 ]; then
+  for ldo_f in "$LDO_TREE"/*.tf; do   # an unmatched glob is no file, so it declares nothing (no grep error line)
+    [ -f "$ldo_f" ] || continue
+    grep -q -E '^[[:space:]]*module[[:space:]]+"ldo_001"' "$ldo_f" && LDO_COVERED=1
+  done
+fi
+if [ "$LDO_COVERED" -eq 1 ]; then
+  ldo_args=(--tf "$LDO_TREE/chat_assist.tf")
+  [ -n "${LDO001_MODE_LIVE_JSON:-}" ] && ldo_args+=(--live-json "$LDO001_MODE_LIVE_JSON")
+  LDO_RC=0
+  LDO_OUT="$(python "$SCRIPT_DIR/ldo001-mode-default-check.py" "${ldo_args[@]}")" || LDO_RC=$?
+  LDO_LAST="$(printf '%s\n' "$LDO_OUT" | tail -n 1 | tr -d '\r')"
+  echo "safe-apply: [ldo001-mode] ${LDO_LAST:-LDO001-MODE verdict=NO-VERDICT default=- live=- (no output)}" >&2
+  if [ "$LDO_RC" -ne 0 ]; then
+    if [ -n "${LDO001_MODE_OVERRIDE:-}" ]; then
+      ldo_actor="$( [ -f "$SCRIPT_DIR/lib/resolve-actor.sh" ] && . "$SCRIPT_DIR/lib/resolve-actor.sh" && resolve_actor )"
+      printf '%s LDO001_MODE_OVERRIDE actor=%s safe-apply root=%s check=[%s] reason=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+        "${ldo_actor:-UNKNOWN}" "$LDO_TREE" "$LDO_LAST" "$LDO001_MODE_OVERRIDE" >> "$SCRIPT_DIR/../$GAO_REL"
+      echo "safe-apply: [ldo001-mode] OVERRIDDEN (audited): $LDO001_MODE_OVERRIDE" >&2
+    else
+      echo "safe-apply: BLOCKED by the ldo001 mode-default gate (rc=$LDO_RC): the trunk default and the live INGRESS_MARK_MODE differ or cannot be read. Nothing was applied. Override: LDO001_MODE_OVERRIDE=\"reason\"." >&2
+      exit 10
+    fi
+  fi
+  [ "${SAFE_LDO001_MODE_CHECK_ONLY:-}" = "1" ] && exit 0
+fi
+
 # NFRA_CTLPLN CT-s-3 -- SEAT GATES (ONE block): who may apply (apply-who-check.py) and the cross-box deploy
 # measurements (crossbox-deploy-check.py). FOUR switches exist, one per check per tool; this wrapper reads two, each a file in
 # org/mcp/ (OPAL_SEAT_GATES_ENFORCE_DIR points a test at another directory; nothing here creates one):
