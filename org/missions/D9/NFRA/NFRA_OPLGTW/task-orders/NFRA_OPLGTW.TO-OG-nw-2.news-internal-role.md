@@ -64,7 +64,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-nw-2.news-internal-role.proof_o
 - Release: after `OG-ap-19` and `OG-ap-20`, with the person reader `OG-cp-1`.
 - Pre-cut: nw2.AC1 base FAIL as expected (test file absent); nw2.AC2 base: the module-scope check passes at base and the parents scan passes, so AC2 is a regression guard, not a build criterion.
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G6-INTERNAL</workstream>
 <slot>~95</slot>
