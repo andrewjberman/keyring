@@ -4121,3 +4121,28 @@ Check IB209-1 (`deliverables/2.0.0_SA_COO~P2/checks/r209/p209_cells.py`), dry-ru
 | `IB-pr-569` | READ why Cottonwood's account is absent from the holdings candidate; the acceptance path in the code; the other firms' refusal state | FWD-21 | SERVED | none | PC1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~412) starts now.
+
+## 206. ROUND 2, WORKSTREAM ~PC (49 Financial's refusal and the Cottonwood validator, both READ; 2026-10-15 ~11:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8248: "cut both READs now, 49 Financial's refusal FIRST")
+
+Round 1 of ~PC closed MAY-CLOSE (IB-pr-569, the S158 READ). Its finding: Cottonwood's residual lost account is listed in the source and dropped by the COT account screen (cause inferred), the first refusal named 9 lost accounts (8 closed), and 49 Financial, the P1 firm, ALSO has a refusal record (served 2026-10-12, two trading days behind T-1 at 2026-10-14). The CTO ordered two reads, 49 Financial FIRST: (1) which condition refused 49 Financial, how many accounts, which class of account or field (ids private); (2) the Cottonwood validator run OFFLINE on the dropped account's source rows to name the failing condition in `cot_screen_accounts`. The guard stays and no bypass is widened; the CTO rules the fix (a screen correction, or a custodian TERMINATED mark) on the reads. Two cells, disjoint write sets (each writes only its own record folder and the shared append-only channel), no edge between them (the order of the reads is the CTO's priority, not a data dependency).
+
+Checks (`deliverables/2.0.0_SA_COO~P2/checks/r210/p210_cells.py`, `control210.py`), dry-run at the base: all six FAIL; the control passes 6 positives and 25 negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-570` | READ 49 Financial's refusal: the condition, the count, the class of account or field, the days behind (recomputed), the acceptance path in the code | FWD-21 | SERVED | none | PC2-a |
+| `IB-pr-571` | READ the Cottonwood validator offline on the dropped account's source rows: the failing condition, the fix options in the code | FWD-21 | SERVED | none | PC2-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two READ cells with disjoint write sets; workers (slots ~413, ~414) start now (413 first by the CTO's priority).
+
+## 207. ROUND 1, WORKSTREAM ~PD (the split-adjusted holdings price return: the READ; 2026-10-15 ~12:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling @9913bf3ed4 (msg 8251) and the CRO's research @fe343dbc14)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a workstream issues its own round). The CTO ruled that the 2026-04-21 VUG IC|RO rows are a 6-for-1 STOCK SPLIT (non-flow, partition INTERNAL), that the defect is `holdings_performance_daily`'s price-only return (not split-adjusted), and that IRPT_BCKEND owns the fix: the custodian's own same-day STK "STOCK SPLIT" ratio (quantity after over quantity before for an account with no same-day trade), confirmed against the close-price ratio, with `SPLIT_RATIO_ABSENT` where it cannot be measured; the three other CUSIPs split that day are inside the fix; the other two firms are read for split days; the change moves served numbers, so it lands under a never-widen pair counting the DELTA per account-day. The build cannot be cut blind: the pure core has no split input and the custodian split rows are read from a different source. One READ cell first (this round): the producer's price contribution in the code, the custodian split rows per firm (columns, rows, split days, measurable or absent ratios, agreement with the close-price ratio), and the served DELTA projection. The build cell and the pair follow on its record.
+
+Check IB211-1 (`deliverables/2.0.0_SA_COO~P2/checks/r211/p211_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control211.py`) passes all three and eighteen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-572` | READ the split-adjusted return's inputs: the producer sites, the custodian split rows and ratios per firm, the served DELTA projection | FWD-21 | SERVED | none | PD1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one record; one worker (slot ~415) starts now.
