@@ -18044,3 +18044,31 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W179-S4 -- the sparse cone widened between two regress runs (docs/ and org/surprise_channel now on disk); infra/aws/ec2/ is still outside it and alone carries AC2's remaining errors
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W179-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~179",
+  "surfaced_at": "2026-10-15T17:22:53Z",
+  "one_line": "The worktree's sparse cone changed between two regress runs without a sparse command from this worker: docs/ and org/surprise_channel are now on disk; infra/aws/ec2/ is still outside the cone and alone now carries AC2's remaining errors.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-67 Bounds and worker face: the worker makes no sparse-checkout change, and the worktree is the tree the order names; AC2 runs seven regression files that read docs/contracts and infra/aws/ec2.",
+  "world_is": "At the first regress run the cone (git sparse-checkout list) held .tools, data/mdpf, infra/aws/lambda, infra/aws/terraform, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards, org/tier1_exec/1.0.0_SA_CTO/deliverables. At the re-run at HEAD e4c3e5b008 it holds .tools, data, docs, infra/aws/lambda, infra/aws/terraform, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/missions/D9/IRPT/IRPT_YCDGEN, org/modules/graph, org/ref, org/standards, org/surprise_channel, org/tier1_exec/1.0.0_SA_CTO/deliverables (saved in the worktree's .scratch/sparse_now.txt). The diff is data/mdpf replaced by data, plus docs, org/missions/D9/IRPT/IRPT_YCDGEN and org/surprise_channel. This worker ran no sparse command in between. infra/aws/ec2/ is still not in the cone and not on disk. The re-run gives AR-G67-REGRESS-FAIL files=['test_resident_installed.py'] passed=53 (need >= 65): test_acceptance_actor 4, test_commentary_requested_member 7, test_ready_signal_ticket_gate 15, test_producer_actor 3 and 1 xfailed, test_opal_thread_integration 3, test_resident_installed 7 and 12 errors, test_generate_installed 14. The 12 errors are FileNotFoundError on infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh. This row supersedes the docs/ part of W179-S1's world_is; W179-S1 is not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list read at the first regress run (saved to the session TMPDIR as sparse_list.txt): 12 entries, data/mdpf present, no docs/ and no org/surprise_channel",
+      "git sparse-checkout list at HEAD e4c3e5b008 (.scratch/sparse_now.txt): 15 entries; diff shows data/mdpf -> data, plus docs, org/missions/D9/IRPT/IRPT_YCDGEN, org/surprise_channel",
+      "ls -d infra/aws/ec2 in the worktree: No such file or directory; ar_g67_checks.py regress at e4c3e5b008 (.scratch/ac2.out): AR-G67-REGRESS-FAIL files=['test_resident_installed.py'] passed=53 (need >= 65), rc=1",
+      "pytest --tb=line on test_resident_installed.py at e4c3e5b008: 12 E FileNotFoundError 'infra/aws/ec2/investor-reporting-ycharts/run-ycharts-session.sh'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Who widened the cone is not known to this worker, and the worker has not changed it back. The remaining gap, infra/aws/ec2/, is a cone question for the box or the issuer. Until it is closed, the 12 tests in test_resident_installed.py that build the package are unmeasured for this cell's edits. The direct make_opal_stores test in test_producer_for_ticket.py passes."
+}
+```
