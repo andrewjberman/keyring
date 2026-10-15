@@ -40109,3 +40109,80 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W439-S1 -- The commit gate printed WARN that the client-data check was not run: the hashed account-id list is absent on this box, so the iam.tf commit was not checked for account identifiers
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W439-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~439",
+  "surfaced_at": "2026-10-15T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The commit gate printed WARN that the client-data check was not run: the hashed account-id list is absent on this box, so the iam.tf commit was not checked for account identifiers",
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-603 worker face, Client data rule: no account, household or client identifier in any tracked file. The commit gate runs a client-data check on each commit.",
+  "world_is": "safe-commit.sh for commit 3c4d117b57 printed: WARN client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty). The commit landed. The worker checked its own 66 added lines by grep for the AWS account number used in the file: 0 matches, and 0 non-ASCII bytes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 3c4d117b57 (worktree C:/dev/wk-IRPT_BCKEND-439): the WARN line for client-data-check, then the commit line [wk-IRPT_BCKEND-439 3c4d117b57]",
+      "git show HEAD -- infra/aws/terraform/inf-pipeline/iam.tf | grep '^+' | grep -c 313476888478 printed 0; added lines counted 66",
+      "The WARN names OPAL_ACCOUNT_ID_HASHES as the override and the account_id_hashes.txt path as the expected location; neither was set or placed by this worker"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W439-S2 -- The pre-commit risk reflex printed HOLD on iam.tf against 116 recorded claims in six other roots' iam.tf files, each citing one 2026-06-16 change record; the commit proceeded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W439-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~439",
+  "surfaced_at": "2026-10-15T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pre-commit risk reflex printed HOLD on iam.tf against 116 recorded claims in six other roots' iam.tf files, each citing one 2026-06-16 change record; the commit proceeded",
+  "spec_asserts": "The pre-commit risk reflex (comp-pulse diff) asks the committer to read the citation of any HOLD before the commit proceeds. A HOLD names a node the estate has written warnings about.",
+  "world_is": "The reflex printed six HOLD lines for infra/aws/terraform/inf-pipeline/iam.tf, each pointing at a different root's iam.tf (advi/billing-read, astn-pipeline, bd-49f-auto-login, bd-pipeline, canonical-schwab-ec2, cot-pipeline), each with 116 recorded claims, and each citing the same change record org/critical_paths/change_management/20260616T153514Z_nfra-gcontr-to2-graph-contracts-table_deploy_completion.md line 17 (text: NO iam.tf change, pattern-consistent). The reflex scanned 1 of 1 file within budget. The commit gate reported OK and the commit landed. The worker read no citation beyond the printed line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 3c4d117b57: the [risk-reflex] HOLD block, six HOLD entries, each with a -> file:infra/aws/terraform/<root>/iam.tf (116 recorded claim(s)) line",
+      "The citation printed for each HOLD: org/critical_paths/change_management/20260616T153514Z_nfra-gcontr-to2-graph-contracts-table_deploy_completion.md:17",
+      "[commit-gate] OK: pre-commit gate clean for 1 of 1 file(s); the commit line [wk-IRPT_BCKEND-439 3c4d117b57] followed"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W439-S3 -- The one-writer gate printed WARN that the channel path named by the order is the laptop's unsuffixed file, written from dell2, and that the per-box file form is the expected one
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W439-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~439",
+  "surfaced_at": "2026-10-15T19:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The one-writer gate printed WARN that the channel path named by the order is the laptop's unsuffixed file, written from dell2, and that the per-box file form is the expected one",
+  "spec_asserts": "The order names org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md as the channel file to append rows to. The append-only one-writer check expects a per-box file named with the stem and the box suffix, for example INVESTIGATION_v1.dell2.md, while the C-QUEUE item is open.",
+  "world_is": "safe-commit.sh for commit 63627ce12a printed: one-writer WARN: INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell2; per-box file <stem>.dell2.<ext> (WARN until C-QUEUE). The gate graded 1 append-only path on box dell2 with 0 blocked and the commit landed on the unsuffixed path the order names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 63627ce12a: the [one-writer] WARN line naming the unsuffixed path and the per-box form, then the [one-writer] OK line with 1 path graded and 0 blocked",
+      "The AGENTBUS_DEVICE value the gate read was dell2 (process environment), as printed on the same line"
+    ]
+  }
+}
+```
