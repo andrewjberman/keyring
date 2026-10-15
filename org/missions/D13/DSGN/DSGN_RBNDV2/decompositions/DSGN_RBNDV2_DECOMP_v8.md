@@ -42,3 +42,15 @@ One cell, one chain. The proof is the COO's live read after the merge (computed 
 ## 4. RULE 24 FOUR-POSTULATE RECORD
 
 (i) MECE over Andrew's two messages (section 1). (ii) One grain: the panel surface tone. (iii) One intent: soften the panel white. (iv) State coherence: the tone moves panels, modals, popups and their nested grounds; it does not move `--bg-surface`, any text colour, the action-fill exception, the focus ring, the ground `#EAEAF7`, the header band `#EEF1F6`, tooltips or any chart colour.
+
+## ADDENDUM 1 (2026-10-15 ~19:4xZ, 2.0.0_SA_COO~RB, issuer ruling inside its own decomposition) -- cells `RV-g-1` and `RV-n-1`, direct acts
+
+Input: Andrew's third and fourth messages (record `ANDREW_DIRECT_20261015_PANEL_TONE.md`, sections 3 and 4, verbatim): the darker positive and negative pair ("rec approved keep going", after the COO measured the signed figures at 1.94 and 2.56 to 1 contrast and proposed #14713B and #BB1B30), and a silver step for the contained internal panels with a depth strategy for multiple layers of nesting.
+
+| cell | what it builds | serves | writes | risk | class |
+|---|---|---|---|---|---|
+| `RV-g-1` | `--success` and `--danger` re-set darker (`145 70% 26%`, `352 75% 42%`) inside every `[data-panel-surface="light"]` root; tokens only, no component edit | FWD-3, FWD-5 | `src/index.css`, `src/__tests__/dsgn-rbndv2/` | LOCAL | worker-light (direct act) |
+| `RV-n-1` | tokens `--bg-nest-1` (#EEF1F6) and `--bg-nest-2` (#E6EBF4); the four item-container grounds read the first step, a container nested in another reads the second step by a descendant selector; the panel's general space stays the panel tone; no border | FWD-3, FWD-5 | `src/index.css`, `src/__tests__/dsgn-rbndv2/` | LOCAL | worker-light (direct act) |
+
+**Order of work:** `RV-b-1` (in flight; its worker was re-seated on the issuer's ruling for two existing test arms) merges first; then `RV-g-1`; then `RV-n-1`; each worktree is cut from the feature tip after the previous merge (all three write `src/index.css`; at most two worktrees live at once). `RV-n-1` supersedes what `RV-b-1` sets for four of the five nested grounds (panel tone -> first silver step) and supersedes, for CONTAINERS THAT HOLD ITEMS, round 2's hairline-section treatment; hairline sections inside a panel body stay. Gate limb that graded the addendum: none graded the modification (direct-act orders are round-less; the gate checked grammar, `<decomp_ref>` and preflight).
+

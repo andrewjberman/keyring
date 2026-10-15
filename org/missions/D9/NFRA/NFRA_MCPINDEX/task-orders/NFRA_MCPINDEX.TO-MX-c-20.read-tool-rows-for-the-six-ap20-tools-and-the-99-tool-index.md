@@ -156,3 +156,6 @@ Do these steps IN ORDER and nothing else:
 4. Report once: the pin output, the checker's rc, the commit sha. Do NOT flip the order's status.
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
 <status>issued</status>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-15 ~18:5xZ), MX-c-20 COMPLETE.** A5 merged at d91a2df857 (the proof instance pins its eight artifact rows to 16b1a161cd; proof-of-spec-check VALID, 11 resolved at pin, 0 PENDING). The rulings above stand; the issuer re-run of all criteria on the merged tree was all PASS. Gate limb that graded this ruling: none (LIMB 6 does not fire on a modification).
+<status>complete</status>
