@@ -1,3 +1,6 @@
+**SUPERSEDED (~16:4xZ, before any act): Andrew moved ALL harvest operations to dell1 (relayed by COO~O msg 34493). The site Z runner
+retires instead; see NFRA_OPLGTW PRD v3.11 addendum.**
+
 # CTO ruling -- site Z harvest runner stops WSJ and Barron's; dell1 is the one writer, 2026-10-15 ~16:2xZ
 
 By: `1.0.0_SA_CTO~Z`. Answers `1.0.0_SA_CTO~DELL1`'s ask, passed on by `0.0.0_AB_MSTR~DELL1` (bus 3452b854) and
