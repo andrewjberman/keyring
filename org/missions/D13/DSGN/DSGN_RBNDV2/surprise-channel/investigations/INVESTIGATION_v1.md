@@ -1493,6 +1493,28 @@
     "spec_asserts": "Issuer ruling on DSGN_RBNDV2-W23-S1 (order amend commit 3a3a890c9e): edit RB1R2-AC1 for the five grounds, change nothing else in either test. TO RB8B1-AC3: 0 fail across dsgn-rbndv2, panels and modal.",
     "world_is": "Arm (c) of RB1R2-AC1 pins the pre-cell count of exact-scope unlayered rules (1). The palette rule is still exactly one of the two such rules, so the control's intent holds, but its count arm reads the new rule. Under the ruling wording it is not in the authorized edit, so it was left untouched.",
     "notes": "Not edited. The minimal form the issuer may wish to rule on: checkOldRule selects the rule whose declarations include --palette-white (count 1 among those) instead of counting all exact-scope rules. Commit 590307cd is LOCAL on wk-DSGN_RBNDV2-23-portal."
+  },
+  {
+    "id": "DSGN_RBNDV2-W24-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~24",
+    "surfaced_at": "2026-10-15T20:03:52Z",
+    "one_line": "RV-g-1 cannot meet RB8G1-AC3 as written: the body-prefixed selector the cell mandates fails the pinned rb-1-t.tokens.test.ts TOKENS-OK arm, which requires every selector of a block whose prelude contains the scope attribute to start with that scope or equal :root scope; that test is outside the order's paths, so the order stays open on AC3.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal worktree wk-DSGN_RBNDV2-24-portal, src/index.css: git diff --stat reports 14 insertions in one file; the only added rule is body [data-panel-surface=\"light\"] with --success 145 70% 26% and --danger 352 75% 42%",
+        "portal/src/__tests__/dsgn-rbndv2/rb-1-t.tokens.test.ts lines 98-103: blocks.filter(b => b.prelude.includes(SCOPE)), then each selector must startWith(SCOPE) or equal ':root ' + SCOPE; the body-prefixed selector fails that expect (bun test, TOKENS-OK, 1 fail)",
+        "bun test src/__tests__/dsgn-rbndv2 src/ui/components/panels src/ui/components/modal: 41 pass, 1 fail, 42 tests across 29 files; the fail is RB1T-AC1 TOKENS-OK; RB8G1 SIGNAL-PAIR-OK passes; bun x tsc -p tsconfig.app.json --noEmit rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-g-1 cell: the selector is body [data-panel-surface=\"light\"], deliberately not :root [data-panel-surface=\"light\"] or the bare scope, because rb-1-r2.surfaces.test.ts and rb-1-r.remap.test.ts pin the count of those exact selectors. RB8G1-AC3: bun test over dsgn-rbndv2, panels and modal reads 0 fail. Refusal clause: do not weaken a test to pass.",
+    "world_is": "rb-1-t.tokens.test.ts also pins the scope-prefix form for every block whose prelude contains the scope attribute, and that pin is not in the cell's list of pinned tests, so no body-prefixed selector can pass it. The RV-g-1 edit is committed exactly as the cell writes it; the test was not edited (outside the order's paths) and no selector was substituted (the cell fixes it).",
+    "notes": "For the issuer to rule on. The cell's own pin list (rb-1-r2, rb-1-r.remap) does not name rb-1-t.tokens.test.ts. Commit of the RV-g-1 change is LOCAL on wk-DSGN_RBNDV2-24-portal; the order's status stays pending."
   }
 ]
 ```

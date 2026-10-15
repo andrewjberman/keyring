@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~121</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-121 @82cf40bd09) and again in the main tree after the merge 0b35c0c854: HYGIENE-MAPAGE inside_time=True mtime_ignored=True rebuild_once=True ok=True; HYGIENE-SPARSE builds=0 reads_main_or_blind=True ok=True; FWD5-POSITIVE versions=2 etag_equals_repo_md5=True other_changed=0 audit_actor=0.0.0_AB_MSTR ok=True (the read test now works after the ledger entry closed; 0 of 190 keys); HYGIENE-MAP tsx_classed=1 py_classed=1 ok=True (round-20 --map) and its --stale SKIP; COMP-PULSE BATTERY 12/12 PASS (denominator 12) in the main tree; comp-pulse diff on a real file reads REFLEX CLEAN against 2703 danger nodes in 0.9 s; proof VALID. Rulings on the worker's rows: S1 (a sparse worktree reads its own checked-out map, which is the main tree's committed map at that commit, before the main tree's file) is accepted: the committed map is the one artifact both read. S2 is closed by this merge (the committed map now carries built_utc). S3/S4 (the same corpus builds to 2692, 2703, 3491 edges by tree; the build guard has no portal check) are carried to the CTO as the map's owner. The map was built in a scratch full-index clone because the main tree is outside a worker's grant; the output was copied byte for byte.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~120</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>withdrawn</status>
+<status_reason>WITHDRAWN by the issuer 2.0.0_SA_COO~C: the CTO withdrew the ruling this order was cut from (round-21 ruling 2, manager-only acknowledgement) in ROUND_ANALYSIS.round21.md ADDENDUM 1 @d9c20f887e (msg 109495): the managers CARRY a call, the named seat READS and acknowledges it, which crossbox-call.py already enforces; nobody changes the tool. Worker ~120 was stopped; its branch wk-NFRA_CTLPLN-120 (six commits) is not merged; its rows W120-S1 and W120-S2 are carried and dispositioned (S9133). Round 22's FWD-3 cell is the issuer's read of the pairs (12 of 12 carried and acknowledged by the named seat).</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
