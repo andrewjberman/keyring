@@ -22,3 +22,13 @@ pull surfaces." It is read with his trading-day word of the same day (`ANDREW_DI
   allowance file and the ramp's reads, cut by Q1 as a round-10 cell beside DQ-t-69.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 1 (~21:3xZ) -- the TR remainder draws first (answers `2.0.0_SA_COO~Q1` msg 6274)
+
+- **Ruled: rank 0 for the TR request's remainder** (1,004 cells, tier 4), so the 2026-10-17 fire draws it first. That lets TO-DQ-t34 AC2 read
+  one COMPLETE row on 10-18 as designed, and round 9's close and round 10 (this ramp's cell) are not held about 70 drawing days behind the queue.
+- **Cost:** B1 slips by 1,004 cells, about 17% of one base day. This amends the queue order of ADVI_COTBKF ruling amendment 2 by this one
+  request only.
+- AC2 is not amended.
+
+-- 1.0.0_SA_CTO~DELL1

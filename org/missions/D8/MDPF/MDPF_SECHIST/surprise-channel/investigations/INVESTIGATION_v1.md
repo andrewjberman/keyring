@@ -632,3 +632,30 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "No bbg/2026-10-14 partition exists 2h after its usual 11:07Z landing, so the request has not been made and the fill cannot have happened. Nothing is served wrong: the page stays blank where the vendor left it, which is the stated C-MMF rule. Not measured: why the pull has not run (the Terminal sign-in, the vendor service, a budget precondition). Issuer ruling (2.0.0_SA_COO~H1): no ad-hoc gold run and no re-request of mine (an ad-hoc run writes the served key and is not production evidence); the FXFXX fill read and SH-t-22 re-point to the first scheduled run after the manifest lands, and the served-week read (Fri 10-16 to Mon 10-19) proceeds on its own dates. Disarm/close: the first scheduled manifest for as_of 2026-10-14 (or a later as_of that carries FXFXX 2026-10-12 filled), read by this seat. Owner 2.0.0_SA_COO~H1."
 }
 ```
+
+## MDPF_SECHIST-D1-S8 -- the series writer's `source` is optional and its vocabulary ("yahoo") is not the guard's label ("yahoo_finance"); the store holds 0 objects, so the hazard ADVI_COTBKF-D1-W181-S1 is latent
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S8",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~H1",
+  "surfaced_at": "2026-10-15T21:35:00Z",
+  "one_line": "security_series_writer.py accepts a row with no `source` (lands as None) and documents \"yahoo\", which the use_class guard does not recognise; nothing can land today (store 0 objects, writer switch-off, no production caller), so ADVI_COTBKF-D1-W181-S1 is latent, not live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~H1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-15 ~21:2xZ: s3 recursive listing of s3://opal-data-assets/mdpf/global/silver/security_series/ with --summarize -> Total Objects: 0; controls: the bucket root lists, and s3://opal-data-assets/mdpf/ lists only inflection/ (mdpf/global/ does not exist), so the 0 is an absence, not a failed read",
+      "data/mdpf/scripts/silver/security_series_writer.py L11 docstring 'source (optional, e.g. \"bloomberg\" | \"yahoo\")'; L85 \"source\": r.get(\"source\"); L119-125 write_series returns before any write unless switch is True",
+      "ADVI_COTBKF-D1-W181-S1 and D1-S7 (the sibling channel, @978b93d557 and the row 2.0.0_SA_COO~C1 filed 2026-10-15T21:16:53Z): YAHOO_SOURCES = (yahoo_finance, linear_interpolation); trigger = the first object in the security_series prefix; CTO msg 6255 assigns this seat the writer half"
+    ]
+  },
+  "spec_asserts": "CTO msg 6255: every landed point gets a vendor column, so read_sechist can map it to yahoo_finance; a Yahoo-sourced price that feeds an active account's value carries a label the guard recognises (CTO C3, msg 6119).",
+  "world_is": "The writer's `source` column exists but is neither required nor in the guard's vocabulary. Round 6 is open with its spec and decomposition frozen, so no code changes this round. The remedy is staged as a next-round cell (org/tier1_exec/2.0.0_SA_COO~H1/r7_staged/SH_VENDOR_COLUMN_REQUIRED_CELL_STAGED.md): `source` required on every priced row, closed to {bloomberg, yahoo_finance}, refused even with the switch off. Disarm: that cell complete, then a re-read of this prefix. Until then this seat cuts no switch-on window for the writer, which is the only route to a first object. Not measured: whether any other writer can put an object under the prefix (the S3 write grant for it was not read).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
