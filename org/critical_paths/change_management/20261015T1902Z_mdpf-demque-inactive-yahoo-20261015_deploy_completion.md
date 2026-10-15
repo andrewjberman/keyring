@@ -12,10 +12,12 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | DQ-t-66 merged 6a557f1206 and DQ-t-68 merged 34bcd8390e on box/dell1 (folder 238 passed) | both merge hashes and the folder count |  | OPEN |
-| L2 | activation | YAHOO-INACTIVE-BACKFILL-01..04 placed in the draw queue (C:/Users/Test/.opal/demque/queue) | ls of the queue and sha256 of the four files |  | OPEN |
+| L1 | git | DQ-t-66 merged 6a557f1206 and DQ-t-68 merged 34bcd8390e on box/dell1 (folder 238 passed) | both merge hashes and the folder count | DQ-t-66 merged 6a557f1206, DQ-t-68 merged 34bcd8390e; pytest data/mdpf/scripts/demque 238 passed; py_compile OK; ruff F,E9 clean | CLOSED 20261015T190501Z |
+| L2 | activation | YAHOO-INACTIVE-BACKFILL-01..04 placed in the draw queue (C:/Users/Test/.opal/demque/queue) | ls of the queue and sha256 of the four files | queue C:/Users/Test/.opal/demque/queue holds YAHOO-INACTIVE-BACKFILL-01..04 (sha256 prefixes 673829c1ddd5d734 83d0e6b1aab8c19a 0b5a1b6b67cdc536 5133ea08bd9d0aa5; cmp identical to the build); demand_queue._load_requests reads 11 requests, backfill last, after the tier-1 standing request | CLOSED 20261015T190502Z |
 | L3 | verify | the first nightly run after the merge: exit code 0, keys written equal the store's changed versions and fall inside the permitted table | the run log line, ledger.jsonl rows and the S3 version list read |  | OPEN |
 
 ## Log
 
 - 20261015T190228Z OPENED by 2.0.0_SA_COO~Q1 with 3 leg(s)
+- 20261015T190501Z LEG L1 closed: DQ-t-66 merged 6a557f1206, DQ-t-68 merged 34bcd8390e; pytest data/mdpf/scripts/demque 238 passed; py_compile OK; ruff F,
+- 20261015T190502Z LEG L2 closed: queue C:/Users/Test/.opal/demque/queue holds YAHOO-INACTIVE-BACKFILL-01..04 (sha256 prefixes 673829c1ddd5d734 83d0e6b1aa
