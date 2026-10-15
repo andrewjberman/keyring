@@ -37032,3 +37032,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The packaged zip layout for the export function was not read. The reader's probe mirrors the sibling reporting function; whether the export zip carries lib/ is unverified."
 }
 ```
+
+## IRPT_BCKEND-D2-W411-S4 -- IB-pr-566 supplies the submit-path caller of the render read on box/dell2; my render-side function is a parallel copy with no caller
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-566's submit legs call filled_reader_or_refuse, filled_accept_read and filled_leg_read, which read the pinned bytes through retained_export.filled_render_read. That supersedes the premise of row IRPT_BCKEND-D2-W411-S2 on box/dell2. render.filled_render_package, this order's render-side function, has no caller on that path, and the named-account logic now exists twice (filled_covered_accounts in retained_export.py and filled_render_package in render.py).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "main tree export/submit_async.py:185-186 and export/submit_service.py:207-208 (read-only, box/dell2, coordinator note of IB-pr-566's merge at 2cb9105a27): filled_reader_or_refuse, filled_accept_read and filled_leg_read",
+      "main tree export/retained_export.py:543-566 (read-only): filled_accept_read and filled_leg_read read through filled_render_read, and filled_covered_accounts judges coverage on the bytes read",
+      "export/render.py filled_render_package @59729482a1 (this order): no caller outside export/tests/"
+    ]
+  },
+  "spec_asserts": "IB-pr-567 (3): the render reads the pinned bytes with read_pinned_filled, and the named accounts come from the shared reader filled_named_accounts.",
+  "world_is": "The submit-path seam now exists, and it reads through the same one read and the same shared reader, with the reader signature reader(client_id, version_id=None) returning key, version_id and body, which this order's reader matches. This order's render function is a parallel copy with no caller. Whether it is kept or the render routes through IB-pr-566's functions is for the issuer. Read-only check of the main tree; no merge and no edit of IB-pr-566's files."
+}
+```
