@@ -10093,3 +10093,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "A conservative deviation from the literal text, stated here so the CTO can rule on the wording. Refusal can only keep a worktree, never remove one, so it cannot widen what --go removes."
 }
 ```
+
+## NFRA_CTLPLN-W104-S1 -- the arm (a) fixture layout org/missions/D0/X/Y/CODE/task-orders/ cannot satisfy the project-folder rule org/missions/D*/*/<CODE>
+
+```json
+{
+  "id": "NFRA_CTLPLN-W104-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~104",
+  "surfaced_at": "2026-10-15T08:44:13Z",
+  "one_line": "The CT-ag-2 order's worker face names the temporary fixture layout org/missions/D0/X/Y/CODE/task-orders/ and the project-folder rule org/missions/D*/*/<CODE> in the same build; the rule matches one directory level under the macro and the fixture puts CODE two levels below D0, so no fixture of the stated shape can pass arm (a) with the rule as written. The worker built the fixture as org/missions/D0/X/CODE/task-orders/ (the shape the real tree uses) and kept the rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO NFRA_CTLPLN.TO-CT-ag-2 worker face, THE CELL and BUILD item 1: the project folder is the one directory org/missions/D*/*/<CODE> that exists at HEAD",
+      "TO NFRA_CTLPLN.TO-CT-ag-2 worker face, BUILD item 6 arm (a): mimics the layout org/missions/D0/X/Y/CODE/task-orders/",
+      "measured at 803d0303ef: .tools/wk-provision.sh cmd_provision project_folder check uses grep -E on org/missions/D[^/]*/[^/]+/<CODE>; the real tree holds org/missions/D0/NFRA/NFRA_CTLPLN"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BUILD item 6 arm (a): a temporary repository that mimics org/missions/D0/X/Y/CODE/task-orders/, with .tools/, lib/ and the project folder checked out by default; BUILD item 1: the project folder is the one org/missions/D*/*/<CODE> directory at HEAD.",
+  "world_is": "The two statements cannot both hold for one fixture: under D0/X/Y/CODE the glob finds no project folder. The test uses org/missions/D0/NFRA/PROJX (the real tree shape), so the rule is exercised as written; the stated fixture depth is not used."
+}
+```
+
+## NFRA_CTLPLN-W104-S2 -- BUILD item 5 (dispatch SKILL.md lines 216-227) cannot land: safe-commit's byte-budget gate refuses the growth the item needs
+
+```json
+{
+  "id": "NFRA_CTLPLN-W104-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~104",
+  "surfaced_at": "2026-10-15T08:51:40Z",
+  "one_line": "The CT-ag-2 build item 5 edit to .claude/skills/dispatch/SKILL.md grows the file by 580 bytes (33198 to 33778). safe-commit's byte-budget gate refuses any growth of a file already over its budget (SKILL.md budget 25600 bytes; it is 33198 at HEAD) and says a file over budget may only shrink. The item's text needs net growth inside that file, and the order forbids any change outside lines 216-227, so the item is not committed; the working copy was restored to HEAD and the proposed text is kept in the worker's scratch folder. The dispatch skill therefore still states the full-checkout recipe until this is ruled.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh of 0.9.0_WK_NFRA_CTLPLN~104 on wk-NFRA_CTLPLN-104 (attempt over the HEAD 803d0303ef): BLOCKED: byte budget -- .claude/skills/dispatch/SKILL.md(33778>25600 bytes; HEAD 33198). A file over its budget may only shrink; one in, one out (report 3 section 5).",
+      "TO NFRA_CTLPLN.TO-CT-ag-2 worker face, BUILD item 5: edit .claude/skills/dispatch/SKILL.md lines 216-227 ONLY; change nothing else in that file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BUILD item 5: say the worktree is sparse by default, show the --order form, say a full checkout needs --full \"<reason>\", keep the HEAD derivation warning and the portal sentences; change nothing else in .claude/skills/dispatch/SKILL.md.",
+  "world_is": "The additions the item requires are net growth (+580 bytes) in a file already over its 25600-byte budget; the gate refuses growth of such a file, and the only in-scope way to offset the growth would be to shrink text outside lines 216-227, which the order forbids. Neither the order nor the gate names who may rule this; disarm owner for the ruling is the issuer.",
+  "notes": "Not worked around: no budget edit, no one-in-one-out edit outside the cited lines, no bypass. The three acceptance criteria CTag2-AC1..AC3 do not read this file."
+}
+```
