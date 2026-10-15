@@ -4232,3 +4232,16 @@ Checks IB218-1 and IB218-2 (`deliverables/2.0.0_SA_COO~P2/checks/r218/p218_cells
 | `IB-pr-581` | READ the split adjustment before and after over the 47 split days of 49 Financial | FWD-21 | SERVED | none | PJ2-a |
 
 fanout: 2 of 2 chains, cap 8, reason: two read-only cells with disjoint outputs; workers slots ~422 and ~423 start now.
+
+## 215. ROUND 1, WORKSTREAM ~PK (two small repairs the CTO named after ~PH r1: the receipts record the exemption's evidence reads; a split row with no key is counted, never skipped; 2026-10-15 ~15:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8359)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). The CTO's msg 8359 (CVO v120) says the two ~PH builds are correct and names the next round: the two dry-run DELTAs (already cut as ~PJ), two never-widen pairs (the exemption for both firms; the 49 Financial split), and two repairs, which are these cells. IB-pr-582 (W420-S1): `run_firm` freezes the source receipts before the gate, so the prior-day partitions the exemption's evidence readers read are not in `_source_objects` nor in the revision digest; the receipts are re-taken after the gate when the provider read anything. IB-pr-583 (W421-S2): a split row whose key chain (cusip, then ticker) is empty is dropped today; it is now counted (`unkeyed_split_rows`, `days_ratio_absent`) and the day says `SPLIT_RATIO_ABSENT` in its attrs and the manifest. Two LOCAL cells on disjoint files (holdings_snapshot.py; holdings_performance.py). The DELTA reads of ~PJ measure the HEAD before these repairs; the harness is committed and is re-run on the repaired HEAD before the pairs.
+
+Checks IB219-1 and IB219-2 (`deliverables/2.0.0_SA_COO~P2/checks/r219/p219_cells.py`), dry-run at the base: AC1 to AC3 of both cells all FAIL; the control (`control219.py`) passes all six positives and fourteen negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-582` | the source receipts record the absent_at_source evidence reads (re-taken after the gate when the provider read anything) | FWD-21 | LOCAL | none | PK1-a |
+| `IB-pr-583` | a split row with no key marks the day SPLIT_RATIO_ABSENT and is counted in the attrs and the manifest | FWD-21 | LOCAL | none | PK2-a |
+
+fanout: 2 of 2 chains, cap 8, reason: two cells on disjoint files; workers slots ~424 and ~425 start now.

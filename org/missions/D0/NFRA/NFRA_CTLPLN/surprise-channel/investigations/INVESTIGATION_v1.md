@@ -10906,3 +10906,284 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The file already meets item 3, so no edit was made to test_round18_batch.py. The four folders named in W105-S5 remain; recursive deletion waits on Andrew. The --real arm was not run here (it creates a real sparse worktree and portal worktree)."
 }
 ```
+
+## NFRA_CTLPLN-W114-S1 -- the fabric value census exits 1 at base: five unclassified hits, four of them outside this order's paths
+
+```json
+{
+  "id": "NFRA_CTLPLN-W114-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~114",
+  "surfaced_at": "2026-10-15T14:30:14Z",
+  "one_line": "fabric_value_census.py prints ok=False and exits 1 before any edit in this order (unclassified=5). Four of the five unclassified hits sit in files outside this order's paths; the fifth is removed by this order's commit 8646885c9d.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/fabric_value_census.py@9cfc5f5fd8 docstring: 'LAST line: ... ok=<True|False>   (ok only when unclassified == 0)'; CLASS_BY_PATH has no key for the four files below",
+      "measured in ctlpln-114 at 9cfc5f5fd8 before any edit: FABRIC-CENSUS files_scanned=2144 hits=48 enum_source=3 compares=0 display=26 fixture=14 unclassified=5 ok=False rc=1; UNCLASSIFIED lines: .tools/tests/test_fabric_readers_dell.py:101, .tools/tests/test_fabric_readers_dell.py:154, .tools/tests/test_manager_on_every_box.py:266, lib/devices.py:84, .tools/tests/test_round19_register.py:105",
+      "measured after commit 8646885c9d: unclassified=4 ok=False rc=1 (test_round19_register.py:105 gone; the census's own file keys re-pointed to :23 and classified)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "fabric_value_census.py docstring: ok only when unclassified == 0; CLASS_BY_PATH keys every hit by path or path:line on purpose, so a new hit stays UNCLASSIFIED until it is named.",
+  "world_is": "The census is red in this tree before any edit of this order. The four remaining unclassified hits are in test_fabric_readers_dell.py, test_manager_on_every_box.py and lib/devices.py, which this order does not name; they are not edited here. Round-19 FWD-2 does not grade the census's ok, so the order's criteria are unaffected; its exit code is printed beside the BOXES-READ line."
+}
+```
+
+## NFRA_CTLPLN-W112-S1 -- a null device is counted as unattributed, a case the order did not name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The order said a fetch record with NO device key is counted under UNATTRIBUTED. The worker also writes device null when the box cannot be named (AGENTBUS_DEVICE unset, or the register unreadable), and the reader counts a null device as unattributed too, never for a box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_fetch.py@8f5584d044: this_device() returns None on devices.RegisterError; Fetch.__init__ writes \"device\": this_device()",
+      "org/devices/intake/intake_request.py@8f5584d044: cmd_downloads counts a record when `not rec.get(\"device\")` under unattributed",
+      ".tools/tests/test_round20_fetch_device.py@2950637674: arm 7 (unnamed-box fetch writes device null) and arm 8 (unattributed=3 afterwards) PASS in the --device run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-1 step 2: a record with NO device key is counted under UNATTRIBUTED and never guessed to belong to the asking device.",
+  "world_is": "A null device is treated as unattributed as well. A box that cannot be named writes a record that no device can claim; no record is attributed to a box by guess. The issuer may rule the null form."
+}
+```
+
+## NFRA_CTLPLN-W112-S2 -- PIP_NO_INDEX=1 is never read on the kit's refusal path, because wrap refuses before any pip process starts
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The order asks for PIP_NO_INDEX=1 in the child environment as a second guard on the wrapper refusal. On the refusal path wrap returns before it starts any pip process, so the variable is set and never consulted there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_pip_no_egress.py@9cfc5f5fd8 wrap(): classify(args) returns REFUSE and wrap returns REFUSED_RC before subprocess.run([sys.executable, \"-m\", \"pip\"] ...)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~112/FWD18_LAPTOP_REFUSAL.md@2950637674: PIP_NO_INDEX=1 run exits 3, stdout 0 bytes, one REFUSED line on stderr"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-1 step 3: run the kit's wrap -- download six with PIP_NO_INDEX=1 in the child environment as a second guard.",
+  "world_is": "The variable bears only on an allowed pip verb, and no allowed verb is a download. The refusal's own guard is the classify() decision, which the kit runs before any process."
+}
+```
+
+## NFRA_CTLPLN-W112-S3 -- the worker's sparse checkout lacked org/surprise_channel/schemas, the folder that holds the row schema
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The cut's sparse set does not hold org/surprise_channel/schemas, so the row schema investigation_item.schema.json was absent from the worktree. The worker added the folder with git sparse-checkout add to read the schema before writing rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in the worktree before the add: .tools, infra/logic/registry, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards (no org/surprise_channel entry)",
+      "ls org/surprise_channel/schemas/ before the add: No such file or directory; after git sparse-checkout add org/surprise_channel/schemas: investigation_item.schema.json and remediation_row.schema.json present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker rules name org/surprise_channel/schemas/investigation_item.schema.json as the row schema a worker follows.",
+  "world_is": "The schema folder is outside the sparse set the cut provisions. The add changed no commit and no tracked file of this order."
+}
+```
+
+## NFRA_CTLPLN-W112-S4 -- intake_check.py writes intake-fetch/1 records with no device key, a second writer of the shape the reader must tell apart
+
+```json
+{
+  "id": "NFRA_CTLPLN-W112-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~112",
+  "surfaced_at": "2026-10-15T14:32:54Z",
+  "one_line": "The order names intake_fetch.py as the one writer of fetch records. org/devices/intake/intake_check.py has a second writer of the same schema string, intake-fetch/1, with no device key and fetched_by set to selftest.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@9cfc5f5fd8 lines 1131-1147 write_fetch_record: rec_ carries \"schema\": \"intake-fetch/1\", \"fetched_by\": \"selftest\" and no device key; written by write_json_atomic under cfg.records_dir(batch)",
+      "org/devices/intake/intake_check.py@9cfc5f5fd8 line 1164: the selftest calls write_fetch_record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-1 premise: the fetch record is written by org/devices/intake/intake_fetch.py.",
+  "world_is": "A selftest path writes fetch-shaped records without a device key. The reader counts each as unattributed, so a selftest record can never be counted for a box. Where the selftest writes was not traced beyond cfg.records_dir."
+}
+```
+
+## NFRA_CTLPLN-W113-S1 -- the pinned-entry deploy derives the S3 key from the safe-deploy.sh header, not from the core's PIPELINE_MAP; silver and bronze keys are unverified
+
+```json
+{
+  "id": "NFRA_CTLPLN-W113-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~113",
+  "surfaced_at": "2026-10-15T14:35:03Z",
+  "one_line": "The pinned-entry step in the pre-push hook maps a deploy-scope path to its S3 object from the safe-deploy.sh header (data/black_diamond -> opal-data-bd, data/inf -> opal-data-inf, data/cot -> opal-data-cot; key code/<layer>/<name>). The order did not name safe_deploy_core.py's PIPELINE_MAP as a read, so I did not read it; the silver and bronze keys are unverified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/pre-push-safe-deploy.sh@19564581c6 pinned_entry_deploy(): the PINNED_PY block (BUCKETS map and the code/<layer>/<name> key line)",
+      ".tools/safe-deploy.sh@9cfc5f5fd8 header lines 27-33 (the pipeline-to-bucket mapping and the cot gold key note; the PIPELINE_MAP reference names the core, which is not read here)",
+      "test run .tools/tests/test_round20_pinned_entry_deploy.py (default arm): STUB | S3-READ opal-data-inf/code/gold/pinned_fixture.py, a local test double, not the real bucket"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-2 BUILD step 1: the gate compares the object the entry pins with what S3 holds for it; the order does not state the bucket or key of a deploy-scope file.",
+  "world_is": "The gate reads s3://opal-data-<pipe>/code/<layer>/<name> for a pinned file. A wrong key reads as ABSENT, which counts as differing, so a pinned file would be redeployed on every box push while its entry is OPEN (the bytes deployed are always the pinned blob). The owner should check the key against PIPELINE_MAP in .tools/safe_deploy_core.py (ONE WRITER IRPT_BCKEND; not edited here)."
+}
+```
+
+## NFRA_CTLPLN-W113-S2 -- the worker sparse set omits org/critical_paths/.open_deploys, which the order names as a read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W113-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~113",
+  "surfaced_at": "2026-10-15T14:35:03Z",
+  "one_line": "The order says to read one entry of org/critical_paths/.open_deploys/, but the worktree cut by wk-provision did not carry that folder; it was added with git sparse-checkout add (rc=0) and the folder then listed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree /c/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-113: git sparse-checkout list (before the add) held .tools, infra/logic/registry, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards",
+      "ls -a org/critical_paths/.open_deploys/ -> 'No such file or directory' before git sparse-checkout add org/critical_paths/.open_deploys (rc=0); 17 sentinel files listed after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: the sparse set holds the paths of this order; a missing folder is named by a sparse-checkout add and the folder is named in the report.",
+  "world_is": "The read the order asked for (one pinned-entry shape) was not in the sparse set; the add was the prescribed remedy and is named in the worker report."
+}
+```
+
+## NFRA_CTLPLN-W113-S3 -- on a pinned-entry deploy the safe-deploy seat gate reports apply-who REFUSED for the worker serial
+
+```json
+{
+  "id": "NFRA_CTLPLN-W113-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~113",
+  "surfaced_at": "2026-10-15T14:35:03Z",
+  "one_line": "A pinned-entry deploy routed through safe-deploy.sh prints 'APPLY-WHO ... verdict=REFUSED reason=a WORKER does not apply' for the worker serial. It is WARN (apply-who is warn-only by ruling 106858), so the deploy proceeds. The crossbox check had no verdict in the temporary repository only because lib/ is absent there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test run output (default arm) PUSH | safe-deploy: [seat-gates] mode=WARN APPLY-WHO serial=0.9.0_WK_NFRA_CTLPLN~113 kind=WORKER root=inf verdict=REFUSED reason=a WORKER does not apply",
+      ".tools/safe-deploy.sh@9cfc5f5fd8 header comment: apply-who is warn-only in this wrapper (ruling 106858); a no-verdict blocks only under an ENFORCE switch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "safe-deploy.sh seat-gate block: apply-who grades a DEPLOY and is WARN-only in this wrapper.",
+  "world_is": "The refusal is printed and does not change the exit code in WARN mode. Whether a pinned deploy by a worker serial should pass apply-who under a future ENFORCE switch is the owner's question; not decided here."
+}
+```
+
+## NFRA_CTLPLN-W115-S1 -- test_named_commit_deploy.py: the import fix moved the failure; open() commits through a safe-commit.sh the temporary ledger root does not carry
+
+```json
+{
+  "id": "NFRA_CTLPLN-W115-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~115",
+  "surfaced_at": "2026-10-15T14:33:05Z",
+  "one_line": "The W108-S2 import fix (real .tools on PYTHONPATH for the deploy_ledger.py open child) is necessary but not sufficient: open() commits its two files through WORKSPACE/.tools/safe-commit.sh, and WORKSPACE is the temporary ledger root, which holds only a copy of deploy_ledger.py. With the import fixed the run stopped at rc=3 with 'safe-commit.sh: No such file or directory'. The fixture now gives that root a zero-exit test double for the open commit only; case 8 reads the sentinel and the entry on disk and is unaffected. The test now prints NAMED-COMMIT-TEST cases=8/8 ok=True.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_named_commit_deploy.py@9cfc5f5fd8 open_ledger(): copies only deploy_ledger.py into the temporary root before the edit",
+      ".tools/deploy_ledger.py@9cfc5f5fd8 _commit_open_artifacts(): WORKSPACE = Path(__file__).resolve().parent.parent and argv = bash_argv(WORKSPACE/.tools/safe-commit.sh, ...)",
+      "run after the import fix only: RuntimeError deploy_ledger open failed rc=3, stderr 'safe-commit.sh: No such file or directory'; run after the fixture double at 4ba9e42a90 (.scratch/ncd_run.txt in the worktree): rc=0 NAMED-COMMIT-TEST cases=8/8 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The W108-S2 row and CT-aj-4 item 1: the only defect is the import path in case 8's fixture, and fixing it makes the last line cases=8/8.",
+  "world_is": "The import was one of two breaks. The open() commit path needs a safe-commit.sh under the temporary ledger root, which the fixture does not provide. The fixture now supplies a zero-exit double there; the real gate is not exercised by this test."
+}
+```
+
+## NFRA_CTLPLN-W115-S2 -- the danger map is nerves-risk-edges.json, outside <paths>; the tracked map already classes 12 of 14 portal tsx entries; an unmapped portal tsx reads as a clean zero
+
+```json
+{
+  "id": "NFRA_CTLPLN-W115-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~115",
+  "surfaced_at": "2026-10-15T14:33:05Z",
+  "one_line": "CT-aj-4 item 2 asks to refresh the danger map entries in org/modules/graph/comp_pulse.py so a staged portal/**/*.tsx is classed. comp_pulse.py holds no class table: it loads RISK = org/modules/graph/nerves-risk-edges.json (tracked, 1662 nodes, generated by nerves_lexical build, outside <paths>) and classes a staged path only when a map node matches its basename or path with severity HOLD or RISK. The tracked map already holds 14 portal tsx nodes, 12 of them HOLD or RISK, so a mapped portal tsx is classed at the cut. An unmapped portal tsx (portal/src/x.tsx) reads PRESENT_WITH_ZERO_RESULTS with rc=0. No edit was made to comp_pulse.py: the map is not in it and any map refresh is a generated-file write outside this order's grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/modules/graph/comp_pulse.py@4ba9e42a90 RISK = os.path.join(_HERE, nerves-risk-edges.json) (line 91); _staged_files() has no extension filter (line 680-686); risk_reflex() counts every file and hits only HOLD or RISK (lines 301-343)",
+      "org/modules/graph/nerves-risk-edges.json@4ba9e42a90 (count-only read): 1662 edges; 15 nodes with .tsx, 14 with portal in the path; of the 14 portal tsx, HOLD or RISK on 12",
+      ".tools/tests/test_round20_hygiene.py (new in this cell) run at the cut: STAGED portal/src/components/BenchmarkHeatmap.tsx and .tools/deploy_ledger.py -> rc=1, [RISK] and [HOLD] lines printed; CONTROL portal/src/x.tsx -> rc=0 PRESENT_WITH_ZERO_RESULTS; HYGIENE-MAP tsx_classed=1 py_classed=1 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-aj-4 item 2 and CTO msg 109393: the reflex used a stale map; the base map classes 0 portal tsx; a refresh of the map entries makes a staged portal tsx classed.",
+  "world_is": "The base map classes the mapped portal tsx entries (the 0-classed premise does not hold for them). The unmapped portal tsx remains a measured clean zero, because a class needs a corpus-linked map node and an unmapped path has none. Refreshing that needs nerves_lexical build, which writes the generated file outside this order's grant."
+}
+```
+
+## NFRA_CTLPLN-W115-S3 -- the comp-pulse battery reads 11 of 12 at the cut, with one failing arm, not the recorded 10 of 12 with two
+
+```json
+{
+  "id": "NFRA_CTLPLN-W115-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~115",
+  "surfaced_at": "2026-10-15T14:33:05Z",
+  "one_line": "CTaj4-AC3 records the base as COMP-PULSE BATTERY 10/12 PASS with a control that has two failing arms. Run in this worktree at 4ba9e42a90 the battery prints COMP-PULSE BATTERY: 11/12 PASS (denominator 12), with one failing arm, B1-PULSE-BUDGET-REACHED rc=0. This cell does not edit comp_pulse.py, so the count difference is not from this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_comp_pulse_battery.py run at 4ba9e42a90 under timeout 280: rc=1, lines [FAIL] B1-PULSE-BUDGET-REACHED -- rc=0 and COMP-PULSE BATTERY: 11/12 PASS (denominator 12)",
+      "org/modules/graph/comp_pulse.py unchanged in this cell (git status shows no edit to it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTaj4-AC3: the battery passes no fewer arms after the map change; base 10/12 with two arms already failing at the cut.",
+  "world_is": "The battery passes 11 of 12 here, which is no fewer than 10. Whether the budget arm is timing-dependent was not measured (one run only)."
+}
+```
