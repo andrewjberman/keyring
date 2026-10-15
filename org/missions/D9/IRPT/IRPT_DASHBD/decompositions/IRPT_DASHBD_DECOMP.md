@@ -2106,3 +2106,17 @@ The apply is its own round because the issuance gate allows one issuance per wor
 **fanout:** 1 of 1 chains, cap 8, reason: one cell, one applier, the apply is a single change under one ledger (the deploy rule: one change at a time).
 
 **Checker (dry-run at the base before the cut; FAIL as expected, self-test green with 38 red record arms; its live clauses read fresh Lambda, IAM, scheduler, S3 and log state and cannot pass before the apply):** `checks/r128/p128_cotapply.py` (DBC128-1-AC1, DBC128-2-AC1, DBC128-3-AC1).
+
+## 127. ROUND 129, WORKSTREAM B-49F (2026-10-15 ~15:0xZ, issuer 2.0.0_SA_COO~D2, on the AE applier's STOP on `DB-b-260` (msg 8351: `safe-apply` refused by the naming-plan gate, rc 7, nothing written); no new CTO analysis: this repairs the issuer's own round-123 order `DB-b-252` again)
+
+The applier's fresh plan read 7 add / 0 change / 0 destroy on the seven addresses, then the naming-plan gate refused 1 of 7: `aws_iam_role_policy.irpt_account_return_daily_scheduler` takes its `name` from the scheduler ROLE's name module (`iam.tf:152`), so a policy carries the role's name, `irpt-cot-account-return-daily-scheduler-role`; the builder's policy name is `irpt-cot-account-return-daily-scheduler-policy`. Nothing is deployed (function, roles, schedule and artifact are absent; the ledger stays OPEN in the applier's worktree). This seat reproduced the refusal with the real gate in plan mode on a synthetic plan (the role name on the policy: REFUSE; the builder name: CONFORMANT). The error is the issuer's: the round-123 order named five builder names and never the scheduler policy's, and the facts record that graded it counted five. Row `D2-S87` (OBSERVATION, INERT: the gate caught it before any write).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `iam.tf`: one `opal_name` module (kind policy, qualifier scheduler, scope from the same local as the role's) and the scheduler policy's `name` pointing at it; a facts record of the six builder names and the real gate's verdict | `DB-b-261` | FWD-11, FWD-21 | WORLD (floor of an `infra/` path; runs nothing) | none | R129-A |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the CTO's round-127 B-CW analysis (msg 8348) asks a Cottonwood report-build cell in the next B-49F issuance; it is NOT in this round because the repair above blocks the landing the build follows and cannot wait on a design that needs a survey of the 49F filled stage, the Cottonwood reader (`DB-b-232`) and an open join-key question between `account_dim` and `account_return_daily`; it is cut in round 130, and the CTO is told so; (b) the signed pair changes bytes (`iam.tf`'s hash, six names), so the packet becomes revision 3 and both halves re-sign; the apply order `DB-b-260` is amended to the new sha256 and stays with the applier (not re-issued: one order, one ledger); (c) the checker runs the real gate in plan mode so the next refusal is found by a check, not by an apply. Gate limb: one new order (LIMB 6 PRD sign-off applies); the placeholders limb sees NONE.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one cell, one write set (`iam.tf` and a record), worker `0.9.0_WK_IRPT_DASHBD~213`.
+
+**Checker (dry-run at the base before the cut; FAIL as expected, self-test green; its HCL clause against arms, its gate clause against a scratch reference and the applier's refusal reproduced):** `checks/r129/p129_iam.py` (DB129-1-AC1, AC2, AC3).
