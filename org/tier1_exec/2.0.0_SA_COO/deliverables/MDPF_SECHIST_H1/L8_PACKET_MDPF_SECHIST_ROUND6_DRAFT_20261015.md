@@ -1,7 +1,9 @@
-# L8 packet -- MDPF_SECHIST round 6 -- DRAFT, NOT SENT (2.0.0_SA_COO~H1 to 3.0.0_SA_CVO)
+# L8 packet -- MDPF_SECHIST round 6 -- INTERIM (2.0.0_SA_COO~H1 to 3.0.0_SA_CVO)
 
-**Drafted:** 2026-10-15 ~05:5xZ, dell1. **Status: DRAFT.** Every section marked PENDING waits on a dated read listed in "To fill before sending"; the packet is sent only when none is
-left, and the PENDING markers are replaced by the read's own output line. **Decomposition:** `org/missions/D8/MDPF/MDPF_SECHIST/decompositions/MDPF_SECHIST_DECOMP_R6.md`.
+**Drafted:** 2026-10-15 ~05:5xZ, dell1. **Status: INTERIM, sent 2026-10-15 ~23:4xZ for the FOUR JUDGMENT CRITERIA ONLY** (SH6-t25-AC4; SH6-t27-AC2, AC3, AC4), whose evidence is complete
+in the orders table (t25 AC4 evidence `R6_AC4/` @e729d5e3bc; t27 plan JSON, live CodeSha256 and the L2 read of 2026-10-15 13:03Z). The rows marked PENDING below (the FXFXX served read and the served
+week) feed the FWD-9 grade, not these four criteria; they are filled in the FINAL packet after the 2026-10-16 to 2026-10-20 runs, and the FWD-9 grade waits for it.
+Earlier rule in this file (send only when no PENDING is left) is amended by the issuer: it was the drafter's own note, and it held the CVO's four grades behind a dated week. **Decomposition:** `org/missions/D8/MDPF/MDPF_SECHIST/decompositions/MDPF_SECHIST_DECOMP_R6.md`.
 **Cut on:** the CTO's round-5 analysis ADDENDA (`ledger/ROUND_ANALYSIS.round5.md`): ADDENDUM 1 @fa26b50ebc (corrected @f443ae70d2, msgs 5540, 5542, 5553) and ADDENDUM 2 @d3206f14a8 (msg 5564).
 **Scope of the round:** the one item the park kept, FWD-9 (a money-market fund's performance is shown by one stated rule, never silently blank). FWD-9 grades REALIZED on the
 replay, the closed-market cell and the two reads (CTO ruling).
