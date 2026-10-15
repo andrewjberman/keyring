@@ -4011,3 +4011,15 @@ Checks `deliverables/2.0.0_SA_COO~P2/checks/r201/p201_cells.py`, dry-run at the 
 
 fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets with no data dependency (the schema copies and their test; the shared module, entry.py, the freeze and their tests); two workers (slots ~401, ~402) start now.
 
+## 197. ROUND 3, WORKSTREAM ~PO (the Orion Inflection raw feed, the unlocated flat-key writer; 2026-10-15 ~05:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO half of the Orion pairs packet (@acaae0ff99, condition 1) and the four managers' answers (msgs 8063, 8070, 8073))
+
+Round 2 of ~PO closed MAY-CLOSE (close commit 17172025c0); both halves of the Orion pairs packet are signed at sha256 c3dcc22f02e8. The CTO's condition 1: the writer of the daily flat keys (11:39-11:56Z) is located before the scheduled handler deploys, or the handler does not deploy. The four boxes' scheduled tasks and processes were read and none runs it (dell2 195, dell1 196, laptop 211, site Z 214): the writer is in AWS or a seat's session cron. This round is ONE READ cell over AWS (object metadata, CloudTrail data events, S3 access logs, Lambda, EventBridge and Scheduler, ECS, Glue, EC2 and SSM, CodeBuild, Step Functions). The three LOCAL build slices of the packet (the port, the schedule declaration, the Scope account addendum) are NOT cut this round: the port and schedule slices wait on what the READ finds (the hand-over shape), and the Scope addendum waits on B-IN round 120's second-household probe (CTO msg 8082: the feed's reason rows take NO_START_DATE_AT_SOURCE and NO_MODEL_AT_SOURCE from accounts_v2 with claim inferred; page words neutral until measured).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r202/p202_cells.py`, dry-run at the base: IB202-1 AC1 to AC3 all FAIL (no record); the control (`control202.py`, a synthetic record in a temporary root) passes all three and eleven negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-559` | READ AWS for the writer of the daily Orion flat keys: object metadata, CloudTrail, S3 access logs, the compute inventory; its kind, name, claim, evidence and the hand-over path; READ ONLY | FWD-3 | SERVED | none | PO3-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one document; one worker (slot ~403) starts now.
+
