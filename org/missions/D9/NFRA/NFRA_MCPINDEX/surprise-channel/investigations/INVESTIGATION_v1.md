@@ -8435,6 +8435,49 @@ carries none.
       ]
     },
     "notes": "Owner of the ranking question is 2.0.0_SA_COO~O (R16.4): a rule that orders a curated need against a servable table needs a decision on which pin wins (E-16's or E-8's). Not a gate field; no access changes."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~55",
+    "surfaced_at": "2026-10-15T22:30:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W55-S1",
+    "one_line": "The MX-c-37 order names eight planted arms (plant_ct.py, 8 of 8) as its control; the control as it stands at HEAD runs twelve arms and reports 12 of 12.",
+    "spec_asserts": "NFRA_MCPINDEX.TO-MX-c-37 section 0 preflight and the ISSUER NOTES: 'eight planted arms (plant_ct.py, 8 of 8) are the control'.",
+    "world_is": "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py at 3317942ecc defines twelve arms (good file passes, fewer than 4 tags, more than 6 tags, symbol, uppercase, one-word, missing entity, extra entity, extra key, repeated tag, copied derived tags, ungrounded tags). Run on the worker's worktree with the curated p1 file present: 'PLANTED 12 of 12', rc=0. The count in the order is stale; the arms behave. No file was changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-37.curated-tags-p1.md@3317942ecc (preflight line 16; ISSUER NOTES line 86)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py@3317942ecc (arms list, lines 54-65)",
+        "worker run: python org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/plant_ct.py -> PLANTED 12 of 12, exit 0"
+      ]
+    },
+    "notes": "Trivial count drift in an order's prose control; the criterion (ct.p1.sh) itself is unaffected. Filed so the control's stated size matches its measurement."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~55",
+    "surfaced_at": "2026-10-15T22:30:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W55-S2",
+    "one_line": "Step 5.2 of MX-c-37 asks for <status>complete</status> appended to the task order itself, but the task order file is not in the worker's <paths>; the flip was not made.",
+    "spec_asserts": "NFRA_MCPINDEX.TO-MX-c-37 section 5 step 2: 'APPEND <status>complete</status> only if the criterion PASSES'; section 3 <paths> lists the deliverables folder and the investigation channel only.",
+    "world_is": "The task order NFRA_MCPINDEX.TO-MX-c-37.curated-tags-p1.md is outside the worker's write grant. Its last status tag at HEAD 3317942ecc is <status>issued</status>. AC1 PASSES by output, so the order's criterion is met, but the status flip it names cannot be made inside the lane. The flip is left for the issuer; nothing was edited outside <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-37.curated-tags-p1.md@3317942ecc (<paths> block lines 57-61; step 5.2 line 80; <status>issued</status> line 88)",
+        "worker run: timeout 120 bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI2/round18/checks/ct.p1.sh -> RESULT: PASS, exit 0"
+      ]
+    },
+    "notes": "The flip needs the issuer (2.0.0_SA_COO~MI2) to append the status in its own lane, or the grant to widen to the task-order file on Andrew's or the issuer's word. Not a gate field."
   }
 ]
 ```
