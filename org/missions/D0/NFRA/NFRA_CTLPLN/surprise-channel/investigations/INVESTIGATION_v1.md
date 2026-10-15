@@ -10906,3 +10906,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The file already meets item 3, so no edit was made to test_round18_batch.py. The four folders named in W105-S5 remain; recursive deletion waits on Andrew. The --real arm was not run here (it creates a real sparse worktree and portal worktree)."
 }
 ```
+
+## NFRA_CTLPLN-W114-S1 -- the fabric value census exits 1 at base: five unclassified hits, four of them outside this order's paths
+
+```json
+{
+  "id": "NFRA_CTLPLN-W114-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~114",
+  "surfaced_at": "2026-10-15T14:30:14Z",
+  "one_line": "fabric_value_census.py prints ok=False and exits 1 before any edit in this order (unclassified=5). Four of the five unclassified hits sit in files outside this order's paths; the fifth is removed by this order's commit 8646885c9d.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/fabric_value_census.py@9cfc5f5fd8 docstring: 'LAST line: ... ok=<True|False>   (ok only when unclassified == 0)'; CLASS_BY_PATH has no key for the four files below",
+      "measured in ctlpln-114 at 9cfc5f5fd8 before any edit: FABRIC-CENSUS files_scanned=2144 hits=48 enum_source=3 compares=0 display=26 fixture=14 unclassified=5 ok=False rc=1; UNCLASSIFIED lines: .tools/tests/test_fabric_readers_dell.py:101, .tools/tests/test_fabric_readers_dell.py:154, .tools/tests/test_manager_on_every_box.py:266, lib/devices.py:84, .tools/tests/test_round19_register.py:105",
+      "measured after commit 8646885c9d: unclassified=4 ok=False rc=1 (test_round19_register.py:105 gone; the census's own file keys re-pointed to :23 and classified)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "fabric_value_census.py docstring: ok only when unclassified == 0; CLASS_BY_PATH keys every hit by path or path:line on purpose, so a new hit stays UNCLASSIFIED until it is named.",
+  "world_is": "The census is red in this tree before any edit of this order. The four remaining unclassified hits are in test_fabric_readers_dell.py, test_manager_on_every_box.py and lib/devices.py, which this order does not name; they are not edited here. Round-19 FWD-2 does not grade the census's ok, so the order's criteria are unaffected; its exit code is printed beside the BOXES-READ line."
+}
+```
