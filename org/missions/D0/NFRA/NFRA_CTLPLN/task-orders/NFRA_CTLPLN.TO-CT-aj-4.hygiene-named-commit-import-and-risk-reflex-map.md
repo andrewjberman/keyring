@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~115</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in wk-NFRA_CTLPLN-115 @4b1f6b8c22 (merged at the drain): NAMED-COMMIT-TEST cases=8/8 ok=True; HYGIENE-MAP tsx_classed=1 py_classed=1 ok=True; COMP-PULSE BATTERY: 10/12 PASS (denominator 12) at my re-run, 11/12 at the worker's (a time-dependent arm; CTaj4-AC3 amended in cacfe9f285); proof VALID. W110-S1 is answered by the round-19 'not graded: N .tsx' line; the map file nerves-risk-edges.json is generated data outside the grant and is unchanged (W115-S2).</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
