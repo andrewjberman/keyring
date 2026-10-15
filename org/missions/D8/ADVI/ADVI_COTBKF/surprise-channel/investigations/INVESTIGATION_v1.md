@@ -9362,3 +9362,57 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-S3 -- check_restricted_prefix.py aborts on the inflection bucket policy's statement count, before and after the grant
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB1",
+  "surfaced_at": "2026-10-15T19:58:00Z",
+  "one_line": "The CB-d-4 check script cannot reach its simulator limb: it assumes exactly one bucket policy carries more than one statement, and the inflection policy now carries several.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/tests/check_restricted_prefix.py lines 57-64: any planned bucket policy with len(Statement) > 1 is taken as the cottonwood policy, and a second one raises 'more than one bucket policy carries restricted statements'",
+      "Run 1 (before, un-carved plan): rc=1 on that message. Run 2 (before, carved plan, C:/dev/_cotbkf_private_evidence_20261015/r88/check_before.txt) and run 3 (after, check_after.txt): the same message, rc=1, with the cottonwood row changing and no inflection change in the plan",
+      "The inflection policy carries the irpt-performance-adapter-role scoped-exemption statements at HEAD (seen in the un-carved plan text), so it has more than one statement regardless of any change"
+    ]
+  },
+  "spec_asserts": "TO-CB-cj-1 step 3 and step 6: run check_restricted_prefix.py before and after and keep both outputs; 'still green (the agents' own user is still refused on the key)'.",
+  "world_is": "The script exits rc=1 both times, so it never prints its RESTRICTED-CHECK line and never ran its simulator limb. The same refusal of the agents' own user was read instead with iam simulate-principal-policy carrying the live bucket policy: the agent user on the one key reads explicitDeny (rb_sim_live.txt). Not established: whether the script has run green since the inflection exemption statements landed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-S4 -- TO-CB-cj-1 step 2 says the shared readers list gains the ARN; step 3 and the pair say the READ deny only
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB1",
+  "surfaced_at": "2026-10-15T19:58:30Z",
+  "one_line": "The order's step 2 names local.lgic_crm_readers, which feeds BOTH the READ deny and the LIST deny; step 3 and the signed COO half say only the READ deny moves.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf at 8e58736597..HEAD: lgic_crm_readers is read by DenyRestrictedReadExceptReaders and by DenyRestrictedListExceptReaders",
+      "Un-carved plan 1 (cj1_targeted_plan.txt): adding the ARN to lgic_crm_readers put it in two Deny statements (read and list)",
+      "NEVER_WIDEN_R88_CRM_MATCH_GRANT_COO_HALF.md row 'the firm bucket policy': 'the READ deny only. The LIST deny ... unchanged'"
+    ]
+  },
+  "spec_asserts": "Step 2: 'local.lgic_crm_readers gains the role's ARN'. Step 3 and the COO half: the LIST deny and WRITE deny are byte-equal.",
+  "world_is": "Followed the signed pair: a new local lgic_crm_get_readers (readers plus the role) feeds the READ deny only; lgic_crm_readers is unchanged, so the LIST deny is byte-equal. Landed in e128e60b43; the live LIST deny reads two principals, without the role. CB-cj-3's revert must remove lgic_crm_get_readers and the module instance, not an entry in lgic_crm_readers as its step 2 words it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
