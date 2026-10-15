@@ -38321,3 +38321,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "PREDICTION: the IB-pr-549 mint lands, for Cottonwood and Inflection (pin 2) and for 49 Financial (pin 1), the HEAD body of directory_marks_no_closures, so Cottonwood's gate lists the lost account and publishes at the first fire after the mint if its directory carries only UNKNOWN source marks besides the two carried TERMINATED entries (the HEAD offline run did exactly this); 49 Financial publishes only if its directory's 73 TERMINATED entries are all carried-forward (not source-marked), which was not read, so 49 Financial is expected to stay refused. THE MINT LANDS NO THIRD UNREAD BODY for this function; the other members are IB-pr-549's own differential. THE LIVE BUNDLES: 49 Financial UHOCIkWj was put by IB2's IB178 apply (order IB-pr-512, the minimal holdings packages); Cottonwood oyIYMVdh predates IB178 and was untouched by it (the earlier IB-pr-404 narrow-bundle apply by the same seat, IB105-1 record); the bundle objects are declared in .tools/safe_deploy_core.py, not in the lambda source map, so no source-map record exists for them; which commit built each live holdings_snapshot.py is not named by these records beyond the packet's blob 3a19dcf5 for the IB193 re-read, and the live bytes differ from that blob, so the build input of each live bundle is NOT established here (a read of the IB2 ledgers under org/critical_paths/change_management/ for the two mints is the open part)."
 }
 ```
+
+## IRPT_BCKEND-D2-W419-S1 -- The order names the publication manifest, but the published .manifest.json is written by publication.py, which is outside the paths grant; the closed_at_source fact is recorded in the run manifest (snapshot _manifest, returned by run_firm) instead.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W419-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~419",
+  "surfaced_at": "2026-10-15T13:06:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the publication manifest, but the published .manifest.json is written by publication.py, which is outside the paths grant; the closed_at_source fact is recorded in the run manifest (snapshot _manifest, returned by run_firm) instead.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings/publication.py@3f7c8910898345e85873d3a1fac78e18e0e7cea1 publish() builds the published manifest dict and puts it as the revision manifest object",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@3f7c8910898345e85873d3a1fac78e18e0e7cea1 land() builds body_payload from keys not beginning with an underscore, so the run manifest _manifest is not part of the published body"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-576 change item 3: the publication manifest records each exempted account as closed_at_source with its dates, written by the same place that writes the other manifest facts.",
+  "world_is": "The published .manifest.json belongs to publication.py, outside this order's paths. This build records closed_at_source in snapshot _manifest (the run manifest that carries the other manifest facts and is returned by run_firm); a run with no exempted account leaves it byte-unchanged. Whether the served manifest should carry the fact is for the issuer: that needs a grant on publication.py. The evidence loader that feeds the provider is the next cell."
+}
+```
+
+## IRPT_BCKEND-D2-W419-S2 -- AMENDMENT 1 part (ii) needs the exempted account listed in its household in the served snapshot; the account nodes are built by holdings_49f.py, which is outside the paths grant, so that part is stopped and the words helper alone is built.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W419-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~419",
+  "surfaced_at": "2026-10-15T13:13:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 1 part (ii) needs the exempted account listed in its household in the served snapshot; the account nodes are built by holdings_49f.py, which is outside the paths grant, so that part is stopped and the words helper alone is built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py@0bd0f39b2b line 378 builds the ACCOUNT nodes of the 49 Financial snapshot with hs._node(account_id, None, 0, ACCOUNT, ...); the household listing is built from these nodes there",
+      "data/assets/scripts/gold/investor_reporting/holdings_membership.py@0bd0f39b2b lines 110 and 119 read ACCOUNT nodes to build the membership roots; the holdings_inf.py builder carries the same node construction",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@0bd0f39b2b holds only the generic _node helper and the gate; the household node placement is not in it"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-576 AMENDMENT 1 (msg 8290) part (ii): the served snapshot keeps the exempted account listed in its household, with no position nodes, the words Not reported by the custodian since <date>, and its last served value never shown as current.",
+  "world_is": "The household account node is built by holdings_49f.py (and holdings_inf.py, holdings_membership.py), none of which is in this order's paths. Built in holdings_snapshot.py: the absent_at_source manifest record and not_reported_display (the words). NOT built: the household node placement in the served snapshot. Stopped on that part per the coordinator. The issuer amends the grant (or re-cuts that part) before it can be built.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W419-S3 -- The proof instance path named by the order is too long for Python on dell2 (about 275 characters, past the Windows MAX_PATH limit with LongPathsEnabled unset): proof-of-spec-check.py returns READ-ERROR rc=2 at that path and VALID rc=0 on a short copy.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W419-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~419",
+  "surfaced_at": "2026-10-15T13:20:26Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The proof instance path named by the order is too long for Python on dell2 (about 275 characters, past the Windows MAX_PATH limit with LongPathsEnabled unset): proof-of-spec-check.py returns READ-ERROR rc=2 at that path and VALID rc=0 on a short copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~419/ holds the criteria output and the record; the instance named by the order is about 275 characters from the drive root",
+      "python -I open of the order-named instance path: FileNotFoundError on write and on read; a bash shell write of the same name succeeds, and the checker run on the same bytes from a short path returns VALID rc=0",
+      "python .tools/proof-of-spec-check.py on the order-named path: READ-ERROR (rc=2) [Errno 2] No such file or directory"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-576 proof_of_spec: the instance goes at the order-named path and is validated with python .tools/proof-of-spec-check.py before the order is reported.",
+  "world_is": "On this box python cannot open the order-named instance path (MAX_PATH; LongPathsEnabled is not set), so the canonical validation cannot run. The instance content validates VALID rc=0 from a short copy. The order is left open; the instance is written untracked at the order path and not committed. Needs a shorter instance name from the issuer, or LongPathsEnabled on dell2 (a machine setting this worker does not change)."
+}
+```
