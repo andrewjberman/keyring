@@ -13883,3 +13883,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The fallback table equals the package for every year 2010 to 2027, so the 15 landing days and the 13 catch-up dates of round 114, answered from the fallback, are the package's answer too. NOT closed by this row: the round-114 records DB-c-1 and DB-c-3 still carry calendar_source NYSE/hardcoded-fallback-2010-2027 and calendar.ran false (history, not rewritten); the checkers run under python -I, which drops the user site, so they still answer from the fallback (equal by this test). The pair packet DB-c-5 states the calendar source it used."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S53",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T03:08:56Z",
+  "one_line": "Disposition of the B-CW round-115 rows at the drain: W403-S4 ruled by the issuer (the principal reads the silver and its own daily gold prefix; the amended packet carries it) and carried to its disarm owner for the sign-off; W403-S2 (schema 1.1 versus 1.2) carried to its disarm owner; W403-S1 and W403-S3 noted",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "51c4f2bfeb (box/dell2) amends DB-c-5 step 5 and the checker: principal_read_prefixes is exactly the Black Diamond silver prefix and the daily gold table's prefix; the re-seated packet and facts record (worker commit 4cc873a370) pass DBC115-2-AC1, re-run by the issuer on the merged tree 8f83241ac1",
+      "the packet NEVER_WIDEN_PACKET_DB-c-5_R115.md question 4 now asks the CTO's half to confirm the grant, and states that a listing refusal would still fall back to one day with a WARN",
+      "python .tools/round-close-check.py --project IRPT_DASHBD --round 115 --workstream B-CW: verdict=MAY-CLOSE (2 orders, 0 judgment criteria)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A BLOCKING or ARMED row is dispositioned or carried to its owner before the round is counted finished; a row whose disarm owner is another seat is carried in the drain-end message, not disarmed by the issuer.",
+  "world_is": "W403-S4 (ARMED, disarm owner 1.0.0_SA_CTO): the issuer's defect (the order named a silver-only read prefix) is ruled and the packet carries the two-prefix grant; the row stays ARMED until the CTO's half signs that grant, because creating the schedule ENABLED without the list grant would skip missing dates silently. W403-S2 (ARMED, disarm owner 1.0.0_SA_CTO): the gold manifests carry schema 1.1 and HEAD emits 1.2, so a HEAD-built function writes 1.2 beside 1.1; the packet asks the CTO's half to rule it. W403-S1 (INERT): the repo's scheduled wrapper fires other declared channels, none the Cottonwood source. W403-S3 (INERT): the worker's interpreter ran under -I and used the fallback calendar, equal to the package by the 18-of-18-year test (D2-S50)."
+}
+```
