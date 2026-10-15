@@ -37365,3 +37365,125 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Both rows stay ARMED/carried under ~P2 until a pair that moves inf-gold-trigger measures T-1 completeness; V3 does not move the trigger."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W412-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~412",
+  "surfaced_at": "2026-10-15T10:53:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-569 read stopped at step 2: one Cottonwood refusal record version names account_lost with count 9 (candidate 2026-10-09), not the one lost account that row S158 describes.",
+  "spec_asserts": "IB-pr-569 step 2 and its STOP clause: every Cottonwood publish refusal record names one condition, account_lost, with lost_count 1; row S158 describes the refusal as one lost account.",
+  "world_is": "The Cottonwood platinum current publish_refusal.json has three versions. The version for candidate business date 2026-10-09 (refused_at 2026-10-12T14:17:38Z) names account_lost with count 9 and listed closed_accounts_not_refused count 8. The version for candidate 2026-10-12 (refused 2026-10-13T14:17:42Z) and the current object for candidate 2026-10-13 (refused 2026-10-14T14:17:41Z) each name account_lost count 1. The served business_date 2026-10-08 is unchanged in the index manifest. Per the order's clause the read stops here; no IB209-1 record is written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-object-versions and get-object --version-id on the cottonwood platinum current publish_refusal.json key, bucket opal-data-cottonwood, read only, at base 1713c505c19eab11b44b04141debbecdf958d089; 3 versions read, none written",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py at 1713c505c19eab11b44b04141debbecdf958d089 lines 3051 (closed = closed_accounts() & gone), 3055 to 3058 (marks gate, then add account_lost), read from the HEAD blob via git show"
+    ]
+  },
+  "notes": "Counts, dates and class names only; no account id is recorded. The 2026-10-09 version is the one that the S158 row did not see. Not read at this stop: the source partitions, the directory mark, the other firms. The three downloaded versions were held in scratch outside the tree and are deleted after this row."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W412-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~412",
+  "surfaced_at": "2026-10-15T10:53:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The worker worktree does not carry data/, so the publisher and its tests named by the IB-pr-569 order are not on disk; AC2 cannot pass in this worktree.",
+  "spec_asserts": "IB-pr-569 names the publisher data/assets/scripts/gold/investor_reporting/holdings_snapshot.py and its tests as the code to read at HEAD, and the p209 check site() requires each acceptance-path file to exist under the worktree root.",
+  "world_is": "The sparse-checkout cone of this worktree lists .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_BCKEND, org/modules/graph and org/standards; data/ is absent on disk, although git ls-files lists the publisher and its tests at HEAD 1713c505c19eab11b44b04141debbecdf958d089. The worker read the HEAD blobs into scratch outside the tree and did not widen the sparse checkout or write into data/.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list and ls on the worktree root at 1713c505c19eab11b44b04141debbecdf958d089: data/ absent",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r209/p209_cells.py lines 53 to 61 (site() reads the file under the worktree root)"
+    ]
+  },
+  "notes": "Blocks the AC2 criterion only. Needs the issuer or the integrator to either widen the worker's sparse grant to the three data/ publisher paths or to state that the acceptance-path read is out of scope for this worker."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W412-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~412",
+  "surfaced_at": "2026-10-15T10:53:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "comp-find --corpus aws is BLOCKED in this session (served-graph client unreachable), so the Cottonwood holdings prefix was found by computing the canonical address and listing the bucket instead.",
+  "spec_asserts": "IB-pr-569 step 2 names comp-find --corpus aws, or the rail's printed command, as the route to the firm's publication prefix and its refusal records.",
+  "world_is": "comp-find --corpus aws returned BLOCKED with the reason no module named projection_client, rc 2, which is no measurement and not a zero. lib/opal_naming.py address() gives the platinum current address for the firm, and a read-only list-objects-v2 under that prefix confirmed the layout.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws opal-data-cot at base 1713c505c19eab11b44b04141debbecdf958d089: BLOCKED, rc 2",
+      "lib/opal_naming.py address('irpt','cottonwood','platinum','holdings','current','manifest.json') at base 1713c505c19eab11b44b04141debbecdf958d089, read in the worktree"
+    ]
+  },
+  "notes": "The routing to the prefix is measured by address() output and list calls, not by the served graph. The served-graph client needs to be reachable before a comp-find aws read can be cited."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W412-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~412",
+  "surfaced_at": "2026-10-15T11:05:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The account-id mint (infra/aws/lambda/investor-reporting/_ids/ids.py) is outside the amended grant: the publisher's identity binding imports it, and it is not on disk in the worker worktree after the data/ sparse add.",
+  "spec_asserts": "Amendment 1 grants the worker the publisher and its tests under data/assets/scripts/gold/investor_reporting, and asks the worker to read the code it names; the publisher imports its opaque_id from the _ids module, which the grant does not name.",
+  "world_is": "holdings_snapshot.py binds opaque_id to _ids/ids.py (infra/aws/lambda/investor-reporting/_ids/ids.py). That file is tracked at HEAD 1713c505c19eab11b44b04141debbecdf958d089 but is outside the sparse grant. The worker read it from the HEAD blob into scratch outside the tree, used only its sha256 mint to test membership of the account in source partitions, and did not widen the sparse checkout further.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py at 1713c505c19eab11b44b04141debbecdf958d089 lines 169 to 176 (the identity binding to _ids.opaque)",
+      "git ls-files at 1713c505c19eab11b44b04141debbecdf958d089 lists infra/aws/lambda/investor-reporting/_ids/ids.py; that path is not in the worktree sparse-checkout list"
+    ]
+  },
+  "notes": "Counts only in the record: the membership test printed booleans and counts, with no account id or account value. The mint needs the registry at data/firm_registry.json, which is on disk at the data root but is not inside the granted folder. A future worker that must recompute an opaque id needs the _ids path granted or a stated reason it is out of scope."
+}
+```
+
+## IRPT_BCKEND-D2-S192 -- Dispositions on worker 412's rows; the S158 READ: the lost account is dropped by the COT account screen; 49 Financial has a refusal record too
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S192",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T11:11:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (the publish guard's owner decides) or whoever accepts the lost account",
+  "one_line": "Dispositions on worker 412's rows (D2-W412-S1 to S4) and the S158 READ: Cottonwood's lost account is in the source but dropped by the COT account screen (cause inferred), the first refusal named 9 lost accounts (8 closed, not refused), the one-date bypass does not clear account_lost, and 49 Financial has a refusal record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB209-1 AC1 to AC3 on the worker tree (all PASS) and the proof instance (VALID); merge f7ae7ad352",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~412/IB209-1_s158_read.json: three refusal record versions (candidates 2026-10-09 count 9 with 8 closed not refused, 2026-10-12 and 2026-10-13 count 1); the account listed in fact_holdings on 2026-10-08, 2026-10-12 and 2026-10-13 and absent from the candidates; no directory entry (271 entries: 2 TERMINATED, 269 UNKNOWN); guard at holdings_snapshot.py line 3058, closed-account exclusion line 3051, one-date bypass line 3191 (waives source_frontier_older only)"
+    ]
+  },
+  "spec_asserts": "Row D2-S158 and my IB-pr-569 order: every Cottonwood refusal names one lost account; the cause is a closed account, a source gap or a mapping break; 49 Financial and Inflection are not blocked.",
+  "world_is": "DISPOSITIONS. D2-W412-S1: the record counts differ (9, then 1, 1); recorded per candidate, my STOP clause was too tight (AMENDMENT 1 @0f2a54c0c4). D2-W412-S2 RESOLVED: a local sparse-checkout add, never committed. D2-W412-S3 (comp-find aws blocked, the canonical address used) and S4 (the id module is outside the grant): INERT, recorded. D2-S158 stays ARMED: the cause is inferred (candidate_filter at the COT account screen), not measured; the failing validate_cot_actual_positions condition is the next read. Correction to row S158: 49 Financial DOES have a refusal record (served 2026-10-12, one refusal), so the staleness is not Cottonwood alone; whether that refusal still blocks it (its candidate for 2026-10-13 and 2026-10-14) is not read and is the next read's second question."
+}
+```
