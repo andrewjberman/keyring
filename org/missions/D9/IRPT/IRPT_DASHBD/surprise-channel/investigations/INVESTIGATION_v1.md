@@ -16246,3 +16246,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Owner for the BLOCKING rows W410-S2, W410-S3, W411-S1, W411-S4 and W411-S5: this seat (issuer), done as above; the CVO adjudicates BLOCKING rows at L9 if it grades them. DBC123-1-AC1 re-run on the landed main tree reads FAIL by design of its base after the drain (other seats' entries changed interleaved with the merge); it was graded on the worker tree before the drain."
 }
 ```
+
+## IRPT_DASHBD-D2-W412-S1 -- A Cottonwood account_dim write whose ETag check fails leaves an unverified object at its key, and the handler's landed-partition guard then refuses every later write to that day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W412-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~412",
+  "surfaced_at": "2026-10-15T08:59:35Z",
+  "one_line": "A Cottonwood account_dim write whose ETag check fails leaves an unverified object at its key, and the handler's landed-partition guard then refuses every later write to that day, so the writer's same-key overwrite cannot run.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "data/assets/scripts/lib/stream_parquet.py finalize(), lines 138-145: on an ETag mismatch the unverified object at the key is 'left for the idempotent same-key reconvert to overwrite'.",
+  "world_is": "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py lines 133-134 return TARGET_ALREADY_LANDED for any object under the day's gold prefix before any silver read, and data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py lines 184-185 raise FileExistsError for a non-empty partition. No handler or adapter path overwrites an existing key, so an unverified object blocks every later invoke and scheduled fire for that day. The function is not deployed, so the hazard is latent: it needs an integrity failure to arise.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/lib/stream_parquet.py lines 136-148 (put_object then the ETag comparison and StreamWriteUnverified) @cd0675ff9c",
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py lines 133-134 (gold_partition_exists then TARGET_ALREADY_LANDED) @cd0675ff9c",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py lines 184-185 (FileExistsError for a non-empty partition) @cd0675ff9c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-19. The branch was read, not exercised: no write was made. The unverified-write branch is written into the packet's Both branches section, and the CTO's half is asked for the ruling (Questions for the CTO's half, item 7)."
+}
+```
