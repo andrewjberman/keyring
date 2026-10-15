@@ -15140,3 +15140,83 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "safe-commit.sh reported the client-data check as ABSENT on this box and passed commit 14d426b8e7 without it. Left alone, every later commit from a worker on this box passes the same way, so a commit carrying a real account number would not be caught by the gate. The two committed files hold no account number or key by construction; that is not a check against the list."
 }
 ```
+
+## IRPT_DASHBD-D2-W187-S1 -- DB118-1-AC1 FAILS after this cell's module edit
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~187",
+  "surfaced_at": "2026-10-15T06:13:19Z",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-W187-S1",
+  "one_line": "DB118-1-AC1 FAILS after this cell's module edit: the round-118 record pins filled_report_values.py by sha256, so any change to the module reds that check until a round-118 record is re-cut.",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-233 BOUNDS: re-run DB118-1-AC1, AC2, AC3 and DB118-3-AC1, AC2 and report their last lines; the round-118 checkers were patched to accept contract 0.5.4 (commit d3c8b0a8e2 message).",
+  "world_is": "Measured in this worktree: p118_hop1.py DB118-1-AC1 rc 1, 'analysis file, hash or tracked flag'. The round-118 record RD_FILLED_REPORT_VALUES_R118.json (folder 0.9.0_WK_IRPT_DASHBD~185) pins analysis sha256 737276850e29f35bcf3584fecbc6ab856cd8b220b3c2496e8af671413eaa89eb, which is the HEAD module's sha; the module edited by this cell hashes differently. AC2 and AC3 of DB118-1 PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r118/p118_hop1.py@d3c8b0a8e2 line 217 (analysis sha256 must equal the module's bytes)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~185/RD_FILLED_REPORT_VALUES_R118.json@d3c8b0a8e2 (analysis block pins the HEAD module sha)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py@d3c8b0a8e2 (HEAD module, sha256 737276850e29f35bcf3584fecbc6ab856cd8b220b3c2496e8af671413eaa89eb)"
+    ]
+  },
+  "notes": "Counts and words only. The round-118 record belongs to worker ~185 and was not edited. Nothing is deployed or scheduled; no function misbehaves on the round-118 record."
+}
+```
+
+## IRPT_DASHBD-D2-W187-S2 -- DB118-3-AC2 and DB118-3-AC1 FAIL after contract 0.5.4
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~187",
+  "surfaced_at": "2026-10-15T06:13:19Z",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-W187-S2",
+  "one_line": "DB118-3-AC2 and DB118-3-AC1 FAIL after contract 0.5.4: the round-118 checks and one Cottonwood reader test count account-return members at 36; 0.5.4 makes ten members source the account-return contract, so the count is 46, and those ten name no Cottonwood firm source.",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-233 WORKER FACE and BOUNDS: the round-118 checkers were patched to accept contract 0.5.4 (commit d3c8b0a8e2 message); the Cottonwood firm_sources stay byte-for-byte and the 107 other members unchanged.",
+  "world_is": "Measured in this worktree: p118_cottonwood.py DB118-3-AC2 'expected 36 account-return members, found 46' rc 1; DB118-3-AC1 pytest 1 failed, 14 passed, test_a_frontier_before_as_of_gives_source_break_naming_the_frontier_for_every_account_return_member asserts 46 == 36. The contract now has 46 members sourced to the account-return contract, 36 with a firm_sources.cottonwood entry, and the ten repaired members (act.beginning_value, act.net_gain, act.ending_value at household and account grain, hold.net_gain_last_12_months, _ytd, _qtd, _since_inception) carry no firm_sources at all. Whether the ten take a Cottonwood source is a ruling the CTO owns.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r118/p118_cottonwood.py@d3c8b0a8e2 lines 133-134 (the count of 36)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_report_reader.py@d3c8b0a8e2 (the frontier test asserts the 36 count; the file is another order's)",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@0.5.4 in this worktree (members sourced to ACCOUNT_RETURN_DAILY: 46; with firm_sources.cottonwood: 36)"
+    ]
+  },
+  "notes": "Counts only. The Cottonwood reader and its test are outside this cell's grant and were not edited. The DB118-3 checks are re-run, not repaired."
+}
+```
+
+## IRPT_DASHBD-D2-W187-S3 -- The 49 Financial QA run of DB-b-233 used the hardcoded NYSE trading-calendar fallback
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~187",
+  "surfaced_at": "2026-10-15T06:13:19Z",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-D2-W187-S3",
+  "one_line": "The 49 Financial QA run of DB-b-233 used the hardcoded NYSE trading-calendar fallback: pandas_market_calendars is absent on this box, so lib/trading_calendar answered from its 2010-2027 table.",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-233 step 4 names the QA run and its household basis; the order states no calendar source and no premise names one.",
+  "world_is": "The run's stderr printed the WARN 'trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027 ...)' twice. The as_of of the run, 2026-10-13, lies inside the covered span, so no figure is affected by the fallback on this run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py@d3c8b0a8e2 line 159 (the fallback WARN text)",
+      "run stderr of the QA run, this worktree .scratch/qa_run_stderr.txt (not committed; two WARN lines)"
+    ]
+  },
+  "notes": "Observation only. Regenerating the calendar is a lib/ act outside this grant; the covered span ends in 2027."
+}
+```
