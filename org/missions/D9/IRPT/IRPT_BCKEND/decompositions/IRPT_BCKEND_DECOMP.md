@@ -4391,3 +4391,15 @@ Check IB233-1 (`deliverables/2.0.0_SA_COO~P2/checks/r233/p233_cells.py`), dry-ru
 | `IB-pr-602` | READ the anatomy and the exemption-alone DELTA of 49 Financial on IB-pr-595's transplant tree | FWD-21 | SERVED | IB-pr-595 (drained) | PL2-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one read-only cell; one worker (slot ~437) starts now.
+
+## 228. ROUND 8, WORKSTREAM ~PO (the Scope feed's IAM resource rebuilt to pass the commit-time naming gate; 2026-10-15 ~19:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on IB2's STOP on IB-pr-600, msg 8563)
+
+IB-pr-600 stopped before any apply: the commit of the signed packet's HCL is refused by the commit-time naming gate (LGIC_ENFORCE, rule 30). The policy name carries a token in no vocabulary, and the scope, bucket and prefix strings were typed by hand where the gate permits only the `opal_name` module and `lookup()` over a registry-fed local. The defect is the packet's (mine): rule 30 asks the L4 text to cite builder output. One WORLD-by-path BUILD cell, repository only: the same resource, the same two statements, the same actions and conditions, spelled through the module and the registry, committed through the gate, its evaluated prefixes equal to `address()` output. No plan, no apply, no registry edit. The packet is then re-issued at the committed text for the CTO to re-bind, and IB-pr-600 applies from HEAD without editing the file.
+
+Check IB234-1 (`deliverables/2.0.0_SA_COO~P2/checks/r234/p234_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control234.py`) passes the three positives; seven HCL negatives, five record negatives, two counter/notes negatives and the no-input cases each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-603` | the IAM resource spelled through opal_name and the registry; the gate accepts the commit | FWD-3 | WORLD (path floor) | none | PO8-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one Terraform file; one worker (slot ~438) starts now.
