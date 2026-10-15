@@ -13962,6 +13962,112 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W404-S1 -- The DBC116-3-AC1 surface arm measures against BASE 8f83241ac1, 35 commits behind this worktree's cut, so it reports a file this cell did not touch
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "DBC116-3-AC1 diffs the tree against BASE 8f83241ac1, but this worktree was cut at 7f16db08c3, 35 commits later; commit 530b3a3246 changed infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf after BASE, so the surface arm FAILs on a file this cell never touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBC116-3-AC1 (checker p116_bcw.py, BASE = 8f83241ac1, 'the tree this round was cut on'): no file outside the four .tf files, handler.py and the two test files changed in infra/aws or the producer's folder.",
+  "world_is": "The worktree was cut from box/dell2 at 7f16db08c3, which is 35 commits past BASE 8f83241ac1. Between them, 530b3a3246 (grant NFRA_OPLGTW OG-ap-19 G3, 0.7.0_AE_CloudOps~Z) changed infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf. The checker's surface arm lists that file and FAILs, while this cell's own changes to the four .tf files, handler.py and test_catch_up.py pass the numstat and hunk arms that run before it. Measured against the cut point, `git diff --name-only 7f16db08c3 -- infra/aws data/assets/scripts/gold/irpt_holdings_performance` lists only this cell's six tracked files. The checker was not edited, and the surface was not widened.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r116/p116_bcw.py BASE and ac_3 @7f16db08c3",
+      "git log 8f83241ac1..7f16db08c3 -- infra/aws shows 530b3a3246 (infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf) @7f16db08c3",
+      "python -I p116_bcw.py . DBC116-3-AC1 @7f16db08c3 + this cell's edits: 'files changed outside the order's surface: infra/aws/terraform/opal-gateway/portal_tiered_read_iam.tf'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. The order's own text names the tree 'this round was cut on'; the cut the worktree was given is 7f16db08c3, not BASE. Disarm = the issuer re-bases the surface arm on the cut point, or the opal-gateway commit is excluded by name. The order stays open on DBC116-3-AC1 until then."
+}
+```
+
+## IRPT_DASHBD-D2-W404-S2 -- The packet's input-frontier hold for an absent T-1 silver (its Function item 3) is not a branch of the cell's listed steps, and the handler has no explicit hold
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "The packet's Function item 3 asks the function to HOLD, log and write nothing when the T-1 silver is absent, and calls it a build item in the function cell; the order's seven steps do not name it, so no explicit hold or absence log was built.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "NEVER_WIDEN_PACKET_DB-c-5_R115.md, Function item 3 (CTO decomposition decision (c)): when the silver partition of T-1 is absent at fire time, the function HOLDS, logs the absence, and writes no key for that day.",
+  "world_is": "TO DB-c-7 steps 1 to 7 name no such branch, and the cell changed only the refused-listing branch of _days_to_compute. The existing path already writes no key for an absent day: lambda_handler stops at the first producer rc != 0 with the print 'catch-up stops here' and never skips the day. No separate absent-silver log line or hold was added. The schedule is created DISABLED, so no fire reaches this path before the applier's order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~403/NEVER_WIDEN_PACKET_DB-c-5_R115.md Function items 3 and 4 @5045d0f2d8",
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py lambda_handler (rc != 0 break) @3c45e1522e",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-7.cottonwood-holdings-performance-function-build-repo-files-only.md steps 1 to 7 @7f16db08c3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. The packet's Function item 4 (the emission version, 1.2 against the existing 1.1 gold) is the CTO's ruling and is not restated here. Disarm = the CTO rules whether the explicit hold is a build item of this cell or of a later one, before the schedule is enabled."
+}
+```
+
+## IRPT_DASHBD-D2-W404-S3 -- No terraform binary on this worktree's shell, so the fmt arm of DBC116-2-AC1 skips and the HCL was checked by hand
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "The terraform binary is absent from the worktree's PATH, so terraform fmt -check cannot run; the checker's fmt arm is skipped and DBC116-2-AC1 PASSes on its structural arms alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBC116-2-AC1: terraform fmt -check reports no unformatted file when the terraform binary is present.",
+  "world_is": "`which terraform` returns nothing on this shell and `terraform version` is not found. The checker's arm catches FileNotFoundError and skips the fmt check. Alignment of consecutive attributes was checked by a line heuristic only (a scratch script in the worktree's .scratch folder). The new blocks were written in the existing roots' shape. No init, plan or provider call was made. The formatting must be proven with the binary before the applier's plan.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "command: which terraform (no output) and terraform version (not found) on the DB-c-7 worktree @7f16db08c3",
+      "p116_bcw.py ac_2 terraform fmt arm: FileNotFoundError -> r = None (skipped) @7f16db08c3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. Disarm = run terraform fmt -check on the four files on a box with the binary, before the applier's plan order."
+}
+```
+
+## IRPT_DASHBD-D2-W404-S4 -- The existing Inflection block in lambda.tf aligns handler and runtime apart from timeout, memory_size and layers, which terraform fmt would align as one group
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W404-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~404",
+  "surfaced_at": "2026-10-15T03:41:31Z",
+  "one_line": "lambda.tf lines 74 to 78 (the IB-er-501 Inflection module, pre-existing) leave handler and runtime unpadded beside timeout, memory_size and layers; a line heuristic groups them as one alignment set, so the root's terraform fmt -check may already fail before this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBC116-2-AC1: the Terraform root is terraform-fmt clean when the binary is present; the cell's new function block copies the Inflection shape.",
+  "world_is": "In the Inflection module, lines 74 to 75 (handler, runtime) are padded to their own width while lines 76 to 78 (timeout, memory_size, layers) sit in the same unbroken run. This cell's copy (lambda.tf, the irpt_holdings_performance_cot module) was written with all five aligned to memory_size, so the new block is formatted by the heuristic. The pre-existing lines were not touched: the order forbids any removed line in the four .tf files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/lambda.tf lines 74 to 78 @7f16db08c3",
+      "the cell's copy at lambda.tf lines 120 to 124 @worktree (aligned to memory_size)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-7. Unverified by terraform fmt (the binary is absent, see row W404-S3). Disarm = terraform fmt on the root on a box with the binary; a fmt-only change to lines 74 to 78 is the CTO's or the applier's to take."
+}
+```
+
 ## IRPT_DASHBD-D2-W405-S1 -- The bronze tables are raw Excel workbooks and JSON files, not Parquet, and no bronze table has date= partitions, so the footer method reads no columns there; the raw workbooks may hold a return column that silver dropped and were not read.
 
 ```json
