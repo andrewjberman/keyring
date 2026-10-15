@@ -5,17 +5,17 @@
 <issued_to>0.7.0_AE_CloudOps~CA</issued_to>
 <issued_by>2.0.0_SA_COO~CA</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<placeholders>GO</placeholders>
+<placeholders>NONE</placeholders>
 <round>20</round>
 <workstream>DEPLOY20NARROW</workstream>
 
 **Directive:** D9 | **Fabric:** laptop | **Decomp cell:** `CA-l-4` (`decompositions/COMM_ASSIST_DECOMP.round20.md`, cell table) | **outcome_ref:** FWD-4, FWD-13 |
 **depends_on:** CA-l-2 (merged `c91b5dc61d`), CA-l-3 (merged; the pin is the trunk after it); the GO waits on the three halves
-**STAGED.** The GO block below is not written until the three halves are SIGNED on the pin; this order is `staged` until then and the seat does not begin.
+**GO WRITTEN** (see below). The three halves are SIGNED on the pin; this order is `pending`.
 
 ---
 
@@ -23,14 +23,14 @@
 
 ### GO
 
-<<ISSUER: GO line -- "GO -- written by 2.0.0_SA_COO~CA" plus the date and time>>. All three halves SIGNED on the pin `863dc0f739`: COO (`2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R20_NARROW_DEPLOY_20261015.md`, commit <<ISSUER: COO half commit>>), CTO (<<ISSUER: CTO half path under 1.0.0_SA_CTO/ and its commit>>), CVO (<<ISSUER: CVO half path under 3.0.0_SA_CVO/ and its commit>>). <<ISSUER: the conditions the CTO and CVO halves add, if any; the COO half already carries the R19 conditions: one sitting, dead-letter queue unchanged, 5 GB, the gate line, check_j5_obs not DIRTY>>
+GO -- written by 2.0.0_SA_COO~CA 2026-10-15 ~09:0xZ. All three halves SIGNED on the pin `863dc0f739`: COO (`2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R20_NARROW_DEPLOY_20261015.md`, commit `4804840be6`), CTO (`1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R20_NARROW_DEPLOY_20261015.md` @0a5a028e6b), CVO (`3.0.0_SA_CVO/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R20_NARROW_DEPLOY_20261015.md` @997636437c). The CTO half adds three conditions that BIND: C1 the static scan of packaged code (step 4b below; ruled (a) in his msg 109378: names reachable only behind `import opal_naming_rootcheck`, an unpackaged module, are excluded, each printed with its guard line, and `opal_naming_rootcheck.py` must NOT be in `dist/pkg`); C2 read the FIRST End of Day after the apply (the 20:00Z-21:45Z window) for a missing-file error and the dead-letter queue unchanged, and roll back the same hour otherwise (the issuer owns that read; you report the apply time so it can be placed); C3 outside 20:00Z-21:45Z and finished in one sitting. The CVO half adds none. The COO half already carries: one sitting, dead-letter queue unchanged, 5 GB free, the gate line `LDO001-MODE verdict=OK default=enforce live=enforce`, `check_j5_obs` not DIRTY.
 Timing: apply BEFORE 19:30Z, so it lands ahead of the End of Day window (20:00Z-21:45Z); if you cannot finish in one sitting before 19:30Z, do not apply until the window has closed and report.
 Rollback is a targeted apply from a detached worktree at `93a3f55d25` (the commit the live CA-k-4 package was built from; its Terraform default is `enforce`), NEVER from `afa8752f44` (its default is `record`).
 
 The three halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full (all under `org/missions/D9/COMM/COMM_ASSIST/deliverables/`):
 - COO `2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R20_NARROW_DEPLOY_20261015.md`
-- CTO `1.0.0_SA_CTO/<<ISSUER: CTO half file name>>`
-- CVO `3.0.0_SA_CVO/<<ISSUER: CVO half file name>>`
+- CTO `1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R20_NARROW_DEPLOY_20261015.md`
+- CVO `3.0.0_SA_CVO/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R20_NARROW_DEPLOY_20261015.md`
 
 ### THE CELL
 

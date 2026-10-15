@@ -10148,3 +10148,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Filed for the CTO's ruling on link handling. No deletion of outside content was observed. The 51 MiB untracked file was preserved whole as one blob (53477376 bytes in the tree), with no size refusal in the preserve step."
 }
 ```
+
+## NFRA_CTLPLN-S9126 -- worktree_gc reads its own command line as an in-use process when given an absolute path
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9126",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-15T09:00:37Z",
+  "one_line": "worktree_gc.py reads its own command line as a process that names the worktree: --check-removable and --only with an ABSOLUTE path report SKIP IN USE for every worktree; a relative path reads correctly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer run 2026-10-15 ~08:55Z on the merged worktree ctlpln-103: `python .tools/worktree_gc.py --check-removable C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-103` printed `NOT-REMOVABLE SKIP IN USE: a running process or scheduled task names this path`, rc 1; the same worktree with `../ajb_wk/ctlpln-103` printed `REMOVABLE-AFTER-PRESERVE MERGED own=5; 1 path(s) would be preserved`, rc 0",
+      ".tools/worktree_gc.py in_use_text() (about :235-250) lists every process command line, which includes the running gc process's own argument"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ag-1: --check-removable and --go --only take a worktree path and decide from the tree; a path alone does not make a worktree IN USE.",
+  "world_is": "The in-use scan matches the path against all process command lines, and the invoking process is one of them when the path is absolute and written in the same form the scan normalises to. The real --go on 2026-10-15 ran with a relative path and worked. Any caller that passes an absolute path (a drain script, MSTR) gets SKIP for every worktree, so nothing is removed and nothing is wrong beyond that. The fix is to exclude the tool's own pid (and its parent shell's command line) from the scan; a round-18 candidate.",
+  "notes": "Found by the issuer on the CT-ag-1 real run; not changed here."
+}
+```

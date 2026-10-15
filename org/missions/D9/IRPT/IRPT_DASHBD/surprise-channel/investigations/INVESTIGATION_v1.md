@@ -16247,6 +16247,60 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W412-S1 -- A Cottonwood account_dim write whose ETag check fails leaves an unverified object at its key, and the handler's landed-partition guard then refuses every later write to that day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W412-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~412",
+  "surfaced_at": "2026-10-15T08:59:35Z",
+  "one_line": "A Cottonwood account_dim write whose ETag check fails leaves an unverified object at its key, and the handler's landed-partition guard then refuses every later write to that day, so the writer's same-key overwrite cannot run.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "data/assets/scripts/lib/stream_parquet.py finalize(), lines 138-145: on an ETag mismatch the unverified object at the key is 'left for the idempotent same-key reconvert to overwrite'.",
+  "world_is": "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py lines 133-134 return TARGET_ALREADY_LANDED for any object under the day's gold prefix before any silver read, and data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py lines 184-185 raise FileExistsError for a non-empty partition. No handler or adapter path overwrites an existing key, so an unverified object blocks every later invoke and scheduled fire for that day. The function is not deployed, so the hazard is latent: it needs an integrity failure to arise.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/lib/stream_parquet.py lines 136-148 (put_object then the ETag comparison and StreamWriteUnverified) @cd0675ff9c",
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py lines 133-134 (gold_partition_exists then TARGET_ALREADY_LANDED) @cd0675ff9c",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_account_dim.py lines 184-185 (FileExistsError for a non-empty partition) @cd0675ff9c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-19. The branch was read, not exercised: no write was made. The unverified-write branch is written into the packet's Both branches section, and the CTO's half is asked for the ruling (Questions for the CTO's half, item 7)."
+}
+```
+
+## IRPT_DASHBD-D2-W412-S2 -- The bounds arm DBC124-2-AC1 fails on the issuer's own base-pinning commit, which lies inside the checker's range and changes the base file the arm does not allow
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W412-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~412",
+  "surfaced_at": "2026-10-15T09:03:03Z",
+  "one_line": "The bounds arm DBC124-2-AC1 fails on the issuer's own base-pinning commit cd0675ff9c, which lies inside the checker's range and changes checks/r124/BASE_R124.txt, a file the arm does not allow; no worker file outside the grant changed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-c-19 criterion DBC124-2-AC1: the only files changed since the base are the packet, the record, the worker's other records in its folder, the channel and the order; the arm's ALLOWED list in checks/r124/p124_bcw.py names those and nothing under checks/.",
+  "world_is": "git log --first-parent --no-merges --name-only over f02b7e9545..HEAD lists cd0675ff9c (the issuer's amendment, checks/r124/BASE_R124.txt, one line changed) and 452aa82ce2 (the worker's packet commit). The arm reports 'files outside the grant changed: ...checks/r124/BASE_R124.txt' and prints DBC124-2-AC1 FAIL at 452aa82ce2. The worker did not edit the checker, the base file or any file outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checks/r124/p124_bcw.py ac_2 and the ALLOWED tuple @cd0675ff9c",
+      "git log f02b7e9545..HEAD --name-only at 452aa82ce2: cd0675ff9c changes checks/r124/BASE_R124.txt only",
+      "python -I checks/r124/p124_bcw.py . DBC124-2-AC1 at 452aa82ce2: 'files outside the grant changed: ...BASE_R124.txt' and FAIL, rc 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-19. The checker and its base are the issuer's. The order stays open on DBC124-2-AC1 until the issuer decides whether the base or the arm changes. The worker did not repair, widen or re-base the arm."
+}
+```
+
 ## IRPT_DASHBD-D2-W196-S1 -- the order's population wording differs from run(): the scheduled set is the holdings population unioned with the newest returns accounts, and the measurement used run()'s set
 
 ```json
@@ -16321,5 +16375,86 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "spec_asserts": "Order step 3 (DB-b-243): 'you may rename its sid to WriteTheSixGoldPrefixesOnly (and fix its comment and the output description); there must remain EXACTLY ONE PutObject statement'. The criterion DB121-2-AC1 is the checker's reading of the same cell.",
   "world_is": "The checker classes every sid absent from the base iam.tf as a NEW statement and requires each new statement to carry only s3:GetObject or s3:ListBucket, so the renamed write statement is refused and AC1 reads FAIL. The worker kept the original sid WriteTheFiveGoldPrefixesOnly (the rename is optional in the order); the write list now carries six prefixes under a five-named sid, and a comment in iam.tf cites this row.",
   "notes": "Form only: the policy's permissions do not depend on a statement id, so hazard_standing is INERT. Owner for a decision on the checker's new-statement rule (key on the sid, or on the statement's content) is the issuer 2.0.0_SA_COO~D2; the worker does not change the checker."
+}
+```
+
+## IRPT_DASHBD-D2-S75 -- issuer's dispositions on worker 412's rows: the base-pinning defect fixed, the unverified-write branch carried to the CTO's half
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S75",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T09:10:28Z",
+  "one_line": "Issuer's dispositions on worker 412's rows W412-S1 (BLOCKING, the unverified-write branch of the account_dim writer) and W412-S2 (BLOCKING, the issuer's base-pinning commit): S2 fixed; S1 carried to the CTO's half as question 7 of the signed-over packet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The account_dim handler writes exactly one new key and refuses a non-empty partition; a failed ETag check must have a defined path (packet DB-c-19, Both branches).",
+  "world_is": "W412-S1: after an ETag mismatch the stream writer raises StreamWriteUnverified and leaves the unverified object at the key; the handler's landed-partition guard then returns TARGET_ALREADY_LANDED for every later invoke of that day, so the same-key overwrite the writer's comment describes cannot run through this handler. The function is not deployed, so the hazard is latent. The packet names it in Both branches and asks the CTO's half to rule the path (a handler change, a delete with Andrew's word, or the stop as written) as question 7; no code change is made before the ruling. W412-S2: the issuer pinned the checker base to the issuance commit and then committed the base file before provisioning, so the bounds arm counted the issuer's own commit; the base is the branch point, fixed in bb73ee8a6a, both criteria PASS on the worker tree. Merge a4a8375b21; round-close-check round 124 MAY-CLOSE; the packet blob is ed09e2768fd13983291ceafbed44ddd54ac69e13. DBC124-2-AC1 re-run on the landed main tree reads FAIL by the base's design after the drain (other seats' commits); it was graded on the worker tree before the drain. Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~412/NEVER_WIDEN_PACKET_DB-c-19_R123_ACCOUNT_DIM.md (Both branches, Questions item 7)",
+      "checks/r124/p124_bcw.py @bb73ee8a6a; merge a4a8375b21",
+      "rows W412-S1 and W412-S2 in this channel"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner for W412-S2 disarm: this seat (issuer), done. W412-S1 is the CTO's half's ruling (packet question 7); the code stays as merged until he rules."
+}
+```
+
+## IRPT_DASHBD-D2-W199-S1 -- the first non-empty fact_allocations date is not in the round-120 record (DB-b-245, FIRST_DATA_DATE)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W199-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~199",
+  "surfaced_at": "2026-10-15T09:01:35Z",
+  "one_line": "The round-120 record does not carry the first non-empty fact_allocations date that FIRST_DATA_DATE and the facts record need",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-245 step 2 defines FIRST_DATA_DATE as the earliest non-empty fact_allocations partition, from the round-120 record; step 5 requires the facts record's manifest.first_data_date in ISO form.",
+  "world_is": "RD_BD_BRONZE_AND_MAP_R120.json (silver block) carries 144 partitions, 33 empty days (2026-04-25 to 2026-07-09), 111 non-empty days, and no first non-empty date. The round-120 drain packet, the round-120 checker p120_bronze.py and the round-121 CTO analysis carry no such date either; a search of the tree found none. FIRST_DATA_DATE is None in the adapter, the facts record carries null, and check DB121-4-AC3 cannot pass its first_data_date form until the date is read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~193/RD_BD_BRONZE_AND_MAP_R120.json @58ab67f3ac (silver block: partitions, empty_days, nonempty_days)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUND120_B49F_DRAIN_END_20261015.md @58ab67f3ac (DB-b-239 bullet: 144 partitions, 33 empty, 111 non-empty)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py @a28b05edd6 (FIRST_DATA_DATE comment)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the landing cell needs the first non-empty fact_allocations date from a read of the Black Diamond silver listing (a LIST under the granted silver root, by the owner of that read). The value goes into FIRST_DATA_DATE and the facts record's manifest.first_data_date. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W199-S2 -- resolves IRPT_DASHBD-D2-W199-S1: the first non-empty fact_allocations date is 2026-04-22 (DB-b-245, FIRST_DATA_DATE)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W199-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~199",
+  "surfaced_at": "2026-10-15T09:08:26Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W199-S1: the first non-empty fact_allocations date is 2026-04-22 by the issuer's silver partition LIST",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W199-S1 (BLOCKING) recorded that the round-120 record does not carry the first non-empty fact_allocations date, so FIRST_DATA_DATE and the facts record's manifest.first_data_date could not be set.",
+  "world_is": "The issuer listed the Cottonwood Black Diamond silver fact_allocations partitions: 144 partitions from 2026-04-22 to 2026-10-13. The first partition, 2026-04-22, is not among the 33 empty days of round 120's record (silver.empty_days starts 2026-04-25). FIRST_DATA_DATE is now 2026-04-22 in the adapter, the facts record carries it, and the test that pinned the constant pins the measured value. The worker did not run the LIST itself: no AWS call was permitted to this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer ruling relayed to worker 0.9.0_WK_IRPT_DASHBD~199 by the coordinator, on surprise row IRPT_DASHBD-D2-W199-S1: silver fact_allocations LIST, 144 partitions, first 2026-04-22",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~193/RD_BD_BRONZE_AND_MAP_R120.json @58ab67f3ac (silver.empty_days starts at 2026-04-25; 2026-04-22 is not in the list)",
+      "data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py @e2dd9f86e0 (FIRST_DATA_DATE comment)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution note for IRPT_DASHBD-D2-W199-S1, which is left as written (append only). The issuer owns the LIST; the worker re-read only the empty_days list. Counts and words only; no client figure is quoted."
 }
 ```
