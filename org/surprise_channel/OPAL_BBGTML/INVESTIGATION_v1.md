@@ -706,3 +706,30 @@ Filed by 2.0.0_SA_COO~ZB at the Z6 drain end.
   "notes": "Z-S22's 'zero unattended successes' sentence is superseded by this row. 10-11 escalation line said '1 attempt used' but the ledger has no unattended entry that morning (old misleading wording, R-series fixed it). Next reads: R7 trace line; Terminal build compare (no earlier build recorded); a console-only vs remote-attached split of the failing mornings once more fires exist."
 }
 ```
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S24",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZB",
+  "surfaced_at": "2026-10-15T17:13Z",
+  "one_line": "Session state at 11:00Z does not separate good sign-in mornings from bad ones after 10-06: console runs now fail too (10-11, 10-15), and before 10-06 remote-attached runs succeeded 3 of 5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZB",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Windows TerminalServices-LocalSessionManager/Operational (ids 21,22,23,24,25) joined to the 14 retained pull-log mornings 09-20..10-15 where the fallback had to sign in; state = the last session event at or before 11:00:00Z.",
+      "BEFORE 10-06 (9 mornings): console 3 of 3 signed in (09-20, 09-22, 10-01); remote-attached from 100.98.173.75 3 of 5 (UP 09-29, 10-02, 10-04; no listener 09-23, 09-27); disconnected-no-client 0 of 1 (09-28 fill unverified).",
+      "AFTER 10-06 04:04Z (5 mornings): console 0 of 2 (10-11, 10-15 focus lost before submit); remote-attached 0 of 3 (10-06 fill unverified, 10-08 window slow plus glyph 10, 10-13 focus lost before submit).",
+      "Denominator: 14 mornings; the other mornings in the retained window had DAPI up and needed no sign-in. 'console' includes a fresh console logon after a reboot."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row Z-S23 and the Z-S2 hypothesis: a remote client attached to the desktop (different screen size and rendering) explains the failing mornings.",
+  "world_is": "Remote attachment cost reliability before 10-06 (3 of 6 non-console mornings failed, 0 of 3 console) but is not the cause since: the post-update failures occur in console and remote sessions alike. That leaves the Terminal build change at 10-06 04:04Z as the one factor common to all 5 failures and absent from all 6 earlier successes' runtime; not proven.",
+  "notes": "Small denominators (5 and 9): read as direction, not significance. Cheapest next evidence: R7's TRACE line at the next failed fire names the foreground owner and the session state (Active/Disconnected/console), which this table infers from event logs."
+}
+```
