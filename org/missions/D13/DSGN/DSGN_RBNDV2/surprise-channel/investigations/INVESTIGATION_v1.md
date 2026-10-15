@@ -439,6 +439,49 @@
     "spec_asserts": "PRD FWD-4 ACCEPT: heat maps shade white to silver, none left in the old blue scale; FWD-3 ACCEPT: no stacked dark strips, panels read white; FWD-1: the page shows real figures and reads as Opal's work.",
     "world_is": "The 'blue scale' is the navy ground of the heat tables (PerformanceHeatMap, BenchmarkHeatmap) and the dark tiles, not a hue ramp in the eight F10 files, which is why the RV-h-1 worker found no blue literal. The ink rule (RV-t-1 c) flips their white text to navy while their ground stays navy.",
     "notes": "Ruled inside the COO's own decomposition (obligation 7): addendum 2, DIRECT-ACT cell RV-r-2, scoped token remap of the old dark surface tokens inside [data-panel-surface=\"light\"] to white and silver, no page file edited. Heat cell premise finding goes to the CTO in the drain-end message."
+  },
+  {
+    "id": "DSGN_RBNDV2-W6-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~6",
+    "surfaced_at": "2026-10-15T06:58:10Z",
+    "one_line": "The acceptance invocation for RB1R2-AC1 names the literal placeholder <WS> in its cd path, which no shell resolves as written; the worker ran it with <WS> replaced by its worktree path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-r-2.inner-surface-token-remap.md worker face, ACCEPTANCE: invocation of RB1R2-AC1 begins 'cd <WS>/portal'; header declares <placeholders>WS</placeholders>",
+        "worktree /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-6 at portal HEAD f96f2d60 (branch wk-DSGN_RBNDV2-6-portal, equal to feature/dsgn-rbndv2-light)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RB1R2-AC1 invocation: 'cd <WS>/portal && ... bun test src/__tests__/dsgn-rbndv2/rb-1-r2.surfaces.test.ts' runs as written and prints VERDICT: INNER-SURFACES-OK.",
+    "world_is": "The invocation is not runnable verbatim because <WS> is an undeclared-expansion placeholder. The worker ran it with <WS> replaced by /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-6, the worktree the order names; bun test then printed VERDICT: INNER-SURFACES-OK with rc=0 (1 pass, 0 fail, 7 expect() calls).",
+    "notes": "No criterion was weakened. The substitution changes only the path prefix, not the command or the expectation."
+  },
+  {
+    "id": "DSGN_RBNDV2-W6-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~6",
+    "surfaced_at": "2026-10-15T06:58:10Z",
+    "one_line": "The task order file in the worker's worktree carries the RECORD FACE header and its preflight block below the WORKER FACE, although the worker face is the worker's whole context and the record face never travels.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- the issuer cuts the worker's copy of the order without the RECORD FACE, or rules where the record face is placed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-r-2.inner-surface-token-remap.md after the REPORT line: a '---' separator, then '## RECORD FACE' and a '<preflight>' block (read at worktree HEAD f96f2d60 by a sed of lines 1-80)",
+        "the worker rules this face is built on: the WORKER FACE is the worker's whole context; the RECORD FACE never travels (L7)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "L7: the WORKER FACE is the worker's whole context and the RECORD FACE never travels to the worker.",
+    "world_is": "The order file at the worker's worktree path contains the RECORD FACE header and its preflight block. The worker read them in passing while locating the criteria and took no action from them; the criteria, invocations and expectations used are the WORKER FACE's.",
+    "notes": "Observed only; the worker did not open the rest of the RECORD FACE section."
   }
 ]
 ```
