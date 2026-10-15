@@ -1,13 +1,12 @@
 {
   "prd": "ADVI_COTBKF_PRD.md",
   "prd_version": "v0.11",
-  "prd_pin": "438c699be3afc4cea0397e0eecb4981028ac09d3",
+  "prd_pin": "e1c831e31c69ed796d0a2ac7abc6f5e8e1609dd6",
   "half": "ratified-text",
-  "half_hash": "6b3acedf32aec685ebc91c4d1549e573c59389373db734d08b135c39da7c2b1d",
+  "half_hash": "2f51e08b459c4cdd2d019b453fbbc348be22dffdc9e3d1d6115324ab87624501",
   "endpoint_hash": "d0930e2c138b4eb287c6e12290ff4f8b268741db8d904fd6fdd20b06f58792f7",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_PRD_v0.11_RATIFIED_TEXT_REVIEW_20261015.md@7025977e0e",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_PRD_v0.11_RATIFIED_TEXT_REREVIEW_20261015.md@af5d5630ce",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-15T19:14:04Z",
-  "reason": "C-RESTRICTED's exception omits option (a)'s limits (in memory, link ids only, no personal data out, logged, removed at job end); the row is wider than Andrew's word"
+  "signed_at": "2026-10-15T19:16:34Z"
 }

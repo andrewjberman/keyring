@@ -4403,3 +4403,15 @@ Check IB234-1 (`deliverables/2.0.0_SA_COO~P2/checks/r234/p234_cells.py`), dry-ru
 | `IB-pr-603` | the IAM resource spelled through opal_name and the registry; the gate accepts the commit | FWD-3 | WORLD (path floor) | none | PO8-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one Terraform file; one worker (slot ~438) starts now.
+
+## 229. ROUND 3, WORKSTREAM ~PL (the 49 Financial account join fixed, the guard unchanged; 2026-10-15 ~20:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on IB-pr-602's finding and the CTO's ruling @334382c7f4 item 1)
+
+IB-pr-602 (merged @98bfeea0f2, the 49 Financial anatomy and the exemption-alone DELTA on IB-pr-595's transplant tree) found: `classified_security_lost` no longer trips (4 to 0 of 1,839; so the registry classification cell of the CTO's msg 8527 item 2 is not cut), `account_lost` still trips on ONE of 7,640 served accounts, cause `join` (the source reports it with positions, the candidate drops it), and the exemption alone moves no node because that account keeps the gate refusing. The CTO's item 1: fix the join, not the guard; a synthetic test with that account's shape; the held rows W426-S2 (a negative test) and W426-S3 (counts only on the console) ride in the same cell. One LOCAL build cell on `holdings_snapshot.py`. The exemption pair's transplant candidate is then rebuilt with this commit added (a later read cell); the dry run at HEAD with 0 lost follows it.
+
+Check IB235-1 (`deliverables/2.0.0_SA_COO~P2/checks/r235/p235_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control235.py`) passes the positives and each negative fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-604` | the account join fix (key found in process), W426-S2 negative test, console counts only | FWD-21 | LOCAL | IB-pr-602 (drained) | PL3-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~440) starts now.
