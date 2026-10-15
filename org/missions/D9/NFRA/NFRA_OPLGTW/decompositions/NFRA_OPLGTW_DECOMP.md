@@ -2347,3 +2347,13 @@ Merges before `OG-ap-21` is cut. **fanout:** 1 of 1 chain (cap 8).
 | `OG-ap-21` | APPLY: release `OG-cp-1` (+`OG-cp-2`), `OG-nw-2`, `OG-gt-13`, `OG-gt-5` with its hookup `OG-gt-11`; Terraform: the news statement re-created on the internal reader role, the published-analysis invoke statement retargeted to it, then `gw_news_read` destroyed BY NAME after the served read; three halves; the contract-staging test must read green at the new deployed commit | applier (`0.7.0_AE_CloudOps~Z`) | WORLD | ~AE | `OG-ap-20` closed |
 
 `NFRA_MCPORTAL`'s F2 writer and close run wait on this release. Queue: MX-r-13 -> ap-20 -> THIS -> ap-17 re-cut -> G2.
+
+## ADDENDUM R3-T.68 (2.0.0_SA_COO~O, 2026-10-15 ~06:5xZ) -- round 37, workstream EGRESS: the harvest runner's whole-prefix silver re-reads (PRD v3.10 @c3b76c142b; CTO msg 34372; CRO findings @b05fee1182)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-eg-1` | E1: a cycle-scoped incremental cache in `store.silver_latest` (silver parts are write-once: LIST, GET only the new parts, same `supersedes` rule, two-entry LRU, unchanged outside the context) used by the runner's cycle; E2: GET count and bytes counted in `store.py` and written into the cycle record as `s3_get_count` and `s3_get_bytes` (a record, never an alert) | `lib/research/harvest/store.py`, `lib/opal_data_harvest/harvest_grammar.py`, `lib/opal_data_harvest/cycle_runner.py`, a test file | WORLD | ~98 | none |
+| `OG-eg-2` | APPLY (`0.7.0_AE_CloudOps~ZW`): the runner stopped at a cycle boundary, `-Plan` first, re-registered with the merged code (carrying the pending `sa` change); the live proof is the first cycle record's `s3_get_bytes` against the CUR baseline | applier | WORLD | ~AE | `OG-eg-1` merged |
+
+Cost context: DataTransfer-Out $67.99 for 2026-10-11..14, 72% from `opal-data-harvest` (541 GB out of 8 GB stored), still running. FIRST in the queue after the release in flight.
+**fanout:** 1 of 1 worker chain (cap 8).
