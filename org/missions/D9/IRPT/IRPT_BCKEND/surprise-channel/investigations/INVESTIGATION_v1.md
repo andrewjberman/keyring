@@ -35769,3 +35769,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W396-S1 to S7: all INERT (writer location, stale pacing and clock text, source-absent days), recorded. THE ANSWERS: (1) the raw producer is a MANUAL command-line pull in data/inf/manual_api, not scheduled; the deployed inf-api-positions lambda writes only parquet; so the .jsonl.gz feeds the mirror needs exist only when a person runs the CLI. (2) 7 positions days landed parquet-only and were dropped (the two known days and five more); transactions and performance none. (3) The mirror refuses parquet by design (it is schema-coerced, raw content not recoverable): the CTO's hypothesis that this is a mirror defect is NOT borne out; the defect is that the raw producer is not scheduled. (4) The re-pull: positions only, 7 days, 2,240 requests, about 19 minutes at the shared 2 req/s floor; transactions and performance need no re-pull for parquet-only days (the two known days are absent at the source for those feeds). (5) The 6 AM fold: one scheduler schedule, trading-day frontier, names from opal_naming. (6) ~I2's feed is not yet written. NEXT: two pairs, cut as cells after the CTO's word on the shape: (a) the one-time 7-day positions raw re-pull (writes only 7 keys in opal-data-inf bronze/positions, read-back, per-key rollback), (b) the scheduled Orion raw producer in the 6 AM fold."
 }
 ```
+
+## IRPT_BCKEND-D2-W398-S1 -- IB-pr-554 cannot add its route key to ROUTES: test_reporting_entry.py pins ROUTES to exactly two keys and is outside the grant (worker stopped at the refusal clause)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W398-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~398",
+  "surfaced_at": "2026-10-15T04:11:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-554 orders one new key in entry.py ROUTES and that the existing tests still pass, but the existing test_one_route_and_function_name pins ROUTES to exactly the two summary-era keys, and that test file is not in the paths grant; the worker stopped at the refusal clause and changed no product file",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/tests/test_reporting_entry.py:74 at commit e056f8fd97006cf33b1861e93001a36591e0237d reads: assert entry.ROUTES == {entry.ROUTE_KEY: entry.OPERATION, entry.SUMMARY_ROUTE_KEY: \"reporting-summary-read\"} (exact two-key equality)",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py:373 at commit e056f8fd97006cf33b1861e93001a36591e0237d reads: ROUTES = {ROUTE_KEY: OPERATION, SUMMARY_ROUTE_KEY: SUMMARY_OPERATION}",
+      "run by 0.9.0_WK_IRPT_BCKEND~398 at commit e056f8fd97 (base, no edit): python -m pytest test_reporting_entry.py test_reporting_summary.py, rc 0, 21 passed (the base is green)",
+      "IRPT_BCKEND.TO-IB-pr-554 paths block grants entry.py, api.tf, locals.tf and the new test file only; test_reporting_entry.py is not granted"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-554 WORKER FACE: build one new key in ROUTES beside SUMMARY_ROUTE_KEY; existing behaviour unchanged and the existing tests must still pass; the refusal clause stops the worker on a change that breaks an existing entry or summary test and cannot be made additive.",
+  "world_is": "Adding the route key to ROUTES makes the ROUTES dict three keys, so the existing assertion at test_reporting_entry.py:74 fails; AC1 runs that file as a regress test, so AC1 cannot pass with the route built as ordered. The only additive alternatives (a side mapping merged into the Entry constructor, or leaving ROUTES unchanged) keep the test green by evading the one-route table the test pins, and were not built. Needed from the issuer: widen the grant to test_reporting_entry.py to update its two-key assertion to three keys, or re-cut the route placement. At this base AC1, AC2 and AC3 FAIL (no new test file, no FILLED-REPORT-B block, no record); the criteria output is recorded in IB200-2_criteria_output.txt."
+}
+```
