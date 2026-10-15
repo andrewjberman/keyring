@@ -19144,3 +19144,78 @@
   "notes": "Form only: the rule is as ordered and the new tests are as ordered; the fixture edits are the minimum the rule forces. The CTO or COO may prefer a different fixture shape; the choice is theirs."
 }
 ```
+
+## IRPT_ANLREQ-D2-W190-S5 -- the commit gate's client-data check found no hashed account-id list on this device, so commit 65a6fa6170 was not checked for client account ids
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W190-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~190",
+  "surfaced_at": "2026-10-15T19:56:59Z",
+  "one_line": "The commit gate's client-data check found no hashed account-id list on this device, so commit 65a6fa6170 was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate runs its client-data check on every commit (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6), and AR-g-90 commits its two product files through safe-commit with no exemption.",
+  "world_is": "safe-commit printed WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt, and this commit was NOT checked for client account ids. The worker scanned its own 150 added lines for a run of six or more digits (0 found) and does not claim the gate's check.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 65a6fa6170: WARN client-data-check hashed account-id list ABSENT (absent is not empty)",
+      "git show 65a6fa6170 over infra/aws/lambda/investor-reporting/reports/resident_installed.py and reports/tests/test_opal_pricing_binding.py: 150 added lines, 0 with a run of 6 or more digits (worker scan, not the gate)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W190-S6 -- the pre-commit risk reflex printed HOLD on resident_installed.py and cited a deploy receipt the sparse worktree does not hold, so the citation was not read before commit 65a6fa6170
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W190-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~190",
+  "surfaced_at": "2026-10-15T19:57:00Z",
+  "one_line": "The pre-commit risk reflex printed HOLD on resident_installed.py and cited a deploy receipt the sparse worktree does not hold, so the citation was not read before commit 65a6fa6170.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate's risk reflex says: GO READ THE CITATION before this commit proceeds. The AR-g-90 worker face names infra/ and org/missions/D9/IRPT on disk and names no critical_paths read.",
+  "world_is": "The reflex printed HOLD infra/aws/lambda/investor-reporting/reports/resident_installed.py (2 recorded claims) and cited org/critical_paths/change_management/20260924T0150Z_irpt-resident-cutover-20260924_deploy_completion.md:19. In worktree C:/dev/wk-irpt-anlreq-190, ls of org/critical_paths/change_management reports No such file or directory, so the citation was not read; the commit proceeded with the HOLD printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit risk-reflex output for commit 65a6fa6170: HOLD on resident_installed.py, citation org/critical_paths/change_management/20260924T0150Z_irpt-resident-cutover-20260924_deploy_completion.md:19",
+      "ls org/critical_paths/change_management in C:/dev/wk-irpt-anlreq-190: No such file or directory; the same condition is on record as IRPT_ANLREQ-D2-W188-S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S127 -- the transcripts root ships one zip to three functions, so a rebuild carries other seats' merged work into functions that never reviewed it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S127",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-15T20:15:05Z",
+  "one_line": "The transcripts root ships ONE zip to its pull, mail-pull and commentary functions, so a rebuild at a pin carries other seats' merged work into functions that never reviewed it: design cell for per-function zips.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The CTO's commentary-deploy half (msg 8577) says the built zip may differ from the fetched live zip in exactly the 3 commentary members, because the zip is shared with the pull functions.",
+  "world_is": "At pin 5b438cd6c4 build.sh makes a 100-member zip; against the live zip (xC1GDXXp, 902,546 bytes) 17 members differ and 8 more exist; 3 of the 17 are the commentary lane's. The other 14 changed and 8 added are other seats' merged work (COMM_ASSIST, the registry, NFRA_TRNSPT, ADVI_FIRMBKTS, IRPT_BCKEND, others) and would ride into both pull functions (applier 0.7.0_AE_CloudOps~AQ2 stopped at step 3, nothing applied). The commentary deploy therefore ships a surgical zip (packet section 8, CTO half R3 @dfac94827f). The CTO's word (msg 8624): every deploy of the transcripts root is surgical or comes with a pair that reads every differing member; per-function zips are a design cell for this lane.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/A_T34_STOP_MEMBER_DIFF.txt (AQ2 msg 8614): 100 members, 17 differ, 8 more, rollback zip 902546 bytes equal to xC1GDXXp",
+      "CTO msg 8624: 'From now on, every deploy of the transcripts root is surgical, or comes with a pair that reads every differing member. Per-function zips become a design cell for you (a row).'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -2333,3 +2333,55 @@
   "notes": "The worker's own Read was unbounded; the carrier file itself holds the record face, which is the subject of this row. The TO file is outside the write grant, so no status flip was made by this worker."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T19:03:28Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S54",
+  "one_line": "Z-W32-S1 is DISARMED: the style authority was read at DEV by the issuer and the page was rendered and looked at; the one break (browser-blue links) is fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W32-S1. The worktree lacked portal/DESIGN.md, so the worker could not grade style. The issuer read it from the portal repo at DEV and checked ink is navy and tokens only; Amendment 1 (@7cdca27ebd) fixed the links and the second render shows them fixed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-2.gateway-view-groups-and-reads-plainly.md Amendment 1 @7cdca27ebd",
+      "drain commit b006b05b90 message: headless Edge render, second build shows the five defects fixed"
+    ]
+  },
+  "spec_asserts": "Z-W32-S1 asserted that style conformance of the new page was unverified because portal/DESIGN.md was absent from the worktree.",
+  "world_is": "Conformance was checked by the issuer against DESIGN.md read at DEV and by rendering the page twice; the break found was fixed. Worker worktrees still do not carry the doc; no later cell depends on it.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-2."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T19:03:28Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S55",
+  "one_line": "Z-W32-S2 is DISARMED: the worker took no step from the record face and the order's own record face is the carrier the gate reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W32-S2. The worker reported it took no step from the record face below the marker; the delivered work matches the worker face (7 of 7 named tests). The order file is a single carrier by design, so the whole-file read is a property of the carrier, not a defect to repair in this round.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-2.gateway-view-groups-and-reads-plainly.md RECORD FACE marker at line 116",
+      "worker 32 report: no step taken from the record face; issuer re-ran pe2.AC1 7 of 7, 61 pass 0 fail"
+    ]
+  },
+  "spec_asserts": "Z-W32-S2 asserted that the record face does not travel to the worker.",
+  "world_is": "The spawn prompt carried the worker face only; the worker later read the order file whole and says it took no step from the record face.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-2."
+}
+```

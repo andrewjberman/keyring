@@ -9051,3 +9051,396 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W173-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~173",
+  "surfaced_at": "2026-10-15T19:20:59Z",
+  "one_line": "The order's ARD mint path (silver files whose names contain 'ard') is not in the checkout. The only silver files with 'ard' in the name are two guards and the ARD tests; the mint module those tests import is data/assets/scripts/silver/commonwealth_account_return_daily.py, which imports the gold producer account_return_daily.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --name '*ard*' data/assets/scripts/silver/ at base b773d5864a: 9 hits; the non-test hits are commonwealth_calendar_guard.py and set_identity_guard.py only",
+      "data/assets/scripts/silver/tests/test_commonwealth_ard_mint_claims.py:24-25 imports commonwealth_account_return_daily as cw",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:131 imports account_return_daily as ard (the producer)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-2 read-first item 2: the valuation chain includes files under data/assets/scripts/silver/ whose names contain ard (the ARD mint path).",
+  "world_is": "No silver module whose name contains ard mints account returns. The mint is commonwealth_account_return_daily.py, which the record classes by its inputs. Not established: whether another mint path exists outside silver.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W173-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~173",
+  "surfaced_at": "2026-10-15T19:20:59Z",
+  "one_line": "The literal token census for yahoo/global returns 0 hits across 9172 scanned files, but every reader builds the Yahoo store address with opal_naming.address('yahoo','global','silver','price_history',...). A zero from a literal-token census reads as absence here and is out of corpus for address-built readers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find -i --files --all 'yahoo/global' data/ lib/ infra/aws/lambda/ integrations/ org/modules/ at base b773d5864a: DENOMINATOR 0 hit(s) across 9172 file(s) scanned",
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py:498 SPLIT_STORE = ('yahoo','global','silver','price_history'); data/assets/scripts/silver/commonwealth_price_need.py:68 index_uri() builds the address the same way",
+      "comp-find -i --files --all 'price_history' over the same scope: 13 files, which catches the address-built readers"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-2 item 1 names yahoo/global as a census token; a zero is read as no reader carrying that literal.",
+  "world_is": "The literal form does not occur in the corpus; readers reach the store through opal_naming.address() and are caught by the price_history token. Not established: readers that build the address from other parts or through an intermediate file.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W173-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~173",
+  "surfaced_at": "2026-10-15T19:20:59Z",
+  "one_line": "The valuation's as-traded basis reads a Yahoo Close cache (read_yahoo_close, one ticker-keyed CSV per ticker, not CUSIP-keyed) into account-day values. The order's reader definition (the Yahoo store and its index) does not name this source, and the cache path has no use_class filter.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py:241 def read_yahoo_close; :329 ser, ao = read_yahoo_close(cache, t); :303 apply_price_basis; PRICE_BASIS_DEFAULT = as_traded at :211",
+      "data/assets/scripts/silver/commonwealth_price_basis_census.py:9-12 writes the Yahoo close cache under .scratch/advi_cotbkf/yahoo_census via yfinance",
+      "comp-find yahoo token census at b773d5864a: no use_class token in commonwealth_daily_valuation.py or in the cache reader"
+    ]
+  },
+  "spec_asserts": "CTO condition C3 (msg 6119): a NOT_FOR_ACTIVE Yahoo price never feeds an active account's return; TO ADVI_COTBKF.TO-CB-ci-2 defines the readers as those of the Yahoo store and its index.",
+  "world_is": "A Yahoo price reaches the as-traded account valuation from a ticker-keyed cache with no use_class filter, so the guard as written does not cover this source. Not established: whether the cache holds any ticker that is NOT_FOR_ACTIVE, and how a ticker maps to a CUSIP.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W172-S1 --The order's item 6 asked for an S3 get-object of the index parquet (schema only); the worker read the footer with pyarrow read_schema over the same s3:// address instead (ranged reads, no whole-object download, no write). The result: 10 columns, no use_class column.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W172-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~172",
+  "surfaced_at": "2026-10-15T19:10:27Z",
+  "one_line": "The order's item 6 asked for an S3 get-object of the index parquet (schema only); the worker read the footer with pyarrow read_schema over the same s3:// address instead (ranged reads, no whole-object download, no write). The result: 10 columns, no use_class column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python: pyarrow.parquet.read_schema(path, filesystem=f) with f, path = pyarrow.fs.FileSystem.from_uri('s3://opal-data-assets/yahoo/global/silver/price_history/index/index.parquet'); rc 0; INDEX-SCHEMA columns=10 names=cusip,yahoo_symbol,valid_from,valid_to,rows,claim,method,as_of,run_id,porting_verdict; has_use_class=False",
+      "record: org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~172/USE_CLASS_READ_RECORD.json (not_established names the footer read and the unread row values)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-1 item 6: one read-only look at the real index, S3 get-object of the index parquet at the index_uri() address, the schema only.",
+  "world_is": "A get-object downloads the whole object; a schema-only read of a parquet needs only its footer, which pyarrow reads by ranged GETs on the same address. The worker used the ranged read: no whole object was downloaded and nothing was written or deleted. Not established: the index row values and any class value; the NO_COLUMN state is what the index carried at the read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W174-S1 -- The R3 custodian number is not in the granted Black Diamond holdings prefix: 0 of 137 parts carry the column, and the accounts dimension has none, so CB87ci3-AC1 and AC2 cannot be met as written
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W174-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~174",
+  "surfaced_at": "2026-10-15T19:08:10Z",
+  "one_line": "The order says the Black Diamond holdings parts under current_locations() carry the custodian column 'Account Number' beside account_id. They do not: 137 of 137 parts listed and read carry no such column, and gold/dimensions/accounts_dimension_latest.parquet (1,005 rows, 27 columns) carries none either. The research places the custodian number in the Black Diamond fact_holdings silver table (blackdiamond/cottonwood/silver/fact_holdings/), which the order does not grant. R3 cannot link on its custodian number from the granted reads; the module is built and its three stub tests pass; the R3 run stopped BLOCKED (rc 2) and wrote no file. No read was made outside the grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python run of data/assets/scripts/silver/commonwealth_match_r3.py --out C:/dev/_cotbkf_match_20261015, worktree C:/dev/wk-cotbkf-174 at the commit carrying this row's parent: HOLDINGS s3://opal-data-cot/gold/canonical/holdings/ listed=137 parquet_read=137 parts_with_custodian_column=0; BLOCKED rc=2; the output folder was not created",
+      "column names over the 137 parts: 3 distinct schemas (47, 51, 39 parts); the union holds account_id and no column named 'Account Number' (the only ccount-like names are account_id and account_supervised)",
+      "gold/dimensions/accounts_dimension_latest.parquet read schema only: 1,005 rows, 27 columns, no custodian-like column",
+      "comp-find 'fact_holdings' (corpus all): data/served_freshness_config.yaml:102 s3_key_prefix s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/ ; org/standards/MDPF_TAXSMA_DATA_CONTRACT.json:155 'fact_holdings (Account Number identity, SUM(Market Value) per account per date)'; the research copy section 3 names fact_holdings Account Number (1,001 distinct)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-3 WORKER FACE grant and item 1: the Black Diamond holdings parts under current_locations() carry the column Account Number beside account_id, which the module projects; AWS reads are limited to the accounts key and holdings prefix current_locations() names. CB87ci3-AC1 and AC2 require the R3 record and the outside links file built from that column.",
+  "world_is": "The granted holdings prefix (opal-data-cot gold/canonical/holdings/) holds 137 daily parts and none carries 'Account Number'. The accounts dimension carries no custodian number. The custodian column sits in blackdiamond/cottonwood/silver/fact_holdings/, outside the grant, so the criteria are not met as written. Not established: whether that silver table is reachable under this worker's grant, or which grant Andrew or the issuer would name for it. Not read: that prefix (listing it would be outside the grant).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W176-S1 -- The named Commonwealth tables carry no registration class, so same_registration_class is null on all 14 list rows; the research's 18 class corroborations cannot be reproduced from them.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W176-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~176",
+  "surfaced_at": "2026-10-15T19:15:35Z",
+  "one_line": "The named Commonwealth tables carry no registration class, so same_registration_class is null on all 14 list rows; the research's 18 class corroborations cannot be reproduced from them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "transactions silver (14 parquet objects, 1,416,497 rows): 25 columns, none a registration or account-class field; Position_Type holds CASH, MARGIN and four other line-level codes, not a class (value-count probe, counts only)",
+      "document_index.parquet listing_fields: 21 distinct keys (Account, AccountNumber, Acct, ClientName, DisplayName, DocName, DocType, DocumentName, DocumentType, FileName, Folder, FolderName, HouseholdName, Keyword, NumberOfPages, ReportID, ReportName, ReportSectionID, ReportVersionID, StmtDate, Year); none a class",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~176/REVIEW_LIST.csv: same_registration_class empty on 14 of 14 rows; NAME_REVIEW_RECORD.json columns_present",
+      "research RESEARCH_20261015_COTTONWOOD_MATCHING_KEYS.copy.md section 4 (line 58) reports 29 corroborated, same registration class 18"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-5 item 3: same_registration_class equals the Black Diamond account_registration_type where the Commonwealth side carries a class, and is null where it carries none; research section 4 measured 18 class corroborations.",
+  "world_is": "The named Commonwealth tables carry no class for any account, so the flag is null on every row and no class corroboration can be measured from them. Not established: where the research's class came from; the restricted CRM zip is outside this cell's grant and was not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W176-S2 -- document_index account strings are not in the ledger's form: an exact string join reaches 234 of the 1,533 Commonwealth accounts, the crosswalk's normalize_account join reaches 738 (as research measured); the order names no join rule, and the worker joined on normalize_account.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W176-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~176",
+  "surfaced_at": "2026-10-15T19:15:35Z",
+  "one_line": "document_index account strings are not in the ledger's form: an exact string join reaches 234 of the 1,533 Commonwealth accounts, the crosswalk's normalize_account join reaches 738 (as research measured); the order names no join rule, and the worker joined on normalize_account.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "document_index.parquet (11,119 rows): 985 distinct raw account strings, 752 distinct commonwealth_crosswalk.normalize_account keys (value-count probes of document_index and transactions, counts only; scratch scripts deleted)",
+      "exact string join of document accounts to transactions Account_Number: 234 accounts; normalize_account join on both sides: 738 accounts, equal to research section 4",
+      "unmatched Commonwealth accounts carrying a name key: 269 on the normalized join; 88 on the exact join",
+      "commit eee317417b, data/assets/scripts/silver/commonwealth_match_names.py: cw_names keyed by cw.normalize_account, with the reason in the comment above the loop"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-5 item 2: a Commonwealth account's document names are matched to that account; the order gives no join key between document_index and the ledger.",
+  "world_is": "The document account strings are not written in the ledger's form, and only the normalized form joins; an exact join would drop the names of 504 accounts. Not established: whether the document_index writer or the ledger writer should carry one form.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W175-S1 -- The order's same-registration-type test has no Commonwealth registration field to read; R4 derives a class from document-name tokens and the Black Diamond side from account_registration_type
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~175",
+  "surfaced_at": "2026-10-15T19:17:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-D1-W175-S1",
+  "one_line": "The order's same-registration-type test has no Commonwealth registration field to read; R4 derives a class from document-name tokens and the Black Diamond side from account_registration_type",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver transactions, positions, document_index and account_links column lists read from S3 on 2026-10-15 (read-only): no registration column on the Commonwealth side",
+      "worktree C:/dev/wk-cotbkf-175 data/assets/scripts/silver/commonwealth_match_r4.py REG_CLASSES (uncommitted at the time of writing)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-4 item 1e: a CANDIDATE when a candidate is window_ok with the same registration type. The order names no Commonwealth registration source.",
+  "world_is": "No Commonwealth table carries a registration column. The build maps name tokens to IRA, TRUST, LLC, JOINT and otherwise PLAIN on both sides (the Black Diamond side from account_registration_type). Consequence: the 89 client-line accounts carry two document names in total, so the registration route cannot fire for them. The class map is this build's choice, stated in the module and in R4_RECORD.json; no other source was consulted.",
+  "notes": "Surfaced building TO CB-ci-4 (round 87)."
+}
+```
+
+## ADVI_COTBKF-D1-W175-S2 -- On the 471-account control, rule R4 as the order states it reaches 358 unique households with 353 right and 5 wrong, not the research's 138 right and 0 wrong; the real run gives 137 name-routed accounts in 94 households against the research's 59
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~175",
+  "surfaced_at": "2026-10-15T19:17:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-D1-W175-S2",
+  "one_line": "On the 471-account control, rule R4 as the order states it reaches 358 unique households with 353 right and 5 wrong, not the research's 138 right and 0 wrong; the real run gives 137 name-routed accounts in 94 households against the research's 59",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "research note section 4 (copy at org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/RESEARCH_20261015_COTTONWOOD_MATCHING_KEYS.copy.md, origin 4.0.0_SA_CRO~DELL2 @fb9f9bc870): 138 right, 0 wrong, 7 multi, 317 no hit over 462 pairs; 59 unmatched reach a household",
+      "R4 run on 2026-10-15 over the served 471 MATCHED accounts (own link hidden from the claims test): 358 unique, 353 right, 5 wrong, 2 multi, 111 no hit; 469 accounts carry a document name; 221 of 225 households are named by relationship_name"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-4 item 2 and the research note: the household stage is expected at 138 right and 0 wrong, and about 59 unmatched accounts reach a household now.",
+  "world_is": "The name stage reaches more households than the research measured, and 5 of its control households are wrong. No DETERMINISTIC link was wrong (341 of 341 right), so the guard did not fire. The 5 wrong households are relationship-named, so the name source is not the cause. Not established: the cause of the gap between the two runs; the stop list and token rule are as the order states.",
+  "notes": "The order's expectation is recorded here, not adjusted to fit."
+}
+```
+
+## ADVI_COTBKF-D1-W175-S3 -- The client-line route reaches 89 unmatched accounts and yields no CANDIDATE and no DETERMINISTIC link, where the research expected a candidate tier; 34 of the 89 touch a reachable account, against the research's 39
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~175",
+  "surfaced_at": "2026-10-15T19:17:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-D1-W175-S3",
+  "one_line": "The client-line route reaches 89 unmatched accounts and yields no CANDIDATE and no DETERMINISTIC link, where the research expected a candidate tier; 34 of the 89 touch a reachable account, against the research's 39",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "research note sections 4 and 5, option 4: client-line propagation then the inside step, 89 households, 39 touching unmatched active accounts, tier candidate",
+      "R4 run on 2026-10-15: 89 accounts via client_line in 56 households; 2 of the 89 carry a document name; best fingerprint against every household account: 75 at 0, 10 below 0.5, 4 between 0.5 and 0.8; all 89 NONE"
+    ]
+  },
+  "spec_asserts": "The research's option 4 is a candidate-tier route through the same inside-household step.",
+  "world_is": "The client-line accounts have no names, so no registration route, and no household account scores 0.8 with a window. Four accounts have a household account between 0.5 and 0.8 yet are NONE; the candidate pool excludes accounts that other matched Commonwealth accounts claim, and the per-account claim was not printed. Not established which way the 4 resolve.",
+  "notes": "Count of accounts (not households) whose household holds a reachable account is 34 for the client-line route and 107 for the name route."
+}
+```
+
+## ADVI_COTBKF-D1-W175-S4 -- Links land on accounts the reverse match already classes otherwise: 1 DETERMINISTIC on a near match awaiting a person, 9 CANDIDATE on near matches, 4 CANDIDATE on accounts the research says are new clients with no predecessor
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~175",
+  "surfaced_at": "2026-10-15T19:17:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-D1-W175-S4",
+  "one_line": "Links land on accounts the reverse match already classes otherwise: 1 DETERMINISTIC on a near match awaiting a person, 9 CANDIDATE on near matches, 4 CANDIDATE on accounts the research says are new clients with no predecessor",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/REVERSE_MATCH_V3.csv (sha256 0783f088aecbf29e46751aa5d80239b8aa53f16484778162e34ee1c09783c66f): 387 with no predecessor, 168 NEW_CLIENT_AFTER_MIGRATION, 13 near_match_waiting_on_a_person with a predecessor set",
+      "R4_LINKS.csv (outside the repository, 110 linked rows: 11 DETERMINISTIC, 99 CANDIDATE) joined to the reverse file by count only"
+    ]
+  },
+  "spec_asserts": "The research note: 168 of the 387 unmatched active accounts are new clients after the migration, and no predecessor exists to find for them.",
+  "world_is": "Of the 110 links, 10 DETERMINISTIC and 85 CANDIDATE point at reachable accounts (reverse reasons AMBIGUOUS, MISMATCH_NO_IDENTIFIER and OTHER). 4 CANDIDATE point at NEW_CLIENT_AFTER_MIGRATION accounts. 9 CANDIDATE and 1 DETERMINISTIC point at accounts the reverse file holds as near matches awaiting a person. 1 CANDIDATE points at an account outside the reverse file. Not established whether these are false links; the yield figures count them as the rule states.",
+  "notes": "The DETERMINISTIC near-match landing needs an owner before any link is applied (L9)."
+}
+```
+
+## ADVI_COTBKF-D1-S2 -- the standing statement for D1-W173-S3 while round 89 is cut
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-15T19:28:23Z",
+  "one_line": "Standing statement for D1-W173-S3 (the four readers that feed an active account's value without a use_class filter), at the CTO's msg 6161: what is and is not being written while the fix waits for round 89.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL1 msg 6161: keep D1-W173-S3 ARMED until the fix lands; state in the row that no new Yahoo active-name price is being written meanwhile",
+      "2.0.0_SA_COO~Q1 broker summary at 19:25Z: MDPF_DEMQUE round 9 gate swap LIVE AT the 22:30 ET run (02:30Z 2026-10-16), receipt read at the 04:17Z tick -- so it is NOT live at the time of this row",
+      "MDPF_DEMQUE NEVER_WIDEN_R9_INACTIVE_YAHOO_COO_HALF.md: today the Yahoo leg writes prices for names outside the P2/P3 gate and 538 CUSIPs are stored, 528 of them active non-cash; after the swap a V2-held name is never drawn or extended on Yahoo, and its stored price reads NOT_FOR_ACTIVE",
+      "D1-W173-S3 evidence: the as-traded valuation's Yahoo Close cache is a separate source (a ticker-keyed cache written by commonwealth_price_basis_census.py under .scratch via yfinance), not the DEMQUE store"
+    ]
+  },
+  "spec_asserts": "CTO condition C3 (msg 6119) and msg 6161: a NOT_FOR_ACTIVE Yahoo price never feeds an active account's return; until the round-89 fix lands this row stays ARMED.",
+  "world_is": "As of this row the statement the CTO asked for cannot yet be made as written: the DEMQUE nightly run still writes Yahoo prices for active-set names under the OLD gate until the swap goes live at the 2026-10-16 02:30Z run; from that run no new Yahoo price is written for a V2-held name, and the 528 already stored stay and read NOT_FOR_ACTIVE. The Yahoo Close cache read by commonwealth_daily_valuation.py is written only when commonwealth_price_basis_census.py is run by hand (read from its header, not measured here), not by the nightly. Not established: whether the cache holds a ticker of a V2-held name today.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-S3 -- check_restricted_prefix.py aborts on the inflection bucket policy's statement count, before and after the grant
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB1",
+  "surfaced_at": "2026-10-15T19:58:00Z",
+  "one_line": "The CB-d-4 check script cannot reach its simulator limb: it assumes exactly one bucket policy carries more than one statement, and the inflection policy now carries several.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/tests/check_restricted_prefix.py lines 57-64: any planned bucket policy with len(Statement) > 1 is taken as the cottonwood policy, and a second one raises 'more than one bucket policy carries restricted statements'",
+      "Run 1 (before, un-carved plan): rc=1 on that message. Run 2 (before, carved plan, C:/dev/_cotbkf_private_evidence_20261015/r88/check_before.txt) and run 3 (after, check_after.txt): the same message, rc=1, with the cottonwood row changing and no inflection change in the plan",
+      "The inflection policy carries the irpt-performance-adapter-role scoped-exemption statements at HEAD (seen in the un-carved plan text), so it has more than one statement regardless of any change"
+    ]
+  },
+  "spec_asserts": "TO-CB-cj-1 step 3 and step 6: run check_restricted_prefix.py before and after and keep both outputs; 'still green (the agents' own user is still refused on the key)'.",
+  "world_is": "The script exits rc=1 both times, so it never prints its RESTRICTED-CHECK line and never ran its simulator limb. The same refusal of the agents' own user was read instead with iam simulate-principal-policy carrying the live bucket policy: the agent user on the one key reads explicitDeny (rb_sim_live.txt). Not established: whether the script has run green since the inflection exemption statements landed.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-S4 -- TO-CB-cj-1 step 2 says the shared readers list gains the ARN; step 3 and the pair say the READ deny only
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB1",
+  "surfaced_at": "2026-10-15T19:58:30Z",
+  "one_line": "The order's step 2 names local.lgic_crm_readers, which feeds BOTH the READ deny and the LIST deny; step 3 and the signed COO half say only the READ deny moves.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf at 8e58736597..HEAD: lgic_crm_readers is read by DenyRestrictedReadExceptReaders and by DenyRestrictedListExceptReaders",
+      "Un-carved plan 1 (cj1_targeted_plan.txt): adding the ARN to lgic_crm_readers put it in two Deny statements (read and list)",
+      "NEVER_WIDEN_R88_CRM_MATCH_GRANT_COO_HALF.md row 'the firm bucket policy': 'the READ deny only. The LIST deny ... unchanged'"
+    ]
+  },
+  "spec_asserts": "Step 2: 'local.lgic_crm_readers gains the role's ARN'. Step 3 and the COO half: the LIST deny and WRITE deny are byte-equal.",
+  "world_is": "Followed the signed pair: a new local lgic_crm_get_readers (readers plus the role) feeds the READ deny only; lgic_crm_readers is unchanged, so the LIST deny is byte-equal. Landed in e128e60b43; the live LIST deny reads two principals, without the role. CB-cj-3's revert must remove lgic_crm_get_readers and the module instance, not an entry in lgic_crm_readers as its step 2 words it.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W177-S1 -- the CRM key the grant names resolves to a different bucket under opal_naming.address()
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W177-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~177",
+  "surfaced_at": "2026-10-15T20:02:13Z",
+  "one_line": "TO-CB-cj-2 says the zip key is built by opal_naming; opal_naming.address() returns bucket opal-data-assets for it, while the CB-cj-1 grant, the checker and the order name opal-data-cottonwood. The job uses the grant's bucket, the one the role can read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO ADVI_COTBKF.TO-CB-cj-2 Constants and Run step: 'built by opal_naming, never typed elsewhere'; the same order names s3://opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/date=2026-06-23/CRM_CottonwoodCapitalAdvisors.zip",
+      "GRANT_RECORD.json policy_resources (deliverables/0.7.0_AE_CloudOps~CB1) = arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/date=2026-06-23/CRM_CottonwoodCapitalAdvisors.zip, apply e128e60b43",
+      "lib/opal_naming.py address('commonwealth','cottonwood','bronze','crm','date=2026-06-23', object='CRM_CottonwoodCapitalAdvisors.zip') at worktree HEAD 1cd15d4b99 returns s3://opal-data-assets/... (the same call for silver crosswalk and blackdiamond fact_holdings also returns opal-data-assets)",
+      "data/assets/scripts/silver/cotbkf_crm_match_job.py at 1cd15d4b99: GRANT_BUCKET = opal-data-cottonwood, KEY = opal_naming.key(...) + object; the module refuses to run unless the grant's resource names this bucket and key"
+    ]
+  },
+  "spec_asserts": "TO-CB-cj-2 Constants: the zip key is opal_naming output (never typed); the grant bucket and the key path agree with the checker's KEY and BUCKET.",
+  "world_is": "The builder and the grant disagree on the bucket for this one key: opal_naming gives opal-data-assets, the grant and the checker give opal-data-cottonwood. The module reads the grant's bucket, the only bucket the role may GetObject from; no read was attempted against opal-data-assets. Not established: which bucket physically holds the zip Andrew landed; the single head_object on the grant's bucket is the first read that will say (landed or NOT_LANDED or refused).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

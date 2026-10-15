@@ -9353,5 +9353,49 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "Resolved by the issuer's AMENDMENT 1 (f94a1a7d09) and the sparse-set fix; both findings were defects of the order, not of the code, and the merged head passes AC1 and AC2."
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W143-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~143",
+     "surfaced_at": "2026-10-15T19:17:32Z",
+     "one_line": "The base suite failure in this worktree is test_harvest_grammar::test_one_writer_for_both_channels (rest_fetch missing from the sparse set), not the test_bn1 failure the order names.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "TO section 1 and the PROOF block: 'One failure is known at the base on a clean main checkout (test_bn1_names_made_whole.py::test_v_building_twice, CRLF against LF on disk); a sparse worktree may show more, so read the base count from your own worktree.'",
+     "world_is": "Base run in C:/dev/wk-harvst-143 at 293aac6c48: 842 passed, 1 failed, 3 skipped. The failure is test_harvest_grammar.py::test_one_writer_for_both_channels, ModuleNotFoundError: No module named 'rest_fetch' (test line 167); test_bn1 passes here. integrations/seekingalpha is tracked (6 files at 293aac6c48) but outside the sparse cone and absent on disk. After the six edits and the new test: 845 passed, the same single failure. The cell touches no code path under it.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "git sparse-checkout list in C:/dev/wk-harvst-143 prints .tools, infra/logic/registry and lib at 293aac6c48",
+       "git ls-files integrations/seekingalpha lists 6 files at 293aac6c48; ls integrations/seekingalpha prints No such file or directory",
+       "lib/opal_data_harvest/test_harvest_grammar.py:167 import rest_fetch raises ModuleNotFoundError (pytest lib/opal_data_harvest at 293aac6c48: 1 failed, 842 passed, 3 skipped)",
+       "same mechanism as AMGT_HARVST-D1-W141-S2 (the sparse set omits a tracked path a test reaches)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W143-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~143",
+     "surfaced_at": "2026-10-15T19:21:27Z",
+     "one_line": "The pre-commit risk reflex held contracts.json and requirements.txt against deploy records I could not read in this sparse worktree, so the cited line was not read.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "TO section 1 edit e: 'No code reads this key (checked); the file must still parse as JSON.' The commit gate's risk reflex says: GO READ THE CITATION before this commit proceeds.",
+     "world_is": "safe-commit 25474a3d61 printed [risk-reflex] HOLD for lib/opal_data_harvest/contracts.json pointing at org/critical_paths/change_management/20261001T0938Z_amgt-resapp-r58-ah2-name-fix-redeploy_deploy_completion.md:15, and for requirements.txt pointing at four infra requirements.txt citations (d7-gateway-html-send-act3-20260821.md:96). That deploy-completion file is absent from this sparse worktree because org/critical_paths is outside the sparse cone, so the citation was not read. The hit may be a path-token match rather than a coupling; this is unverified. The commit landed; this cell ran no deploy or publish.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "safe-commit output at 25474a3d61: [risk-reflex] HOLD lib/opal_data_harvest/contracts.json -> org/critical_paths/change_management/20261001T0938Z_amgt-resapp-r58-ah2-name-fix-redeploy_deploy_completion.md:15",
+       "sed -n 12,17p of that path in C:/dev/wk-harvst-143 prints: No such file or directory (org/critical_paths is outside the sparse cone)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

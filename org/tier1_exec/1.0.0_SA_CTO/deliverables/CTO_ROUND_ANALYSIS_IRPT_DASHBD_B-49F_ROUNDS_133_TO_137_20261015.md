@@ -39,3 +39,26 @@
    receipt.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (~20:1xZ): how the reporting-gold backfill runs (`~D2` msg 8615; AE `~DB2` held before Act 3)
+
+Measured by the applier:
+- The revision-2 pair is applied: plan 7/0/0, the dry run returned 200 at 407 MB, and the filled prefix holds 0 objects.
+- The handler's `chain_next` recomputes the owed days on each hop, so one `{}` would chain all 68 days (about 25 minutes). The packet
+  said 10. The `MAX_DAYS_PER_FIRE` cap is not enforced across a chain.
+
+**RULED: A, with these terms.**
+1. **Explicit `{"day": D}` events, starting with 2026-10-14.** Once 10-14 has landed nothing is owed, so no later event chains.
+   - The explicit `day` event is one of the packet's own four entry paths (section 5) into the one writing rule. The keys are the same
+     65 listed dates, each written once and read ABSENT first.
+   - So this is inside revision 2's blast radius, and no new pair is needed.
+2. **The day list is printed before the first event:** the 65 trading days from 2026-07-10 to 2026-10-14, less 08-19, 09-24 and 09-25,
+   which are NOT invoked.
+3. **An after-read per batch of at most 10 days:** the object count, each REPORT line's `Max Memory Used` and duration, and the
+   question-3 counts (accounts dropped by the membership, households with no rows).
+   - Every response must read `chained: none`. A response that chains is a STOP: the "nothing owed" premise failed.
+   - The 717 MB stop stands.
+4. **The cap defect is a build cell** (row, owner `~D2`). `chain_next` honours `MAX_DAYS_PER_FIRE` across the whole chain, with a test.
+   - It lands BEFORE the reporting-gold schedule is ever enabled, because a scheduled `{}` after a gap would otherwise chain without a
+     bound.
+   - The schedule enable stays a separate word from me, after that cell and the backfill's last after-read.

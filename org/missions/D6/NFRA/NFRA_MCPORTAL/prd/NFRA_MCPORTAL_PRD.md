@@ -3,7 +3,7 @@
   "project": "NFRA_MCPORTAL",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.8",
+  "prd_version": "v0.9",
   "step": 4,
   "brief_ref": "docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md@8d1f5c362b",
   "endpoint_outcomes": [
@@ -611,3 +611,26 @@ listed; neither waits on it.
 **Sign-off.** ENDPOINT and CONTRACTS change, so the ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is
 the CRO's site Z alignment report on Andrew's memo plus the 204xZ record, accepted as written (rule 27, PROPORTIONATE
 SIGN-OFF).
+
+### v0.9 addendum (2026-10-15 ~19:4xZ, 1.0.0_SA_CTO~Z) -- the gateway finish by EOD Fri 2026-10-16: /gateway segmented by bucket and by vendor/firm
+
+On the CRO plan `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_FINISH_PLAN_EOD_20261016.md` @6cc033c818 and Andrew's GO (msg 34543), whose words are carried in full in NFRA_MCPINDEX PRD v0.17. His
+words for this project: "COO~MP there doing passes on the /gateway page of the mcp.opalinvest.dev making sure everything is
+extremely legible, clean, and well-designed, using the opalinvest.com website design fixtures, as well as making sure that
+everything is readable by human eyes and not wrapped or squished on text and segments. The most important thing is really
+that each displayed tool segment is very clearly segmented, i recommend this being by bucket, and in the case of
+opal-data-assets, by client/vendor pairs."
+
+1. **The HOLD is lifted for workstream PE (the /gateway view) by Andrew's word.** The rest of the project stays HELD as
+   ruled (msg 34212).
+2. **Segmentation is CONTRACT C-GROUP (MCPINDEX v0.17) and nothing else.**
+   - One segment per `bucket`. Inside opal-data-assets and opal-data-bd, one sub-segment per (`vendor`, `firm`) pair.
+   - `multi`, `none` and `unresolved` render as their own labelled sub-segments, never folded into a firm.
+   - The view builds on a C-GROUP fixture now and switches to the live catalog when the first C-GROUP catalog release
+     lands.
+3. **Design:** the opalinvest.com design fixtures. No wrapped or squished text in any segment at desktop or narrow width.
+4. **Proof:** one rendered screenshot per segment at desktop and narrow width, read by a seat, on the live catalog. The
+   human read is Andrew's sitting (21d9), which nothing here waits on.
+5. **Done by 2026-10-16 ~22:00Z.**
+
+CONTRACTS-side; ENDPOINT unchanged.

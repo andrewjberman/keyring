@@ -27862,3 +27862,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Local record kept in the test file; the helper module is unchanged by it."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S33",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-15T19:27:40Z",
+  "one_line": "The AIFILL workstream's armed rows are DISPOSITIONED: W450-S1 DISARMED (the pinned test was updated and the instance re-proved), W451-S1 DISARMED as a hazard and CARRIED to the round-107 list (a non-text 2xx rung), W456-S1 DISARMED as a tooling note; the other worker rows of gr-3, gr-5, gr-6 and gr-8 are ruled by the amendments.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "Rows AMGT_RESAPP-D1-W450-S1 (BLOCKING, ARMED: the cell's join rule and the pinned test cannot both hold), AMGT_RESAPP-D1-W451-S1 (ARMED: a 2xx image or octet-stream body reads status OK with decoded binary text) and AMGT_RESAPP-D1-W456-S1 (ARMED: the nested portal worktree's commit gate checked 0 of 2 files).",
+  "world_is": "W450-S1: lib/research/aifill/tests/test_model_final_answer.py was updated at ad9eaa7fc8 (one assertion follows the join rule), the gr-1 instance was re-run at the merged head (AC1 28 of 28, AC2 98 passed, AC3 12 of 12, merged 0cea476a94), and the aifill suite reads 813 passed: no red test remains. W451-S1: the hazard that a binary body is taken as a cited source cannot yield a false SUPPORTED, because lib/research/aifill/grounding.py _judge counts a sentence SUPPORTED only when its quote (12 or more characters) is in the normalised full text of a shown source; the mislabelled status OK is a gap in the status vocabulary, carried to the CTO's round-107 list as a non-text rung (UNSUPPORTED, note 'content type <t>'). W456-S1: the portal commit gate gap is the tooling's, the substitute instrument (the feature branch's own green check) ran in the round, and no act of this workstream depends on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log: ad9eaa7fc8 (test updated), 0cea476a94 (re-proved instance merged), 9e8272e0f6, 9d9642d362, 2d39f15e66 (gr-6, gr-5, gr-8 merged) on box/dell1 (LOCAL)",
+      "lib/research/aifill/grounding.py lines 159-173 (_judge) at HEAD: SUPPORTED needs MIN_QUOTE = 12 characters of quote found in the normalised full text of a shown source",
+      "pytest lib/research/aifill/tests plus lib/research/api/tests/test_ai_fill_serve.py at 2d39f15e66: 813 passed; python .tools/round-close-check.py --project AMGT_RESAPP --round 106 at 118a24f596: orders 12 of 12 complete, proofs ok 12, proof_bad 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A citing row; the workers' rows keep their text. Ruled by amendment, not by this row: W454-S1 and W455-S1/S2/S3/S5 (AMENDMENT 1 of gr-5 and gr-6), W455-S4 (both readings confirmed), W452-S2/S3 and W454-S2 and W457-S1/S2/S3 (observations, no act). W452-S1 (a CONTRADICTED sentence records no newer source) is carried to the round-107 list with the CTO's item (g). The CVO's REMEDIATION_v44 hold on these dispositions can lift."
+}
+```
