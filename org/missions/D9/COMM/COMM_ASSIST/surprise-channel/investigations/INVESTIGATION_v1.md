@@ -1642,3 +1642,83 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Not repaired here: the arm sits outside the CA-k-1 cell and the order forbids widening the edit. After commit 41cd03765f the file reads 16/17, the new CA-k-1 arms pass and client_no_request is the only failure. Measured, not judged."
 }
 ```
+
+## COMM_ASSIST-W28-S1 -- the naming gate refuses the hand-typed transcripts path; --tf is made required
+
+```json
+{
+  "id": "COMM_ASSIST-W28-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~28",
+  "surfaced_at": "2026-10-15T01:03:31Z",
+  "one_line": "The LGIC naming gate refused the script's hand-typed default --tf path (the literal transcripts); no registry row carries a Terraform file path, so --tf is now required and the default is removed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git commit attempt on branch wk-COMM_ASSIST-28 at cd1e04765b (safe-commit.sh, naming limb in ENFORCE): NAMING REFUSE .tools/ldo001-mode-default-check.py:33 transcripts -> lookup('transcripts'); commit aborted, rc 1",
+      "infra/logic/registry/root_map.json:1749-1753 (key transcripts) carries system, scope, source and fills only; infra/logic/registry/scopes.json:354-359 (scope transcripts) carries a bucket and no file path; lib/opal_naming.py:366 lookup() returns the scope row only",
+      "commit 935a400f14: --tf required; python .tools/ldo001-mode-default-check.py with no --tf prints NO-VERDICT and exits 2; check_l2_gate.py still L2-GATE ok=True arms=13 of 13 (every caller passes --tf)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's contract is `.tools/ldo001-mode-default-check.py [--tf PATH] [--live-json PATH]`: the flag is optional, and the order names no default path. A builder refusal of a name is answered by a missing registry row to add (CLAUDE.md rule 30).",
+  "world_is": "No registry row gives the Terraform file path of the module, so the naming gate's read-through-lookup rule has no row to read. The default path was removed and --tf became required; an absent --tf is the existing NO-VERDICT rc 2 arm. The criteria are unchanged: the issuer check, safe-apply.sh's covered block and the order's live read all pass --tf explicitly.",
+  "notes": "Not decided by this worker. The COO or the CVO decides whether a registry row for the root's path should be added, or the optional flag restored with a sanctioned route."
+}
+```
+
+## COMM_ASSIST-W28-S2 -- the commit's Co-Authored-By line names Haiku 5.5, not the Sonnet 5.5 the order gives
+
+```json
+{
+  "id": "COMM_ASSIST-W28-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~28",
+  "surfaced_at": "2026-10-15T01:03:31Z",
+  "one_line": "The order's step 3 asks for a Co-Authored-By line naming Claude Sonnet 5.5; the worker runs as Claude Haiku 5.5, and commit 935a400f14 carries the Haiku line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order COMM_ASSIST.TO-CA-k-2 step 3 (the worker face's closing instruction) names Co-Authored-By: Claude Sonnet 5.5",
+      "git log -1 --format=%B 935a400f14 line 20: Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>; the session's attribution rule and the model id claude-haiku-5-5 name Haiku 5.5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says the commit message ends with Co-Authored-By: Claude Sonnet 5.5.",
+  "world_is": "The worker's model is Haiku 5.5, and the harness attribution rule for commits names Haiku 5.5, so the Haiku line was written. The order's Sonnet line was not used.",
+  "notes": "Recorded as a departure from the order's text. The COO decides whether the attribution line for this worker should read Haiku 5.5 or be corrected in a later commit."
+}
+```
+
+## COMM_ASSIST-W28-S3 -- a refused safe-commit left the safe-apply hunk staged in the index
+
+```json
+{
+  "id": "COMM_ASSIST-W28-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~28",
+  "surfaced_at": "2026-10-15T01:03:31Z",
+  "one_line": "After the naming refusal, safe-commit.sh printed 'files unstaged', but git status still showed .tools/safe-apply.sh staged; the next commit took the explicit paths and was unaffected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output on the refused attempt at cd1e04765b: 'ERROR: BLOCKED -- the naming limb refused ... Commit aborted; files unstaged.'",
+      "git status --short in the worktree straight after that refusal: 'M  .tools/safe-apply.sh' (staged) and '?? .tools/ldo001-mode-default-check.py' (untracked)",
+      "the next safe-commit (935a400f14) reported '2 files changed, 223 insertions(+)' with the two named paths; the worktree index is private to wk-COMM_ASSIST-28"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The refusal message says 'Commit aborted; files unstaged.'",
+  "world_is": "The index kept the staged safe-apply.sh hunk after the refusal. No commit went through with it, and the worktree's index is not shared with another seat.",
+  "notes": "Recorded as a claim-versus-world mismatch of the refusal message. Not repaired here: git reset and restore are outside this order."
+}
+```
