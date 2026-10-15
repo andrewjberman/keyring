@@ -36928,3 +36928,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Disarm: 2.0.0_SA_COO~P2 cuts packet v2 on the candidate recorded in IB205-1 (CodeSha256 3+fMEJhQ8...), not on MfxpvRhV..., and treats the IB203-2 trunk-map note as superseded. No live write was made; this row records a premise the world does not hold."
 }
 ```
+
+## IRPT_BCKEND-D2-S189 -- Dispositions on the round-4 workers' rows; D2-W402-S3 and D2-S185 disarmed; IB-pr-564 replaces the IB-pr-561 candidate
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S189",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T07:09:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Dispositions on the round-4 ~PS, ~PO and ~PY workers' rows (D2-W404-S1 to S10, D2-W405-S1 and S2, D2-W406-S1 to S3, D2-W407-S1 and S2, D2-W408-S1); D2-W402-S3 and D2-S185 DISARMED; the IB-pr-561 candidate is replaced by IB-pr-564's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB203-1, IB203-2, IB204-1, IB204-2 and IB205-1 AC1 to AC3 on each worker tree (all PASS) and the proof instances (VALID); merges 0ea9b3e1d2 (560), 6f019c40ee (561), 05ea78f452 (562), 34ea6312cc (563), c324a93684 (564)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~408/IB205-1_ycharts_generate_rebuild_v2.json: candidate 3+fMEJhQ8 built with the candidate map at e7bb7e923a; the three ENDPOINT members carry commentary_requested 3, 3 and 1 and equal the signed hashes (resign_needed false); release 29's four members byte-identical to the live zip (digest 5TRFZf6G); moved against live: acceptance.py, submission.py, the schema and composition_admission.py (4 of 106); the live zip holds commentary_requested 0 times in the three members"
+    ]
+  },
+  "spec_asserts": "IB-pr-561 (my cell): rebuild the candidate from current trunk; the trunk source map carries the right pins, so the candidate carries commentary_requested.",
+  "world_is": "DISPOSITIONS. D2-W402-S3 DISARMED: the source map stages _scope/filled_named_accounts.py in irpt-49f-reporting-read-lambda and irpt-export-render (IB-pr-562 @05ea78f452, build-only import PASS for both). D2-S185 DISARMED: the live bytes are the R29c ledger (answered); the candidate keeps release 29's four members (IB-pr-564). D2-W405-S1: the composition_admission.py change (IRPT_ANLREQ cause commit 83eb798a08) still rides in the corrected candidate; stays ARMED, owner me, until the CTO rules on the packet. D2-W405-S2, D2-W406-S2 and S3 (ycharts-generate is not an importer; bundle.py imports nothing), D2-W407-S2 (no installed filled reader), D2-W408-S1 (the trunk map pins hold commentary_requested 0 times: the fact that corrected IB-pr-561): INERT, recorded. D2-W406-S1: RESOLVED, my check selector defect (fixed @c8a836b0fa, no criterion weakened). D2-W407-S1 (freeze_filled_report has no production caller): INERT, the round-5 enrichment (wire the submit branch and compose the reader). D2-W404-S1 and S2 (the 36-day denominators differ from the calendar: positions 4 of 7 are trading days without a flat key, transactions 13 trading days lack one, six of them 2026-05-04 to 2026-05-11, unlisted), S7, S8, S10 (stale comments): INERT, recorded for the re-cut. D2-W404-S3 (the chain's pull steps carry no date token and run_chain refuses --run-date, so pair (a) cannot re-run past days through them) and D2-W404-S5 (the silver aggregator has no source directory in the repository): BLOCKING for the Orion act, asked of the CTO; D2-W404-S4, S6 and S9 stay ARMED (owner me): the dispatch script is an unversioned S3 object; T-1 completeness at 06:00 NY is unmeasured and the earliest measured pull is 11:39Z; a failed pull logs WARN and the chain reports complete."
+}
+```
