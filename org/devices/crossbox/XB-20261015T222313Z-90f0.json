@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN journey: re-run prove and install with colour off (PYTHON_COLORS=0), then install --target and the lane read",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_DELL1_RERUN_PLAIN_COLOUR.md",
  "opened_at": "2026-10-15T22:23:13Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-15T22:25:14Z",
   "bus_message_id": "09504ae2-5c8f-4277-8302-9f5928f286aa"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-15T22:57:54Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
