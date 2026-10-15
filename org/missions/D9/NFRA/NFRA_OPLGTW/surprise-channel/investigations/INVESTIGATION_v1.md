@@ -17001,3 +17001,27 @@ name the one known failure instead of silently inheriting it.
     "notes": "The AC2 check is the issuer's file and was not edited. Owner may name a fund with trades in the newest partition (for example one of the peer group) as the witness."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W101-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~101",
+    "surfaced_at": "2026-10-15T09:57:09Z",
+    "one_line": "A2 names the flow narrowing only if the flow rows near the cap and gives no flow column list; the live flow rows are about 2.8 KB each, so the list is my choice, made by the trade rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: live gold flow_reconciliation newest partition (date=2026-10-13), read-only: 11 rows, 37 columns, JSON row bytes 2779 to 2841 (average 2803); 50 KB reached at about 18 partitions for one fund.",
+        "CHECK: TO-OG-rv-2 section 1 and issuer note A2 item 2 (if they near the cap); the module harvest_read projection PROJECT_LIMIT 51200 in harvest_typed.py."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "etfs_get_fund_flows returns one fund's window rows with claim and trade_count, and A2 narrows flow rows if they near the 50 KB cap (TO-OG-rv-2 section 1, issuer note A2).",
+    "world_is": "The flow rows near the cap for a window of about 18 or more partitions. The module narrows them to FLOW_COLUMNS (13 names: fund_ticker, window dates and window_trading_days, flow_factor_f, cash_line_delta_base, income_received_base, unexplained_residual_base, trade_count, trade_net_notional_base, corporate_action_count, status, reason) plus claim, and names the other columns once in columns_dropped.",
+    "notes": "The order gave the trade list only; the flow list is the worker's choice, kept to the columns a reader asks about and the columns the tests use. Owner to confirm or name a different list. The trade rule (TRADE_COLUMNS) is as ruled in A2."
+  }
+  ```
