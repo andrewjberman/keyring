@@ -4465,3 +4465,15 @@ Check IB238-1 (`deliverables/2.0.0_SA_COO~P2/checks/r238/p238_cells.py`), dry-ru
 | `IB-pr-607` | the SmartX evidence `unread` with a reason category on a failed or refused read; decision unchanged | FWD-21 | LOCAL | IB-pr-604 (drained) | PL5-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~443) starts now.
+
+## 234. ROUND 6, WORKSTREAM ~PL (the 49 Financial ADDENDUM 1 candidate rebuilt on the CTO's `unread` condition; 2026-10-15 ~23:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on IB-pr-607 drained and the CTO half, msg 8719)
+
+IB-pr-607 is drained @53c238604b (IB238-1 AC1 to AC3 re-run PASS in the worker tree, instance VALID, 79 tests pass over the six files, three `ABSENT-AT-SOURCE-D` spans; a failed or refused SmartX read now gives `evidence` `unread` with a reason category; the one wiring-test dict edited by AMENDMENT 1; row W443-S2: `partition_missing_or_empty` also covers a partition with rows and no usable account number). Candidate `32d6dfcb` (IB-pr-606) predates it and does not meet condition 2 of the CTO half: it is VOID for any apply. This round cuts the READ cell that rebuilds the 49financial candidate from IB-pr-595's signed transplant files plus the CURRENT D spans, BUILD ONLY, a NEW digest; the addendum pair's COO half is then re-stated on it and the CTO half re-signed at the new bytes.
+
+Check IB239-1 (`deliverables/2.0.0_SA_COO~P2/checks/r239/p239_cells.py`, the r237 check with the slot, ids and paths moved to this order), dry-run at the base: AC1 to AC3 all FAIL; the control (`control239.py`) passes the three positives and sixteen negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-608` | READ the 49financial addendum candidate v2: signed transplant plus the current D spans, build only, tests, compare with live | FWD-21 | SERVED | IB-pr-607 (drained) | PL6-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one bundle build; one worker (slot ~444) starts now.

@@ -19103,3 +19103,54 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Resolves IRPT_DASHBD-D2-W224-S1, IRPT_DASHBD-D2-W224-S2 and IRPT_DASHBD-D2-W224-S3. The rows S1, S2 and S3 stay as written (append-only). S4, S5 and S6 are the three pinned-assertion edits and are not covered by Amendment 1; they stay OBSERVATION, INERT, UNDER_INVESTIGATION."
 }
 ```
+
+## IRPT_DASHBD-D2-S99 -- TO-DB-b-276: the ledger CLI has no verb to add legs to an open ledger, and the stamp wrapper's own commit was refused again
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S99",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T22:58:00Z",
+  "one_line": "TO-DB-b-276 step 1 says to reuse the open r139 ledger with new legs L6 to L9, but deploy_ledger.py has no add-leg verb (open refuses an existing slug); the legs were added through the module's own _load, _save and _write_entry. The stamp wrapper record-terraform-deploy.sh again wrote CHANGELOG.json and its own commit was refused by the naming gate on that file (met in S89 and S96); the CHANGELOG was restored and the source-map stamp committed alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/deploy_ledger.py: cmd_open exits 'already OPEN' when the slug's sentinel exists (lines 553-556); the usage lists open, close-leg, close, hold, check and list, and no verb that appends a leg",
+      "ledger commit 5164a5bb70 on wk-IRPT_DASHBD-DB2-b276: legs L1 to L9 read back through deploy_ledger.py close-leg and close without error; the ledger closed with 'all 9 legs proven'",
+      "record-terraform-deploy.sh --function irpt-cot-reporting-gold-lambda: 'NAMING REFUSE infra/aws/terraform/investor-reporting/CHANGELOG.json:1362 ... lookup(cottonwood)', rc 1, files unstaged; git checkout of that one file; the stamp (last_deployed_commit, last_deployed_at) committed alone in b141c38d7f"
+    ]
+  },
+  "spec_asserts": "Order step 1: 'Reuse the ledger, new legs' with python .tools/deploy_ledger.py; step 5: 'Stamp the deploy as your earlier applies do'.",
+  "world_is": "A seat that reuses a ledger for a later pair has no supported way to add legs; the module's private functions were called from a script instead (no JSON hand edit). The stamp wrapper cannot commit a deploy of this root while its CHANGELOG.json entry carries the hand-kept 'cot' carrier the naming gate refuses, so each apply on this root needs the same manual split. Neither blocks the order."
+}
+```
+
+## IRPT_DASHBD-D2-S100 -- TO-DB-b-276: the refused event's response body does not name chain_left (its log tail does), and crossbox-deploy-check timed out in safe-apply
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S100",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T22:58:30Z",
+  "one_line": "Act 3 event (c) (chain_left 10) was refused as designed, but the invoke response body reads errorType Runtime.ExitError with a message that names only the exit status; the words REFUSED and chain_left appear in the log tail (REFUSED: chain_left 10 must be an integer from 0 to 9), which is what the record's error_text carries. Separately, safe-apply's seat-gates crossbox-deploy-check gave no verdict (rc=124, WARN mode) before the apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "invoke of irpt-cot-reporting-gold-lambda with {day 2026-10-14, chain_left 10} at 2026-10-15T22:52:48Z: StatusCode 200, FunctionError Unhandled, response body {errorType Runtime.ExitError, errorMessage 'Runtime exited with error: exit status 1'}, log tail line 'REFUSED: chain_left 10 must be an integer from 0 to 9', REPORT Status: error, Max Memory Used 103 MB",
+      "safe-apply output of the one apply: 'WARN [seat-gates] crossbox-deploy-check gave no verdict (rc=124)' with the APPLY-WHO verdict ADMITTED"
+    ]
+  },
+  "spec_asserts": "Order step 6 (c): 'expect a FUNCTION ERROR whose message names chain_left and REFUSED'; the packet's section 1 Act 3 (c) says the same.",
+  "world_is": "The handler refuses by printing the REFUSED line and exiting, so a caller reading only the response body cannot tell a refusal from any other exit; the log tail carries the words. The record's error_text uses the log line. Any consumer of the schedule's async failures would see Runtime.ExitError only. The crossbox check's timeout did not block the apply (mode WARN) and its cause was not read here."
+}
+```
