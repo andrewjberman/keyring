@@ -8287,6 +8287,28 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W43-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~43",
+    "surfaced_at": "2026-10-15T10:48:53Z",
+    "one_line": "A1 step 6 cannot grade AC3 PASS: the instance's AC3 expect regex requires 'new tests collected: [6-9]', and the literal AC3 run prints 'new tests collected: 12', so the checker reports INVALID rc=1.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-19 section 4 AC3 expect: 'pytest rc=0 on test_firm_catalog_visibility.py, test_opal_discover.py and test_portal_index.py; new tests collected at least 6'. The proof instance encodes this as the regex 'pytest rc=0[\\s\\S]*new tests collected: [6-9][\\s\\S]*RESULT: PASS'.",
+    "world_is": "The literal AC3 invocation (f1.AC3.sh, with echo exit) run at the A1 tree prints 'pytest rc=0: 70 passed', 'new tests collected: 12', 'RESULT: PASS', 'exit=0' (saved at .scratch/ac3_a1.out). The regex [6-9] matches only a single leading digit 6 to 9, so a count of 12 (or any count of 10 or more) cannot match, and proof-of-spec-check.py reports 'VIOLATION: acceptance[AC3]: status=PASS but output_evidence does NOT match expect ... INVALID (rc=1)'. The regrade step (A1 step 6) was executed as written and its output is uncommitted in the worktree. The steps after step 6 (commits, catalog-commit) were not run; the instance was not edited beyond the regrade.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-19.firm-field-on-the-24-prose-firm-rows.md@17fc630e0a (section 4 AC3 expect; AMENDED A1 step 6)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~43/NFRA_MCPINDEX.TO-MX-c-19.firm-field-on-the-24-prose-firm-rows.proof_of_spec.json (acceptance AC3 expect; uncommitted regraded copy)",
+        ".scratch/ac3_a1.out in C:/tmp/wk-r17-43b (the literal AC3 re-run output, exit=0, new tests collected: 12)",
+        ".tools/proof-of-spec-check.py@17fc630e0a (the expect match block: re.search(expect, output_evidence))"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
