@@ -64,3 +64,19 @@ page and sidebar. `#EAEAF7` is not one of the brand file's values. This is still
 **Not ruled (surfaced, not adjudicated):** the first order placed DSGN_RBNDV2 on DELL1 ("the design project can be handled on
 DELL1 box"). This order places the light-mode build on this box. Whether the whole project now seats on the laptop, or only
 the light-mode build does, is Andrew's to say.
+
+## Addendum, ~00:1xZ 2026-10-15 (same channel), verbatim -- PLACEMENT AND SCOPE RULED
+
+> "lets do this whole project on the laptop. it should be extremely targeted, I think its just 3 steps. 1.) Sidebar flip to
+> this color + background same color #EAEAF7. 2.) Panels flip to this fixture type, including solution for modals. 3.)
+> White-&-silver-scaling for heat maps instead of the blue scaling. Once these three are done we just look page by page,
+> modal by modal, and point out if reds/greens etc have to be darker."
+
+**What this rules:**
+- The WHOLE project is on the laptop. That replaces DELL1 and answers the open placement question.
+- The scope is three steps plus a closing walk:
+  1. The sidebar and page ground in `#EAEAF7`.
+  2. Panels and modals in the new fixture.
+  3. A white-to-silver heat-map scale.
+  4. Then a page-by-page, modal-by-modal walk naming the semantic colours that need darkening.
+- The brief's Part I-R carries these as R1-R4.
