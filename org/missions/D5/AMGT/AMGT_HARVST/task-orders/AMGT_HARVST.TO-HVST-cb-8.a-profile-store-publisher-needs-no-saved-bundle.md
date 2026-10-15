@@ -72,10 +72,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Direct act: ONE cell, LOCAL, about 25 product lines; no L2, L4-R or L8-L10.
 - Slot ~145, worktree `C:/dev/wk-harvst-145`, branch `wk-AMGT_HARVST-145`. Widen the sparse set at provision with `org/tier1_exec/4.0.0_SA_CRO/scripts`.
 
+**COMPLETE 2026-10-15 ~21:0xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~145` (worker-light, haiku, high), branch `wk-AMGT_HARVST-145`, build `629d613093`, head `02456ec3d9`. Diff read by this seat: `auth.py` +19/-5 (`profile_is_store` factored from `refresh`'s inline test; `refresh` calls it, behaviour unchanged), `sessions.py` +10 (the profile branch in `get`, no refresh, `token_source` `browser_profile`, event `profile_store_used`); line endings preserved.
+- **AC1 PASS:** `9 passed` (worker; this seat `9 passed in 0.11s`). **AC2 PASS:** `144 passed, 4 subtests passed` (worker; this seat `144 passed, 4 subtests passed in 4.84s`; base the same). Proof instance VALID rc 0, re-run by this seat. `round-close-check --round 87` before this flip: MAY-CLOSE. Full suite per the worker `859 passed, 1 failed (sparse import), 3 skipped`, base `850 passed, 1 failed`.
+- **Rows `D1-W145-S1` and `-S2`** (the worker's, ARMED, my disarm): an empty profile-store bundle makes `verification.repair` raise `KeyError` at `verification.py:115-116` and a repaired result is refused at the vault save by `storage.py:58`. Both sit on `repair_verification`, which the runner never reaches (`--no-sign-in`: `worker.py` re-raises the challenge before the repair; `TokenFirstSessions.repair_verification` refuses). They are reachable only from a run WITHOUT `--no-sign-in`, where HVST-ca-1's refresh already returned the same empty-bundle envelope. Dispositioned by the issuer's row after the merge; the residual (a manual, signed-in-allowed run meeting a challenge on a profile-store publisher) is NAMED, not fixed.
+- **What this does NOT prove:** a real job from a runtime root with no saved session. That is AC3, the issuer's run at the drain.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <direct_act>true</direct_act>
-<status>pending</status>
+<status>complete</status>
 <round>87</round>
 <workstream>PROFILE-STORE</workstream>
 <slot>dell1</slot>
