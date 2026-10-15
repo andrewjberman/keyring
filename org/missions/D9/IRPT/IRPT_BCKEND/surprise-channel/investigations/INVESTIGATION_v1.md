@@ -35769,3 +35769,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W396-S1 to S7: all INERT (writer location, stale pacing and clock text, source-absent days), recorded. THE ANSWERS: (1) the raw producer is a MANUAL command-line pull in data/inf/manual_api, not scheduled; the deployed inf-api-positions lambda writes only parquet; so the .jsonl.gz feeds the mirror needs exist only when a person runs the CLI. (2) 7 positions days landed parquet-only and were dropped (the two known days and five more); transactions and performance none. (3) The mirror refuses parquet by design (it is schema-coerced, raw content not recoverable): the CTO's hypothesis that this is a mirror defect is NOT borne out; the defect is that the raw producer is not scheduled. (4) The re-pull: positions only, 7 days, 2,240 requests, about 19 minutes at the shared 2 req/s floor; transactions and performance need no re-pull for parquet-only days (the two known days are absent at the source for those feeds). (5) The 6 AM fold: one scheduler schedule, trading-day frontier, names from opal_naming. (6) ~I2's feed is not yet written. NEXT: two pairs, cut as cells after the CTO's word on the shape: (a) the one-time 7-day positions raw re-pull (writes only 7 keys in opal-data-inf bronze/positions, read-back, per-key rollback), (b) the scheduled Orion raw producer in the 6 AM fold."
 }
 ```
+
+## IRPT_BCKEND-D2-W400-S1 -- The pair (a) flat keys have no address() output: the order's own keys are a typed address, which the refusal clause stops
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W400-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~400",
+  "surfaced_at": "2026-10-15T04:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The flat keys s3://opal-data-inf/bronze/<feed>/<date>.jsonl.gz that IB-pr-556 pair (a) must write have no lib/opal_naming.py address() output and no registry row naming the per-feed, per-date landing key; the registry rules only the legacy bronze/ prefix, so writing the design means typing legacy keys, which the order's refusal clause stops. No design record and no packet were written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address('advi','inflection','bronze','positions','PLACEHOLDER','PLACEHOLDER.jsonl.gz') at base 8110ace2ee returns s3://opal-data-assets/orion/inflection/bronze/positions/PLACEHOLDER/PLACEHOLDER.jsonl.gz (read-only call from the worktree; the key grammar is {source}/{scope}/{tier}/{table}/{partition}, five segments)",
+      "infra/logic/registry/key_rulings.json:210-218 at 8110ace2ee rules bucket opal-data-inf, key bronze/, shape prefix, canonical orion/inflection/bronze/ (the mirror's map row, lambda_function.py:98-118), owner ADVI_FIRMBKTS; a grep of infra/logic/registry for bronze/positions, bronze/transactions and bronze/performance returns zero matches",
+      "data/inf/manual_api/pull_inflection_positions_daily.py:445 at 8110ace2ee writes bronze/positions/{snap_iso}.jsonl.gz to opal-data-inf: a three-segment legacy key, outside the five-segment grammar that address() implements",
+      "infra/logic/registry/scopes.json:128 at 8110ace2ee: the inflection scope bucket is opal-data-inflection, not opal-data-inf"
+    ]
+  },
+  "spec_asserts": "IB-pr-556 worker face step 3 and CLAUDE.md rule 30: every S3 address and resource name is lib/opal_naming.py output, and the refusal clause stops a worker on a need to type an object address by hand (that is a missing registry row: record it). The check p200_orion.py c2 requires the literal keys s3://opal-data-inf/bronze/<feed>/<date>.jsonl.gz for 7, 7 and 22 days.",
+  "world_is": "address() yields only the canonical five-segment opal-data-assets form for the inflection scope. The registry's ruling on the legacy bronze/ prefix names the mirror's destination (orion/inflection/bronze/), not the per-feed, per-date landing key that the producer writes and the mirror reads. The order's flat keys are therefore legacy addresses that would be typed by hand, with no ruled write target. Per the refusal clause the worker stopped before typing them: no design record, no packet, no key written. The check AC2 cannot pass until the registry rules the landing key or the issuer names its canonical target, an act outside this order's paths. Recorded, not decided: which key the producer should land is the issuer's and the CTO's call."
+}
+```
+
+## IRPT_BCKEND-D2-W400-S2 -- The existing raw schedule names grade OUT-OF-PATTERN, and no registry row holds a SCHEDULE name
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W400-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~400",
+  "surfaced_at": "2026-10-15T04:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The live daily positions rule inf-api-positions-daily grades OUT-OF-PATTERN under lib/opal_naming.py grade(); the builder names for the 6 AM fold grade CONFORMANT, but event_rules.json holds only event-pattern rows, so the fold's schedule has no registry row yet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py grade('inf-api-positions-daily','EVENT_RULE') at base 8110ace2ee returns ('OUT-OF-PATTERN', 'orion-inf-api-positions-daily'); name('advi','inflection','api-positions','daily') returns advi-inf-api-positions-daily (read-only calls)",
+      "name('orion','inflection','raw-producer','daily') returns orion-inf-raw-producer-daily; grade with type SCHEDULE returns CONFORMANT; name('orion','inflection','raw-producer','lambda') returns orion-inf-raw-producer-lambda; grade with type LAMBDA returns CONFORMANT",
+      "infra/logic/registry/event_rules.json at 8110ace2ee holds 13 rows, each an EVENT_RULE with an event pattern (canonical names such as advi-inf-assets-trigger-on-bronze-complete); none is a schedule",
+      "infra/aws/terraform/inf-pipeline/inf-api-positions.tf:179-182 at 8110ace2ee names the rule inf-api-positions-daily with cron(22 11 * * ? *); its description says 13:37 UTC, a stale clock text"
+    ]
+  },
+  "spec_asserts": "IB-pr-556 worker face step 2 asks whether the naming builder has a SCHEDULE kind and whether a registry row is needed for the new schedule; the READ record (IB199-4) expected the first builder call to refuse.",
+  "world_is": "The builder does not refuse a SCHEDULE name: the cadence token daily is a NAMING_SCHEMA.json cadence value and the 6 AM time lives in the schedule expression, not the name. The live rule name is out of pattern and the one registry table of rules holds no schedule row. No registry row is needed for the names to grade CONFORMANT; a row is needed only if the schedule is to be registered. The READ's expectation of a refusal is not borne out (read-only; nothing added)."
+}
+```
