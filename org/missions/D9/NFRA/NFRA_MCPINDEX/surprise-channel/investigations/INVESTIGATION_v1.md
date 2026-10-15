@@ -8372,6 +8372,47 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W44-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~44",
+    "surfaced_at": "2026-10-15T17:00:42Z",
+    "one_line": "A2 step 1(a) premise fails: the ask 'account counts by partner' is not equal to any example question of served need E-16, so the +100 rank edit does not put E-16 first; test_gap_need_answers_with_its_owner_and_no_tool still fails (KeyError 'need', test_opal_discover.py:874), E-16 ranks second behind opal_data_etfs_gold_daily_partner_ownership.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AMENDED A2 ruling (a): 'the ask account counts by partner is the example question of the SERVED need E-16' and 'an ask equal to one of a need's own example questions is that need's question and the need ranks first'; step 2 requires all four files to pass.",
+    "world_is": "E-16 example_questions are ['How many accounts do we have, and what were the month-end counts?', 'Account count by partner at each month end.']; the ask's content words {account, count, partner} differ from the second question's {account, count, each, end, month, partner}, so _need_example_equal returns False (overlap 3). After edit (a) the pytest run reads 1 failed, 73 passed (test_opal_discover.py::test_gap_need_answers_with_its_owner_and_no_tool); discover('account counts by partner') returns matches[0] = opal_data_etfs_gold_daily_partner_ownership and matches[1] = need:E-16. Edit (b) in test_portal_index.py passes.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py@5025c60ba1 (_need_example_equal line 564, need_ids line 882, _rank line 887)",
+        "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml@5025c60ba1 (needs E-16 example_questions)",
+        "C:/tmp/wk-r17-44c/.scratch/a2_pytest.out (pytest 1 failed, 73 passed; KeyError 'need')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W44-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~44",
+    "surfaced_at": "2026-10-15T17:00:42Z",
+    "one_line": "A2 step 1 and step 3 name tests/test_opal_discover.py for the new test and its commit, but that file is not in the order's <paths>; the write grant does not admit it, so the new test cannot be written by this lane.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AMENDED A2 step 1: 'Add ONE new test to tests/test_opal_discover.py named test_example_question_ranks_its_need_before_a_servable_table'; step 3 commits 'integration.py, tests/test_opal_discover.py, tests/test_portal_index.py'; <paths> block names integration.py and tests/test_portal_index.py and not tests/test_opal_discover.py.",
+    "world_is": "The <paths> block (order lines 61-71) lists workflows/atom_decomposition/gen_silver_rows.py, workflows/atom_decomposition/tests/, workflows/atom_decomposition/catalog_entries/, infra/aws/ec2/opal-gateway/tests/test_blackdiamond.py, infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py, infra/aws/ec2/opal-gateway/tests/test_portal_index.py, infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml, the deliverables folder and this channel file; tests/test_opal_discover.py is absent. No edit to that file was made.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-20.read-tool-rows-for-the-six-ap20-tools-and-the-99-tool-index.md@5025c60ba1 (<paths> lines 61-71; AMENDED A2 step 1 and step 3, lines 120-126)",
+        "infra/aws/ec2/opal-gateway/tests/test_opal_discover.py@5025c60ba1 (_ask helper line 849, test_gap_need_answers_with_its_owner_and_no_tool line 854)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
