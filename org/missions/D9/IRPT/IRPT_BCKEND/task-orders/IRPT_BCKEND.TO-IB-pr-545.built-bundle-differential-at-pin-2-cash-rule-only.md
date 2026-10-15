@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~390</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-14</issued_date>
-<status>pending</status>
+<status>cancelled</status>
+<status_reason>STOPPED on its own rule: IB197-2-AC1 reads 49financial at 119 changed nodes against the signed 32 (34 carry the signed cash rule, 87 carry a change outside it: 32 equity to unclassified, 32 basis TABLE to NONE, 24 non-rule groups) and the 49financial built gate REFUSED on classified_security_lost while the live gate PUBLISHED on the same served state; Cottonwood 255 (all the signed cash rule, exemption repair) and Inflection 841 (all the signed cash rule) reproduce; AC2 and AC3 PASS; the live 49financial bundle's holdings_snapshot.py (sha256 5651000b002f, 12 cusip lines) is not the Cottonwood or Inflection live file, so reverting the port moves 49financial's classification; evidence deliverables/0.9.0_WK_IRPT_BCKEND~390/IB197-2_built_differential.json, rows D2-W390-S1 and S2; merged @8e9becba9c as a measured STOP; the worker ended on a spend-limit error before writing its proof instance, which a STOP does not need</status_reason>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
