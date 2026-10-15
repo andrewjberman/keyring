@@ -36177,3 +36177,237 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The build inclusion is not verified by this worker. The map is explicit per file, so the new file needs a map entry for each build that imports it before any deploy. No deploy is in this order; the map is outside the grant and was not edited. The disarm is the deploy leg's map entry for the new file, owned by the issuer."
 }
 ```
+
+## IRPT_BCKEND-D2-S185 -- live irpt-ycharts-generate bytes match neither IB-pr-456 digest; the only source-map record is an uncommitted release worktree
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S185",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T05:34:30Z",
+  "one_line": "Live irpt-ycharts-generate CodeSha256 reads 5TRFZf6G... (LastModified 2026-10-14T13:03:45Z), which is neither the IB-pr-456 pre-apply digest the FWD-1 run's R0f expects (tdpterTMfJl...) nor the IB-pr-456 build digest (AHxuDf7h...); the only uncommitted source-map stamp for this function (pins 83eb798a, 5be427ba) sits in the release worktree C:/dev/irpt-release-r30/w131/release, not on box/dell2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "IB-pr-456 (CTO_ROUND_ANALYSIS_IRPT_BCKEND_P_ROUND_183_20261013.md) and the FWD-1 run pair R0f (blob a45596d5f0): irpt-ycharts-generate is at its pre-apply digest until Andrew's f61b releases IB-pr-456; the trunk source map records the deployed build of every function.",
+  "world_is": "get-function-configuration (this seat, 2026-10-15 ~05:3xZ): CodeSha256 5TRFZf6Grgd9V9jWBVu2QDPRVbgfWBjsuuw8rtf8hRA=, LastModified 2026-10-14T13:03:45Z. box/dell2 HEAD's lambda-source-map.json carries 0 hits for pins 83eb798a0870 and 5be427ba7642, which the r30 release worktree's uncommitted map stamps on irpt-ycharts-generate files. Which act wrote the live bytes is not read here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration --function-name irpt-ycharts-generate (CodeSha256, LastModified)",
+      "git -C C:/dev/irpt-release-r30/w131/release diff -- infra/aws/lambda/ci/lambda-source-map.json (2 file pins, function irpt-ycharts-generate)",
+      "org/tier0_exec/0.0.0_AB_MSTR/deliverables/GC_RECEIPTS_CALL_5982_20261015.md @8c0cd89d86 (worktree held, tree not clean)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm: ~P2 names the act that wrote the 2026-10-14 13:03Z bytes (its NEVER-2 ledger entry), commits that build's source-map record to box/dell2 if it is a landed release, and re-states the FWD-1 R0f expected digest to the live one, or rolls back; the worktree is kept until then (MSTR~DELL2 holds it)."
+}
+```
+
+## IRPT_BCKEND-D2-W401-S1 -- The item-level filled_report_source property does not make a frozen filled bundle validate: the top-level oneOf admits no branch for it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W401-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~401",
+  "surfaced_at": "2026-10-15T05:17:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The cell premise fails: the packaged ExportBundle top-level oneOf admits no branch for a frozen filled_report bundle, so the item-level filled_report_source property alone does not make a bundle validate. The arm-1 bundle test fails, and IB201-1-AC1 and AC3 cannot pass within the grant; a CTO ruling on the oneOf shape is needed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/ExportBundle.schema.json@b611ec2746 lines 34-85: the top-level oneOf has four branches (narrative_packet_ref; analysis_report_ref; custody_report_ref; the PATH B branch requiring narrative_state and narrative_reason). A frozen filled bundle carries none of the three refs and no narrative_state.",
+      "infra/aws/lambda/investor-reporting/export/bundle.py@b611ec2746 freeze() lines 198-208: the filled branch sets no ref and no narrative_state; narrative_state is set only on the platinum branch.",
+      "Worker probe in scratch (nothing written, no AWS call): with the item property added, the item alone validates (0 errors); a bundle from bundle.freeze of one filled item returns exactly one error, validator oneOf, once versions and render_options use the schema's own key names."
+    ]
+  },
+  "spec_asserts": "IB-pr-557 (CTO round-3 ruling): the packaged ExportBundle contract gains filled_report as an allowed source kind so that bundle.validate accepts a frozen filled bundle, changing nothing else; the test pins a new bundle that validates.",
+  "world_is": "The item-level change is sufficient for the item and insufficient for the bundle: no top-level oneOf branch matches a bundle with no retained-report ref and no narrative_state, and the freeze emits neither. Honouring the arm as written needs a new oneOf branch or a changed branch, which is a change to a schema property other than the new one and is refused by the order's refusal clause, so the worker stopped there. The schema change as ordered is committed; the file x-contract-revision reads 1.2 in both copies. Nothing was deployed, so the served packaged copy refuses a frozen filled bundle exactly as at base (status quo). The order stays open; the test test_new_bundle_with_filled_report_item_validates fails on the oneOf and is the record of it."
+}
+```
+
+## IRPT_BCKEND-D2-W401-S2 -- Four contract-seam tests fail at the base commit with the base schema bytes served as well: not caused by IB-pr-557
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W401-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~401",
+  "surfaced_at": "2026-10-15T05:17:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Four tests in infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py fail in the worktree and fail identically with the base ExportBundle schema bytes served for both copies, so the failures are not caused by the IB-pr-557 change. They are outside the grant and were not touched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_seam_paired.py run in the worktree at HEAD b611ec2746 with the IB-pr-557 schema edit: 4 failed, 63 passed; the failing tests are test_the_consumer_fixture_source_is_named_and_non_empty, test_the_operation_map_covers_the_consumers_own_denominator, test_every_declared_route_has_a_response_contract_whose_refs_resolve, and test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-request-original].",
+      "The same file with the b611ec2746 bytes of both ExportBundle schema copies served in memory (the check's own DATA_RUNNER pattern): 4 failed, 63 passed, the same four names."
+    ]
+  },
+  "spec_asserts": "IB201-1-AC1 asks that the existing contract and export tests pass.",
+  "world_is": "Four existing seam-contract tests fail at the base commit on analysis-operation and route-contract assertions, not on the ExportBundle copies. The export folder regression set (test_export.py, test_packaged_contracts_match_docs.py) passes. Recorded for the issuer; not fixed."
+}
+```
+
+## IRPT_BCKEND-D2-W401-S3 -- An existing ExportBundle oneOf branch admits a filled pin beside a narrative ref; the freeze refuses it, the schema does not
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W401-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~401",
+  "surfaced_at": "2026-10-15T06:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The packaged ExportBundle schema accepts a bundle whose authorized_report_revisions carries a filled_report_source item beside narrative_packet_ref, through the existing branch 1, which does not exclude filled pins. bundle.freeze refuses that shape. The existing branches are frozen by AMENDMENT 1, so the looseness is recorded, not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json at the worker commit: the first oneOf branch requires narrative_packet_ref and carries no item constraint; a probe with one filled item plus narrative_packet_ref validates (True) against the packaged schema.",
+      "infra/aws/lambda/investor-reporting/export/bundle.py@b611ec2746 freeze() lines 150-152 refuse any filled pin beside a narrative, analysis, custody ref or performance pin."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 of IB-pr-557: the new oneOf branch must not make any bundle that was refused before validate unless it carries a well-formed filled_report_source, and every existing branch stays byte-for-byte.",
+  "world_is": "The amendment's rule is met: the new branch admits only filled bundles. The schema is looser than the freeze on a shape that predates the change: branch 1 and the other ref branches do not forbid filled items. Tightening them would change existing branches, which the amendment forbids. A CTO ruling is needed if the schema is to refuse what the freeze refuses. Nothing is served from this yet."
+}
+```
+
+## IRPT_BCKEND-D2-W403-S1 -- IB-pr-559 locates the flat-key writer: inf-gold-layer-runner runs the gold chain's Orion pulls, so the unlocated-writer premise is superseded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W403-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~403",
+  "surfaced_at": "2026-10-15T05:45:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The daily flat-key writer is located and measured: the inf-gold-layer-runner EC2 instance, started by inf-gold-trigger at about 11:32Z, runs chain:full of orion-gold-dispatch.sh, whose steps INF_API_PULL_TXN, INF_API_PULL_PERF and INF_API_PULL_POSITIONS_DAILY write the three flat keys (PutObject at 11:40:28Z, 11:48:56Z and 11:51:51Z on 2026-10-14). The S184 premise of no trigger or instance in the window is superseded; the start precedes the window and was outside the earlier search.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~403/IB202-1_flat_key_writer_read.json@14f2b2da5b: writer.kind ec2_instance, name inf-gold-layer-runner, claim measured, three PutObject events by the runner role session for bronze/transactions, bronze/performance and bronze/positions on 2026-10-14 (events_matching 3 of 3)",
+      "Gold chain log chain_full_20261014_113301 (s3 diagnostic/chain_logs on opal-data-inf): INF_API_PULL_TXN runs pull_inflection_transactions_rest.py, INF_API_PULL_PERF runs pull_inflection_performance_rest.py, INF_API_PULL_POSITIONS_DAILY runs pull_inflection_positions_daily.py; each logs its flat key at the PutObject second",
+      "SSM AWS-RunShellScript sent 2026-10-14 11:32:57Z by inf-gold-trigger to the runner, status Success exit 0; output downloads code/gold/orion-gold-dispatch.sh and starts chain:full",
+      "inf-silver-aggregator log 'FIRED gold trigger' (mode full, source aggregator) and inf-gold-trigger log (invoked 11:32:35Z, StartInstances, SendCommand 11:32:57Z) on 2026-10-14"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-D2-S184 and the COO half condition 1 (msg 8062) assert that the writer of the daily flat keys is unlocated: no trigger, log stream or instance was found in the 11:39-11:56Z window, so retiring the manual CLIs or deploying the scheduled handler could stop the feed or double it.",
+  "world_is": "The writer is measured and has three named steps (see the grounding). The manual CLIs are the same scripts as the gold chain's pull steps (the chain log collision check reads the copies as identical). The handover question is therefore a question about the gold chain, not about an unknown host; the stop and handover path is recorded in IRPT_BCKEND-D2-W403-S3."
+}
+```
+
+## IRPT_BCKEND-D2-W403-S2 -- CloudTrail records PutObject for opal-data-inf only from 2026-10-13 20:30Z, so the 2026-10-10 to 10-13 flat writes cannot be attested by write event
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W403-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~403",
+  "surfaced_at": "2026-10-15T05:45:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The org trail write-data selector for opal-data-inf was set by a PutEventSelectors call at 2026-10-13 20:30Z; before that the flat keys have GET and HEAD data events but no PutObject, so the 2026-10-10 to 10-13 writes cannot be named by event and the writer for those days rests on the host's daily start and reads.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~403/IB202-1_flat_key_writer_read.json@14f2b2da5b: cloudtrail lookup-events PutEventSelectors 2026-10-01 to 10-15 returns one event (2026-10-13 20:30Z, a named user, selector including the opal-data-inf prefix); the org trail log files for 2026-10-10 to 10-14 (869 files, 11:30-12:05Z deliveries) hold PutObject on opal-data-inf only on 2026-10-14",
+      "The same day files hold GetObject and HeadObject events for bronze/transactions, bronze/performance and bronze/positions on 2026-10-10 to 10-13 by the runner role, so the read selector was on before the write selector"
+    ]
+  },
+  "spec_asserts": "IB-pr-559 step 3 of the order assumes CloudTrail records S3 data events for opal-data-inf over 2026-10-10 to 2026-10-14, so PutObject events can name the writer on each day of the window.",
+  "world_is": "Write data events exist for 2026-10-14 only. The earlier days are attested by reads and by the daily start events of the runner (StartInstances by inf-gold-trigger on 2026-10-09 to 10-14), not by a write event; this is a coverage gap in the trail, not a negative finding about the writer."
+}
+```
+
+## IRPT_BCKEND-D2-W403-S3 -- The flat-key writer is three steps of the gold chain: stopping or handing it over starves the silver and gold steps unless the handler writes the same keys first
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W403-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~403",
+  "surfaced_at": "2026-10-15T05:45:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The writer is not a separate job that can be stopped alone: INF_API_PULL_TXN, INF_API_PULL_PERF and INF_API_PULL_POSITIONS_DAILY are CHAIN_PULL steps of orion-gold-dispatch.sh, and their outputs feed the silver transactions and performance steps and the gold compute in the same run. Retiring them without the handler writing the same keys first starves those steps; running the handler beside them makes two producers of each key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~403/IB202-1_flat_key_writer_read.json@14f2b2da5b: writer name inf-gold-layer-runner, kind ec2_instance; handover field requires the three steps to be retired in the release ledger on the handler's first enabled day",
+      "code/gold/orion-gold-dispatch.sh (read by get, 2127 lines): CHAIN_PULL names INF_API_PULL_TXN, INF_API_PULL_PERF and INF_API_PULL_POSITIONS_DAILY; the pull stage is ordered before the silver and compute stages; the dispatch arms an auto-shutdown of the runner after the chain",
+      "Chain log: INF_API_PULL_POSITIONS_DAILY and the silver steps share the chain's run; the runner stops after each run, so the stop is the runner's own shutdown, not an EC2 API call"
+    ]
+  },
+  "spec_asserts": "The COO half condition 1 and the pair (b) design (IB-pr-556, IB200-4) assume the writer can be stopped or handed over with the manual CLIs retired in the same pair, and that the scheduled handler is a clean replacement for it.",
+  "world_is": "Handover runs through orion-gold-dispatch.sh and the inf-gold-trigger path. The stop is a ledger act on the chain's pull steps, with the dispatch object kept as the rollback, and it must follow the handler's first write of the same keys. Nothing was stopped or changed by this read; the hazard is armed until the release ledger records that handover, and the disarm owner is the issuer holding condition 1."
+}
+```
+
+## IRPT_BCKEND-D2-W403-S4 -- Stop and command text are not visible in CloudTrail: no StopInstances event for the runner, and the SendCommand parameters are hidden
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W403-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~403",
+  "surfaced_at": "2026-10-15T05:45:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CloudTrail holds StartInstances for the runner on each day 2026-10-09 to 10-14 and no StopInstances; the SendCommand request parameters read HIDDEN_DUE_TO_SECURITY_REASONS, so the command text was verified only through the chain log and the dispatch script.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~403/IB202-1_flat_key_writer_read.json@14f2b2da5b: lookup-events ResourceName filter on the runner, 2026-10-09 to 10-14: StartInstances by inf-assets-trigger, inf-gold-trigger and inf-ec2-retry-launch each day, zero StopInstances events",
+      "lookup-events SendCommand 2026-10-14 11:32:57Z by inf-gold-trigger: requestParameters.parameters reads HIDDEN_DUE_TO_SECURITY_REASONS; the invocation output (status and output lines only) was read by ssm list-command-invocations"
+    ]
+  },
+  "spec_asserts": "IB-pr-559 step 6 of the order assumes the handover can name the stop or hand-over act per resource, from the control-plane events.",
+  "world_is": "The control-plane record does not show a stop act for the runner, and the command text is hidden by the service; the handover in the ledger must name the dispatch object and the trigger path as the stop surface, verified against a live read at the time of the act."
+}
+```
+
+## IRPT_BCKEND-D2-S186 -- Dispositions on the ~PS r3 and ~PO r3 workers' rows; the Orion flat-key writer is the gold chain on inf-gold-layer-runner: pair (b) as signed needs a re-cut
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S186",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T06:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on the ~PS round-3 and ~PO round-3 workers' rows (D2-W401-S1 to S3, D2-W402-S1 to S3, D2-W403-S1 to S4) and the Orion finding: the daily flat keys are written by the Orion pull steps of the gold chain on the inf-gold-layer-runner EC2 (started by inf-gold-trigger at about 11:32Z), so pair (b) as signed (port the manual CLI and retire its writes) would cut the same pulls that feed the silver steps; the pair needs a re-cut by the CTO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB201-1, IB201-2 and IB202-1 AC1 to AC3 on the landed trees (all PASS) and the three proof instances (VALID); merges 85594eeabe, 2b0d56c675, e7837beeca",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~403/IB202-1_flat_key_writer_read.json: writer measured, kind ec2_instance, inf-gold-layer-runner; CloudTrail S3 data events 2026-10-14 (PutObject by the runner's instance-profile role at 11:40:28Z transactions, 11:48:56Z performance, 11:51:51Z positions); gold chain log steps INF_API_PULL_TXN, INF_API_PULL_PERF, INF_API_PULL_POSITIONS_DAILY; inf-gold-trigger started the instance and sent the chain by SSM at 11:32:35Z and 11:32:57Z; the code/manual_api and code/gold copies of the three pull scripts are identical"
+    ]
+  },
+  "spec_asserts": "The Orion pairs packet (sha256 c3dcc22f02e8, both halves signed): pair (b) PORTS the manual CLI writes into one scheduled handler at 06:00 New York and RETIRES the manual CLI writes in the same pair; no second producer.",
+  "world_is": "DISPOSITIONS. D2-W401-S1 (the oneOf had no branch for a filled bundle): RESOLVED by IB-pr-557 AMENDMENT 1 (my defect). D2-W401-S2 (four seam tests failing at base, outside the grant): INERT, recorded. D2-W401-S3 (an existing branch admits a filled pin beside a narrative ref): INERT, recorded for the round-4 contract read. D2-W402-S1 (my order said _scope was already on the export path; it is not): INERT, my error, the freeze adds it. D2-W402-S2 (AC3 needs the worker's own commits): INERT. D2-W402-S3 (ARMED, owner me): infra/aws/lambda/ci/lambda-source-map.json lists no entry for _scope/filled_named_accounts.py, so a route or export deploy would omit it: a round-4 cell before any deploy leg. D2-W403-S1 (writer located), S2 (CloudTrail data events for opal-data-inf only from 2026-10-13 20:30Z), S4 (no StopInstances event; SendCommand hidden): INERT. D2-W403-S3 (ARMED, owner me): the flat-key pulls are steps of the gold chain that also feeds the silver transactions and performance steps, so retiring them (pair (b) as signed) couples to the gold chain; disarm condition: the CTO re-cuts pair (b) on the located writer (recommended: re-time the existing chain trigger into the 06:00 New York fold; no new producer, no port)."
+}
+```
