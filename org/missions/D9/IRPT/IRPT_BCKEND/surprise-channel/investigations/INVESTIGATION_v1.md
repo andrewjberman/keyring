@@ -37983,3 +37983,107 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W416-S1: the order's premise (a builder filter drops the account) FAILS: the account has no source row on the candidate date, so nothing in the candidate builder drops it; the refusal is the gate working on a source gap. D2-W416-S2 (the Cottonwood record existed only on box/dell2 when the worker started): INERT, the comparison was read by git show. D2-W413-S1 (the refused 49F account is ACTIVE in the directory) is RESOLVED as to cause: a SOURCE GAP on 2026-10-13 (inferred: why the custody partition omits the account, and whether it returns on later dates, are not read). The remedies differ from Cottonwood's: a source correction re-landing the account's custody row for 2026-10-13 if the account is live at the custodian, or a custodian-confirmed TERMINATED mark if it is closed. Whether the gap persists on 2026-10-14 (the candidate of today's fire) is the next read and decides whether the refusal clears on its own."
 }
 ```
+
+## IRPT_BCKEND-D2-W418-S1 -- The dim_balance writer sits outside the granted sparse checkout, so criterion IB214-1-AC2 cannot resolve its site
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W418-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~418",
+  "surfaced_at": "2026-10-15T12:44:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The order's grant sparse-checks only data/assets/scripts/gold/investor_reporting, but the dim_balance writer is data/assets/scripts/silver/schwab_conversion.py, outside that folder; criterion IB214-1-AC2 resolves site.file under the worktree root and cannot pass without widening the checkout.",
+  "spec_asserts": "IB-pr-575 Worker Face: the writer's code and the check's file reads resolve under the worktree root once investor_reporting is sparse-added, and the upstream writer is read from the code that the builder's source points back to.",
+  "world_is": "MEASURED at base 1ce448234b38360e68e5931c5c69dbda0c784ce4: the line that finalizes the dim_balance writer (line 570, w.finalize()) is in data/assets/scripts/silver/schwab_conversion.py, a file the sparse worktree does not hold. The channel already names that file as the Schwab silver producer (INVESTIGATION_v1.md around line 13329). IB214-1-AC2 returns FAIL with the message 'is not in the tree'. The writer was read by git object read, not by widening the sparse set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 1ce448234b38360e68e5931c5c69dbda0c784ce4:data/assets/scripts/silver/schwab_conversion.py read to scratch (632 lines); convert_object creates the dim writers at lines 554 to 555 and finalizes them at line 570",
+      "p214_cells.py run from the worktree root: IB214-1-AC2 FAIL, rc 1, 'is not in the tree'; the sparse list is data/assets/scripts/gold/investor_reporting plus the shared roots already named by the worker lane"
+    ]
+  },
+  "notes": "Not widened: the sparse set was left as the order names it. Not overridden: the record names the true writer file and line, and the check was not edited. Resolution belongs to the issuer: either the grant names the silver writer path for read, or the check resolves the site through the base object store. Surfaced by 0.9.0_WK_IRPT_BCKEND~418 under task order IRPT_BCKEND.TO-IB-pr-575."
+}
+```
+
+## IRPT_BCKEND-D2-W418-S2 -- The fact_trn silver partition for the served day 2026-10-12 is about one seventh the size of its neighbours
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W418-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~418",
+  "surfaced_at": "2026-10-15T12:44:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The sibling silver table fact_trn, written by the same Schwab conversion, holds a 2026-10-12 partition object of 81357 bytes against 562618 bytes for 2026-10-13 and 593657 bytes for 2026-10-14: a size shape a truncated write would produce. Measured by head only; rows not read.",
+  "spec_asserts": "IB-pr-575 reads the dim_balance partitions for truncation: a row count far below its neighbours is the truncation signal. The order does not name fact_trn.",
+  "world_is": "MEASURED by head-object (read only) at base date 2026-10-15: schwab/08335338/silver/fact_trn/date=2026-10-12 ContentLength 81357, LastModified 2026-10-13T09:46:31Z; date=2026-10-13 ContentLength 562618; date=2026-10-14 ContentLength 593657. The dim_position partitions for the same days (about 2.7 MB each) and the dim_balance partitions (about 585 kB each) are steady. Rows read in scratch (counts only): fact_trn holds 509 rows on 2026-10-12, 11906 on 2026-10-13 and 9777 on 2026-10-14, while the dim_position partitions hold about 110000 rows each day. Whether the 2026-10-12 fact_trn is a low-activity day or a truncated write is not decided here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object (read only, via the .tools/aws shim) on the three fact_trn partitions for 2026-10-12, 2026-10-13 and 2026-10-14 in bucket opal-data-assets",
+      "the five dim_balance partitions 2026-10-08 to 2026-10-14 were downloaded to scratch and counted; their sizes rise steadily, so the fact_trn shape is not shared by the dim_balance table"
+    ]
+  },
+  "notes": "Read only and not graded under IB-pr-575, whose truncation question is for dim_balance. Whether the 2026-10-12 served publication depends on this table's day was not checked. The read owner for this table is the Schwab silver conversion owner (AE PartnerETL seat), per the channel."
+}
+```
+
+## IRPT_BCKEND-D2-W418-S3 -- The lost account's 20 dim_position rows on 2026-10-12 are absent from 2026-10-13 with the balance row, and no transaction code explains it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W418-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~418",
+  "surfaced_at": "2026-10-15T12:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The lost 49 Financial account has 20 dim_position rows on 2026-10-12 and none on 2026-10-13 or 2026-10-14, the same days its dim_balance row is absent, and fact_trn holds no row for it on any of the three days; the gap is therefore not a balance-file-only defect, and the rule's classes do not settle it.",
+  "spec_asserts": "IB-pr-575 amendment 1 step 3b: a closing or transfer-out transaction, or no positions, means closed_at_source; positions still present means a balance-file gap.",
+  "world_is": "MEASURED in scratch by counts only: dim_position account rows 20, 0, 0 for 2026-10-12, 10-13, 10-14; fact_trn account rows 0 on all three days. The classification recorded is undetermined, with the reason in the record; check AC3 cannot pass closed_at_source while the served day carries positions, so the rule's two clauses conflict on this account.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-object (read only) of the dim_position and fact_trn partitions for 2026-10-12, 10-13 and 10-14 to scratch; counted with python -I on the account key; no id in any tracked file",
+      "the check p214_cells.py c3 at HEAD: closed_at_source needs a closing code in fact_trn or every dim_position day at zero; balance_file_gap needs positions on some present day"
+    ]
+  },
+  "notes": "Read only. The 2026-10-12 fact_trn partition is the 509-row object filed as IRPT_BCKEND-D2-W418-S2, so the absence of transactions on the served day is not decisive. The rule needs its clauses stated for a position that vanishes on the same day as the balance row; the issuer should settle that wording."
+}
+```
+
+## IRPT_BCKEND-D2-S198 -- Dispositions on worker 418's rows; 49 Financial's lost account is gone from dim_balance and dim_position from 2026-10-13: closed_at_source by the CTO's rule (a), with one caveat open
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S198",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T12:58:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 418's rows (D2-W418-S1 to S3) and the 49 Financial presence read: the lost account is gone from dim_balance AND dim_position from 2026-10-13 and persists on 2026-10-14; by the CTO's rule (a) it is closed_at_source; one caveat stays open (the 2026-10-12 fact_trn partition has 509 rows against 11,906 the next day).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB214-1 AC1 to AC3 on the worker tree (all PASS) and the proof instance (VALID); merge 23eff77fbb",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~418/IB214-1_49f_presence_read.json: dim_balance partitions 2026-10-08 to 2026-10-14 present (7,626 to 7,664 rows), the account present through 2026-10-12 and absent on 2026-10-13 and 2026-10-14; the writer is convert_object in schwab_conversion.py (opal-assets-silver-schwab Lambda, owner the AE PartnerETL ingest seat), no error line in the invocations of 2026-10-13 and 2026-10-14 (success inferred); dim_position 20 rows on 2026-10-12 and 0 on 2026-10-13 and 2026-10-14; fact_trn no row for the account on the three days"
+    ]
+  },
+  "spec_asserts": "The CTO msg 8276: read Schwab's other files for the account; a closing or transfer-out transaction, or no positions, means closed at the source; positions still present means a Schwab balance-file gap.",
+  "world_is": "DISPOSITIONS. D2-W418-S1 RESOLVED: the dim_balance writer was outside the sparse grant (AMENDMENT 2 of IB-pr-575). D2-W418-S3: the account's 20 dim_position rows vanish on the same days as its dim_balance row, so it is not a balance-file-only defect; the rule's class is closed_at_source (no positions on the last two days). D2-W418-S2 stays ARMED, owner me: the 2026-10-12 fact_trn partition has 81 KB and 509 rows against 563 KB and 11,906 rows the next day (a size shape a truncated write would produce; rows were counted by head and a count, not read in full), so a closing transaction on 2026-10-12 could be missing; the CTO's completeness condition (each partition at least 95 percent of the prior day's) is the guard against exactly this. The acceptance mechanism is the closed_at_source exemption of the gate (IB-pr-576, workstream ~PG), one pair for both firms (CTO msg 8284); a TERMINATED mark through the directory cannot be written for an account absent from its source (D2-W417-S3)."
+}
+```
