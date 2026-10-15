@@ -2282,3 +2282,55 @@
   "notes": "Work-around used by this seat only, per command: PATH=<Python311 dir>:$PATH. Remedy (reinstall or restore Python314's Lib, or point PATH at a working interpreter) is the box owner's; the seat did not change the install. Gates that run `python` bare will refuse or misread until then."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T17:32:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-W31-S1",
+  "one_line": "admin_people.py keeps its own copy of the old placement (every tool with no integration spec goes to m365), so the People view and the regrouped breakdown disagree on the undeclared tools and the AC2 seam test fails (passed=100 failed=1 seam=1).",
+  "spec_asserts": "MP-pe-1 (PE round 1, decomposition v11), AC2: the admin suite stays green with seam test failures=0, because the People view reuses the breakdown's helpers and test_person_holdings_equal_breakdown_holders must still hold after the regrouping; the write surface excludes every other app/ module.",
+  "world_is": "app/admin_people.py _compute (lines 87-97) sets chan_of[tool] = bd.M365_ID for every tool without an integration spec instead of using the breakdown's placement. After the MP-pe-1 change the breakdown lists send_email and list_calendar under undeclared while the People view lists them under m365, and tests/test_admin_people.py::test_person_holdings_equal_breakdown_holders fails its _pairs equality. The People page still tells its reader that undeclared tools are Microsoft 365 tools.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN pe1.AC2.sh in worktree C:/tmp/mp-pe-31: 'admin suite: 1 failed, 100 passed, 3 warnings in 36.73s; passed=100 failed=1; seam test failures=1' RESULT: FAIL exit=1",
+      "RAN pytest tests/test_admin_gateway_breakdown.py tests/test_admin_people.py: FAILED tests/test_admin_people.py::test_person_holdings_equal_breakdown_holders, left side holds ('m365', 'list_calendar') and ('m365', 'send_email'), right side holds ('undeclared', ...)",
+      "READ infra/aws/ec2/opal-gateway/app/admin_people.py@bf3d5c9913 lines 87-97: chan_of[tool] = bd.M365_ID for every tool with no active integration spec"
+    ]
+  },
+  "notes": "Not repaired: admin_people.py is outside this order's <paths>, and the seam assertion was left unchanged because weakening it to compare tool names only would hide the divergence. AC2 is REFUSED with this measurement. The People placement must derive from the breakdown's grouping, or the seam must be re-specified; the issuer routes that."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~31",
+  "surfaced_at": "2026-10-15T17:32:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-W31-S2",
+  "one_line": "Rule 3 keys Microsoft 365 on graph_scope_map.TOOL_GRAPH_SCOPES, which lacks send_email, list_calendar, find_online_meeting and copy_site_file_to_s3; these call Graph through tools._run and now read 'No source declared'.",
+  "spec_asserts": "MP-pe-1 PE.0 premise: only tools that call Microsoft Graph belong in Microsoft 365; rule 3 places a tool there only when it is a key of TOOL_GRAPH_SCOPES, and rule 4 files every other tool under undeclared.",
+  "world_is": "send_email (app/tools.py:465) and list_calendar (app/tools.py:497) run through _run, the Graph-token path, yet neither is a key of app/graph_scope_map.py TOOL_GRAPH_SCOPES (keys at lines 19-52). The rule was implemented as written, so the live breakdown files these Graph tools under 'No source declared'; the page is wrong in the other direction for them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN .scratch/pe1_real_compute.py in worktree C:/tmp/mp-pe-31: m365 tools = 11 names, none of them send_email or list_calendar; undeclared = 75",
+      "READ app/tools.py@bf3d5c9913 lines 465 and 497: send_email and list_calendar bodies return through _run(...)",
+      "GREP app/graph_scope_map.py@bf3d5c9913 TOOL_GRAPH_SCOPES keys (lines 19-52): no send_email, list_calendar, find_online_meeting or copy_site_file_to_s3 key"
+    ]
+  },
+  "notes": "Not repaired: the scope map is outside this order's <paths>, and the spec's rule 3 was implemented exactly as written. The issuer decides whether the Graph-scope map or the rule's key set is the intended source of truth."
+}
+```
