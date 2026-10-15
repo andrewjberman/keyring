@@ -17286,3 +17286,29 @@
   "notes": "The addendum's source rule (catalogue only, no vendor call) and the existing mechanism (provider-verified, at upload) differ. Porting the existing suggestion is PORTAL_ONLY for the display and the accept; a catalogue-only suggestion is a new portal function with weak coverage. The CTO rules which source the Did you mean uses."
 }
 ```
+
+## IRPT_ANLREQ-D2-W171-S1 -- the AR-g-52 contract is silent on an exception raised by classify, and on a ticker that appears on two pool rows with one row matching the class and one not
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W171-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~171",
+  "surfaced_at": "2026-10-15T15:50:49Z",
+  "one_line": "The AR-g-52 contract names no outcome for an exception raised by the classify callable, nor for a ticker that appears on two pool rows with different classes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-52 item 4 says a proposal is class-checked from the pool row for that ticker, else from classify(ticker) if given, else dropped; item 5 gives typed drop reasons for a history call that raises, and none for a classify call that raises.",
+  "world_is": "swap_replacement.py at 011f9c1245 lets an exception from classify(ticker) propagate, because the contract gives it no drop reason and the message must not enter the result. A ticker on several pool rows counts as a pool candidate when any one row matches the class, and a proposal is class-checked against the set of classes its rows give, so the answer does not depend on row order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py:109 @011f9c1245 (key = _class_of(classify(ticker)), with no try around it)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py:47 @011f9c1245 (_pool_classes collects every pool row's class key per ticker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The adapter cell reads classify and decides its exception path; the CTO rules whether a classify fault is a NOT_CLASSIFIED drop or a loud failure. No module behaviour is changed by this row."
+}
+```
