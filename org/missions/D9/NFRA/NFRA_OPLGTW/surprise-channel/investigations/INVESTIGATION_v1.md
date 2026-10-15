@@ -17714,3 +17714,99 @@ name the one known failure instead of silently inheriting it.
     "world_is": "The catalog carries SmartX silver rows at HEAD, so ctx.prefix would resolve them and the no_catalog_row refusal does not fire for those tables. The census figure is stale. No gateway code was changed."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T19:52:58Z",
+    "one_line": "The protocol's envelope keys omit freshness_td and absent_reason, and its resolve_account signature omits the contract's account_suffix and account_ref pin; the SmartX adapter emits _freshness_td and _absent_reason as extra keys and does not implement the pin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2_ADAPTER_PROTOCOL.md sections 'Adapter side' and 'Context side' @9fa68ea4e6: the envelope keys are _as_of, _partition_date, _source_keys, _denominator, _platform_label, _platform_label_source, _label_claim (this seat)",
+        "READ G2_CLIENT_TOOLS_CONTRACT.md 'Shared envelope' and 'client_resolve_account' inputs @9fa68ea4e6: every answer carries freshness_td and absent_reason; resolve_account takes account_suffix or account_ref (this seat)",
+        "RAN tests/test_og_cl5.py on the worktree (base e7cbf77ec1, adapter uncommitted): 8 of 8 pass; resolve_account returns the full candidate list with no pin (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The core builds the shared envelope from the protocol's _-keys, and every SmartX answer states freshness_td and absent_reason; resolve_account pins one account on account_suffix or account_ref.",
+    "world_is": "The protocol lists no freshness or absent key, so the core cannot build those two envelope fields from the protocol alone. The adapter returns _freshness_td and _absent_reason as extra keys, which the core must carry. The protocol signature has no pin argument, so the adapter returns every candidate and implements no account_suffix or account_ref pin. No gateway code outside the adapter and its tests was changed."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T19:52:58Z",
+    "one_line": "partner_roster.json carries no advisor_id: its only SmartX join key is the advisor_name alias, so a byte-equal copy of the file cannot serve the advisor-id roster that ctx.firm_roster() must return.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ data/mdpf/config/partner_roster.json @e7cbf77ec1: partners[] carry firm_id and aliases.advisor_name ('49 Financial Group' for 49financial) and aliases.legacy_id; no advisor_id key anywhere in the file (this seat)",
+        "READ G2c_smartx.md section (c) and the fact_model_allocation_roster contract @GATEWAY_DATA_CONTRACTS_20261014: advisor_id is a column of fact_model_allocation_roster only (this seat)",
+        "RAN probe_smartx.py on the worktree (base e7cbf77ec1): build_roster joins the file's name aliases to the silver roster's advisor_id and advisor_name pairs; envelope_ok True, fence_negative_arm True (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ctx.firm_roster() returns advisor id to canonical firm id or None, served from a byte-equal copy of data/mdpf/config/partner_roster.json under app/refs/ (protocol A1 item 4).",
+    "world_is": "The file maps advisor names to firm ids and has no advisor id. A core that serves a byte-equal copy maps no advisor id, so every SmartX roster row drops as an unknown advisor and every resolve returns zero candidates with absent_reason no_account_match, not a refusal. The probe built the map by joining the file's name aliases to the silver roster's ids. The hookup must choose the advisor-id source before the SmartX release."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S9",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T19:52:58Z",
+    "one_line": "The probe reads as the box's own credentials with a nominal stand-in principal; principal admission (principal_required, typed_opal_only) is the core's and the probe does not exercise it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ app/typed_scope.py admit_scope @e7cbf77ec1: admission reads harvest_read.get_current_principal() and tools._is_opal_user; neither exists in a probe process (this seat)",
+        "READ the task order section 1 (probe): 'an Opal stand-in principal'; protocol A1 item 2: the probe writes its own ProbeCtx and the Context side has no principal (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The probe builds the adapter context with an Opal stand-in principal, and the Opal-only gate applies to client reads.",
+    "world_is": "Admission is the core's, through typed_scope.admit_scope, which needs a request principal this standalone probe does not have. The probe's stand-in is nominal, its reads use the box credentials, and it prints counts and booleans only. The core's own test must prove typed_opal_only at the hookup."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W107-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~107",
+    "surfaced_at": "2026-10-15T19:52:58Z",
+    "one_line": "The contract's weekend fallback needs a prior-trading-day lookup, which ctx does not offer; the adapter walks back through list_partitions to the newest non-empty account-map partition instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ G2c_smartx.md freshness and open_items for fact_allocation_account_map @GATEWAY_DATA_CONTRACTS_20261014: the map is empty on weekends and holidays (27 of 91 partitions) (this seat)",
+        "READ G2_ADAPTER_PROTOCOL.md 'Context side' @9fa68ea4e6: ctx offers freshness_td and list_partitions, no prior-trading-day call (this seat)",
+        "RAN the probe on the worktree (base e7cbf77ec1): the map read used the newest non-empty partition; the trading calendar answered from its NYSE fallback (stderr WARN) (this seat)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A weekend as_of on the account map falls back to the prior trading day and says so (contract, SmartX resolve_account).",
+    "world_is": "ctx has no prior-trading-day function, so the adapter walks back at most 10 partitions to the newest non-empty map partition, data-driven, and reports the partition read in _denominator (account_map_partition, account_map_fallback_steps). The calendar's day count is not used for the fallback. The lookup is equivalent for weekends and holidays, but it is not the calendar the contract names."
+  }
+  ```
