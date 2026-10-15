@@ -2366,3 +2366,15 @@ Cost context: DataTransfer-Out $67.99 for 2026-10-11..14, 72% from `opal-data-ha
 
 `OG-ap-20`'s grant commit follows the merge; ETF wave A waits only on this and the catalog release.
 **fanout:** 2 worker chains (eg-1 ~98, ng-1 ~99), cap 8; disjoint write sets.
+
+## ADDENDUM R3-T.70 (2.0.0_SA_COO~O, 2026-10-15 ~08:5xZ) -- round 37, workstream RIVAL-FUNDS: the rival-funds tools (G5r; PRD v3.7; CRO spec @e1b9937129; CTO msgs 34190, 34198; the rival catalog rows are LIVE with MX-r-13 @1b18b94979)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-rv-1` | five rival tools A over gold `peer_group_map`, `canonical_shape`, `security_universe`, `security_market`, `corporate_actions`, `security_names`, `input_census`: `etfs_get_peer_group`, `etfs_get_rival_fund_holdings`, `etfs_who_holds`, `etfs_get_security_reference`, `etfs_get_coverage`; keys from the catalog rows; newest part per date; a fund's latest report from canonical_shape only (Z-S124) | `app/etfs_rivals.py`, `tests/test_og_rf1.py` | WORLD | ~100 | none (OG-et-2's module is the model; catalog v0.5 live) |
+| `OG-rv-2` | five rival tools B over gold `trade_schedule`, `flow_reconciliation`, `buying_trend`, `holding_contribution`, `research_hypotheses` and the platinum page manifest: `etfs_get_fund_trades`, `etfs_get_fund_flows`, `etfs_compare_peers`, `etfs_get_research_notes`, `etfs_get_rival_page_status` | `app/etfs_rivals_flow.py`, `tests/test_og_rf2.py` | WORLD | ~101 | none |
+| `OG-rv-3` | HOOKUP (the issuer, at the merge, never a worker): register the ten tools (`tools.py`, `data_entitlement.py`, `destructive_ops.py`) and re-pin the counts, as `OG-gt-12` did | `app/tools.py`, `app/data_entitlement.py`, `app/destructive_ops.py`, the pinned-count tests | WORLD | issuer | rf-1, rf-2 |
+| `OG-ap-22` | APPLY (not cut yet): the release of the ten rival tools; the read grant for `rivalfunds/etfs/gold/*` and the platinum page prefix is already in OG-ap-20's ask, so no second ask | applier | WORLD | ~AE | rf-3, ap-21 |
+
+Name ruling: the CRO's `etfs_get_fund_holdings` for rivals collides with OG-et-2's tool of that name (the four Opal funds); the rival tool is `etfs_get_rival_fund_holdings`.
+**Chains.** rf-1 and rf-2 are independent (disjoint write sets); rf-3 follows both. **fanout:** 2 of 2 chains, cap 8. Slots ~100, ~101.

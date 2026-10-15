@@ -16640,3 +16640,162 @@ name the one known failure instead of silently inheriting it.
   "notes": "A future edit that moves the uncached scan out of silver_latest breaks that suite by design, so the mutant check still has to read the same text."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W99-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~99",
+    "surfaced_at": "2026-10-15T07:43:27Z",
+    "one_line": "ng1.AC2 probe carries no org/missions project home, so the S3PREFIX reader clause cannot derive a committing project and the four registered ETF prefixes still refuse (4 refused, 0 wanted).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ng1.AC2.sh (worktree, uncommitted) builds a probe diff with ONE file, infra/aws/terraform/opal-gateway/probe_s3prefix.tf, and calls naming-gate.py --diff with no --staged-paths.",
+        "RUN: bash ng1.AC2.sh from C:/tmp/wk-oplgtw-99 at HEAD d971301a6a plus the cell edits: 'the four registered ETF patterns refused: 4 (want 0); the mistyped one refused: 1 (want 1+), enforce rc 1' RESULT: FAIL exit=1.",
+        "SAME FOUR VALUES with one org/missions/D9/NFRA/NFRA_OPLGTW/ path added to the diff: IAM-PREFIX-ADMITTED n=4 and four CONFORMANT verdicts (.scratch/four.diff, worktree gate). The clause works; the probe has no project.",
+        "SPEC: order 1(b) says if no project can be derived the clause does NOT fire, so AC2 as written cannot pass with this probe."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2: the four registered ETF patterns grade clean (0 refused) in the ng1.AC2 probe diff, while a mistyped one still refuses.",
+    "world_is": "The probe diff has no committing-project home, so the clause (which needs one, order 1(b)) does not fire and all four refuse. In a real commit the --staged-paths list carries the NFRA_OPLGTW home and the four are admitted. The check, not the gate, lacks the project home.",
+    "notes": "Not fixed by this cell: the probe lives in the COO's deliverables folder, outside this cell's write grant. Owner to rule: add an org/missions/D9/NFRA/NFRA_OPLGTW/ path to the probe, or pass --staged-paths in the check."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W99-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~99",
+    "surfaced_at": "2026-10-15T07:43:27Z",
+    "one_line": "An s3:prefix value that is a bare '*' or an unregistered non-tier-first prefix is NOT GRADED at HEAD (PASS, 0 graded), so the order's REFUSES cannot be met without adding a refusal the cell's bounds forbid.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "HEAD GATE: .tools/naming-gate.py at HEAD d971301a6a run on a diff with s3:prefix values '*' and 'nope/zzz/*' under an NFRA_OPLGTW project home: no NAMING verdict line for either, 'NAMING-GATE: PASS' (same fixture as the test file).",
+        "ORDER: ng1.AC1 ac03 (amended A1) lists a bare '*' and an unregistered prefix as cases that REFUSE; the clause alone admits nothing for them.",
+        "TEST: .tools/tests/test_naming_gate_s3prefix.py test_ng1_ac03 asserts REFUSE for all nine near misses and is RED on '*' (first failure) and 'nope/zzz/*'.",
+        "BOUND: order section 2 says the clause is a narrowing and nothing else; a refusal for ungraded s3:prefix values is a new refusal class."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A1 ac03: a bare '*', an empty key part and an unregistered prefix each REFUSE under the s3:prefix clause.",
+    "world_is": "Those values are not classified as S3 keys at HEAD, so the gate never grades them. The clause can only admit, not refuse. A mistyped s3:prefix (a bare '*' or a non-tier-first typo) therefore passes silently, the confinement hazard the CTO ruling names.",
+    "notes": "The issuer rules whether an s3:prefix value the clause does not admit should REFUSE (a new refusal, outside this cell) or stay ungraded. Until ruled, ng1.AC1 stays FAIL on ac03."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W99-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~99",
+    "surfaced_at": "2026-10-15T07:43:27Z",
+    "one_line": "At HEAD the MX-c-9 legacy precedent already grades a bare registered key part ('gold/book/', no '*') CONFORMANT for its own reader inside an s3:prefix, which would confine a ListBucket to nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "HEAD GATE: .tools/naming-gate.py at HEAD d971301a6a on a probe with s3:prefix 'gold/book/' and reader NFRA_OPLGTW: NAMING CONFORMANT ... -> legacy_address 'gateway-etfs-gold-book' (the MX-c-9 branch, _legacy_own).",
+        "WORKTREE GATE: the same verdict, unchanged; the clause does not admit it (no IAM-PREFIX-ADMITTED value for it).",
+        "ORDER: ng1.AC1 ac02 header says 'not admitted by this clause (refused)'; the A1 text says 'not admitted by this clause'. The test asserts the A1 text.",
+        "CTO conditions (RULING_20261015_064xZ @bf9198273e, as quoted in the order): a value WITHOUT the '*' is not admitted; the hazard is a bare prefix confining a ListBucket."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A1 ac02: the value without the trailing '*' is not admitted by this clause (header: refused).",
+    "world_is": "The clause does not admit it, but the pre-existing MX-c-9 branch does (for an own-reader row), and that branch is not part of this cell. Changing it would be a refusal change outside the bounds.",
+    "notes": "Recorded, not fixed. The issuer and CTO decide whether the MX-c-9 branch should refuse bare key parts in an s3:prefix context. No grant uses a bare value today."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W99-S4",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~99",
+    "surfaced_at": "2026-10-15T07:43:27Z",
+    "one_line": "The existing tf_literals block tracker resets its bracket count at every '{', so a second element of a list of maps loses the key it sits under; the clause needed its own frame stack.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: a two-statement jsonencode policy (Statement = [{...}, {...}]) admitted the first statement's s3:prefix value and refused the second's, same registry (first test run, before the frame stack).",
+        "CODE: .tools/naming-gate.py tf_literals at HEAD d971301a6a: the '{' branch sets bracket to 0, so a '{' that is a list element has attr None and its keys lose the list key.",
+        "FIX IN THIS CELL: an independent frame stack (frame_ids, frame_names) feeds only the S3PREFIX clause; the existing blocks and their permitted rules are unchanged (self-test 51 arms still ok).",
+        "NOT FIXED: the existing tracker's reset also affects other permitted contexts; those consumers were not re-graded here (bounds)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A1 section 1: the clause is ONE clause in the S3Key limb, reading the existing context as it stands.",
+    "world_is": "The existing context tracker loses list-element keys after a '{', so reading it for the clause was unsafe. The clause reads a separate frame stack instead.",
+    "notes": "Owner to rule whether the old tracker's bracket reset is a defect to fix in its own cell. A fix would move other permitted verdicts, so it needs its own grading."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W99-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~99",
+    "surfaced_at": "2026-10-15T08:10:58Z",
+    "one_line": "The naming gate's live limb runs inside the OFFLINE S3PREFIX tests: every NAMING REFUSE line in the throwaway repos carries LIVE-READ-FAILED (CensusError, rc=2) on this device. The asserted verdict strings are unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: pytest of .tools/tests/test_naming_gate_s3prefix.py at worktree HEAD 433d0a383c, before the ac03 edit: the failure output shows 'LIVE-READ-FAILED: CensusError: the live pull did not scan every node type (rc=2)' on each NAMING REFUSE line. The file ran in 18.66 s.",
+        "MEASURED: after the ac03 edit the same file reads 8 passed in 16.73 s (rc=0); the REFUSE verdict strings are unchanged.",
+        "SPEC: the test file header and order section 1 step 3 both say the S3PREFIX tests are offline (throwaway git repo, no live read).",
+        "NOT MEASURED: whether a successful live read could move a REFUSE verdict in these temp repos. This cell did not change _live_limb."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The S3PREFIX tests are offline: each throwaway repo is graded without a live read (test header; order section 1 step 3).",
+    "world_is": "On this device the gate's live limb is reached for each new refusal candidate in the temp repos and fails with CensusError rc=2, so the offline premise does not hold for the live limb. The asserted verdicts do not depend on it.",
+    "notes": "Not fixed by this cell (the limb is outside the clause and the bounds). Owner to rule whether the tests should set the live plane off, or whether the live-read failure should be a named SKIP in the verdict."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W99-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~99",
+    "surfaced_at": "2026-10-15T08:10:58Z",
+    "one_line": "ng1.AC2.sh counts REFUSE verdicts only, so its PASS does not witness the four registered ETF patterns grading CONFORMANT, which the order requires; a pattern that is ungraded or WARN would also pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ng1.AC2.sh, the ng_good line: grep -cE 'REFUSE.*(gold/book|gold/holding|platinum/reports|silver/holdings)' counts REFUSE lines only.",
+        "RUN: bash ng1.AC2.sh at worktree HEAD 433d0a383c: 'the four registered ETF patterns refused: 0 (want 0); the mistyped one refused: 1 (want 1+), enforce rc 1' and RESULT: PASS.",
+        "MEASURED: python .tools/naming-gate.py --diff .scratch/ng1_probe/probe.diff gives four 'NAMING CONFORMANT' verdicts (legacy keys gateway-etfs-gold-book, -gold-holding, -platinum-monthly-reports, -silver-holdings) and IAM-PREFIX-ADMITTED n=4 bucket=opal-data-etfs. The copy with silver/holdins REFUSEs under --enforce (rc 1).",
+        "ORDER: AC2 expect and A2 step 3 say the four registered ETF patterns must grade CONFORMANT and the mistyped one must REFUSE."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 and A2 step 3: the four registered ETF patterns must then grade CONFORMANT, and the mistyped one must REFUSE.",
+    "world_is": "The check's expect asserts the REFUSE count of the four patterns is 0 and does not count CONFORMANT verdicts. The four CONFORMANT verdicts were confirmed by a direct run, not by the check.",
+    "notes": "Not changed: the check is the issuer's file and this worker does not edit it. Owner may add a CONFORMANT count (expected 4) to the expect line."
+  }
+  ```
