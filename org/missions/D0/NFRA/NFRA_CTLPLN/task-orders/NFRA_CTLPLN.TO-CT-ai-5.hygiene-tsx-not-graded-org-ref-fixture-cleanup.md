@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~110</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in wk-NFRA_CTLPLN-110 @1dad8bf65d (merged f6a6ed1e6e): HYGIENE-TSX ok=True, HYGIENE-ORG-REF ok=True, HYGIENE-CLEANUP ok=True (new=0); bash -n clean on safe-commit.sh, commit-gate.sh, wk-provision.sh; proof VALID. Not done: the risk reflex's map lives in comp-pulse, outside the grant (W110-S1); carried to round 20.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
