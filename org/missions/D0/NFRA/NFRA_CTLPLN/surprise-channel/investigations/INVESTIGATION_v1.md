@@ -10424,3 +10424,78 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "safe-commit.sh's author-seat check appends to a tracked audit log on each commit by a serial the roster does not know. In a sparse worktree that file is a tracked change the worker cannot commit under its lane, so it stays dirt until the worktree is removed."
 }
 ```
+
+## NFRA_CTLPLN-W110-S1 -- the risk reflex's danger map is not in .tools/safe-commit.sh; the reflex is one comp-pulse call
+
+```json
+{
+  "id": "NFRA_CTLPLN-W110-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~110",
+  "surfaced_at": "2026-10-15T13:06:00Z",
+  "one_line": "The CT-ai-5 cell asks to refresh the risk reflex's file map in .tools/safe-commit.sh; no map is held there. The reflex is one comp-pulse diff call, and comp-pulse reads its own danger map outside this order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh@afebfdc81a: grep -n -i 'risk|map' returns the reflex block at lines 940-951 (comp-pulse diff call) and no map file; the refresh target named by the cell is absent",
+      "temporary repository, real unedited safe-commit.sh @afebfdc81a, one staged portal/src/Probe.tsx: '[risk-reflex] danger map: 0.0h old', 'DENOMINATOR: 1 file(s) checked against 1662 danger node(s)', 'ANSWER STATE: PRESENT_WITH_ZERO_RESULTS' (the reflex checked the .tsx on this box; the stale-map cause in CTO msg 109393 is not reproduced here)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-5 item 1 (cell W110): 'Find the risk reflex's file map in .tools/safe-commit.sh (Grep risk and map in it) and refresh it so a portal/**/*.tsx path is known'; CTO msg 109393: the reflex used a stale map.",
+  "world_is": "No map is held in safe-commit.sh (reflex = lines 940-951, one comp-pulse call; the map is read inside comp-pulse, outside <paths>). The refresh was not made. The 'not graded: <N> .tsx' line is printed by safe-commit.sh itself (commit 08591e1c06), so it does not depend on the map."
+}
+```
+
+## NFRA_CTLPLN-W110-S2 -- the real scripts run only from a repository that carries their config; a bare temporary repository fails the gate
+
+```json
+{
+  "id": "NFRA_CTLPLN-W110-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~110",
+  "surfaced_at": "2026-10-15T13:06:00Z",
+  "one_line": "The cell asks for a temporary repository with the real safe-commit.sh and commit-gate.sh. Both take their inputs from the toplevel of the repository they run in, so a bare repository fails the gate before any check.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit-gate.sh run from a bare temporary repository (.scratch/tsx2, first attempt, before the copy): 'ERROR: config not found: ...\\.scratch\\tsx2\\comp-constants.config.yaml' rc=1, commit blocked; comp-constants.config.yaml is a root file of the worktree",
+      "safe-commit.sh @08591e1c06 writes its audit log under the toplevel of the cwd repository; the first bare attempt failed on a missing org/ directory (.scratch/tsx1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-5 item 1 (cell W110): 'test it in a temporary repository with the real two scripts, with one .tsx file and with none (no line)'.",
+  "world_is": "The temporary repository must carry copies of the wk-provision sparse set, comp-constants.config.yaml and .owned-paths.yaml. test_round19_hygiene.py --tsx builds that fixture (commit 93f41a99d5); the real scripts run from it unedited."
+}
+```
+
+## NFRA_CTLPLN-W110-S3 -- the round-18 batch already removes only its own folder in a finally; the default run leaves no new folder
+
+```json
+{
+  "id": "NFRA_CTLPLN-W110-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~110",
+  "surfaced_at": "2026-10-15T13:06:00Z",
+  "one_line": "CTai5-AC3 assumes the round-18 batch leaves r18_batch_* folders. At afebfdc81a the file removes its own fixture folder in a finally, and a default run leaves no new folder; the four folders from the first runs remain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_round18_batch.py@afebfdc81a main(): base = tempfile.mkdtemp(prefix='r18_batch_') then shutil.rmtree(base, onerror=FX._clear_readonly) in the finally; no ignore_errors in the file",
+      "measured in the worktree: r18_batch_* folders in Temp BEFORE=4 AFTER=4 for one default run; 'ROUND18-BATCH arms=3/4 skipped=1 ok=True' rc=0 (the four old folders are not touched)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTai5-AC3 base: 'the batch test leaves them'; CT-ai-5 item 3: 'make it remove only the folders IT created, in a finally, by the path it created'.",
+  "world_is": "The file already meets item 3, so no edit was made to test_round18_batch.py. The four folders named in W105-S5 remain; recursive deletion waits on Andrew. The --real arm was not run here (it creates a real sparse worktree and portal worktree)."
+}
+```
