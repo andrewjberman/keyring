@@ -35,6 +35,8 @@
 
 **Run the three criteria below from your worktree root**, record each output and exit code verbatim in `IB200-4_criteria_output.txt`, write the proof instance named under proof_of_spec and validate it with `python .tools/proof-of-spec-check.py <instance>`, and commit with explicit paths (record, packet and criteria output first, then set the instance's artifact rows to the hash of that commit, the instance last). Do NOT edit this order file or the check; do not flip `<status>`. If a criterion fails, fix YOUR record or packet (never the check); a check no record can pass is the issuer's defect: file a BLOCKING row and report. Remove your scratch if you can. Report once, under 150 words.
 
+**AMENDMENT 1 (the issuer, 2026-10-15 ~04:5xZ, on your row `IRPT_BCKEND-D2-W400-S1`; my defect, the refusal clause was too broad):** the flat bronze keys of pair (a) and of the ported producer's output are EXISTING addresses of an existing pipeline (the mirror's read contract); they have no `address()` output and need none, and pair (b) must KEEP writing exactly that key shape. Only what the pairs CREATE NEW (the schedule, the function or rule names) comes from `lib/opal_naming.py` `name()`/`address()`; for each such new name state the builder call and any registry row it needs. Your inherited state: your three commits on this branch (the stop record, the CRLF restore, the instance) stay; write the design record and the packet now and replace the criteria output and the instance with your new run.
+
 **Criteria (run each under `timeout 120` from your worktree root, record the output and exit code verbatim):**
 
 <criterion id="IB200-4-AC1" cell_refs="IB-pr-556"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py" . IB200-4-AC1</invocation><expect>IB200-4-AC1 PASS</expect></criterion>
@@ -48,7 +50,7 @@ What the checks grade: AC1 the live daily writer with a claim and two evidence l
 ## BOUNDS
 
 - **Grant:** the `paths` block, the worktree and the scratch directory outside the repository. READ ONLY. **Nothing is built, changed, pulled, re-pulled, deployed, written to AWS, invoked, signed or sent, and no Orion request is made:** the only AWS calls are `list`, `get`, `head` and `describe` reads with your identity. A denial is recorded, never worked around.
-- **Refusal clause:** STOP, file a row, change nothing more, on any of: a call that writes, invokes, pulls or sends; a need to read a secret value; a client identifier in a tracked file; a need to type an object address by hand (that is a missing registry row: record it). Never weaken a check.
+- **Refusal clause:** STOP, file a row, change nothing more, on any of: a call that writes, invokes, pulls or sends; a need to read a secret value; a client identifier in a tracked file; a NEW object address or resource name that you would have to type by hand (a missing registry row: record it). The EXISTING bronze flat keys `s3://opal-data-inf/bronze/<feed>/<date>.jsonl.gz` are the mirror's read contract and belong to an existing pipeline (CLAUDE.md rule 30, non-application: existing pipelines reach conformance through their own migration project, never as a rider), so they are CITED as existing keys with their shape read from the mirror, and are NOT a refusal. Never weaken a check.
 - **Row ids** are `IRPT_BCKEND-D2-W400-S<k>` (start at 1); file a row for anything odd (a fenced json block in `INVESTIGATION_v1.md` with `grounding` and `surfaced_at` = `date -u +%FT%TZ`) and keep working.
 
 <paths>
