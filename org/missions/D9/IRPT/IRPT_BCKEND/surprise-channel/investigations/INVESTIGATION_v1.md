@@ -39204,3 +39204,108 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W432-S1 -- The Read of the order file by path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The Read of the order file by path returned the whole file, RECORD FACE included, although the worker face says that face never travels to the worker.",
+  "spec_asserts": "The order's WORKER FACE (task order IRPT_BCKEND.TO-IB-pr-592, line 20 and the worker instruction 'Do not read the RECORD FACE') says the RECORD FACE is not part of the worker context and does not travel to the worker.",
+  "world_is": "A Read of the order file in the worktree with no offset or limit returned all 96 lines, the RECORD FACE (lines 85 to 95) included. The worker saw the record preflight text before the first criterion ran. The record fields were taken from the worker face instruction at line 40, which names the same fields. This is the same instrument behaviour as the sibling row IRPT_BCKEND-D2-W430-S2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-592.split-ratio-absent-named.md at 53581d41a6: RECORD FACE at lines 85 to 95; worker face instruction at line 20 says the record face is not worker context",
+      "Read tool result for that path in C:/dev/wk-IRPT_BCKEND-432 at 53581d41a6 returned the file from line 1 to line 96 with no offset and no limit",
+      "IRPT_BCKEND-D2-W430-S2 in org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md: the same Read behaviour recorded by worker 430"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W432-S2 -- The order asks the run manifest's split_adjust block to name the ratio-absent entries of every day of the run, but the producer writes one manifest per day and has no run-level manifest.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks the run manifest's split_adjust block to name the ratio-absent entries of every day of the run, but the producer writes one manifest per day and has no run-level manifest.",
+  "spec_asserts": "Change item 3 of the worker face says the run manifest's split_adjust block gains ratio_absent holding the entries of every day of the run, sorted by day then security.",
+  "world_is": "holdings_performance.py emit_day() builds the manifest from one day's frame and writes one manifest.json per day (base 53581d41a6, emit_day at lines 1370 to 1435). main() prints one line per day and an EMIT summary, and writes no run-level manifest (main at lines 1438 to 1522). The ratio_absent list is therefore carried in the block of the day it describes. A multi-day run leaves one list per day manifest and no single block holds the run's entries. Built as specified for the day manifest; no run-level block was built, because the producer has no run manifest to add it to. The grading is unchanged either way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_performance.py at 53581d41a6 lines 1370 to 1435: emit_day builds one manifest dict per day and writes manifest.json at the day's manifest address",
+      "holdings_performance.py at 53581d41a6 lines 1438 to 1522: main() loops days through pool.map, prints per-day lines and the EMIT summary, and does not write a run-level manifest",
+      "IRPT_BCKEND.TO-IB-pr-592 worker face change item 3 at line 36: the run manifest split_adjust block gains ratio_absent for every day of the run"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W432-S3 -- The import chain of holdings_performance.py needs data/assets/scripts/lib, which the worker face's list of named sparse directories does not carry.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The import chain of holdings_performance.py needs data/assets/scripts/lib, which the worker face's list of named sparse directories does not carry.",
+  "spec_asserts": "Worker face line 24 names the sparse directories earlier workers needed: infra/aws/lambda/investor-reporting, data/mdpf/scripts/gold, data/mdpf/scripts/silver, data/assets/scripts/silver, infra/aws/lambda/v2_portal/_shared, docs/contracts/investor-reporting and lib, and says to add the directory of each import error until the tests collect.",
+  "world_is": "Collection of the existing split tests failed with ModuleNotFoundError: stream_parquet. holdings_performance.py inserts data/assets/scripts/lib into sys.path (base 53581d41a6 lines 115 to 119) and imports stream_parquet and trading_calendar from it. The directory data/assets/scripts/lib was added locally as a sparse entry, not committed, and the tests then collected and passed. The face's list does not name it, so the next worker meets the same failure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_performance.py at 53581d41a6 lines 115 to 119: sys.path inserts for lib and data/assets/scripts/lib, then import stream_parquet, trading_calendar",
+      "pytest collection of test_split_unkeyed.py and test_split_adjust.py in C:/dev/wk-IRPT_BCKEND-432 raised ModuleNotFoundError: stream_parquet before the sparse entry was added",
+      "worker face line 24 of IRPT_BCKEND.TO-IB-pr-592 at 53581d41a6: the named list of sparse directories"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W432-S4 -- The order's sequence and the standing status-flip rule cannot both hold: the criteria grade the worker's own commits, so the criteria output is recorded after the product commit, and a status flip committed by the worker would add a changed path the record does not list.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W432-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~432",
+  "surfaced_at": "2026-10-15T17:00:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's sequence and the standing status-flip rule cannot both hold: the criteria grade the worker's own commits, so the criteria output is recorded after the product commit, and a status flip committed by the worker would add a changed path the record does not list.",
+  "spec_asserts": "The worker face says to record the criteria output first, in the product commit, then commit the instance alone in a second commit. The standing worker rules say to flip the task order status to complete and commit the instance, deliverables and the flip together.",
+  "world_is": "AC3 (p207 ac3 via p200 own_changes) compares the record's changed_paths with the paths of this worker's own non-merge commits since base, excluding the deliverables prefix and the channel file. The criteria output can only be written after the product commit exists, so it is committed with the instance in the second commit. A status flip of the order file committed by this worker would be an own change outside changed_paths and would fail AC3, so the status is left pending for the issuer to flip after the proof validates.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r200/p200_cells.py at 53581d41a6: own_changes lists this serial's commits since base and drops ALLOWED_PREFIX paths (the deliverables prefix and the channel file)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r207/p207_cells.py at 53581d41a6 lines 62 to 68: ac3 fails when changed_paths differs from own_changes",
+      "IRPT_BCKEND.TO-IB-pr-592 worker face line 44: criteria output first, then the instance alone in a second commit"
+    ]
+  }
+}
+```
