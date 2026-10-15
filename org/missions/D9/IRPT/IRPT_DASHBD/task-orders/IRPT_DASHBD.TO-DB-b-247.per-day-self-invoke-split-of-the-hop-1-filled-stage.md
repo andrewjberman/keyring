@@ -56,9 +56,12 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-201` (branch `wk-IRPT_DASHBD-2
 - **Refusal clause.** A criterion you cannot satisfy AS WRITTEN is reported with your measurement, never repaired, widened or satisfied by a route this order did not name. If the 105 earlier handler tests cannot all pass after your edit, or the invoke cannot be written without a typed function name, file a BLOCKING row with the numbers and stop on that point. An edit outside the grant is a defect: stop and file a row.
 - **Rows** go to the investigation file in the grant, ids `IRPT_DASHBD-D2-W201-S<k>` (start at S1), with the real current UTC time (`date -u +%FT%TZ`); append as BYTES. Commit with `.tools/safe-commit.sh`; run its gates in the background and wait for them. ASCII only in anything you write; every `.py` passes ruff (target py39, no semicolon-joined statements).
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-15, on worker row W201-S3; gate limb: a modification of an existing order, placeholders NONE, no criterion id or cell changes).** Step 2 requires `run()` to stop calling the shared `filled_stage`, and the existing test `FilledStageTests.test_stage_runs_after_the_class_and_lot_stages` in `tests/test_filled_report_values_stage.py` pins exactly that call. The order was wrong to demand both unchanged. That ONE test file is now in the grant for ONE change: update that single test so it asserts the new behaviour (after the class and lots stages `run()` calls `owed_filled_days` and `run_filled_day`, and does not call `filled_stage`); every other test of that file stays byte-identical. The whole tests directory must still pass with at least 113 tests (the updated test counts as an earlier test). Record the change in the facts record's `files_changed` (the file's `kind` is "test updated") and in `words`.
+
 <paths>
 infra/aws/lambda/investor-reporting/reporting-gold/handler.py
 infra/aws/lambda/investor-reporting/reporting-gold/tests/test_filled_per_day.py
+infra/aws/lambda/investor-reporting/reporting-gold/tests/test_filled_report_values_stage.py
 infra/aws/terraform/investor-reporting/reporting-gold/iam.tf
 infra/aws/terraform/investor-reporting/reporting-gold/locals.tf
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~201/
