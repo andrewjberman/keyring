@@ -36954,6 +36954,111 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+## IRPT_BCKEND-D2-W411-S1 -- the composed filled reader reads the platinum-tier filled object directly; the export function is designed to be fenced from that bucket
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "filled_reader_installed.py reads the filled report object with the export function's own S3 client, by VersionId. The export function is designed to be fenced out of the platinum bucket, and the filled report object is platinum tier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "export/entry.py _with_platinum_reader docstring (line 403) @f0069dd8ca: the export function's role is fenced out of the platinum bucket, and the PATH B read goes through the reporting route",
+      "export/retained_export.py lines 30-31 @f0069dd8ca: the submit and the render read-back never read S3 for the series; they call the reporting route",
+      "infra/logic/registry/reporting_policies.json FILLED_REPORT tier platinum @f0069dd8ca; reporting/entry.py _filled_uri reads that tier"
+    ]
+  },
+  "spec_asserts": "IB-pr-567 (CTO round-5 ruling, ~PS item 2): the installed reader reads the pinned filled report object through the shared named-account reader, by VersionId.",
+  "world_is": "Whether the export function's role holds s3:GetObject on the filled report object was not read (Terraform is not in this grant). If it does not, a deployed export with a filled pin answers FilledReportUnavailable (fail closed). If the role is widened to meet the read, the platinum fence the reporting route was built to keep is breached. Nothing is deployed; the first deploy of this reader decides which."
+}
+```
+
+## IRPT_BCKEND-D2-W411-S2 -- no live caller of the render-side read of a frozen filled report exists inside the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:05:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "retained_export.filled_render_read (the render's one read of a frozen filled item) and render.filled_render_package have no caller outside the tests, and nothing in export/ reads ports['filled_reader'] yet. No live path reads the pinned bytes at render. The submit-path call site is in submit_async.py or submit_service.py (IB-pr-566's files), outside this grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep of export/*.py at 95d187e535 for filled_reader, filled_render_read, read_pinned_filled and filled_report_source: the only caller of filled_render_read outside retained_export.py is render.filled_render_package (added here); nothing outside export/tests/ calls filled_render_package, and no module reads ports['filled_reader']",
+      "export/render.py filled_render_package and export/retained_export.py filled_render_read (lines 479-489) @95d187e535",
+      "export/submit_async.py line 127 @95d187e535 calls freeze_platinum on ports['platinum_series']; no filled counterpart is called there"
+    ]
+  },
+  "spec_asserts": "IB-pr-567 (3): where a bundle revision carries filled_report_source, the render reads the pinned bytes with read_pinned_filled(reader, pin); the render seam is in render.py, dispatch.py, download.py, package.py or handler.py, else file a row naming the file.",
+  "world_is": "The seam is not in those five files. render.py now carries filled_render_package, which is the render's read and checks, but nothing calls it there. The live call site belongs to the submit path (IB-pr-566's grant). Left alone, a filled export is frozen with its pin and no controller read of the pinned bytes happens at render. The issuer amends the grant or wires the call site under IB-pr-566."
+}
+```
+
+## IRPT_BCKEND-D2-W411-S3 -- the reader finds the naming builder by walking up from its own file; the deployed package layout is not read
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "filled_reader_installed.py locates lib/opal_naming.py by walking up from its own file (the repository layout). Whether the deployed export package carries lib/ was not read. Where it does not, the reader answers FilledReportUnavailable, a fail-closed refusal, and never a guessed address.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "export/entry.py lines 36-51 @f0069dd8ca: the deployed layout is flat, with members beside entry.py in the function root, and the repository-only roots are added only if they exist",
+      "reporting/entry.py _root() @f0069dd8ca: the sibling reporting function probes for lib/opal_naming.py by walking up from its file"
+    ]
+  },
+  "spec_asserts": "IB-pr-567: the object address comes from lib/opal_naming.address(), never typed.",
+  "world_is": "The packaged zip layout for the export function was not read. The reader's probe mirrors the sibling reporting function; whether the export zip carries lib/ is unverified."
+}
+```
+
+## IRPT_BCKEND-D2-W411-S4 -- IB-pr-566 supplies the submit-path caller of the render read on box/dell2; my render-side function is a parallel copy with no caller
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W411-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~411",
+  "surfaced_at": "2026-10-15T08:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-566's submit legs call filled_reader_or_refuse, filled_accept_read and filled_leg_read, which read the pinned bytes through retained_export.filled_render_read. That supersedes the premise of row IRPT_BCKEND-D2-W411-S2 on box/dell2. render.filled_render_package, this order's render-side function, has no caller on that path, and the named-account logic now exists twice (filled_covered_accounts in retained_export.py and filled_render_package in render.py).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "main tree export/submit_async.py:185-186 and export/submit_service.py:207-208 (read-only, box/dell2, coordinator note of IB-pr-566's merge at 2cb9105a27): filled_reader_or_refuse, filled_accept_read and filled_leg_read",
+      "main tree export/retained_export.py:543-566 (read-only): filled_accept_read and filled_leg_read read through filled_render_read, and filled_covered_accounts judges coverage on the bytes read",
+      "export/render.py filled_render_package @59729482a1 (this order): no caller outside export/tests/"
+    ]
+  },
+  "spec_asserts": "IB-pr-567 (3): the render reads the pinned bytes with read_pinned_filled, and the named accounts come from the shared reader filled_named_accounts.",
+  "world_is": "The submit-path seam now exists, and it reads through the same one read and the same shared reader, with the reader signature reader(client_id, version_id=None) returning key, version_id and body, which this order's reader matches. This order's render function is a parallel copy with no caller. Whether it is kept or the render routes through IB-pr-566's functions is for the issuer. Read-only check of the main tree; no merge and no edit of IB-pr-566's files."
+}
+```
+
 ## IRPT_BCKEND-D2-W410-S1 -- The order's named mirror for driving entry.submit_export does not call entry.submit_export
 
 ```json
@@ -37205,5 +37310,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "spec_asserts": "IB-pr-565 step 5: the T-1 completeness read recomputes asof_is_prior_trading_day per day, and a measured claim needs every as-of equal to the prior trading day.",
   "world_is": "The as-of stamp is the pull day on every present row, so the measured test cannot be met; the earliest measured-complete time stays inferred, and the 06:00 fold's premise (T-1 complete by 06:00) remains unmeasured."
+}
+```
+
+## IRPT_BCKEND-D2-S190 -- Dispositions on the round-5 workers' rows; W404-S3 and S5 closed; the Orion pair (a) issued as IB-pr-568; W411-S1 stays armed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S190",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T08:28:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on the round-5 workers' rows (D2-W404-S1 to S10 as read by D2-W409-S1 to S7, D2-W410-S1 to S3, D2-W411-S1 to S4); W404-S3 and S5 closed; the Orion pair (a) is signed on V3 and issued as IB-pr-568; W411-S1 (the export role's read of the filled object) stays ARMED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB206-1, IB207-1 and IB207-2 AC1 to AC3 on each worker tree (all PASS) and the proof instances (VALID); merges 8450a21863 (565), 2cb9105a27 (566), f32e66d896 (567)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~409/IB206-1_orion_chain_read.json: the positions and transactions chain copies are byte-identical to the repository scripts, the performance chain copy differs (29,230 against 29,784 bytes); inf-silver-aggregator's source is at infra/aws/lambda/inf-silver-aggregator and in the source map; all 52 present objects state as-of equal to their own day",
+      "CTO rulings 8193 and 8195 (CTO half of the Orion packet V3 signed on sha256 03a77b33174c, @b5b6db462a)"
+    ]
+  },
+  "spec_asserts": "My IB-pr-565 order: the chain's pull-script copies are under code/gold; the performance copy is the repository script; the pair's 36 days are the three lists of the V1 order.",
+  "world_is": "DISPOSITIONS. D2-W409-S1: RESOLVED, my read grant was too narrow (AMENDMENT 1 @cee3478342, the other flattened code/ prefixes). D2-W409-S2: the performance chain copy differs from the repository script, so a positive control is owed before any performance day (the check's control-owed rule fixed @8cad619607 after the worker showed it let the record say not needed); carried into IB-pr-568. D2-W404-S3 CLOSED: no date token goes on the chain; the one-time dated run of the same code is the signed pair. D2-W404-S5 CLOSED by D2-W409-S3: the silver aggregator's source exists at infra/aws/lambda/inf-silver-aggregator and is byte-equal to the live zip member (the W404 search read only infra/aws/lambda/inf-pipeline). D2-W404-S1, S2 and D2-W409-S5: resolved by the per-span recount (33 days: positions 4, transactions 7, performance 22; each feed's own first key is its span, CTO msg 8193). D2-W409-S4 (calendar fallback table), S6 (the _meta object under two prefixes), S7 (as-of equals the pull day on all 52 present objects; T-1 completeness at 06:00 unmeasurable, the trigger keeps its measured time): INERT, recorded. D2-W404-S4 (the chain code exists only as an S3 object) and D2-W404-S6, D2-W404-S9: stay ARMED, owner me (the CTO ruled S4 is brought into the repository by a later pair). D2-W410-S1 (the PATH B route test never calls entry.submit_export; test_submit_async.py does), S2 (print query kind 'filled-report', agreed with IB-pr-567), S3 (filled_grant pins accountSetId to the report id): INERT, recorded. D2-W411-S2 and S4 RESOLVED by IB-pr-567 AMENDMENT 1 (one implementation: the render calls IB-pr-566's functions); D2-W411-S3 INERT (lib/opal_naming.py is already in irpt-export-render's files list; the new module is now named there). D2-W411-S1 stays ARMED, owner me: filled_reader_installed.py reads the filled report object with the export function's S3 client, and whether the export role holds s3:GetObject on it was not read; the deploy leg reads the role first (the export function already reads the platinum tier for PATH B, so the fence premise is checked, not assumed)."
+}
+```
+
+## IRPT_BCKEND-D2-S191 -- owner disposition: W404-S6 and W409-S7 have one live owner, 2.0.0_SA_COO~P2
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S191",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-15T08:38:57Z",
+  "one_line": "Owner disposition: rows IRPT_BCKEND-D2-W404-S6 (T-1 completeness at 06:00 New York unmeasured) and D2-W409-S7 (as-of equals its own day) have ONE live owner, 2.0.0_SA_COO~P2; the base serial 1.0.0_SA_CTO named on them is superseded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W404-S6 and W409-S7 as written name base 1.0.0_SA_CTO as owner; S190 names 2.0.0_SA_COO~P2 (CVO~IRPT ADJUDICATION_v110 @e00a26e02c: two owners).",
+  "world_is": "The CTO ruled the owner in CTO_ROUND_ANALYSIS_IRPT_BCKEND_PO5_PS5_PY3_20261015.md @25f361860e (~PO item 3: 'W404-S6: owner ~P2, not the base CTO') and in the Orion V3 CTO half @b5b6db462a (the trigger keeps its measured time with that reason). The base serial has no live session that works these rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_PO5_PS5_PY3_20261015.md @25f361860e",
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v110.md @e00a26e02c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Both rows stay ARMED/carried under ~P2 until a pair that moves inf-gold-trigger measures T-1 completeness; V3 does not move the trigger."
 }
 ```

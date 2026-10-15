@@ -1,0 +1,6 @@
+# Drive log -- 2.0.0_SA_COO~F2 -- IRPT_DASHBD F-SHIP (hour 20261015T08)
+
+## tick 13 (2026-10-15 ~08:3xZ, empty-tick path): the export wire against the merged server
+- Seam probe of the page's filled-report export wire against the merged submit handler (infra/aws/lambda/investor-reporting/export/entry.py `_page_pins_dropped`, retained_export.py `parse_filled_report_source`, round 5 ~PS): the page sends `filled_report_source: {source_kind: 'filled_report', client_id}` at the top level of the wire bundle, which is the POST body (`submit.ts`, FE-s-13: the composed bundle IS the body); the server reads `body.get("filled_report_source")`, drops any page-sent version_id/sha256/size, requires `source_kind == 'filled_report'` and `client_id`, and refuses keys outside its pin set: the page's keys are inside it. MATCH; no row.
+- Still open with ~P2: row D2-S70 (the filled route ignores version_id; how the print page gets the pinned document; IB-pr-567 installs the server-side filled reader for the render, which suggests the server-side read; the portal's version query then drops by an F-SHIP amendment once ~P2 answers).
+- Waiting on the serve path hops 2-5 for the first real run; the candidate (portal 65f2e543, local) registers when the route serves a 49 Financial sample.
