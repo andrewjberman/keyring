@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_RBNDV2~8</issued_to>
 <issued_by>2.0.0_SA_COO~RB</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -48,7 +48,7 @@ It renders nothing when `open` is false. When open it renders INLINE (no `create
 ### ACCEPTANCE
 
 <criterion id="RB2M1-AC1" cell_refs="RV-m-1"><invocation>cd <WS>/portal && export OPAL_AGENT_SERIAL=0.9.0_WK_DSGN_RBNDV2~8; timeout 180 /c/Users/AndrewBerman/.bun/bin/bun test src/ui/components/modal/__tests__/dsgn-rbndv2/rb-2-m1.frame.test.tsx 2>&1 | tail -25</invocation><expect>VERDICT: MODAL-FRAME-OK</expect></criterion>
-`RB2M1-AC1` -- rendering `ModalFrame` to static markup: with `open` false the markup is empty; with `open` true and a title, a body and a footer, the markup contains `role="dialog"`, `aria-modal="true"`, an `aria-labelledby` whose id matches the title element's id, `data-panel-surface="light"` on the surface, `bg-[hsl(var(--bg-surface))]`, `border-[hsl(var(--hairline))]`, `var(--rb-accent)` for the title underline and `var(--rb-rule)` for the header rule, a button with `aria-label="Close"`, and the footer content; the markup contains no `shadow`, no `rounded-lg`, no `rounded-xl`, no `hsl(var(--rb-`; the source file contains an Escape key handler and a scrim click handler; (difference control: the same text arms run on the string `<div role="dialog">` alone must FAIL the surface arms, proving the test can fail). The test prints `VERDICT: MODAL-FRAME-OK` only when every arm holds.
+`RB2M1-AC1` -- rendering `ModalFrame` to static markup: with `open` false the markup is empty; with `open` true and a title, a body and a footer, the markup contains `role="dialog"`, `aria-modal="true"`, an `aria-labelledby` whose id matches the title element's id, `data-panel-surface="light"` on the surface, `bg-[hsl(var(--bg-surface))]`, `border-[hsl(var(--hairline))]`, `var(--rb-accent)` for the title underline and `var(--rb-rule)` for the header rule, a button with `aria-label="Close"`, and the footer content; the markup contains no `shadow`, no `rounded-lg`, no `rounded-xl`, no `hsl(var(--rb-`; the source file contains an Escape key handler and a scrim click handler, and the open effect does not take focus from an element already inside the surface; (difference control: the same text arms run on the string `<div role="dialog">` alone must FAIL the surface arms, proving the test can fail). The test prints `VERDICT: MODAL-FRAME-OK` only when every arm holds.
 
 <criterion id="RB2M1-AC2" cell_refs="RV-m-1" judgment="true"/>
 `RB2M1-AC2` -- graded at the round-2 close by the COO on a modal opened in the live walk, then the CVO and Andrew (DEC-5), never self-graded: the frame reads as the A-light panel (white, silver edge, eyebrow title with the violet underline, hairline rules, no shadow). RECORD; no verdict.

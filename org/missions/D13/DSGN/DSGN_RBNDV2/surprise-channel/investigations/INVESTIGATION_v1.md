@@ -483,69 +483,375 @@
     "world_is": "The order file at the worker's worktree path contains the RECORD FACE header and its preflight block. The worker read them in passing while locating the criteria and took no action from them; the criteria, invocations and expectations used are the WORKER FACE's.",
     "notes": "Observed only; the worker did not open the rest of the RECORD FACE section."
   },
-    {
-      "id": "DSGN_RBNDV2-W7-S1",
-      "project": "DSGN_RBNDV2",
-      "fabric": "laptop",
-      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~7",
-      "surfaced_at": "2026-10-15T07:58:58Z",
-      "one_line": "The test file RB1R3-AC1 names, rb-1-r3.token-format.test.ts, is absent from the worktree at HEAD adc70061; the worker authored it at that path to the criterion's arms.",
-      "class": "OBSERVATION",
-      "hazard_standing": "ARMED",
-      "disarm_owner": "2.0.0_SA_COO~RB -- confirm at the drain that the authored file is the test the order meant, and that no other cell writes the same path.",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "portal/src/ui/components/sidebar/__tests__/dsgn-rbndv2/ listing at adc70061 (worktree /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-7/portal): rb-1-s.app-seam.test.ts and rb-1-s.sidebar.test.tsx only",
-          "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-r-3.sidebar-token-format.md ACCEPTANCE: the invocation names src/ui/components/sidebar/__tests__/dsgn-rbndv2/rb-1-r3.token-format.test.ts"
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "spec_asserts": "TO RV-r-3 RB1R3-AC1: the criterion's invocation runs src/ui/components/sidebar/__tests__/dsgn-rbndv2/rb-1-r3.token-format.test.ts and expects VERDICT: SIDEBAR-TOKEN-FORMAT-OK.",
-      "world_is": "The named file did not exist, so the invocation could not produce its verdict. The worker wrote the file at the named path, inside the granted folder, with the arms the criterion lists and the adc70061 difference control, and did not weaken any assertion."
+  {
+    "id": "DSGN_RBNDV2-W7-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~7",
+    "surfaced_at": "2026-10-15T07:58:58Z",
+    "one_line": "The test file RB1R3-AC1 names, rb-1-r3.token-format.test.ts, is absent from the worktree at HEAD adc70061; the worker authored it at that path to the criterion's arms.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- confirm at the drain that the authored file is the test the order meant, and that no other cell writes the same path.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/ui/components/sidebar/__tests__/dsgn-rbndv2/ listing at adc70061 (worktree /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-7/portal): rb-1-s.app-seam.test.ts and rb-1-s.sidebar.test.tsx only",
+        "org/missions/D13/DSGN/DSGN_RBNDV2/task-orders/DSGN_RBNDV2.TO-RV-r-3.sidebar-token-format.md ACCEPTANCE: the invocation names src/ui/components/sidebar/__tests__/dsgn-rbndv2/rb-1-r3.token-format.test.ts"
+      ]
     },
-    {
-      "id": "DSGN_RBNDV2-W7-S2",
-      "project": "DSGN_RBNDV2",
-      "fabric": "laptop",
-      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~7",
-      "surfaced_at": "2026-10-15T07:58:58Z",
-      "one_line": "The criterion says the --rb names used by the sidebar are five names defined in index.css :root; the :root block defines seven.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "disposition": "UNDER_INVESTIGATION",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "portal/src/index.css lines 135-141 (:root block, RB-t-1 tokens): --rb-rule, --rb-row-rule, --rb-ink, --rb-ink-2, --rb-ink-3, --rb-quiet, --rb-accent",
-          "the sidebar files at the cell's HEAD use exactly accent, ink, ink-2, ink-3, rule (AppSidebar.tsx, SidebarLink.tsx)"
-        ]
-      },
-      "spec_asserts": "TO RV-r-3 RB1R3-AC1: every --rb- name used in the two files is one of the five names defined in src/index.css :root.",
-      "world_is": "The defined set is seven names. The test reads the defined set from the CSS text and checks that every used name is in it; the used set is the five named in the criterion, so the verdict is the same under either reading."
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-r-3 RB1R3-AC1: the criterion's invocation runs src/ui/components/sidebar/__tests__/dsgn-rbndv2/rb-1-r3.token-format.test.ts and expects VERDICT: SIDEBAR-TOKEN-FORMAT-OK.",
+    "world_is": "The named file did not exist, so the invocation could not produce its verdict. The worker wrote the file at the named path, inside the granted folder, with the arms the criterion lists and the adc70061 difference control, and did not weaken any assertion."
+  },
+  {
+    "id": "DSGN_RBNDV2-W7-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~7",
+    "surfaced_at": "2026-10-15T07:58:58Z",
+    "one_line": "The criterion says the --rb names used by the sidebar are five names defined in index.css :root; the :root block defines seven.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/index.css lines 135-141 (:root block, RB-t-1 tokens): --rb-rule, --rb-row-rule, --rb-ink, --rb-ink-2, --rb-ink-3, --rb-quiet, --rb-accent",
+        "the sidebar files at the cell's HEAD use exactly accent, ink, ink-2, ink-3, rule (AppSidebar.tsx, SidebarLink.tsx)"
+      ]
     },
-    {
-      "id": "DSGN_RBNDV2-W9-S1",
-      "project": "DSGN_RBNDV2",
-      "fabric": "laptop",
-      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~9",
-      "surfaced_at": "2026-10-15T08:35:21Z",
-      "one_line": "The RV-i-1 section contract turns the round-1 test RB1P-AC1 arm (f) red: that arm requires NestedCard to render the box surface and hairline it now removes.",
-      "class": "OBSERVATION",
-      "hazard_standing": "ARMED",
-      "disarm_owner": "2.0.0_SA_COO~RB -- rule whether RB1P-AC1 arm (f) is amended to the section contract (a round-2 criterion amendment) or the round-1 test is kept; until then the portal panels test run on this branch stays red at that arm. The worker did not edit the round-1 test.",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "portal/src/ui/components/panels/__tests__/dsgn-rbndv2/rb-1-p.panel.test.tsx lines 122-135 (arm f: NestedCard root must carry bg-[hsl(var(--bg-surface))] and border-[hsl(var(--hairline))]) at branch HEAD febd743a plus the RV-i-1 commit",
-          "bun test run of rb-1-p.panel.test.tsx after the RV-i-1 change: 0 pass, 1 fail; Expected to contain bg-[hsl(var(--bg-surface))]; Received [ py-4, px-4 ]",
-          "portal/src/ui/components/panels/NestedCard.tsx at the RV-i-1 commit: cn('py-4 px-4', className), no bg- class, no border class, no absolute bar",
-          "bun test run of rb-2-i1.sections.test.tsx: VERDICT: SECTIONS-OK, 27 expect() calls, 1 pass"
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "spec_asserts": "TO RV-i-1 RB2I1-AC1: NestedCard renders a section with no border box, no bg- fill, no radius and no absolutely positioned bar, and PanelGrid draws the hairlines. Round-1 TO RV-p-1 RB1P-AC1 arm (f): NestedCard, like SectionCard and DarkCard, renders the white surface and the hairline border.",
-      "world_is": "Both assertions cannot hold on the same NestedCard. RV-i-1 was executed as written, so the round-1 arm (f) now fails by design. The worker left the round-1 test unchanged and did not weaken the RV-i-1 criterion."
-    }
+    "spec_asserts": "TO RV-r-3 RB1R3-AC1: every --rb- name used in the two files is one of the five names defined in src/index.css :root.",
+    "world_is": "The defined set is seven names. The test reads the defined set from the CSS text and checks that every used name is in it; the used set is the five named in the criterion, so the verdict is the same under either reading."
+  },
+  {
+    "id": "DSGN_RBNDV2-W9-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~9",
+    "surfaced_at": "2026-10-15T08:35:21Z",
+    "one_line": "The RV-i-1 section contract turns the round-1 test RB1P-AC1 arm (f) red: that arm requires NestedCard to render the box surface and hairline it now removes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- rule whether RB1P-AC1 arm (f) is amended to the section contract (a round-2 criterion amendment) or the round-1 test is kept; until then the portal panels test run on this branch stays red at that arm. The worker did not edit the round-1 test.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/ui/components/panels/__tests__/dsgn-rbndv2/rb-1-p.panel.test.tsx lines 122-135 (arm f: NestedCard root must carry bg-[hsl(var(--bg-surface))] and border-[hsl(var(--hairline))]) at branch HEAD febd743a plus the RV-i-1 commit",
+        "bun test run of rb-1-p.panel.test.tsx after the RV-i-1 change: 0 pass, 1 fail; Expected to contain bg-[hsl(var(--bg-surface))]; Received [ py-4, px-4 ]",
+        "portal/src/ui/components/panels/NestedCard.tsx at the RV-i-1 commit: cn('py-4 px-4', className), no bg- class, no border class, no absolute bar",
+        "bun test run of rb-2-i1.sections.test.tsx: VERDICT: SECTIONS-OK, 27 expect() calls, 1 pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-i-1 RB2I1-AC1: NestedCard renders a section with no border box, no bg- fill, no radius and no absolutely positioned bar, and PanelGrid draws the hairlines. Round-1 TO RV-p-1 RB1P-AC1 arm (f): NestedCard, like SectionCard and DarkCard, renders the white surface and the hairline border.",
+    "world_is": "Both assertions cannot hold on the same NestedCard. RV-i-1 was executed as written, so the round-1 arm (f) now fails by design. The worker left the round-1 test unchanged and did not weaken the RV-i-1 criterion."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T08:32:09Z",
+    "one_line": "The pre-commit checks passed a portal .tsx commit with 0 of 3 files checked: the risk reflex scanned 0 of 3 with a STALE danger map, and commit-gate reads only .py/.sh/.tf/org/projects JSON.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- route to the commit-gate and risk-reflex owner; no worker can disarm it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output of commit 1b157a12 in the portal worktree (branch wk-DSGN_RBNDV2-8-portal): comp-pulse WARN, the portal toplevel carries no .tools/comp-pulse, so the baked path C:/Users/AndrewBerman/Desktop/ajb_workspace/.tools/comp-pulse ran; danger map 194.9h old, ANSWER STATE PARTIAL_OR_BLIND, scanned 0 of 3",
+        "safe-commit output of commit 1b157a12: [commit-gate] WARN checked 0 of 3 file(s); the gate reads only .py / .sh / .tf / org/projects/*.json",
+        "the worker ran the checks itself before the commit: bun test on rb-2-m1.frame.test.tsx (1 pass) and bun x tsc --noEmit -p tsconfig.app.json (rc=0, 0 error TS lines) in the portal worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 14 of CLAUDE.md: every .py edit passes .tools/commit-gate.sh; rule 14a: commit via .tools/safe-commit.sh. The TO RV-m-1 names no frontend pre-commit check.",
+    "world_is": "safe-commit ran for a portal .tsx-only commit, and the commit-gate and risk reflex both checked none of its three files and printed that as WARN, not as a failure. Every frontend commit on the portal worktree passes this path unchecked by the pre-commit gates."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T08:32:09Z",
+    "one_line": "The order says the portal feature branch is at adc70061; the worktree HEAD is febd743a, three commits later, carrying the RV-r-3 merge and its token-format fix (919f5cc3).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal rev-parse --short HEAD at the worktree start: febd743a (wk-DSGN_RBNDV2-8-portal); git merge-base --is-ancestor adc70061 HEAD: ancestor",
+        "git -C portal log --oneline adc70061..HEAD before the RV-m-1 commit: 919f5cc3 fix(DSGN_RBNDV2 RV-r-3) and febd743a drain(DSGN_RBNDV2.TO-RV-r-3)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-1 Environment: the portal worktree is branched from feature/dsgn-rbndv2-light at adc70061 (the difference-control base).",
+    "world_is": "adc70061 is an ancestor of the worktree HEAD febd743a, which adds the round-1 RV-r-3 sidebar token fix and its drain. The round-1 state the order describes is present; the base named in the order is not the HEAD. The RV-m-1 commit 1b157a12 sits on febd743a."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T08:55:14Z",
+    "one_line": "RB2M2-AC2 cannot pass as written by a correct adoption: each of the four TradeSubmission modals loses three onClick tokens (5 at adc70061, 2 now) because the overlay, the card stopPropagation and the header X handlers are the chrome ModalFrame replaces.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal show adc70061:src/pages/TradeSubmission/components/RejectModal.tsx: onClick count 5; the working tree (commit 1b157a12 plus the adoption edits): onClick count 2; useState 3 and 3",
+        "rb-2-m2.bound.test.ts run in the portal worktree: RB2M2-AC2 TradeDetailsModal.tsx onClick base 5 now 2, expect(after).toBeGreaterThanOrEqual(before) received 2, expected >= 5; test not weakened"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-2 RB2M2-AC2: for each ADOPTED file, the file still contains every useState, useEffect, onClick and onSubmit token count it had at the base (a count may not fall); insertions plus deletions at most 160 lines.",
+    "world_is": "The line bound holds (73, 82, 84, 96 changed lines against 160). useState, useEffect and onSubmit hold at base. onClick falls by three in each file, the three chrome handlers that ModalFrame now owns (scrim click, surface, Close control); the behaviour they carried is reproduced by the frame's onClose. The count bound cannot be met by an adoption that removes the chrome. The arm is not weakened; AC2 is recorded FAIL and the order stays open pending the issuer's ruling on the proxy."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S4",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T08:55:14Z",
+    "one_line": "The order's base form git show adc70061:portal/<file> run from the workspace root fails: adc70061 is not an object in the workspace repository; it is a commit of the portal repository.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file -t adc70061 run in /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-8 returns fatal: Not a valid object name adc70061",
+        "git -C portal cat-file -t adc70061 returns commit; cd portal && git show adc70061:src/pages/TradeSubmission/components/RejectModal.tsx prints the base file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-2 RB2M2-AC1 invocation text: the base text is read with git show adc70061:portal/<file> from /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-8.",
+    "world_is": "The form from the workspace root produces no base text. The tests read the same commit from the portal root with git show adc70061:src/... (the same bytes, the portal prefix dropped). No criterion was weakened by the path change."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S5",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T08:55:14Z",
+    "one_line": "ModalFrame has no disabled state for its Close control, so the three action modals guard onClose while a submission is in flight; a backdrop click during submission no longer closes, where it did at base.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RejectModal.tsx, ExecuteModal.tsx and ApproveModal.tsx at adc70061: the header X button carries disabled={isSubmitting}; the overlay onClick called onClose with no guard",
+        "portal/src/ui/components/modal/ModalFrame.tsx at 1b157a12: the Close button has no disabled prop; the scrim calls onClose when closeOnBackdrop is not false; Escape calls onClose"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-2 worker face: ALL state, effects, handlers, props and behaviour of the modal stay exactly as they are.",
+    "world_is": "requestClose wraps onClose in the three action modals and does nothing while isSubmitting, so the X and Escape cannot close an in-flight submission, as the disabled X did. A backdrop click during submission is now also ignored, which differs from base. Escape and focus return are new to these modals because the frame provides them; the frame's API has no prop to disable the Close control."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S6",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T09:27:19Z",
+    "one_line": "ModalFrame's focus-on-open effect runs after React's autoFocus, so the autoFocus search and weight inputs of SecurityLookupModal and BulkEditModal likely lose focus to the dialog surface on open.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- ModalFrame's focus effect should skip the focus call when focus is already inside the surface; route to the owner of the RV-m-1 frame.",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "portal/src/ui/components/modal/ModalFrame.tsx at 1b157a12: the focus effect is a useEffect that calls surfaceRef.current.focus() on open",
+        "portal/src/pages/PortfolioManagement/components/SecurityLookupModal.tsx and BulkEditModal.tsx at 8c65d1c9 (the adoption commit, portal branch wk-DSGN_RBNDV2-8-portal): the input carries autoFocus; React applies autoFocus during commit, before passive effects; not walked in a browser (no server, per the order)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-3 worker face: ALL state, effects, handlers, props and behaviour of each adopted modal stay exactly as they are.",
+    "world_is": "The adopted modals keep their autoFocus attributes unchanged. By the order of React's commit and effect phases, the frame's focus effect moves focus from the input to the surface on open, so the autofocus behaviour of the two inputs is likely lost. Not walked in a live DOM; the fix is in the frame, outside this order's grant, and the adopted files were not changed to work around it."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S7",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T09:27:19Z",
+    "one_line": "ModalFrame adds a Close control and Escape-to-close to modals that had neither: UploadConfirmationModal and the ExportModal success view got a new close control, and Escape now closes ExportModal while a submission is in flight (its X and backdrop could already do so).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show adc70061:portal/src/pages/PortfolioManagement/components/UploadConfirmationModal.tsx: no close button in the header; the backdrop calls onClose",
+        "git show adc70061:portal/src/pages/PortfolioManagement/components/ExportModal.tsx: the success header has no close button; the form X and backdrop are unguarded (no disabled); Cancel is disabled while submitting"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-3 worker face: ALL state, effects, handlers, props and behaviour of each adopted modal stay exactly as they are.",
+    "world_is": "These two gains come from the frame's shared chrome, not from the adopted files. UploadPortfolioModal's header X was disabled while uploading; the frame's Close control cannot be disabled, so the handler guard (handleClose) carries that rule, as recorded in DSGN_RBNDV2-W8-S5."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S8",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T09:47:29Z",
+    "one_line": "portal/src/components/market-performance/ExecutiveSummary.tsx carries its own modal overlay in DrilldownModal (function at line 731, fixed inset-0 overlay at line 772); the file is not on the RV-m-4 list, so it is not adopted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/market-performance/ExecutiveSummary.tsx at the portal commit dc5cf484: line 731 function DrilldownModal, line 772 className fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm",
+        "the sweep of portal/src/components/market-performance (native Grep for fixed inset-0, role=dialog, aria-modal, aria-labelledby, catalyst/dialog) returns this line as the only overlay outside the five listed modals"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-4 worker face: the market-performance modals on the list adopt ModalFrame; ExecutiveSummary.tsx is NOT on the list; look in the directory for any other overlay and name it in a surprise row (a wall, not to be edited).",
+    "world_is": "DrilldownModal in ExecutiveSummary.tsx still draws its own overlay and card. It is a modal the directory holds and the list does not name, so it remains the un-adopted modal of the directory until the issuer decides its cell."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S9",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T09:47:29Z",
+    "one_line": "RSIModal and FearGreedModal keep a literal dark content ground (bg-[hsl(221,28%,25%)]), which the frame's token remap does not reach; inside data-panel-surface the text-white idioms resolve to navy ink, so the labels on that ground are likely navy on dark navy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- the content ground of these two modals needs a token or a light ground; the issuer decides which, since the order keeps chart colours (C6) and changes only chrome.",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "portal/src/components/market-performance/RSIModal.tsx line 1003 and FearGreedModal.tsx line 696 at dc5cf484: <div className=\"flex-1 overflow-y-auto bg-[hsl(221,28%,25%)]\"> (a literal, not a --bg token)",
+        "portal/src/index.css lines 546-555 (round-1 scoped rule): [data-panel-surface=\"light\"] .text-white and [class*=\"text-white/\"] set color to var(--rb-ink) #0A1733; the ground's text classes (text-white/70 and similar) fall under that rule"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-4 worker face: the frame's data-panel-surface turns the old dark grounds white and silver by token; a modal body written for a dark ground reads on the white surface; C6 keeps chart colours.",
+    "world_is": "The literal navy ground is not a token, so the frame does not turn it white. The scoped rule turns the labels' text-white idioms to navy ink, so the labels on that ground are likely navy on dark navy. Not walked in a browser (no server, per the order); the judgment criterion RB2M4-AC3 is the check and it is the COO's."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S10",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T10:07:55Z",
+    "one_line": "ModelPortfolioModal's navy HeroDialog (the 2026-09-14 design) is replaced by the A-light ModalFrame in this file only; HeroDialog still serves SatelliteModal, EtfModal and the page modals, so the modal family now carries two designs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show adc70061:portal/src/components/ModelPortfolioModal.tsx: the render returns HeroDialog with eyebrow, icon, title, subtitle, meta and footer (the navy hero) and the file header states the 2026-09-14 design",
+        "portal/src/components/ModelPortfolioModal.tsx at ec15d42a: the render returns ModalFrame (title Model Portfolio, the target and code in the first body row, footer DialogStamp); the HeroDialog import is removed",
+        "native Grep for HeroDialog over portal/src lists 27 files, including components/SatelliteModal.tsx and components/EtfModal.tsx"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-5 worker face: each listed modal adopts ModalFrame and keeps its state, effects, handlers, props and behaviour; the cell's FWD-3 intent is one shared modal frame.",
+    "world_is": "The adoption replaces the hero of this one modal. Its content (target, code, the ruled six fields, Key Notes, the data-as-of stamp) is kept; the eyebrow icon and the navy hero band are no longer drawn. The other HeroDialog modals are untouched, so the family differs. The issuer decides whether the hero is kept for this modal."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S11",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T10:07:55Z",
+    "one_line": "SessionTimeoutWarning hides the frame's Close control with an arbitrary-variant class on the surface; the rule is checked as class text only (not walked), and if the variant does not emit, a dead X would show on a dialog that has no X by design.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- confirm in the live walk that the session warning shows no X; if it does, the frame needs a showClose option (the API is frozen by RV-m-1, so the issuer decides).",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "portal/src/components/SessionTimeoutWarning.tsx at ec15d42a: className=\"[&_button[aria-label=Close]]:hidden\" on ModalFrame (the className goes to the surface)",
+        "portal/package.json: tailwindcss ^4.2.1 (arbitrary variants are supported); the emitted CSS was not inspected and the page was not walked (no server, per the order)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-5 worker face: SessionTimeoutWarning keeps its behaviour (static backdrop, no X: the user must actively choose to continue).",
+    "world_is": "The Close control is hidden by a selector on the surface, which keeps the no-X behaviour if the variant emits as written. Onclose is a no-op, so even a visible Close control would not end the session. The walk decides."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S12",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T10:07:55Z",
+    "one_line": "SmallAccountsByRoleModal keeps its own window keydown Escape effect, and the frame adds a document Escape handler, so one Escape press calls onClose twice.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show adc70061:portal/src/pages/AdvisorIntelligence/_shared/SmallAccountsByRoleModal.tsx lines 21-27: useEffect adds a window keydown listener that calls onClose on Escape",
+        "portal/src/ui/components/modal/ModalFrame.tsx: the Escape effect adds a document keydown listener that calls onClose on Escape"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-5 worker face: every effect of the adopted modal stays exactly as it is.",
+    "world_is": "The effect is kept as written. The frame's Escape adds a second onClose call per press. The onClose handler of the page is idempotent in practice (it closes a modal), so the double call is inert; the issuer may remove one listener."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S13",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T10:07:55Z",
+    "one_line": "Other overlays in the files' directories, not on the list and not adopted: components/SatelliteModal.tsx and components/EtfModal.tsx (HeroDialog modals) and components/LoadingSpinner.tsx line 57 (a full-page fixed inset-0 loader, not a modal).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "native Grep of portal/src/components for HeroDialog lists SatelliteModal.tsx and EtfModal.tsx",
+        "native Grep of portal/src/components for fixed inset-0 at portal/src/components/LoadingSpinner.tsx line 57: className fixed inset-0 bg-[hsl(var(--bg-page))] with Z_INDEX.overlay (a loader, with no dialog role)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-5 worker face: look in the files' own directories for any other overlay and name it in a surprise row, a wall you may not edit.",
+    "world_is": "SatelliteModal.tsx and EtfModal.tsx are modals on HeroDialog and are not on the RV-m-5 list; LoadingSpinner.tsx draws a full-page loader, which is not a modal. None is edited."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S14",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T10:23:36Z",
+    "one_line": "The App.tsx account-menu popup items keep hover:bg-white/10, and the round-1 light-scope remap excludes hover-variant classes, so on the white popup surface the hover tint is white on white and shows nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "portal/src/App.tsx at ec15d42a: the popup buttons carry hover:bg-white/10 and hover:text-white",
+        "portal/src/index.css lines 546-555 (round-1 scoped rule): the bg-white/ remap excludes classes containing :bg-white/ (a hover variant), so the hover fill is not remapped to a visible tint"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-6 worker face: App.tsx is changed only for the account-menu popup surface, which takes the A-light look; the popup's own classes are not changed.",
+    "world_is": "The surface is the A-light panel and the item text reads navy. The item hover fill (white at 10 percent) does not show on the white surface. Not walked in a browser (no server, per the order); the issuer decides whether the hover needs a light tint token."
+  },
+  {
+    "id": "DSGN_RBNDV2-W8-S15",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+    "surfaced_at": "2026-10-15T10:23:36Z",
+    "one_line": "ExportModal and SatelliteModal pass a width class (sm:max-w-[75rem]! and max-w-[56rem]) that must win over the frame's size class through the class merge; the merge is checked by reading the class string only, not by a rendered width.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/export/ExportModal.tsx: EXPORT_MODAL_PANEL_CLASS = 'sm:max-w-[75rem]!' passed as className to ModalFrame (size xl)",
+        "portal/src/components/SatelliteModal.tsx at ec15d42a: className max-w-[56rem] when there is no sheet, over the size xl max-w-[64rem]"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-m-6 worker face: each adopted modal keeps its width (the export panel 75rem; the satellite sheet without a factsheet 56rem).",
+    "world_is": "The frame's cn() merge keeps the className's important sm:max-w and the later max-w, so the intended widths should hold. Not walked: no server, no browser, no rendered width measured."
+  }
 ]
 ```
