@@ -18082,3 +18082,160 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Worker row: the disposition of IRPT_DASHBD-D2-W219-S1 from ARMED BLOCKING to resolved is for the CVO to make (a worker row cannot carry GRADUATED or adjudicates, gate A-1). S1 is not edited; this row is its resolution in the record."
 }
 ```
+
+## IRPT_DASHBD-D2-W220-S1 -- the mandated day re-read of the returns partition adds one GET, so one earlier count assertion moves from 2 to 3; the rest of the earlier tests are unchanged
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W220-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~220",
+  "surfaced_at": "2026-10-15T19:29:41Z",
+  "one_line": "The mandated day re-read of the built day's own returns partition (frv.read_partition) adds one GET, so the earlier test asserting exactly two returns GETs reads 3; that one assertion is moved to 3 with a comment, every other earlier test is unchanged, and 42 tests pass (33 earlier, 9 new)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q infra/aws/lambda/investor-reporting/reporting-gold-cot/tests at deaac76f02 (the base, before any edit): 33 passed",
+      "handler.py at deaac76f02 plus the worker's uncommitted read: test_the_returns_partition_before_the_floor_is_never_listed_or_opened fails with assert 3 == 2; 32 passed, 1 failed",
+      "tests/test_reporting_gold_cot.py: the GET count of that test reads len(gets) == 3 with a comment naming the built day's re-read; the rest of the test is unchanged"
+    ]
+  },
+  "spec_asserts": "DB-b-271 step 2 reads the built day's own returns partition through frv.read_partition(reader, ad, frv.RET, day, [account_id]), and the order says every earlier test stays and still passes (the handler's earlier tests included).",
+  "world_is": "The named read is one more GET of the same returns partition, so the earlier exact-count assertion (two GETs on returns data.parquet, both in the floor window) reads three. The property the test names (no returns read before the floor) holds unchanged. Counts only.",
+  "notes": "Worker row: the resolution is the one-line count change in the earlier test, made so the named read and the earlier test can both stand; the CVO and the CTO read this row to accept or refuse that edit. No other earlier assertion moved."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S1 -- The spec writes a None holdings_price_return_reason beside a null holdings_price_return; the contract says that reason column is WHY the return is null
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "Rule 6 of DB-i-10 writes holdings_price_return None and holdings_price_return_reason None on every Orion row, but contract 0.4.0 says holdings_price_return_reason is WHY holdings_price_return is null (enum NO_HOLDINGS_ROW, HOLDINGS_NOT_OK); the validator does not catch a null return with no reason, so the adapter writes the spec's None as written and a later served run would carry an unlabelled null",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@13b4cd4c68 holdings_price_return_reason meaning: why holdings_price_return is null; null when it is present; enum NO_HOLDINGS_ROW, HOLDINGS_NOT_OK",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule 6: holdings_price_return None and holdings_price_return_reason None",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_040.py@13b4cd4c68 row_problems tests no condition on a reason beside a null holdings return"
+    ]
+  },
+  "spec_asserts": "Rule 6 of DB-i-10 writes holdings_price_return None and holdings_price_return_reason None; the contract's holdings_price_return_reason meaning says it carries the reason a holdings return is null.",
+  "world_is": "The module writes the spec's None as written (no reason class is invented, per the refusal clause). Every synthetic row passes the contract validator with that None. Counts only: 0 rows refused, 0 reason values written. Not measured on the real feed (a later cell)."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S2 -- The rules do not say what a repeated (account, day) feed row means
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "The rules key each account's feed row by its calendar day but do not say what a repeated (account, day) silver row means; the module reads the LAST one given, silently, and its adapt() docstring says so",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 feed description: one row per account per CALENDAR day",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py adapt() docstring, uncommitted worktree file (last row wins)"
+    ]
+  },
+  "spec_asserts": "The feed lands one row per account per CALENDAR day, and rules 2 to 5 read the account's own row on each day.",
+  "world_is": "A repeated (account, day) silver row would be resolved by input order, with no refusal and no count. Not measured: the adapter reads no feed, and the synthetic tests contain no repeat. Counts only."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S3 -- With no feed rows the rules have no min_day or max_day, so the output domain is undefined
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "The rules define min_day and max_day over the feed rows and say nothing for an empty feed; the module returns an empty result with zero counts, and test_empty_feed_returns_an_empty_result pins that choice",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule intro: min_day and max_day are the smallest and largest day in feed_rows",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_adapter.py@13b4cd4c68 is not yet committed; the empty case is its test_empty_feed_returns_an_empty_result"
+    ]
+  },
+  "spec_asserts": "Let min_day and max_day be the smallest and largest day in feed_rows; the output domain is the trading days between them.",
+  "world_is": "An empty feed has no domain, so the module writes no row and no absent record and reports zero counts. Counts only: 0 rows, 0 absent records for an empty input. The rules do not state this case."
+}
+```
+
+## IRPT_DASHBD-D2-W310-S4 -- accounts_mapped counts feed accounts only; the rules do not say whether a map entry with no feed account counts
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W310-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~310",
+  "surfaced_at": "2026-10-15T19:35:15Z",
+  "one_line": "Rule 8 defines accounts_mapped and accounts_unmapped without saying whether an account_map key with no feed account is counted; the module counts feed accounts only, so such a key appears in neither count and writes no row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-10.inflection-scope-feed-adapter-to-account-return-daily-040.md@13b4cd4c68 rule 8: the manifest counts accounts_in_feed, accounts_mapped, accounts_unmapped",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py manifest block, uncommitted worktree file (counts over by_account keys)"
+    ]
+  },
+  "spec_asserts": "The manifest carries accounts_in_feed, accounts_mapped and accounts_unmapped; an account is MAPPED when its key is present in account_map.",
+  "world_is": "A map entry with no feed rows is in neither manifest count and writes no row or absent record. The synthetic map has no such entry, so the counts are 6 in feed, 5 mapped, 1 unmapped. Counts only."
+}
+```
+
+## IRPT_DASHBD-D2-S93 -- disarm of W310-S1: a None holdings reason beside a null return is valid under contract 0.4.0 and no reason class is invented
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S93",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T19:47:07Z",
+  "one_line": "Disarm of W310-S1 (ruled by its disarm owner): the Orion adapter rows carry holdings_price_return None and holdings_price_return_reason None; that is valid under contract 0.4.0 (the reason column is nullable and its enum holds only NO_HOLDINGS_ROW and HOLDINGS_NOT_OK, neither true for a vendor-reported return the holdings guard never saw), so no reason class is invented. A consumer tells a guard-less number by source = orion and guard_state = GUARD_NOT_REACHED, which the adapter writes on every row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "W310-S1: rule 6 writes holdings_price_return_reason None beside a null holdings_price_return, though the contract calls that column the reason the return is null.",
+  "world_is": "The contract file marks holdings_price_return_reason nullable and the validator accepts the row; all 17 golden rows carry source orion, flow_claim absent and guard_state GUARD_NOT_REACHED. Whether a third enum member is wanted for a vendor return is the contract owner's and the CVO's call at L9 and is carried in the round-123 packet; nothing is served from this table yet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W310-S1",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_scope_feed_adapter.py"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-W310-S1: the condition (an unlabelled null) is not a defect under contract 0.4.0, whose reason column is nullable and whose enum has no member true for a vendor return; every adapter row carries source orion and guard_state GUARD_NOT_REACHED, measured by the 17 golden rows the checker grades."
+}
+```

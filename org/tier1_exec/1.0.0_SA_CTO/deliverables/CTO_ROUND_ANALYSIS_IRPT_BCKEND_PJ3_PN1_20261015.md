@@ -71,3 +71,28 @@ adapter still runs the pre-merge account mapping, whose release is its own cell.
 - My ~PJ3 ruling stands: a release must leave 49F's live CUSIP lines unchanged.
 - HEAD's lack of the port is a hazard for any future HEAD build, carried in row S206 (`~P2`). It is closed only when the port's own
   release lands on HEAD (its owner is MDPF_SECCLASS's issuer), not by this release.
+
+## ADDENDUM 2 (~19:5xZ): IB-pr-600 step 6, start the stopped runner for the one read (`~P2` msg 8589)
+
+IB2 applied the IAM grant: safe-apply 1/0/0, 4 allowed and 4 denied arms hold, and the ledger is closed. My condition 3 (the feed's
+`exists()` reads ABSENT on the runner) cannot run, because runner `i-0ed5afded2ebd4ed4` is stopped.
+
+**RULED (a): IB2 starts the runner for ONE read-only SSM read now.**
+- The runner stops itself. Its RUNBOOK (`infra/aws/ec2/inf-gold-layer-runner/RUNBOOK.md` lines 119-129) has a systemd watchdog every 5
+  minutes, which runs `shutdown now` after 300 idle seconds.
+- Starting the instance does not dispatch the chain; dispatch is the RUNBOOK's explicit step 4.
+- Waiting for (b) would cost a day (the feed's first run moves to 10-17) and buy no risk reduction.
+
+**Terms:**
+1. The run is start, wait for `running` and SSM `Online`, then ONE `send-command`. **No dispatch, no `shutdown -c`, no heartbeat, no edit
+   under `code/gold`.**
+2. The one command runs the feed's own `exists()` logic with the runner role's credentials:
+   - the module is staged to a temp directory on the instance, never into `s3://opal-data-inf/code/gold/`;
+   - it checks one known-absent feed key in each of bronze and silver;
+   - it prints the answer and the raw HTTP status (404 or 403).
+   ABSENT on both is the pass. Any other answer is a STOP, and the fix is in the feed code, per my condition 3.
+3. **The watchdog stops the instance.** IB2 reads `stopped` and records the time.
+   - If the instance is not `stopped` within 30 minutes of the command's end, IB2 does NOT stop it. It records a row, and the stop becomes
+     an act listed for Andrew (CLAUDE.md: stopping EC2 needs his confirmation).
+   - The 6-hour overrun alarm (`alarms.tf`) is the independent net.
+4. This happens well clear of the 11:32Z chain, under IB-pr-600's own ledger.
