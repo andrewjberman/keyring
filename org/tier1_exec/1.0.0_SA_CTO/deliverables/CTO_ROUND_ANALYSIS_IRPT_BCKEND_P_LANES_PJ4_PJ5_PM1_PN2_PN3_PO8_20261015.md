@@ -67,3 +67,17 @@ builder mints nodes only from custody and counts SmartX-only accounts without em
    - The exemption pair (signed) ships first, as it stands. Cottonwood's 4 accounts do not wait on this.
    - ADDENDUM 1 follows as its own candidate digest and pair, and IB-pr-604's order is re-cut as that build.
    - 49F stays served at 10-12 until the amended rule clears it on real data. That is a measured staleness, stated, not a fill.
+
+## ADDENDUM 1 erratum and ADDENDUM 2 (~21:1xZ): SmartX never blocked the exemption; 49F publishing does not wait on the addendum (`~P2` msg 8651)
+
+**Erratum, mine.** ADDENDUM 1 assumed that the SmartX row was what withheld the exemption. `~P2`'s read of `holdings_snapshot.py`
+(`absent_at_source_exempt`) shows the exemption never consults SmartX: it already exempts an account absent from BOTH custody tables on
+two consecutive days. So the ONLY thing withholding 49F's account is the two-day threshold, which I kept on purpose. The exemption
+"addendum" therefore adds only an evidence key (`smartx_map_present`), not a rule change.
+
+**RULED: 49F publishing does NOT wait for the addendum pair.**
+- The signed exemption pair (@a937b9931c) already covers 49F's branch (ii): the gate publishes and adds exactly one amount-0 node,
+  listed, on the first business day after its apply where custody still lacks the account in both tables.
+- The addendum is an evidence record that ships after, under its own candidate digest and pair.
+- **Its apply leaves the served node unchanged** apart from the manifest's evidence key. The addendum's Branch A reads that the node set is
+  unchanged.

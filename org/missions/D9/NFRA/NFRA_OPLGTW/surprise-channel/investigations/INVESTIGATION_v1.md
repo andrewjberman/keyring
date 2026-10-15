@@ -17973,3 +17973,274 @@ name the one known failure instead of silently inheriting it.
   "notes": "Measured, not dispositioned. The order text and the gate disagree on the name; the issuer decides whether the order's name or the gate's convention stands. The instance content is unchanged apart from the surprise list."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The contract's Cottonwood bullets name the _s2 twins as read sources, but each _s2 table holds the 5-row xlsx report header (c1 label, c2 value), not account rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G2_assets_silver.md blackdiamond/cottonwood/silver/*_s2 contract blocks (columns c1, c2) @2a78786dda",
+      "READ DATA_CATALOG.yaml silver_datasets *_s2 entries: grain is the report-header line @ 2026-10-15 live runtime_catalog",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_CLIENT_TOOLS_CONTRACT.md Cottonwood bullets read blackdiamond/cottonwood/silver/fact_holdings/ and fact_holdings_s2/ (and the transactions and allocations twins) as the daily snapshot.",
+  "world_is": "The census column blocks for every _s2 table list only c1, c2 and the _source fields, with rows_newest 5. The adapter reads the data tables only; no _s2 key appears in source_keys.",
+  "notes": "Form only. The twins are not positions; a snapshot reader that summed them would read header text."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The model join finds no roster row for one strategy name that carries 514 of the 998 live assignment rows; the adapter answers those accounts with absent_reason model_not_in_roster.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN .scratch/join_count.py (count-only, no values printed) in worktree 106",
+      "READ G2_assets_silver.md fact_model_assignment proposed_tools block @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_assets_silver.md fact_model_assignment proposed tool: the strategy's target weights join from fact_model_definition and fact_model_blend. The join key is not stated.",
+  "world_is": "Count-only read of the newest partitions (2026-10-15): assignment 998 rows and 56 distinct strategy_name; roster 73 rows and 73 distinct model_name. 55 of 56 strategy names equal a roster model_name; 484 of 998 assignment rows resolve; the 514 rows of the remaining name have no roster or definition row.",
+  "notes": "The adapter joins strategy_name = roster model_name (inferred from column names) and states the join basis in the body. No remedy proposed; a rule on whether the 514-row strategy is a roster omission is the CRO's or the CTO's."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "fact_model_assignment does not join to the z09 account id; the adapter joins it on the custodian Account Number, and 6 assignment and 5 allocation numbers carry a mask that does not join.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN an inline count-only join of assignment account_number to allocation Account Number on the newest partitions in worktree 106 (no values printed); the masked counts came from the same inline run",
+      "READ G2_assets_silver.md fact_model_assignment columns block @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_assets_silver.md describes fact_model_assignment.account_id as the BD rebalancer account id (8 digits, example z08...), and the catalog says last-4 derives from account_number.",
+  "world_is": "Live newest assignment partition: account_id is 8 characters with neither a z08 nor a z09 prefix (998 of 998). account_number matches the allocation custodian numbers exactly on 861 distinct values. 6 of 998 assignment values and 5 of 1,520 allocation values carry an asterisk mask.",
+  "notes": "Masked values do not join, so those accounts answer no_model_assignment rather than matching on a mask. A reader must not rejoin on account_id."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The adapter raises or returns refusal codes that the contract does not name, and the protocol carries no channel for an absent_reason on an answered body.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_ADAPTER_PROTOCOL.md A1 section (uncommitted copy) in worktree 106",
+      "READ infra/aws/ec2/opal-gateway/app/client_adapter_bdcottonwood.py (uncommitted) refusal sites",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_CLIENT_TOOLS_CONTRACT.md names the refusal codes per tool; G2_ADAPTER_PROTOCOL.md defines AdapterRefusal raises and the underscore keys, with no absent_reason key.",
+  "world_is": "The adapter raises account_not_in_partition, no_partition_at_or_before_as_of, window_required, fence_firm_mismatch and model_not_in_roster, which the contract does not name. It returns absent_reason as a body key (null, no_model_assignment or model_not_in_roster). no_model_assignment is named by AC4 but not by the contract. firm_not_served is the A1 rule 3 code.",
+  "notes": "The core (OG-cl-1) must lift body absent_reason into the envelope. A ruling on the code names is the issuer's."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "For Cottonwood transactions the contract gives no behaviour for a requested window that starts before the newest partition's earliest trade date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_CLIENT_TOOLS_CONTRACT.md decision 3 and the Cottonwood transactions bullet @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract decision 3: Cottonwood transactions are a rolling window read from the newest partition, deduplicated on TransactionID.",
+  "world_is": "The adapter answers from the newest partition and reports partition_dates and window_starts_before_partition. A true absence and a window gap read the same as an empty list unless the caller reads that flag.",
+  "notes": "The flag is carried in the body; the envelope has no field for it."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The census tool spec and the contract disagree on the Cottonwood fee rows: the census adds an Account Fee column, the contract names Management Fee rows only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_assets_silver.md blackdiamond_list_fees (extend) block @2a78786dda",
+      "READ G2_CLIENT_TOOLS_CONTRACT.md client_get_fees Cottonwood bullet",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_assets_silver.md blackdiamond_list_fees (extend) returns Transaction Type = Management Fee rows + Account Fee. G2_CLIENT_TOOLS_CONTRACT.md Cottonwood fee bullet: Management Fee rows of fact_transactions.",
+  "world_is": "The adapter returns Transaction Type = Management Fee rows only, follows the contract, and does not add the Account Fee column.",
+  "notes": "A ruling on whether Account Fee joins the fee total is the issuer's."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "fact_holdings carries no Custodian column, so the holdings platform label is derived from fact_allocations for the same account.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_assets_silver.md fact_holdings columns block @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_CLIENT_TOOLS_CONTRACT.md envelope: platform_label is the source's own label per answer, with platform_label_source and label_claim. The Cottonwood holdings bullet names no label column.",
+  "world_is": "The census columns for fact_holdings have no Custodian. The adapter takes the label from fact_allocations for the same account and sets label_claim to inferred.",
+  "notes": "Holdings labels are inferred, never measured per row."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "Holdings carry duplicate (AccountID, AssetID) rows; the adapter sums them per asset as the census instructs, and the cause of the duplicates is not traced.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ G2_assets_silver.md fact_holdings open_items @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_assets_silver.md fact_holdings open items: 102 duplicate (AccountID, AssetID) rows on 2026-10-13; a tool must sum per key, not dedupe blindly (cause not traced).",
+  "world_is": "The adapter sums Units and Market Value per AssetID within one account, falling back to CUSIP then Symbol, and returns one position per asset.",
+  "notes": "The cause is not traced in this cell."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The status flip of this task order to complete is outside this cell's write grant: the task order file is not in <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN cl4.AC1.sh and cl4.AC2.sh from worktree 106: RESULT PASS, RESULT PASS",
+      "READ task-order section 3 <paths> in worktree 106",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_OPLGTW.TO-OG-cl-4 section 5: flip the one <status> tag to complete when both criteria pass. Section 3 <paths> is the write grant.",
+  "world_is": "AC1 and AC2 both pass by output. The task order file NFRA_OPLGTW.TO-OG-cl-4.client-bd-cottonwood.md is not in this cell's <paths>, so the flip is not made in this worktree.",
+  "notes": "The issuer owns the flip. The proof instance is validated and committed on its own."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:01:30Z",
+  "one_line": "The live newest partitions are newer than the census figures the contract cites.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN probe partition listing (boto3 list_objects_v2, Delimiter /) in worktree 106, date only",
+      "READ G2_CLIENT_TOOLS_CONTRACT.md freshness figures @2a78786dda",
+      "worktree C:/tmp/wk-oplgtw-106 HEAD b56fd6ef9d (uncommitted adapter and tests)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_CLIENT_TOOLS_CONTRACT.md freshness: fact_holdings and fact_allocations newest 2026-10-13 at 0 td; fact_transactions newest 2026-10-14.",
+  "world_is": "Live listing at 2026-10-15T19:0xZ: fact_holdings and fact_allocations newest date=2026-10-14; fact_model_assignment, roster and definition newest date=2026-10-15. The adapter reads the newest partition at or before as_of, and the probe states the live partition.",
+  "notes": "The contract's td figures were measured at census time; they are not re-measured here."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W106-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~106",
+  "surfaced_at": "2026-10-15T19:20:00Z",
+  "one_line": "The commit-time naming gate refuses four firm-name literals in the Cottonwood adapter as hand-kept carriers. The gate is in its warn window, so the commit is not blocked, and the adapter keeps the literals.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ safe-commit output of the OG-cl-4 commit attempt in worktree 106: naming-gate NAMING REFUSE at infra/aws/ec2/opal-gateway/app/client_adapter_bdcottonwood.py lines 31 and 32 (cottonwood, 49financial, inflection), each 'NEW hand-kept carrier (context rule)'",
+      "READ naming-gate line: 4 REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce; LIVE-READ-FAILED served-graph client blocked in this worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 4 and G2_ADAPTER_PROTOCOL.md: no bucket, prefix or key literal in adapter code; the firm set is the contract's fence. The commit-time naming gate refuses names it grades as hand-kept carriers.",
+  "world_is": "The adapter's FIRMS and CANONICAL_FIRMS tuples hold the firm keys as literals, which the naming gate grades as hand-kept carriers. The gate's live read was blocked in this worktree and the verdict is WARN, not ENFORCE. The commit is not blocked.",
+  "notes": "The literals are firm keys, not S3 addresses. Whether they move behind lookup() is the issuer's call at the hookup; this cell keeps them as written so the named tests and the probe stay byte-stable."
+}
+```
