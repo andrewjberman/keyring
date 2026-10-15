@@ -37437,3 +37437,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The routing to the prefix is measured by address() output and list calls, not by the served graph. The served-graph client needs to be reachable before a comp-find aws read can be cited."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W412-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~412",
+  "surfaced_at": "2026-10-15T11:05:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The account-id mint (infra/aws/lambda/investor-reporting/_ids/ids.py) is outside the amended grant: the publisher's identity binding imports it, and it is not on disk in the worker worktree after the data/ sparse add.",
+  "spec_asserts": "Amendment 1 grants the worker the publisher and its tests under data/assets/scripts/gold/investor_reporting, and asks the worker to read the code it names; the publisher imports its opaque_id from the _ids module, which the grant does not name.",
+  "world_is": "holdings_snapshot.py binds opaque_id to _ids/ids.py (infra/aws/lambda/investor-reporting/_ids/ids.py). That file is tracked at HEAD 1713c505c19eab11b44b04141debbecdf958d089 but is outside the sparse grant. The worker read it from the HEAD blob into scratch outside the tree, used only its sha256 mint to test membership of the account in source partitions, and did not widen the sparse checkout further.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py at 1713c505c19eab11b44b04141debbecdf958d089 lines 169 to 176 (the identity binding to _ids.opaque)",
+      "git ls-files at 1713c505c19eab11b44b04141debbecdf958d089 lists infra/aws/lambda/investor-reporting/_ids/ids.py; that path is not in the worktree sparse-checkout list"
+    ]
+  },
+  "notes": "Counts only in the record: the membership test printed booleans and counts, with no account id or account value. The mint needs the registry at data/firm_registry.json, which is on disk at the data root but is not inside the granted folder. A future worker that must recompute an opaque id needs the _ids path granted or a stated reason it is out of scope."
+}
+```
