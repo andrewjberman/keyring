@@ -18534,3 +18534,29 @@
   "notes": "The junction is removed by rmdir, which never recurses into its target. A crashed run would leave a link in .scratch; mutant_check.py removes a leftover link before it builds a new copy."
 }
 ```
+
+## IRPT_ANLREQ-D2-W191-S1 -- the sparse worktree lacks data/transcripts/assets, so one commentary test is red at base
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W191-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~191",
+  "surfaced_at": "2026-10-15T18:35:02Z",
+  "one_line": "The sparse worktree lacks data/transcripts/assets, so test_build_packages_keys_module is red at base before any edit of TO-AR-t-32.",
+  "class": "BLOCKING",
+  "spec_asserts": "TO-AR-t-32 Bounds: keep every existing test_commentary_*.py green; a missing folder in the sparse worktree is a row, never a stub.",
+  "world_is": "At base 169654b4a9 in worktree wk-IRPT_ANLREQ-191 the commentary suite is 66 passed, 1 failed: test_commentary_composition_port.py::test_build_packages_keys_module, because the build.sh cp step cannot stat data/transcripts/assets (tracked at HEAD, absent in this worktree). After the order's change the suite is 68 passed, 1 failed, the same test. Nothing was stubbed or reconstructed.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest data/transcripts/scripts/tests/test_commentary_*.py before the edit: 1 failed, 66 passed; failure line cp: cannot stat '/c/dev/wk-irpt-anlreq-191/data/transcripts/assets'",
+      "ls -d data/transcripts/assets: No such file or directory; git ls-files data/transcripts/assets lists ASSETS.lock.json and README.md at HEAD 169654b4a9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed for the sparse tree. Not caused by the order's change and not in the order's paths. Criterion AR32-t-AC1 is green regardless (R42-LG1-OK, 2 passed)."
+}
+```
