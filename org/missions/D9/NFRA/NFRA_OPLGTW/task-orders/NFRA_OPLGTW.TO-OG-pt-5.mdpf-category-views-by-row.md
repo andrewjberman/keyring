@@ -136,7 +136,7 @@ the issuer to make at the merge.
 - Round 37, workstream G3-CATVIEWS (decomposition addendum R3-T.60). `OG-pt-3` was SUPERSEDED when `NFRA_MCPINDEX` offered a portal-channel row; `~MI` withdrew that offer (msg 34293: a new certified entity is a CVO matter) and the table row route needs no one else. The hookup rides the batch hookup cell with `OG-et-1` and `OG-et-2`.
 - Pre-cut: pt5.AC1 and pt5.AC2 are the superseded pt3 checks re-pointed at the new module test file.
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G3-CATVIEWS</workstream>
 <slot>~92</slot>
