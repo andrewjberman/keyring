@@ -3998,3 +3998,16 @@ Check IB200-4 (`p200_orion.py`, dry-run at the base: AC1 to AC3 all FAIL; thirte
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one document; one worker (slot ~400) starts now.
 
+## 196. ROUND 3, WORKSTREAM ~PS (the filled-report serve path, the export contract and the export scope rule; 2026-10-15 ~06:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-3 analysis (@a4718eab10, msg 8058) and the CVO's L10 slug for round 2 (ADJUDICATION_v102 @6a4b9d068b))
+
+Round 2 of ~PS closed MAY-CLOSE (packet @aefc53ef3a; override 409a7f7ef2 accepted by the CTO). The CTO's two rulings: (1) the packaged ExportBundle contract gains `filled_report` as an allowed source kind for NEW bundles (a MINOR revision step; both arms tested: a new bundle validates and an existing bundle validates unchanged); (2) the export freeze uses the route's ONE named-account reader (`household.accounts` plus the account-keyed `by_row` keys), written once, with its own negative test (a freeze that scopes narrower than the route is a widening). The deploy legs and the first exercise still wait on 49 Financial gold for one date (condition 3 of the CTO half). Two cells, two independent chains by write set (two JSON schema copies and a test; a shared module, entry.py, the export freeze and tests).
+
+Checks `deliverables/2.0.0_SA_COO~P2/checks/r201/p201_cells.py`, dry-run at the base: IB201-1 and IB201-2, AC1 to AC3, all six FAIL; the positive control (`control201.py`, stub files at the real relative paths in temporary git roots with a worker commit) passes all six and fifteen negatives each fail their own arm. The contract cell's difference control serves the BASE schema bytes in memory (JSON is data, not a marker block); the freeze cell's removes the FILLED-REPORT-D blocks.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-557` | the packaged and docs ExportBundle schemas gain `filled_report_source` (byte-equal copies, one minor revision step), tests for both arms | FWD-3 | WORLD (the path floor of an infrastructure path; the work edits repository files only, nothing is deployed) | none | PS3-a |
+| `IB-pr-558` | the export freeze on the shared named-account reader (one module, defined once, imported by the route and the freeze), with its negative test | FWD-3 | WORLD (same) | none | PS3-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two disjoint write sets with no data dependency (the schema copies and their test; the shared module, entry.py, the freeze and their tests); two workers (slots ~401, ~402) start now.
+
