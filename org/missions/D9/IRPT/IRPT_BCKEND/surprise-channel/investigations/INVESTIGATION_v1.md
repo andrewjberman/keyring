@@ -37513,3 +37513,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "S158 and S192 stay ARMED under ~P2; 49 Financial is served at 2026-10-12 (2 trading days behind T-1), Cottonwood 4 behind."
 }
 ```
+
+## IRPT_BCKEND-D2-W413-S1 -- 49 Financial's refused account is marked ACTIVE in the custodian directory, so the closed-account exemption cannot clear account_lost
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W413-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~413",
+  "surfaced_at": "2026-10-15T11:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (the publish guard's owner decides) or whoever accepts the lost account",
+  "one_line": "49 Financial's single account_lost condition (candidate 2026-10-13, served 2026-10-12) names one account that the custodian directory marks ACTIVE, not TERMINATED; the closure exemption at line 3051 therefore cannot apply, and the omitting candidate filter is not read.",
+  "spec_asserts": "Row D2-S192 and the IB-pr-570 order: a refused account is a closed account, a source gap or a mapping break, and the closed-account exemption is the path that clears a closed account.",
+  "world_is": "MEASURED: the 49 Financial refusal record has one version (candidate 2026-10-13, refused 2026-10-14) with account_lost count 1 and listed.new_unclassified count 0. The directory dated 2026-10-13 has 4746 entries: 4673 ACTIVE, 73 TERMINATED, none carried forward. The refused account sits in one entry marked ACTIVE. The cause is INFERRED: the candidate builder omits an account the source still lists as open, and the filter that does it is not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~413/IB210-1_49f_refusal_read.json at bbdeae6f89 (refusals, served, account_or_field, cause blocks; counts only)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@bbdeae6f89 lines 2980 to 2989 (closed_account_ids exempts only TERMINATED entries) and lines 3051 to 3058 (closed exclusion, directory no-closures mark, add account_lost)"
+    ]
+  },
+  "notes": "Counts only in this row: the membership test printed booleans and counts, with no account id or value. The directory was read at its routed pointer in the legacy bucket, not the canonical address (see row D2-W413-S2)."
+}
+```
+
+## IRPT_BCKEND-D2-W413-S2 -- The publish gate's closed-account set is read from a legacy routed bucket; the canonical 49 Financial directory latest pointer is absent
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W413-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~413",
+  "surfaced_at": "2026-10-15T11:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The publisher's directory read (directory_runner prefix via the firm_bucket_map alias) resolves to a legacy routed bucket; the canonical address for the 49 Financial directory latest pointer returned NoSuchKey on get-object.",
+  "spec_asserts": "holdings_snapshot.py docstring: a new publication uses the canonical builder's primary private firm home; legacy routed bucket aliases remain input reads only.",
+  "world_is": "MEASURED: get-object of the canonical 49 Financial platinum directory current latest pointer returned NoSuchKey (rc 254). The gate's closed_account_ids and directory_marks_no_closures read the pointer through firm_bucket_map (the legacy routed bucket) at investor-reporting/directory/latest.json, which resolved to a dated directory (2026-10-13). Whether the two homes hold the same directory was not compared beyond this.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@bbdeae6f89 lines 2968 to 2977 (_directory_entries reads PROD_PREFIX directory latest.json through the bucket argument) and line 183 (49financial maps to a legacy routed bucket)",
+      "lib/opal_naming.py address('irpt','49financial','platinum','directory','current','latest.json') resolves to the canonical home; get-object on it returned NoSuchKey at 2026-10-15"
+    ]
+  },
+  "notes": "Read-only: head-object and get-object only, no writes. The gate's write path was not read beyond the directory read, and the two homes were not compared object by object."
+}
+```
