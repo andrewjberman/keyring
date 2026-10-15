@@ -40,11 +40,11 @@ Round 11: 2 of 2 complete, MAY-CLOSE (re-run by this seat), all checks mechanica
     "owner": "2.0.0_SA_COO~MI",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~MI",
       "round": "v9"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

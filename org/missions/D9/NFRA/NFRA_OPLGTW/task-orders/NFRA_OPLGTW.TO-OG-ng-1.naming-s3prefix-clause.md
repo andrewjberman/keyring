@@ -75,7 +75,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ng-1.naming-s3prefix-clause.pro
 
 - A2 (issuer, 2026-10-15 ~08:1xZ, worker ~99 rows Z-W99-S1..S4, all read): three rulings, none widens the clause. (1) Z-W99-S1: the AC2 probe diff had no path under `org/missions/` so the reader condition (5) could derive no project and the clause did not fire; ng1.AC2 now stages one path under the project home beside the `.tf`, exactly as the real OG-ap-20 commit must (its release record sits under the project home). The worker's code is right: no project derivable means the clause does not fire. (2) Z-W99-S2: condition 4's list (mid-path `*`, bare `*`, `**`, `?`, empty key part, near misses, unregistered) means NOT ADMITTED BY THIS CLAUSE and graded exactly as before (the ruling's condition 7: the clause passes a name, never access). A tier-first shaped value (`gold/`, `silver/`, `platinum/` ...) is REFUSED as before; a value the gate never grades (a bare `*`, a non-tier-first prefix) stays ungraded and is not admitted either. NO new refusal class is added. Test `test_ng1_ac03` asserts exactly that per arm: no IAM-PREFIX-ADMITTED line and no clause admission for every arm, plus REFUSE for each tier-first shaped arm. (3) Z-W99-S3: ac02 asserts not-admitted BY THIS CLAUSE (no printed line); the gate may still grade the bare registered key part as before (MX-c-9 A4), which the check header now says. Z-W99-S4 (the `tf_literals` block tracker drops a second list element's key; the clause reads its own frame stack) is left unchanged and recorded. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>NAMING-S3PREFIX</workstream>
 <slot>~99</slot>
