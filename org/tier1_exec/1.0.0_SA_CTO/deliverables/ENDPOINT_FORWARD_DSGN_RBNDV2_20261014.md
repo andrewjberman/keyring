@@ -71,3 +71,16 @@ your confirmation of the lines above.
 **NOT READ:** the task-order register, any project JSON (none exists yet), the DSGN_REBRND worktrees, the Yang Liu Teams
 thread (the brief marks it as an addendum owed once you sign in to the gateway), and brief Parts IV-VII beyond the outcome
 territory, boundary and bar.
+
+## ADDENDUM 1 (~03:2xZ 2026-10-15): Andrew's rulings at 4.0.0_SA_CRO~A, applied to the endpoint
+
+Andrew, verbatim (~00:0xZ, `ANDREW_DIRECT_20261014_201xZ_..._PANEL_RESKIN.md` addendum @f4532f545c): "This whole light mode build
+needs to stay on a feature tree on this box and is only pushed when i say so. also yes, i like EAEAF7"
+
+- **Open item 1 is answered: background colour is IN scope.** The page and sidebar ground is `#EAEAF7`; panels are white with
+  a 1px `#C4CBDB` border. FWD-2 and FWD-3 grade the light build with that ground.
+- **FWD-4 and FWD-6 tighten.** The build lives on a laptop feature branch, and nothing is pushed (not DEV, not PROD) without
+  his word. FWD-6's "before anything reaches a client" becomes "before anything leaves the laptop's feature branch".
+  FWD-1's "dev build" is the LOCAL dev build (port 5174) of that branch.
+- **Open item 2 (placement) is for him:** the first order placed DSGN_RBNDV2 on dell1; this one places the light-mode build on
+  the laptop.
