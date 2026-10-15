@@ -10,6 +10,8 @@ not in the table is UNCLASSIFIED. The table was written by READING every hit (se
 LAST line: FABRIC-CENSUS files_scanned=<f> hits=<h> enum_source=<e> compares=<c> display=<d> fixture=<x>
 unclassified=<u> ok=<True|False>   (ok only when unclassified == 0).
 """
+import argparse
+import json
 import os
 import re
 import subprocess
@@ -58,7 +60,7 @@ CLASS_BY_PATH = {
     # line in one of these, stays UNCLASSIFIED until it is named here (there is no directory or wildcard key)
     ".tools/tests/fabric_value_census.py:2": DISPLAY,
     ".tools/tests/fabric_value_census.py:5": DISPLAY,
-    ".tools/tests/fabric_value_census.py:21": FIXTURE,
+    ".tools/tests/fabric_value_census.py:23": FIXTURE,
     ".tools/tests/test_fabric_enum_dell.py:4": DISPLAY,
     ".tools/tests/test_fabric_enum_dell.py:63": FIXTURE,
     ".tools/tests/test_fabric_readers_dell.py:7": DISPLAY,
@@ -96,7 +98,21 @@ def read_text(rel):
     return raw.decode("utf-8", "replace")
 
 
-def main():
+def parse_args(argv):
+    ap = argparse.ArgumentParser(description="token census plus the register box names (FWD-2 read-back)")
+    ap.add_argument("--register", default=os.path.join(ROOT, "org", "devices", "DEVICES.json"),
+                    help="device register whose box names are printed on the BOXES-READ line (default: the real register)")
+    return ap.parse_args(argv)
+
+
+def register_box_names(path):
+    """The box names of a register file (read as JSON; this census compares against no box list)."""
+    with open(path, encoding="utf-8") as fh:
+        return sorted(d["name"] for d in json.load(fh)["devices"])
+
+
+def main(argv=None):
+    args = parse_args(argv)
     files = tracked_files()
     scanned = 0
     hits = []
@@ -117,6 +133,7 @@ def main():
         cls = CLASS_BY_PATH.get("%s:%d" % (rel, n)) or CLASS_BY_PATH.get(rel, "UNCLASSIFIED")
         counts[cls] += 1
         print("%s:%d  %s  | %s" % (rel, n, cls, snip))
+    print("BOXES-READ " + " ".join(register_box_names(args.register)))
     ok = counts["UNCLASSIFIED"] == 0
     print("FABRIC-CENSUS files_scanned=%d hits=%d enum_source=%d compares=%d display=%d fixture=%d "
           "unclassified=%d ok=%s" % (scanned, len(hits), counts[ENUM_SOURCE], counts[COMPARES],

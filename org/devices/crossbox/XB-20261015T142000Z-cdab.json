@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN FWD-18: run one blocked download on site Z and report the refusal",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD18_SITEZ_WRAPPER_RUN.md",
  "opened_at": "2026-10-15T14:20:00Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-15T14:23:20Z",
   "bus_message_id": "ebba0b9d-0537-40f5-b2e0-14e93f81c4b2"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-15T14:47:43Z",
+  "by": "0.0.0_AB_MSTR~Z",
+  "bus_message_id": "cfee6327-31bb-4cc6-9e9f-5c83c9f6faff"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

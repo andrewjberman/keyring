@@ -167,13 +167,13 @@ def downloads_arms(tmp):
 
     rc, out, err = run(["downloads", "--device", "laptop", "--day", "20261015", "--root", root])
     arm("downloads laptop 20261015: two records counted, requests 2+3, one other day excluded",
-        rc == 0 and last_line(out) == "DOWNLOADS-TODAY device=laptop day=20261015 requests=5 files=2")
+        rc == 0 and last_line(out) == "DOWNLOADS-TODAY device=laptop day=20261015 requests=5 files=2 unattributed=0")
     rc, out, err = run(["downloads", "--device", "laptop", "--day", "20261016", "--root", root])
     arm("downloads on a day with no records: zero, read from the record folder (rc 0)",
-        rc == 0 and last_line(out) == "DOWNLOADS-TODAY device=laptop day=20261016 requests=0 files=0")
+        rc == 0 and last_line(out) == "DOWNLOADS-TODAY device=laptop day=20261016 requests=0 files=0 unattributed=0")
     rc, out, err = run(["downloads", "--device", "dell1", "--day", "20261015", "--root", root])
     arm("downloads for another device: records of laptop not counted",
-        rc == 0 and last_line(out) == "DOWNLOADS-TODAY device=dell1 day=20261015 requests=0 files=0")
+        rc == 0 and last_line(out) == "DOWNLOADS-TODAY device=dell1 day=20261015 requests=0 files=0 unattributed=0")
     rc, out, err = run(["downloads", "--device", "laptop", "--day", "20261015",
                         "--root", os.path.join(tmp, "no_such_folder")])
     arm("missing intake folder REFUSED (rc != 0)", rc != 0 and "REFUSED" in out)
