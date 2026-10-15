@@ -13243,3 +13243,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-229. Counts only; no account or household id and no client value. The disarm owner is the round issuer; the CTO may reassign. The row states the form; the repair is a later round's packet under a never-widen pair."
 }
 ```
+
+## IRPT_DASHBD-D2-S48 -- issuer's dispositions on W184-S1 (calendar fallback, inert) and W184-S2 (04-21 is a FLOW_UNRECONCILED event; carried to the CTO)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S48",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T01:55:11Z",
+  "one_line": "Issuer's dispositions on worker 184's rows W184-S1 (the trading calendar answers from its hardcoded fallback on dell2, pandas_market_calendars absent) and W184-S2 (the 858 households broken on 2026-04-21 are carried by FLOW_UNRECONCILED account-days, not by that date's 123 NOT_MEASURABLE rows): W184-S1 is inert and noted; W184-S2 is disarmed by carrying it to the CTO in the round-113 slug as the corrected premise for the repair cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-229 Why (the CTO's round-113 analysis, taken from round 112's cause read): 2026-04-21 is the worst date because of NOT_MEASURABLE rows, 'a producer or input defect on that day'.",
+  "world_is": "Round 113 read (RD_NOT_MEASURABLE_R113.json, DB113-1-AC1 PASS on the landed tree): across all 56,311 unmeasured account-days the cause is LINK_BREAK_BASE_NONPOSITIVE with the row's own price reason HOLDINGS_NOT_OK, 50,173 (0.8910), then FLOW_UNRECONCILED with the guard graded and disagreeing, 5,187 (0.0921); but ON 2026-04-21 the account gold holds 944 FLOW_UNRECONCILED rows beside 123 NOT_MEASURABLE rows (117 non-positive base, 6 absent base, all price), and 943 of the date's 1,061 household-sense unmeasured account-days are the guard-disagreed kind. Both calendars call 2026-04-21 a trading day (the lib from its fallback table). So the date is a flow-guard event, not a link-break event; the repair question is the guard's disagreement on that date (a flow or value input), not the price/base link. Counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~184/RD_NOT_MEASURABLE_R113.json",
+      "this seat re-ran DB113-1-AC1 on the landed tree @cf4a94db99: DB113-1-AC1 PASS; worker rows W184-S1 and W184-S2 in this file",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 1505, 1517, 1522 (FLOW_UNRECONCILED sites), as recorded by the worker"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "W184-S2 is carried to 1.0.0_SA_CTO~DELL2 in the L10 slug (the repair cell is the CTO's round-114 analysis to rule; it moves served numbers and needs a never-widen pair). W184-S1: the fallback covers 2010-2027 and answers NYSE correctly for the date; hygiene for whoever installs pandas_market_calendars on dell2, not this project."
+}
+```
