@@ -1089,6 +1089,27 @@
     "spec_asserts": "TO RV-x-4 environment block: the portal worktree is branched from feature/dsgn-rbndv2-light at 7f8731df, the difference-control base.",
     "world_is": "7f8731df is an ancestor of the worktree HEAD 9027a72d, which carries the RV-x-1 merge. The difference-control arms read the base by git show 7f8731df and are unaffected. The worker's commit 140f474f touches only the three RV-x-4 paths, so the descendant commits were not edited by this cell.",
     "notes": "Filed, not fixed. The order's branch premise is stale relative to the live branch; the cut point is the drain's merge commit, not the base named in the order. Whether the RV-x-1 merge changes the light-panel render of the Fear and Greed panel was not measured here; the arms are text arms."
+  },
+  {
+    "id": "DSGN_RBNDV2-W17-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~17",
+    "surfaced_at": "2026-10-15T15:50:18Z",
+    "one_line": "RV-x-5 says the portal worktree is branched from feature/dsgn-rbndv2-light at 7f8731df, but the worktree HEAD was 5269d02c, 8 commits past 7f8731df, with 7f8731df an ancestor of it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal worktree wk-DSGN_RBNDV2-17-portal: git -C portal rev-parse HEAD = 5269d02c before the RV-x-5 commit; git rev-list --count 7f8731df..5269d02c = 8 and 5269d02c..7f8731df = 0",
+        "git merge-base --is-ancestor 7f8731df 5269d02c printed ANCESTOR-YES; git log -1 --oneline 5269d02c: 'drain(DSGN_RBNDV2.TO-RV-x-4): merge worker 0.9.0_WK_DSGN_RBNDV2~16 ... into feature/dsgn-rbndv2-light'; git log -1 feature/dsgn-rbndv2-light printed the same 5269d02c"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RV-x-5 environment block: the portal worktree is branched from feature/dsgn-rbndv2-light at 7f8731df, the difference-control base.",
+    "world_is": "7f8731df is an ancestor of the feature tip 5269d02c, which the worktree was branched from. The difference-control arms read the base by git show 7f8731df and are unaffected. The RV-x-5 commit e72e5dbe touches only the three RV-x-5 paths.",
+    "notes": "Filed, not fixed. The cut point is the feature tip 5269d02c, not the base named in the order. Same shape as DSGN_RBNDV2-W16-S1."
   }
 ]
 ```
