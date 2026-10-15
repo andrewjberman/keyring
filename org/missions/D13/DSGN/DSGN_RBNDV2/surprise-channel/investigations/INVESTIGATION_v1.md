@@ -666,6 +666,47 @@
       "disposition": "UNDER_INVESTIGATION",
       "spec_asserts": "TO RV-m-3 worker face: ALL state, effects, handlers, props and behaviour of each adopted modal stay exactly as they are.",
       "world_is": "These two gains come from the frame's shared chrome, not from the adopted files. UploadPortfolioModal's header X was disabled while uploading; the frame's Close control cannot be disabled, so the handler guard (handleClose) carries that rule, as recorded in DSGN_RBNDV2-W8-S5."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S8",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T09:47:29Z",
+      "one_line": "portal/src/components/market-performance/ExecutiveSummary.tsx carries its own modal overlay in DrilldownModal (function at line 731, fixed inset-0 overlay at line 772); the file is not on the RV-m-4 list, so it is not adopted.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "portal/src/components/market-performance/ExecutiveSummary.tsx at the portal commit dc5cf484: line 731 function DrilldownModal, line 772 className fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm",
+          "the sweep of portal/src/components/market-performance (native Grep for fixed inset-0, role=dialog, aria-modal, aria-labelledby, catalyst/dialog) returns this line as the only overlay outside the five listed modals"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-4 worker face: the market-performance modals on the list adopt ModalFrame; ExecutiveSummary.tsx is NOT on the list; look in the directory for any other overlay and name it in a surprise row (a wall, not to be edited).",
+      "world_is": "DrilldownModal in ExecutiveSummary.tsx still draws its own overlay and card. It is a modal the directory holds and the list does not name, so it remains the un-adopted modal of the directory until the issuer decides its cell."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S9",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T09:47:29Z",
+      "one_line": "RSIModal and FearGreedModal keep a literal dark content ground (bg-[hsl(221,28%,25%)]), which the frame's token remap does not reach; inside data-panel-surface the text-white idioms resolve to navy ink, so the labels on that ground are likely navy on dark navy.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~RB -- the content ground of these two modals needs a token or a light ground; the issuer decides which, since the order keeps chart colours (C6) and changes only chrome.",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "portal/src/components/market-performance/RSIModal.tsx line 1003 and FearGreedModal.tsx line 696 at dc5cf484: <div className=\"flex-1 overflow-y-auto bg-[hsl(221,28%,25%)]\"> (a literal, not a --bg token)",
+          "portal/src/index.css lines 546-555 (round-1 scoped rule): [data-panel-surface=\"light\"] .text-white and [class*=\"text-white/\"] set color to var(--rb-ink) #0A1733; the ground's text classes (text-white/70 and similar) fall under that rule"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-4 worker face: the frame's data-panel-surface turns the old dark grounds white and silver by token; a modal body written for a dark ground reads on the white surface; C6 keeps chart colours.",
+      "world_is": "The literal navy ground is not a token, so the frame does not turn it white. The scoped rule turns the labels' text-white idioms to navy ink, so the labels on that ground are likely navy on dark navy. Not walked in a browser (no server, per the order); the judgment criterion RB2M4-AC3 is the check and it is the COO's."
     }
 ]
 ```
