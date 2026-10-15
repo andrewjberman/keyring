@@ -4307,3 +4307,15 @@ Check IB225-1 (`deliverables/2.0.0_SA_COO~P2/checks/r225/p225_cells.py`), dry-ru
 | `IB-pr-592` | BUILD the named ratio_absent list in the frame attrs and the run manifest (day, security, accounts used; unkeyed rows by day), grading unchanged | FWD-21 | LOCAL | none | PM1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one product file; one worker (slot ~432) starts now.
+
+## 221. ROUND 2, WORKSTREAM ~PN (the Scope account feed stores the daily factor, admits SERIES_ENDED_AT_SOURCE and walks calendar days; 2026-10-15 ~17:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8484 and B-IN's round-122 probe)
+
+IB-pr-586 (merged @7b150e672a) built the feed with `return_value = performance / 100` per series point. B-IN's history probe (294 households, series calendar-day and contiguous from each account's start; chained factors equal Orion's period return up to a year; Orion annualizes its summary over a year; two series end 95 and 120 days early) and the CTO's ruling (round-118 ADDENDUM 3, msg 8484) fix four things: store the daily FACTOR only (never a summary), admit the reason class `SERIES_ENDED_AT_SOURCE` for the scheduled feed too, chain CALENDAR days weekends included, and give the scheduled run a window from the day after the newest landed partition. One LOCAL cell on the one script. The feed's apply order waits for it.
+
+Check IB227-1 (`deliverables/2.0.0_SA_COO~P2/checks/r227/p227_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control227.py`) passes the three positives and seven negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-594` | the feed stores the daily factor only, SERIES_ENDED_AT_SOURCE, calendar-day rows, the scheduled window from the newest landed day | FWD-3 | LOCAL | none | PN3-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one script; one worker (slot ~433) starts now.

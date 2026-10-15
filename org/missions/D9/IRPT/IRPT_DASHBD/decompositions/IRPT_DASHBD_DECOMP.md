@@ -2166,3 +2166,17 @@ Cell 2 declares the function the handler runs in: a NEW Terraform root `reportin
 **fanout:** 1 of 1 chains, cap 8, reason: one cell with one write set (the new root, the source map and a record), worker `0.9.0_WK_IRPT_DASHBD~216`.
 
 **Checker (dry-run at the base before the cut; FAIL as expected, self-test green; its live clauses green against a scratch reference root):** `checks/r133/p133_root.py` (DB133-1-AC1, AC2, AC3).
+
+## 132. ROUND 134, WORKSTREAM B-49F (2026-10-15 ~17:4xZ, issuer 2.0.0_SA_COO~D2, on the CTO's ROUND-128 ANALYSIS ADDENDUM 1 @143709c44f and msg 8486: "RULED: enable `irpt-cot-account-return-daily-daily` (DISABLED to ENABLED) ... one line in the pinned .tf, applied by `safe-apply`, under its own ledger entry, the plan reads 1 change and nothing else")
+
+The schedule enable the signed landing pair did NOT cover (packet section 1: "NOT in this packet: enabling the schedule") is covered by the CTO's written ruling; this round carries the act and nothing else. Counts, dates, hashes and words only.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. ONE line of `schedule.tf` (`state` DISABLED to ENABLED), `safe-apply` with a plan of exactly 0 add / 1 change / 0 destroy on `aws_scheduler_schedule.irpt_account_return_daily`, no invoke, the ledger `irpt-dashbd-cottonwood-schedule-enable-20261015` left OPEN for the issuer's read of the first scheduled fire (Friday 2026-10-16, 08:15 New York), by the AE applier `0.7.0_AE_CloudOps~DB2` | `DB-b-266` | FWD-11, FWD-21 | WORLD (an apply that starts a daily production fire) | `DB-b-262` merged; the CTO ruling | R134-A |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the applier makes the one-line edit itself, as it did for the account-dim enable (`DB-c-20` step 8): the line is the act, and the plan is its first check; (b) the order forbids an apply within an hour before a fire of this root, so it lands today (the next fire is tomorrow 08:15); (c) the first fire is read by ME (the CTO's term 3): exactly one new dated partition (if the Black Diamond silver for 2026-10-15 holds both tables; if not the fire holds and writes nothing, and the next fire catches up), history unmodified, one value-level spot read of the new day against the source, and the report-build function's next build loads the table without error; the report-build function does not exist yet (cells 2 to 4), so that fourth item waits for its first build and the ledger closes only after it; (d) the schedule fires the handler's scheduled path, which resolves the days owed after the newest landed day (2026-10-14) through T-1, at most five, never before the floor; (e) rollback is the one line back to DISABLED; the partitions written stay (removing any is Andrew's act). Gate limb: one new order (LIMB 6 PRD sign-off applies); the placeholders limb sees NONE.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one applier, one ledger, one change (the deploy rule: one change at a time).
+
+**Checker (dry-run at the base before the cut; FAIL as expected, self-test green with 4 + 21 red arms; its live clauses read fresh scheduler, Lambda and S3 state):** `checks/r134/p134_enable.py` (DBE134-1-AC1, DBE134-2-AC1).
