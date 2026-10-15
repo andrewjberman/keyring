@@ -17997,3 +17997,149 @@ name the one known failure instead of silently inheriting it.
   "notes": "Recorded for the issuer's naming review. No criterion is affected; the worker did not change the literals to pass the gate."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T21:09Z",
+  "one_line": "The Black Diamond adapter issues account references as ****<last4>|<bd_id> with no vendor key; the core's protocol router refuses that form account_not_resolved unless the core composes the vendor on it, which it does only for resolved candidates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ADAPTER: app/client_adapter_bd49f.py @98dd8a6d05 line 122 (_ref returns ****%s|%s) and line 61 (_REF_RE); VENDOR is blackdiamond (line 31).",
+      "CORE: app/client_core.py @98dd8a6d05 _ACCOUNT_REF is ****<last4>/<vendor>/<alias>; _route raises account_not_resolved for any other form.",
+      "COMPOSE: client_resolve_account wraps each candidate as ****<last4>/<vendor>/<issued>, so a resolved candidate routes; a bare issued form does not."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_ADAPTER_PROTOCOL.md: an account arrives as the account_ref the same adapter issued. A2 S5: the protocol form is ****<last4>/<vendor>/<alias>, vendor-prefixed.",
+  "world_is": "The Black Diamond form carries no vendor key while the core routes by one. The two agree only through the core's composition on resolve.",
+  "notes": "The form decision belongs to the issuer at the hookup. No OG-cl-1 criterion depends on it; the Schwab path uses the protocol form."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T21:09Z",
+  "one_line": "The core takes the envelope's absent_reason from the adapter's _absent_reason key only, so the Black Diamond adapter's body absent_reason (set by its _absent helper and by its empty answers) is replaced by null.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ADAPTER: app/client_adapter_bd49f.py @98dd8a6d05 line 219 (_absent sets out[\"absent_reason\"] = code) and lines 273, 320, 370, 428, 478 (body absent_reason).",
+      "CORE: app/client_core.py @98dd8a6d05 _answer sets body[\"absent_reason\"] from meta[\"_absent_reason\"] (None when the adapter sends no underscore key)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "G2_ADAPTER_PROTOCOL.md: the core builds the envelope from the adapter's _-keys; an adapter never returns an empty body without a code.",
+  "world_is": "A Black Diamond empty answer reaches the envelope with absent_reason null, so the code the adapter wrote is lost at the core.",
+  "notes": "Not changed here. It arms at the hookup, when the core registers this module. The issuer aligns the key (adapter to _absent_reason, or the core reads the body key)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T21:09Z",
+  "one_line": "The AC2 check script takes its probe rc from the tr at the end of its pipeline, not from the probe, so the printed probe rc is tr's exit and the PASS rests on the AC2 line and the digit-run count.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/cl1.AC2.sh -- the line out=$(timeout 115 python \"$P\" 2>&1 | tr -d '\\r'); rc=$? takes the tr exit.",
+      "MEASURED: a direct run of the probe at its own path exits 0 and prints the AC2 line (this worker, 2026-10-15)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The AC2 invocation's probe rc is the probe's own exit code, and the PASS requires rc 0.",
+  "world_is": "The printed rc is the pipeline's last command. Without pipefail the probe's exit does not reach the gate.",
+  "notes": "The check script belongs to the issuer (r37/checks) and is not edited by this worker."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S12",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T21:09Z",
+  "one_line": "On this box lib/trading_calendar.py answers from its hardcoded NYSE fallback (pandas_market_calendars is absent), so every freshness_td in the probe and core run is measured against that fallback calendar.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: the probe run's stderr on this box carries the WARN line: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027).",
+      "CODE: app/client_core.py Ctx.freshness_td calls lib/trading_calendar.trading_days_behind (A1 item 2)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 item 2 and the protocol: freshness_td is trading days behind the T-1 frontier, through lib/trading_calendar.py.",
+  "world_is": "The fallback calendar is in force on this box. The core and the probe read the same calendar, so the figures agree with each other; agreement with the vendor calendar is not measured here.",
+  "notes": "envelope_ok requires only an int for freshness_td, so no OG-cl-1 criterion grades the value."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S13",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T21:09Z",
+  "one_line": "The order's premise that four other vendor adapters are merged on trunk does not match the refs: origin/CLOUD carries three non-Schwab client adapter modules (bd49f, eclipse, orion).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REFS: git ls-tree -r --name-only origin/CLOUD -- infra/aws/ec2/opal-gateway/app lists client_adapter_bd49f.py, client_adapter_eclipse.py and client_adapter_orion.py.",
+      "LOCAL: the local CLOUD ref lists no client adapter module; this branch (98dd8a6d05) carries client_adapter_bd49f.py and client_adapter_schwab.py."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker's premise: four other adapters are already merged on trunk.",
+  "world_is": "Three non-Schwab adapter modules are on origin/CLOUD at the fetch time. The Schwab module is on this branch and not on trunk.",
+  "notes": "No OG-cl-1 criterion depends on the count. The issuer's hookup reads the trunk state at its own time."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W103-S14",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~103",
+  "surfaced_at": "2026-10-15T21:09Z",
+  "one_line": "The orion and eclipse adapters on origin/CLOUD issue account references as ****<last4>/<segment>/<account id as an integer>, a form other than the protocol's, and the third part is the account identifier itself, which the masked-reference rule does not name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ORION: origin/CLOUD app/client_adapter_orion.py line 59 _masked_ref returns \"****%s/%s/%d\" % (last4, seg, account_id), called at line 227 with segs[0].",
+      "ECLIPSE: origin/CLOUD app/client_adapter_eclipse.py line 60 has the same form.",
+      "PROTOCOL: G2_ADAPTER_PROTOCOL.md privacy line: no full account number appears in any returned body; only the masked account_ref. A2 S5: the protocol form is ****<last4>/<vendor>/<alias>."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The privacy line: a returned body carries only the masked account_ref, and the masked form is the last four and the vendor id.",
+  "world_is": "The trunk form writes an integer account id after the last four, and its middle part is a firm segment, not the vendor key. Whether that integer is a custodian number is not measured here, and the core routes by the middle part only if it equals the module's VENDOR (not measured).",
+  "notes": "The issuer decides at the hookup whether the integer is a custodian number. This worker printed no account id and read none for this row."
+}
+```
