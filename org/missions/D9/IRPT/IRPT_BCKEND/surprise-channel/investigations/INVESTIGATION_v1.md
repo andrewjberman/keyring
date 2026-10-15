@@ -36074,3 +36074,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The builder does not refuse a SCHEDULE name: the cadence token daily is a NAMING_SCHEMA.json cadence value and the 6 AM time lives in the schedule expression, not the name. The live rule name is out of pattern and the one registry table of rules holds no schedule row. No registry row is needed for the names to grade CONFORMANT; a row is needed only if the schedule is to be registered. The READ's expectation of a refusal is not borne out (read-only; nothing added)."
 }
 ```
+
+## IRPT_BCKEND-D2-S184 -- Dispositions on worker 400's rows; the daily flat-key writer is still unlocated: retiring the CLIs or deploying beside it is held by COO half condition 1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S184",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T06:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 400's rows (D2-W400-S1, S2) and the Orion pairs packet: the daily flat-key writer is still UNLOCATED (the flat keys land 11:39-11:56Z each day after the parquet), so retiring the manual CLIs or deploying the scheduled handler could stop the feed or double it; condition 1 of the COO half holds both until the writer is found and handed over.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB200-4 AC1 to AC3 on the landed tree (PASS) and the proof instance (VALID); merge 7dc4dbbc6e; packet sha256 c3dcc22f02e8624eca4f402f77fe95ba28c3df331a0896e22ef94dd19bc56b62",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~400/IB200-4_orion_pairs_design.json live_writer: claim absent; flat transactions keys landed 11:39-11:43Z, performance 11:45-11:49Z, positions .jsonl.gz 11:48-11:56Z on 2026-10-10 to 2026-10-14, after the deployed positions parquet at 11:25-11:26Z; no trigger, log stream or instance found in that window"
+    ]
+  },
+  "spec_asserts": "CTO msg 8014 condition 1: pair (b) PORTS the manual CLI into the scheduled function, no second producer beside it, the CLI retired or repointed in the same pair.",
+  "world_is": "DISPOSITIONS. D2-W400-S1 (BLOCKING, INERT): the flat bronze keys have no address() output: SUPERSEDED by IB-pr-556 AMENDMENT 1 (they are an existing pipeline's read contract, rule 30 non-application), my defect. D2-W400-S2 (the existing schedule name grades OUT-OF-PATTERN): INERT, recorded. THE HAZARD (new, ARMED, owner me): nobody has located what writes the daily flat keys; the repository holds three manual CLIs that write exactly that key shape. Either a person or host runs a CLI by hand each morning, or another writer exists. Retiring the CLIs without finding it can stop the feed; deploying (b) beside it makes two producers of one key. COO half condition 1 makes finding and handing over that writer the releasing seat's first read-only step, and a STOP if it cannot be found. Disarm condition: the writer is located and stopped or handed to (b) in the release's ledger."
+}
+```
