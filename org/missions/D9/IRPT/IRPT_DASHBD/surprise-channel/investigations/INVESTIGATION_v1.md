@@ -14068,3 +14068,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. Form only; the two texts of step 2 should be reconciled by the issuer."
 }
 ```
+
+## IRPT_DASHBD-D2-W305-S1 -- the Scope probe POSTed the wrapped requests_for body while the estate's transport posts the inner scope, so both calls drew HTTP 400
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W305-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~305",
+  "surfaced_at": "2026-10-15T03:40:04Z",
+  "one_line": "The Scope probe POSTed the wrapped body that requests_for returns; the estate's transport posts the inner scope, so both calls drew HTTP 400 and the probe answered nothing about fees or the credential.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "TO DB-i-5 worker face, step 2: build the body with the module's own requests_for and POST it, the flag at body[\"scope\"][\"calculations\"][0][\"contextChange\"][\"performanceOption\"][\"calcGrossOfFees\"]; the estate's live Scope call (orion_selected.calculate) is the reference shape the probe must reproduce.",
+  "world_is": "requests_for returns {\"scope\": scope} (orion_selected.py line 109), and calculate() posts requests[\"scope\"], the inner dict (line 147). The probe posted the wrapper: call 1 (flag false) and call 2 (flag true) both answered HTTP 400, six seconds apart, and neither was retried because a 4xx is not retried. The 400 body is not saved by rule, so what it names is unread. Verdicts (a) REFUSED and (c) REFUSED were computed from these two non-2xx answers, so they describe a body the estate does not send. Two of four calls were used; no further call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/orion_selected.py@f240990cfd lines 109 and 146-147",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-5.orion-scope-probe-multi-account-fee-flag-credential.md@f240990cfd worker face step 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-5. Form only: no token was printed or stored, no client value is in the repo, and no call beyond the two POSTs was made. A CTO ruling is needed before any further call: whether the estate's inner-scope shape may be posted on up to two more calls under a new order. The worker did not widen the cap of four or the no-retry-on-4xx rule."
+}
+```
