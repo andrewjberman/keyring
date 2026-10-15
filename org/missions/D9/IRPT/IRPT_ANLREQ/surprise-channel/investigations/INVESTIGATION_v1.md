@@ -17501,3 +17501,58 @@
   "notes": "S1 is closed by the widening and by the record. S2 (org/surprise_channel/schemas skip-worktree) is not addressed by this row and stays as filed. The record's recommendation is A (stamp at acceptance); the grant is the shared gate for A and B, and the CTO or CloudOps decides it."
 }
 ```
+
+## IRPT_ANLREQ-D2-W173-S1 -- the worktree's sparse-checkout omits data/, org/tier1_exec/ and org/surprise_channel/: the cell's Q2 store read and its basis record are tracked at base but skip-worktree on disk
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W173-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~173",
+  "surfaced_at": "2026-10-15T15:50:44Z",
+  "one_line": "The worktree's sparse-checkout omits data/, org/tier1_exec/ and org/surprise_channel/, so the TO-AR-g-54 Q2 read of data/mdpf/scripts/demque/price_store.py and the PRICES_ARE_TOTAL_RETURN record cannot be read from this tree; the order stops at BLOCKING.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-54 worker face: if the worktree does not carry the paths the task order names, that is a BLOCKING row and the final report, and the worker STOPS without rebuilding or extracting the tree. Cell Q2 names data/mdpf/scripts/demque/price_store.py and org/tier1_exec/2.0.0_SA_COO~Q1/deliverables/ANDREW_DIRECT_20261009_054xZ_PRICES_ARE_TOTAL_RETURN_STORE_PRICE_DIVIDEND_TR_PER_DAY.md as read paths.",
+  "world_is": "git sparse-checkout list in worktree C:/dev/wk-irpt-anlreq-173 (gitdir C:/dev/ajb_workspace/.git/worktrees/wk-irpt-anlreq-173) names only .tools, infra/aws/lambda/investor-reporting, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps, org/modules/graph, org/ref and org/standards. ls data returns no such file. git ls-files -t marks data/mdpf/scripts/demque/price_store.py, the ANDREW_DIRECT_20261009_054xZ record and org/surprise_channel/schemas/investigation_item.schema.json as S (skip-worktree). The blobs exist at base 5aefc342bf (price_store.py is 17075 bytes by git cat-file -s). The product files named by Q1, Q3 and Q4 are on disk (layout_overview.py is H and present). No sparse change, checkout or git show extraction was made, and no record was built.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list (worktree wk-irpt-anlreq-173, HEAD 5aefc342bf): no data/, org/tier1_exec/ or org/surprise_channel/ pattern",
+      "data/mdpf/scripts/demque/price_store.py @5aefc342bf (git ls-files -t: S; on disk: no)",
+      "org/tier1_exec/2.0.0_SA_COO~Q1/deliverables/ANDREW_DIRECT_20261009_054xZ_PRICES_ARE_TOTAL_RETURN_STORE_PRICE_DIVIDEND_TR_PER_DAY.md @5aefc342bf (git ls-files -t: S)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py @5aefc342bf (git ls-files -t: H; on disk: yes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocking premise, not a path-elsewhere: the paths are tracked at base and excluded only by this worktree's sparse set. The worker did not widen the sparse set or read the blobs with git show, because that would extract the tree to make the order executable. The issuer or the CTO rules whether the worktree is re-provisioned with those paths in scope and the order re-cut. Q1, Q3 and Q4 were not read."
+}
+```
+
+## IRPT_ANLREQ-D2-W173-S2 -- closing row: IRPT_ANLREQ-D2-W173-S1 (BLOCKING, the Q2 paths absent from the sparse checkout) is resolved by the issuer's widening; the AR-g-54 record is complete
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W173-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~173",
+  "surfaced_at": "2026-10-15T16:11:51Z",
+  "one_line": "IRPT_ANLREQ-D2-W173-S1 is resolved: the issuer widened the sparse checkout, the Q2 paths are on disk, and the AR-g-54 record was written from source (Q1 to Q4). S1 stays as filed; this row closes its blocking effect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_ANLREQ-D2-W173-S1 (class BLOCKING) recorded that the worktree sparse-checkout omitted data/, org/tier1_exec/ and org/surprise_channel/, so the TO-AR-g-54 Q2 paths could not be read and the order stopped. The worker face says that stop holds until the premise is restored.",
+  "world_is": "The issuer (2.0.0_SA_COO~G2, msg after S1) widened the sparse checkout in C:/dev/wk-irpt-anlreq-173 to data/mdpf/scripts/demque, infra/logic, infra/aws/terraform, infra/aws/lambda/ticket_center, org/tier1_exec/2.0.0_SA_COO~Q1/deliverables and org/tier1_exec/1.0.0_SA_CTO/deliverables. On disk and verified in this worktree: data/mdpf/scripts/demque/price_store.py and the PRICES_ARE_TOTAL_RETURN record. org/surprise_channel/ is still outside the sparse set (the investigation_item schema is absent on disk); the row gate ran without it. The record ENGINE_COMPOSE_READ.json is committed at 80be7fd041, with 125 of 125 cites re-opened and SHAPE-OK. Q1 to Q4 were all answered from source; not_read names what stayed unread.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at worktree wk-irpt-anlreq-173 (HEAD a3f17b27b7): data/mdpf/scripts/demque, infra/logic, infra/aws/terraform, org/tier1_exec/1.0.0_SA_CTO/deliverables, org/tier1_exec/2.0.0_SA_COO~Q1/deliverables present",
+      "data/mdpf/scripts/demque/price_store.py @a3f17b27b7 (on disk: yes)",
+      "deliverables/0.9.0_WK_IRPT_ANLREQ~173/r7/ENGINE_COMPOSE_READ.json @80be7fd041 (AC1 SHAPE-OK, AC2 CITES-OK 125 of 125)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closing row, not a remediation: S1 is not edited. Two read findings for the issuer sit in the record, not in new rows: (a) the three periodic-return and drawdown elements of overview_map.json (p2.e08, p2.e13, p6.e22) carry statistic null, so the layout cannot compute them at any pricing setting; (b) opal_producer._opal_map empties the map's calls, so under pricing=True every call-sourced computed element would be OUTSIDE_BUDGET unless the compose keeps the call names. The CTO or the issuer rules which cell takes each."
+}
+```
