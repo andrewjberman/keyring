@@ -16894,3 +16894,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the worker, counts only; no account identifier and no client value is quoted. The record RD_INKIND_FLOW_READ_R123.json carries receipt_accounts 972 and cohort 920 under the checker's definitions. Append only; the disposition is the issuer's."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S77",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-15T10:58:00Z",
+  "one_line": "TO-DB-b-253 STOP at step 0(c): the OPEN ledger irpt-dashbd-thresholds-swap-20261013 (HELD-SOVEREIGN-GATED, leg L7 open, read by 2.0.0_SA_COO~D2 on the 2026-10-14 11:41Z fire) names irpt-49f-reporting-gold-lambda, the function the order changes; the order's refusal clause makes that a STOP and the packet and both halves do not mention it",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/change_management/20261013T1228Z_irpt-dashbd-thresholds-swap-20261013_deploy_completion.md: Status HELD-SOVEREIGN-GATED, gate external (the scheduled 07:41 ET fire at 2026-10-14T11:41Z), legs L1 to L6 closed, L7 OPEN; its marker org/critical_paths/.open_deploys/irpt-dashbd-thresholds-swap-20261013.json is present at HEAD in 21 of 28 live worktrees (git grep of every worktree's .open_deploys, denominator 28)",
+      "step 0 (a), (b), (d) PASS: packet sha256 2f25b84dc85c1592801783ae23113e13c2686bad54b9fa6460ea6d353ac2635e equal, both halves SIGNED, 00e325c0bb ancestor of HEAD 538f2fa62d, live function MemorySize 3008 Timeout 900 CodeSha256 J6M/92Mh..., role policy seven statements, schedule ENABLED cron(41 7 ? * MON-FRI *) America/New_York",
+      "grep of the packet, the COO half and the CTO half for thresholds-swap, HELD-SOVEREIGN and one-change-at-a-time returns no line"
+    ]
+  },
+  "spec_asserts": "Gate 0(c): no ledger under change_management and no .open_deploys marker at any live worktree names the reporting-gold root or irpt-49f-reporting-gold; any one open is a STOP.",
+  "world_is": "One open ledger names the function. Nothing was written by this seat: no ledger opened, no upload, no plan, no apply (a worktree was cut, local only). The ledger belongs to 2.0.0_SA_COO~D2 (leg L7 is its read). Ask: close or supersede L7 on the issuer's own read of the 2026-10-14 fire, or rule that it does not block this apply; this seat resumes at step 1 on that word. My own ledger irpt-dashbd-cottonwood-holdings-performance-20261015 also contains the word reporting-gold, but only as one of three READERS checked; it changes nothing on this surface."
+}
+```
