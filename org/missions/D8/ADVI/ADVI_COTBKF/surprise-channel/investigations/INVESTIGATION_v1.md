@@ -9051,3 +9051,28 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-W172-S1 --The order's item 6 asked for an S3 get-object of the index parquet (schema only); the worker read the footer with pyarrow read_schema over the same s3:// address instead (ranged reads, no whole-object download, no write). The result: 10 columns, no use_class column.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W172-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~172",
+  "surfaced_at": "2026-10-15T19:10:27Z",
+  "one_line": "The order's item 6 asked for an S3 get-object of the index parquet (schema only); the worker read the footer with pyarrow read_schema over the same s3:// address instead (ranged reads, no whole-object download, no write). The result: 10 columns, no use_class column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python: pyarrow.parquet.read_schema(path, filesystem=f) with f, path = pyarrow.fs.FileSystem.from_uri('s3://opal-data-assets/yahoo/global/silver/price_history/index/index.parquet'); rc 0; INDEX-SCHEMA columns=10 names=cusip,yahoo_symbol,valid_from,valid_to,rows,claim,method,as_of,run_id,porting_verdict; has_use_class=False",
+      "record: org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~172/USE_CLASS_READ_RECORD.json (not_established names the footer read and the unread row values)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-1 item 6: one read-only look at the real index, S3 get-object of the index parquet at the index_uri() address, the schema only.",
+  "world_is": "A get-object downloads the whole object; a schema-only read of a parquet needs only its footer, which pyarrow reads by ranged GETs on the same address. The worker used the ranged read: no whole object was downloaded and nothing was written or deleted. Not established: the index row values and any class value; the NO_COLUMN state is what the index carried at the read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
