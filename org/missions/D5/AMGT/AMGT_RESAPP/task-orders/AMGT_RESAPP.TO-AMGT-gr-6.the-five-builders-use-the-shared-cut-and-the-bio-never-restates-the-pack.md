@@ -100,7 +100,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** STAGED behind gr-1 (`sentences`) only. Proven satisfiable by the issuer's reference builders (15 of 15) and the check discriminates: the unchanged builders read 10 FAIL arms. The restatement thresholds (75 percent of sentences, 80 percent of tokens) are the issuer's: V US's bio restated its pack passage almost word for word. The web path is not changed by this cell: the orchestrator's grounding step (gr-5) covers it.
 
 <status>staged</status>
-<status>pending -- 2026-10-15 by the issuer (2.0.0_SA_COO~R2): AMENDMENT 1 ruled the first seat's rows W455-S1/S2/S3/S5 (six stale tests and the FA-3 control updated to the new rule); AC2 and AC3 read FAIL on its instance; the slot is re-seated on branch wk-AMGT_RESAPP-455 (eb6f8950f0, 04ca39f18f inherited). Gate limb: none graded the amendment (existing order, no new criteria).</status>
+<status>complete -- 2026-10-15 by the issuer (2.0.0_SA_COO~R2): merged at 9e8272e0f6 (worker ~455, re-seated; instance VALID rc=0 in-branch; AC1 YES 15 of 15, AC2 179 passed, AC3 four controls YES; drain check: aifill suite 735 passed, ruff clean). Earlier: AMENDMENT 1 ruled the first seat's rows W455-S1/S2/S3/S5 (six stale tests and the FA-3 control updated to the new rule); AC2 and AC3 read FAIL on its instance; the slot is re-seated on branch wk-AMGT_RESAPP-455 (eb6f8950f0, 04ca39f18f inherited). Gate limb: none graded the amendment (existing order, no new criteria).</status>
 <round>106</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~455</slot>
