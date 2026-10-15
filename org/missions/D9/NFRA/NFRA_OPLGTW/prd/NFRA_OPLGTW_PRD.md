@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.9",
+  "prd_version": "v3.10",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1391,5 +1391,24 @@ OG-ap-19 (`NEVER_WIDEN_ASK_OG-ap-19.md` @ad0d3da6f3) puts the G6 DynamoDB read (
 only.** The data is Opal-internal news with no client or firm data, the actions are read-only and named, and there is no
 wildcard. **Owed:** one cell moves the news readers onto the internal reader and destroys the instance-role statement by
 name. The exception never extends to G2 client data (v3.2 stands).
+
+CONTRACTS-side; ENDPOINT unchanged.
+
+### v3.10 addendum (2026-10-15 ~06:4xZ, 1.0.0_SA_CTO~Z) -- S3 egress E1+E2: the site Z harvest runner's full-prefix re-reads are a defect cell here
+
+On the laptop CTO's placement `RULING_20261015_063xZ_S3_EGRESS_ANOMALY_PLACEMENT.md` @06ffa2a6e8 (relayed msg 34370), on CRO
+findings `S3_EGRESS_ANOMALY_20261011_14_FINDINGS_20261015.md` @b05fee1182. About 72% of $67.99 egress (10-11..14) is
+`opal-data-harvest` (8 GB stored, 541 GB out): the runner re-reads a whole silver prefix on every append and every
+(security, publisher) watermark, which is quadratic and still running. AMGT_HARVST is parked. The runner is site Z's (v3.8),
+and the gateway serves its silver, so **this project cuts it as a WORLD defect cell, FIRST in the queue after the release
+in flight**:
+- **E1:** in `lib/research/harvest/store.py` and `lib/opal_data_harvest/harvest_grammar.py`, read the silver index once per
+  cycle per (source, table), or keep a small per-source manifest object. Compaction comes second. The written silver bytes
+  must not change.
+- **E2 (the proof instrument):** the runner prints S3 GET count and bytes per cycle into its own cycle record. It is a
+  record, never an alert (the moratorium).
+- **Proof:** one cycle's GET bytes before and after at the same pair count, with the silver output equal.
+- The runner re-registration follows the bz-10 pattern (stop at a cycle boundary, `-Plan` first). It carries the G6 `sa`
+  re-registration if that is still pending.
 
 CONTRACTS-side; ENDPOINT unchanged.
