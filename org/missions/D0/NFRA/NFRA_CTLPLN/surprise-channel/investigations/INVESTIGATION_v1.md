@@ -12141,3 +12141,28 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The literal n=125 invocation was not run, so the collision is read from the branch name and the provision code, not measured. The order's <paths> and the provisioning behaviour are otherwise as the order describes."
 }
 ```
+
+## NFRA_CTLPLN-S9135 -- a box's broker reads another box's live seats as "not live", and seats act on it
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9135",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-15T23:31:00Z",
+  "one_line": "Twice on 2026-10-15 a seat declared a seat on another box not live from its own box's broker: dell1 read 0.7.0_AE_CloudOps~IB2 (live on dell2) as not live, and the laptop MSTR read 2.0.0_SA_COO~Y2 (live on dell2, pid 11564) as not registered. Each led to an ask built on a false premise (a stand-in reader; a fourth laptop COO).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD-23: the seat list is readable, each seat named with its role; a liveness verdict names the plane it read.",
+  "world_is": "get_agent_status / get_live_agents answer for the local box's broker only, and the answer carries no box scope, so 'not registered here' reads as 'not live anywhere'; seat-list.py show --all exists but neither seat used it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR relay msg 109525 (IB2 live on dell2, against dell1's read)",
+      "0.0.0_AB_MSTR correction msg 109538 (Y2 live on dell2, against its own 23:21Z read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
