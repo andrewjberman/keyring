@@ -17112,3 +17112,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only: the order's text did not anticipate a fake that already had the method. No client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W207-S3 -- OBSERVATION: resolves IRPT_DASHBD-D2-W207-S1 under issuer Amendment 1 (commit 1bec1bfc83); the one contradicted handler example is changed to the cap check and the handler suite is green
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W207-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~207",
+  "surfaced_at": "2026-10-15T11:41:19Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W207-S1: the floor contradicted one earlier handler example; Amendment 1 (commit 1bec1bfc83) allowed that one example to change, and it now reads the cap check on 2026-09-15; the handler suite is 16 of 16 passing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-b-254 Amendment 1 (commit 1bec1bfc83, issuer 2.0.0_SA_COO~D2): the one superseded example in test_owed_days_three_examples may change to the cap check on 2026-09-15, the first owed day being 2026-07-10; nothing else in it or in any other earlier test changes beyond the fake list method.",
+  "world_is": "test_owed_days_three_examples in the handler test file now asserts len(owed_days(2026-06-01, 2026-09-15)) == 5 == MAX_DAYS_PER_FIRE and owed_days(2026-06-01, 2026-09-15)[0] == 2026-07-10. No other assertion of an earlier test changed. The handler suite passes 16 of 16 at the worker's commit; the adapter suite passes 37 of 37.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer Amendment 1 in the order file, commit 1bec1bfc83 (git log author 2.0.0_SA_COO~D2)",
+      "infra/aws/lambda/investor-reporting/account-return-daily/tests/test_handler.py test_owed_days_three_examples at the worker's commit carrying this row: pytest 16 passed",
+      "row IRPT_DASHBD-D2-W207-S1 (BLOCKING, ARMED) in this file, which this row resolves"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolves IRPT_DASHBD-D2-W207-S1 by an appended row, citing the issuer amendment commit 1bec1bfc83; S1's ARMED standing is disarmed by the issuer's amendment and the green suite. Form only; no client figure is quoted."
+}
+```
