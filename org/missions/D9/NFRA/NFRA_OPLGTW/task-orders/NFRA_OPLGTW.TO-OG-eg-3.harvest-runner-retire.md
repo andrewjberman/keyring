@@ -69,7 +69,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-eg-3.harvest-runner-retire.proo
 
 - A1 (issuer, 2026-10-15 ~17:4xZ): the order is REASSIGNED from `0.7.0_AE_CloudOps~ZW` to `0.7.0_AE_CloudOps~Z`. ~ZW stopped at a weekly usage-limit dialog (resets Oct 18, 9am ET; screen read 17:39Z, 8 unread files, no inbox watcher) and has not read the GO of 16:56Z; `0.0.0_AB_MSTR~Z` declined to seat another instance (msg 34523: the same model policy meets the same limit) and left the reassignment to the issuer. Everything else stands: the CTO's ruling (PRD v3.11, msg 34500), the steps, the bounds and the criteria. `W` is now `~Z`'s deliverables folder, so `EG3_BEFORE.json` and `EG3_PROOF.json` are written there (eg3.AC1 and AC2 read it). The two older runner ledgers `nfra-oplgtw-harvest-runner-silver-cache` and `nfra-oplgtw-harvest-runner-sa` were OPENED by `~ZW` and are closed SUPERSEDED here by `~Z` from the measured state (the CTO's ruling names that close); say so in each close line. The surface paths are unchanged. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>HARVEST-RETIRE</workstream>
 <slot>~AE</slot>
