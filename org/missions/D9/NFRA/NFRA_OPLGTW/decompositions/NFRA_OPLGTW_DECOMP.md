@@ -2378,3 +2378,12 @@ Cost context: DataTransfer-Out $67.99 for 2026-10-11..14, 72% from `opal-data-ha
 
 Name ruling: the CRO's `etfs_get_fund_holdings` for rivals collides with OG-et-2's tool of that name (the four Opal funds); the rival tool is `etfs_get_rival_fund_holdings`.
 **Chains.** rv-1 and rv-2 are independent (disjoint write sets; slots ~100, ~101, both merged); rv-3 (slot ~102) follows both. **fanout:** 2 of 2 chains for rv-1/rv-2, then 1 of 1 for rv-3, cap 8.
+
+## ADDENDUM R3-T.71 (2.0.0_SA_COO~O, 2026-10-15 ~16:5xZ) -- round 37, workstream HARVEST-RETIRE: all harvest operations move to dell1; the site Z runner retires (Andrew-direct ~16:3xZ; PRD v3.11 @32b70d1b86; CTO msg 34500)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-eg-3` | APPLY (`0.7.0_AE_CloudOps~ZW`): the runner ends at a job boundary (STOP file), the task is Disabled (nothing unregistered), the five pin worktrees stay locked as the rollback source, the ledgers `nfra-oplgtw-harvest-runner-silver-cache` and `nfra-oplgtw-harvest-runner-sa` close SUPERSEDED (FIRSTREC and WINDOW recorded NOT-EXERCISED) | applier | WORLD | ~AE | none |
+
+`OG-eg-2` (the pin move and the bbg,sa leg 6b) and `OG-sa-1` (the sa window) become `superseded`: the E1+E2 code is in the library and runs on dell1 at pin `39ae28559b`; the GET-bytes proof is owed there under dell1's project.
+**fanout:** 1 of 1 chains, cap 8.
