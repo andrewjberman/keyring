@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.22",
+ "prd_version": "v2.23",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -195,8 +195,9 @@ CONTRACTS changed, so both halves are owed again.
          (`firmId` = the internal firm), read from that firm's own
          served series, which an internal session may read; the Global
          served leaves keep FWD-3's fold and gain no single-firm value;
-         every other session (the demo tenant, a claim with no firmId)
-         draws on those dates one "Models" band (`model_aua`) and keeps
+         a demo-tenant session draws exactly as an internal session
+         (v2.23, Andrew 2026-10-15); every other session (a claim with
+         no firmId) draws on those dates one "Models" band (`model_aua`) and keeps
          exception (ii) of clause (2), its boundary sentence and its
          printed gap; (b) Client Supervised on every date =
          `non_model_aua` minus the two Opal SMA strategies (Dividend,
@@ -215,7 +216,17 @@ CONTRACTS changed, so both halves are owed again.
          cent on every dated row. Firm scopes are unchanged by (a)-(d),
          except that at a firm scope the Client chips draw on the
          as-of date only, and the dated category-views history route
-         has no required reader until the Cottonwood Trend addendum.
+         has no required reader (v2.23). (f) AT COTTONWOOD (v2.23): the
+         window starts at the first measured total (2026-06-09); the
+         Total is `partner_custody_total`; Other AUM = that total minus
+         `model_aua` on every total-bearing row; the model leg carries
+         its last measured value on a date where it is absent (point
+         class `carried`); the interpolated model mix before 2026-07-20
+         keeps its marking; the groups sum to the Total to the cent.
+         (g) MUNI (v2.23): the Cottonwood muni portfolio (Opal Muni
+         Income) is a Custom Model, displayed as "Opal Municipal Bonds",
+         inside "Custom Models" at Cottonwood and at Global, never Other
+         AUM or non-model.
          DONE WHEN  EXERCISED -- on Model Portfolios > AUA TREND ANALYSIS > Trend (the
                     period-end bars, the daily area chart, the legend and the
                     tooltip), read on `bun run dev:live --port 5174` (portal
@@ -737,5 +748,43 @@ reaching dell1 at the next integrator pass. It was read here from `origin/box/de
 - At the firm scopes, Andrew approved the as-shown view ("49 Financial View: No comments, everything is good to go"; "Inflection view: No need to touch these"; record `ANDREW_DIRECT_20261014_201xZ_PORTFOLIOS_SMOKE_TREND_FULL_HISTORY_COTTONWOOD_SPEC.md` @caf5dc7d73), and that view draws the chips on the as-of date only. His Cottonwood Trend upgrade decides any firm-scope history design.
 - **The history leaf stays served** (read-only, no reader) until that addendum keeps it or retires it under its own pair. FWD-9's head states this. CN-j-1 AC4 is closed by this amendment.
 - ENDPOINT text moves (FWD-9 head), so the ratified-text half is re-owed to `3.0.0_SA_CVO`.
+
+-- 1.0.0_SA_CTO~DELL1
+
+**v2.23 (2026-10-15 ~18:5xZ), the Cottonwood Trend addendum, Muni, and the demo session (`1.0.0_SA_CTO~DELL1`):**
+- **Records, VERBATIM:**
+  - `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_152xZ_MUNI_IS_CUSTOM_MODELS_EVERYWHERE.md`: "Muni is in Custom Models, yes".
+  - `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_184xZ_HAPPYLAND_MUNI_IS_CUSTOM_MODEL_OPAL_MUNICIPAL_BONDS.md` @fee736b125
+    (laptop): "the happyland ventures Muni portfolio should be considered a Custom Model, Opal Municipal Bonds; it's with Cottonwood. It should be
+    included in the Agggregate "Custom Models" group in the global view."
+  - `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261015_162xZ_DEMO_GLOBAL_TREND_USES_VARIANT1_NEXT_PROMOTE.md` @25ef8b9c1a:
+    "let's just make the Demo View see the same thing as the global view ... just use the same code as global view" and "it should get added on
+    to the next prod promote of the portal."
+- **FWD-9 head (f), the Cottonwood Trend.** It is the CRO spec `org/tier1_exec/4.0.0_SA_CRO/deliverables/MDPF_CANON_COTTONWOOD_AUM_TREND_UPGRADE_SPEC_20261015.md`
+  @21caa664be, BASE ONLY. The 2026-04-22 extension is not taken: the ramp is custody arriving, not growth, and it would add a cross-product read.
+  The spec's rule table and month-end oracle are cited, not restated. The 12 carried model-leg dates are emitted as `carried`, by the producer or
+  read-side, whichever the decomposition picks. A producer emission is a served change under a never-widen pair.
+- **FWD-9 head (g), Muni.** Opal Muni Income (about $64M, one Cottonwood account, `custom_residual_detail` Opal_Muni_Income) moves from
+  Cottonwood's `income_non_model_residual` into `by_model` / `model_aua`. It moves into Custom at Global through the sums. Its display name is
+  "Opal Municipal Bonds".
+  - Only Muni is named; the 2026-09-21 rule (`build_cottonwood_mdpf_slice.py:933`) stands for every other auto-classified Opal-named model.
+  - **Identity check before the move:** the cell confirms that the Opal_Muni_Income account is the Happyland Ventures account, printing a match
+    flag and no name. If it is not, the cell stops and reports; nothing wider is inferred.
+  - A served change at Cottonwood and Global, under a never-widen pair.
+- **FWD-9 head (a), the demo tenant.** A demo-tenant session draws the Global Trend with the internal session's code (Variant 1).
+  - **Amended ~19:0xZ, on `3.0.0_SA_CVO` msg 6133** (`L4R_REVIEW_MDPF_CANON_v2.23_RATIFIED_TEXT_20261015.md` @8dc11dc359): a non-internal
+    claim with no firmId still opens Global on Variant 2 (`effectiveFirmId = claims?.firmId ?? 'global'`), and ENDPOINT's partition binds it.
+  - So round 11 ALSO repairs Variant 2 in one condition: the Models band is never carried forward on or after `per_model_detail_begins`
+    (`trendGrouping.ts` roll-forward loop).
+  - The repair's test reads the real served object: 0 of 497 rows draw both the band and the model stack, and the drawn groups do not sum above
+    the Total.
+  - D1-S29 disarms when both changes are on DEV.
+  - Variant 1's pre-2026-05-15 lines read 49 Financial's own served series, so a demo session sees them. Andrew was told this the same turn.
+  - If the per-firm edge gate (`auth-validator-edge`) refuses a demo session that read, those lines draw nothing for demo. The cell reports
+    that; it never widens the gate.
+  - Lands on DEV and rides the next portal PROD promote (client-facing, Andrew's word).
+- **The category-views history leaf** stays served and read-only, with no required reader. Its retirement is not ordered.
+- **Placement:** round 11 cut, after round 10's drain. ENDPOINT text moves (FWD-9 head (a), (f), (g)), so the ratified-text half is re-owed to
+  `3.0.0_SA_CVO`.
 
 -- 1.0.0_SA_CTO~DELL1
