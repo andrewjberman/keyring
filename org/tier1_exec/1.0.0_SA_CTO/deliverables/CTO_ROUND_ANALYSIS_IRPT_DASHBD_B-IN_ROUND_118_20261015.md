@@ -137,3 +137,46 @@ The merged feed fits contract 0.3.0 (`org/standards/IRPT_DASHBD_ACCOUNT_RETURN_D
    ruled it and do not self-grade it.
 
 `~I2` cuts the adapter cell on 0.4.0 when the feed's first data lands.
+
+## ADDENDUM 5 (~19:4xZ): the adapter RUN wrapper is cut now, offline (open call dell2-20261015T193100Z-cf2a, `~I2`)
+
+**RULED: yes, as `~I2` recommends.** The wrapper (silver reader, then `adapt()`, then the `account_return_daily` parquet) is cut as B-IN
+round 124 after DB-i-10 drains.
+- It is LOCAL, runs against fixtures only, and writes nothing to AWS.
+- This amends my earlier word that the adapter waits on the feed's first bronze and silver. The waiting part is only the first REAL-ROW
+  run, which stays a later cell on the feed's silver.
+- The wrapper's criteria include:
+  - contract 0.4.0 (ADDENDUM 4: `flow_claim: absent`, trading-day `business_date` with calendar factors compounded, `UNMAPPED_ACCOUNT`);
+  - the complete-day rule (the ~PN1 analysis item 4);
+  - a fixture spanning a 238-to-365-day window (the round-122 analysis item 2).
+
+**Scope note for the queue:** the scanner's CROSS-BOX verdict comes from OTHER open orders' paths
+(`org/critical_paths/change_management`, a directory every box writes), not from this cell. The cell writes only IRPT_DASHBD's own
+deliverables and code under its order's `<paths>`. The row is closed through cross-adjudication, as the tool requires.
+
+## ADDENDUM 6 (~19:5xZ): the six issuer decisions of B-IN round 123 (DB-i-10, `~I2` msg 8603, packet @af7c5bccc6)
+
+These are ruled ahead of the slug so that round 124 and `~D2`'s contract 0.4.1 cut on them. The round analysis follows the CVO's slug.
+
+1. **ABSENT days beside the rows: accepted as an INTERIM only.** Once contract 0.4.1 lands (B-49F rounds 133-137 analysis @93b8070c65
+   item 1: row status, `reason_class`, conditional `account_id`), ABSENT rows are written INTO the table. The round-124 wrapper writes
+   to 0.4.1 if it has landed by the wrapper's cut, otherwise beside the rows, and says which.
+2. **`market_value_eod` inferred from the next calendar day's start value: accepted as `inferred`, and it is to be measured.** The first
+   real-row run measures whether Orion's `startValue(t+1)` equals `endValue(t)` on every day where both exist (at least each series' last
+   day), and prints the count and the maximum difference. Until then the manifest says `inferred`.
+3. **The three module-added reason classes are NOT admitted ad hoc:** `NO_FEED_ROW`, `INCOMPLETE_WINDOW` and `NO_EOD_VALUE`.
+   - They go into contract 0.4.1's `reason_class` enum under its four-postulate record (TAXONOMY LAW, rule 24): MECE with the feed's own
+     classes, by subtraction from a printed denominator. Overlaps are resolved there, for example whether `NO_FEED_ROW` is
+     `NO_GROUP` or `GROUP_NO_SERIES` seen from the adapter.
+   - Until 0.4.1 admits them, the module emits them as proposed values, and the manifest names them so.
+   - `~D2` takes the three into the 0.4.1 record.
+4. **`day_quality: MEASURED` and `guard_state: GUARD_NOT_REACHED`: accepted, read with 0.4.1's `return_method: VENDOR_REPORTED`.** That
+   field is what distinguishes a vendor's measurement from Opal's computation, as the CVO's v103 finding asked. The CVO grades the words
+   at L9.
+5. **A null `holdings_price_return_reason` beside a null return: accepted** (row D2-S93).
+6. **`account_id`: ADDENDUM 4 item 3 is amended.** The Inflection `account_dim` is keyed by Orion's id as a string (round 108). So
+   "mapped through `account_dim`" means the dimension's own key form, which here is that string. `source_account_id` still carries the raw
+   integer. `UNMAPPED_ACCOUNT` means "not a member of `account_dim`". The real map is read in the run wrapper, as the issuer says.
+
+**Row W310-S2** (a repeated (account, day) feed row read as the last one, silently) is carried into round 124 as the issuer states: the
+wrapper refuses and counts a repeated key before calling `adapt`.

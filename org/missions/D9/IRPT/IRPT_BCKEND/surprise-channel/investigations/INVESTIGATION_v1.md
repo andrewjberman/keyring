@@ -40109,3 +40109,182 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W439-S1 -- The commit gate printed WARN that the client-data check was not run: the hashed account-id list is absent on this box, so the iam.tf commit was not checked for account identifiers
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W439-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~439",
+  "surfaced_at": "2026-10-15T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The commit gate printed WARN that the client-data check was not run: the hashed account-id list is absent on this box, so the iam.tf commit was not checked for account identifiers",
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-603 worker face, Client data rule: no account, household or client identifier in any tracked file. The commit gate runs a client-data check on each commit.",
+  "world_is": "safe-commit.sh for commit 3c4d117b57 printed: WARN client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty). The commit landed. The worker checked its own 66 added lines by grep for the AWS account number used in the file: 0 matches, and 0 non-ASCII bytes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 3c4d117b57 (worktree C:/dev/wk-IRPT_BCKEND-439): the WARN line for client-data-check, then the commit line [wk-IRPT_BCKEND-439 3c4d117b57]",
+      "git show HEAD -- infra/aws/terraform/inf-pipeline/iam.tf | grep '^+' | grep -c 313476888478 printed 0; added lines counted 66",
+      "The WARN names OPAL_ACCOUNT_ID_HASHES as the override and the account_id_hashes.txt path as the expected location; neither was set or placed by this worker"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W439-S2 -- The pre-commit risk reflex printed HOLD on iam.tf against 116 recorded claims in six other roots' iam.tf files, each citing one 2026-06-16 change record; the commit proceeded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W439-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~439",
+  "surfaced_at": "2026-10-15T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The pre-commit risk reflex printed HOLD on iam.tf against 116 recorded claims in six other roots' iam.tf files, each citing one 2026-06-16 change record; the commit proceeded",
+  "spec_asserts": "The pre-commit risk reflex (comp-pulse diff) asks the committer to read the citation of any HOLD before the commit proceeds. A HOLD names a node the estate has written warnings about.",
+  "world_is": "The reflex printed six HOLD lines for infra/aws/terraform/inf-pipeline/iam.tf, each pointing at a different root's iam.tf (advi/billing-read, astn-pipeline, bd-49f-auto-login, bd-pipeline, canonical-schwab-ec2, cot-pipeline), each with 116 recorded claims, and each citing the same change record org/critical_paths/change_management/20260616T153514Z_nfra-gcontr-to2-graph-contracts-table_deploy_completion.md line 17 (text: NO iam.tf change, pattern-consistent). The reflex scanned 1 of 1 file within budget. The commit gate reported OK and the commit landed. The worker read no citation beyond the printed line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 3c4d117b57: the [risk-reflex] HOLD block, six HOLD entries, each with a -> file:infra/aws/terraform/<root>/iam.tf (116 recorded claim(s)) line",
+      "The citation printed for each HOLD: org/critical_paths/change_management/20260616T153514Z_nfra-gcontr-to2-graph-contracts-table_deploy_completion.md:17",
+      "[commit-gate] OK: pre-commit gate clean for 1 of 1 file(s); the commit line [wk-IRPT_BCKEND-439 3c4d117b57] followed"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W439-S3 -- The one-writer gate printed WARN that the channel path named by the order is the laptop's unsuffixed file, written from dell2, and that the per-box file form is the expected one
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W439-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~439",
+  "surfaced_at": "2026-10-15T19:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The one-writer gate printed WARN that the channel path named by the order is the laptop's unsuffixed file, written from dell2, and that the per-box file form is the expected one",
+  "spec_asserts": "The order names org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md as the channel file to append rows to. The append-only one-writer check expects a per-box file named with the stem and the box suffix, for example INVESTIGATION_v1.dell2.md, while the C-QUEUE item is open.",
+  "world_is": "safe-commit.sh for commit 63627ce12a printed: one-writer WARN: INVESTIGATION_v1.md is the laptop's (unsuffixed) file, written from dell2; per-box file <stem>.dell2.<ext> (WARN until C-QUEUE). The gate graded 1 append-only path on box dell2 with 0 blocked and the commit landed on the unsuffixed path the order names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output at commit 63627ce12a: the [one-writer] WARN line naming the unsuffixed path and the per-box form, then the [one-writer] OK line with 1 path graded and 0 blocked",
+      "The AGENTBUS_DEVICE value the gate read was dell2 (process environment), as printed on the same line"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W437-S1 -- The import chain of the two harnesses needs more directories than the order names: org/standards, infra/logic/registry, the root file data/firm_registry.json, and the top-level modules of data/assets/scripts/gold.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W437-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~437",
+  "surfaced_at": "2026-10-15T19:27:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The import chain of the two harnesses needs more directories than the order names: org/standards, infra/logic/registry, the root file data/firm_registry.json, and the top-level modules of data/assets/scripts/gold.",
+  "spec_asserts": "Worker face (IB-pr-602): add the directory of each import error until the module imports; the named set was the investor-reporting gold and silver scripts, the investor-reporting Lambda, the mdpf gold and silver scripts, the v2_portal shared package, the investor-reporting contracts and lib.",
+  "world_is": "Importing holdings_snapshot and running both harnesses also raised import errors for org/standards/NAMING_SCHEMA.json (lib/opal_naming.py load_schema), infra/logic/registry/systems.json (holdings_snapshot.py SYSTEMS_REGISTRY_PATH), data/firm_registry.json (the _ids firm registry, which is a root file a cone sparse-checkout does not carry) and build_cottonwood_mdpf_slice.py (holdings_snapshot.py _cot_taxonomy_rules, reached by the cottonwood block of the DELTA harness). Each was added to the sparse checkout or copied into the scratch tree, never committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_snapshot.py@e1cbf4348918831d9deed79b716f019ed2aba6de line 1908 (_cot_taxonomy_rules imports build_cottonwood_mdpf_slice); comp-find located that module at data/assets/scripts/gold/build_cottonwood_mdpf_slice.py",
+      "lib/opal_naming.py@e1cbf4348918831d9deed79b716f019ed2aba6de load_schema reads org/standards/NAMING_SCHEMA.json (the import error named that path in the scratch tree)",
+      "infra/aws/lambda/investor-reporting/_ids/ids.py@e1cbf4348918831d9deed79b716f019ed2aba6de _find_registry walks up to data/firm_registry.json and raises IdRefused when absent",
+      "git sparse-checkout list at e1cbf43489 (worktree): the cone carries directories only, so the root file data/firm_registry.json is not carried"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W437-S2 -- The IB-pr-580 DELTA harness measures both firms (49financial and cottonwood) in one run, so a 49 Financial read carries a cottonwood block that the record does not keep.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W437-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~437",
+  "surfaced_at": "2026-10-15T19:27:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-580 DELTA harness measures both firms (49financial and cottonwood) in one run, so a 49 Financial read carries a cottonwood block that the record does not keep.",
+  "spec_asserts": "Worker face step 3: the same candidate gated WITHOUT and WITH the evidence provider, 49 Financial only.",
+  "world_is": "IB218-1_exemption_delta_harness.py selects every builder in the wanted set (build_49f_meshed and build_cot) and writes a firms block for each. The run printed OK lines for cottonwood (served day 2026-10-08, exemption alone 4 nodes, PUBLISHED). The driver keeps the 49financial block only; the cottonwood numbers are not in the record and are not read further.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB218-1_exemption_delta_harness.py@e1cbf4348918831d9deed79b716f019ed2aba6de lines 38-39 (wanted = build_49f_meshed, build_cot; firm_ids over BUILDERS)",
+      "IB218-1_exemption_delta.json@e1cbf4348918831d9deed79b716f019ed2aba6de firms block holds both 49financial and cottonwood (the IB-pr-580 record)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W437-S3 -- The scratch-location conflict of IRPT_BCKEND-D2-W434-S3 recurs: the order says scratch files go OUTSIDE the repository, the worker rule says <worktree>/.scratch/.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W437-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~437",
+  "surfaced_at": "2026-10-15T19:27:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The scratch-location conflict of IRPT_BCKEND-D2-W434-S3 recurs: the order says scratch files go OUTSIDE the repository, the worker rule says <worktree>/.scratch/.",
+  "spec_asserts": "Worker face (IB-pr-602): scratch files go in a directory OUTSIDE the repository; the BOUNDS name the scratch directory outside the repository. Worker rule: scratch is <your worktree>/.scratch/ only.",
+  "world_is": "The scratch copy of the tree, its logs and the criteria staging were placed under the session scratchpad, which is outside the repository, following the order. The worker rule would have placed them in the worktree .scratch directory. The same conflict was recorded for IB-pr-590 (IRPT_BCKEND-D2-W431-S2) and IB-pr-595 (IRPT_BCKEND-D2-W434-S3).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-602.49f-transplant-reread.md@e1cbf4348918831d9deed79b716f019ed2aba6de worker face line 28 and BOUNDS",
+      "INVESTIGATION_v1.md@e1cbf4348918831d9deed79b716f019ed2aba6de row IRPT_BCKEND-D2-W434-S3"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W437-S4 -- The anatomy and DELTA harnesses print one line per security the candidate cannot classify, and each line carries the security identifier; the recurrence of IRPT_BCKEND-D2-W426-S3 was seen again on this read.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W437-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~437",
+  "surfaced_at": "2026-10-15T19:27:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The anatomy and DELTA harnesses print one line per security the candidate cannot classify, and each line carries the security identifier; the recurrence of IRPT_BCKEND-D2-W426-S3 was seen again on this read.",
+  "spec_asserts": "Client data rule (worker face): counts, dates, hashes, commit ids and file paths only in any tracked file; no real security identifier in any tracked file. Harness output is counts only.",
+  "world_is": "The console and the scratch logs of both harness runs carried security identifier values from the classification step. The logs stayed in the scratch directory outside the repository and no identifier was copied into the record, the criteria output or the proof instance. The harnesses' printed output is therefore a hazard for any run that is pasted or committed as a log.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB220-1_49f_refusal_anatomy_harness.py@e1cbf4348918831d9deed79b716f019ed2aba6de prints counts only; the identifier lines come from the build module's classification step (the W426-S3 row)",
+      "INVESTIGATION_v1.md@e1cbf4348918831d9deed79b716f019ed2aba6de row IRPT_BCKEND-D2-W426-S3"
+    ]
+  }
+}
+```

@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.16",
+  "prd_version": "v0.17",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -728,3 +728,76 @@ From `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014
 - nl_tags.
 The coverage row says that latest-report freshness is read from `canonical_shape` (Z-S124). Land them after the Friday
 rows (G5 wave A, G6, G3). CONTRACTS-only.
+
+### v0.17 addendum (2026-10-15 ~19:4xZ, 1.0.0_SA_CTO~Z) -- the gateway finish by EOD Fri 2026-10-16: CONTRACT C-GROUP; two index workstreams
+
+On the CRO plan `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_FINISH_PLAN_EOD_20261016.md` @6cc033c818.
+
+**Andrew, verbatim** (site Z session of `4.0.0_SA_CRO~Z`, ~18:4xZ, carried in the plan):
+
+> "Yes I want to make sure that we have a very clean and tight process to get this completely done by end of day tomororw.
+> We have the compute necessary to handle it on this box and it's not complicated work. Here is what it looks like: COO~MI
+> focuses on getting those data contracts indexed in MCP channels. This should include everything in opal-data-harvest,
+> every vendor/firm combo in opal-data-assets, opal-data-etfs using whatever we use for the monthly
+> reconciliation/accounting, wherever the served rivalfunds outputs live, opal-data-portal-v2 for whatever is served to
+> the portal not including advisor intelligence and investor reporting surfaces. We need to push through this
+> aggressively so we may want to have 2 COOs ~MI and ~MI2 and they split that workload. While this is happening, we have
+> COO~O handle whatever opalgateway server infrastructure needs to be done to accomodate and managing entitlements/access,
+> through NFRA_OPLGTW. While this is happening we have COO~MP there doing passes on the /gateway page of the
+> mcp.opalinvest.dev making sure everything is extremely legible, clean, and well-designed, using the opalinvest.com website
+> design fixtures, as well as making sure that everything is readable by human eyes and not wrapped or squished on text and
+> segments. The most important thing is really that each displayed tool segment is very clearly segmented, i recommend this
+> being by bucket, and in the case of opal-data-assets, by client/vendor pairs. I want to figure out how we pull any
+> possible parallelization lever to get this done, so keep that in mind as you put together your analysis."
+
+GO at ~19:2xZ (relayed by `4.0.0_SA_CRO~Z` msg 34543): "We have usage, run it now" and "get it to CTO and let's get this going".
+
+#### CONTRACT C-GROUP (owned by NFRA_MCPINDEX; read by NFRA_MCPORTAL and NFRA_OPLGTW)
+
+1. **`bucket`, on every catalog row and every `tool_index` row.**
+   - Its value is the S3 bucket name the row reads, for example `opal-data-harvest`, `opal-data-assets`, `opal-data-bd`,
+     `opal-data-etfs`, `opal-data-portal-v2`, `opal-data-mdpf` or `opal-data-news-v2`.
+   - A non-S3 source names its store: `dynamodb`, or `graph` for the Microsoft tools.
+   - The value is read from the row's own source path, never typed from memory.
+   - MX-c-21's `source_group.id` IS this value. There is one field and one spelling.
+2. **`vendor` and `firm`, on every opal-data-assets and opal-data-bd row.**
+   - `vendor` is one of: `schwab`, `blackdiamond`, `orion`, `eclipse`, `smartx`, `commonwealth`, `gateway` (Tax SMA),
+     `market` (a non-client source: trueshares, pathfinder, yahoo).
+   - `firm` is one of: `49financial`, `cottonwood`, `inflection`, `multi` (one object mixes firms: SmartX, Tax SMA, and
+     any Schwab master that serves more than one firm), or `none` (`vendor: market`).
+   - `firm` comes from `infra/logic/registry/catalog_fork_keys.json`, the same join MX-c-19 used, or from the row's own
+     key segment. A row that neither source resolves carries `firm: unresolved` and is listed in the release record.
+     It is never guessed.
+   - The 24 rows MX-c-19 set (23 `49financial`, 1 `inflection`) keep their values.
+3. **The display and discovery group key is exactly (`bucket`) for every bucket, and (`bucket`, `vendor`, `firm`) for
+   opal-data-assets and opal-data-bd.** No other grouping field is introduced. A new value in either list is an addendum
+   here, not a local spelling.
+4. **The `firm` VALUE on a row is a label for grouping.** Visibility and data access stay where they are: catalog visibility
+   is MX-c-19's gate, and data access is the firm's data grant (NFRA_OPLGTW v3.1 Ruling 2 / v3.2).
+
+**Scope of FWD-22 for this finish (Andrew's list):**
+- everything in opal-data-harvest;
+- every vendor/firm pair in opal-data-assets, plus opal-data-bd (49F BD, v0.15);
+- opal-data-etfs: the monthly reconciliation set, meaning the inputs and outputs of `etfs-reports-orchestrator`;
+- the served rival-fund outputs (`rivalfunds/etfs/gold/*` and the platinum page manifest);
+- opal-data-portal-v2 rows served to the portal, EXCLUDING advisor intelligence and investor reporting. Rows under
+  `advi/` or `irpt/` surfaces come out of scope and are listed in the release record.
+
+**Two workstreams, disjoint files, one project (CLAUDE.md rule 27):**
+- **ASSETS, `2.0.0_SA_COO~MI`:** the opal-data-assets and opal-data-bd source files in
+  `workflows/atom_decomposition/catalog_entries/`. It adds C-GROUP and links each row's `read_tool` as NFRA_OPLGTW's
+  `OG-cl-*` tools go live.
+- **RESEARCH, `2.0.0_SA_COO~MI2`** (a new seat that `0.0.0_AB_MSTR~Z` spawns): the harvest, etfs (including rivalfunds),
+  portal-v2, mdpf and news source files. It adds C-GROUP and drops the out-of-scope rows.
+- Only ONE release cell per catalog release runs the emitter and writes `DATA_CATALOG.yaml`. The two COOs take turns at the
+  release, never a shared file.
+
+**MX-c-21 and MX-c-22 (COO~MI msg 34542): YES, both enter round 18.**
+- MX-c-21 implements C-GROUP item 1 on `tool_index`.
+- MX-c-22 is the `etfs_get_positioning` extension, with the old answer byte-equal.
+
+**Done by 2026-10-16 ~22:00Z:**
+- every in-scope row carries C-GROUP and a `read_tool` naming a live tool;
+- `opal_discover` returns one row per bucket by plain words, recorded.
+
+CONTRACTS-side under FWD-22; ENDPOINT unchanged.

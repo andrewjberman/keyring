@@ -1428,6 +1428,71 @@
     "spec_asserts": "Cell RV-z-1 step 2: remove that scratch worktree (git worktree remove --force) after the baseline typecheck.",
     "world_is": "The residue is an untracked copy of PROD at 33ad65ee plus a bun install, and no git worktree tracks it. Deleting it is a recursive delete, which the autonomy rule holds for Andrew's word, so this worker did not delete it.",
     "notes": "Disposition for Andrew or the drain: remove the directory. Not blocking the rehearsal; no criterion reads it."
+  },
+  {
+    "id": "DSGN_RBNDV2-W23-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~23",
+    "surfaced_at": "2026-10-15T19:19:30Z",
+    "one_line": "RV-b-1 as specified makes two existing dsgn-rbndv2 tests fail (RB1R-AC1 exact-scope rule count; RB1R2-AC1 bare-triple check on the five grounds); RB8B1-AC3 cannot read 0 fail without editing them, and the cell forbids that.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@e5588a8e src/index.css: an unlayered [data-panel-surface=\"light\"] background-color rule is added beside the palette block, so the exact-scope selector now sits outside every @layer twice; the :root [data-panel-surface=\"light\"] grounds now read var(--bg-panel)",
+        "bun test src/__tests__/dsgn-rbndv2 src/ui/components/panels src/ui/components/modal: 39 pass, 2 fail, 41 tests; rb-1-r.remap.test.ts:140 'exact-scope rules outside @layer: 2'; rb-1-r2.surfaces.test.ts:162 '--semantic-background-contentPanel is not a bare H S% L% triple: var(--bg-panel)'",
+        "a base-commit run of those two files was not measured in this worktree; the failure reasons name the two CSS blocks this cell changes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO RB8B1-AC3: every test under src/__tests__/dsgn-rbndv2/, src/ui/components/panels/ and src/ui/components/modal/ passes (summary 0 fail). Worker face: change nothing else in an existing test; the cell requires the unlayered scoped rule and the var(--bg-panel) grounds.",
+    "world_is": "The two tests pin the pre-cell form of the two CSS blocks RV-b-1 changes, so their exact-count and bare-triple arms are false under the cell's own rule form. The paths grant covers the folder, but the face forbids editing those arms, so the worker left them untouched and did not weaken them.",
+    "notes": "Not edited, not weakened. Disposition for the COO: amend RB1R-AC1 and RB1R2-AC1 to the RV-b-1 form, or re-scope RB8B1-AC3. Commit e5588a8e is LOCAL on wk-DSGN_RBNDV2-23-portal (not pushed)."
+  },
+  {
+    "id": "DSGN_RBNDV2-W23-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~23",
+    "surfaced_at": "2026-10-15T19:19:30Z",
+    "one_line": "The worktree carries no org/surprise_channel/ tree, so the investigation item schema named in CLAUDE.md is not reachable from the worktree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls org/surprise_channel under C:/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-23 returned 'No such file or directory'; the worktree root HEAD is 3509eae8",
+        "the workspace root C:/Users/AndrewBerman/Desktop/ajb_workspace/org/surprise_channel/schemas holds investigation_item.schema.json and remediation_row.schema.json (read only, not copied)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md section 2 and the worker face: a surprise row is appended per org/surprise_channel/schemas/investigation_item.schema.json.",
+    "world_is": "The schema is present at the workspace root and absent from this worktree. The row was written by the schema's required-field list read from the workspace root, not from a worktree copy.",
+    "notes": "Filed, not fixed. Cause not measured: whether the worktree was cut before org/surprise_channel landed is unverified."
+  },
+  {
+    "id": "DSGN_RBNDV2-W23-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~23",
+    "surfaced_at": "2026-10-15T19:35:09Z",
+    "one_line": "The issuer ruling on W23-S1 names two arms, but the same RB1R2-AC1 test also has control arm (c), checkOldRule, which counts exact-scope rules outside @layer as 1 and now reads 2; the ruling says change nothing else, so AC3 stays 1 fail.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@590307cd rb-1-r2.surfaces.test.ts: checkNewRule (the ruled arm) passes; checkOldRule (arm (c), line ~150) returns 'exact [data-panel-surface] rules outside @layer: 2'",
+        "bun test src/__tests__/dsgn-rbndv2 src/ui/components/panels src/ui/components/modal: 40 pass, 1 fail, 719 expect() calls, 41 tests across 28 files; the one fail is INNER-SURFACES-OK (RB1R2-AC1) at rb-1-r2.surfaces.test.ts:173",
+        "bun test rb-1-r.remap.test.ts (RB1R-AC1 with the ruled count 2): passes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer ruling on DSGN_RBNDV2-W23-S1 (order amend commit 3a3a890c9e): edit RB1R2-AC1 for the five grounds, change nothing else in either test. TO RB8B1-AC3: 0 fail across dsgn-rbndv2, panels and modal.",
+    "world_is": "Arm (c) of RB1R2-AC1 pins the pre-cell count of exact-scope unlayered rules (1). The palette rule is still exactly one of the two such rules, so the control's intent holds, but its count arm reads the new rule. Under the ruling wording it is not in the authorized edit, so it was left untouched.",
+    "notes": "Not edited. The minimal form the issuer may wish to rule on: checkOldRule selects the rule whose declarations include --palette-white (count 1 among those) instead of counting all exact-scope rules. Commit 590307cd is LOCAL on wk-DSGN_RBNDV2-23-portal."
   }
 ]
 ```

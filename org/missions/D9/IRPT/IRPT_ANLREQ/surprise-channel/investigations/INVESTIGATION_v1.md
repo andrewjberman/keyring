@@ -19038,3 +19038,109 @@
   "world_is": "The issuer's read is not the gate's check and does not claim it. The same instrument gap is on the record as W143-S2, W52-S25 and, for adapters 81 and 84, S123 and S124."
 }
 ```
+
+## IRPT_ANLREQ-D2-W188-S1 -- the commit gate's client-data check found no hashed account-id list on this device, so commit 61457ec92a was not checked for client account ids
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W188-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~188",
+  "surfaced_at": "2026-10-15T19:33:25Z",
+  "one_line": "The commit gate's client-data check reports its hashed account-id list ABSENT on this device, so commit 61457ec92a was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "TO-AR-g-88 WORKER FACE: commit with bash .tools/safe-commit.sh and pass every .py through the commit gate; CLAUDE.md rule 14a: commits go through safe-commit.sh, whose gate chain runs the client-data check on each commit.",
+  "world_is": "safe-commit printed WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty). Commit 61457ec92a (layout_overview.py and tests/test_layout_own_series_columns.py) landed with rc=0, so on this device every commit proceeds unchecked for client account ids until the list is provisioned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 61457ec92a: WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "git show 61457ec92a -- infra/ | grep '^+' | grep -E '[0-9]{6,}' returns one line, the milliseconds-per-day constant 86400000; no account id is added"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The same instrument gap as IRPT_ANLREQ-D2-W187-S1, on this device; not caused by the order's change. This worker created, read and moved no account-id list. Disarm: provision the hashed list or set OPAL_ACCOUNT_ID_HASHES on dell2; the disarm owner is named for the CVO to route."
+}
+```
+
+## IRPT_ANLREQ-D2-W188-S2 -- the pre-commit risk reflex cited a deploy receipt the sparse worktree does not hold, so the citation could not be read before commit 61457ec92a
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W188-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~188",
+  "surfaced_at": "2026-10-15T19:33:25Z",
+  "one_line": "The pre-commit risk reflex cited a deploy receipt the sparse worktree does not hold, so the citation could not be read before commit 61457ec92a.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate's risk reflex says: GO READ THE CITATION before this commit proceeds. TO-AR-g-88 WORKER FACE says the worktree carries infra/, docs/, data/ and org/missions/D9/IRPT on disk and names no critical_paths read.",
+  "world_is": "The worktree is sparse: org/critical_paths/change_management/ does not exist on disk here (ls reports no such file or directory). The reflex on commit 61457ec92a printed HOLD infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py (2 recorded claims) and cited org/critical_paths/change_management/20261009T0050Z_irpt-ycdgen-f1-st26-20261008_deploy_completion.md:15. The citation was not read; the commit proceeded with the HOLD printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit risk-reflex output for commit 61457ec92a: HOLD infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py, citation org/critical_paths/change_management/20261009T0050Z_irpt-ycdgen-f1-st26-20261008_deploy_completion.md:15",
+      "ls org/critical_paths/change_management/ in the worktree: No such file or directory; the same condition is on record as IRPT_ANLREQ-D2-W187-S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The same instrument gap as IRPT_ANLREQ-D2-W187-S2. The flagged change adds one pure function, a column branch and a milliseconds-per-day constant; it deploys nothing and calls no AWS. The citation stays unread by this worker."
+}
+```
+
+## IRPT_ANLREQ-D2-S126 -- disposition of IRPT_ANLREQ-D2-W188-S1: the added lines read clean for account-id-shaped strings
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S126",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T19:38:55Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client-account gate could not run on this box, so the issuer read the lines the commit added for account-id-shaped strings: the only run of six or more digits is the milliseconds-per-day constant 86400000 in the test file. The gate stays unmeasured; the box's hashed list is not this order's to place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W188-S1 (ARMED, client account-id check absent on this box): the lines commit 61457ec92a added hold no account-id-shaped string, read by the issuer at 0a3720ff89.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 61457ec92a over ycharts/research/: 158 added lines, one with a run of 6 or more digits (86400000, a day in milliseconds, in tests/test_layout_own_series_columns.py)",
+      "the change is a statistic loop and its labels over invented series values"
+    ]
+  },
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned against the hashed list; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "The issuer's read is not the gate's check and does not claim it. The same instrument gap is on the record as W143-S2, W52-S25, S123, S124 and S125."
+}
+```
+
+## IRPT_ANLREQ-D2-W192-S1 -- TO-AR-t-33 says leave the other four figure tests alone, but the model-name rule also forces fixture edits beyond the ticker-only allowance
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W192-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~192",
+  "surfaced_at": "2026-10-15T19:38:25Z",
+  "one_line": "The model-name rule (keep a model_names entry only if it is a comparison key) also fails the shared clean_block fixture in test_commentary_figures.py, so test_prompt and test_provenance needed fixture edits that the order's ticker-only refusal clause does not name; made, and listed here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-t-33 BOUNDS: 'do not touch the other four there' (the four existing tests in test_commentary_figures.py). Refusal clause: if an existing figures test fails because of the new rule, change the test's fixture to a ticker in the table (and say which) rather than loosening the rule.",
+  "world_is": "Four existing tests are touched, not one. (1) clean_block(): top_holdings ZZQ1 -> AAPL (the ticker fixture the clause names); model_names ['Figure Model Zeta','Figure Model Eta'] -> ['Model Alpha'], the request's own comparison key, which the clause does not name. (2) test_figures_whitelist_drops_unknown_members_and_bad_tickers: expected ZZQ4 -> MSFT (ticker clause). (3) test_provenance_lists_prompt_fields_by_name_only: assertion figures.model_names == 2 -> == 1 (follows from the model-name fixture). test_prompt_carries_figures_block_and_no_planted_name_or_dollar needed no body edit. In test_provenance the 'ZZQ1 not in blob' check is now vacuous (kept, not edited). Rule itself unchanged. Commentary tests: the figures file had 4 passing tests at base and 7 after; test_commentary_*.py had 69 passing at base and 72 after.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest data/transcripts/scripts/tests/test_commentary_figures.py at base 218aa64619 (worktree before edits): 4 passed; after the rule and fixture edits: 7 passed; test_commentary_*.py: 69 passed at base, 72 passed after",
+      "git diff -- data/transcripts/scripts/tests/test_commentary_figures.py in worktree wk-IRPT_ANLREQ-192 lists the clean_block, test_figures_whitelist and test_provenance hunks",
+      "r43_checks.py cn1 at base: R43-CN1-FAIL missing (three test names); after: R43-CN1-OK 7 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the rule is as ordered and the new tests are as ordered; the fixture edits are the minimum the rule forces. The CTO or COO may prefer a different fixture shape; the choice is theirs."
+}
+```
