@@ -57,12 +57,15 @@ The package `lib/research/aifill/` already holds `contract.py`, `orchestrate.py`
 ### Tests
 A new test module `lib/research/aifill/tests/test_orchestrate_grounding.py` (no `__init__.py`): one test per behaviour above. The existing tests of `tests/test_contract_orchestrate.py` and `tests/test_store_run.py` that build documents from stub builders returning filled blocks pass `ground=False` (or a stub fetch and model) so that they keep their meaning; change only what the new step breaks, and say which in your report.
 
+### AMENDMENT 1 (issuer ruling on the first seat's row W454-S1): one more existing test takes `ground=False`, and nothing else changes
+Your predecessor on this order left commits `3bc81d3a84` (orchestrate.py, run.py, the new test module, the two edited test files) and `0398e43216` (the instance) on branch `wk-AMGT_RESAPP-454`, with AC1 YES 20 of 20 and AC2 `1 failed, 754 passed`. Start from them; do not redo them. The one failure is `lib/research/aifill/tests/test_text_blocks.py::test_document_with_a_silent_pack_and_empty_header_fills_the_three_blocks`: it builds a document from the real builders with a stub model and no fetcher, which the grounding step now withholds. `lib/research/aifill/tests/test_text_blocks.py` is now in `<paths>`. In that one test add `ground=False` to the `orchestrate.build_document(...)` call and change nothing else in the file. Then re-run AC1 and AC2 (AC2 must read `N passed` with no failure), overwrite and re-commit the proof-of-spec instance at its path, and run `python .tools/proof-of-spec-check.py <instance>` on the committed bytes. Your rows start at `AMGT_RESAPP-D1-W454-S3`.
+
 Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W454-S<k>`, `disarm_owner` `2.0.0_SA_COO~R2`.
 
 ## 2. BOUNDS
 
 
-1. Write ONLY `lib/research/aifill/orchestrate.py`, `lib/research/aifill/run.py`, `lib/research/aifill/tests/test_orchestrate_grounding.py`, `lib/research/aifill/tests/test_contract_orchestrate.py` and `lib/research/aifill/tests/test_store_run.py`. The contract, the grounding and sources modules and the five builders are other cells'.
+1. Write ONLY `lib/research/aifill/orchestrate.py`, `lib/research/aifill/run.py`, `lib/research/aifill/tests/test_orchestrate_grounding.py`, `lib/research/aifill/tests/test_contract_orchestrate.py` and `lib/research/aifill/tests/test_store_run.py`, plus the one call named in AMENDMENT 1 in `lib/research/aifill/tests/test_text_blocks.py`. The contract, the grounding and sources modules and the five builders are other cells'.
 2. `orchestrate.py` does no network of its own (the fetcher arrives as an argument).
 - Leave `lib/research/management/`, `lib/research/filings/`, `lib/research/posture/` and every existing module untouched.
 - No network, no AWS, no real model call, no `pip install`: every model call in your tests is a stub or the recorded response. The `anthropic` package is never imported (the installed 0.45.0 crashes on web-search blocks).
@@ -77,6 +80,7 @@ lib/research/aifill/run.py
 lib/research/aifill/tests/test_orchestrate_grounding.py
 lib/research/aifill/tests/test_contract_orchestrate.py
 lib/research/aifill/tests/test_store_run.py
+lib/research/aifill/tests/test_text_blocks.py
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 

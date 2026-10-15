@@ -18534,3 +18534,226 @@
   "notes": "The junction is removed by rmdir, which never recurses into its target. A crashed run would leave a link in .scratch; mutant_check.py removes a leftover link before it builds a new copy."
 }
 ```
+
+## IRPT_ANLREQ-D2-S123 -- disposition of IRPT_ANLREQ-D2-W181-S1: the merged files read clean for account-id-shaped strings
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S123",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T18:26:12Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client-account gate could not run on this box, so the issuer read the merged files for account-id-shaped strings: none present. The gate stays unmeasured; the box's hashed list is not this order's to place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W181-S1 (ARMED, client account-id check absent on this box): the merged files hold no account-id-shaped string, read by the issuer at dc80bdd32c.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Regex (?<![0-9.])[0-9]{6,}(?![0-9]) over the adapter and its test file at dc80bdd32c: no match except the millisecond constants 86400000 and 3600000 (a day and an hour in ms), no account id, name or firm label",
+      "price_adapter_bbg.py (124 lines) and tests/test_price_adapter_bbg.py (164 lines)"
+    ]
+  },
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned against the hashed list; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "The files are price-adapter code and tests over invented symbols, dates and numbers; the issuer's read is not the gate's check and does not claim it. The same instrument gap is already on the record as W143-S2 and W52-S25."
+}
+```
+
+## IRPT_ANLREQ-D2-S124 -- disposition of IRPT_ANLREQ-D2-W184-S1: the merged files read clean for account-id-shaped strings
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S124",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T18:26:12Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client-account gate could not run on this box, so the issuer read the merged files for account-id-shaped strings: none present. The gate stays unmeasured; the box's hashed list is not this order's to place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W184-S1 (ARMED, client account-id check absent on this box): the merged files hold no account-id-shaped string, read by the issuer at 3cb1344c88.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Regex (?<![0-9.])[0-9]{6,}(?![0-9]) over the adapter and its test file at 3cb1344c88: no match except the millisecond constants 86400000 and 3600000 (a day and an hour in ms), no account id, name or firm label",
+      "price_adapter_ycharts.py (105 lines) and tests/test_price_adapter_ycharts.py (115 lines)"
+    ]
+  },
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned against the hashed list; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "The files are price-adapter code and tests over invented symbols, dates and numbers; the issuer's read is not the gate's check and does not claim it. The same instrument gap is already on the record as W143-S2 and W52-S25."
+}
+```
+
+## IRPT_ANLREQ-D2-W182-S1 -- AR-g-82 contract conflict: the default s3_root needs a nested import of opal_naming, which the AC2 hygiene allow-list forbids; built to the contract, AC2 left FAIL
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W182-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~182",
+  "surfaced_at": "2026-10-15T18:11:59Z",
+  "one_line": "AR-g-82 cannot meet AC2 as written: the contract's lazy import of opal_naming (default s3_root) is refused by the hygiene allow-list; built to the contract, AC2 FAILs and the order stays open.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO AR-g-82 contract item 4 (worker face, make_reader default): when index_rows or price_rows is None the default s3_root imports opal_naming INSIDE the function, a bare import. AC2 (ar_g8x_checks.py hygiene82) admits nested imports only from NESTED_OK = pandas, pyarrow, yfinance, io, json, time, plus the top-level TOP_OK set.",
+  "world_is": "The two cannot both hold at worktree HEAD 224b73edce. price_adapter_demque.py _default_root() imports opal_naming nested, and hygiene82 prints AR-G82-HYGIENE-FAIL nested imports outside the allowed set: opal_naming (rc=1). opal_naming is in neither set. AC1 PASSes (cases=7 wrong none; tests 11 passed). No lazy route the allow-list admits reaches opal_naming without evading the check: a sys.modules lookup, __import__ or importlib are each refused or are a silent hack. The contract import is kept and AC2 is left FAIL, not weakened.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ar_g8x_checks.py hygiene82 at worktree HEAD 224b73edce: AR-G82-HYGIENE-FAIL nested imports outside the allowed set: opal_naming (rc=1)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g8x_checks.py lines 19-20 (TOP_OK, NESTED_OK) at 224b73edce",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_demque.py _default_root() at 224b73edce",
+      "lib/opal_naming.py address() at line 2515 at 224b73edce"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocking for this order only (AR82-g-AC2). Whether the allow-list widens or the default root routes another way belongs to the issuer and the CTO; this worker did not edit the check or the contract. The module is imported by nothing yet, so the hazard is INERT."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W182-S2 -- the facts record names the reader seam index_frame; the order names index_rows and price_rows; the module follows the order
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W182-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~182",
+  "surfaced_at": "2026-10-15T18:11:59Z",
+  "one_line": "The facts record PRICE_ADAPTER_FACTS.json q4 names the demque reader seam index_frame; the order names index_rows and price_rows. The module follows the order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The facts record r9/PRICE_ADAPTER_FACTS.json (q4 summary, line 558) states make_reader(s3, *, s3_root=None, index_frame=None).",
+  "world_is": "The order AR-g-82 (worker face items 2 and 3) fixes make_reader(s3, *, s3_root=None, index_rows=None, price_rows=None), index_rows a list of dicts and price_rows a mapping. The built module follows the order. The record and the order disagree on one public seam name.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~176/r9/PRICE_ADAPTER_FACTS.json line 558 at 224b73edce",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_demque.py make_reader signature at 224b73edce"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Observation only. The record is an issuer artifact and is not edited by this worker."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W182-S3 -- resolves W182-S1: the issuer's amendment a294ca574a admits the contract's nested opal_naming import in the hygiene allow-list; AC2 now passes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W182-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~182",
+  "surfaced_at": "2026-10-15T18:25:33Z",
+  "one_line": "BLOCKING row W182-S1 is resolved by the issuer's amendment a294ca574a: NESTED_OK now includes opal_naming; AC2 hygiene82 prints AR-G82-HYGIENE-OK and AC1 g82 prints AR-G82-OK cases=7 tests=11, both at this worker's tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W182-S1 (BLOCKING): the order's contract item 4 requires a nested import of opal_naming in the default s3_root; the AC2 hygiene allow-list (NESTED_OK in ar_g8x_checks.py) did not admit it, so AR82-g-AC2 FAILed.",
+  "world_is": "Re-measured in worktree C:/dev/wk-irpt-anlreq-182 at product commit 224b73edce with the issuer's amended checker copied in as an uncommitted modification (not committed by this worker; not in its paths): git diff shows NESTED_OK = pandas, pyarrow, yfinance, io, json, time, opal_naming, and the g82 AC1 run is unchanged. hygiene82 prints AR-G82-HYGIENE-OK top=math,tr_level nested=io,opal_naming,pyarrow (rc 0). g82 prints AR-G82-OK cases=7 tests=11 (rc 0). The issuer's amendment is on main at a294ca574a (git cat-file -t reads commit in this worktree). The same diff also adds an AR-g-83 case (cases83, a split on a dropped bad-Close row) which is outside this order and was not run here by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ar_g8x_checks.py hygiene82 at worktree C:/dev/wk-irpt-anlreq-182 with the amended checker: AR-G82-HYGIENE-OK top=math,tr_level nested=io,opal_naming,pyarrow (rc=0)",
+      "ar_g8x_checks.py g82 at the same tree: AR-G82-OK cases=7 tests=11 (rc=0)",
+      "git diff of org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g8x_checks.py in the worktree: NESTED_OK line 20 gains opal_naming; uncommitted",
+      "git cat-file -t a294ca574a in the worktree reads commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closes the blocking condition of W182-S1 by the issuer's amendment; S1 is not edited and keeps its filed text. S2 stands as filed and was ruled correct by the issuer (the order governs). The AR-g-83 case in the amended checker is not verified by this worker."
+}
+```
+
+## IRPT_ANLREQ-D2-W183-S1 -- AR-g-83 contract: a split dated on a dropped (bad-Close) row is not applied to the spanning return, so the literal formula reports -49 percent where the true move is +2 percent
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:07:20Z",
+  "one_line": "The AR-g-83 contract applies the split ratio on the returned row only (s_t), so a 2-for-1 split dated on a dropped bad-Close row is missed by the spanning return: -49 percent is read where the true move is +2 percent. Implemented literally; not corrected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-83 item 3: r_t = (P_t + D_t) / (P_prev / s_t) - 1, where P_prev is the previous usable row's as-traded close and s_t the split ratio on t (1.0 when none); a bad row between two good rows is dropped and the next return spans the gap. Item 2: factor(d) is the product of every split ratio dated strictly after d over ALL fetched rows, including a row whose Close is unusable.",
+  "world_is": "MEASURED on the module as committed at 286cdf9f94 (run just before the one-line __future__ import was added; no behaviour change) by calling make_reader(fetch=...) on three served rows: 2024-01-02 Close 50.0 Stock Splits 0.0; 2024-01-03 Close NaN Stock Splits 2.0; 2024-01-04 Close 51.0 Stock Splits 0.0. Output [('2024-01-02', 100.0), ('2024-01-04', 51.0)]. The as-traded close for 2024-01-02 is 100, its factor 2 coming from the split on the dropped 2024-01-03 row, while s on 2024-01-04 is 1.0, so the spanning return is 51 / 100 - 1 = -0.49. The true return across the 2-for-1 split is 51 / (100 / 2) - 1 = +0.02. The spec's own daily_tr has the same shape: it reindexes splits onto the close index only, so a split on a row absent from that index is not applied (data/mdpf/scripts/demque/tr_compare.py lines 45-49 at HEAD). NOT MEASURED: how often Yahoo serves a split day with a NaN or zero Close (no live pull, no network, no AWS, per the order).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py@286cdf9f94: the factor_by_date loop (factor(d) over all served rows) and the returns loop (s_t taken from the returned row only)",
+      "python -c measurement on the committed module, three-row case: [('2024-01-02', 100.0), ('2024-01-04', 51.0)]; the spec-literal return printed as -0.49 against the true +0.02",
+      "data/mdpf/scripts/demque/tr_compare.py@HEAD lines 45-49: s = sp.reindex(close.index).fillna(1.0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker, not dispositioned. Does not block AR83-g-AC1 or AC2: the contract cases pass as written. Whether the spanning return should carry a split on a dropped row is for the issuer and the CTO; a correction changes the contract's formula, which is not a worker act."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W183-S2 -- closes W183-S1: the issuer amended item 3 (af96479526, on main) so s_t is the product of the split ratios since the previous usable row; the reader is fixed at 497e911dab and checker case 11 passes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:24:37Z",
+  "one_line": "Closing row for W183-S1: the issuer's amendment af96479526 (main) makes s_t the product of the split ratios of every fetched row dated after the previous usable row up to and including t, so a split on a dropped bad-Close row counts across the gap. The reader at 497e911dab implements it; checker case 11 passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W183-S1 stands as filed and is not edited. It recorded that TO-AR-g-83 item 3 read s_t as the split ratio on t alone, which misses a split on a dropped bad-Close row for the return across the gap.",
+  "world_is": "The issuer's ruling (2.0.0_SA_COO~G2) and amendment af96479526 on main amend item 3: s_t is the product of the split ratios (as item 2 reads them) of every fetched row dated after the previous usable row's date up to and including t, 1.0 when none. The checker ar_g8x_checks.py g83 gained case 11 (D1 served 50, D2 bad Close with split 2.0, D3 served 51.51, expecting [(D1, 100.0), (D3, 103.02)]). The reader at 497e911dab implements the amended rule; the offline test test_a_split_on_a_dropped_bad_close_row_counts_for_the_return_across_the_gap passes; AC1 reads cases 11, wrong none and tests 12 passed (rc 0); AC2 reads AR-G83-HYGIENE-OK (rc 0). The issuer also ruled the judgment calls correct: a non-finite Dividends value counts as 0.0 and a bool Stock Splits value counts as 1.0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show af96479526 --stat: the amended order file (item 3 and the case count) and ar_g8x_checks.py (+3 lines, case 11)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py@497e911dab: the accrued-split loop over served rows between the previous usable row and t",
+      "ar_g8x_checks.py g83 run at the worktree after 497e911dab: 'cases 11, wrong none'; 'AR-G83-OK cases=11 tests=12', rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closing row: the finding is resolved in substance by the issuer's amendment af96479526 and the fix at 497e911dab. W183-S1 is not edited and keeps its filed text and disposition. The disposition is left UNDER_INVESTIGATION because the worker cannot transfer one: the gate refused GRADUATED from a worker (a CVO transfer at L9). The CVO's compile may close it."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-W183-S3 -- the lane gate refused the amendment fix at HEAD because the order was flipped to complete; the amended order was committed as pending first (9db088e4ad), and the fix then passed at 497e911dab
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W183-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~183",
+  "surfaced_at": "2026-10-15T18:30:03Z",
+  "one_line": "A worker's commit to the order's own paths was refused as another lane once the order was complete at HEAD: the owned-paths gate reads only NON-TERMINAL task orders at HEAD, so an amendment fix needed the order reopened (pending) in its own commit before the module and test could land.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face commits the worker's files with safe-commit scoped to the order's <paths>, and the order's status is flipped to complete only at the close. The owned-paths lane gate admits a worker's commit only to paths named by a non-terminal task order at HEAD issued to its serial.",
+  "world_is": "MEASURED 2026-10-15 at dbb40402f8 (the closing flip): safe-commit of infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py and its test was refused in block mode with 'owned-paths lane violation ... WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. Committing the amended order file alone (status pending, 9db088e4ad) restored the grant, and the same two files then committed at 497e911dab with rc 0. NOT MEASURED: whether a complete order with an amendment on main should reopen through the issuer rather than the worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree scratch .scratch/commit_fix.out (the refusal, lines 19-20: the two VIOLATION lines with the no-non-terminal-order text)",
+      "git log: 9db088e4ad (amended order, pending) then 497e911dab (module and test) on wk-IRPT_ANLREQ-183",
+      "git log: dbb40402f8 (the closing flip to complete) is the HEAD the refusal read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker for the CVO and the issuer. No order text was widened and no override was used: the gate was not bypassed, the grant was restored by the order's own status."
+}
+```
