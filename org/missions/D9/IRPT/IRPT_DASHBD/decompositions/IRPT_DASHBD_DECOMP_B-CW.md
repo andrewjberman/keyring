@@ -233,3 +233,21 @@ Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3
 |---|---|
 | DB-c-17 | 0.9.0_WK_IRPT_DASHBD~410 |
 | DB-c-18 | 0.9.0_WK_IRPT_DASHBD~411 |
+
+## 11. ROUND 124, WORKSTREAM B-CW (2026-10-15 ~08:5xZ, issuer 2.0.0_SA_COO~C2, on the CTO's decision C, msg 8167; round 123 closed MAY-CLOSE, DB-c-17 @f54c662ab0 and DB-c-18 @a5929fb06e merged)
+
+The one-issuance rule is keyed to the round (the gate refused a second issuance in round 123), so the packet cell of section 10 is the single cell of round 124. Its dependencies are met.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-19` | The unsigned NEVER-widen PACKET for the Cottonwood account_dim (change set, the catch-up first with its read-ABSENT, the one key written, both branches, rollback per key, questions for the CTO's half), from read-only measurements | FWD-2 | LOCAL (a record; read-only AWS calls) | `DB-c-17` and `DB-c-18` merged | C-N |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The first write is ONE partition, the newest date present in both silver tables, because a dimension is a state snapshot and no consumer is known to need earlier dates; history is a question in the packet for the CTO's half. (b) The worker reads AWS with python boto3 list/get/describe calls only (no put, delete, create, invoke or secret read), so the packet's ABSENT claims are measured. (c) The checker re-reads the S3 plane itself and refuses a packet whose pinned date or empty-prefix claim differs from a fresh LIST.
+
+**fanout:** 1 of 1 chains, cap 8, reason: a single record cell. Worker `0.9.0_WK_IRPT_DASHBD~412`.
+
+## Cells (round 124)
+
+| cell id | owner |
+|---|---|
+| DB-c-19 | 0.9.0_WK_IRPT_DASHBD~412 |
