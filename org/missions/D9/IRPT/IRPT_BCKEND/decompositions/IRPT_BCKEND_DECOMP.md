@@ -3923,3 +3923,15 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r197/p197_cells.py`, dry-run at the b
 
 fanout: 2 of 2 chains, cap 8, reason: chain P197-a (544 -> 545 -> 546) has real data dependencies, so slot ~389 is spawned now and ~390 and ~391 when their predecessors merge; chain P197-b (547) is independent and takes slot ~392 now. The apply is NOT cut (both halves must sign v3 first; owner me).
 
+## 190. ROUND 198, WORKSTREAM ~P (2026-10-15 ~02:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's round-198 analysis (@daa0cbc57d, msg 7910): per-firm pins; each firm moves by the signed cash rule alone)
+
+Round 197 closed MAY-CLOSE (packet @1eb73ef0a4). The CTO ruled: 49financial ships on the closure-fix pin b1d354cfc9 (the CUSIP port is already live there; 32 changed nodes), Cottonwood and Inflection on pin 2 5fad7eaaa8 (255 and 841); the divergence is a named, temporary fork closed by the CUSIP port's own release; packet v3 carries the per-firm pin table and the three differentials; both halves sign, then the apply runs per firm. Every measurement the table needs is already committed: 49financial 32 at the closure-fix pin (IB196-2, ~386), Cottonwood 255 and Inflection 841 at pin 2 (IB197-2, ~390), the closure proof at the closure-fix pin (~385) and the pin 2 verification (~389); the served states of IB196-2 and IB197-2 are identical per firm (same manifest versions and latest dates). So the round is ONE cell, the packet.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r198/p198_cells.py`, dry-run at the base: IB198-1 AC1 to AC3 all FAIL (no packet v3); the positive control (`control198.py`, synthetic records and packets in a temporary root) passes all three and fourteen negatives each fail their own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-548` | packet v3 on per-firm pins: the table, the two pins, why 49financial is not on pin 2 (119), the temporary fork, the signed scope, Branch A per firm, Branch B; both halves UNSIGNED | FWD-3 | LOCAL (a document from committed records) | none | P198-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one document; every record it reads is committed, so one worker (slot ~393) starts now.
+

@@ -13054,3 +13054,192 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-227. The disarm owner is the integrator (0.0.0_AB_MSTR) because the commit gate is infrastructure; the CTO may reassign it. The row states the form only; it carries no client value."
 }
 ```
+
+## IRPT_DASHBD-D2-W301-S1 -- the criterion DBI114-1-AC1 refuses the cell's script for the write token write_table, while step 3 of the order has the cell write its private variant parquet
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W301-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~301",
+  "surfaced_at": "2026-10-15T01:32:56Z",
+  "one_line": "The checker of DBI114-1-AC1 refuses the tracked script for the write token write_table, while step 3 of the order has the same cell write the private variant parquet; the criterion and the order conflict on that one local write. The worker did not rename or route around the token.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 3 of the order: write the private variant file QTD_BASIS_VARIANTS.parquet. Step 4: the tracked script holds no S3 write call. The criterion expects the script with no write call, and the checker refuses any script text containing write_table or to_parquet.",
+  "world_is": "The script writes the private variant file with the pyarrow table writer. That is a local write into the private folder, not an S3 write, and no S3, DynamoDB or vendor call is made. The checker stops at 'write token in script: write_table' and the criterion is FAIL. A diagnostic run of the same checker arms with the token list emptied, in a scratch harness and not a verdict, found every other arm holding: the control matched on 0 households and the bins, the moved-down recount and the record fields all agree. The order does not say which API writes the file, so the conflict is for the issuer and the CTO to rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r114/p114_bin.py at 1cb46e909b (WRITE_TOKENS and script_clean)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~301/tieout_basis_variants.py (its final write call), in the worker worktree at the commit that lands this row",
+      "the checker output on the worker record: 'DBI114-1-AC1 FAIL: write token in script: write_table'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-1. The row states the form only. The criterion stays FAIL until the issuer rules the token list or the write path; the worker edited neither the checker nor the script to pass."
+}
+```
+
+## IRPT_DASHBD-D2-W301-S2 -- the order's performance axis, the sorted trading days in the cache, is not what the cache holds: the cache carries calendar-daily partition dates
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W301-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~301",
+  "surfaced_at": "2026-10-15T01:32:56Z",
+  "one_line": "The cache's dates are calendar-daily, weekends included, and the cache has no partition for the two NYSE trading days 2026-07-01 and 2026-09-28; the tie-out therefore takes the axis as the NYSE trading days of the range, which is the module's t-1 definition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 1 of the cell defines the performance axis as the sorted trading days in the cache, with the as-of day the cache's newest date.",
+  "world_is": "The cache holds 2328 distinct partition dates with every weekday present, so weekend dates are on the cache, and it has no partition for 2026-07-01 or 2026-09-28. The axis used is the NYSE trading days from the base day 2026-09-30 to the as-of day 2026-10-14, from lib/trading_calendar.py. Every trading day of the quarter-to-date window is in the cache, and the control matched on every household, so the qtd figures do not depend on the reading here. The other windows, which hold the two missing days, are not run by this cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py at 1cb46e909b (the header's t-1 definition: the previous NYSE trading day)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~174/TWR_TIEOUT_R109.json at 1cb46e909b (basis_words CALENDAR entry and the two-missing-days entry)",
+      "the worker's read of the round-109 cache's date column (counts only): 2328 distinct dates, all seven weekdays present, no partition for the two trading days"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-1. The row states the form only."
+}
+```
+
+## IRPT_DASHBD-D2-W302-S1 -- the round-108 reader has no method that lists the silver common prefixes; the silver table list came from its client after the grant check
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W302-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~302",
+  "surfaced_at": "2026-10-15T01:39:31Z",
+  "one_line": "The round-108 reader has no method that lists the silver common prefixes, so the Orion silver table list was taken by one LIST through the reader's own client after its grant check, under the granted silver prefix only; the four tables found are the set a fresh LIST by the checker reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-i-2 cell 1: list the Orion silver tables under s3://opal-data-assets/orion/inflection/silver/ (the common prefixes, through the reader).",
+  "world_is": "InflectionSilverReader in inflection_account_dim.py offers list_partitions (date= names under one table), read_parquet and latest_partition; it has no method that returns the silver common prefixes. The LIST was made with the reader's _split grant check first and the reader's _api() client second, Delimiter slash, under the granted silver prefix only. No write call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_dim.py at 1cb46e909b: class InflectionSilverReader, methods _api, _split, list_partitions, read_parquet, latest_partition",
+      "the worker's silver LIST printed four common prefixes (fact_assets, fact_performance, fact_positions, fact_transactions) and the record silver_tables carries the same names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-2. Counts and names only; no client value is recorded. The reader's gap is a capability note for the issuer, not a change to the reader."
+}
+```
+
+## IRPT_DASHBD-D2-W302-S2 -- the two missing days are absent from three Orion silver feeds, not only fact_positions
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W302-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~302",
+  "surfaced_at": "2026-10-15T01:39:31Z",
+  "one_line": "The two NYSE trading days 2026-07-01 and 2026-09-28 are absent from silver fact_positions, fact_performance and fact_transactions and from bronze positions, performance and transactions; fact_assets carries both days in silver and bronze assets. No repo file records a cause.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~I2",
+  "spec_asserts": "Round 109 row IRPT_DASHBD-D2-W174-S2 and TO DB-i-2 frame the gap as a missing fact_positions partition on two trading days.",
+  "world_is": "Both dates are absent from the fact_performance and fact_transactions silver tables and from the bronze performance and transactions feeds as well. fact_assets has both dates in silver and bronze assets. Bronze positions has no file for either date, so the silver fact_positions gap has no bronze source to convert. The repo catalog entry records the absent trading days as measured and gives no cause. Left alone, a daily sweep that converts whatever bronze lands would keep reproducing feed-by-feed holes on any day a feed fails to land.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the worker's LIST of the four silver prefixes and of the bronze feed prefixes, recorded as counts in org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~302/DATE_GAP_READ_R114.json (partition_present and bronze_present)",
+      "workflows/atom_decomposition/catalog_entries/opal_data_assets_silver_orion_inflection_fact_positions.yaml at 1cb46e909b (contract.partition note: latest absent trading days 2026-07-01, 2026-09-28; no cause)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-2. The disarm owner is the issuer, who routes the finding to the CTO's tolerance ruling. Counts only; no account or household id is recorded. Nothing was re-pulled or written."
+}
+```
+
+## IRPT_DASHBD-D2-W302-S3 -- the trading-day answer came from the calendar's hardcoded NYSE fallback because pandas_market_calendars is absent on this box
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W302-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~302",
+  "surfaced_at": "2026-10-15T01:39:31Z",
+  "one_line": "lib/trading_calendar printed WARN that pandas_market_calendars is absent and answered from the hardcoded NYSE fallback; both gap dates read as trading days from that fallback, which matches the weekday rule and the holiday list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-i-2 cell 2: record whether each date is a trading day per lib/trading_calendar.py is_trading_day.",
+  "world_is": "is_trading_day returned True for 2026-07-01 and True for 2026-09-28, but printed WARN: pandas_market_calendars absent; answering from the NYSE hardcoded-fallback covering 2010 to 2027. The answer is the fallback's answer, not the library calendar's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py at 1cb46e909b: is_trading_day (the fallback set NYSE_HOLIDAYS_FALLBACK answers when the library is absent)",
+      "the worker's run of is_trading_day on both dates on this box, which printed the WARN line verbatim"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-2. The fallback's answer for these two dates is the weekday rule plus the holiday list; the CTO may want the library calendar installed on dell2 before the tolerance ruling. Nothing was installed."
+}
+```
+
+## IRPT_DASHBD-D2-W184-S1 -- pandas_market_calendars is absent on dell2, so lib/trading_calendar.py answers from its hardcoded NYSE fallback
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W184-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~184",
+  "surfaced_at": "2026-10-15T01:45:21Z",
+  "one_line": "TO-DB-b-229's calendar read (step 5) answered 2026-04-21 from lib/trading_calendar.py's hardcoded NYSE fallback, not from the pandas_market_calendars package: the module's own WARN line printed on every run, so the package capability is missing on this box. The answer (trading day) is the same under the fallback; the fallback covers 2010-2027 and the module says to regenerate it before 2028.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run log of the read script (worktree scratch run2.log, line 1): 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027; regenerate with lib/tests/gen_nyse_closures.py --write before 2028)'",
+      "lib/trading_calendar.py at e53c37c8ac: is_trading_day answers from NYSE_HOLIDAYS_FALLBACK when _USE_PMC is false (lines 177-188); _require_covered raises CalendarCoverageError outside 2010-2027 (lines 164-174)",
+      "the same answer on both paths for the order's date: 2026-04-21 is a Tuesday and is not in the generated closure list, so is_trading_day returns True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-b-229 step 5 and DB113-1-AC1: the library calendar answers whether 2026-04-21 is a trading day (lib/trading_calendar.py, call is_trading_day); the order names no fallback and assumes the calendar answers from the NYSE package.",
+  "world_is": "On dell2 the package pandas_market_calendars is not importable, so every is_trading_day call answers from the hardcoded fallback table and prints one WARN line; for the order's date the fallback gives the NYSE answer (True), so the criterion's calendar clause is met, but the answer is not the package's.",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-229. The fallback is the module's own designed path (the W282-S3 announce line); the row records that the package capability is absent on this box and that the fallback's coverage ends in 2027. No action is taken here."
+}
+```
+
+## IRPT_DASHBD-D2-W184-S2 -- the households broken on 2026-04-21 are carried by FLOW_UNRECONCILED rows, not by its NOT_MEASURABLE rows
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W184-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~184",
+  "surfaced_at": "2026-10-15T01:45:21Z",
+  "one_line": "On 2026-04-21 the 858 households broken are carried by FLOW_UNRECONCILED account-days (943 of the 1,061 household-sense unmeasured account-days of that date, guard_state GRADED_DISAGREED), while the day's NOT_MEASURABLE rows are 123 firm-wide (117 link breaks with a non-positive base, 6 with an absent base, all with holdings_price_return_reason HOLDINGS_NOT_OK). The cell's framing of the worst date as a NOT_MEASURABLE event does not hold for its households.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run log (worktree scratch run2.log): 'PROFILE 2026-04-21 (all accounts)': 5,902 gold rows; day_quality FLOW_UNRECONCILED 944, MEASURED 4,801, NOT_MEASURABLE 123, LARGE_FLOW 34",
+      "run log: 'PAIRS ON 2026-04-21 (household sense)': FLOW_UNRECONCILED GRADED_DISAGREED 943, NOT_MEASURABLE link break NONPOSITIVE 117, FLOW_UNRECONCILED NOT_GRADED_OUTSIDE_DOMAIN 1",
+      "the producer sets FLOW_UNRECONCILED at data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 1505, 1517 and 1522 (RULING 17: the guard graded and disagreed serves nothing)",
+      "record RD_NOT_MEASURABLE_R113.json date_0421 (rows_not_measurable 123, households_broken 858) at e53c37c8ac plus this worker's commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-b-229 WORKER FACE, Why: the 861 households broken by 2026-04-21 come from this producer's NOT_MEASURABLE rows on that date ('a producer or input defect on that day'), and step 4 reads the day's NOT_MEASURABLE rows as its cause.",
+  "world_is": "The date's household breakage runs through the guard's FLOW_UNRECONCILED disagreements: 943 of the date's 1,061 household-sense unmeasured account-days are FLOW_UNRECONCILED with GRADED_DISAGREED, and only 117 are NOT_MEASURABLE link breaks. The date-level NOT_MEASURABLE count (123) is small relative to the households it breaks. The record reports the NOT_MEASURABLE split as the order asks; the FLOW share is reported here as a measured count.",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-229. Counts only; no account or household id and no client value. The disarm owner is the round issuer; the CTO may reassign. The row states the form; the repair is a later round's packet under a never-widen pair."
+}
+```

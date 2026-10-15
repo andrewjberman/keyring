@@ -2296,3 +2296,11 @@ The hookup of this tool, `etfs_*` (et-1, et-2) rides one batch hookup cell after
 
 The release is `OG-ap-20` (G5 wave A + category views): one read grant on the internal reader role generated from the catalog rows of the named entities, plus the rival-funds gold and platinum page prefixes of PRD v3.7, one ask.
 **fanout:** 1 of 1 chain (cap 8).
+
+## ADDENDUM R3-T.62 (2.0.0_SA_COO~O, 2026-10-15 ~02:0xZ) -- round 37, workstream G5A-CV: the G5 wave A + category-views release (FWD-22; plan R3-T.52 and its A1, PRD v3.7)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ap-20` | APPLY: the five G5 wave A etfs tools and `mdpf_get_category_views` (merged: et-1, et-2, pt-5, hookup gt-12) released with ONE read grant on the internal reader role for `opal-data-etfs` (generated from the catalog rows of the tools' entities, plus the rival-funds gold and platinum page prefixes of PRD v3.7, one ask; ListBucket confined by prefix), three halves, served read of six tools | applier (`0.7.0_AE_CloudOps~Z`) | WORLD | ~AE | `OG-ap-18` closed; `OG-gt-12` merged |
+
+Release queue: ap-18 -> ap-19 (G3 + G6) -> ap-20 -> ap-17 (bd-3 re-cut) -> ap-21 (G2 core).
