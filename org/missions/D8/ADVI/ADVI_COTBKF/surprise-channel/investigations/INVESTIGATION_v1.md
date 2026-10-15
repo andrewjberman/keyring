@@ -9334,3 +9334,31 @@ round.** Never edit an existing row.
   "notes": "The DETERMINISTIC near-match landing needs an owner before any link is applied (L9)."
 }
 ```
+
+## ADVI_COTBKF-D1-S2 -- the standing statement for D1-W173-S3 while round 89 is cut
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-15T19:28:23Z",
+  "one_line": "Standing statement for D1-W173-S3 (the four readers that feed an active account's value without a use_class filter), at the CTO's msg 6161: what is and is not being written while the fix waits for round 89.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL1 msg 6161: keep D1-W173-S3 ARMED until the fix lands; state in the row that no new Yahoo active-name price is being written meanwhile",
+      "2.0.0_SA_COO~Q1 broker summary at 19:25Z: MDPF_DEMQUE round 9 gate swap LIVE AT the 22:30 ET run (02:30Z 2026-10-16), receipt read at the 04:17Z tick -- so it is NOT live at the time of this row",
+      "MDPF_DEMQUE NEVER_WIDEN_R9_INACTIVE_YAHOO_COO_HALF.md: today the Yahoo leg writes prices for names outside the P2/P3 gate and 538 CUSIPs are stored, 528 of them active non-cash; after the swap a V2-held name is never drawn or extended on Yahoo, and its stored price reads NOT_FOR_ACTIVE",
+      "D1-W173-S3 evidence: the as-traded valuation's Yahoo Close cache is a separate source (a ticker-keyed cache written by commonwealth_price_basis_census.py under .scratch via yfinance), not the DEMQUE store"
+    ]
+  },
+  "spec_asserts": "CTO condition C3 (msg 6119) and msg 6161: a NOT_FOR_ACTIVE Yahoo price never feeds an active account's return; until the round-89 fix lands this row stays ARMED.",
+  "world_is": "As of this row the statement the CTO asked for cannot yet be made as written: the DEMQUE nightly run still writes Yahoo prices for active-set names under the OLD gate until the swap goes live at the 2026-10-16 02:30Z run; from that run no new Yahoo price is written for a V2-held name, and the 528 already stored stay and read NOT_FOR_ACTIVE. The Yahoo Close cache read by commonwealth_daily_valuation.py is written only when commonwealth_price_basis_census.py is run by hand (read from its header, not measured here), not by the nightly. Not established: whether the cache holds a ticker of a V2-held name today.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
