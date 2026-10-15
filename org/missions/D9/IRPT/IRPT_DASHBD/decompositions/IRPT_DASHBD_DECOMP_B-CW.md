@@ -251,3 +251,21 @@ The one-issuance rule is keyed to the round (the gate refused a second issuance 
 | cell id | owner |
 |---|---|
 | DB-c-19 | 0.9.0_WK_IRPT_DASHBD~412 |
+
+## 12. ROUND 125, WORKSTREAM B-CW (2026-10-15 ~09:5xZ, issuer 2.0.0_SA_COO~C2, on the signed pair DB-c-19: CTO half @055825367e msg 8218, COO half @d405648eff, both at packet blob ed09e2768f; round 124 closed MAY-CLOSE, DB-c-19 merged @a4a8375b21)
+
+The CTO's decision C (msg 8167) ends with "Cut the build cell and the packet": the build cells are merged (DB-c-16, 17, 18) and the packet is signed by both halves, so the APPLY is the single cell of round 125, issued to the AE lane the CTO half names (answer 1: `0.7.0_AE_CloudOps~DB2`).
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-20` | The APPLY of the signed pair: step-0 live reads (bucket fence, layer), the ledger, BUILD_ONLY zip and package test on that zip, the upload, the plan (7 adds, 0 change, 0 destroy), ONE `safe-apply` creating the function, roles and a DISABLED schedule, ONE invoke for 2026-10-13, the after-read of the one key, then the schedule ENABLED by a one-line change | FWD-2, FWD-11, FWD-15 | WORLD | the pair signed at blob ed09e2768f; DB-c-16..19 merged | C-O |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The order repeats the precedent of `DB-c-9` and `DB-c-14` (one ledger left OPEN for the first scheduled fire; the issuer closes the last leg) with the CTO half's added step 0. (b) The ENABLE edit is the one line in the new root's `schedule.tf`; the order's paths name that file and the source map (the build script records `artifact_sha256` for the one new entry) and nothing else outside the AE folder, the ledger and the channel. (c) The checker (`p125`) recounts from fresh Lambda, scheduler, IAM-free S3 reads and the repo, and recomputes the parquet's schema hash against the contract's.
+
+**fanout:** 1 of 1 chains, cap 8, reason: a single WORLD apply cell; it is the Tier-2 AE lane's act, not a worker's.
+
+## Cells (round 125)
+
+| cell id | owner |
+|---|---|
+| DB-c-20 | 0.7.0_AE_CloudOps~DB2 |
