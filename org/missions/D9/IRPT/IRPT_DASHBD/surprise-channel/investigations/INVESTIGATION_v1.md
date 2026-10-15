@@ -18841,3 +18841,156 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "W223-S2 and W223-S3 stay as written (append-only). S3 closed the S2 failure by the claim-aware 0.4.1 validator under AMENDMENT 1; AMENDMENT 2 changes the return_basis rule that the 0.4.1 file also pins. The CVO's adjudication of S2 is the CVO's carrier and is not written here."
 }
 ```
+
+## IRPT_DASHBD-D2-W224-S1 -- AC3 checker clause pins the pointer constant WITH a trailing period that the render does not carry; the order says the pointer stays as it is
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W224-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~224",
+  "surfaced_at": "2026-10-15T22:30:40Z",
+  "one_line": "AC3 checker clause pins the pointer constant WITH a trailing period that the render does not carry; the order says the pointer stays as it is",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB144-1-AC3 via checker check_report_sheet: INCOMPLETE_WITHOUT_DISCLOSURE must equal 'This report is incomplete without the accompanying disclosure page.' (with a trailing period). The worker face says the pointer line stays exactly as it is and quotes the same constant with the period.",
+  "world_is": "documentSheets.ts at c81d54ff line 83 and at portal af8ca0ba carry the constant WITHOUT the trailing period. Adding the period would change the printed pointer line, which the order forbids, so it is not repaired. Measured on af8ca0ba: AC3 FAIL on this clause. The earlier clauses of the constant check and of the client-branch check PASS, and the printing clause after it is not reached.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r144/p144_placeholder.py@e0f04d8b30",
+      "portal/src/pages/InvestorReporting/render/performance/report/documentSheets.ts@c81d54ff:83 (base line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired (refusal clause). A decision is needed: whether the clause or the quoted constant is wrong. The pointer line text is unchanged in this cell."
+}
+```
+
+## IRPT_DASHBD-D2-W224-S2 -- AC3 no-authored-language clause fires on the pre-existing product label 'Billed advisory fee:' (substring 'advisory fee')
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W224-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~224",
+  "surfaced_at": "2026-10-15T22:30:40Z",
+  "one_line": "AC3 no-authored-language clause fires on the pre-existing product label 'Billed advisory fee:' (substring 'advisory fee')",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB144-1-AC3 via checker check_no_authored_language: no disclosure, compliance or performance wording (the tokens past performance, not a guarantee, advisory fee, form adv, hypothetical) appears in the render files, scanned as whole files.",
+  "world_is": "ClientReportDocument.tsx prints the field label 'Billed advisory fee:' at line 353 of c81d54ff (line 354 at af8ca0ba); that label predates this cell. Measured on af8ca0ba: the clause returns FAIL with the token list ['advisory fee']. This cell added no wording of its own; the clause over-matches an existing label.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r144/p144_placeholder.py@e0f04d8b30",
+      "portal/src/pages/InvestorReporting/render/clientreport/ClientReportDocument.tsx@c81d54ff:353 (base line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired (refusal clause). A decision is needed: whether the token list or the file scope of the clause is wrong. The label is unchanged in this cell."
+}
+```
+
+## IRPT_DASHBD-D2-W224-S3 -- Face test case 'every contract member appears exactly once' is false of the render: 52 of 117 member ids print more than once
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W224-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~224",
+  "surfaced_at": "2026-10-15T22:30:40Z",
+  "one_line": "Face test case 'every contract member appears exactly once' is false of the render: 52 of 117 member ids print more than once",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-277 step 5 lists the test case 'every contract member still appears exactly once' for the new test file.",
+  "world_is": "Measured on portal af8ca0ba with the synthetic alpha report: 117 distinct data-member ids and 174 occurrences; 52 ids print more than once (51 twice, hold.allocation seven times). The disclosures sheet carries no data-member. The case in disclosure-placeholder.test.tsx asserts 117 distinct ids and no data-member on the disclosures sheet instead of exactly once. That is a deviation from the face's wording, disclosed here and not repaired.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/irpt-dashbd/disclosure-placeholder.test.tsx@af8ca0ba",
+      "portal/src/pages/InvestorReporting/__tests__/irpt-dashbd/report-export.test.tsx@af8ca0ba"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The existing export test (b) asserts the distinct count (117) for the same reason. Whether exactly-once is the intended property is for the issuer to decide."
+}
+```
+
+## IRPT_DASHBD-D2-W224-S4 -- Pinned assertion report-export (a) edited: the disclosures section and heading are filtered out of the eight-section order check
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W224-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~224",
+  "surfaced_at": "2026-10-15T22:30:40Z",
+  "one_line": "Pinned assertion report-export (a) edited: the disclosures section and heading are filtered out of the eight-section order check",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The existing test report-export.test.tsx (a) pins the document's section order, and its headings, to the eight RECORD_SECTION_ORDER ids.",
+  "world_is": "The export now carries a ninth data-section (disclosures) and a ninth h2 (Disclosures) by design (TO-DB-b-277). The edit filters the disclosures id out of the order and heading lists (3 changed lines including one comment). The eight ids and titles are unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/irpt-dashbd/report-export.test.tsx@af8ca0ba"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Minimum edit to a pinned assertion, counted against the 40-line limit for existing test files (report-export and r105 together: 15 changed lines)."
+}
+```
+
+## IRPT_DASHBD-D2-W224-S5 -- Pinned assertion report-export (f) edited: the last page section is now disclosures, and the pointer-line count is sheets minus one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W224-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~224",
+  "surfaced_at": "2026-10-15T22:30:40Z",
+  "one_line": "Pinned assertion report-export (f) edited: the last page section is now disclosures, and the pointer-line count is sheets minus one",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The existing test report-export.test.tsx (f) pins the last data-page-section to 'disclosure' and expects the incomplete-without-disclosure line on every sheet.",
+  "world_is": "The last sheet is the disclosures sheet, which by the order prints no pointer line. The edit sets the last section expectation to 'disclosures', sets the line count to sheets minus one, and renames the title to match (about 3 changed lines).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/irpt-dashbd/report-export.test.tsx@af8ca0ba"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Minimum edit to a pinned assertion. The count of sheets and the pointer text are unchanged."
+}
+```
+
+## IRPT_DASHBD-D2-W224-S6 -- Pinned assertion r105 pointer test edited: the pointer count is the sheet-marker count minus one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W224-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~224",
+  "surfaced_at": "2026-10-15T22:30:40Z",
+  "one_line": "Pinned assertion r105 pointer test edited: the pointer count is the sheet-marker count minus one",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The existing test report-render-r105.test.tsx ('the disclosure pointer line prints on every export sheet') expects the pointer-line count to equal the count of data-report-page markers.",
+  "world_is": "The disclosures sheet carries a data-report-page marker but not the pointer line, by the order (TO-DB-b-277). The edit sets the expected count to the marker count minus one and renames the title (2 changed lines).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/irpt-dashbd/report-render-r105.test.tsx@af8ca0ba"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Minimum edit to a pinned assertion."
+}
+```
