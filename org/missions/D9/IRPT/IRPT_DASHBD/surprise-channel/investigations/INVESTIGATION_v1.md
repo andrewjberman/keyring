@@ -18029,3 +18029,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The session runs claude-haiku-5-5 and the attribution the harness supplies names Haiku 5.5; the face's Sonnet line was not written, and the coordinator may correct the line on the record if it wants the face's text. Counts only."
 }
 ```
+
+## IRPT_DASHBD-D2-W219-S1 -- the earlier Cottonwood test pins the 0.3.0 top-level hash, so it is red once the contract reads 0.4.0; AC3 stops here, the test file is outside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W219-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~219",
+  "surfaced_at": "2026-10-15T18:50:30Z",
+  "one_line": "Contract 0.4.0 moves the top-level schema_hash_with_optional (the 0.3.0 value is bc70..., the 0.4.0 value is 74fd..., as the spec requires) and the earlier Cottonwood test asserts the contract top-level value equals its 20-field 0.3.0 hash, so test_the_two_hashes_equal_the_contract_and_match_a_recomputation fails: 1 failed, 51 passed; the test file is outside the grant, so AC3 stops here",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I -m pytest -q data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_bd_account_return_daily.py at 5f91315a60: 1 failed, 51 passed (the failure is line 263 of that file)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_bd_account_return_daily.py:263@5f91315a60 asserts m.schema_hash_with_optional() == contract[schema_hash_with_optional]; the adapter hash is over 20 fields, so it equals the 0.3.0 value bc70ee2f2e, and the 0.4.0 contract value is 74fdee3def"
+    ]
+  },
+  "spec_asserts": "DB-b-270 criterion DB137-2-AC3 and the refusal clause: the two earlier contract-reading test files still pass once the contract reads 0.4.0; a failure caused by a hard-coded 0.3.0 in those files is a BLOCKING row and a stop, because they are not in the grant.",
+  "world_is": "The earlier test pins the contract top-level hash to the 0.3.0 value. The 0.4.0 contract recomputes the top-level hash over 19 columns plus source, flow_claim and source_account_id, as the spec requires, so the earlier assertion is red at 5f91315a60. The test is not repaired here (outside the grant). The contract and its test commit 5f91315a60 are unaffected. Counts only."
+}
+```
