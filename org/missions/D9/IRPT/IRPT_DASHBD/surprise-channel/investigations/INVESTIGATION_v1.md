@@ -13434,3 +13434,240 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only; the change is the issuer's and is not reverted by this worker. The question for the COO is whether the digit exemption for paths is intended. Row IRPT_DASHBD-D2-W402-S1 is left as filed for the issuer's drain disposition."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S49",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T02:06:32Z",
+  "one_line": "Disposition of the B-CW round-114 rows at the drain: W401-S3 disarmed (its hazard is carried by the unsigned packet, which runs 2026-06-09 by a manual event and states the scheduled path's reach); W402-S1 BLOCKING closed by the issuer's checker amendment (323883217a); W402-S3 noted; W401-S1 stays ARMED with its owner 0.0.0_AB_MSTR",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~401/NEVER_WIDEN_PACKET_DB-c-2_R114.md: the catch-up run is per date by the handler event {date, source} (covers 2026-06-09) and the scheduled path starts after the newest landed gold date; question 3 asks the CTO's half whether the 2026-06-09 gap is expected",
+      "323883217a (box/dell2) amends p114_bcw.py: the keys path, paths and file leave the foreign-firm guard (a repo file name is not another firm's data) and join the 8-digit exemption list; selftest PASS with a negative arm; DBC114-1-AC1, -2-AC1 and -3-AC1 all PASS on the merged tree bea5f1de31 and 6150170b3e",
+      "python .tools/round-close-check.py --project IRPT_DASHBD --round 114 --workstream B-CW: verdict=MAY-CLOSE (3 orders, 3 complete, 3 proofs ok, reviewer on box 3.0.0_SA_CVO~DELL2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner (CLAUDE.md section 2); a BLOCKING row is dispositioned before the round is counted finished.",
+  "world_is": "W401-S3 (disarm owner this seat) is disarmed on the packet's text. W402-S1 is closed: the defect was the issuer's checker, now fixed, and worker 402's record needed no edit. W402-S3 is correct: the amendment also added paths to the 8-digit exemption list, which the amendment's commit message does not describe; both exemptions are for repo file paths. NOT closed by this row: W401-S1 (ARMED, disarm owner 0.0.0_AB_MSTR): pandas_market_calendars is absent on dell2, so every trading-day answer in this round came from the NYSE fallback table and the package-equality test was not run (DB-c-3: ran false); W401-S2 and W402-S2 (INERT observations, carried in the drain-end packet)."
+}
+```
+
+## IRPT_DASHBD-D2-W502-S1 -- the task order names the read route and the publisher as owned by workstream ~P2; the files issue them under 2.0.0_SA_COO~P
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W502-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~502",
+  "surfaced_at": "2026-10-15T01:48:21Z",
+  "one_line": "TO DB-f-502 names the owner of the served reporting read route and of the platinum publisher as IRPT_BCKEND workstream ~P2; the files issue both surfaces under 2.0.0_SA_COO~P, and ~P2 appears only as the issuer of a round-146 check.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order's Why paragraph and its cell step 2 name the owner of the read route irpt-reporting-read and of the platinum publisher as IRPT_BCKEND workstream ~P2.",
+  "world_is": "The task orders that built the publisher and the read route are issued by 2.0.0_SA_COO~P: IRPT_DASHBD TO-DB-b-2 (platinum publisher), TO-DB-b-4 (reporting read route) and TO-DB-b-17 (publisher summaries), and IRPT_BCKEND TO-IB-pr-304 and TO-IB-pr-316. The investor-reporting deploy record (CHANGELOG line 515) names 2.0.0_SA_COO~P for irpt-49f-reporting-read-lambda. The serial 2.0.0_SA_COO~P2 is named only as the issuer of IRPT_BCKEND round 146 checks for workstream ~P. The worker's record names 2.0.0_SA_COO~P as owner; the ~P2 naming for these surfaces is not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-2.platinum-publisher-series-manifest.md lines 5-6 (issued_by 2.0.0_SA_COO~P) @413876740f",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-4.reporting-read-route.md lines 5-6 (issued_by 2.0.0_SA_COO~P) @413876740f",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-304.render-reach-reporting-route.md lines 5-6 (issued_by 2.0.0_SA_COO~P) @413876740f",
+      "infra/aws/terraform/investor-reporting/CHANGELOG.json line 515 (deploy record r58 names 2.0.0_SA_COO~P for irpt-49f-reporting-read-lambda) @413876740f",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r146/p146_cells.py first line (issuer 2.0.0_SA_COO~P2, workstream ~P) @413876740f"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-502. Record owner fields name 2.0.0_SA_COO~P. The row states the form only; the owner call is the issuer's."
+}
+```
+
+## IRPT_DASHBD-D2-W502-S2 -- the export host the task order calls a server render has no live render host on the record: a dedicated host is not built and the existing render-capable instance is stopped
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W502-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~502",
+  "surfaced_at": "2026-10-15T01:48:21Z",
+  "one_line": "The export is rendered by a server host in code (run-export-render.sh line 29), but the host README records no dedicated export host built and the one render-capable instance declared stopped, with a start that needs Andrew's per-use word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order's Why paragraph and cell step 4 say the export is rendered by a server host from a frozen series version, which a filled-report hop would extend.",
+  "world_is": "The code premise holds: run-export-render.sh line 29 runs node render_export.cjs, which opens the print route in Chromium. The host README records that a dedicated export host was refused and not built (lines 55 and 80-85), and that the one existing Playwright-capable instance, irpt-ycharts-runner, is declared stopped in its Terraform root; starting it is recorded as needing Andrew's per-use word (lines 56 and 66-71). The host half of the export names no live issuing seat in the files; its author is worker 0.9.0_WK_IRPT_BCKEND~4. A filled-report render has no live host on the record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-export/run-export-render.sh line 29 (node render_export.cjs) @413876740f",
+      "infra/aws/ec2/investor-reporting-export/README.md lines 55-56 (host options; the runner is stopped) @413876740f",
+      "infra/aws/ec2/investor-reporting-export/README.md lines 66-71 (start needs Andrew's per-use word) @413876740f",
+      "infra/aws/ec2/investor-reporting-export/README.md lines 4-5 (author worker 0.9.0_WK_IRPT_BCKEND~4) @413876740f"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-502. Live host state was not read (no AWS call); the stopped state is the README's record. The row states the form only."
+}
+```
+
+## IRPT_DASHBD-D2-W501-S1 -- resolved: the report is the outer choice and the existing dashboard and body choice sits unchanged inside it, so the literal asserted by iv-e-135 (g) wiring survives
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W501-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~501",
+  "surfaced_at": "2026-10-15T02:08:10Z",
+  "one_line": "Restates IRPT_DASHBD-F2-W501-S1 under the device coordinate and records its fix: the mount is the outer choice, the existing ternary is unchanged inside a fragment, and the neighbour test iv-e-135 (g) wiring passes; the suite gate holds (failing names a subset of the base run).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-f-501 gate 5: failing names after a subset of before; a neighbour test outside the grant is not edited (amended order, step 2: the report as the outer choice, the existing choice byte-for-byte inside it).",
+  "world_is": "tabs/reporting/ReportingTab.tsx at commit d3c37966 renders the reporting-report branch as the outer choice and the existing dashboard ternary inside a fragment; the literal {dashboardServed ? ( is present. dsgn-irptv1 fails only IVE26-AC3, IVE48-AC1 and IVE98, all three in the base run. The whole scope under the harness-default environment: 1319 pass, 20 fail, the same 20 names as the base run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit d3c37966 (wk-IRPT_DASHBD-501-portal): tabs/reporting/ReportingTab.tsx, the diff against c81d54ff adds the fragment and the reporting-report branch and leaves the dashboard ternary lines unchanged",
+      "worker scratch .scratch/suite_after3.clean.txt: 1319 pass, 20 fail, 1366 tests; the normalized failing names equal those of .scratch/suite_before.clean.txt (base run, 1300 pass, 20 fail)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-501 under the issuer ruling on the device coordinate (amended order 081fbd6e90). The F2 row stays in the channel as the record (append-only). Resolution by the fix at portal commit d3c37966 is stated for the CVO to disposition."
+}
+```
+
+## IRPT_DASHBD-D2-W501-S2 -- the criterion checker's bun summary parse, repaired by the issuer; both criteria re-measured PASS with FORCE_COLOR set, unset and set to 1
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W501-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~501",
+  "surfaced_at": "2026-10-15T02:08:10Z",
+  "one_line": "Restates IRPT_DASHBD-F2-W501-S2 under the device coordinate: the issuer's checker now strips ANSI codes and runs bun without FORCE_COLOR; DBF114-1-AC1 and DBF114-1-AC2 print PASS in all three environments.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Criterion invocation: python -I .../p114_ship.py . DBF114-1-AC1 (and AC2), expected 'DBF114-1-AC1 PASS'.",
+  "world_is": "With the repaired checker (amendment 4aaf4dbb29, in worker branch commit 081fbd6e90): FORCE_COLOR=1 gives 'DBF114-1-AC1 PASS' rc=0 and 'DBF114-1-AC2 PASS' rc=0; FORCE_COLOR unset gives the same PASS lines; the harness default (FORCE_COLOR present) gives PASS for AC1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checker p114_ship.py at 081fbd6e90: bun_result strips ANSI before the regular expression and run_bun removes FORCE_COLOR from the child environment",
+      "worker run, this round: FORCE_COLOR=1 python -I p114_ship.py . DBF114-1-AC1 -> DBF114-1-AC1 PASS rc=0; the same for AC2 -> DBF114-1-AC2 PASS rc=0; env -u FORCE_COLOR runs -> PASS rc=0 for both"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-501 under the issuer ruling on the device coordinate."
+}
+```
+
+## IRPT_DASHBD-D2-W501-S3 -- the one added request per selection, accepted by the issuer; markup unchanged
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W501-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~501",
+  "surfaced_at": "2026-10-15T02:08:10Z",
+  "one_line": "Restates IRPT_DASHBD-F2-W501-S3 under the device coordinate: the mount's effect makes one added report read per selection key while no route serves it; the issuer accepted it in the amended order, and the markup is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-f-501 amended BOUNDS: with no served report the tab's MARKUP is that of the base commit; the ONE added request per selection is accepted and stated in the approval row; no PROD promotion before the route is served.",
+  "world_is": "The read effect in tabs/reporting/ReportingTab.tsx issues one report read per selection key on the live adapter and the answer is absent until a route serves it. The server-rendered markup of the tab is unchanged (report-tab-mount falls-back arm).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit d3c37966: ReportingTab.tsx effect calling readReportAnswer, guarded by the null key and the fixture adapter",
+      "amended order 081fbd6e90: BOUNDS 'Inert means inert (amended 2026-10-15, row W501-S3)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-501 under the issuer ruling on the device coordinate."
+}
+```
+
+## IRPT_DASHBD-D2-W501-S4 -- the firm id is the selection's resolved scope, ruled by the issuer
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W501-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~501",
+  "surfaced_at": "2026-10-15T02:08:10Z",
+  "one_line": "Restates IRPT_DASHBD-F2-W501-S4 under the device coordinate: the mount reads the firm id from the selection's resolved scope; the header reads report.scope.firmId; the issuer ruled scope.scope.firmId stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-f-501 cell step 3: the firm id is the one the tab already knows for its header; none for a selection, the report is not shown and the tab falls back.",
+  "world_is": "The mount takes reportFirmId from scope.scope.firmId (ReportingTab.tsx, commit d3c37966); the header keeps report.scope.firmId. The issuer ruled scope.scope.firmId stands.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit d3c37966: ReportingTab.tsx const reportFirmId = scope?.scope.firmId ?? null",
+      "amended order 081fbd6e90: step 3, row W501-S4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-501 under the issuer ruling on the device coordinate."
+}
+```
+
+## IRPT_DASHBD-D2-W501-S5 -- the reader's shape check now requires the account fields buildReportModel reads; fixed, with one pinning arm
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W501-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~501",
+  "surfaced_at": "2026-10-15T02:08:10Z",
+  "one_line": "Restates IRPT_DASHBD-F2-W501-S5 under the device coordinate and records its fix: the reader requires first_data_date, last4 (string or null) and the four window statuses of each account; a missing window_status is absent REPORT_UNREADABLE, pinned by a test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-f-501 amended cell step 2: each account entry carries a string first_data_date, a last4 that is a string or null, and a window_status with qtd, ytd, last_12_months and since_inception each MEASURED, NOT_SPANNED or BREAK; a test pins one absent REPORT_UNREADABLE case for a missing window_status.",
+  "world_is": "dashboard/report/reportRead.ts at commit d3c37966 implements isAccountEntry with those checks; report-read.test.tsx carries the arm 'unreadable: an account with no window_status is absent with REPORT_UNREADABLE, never partial'; the file reads 11 pass 0 fail, repeated.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit d3c37966: dashboard/report/reportRead.ts isAccountEntry and WINDOW_STATUSES",
+      "portal commit d3c37966: __tests__/irpt-dashbd/report-read.test.tsx, the missing window_status arm; mutant run (return true) fires 3 unreadable arms"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-501 under the issuer ruling on the device coordinate. Mutant control: 8 pass, 3 fail when the shape check is replaced by return true."
+}
+```
+
+## IRPT_DASHBD-D2-W501-S6 -- two FE-s-90 suite-complete arms fail when FORCE_COLOR is unset and pass when it is set
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W501-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~501",
+  "surfaced_at": "2026-10-15T02:08:10Z",
+  "one_line": "Running the whole InvestorReporting scope with FORCE_COLOR unset fails FE-s-90 CONTROL 2 and CONTROL 3 (suite-complete-check reads bun's summary as zero reported failures); the same arms pass under the harness default, so the mount is not their cause.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-f-501 gate 5: the failing names after the change are a subset of those before, measured under the environment the base run used (FORCE_COLOR set by the harness).",
+  "world_is": "With FORCE_COLOR unset, __tests__/fe-s-90/suite-complete-check.test.ts CONTROL 2 expects 'unreconciled-failure' and the checker anchor reads 'unreconciled: nonzero producer exit (rc=1) with a completion line but zero reported failures'; CONTROL 3 fails the same way. With FORCE_COLOR set, FE-s-90 reads 4 pass 0 fail, and the whole scope reads 20 fail, the base names. The base run with FORCE_COLOR unset was not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker run: env -u FORCE_COLOR bun test src/pages/InvestorReporting -> 22 fail, two of them FE-s-90 CONTROL 2 and CONTROL 3 (worker scratch .scratch/suite_after2.clean.txt)",
+      "worker run: bun test src/pages/InvestorReporting/__tests__/fe-s-90 with FORCE_COLOR set -> 4 pass 0 fail; with it unset -> 2 pass 2 fail"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-501. The test file is outside the grant and was not edited. The owner of the colour-dependent parse is the suite's owner; the issuer may route it."
+}
+```
