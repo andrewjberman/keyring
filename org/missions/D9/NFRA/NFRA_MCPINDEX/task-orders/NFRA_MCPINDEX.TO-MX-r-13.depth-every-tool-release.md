@@ -61,6 +61,18 @@ These are the differences:
   dry-run at the base. Round 12 closes with round 13 because this order is the tail of both.
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
 
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-15 ~06:0xZ) -- THE PHASE A GO, on `2.0.0_SA_COO~O` msg 34339 (the OPLGTW queue ahead of this release is empty).**
+- **Start condition met:** MX-c-10, MX-c-11 and MX-c-12 are drained (and MX-c-13 to MX-c-17 with them); the NFRA_OPLGTW ledgers ahead (OG-yr-1, OG-ap-18, OG-ap-19) read CLOSED.
+- **The live ref:** `ee23dd004c` as `2.0.0_SA_COO~O` states it (and `infra/aws/ec2/EC2_MANIFEST.json` at the GO). Read the live ref from the HOST by md5 at the act, as MX-r-12 A1 says; if a later release has landed first, STOP at the ANNOUNCE and report the new ref, and the issuer re-cuts.
+- **What ships (names the blobs; replaces differences 1 and A2's list):** exactly two files, at trunk commit `789ffd57b0`:
+  - `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml`, blob `11620b3c520175260a4662b803c1f6344b7a8eec` (catalog v0.5: 78 harvest rows, 216 table rows with key templates, the 78 + 19 rows naming the live tools, the aum-metrics row denied, the legacy mdpf row dropped, history depth re-read on 2026-10-15);
+  - `infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py`, blob `f3cf344cc315420f1e7d833657b07b504a246b1a` (a table row that names no tool is a gap and sorts last).
+  Verify each blob with `git rev-parse 789ffd57b0:<path>` before the upload and again from the host after (md5 of the file equal to the tree's). Nothing else ships.
+- **Criteria:** `r13.AC1` to `r13.AC3` stand; **`r13.AC4` is added** (the round 13, 14 and 16 catalog live on the host: version 0.5, 78 harvest rows, 216 table rows with a key_template, 5 retired, md5 equal to the tree's catalog, every named read_tool served by the deployed commit). Base dry-runs 2026-10-15: AC1 FAIL (no entry), AC2 live guard PASS, AC3 PASS on this tree, AC4 FAIL (host version 0.4, 39 harvest rows, 0 table rows). Planted arms for AC4: 5 of 5.
+- **Time limit:** the depth claims were read today and equal the live objects until the next daily publish (about 13:30Z). Land PHASE B before then; if it will not, report at the ANNOUNCE and the issuer re-measures.
+- **At close:** the issuer tells `2.0.0_SA_COO~O` the deployed commit (it takes the next gateway slot for OG-ap-20, which reads its keys from this catalog).
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file.
@@ -86,10 +98,11 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 ## 4. PROOF OF SPEC (literal; run from your worktree root)
 
 <proof_of_spec>
-  <expected_criteria>AC1,AC2,AC3</expected_criteria>
+  <expected_criteria>AC1,AC2,AC3,AC4</expected_criteria>
   <criterion id="AC1" cell_refs="MX-r-13" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round12/checks/r13.AC1.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MX-r-13" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round12/checks/r13.AC2.sh; echo "exit=$?"</invocation><expect>/health=200; on the host the PARTITION sums N of N, every member valid (index rc=0), and discover reads good 3 of 3 (discover rc=0) -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-r-13" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round12/checks/r13.AC3.sh; echo "exit=$?"</invocation><expect>DEPTH valid N of N; ANSWER-TIME answered measured and equal m of m, anchors 2 of 2; catalog rc=0; answer-time rc=0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC4" cell_refs="MX-r-13" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round12/checks/r13.AC4.sh; echo "exit=$?"</invocation><expect>HOST CATALOG version=0.5 harvest=78 table=216 key_template=216 retired=5; the host md5 equals the tree md5; read_tool names unserved by the deployed commit: none -- RESULT: PASS -- exit=0</expect></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/NFRA_MCPINDEX.TO-MX-r-13.depth-every-tool-release.proof_of_spec.json</instance_path>
 </proof_of_spec>
 
