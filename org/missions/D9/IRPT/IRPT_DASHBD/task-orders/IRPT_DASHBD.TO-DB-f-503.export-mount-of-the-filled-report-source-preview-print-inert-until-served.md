@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~503</issued_to>
 <issued_by>2.0.0_SA_COO~F2</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -41,7 +41,7 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-503` (branch `wk-IRPT_DASHBD-5
 <criterion id="DBF115-1-AC2" cell_refs="DB-f-503"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r115/p115_export.py" . DBF115-1-AC2</invocation><expect>DBF115-1-AC2 PASS</expect></criterion>
 `DBF115-1-AC2` -- the print side: `PrintEntry.tsx` reads `client` and `version`, `reportRead.ts` carries `version_id`, a render file other than the document itself mounts `PerformanceReportDocument`; `print-filled-report.test.tsx` has the seven title words and passes with 0 failures and at least 6 tests. Base: FAIL (the print entry lacks the read).
 <criterion id="DBF115-1-AC3" cell_refs="DB-f-503"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r115/p115_export.py" . DBF115-1-AC3</invocation><expect>DBF115-1-AC3 PASS</expect></criterion>
-`DBF115-1-AC3` -- bounds: the portal diff from the round-114 head to your head is not empty and touches only files under `export/` and `render/`, `tabs/reporting/ReportingTab.tsx`, `dashboard/report/reportRead.ts` and the two new test files. Base: FAIL (no change).
+`DBF115-1-AC3` -- bounds: the portal diff from the round-114 head to your head is not empty and touches only files under `export/` and `render/`, `tabs/reporting/ReportingTab.tsx`, `dashboard/report/reportRead.ts` and the two new test files, plus (amended 2026-10-15, CTO round-116 analysis ruling 1) the issuer's own one hookup in `index.tsx`, which is not the worker's grant; AC3 is graded at the candidate head that is registered (`506a2302`), not at the worker's. Base: FAIL (no change).
 
 <expected_criteria>DBF115-1-AC1,DBF115-1-AC2,DBF115-1-AC3</expected_criteria>
 

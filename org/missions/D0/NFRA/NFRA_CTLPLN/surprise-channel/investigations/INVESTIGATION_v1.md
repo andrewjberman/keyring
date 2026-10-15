@@ -9904,3 +9904,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Filed by CT-ae-3 as a neighbouring instance of W93-S1. Not changed here: the order names the ENFORCE refusal only. Whether the placement branch should unstage the same set is for the CTO or the COO."
 }
 ```
+
+## NFRA_CTLPLN-S9125 -- the INF gold freshness guard lacks the 2027 closures; owner dell1, due before 2026-12-31
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9125",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-15T04:25:21Z",
+  "one_line": "inf-gold-freshness-guard holds a hand-typed MARKET_HOLIDAYS set with none of the ten 2027 closures; its fix is dell1's (ADVI owns the INF pipelines): import lib/trading_calendar at the function's next deploy, before 2026-12-31.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "NFRA_CTLPLN-W98-S2 (CT-ae-2): INLINE-HOLIDAY-SETS found=6 same_2026_2027=5 differs_2026_2027=1; the differing set is infra/aws/lambda/inf-pipeline/inf-gold-freshness-guard/lambda_function.py, first miss 2027-01-01",
+      "1.0.0_SA_CTO msg 109290 (2026-10-15T01:11:45Z): owner dell1, due before 2026-12-31; the CTO relays it to 1.0.0_SA_CTO~DELL1 to name the project",
+      "TO-CT-ae-2 closed complete (d531251edb), cell merged 833f1d7bb7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling (round-14 analysis ruling 2, msg 109290): a hand-typed holiday set that differs from the library is fixed by importing lib/trading_calendar at the function's next deploy, never by correcting the copy; this Lambda's fix is dell1's.",
+  "world_is": "The Lambda is deployed with a 2026-only set, so any 2027 trading-day count in it is wrong from 2027-01-01. Inert until then. This project changes no Lambda; the owner is dell1 and the condition that un-parks it is its next deploy of that function, which must land before 2026-12-31.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1",
+  "notes": "Filed by the issuer on the CTO's instruction (msg 109290) once the CT-ae-2 measure merged."
+}
+```
