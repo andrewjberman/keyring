@@ -4283,3 +4283,27 @@ Check IB223 (`deliverables/2.0.0_SA_COO~P2/checks/r223/p223_cells.py`), dry-run 
 | `IB-pr-587` | LIFT the one-account limit of orion_account_mapping.py, add the household-members helper | FWD-3 | WORLD | none | PN2-a |
 
 fanout: 2 of 2 chains, cap 8, reason: two cells on disjoint files (a new pull script with the dispatch script; the Lambda mapping module); workers slots ~429 and ~430 start now.
+
+## 219. ROUND 3, WORKSTREAM ~PJ (the minimal overlay candidate of the three holdings bundles; 2026-10-15 ~16:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the finding of IB-pr-589)
+
+IB-pr-589 (record `IB222-1_holdings_bundles_candidate.json`) built each firm's bundle from the current HEAD and found that besides `holdings_snapshot.py` and `publication.py` (the two files the exemption, its listing and the receipts changed) SIX unrelated closure members differ from the live bundles, because other projects' commits landed since the minting pins: `dim_mdpf_aggregate_aua_timeseries.py`, `dim_mdpf_aum_metrics.py`, `mdpf_category_registry.py` (MDPF_CANON), `exemptions.json` and `opal_naming.py` (the registry owner) and `reporting_policies.json` (IB-pr-553). Shipping them under the exemption pair would widen its blast radius to changes it does not own. The cell builds the MINIMAL candidate: each firm's bundle from its MINTING pin with only the two files overlaid from HEAD, BUILD ONLY, and runs the exemption tests on that overlay tree to prove the two files need nothing the drifted members carry. If the tests fail the finding is which drifted member the new code needs, and the pair then names it.
+
+Check IB224-1 (`deliverables/2.0.0_SA_COO~P2/checks/r224/p224_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control224.py`) passes the three positives and ten negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-590` | READ the overlay release candidates of the three holdings bundles (minting pin + the two files), BUILD ONLY, tested offline, against the live bundles | FWD-21 | SERVED | none | PJ5-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one read-only build cell; one worker (slot ~431) starts now.
+
+## 220. ROUND 1, WORKSTREAM ~PM (the served manifest names the ratio-absent split securities; 2026-10-15 ~17:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO half of the 49 Financial split pair @ab04a4b5a2, condition 3)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). The CTO signed the split pair (msg 8466) on the condition that the 13 ratio-absent security-days stay ungraded AND "the served manifest names them by security and day. They are never silent." The build (IB-pr-578 and 583) records only counts in the run manifest's `split_adjust` block. This cell adds the names (`ratio_absent`: day, security, accounts used; the unkeyed rows by day), LOCAL, grading unchanged. The release candidate of IB-pr-585 is then REBUILT (its digest changes) and the pair's COO half re-issued on the new digest for the CTO to re-bind; the apply order waits for that.
+
+Check IB225-1 (`deliverables/2.0.0_SA_COO~P2/checks/r225/p225_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control225.py`) passes the three positives and seven negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-592` | BUILD the named ratio_absent list in the frame attrs and the run manifest (day, security, accounts used; unkeyed rows by day), grading unchanged | FWD-21 | LOCAL | none | PM1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one product file; one worker (slot ~432) starts now.
