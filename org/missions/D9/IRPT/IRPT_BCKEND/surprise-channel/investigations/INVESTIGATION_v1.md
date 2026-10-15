@@ -37670,3 +37670,211 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Ask the issuer to define functions_invoked in the next amendment. Until then the record states the reading in its notes, so the grader sees it."
 }
 ```
+
+## IRPT_BCKEND-D2-S194 -- Dispositions on workers 413 and 414's rows; 49 Financial's lost account is ACTIVE in the directory; Cottonwood's account has only no-position source rows (measured)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S194",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T11:54:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (the publish guard's owner decides) or whoever accepts the lost accounts",
+  "one_line": "Dispositions on workers 413 and 414's rows (D2-W413-S1, S2; D2-W414-S1 to S4) and the two refusal reads: 49 Financial (P1, two trading days behind) is refused on one account_lost whose account is ACTIVE in the directory; Cottonwood's account is dropped because all its source rows are no-position rows, so the validator refuses an empty custody frame (measured); D2-S158 stays ARMED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB210-1 and IB210-2 AC1 to AC3 on the worker trees (all PASS) and the proof instances (VALID); merges a9eb88ed54 (570) and 61fd06850f (571)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~413/IB210-1_49f_refusal_read.json: 49 Financial served 2026-10-12 (two trading days behind T-1 at 2026-10-14); one refusal record, candidate 2026-10-13, account_lost count 1, listed.new_unclassified 0; the account marked ACTIVE in a directory of 4,746 entries (4,673 ACTIVE, 73 TERMINATED), so closed_account_ids (TERMINATED only) cannot exempt it; the candidate builder's filter unread (cause inferred)",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~414/IB210-2_cot_validator_read.json: the validator run offline on the dropped Cottonwood account's rows (2 rows over 3 dates): refused at holdings_snapshot.py line 403 because the custody frame is empty after the screen's no-position filter; zero independent-total rows for the account on 2026-10-13 (measured)"
+    ]
+  },
+  "spec_asserts": "Row D2-S158 and my IB-pr-569 order: the lost account is dropped by the COT account screen for a reason not yet measured; 49 Financial is not blocked.",
+  "world_is": "DISPOSITIONS. D2-W413-S1 (the refused 49 Financial account is ACTIVE in the directory, so the closure exemption cannot clear it; cause inferred): ARMED, owner me, carried into IB-pr-573. D2-W413-S2 (the closed-account set is read from a legacy bucket): INERT, recorded for the screen fix. D2-W414-S1 RESOLVED: the validator's import chain sat outside the sparse grant (AMENDMENT 1 of IB-pr-571). D2-W414-S2 RESOLVED: my check let an accepted branch pass a record that never ran the validator; fixed. D2-W414-S3 (a currency file added to the sparse grant) and S4 (functions_invoked is ambiguous: the offline run imports the repository function, which is not a Lambda invocation, counter 0): INERT, recorded. D2-S158 stays ARMED: the Cottonwood cause is now MEASURED (the account's source rows are all no-position rows, so the custody frame is empty after the no-position filter and the validator refuses), which points to a real closure or a stale source rather than a defect in the validator; the choice among a custodian-confirmed TERMINATED mark, a source confirmation of the no-position rows and a screen decision is the CTO's. 49 Financial's cause remains inferred until IB-pr-573."
+}
+```
+
+## IRPT_BCKEND-D2-W415-S1 -- the Cottonwood and Inflection transaction feeds carry no tran_srcde, tr_cd or sb_cd: the keyed split read cannot classify two of the three firms
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W415-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~415",
+  "surfaced_at": "2026-10-15T11:53:18Z",
+  "one_line": "The split fix as the CTO ruled it keys on (tran_srcde, tr_cd, sb_cd); the Cottonwood and Inflection transaction feeds carry none of the three columns in any partition, so their split rows cannot be read by that key.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "CTO ruling @9913bf3ed4 item 4 and IB-pr-572 step 2: every reader classifies by (tran_srcde, tr_cd, sb_cd); the three firms' split rows are read from the custodian STK STOCK SPLIT rows.",
+  "world_is": "49financial carries all three columns (572 partitions, 1,348 STK STOCK SPLIT rows, 47 split days). Cottonwood (125 partitions at read time, 73 columns) and Inflection (146 partitions, 36 columns) carry none of the three in any partition, read by footer schema on every partition. Cottonwood's split rows sit on Transaction Type Corporate Action with Sub Type Split (70) or Reverse Split (74) on the first 124 partitions; Inflection's type is transTypeId and was not counted. The check's source_found flag is therefore false for both, and the served holdings price return for their split days stays unadjusted under the current design.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~415/IB211-1_split_adjust_read.json (uncommitted at this row, base a8b2b7254930)",
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json @a8b2b7254930 (no transactions key in the blackdiamond_z09 or orion entries)",
+      "AWS read-only: list and footer schema of the cottonwood and inflection silver fact_transactions prefixes, 2026-10-15 ~11:4xZ"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The design needs a declared split key per firm (Transaction Type and Sub Type for Cottonwood) before a ratio can be read there; the served delta for those two firms is not counted (delta_projection cottonwood 0 and inflection 0 are not measured zeros)."
+}
+```
+
+## IRPT_BCKEND-D2-W415-S2 -- the 49F transactions source is declared in the irpt_reporting sources file, not in the holdings producer declaration
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W415-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~415",
+  "surfaced_at": "2026-10-15T11:53:18Z",
+  "one_line": "The holdings producer's declaration names no transactions prefix for any channel; the 49F transactions prefix is declared in the irpt_reporting sources file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB-pr-572 step 2: find the declared transactions source the firm's rows come from, in the declaration entry.",
+  "world_is": "The holdings sources file (irpt_holdings_performance) has positions and balance keys only for its three channels. The 49F custody entry in the irpt_reporting sources file carries transactions_prefix, transaction_key_columns (tran_srcde, tr_cd, sb_cd) and the classification table. A split-adjusting producer would have to read the transactions declaration from another pipeline's file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json @a8b2b7254930 (positions_prefix and balance_prefix only)",
+      "data/assets/scripts/gold/irpt_reporting/sources.json @a8b2b7254930 (transactions_prefix and transaction_key_columns in the custody entry)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for the design: the new input is a transactions declaration in the holdings channel entries or a read of the irpt_reporting entry."
+}
+```
+
+## IRPT_BCKEND-D2-W415-S3 -- the ruling's 920 account-days on 2026-04-21 do not reproduce: 985 accounts held a split security at t-1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W415-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~415",
+  "surfaced_at": "2026-10-15T11:53:18Z",
+  "one_line": "The CTO ruling states 920 account-days graded on 2026-04-21; this read counts 985 distinct accounts holding one of five split securities at t-1, and 846 holders of the 6-for-1 security with no same-day activity.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ruling @9913bf3ed4 item 5: the 920 account-days on 2026-04-21 are the guard's grading set that the fix makes measurable.",
+  "world_is": "Measured on the 49financial positions and transactions partitions: the 6-for-1 security has 972 holder pairs at t-1, 846 with no same-day activity, ratio 6.0 measured; the day has five split securities. The guard's grading set was not read, so the 920 is neither confirmed nor refuted by this read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~415/IB211-1_split_adjust_read.json (delta_projection, uncommitted at this row)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_ICRO_VUG_STOCK_SPLIT_NONFLOW_SPLIT_ADJUST_HOLDINGS_RETURN_20261015.md @9913bf3ed4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The count difference is not explained here; the guard's grading set is the next read if the 920 is to be reproduced."
+}
+```
+
+## IRPT_BCKEND-D2-W415-S4 -- the STOCK SPLIT text sits in the source-code description column, not in the detail column the ruling implies
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W415-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~415",
+  "surfaced_at": "2026-10-15T11:53:18Z",
+  "one_line": "On the 49F transactions, the STOCK SPLIT text is in transaction_source_code_description on all 1,348 STK rows and in transaction_detail_description on only 36.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB-pr-572 step 2 and the ruling item 2: the same-day STK row carries the STOCK SPLIT text.",
+  "world_is": "The text is read from transaction_source_code_description on every STK row; a reader that tests the detail column would miss 1,312 of the 1,348 split rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AWS read-only: every partition of the 49financial transactions prefix, 572 partitions, 3,349,750 rows (2026-10-15 ~11:3xZ)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Any reader keyed on the detail text would undercount; the source-code description is the column to key on, with the three-part key."
+}
+```
+
+## IRPT_BCKEND-D2-W415-S5 -- the trading calendar answered from its hardcoded NYSE fallback on this box
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W415-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~415",
+  "surfaced_at": "2026-10-15T11:53:18Z",
+  "one_line": "lib/trading_calendar.py answered from its hardcoded NYSE fallback (pandas_market_calendars absent on dell2); the trading-day checks of the split days rest on that fallback.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Trading days are resolved through lib/trading_calendar.py (CLAUDE.md section 5 trading-calendar rule).",
+  "world_is": "The module printed a WARN that it answers from the hardcoded fallback covering 2010 to 2027. All 47 split days are trading days under that fallback; the primary calendar source was not used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py @a8b2b7254930 (is_trading_day and prev_trading_day, the fallback warning)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as a box condition; the fallback's regeneration date is named in the module warning."
+}
+```
+
+## IRPT_BCKEND-D2-W415-S6 -- the Cottonwood transactions have a second sibling prefix that the split count does not include
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W415-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~415",
+  "surfaced_at": "2026-10-15T11:53:18Z",
+  "one_line": "The Cottonwood silver transactions have a sibling prefix (fact_transactions_s2) with the same 124-partition span and 0.57 MB total; the split-text count does not read it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB-pr-572 step 2: the declared transactions source of the firm, counted over the history the firm holds.",
+  "world_is": "Two Cottonwood transaction prefixes are landed. The primary carries 73 columns and 53 MB; the sibling is 0.57 MB over the same dates and was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AWS read-only: list of the cottonwood silver fact_transactions and fact_transactions_s2 prefixes (2026-10-15 ~11:4xZ)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The Cottonwood split count is over the primary prefix only; the sibling's role is not established."
+}
+```
+
+## IRPT_BCKEND-D2-S195 -- Dispositions on worker 415's rows; the split key exists on 49 Financial's transactions only; 17 of 75 ratios disagree with the close; 985 against 920
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S195",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T12:09:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 415's rows (D2-W415-S1 to S6) and the split-adjust READ: the ruled key (tran_srcde, tr_cd, sb_cd) exists on 49 Financial's transactions only; 17 of 75 measurable ratios disagree with the close-price ratio at 2 percent; the read counts 985 accounts on 2026-04-21 against the ruling's 920; the producer's declaration names no transactions prefix.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB211-1 AC1 to AC3 on the worker tree (all PASS) and the proof instance (VALID); merge af479072d6",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~415/IB211-1_split_adjust_read.json: the contribution is v * (p1 / p0 - 1) (holdings_performance.py line 816), neither price split-adjusted; 49 Financial: 572 transaction partitions (3,349,750 rows), 1,348 STK rows all carrying STOCK SPLIT in the source-code description, 47 split days, 76 security-days = 75 measurable + 1 SPLIT_RATIO_ABSENT, 75 = 58 agree + 17 disagree with the close-price ratio at a 0.02 tolerance, 1,291 (account, day) pairs affected; Cottonwood: no declared transactions prefix for the Black Diamond channel, 153 split-like rows by text (Corporate Action Split 70, Reverse Split 74) over the first 124 partitions; Inflection: no declared prefix, the 4.63 GB feed not classified"
+    ]
+  },
+  "spec_asserts": "The CTO ruling @9913bf3ed4: the split row is the same-day STK STOCK SPLIT row keyed (tran_srcde, tr_cd, sb_cd) for every firm; the guard grades 920 account-days on 2026-04-21 that become measurable; the other two firms are read for split days.",
+  "world_is": "DISPOSITIONS and four findings the CTO should see before the pair. (1) THE KEY: only 49 Financial's transactions carry the three columns (W415-S1, BLOCKING for the build as ruled); Cottonwood's Black Diamond feed names its splits in text types (Corporate Action Split, Reverse Split) and Inflection's Orion feed was not classifiable by this read, so the split key per firm is a declaration still to be written. (2) THE RATIO: 17 of 75 measured custodian ratios disagree with the close-price ratio at a 2 percent tolerance (the tolerance is the worker's, stated, not tuned); the build must say which ratio governs on a disagreement; the ruling takes the custodian's ratio and a control against the close. (3) THE COUNT: 985 distinct accounts held one of five split securities at t-1 on 2026-04-21 (846 held the 6-for-1 security with no same-day activity) against the ruling's 920 graded account-days; the 920 is the guard's graded set and was not reproduced (W415-S3). (4) THE INPUT: the holdings producer's declaration names no transactions prefix for any channel; 49 Financial's is declared in the irpt_reporting sources file (W415-S2), so the pure core needs a new per-(security, day) ratio table input and a declared split key per firm. D2-W415-S4 (the STOCK SPLIT text sits in the source-code description on all 1,348 STK rows and in the detail text on 36), S5 (the calendar fallback table) and S6 (a sibling Cottonwood prefix, fact_transactions_s2, not counted): INERT, recorded. D2-W415-S1 stays ARMED, owner me."
+}
+```

@@ -17301,3 +17301,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "Nothing blocked: the act ran as signed (0/2/0, no invoke, ledger open at L6). Asks, all the issuer's or the CTO's: correct the key spelling in the order text; decide whether the packet's condition 3 should say the applier writes the pins BEFORE the build (the builder cannot write them); consider renaming WriteTheFiveGoldPrefixesOnly when the next policy change lands (a rename is a policy change, not done here); the fmt alignment is a repo defect owned by the author of locals.tf; the 19 stale marker copies sit in other seats' worktrees and are named, never closed."
 }
 ```
+
+## IRPT_DASHBD-D2-S81 -- OBSERVATION: S79 disarmed, the Cottonwood write guard and start floor are merged and tested
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S81",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T12:00:00Z",
+  "one_line": "Row IRPT_DASHBD-D2-S79 is disarmed: the no-overwrite guard in write_day and the 2026-07-10 start floor in owed_days are merged and tested (round 125, DB-b-254)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DB125-1-AC1, DB125-1-AC2 and DB125-1-AC3 run by this seat on the landed tree after merge 4200e3415b: PASS (37 adapter tests and 16 handler tests pass)",
+      "write_day LISTs the exact day partition and raises GoldWriteError with no put when either key exists, including a 2026-06-22 history day; owed_days starts at the floor 2026-07-10 and an event naming a day before the floor raises before any write",
+      "the schedule is still DISABLED, the Terraform root unapplied and the handler undeployed, so no landing has occurred"
+    ]
+  },
+  "spec_asserts": "Row IRPT_DASHBD-D2-S79 disarm condition: guard and floor merged and tested.",
+  "world_is": "The condition is met in the repo at 4200e3415b. The landing packet still owes: first act one explicit event for 2026-07-10, memory 1024 MB from the DB-b-255 measurement, catch-up by explicit days events, never a day on or before 2026-06-22. Counts, dates and words only."
+}
+```
