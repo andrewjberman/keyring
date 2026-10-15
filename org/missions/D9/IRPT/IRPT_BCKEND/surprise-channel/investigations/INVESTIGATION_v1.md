@@ -39647,3 +39647,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W434-S4 -- The record commit's one-writer gate WARNs that the unsuffixed channel file is the laptop's, written from dell2, and names the per-box file; the rows went to the named file as the order says
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The record commit 1b5d1ac69a printed one-writer WARN: INVESTIGATION_v1.md is the laptop's unsuffixed file written from dell2, and the gate names the per-box file <stem>.dell2.<ext> (WARN until C-QUEUE); the rows were appended to the named file, as the order says.",
+  "spec_asserts": "The order's BOUNDS and worker face name org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md as the channel file for this worker's rows.",
+  "world_is": "safe-commit of 1b5d1ac69a passed with the one-writer WARN on that unsuffixed path; the gate's per-box convention would put a dell2 writer in a suffixed file. The rows S1 to S3 were appended to the named file in the same commit, and the surprise-row gate reported no row problem.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at 1b5d1ac69a (this worktree): line beginning [one-writer] WARN: org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file",
+      "the surprise-row gate of commit 1b5d1ac69a: 3 new row(s) of 1526 total checked, OK: 1 file(s), all new rows carry their step-7/step-10 fields (the S4 row is appended after that commit)",
+      "the worker face channel-rows paragraph: append each row as its OWN block at the END of INVESTIGATION_v1.md"
+    ]
+  }
+}
+```
