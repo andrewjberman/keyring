@@ -14095,3 +14095,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-5. Form only: no token was printed or stored, no client value is in the repo, and no call beyond the two POSTs was made. A CTO ruling is needed before any further call: whether the estate's inner-scope shape may be posted on up to two more calls under a new order. The worker did not widen the cap of four or the no-retry-on-4xx rule."
 }
 ```
+
+## IRPT_DASHBD-D2-S54 -- disarm owner's evidence for W305-S1: the two 400s were the issuer's order omission, fixed by AMENDMENT 1, and the re-run drew 200 and 200
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S54",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T03:59:15Z",
+  "one_line": "W305-S1 disarm evidence: both 400s were the issuer's order omission (the wrapper dict posted instead of the inner scope); AMENDMENT 1 @1009b791fa fixed it and the re-run drew 200 and 200, DBI117-1-AC1 PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-i-5 step 2: build the body with requests_for; the estate's transport posts the inner scope (orion_selected.calculate line 147).",
+  "world_is": "requests_for returns {scope: scope}; calculate posts requests[scope]. The worker posted the wrapper (2 calls, HTTP 400, no credential answer). After AMENDMENT 1 the worker posted the inner scope (2 calls, HTTP 200, 200) and the record lists all four calls; the amended check reads (c) ACCEPTED. The 400s carried no 401 or 403.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-5.orion-scope-probe-multi-account-fee-flag-credential.md",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~305/SCOPE_PROBE_R117.json",
+      "infra/aws/lambda/investor-reporting/performance/orion_selected.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
