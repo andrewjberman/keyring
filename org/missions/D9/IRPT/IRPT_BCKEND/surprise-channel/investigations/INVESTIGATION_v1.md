@@ -38061,3 +38061,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Read only. The 2026-10-12 fact_trn partition is the 509-row object filed as IRPT_BCKEND-D2-W418-S2, so the absence of transactions on the served day is not decisive. The rule needs its clauses stated for a position that vanishes on the same day as the balance row; the issuer should settle that wording."
 }
 ```
+
+## IRPT_BCKEND-D2-S198 -- Dispositions on worker 418's rows; 49 Financial's lost account is gone from dim_balance and dim_position from 2026-10-13: closed_at_source by the CTO's rule (a), with one caveat open
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S198",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T12:58:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 418's rows (D2-W418-S1 to S3) and the 49 Financial presence read: the lost account is gone from dim_balance AND dim_position from 2026-10-13 and persists on 2026-10-14; by the CTO's rule (a) it is closed_at_source; one caveat stays open (the 2026-10-12 fact_trn partition has 509 rows against 11,906 the next day).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB214-1 AC1 to AC3 on the worker tree (all PASS) and the proof instance (VALID); merge 23eff77fbb",
+      "deliverables/0.9.0_WK_IRPT_BCKEND~418/IB214-1_49f_presence_read.json: dim_balance partitions 2026-10-08 to 2026-10-14 present (7,626 to 7,664 rows), the account present through 2026-10-12 and absent on 2026-10-13 and 2026-10-14; the writer is convert_object in schwab_conversion.py (opal-assets-silver-schwab Lambda, owner the AE PartnerETL ingest seat), no error line in the invocations of 2026-10-13 and 2026-10-14 (success inferred); dim_position 20 rows on 2026-10-12 and 0 on 2026-10-13 and 2026-10-14; fact_trn no row for the account on the three days"
+    ]
+  },
+  "spec_asserts": "The CTO msg 8276: read Schwab's other files for the account; a closing or transfer-out transaction, or no positions, means closed at the source; positions still present means a Schwab balance-file gap.",
+  "world_is": "DISPOSITIONS. D2-W418-S1 RESOLVED: the dim_balance writer was outside the sparse grant (AMENDMENT 2 of IB-pr-575). D2-W418-S3: the account's 20 dim_position rows vanish on the same days as its dim_balance row, so it is not a balance-file-only defect; the rule's class is closed_at_source (no positions on the last two days). D2-W418-S2 stays ARMED, owner me: the 2026-10-12 fact_trn partition has 81 KB and 509 rows against 563 KB and 11,906 rows the next day (a size shape a truncated write would produce; rows were counted by head and a count, not read in full), so a closing transaction on 2026-10-12 could be missing; the CTO's completeness condition (each partition at least 95 percent of the prior day's) is the guard against exactly this. The acceptance mechanism is the closed_at_source exemption of the gate (IB-pr-576, workstream ~PG), one pair for both firms (CTO msg 8284); a TERMINATED mark through the directory cannot be written for an account absent from its source (D2-W417-S3)."
+}
+```
