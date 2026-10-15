@@ -190,6 +190,18 @@ The CTO closed round 126 MAY-CLOSE with one enrichment: the read record carries 
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent direct-act cell with a disjoint write set (one record); worker `0.9.0_WK_IRPT_DASHBD~315` (`DB-i-15`).
 
+## 15. ROUND 129, WORKSTREAM B-IN (2026-10-15, issuer 2.0.0_SA_COO~I2, on the CTO's round-127 analysis ADDENDUM 1, msg 8736; open call dell2-20261015T223117Z-5df4 ruled yes)
+
+The CTO ruled that the first-real-row RUN script is built now, on fixtures, so the real run is a same-day act when the feed's first silver lands (IB-pr-596, `~P2`). He wrote "round 128"; round 128 is the cause-claim line (DB-i-15, drained at b421b07328), so this is round 129.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-16` | The first-real-row run script and its tests: the feed's silver via the GET-only reader into the round-127 wrapper and a private local directory; the Orion boundary measure (pairs, pairs equal, max relative difference in basis points); a 238-to-365-day chain check; NO_SILVER_YET and STOPPED_AT_CAP as recorded results; fixtures only, nothing run on real data | FWD-2 | LOCAL (a new script and tests in the order's own folder; no S3 write, no vendor call, nothing deployed) | `DB-i-14` (merged, @c7d980af1b) | I-P |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The boundary measure prints the RELATIVE difference in basis points and counts, not dollar differences: a dollar figure per account is a client value and the repo carries counts and statistics only; "equal" is within half a cent. (b) The chain check as the CTO worded it ("the 238-365 day chain check") compares the table's chained rows with the product of the silver's own daily factors, a consistency check of the adapter and wrapper on real rows; a comparison with Orion's REPORTED period return needs a vendor call and a window the backfill provides, and is NOT built here. The order, the check and the report say so. (c) `method_version` is 0 for this private run (no `dim_return_method` row exists for an Orion return); the record says so. (d) The script's `main` is wired to the estate's own dimension builder, reads two silver tables, and is not exercised until the silver exists; the checker exercises `run_real` through a fake reader. (e) The script lives in the worker's folder, not in a production tree: it is a measurement instrument, not a pipeline.
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent build cell with a disjoint write set (a script and its tests); worker `0.9.0_WK_IRPT_DASHBD~316` (`DB-i-16`).
+
 ## Cells
 
 | cell id | owner |
@@ -209,3 +221,4 @@ The CTO closed round 126 MAY-CLOSE with one enrichment: the read record carries 
 | DB-i-13 | 0.9.0_WK_IRPT_DASHBD~313 |
 | DB-i-14 | 0.9.0_WK_IRPT_DASHBD~314 |
 | DB-i-15 | 0.9.0_WK_IRPT_DASHBD~315 |
+| DB-i-16 | 0.9.0_WK_IRPT_DASHBD~316 |

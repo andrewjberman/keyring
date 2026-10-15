@@ -40543,3 +40543,105 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W443-S1 -- The order's missing-map arm (clause 1: a partition that is absent or empty sets unread) fails an existing wiring test that asserts the base manifest entry for the same case.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W443-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~443",
+  "surfaced_at": "2026-10-15T22:36:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The order's missing-map arm (clause 1: a partition that is absent or empty sets smartx_map_unread to partition_missing_or_empty, and the listing writes evidence unread) fails test_absent_at_source_wiring.py::test_published_manifest_carries_absent_at_source_never_closed, which asserts the base manifest entry with no evidence key for the same missing partition.",
+  "spec_asserts": "Order IB-pr-607 clause 1 sets smartx_map_unread to partition_missing_or_empty when the partition is absent or empty, and clause 2 writes evidence unread for every exempted account whose evidence carries it. BOUNDS: every existing test outside the one test replaced stays green and no other existing assertion is edited; refusal clause: an existing test that fails because of the change is a STOP.",
+  "world_is": "With the change applied, 78 of 79 tests pass across the six AC1 files. The one failure is test_absent_at_source_wiring.py::test_published_manifest_carries_absent_at_source_never_closed (its prepare and fire run write no SmartX map, so the reader finds a missing partition): its manifest entry now carries evidence unread and evidence_reason partition_missing_or_empty where the test asserts no evidence key. The two requirements cannot both hold for a missing partition. Nothing was edited to satisfy the test; the product change is as the order states it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/tests/test_absent_at_source_wiring.py@6651c031880c2a914cdeb3e2e078221246501726 lines 308-316 (the exact manifest assertion)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@6651c031880c2a914cdeb3e2e078221246501726 _absent_smartx_map_ids (the frame-is-None branch that the order's clause 1 maps to partition_missing_or_empty)",
+      "pytest run in the worktree at base 6651c03188 plus the change: 78 passed, 1 failed (test_published_manifest_carries_absent_at_source_never_closed)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W443-S2 -- A SmartX partition that holds rows but no usable account_number (every value null) is classed partition_missing_or_empty; the order names no category for that case.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W443-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~443",
+  "surfaced_at": "2026-10-15T22:36:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The reader gives a non-empty partition whose account_number cells are all null the category partition_missing_or_empty, which the order's category set defines as absent or empty.",
+  "spec_asserts": "Order IB-pr-607 clause 1: the category set is exactly four values, and partition_missing_or_empty means the partition is absent or empty. The order does not say how a partition with rows but no usable account id is classed.",
+  "world_is": "_absent_smartx_map_ids raises partition_missing_or_empty when the set of usable ids is empty, so a partition whose rows all carry a null account_number reads as unread with that category. No test arm covers this case; the choice is the worker's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@6651c031880c2a914cdeb3e2e078221246501726 _absent_smartx_map_ids, the final 'if not ids' branch (the worktree copy carries the change)"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-S210 -- Owner re-point to 2.0.0_SA_COO~N2 (IRPT_BCKEND ~PN and ~PO): rows D2-W404-S4, D2-W404-S6, D2-W404-S9, D2-W409-
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S210",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T23:50:00Z",
+  "one_line": "Owner re-point to 2.0.0_SA_COO~N2 (IRPT_BCKEND ~PN and ~PO): rows D2-W404-S4, D2-W404-S6, D2-W404-S9, D2-W409-S7 and D2-W430-S3 (and D2-W409-S2, read its disposition S190 first) now have ONE live owner, 2.0.0_SA_COO~N2; in-flight order IB-pr-596 stays issued by 2.0.0_SA_COO~P2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D2-W404-S4, S6, S9 and D2-W409-S7 name 2.0.0_SA_COO~P2 as owner (S190, S191); D2-W430-S3 and D2-W409-S2 name none.",
+  "world_is": "CTO ruling msg 8739 splits IRPT_BCKEND into three issuers: ~PN and ~PO go to 2.0.0_SA_COO~N2. The hazard standing of each row is unchanged by this row (ARMED rows stay ARMED); only the owner moves. S191's single-owner rule holds with the new serial.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_PARALLELIZE_WORKSTREAM_ASSIGNMENTS_20261015.md Move 1",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/HANDOVER_IRPT_BCKEND_P2_TO_N2_20261015.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner re-point by appended row (CTO ruling msg 8739); the old rows are not edited."
+}
+```
+
+## IRPT_BCKEND-D2-S211 -- Owner re-point to 2.0.0_SA_COO~S2 (IRPT_BCKEND ~PS, IB-pr-551 and ~PI): row D2-W411-S1 (does the export functi
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S211",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T23:50:00Z",
+  "one_line": "Owner re-point to 2.0.0_SA_COO~S2 (IRPT_BCKEND ~PS, IB-pr-551 and ~PI): row D2-W411-S1 (does the export function's role hold s3:GetObject on the platinum filled object?) now has ONE live owner, 2.0.0_SA_COO~S2; it is read live as STEP 0 of the IB-pr-551 deploy legs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D2-W411-S1 names 2.0.0_SA_COO~P2 as owner (S190).",
+  "world_is": "CTO ruling msg 8739 splits IRPT_BCKEND into three issuers: ~PS, IB-pr-551 and ~PI go to 2.0.0_SA_COO~S2. The hazard standing is unchanged (ARMED stays ARMED); only the owner moves.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_PO6_PS6_20261015.md",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/HANDOVER_IRPT_BCKEND_P2_TO_S2_20261015.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner re-point by appended row (CTO ruling msg 8739); the old rows are not edited."
+}
+```

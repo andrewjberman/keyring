@@ -224,14 +224,32 @@ def main_tree_of(tree: str):
     return os.path.dirname(gd) if os.path.basename(gd) == ".git" else None
 
 
+def build_guard_refusal(builder: str, tree: str):
+    """THE SAME GUARD AS THE BUILDER: nerves_lexical.build_refusal, loaded from the builder beside the map
+    (importing it runs no build). -> the refusal text, or None when the builder admits this tree."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("nerves_lexical_guard", builder)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.build_refusal(tree)
+
+
 def rebuild_risk_map(map_path: str, timeout: int = REBUILD_TIMEOUT_S):
     """ONE rebuild of the danger map by its own builder, as a child process capped at `timeout`
-    seconds. A lock file keeps two reflexes from building at once. -> (ok, why)."""
+    seconds. The build guard is checked FIRST: a refused tree is never built here. A lock file keeps
+    two reflexes from building at once. -> (ok, why)."""
     global BUILD_SPAWNS
     graph = os.path.dirname(map_path)
     builder = os.path.join(graph, "nerves_lexical.py")
     if not os.path.isfile(builder):
         return False, "no nerves_lexical.py beside the map"
+    tree = os.path.normpath(os.path.join(graph, "..", "..", ".."))
+    try:
+        refusal = build_guard_refusal(builder, tree)
+    except Exception as exc:  # noqa: BLE001 -- a guard that cannot load refuses, it never waves a build through
+        refusal = "the guard could not be loaded: %s: %s" % (type(exc).__name__, exc)
+    if refusal:
+        return False, "NOT-DECIDABLE: danger map STALE and the build guard refused: %s" % refusal
     lock = os.path.join(graph, REBUILD_LOCK_NAME)
     try:
         if os.path.exists(lock) and time.time() - os.path.getmtime(lock) > REBUILD_LOCK_STALE_S:
@@ -286,6 +304,8 @@ def resolve_risk_map(tree: str, own_map: str, rebuild=rebuild_risk_map):
     fresh = RiskSource(own_map)
     if ok and not fresh.stale:
         return fresh, "danger map was STALE; rebuilt once by the reflex (%s)" % why, False
+    if why.startswith("NOT-DECIDABLE"):
+        return fresh, why, False     # the build guard refused: the reflex says so, it does not build
     return fresh, "danger map STALE; the one rebuild did not clear it (%s)" % why, False
 
 
@@ -487,7 +507,8 @@ def render_reflex(hits, denom, risk_src: Source, invocation: str) -> str:
          "  INVOCATION (pin beside any quoted result): %s" % invocation,
          "  danger map: %s" % risk_src.vintage]
     if denom.get("rebuild_note"):
-        L.append("  REBUILD: %s" % denom["rebuild_note"])
+        note = denom["rebuild_note"]
+        L.append(("  " + note) if note.startswith("NOT-DECIDABLE") else ("  REBUILD: " + note))
     if hits is None:
         reason = denom.get("reason") or "danger map unavailable"
         L += ["  ANSWER STATE: PARTIAL_OR_BLIND",

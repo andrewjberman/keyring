@@ -19629,3 +19629,106 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W161-S1 -- The Ticket Center filing form never reads a NORMALIZED answer portfolio findings, so a NOTICE for a security Opal cannot price is not shown to the filer
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W161-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~161",
+  "surfaced_at": "2026-10-15T22:44:17Z",
+  "one_line": "The Ticket Center filing form never reads a NORMALIZED answer portfolio findings, so a NOTICE for a security Opal cannot price is not shown to the filer",
+  "spec_asserts": "AR-y-364 context: a real security Opal cannot price gets a NOTICE (TICKER_DATA_NOT_ENTITLED) in answer.portfolio.findings of a NORMALIZED answer, with no filer choice. Step 5 asks where the Ticket Center form shows those findings.",
+  "world_is": "The Ticket Center reads no portfolio member: zero .portfolio reads in portal/src/pages/TicketCenter outside __tests__. fileAnalysisRequest files on NORMALIZED (analysisRequest.ts lines 376-395) and returns filed:true with the ticket only. stepLines (analysisRequest.ts lines 596-603) and the notice set in TicketCenter.tsx lines 390-397 carry no notice words. The only caller of noticeDescriptions is ProspectComposer.tsx line 356 (Investor Reporting; prospect.ts line 112). A TICKER_DATA_NOT_ENTITLED notice would not be visible to the Ticket Center filer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts@50db1eb4 lines 376-395 and 596-603",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx@50db1eb4 lines 390-397",
+      "portal/src/pages/InvestorReporting/tabs/analysis/ProspectComposer.tsx@a168015b line 356",
+      "portal/src/pages/InvestorReporting/tabs/analysis/prospect.ts@a168015b line 112"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W161-S2 -- The investigation row schema the worker face names is not in this worktree or in the base checkout
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W161-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~161",
+  "surfaced_at": "2026-10-15T22:44:17Z",
+  "one_line": "The investigation row schema the worker face names is not in this worktree or in the base checkout",
+  "spec_asserts": "The worker face names org/surprise_channel/schemas/investigation_item.schema.json as the row contract.",
+  "world_is": "No file at that path. The worktree has no org/surprise_channel directory, and the base checkout path C:/dev/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json is not found. The row was written in the shape of the existing rows of INVESTIGATION_v1.md; the schema enums were not checked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-161: Glob org/surprise_channel/** reports the directory does not exist",
+      "C:/dev/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json: file not found"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W200-S1 -- the commit gate's client account-id check cannot run on this box: the hashed list is absent, so the AR-g-99 commit was made unchecked
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W200-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~200",
+  "surfaced_at": "2026-10-15T22:54:58Z",
+  "one_line": "On this box the safe-commit client-data check cannot run because the hashed account-id list is absent at its default path; commit 060e838c6f was made without that check, and every later commit on this box is exposed to the same gap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2",
+  "spec_asserts": "The TO-AR-g-99 worker face says to commit with bash .tools/safe-commit.sh and names no client-data precondition. The safe-commit gate chain is expected to run the client account-id check on every commit it admits.",
+  "world_is": "safe-commit.sh printed WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt, and said this commit was NOT checked for client account ids, when committing 060e838c6f on wk-IRPT_ANLREQ-200. The commit holds two pure Python files (a module and its offline tests) and no data file, so no client data entered this commit; the gap is the check itself. This worker did not place or point the list, which is outside this order's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for commit 060e838c6f on branch wk-IRPT_ANLREQ-200 (this worktree): WARN client-data-check, hashed account-id list ABSENT, commit NOT checked for client account ids",
+      "git show --stat 060e838c6f lists exactly two files: infra/aws/lambda/investor-reporting/ycharts/research/yahoo_history_days.py and its tests/test_yahoo_history_days.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W199-S1 -- AR-g-98: swap_pass.REQUEST_CHUNK's comment names yahoo_history_days.DEFAULT_CHUNK as its source, and that module is not in this base
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W199-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~199",
+  "surfaced_at": "2026-10-15T22:58:14Z",
+  "one_line": "AR-g-98 sets REQUEST_CHUNK = 50 and its comment says it equals yahoo_history_days.DEFAULT_CHUNK; no yahoo_history_days module exists at the base, so the equality the comment asserts cannot be read in this worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-98 cell, swap_pass.py constants: REQUEST_CHUNK = 50 (the candidates one Yahoo request carries), with a comment that it equals yahoo_history_days.DEFAULT_CHUNK.",
+  "world_is": "At base 9438a8aaab the research folder holds no yahoo_history_days module (a Glob of yahoo_history_days*.py under infra/aws/lambda/investor-reporting/ycharts/research returned no file); the figure 50 is the cell's own, and the comment's equality is unverified until the sibling AR-g-99 port lands. Not edited by this worker beyond the comment as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py@d071c86041:25 comment names yahoo_history_days.DEFAULT_CHUNK as the same figure as REQUEST_CHUNK",
+      "infra/aws/lambda/investor-reporting/ycharts/research/ at 9438a8aaab holds no yahoo_history_days module (Glob read at 2026-10-15T22:58Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
