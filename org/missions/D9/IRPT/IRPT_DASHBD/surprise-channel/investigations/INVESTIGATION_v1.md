@@ -18239,3 +18239,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "dismissal_reason": "Disarms IRPT_DASHBD-D2-W310-S1: the condition (an unlabelled null) is not a defect under contract 0.4.0, whose reason column is nullable and whose enum has no member true for a vendor return; every adapter row carries source orion and guard_state GUARD_NOT_REACHED, measured by the 17 golden rows the checker grades."
 }
 ```
+
+## IRPT_DASHBD-D2-S94 -- disarm of IRPT_DASHBD-D2-S92: the report-build handler never chains across the two Cottonwood account_return_daily contracts
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S94",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T19:54:04Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-S92 (one Cottonwood account_return_daily table name, two contracts): the report-build handler reads each used partition's manifest contract_version and method_version, chains within one pair, refuses a mix or an unnamed contract with zero puts, never opens the Commonwealth partition, and the window fold reads NOT_SPANNED in words before the floor.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "S92: one table name is one contract; a return window is chained within one method; a test spanning 2026-06-22 and 2026-07-10 shows the stated floor or 'not enough history', never a splice (CTO round-128 ADDENDUM 2, round-133-to-137 analysis item 3).",
+  "world_is": "The handler test test_building_across_the_floor_never_opens_the_commonwealth_partition_and_early_windows_read_not_spanned (reporting-gold-cot/tests/test_contract_guard.py) holds a store with the 2026-06-22 Commonwealth partition beside the Black Diamond partitions, builds 2026-07-13, asserts no call touches a 2026-06 key, exactly one put, and that every qtd, ytd and last_12_months window-status row reads NOT_SPANNED with no number. The mixed-contract and unnamed-contract tests assert refusal with zero puts. The issuer's probe DB135-1-AC2 re-runs the same scenarios on the staged handler. Round 138 adds the households claim and does not change the guard; the landing schedule writes Black Diamond-era days only, so it does not widen the splice.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/tests/test_contract_guard.py@f25b913caf",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r135/p135_contract.py@f25b913caf",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-49F_ROUNDS_133_TO_137_20261015.md@93b8070c65 item 3"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-S92: the condition (a consumer chaining across the Commonwealth and Black Diamond eras) cannot occur in the report-build handler: the DB135 test that spans 2026-06-22 and 2026-07-10 shows the stated floor (NOT_SPANNED in words for every window reaching before 2026-07-10) and the refusal of a mixed or unnamed contract with zero puts, and the DB135 criteria and the re-pointed DB131 criteria pass on the landed tree."
+}
+```
