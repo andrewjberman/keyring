@@ -86,7 +86,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-eg-2.harvest-runner-silver-cach
 
 - A1 (issuer, 2026-10-15 ~16:3xZ, CTO ruling msg 34491 @86581c31be): step 6b added: the runner drops `wsj` and `barrons`, so dell1 is their one writer (Andrew moved them ~16:0xZ). The bounds bullet now names two changes. The earlier hold stands for the first-record leg; it is graded on a `bbg` or `sa` cycle that ran jobs. Measured at the cut: cycles `bbg` 20261015T150246Z, `wsj` 20261015T152234Z and `barrons` 20261015T153316Z carry `s3_get_count` and `s3_get_bytes` (0 each: they stopped on `bot_check` and `sign_in_refused` before any silver read, row Z-S150); the `sa` cycle in progress is the first that reads silver per security. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+- SUPERSEDED (issuer, 2026-10-15 ~16:5xZ): Andrew moved ALL harvest operations to dell1 (~16:3xZ, relayed by msg 34493); PRD v3.11 @32b70d1b86 and the CTO's msg 34500 retire the site Z runner and close this order's ledger SUPERSEDED (its FIRSTREC leg NOT-EXERCISED) under `NFRA_OPLGTW.TO-OG-eg-3`. Step 6b (the bbg,sa leg) is withdrawn; the E1+E2 code runs on dell1 at pin 39ae28559b and its GET-bytes proof is owed there. Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+<status>superseded</status>
 <round>37</round>
 <workstream>EGRESS-APPLY</workstream>
 <slot>~AE</slot>

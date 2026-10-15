@@ -10,16 +10,20 @@
  "subject": "NFRA_CTLPLN FWD-3 manager pair test (sitez -> dell2): acknowledge, nothing else",
  "body_path": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/XB_FWD3_SITEZ_MANAGER_PAIR_TEST_20261015.md",
  "opened_at": "2026-10-15T16:31:09Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-15T16:35:57Z",
+  "bus_message_id": "a2a20ea9-745d-454b-84a3-6e0a74445d4f"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-15T16:56:37Z",
+  "by": "0.0.0_AB_MSTR~DELL2",
+  "bus_message_id": "1a47b97c-3d3d-4658-9c6e-7476d505921a"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-15T16:57:05Z",
+  "to_by": "0.0.0_AB_MSTR~DELL2"
  }
 }

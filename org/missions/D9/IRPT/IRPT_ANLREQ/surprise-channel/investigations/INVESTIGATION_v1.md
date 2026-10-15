@@ -17715,3 +17715,251 @@
   "notes": "The source map records no owner for ycharts/research; the owner was not read."
 }
 ```
+
+## IRPT_ANLREQ-D2-W152-S1 -- the task order routes Use through fileAnalysisRequest, but the staff form files through fileAndRequestAnalysis; Use now mirrors each form's own press, so a Use that reaches NORMALIZED still requests the analysis
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W152-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~152",
+  "surfaced_at": "2026-10-15T16:07:41Z",
+  "one_line": "Use re-posts the same upload through the handler the form's own File press runs: the staff form through fileAndRequestAnalysis (upload, ticket, analysis POST, record), the partner form through fileAnalysisRequest with submitPartner. A bare fileAnalysisRequest on the staff path would file a ticket with no analysis request.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-351 step 3: Use re-posts the SAME upload through fileAnalysisRequest, so the existing polling and ticket creation apply unchanged.",
+  "world_is": "The staff File press calls fileAndRequestAnalysis (portal/src/pages/TicketCenter/TicketCenter.tsx:363 at base 33ad65ee), which runs fileAnalysisRequest (analysisRequest.ts:424 at base) and then the analysis POST and the record step (analysisRequest.ts:417-434 at base). The partner File press calls fileAnalysisRequest directly (TicketCenter.tsx:413 at base). The candidate passes the corrected upload into the same handler each press uses (a6b83f69, TicketCenter.tsx useHint), so the Use outcome has the same steps as the File outcome.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:363 @33ad65ee (read by git show; the staff File press)",
+      "portal/src/pages/TicketCenter/TicketCenter.tsx:413 @33ad65ee (the partner File press)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:417-434 @33ad65ee (fileAndRequestAnalysis)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Mirroring the press is the reading that keeps the tickets I1-complete. The literal fileAnalysisRequest route is recorded so the issuer can see the deviation at L9. No criterion depends on the choice."
+}
+```
+
+## IRPT_ANLREQ-D2-W152-S2 -- the before-arm predicted (a), (c) and (e) FAIL and (f), (g) PASS on origin/PROD; the run gives 7 of 7 FAIL, because four more cases run through the new export or its words
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W152-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~152",
+  "surfaced_at": "2026-10-15T16:07:41Z",
+  "one_line": "On origin/PROD 33ad65ee with the new test file and no candidate change, all seven cases fail, not the three the order predicted: (b), (e), (f), (g) throw on AR.filingHints being undefined, (c) throws on the missing hints, and (d) finds no kept sentence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-351 step 4: run the new tests on origin/PROD WITHOUT your change: (a), (c), (e) FAIL.",
+  "world_is": "Run against a scratch copy of origin/PROD TicketCenter (.scratch/prod351): 0 pass, 7 fail. (a),(b),(e),(f),(g) fail with 'AR.filingHints is not a function'; (c) fails with 'undefined is not an object (evaluating first.hints[0])'; (d) fails because the PROD UploadFindings markup has no kept sentence. The candidate passes 7 of 7 and the mutant fails (b) and (f).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/__tests__/filing-hint.test.tsx @a6b83f69 (the fixtures call AR.filingHints in (b), (e), (f), (g))",
+      ".scratch/prod351 bun test output, 0 pass 7 fail (scratch, outside the product tree)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The tests discriminate the feature's absence on the base. The narrower prediction was the order's own guess; recorded so the L9 reader sees the before-arm as run, with its reasons."
+}
+```
+
+## IRPT_ANLREQ-D2-W152-S3 -- the cell names the NEEDS_CORRECTION arm of FileOutcome, but the form reads its outcome through FilingOutcome, which carries the same arm; both arms gain hints
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W152-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~152",
+  "surfaced_at": "2026-10-15T16:07:41Z",
+  "one_line": "FileOutcome is returned unchanged through fileAndRequestAnalysis and typed FilingOutcome, so the NEEDS_CORRECTION member of FilingOutcome gains hints too; without it the form cannot read hints from the staff outcome.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-351 step 3: the NEEDS_CORRECTION arm of FileOutcome gains hints; every other arm and every existing member is unchanged.",
+  "world_is": "fileAndRequestAnalysis returns the FileOutcome false arm as FilingOutcome (analysisRequest.ts:417-425 at base 33ad65ee; FilingOutcome at :394-396). The candidate splits the NEEDS_CORRECTION member out of the multi-state arm in both types so hints exists only on that member. Every other member keeps its shape; no caller of an existing member changes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/analysisRequest.ts:394-396 @33ad65ee (FilingOutcome)",
+      "portal/src/pages/TicketCenter/analysisRequest.ts:424-425 @33ad65ee (return filed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A type-only widening inside the grant's analysisRequest.ts. Recorded because the order named one union type and the form needs the other."
+}
+```
+
+## IRPT_ANLREQ-D2-W153-S1 -- AR-y-352's cell names the portal request helpers fetchJson, postJson and apiClient; the Ticket Center path uses apiRequest and bare fetch()
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W153-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~153",
+    "surfaced_at": "2026-10-15T16:37:11Z",
+    "one_line": "AR-y-352's cell names the portal request helpers fetchJson, postJson and apiClient for the Q1 trace. In portal/src (non-test) postJson and apiClient do not exist, and fetchJson is only a parameter or local name in the InvestorReporting readers and comparisonCatalogue.ts. The Ticket Center's requests go through apiRequest (api/api-client.ts:143) and bare fetch(). The trace searched those transports too, so no request was missed on that account.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-y-352 Q1: search portal/src/api/ and the pages' own calls for fetchJson, postJson, apiClient, fetch( and the endpoint clients, to list every non-GET request from the sign-in landing to the Submit click.",
+    "world_is": "comp-find 'postJson|apiClient\\b|fetchJson' over portal/src: 16 hits in 1497 files; postJson 0, apiClient 0, fetchJson 16 (dashboard/reportingRead.ts, export/resolveBundle.ts, tabs/analysis/GenerateComposer.tsx, tabs/analysis/comparisonCatalogue.ts, one test). The Ticket Center transports are apiRequest (portal/src/api/api-client.ts:143) and fetch() (portal/src/contexts/AuthContext.tsx:174, portal/src/services/analytics.ts:777).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'postJson|apiClient\\b|fetchJson' portal/src --limit 40: DENOMINATOR 16 hit(s) across 1497 file(s), corpus=all",
+        "portal/src/api/api-client.ts:143 export async function apiRequest<T>(",
+        "portal/src/contexts/AuthContext.tsx:174 const response = await fetch(`${API_BASE}/auth/refresh`, {",
+        "portal/src/services/analytics.ts:777 await fetch(`${this.config!.apiEndpoint}/ingest`, {",
+        "portal/src/pages/TicketCenter/TicketCenter.tsx:103 const resolved = await client.resolveDirectoryContext("
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Form-only record of a premise name that does not match the tree at portal origin/DEV ad7c100b5c. No hazard is claimed; the Q1 result rests on the transports named here."
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W153-S2 -- apiRequest answers a 401 by re-sending the same request, method and body included, so a write answered 401 is sent again
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W153-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~153",
+    "surfaced_at": "2026-10-15T16:37:11Z",
+    "one_line": "apiRequest answers a 401 by refreshing the token and re-sending the same request once, method and body included (portal api-client.ts:173-175 and :226-228). A write whose first answer was 401 is therefore sent a second time, and the synthetic run's guard admits each send as a fresh POST.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The synthetic run may WRITE only what the signed pair names (a ticket, an upload, an analysis, a report attachment), each write one step of the filing (AR-y-352 context; the guard's purpose in fwd1_driver.mjs).",
+    "world_is": "refreshAndRetry (portal/src/api/api-client.ts:105-125) calls attemptTokenRefresh and then fetch(url, { ...options, headers }); options carries the POST body for every method. No method check and no idempotency key is in that path. Whether any write route answers 401 after accepting the write was not measured.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/api/api-client.ts:173 if (response.status === 401 && renderToken === null) {",
+        "portal/src/api/api-client.ts:175 response = await refreshAndRetry(url, options, isFormData)",
+        "portal/src/api/api-client.ts:124 return fetch(url, { ...options, headers: retryHeaders })",
+        "portal/src/api/api-client.ts:226 if (response.status === 401) {"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Recorded as a form observation for the owner of the portal request path. Not ARMED: no route was measured to answer 401 after accepting a write, and no disarm owner is named here."
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W153-S3 -- the row-gate schema is absent from this worktree's sparse checkout; the row was shaped against the blob at HEAD
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W153-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~153",
+    "surfaced_at": "2026-10-15T16:37:11Z",
+    "one_line": "The row-gate schema org/surprise_channel/schemas/investigation_item.schema.json is absent from this worktree's sparse checkout (org/surprise_channel does not exist on disk). This row was shaped against the schema read as a blob at HEAD with git show, not against a file on disk. Same form as IRPT_ANLREQ-D2-W172-S2.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Worker face: each row passes the row gate (.tools/surprise-row-gate.py), which validates NEW rows against org/surprise_channel/schemas/investigation_item.schema.json; the worker writes its rows in its own worktree.",
+    "world_is": "ls org/surprise_channel: No such file or directory in C:/dev/wk-irpt-anlreq-153; git sparse-checkout list does not carry org/surprise_channel; git ls-tree HEAD org/surprise_channel/schemas/ lists investigation_item.schema.json (blob 696468806e9e) and remediation_row.schema.json. No sparse-checkout change was made.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls org/surprise_channel: No such file or directory (worktree C:/dev/wk-irpt-anlreq-153)",
+        "git ls-tree HEAD org/surprise_channel/schemas/ -> 100644 blob 696468806e9e8163a32b71c65d18d3a98ca318c2 investigation_item.schema.json",
+        "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json rc=0 (read for this row's shape)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed in this worker's worktree. The skip-worktree is the subject of IRPT_ANLREQ-D2-W172-S2, which this row does not change."
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W175-S1 -- AR-g-63: the cell does not say what happens when the t0 recomputed after a BAD_BASE exclusion makes a remaining ticker's base unusable; the module repeats the exclusion until every used base is usable
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W175-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~175",
+  "surfaced_at": "2026-10-15T16:38:21Z",
+  "one_line": "AR-g-63 item 3 says a base <= 0 excludes the ticker and t0 is recomputed over the tickers still in, but not whether the recomputed t0 can expose a second base <= 0; the module excludes those too and recomputes until none remains.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-g-63 item 3: each ticker's base is its value as of t0; a base <= 0 excludes the ticker with reason BAD_BASE and t0 is recomputed over the tickers still in.",
+  "world_is": "Recomputing t0 over the remaining tickers can only move t0 earlier, so a remaining ticker's value as of the new t0 can be <= 0 (a zero observation before the other ticker's start). The cell is silent on that second exclusion. The module runs the exclusion as a loop, so every used base is positive and no division by a zero base is reachable. Reading taken where the cell is silent: a non-finite base (NaN) is also BAD_BASE, since the cell names only the <= 0 case.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/portfolio_series.py@8676450a96 buy_and_hold, the while loop over t0 and the BAD_BASE exclusion",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_portfolio_series.py@8676450a96 test_typed_exclusions_and_coverage (case Z: a 0.0 first observation at the common start)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Both readings pass the twelve AR-g-63 cases (AR-G63-OK cases=12). The cell's author decides whether the loop is the intended rule."
+}
+```
+
+## IRPT_ANLREQ-D2-W175-S2 -- the commit gate's client-data check could not run on this box: the hashed account-id list is absent, so the commit printed WARN "this commit was NOT checked for client account ids"
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W175-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~175",
+  "surfaced_at": "2026-10-15T16:38:21Z",
+  "one_line": "safe-commit of 8676450a96 printed WARN client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt; absent is not empty, so the commit was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face: every commit goes through .tools/safe-commit.sh, which runs the commit gates; the CLAUDE.md commit law gates the commit.",
+  "world_is": "On this box the account-id hash list is not at C:\\Users\\Test\\.opal\\account_id_hashes.txt and OPAL_ACCOUNT_ID_HASHES is not set, so the client-data check ran no comparison and the commit reported only the WARN. The two committed files hold made-up symbols and dates and no account identifier, so this commit's content carries no client account id. Not ARMED for this commit; the box-level absence stands for every commit on this box and its owner was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for 8676450a96: line 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt'",
+      "git show --stat 8676450a96: 2 files, both under infra/aws/lambda/investor-reporting/ycharts/research/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The gate's own text says absent is not empty. The owner of the list and the location decision were not read; no change was made to the gate or the list."
+}
+```
+
+## IRPT_ANLREQ-D2-W177-S1 -- the cell says a ticker with two pool classes is listed once in dropped as CLASS_AMBIGUOUS, but not whether that list is built when the missing security carries no class
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W177-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~177",
+  "surfaced_at": "2026-10-15T16:41:04Z",
+  "one_line": "TO-AR-g-70 item 4 does not say whether the CLASS_AMBIGUOUS entries belong in the dropped list of the NO_CLASS answer; the repair keeps the base answer there (dropped empty) and lists them only on the classed path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-70 item 4: a ticker that appears on two or more pool_rows with DIFFERENT classes is never a candidate and is listed in dropped exactly once with reason CLASS_AMBIGUOUS. The cell names no path for a missing security that carries no class.",
+  "world_is": "At base, choose_replacement returns NO_CLASS before it reads pool_rows, with dropped []. The first cut of the repair built the ambiguity list above that early return, so choose_replacement('MISS', None, None, [], {}) raised TypeError at b88f8d90e4. Commit 1c059acec6 restores the base early return. The NO_CLASS answer now carries dropped [] even when pool_rows holds an ambiguous ticker. The classed path lists each ambiguous ticker once.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py at 1c059acec6: the NO_CLASS return sits before _pool_classes is called",
+      "python call choose_replacement('MISS', None, None, [], {}) on the worktree: printed NO_CLASS at 1c059acec6; raised TypeError at b88f8d90e4 (the first cut)",
+      "ar_g70_checks.py repair and regress both print OK at 1c059acec6 (cases 10, wrong none; AR-G70-REGRESS-OK checks=4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer to rule whether the NO_CLASS answer should also list the ambiguous tickers in dropped. Ruling it yes means the ambiguity list must be built from pool_rows on that path, and a None pool_rows must then be refused or defaulted. The worker did not decide this."
+}
+```
