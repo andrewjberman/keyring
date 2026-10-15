@@ -4427,3 +4427,17 @@ Check IB236-1 (`deliverables/2.0.0_SA_COO~P2/checks/r236/p236_cells.py`), dry-ru
 | `IB-pr-605` | APPLY the exemption pair: gates, digest gate, re-measure, three mints, first fire per firm | FWD-21 | WORLD | IB-pr-549 ledger closed | PQ1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
+
+## 231. ROUND 3, WORKSTREAM ~PL, AMENDMENT 1 (cell `IB-pr-604` re-cut as the ADDENDUM 1 build; 2026-10-15 ~21:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ADDENDUM 1 @9fef489152, msg 8644)
+
+The cell of section 229 stopped: worker `~440` measured that no join key is wrong for 49 Financial's one remaining lost account (candidate-day custody 0 balance and 0 position rows under every key form; prior day 1 and 13; candidate-day SmartX map 1 row; rows W440-S1 to S3, drained @6c58d386ab). The CTO ruled (msg 8644): the SmartX row is evidence the account exists, so it is exempt-eligible; the exemption pair's ADDENDUM 1 writes that as a rule change with its own pair and names `smartx_map_present` as the manifest evidence; the two-consecutive-day threshold and the 95 percent floor are unchanged (one absent day is not eligible; the next business day decides); (c) is refused; the signed exemption pair ships first and Cottonwood does not wait; 49 Financial stays served at 2026-10-12 until the amended rule clears it on real data. `IB-pr-604` is re-cut as the code build of that addendum: the SmartX evidence read for 49 Financial's reader and the `evidence` key in the manifest entry, inside `ABSENT-AT-SOURCE-D` spans, with the exemption's decision, floor and threshold untouched. The criterion ids, the cell id and the check file stay; the worker slot is `~441`, the test file, the marker and the named tests change (check amended, control re-run: 3 positives pass, 7 negatives each fail their own arm, 0 unexpected; base dry-run AC1 to AC3 FAIL).
+
+Reading recorded for the CTO (not a ruling asked): `absent_at_source_exempt` does not consult SmartX at all; it already exempts any lost account absent from both custody tables on two consecutive days. So this build changes no gate decision, only adds the evidence key to the entry. The same rule, applied by the signed pair alone, exempts the account on the first business day after the apply on which custody still lacks it.
+
+Next cells, not yet cut (each needs the previous commit): the 49 Financial addendum candidate (the D spans applied onto the transplanted file of IB-pr-595, a new digest, the changed members still exactly the two files), then the addendum pair packet (COO half, the CTO half).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-604` | ADDENDUM 1 code build: SmartX evidence read and the `smartx_map_present` key (re-cut) | FWD-21 | LOCAL | IB-pr-602 (drained) | PL3-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one module; one worker (slot ~441) starts now.

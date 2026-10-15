@@ -9442,5 +9442,107 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W145-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~145",
+     "surfaced_at": "2026-10-15T20:41:39Z",
+     "one_line": "The profile-store envelope (bundle {}) reaches verification.repair, which indexes bundle[\"user_agent\"] and bundle[\"all_cookies\"] with no default: a challenged wsj or barrons job raises KeyError in the repair, not a sign-in refusal.",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "TO HVST-cb-8 section 1.c: read verification.repair and publishers.py for [\"bundle\"] and bundle[ uses, and for each tell report whether an empty bundle is safe for a tab publisher with seed_from_bundle false; if one is NOT safe, do not change it, file a row naming the line and keep the rest.",
+     "world_is": "verification.py:107 reads bundle = envelope[\"bundle\"]; verification.py:115 bundle[\"user_agent\"] and verification.py:116 bundle[\"all_cookies\"] index the dict with no default, so the empty bundle {} that get() now returns for wsj and barrons raises KeyError when repair runs (reached from worker.py:719 via TokenFirstSessions.repair_verification -> SessionManager.repair_verification -> verification.repair). The other tells are safe: publishers.py:371 only assigns the bundle; publishers.py:393 skips seed_cookies because seed_from_bundle is false; publishers.py:406-409 index the bundle only on the non-tab branch; sessions.py:71 and verification.py:39 use .get. Nothing changed: the fix belongs to the issuer. The same empty bundle already reached repair through the HVST-ca-1 renew when the vault held nothing (auth.py:91), so this is a pre-existing gap that get() now makes the normal start.",
+     "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+               "lib/opal_data_harvest/verification.py:107,115,116 at 7866071911 (bundle = envelope[\"bundle\"]; bundle[\"user_agent\"]; bundle[\"all_cookies\"])",
+               "lib/opal_data_harvest/publishers.py:371,393,406,408 at 7866071911 (assignment; seed guard; non-tab branch indexing)",
+               "lib/opal_data_harvest/worker.py:719 at 7866071911 (self.sessions.repair_verification on a challenge)",
+               "worktree run: python -m pytest lib/opal_data_harvest/test_cb8_profile_store_envelope.py -q -> 9 passed (the repair path is not exercised; no browser run)"
+          ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-W145-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~145",
+     "surfaced_at": "2026-10-15T20:41:39Z",
+     "one_line": "The profile-store envelope carries network_auth_corroborated False, and the repair result inherits it, so the vault save that follows a successful repair refuses it with ValueError.",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "TO HVST-cb-8 section 1.b: the profile-store envelope is {\"publisher\", \"bundle\": {}, \"network_auth_corroborated\": False, \"renewed_by\": \"profile\", \"captured_at\"}; section 1.c asks only whether the empty bundle is safe.",
+     "world_is": "storage.py:58 SessionVault.save raises ValueError(\"Session lacks network authentication proof\") when envelope.get(\"network_auth_corroborated\") is falsy. auth.py:46 SessionManager.repair_verification calls self.vault.save(publisher, result) with result = dict(envelope, ...) from verification.py:188, which keeps the False. So a challenge repair that succeeds on a profile-store publisher raises at save instead of returning. Nothing changed; the envelope value is the spec's, so the choice between the two belongs to the issuer.",
+     "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+               "lib/opal_data_harvest/storage.py:58-59 at 7866071911 (save guard and ValueError)",
+               "lib/opal_data_harvest/auth.py:45-46 at 7866071911 (repair result passed to vault.save)",
+               "lib/opal_data_harvest/verification.py:188 at 7866071911 (result = dict(envelope, bundle=..., ...))",
+               "lib/opal_data_harvest/sessions.py (worktree, get profile branch): network_auth_corroborated False as the spec states"
+          ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S21",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-15T20:50:00Z",
+     "one_line": "AMGT_HARVST-D1-W145-S1 and -S2 (an empty profile-store bundle breaks verification.repair, and a repaired result is refused at the vault save) are unreachable from the dell1 runner; the residual is a manual run without --no-sign-in.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-8 section 1.c: for each reader of the envelope's bundle, say whether an empty bundle is safe for a tab publisher with seed_from_bundle false.",
+     "world_is": "verification.py:115-116 indexes bundle['user_agent'] and bundle['all_cookies']; storage.py:58 refuses an envelope whose network_auth_corroborated is False. Both sit on repair_verification. The runner passes --no-sign-in on every job: worker.py re-raises VerificationRequired before the repair when no_sign_in is set, and TokenFirstSessions.repair_verification refuses under no_sign_in, so neither line is reached from the runner. They are reachable from a run WITHOUT --no-sign-in that meets a bot challenge on wsj or barrons; before cb-8 that run's refresh (HVST-ca-1) already returned the same empty-bundle envelope, so cb-8 adds no new path. The tab transport's own challenge route (PacedSession routes a bot check to verification.route_bot_check) does not read the envelope's bundle (not changed or re-read here).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/opal_data_harvest/worker.py: the 'except VerificationRequired' branch re-raises when self.no_sign_in (read at a879d12881)",
+       "lib/opal_data_harvest/sessions.py: TokenFirstSessions.repair_verification refuses under no_sign_in (read at a879d12881)",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-8.a-profile-store-publisher-needs-no-saved-bundle.md COMPLETE note @a879d12881"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W145-S1",
+      "AMGT_HARVST-D1-W145-S2"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "Unreachable from the dell1 runner (every job runs --no-sign-in, which refuses the repair before either line); the residual, a manual signed-in-allowed run meeting a challenge on a profile-store publisher, predates cb-8 (HVST-ca-1 already returned the empty-bundle envelope) and is named here, not fixed."
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S22",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-15T20:55:00Z",
+     "one_line": "AMGT_HARVST-D1-S19 (the stop rule fired on the runner's first pass) and -S20 (the pair named the wrong bucket) are both resolved; both were defects of the issuer's order or pair, not of the account.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-2: the first pass of the dell1 runner collects for wsj and barrons; the pair's bucket is where the runner writes.",
+     "world_is": "S19: wsj and barrons each read REFUSAL expired, REFRESH done in 3 s, REFUSAL expired again; the runner log (lines 245-252, 502-509) and run record 20261015T202310Z-wsj-23b255623f show token_source None and no request made: TokenFirstSessions.get() demands a stored session and the runner's runtime root had none. SC1's stop was correct under the order's stop rule. Resolved operationally by AMENDMENT 1 (@1c5948e37a: seed the directory, CTO-bounded, msg 6216) and durably by HVST-cb-8 (merged a879d12881), which reaches the runner by the cb-9 re-pin. The second pass (T0 20:32:04Z) ran 17 jobs with 0 errors and stored articles. S20: the pair and order named opal-data-assets; the runner writes opal-data-harvest (store.HARVEST_BUCKET); erratum ledger/ERRATUM_CB2_PAIR_BUCKET_NAME_20261015.md, ratified by the CTO (@79a5321348).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb2_reads.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/ledger/ERRATUM_CB2_PAIR_BUCKET_NAME_20261015.md",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-2.the-dell1-runner-registered-for-wsj-and-barrons.md COMPLETE note"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-S19",
+      "AMGT_HARVST-D1-S20"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "Resolved: S19 by order amendment 1 and HVST-cb-8; S20 by the ratified erratum. Neither was an account or world fault."
+    }
 ]
 ```

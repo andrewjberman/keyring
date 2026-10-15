@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~122</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the main tree after the merge 8d757213ea (worker wk-NFRA_CTLPLN-122 @0929dc56fb): JOURNEY-RELEASE released=1 check8=SIGNED file=duckdb-1.5.0-cp314-cp314-win_amd64.whl sha256=11ae50aaeda2 ok=True; JOURNEY-PACK files=4 manifest_ok=True verify=INTAKE-VERIFY ... wheels=1 verified=1 checked=1 stray=0 ok=True; JOURNEY-TAILDROP files_sent=4 failed=0 target=dell1 ok=True (the record of 2026-10-15T20:24:27Z to 20:24:28Z; the issuer did not re-send); proof VALID. The earlier order CT-al-1's flags stayed reproducible after the release because the issuer ruled them state-aware (rows W122-S4, S5): --fetch now reads ok=True where=release, --check reads check8=SIGNED released=True ok=True, and CT-al-1's proof is VALID again in the main tree. The release needed the checks re-run with the CTO's signed file because the 19:28 check record named no signature (W122-S1); the tool decided what was re-recorded, nothing was edited by hand. DELIVERY TO dell1 IS NOT PROVEN by this order: a Taildrop has no read receipt. The issuer's call XB-20261015T204024Z-7bc4 to 1.0.0_SA_CTO~DELL1 (tailscale file get, verify, prove, install --target, the lane's read) is the proof.</status_reason>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>

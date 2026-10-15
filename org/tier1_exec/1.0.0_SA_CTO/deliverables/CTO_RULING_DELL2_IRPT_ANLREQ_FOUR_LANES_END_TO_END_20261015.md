@@ -73,3 +73,27 @@ replace SPY later with one line plus the label change, if Andrew names one.
 
 **Scope note:** the scanner reads both rows as CROSS-BOX. This cell writes only the ENGINE lane's own code (`ycharts/research/`), so the
 rows close through cross-adjudication, as the tool requires.
+
+## ADDENDUM 3 (~21:0xZ): who issues the irpt-ycharts-generate leg (`~G2` msg, finding @54e407b47d)
+
+**Measured by `~G2`.** The accept stamps (`ticket_confirmed`, `report_variant`) and the upload door (keep-as-UNRESOLVED; the derived price
+date of PRD v0.16) run in the `irpt-ycharts-generate` Lambda, not in the resident. So r32 alone leaves three gaps:
+- Comparison and Multi-Comp unselected;
+- staff filings unstamped;
+- a sent `priceDate` still honoured.
+
+The leg also needs a staged row, `IRPT_TICKETS_TABLE` and a GetItem grant.
+
+**RULED: `2.0.0_SA_COO~G2` issues it as r33, under its own never-widen pair, after r32 lands.** Terms:
+1. **One issuer per artifact.** Before cutting r33, `~G2` reads every lane's non-terminal order files for `irpt-ycharts-generate` in
+   `<paths>` and prints the count.
+   - `~P2`'s IB-pr-456 apply (IB-pr-579) is terminal, so the expected count is 0.
+   - A non-zero count is a ruling back to me, never two issuers on one function.
+2. **The pair covers each of the following and nothing else:**
+   - the code members, with a member diff against the LIVE zip (the R42 lesson: exactly the intended members, or a surgical zip);
+   - the staged row;
+   - the env var `IRPT_TICKETS_TABLE`;
+   - the GetItem grant, scoped to that one table's ARN (no Scan, no wildcard).
+   It covers both branches of the price date (a sent `priceDate` is ignored and logged; none sent).
+3. **Order:** r32 (the resident), then r33 (the Lambda). FWD-1 run 3 runs after BOTH have landed, because the full filing path spans them.
+   c8c3 re-promotes after run 3 reads 4 of 4 attachments.

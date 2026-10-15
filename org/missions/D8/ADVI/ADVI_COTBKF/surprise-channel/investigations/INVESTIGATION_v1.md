@@ -9471,3 +9471,84 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-S6 -- dispositions D1-W170-S3 (the dell1 leak scan) as by-design
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S6",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-15T20:50:58Z",
+  "one_line": "Dispositions D1-W170-S3 (and its repeats in W172, W173, W174, W175, W176, W177, W178, W179 reports) as BY DESIGN: the pinned account-id scan cannot run on dell1 and the hashed id list is set aside, on Andrew's 10-09 word; the CTO withdrew round-88 item 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL1 msg 6228 and ROUND_ANALYSIS.round88.md amendment 1 @384ecc0e4c: item 3 withdrawn; the dell1 hash list is set aside on Andrew's 10-09 word ('I don't care about the client data getting committed to Git'); do not cut a W170-S3 cell; disposition the row as by-design",
+      "0.0.0_AB_MSTR~DELL1 msg 6229: ruling 5928 stands; nothing restored; the combined hash list stays in ~/.opal/_set_aside_20261014/",
+      "the pinned test test_cotbkf_no_account_ids.py fails closed on dell1 because its account set (C:/dev/_cotbkf_private_evidence_20261009/account_set.json, sha256-pinned) is on another machine; every merge of this seat's rounds 86-90 ran a count-only scan of the committed files against the 860 active-set account keys instead (0 hits each time)"
+    ]
+  },
+  "spec_asserts": "every dell1 commit is scanned for client account ids (the client-data-check hook and the pinned account-id test).",
+  "world_is": "On dell1 neither scan runs: the hook prints ABSENT and passes, the pinned test fails closed. The CTO ruled this by design. The substitute this seat uses is a count-only scan of the files a merge introduces against the 860 V2 account keys; it covers V2 keys only, not other Commonwealth account numbers, and runs at the merge, not at each worker commit.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "By design per the CTO's ruling (msg 6228) and Andrew's 10-09 word; the narrower count-only substitute is recorded in world_is."
+}
+```
+
+## ADVI_COTBKF-D1-W178-S1 -- the worktree's sparse checkout omits data/assets/scripts/analysis/, which the fwd3 module imports through commonwealth_daily_valuation
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W178-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~178",
+  "surfaced_at": "2026-10-15T20:38:20Z",
+  "one_line": "The worktree's sparse checkout omits data/assets/scripts/analysis/, which commonwealth_daily_valuation.py imports at module level (commonwealth_price_census), so no fwd3 module or test imports here and the CB-ck-1 order cannot run in this worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-cotbkf-178 sparse-checkout list (rc=0, HEAD 5c1cd69c65): .tools, data/assets/scripts/silver, data/mdpf/scripts/demque, infra/logic/registry, lib, org/devices, org/missions/D8/ADVI/ADVI_COTBKF, org/missions/D8/MDPF/MDPF_DEMQUE/ledger, org/ref, org/standards, org/modules/graph",
+      "git ls-tree HEAD data/assets/scripts/analysis/ at 5c1cd69c65 lists commonwealth_price_census.py and tests/; the worktree has data/assets/scripts/silver/ and no analysis/ directory",
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py@5c1cd69c65 line 50: import commonwealth_price_census as pc; python -m pytest data/assets/scripts/silver/tests/test_commonwealth_fwd3_serve.py -q (2026-10-15) -> collection ERROR, ModuleNotFoundError: No module named 'commonwealth_price_census'"
+    ]
+  },
+  "spec_asserts": "The order's first act: the worktree must carry the paths the order names. The CB-ck-1 build and tests (items 2 and 5; criteria CB89ck1-AC1 and CB89ck1-AC3) import commonwealth_fwd3_serve.py, which imports commonwealth_daily_valuation.py at module level.",
+  "world_is": "The worktree does not carry data/assets/scripts/analysis/, which HEAD tracks and the import chain needs; every fwd3 test errors at collection. Not rebuilt: the sparse set was not widened and no file was copied from another checkout, as the order's BOUNDS forbid. The order stays open at BLOCKING.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Re-cut of the worktree's sparse set is the issuer's or the CVO's call; the order is re-runnable once analysis/ is present."
+}
+```
+
+## ADVI_COTBKF-D1-W178-S2 -- CB-ck-1 puts use_class last, after porting_verdict; the existing test asserts porting_verdict is last, so AC3 cannot pass as written
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W178-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~178",
+  "surfaced_at": "2026-10-15T20:38:20Z",
+  "one_line": "CB-ck-1 puts use_class as the last column of each served table, but the existing test test_the_served_tables_carry_the_porting_verdict_last asserts porting_verdict is the last column; AC3 (every fwd3 test passes, existing ones unchanged) cannot hold with both.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/tests/test_commonwealth_fwd3_serve.py@5c1cd69c65 line 331: assert t[name].column_names[-1] == \"porting_verdict\" and t[name].schema.equals(fs.SCHEMAS[name]) (test at lines 326-332)",
+      "CB-ck-1 item 1 (order face, line 35): use_class is the LAST column of each of the three served tables, after porting_verdict; item 5 and BOUNDS: edit no existing test"
+    ]
+  },
+  "spec_asserts": "CB-ck-1 item 1 places use_class as the last column after porting_verdict; criterion CB89ck1-AC3 requires every fwd3 test file, the existing ones included, to pass; item 5 forbids editing an existing test.",
+  "world_is": "The existing test asserts porting_verdict is the last column of all three tables, so appending use_class fails that assertion. The three demands cannot all hold; one of them must give way, and that ruling is the CTO's or the issuer's, not the worker's.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found by reading the existing test against item 1 before any code was written; no code was changed to resolve it."
+}
+```
