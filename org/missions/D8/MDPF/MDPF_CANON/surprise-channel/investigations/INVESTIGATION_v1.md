@@ -2592,3 +2592,27 @@
   "notes": "Comment-only; the issuer decides whether to correct it. No code path reads the comment."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S28",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~U7",
+  "surfaced_at": "2026-10-15T02:39:20Z",
+  "one_line": "After the CN-q-1 edge deploy, Lambda auth-validator-edge version 23 (the rollback target) reads a LastModified 17 minutes after the apply, with an unchanged CodeSha256 and no CloudTrail mutation of the function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ADHOC.canon-q1-edge-firm-gate-deploy L5e: version 23 still exists and its CodeSha256 equals the L1 before print; section 3f: only CodeSha256, LastModified and the version list of the function move.",
+  "world_is": "get-function --qualifier 23 reads CodeSha256 sCxEV3p6ucK1iewCWQeqJaf0SHVURqOlj52dnE58WHo= (equal to the L1 print), State Active, LastModified 2026-10-14T23:22:22Z; the apply published version 24 at 23:05:26Z to 23:06:03Z. CloudTrail us-east-1 for 22:30Z to 02:40Z lists exactly one UpdateFunctionCode, one PublishVersion and one UpdateDistribution on this function, all from the apply; none at 23:22Z. The version-23 timestamp is unexplained; its code hash is the rollback proof and it holds.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration --qualifier 23 and list-versions-by-function read 2026-10-15T02:3xZ",
+      "aws cloudtrail lookup-events (UpdateFunctionCode20150331v2, PublishVersion20150331) for the window, function names read from requestParameters"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No act taken. Ledger mdpf-canon-edge-firm-gate L5 carries the same observation."
+}
+```
