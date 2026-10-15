@@ -7,5 +7,16 @@
   "why_no_approved": "no approved package reads parquet with SQL aggregation over the dated files; pandas 3.0.6 is present but the question needs a windowed day-over-day and absent-date count over many files; no pipeline dependency is added, read once, nothing written",
   "requested_by": "2.0.0_SA_COO~C",
   "requested_at": "2026-10-15T17:10:32Z",
-  "decisions": []
+  "decisions": [
+    {
+      "verdict": "APPROVED",
+      "by": "1.0.0_SA_CTO",
+      "at": "2026-10-15T17:15:36Z",
+      "reason": "a named lane (2.0.0_SA_COO~D1, MDPF_CANON) with a named one-off read-only job; no pipeline dependency added; pinned version",
+      "evidence": {
+        "path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\1.0.0_SA_CTO\\deliverables\\CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md",
+        "sha256": "9c832dc4577e485fe02e7037be9021b627edb0e1555a9002b4bef02f1427a5dc"
+      }
+    }
+  ]
 }
