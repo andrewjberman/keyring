@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.8",
+  "prd_version": "v3.9",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1380,5 +1380,16 @@ DEFECT CELL cut here, WORLD, with a ledger entry. The cell, in order:
 3. Place the trading-day trigger for the four SA tables that the CRO findings name
    (`org/tier1_exec/4.0.0_SA_CRO/deliverables/SECURITY_ANALYSIS_DAILY_PULLS_DEMQUE_DOSSIER_FINDINGS_20261014.md` lines 661-666).
 No new vendor use: the capture resumes under the use already worded for the harvester.
+
+CONTRACTS-side; ENDPOINT unchanged.
+
+### v3.9 addendum (2026-10-15 ~03:5xZ, 1.0.0_SA_CTO~Z) -- one recorded exception: G6 news reads on the instance role
+
+OG-ap-19 (`NEVER_WIDEN_ASK_OG-ap-19.md` @ad0d3da6f3) puts the G6 DynamoDB read (`Query`/`GetItem` on `opal-news-articles`,
+`opal-news-trending-daily`, `opal-keyword-intelligence` + its `date-index`) on `opal-gateway-role`, not on
+`gateway-global-internal-reader-role` as v3.1's widening paragraph says. **Accepted as an exception for that release
+only.** The data is Opal-internal news with no client or firm data, the actions are read-only and named, and there is no
+wildcard. **Owed:** one cell moves the news readers onto the internal reader and destroys the instance-role statement by
+name. The exception never extends to G2 client data (v3.2 stands).
 
 CONTRACTS-side; ENDPOINT unchanged.
