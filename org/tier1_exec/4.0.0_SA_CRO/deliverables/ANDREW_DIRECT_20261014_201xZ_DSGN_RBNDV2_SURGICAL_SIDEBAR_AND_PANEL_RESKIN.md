@@ -16,3 +16,12 @@
 default panel primitives), feeding an L1 brief for a new project `DSGN_RBNDV2` (D13/DSGN, successor to `DSGN_REBRND`). Scope is
 the sidebar and the default panel cards only, by one surgical mechanism. "handled on DELL1 box" places the project's seats on
 dell1; the seating itself is the CTO's (L3) and the COO's, not this record's.
+
+## Addendum, ~23:4xZ (same channel), verbatim
+
+> "I'm intrigued, show me what it would look like if we used white for everything, effectively made this shit light mode.
+> create the artifact"
+
+**Reading:** a request for a light-mode MOCK (an artifact), not a ruling on panel ground colour. Open call 1 (is ground colour in
+scope) stays open until Andrew answers it. His 2026-10-06 hold keeps the light `/market` experiment off the main branch, and
+that hold is unchanged.
