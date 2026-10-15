@@ -36953,3 +36953,257 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W402-S3 DISARMED: the source map stages _scope/filled_named_accounts.py in irpt-49f-reporting-read-lambda and irpt-export-render (IB-pr-562 @05ea78f452, build-only import PASS for both). D2-S185 DISARMED: the live bytes are the R29c ledger (answered); the candidate keeps release 29's four members (IB-pr-564). D2-W405-S1: the composition_admission.py change (IRPT_ANLREQ cause commit 83eb798a08) still rides in the corrected candidate; stays ARMED, owner me, until the CTO rules on the packet. D2-W405-S2, D2-W406-S2 and S3 (ycharts-generate is not an importer; bundle.py imports nothing), D2-W407-S2 (no installed filled reader), D2-W408-S1 (the trunk map pins hold commentary_requested 0 times: the fact that corrected IB-pr-561): INERT, recorded. D2-W406-S1: RESOLVED, my check selector defect (fixed @c8a836b0fa, no criterion weakened). D2-W407-S1 (freeze_filled_report has no production caller): INERT, the round-5 enrichment (wire the submit branch and compose the reader). D2-W404-S1 and S2 (the 36-day denominators differ from the calendar: positions 4 of 7 are trading days without a flat key, transactions 13 trading days lack one, six of them 2026-05-04 to 2026-05-11, unlisted), S7, S8, S10 (stale comments): INERT, recorded for the re-cut. D2-W404-S3 (the chain's pull steps carry no date token and run_chain refuses --run-date, so pair (a) cannot re-run past days through them) and D2-W404-S5 (the silver aggregator has no source directory in the repository): BLOCKING for the Orion act, asked of the CTO; D2-W404-S4, S6 and S9 stay ARMED (owner me): the dispatch script is an unversioned S3 object; T-1 completeness at 06:00 NY is unmeasured and the earliest measured pull is 11:39Z; a failed pull logs WARN and the chain reports complete."
 }
 ```
+
+## IRPT_BCKEND-D2-W410-S1 -- The order's named mirror for driving entry.submit_export does not call entry.submit_export
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W410-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~410",
+  "surfaced_at": "2026-10-15T07:47:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says drive entry.submit_export the way test_export_path_b_route.py drives PATH B; that file never calls entry.submit_export: it drives submit_service.serve_submit, submit_async.accept and submit_async.run directly. The handler-level driver mirrored is test_submit_async.py, which calls entry.submit_export and entry.lambda_handler.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/tests/test_export_path_b_route.py at 941abbfa1d lines 78-106 call ss.serve_submit, sa.accept and sa.run; no entry. reference in that file",
+      "infra/aws/lambda/investor-reporting/export/tests/test_submit_async.py at 941abbfa1d line 73 defines _post as entry.submit_export(...) and line 102 calls entry.lambda_handler(invoked[0], None)"
+    ]
+  },
+  "spec_asserts": "Worker face, the test file paragraph: drive entry.submit_export the way test_export_path_b_route.py drives PATH B (stubs, synthetic ids and bytes).",
+  "world_is": "test_export_path_b_route.py does not drive the handler; the entry-level driver is test_submit_async.py. test_filled_report_submit_handler.py mirrors test_submit_async.py for the entry-level POST and async leg, and the stub world of test_submit_service.py for the ports. Nothing is deployed or invoked."
+}
+```
+
+## IRPT_BCKEND-D2-W410-S2 -- The print query of a filled export has no kind named by the order or by any consumer in the export package
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W410-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~410",
+  "surfaced_at": "2026-10-15T07:47:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks the PATH C submit to build the print query but names no kind for it. This cell writes kind 'filled-report' with report, version, bundle, tenant and revision (retained_export.filled_print_query). No consumer of that kind exists in the export package at base; the render cell (IB-pr-567) must agree with it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py at 941abbfa1d: print_query uses kinds 'analysis' and 'custody-report' and the performance window; platinum_print_query uses kind 'performance' and account, start, end, version",
+      "the worker's own retained_export.py filled_print_query block (F markers) is the only kind 'filled-report' in the export package"
+    ]
+  },
+  "spec_asserts": "Worker face, change (2): the async leg serves PATH C from the frozen row only (_serve_filled, the twin of _serve_platinum): bundle, grant written and read back, the print query, status QUEUED.",
+  "world_is": "The print query shape for a filled report is not defined in the export package. The worker chose kind 'filled-report' (a new value) and the frozen VersionId as 'version'. Unverified against the print page; the render cell owns the consumer."
+}
+```
+
+## IRPT_BCKEND-D2-W410-S3 -- A filled report has no server-issued account set; the grant's accountSetId is the report id
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W410-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~410",
+  "surfaced_at": "2026-10-15T07:47:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "platinum_grant takes its one account from the series row; a filled report covers every account its document names and has no server-issued account set (the PERFORMANCE path pins owner account_set_id, the ANALYSIS path pins the request id). filled_grant (retained_export, F markers) pins accountSetId and reportId to the report id FILLED-<client> and jobId to the export revision, with account_ids the covered accounts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py at 941abbfa1d: render_grant pins owner account_set_id for PERFORMANCE and analysis_pins uses the request id for ANALYSIS; platinum_grant pins the one account as accountSetId",
+      "infra/aws/lambda/investor-reporting/_render_identity/grant.py at 941abbfa1d: build requires pinned_ids to pin exactly accountSetId, jobId and reportId; account_ids is non-empty on the account branch"
+    ]
+  },
+  "spec_asserts": "Worker face, change (1): take the grant for the covered accounts the freeze returns (add a filled_grant modelled on platinum_grant if the existing helpers cannot take a filled row; say which in the notes).",
+  "world_is": "The existing helpers cannot take a filled row (platinum_grant reads performance_source and pins one account), so filled_grant was added. Its accountSetId convention is the report id, not an account set. The render reader of IB-pr-567 must read the grant with the same convention."
+}
+```
+
+## IRPT_BCKEND-D2-W409-S1 -- the positions chain copy is in no code/gold object, so AC1 cannot carry its hash inside the granted reads
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W409-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~409",
+  "surfaced_at": "2026-10-15T07:41:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the chain's copy of each pull script under code/gold and grants reads of code/gold only; the dispatch sync flattens four code/ prefixes, and the positions pull script is not under code/gold, so its chain copy hash cannot be recorded and IB206-1-AC1 cannot pass as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/code/gold/ listing read 2026-10-15 holds pull_inflection_transactions_rest.py and pull_inflection_performance_rest.py and no pull_inflection_positions_daily.py",
+      "orion-gold-dispatch.sh (S3 object, GET to scratch, sha256 d6b00f6f) line 545: sync_scripts reads the prefixes code/gold/, code/manual_api/, code/silver/ and code/bronze/ and flattens them by basename; line 673 expects $SCRIPTS/$filename",
+      "record deliverables/0.9.0_WK_IRPT_BCKEND~409/IB206-1_orion_chain_read.json (chain_invocation.steps.positions.chain_copy_sha256 null) read at the worktree; checks/r206/p206_cells.py c1 fails on that field"
+    ]
+  },
+  "spec_asserts": "IB-pr-565 names the chain's copy of each pull script under code/gold and limits the S3 reads to code/gold and the bronze prefixes; AC1 needs each step's chain_copy_sha256.",
+  "world_is": "The positions pull script has no object under code/gold, so its chain copy sits under a flattened prefix the grant does not name; reading it would widen the order, and without it the record cannot carry a sha256 for the positions step and AC1 fails for a reason no record can clear."
+}
+```
+
+## IRPT_BCKEND-D2-W409-S2 -- the performance chain copy differs in bytes from the repo CLI it is said to run
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W409-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~409",
+  "surfaced_at": "2026-10-15T07:41:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "code/gold/pull_inflection_performance_rest.py (29230 bytes) is not byte-identical to data/inf/manual_api/pull_inflection_performance_rest.py at the base (29784 bytes); the chain runs the copy, so a dated run through the repo CLI would run other bytes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "code/gold/pull_inflection_performance_rest.py GET to scratch: 29230 bytes, sha256 8f291d0c67f0daf665c5fbf7df83a8a59c24375a97c6788562681958c5dc2c86",
+      "data/inf/manual_api/pull_inflection_performance_rest.py at ea49e51d58: 29784 bytes, sha256 ecba0fa632d78cd3731d00bcb202ee3b48c0b09ba6955729a5c877b4a126dc7b",
+      "orion-gold-dispatch.sh line 297 catalog row INF_API_PULL_PERF|pull_inflection_performance_rest.py|--upload runs the S3 copy by basename (line 718)"
+    ]
+  },
+  "spec_asserts": "The CTO ruling (@1dca8c9e4d): if the dispatch script invokes the data/inf/manual_api scripts, those scripts ARE the production code and run with a date.",
+  "world_is": "The dispatch invokes the performance script by name but runs the code/gold copy, which differs from the repo CLI in bytes; the repo CLI is therefore not the production code for this step, and the ruling's premise holds for transactions only (byte-identical copy)."
+}
+```
+
+## IRPT_BCKEND-D2-W409-S3 -- the silver aggregator's source is in the repository under a top-level folder the W404 search did not cover
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W409-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~409",
+  "surfaced_at": "2026-10-15T07:41:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IRPT_BCKEND-D2-W404-S5 said the silver aggregator has no source in the tree; its source is at infra/aws/lambda/inf-silver-aggregator/lambda_function.py, listed in the source map, and byte-equal to the live zip member.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-silver-aggregator/lambda_function.py at ea49e51d58: 7006 bytes, sha256 6f40f709ba29047c8710ee980bf52d4952bc2217054ed70f9189bba930052013",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.inf-silver-aggregator: source_dir infra/aws/lambda/inf-silver-aggregator, artifact_sha256 equal to the live CodeSha256",
+      "live zip (lambda get-function, downloaded to scratch, 2770 bytes): its lambda_function.py equals the repo file; the zip holds that one member"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-D2-W404-S5: the silver aggregator has no source directory in the repository, so its direct dispatch of inf-gold-trigger cannot be read or retired from source.",
+  "world_is": "The source exists at the top-level folder infra/aws/lambda/inf-silver-aggregator; the W404 search covered only infra/aws/lambda/inf-pipeline. The retirement can be designed from source; the premise failed on the search scope, not on the tree."
+}
+```
+
+## IRPT_BCKEND-D2-W409-S4 -- the trading calendar answered from the hardcoded NYSE fallback, not the package source
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W409-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~409",
+  "surfaced_at": "2026-10-15T07:41:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "pandas_market_calendars is absent in this environment, so lib/trading_calendar.py answers from the hardcoded NYSE fallback covering 2010 to 2027; every trading-day count in IB-pr-565 rests on that table.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I calendar load in the worktree at ea49e51d58: calendar_source() returns NYSE/hardcoded-fallback-2010-2027 and prints the WARN line on stderr",
+      "lib/trading_calendar.py _require_covered and FALLBACK_LAST_YEAR: a date after 2027 raises CalendarCoverageError under the fallback"
+    ]
+  },
+  "spec_asserts": "The denominator is recomputed against lib/trading_calendar.py per feed span (IB-pr-565 step 4).",
+  "world_is": "The calendar in use is the fallback table; the counts are reproducible by the check that uses the same module, but they are not the package's NYSE calendar. Nothing in this order depends on a day after 2027."
+}
+```
+
+## IRPT_BCKEND-D2-W409-S5 -- the transactions and performance day lists in W404-S1 mix days before the feed's first key with missing days
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W409-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~409",
+  "surfaced_at": "2026-10-15T07:41:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The transactions feed's first key is 2026-05-12, so the six days 2026-05-04 to 2026-05-11 that W404-S1 counted as missing are out of span; in span transactions has 7 missing trading days, matching the design's list, and performance has 22.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/bronze/transactions/ listing read 2026-10-15: earliest day key 2026-05-12, 146 flat and 49 parquet day keys plus one _meta object",
+      "s3://opal-data-inf/bronze/performance/ listing read 2026-10-15: earliest day key 2026-05-03, 22 missing trading days in span from 2026-05-04"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-D2-W404-S1: transactions has 13 trading days without a flat key, including six days 2026-05-04 to 2026-05-11.",
+  "world_is": "Those six days precede the feed's first key and are out of span, not missing; the in-span transactions count is 7 and the performance count is 22, as listed in the design."
+}
+```
+
+## IRPT_BCKEND-D2-W409-S6 -- a non-day metadata object sits under two bronze prefixes that the chain's readers may glob
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W409-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~409",
+  "surfaced_at": "2026-10-15T07:41:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "bronze/transactions/ and bronze/performance/ each hold _meta/window-coverage-20260716.json, which is neither a flat day key nor a parquet day key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/bronze/transactions/_meta/window-coverage-20260716.json and the same key under bronze/performance/, listed 2026-10-15 (names only)"
+    ]
+  },
+  "spec_asserts": "The bronze prefixes hold day-keyed flat and parquet objects only (the spans denominator in IB-pr-565 assumes this).",
+  "world_is": "Each of the two prefixes holds one _meta object beside its day keys; the denominator excludes it, and any reader that lists the prefix without the day pattern would read it as a key."
+}
+```
+
+## IRPT_BCKEND-D2-W409-S7 -- the as-of stamp of every present T-1 pull equals its own day, so no pull labels its content as the prior trading day
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W409-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~409",
+  "surfaced_at": "2026-10-15T07:41:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "All 52 present T-1 flat objects (18 positions, 18 transactions, 16 performance) state an as-of date equal to their own day; none equals the prior trading day, so the stamp cannot measure T-1 completeness at the 06:00 fold.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "leading record of each T-1 flat object read by ranged GET (first 64 KiB, one record per key): positions asOfDate, transactions and performance pull_date, compared with the key's day and prev_trading_day",
+      "performance first record also carries a date field with one fixed value on every file (a factor date, not a stamp); it was not used as the as-of field"
+    ]
+  },
+  "spec_asserts": "IB-pr-565 step 5: the T-1 completeness read recomputes asof_is_prior_trading_day per day, and a measured claim needs every as-of equal to the prior trading day.",
+  "world_is": "The as-of stamp is the pull day on every present row, so the measured test cannot be met; the earliest measured-complete time stays inferred, and the 06:00 fold's premise (T-1 complete by 06:00) remains unmeasured."
+}
+```
