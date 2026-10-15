@@ -1236,6 +1236,48 @@
     "spec_asserts": "RV-y-1 face: a test file must typecheck (execSync, join, a cast on process.env reads); the bar is the test this order writes.",
     "world_is": "The new test rb-6-y1.border-sweep.test.ts adds no tsc error. The one error sits in a neighbouring cell test (RV-x-5) that this order does not own, so it is recorded here and not edited.",
     "notes": "Filed, not fixed. The fix belongs to the owner of RV-x-5; this worker did not touch that file."
+  },
+  {
+    "id": "DSGN_RBNDV2-W21-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~21",
+    "surfaced_at": "2026-10-15T17:06:48Z",
+    "one_line": "RV-y-3 names git show d0cb67d0:src/__tests__/dsgn-rbndv2/rb-6-y1.border-sweep.test.ts as the difference-control base; that file does not exist at d0cb67d0, so the git show would fail.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 86db3d1b (worktree wk-DSGN_RBNDV2-21-portal): git cat-file -e d0cb67d0:src/__tests__/dsgn-rbndv2/rb-6-y1.border-sweep.test.ts = fatal, path not in d0cb67d0; the folder listing at d0cb67d0 has 11 test files and no rb-6-y1",
+        "git log --diff-filter=A -- src/__tests__/dsgn-rbndv2/rb-6-y1.border-sweep.test.ts = e6319c40 (RV-y-1); e6319c40^ = d0cb67d0; e6319c40 holds the same y1 text as HEAD (git diff e6319c40 HEAD on that file = 0 lines)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-3 difference control: the standalone arms run on git show d0cb67d0:<y1 test path> and on git show d0cb67d0:<x5 test path>, and must report at least one failing arm.",
+    "world_is": "The y1 test first exists at e6319c40, the RV-y-1 commit whose parent is d0cb67d0. The x5 base at d0cb67d0 exists and names maxBuffer. This worker reads the y1 pre-fix text at e6319c40 and the x5 pre-fix text at d0cb67d0; the arms and the discrimination are unchanged.",
+    "notes": "Filed, not fixed. Substitution made in rb-6-y3.standalone.test.ts only: the y1 control reads e6319c40 because d0cb67d0 does not carry the file. The issuer decides whether the order text is corrected."
+  },
+  {
+    "id": "DSGN_RBNDV2-W21-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~21",
+    "surfaced_at": "2026-10-15T17:06:48Z",
+    "one_line": "RV-y-3 says the y1 test names org/missions literally; at its pre-fix text the path is split into quoted tokens, so a literal-string arm does not see it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal show e6319c40:src/__tests__/dsgn-rbndv2/rb-6-y1.border-sweep.test.ts | grep -c 'org/missions' = 0; the LIST_PATH constant (lines 28-38 at e6319c40) builds the path from the tokens 'org', 'missions', 'deliverables', '0.9.0_WK_DSGN_RBNDV2~19', one token per line",
+        "the literal arm alone on the y1 pre-fix text passes; the split-token arm (SPLIT_A, SPLIT_B in rb-6-y3.standalone.test.ts) fails it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-3 standalone arm: no test file contains the string org/missions or deliverables/0.9.0, and the difference control fails on the y1 base for that reason.",
+    "world_is": "The literal arm cannot discriminate the y1 pre-fix text. The standalone test also detects the same two segments written as separate quoted tokens, so the y1 control fails on that arm. No test in the folder names a workspace path after RV-y-3.",
+    "notes": "Filed, not fixed in any other file. The split-token detector is a stronger form of the order's literal arm, not a weaker one; the literal check is still performed."
   }
 ]
 ```
