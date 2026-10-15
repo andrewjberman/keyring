@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-15T15:26:00.800783+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261015T155445Z
 **Deploy:** IRPT_BCKEND TO-IB-pr-579: move irpt-ycharts-generate from CodeSha256 5TRFZf6G.. to the signed candidate 3+fMEJhQ8.. (the commentary_requested release) by its Terraform path; Branch B = S3 version sf9zrBdAUPuzO3qgCpk52_iVf6EFle_C of investor-reporting/irpt-ycharts-generate.zip
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -28,3 +28,4 @@
 - 20261015T153839Z LEG irpt-ycharts-generate closed: ONE safe-apply (HALT checkpoint and comp-tagauthz passed; inbox 8 of 8 READ) on the saved plan 15:32:31Z-15:34:14Z: 'App
 - 20261015T153840Z LEG L4 closed: re-plan No changes rc=0; deployed zip sha256 = 3+fMEJhQ8..; vs pre-apply zip exactly 4 members differ (acceptance.py abb
 - 20261015T154559Z LEG L5 closed: health proof 11.1 min after the apply, window 2026-10-15T15:34:08Z to 15:45:13Z: AWS/Lambda Invocations 1 (the census in
+- 20261015T155445Z CLOSED -- all 6 legs proven
