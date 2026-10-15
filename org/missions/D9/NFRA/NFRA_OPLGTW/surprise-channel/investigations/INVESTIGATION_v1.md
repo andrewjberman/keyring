@@ -17233,7 +17233,7 @@ name the one known failure instead of silently inheriting it.
     },
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "A producer on a scheduled task keeps capturing while a device update runs.",
-    "world_is": "No python runs on the box: safe-commit and every gate are blocked (no seat can commit), and the runner captures nothing for four publishers while it retries on its idle cycle. OG-eg-2's AC2 must read a cycle that ran jobs, not these. Reported to 0.0.0_AB_MSTR~Z and 0.7.0_AE_CloudOps~ZW at 14:25Z. I changed nothing on the install. UPDATE 14:31Z: the bare python command in this seat's Git Bash now resolves to Python 3.11 (sys.prefix C:/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311), not Python 3.14, so shell python runs again; no change by this seat. C:/Program Files/Python314 is still without its Lib (only site-packages), and the runner's registered interpreter is that 3.14 pythonw.exe, so the runner's 14:27Z cycles still failed. Whoever owns the interpreter policy (0.0.0_AB_MSTR~Z) must say whether 3.14 is restored or retired; re-registering the runner on another interpreter is 0.7.0_AE_CloudOps~ZW's act under its own order, not this seat's."
+    "world_is": "No python runs on the box: safe-commit and every gate are blocked (no seat can commit), and the runner captures nothing for four publishers while it retries on its idle cycle. OG-eg-2's AC2 must read a cycle that ran jobs, not these. Reported to 0.0.0_AB_MSTR~Z and 0.7.0_AE_CloudOps~ZW at 14:25Z. I changed nothing on the install. UPDATE 14:31Z: the bare python command in this seat's Git Bash now resolves to Python 3.11 (sys.prefix C:/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311), not Python 3.14, so shell python runs again; no change by this seat. C:/Program Files/Python314 is still without its Lib (only site-packages), and the runner's registered interpreter is that 3.14 pythonw.exe, so the runner's 14:27Z cycles still failed. Whoever owns the interpreter policy (0.0.0_AB_MSTR~Z) must say whether 3.14 is restored or retired; re-registering the runner on another interpreter is 0.7.0_AE_CloudOps~ZW's act under its own order, not this seat's. RESOLVED 15:06Z (read by this seat): the MSP rolled 3.14.8 back at 14:35Z (MSTR msg 34468), then a reinstall put 3.14.8 back with its Lib (python.exe reports 3.14.8, 191 Lib entries, pyarrow/boto3/yaml import) by 15:03Z; the runner's bbg cycle started 15:02:46Z and its first JOB line at 15:06:19Z reads status=no_new_articles (run id 20261015T150248Z); no runner re-registration was needed. Records 14:22Z-14:57Z of cycles/<publisher> are outage failures and are not an egress measurement. Disarmed."
   }
   ```
 
@@ -17291,3 +17291,260 @@ name the one known failure instead of silently inheriting it.
     "notes": "WHY NOT THE OVERRIDE. The gate's FIX line offers '# pipeline-override: <reason>', audited and printed. Using it would have made a FILENAME disagreement look like an order that stands outside the pipeline, which is false and would have put a false reason in an audit log. An override is for a claim about the work, not a way around a typo. THE SHAPE WORTH KEEPING: when an order's PROSE and a GATE disagree about a path, the gate is the mechanism and the prose is a wish -- but read the completed SIBLING before concluding which is wrong, because the sibling shows what the convention actually is. Here ap-19's instance matching its own stem is what turned 'the gate is being awkward' into 'the order typed the wrong name'."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S149",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T15:12:22Z",
+    "one_line": "OG-ap-21 step 2 cannot read '1 to add, 1 to change': the invoke policy it retargets was NEVER APPLIED. aws_iam_role_policy.gw_harvest_published_invoke is absent from terraform state and the gateway instance role carries no such policy live, so changing its role is a second ADD, not a change. The targeted plan reads '2 to add, 0 to change, 0 to destroy' with exactly the two intended resources and nothing else. AND THE CONSEQUENCE FOR THE ASK: the order's widening sentence says the news AND invoke statements MOVE from the instance role to the internal reader, narrowing the instance role. Only the NEWS statement moves. The invoke statement was never on any role, so it is a NEW grant on the internal reader and narrows nothing.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform -chdir=infra/aws/terraform/opal-gateway state list, filtered to the three policy addresses in question, returns exactly ONE: aws_iam_role_policy.gw_news_read. Neither gw_harvest_published_invoke nor int_reader_news_read is in state",
+        "LIVE, on a second plane: aws iam list-role-policies --role-name opal-gateway-role names gateway-global-news-read-policy and NO gateway-global-harvest-published-invoke-policy",
+        "the plan itself: '# aws_iam_role_policy.gw_harvest_published_invoke will be CREATED' and '# aws_iam_role_policy.int_reader_news_read will be CREATED', then 'Plan: 2 to add, 0 to change, 0 to destroy'. No resource outside the two targets appears, so the order's 'any other change is a STOP' limb is satisfied -- the divergence is in the add/change SPLIT, not in extra resources",
+        "harvest_published_invoke_iam.tf's own header says it, and has since OG-gt-5 wrote it: 'PHASE A: this file is code only. It is NOT applied and NOT deployed by the cell that wrote it. The apply is a later order, after the three halves of the never-widen ask sign (W/NEVER_WIDEN_ASK_OG-gt-5.md)' -- that later order never came",
+        "terraform fmt -check clean on both files (-check, never -diff, which WRITES)",
+        "plan saved at W/P21_PLAN.txt, 3663 bytes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "step 2(c): 'the plan must read 1 to add, 1 to change, 0 to destroy (the new policy; the invoke policy's role)'; and step 4(3): 'no grant widens (the news and invoke statements MOVE from the instance role to the internal reader role, narrowing the instance role)'.",
+    "world_is": "the invoke policy exists only as unapplied code, so there is nothing to change and nothing to narrow. The plan is correct at 2 to add; the order's expected line was written against an assumption that OG-gt-5's grant had been applied.",
+    "notes": "I AM NOT WRITING THE ASK'S WIDENING SECTION TO THE ORDER'S SENTENCE. A never-widen half signing 'no grant widens, the statements merely move' would be signing something false about half of it: the internal reader gains lambda:InvokeFunction on opal-amgt-scoped-api that NO role holds today. That is a real widening and it belongs in the widening section as one, which is exactly what that half exists to catch. The news half of the sentence IS a move and does narrow the instance role, but only in Phase B when gw_news_read is destroyed after the served read. So the ask will state three things separately: one NEW grant, one MOVE whose old half survives until Phase B, and an instance role that narrows at the END of the sequence rather than at the start. THE SHAPE WORTH KEEPING: 'retarget X from role A to role B' reads like a move and plans like an addition whenever X was never applied -- and the tell is in the plan's VERB (created, not updated), which is cheap to read and easy to skim past when you are looking at the count instead. A plan's total can match while its verbs say something else entirely; here the total did NOT match, which is the only reason I looked at the verbs at all."
+  }
+  ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T10:32:45Z",
+  "one_line": "The worktree does not carry the gateway tree the order names: infra/aws/ec2 is outside the sparse-checkout cone, so every gateway app and test file in the order's paths is absent on disk though tracked in the index. BLOCKING; the cone was not widened and nothing was reconstructed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SPARSE: git sparse-checkout list in C:/tmp/wk-oplgtw-102 prints .tools, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_OPLGTW, org/modules/graph, org/standards; git config core.sparseCheckout prints true",
+      "ABSENT: ls infra/aws and ls infra/aws/ec2 both fail with No such file or directory; the criterion runs print grep errors for infra/aws/ec2/opal-gateway/app/tools.py and cd errors for infra/aws/ec2/opal-gateway",
+      "INDEXED: git ls-files lists infra/aws/ec2/opal-gateway/app/tools.py and tests/test_entitlement_admin.py at HEAD bcff0f9889, so the gap is the checkout cone, not the history",
+      "MEMORY: the device memory entry on sparse cones for worktrees (a full worktree checkout OOMs under memory pressure) explains why the cone is narrow here"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 3 <paths> and section 1 step 1 name infra/aws/ec2/opal-gateway app and test files that the worker edits and runs inside its worktree; the worker bar says a worktree that does not carry the named paths is a BLOCKING row and a STOP.",
+  "world_is": "The worktree checkout excludes infra/aws, so the hookup script, the five gateway files and the two pinned suites cannot be run here, and the rv-1 and rv-2 modules (app/etfs_rivals.py, app/etfs_rivals_flow.py) are absent from disk as well. Restoring the cone is a rebuild of the tree to make the order executable, which the bar forbids.",
+  "notes": "STOPPED AT THE PREFLIGHT: step 1 (the hookup script) was not run, step 3 (the pytest suites) was not run, and no tool, test or pin file was edited. The criteria were run as written and recorded as FAIL on the absent tree. The cell needs a worktree whose checkout carries infra/aws/ec2/opal-gateway."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T10:32:45Z",
+  "one_line": "The order's proof_of_spec invocations run gt12.AC1.sh and gt12.AC2.sh, which grade the six OG-gt-12 tools and print of 6, not the ten OG-rv-3 tools; as written their output can never match the expect lines. BLOCKING for both criteria as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ORDER: NFRA_OPLGTW.TO-OG-rv-3.rival-hookup.md section 4 at HEAD bcff0f9889 names checks/gt12.AC1.sh and checks/gt12.AC2.sh, with expect lines for 10 of 10, pin 105 and SAFE 10 of 10",
+      "CHECK: r37/checks/gt12.AC1.sh names six tools and prints tools registered in app/tools.py: N of 6 with pin 95 (path@bcff0f9889)",
+      "CHECK: r37/checks/rv3.AC1.sh and rv3.AC2.sh name the ten tools and print of 10 with pins 105 and 96, matching the order expect lines (path@bcff0f9889)",
+      "RUN on the absent tree: gt12.AC1 printed 'tools registered in app/tools.py: 0 of 6' rc=1; gt12.AC2 printed 'classified: SAFE 0 of 6, NATIVE 0 of 6' rc=1; rv3.AC1 printed '0 of 10' rc=1; rv3.AC2 printed 'SAFE 0 of 10, NATIVE 0 of 10' rc=1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 4: AC1 invokes r37/checks/gt12.AC1.sh and expects 'tools registered in app/tools.py: 10 of 10' and 'the registry count pin is 105'; AC2 invokes gt12.AC2.sh and expects 'SAFE 10 of 10, NATIVE 10 of 10'.",
+  "world_is": "The invoked scripts grade the six OG-gt-12 tools (etfs_get_partner_ownership through mdpf_get_category_views) against pins 95 and 86, so no tree state can print the expected ten-of-ten lines from them. The ten-tool scripts that do match the expect lines are r37/checks/rv3.AC1.sh and rv3.AC2.sh, in the same folder.",
+  "notes": "The worker ran the invocations as written (recorded FAIL) and also ran rv3.AC1.sh and rv3.AC2.sh to record their output beside them. The order's invocation text was not edited. A proof instance that names the invocation actually run is the honest record until the issuer re-points the invocation."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T10:32:45Z",
+  "one_line": "rv3.AC2's outside-files bound reads 0 before any worker commit by construction: its base is merge-base(HEAD, box/sitez), which equals HEAD while the cut commit sits on box/sitez, so the bound passes on an empty branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: r37/checks/rv3.AC2.sh sets base=$(git merge-base HEAD box/sitez) and counts git diff --name-only base HEAD outside the five cell files (path@bcff0f9889)",
+      "GIT: git merge-base HEAD box/sitez prints bcff0f98893a12178ad14a79dc4d3f554c8403cf; git rev-parse box/sitez prints bf89afe1026422add31d6721e19b3fa8a3df7daf, which contains the cut commit",
+      "RUN: rv3.AC2 printed 'files outside this cell's five (and its records) 0 (want 0)' before any worker commit, so the zero is an empty diff, not a measured bound",
+      "RUN: the same run printed an empty grant count ('in DATA_GRANT_TOOLS  (want 0)') after a python FileNotFoundError, so the echo does not separate a failed read from a zero"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "rv3.AC2 states that the five cell files are the only files that differ from the base of this branch, and its outside count is the evidence for that bound.",
+  "world_is": "Before the worker commits, base equals HEAD and the diff is empty, so the bound holds for any tree state. The bound can fail only after a commit lands on this branch, and a pass on an uncommitted branch is not evidence about the files the cell touched.",
+  "notes": "Form-only observation for the issuer: the echo of an empty grant read reads as a zero. No edit was made to the check."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T10:32:45Z",
+  "one_line": "Task order section 2 forbids editing app/tools.py, app/data_entitlement.py, app/destructive_ops.py and the pinned-count tests, while step 1 runs hookup_rv.py to edit exactly those files; the RECORD FACE also repeats a worker-face fragment and gives two Rides lines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ORDER: NFRA_OPLGTW.TO-OG-rv-3.rival-hookup.md section 2 bullets at lines 34-37 (the five files are NOT yours; do not edit them) at HEAD bcff0f9889",
+      "ORDER: section 1 step 1 at lines 24-27 and section 3 <paths> at lines 45-54 grant the same five files to the hookup script run",
+      "ORDER: lines 77-84 hold a stray <status> tag fragment and a repeated worker-face sentence; the first ISSUER NOTES block at line 78 says Rides OG-ap-22 and the second at line 87 says Rides OG-ap-20"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 2 says the five files are not the worker's and must not be edited; section 1 step 1 and section 3 grant the worker a script run that edits exactly those five files.",
+  "world_is": "The two statements cannot both bind the same five files. The worker read the grant as the script run and the bound as forbidding a hand edit; the script was not run here because the tree is absent, so the reading was not acted on. The RECORD FACE carries a duplicate fragment and two conflicting Rides lines.",
+  "notes": "For the issuer to settle in a re-issue; the worker did not adjudicate it. The hookup script reads and writes the five files as text; app/tools.py at HEAD bcff0f9889 has no carriage returns, so the text-mode round trip is byte-neutral for that file."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T10:56:48Z",
+  "one_line": "The commit-time author check printed WARN that serial 0.9.0_WK_NFRA_OPLGTW~102 names no known seat, because org/ref/SEAT_ROLES.json is outside this worktree's sparse cone; the commit landed WARN-only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "COMMIT: .tools/safe-commit.sh output for 6202abcec8 (C:/tmp/wk-oplgtw-102/.scratch/commit_out.txt line 1): 'WARN: author 0.9.0_WK_NFRA_OPLGTW~102 names no known seat (not in org/ref/SEAT_ROLES.json serial patterns, not a permitted_agents base in .owned-paths.yaml; org/ref/SEAT_ROLES.json unreadable (FileNotFoundError)). WARN-only until the announced refusal (1.0.0_SA_CTO msg 107910).'",
+      "SPARSE: git sparse-checkout list in C:/tmp/wk-oplgtw-102 prints .tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D9/NFRA/NFRA_OPLGTW, org/modules/graph, org/standards; org/ref is not in the cone.",
+      "ABSENT: ls org/ref/SEAT_ROLES.json in C:/tmp/wk-oplgtw-102 prints 'No such file or directory'; git ls-tree HEAD org/ref/SEAT_ROLES.json prints blob 9366a0111b5ccec9aef585a1de133af3f5debaa9, so the register is tracked and outside the cone."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's step 4 says the commit-time naming gate and the non-ASCII WARN are expected to print and that neither may be overridden. It names no author-seat check and no register read for the commit author.",
+  "world_is": "The author check reads org/ref/SEAT_ROLES.json, which this worktree does not carry, so it prints WARN for a serial it cannot classify and the commit proceeds WARN-only. The gate names an announced refusal for unknown seats; a commit from a worktree without the register would then be judged against an unreadable file.",
+  "notes": "ARMED: the armed condition is the announced refusal reaching this gate while the worktree cone omits org/ref. The disarm is the issuer's to take: widen the cone to org/ref, or accept the WARN as standing. This worker did not widen the cone, edit the gate or touch the register."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T14:57:50Z",
+  "one_line": "The naming gate's live read is BLOCKED in this worktree: the IAM_GROUP verdict on the old tool name printed LIVE-READ-FAILED (comp-find [aws] BLOCKED, served-graph client unavailable). The three REFUSE lines stood on the name alone; the renamed diff graded 0 strings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CONTROL: python .tools/naming-gate.py --diff .scratch/rv3_reverse_control.patch --staged-paths .scratch/rv3_staged.txt --enforce, where the patch is git diff HEAD 6ae0b5b1db (the old name as added lines), printed NAMING-GATE: REFUSE 3 graded and rc=1; each REFUSE carried why: NEW and OUT-OF-PATTERN as IAM_GROUP; LIVE-READ-FAILED: CensusError ... comp-find [aws] '.' BLOCKED: the served-graph client is (paths app/data_entitlement.py:148, app/destructive_ops.py:102, app/tools.py:1513)",
+      "FORWARD: the same gate over git diff 6ae0b5b1db HEAD (commit 1b22c0add7 only) printed NAMING-GATE: PASS 0 graded and rc=0, with no LIVE-READ line; the live read is consulted only for an IAM_GROUP candidate, and the renamed name is not one",
+      "GREP: grep -w etfs_get_peer_group over infra/aws/ec2/opal-gateway in C:/tmp/wk-oplgtw-102 returned no matches"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order A2 and step 4 take the naming gate's printed verdict as the commit-time evidence that the old name is refused and the new one is not. The gate's own REFUSE lines say the live census that backs an IAM_GROUP verdict did not run in this worktree.",
+  "world_is": "In this worktree the served-graph client is unavailable to the gate. An IAM_GROUP REFUSE still issues on the name, and the renamed name is not graded under any context rule, so the PASS of 0 graded is a zero whose cause is the rename, not a live census.",
+  "notes": "Form-only for the issuer: no gate was edited and no override was used. The rename's clean verdict rests on the name rule, which the positive control exercised. The live-read failure is named here so a later PASS in this tree is not read as a live census."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T14:57:50Z",
+  "one_line": "Merge 6ae0b5b1db took the order's status tag back to pending: commit 33b8d7f704 flipped it to complete, and HEAD reads pending after the merge. The instance recorded at 33b8d7f704 also predates the rename at 1b22c0add7.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GIT: git show 33b8d7f704:<order path> prints <status>complete</status>; git show 6ae0b5b1db:<order path> and git show HEAD:<order path> print <status>pending</status>",
+      "PARENTS: git log -1 --format=%p 6ae0b5b1db prints 33b8d7f704 685fb24339; the box/sitez side 685fb24339 carries pending",
+      "ORDER OF COMMITS: git log --first-parent HEAD lists 1b22c0add7, 6ae0b5b1db, 33b8d7f704 (the instance with AC1 and AC2 PASS on the pre-rename tree), 6202abcec8 (the hookup)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's <status> tag is flipped once, in the same commit as its proof instance (order step 3 and the closing section). A merge of the branch does not undo a completed flip.",
+  "world_is": "The merge result reverted the flip, so an order read at HEAD shows pending while the instance at 33b8d7f704 shows PASS on a tree that no longer exists. This cell re-records the instance on the post-rename tree and flips the tag again in its own commit.",
+  "notes": "The merge mechanism was read only as far as its parent list and the two order-file versions; it was not diagnosed. The revert is for the issuer to read at the drain."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T14:57:50Z",
+  "one_line": "The 3.11 stopgap interpreter lacks pandas_market_calendars: rv1.AC2 printed a WARN and answered the NYSE calendar from the hardcoded fallback, and the check still PASSed. The stopgap is not the full environment the gateway tests were measured against.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/rv1.AC2.sh printed 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027 ...)' then 'RESULT: PASS' and exit=0",
+      "INTERPRETER: python --version in C:/tmp/wk-oplgtw-102 prints Python 3.11.9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 3 says the five named suites print their pass and fail counts; the rv1 and rv3 criteria are run as written under the stopgap interpreter.",
+  "world_is": "The stopgap lacks one calendar dependency, so the trading-calendar read takes its hardcoded fallback. The rv1.AC2 PASS is measured with that fallback, not the library calendar; the cell's own criteria do not read the calendar.",
+  "notes": "Measured, not dispositioned. The fallback's own note says it is valid through 2027 and must be regenerated before 2028."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T14:57:50Z",
+  "one_line": "The naming gate over the full branch range bcff0f9889..HEAD prints WARN 24 graded, all in app/refs/DATA_CATALOG.yaml (tokens 49financial and inflection), a file outside this cell's paths that the branch carries from the MCPINDEX catalog commit. No REFUSE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git diff bcff0f9889 HEAD written to .scratch/rv3_full_diff.patch; python .tools/naming-gate.py --diff .scratch/rv3_full_diff.patch --staged-paths .scratch/rv3_staged.txt --enforce printed NAMING-GATE: WARN 24 graded and rc=0; all 24 NAMING OUT-OF-PATTERN lines name infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml",
+      "PROVENANCE: git log bcff0f9889..HEAD -- infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml prints 8581fa17b4 catalog(NFRA_MCPINDEX.TO-MX-c-19 A1, 0.9.0_WK_NFRA_MCPINDEX~43)",
+      "SCOPE: the same range's cell diff (the five files plus this cell's records) is the set rv3.AC2 counts; DATA_CATALOG.yaml is not in it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 4 says the commit-time naming gate prints and may not be overridden; the cell's diff is the five code files and the records it commits.",
+  "world_is": "The range-wide gate grades the catalog lines WARN, not REFUSE, and they are not this cell's lines. The cell's own range (commit 1b22c0add7 over the box/sitez base) grades 0 strings with no REFUSE.",
+  "notes": "Measured, not dispositioned: the catalog belongs to NFRA_MCPINDEX and this cell did not write it."
+}
+```
