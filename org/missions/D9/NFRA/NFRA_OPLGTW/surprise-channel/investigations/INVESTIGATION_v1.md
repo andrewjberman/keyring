@@ -17312,3 +17312,102 @@ name the one known failure instead of silently inheriting it.
   "notes": "ARMED: the armed condition is the announced refusal reaching this gate while the worktree cone omits org/ref. The disarm is the issuer's to take: widen the cone to org/ref, or accept the WARN as standing. This worker did not widen the cone, edit the gate or touch the register."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T14:57:50Z",
+  "one_line": "The naming gate's live read is BLOCKED in this worktree: the IAM_GROUP verdict on the old tool name printed LIVE-READ-FAILED (comp-find [aws] BLOCKED, served-graph client unavailable). The three REFUSE lines stood on the name alone; the renamed diff graded 0 strings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CONTROL: python .tools/naming-gate.py --diff .scratch/rv3_reverse_control.patch --staged-paths .scratch/rv3_staged.txt --enforce, where the patch is git diff HEAD 6ae0b5b1db (the old name as added lines), printed NAMING-GATE: REFUSE 3 graded and rc=1; each REFUSE carried why: NEW and OUT-OF-PATTERN as IAM_GROUP; LIVE-READ-FAILED: CensusError ... comp-find [aws] '.' BLOCKED: the served-graph client is (paths app/data_entitlement.py:148, app/destructive_ops.py:102, app/tools.py:1513)",
+      "FORWARD: the same gate over git diff 6ae0b5b1db HEAD (commit 1b22c0add7 only) printed NAMING-GATE: PASS 0 graded and rc=0, with no LIVE-READ line; the live read is consulted only for an IAM_GROUP candidate, and the renamed name is not one",
+      "GREP: grep -w etfs_get_peer_group over infra/aws/ec2/opal-gateway in C:/tmp/wk-oplgtw-102 returned no matches"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order A2 and step 4 take the naming gate's printed verdict as the commit-time evidence that the old name is refused and the new one is not. The gate's own REFUSE lines say the live census that backs an IAM_GROUP verdict did not run in this worktree.",
+  "world_is": "In this worktree the served-graph client is unavailable to the gate. An IAM_GROUP REFUSE still issues on the name, and the renamed name is not graded under any context rule, so the PASS of 0 graded is a zero whose cause is the rename, not a live census.",
+  "notes": "Form-only for the issuer: no gate was edited and no override was used. The rename's clean verdict rests on the name rule, which the positive control exercised. The live-read failure is named here so a later PASS in this tree is not read as a live census."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T14:57:50Z",
+  "one_line": "Merge 6ae0b5b1db took the order's status tag back to pending: commit 33b8d7f704 flipped it to complete, and HEAD reads pending after the merge. The instance recorded at 33b8d7f704 also predates the rename at 1b22c0add7.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GIT: git show 33b8d7f704:<order path> prints <status>complete</status>; git show 6ae0b5b1db:<order path> and git show HEAD:<order path> print <status>pending</status>",
+      "PARENTS: git log -1 --format=%p 6ae0b5b1db prints 33b8d7f704 685fb24339; the box/sitez side 685fb24339 carries pending",
+      "ORDER OF COMMITS: git log --first-parent HEAD lists 1b22c0add7, 6ae0b5b1db, 33b8d7f704 (the instance with AC1 and AC2 PASS on the pre-rename tree), 6202abcec8 (the hookup)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's <status> tag is flipped once, in the same commit as its proof instance (order step 3 and the closing section). A merge of the branch does not undo a completed flip.",
+  "world_is": "The merge result reverted the flip, so an order read at HEAD shows pending while the instance at 33b8d7f704 shows PASS on a tree that no longer exists. This cell re-records the instance on the post-rename tree and flips the tag again in its own commit.",
+  "notes": "The merge mechanism was read only as far as its parent list and the two order-file versions; it was not diagnosed. The revert is for the issuer to read at the drain."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T14:57:50Z",
+  "one_line": "The 3.11 stopgap interpreter lacks pandas_market_calendars: rv1.AC2 printed a WARN and answered the NYSE calendar from the hardcoded fallback, and the check still PASSed. The stopgap is not the full environment the gateway tests were measured against.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/rv1.AC2.sh printed 'WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027 ...)' then 'RESULT: PASS' and exit=0",
+      "INTERPRETER: python --version in C:/tmp/wk-oplgtw-102 prints Python 3.11.9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 3 says the five named suites print their pass and fail counts; the rv1 and rv3 criteria are run as written under the stopgap interpreter.",
+  "world_is": "The stopgap lacks one calendar dependency, so the trading-calendar read takes its hardcoded fallback. The rv1.AC2 PASS is measured with that fallback, not the library calendar; the cell's own criteria do not read the calendar.",
+  "notes": "Measured, not dispositioned. The fallback's own note says it is valid through 2027 and must be regenerated before 2028."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W102-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~102",
+  "surfaced_at": "2026-10-15T14:57:50Z",
+  "one_line": "The naming gate over the full branch range bcff0f9889..HEAD prints WARN 24 graded, all in app/refs/DATA_CATALOG.yaml (tokens 49financial and inflection), a file outside this cell's paths that the branch carries from the MCPINDEX catalog commit. No REFUSE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git diff bcff0f9889 HEAD written to .scratch/rv3_full_diff.patch; python .tools/naming-gate.py --diff .scratch/rv3_full_diff.patch --staged-paths .scratch/rv3_staged.txt --enforce printed NAMING-GATE: WARN 24 graded and rc=0; all 24 NAMING OUT-OF-PATTERN lines name infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml",
+      "PROVENANCE: git log bcff0f9889..HEAD -- infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml prints 8581fa17b4 catalog(NFRA_MCPINDEX.TO-MX-c-19 A1, 0.9.0_WK_NFRA_MCPINDEX~43)",
+      "SCOPE: the same range's cell diff (the five files plus this cell's records) is the set rv3.AC2 counts; DATA_CATALOG.yaml is not in it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 4 says the commit-time naming gate prints and may not be overridden; the cell's diff is the five code files and the records it commits.",
+  "world_is": "The range-wide gate grades the catalog lines WARN, not REFUSE, and they are not this cell's lines. The cell's own range (commit 1b22c0add7 over the box/sitez base) grades 0 strings with no REFUSE.",
+  "notes": "Measured, not dispositioned: the catalog belongs to NFRA_MCPINDEX and this cell did not write it."
+}
+```
