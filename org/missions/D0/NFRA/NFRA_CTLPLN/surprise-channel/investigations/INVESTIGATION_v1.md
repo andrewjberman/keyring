@@ -10013,3 +10013,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Arm (a) control confirms the base still leaves the .md staged on the placement fixture, so the pinned base is the defect's pre-change form. No other order premise failed: the cited line numbers moved by at most a few lines and the ENFORCE branch is unchanged."
 }
 ```
+
+## NFRA_CTLPLN-W101-S1 -- the order's "keep the untagged seat-folder rule" is ambiguous once the scoping round can come from a decomposition: 8 untagged seat-folder orders that name a decomposition roundN leave the every-round count
+
+```json
+{
+  "id": "NFRA_CTLPLN-W101-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~101",
+  "surfaced_at": "2026-10-15T06:44:24Z",
+  "one_line": "TO CT-af-2 says keep the seat-folder untagged rule unchanged (an untagged flat-folder order is counted in every round and named untagged). The rule now keys on the scoping round, so an untagged seat-folder order that names a decomposition roundN is scoped to that round and no longer counted in every round. Eight such orders (TO-APPLY-3, 4, 5, 6, 7, 8, 10 and TO-DELL-1) move; the 23 orders with neither a tag nor a decomposition are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/round-close-check.py@d7205c4365:356-362 -- the scoping round is the decomposition roundN when the order names one, else its <round> tag; the untagged exemption tests that scoping round, not the tag",
+      "measured 2026-10-15 by a read-only read_orders run over NFRA_CTLPLN at the pre-change base cb843928c1 and at d7205c4365: 144 orders read, 46 change scoping round, 8 of them untagged seat-folder orders with a decomposition roundN (none/2: TO-DELL-1; none/3: TO-APPLY-3; none/4: TO-APPLY-4, 5, 6, 7, 8, 10)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO NFRA_CTLPLN.TO-CT-af-2 BUILD item 1: derive each order's scoping round from its decomp_doc roundN, else its <round> tag exactly as today; keep the existing seat-folder rule (an untagged flat-folder order is counted in every round and named as untagged) unchanged.",
+  "world_is": "The order does not say whether an untagged seat-folder order that names a decomposition keeps the every-round count. The build reads the untagged rule as applying only to an order with NO scoping round (no tag and no decomposition roundN), so those 8 orders are scoped to their decomposition round. The alternative reading, every-round count plus the decomposition round, would keep them in all rounds. Verdicts are MAY-CLOSE for all 16 rounds under both the base and the build.",
+  "notes": "Judgment call recorded for the issuer. The 23 orders with neither a tag nor a decomposition are still counted in every round and named untagged. Not an ARMED hazard: no gate refuses, and the check's verdict is unchanged for every round."
+}
+```
