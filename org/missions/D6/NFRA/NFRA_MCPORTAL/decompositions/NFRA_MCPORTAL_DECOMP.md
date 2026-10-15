@@ -1700,3 +1700,19 @@ with MP-pe-1 (one release). The catalog fields arrive with MCPINDEX's first C-GR
 2. The segments exist on the live page only after (a) MCPINDEX's C-GROUP catalog release and (b) the gateway release carrying MP-pe-1 and MP-pf-1. Until then the page shows what it shows today.
 3. The vendor and firm WORDS are the issuer's spelling of the C-GROUP values for a human; they are display only and change no value.
 4. The open question for Andrew from PE.6 item 3 (regroup integration channels by bucket) is unchanged.
+
+## PF.7 AMENDMENT 1 (issuer, 2026-10-15 ~22:0xZ, after reading NFRA_MCPINDEX TO-MX-c-21 lines 28 to 37 and the CTO's ruling msg 34591)
+
+Appended, not rewritten. Three facts that PF.0 to PF.2 did not have:
+1. **`source_group.kind` takes a THIRD value, `store`.** MX-c-21 item 3 writes `kind` `bucket` for an `opal-data-` bucket, `graph` for the Microsoft tools and `store` for any other source (the YCharts tools, the Kuzu graph tools, a tool that reads only gateway
+   state, DynamoDB), with `source_group.name` the bucket word title-cased. PE.2 rule 5 (written before MX-c-21 existed) treats any kind other than `bucket` and `graph` as a malformed declaration, so every `store` tool would read as "No source declared"
+   although it IS declared. That is the issuer's fault; it would have shown a false gap on the live page. Ruling: rule 2 accepts a third kind `store`; the tool joins a group `{id: <source_group.id>, name: <source_group.name>, kind: "store", auth: "per tool", min_tier: "per tool"}`;
+   `channels[].kind` gains `store`; the channel order becomes bucket, store, integration, native, undeclared. The page says `Data store` for it (not `AWS bucket`, not a gap).
+   Rule 24 record: `kind` {integration, native, bucket, store, undeclared} stays one axis (how the tool's group was decided: by spec, by graph scope, by a declared S3 bucket, by a declared other store, or by nothing); `store` is declared, so it is never a gap.
+   Token census: `store` is new in this field; in the catalog it appears only as `source_group.kind` (MX-c-21 item 3).
+2. **`vendor` and `firm` are on catalog ROWS only, not on `tool_index` entries** (MX-c-21 items 2 and 3). I asked the CTO (msg 34589).
+3. **RULED by the CTO (msg 34591, C-GROUP item 2 amended @5ba12d1de5): the tool-level pair is a LIST, `serves`.** Each assets/bd `tool_index` entry carries `serves`, the distinct (vendor, firm) pairs of the catalog rows naming it as `read_tool`, written by MX-c-21 and never typed;
+   /gateway lists a tool under EVERY pair in its `serves`. This replaces PF.1 rules 1 and 2 (one `vendor` and one `firm` field per tool). The shape the handler reads, stated here because the contract names no element form: a list of objects `{"vendor": <str>, "firm": <str>}`.
+   Until MX-c-21 writes it, every assets tool reads the pair (`unresolved`, `unresolved`), which the page shows honestly as `Vendor not resolved / Firm not resolved`.
+
+New cells (PF ROUND 2, because the issuance gate allows one issuance per workstream round; round 1 stays open until its two orders and Amendment 2 drain): `MP-pf-3` (handler: `store` and `serves`, chain H on worker ~31's queue) and Amendment 2 to `MP-pf-2` (the words `Data store`, the type, the fixture with a store channel and a tool serving two pairs, two tests).
