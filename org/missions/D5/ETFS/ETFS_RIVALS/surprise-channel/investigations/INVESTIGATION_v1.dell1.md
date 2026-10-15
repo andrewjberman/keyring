@@ -933,6 +933,29 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "A criterion's cell_ref resolves when the cell exists in any of the project's decomposition documents.",
     "world_is": "The alignment limb resolves cell_ref against the one named decomp_ref.doc. Eleven instances whose cell was moved to a round file read INVALID, so those orders cannot be flipped complete and the completion report lists them as not terminal-with-proof.",
     "notes": "Not fixed by this seat: the checker is not this project's. CTO ruling msg 6215: keep the 12 pending orders as they are, flip none without a VALID instance, file this row. iam-1 is the twelfth pending order and fails on schema (spec_ref group, artifact kind), a different cause."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W43-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~43",
+    "surfaced_at": "2026-10-15T21:17:29Z",
+    "one_line": "RIV-ya-1's chart reader (price_series.series) applies the precedence rule to the actions frame that load() windows by object date partition, so a Bloomberg split whose partition lies outside the chart window is not seen: an inferred split of the same key inside the window then applies alone, not the Bloomberg ratio, and the cell's 'whatever the two ratios' claim holds only for the rows both readers see",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/price_series.py _actions at base 1af8b0dba8 line 246: `if m and lo <= m.group(1) <= hi and u.endswith(\".parquet\") and not _is_void_uri(u)` (the partition date filter over the window's lo and hi)",
+        "data/etfs/scripts/rivalfunds/price_series.py load at base 1af8b0dba8 line 261: `return series(g4, g1, keys, start, end, actions=_actions(s, lo, hi))`, so series() sees only the windowed frame",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py load_actions at 1af8b0dba8 line 986 lists EVERY corporate_actions object (no date window), so the G5 reader pairs across all partitions while the chart reader pairs within the window",
+        "the round-31 check ya1_bloomberg_wins_check.py test_ac2 builds both rows in one frame passed straight to series(), so it cannot see the windowing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-ya-1 interface item 2: the same rule over the actions frame before _adjustments, so a Bloomberg split and an inferred split of the same ex_date apply ONCE (the Bloomberg row) whatever the two ratios.",
+    "world_is": "The rule is applied as specified to the frame series() is handed. load() hands it the object partitions dated inside [start, end], so a pair split across the window edge is not paired by the chart. No inferred object exists in the live store today (cell measured 0), so the case has not arisen; the G5 reader and the chart reader can disagree on which pairs exist.",
+    "notes": "Not edited (price_series.load is outside this order's paths for a windowing change). Owner of the call: 2.0.0_SA_COO~RV at the drain; the choices are to read the corporate_actions prefix unwindowed for the chart's precedence pass (the G5 reader's shape) or to accept the window edge with the disarm's detect-and-void. The worker's pairing is over the frame it is given, as the cell words it."
   }
 ]
 ```
