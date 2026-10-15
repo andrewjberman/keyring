@@ -16513,3 +16513,32 @@ name the one known failure instead of silently inheriting it.
     "notes": "OBSERVATION only. No measured harm to a served artifact was taken in this order; the grant-writer package and the deploy copy were not rebuilt or read beyond the byte comparisons above."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S140",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-15T06:27:29Z",
+    "one_line": "The commit-time naming limb REFUSES four s3:prefix FILTER PATTERNS in etfs_read_iam.tf's ListBucket condition as OUT-OF-PATTERN S3Keys (gold/book/*, gold/holding/*, platinum/reports/*, silver/holdings/*). They are tier-first LEGACY prefixes and cannot satisfy {source}/{scope}/ by construction -- which is what legacy means. The .tf is therefore uncommitted; the remedy per the registry's own contract is four key_rulings.json rows, which is 4.0.0_SA_CRO's lane.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit BLOCKED: '[naming-gate] NAMING REFUSE ... gold/book/* -> {source}/{scope}/gold/book/* why: NEW and OUT-OF-PATTERN as S3Key: REFUSE', same for gold/holding/*, platinum/reports/*, silver/holdings/*; NAMING-GATE: REFUSE 7 graded, LGIC_ENFORCE DEC-6 ENFORCE. The policy NAME graded CONFORMANT as IAM_POLICY.",
+        "the limb grades a string only at 2+ segments: single-segment daily/* was NOT graded; rivalfunds/etfs/gold/* and rivalfunds/etfs/platinum/page/* graded CONFORMANT because rivalfunds/etfs/ happens to satisfy {source}/{scope}/",
+        "CONTROL: harvest_read_iam.tf, landed 2026-10-14 by this same seat and PASSED this same gate, conditions its ListBucket on bare literals too -- packs/, packs/*, wsj/, wsj/* -- every one single-segment and so never graded. The gate is behaving consistently; this file is simply the first to put a 2+-segment legacy prefix in a condition.",
+        "the GetObject ARNs in the same file were NOT graded, because they are full arn:aws:s3::: strings; only the bare prefix strings look like keys to the limb",
+        "key_rulings.json _about: 'A stored-file path the grader cannot read ... gets its answer here' and 'a row here does not authorize a read or a write and names no reader; it tells the naming check what to print'; its authority line names 4.0.0_SA_CRO as the writer. 161 rows, 9 on opal-data-etfs, NONE for these four.",
+        "all four addresses already carry legacy_addresses rows (the nine landed at f636989b97), so the store is registered as legacy -- the naming limb simply does not consult that when grading a .tf literal"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step 2 ends in a committed .tf whose policy name and bucket are builder output written as literals the naming limb can grade.",
+    "world_is": "The policy NAME grades fine. What refuses is four prefix FILTER PATTERNS, and the question underneath is whether an IAM condition's s3:prefix value is a 'stored-file path' at all: its purpose is to CONFINE a ListBucket so it cannot enumerate the bucket, and grading it as an address the code writes may be a category error in the limb rather than a naming violation in my file. Either way the four are legacy and cannot conform.",
+    "notes": "WHAT I DID NOT DO, deliberately: I did not rebuild the condition from an HCL expression. The limb defers expressions to plan time, so that would have HIDDEN the literals instead of answering them, and LGIC R30 says a builder refusal is a missing registry row and never a hand-typed workaround. Making a gate quiet is not the same as making it pass. Two routes for the issuer: (a) 4.0.0_SA_CRO lands four key_rulings rows -- I have written them with the measurement and my reading attached (none_owed, because the ETFs bucket is tier-first by construction and no address is owed until the pipeline's own migration project re-addresses the store), at W/G5A_KEY_RULINGS_FOR_CRO.json; or (b) the gate's owner rules that an s3:prefix condition value is out of the S3Key limb's scope, which fixes it for every future confined ListBucket rather than four keys at a time -- and the harvest control suggests this will recur the moment anyone conditions on a 2+-segment legacy prefix. RECOMMENDED: (a) now so OG-ap-20 moves, (b) as the durable fix."
+  }
+  ```

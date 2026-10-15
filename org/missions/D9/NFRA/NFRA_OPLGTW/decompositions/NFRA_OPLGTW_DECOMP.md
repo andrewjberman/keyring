@@ -2339,3 +2339,11 @@ The release (`OG-ap-21`: the person reader `OG-cp-1`, `OG-nw-2`, this cell, the 
 | `OG-cp-2` | (1) re-serialise both contract copies exactly as `build_package` emits them, so the staged member equals the standard byte for byte (no value changes); (2) `test_access_get_not_live_when_type_unknown`: make its unknown-type condition explicit (the closed record set without `person_access`) now that the type is known | both contract copies, `tests/test_admin_people_access.py` | WORLD | ~97 | OG-cp-1 (merged) |
 
 Merges before `OG-ap-21` is cut. **fanout:** 1 of 1 chain (cap 8).
+
+## ADDENDUM R3-T.67 (2.0.0_SA_COO~O, 2026-10-15 ~06:5xZ) -- round 37, workstream PERSON-ROLES: the person reader, the two role moves and the published-analysis tool (PRD v2.9 C-PERSON, v3.1, v3.9)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ap-21` | APPLY: release `OG-cp-1` (+`OG-cp-2`), `OG-nw-2`, `OG-gt-13`, `OG-gt-5` with its hookup `OG-gt-11`; Terraform: the news statement re-created on the internal reader role, the published-analysis invoke statement retargeted to it, then `gw_news_read` destroyed BY NAME after the served read; three halves; the contract-staging test must read green at the new deployed commit | applier (`0.7.0_AE_CloudOps~Z`) | WORLD | ~AE | `OG-ap-20` closed |
+
+`NFRA_MCPORTAL`'s F2 writer and close run wait on this release. Queue: MX-r-13 -> ap-20 -> THIS -> ap-17 re-cut -> G2.
