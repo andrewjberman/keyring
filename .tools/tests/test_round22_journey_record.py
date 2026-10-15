@@ -12,6 +12,9 @@ Flags (each prints one line; exit 0 only when every requested line says ok=True)
   --release JOURNEY-RELEASE released=<n> check8=<SIGNED|OTHER> file=<name> sha256=<12 hex> ok=<True|False>
   --pack    JOURNEY-PACK files=<n> manifest_ok=<True|False> verify=<INTAKE-VERIFY last line> ok=<True|False>
   --taildrop JOURNEY-TAILDROP files_sent=<n> failed=<f> target=dell1 ok=<True|False>
+--check is state-aware: ok=True only in the pre-signature state (check8=AWAITING, released=False) or the post-release
+state (check8=SIGNED, released=True), with checks 1-7 run and 0 failed; its two mismatch mutants print JOURNEY-CHECK-MUTANT
+lines and must read held=True.
 The three new flags run only when named; the default run is the original three. --release is read-only (it reads the
 release folder, the fetch and check records, and the CTO's signature file). --pack re-runs `intake_receive.py verify`
 locally on the pack and sends nothing. --taildrop reads ONLY TAILDROP_RECORD.md and never calls Tailscale.
@@ -129,6 +132,20 @@ def cmd_fetch() -> bool:
     return ok
 
 
+PRE_SIGNATURE = ("AWAITING", False)   # check 8 awaits the CTO's signature, nothing released (state before the signature)
+POST_RELEASE = ("SIGNED", True)       # check 8 signed and the wheel released (state after release)
+# the two mismatch states the ok expression must refuse (ruling from 2.0.0_SA_COO~C on W122-S4)
+MUTANT_CASES = (("signed_not_released", "SIGNED", False), ("awaiting_released", "AWAITING", True))
+
+
+def check_state_ok(ran_count: int, failed_count: int, check8: str, released: bool) -> bool:
+    """ok for --check: checks 1-7 all ran with 0 failed, AND the state is either PRE_SIGNATURE or POST_RELEASE.
+    Any other pairing of check8 and released (SIGNED without a release, AWAITING with a release) is not ok."""
+    if ran_count != CHECKS_LAST - CHECKS_FIRST + 1 or failed_count != 0:
+        return False
+    return (check8, released) in (PRE_SIGNATURE, POST_RELEASE)
+
+
 def cmd_check() -> bool:
     wheels = held_wheels()
     name = wheels[0] if len(wheels) == 1 else WHEEL_NAME
@@ -156,13 +173,14 @@ def cmd_check() -> bool:
     print("JOURNEY-CHECK-DETAIL check8_verdict=%s check8_summary=%s signature_file_exists=%s"
           % (c8.get("verdict"), (c8.get("evidence") or {}).get("summary"), sig_exists))
     released = (release_dir() / name).exists()
-    ok = (
-        len(ran) == CHECKS_LAST - CHECKS_FIRST + 1
-        and not failed
-        and check8 == "AWAITING"
-        and not released
-        and rec.get("verdict") != "checked"
-    )
+    ok = check_state_ok(len(ran), len(failed), check8, released)
+    mutants_held = True
+    for label, m8, mrel in MUTANT_CASES:
+        m_ok = check_state_ok(CHECKS_LAST - CHECKS_FIRST + 1, 0, m8, mrel)
+        mutants_held = mutants_held and not m_ok
+        print("JOURNEY-CHECK-MUTANT case=%s check8=%s released=%s ok=%s expected=False held=%s"
+              % (label, m8, mrel, m_ok, not m_ok))
+    ok = ok and mutants_held
     print("JOURNEY-CHECK checks_run=%d failed=%d check8=%s released=%s ok=%s"
           % (len(ran), len(failed), check8, released, ok))
     return ok
