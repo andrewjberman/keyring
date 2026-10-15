@@ -9552,3 +9552,79 @@ round.** Never edit an existing row.
   "notes": "Found by reading the existing test against item 1 before any code was written; no code was changed to resolve it."
 }
 ```
+
+## ADVI_COTBKF-D1-W180-S1 -- R3_LINKS.csv holds 90 rows, not the 88 the order names: 88 DETERMINISTIC and 2 AMBIGUOUS; the 0-to-active-accounts premise holds
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W180-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~180",
+  "surfaced_at": "2026-10-15T20:58:36Z",
+  "one_line": "R3_LINKS.csv holds 90 rows, not the 88 the order names: 88 DETERMINISTIC and 2 AMBIGUOUS; the 0-to-active-accounts premise holds",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_cotbkf_match_20261015/R3_LINKS.csv: 90 data rows; status DETERMINISTIC 88, AMBIGUOUS 2 (counts only, read by the packet builder)",
+      "TO ADVI_COTBKF.TO-CB-cl-3 Read item 3 names R3 as 88 links, 0 to active accounts, context only",
+      "REVERSE_MATCH_V3.csv (sha256 0783f088aecbf29e46751aa5d80239b8aa53f16484778162e34ee1c09783c66f): none of the 90 R3 account keys present (count only)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cl-3 Read item 3: R3_LINKS.csv (R3: 88 links, 0 to active accounts; context only)",
+  "world_is": "R3_LINKS.csv carries 90 rows, 88 DETERMINISTIC and 2 AMBIGUOUS. Not established: whether the 2 AMBIGUOUS rows were meant to be counted in the 88.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W180-S2 -- R4_LINKS.csv writes household_via as 'via name' on all 110 rows; the order's form is name or client_line; the packet reads the route word after 'via ' (form only, no value change)
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W180-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~180",
+  "surfaced_at": "2026-10-15T20:58:36Z",
+  "one_line": "R4_LINKS.csv writes household_via as 'via name' on all 110 rows; the order's form is name or client_line; the packet reads the route word after 'via ' (form only, no value change)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_cotbkf_match_20261015/R4_LINKS.csv: 110 data rows; household_via 'via name' on all 110 (count only)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~175/R4_RECORD.md: the client-line route yields no CANDIDATE"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cl-3 Item 2: r4_household_via is name, client_line or blank",
+  "world_is": "The R4 link file writes the route as a prefixed word; the packet strips the prefix. Not established: whether a client-line DETERMINISTIC link exists anywhere outside this file.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W180-S3 -- one R4 link's Black Diamond account (of 89 distinct) has no row in REVERSE_MATCH_V3, so the packet records its state as other with in_219 false; the order's four states do not name absence
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W180-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~180",
+  "surfaced_at": "2026-10-15T20:58:36Z",
+  "one_line": "one R4 link's Black Diamond account (of 89 distinct) has no row in REVERSE_MATCH_V3, so the packet records its state as other with in_219 false; the order's four states do not name absence",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_cotbkf_match_20261015/R4_LINKS.csv: 89 distinct bd_account_id values (count only)",
+      "REVERSE_MATCH_V3.csv: one R4 bd account key absent; packet bd_account_state other count 1 (counts only)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-cl-3 Item 2: bd_account_state is unmatched_active, new_client, near_match_waiting or other, from the reverse match",
+  "world_is": "The reverse match omits one R4 Black Diamond account. Not established: whether that account is an active unmatched account the reverse match should carry.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
