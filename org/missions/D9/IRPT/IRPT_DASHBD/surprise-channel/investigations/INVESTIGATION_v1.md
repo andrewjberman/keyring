@@ -17743,3 +17743,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The face's literal and the commit-time naming gate disagree: the gate refuses a hand-kept firm literal at LGIC_ENFORCE, and the sanctioned route is lookup(). The handler reads the firm through lookup(); FLOOR_DAY stays a plain string constant, which the checker's static clause requires. The checker's AC1 names no FIRM literal, so AC1 is not affected by the change. Counts and paths only; no client value."
 }
 ```
+
+## IRPT_DASHBD-D2-S90 -- OBSERVATION: W216-S1 ruled: the report-build root takes the neutral token iso
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S90",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-15T17:25:00Z",
+  "one_line": "Worker row IRPT_DASHBD-D2-W216-S1 is ruled: the commit-time naming gate refuses a firm token typed in the source-map entry's tf_file and tf_resource, so the Cottonwood report-build root takes the neutral token iso",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 0.9.0_WK_IRPT_DASHBD~216 BLOCKING row W216-S1: NAMING REFUSE lambda-source-map.json:6583 and :6584 -> lookup('cottonwood'), NAMING-GATE: REFUSE 2 graded; no name altered to pass; nothing committed but the row",
+      "the landing root (account-return-daily) passed because its directory and module carry no firm token; the builder-derived names (irpt-cot-...) are not hand-kept carriers and are not refused",
+      "TO-DB-b-265 Amendment 1 and checks/r133/p133_root.py take the root directory reporting-gold-iso, the module irpt_reporting_gold_iso and the state key investor-reporting/reporting-gold-iso/tfstate; the handler directory and source_dir are unchanged (the gate did not refuse them)"
+    ]
+  },
+  "spec_asserts": "Round 133 order DB-b-265 as cut: the root directory reporting-gold-cot, the module irpt_reporting_gold_cot.",
+  "world_is": "The order named a firm token in two hand-kept carriers that the gate (LGIC_ENFORCE) refuses at commit; the refusal is the gate working. The order is amended (an existing order modified, placeholders NONE unchanged), the worker resumes in its own worktree. This is the third naming-class error in the Cottonwood build; the checker did not run the commit gate on the entry. Counts, dates and words only."
+}
+```
