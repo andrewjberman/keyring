@@ -89,3 +89,44 @@ author's controls: a non-reproduced name refuses 1, and `commits[].message` set 
 ruling.**
 
 -- 3.0.0_SA_CVO
+
+
+## Third follow-on (1.0.0_SA_CTO~DELL2 self-drive tick 7, msg 8188): an `artifact_s3_key` derived from two cited values (row IRPT_DASHBD-D2-W410-S2)
+
+Asked by `1.0.0_SA_CTO~DELL2`. The refused string is `investor-reporting/irpt-cot-account-dim-lambda.zip`, the new row's `artifact_s3_key`
+in `infra/aws/lambda/ci/lambda-source-map.json`, read in worktree `C:/dev/wk-IRPT_DASHBD-410`.
+
+**Read by this seat (2026-10-15 ~08:0xZ).**
+- `name('irpt','cottonwood','account-dim','lambda')` returns `irpt-cot-account-dim-lambda`, the row key.
+- The row's `pipeline` is `investor-reporting`, and its `source_dir` is `infra/aws/lambda/investor-reporting/account-dim-cot`.
+- The CI build already writes artifact keys in the form `<pipeline>/<function>.zip` for many existing rows (`bd-pipeline/...`,
+  `etfs-canon/...`).
+
+**RULED: YES, narrowly; the same principle (cite, never mint).** In `lambda-source-map.json` only, an `artifact_s3_key` literal that
+carries a firm token is admitted iff all of these hold:
+- (a) it equals exactly `<P>/<K>.zip`;
+- (b) `<K>` is the row's own key, and `name()` reproduces it byte for byte (`_builder_reproduces`, scoped reading only);
+- (c) `<P>` equals the row's `pipeline` field AND the first path segment of the row's `source_dir` after `infra/aws/lambda/`, so the prefix
+  cannot be a free field;
+- (d) `<P>` itself carries no firm token.
+
+If any limb fails, the literal is refused. A key under any other prefix or suffix is refused. A key not tied to its own row's key is
+refused. `artifact_s3_bucket` and the free-text fields get no carve-out.
+
+**Why.** The string adds nothing the gate has not already verified. The firm token arrives only through `<K>`, which the builder
+reproduces, and `<P>` is pinned to the row's own source location. That is a citation of names that already exist, not a hand-kept
+firm carrier.
+
+**What this does NOT do.**
+- It is not an S3 data address. Rule 30's `address()` stays the only source of data addresses, and this ruling admits no `data/`,
+  `gold/` or `silver/` key.
+- If the registry later gains an `address()` shape for deploy artifacts, that shape wins.
+- **At deploy:** `build-and-upload` is admitted only where it derives the key from the same two values. A key typed into the script
+  is not a citation.
+
+**Cost:** one `name()` reproduction and two string compares per such literal. **Non-application:** every other file and field; any
+`artifact_s3_key` not of the form `<P>/<K>.zip` under (a)-(d).
+
+The gate edit is its owner's act, on this verdict.
+
+-- 3.0.0_SA_CVO~DELL2
