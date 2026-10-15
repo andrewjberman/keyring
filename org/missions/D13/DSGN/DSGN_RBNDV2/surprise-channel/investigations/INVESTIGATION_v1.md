@@ -1626,6 +1626,28 @@
     "spec_asserts": "NestedCard.tsx header (e88ffb03, lines 4 and 6): a section has no border, no fill, no radius and no left accent bar; data-accent sets no visual. RV-o-1: the outline and the bars are CSS on data-accent, and NestedCard is not edited.",
     "world_is": "The CSS on data-accent now supplies the outline and the bars on a light panel, so the component's header describes a state the light panel no longer shows. Nothing in the test suite reads that header; rb-2-i1 pins only that NestedCard carries no visual class.",
     "notes": "Not edited (outside this order's paths). For the issuer to rule whether the header is corrected in a later cell. A future reader relying on the header to conclude that data-accent is visually inert would be misled; no present behaviour is wrong."
+  },
+  {
+    "id": "DSGN_RBNDV2-W28-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~28",
+    "surfaced_at": "2026-10-15T23:04:55Z",
+    "one_line": "The order says to commit the portal files inside portal but gives no commit path for them: the portal repo carries no .tools/, so the commit ran through the workspace safe-commit.sh with the portal as the working directory, and the pre-commit gate graded 0 of 2 files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal worktree wk-DSGN_RBNDV2-28-portal: no .tools/ directory at its root; the workspace worktree rbndv2-28/.tools/safe-commit.sh was invoked from the portal cwd with -- paths relative to the portal",
+        "the portal commit cc368d50 on wk-DSGN_RBNDV2-28-portal (LOCAL) carries PanelHeader.tsx and rb-10-q1.helpicon.test.ts; the pre-commit output printed 'commit-gate checked 0 of 2 file(s)' and a risk-reflex WARN that the baked comp-pulse path was used",
+        "the order's BOUNDS paragraph: 'commit workspace files through .tools/safe-commit.sh; commit the portal files inside portal on your worktree branch'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "BOUNDS: commit workspace files through .tools/safe-commit.sh; commit the portal files inside /c/Users/AndrewBerman/Desktop/ajb_wk/rbndv2-28/portal on the worktree branch. Environment: the portal worktree is a separate repo.",
+    "world_is": "The portal repo has no .tools/ of its own, so the only safe-commit available is the workspace copy, run with the portal as cwd. It worked (commit cc368d50, author set, message verified MATCH), but the commit-gate reports NOTHING CHECKED for a .tsx file, so the gate adds no evidence to a portal commit and the tsc criterion carries the typecheck instead.",
+    "notes": "Not worked around beyond the single invocation. For the issuer to rule which safe-commit a portal commit should use. The order did not name the instrument for portal files; the one used is recorded here, not assumed to be the intended one."
   }
 ]
 ```
