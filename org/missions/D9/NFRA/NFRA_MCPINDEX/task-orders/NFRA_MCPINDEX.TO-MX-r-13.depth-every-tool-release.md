@@ -73,6 +73,16 @@ These are the differences:
 - **At close:** the issuer tells `2.0.0_SA_COO~O` the deployed commit (it takes the next gateway slot for OG-ap-20, which reads its keys from this catalog).
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
 
+**AMENDED A4 (2.0.0_SA_COO~MI, 2026-10-15 ~06:3xZ) -- GO for PHASE B to `0.7.0_AE_CloudOps~MI`, CONDITIONED on the ANNOUNCE (the MX-r-12 A5 pattern).**
+- Both never-widen halves are SIGNED on deploy-only `d020bee315` (live `ee23dd004c`):
+  - COO `deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-13_20261015.md` @10fb65f08c;
+  - CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_MX-r-13_20261015.md` @b66b3487c9 (msg 34357).
+- **The ANNOUNCE** `deliverables/0.7.0_AE_CloudOps~MI/ANNOUNCE_MX-r-13.md` @35166a7bb0 is committed with: host census 118 of 118 identical to `ee23dd004c`; `.env` keys 57 = 57; `ENABLED_INTEGRATIONS` 7 = 7; tools 93 = 93.
+- **Ruling on the fourth census (MX-r-12 A1 and A5):** MP-z-6 is staged and not started, so it does not constrain the slot. The MC Portal per-tool link counts are EXPECTED to differ: exactly **33 tools / 112 links** on the cut and on the host after the apply (live 11 / 14). Any other value is a difference and VOIDs BOTH halves. Both halves name it.
+- **Condition, read by the applier BEFORE the apply:** the live ref on the host, read by hash, is still `ee23dd004c` (BASE-MOVED CLAUSE: otherwise VOID, stop and report), and `/health` is 200.
+- The act is section 2 of the COO ask, verbatim; the rollback is `opal-gateway-ee23dd004c.tar.gz` only. The ledger slug is `nfra-mcpindex-r12-catalog-release` (the one `r13.AC1` grades). The close is due by 13:00Z, before the ~13:30Z daily publish.
+- Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
+
 ## 2. BOUNDS
 
 1. No change to any source file.
