@@ -27,12 +27,12 @@
   "decomposition_lineage": [],
   "leads": {
     "cto": "1.0.0_SA_CTO",
-    "coo": "UNSEATED (laptop; at most one more COO fits the three-COO limit)",
+    "coo": "2.0.0_SA_COO~RB",
     "cvo": "3.0.0_SA_CVO~L",
     "cro": "4.0.0_SA_CRO~A",
     "workers": "0.9.0_WK_DSGN_RBNDV2~<n>, per the L6 issuance"
   },
-  "coo_lane": null,
+  "coo_lane": "2.0.0_SA_COO~RB",
   "feature_branch": {
     "repo": "portal",
     "branch": "feature/dsgn-rbndv2-light",
