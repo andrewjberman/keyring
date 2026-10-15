@@ -37983,3 +37983,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W416-S1: the order's premise (a builder filter drops the account) FAILS: the account has no source row on the candidate date, so nothing in the candidate builder drops it; the refusal is the gate working on a source gap. D2-W416-S2 (the Cottonwood record existed only on box/dell2 when the worker started): INERT, the comparison was read by git show. D2-W413-S1 (the refused 49F account is ACTIVE in the directory) is RESOLVED as to cause: a SOURCE GAP on 2026-10-13 (inferred: why the custody partition omits the account, and whether it returns on later dates, are not read). The remedies differ from Cottonwood's: a source correction re-landing the account's custody row for 2026-10-13 if the account is live at the custodian, or a custodian-confirmed TERMINATED mark if it is closed. Whether the gap persists on 2026-10-14 (the candidate of today's fire) is the next read and decides whether the refusal clears on its own."
 }
 ```
+
+## IRPT_BCKEND-D2-W419-S1 -- The order names the publication manifest, but the published .manifest.json is written by publication.py, which is outside the paths grant; the closed_at_source fact is recorded in the run manifest (snapshot _manifest, returned by run_firm) instead.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W419-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~419",
+  "surfaced_at": "2026-10-15T13:06:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the publication manifest, but the published .manifest.json is written by publication.py, which is outside the paths grant; the closed_at_source fact is recorded in the run manifest (snapshot _manifest, returned by run_firm) instead.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings/publication.py@3f7c8910898345e85873d3a1fac78e18e0e7cea1 publish() builds the published manifest dict and puts it as the revision manifest object",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@3f7c8910898345e85873d3a1fac78e18e0e7cea1 land() builds body_payload from keys not beginning with an underscore, so the run manifest _manifest is not part of the published body"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-576 change item 3: the publication manifest records each exempted account as closed_at_source with its dates, written by the same place that writes the other manifest facts.",
+  "world_is": "The published .manifest.json belongs to publication.py, outside this order's paths. This build records closed_at_source in snapshot _manifest (the run manifest that carries the other manifest facts and is returned by run_firm); a run with no exempted account leaves it byte-unchanged. Whether the served manifest should carry the fact is for the issuer: that needs a grant on publication.py. The evidence loader that feeds the provider is the next cell."
+}
+```
