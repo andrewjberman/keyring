@@ -1676,3 +1676,6 @@ Base dry-runs 2026-10-15: `t1.AC1` FAIL (260 of 304), `t1.AC2` FAIL, `t1.AC3` FA
 ### R17.5 WHAT THIS CUT DOES NOT CLAIM
 
 It does not close Z-C-S57: that needs the two plain-words discover reads on the served host after `MX-r-14`, the issuer's own acts at the close. It does not widen any DATA access (F1 changes what a catalog row shows, never a grant), does not cut R1, and does not touch the ranking question.
+
+### R17.3a RULING RECORDED (1.0.0_SA_CTO~Z msg 34407, 2026-10-15 ~09:3xZ), on the F1 scope question
+YES: widen F1 to the 93 single-clean-firm firm-scoped table rows, in the NEXT round, as ONE cell with its own never-widen pair naming the per-firm catalog visibility change, after the 24 of MX-c-19 are live and the difference control reads deny->serve 0 across every firm principal x row. The taxsma workbook row (three firms) stays Opal-internal until it is split per firm; no firm is guessed for it. Seeing a row never reads its data (the firm's data grant still gates it). This round's cells are unchanged; the 93-row cell is carried to the next round's enrichment list.
