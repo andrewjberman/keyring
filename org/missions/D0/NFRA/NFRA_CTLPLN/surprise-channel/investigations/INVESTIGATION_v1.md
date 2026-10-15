@@ -11507,3 +11507,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The file carries six E402 (module-level import after the from __future__ line and the bare string on line 2, which Python does not treat as a module docstring) and one F401 (numpy unused) before this cell touched it. The commit-gate ruff step blocks any commit of this file, so the signed change cannot land on box/laptop through the gate as written. Clearing the findings needs a code-token change, which the cell forbids, or a gate or lane decision by its owner (IRPT_BCKEND or the commit-gate owner), not by this worker."
 }
 ```
+
+## NFRA_CTLPLN-W118-S2 -- the amended CT-ak-4 order (ast-identical, comment-only) is on box/laptop at 9b2702a5a5 and is not in this worktree branch, so the proof checker grades the instance against the pre-amendment order
+
+```json
+{
+  "id": "NFRA_CTLPLN-W118-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~118",
+  "surfaced_at": "2026-10-15T17:36:04Z",
+  "one_line": "proof-of-spec-check.py on the committed proof instance of CT-ak-4 returns INVALID (rc=1): invocation-alignment[CTak4-AC2] names --ast-identical, but the order file in this worktree (cut at 4d79c7c58c) still records --docstring-only; the amendment that changes it is commit 9b2702a5a5 on box/laptop, which this branch does not contain.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <instance> CTak4-AC1,CTak4-AC2,CTak4-AC3 run 2026-10-15T17:3xZ on worktree HEAD 7b95bf924a: 'VIOLATION: invocation-alignment[CTak4-AC2]: the RECORDED invocation is NOT the criterion's invocation'; 'INVALID (rc=1)'",
+      "grep -c 'ast-identical' on the worktree copy of NFRA_CTLPLN.TO-CT-ak-4.signed-change-commit-and-positive-read-test.md = 0; grep -c 'docstring-only' = 3",
+      "git merge-base --is-ancestor 9b2702a5a5 HEAD -> not an ancestor; git branch --contains 9b2702a5a5 -> box/laptop only; commit 9b2702a5a5 amend(NFRA_CTLPLN round 21, 2.0.0_SA_COO~C): TO-CT-ak-4 signed change becomes comment-only (noqa) and CTak4-AC2 becomes --ast-identical",
+      "--governing-order bound to a read copy of 9b2702a5a5 (.scratch) -> 'VIOLATION: governing-binding: the order being flipped ... but the instance's decomp_ref.to_ref names org/missions/...' (the binding requires the in-tree path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-4 RULING (issuer, after W118-S1): the proof instance's CTak4-AC2 row takes the new invocation and expect ast_identical=True; validate with proof-of-spec-check on the committed state.",
+  "world_is": "The ruled text exists only on box/laptop at 9b2702a5a5. The worker branch was cut earlier, so the checker, which resolves the governing order from the instance's decomp_ref.to_ref inside the worktree, reads the pre-amendment order. The worker may not merge, rebase, or edit the order file (outside <paths>), so the committed instance cannot validate on this branch until the amendment is on the worker's branch or the branch is re-cut. The instance records the ruled invocation; its validation is INVALID here."
+}
+```
