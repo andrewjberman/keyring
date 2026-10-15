@@ -17694,3 +17694,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Measured, not ruled. Per-ticker positions are not summed here, and the grain of unrealized is still unmeasured (contract decision 8)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W104-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~104",
+  "surfaced_at": "2026-10-15T19:27:39Z",
+  "one_line": "The task order names the proof instance NFRA_OPLGTW.TO-OG-cl-2.client_bd49f.proof_of_spec.json, but the to-pipeline gate resolves an instance by the deliverables/*/<full-stem>.proof_of_spec.json convention, where the stem is the task-order filename (client-bd49f, with a hyphen). The complete flip was refused until the instance carried that name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ .tools/to-pipeline-gate.py: the instance resolves from a <proof_of_spec> block or from the deliverables/*/<full-stem>.proof_of_spec.json pattern",
+      "safe-commit output of the flip attempt (.scratch/commit2.log in the worktree): to-pipeline-gate REFUSED, 'flips to complete ... NO proof-of-spec instance was found beside it'",
+      "The task order section 5 names W/NFRA_OPLGTW.TO-OG-cl-2.client_bd49f.proof_of_spec.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Task order section 5: write the proof instance at W/NFRA_OPLGTW.TO-OG-cl-2.client_bd49f.proof_of_spec.json.",
+  "world_is": "The gate's instance convention is the task-order filename stem. The instance is written under that stem, with the bytes that validated (proof-of-spec-check rc=0).",
+  "notes": "Measured, not ruled. The issuer may align the order's section 5 name with the gate convention on the next cut."
+}
+```
