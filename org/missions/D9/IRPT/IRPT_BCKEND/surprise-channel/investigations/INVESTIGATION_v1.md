@@ -38587,6 +38587,67 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-D2-W423-S1",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~423",
+    "surfaced_at": "2026-10-15T14:54:02Z",
+    "one_line": "The order fixes the record counter functions_invoked at 0, but the READ-ONLY run calls the producer's read path (_frame_for, _split_ratios_for_day, identifier, PartitionCache.get); the counter is recorded 0 with its write-surface meaning stated in the notes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Face: the record carries the six counters functions_invoked, sign_ins_made, aws_writes_made, rows_written, figures_written and vendor_requests_sent, all 0, for a run that reads and writes nothing.",
+    "world_is": "The run made 94 _frame_for calls (47 split days, two arms) on one shared cache and invoked no write-surface function: emit_day, stream_to_parquet, put_object and land were never called. The order does not say whether functions_invoked counts read-path calls; on that reading it would be non-zero.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~423/ib218_2_split_delta.py run of 47 days, two arms: 94 _frame_for calls, cache 286 hit(s) and 184 miss(es) (scratchpad run log)",
+        "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py@28fa4f96cf958253b0f448e553101b2a964b91fa: emit_day is the module's only writer (put_object and stream_to_parquet); the harness does not call it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-D2-W423-S2",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~423",
+    "surfaced_at": "2026-10-15T14:54:02Z",
+    "one_line": "The CTO ruling's 920 account-days changed on 2026-04-21 does not reproduce: the producer's own two-arm run changes 985 account-days against 985 that hold a split security at t-1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~P2",
+    "spec_asserts": "Ruling @9913bf3ed4 and the TO face: 2026-04-21 carries 920 account-days affected by the 49 Financial split adjustment, to be printed beside this run's count.",
+    "world_is": "This run's per_day entry for 2026-04-21 reads account_days_changed 985 and account_days_holding_a_split_security 985 (3 securities adjusted, 2 ratio-absent). The READ IB-pr-572 also counted 985 accounts on that day. Neither read reproduces 920, and the record does not carry the basis of the 920.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~423/IB218-2_split_delta.json per_day entry for 2026-04-21 (counts only)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~415/IB211-1_split_adjust_read.json statement: 985 distinct accounts on 2026-04-21, the ruling states 920, not reproduced"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-D2-W423-S3",
+    "project": "IRPT_BCKEND",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~423",
+    "surfaced_at": "2026-10-15T14:54:02Z",
+    "one_line": "Over the 47 split days, 1,293 account-days hold a t-1 position on a split security but only 1,291 change under the adjustment; the READ's 1,291 matches the changed count, not the holding count.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "READ IB211-1 delta_projection 49financial 1291 is the count of distinct (account, day) pairs that held a split security at t-1 on the 47 split days.",
+    "world_is": "The producer's own run counts 1293 account-days with a t-1 row on a split security (identifier chain) and 1291 changed between the arms. The per-day guard (changed not above holding) holds on all 47 days. The two holding account-days that do not change, on 2026-05-08 and 2026-07-02, are not read further.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~423/IB218-2_split_delta.json totals and per_day (counts only)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~415/IB211-1_split_adjust_read.json delta_projection.49financial = 1291"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
