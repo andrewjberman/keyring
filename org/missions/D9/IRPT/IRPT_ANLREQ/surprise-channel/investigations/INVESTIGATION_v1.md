@@ -18534,3 +18534,55 @@
   "notes": "The junction is removed by rmdir, which never recurses into its target. A crashed run would leave a link in .scratch; mutant_check.py removes a leftover link before it builds a new copy."
 }
 ```
+
+## IRPT_ANLREQ-D2-S123 -- disposition of IRPT_ANLREQ-D2-W181-S1: the merged files read clean for account-id-shaped strings
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S123",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T18:26:12Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client-account gate could not run on this box, so the issuer read the merged files for account-id-shaped strings: none present. The gate stays unmeasured; the box's hashed list is not this order's to place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W181-S1 (ARMED, client account-id check absent on this box): the merged files hold no account-id-shaped string, read by the issuer at dc80bdd32c.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Regex (?<![0-9.])[0-9]{6,}(?![0-9]) over the adapter and its test file at dc80bdd32c: no match except the millisecond constants 86400000 and 3600000 (a day and an hour in ms), no account id, name or firm label",
+      "price_adapter_bbg.py (124 lines) and tests/test_price_adapter_bbg.py (164 lines)"
+    ]
+  },
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned against the hashed list; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "The files are price-adapter code and tests over invented symbols, dates and numbers; the issuer's read is not the gate's check and does not claim it. The same instrument gap is already on the record as W143-S2 and W52-S25."
+}
+```
+
+## IRPT_ANLREQ-D2-S124 -- disposition of IRPT_ANLREQ-D2-W184-S1: the merged files read clean for account-id-shaped strings
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S124",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-15T18:26:12Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client-account gate could not run on this box, so the issuer read the merged files for account-id-shaped strings: none present. The gate stays unmeasured; the box's hashed list is not this order's to place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W184-S1 (ARMED, client account-id check absent on this box): the merged files hold no account-id-shaped string, read by the issuer at 3cb1344c88.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Regex (?<![0-9.])[0-9]{6,}(?![0-9]) over the adapter and its test file at 3cb1344c88: no match except the millisecond constants 86400000 and 3600000 (a day and an hour in ms), no account id, name or firm label",
+      "price_adapter_ycharts.py (105 lines) and tests/test_price_adapter_ycharts.py (115 lines)"
+    ]
+  },
+  "spec_asserts": "client-data-check.py header (CTO_RULING_CLIENT_ACCOUNT_DATA_IN_REPO_CONTAINMENT_20261009 item 6): a commit is scanned against the hashed list; an absent list is a loud WARN, and absent is not empty.",
+  "world_is": "The files are price-adapter code and tests over invented symbols, dates and numbers; the issuer's read is not the gate's check and does not claim it. The same instrument gap is already on the record as W143-S2 and W52-S25."
+}
+```
