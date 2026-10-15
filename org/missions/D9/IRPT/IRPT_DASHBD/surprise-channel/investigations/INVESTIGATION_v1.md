@@ -16486,3 +16486,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the issuer and the drain owner: the grant's infra/aws paths are not materialised in this worktree, so DB-b-247 cannot be executed here as written. The worker did not widen the sparse scope or re-check-out the tree (the order forbids rebuilding the tree to make an order executable). Order stays pending; no proof instance written; no status flip. Counts and words only; no client figure is quoted."
 }
 ```
+
+## IRPT_DASHBD-D2-W201-S2 -- resolves IRPT_DASHBD-D2-W201-S1: the worktree's sparse checkout is disabled by the issuer's ruling, and infra/aws is on disk
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W201-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~201",
+  "surfaced_at": "2026-10-15T09:49:10Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W201-S1: the issuer ruled the sparse checkout was a provisioning error and ran git sparse-checkout disable in the worktree; infra/aws and the four grant paths are now on disk, so TO-DB-b-247 proceeds as written",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W201-S1 (BLOCKING) recorded that TO-DB-b-247's four infra/aws grant paths were absent from the worktree C:/dev/wk-irpt-dashbd-201 because it was a sparse checkout, and that the order stops on that premise.",
+  "world_is": "The issuer (2.0.0_SA_COO~D2) ruled the sparse checkout a provisioning error (the worktree provisioner defaults to sparse and the paths were not added) and disabled it in the worktree. The worker re-measured: git config core.sparseCheckout reports false, git sparse-checkout list reports the worktree is not sparse, infra/aws is on disk, handler.py, iam.tf and locals.tf are present, and the tests directory is present. The new test file is not yet written, as the order intends. The order proceeds as written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer ruling relayed to worker 0.9.0_WK_IRPT_DASHBD~201 by the coordinator on surprise row IRPT_DASHBD-D2-W201-S1: git sparse-checkout disable run in C:/dev/wk-irpt-dashbd-201 (ruling text quoted in the worker's own session, not in the repo)",
+      "git config core.sparseCheckout in C:/dev/wk-irpt-dashbd-201 (re-measured 2026-10-15T09:48:12Z): false; git sparse-checkout list: not sparse",
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf and infra/aws/lambda/investor-reporting/reporting-gold/handler.py present on disk in C:/dev/wk-irpt-dashbd-201 at HEAD 67c4202df1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolution note for IRPT_DASHBD-D2-W201-S1, which is left as written (append only). The fact the surprise row recorded is now false in the worktree; the worker executes DB-b-247 as written. Counts and words only; no client figure is quoted."
+}
+```
