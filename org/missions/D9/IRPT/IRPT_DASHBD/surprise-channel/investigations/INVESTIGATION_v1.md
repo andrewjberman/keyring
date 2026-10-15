@@ -16136,3 +16136,32 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Blocks the apply's landing of the stage, not this cell's build; nothing is deployed. The write-prefix gap (the filled prefix is not in WriteTheFiveGoldPrefixesOnly) is a fact in RD_HOP1_STAGE_FACTS_R120.json, not a row."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W410-S3 -- DBC123-1-AC1 FAILS on its existing-entries arm: the merge that carries the entry also carries another seat's irpt-export-render change
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W410-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~410",
+  "surfaced_at": "2026-10-15T08:36:05Z",
+  "spec_asserts": "TO-DB-c-17 DBC123-1-AC1: the source map equals its base in every existing entry and gains exactly the one new function entry. The checker's base (amendment 28ffee4982) is the first parent of the commit that added the entry.",
+  "world_is": "The entry was added by eda88f89c7 (merge box/dell2 into wk-IRPT_DASHBD-409, committed with --no-verify). Relative to eda88f89c7^1, that commit adds only irpt-cot-account-dim-lambda and changes irpt-export-render (its files list), a change that came in on the box/dell2 side and is not in this order. The checker therefore reports 'an existing function entry changed' and DBC123-1-AC1 FAIL (rc=1), while the entry itself carries the 15 files, 14 staged rows and the corrected tf values. Checker and TO are not edited here (the checker is outside this grant).",
+  "one_line": "DBC123-1-AC1 FAILS on its existing-entries arm because the merge that carries the entry also carries another seat's irpt-export-render change",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -1 -S'\"irpt-cot-account-dim-lambda\"' -- infra/aws/lambda/ci/lambda-source-map.json -> eda88f89c7 (merge box/dell2 into wk-IRPT_DASHBD-409)",
+      "python comparison at HEAD 1f506b057d against eda88f89c7^1: added=['irpt-cot-account-dim-lambda'], removed=[], changed=['irpt-export-render'] (files list)",
+      "python -I .../checks/r123/p123_bcw.py . DBC123-1-AC1 -> 'an existing function entry changed' / DBC123-1-AC1 FAIL (rc 1), at HEAD 1f506b057d",
+      "checks/r123/p123_bcw.py ac_1_1 base selection (amendment 28ffee4982): git log -1 -S of the key, then its parent"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer decision needed: either the arm compares against a base the merge does not perturb (for example the issuance commit with the other seats' entries excluded by key), or the merge is accepted as the entry's introducing commit and the arm is re-based. The worker did not rewrite history or edit the checker. AC2 PASS and the source-map values are unaffected."
+}
+```
