@@ -1617,3 +1617,28 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Recorded so the 562 figure is not read as covering the plain-script files. The order's pytest figure is reported as measured."
 }
 ```
+
+```json
+{
+  "id": "COMM_ASSIST-W27-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~27",
+  "surfaced_at": "2026-10-14T23:08:34Z",
+  "one_line": "test_inbound_mail_draft.py already fails its client_no_request arm at the base (11/12) before any CA-k-1 edit: the arm asserts a footer text that mail_requests.py no longer writes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/transcripts/scripts/tests/test_inbound_mail_draft.py at ad67a9b9a4 (parent of the CA-k-1 commit 41cd03765f): MAIL-DRAFT ok=False arms=11/12 base_texts_client_no_request=-1",
+      "traceback of client_no_request at ad67a9b9a4: data/transcripts/scripts/tests/test_inbound_mail_draft.py line 127 assert body.rstrip().endswith('Reply #dev [notes] to open a job / 0 drop') raises AssertionError",
+      "data/transcripts/scripts/teams_chat/mail_requests.py at ad67a9b9a4 line 235 writes the footer 'Reply 1 to approve ... / notes to redraft / 0 drop / #dev [notes] to open a job'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CA-k-1 says test_inbound_mail_draft.py must be kept passing, and that only test_inbound_mail.py fails at the base (4 of its 15 cases).",
+  "world_is": "test_inbound_mail_draft.py already fails one arm at the base: client_no_request asserts a footer text that mail_requests.py no longer writes. The file reads 11/12 before any CA-k-1 edit.",
+  "notes": "Not repaired here: the arm sits outside the CA-k-1 cell and the order forbids widening the edit. After commit 41cd03765f the file reads 16/17, the new CA-k-1 arms pass and client_no_request is the only failure. Measured, not judged."
+}
+```
