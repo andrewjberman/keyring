@@ -10424,3 +10424,78 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "safe-commit.sh's author-seat check appends to a tracked audit log on each commit by a serial the roster does not know. In a sparse worktree that file is a tracked change the worker cannot commit under its lane, so it stays dirt until the worktree is removed."
 }
 ```
+
+## NFRA_CTLPLN-W108-S1 -- the cell's fixture path data/fixture/scripts/ is not a deploy-scope path, so the hold is never written
+
+```json
+{
+  "id": "NFRA_CTLPLN-W108-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~108",
+  "surfaced_at": "2026-10-15T12:52:31Z",
+  "one_line": "The fixture path named by the cell, data/fixture/scripts/fixture_unsigned.py, is not deploy-scope: the real hook printed 'no deploy-scope file in this box's diff against origin/CLOUD; nothing to deploy' and wrote no HELD-DEPLOY row. The test therefore uses data/inf/scripts/gold/fixture_unsigned.py, the nearest declared deploy-gated home, inside a temporary repository only.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "literal-path run in a temporary repository, box/laptop pushed with AGENTBUS_DEVICE=laptop: push rc=0; stderr 'deploy gate: refs/heads/box/laptop -- no deploy-scope file in this box's diff against origin/CLOUD; nothing to deploy'; no org/safe-deploy-bypass-audit.log HELD-DEPLOY row; STUB-LOG lines=0",
+      ".tools/safe_deploy_core.py@afebfdc81a lines 666-706 (file_to_s3_target resolves only deploy_gated CODE_TREES homes) and 804-814 (detect_script_files filters on it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-3 BUILD 1: commit data/fixture/scripts/fixture_unsigned.py that no open change names, push box/laptop, require a HELD-DEPLOY record that names the script.",
+  "world_is": "data/fixture/ is not a declared deploy_gated code tree, so the literal fixture is outside the deploy scope and the hold cannot be exercised by that path. The hold is exercised by data/inf/scripts/gold/fixture_unsigned.py (run: push rc=0, deployed=0, held=1, reason=no-open-ledger-names-it)."
+}
+```
+
+## NFRA_CTLPLN-W108-S2 -- test_named_commit_deploy.py stops at case 8 with ModuleNotFoundError git_bash_resolver, not after case 7
+
+```json
+{
+  "id": "NFRA_CTLPLN-W108-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~108",
+  "surfaced_at": "2026-10-15T12:52:31Z",
+  "one_line": "python .tools/tests/test_named_commit_deploy.py prints PASS for cases 1 to 7, then raises ModuleNotFoundError: No module named 'git_bash_resolver' in case 8's open_ledger() helper. The helper runs deploy_ledger.py from a temporary ledger root that holds only that one file. The run exits 1 with no NAMED-COMMIT-TEST line. It is not a control for CT-ai-3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run on the worker worktree at HEAD 641adaa19a: PASS case 1 through PASS case 7, then Traceback ... ModuleNotFoundError: No module named 'git_bash_resolver'; rc=1; no NAMED-COMMIT-TEST line",
+      ".tools/tests/test_named_commit_deploy.py@afebfdc81a lines 83-92 (open_ledger copies only deploy_ledger.py into the temporary root)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The test's header: cases 1 to 7 call the check directly, case 8 runs the real wrappers as far as the check; the last line prints NAMED-COMMIT-TEST cases=k/8.",
+  "world_is": "The failure is in case 8's fixture setup, one step before the wrappers are exercised, so the case-8 control never runs on this box."
+}
+```
+
+## NFRA_CTLPLN-W108-S3 -- the real pre-push hook refuses a worker serial unless a tracked task order at HEAD names it; the test adds one fixture order
+
+```json
+{
+  "id": "NFRA_CTLPLN-W108-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~108",
+  "surfaced_at": "2026-10-15T12:52:31Z",
+  "one_line": "The real hook runs halt-gate-check.sh, which admits a worker serial 0.9.0_WK_<CODE>~<n> only while a tracked, non-terminal task order under <CODE> at HEAD of the pushing repository names it. In a temporary repository with no such order the push was refused (push rc=1: HALT-GATE check worker-no-order). The test commits one fixture order file that names the serial; the serial and the inbox are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run of the test, literal fixture and no order file: push rc=1, stderr 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', 'Check that failed: worker-no-order'; after the order file: push rc=0 and 'worker ... has no inbox; scanning its issuer'",
+      ".tools/halt-gate-check.sh@afebfdc81a lines 196-252 (halt_gate_worker_issuer reads git ls-files and git show HEAD:<path> under org/missions/D*/*/<CODE>/task-orders/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-3 BUILD 1: the real hook lets the push through; the cell names no worker-admission fixture for the temporary repository.",
+  "world_is": "A worker push from a repository without a tracked order is refused fail-closed by the real gate. The test's admission is a fixture order inside the temporary repository, not a change to the serial or to the gate."
+}
+```
