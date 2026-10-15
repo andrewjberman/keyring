@@ -11481,3 +11481,419 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The literal is a retired-phrase probe that decides no box value, so it is not a box list in the FWD-2 sense as this worker reads it. A reviewer who reads 'laptop|sitez' as a box-list literal should overrule the FIXTURE entry; the census would then need a different reason, not a removal of the probe."
 }
 ```
+
+## NFRA_CTLPLN-W118-S1 -- the commit gate refuses the one-line signed change to diag_sleeve_fix.py on seven ruff findings that the unmodified file already carries, so CT-ak-4 cannot commit the signed change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W118-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~118",
+  "surfaced_at": "2026-10-15T17:12:00Z",
+  "one_line": "safe-commit.sh refused the signed change (docstring line 2 of data/black_diamond/scripts/gold/diag_sleeve_fix.py) with commit-gate BLOCKED: ruff check failed (Found 7 errors: E402 x6 at lines 3,4,7,8,9,10 and F401 numpy at line 8); the same gate on the unmodified HEAD copy (blob 0e4aec8d80) also returns rc=1 with Found 7 errors, so the refusal is not caused by the one-line edit, and the file cannot be committed without a code-token change or an override.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh --author '0.9.0_WK_NFRA_CTLPLN~118 <...>' -F .scratch/msg_signed_change.txt -- data/black_diamond/scripts/gold/diag_sleeve_fix.py run 2026-10-15T17:0xZ in worktree ctlpln-118: 'ERROR: BLOCKED -- commit-gate failed (py_compile / ruff / lint). Commit aborted; files unstaged.' rc=1; HEAD stays 4d79c7c58c",
+      "control: bash .tools/commit-gate.sh .scratch/base_diag.py (git show HEAD:data/black_diamond/scripts/gold/diag_sleeve_fix.py, md5 56cb170f95c0b112a36a0ee3973d5473) run 2026-10-15T17:1xZ: 'Found 7 errors.' 'BLOCKED: ruff check failed on .scratch/base_diag.py' rc=1",
+      "python -m ruff check data/black_diamond/scripts/gold/diag_sleeve_fix.py (default config, edited file): Found 7 errors, same count as the base copy; the edited line is 76 characters and is not among the findings"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-4 BUILD step 1: commit the one-line signed change ALONE with .tools/safe-commit.sh (explicit path), py_compile and ruff stay clean; RULES: if a gate REFUSES, STOP and file a BLOCKING row; no override.",
+  "world_is": "The file carries six E402 (module-level import after the from __future__ line and the bare string on line 2, which Python does not treat as a module docstring) and one F401 (numpy unused) before this cell touched it. The commit-gate ruff step blocks any commit of this file, so the signed change cannot land on box/laptop through the gate as written. Clearing the findings needs a code-token change, which the cell forbids, or a gate or lane decision by its owner (IRPT_BCKEND or the commit-gate owner), not by this worker."
+}
+```
+
+## NFRA_CTLPLN-W118-S2 -- the amended CT-ak-4 order (ast-identical, comment-only) is on box/laptop at 9b2702a5a5 and is not in this worktree branch, so the proof checker grades the instance against the pre-amendment order
+
+```json
+{
+  "id": "NFRA_CTLPLN-W118-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~118",
+  "surfaced_at": "2026-10-15T17:36:04Z",
+  "one_line": "proof-of-spec-check.py on the committed proof instance of CT-ak-4 returns INVALID (rc=1): invocation-alignment[CTak4-AC2] names --ast-identical, but the order file in this worktree (cut at 4d79c7c58c) still records --docstring-only; the amendment that changes it is commit 9b2702a5a5 on box/laptop, which this branch does not contain.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <instance> CTak4-AC1,CTak4-AC2,CTak4-AC3 run 2026-10-15T17:3xZ on worktree HEAD 7b95bf924a: 'VIOLATION: invocation-alignment[CTak4-AC2]: the RECORDED invocation is NOT the criterion's invocation'; 'INVALID (rc=1)'",
+      "grep -c 'ast-identical' on the worktree copy of NFRA_CTLPLN.TO-CT-ak-4.signed-change-commit-and-positive-read-test.md = 0; grep -c 'docstring-only' = 3",
+      "git merge-base --is-ancestor 9b2702a5a5 HEAD -> not an ancestor; git branch --contains 9b2702a5a5 -> box/laptop only; commit 9b2702a5a5 amend(NFRA_CTLPLN round 21, 2.0.0_SA_COO~C): TO-CT-ak-4 signed change becomes comment-only (noqa) and CTak4-AC2 becomes --ast-identical",
+      "--governing-order bound to a read copy of 9b2702a5a5 (.scratch) -> 'VIOLATION: governing-binding: the order being flipped ... but the instance's decomp_ref.to_ref names org/missions/...' (the binding requires the in-tree path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-4 RULING (issuer, after W118-S1): the proof instance's CTak4-AC2 row takes the new invocation and expect ast_identical=True; validate with proof-of-spec-check on the committed state.",
+  "world_is": "The ruled text exists only on box/laptop at 9b2702a5a5. The worker branch was cut earlier, so the checker, which resolves the governing order from the instance's decomp_ref.to_ref inside the worktree, reads the pre-amendment order. The worker may not merge, rebase, or edit the order file (outside <paths>), so the committed instance cannot validate on this branch until the amendment is on the worker's branch or the branch is re-cut. The instance records the ruled invocation; its validation is INVALID here."
+}
+```
+
+## NFRA_CTLPLN-S9132 -- the shared-branch push gate refuses the CloudOps seat's push of box/laptop, which CT-ak-3 step 5 names as the act under test
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9132",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT2",
+  "surfaced_at": "2026-10-15T17:58:25Z",
+  "one_line": "CT-ak-3 step 5 cannot be done as written: the shared-branch push gate (LD-0367/0368, never-rules-gate.sh PreToolUse) REFUSES a git push of box/laptop by any serial except 0.0.0_AB_MSTR, so the CloudOps seat cannot make the push that the order names as the act under test.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git push origin box/laptop by 0.7.0_AE_CloudOps~CT2 at 2026-10-15T17:56Z and 17:57Z: 'BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch box/laptop): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z may push or pull the shared branch'; the audited override '# never-override: <reason>' is for an Andrew-directed push or a rare case coordinated with the integrator first; neither holds here, so it was NOT used",
+      "the entry ctlpln-r21-fwd5-one-script-20261015 is OPEN and committed (deploy_ledger.py open committed it itself, 2026-10-15T17:55Z); pre-state: S3 key 1 version VersionId 3.yZFEuxxfxUOEMd.NRY7bZucaDccGX. ETag 56cb170f95c0b112a36a0ee3973d5473; 357 top-level deploy-scope scripts, 0 LEDGERED before the open; test --pre ok=True others_differ=0",
+      "CLAUDE.md Agent Autonomy ('agents push at will' box/*) and the LD-0367 gate disagree; the gate is mechanical and wins at the call"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-3 step 5: the CloudOps seat pushes box/laptop with AGENTBUS_DEVICE=laptop and OPAL_AGENT_SERIAL set so the audit row names it; RULES: if a gate REFUSES, STOP and file a BLOCKING row.",
+  "world_is": "Nothing was written to S3 by this seat. The OPEN entry pins the build, so the next scheduled Opal box-sync push of box/laptop (serial 0.0.0_AB_MSTR, every 10 minutes) will run the hook and deploy the one ledgered script; the deploy will then be MSTR's act, not the CloudOps seat's. The positive arm's outcome (one script deployed, nothing else) can still be read; the order's actor claim (CloudOps seat) cannot be met without an Andrew word or an integrator-coordinated override."
+}
+```
+
+## NFRA_CTLPLN-W119-S1 -- intake_check.py records check 8 as verdict "failed" (reason "the signature file does not exist"), not as an awaiting state; the wheel is held and unreleased, the test maps it to AWAITING
+
+```json
+{
+  "id": "NFRA_CTLPLN-W119-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~119",
+  "surfaced_at": "2026-10-15T19:35:55Z",
+  "one_line": "intake_check.py check on duckdb-1.5.0-cp314-cp314-win_amd64.whl ran checks 1-7 (all passed) and recorded check 8 as verdict failed with reason 'the signature file does not exist'; the record verdict is not_checked and the wheel is not released. The order says check 8 must await; the tool has no awaiting state. The journey test reads 'failed' plus an absent signature file as AWAITING.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cd <worktree ctlpln-119> && python org/devices/intake/intake_check.py check --batch intake-20261015-duckdb --file duckdb-1.5.0-cp314-cp314-win_amd64.whl --approved-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md --signed-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md printed 'c8 failed the signature file does not exist' and 'INTAKE-CHECK batch=intake-20261015-duckdb file=duckdb-1.5.0-cp314-cp314-win_amd64.whl c1=passed c2=passed c3=passed c4=passed c5=passed c6=passed c7=passed c8=failed verdict=not_checked' rc=0 (run 2026-10-15T19:28Z)",
+      "record org/devices/intake/records/intake-20261015-duckdb/duckdb-1.5.0-cp314-cp314-win_amd64.whl.check.json at commit 972d15271d: checks[7] verdict failed, evidence.summary 'the signature file does not exist'; record verdict not_checked",
+      "org/devices/intake/intake_check.py check_8() (line 788, at commit 972d15271d) returns rec('failed', 'the signature file does not exist'); a case-insensitive grep for 'awaiting' and 'AWAIT' in intake_check.py returns no verdict string",
+      "ls /c/opal-intake/release/ lists only intake-20261008-a; /c/opal-intake/holding/intake-20261015-duckdb/ holds the one wheel (13575130 bytes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-al-1 BUILD step 3: pass --signed-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md (not yet written); the tool must then leave the wheel UNRELEASED with check 8 AWAITING. CTLPLN-AC2 expects check8=AWAITING.",
+  "world_is": "The wheel is unreleased (record verdict not_checked; no release folder for the batch) and checks 1-7 passed with 0 failed. Check 8 is the tool's 'failed' verdict with reason 'the signature file does not exist', not a separate awaiting state. This seat did not write the check-8 file, did not run release or pack. The test .tools/tests/test_round22_journey_record.py prints check8=AWAITING only when check 8 is not passed AND the signature file is absent on disk; a signed file would print SIGNED only when check 8 also passes. The CTO's check-8 reading is unaffected: no signature file exists to be read."
+}
+```
+
+## NFRA_CTLPLN-S9133 -- disposition of worker ~120's findings: moot, the manager-only ruling was withdrawn
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9133",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-15T20:25:45Z",
+  "one_line": "Disposition of worker ~120's findings (its rows W120-S1 and W120-S2 on the unmerged branch wk-NFRA_CTLPLN-120): moot. The CTO withdrew round-21 ruling 2 (managers acknowledge) in ROUND_ANALYSIS.round21.md ADDENDUM 1 @d9c20f887e: the managers carry a call and the named seat reads and acknowledges it, which crossbox-call.py already enforces. TO-CT-al-2 is withdrawn.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 109495 and ROUND_ANALYSIS.round21.md ADDENDUM 1 @d9c20f887e",
+      "issuer read of org/devices/crossbox/ at ~20:3xZ: the newest file of each of the 12 directed pairs is ACKED, carried (sent.bus_message_id present) and acknowledged by the very serial its to_serial names, 12 of 12"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The ruling the withdrawn order served (manager-only acknowledgement) was withdrawn by the CTO, so the two findings it produced have no live consequence. The findings are kept here in words: (1) the manager-only rule turned six cases red in .tools/tests/test_crossbox_call.py (64 of 65 to 65 of 69) and .tools/tests/test_round13_batch.py (10 of 15 to 7 of 15), outside the order's paths; (2) with the named-seat rule kept beside the manager-only rule, a call addressed to a seat could not be acknowledged by any admitted serial. Worker ~120 filed them as W120-S1 and W120-S2 on its unmerged branch wk-NFRA_CTLPLN-120 (commit 237684af81); a seat may not carry a worker coordinate on the main index, so they are restated here.",
+  "spec_asserts": "CTO round-21 ruling 2 (now withdrawn): crossbox-call.py ack refuses any serial that is not the receiving box's MSTR lane.",
+  "world_is": "The tool is unchanged. FWD-3's cell for round 22 is a read of each pair's manager path and its named-seat acknowledgement, and it reads 12 of 12."
+}
+```
+
+## NFRA_CTLPLN-W121-S1 -- a sparse worktree reads its OWN fresh danger map before the main tree's map; the order says main's map or BLIND
+
+```json
+{
+  "id": "NFRA_CTLPLN-W121-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~121",
+  "surfaced_at": "2026-10-15T20:08:14Z",
+  "one_line": "resolve_risk_map in org/modules/graph/comp_pulse.py returns the worktree's own tracked danger map when it carries a fresh built_utc, before the sparse-tree branch. The cell said a sparse worktree reads the MAIN tree's map or prints BLIND: sparse worktree, no map. Without this branch the round-20 --map arm, which runs the reflex in this sparse worktree, reads the main checkout's map (no built_utc) and cannot pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/modules/graph/comp_pulse.py resolve_risk_map at 263a061cac: the own-fresh return precedes the is_sparse_tree branch; at 60de573afc and later the own map is fresh",
+      "python .tools/tests/test_round22_hygiene.py --sparse arm (4): own fresh map read=True builds=0 (test at f279d5883a)",
+      "python .tools/tests/test_round20_hygiene.py --map at 309c8f6f2e: HYGIENE-MAP tsx_classed=1 py_classed=1 ok=True, while the main checkout map carries no built_utc (pre-commit reflex at 263a061cac printed UNKNOWN-VINTAGE from the main map)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-al-3 item 3 (worker face): a sparse worktree never builds; the reflex there reads the main tree's map (git rev-parse --git-common-dir) or prints BLIND: sparse worktree, no map and exits NOT-DECIDABLE. The reflex does not read the sparse tree's own copy.",
+  "world_is": "The reflex reads the sparse tree's own map first when that map has a fresh built_utc, reads the main tree's map only when the own map is absent or STALE, and never builds in either case. The literal branch would leave the round-20 --map arm failing in every sparse worktree until the main checkout is rebuilt. CTO to rule whether the own-fresh read stands."
+}
+```
+
+## NFRA_CTLPLN-W121-S2 -- the main checkout's danger map carries no built_utc, so a sparse worktree without its own fresh map reads it as STALE
+
+```json
+{
+  "id": "NFRA_CTLPLN-W121-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~121",
+  "surfaced_at": "2026-10-15T20:08:14Z",
+  "one_line": "The main checkout's org/modules/graph/nerves-risk-edges.json predates the embedded built_utc. Under the new reflex it reads UNKNOWN-VINTAGE and STALE, so a sparse worktree with no map of its own answers NOT-DECIDABLE until someone rebuilds the main checkout. The main checkout is outside this order's write surface and was not touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pre-commit reflex in ctlpln-121 at 263a061cac (before the map rebuild): 'REBUILD: sparse worktree: read the MAIN tree's map (C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\modules\\graph\\nerves-risk-edges.json)' then 'danger map: UNKNOWN-VINTAGE (no built_utc in the map: age unknown, treated as STALE)  !! STALE'",
+      "ajb_workspace is box/laptop at 49bcd31b80; its map is the tracked file before this order's commits 60de573afc and 309c8f6f2e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-al-3 item 1 (worker face): a map without the embedded time reads as unknown age and is treated as stale; a rebuild is the cure, and a sparse worktree never builds.",
+  "world_is": "Until the main checkout is rebuilt by a full-tree build, every sparse worktree that lacks its own fresh map gets NOT-DECIDABLE for its diffs. No commit is refused by this; the reflex is WARN-only. Owner of the main-checkout rebuild not named in this order's files."
+}
+```
+
+## NFRA_CTLPLN-W121-S3 -- the danger-map node count depends on the tree that builds it: the same corpus builds to 2692, 2703 and 3491 edges
+
+```json
+{
+  "id": "NFRA_CTLPLN-W121-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~121",
+  "surfaced_at": "2026-10-15T20:08:14Z",
+  "one_line": "nerves_lexical build emits a different edge count for each tree it runs in: 3491 edges at 54e8947a06 (docs_scanned 2709), 2692 in a scratch clone without portal/ (docs_scanned 2719), 2703 in a scratch clone with portal/ copied in (docs_scanned 2719). The committed map therefore does not describe a single corpus; it describes the tree that built it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 54e8947a06:org/modules/graph/nerves-risk-edges.json: docs_scanned 2709, len(edges) 3491 (measured in ctlpln-121)",
+      "build in scratch clone r22_full2 without portal/: 'nerves-lexical: 2692 nodes carry claims', DENOMINATOR 2719 corpus docs scanned | 312 named nothing addressable (commit 60de573afc)",
+      "build in the same clone with portal/ copied read-only from ajb_workspace: 'nerves-lexical: 2703 nodes carry claims', DENOMINATOR 2719 corpus docs scanned | 265 named nothing addressable (commit 309c8f6f2e)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The danger map is a derived cache of the corpus (comp-pulse vintage discipline): the same corpus should give the same map.",
+  "world_is": "Node count moves with which files the build tree can address (git ls-files, portal/ presence, the trace-graph cache). The builder states docs_scanned but not the addressable-file population, so a map's size cannot be checked against its tree."
+}
+```
+
+## NFRA_CTLPLN-W121-S4 -- the build guard covers sparse trees and absent corpus folders but not the portal: a build without portal/ silently drops the portal .tsx danger nodes
+
+```json
+{
+  "id": "NFRA_CTLPLN-W121-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~121",
+  "surfaced_at": "2026-10-15T20:08:14Z",
+  "one_line": "build_refusal in org/modules/graph/nerves_lexical.py refuses a sparse tree and a missing corpus folder. It does not check portal/, whose files the resolver addresses by existence (rule 3 of the path resolver). A build without portal/ prints a normal success line and writes a map with no portal .tsx nodes; the round-20 --map arm then reads tsx_classed=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 60de573afc (map built without portal/): grep -c BenchmarkHeatmap = 0; 54e8947a06 map carries 'file:portal/src/components/BenchmarkHeatmap.tsx'",
+      "python .tools/tests/test_round20_hygiene.py --map at 60de573afc-era map: HYGIENE-MAP tsx_classed=0 py_classed=1 ok=False",
+      "org/modules/graph/nerves_resolve.py rule 3: os.path.exists(os.path.join(_WS, r)) makes a repo path a node"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "nerves_lexical build refuses where it would emit a degraded danger map (this order's S2 guard, extended to the corpus folders).",
+  "world_is": "The guard has no portal check, so a degraded map from a portal-less tree is still buildable and reads OK. Normal operation builds from a tree with portal/, so the hazard is not currently armed; the cure is a portal presence check in build_refusal."
+}
+```
+
+## NFRA_CTLPLN-W121-S5 -- the one rebuild the order asks for became two: the first map (60de573afc) lacked the portal nodes and is superseded by 309c8f6f2e
+
+```json
+{
+  "id": "NFRA_CTLPLN-W121-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~121",
+  "surfaced_at": "2026-10-15T20:08:14Z",
+  "one_line": "The worker face says rebuild the map ONCE at the end from a full tree. The first rebuild, from a scratch clone without portal/, committed 60de573afc and dropped the portal .tsx nodes (CTaj4-AC2 reads tsx_classed=0). A second rebuild with portal/ copied read-only committed 309c8f6f2e and supersedes it. Both commits are on wk-NFRA_CTLPLN-121; neither was rewritten.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log: 60de573afc data(...) danger map rebuilt ONCE; 309c8f6f2e data(...) danger map rebuilt again, now with the portal tree present (supersedes 60de573afc)",
+      "round-20 --map on 60de573afc-era map: HYGIENE-MAP tsx_classed=0 py_classed=1 ok=False; on 309c8f6f2e: HYGIENE-MAP tsx_classed=1 py_classed=1 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-al-3 item 5 (worker face): rebuild the map ONCE at the end, from a FULL tree, and commit that output as it came.",
+  "world_is": "The superseded map is in history only. The committed map at 309c8f6f2e is the output of one build from a tree that has portal/; it was copied byte for byte. The order's ONCE was not achievable from the scratch clone without the portal copy."
+}
+```
+
+## NFRA_CTLPLN-W121-S6 -- the FWD-5 read test reports audit_actor NONE-WRITTEN: the worktree's audit copy has no PINNED-DEPLOY row for the path, while the main checkout's audit file has it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W121-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~121",
+  "surfaced_at": "2026-10-15T20:08:14Z",
+  "one_line": "python .tools/tests/test_round21_fwd5_positive_read.py prints audit (worktree) 0 row(s) and audit_actor=NONE-WRITTEN. read_repo_file prefers the worktree copy of org/safe-deploy-bypass-audit.log, which in this worktree has no PINNED-DEPLOY row for the path. The closed completion record names 0.0.0_AB_MSTR and the main checkout's audit file holds the row at 2026-10-15T18:01:57Z. audit_actor is reported, not graded, so the criterion is unaffected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round21_fwd5_positive_read.py at 309c8f6f2e: 'audit (worktree): 0 row(s) name data/black_diamond/scripts/gold/diag_sleeve_fix.py' and 'FWD5-POSITIVE versions=2 etag_equals_repo_md5=True other_changed=0 audit_actor=NONE-WRITTEN ok=True'",
+      "git show 263a061cac:org/safe-deploy-bypass-audit.log | grep -c ctlpln-r21-fwd5 = 0",
+      "ajb_workspace/org/safe-deploy-bypass-audit.log: '2026-10-15T18:01:57Z PINNED-DEPLOY  0.0.0_AB_MSTR  ref=refs/heads/box/laptop  path=data/black_diamond/scripts/gold/diag_sleeve_fix.py  slug=ctlpln-r21-fwd5-one-script-20261015'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The FWD-5 read test reports the actor of the last PINNED-DEPLOY row for the path, read from the audit log.",
+  "world_is": "The reader sees only the worktree or HEAD copy of the audit log. In a worktree that lacks the latest audit rows the actor reads NONE-WRITTEN although the row exists in the main checkout. The reader cannot tell a missing row from an unsynced copy."
+}
+```
+
+## NFRA_CTLPLN-W122-S1 -- the release refused on the stored check record, which named no signature; the release went through only after the checks were re-run with the CTO's check-8 file
+
+```json
+{
+  "id": "NFRA_CTLPLN-W122-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "surfaced_at": "2026-10-15T20:31:22Z",
+  "one_line": "intake_check.py release refused duckdb-1.5.0-cp314-cp314-win_amd64.whl with 'the check record does not read checked', because the 19:28 check record predates the CTO's signature and names no signature file; release succeeded only after check was re-run with --signed-by and re-recorded all eight checks as checked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/intake/intake_check.py release --batch intake-20261015-duckdb --file duckdb-1.5.0-cp314-cp314-win_amd64.whl at worktree ctlpln-122 (HEAD bbcec1c613), before any re-run: 'INTAKE-RELEASE REFUSED ... reason=the check record does not read checked' rc=1; holding folder still held the 13575130-byte wheel",
+      "the 19:28 record (commit 972d15271d, as cited in NFRA_CTLPLN-W119-S1): check 8 verdict failed, 'the signature file does not exist'; record verdict not_checked",
+      "python org/devices/intake/intake_check.py check --batch intake-20261015-duckdb --file duckdb-1.5.0-cp314-cp314-win_amd64.whl --approved-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md --signed-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md: c1-c8 all passed, verdict=checked, rc=0; the tool rewrote the record; committed at 6dfadc6c66",
+      "then release printed 'INTAKE-RELEASE ... released sha256=11ae50aaeda2145b50294ee0247e4f11fb9448b3cc3d2aea1cfc456637dfb977' rc=0 (commit 6dfadc6c66 carries the record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-al-4 BUILD step 1: release reads the CTO's signed check-8 file, because the check record names it; if release refuses, STOP and file a BLOCKING row; re-run the checks only if the tool says it must.",
+  "world_is": "The stored record named no signature, so the signed file alone did not release the wheel. The tool said it must re-run the checks (its refusal names the record, not the file), and the seat re-ran check with --approved-by and --signed-by, letting the tool re-record. No record was edited by hand. The seat read the re-run as the face's allowance, not as a BLOCKING refusal; the CTO and the issuer decide whether that reading stands."
+}
+```
+
+## NFRA_CTLPLN-W122-S2 -- the release folder holds the wheel and a delivery text beside it, so 'exactly the one file' is not literal; the --release test counts wheels only
+
+```json
+{
+  "id": "NFRA_CTLPLN-W122-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "surfaced_at": "2026-10-15T20:31:22Z",
+  "one_line": "intake_check.py release writes <name>.delivery.txt into C:/opal-intake/release/intake-20261015-duckdb/ beside the released wheel, so that folder holds two files, not the one file the order's wording describes; the --release flag counts wheels and prints the delivery text as a detail field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls -la C:/opal-intake/release/intake-20261015-duckdb/ after release (2026-10-15T16:19 local): duckdb-1.5.0-cp314-cp314-win_amd64.whl (13575130 bytes) and duckdb-1.5.0-cp314-cp314-win_amd64.whl.delivery.txt (1618 bytes)",
+      "python .tools/tests/test_round22_journey_record.py --release: 'JOURNEY-RELEASE released=1 check8=SIGNED file=duckdb-1.5.0-cp314-cp314-win_amd64.whl sha256=11ae50aaeda2 ok=True' with detail 'members=[wheel, delivery.txt] delivery_text_present=True'",
+      "intake_check.py release_ writes deliv = dest_dir / (file_name + '.delivery.txt') before the move (run_release, the open-write of the delivery text)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTal4-AC1 wording: the one checked wheel is released with check 8 signed and nothing else is in the release folder for this batch.",
+  "world_is": "The release folder holds the wheel and its tool-written delivery text. The delivery text is the tool's own companion file, not a second package. Nothing was removed from the folder. The --release test counts only the wheel and reports the delivery text as a detail field, so released=1 is a wheel count."
+}
+```
+
+## NFRA_CTLPLN-W122-S3 -- three folders the worker face names for reading were outside the worktree's sparse set; each was added with git sparse-checkout add
+
+```json
+{
+  "id": "NFRA_CTLPLN-W122-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "surfaced_at": "2026-10-15T20:31:22Z",
+  "one_line": "The sparse worktree cut by wk-provision.sh for CT-al-4 did not carry .claude/skills/tdrop, org/tier1_exec/1.0.0_SA_CTO/deliverables or org/tier2_senior/0.7.0_AE_CloudOps~CT1/deliverables, which the face names as reads; the first cat calls returned 'No such file or directory' and the folders were added with git sparse-checkout add.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at worktree ctlpln-122 before the add: .tools, infra/logic/registry, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards",
+      "cat .claude/skills/tdrop/SKILL.md and cat org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_DUCKDB_20261015.md both returned 'No such file or directory' from the worktree",
+      "git sparse-checkout add .claude/skills/tdrop org/tier1_exec/1.0.0_SA_CTO/deliverables org/tier2_senior/0.7.0_AE_CloudOps~CT1/deliverables org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~8 rc=0; the files then read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: the worktree is a sparse checkout that holds the paths of the order; if a command fails because a folder is missing, run git sparse-checkout add <folder>, retry, and name the folder.",
+  "world_is": "The three named read folders were not in the set wk-provision.sh cut, so the face's first reads failed. The face's own remedy was applied and it succeeded. The sparse-set change is local to this worktree and is not committed."
+}
+```
+
+## NFRA_CTLPLN-W122-S4 -- the existing --check flag reads ok=False on the released state, because its ok expression requires the pre-release state (check8=AWAITING and released=False)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W122-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "surfaced_at": "2026-10-15T20:31:22Z",
+  "one_line": "After the release, python .tools/tests/test_round22_journey_record.py --check prints 'JOURNEY-CHECK checks_run=7 failed=0 check8=SIGNED released=True ok=False' and exits 1, because its ok expression requires check8=AWAITING and released=False; the default run includes --check and so also exits 1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round22_journey_record.py --check (worktree ctlpln-122, commit b258c7a06b, released state): 'JOURNEY-CHECK checks_run=7 failed=0 check8=SIGNED released=True ok=False' rc=1",
+      "the cmd_check ok expression in .tools/tests/test_round22_journey_record.py: 'check8 == AWAITING' and 'not released' (both now false)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-al-4 extends the round-22 test and keeps its three flags; the three flags keep the round-22 journey meaning.",
+  "world_is": "The three flags were kept unchanged, as the face says. The --check flag's ok expression encodes the pre-release state, so it now reads ok=False by design of its own expression. The seat did not change that expression; whether the flag is retired or re-keyed is for the test's owner."
+}
+```
+
+## NFRA_CTLPLN-W122-S5 -- the existing --fetch flag reads ok=False after the release, because its ok expression needs a wheel still held in holding and a disk hash equal to the fetch record
+
+```json
+{
+  "id": "NFRA_CTLPLN-W122-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~122",
+  "surfaced_at": "2026-10-15T20:40:39Z",
+  "one_line": "After the release, python .tools/tests/test_round22_journey_record.py --fetch prints 'JOURNEY-FETCH wheels=0 file=NONE device=laptop sha256=- requests=4 ok=False' and exits 1, because its ok expression requires exactly one wheel in holding and a disk hash equal to the fetch record; the wheel has moved to release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round22_journey_record.py --fetch (worktree ctlpln-122, released state, after the state-aware --check edit): 'JOURNEY-FETCH wheels=0 file=NONE device=laptop sha256=- requests=4 ok=False' and 'JOURNEY-FETCH-DETAIL box=laptop fetch_record=True disk_matches_record=False cp312_present=False' rc=1",
+      "C:/opal-intake/holding/intake-20261015-duckdb/ is empty after release; the wheel is in C:/opal-intake/release/intake-20261015-duckdb/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The round-22 test keeps its flags; the --fetch flag reads the held wheel as the fetch proof of the round.",
+  "world_is": "The --fetch flag encodes the pre-release state (one held wheel), as --check did (NFRA_CTLPLN-W122-S4). The ruling from 2.0.0_SA_COO~C covered --check only, so --fetch was left unchanged; the seat reports it and does not change the flag without a ruling."
+}
+```

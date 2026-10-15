@@ -71,7 +71,7 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>13</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

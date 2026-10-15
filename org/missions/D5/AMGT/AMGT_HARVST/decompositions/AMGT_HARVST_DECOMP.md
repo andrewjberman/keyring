@@ -4062,3 +4062,59 @@ Andrew placed the wsj and barrons ops on dell1 (`org/tier1_exec/2.0.0_SA_COO~W1/
 - **Why AC3 is not a worker criterion:** the worker runs every invocation under `timeout 120`; a headful sign-in job takes about 2.5 minutes. The CTO's ruling places the real job in the cell; it is graded here, by the issuer, on the merged head (dispatch Step 5, the one real run), and the CTO is told.
 - **Not in this round** (addendum 1): anything else from the enrichment list; the first full dell1 cycle (held for the site Z stop); FT, Bloomberg, Seeking Alpha, which stay at site Z.
 - **Checks dry-run at the base before the cut:** ca-1 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`113 passed, 4 subtests passed`). AC3 base: NOT run (a real vendor job; held).
+
+## 108. ROUND 87 -- all harvest publishers move to dell1 (`1.0.0_SA_CTO~DELL1` msg 6094 and 6099, addenda 3 and 4; Andrew-direct 2026-10-15 ~16:3xZ), 2026-10-15 ~19:1xZ
+
+Round 86 is drained (`d0c48b3946`, AC3 PASS at `de87f708fb`). Andrew moved ALL harvest operations to dell1 (Seeking Alpha and Bloomberg now, FT later by his own hand). Site Z's runner is stopped (Ready) at 18:54Z; the formal stop-and-Disabled read-back is site Z's, due about 19:20Z, relayed by `0.0.0_AB_MSTR~DELL1`. The CTO's order: dell1 starts each publisher on its own clock after its local proof; production collection is a SCHEDULED runner on dell1, never a hand-run; the runner goes in at a pin that carries NFRA_OPLGTW E1+E2 (`39ae28559b`, in this branch) and prints E2's S3 GET count and bytes in its cycle record.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cb-1` | `cb-1` | **The harvest library stops naming site Z as where it runs**: README line 3, `requirements.txt` line 1, the `backfill_driver.py`, `tab_transport.py` and `test_ae4` docstrings, and the unread `contracts.json` `execution` label; a six-file test with a positive control. | LOCAL (direct act, about 15 lines) | worker `0.9.0_WK_AMGT_HARVST~143` | CUT, pending |
+| `HVST-cb-2` | (cut after the read-back and the signed pair) | **The dell1 scheduled runner**, registered by `install-cycle-schedule.ps1 -Windowless -RefreshOnce -Publishers wsj,barrons` from a pin that carries `39ae28559b` and the ca-1 merge; `-Plan` read first; one runner; the first productive cycle per publisher reported with the run record, the accepted count and the GET bytes (the E2 proof). Moves served output: a never-widen pair (COO and CTO halves) first. | WORLD | seat `0.7.0_AE_CloudOps~SC1` (idle, live on dell1) | STAGED: waits on site Z's formal read-back and the pair |
+| `HVST-cb-3` | (after the issuer's first read) | **Seeking Alpha local proof**: one job `complete_candidates` with more than 0 accepted, no upload. Its profile has no in-profile sign-in (`verification.ACCOUNT_CHECKS` lacks `sa`); the first read decides whether a script gets the session or Andrew signs in once in a Chromium. | LOCAL (a vendor read) | issuer's read, then a cell | STAGED |
+| `HVST-cb-4` | (after the issuer's first read) | **Bloomberg local proof** (the bloomberg.com web session, credential `google/andrew-goldengate/credentials`; NOT the Terminal, `integrations/bloomberg/READ_HERE.md` does not apply to it): one job `complete_candidates`, no upload. Round 85's refresh ruling excluded the Google path; addendum 3 names this proof. | LOCAL (a vendor read) | issuer's read, then a cell | STAGED |
+
+- **Fan-out:** 1 worker (cb-1), 1 chain of 1, cap 8; cb-2 is a seat order; cb-3 and cb-4 start as the issuer's own read (the round-86 shape: scripts first, no code change before the read).
+- **Order of starting:** wsj and barrons are in the runner from cb-2; sa and bbg join by a re-registration (`-Publishers wsj,barrons,sa,bbg`) once their proofs are in. A preference, not a dependency (addendum 4).
+- **Ledger of what is NOT in this round:** FT (Andrew provides the session); the PRD's 16 lines naming site Z (the CTO's edit, the CVO's re-sign); site Z's own runner and records.
+- **Checks dry-run at the base before the cut:** cb-1 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`93 passed`). cb-2 and cb-3/4 are not cut.
+
+## 109. ROUND 87, workstream RUNNER -- the runner's browser window is minimised before the runner is registered (`1.0.0_SA_CTO~DELL1` msg 6165, CTO half `ledger/NEVER_WIDEN_ROUND87_CB2_CTO_HALF.md`), 2026-10-15 ~19:5xZ
+
+The tab transport opens a visible headful Chrome per job (`tab_transport.py:99`), so a continuous runner would keep a window on the desktop that hosts every agent terminal. The CTO half rules: a minimise cell first, measured on one real job, then register; if that fails, do not register headful. Measured by this seat before the cut: the flag `--start-minimized` leaves a plain Chrome window NOT minimised (`IsIconic` False at 4 s); minimising over the browser's debug protocol (`Browser.setWindowBounds`, `windowState: minimized`) does, the window stays minimised through a navigation, `document.visibilityState` stays `visible`, a screenshot works.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cb-5` | `cb-5` | **A `TabSession` minimises its own window at start** (`minimize=True`; the three protocol calls inside a swallow-everything `try`, before the origin `goto`); launch arguments, profile and every other method unchanged; a fake-Playwright test with a mutant. | LOCAL (direct act, about 20 lines) | worker `0.9.0_WK_AMGT_HARVST~144` | CUT, pending |
+| `HVST-cb-5` AC3 | (the issuer's run) | **One real `wsj` job with every Chrome window sampled for minimisation**: `deliverables/2.0.0_SA_COO_W1/round87/cb5_window_probe.py`; PASS needs `complete_candidates`, accepted > 0, zero samples not minimised after a 3 s launch allowance. | LOCAL (real run) | `2.0.0_SA_COO~W1` at the drain | HELD for the cb-5 merge |
+| `HVST-cb-2` | (staged) | **The dell1 runner**, after cb-5's AC3 passes and site Z's formal Disabled read-back (CTO C-g) is on file. | WORLD | seat `0.7.0_AE_CloudOps~SC1` | STAGED |
+
+- **Fan-out:** 1 worker (cb-5), 1 chain of 1, cap 8.
+- **Checks dry-run at the base before the cut:** cb-5 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`47 passed`). The probe's positive control: a plain Chrome window reads not minimised; zero Chrome windows before and after.
+- **Deviation from the CTO half (reported to him):** the half names `--start-minimized`; it was measured and does not minimise, so the cell uses the protocol call.
+
+## 110. ROUND 87, workstream RUNNER-REGISTER -- `HVST-cb-5` merged and measured; `HVST-cb-2` CUT, STAGED; `HVST-cb-6` defined, 2026-10-15 ~20:0xZ
+
+`HVST-cb-5` merged `e6649b1250` (AC1 5 passed, AC2 47 passed); its issuer-run AC3 PASSED (`2657939237`): a real `wsj` job ended `complete_candidates` with 5 accepted, 383 of 384 window samples minimised, the 384th inside the 3 s launch allowance, none after it. The CTO half's condition (c) is met for the cell.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cb-2` | `cb-2` | **The dell1 runner registered for `wsj` and `barrons`** from a locked pin carrying `39ae28559b`, `d0c48b3946`, `08c80a8f75` and `e6649b1250`; `OPAL_HARVEST_PROFILE_ROOT` set so a re-pin keeps the profiles; the stop file's parent created first (row Z-S120); `-Plan` read first; five reads (log fresh, task XML, no console, collector spawn, every runner window minimised) at +3 and +15 minutes; signed rollback; account stop rule. | WORLD | seat `0.7.0_AE_CloudOps~SC1` | CUT, STAGED: waits on site Z's formal Disabled read-back (CTO C-g) filed as `ledger/SITE_Z_RETIRE_READBACK_20261015.md` |
+| `HVST-cb-6` | (cut at the registration) | **The close read, read only:** the first productive cycle per publisher: its `.cycle.json`, the accepted count, `s3_get_count` and `s3_get_bytes` (CTO C-h, the E2 proof); reported to the CTO and, through MSTR, to site Z. Organic, about a cycle length. | LOCAL (read) | seat `0.7.0_AE_CloudOps~SC1` | DEFINED |
+
+- **Fan-out:** 0 workers (a seat order), 1 chain.
+- **Checks at the cut:** cb-2's criteria are reads of dell1's scheduler and of a file the seat writes; at the base no task exists, so AC1 and AC2 FAIL as expected, and AC3's file does not exist. Not dry-run as commands (they would read a task that does not exist).
+
+## 111. ROUND 87, workstream PROFILE-STORE -- the first dell1 pass found a second defect of the same family; `HVST-cb-8` CUT, `HVST-cb-9` defined, 2026-10-15 ~20:4xZ
+
+`HVST-cb-2` registered the dell1 runner (T0 20:23:04Z, pin `47c623dcf8`) and its first pass failed: `wsj` and `barrons` each REFUSAL expired, REFRESH done (3 s), REFUSAL expired again; the stop rule fired and `0.7.0_AE_CloudOps~SC1` ended the runner by its stop file at 20:27:16Z (SC1 msg 6206; rows `D1-S19`, `D1-S20`). Read from `.runtime/harvest-cycle/state/cycle_runner.log` lines 245-252 and 502-509 and run record `20261015T202310Z-wsj-23b255623f`: `status` sign_in_refused, `detail` "SignInRefused: sign-in refused: --no-sign-in", `token_source` None, `request_attempts` empty. The job never opened its tab: `TokenFirstSessions.get()` demands a stored session, the runner's runtime root has none, and `--no-sign-in` forbids the sign-in that would create one. The refresher's 3 s `done` was the in-profile renew finding the profile already signed in. Not the account.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cb-2` | `cb-2` (amendment 1) | **Seed the runner's saved-session directory, restart, repeat the reads** (operational unblock; the pair is unchanged). | WORLD | seat `0.7.0_AE_CloudOps~SC1` | pending, amended |
+| `HVST-cb-8` | `cb-8` | **`TokenFirstSessions.get()` returns a profile-store envelope, with no refresh, for a publisher whose session lives in its browser profile** (the SAME predicate `SessionManager.refresh` uses, factored into `auth.profile_is_store`); every other publisher unchanged; a loop test with a mutant. | LOCAL (direct act, about 25 lines) | worker `0.9.0_WK_AMGT_HARVST~145` | CUT, pending |
+| `HVST-cb-8` AC3 | (the issuer's run) | **One real `wsj` job, `--no-sign-in`, from a worktree with NO saved session and a signed-in profile**: `complete_candidates`, accepted > 0, `token_source` `browser_profile`. | LOCAL (real run) | `2.0.0_SA_COO~W1` at the drain | HELD for the cb-8 merge |
+| `HVST-cb-9` | (after cb-8 merges) | **Re-pin the runner** to a head carrying cb-8, by the stop-file boundary, with a pair half (a re-pin is a new act; round 85 signed one per re-pin). | WORLD | seat `0.7.0_AE_CloudOps~SC1` | DEFINED |
+
+- **Fan-out:** 1 worker (cb-8), 1 chain of 1, cap 8.
+- **Checks dry-run at the base before the cut:** cb-8 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`144 passed, 4 subtests passed`).

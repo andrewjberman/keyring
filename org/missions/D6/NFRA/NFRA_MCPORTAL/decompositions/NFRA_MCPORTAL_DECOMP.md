@@ -1589,3 +1589,114 @@ Holder of the release gate: 2.0.0_SA_COO~O.
 3. **Open for Andrew: should integration channels (Schwab, Black Diamond, YCharts and the rest) also be regrouped by bucket?** Rule 1 keeps them as their
    own integration groups because they carry auth and tier facts a bucket group cannot. One word from him changes rule 1.
 4. Ratings for the new group ids are the CTO's data file (C16); until rows exist they read `unrated`.
+
+## PE.7 AMENDMENT 1 (issuer, while MP-pe-1 is open and MP-pe-2 is being amended; 2026-10-15 ~18:3xZ)
+
+Appended, not rewritten: PE.0 to PE.2 stand as the record of what was believed at the cut. Three corrections, each found by a worker or by looking at the rendered page.
+
+1. **PE.0 item 3 was wrong.** It said `graph_scope_map.TOOL_GRAPH_SCOPES` "lists exactly the tools that call Microsoft Graph". It does not: its header says it is the consent-scope map for SCOPED identities, one entry per tool any scoped identity may call, and "an allowlisted tool with NO entry contributes nothing". Measured by worker `~31` and re-measured by the issuer on the repository's own registry (86 tools, no integration enabled): 11 tools have an entry; at least eight tools that plainly use Microsoft Graph (`send_email`, `create_draft`, `reply_email`, `upload_text_to_site`, `save_email_attachment_to_site`, `copy_site_file_to_s3`, `list_calendar`, `find_online_meeting`) have none. The map is a PARTIAL signal. No hand-kept Microsoft 365 list is introduced (FWD-20 ACCEPT: "none from a hand-kept list").
+2. **PE.2 rule 2 gains a second kind.** A `source_group` element may carry `kind` equal to `graph` as well as `bucket`. A tool whose declaration has an element of kind `graph` joins the existing Microsoft 365 group (`id` `m365`, `kind` `native`, `auth` `delegated`, `min_tier` `per tool`), whatever the element's `id` and `name`. Rule 5 (malformed means not declared) reads "`kind` equal to `bucket` or `graph`". Rule 3 stays, stated as what it is: tools with a known Graph scope join Microsoft 365 when no declaration places them. Until NFRA_MCPINDEX's carrier MX-c-21 declares the remaining Microsoft tools, they read "No source declared": truthful, not yet pretty. The ask to MX-c-21 is sent to `2.0.0_SA_COO~MI` with the eight names above as the start of its census.
+3. **The People view had its own copy of the placement rule** (`app/admin_people.py` lines 87 to 97, built at MP-pc-2): every tool with no spec went to `m365`. It made the People view disagree with the regrouped breakdown, and the seam test `test_person_holdings_equal_breakdown_holders` caught it. The rule is made ONE function in `app/admin_gateway_breakdown.py`, called by both the breakdown and the People view. `app/admin_people.py` joins `MP-pe-1`'s write surface for that and nothing else.
+
+**What changes in the orders.** `MP-pe-1` gets Amendment 1 (the three items above, two new tests, `admin_people.py` in its paths, the AC1 wording). `MP-pe-2` is unaffected by this amendment (its own Amendment 1 is about readability). The checks: `pe1.AC1.sh` gains two named tests; `pe1.AC2.sh` is unchanged.
+
+
+---
+
+# v12 -- WORKSTREAM PF (PE continued): `/gateway` segmented by CONTRACT C-GROUP (2026-10-15 ~20:1xZ, 2.0.0_SA_COO~MP)
+
+Source: PRD v0.9 @532d1e68bb (addendum "the gateway finish by EOD Fri 2026-10-16"), CTO GO msg 34553, Andrew's words carried in the PRD (verbatim there):
+"...making sure everything is extremely legible, clean, and well-designed, using the opalinvest.com website design fixtures, as well as making sure that everything is
+readable by human eyes and not wrapped or squished on text and segments. The most important thing is really that each displayed tool segment is very clearly
+segmented, i recommend this being by bucket, and in the case of opal-data-assets, by client/vendor pairs."
+The hold on workstream PE is lifted by that word; PD stays held. Done by 2026-10-16 ~22:00Z. Serves FWD-22 (CONTRACTS side). ENDPOINT unchanged.
+
+## PF.0 WHAT IS MEASURED
+
+1. MP-pe-2 (drained, mcportal DEV 2fdfb607d7) renders one section per `channels[]` entry, a summary table, plain kind words. A bucket group exists only for a tool whose
+   `tool_index` row carries `source_group` (MX-c-21, in MCPINDEX round 18, not yet released). Today the live page shows m365 plus "No source declared".
+2. CONTRACT C-GROUP (MCPINDEX PRD v0.17 section C-GROUP) fixes the segmentation key: `bucket` on every row (its value IS `source_group.id`); `vendor` and `firm` on every
+   opal-data-assets and opal-data-bd row. Vendor values: schwab, blackdiamond, orion, eclipse, smartx, commonwealth, gateway (Tax SMA), market. Firm values: 49financial,
+   cottonwood, inflection, multi (one object mixes firms), none (market data), unresolved (neither source resolved it; never guessed). No other grouping field exists.
+3. MP-pe-1 (worker ~31, branch `wk-NFRA_MCPORTAL-pe-31`) is the handler cell and holds the same file (`admin_gateway_breakdown.py`). It reported at 7abfb91b46 with
+   two blocking rows (Z-W31-S3 the seam test pins the old default for `send_email`; Z-W31-S4 the AC1 expect form); both are the issuer's and are ruled in PF.5.
+
+## PF.1 CELL `MP-pf-1` -- the breakdown segments an assets/bd bucket by (vendor, firm)  (handler; chain H, runs on worker ~31's queue AFTER MP-pe-1 closes)
+
+Reads, never re-derives: for each tool the handler already places by PE.2 rules 1 to 5.
+
+1. When a tool joins a group of kind `bucket` whose `id` is `opal-data-assets` or `opal-data-bd`, read two more string fields from the tool's `tool_index` row (the same
+   row `source_group` comes from): `vendor` and `firm`. A field that is missing, not a string, or empty reads as the literal `unresolved`. The handler does NOT
+   validate the values against the C-GROUP lists (a new value is an addendum to the contract, never a local rejection).
+2. That channel gains `segments`: a list of `{"vendor": <str>, "firm": <str>, "tools": [<tool name>, ...]}`, one entry per distinct (vendor, firm) pair among the channel's tools,
+   each tool name listed once in its pair, `tools` sorted by name. A tool in two buckets is placed per bucket by its own element; its vendor and firm are the row's.
+3. ORDER of `segments`: by `vendor` ascending, and inside a vendor the named firms ascending, then `multi`, then `none`, then `unresolved`. A vendor `unresolved` sorts last.
+4. A channel that is not one of those two buckets carries NO `segments` key (absent, not empty). A bucket channel in those two with no tools in it does not exist (as today).
+5. `grouping_basis` gains nothing. `channels[].tools[]`, `indexes`, `holders`, `holders_basis`, `rating` keep their meaning. The People view is unchanged (it lists channels, not segments).
+
+Tests, in `infra/aws/ec2/opal-gateway/tests/test_admin_gateway_breakdown.py`, by these names (a test plants `tool_index` rows through the file's existing helper):
+- `test_assets_bucket_splits_into_vendor_firm_segments`
+- `test_multi_none_and_unresolved_firms_are_own_segments`
+- `test_missing_vendor_or_firm_reads_unresolved`
+- `test_bucket_without_vendor_firm_fields_has_no_segments`
+- `test_segments_order_named_firms_before_multi_none_unresolved`
+- `test_tool_in_two_buckets_is_segmented_only_where_it_is_assets_or_bd`
+
+## PF.2 CELL `MP-pf-2` -- the Gateway page shows each bucket as a clear segment and each assets/bd (vendor, firm) as a sub-segment  (view; chain V, a new worker ~33)
+
+Contract the page is built against (fixed): `GatewayChannel` gains an optional `segments?: {vendor: string; firm: string; tools: string[]}[]` (MP-pf-1 fills it; absent
+means none). The page keeps working with the response of today. It builds against a checked-in fixture (`gateway.cgroup.fixture.ts`, a `GatewayBreakdown` of: opal-data-harvest
+(no segments), opal-data-assets with Schwab/49financial, Schwab/cottonwood, Black Diamond/cottonwood, SmartX/multi, Commonwealth/cottonwood, Market/none and one
+unresolved/unresolved segment, opal-data-bd with Black Diamond/49financial, one integration, m365, undeclared) and switches to the live catalog with no code change.
+
+What a reader sees (words are fixed so a test can pin them):
+- Vendor words: schwab `Schwab`; blackdiamond `Black Diamond`; orion `Orion`; eclipse `Eclipse`; smartx `SmartX`; commonwealth `Commonwealth`; gateway `Tax SMA`; market
+  `Market data`; any other value is shown as given; `unresolved` reads `Vendor not resolved`.
+- Firm words: 49financial `49 Financial`; cottonwood `Cottonwood`; inflection `Inflection`; multi `Several firms`; none `No firm`; unresolved `Firm not resolved`; any other value as given.
+- A segment heading reads `<vendor words> / <firm words>` (for example `Schwab / 49 Financial`); a segment of `multi`, `none` or `unresolved` firm shows ONE line under the heading saying
+  why (`One object mixes firms; the tools filter rows by firm.` / `Not a client source.` / `The catalog did not resolve a firm for these tools; a gap, not a firm.` -- the last in
+  the existing `gateway-gap` red).
+- A bucket with `segments` shows, inside its section, one sub-section per segment with `id="gateway-<bucket>--<vendor>--<firm>"` (`data-segment`), its tool count in the heading line,
+  and its own tools table (the bucket's tool rows whose names are in the segment). A bucket with no `segments` renders as it does today.
+- The summary table lists the bucket row as today and, under each segmented bucket, one indented row per segment (Group cell a link to the sub-section, Kind `Segment`, Tools = the
+  segment's count, Holders blank).
+- NOT SQUISHED, NOT WRAPPED: every tools table sits in a container `gateway-scroll` with `overflow-x: auto`, tool and index names are `white-space: nowrap`, and the page itself never scrolls
+  sideways at 390 px width; a segment heading never wraps mid-word (`overflow-wrap: normal`, the heading may wrap between words only). Colour and type are the existing tokens
+  only (portal/DESIGN.md at `C:/Users/Opal Bloomberg/Desktop/ajb_workspace/portal/DESIGN.md`, read-only): light canvas, white hairline panels, navy ink `#163372`, one band per page; no new colour, no new font.
+
+Tests, in `src/pages/gateway/gateway.test.tsx` by these names (the file's `renderToStaticMarkup` way), using the checked-in fixture:
+- `a segmented bucket renders one sub-section per vendor and firm`
+- `a segment heading reads vendor words slash firm words`
+- `multi none and unresolved firms are labelled segments with their reason`
+- `the summary table lists each segment under its bucket with a link`
+- `a bucket with no segments renders as before`
+- `every tools table sits in a scroll container`
+
+## PF.3 EDGES AND CHAINS
+
+```
+chain H   MP-pe-1 (open) -> MP-pf-1    (same file, one worker's queue: ~31)
+chain V   MP-pf-2                       (no edge to H beyond the contract; builds on the fixture)
+```
+`N = 2 of M = 2 chains, cap 8` (workers ~31 continued and ~33 new). No join; the live `segments` field arrives with the gateway release by 2.0.0_SA_COO~O, which batches MP-pf-1
+with MP-pe-1 (one release). The catalog fields arrive with MCPINDEX's first C-GROUP catalog release.
+
+## PF.4 CRITERIA
+
+- MP-pf-1: AC1 the six named tests; AC2 the admin suite bound (0 failed, no seam failure, 102 or more passed); no third.
+- MP-pf-2: AC1 the six named tests plus `bun test src` 0 failed; AC2 a judgment criterion (`judgment="true"`): legibility at 1280 px and 390 px, graded by the CVO or Andrew from the issuer's screenshots.
+  The ISSUER's one real run at close: render the fixture at both widths with headless Edge, one screenshot per segment (every bucket and every sub-segment), look at each, and measure
+  `document.documentElement.scrollWidth <= innerWidth` at 390 px. That run is mine, not a worker criterion.
+
+## PF.5 RULINGS ON WORKER ~31's ROWS (issuer, inside this decomposition; gate limb: none graded a modification, `<placeholders>` is NONE)
+
+- **Z-W31-S3:** the seam test asserts the old default, `("m365","send_email")`. `send_email` calls Microsoft Graph but has no `TOOL_GRAPH_SCOPES` entry, so by PE.7 rule 3 it is undeclared
+  until MX-c-21 declares it (kind `graph`). The assertion is the stale half: it changes to say BOSS holds `send_email` and the population does not, under whatever group id the breakdown gives it.
+- **Z-W31-S4:** the AC1 expect form is the issuer's: the script prints three lines. The expect becomes one pattern a checker can match: `named tests PASSED 10 of 10.*RESULT: PASS.*exit=0`; the same for AC2.
+
+## PF.6 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. Whether the live page reads right is looked at on the rendered fixture by me and on the live catalog after the first C-GROUP release, then by Andrew's sitting (21d9).
+2. The segments exist on the live page only after (a) MCPINDEX's C-GROUP catalog release and (b) the gateway release carrying MP-pe-1 and MP-pf-1. Until then the page shows what it shows today.
+3. The vendor and firm WORDS are the issuer's spelling of the C-GROUP values for a human; they are display only and change no value.
+4. The open question for Andrew from PE.6 item 3 (regroup integration channels by bucket) is unchanged.
