@@ -2488,3 +2488,107 @@
   "notes": "Not repaired: the expect is the issuer's text and is kept verbatim (a criterion is never repaired). AC1 is REFUSED as written with this measurement; the substance (named tests PASSED 10 of 10, RESULT: PASS, exit 0) is measured. The issuer re-states the expect; the sibling '.*' form would match the verbatim output."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T21:30:41Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S56",
+  "one_line": "Z-W31-S1 is DISARMED: the People view no longer keeps its own placement; one function in admin_gateway_breakdown.py places every tool for both views.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W31-S1. The duplicate rule was the issuer's spec fault (it ruled the People view out of MP-pe-1's paths). Amendment 1 put admin_people.py in the paths for that only; the worker built the single function and the seam test test_person_holdings_equal_breakdown_holders passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain commit 8310672247: pe1.AC1 named tests PASSED 10 of 10, pe1.AC2 103 passed 0 failed, seam test failures 0 (re-run by the issuer on the shared tree)",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-1.breakdown-groups-by-source.md AMENDMENT 1 (@7cdca27ebd) and AMENDMENT 2 (@33932ee038)"
+    ]
+  },
+  "spec_asserts": "Z-W31-S1 asserted that admin_people.py kept its own copy of the old placement so the two views disagreed.",
+  "world_is": "The two views call one placement function; test_people_view_places_tools_in_the_breakdowns_groups and the seam test both pass.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-1 (merged @8310672247)."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T21:30:41Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S57",
+  "one_line": "Z-W31-S2 is DISARMED: TOOL_GRAPH_SCOPES is kept as a partial signal, not the Microsoft 365 list; the full classification is MCPINDEX's declaration (kind graph, MX-c-21).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W31-S2. The belief that TOOL_GRAPH_SCOPES lists every Graph tool was the issuer's error. Amendment 1 (PE.7) keeps rule 3 as a partial signal and adds the declared kind graph; until MX-c-21 ships declarations, Graph tools without a scope entry read undeclared (75 of 86 on the real registry, measured by the worker).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain commit 8310672247: pe1.AC1 named tests PASSED 10 of 10, pe1.AC2 103 passed 0 failed, seam test failures 0 (re-run by the issuer on the shared tree)",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-1.breakdown-groups-by-source.md AMENDMENT 1 (@7cdca27ebd) and AMENDMENT 2 (@33932ee038)"
+    ]
+  },
+  "spec_asserts": "Z-W31-S2 asserted that rule 3 placed only 11 of the tools that use Graph in Microsoft 365 and left others undeclared.",
+  "world_is": "True and now stated: the page shows them as No source declared (a gap, labelled so) until the catalog declares kind graph; no hand-kept list was added.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-1 (merged @8310672247)."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T21:30:41Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S58",
+  "one_line": "Z-W31-S3 is DISARMED: the seam assertion no longer names a group for send_email; the seam comparison of every person's holdings is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W31-S3. The assertion pinned the old default (m365); Amendment 2 changed that one line to say BOSS holds send_email and the population does not, under whichever group the breakdown gives it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain commit 8310672247: pe1.AC1 named tests PASSED 10 of 10, pe1.AC2 103 passed 0 failed, seam test failures 0 (re-run by the issuer on the shared tree)",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-1.breakdown-groups-by-source.md AMENDMENT 1 (@7cdca27ebd) and AMENDMENT 2 (@33932ee038)"
+    ]
+  },
+  "spec_asserts": "Z-W31-S3 asserted that the seam test could not pass while send_email was kept out of m365.",
+  "world_is": "The seam test passes with the one line changed (worker report, issuer re-run 103 passed).",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-1 (merged @8310672247)."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-15T21:30:41Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S59",
+  "one_line": "Z-W31-S4 is CLOSED: the AC1 and AC2 expect lines are re-cut to patterns the checker matches, and the instance validated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Closes NFRA_MCPORTAL-Z-W31-S4. The expect form was the issuer's: the script prints three lines. Amendment 2 re-cut both expects with the sibling pattern form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain commit 8310672247: pe1.AC1 named tests PASSED 10 of 10, pe1.AC2 103 passed 0 failed, seam test failures 0 (re-run by the issuer on the shared tree)",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/task-orders/NFRA_MCPORTAL.TO-MP-pe-1.breakdown-groups-by-source.md AMENDMENT 1 (@7cdca27ebd) and AMENDMENT 2 (@33932ee038)"
+    ]
+  },
+  "spec_asserts": "Z-W31-S4 asserted the AC1 expect could not match the script's three-line output.",
+  "world_is": "proof-of-spec-check.py reads the instance VALID rc=0 with the re-cut expects.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-1 (merged @8310672247)."
+}
+```
