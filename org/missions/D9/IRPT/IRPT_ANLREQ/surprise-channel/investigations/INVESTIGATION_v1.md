@@ -19038,3 +19038,56 @@
   "world_is": "The issuer's read is not the gate's check and does not claim it. The same instrument gap is on the record as W143-S2, W52-S25 and, for adapters 81 and 84, S123 and S124."
 }
 ```
+
+## IRPT_ANLREQ-D2-W188-S1 -- the commit gate's client-data check found no hashed account-id list on this device, so commit 61457ec92a was not checked for client account ids
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W188-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~188",
+  "surfaced_at": "2026-10-15T19:33:25Z",
+  "one_line": "The commit gate's client-data check reports its hashed account-id list ABSENT on this device, so commit 61457ec92a was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "TO-AR-g-88 WORKER FACE: commit with bash .tools/safe-commit.sh and pass every .py through the commit gate; CLAUDE.md rule 14a: commits go through safe-commit.sh, whose gate chain runs the client-data check on each commit.",
+  "world_is": "safe-commit printed WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty). Commit 61457ec92a (layout_overview.py and tests/test_layout_own_series_columns.py) landed with rc=0, so on this device every commit proceeds unchecked for client account ids until the list is provisioned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 61457ec92a: WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "git show 61457ec92a -- infra/ | grep '^+' | grep -E '[0-9]{6,}' returns one line, the milliseconds-per-day constant 86400000; no account id is added"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The same instrument gap as IRPT_ANLREQ-D2-W187-S1, on this device; not caused by the order's change. This worker created, read and moved no account-id list. Disarm: provision the hashed list or set OPAL_ACCOUNT_ID_HASHES on dell2; the disarm owner is named for the CVO to route."
+}
+```
+
+## IRPT_ANLREQ-D2-W188-S2 -- the pre-commit risk reflex cited a deploy receipt the sparse worktree does not hold, so the citation could not be read before commit 61457ec92a
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W188-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~188",
+  "surfaced_at": "2026-10-15T19:33:25Z",
+  "one_line": "The pre-commit risk reflex cited a deploy receipt the sparse worktree does not hold, so the citation could not be read before commit 61457ec92a.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The commit gate's risk reflex says: GO READ THE CITATION before this commit proceeds. TO-AR-g-88 WORKER FACE says the worktree carries infra/, docs/, data/ and org/missions/D9/IRPT on disk and names no critical_paths read.",
+  "world_is": "The worktree is sparse: org/critical_paths/change_management/ does not exist on disk here (ls reports no such file or directory). The reflex on commit 61457ec92a printed HOLD infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py (2 recorded claims) and cited org/critical_paths/change_management/20261009T0050Z_irpt-ycdgen-f1-st26-20261008_deploy_completion.md:15. The citation was not read; the commit proceeded with the HOLD printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit risk-reflex output for commit 61457ec92a: HOLD infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py, citation org/critical_paths/change_management/20261009T0050Z_irpt-ycdgen-f1-st26-20261008_deploy_completion.md:15",
+      "ls org/critical_paths/change_management/ in the worktree: No such file or directory; the same condition is on record as IRPT_ANLREQ-D2-W187-S2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The same instrument gap as IRPT_ANLREQ-D2-W187-S2. The flagged change adds one pure function, a column branch and a milliseconds-per-day constant; it deploys nothing and calls no AWS. The citation stays unread by this worker."
+}
+```
