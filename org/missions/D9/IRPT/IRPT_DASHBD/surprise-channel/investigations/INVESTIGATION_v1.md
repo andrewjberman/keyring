@@ -16377,3 +16377,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Form only: the policy's permissions do not depend on a statement id, so hazard_standing is INERT. Owner for a decision on the checker's new-statement rule (key on the sid, or on the statement's content) is the issuer 2.0.0_SA_COO~D2; the worker does not change the checker."
 }
 ```
+
+## IRPT_DASHBD-D2-S75 -- issuer's dispositions on worker 412's rows: the base-pinning defect fixed, the unverified-write branch carried to the CTO's half
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S75",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T09:10:28Z",
+  "one_line": "Issuer's dispositions on worker 412's rows W412-S1 (BLOCKING, the unverified-write branch of the account_dim writer) and W412-S2 (BLOCKING, the issuer's base-pinning commit): S2 fixed; S1 carried to the CTO's half as question 7 of the signed-over packet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The account_dim handler writes exactly one new key and refuses a non-empty partition; a failed ETag check must have a defined path (packet DB-c-19, Both branches).",
+  "world_is": "W412-S1: after an ETag mismatch the stream writer raises StreamWriteUnverified and leaves the unverified object at the key; the handler's landed-partition guard then returns TARGET_ALREADY_LANDED for every later invoke of that day, so the same-key overwrite the writer's comment describes cannot run through this handler. The function is not deployed, so the hazard is latent. The packet names it in Both branches and asks the CTO's half to rule the path (a handler change, a delete with Andrew's word, or the stop as written) as question 7; no code change is made before the ruling. W412-S2: the issuer pinned the checker base to the issuance commit and then committed the base file before provisioning, so the bounds arm counted the issuer's own commit; the base is the branch point, fixed in bb73ee8a6a, both criteria PASS on the worker tree. Merge a4a8375b21; round-close-check round 124 MAY-CLOSE; the packet blob is ed09e2768fd13983291ceafbed44ddd54ac69e13. DBC124-2-AC1 re-run on the landed main tree reads FAIL by the base's design after the drain (other seats' commits); it was graded on the worker tree before the drain. Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~412/NEVER_WIDEN_PACKET_DB-c-19_R123_ACCOUNT_DIM.md (Both branches, Questions item 7)",
+      "checks/r124/p124_bcw.py @bb73ee8a6a; merge a4a8375b21",
+      "rows W412-S1 and W412-S2 in this channel"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner for W412-S2 disarm: this seat (issuer), done. W412-S1 is the CTO's half's ruling (packet question 7); the code stays as merged until he rules."
+}
+```
