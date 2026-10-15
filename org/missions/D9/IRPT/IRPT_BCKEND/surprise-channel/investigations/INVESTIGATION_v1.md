@@ -38916,6 +38916,216 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+## IRPT_BCKEND-D2-W426-S1 -- IB-pr-584 premise: the READ FIRST harness is named IB218-1_exemption_delta_harness.py in the 422 folder, not ib218_1_exemption_delta.py.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W426-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~426",
+  "surfaced_at": "2026-10-15T15:55:11Z",
+  "one_line": "IB-pr-584 premise: the READ FIRST harness is named IB218-1_exemption_delta_harness.py in the 422 folder, not ib218_1_exemption_delta.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face, READ FIRST: the harness is deliverables/0.9.0_WK_IRPT_BCKEND~422/ib218_1_exemption_delta.py; reuse its set-up lines, do not edit it.",
+  "world_is": "The 422 folder holds IB218-1_exemption_delta_harness.py, and no file of the named name is tracked at base f2ef40fa28. The worker read the file that exists and reused its set-up lines; no edit was made to it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~422/IB218-1_exemption_delta_harness.py@f2ef40fa2804e0ec14a5e5478b8d83d96d500f3b",
+      "git ls-tree --name-only at f2ef40fa28 of the 422 folder lists four files, none named ib218_1_exemption_delta.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Path form only. The order names a path the tree does not hold; the issuer may correct the name in an amendment."
+}
+```
+
+## IRPT_BCKEND-D2-W426-S2 -- IB220-1 check AC2 counts a lost closed-directory account as remaining, but the gate never refuses a closed account, so the agreement it grades can false-fail on a correct record.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W426-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~426",
+  "surfaced_at": "2026-10-15T15:55:11Z",
+  "one_line": "IB220-1 check AC2 counts a lost closed-directory account as remaining, but the gate never refuses a closed account, so the agreement it grades can false-fail on a correct record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "Worker face: remaining = total minus exempted, and conditions_remaining must agree with the remaining lost accounts. Check p220_cells.py lines 44 and 56 grade account_lost as present iff total minus exempted is above zero.",
+  "world_is": "evaluate_publish_gate lists a lost account that is in closed_account_ids as closed_accounts_not_refused and removes it before the exemption and the account_lost test, so a closed lost account counts in remaining while no account_lost condition is raised. At base the closed directory holds 80 accounts and 0 of the 2 lost accounts are closed, so the check passes today; the mismatch is latent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r220/p220_cells.py@f2ef40fa2804e0ec14a5e5478b8d83d96d500f3b lines 44 and 56",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@f2ef40fa2804e0ec14a5e5478b8d83d96d500f3b evaluate_publish_gate, the closed_accounts_not_refused branch and the account_lost test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not edited: the checks belong to the issuer. The disarm is the issuer's: either remaining excludes closed_by_directory, or the agreement is stated on lost minus closed."
+}
+```
+
+## IRPT_BCKEND-D2-W426-S3 -- The build module writes a ticker identifier to the process output for each security it cannot classify, so a run of the counts-only harness puts identifiers on the console.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W426-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~426",
+  "surfaced_at": "2026-10-15T15:55:11Z",
+  "one_line": "The build module writes a ticker identifier to the process output for each security it cannot classify, so a run of the counts-only harness puts identifiers on the console.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "Worker face, client data rule: the harness prints and writes counts only, and no real security identifier appears in any tracked file.",
+  "world_is": "Importing holdings_snapshot and running build_snapshot prints one line per unclassified ticker ('Classification not found for ticker') to the process output, several hundred lines in one run. The harness's own prints are counts only. The console capture is scratch and untracked; no tracked file holds an identifier. The printing source is not in the checked-out directories (a search of the gold, lib and investor-reporting Lambda trees finds no such string).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "console output of the read-only harness run at base f2ef40fa2804e0ec14a5e5478b8d83d96d500f3b, held in scratch outside the repository, carries the repeated line prefix",
+      "the search of data/assets/scripts/gold/investor_reporting, lib and infra/aws/lambda/investor-reporting at f2ef40fa28 finds no string of that text; the emitting module is outside the sparse checkout"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. A future counts-only run must redirect the console, or the emitting module must be named and its print removed by its owner."
+}
+```
+
+## IRPT_BCKEND-D2-W427-S1 -- The BUILD ONLY of irpt-holdings-performance-lambda prints an ADVISORY that the package is not enforced (no BUILD_MANIFEST.json declaring layer_dependencies and vendored_modules); the build still returns rc 0.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W427-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~427",
+  "surfaced_at": "2026-10-15T16:18:05Z",
+  "one_line": "The BUILD ONLY of irpt-holdings-performance-lambda prints an ADVISORY that the package is not enforced (no BUILD_MANIFEST.json declaring layer_dependencies and vendored_modules); the build still returns rc 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh@c5c06462414832b495c243a86254a4b959ba7c9b, the BUILD_ONLY branch (lines 687-692) prints the zip and sha256 and exits without upload",
+      "build log of both candidate builds at base c5c06462414832b495c243a86254a4b959ba7c9b (kept in scratch outside the repository): the ADVISORY block lists four imports (pandas, pyarrow, stream_parquet, trading_calendar) and the line UNENFORCED IS NOT A PASS; both builds returned rc 0 and produced byte-identical zips",
+      "no BUILD_MANIFEST.json was added or edited (outside the paths block); the live function's own build log was not read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's build line produces the candidate zip for irpt-holdings-performance-lambda; the order does not name a BUILD_MANIFEST and asks for no packaging change.",
+  "world_is": "The build prints the not-enforced ADVISORY for this function on every BUILD_ONLY run at base c5c06462414832b495c243a86254a4b959ba7c9b; the candidate is built and compared as the order asks, with the advisory recorded and not resolved."
+}
+```
+
+## IRPT_BCKEND-D2-W427-S2 -- The investigation row schema the order names at org/surprise_channel/schemas/investigation_item.schema.json is not in the worktree sparse checkout; it was read from the committed blob at HEAD by git show.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W427-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~427",
+  "surfaced_at": "2026-10-15T16:18:05Z",
+  "one_line": "The investigation row schema the order names at org/surprise_channel/schemas/investigation_item.schema.json is not in the worktree sparse checkout; it was read from the committed blob at HEAD by git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at c5c06462414832b495c243a86254a4b959ba7c9b: .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_BCKEND, org/modules/graph, org/ref, org/standards (org/surprise_channel is absent; the worker face's sparse set does not add it)",
+      "Glob of C:/dev/wk-IRPT_BCKEND-427/org/surprise_channel reports the directory does not exist in the worktree",
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json rc 0 at c5c06462414832b495c243a86254a4b959ba7c9b; its required fields and enums were used for the rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face names the row schema at a path inside the worktree tree, and the sparse set it gives covers the paths the worker reads.",
+  "world_is": "The schema path is absent from the sparse worktree; the schema is present in the committed tree at HEAD and was read there; the rows here conform to its required fields and enums."
+}
+```
+
+## IRPT_BCKEND-D2-W428-S1 -- The pin worktree came up sparse: the shared repo config sets core.sparseCheckout=true, so the pin's closure was missing until sparse checkout was disabled in that worktree alone.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W428-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~428",
+  "surfaced_at": "2026-10-15T16:22:27Z",
+  "one_line": "The pin worktree came up sparse: the shared repo config sets core.sparseCheckout=true, so the pin's closure was missing until sparse checkout was disabled in that worktree alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB-pr-589 worker face, Do step 2: create a worktree outside the repository with git worktree add --detach <scratch>/pin <PIN> and run the declared builder from it; the order gives no sparse condition for the pin.",
+  "world_is": "git worktree add on this box inherited core.sparseCheckout=true from the shared .git/config, and the pin's own config.worktree carried it, so the pin held only the sparse directories. A closure member, data/assets/scripts/silver/opal_strategy_matcher.py, was absent, and build_bundle_payload refused with member authority missing. git sparse-checkout disable inside the pin worktree alone restored the full closure with zero dirty entries; the base worktree keeps its own sparse list.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/opal_strategy_matcher.py@c5c06462414832b495c243a86254a4b959ba7c9b is a declared closure member in .tools/safe_deploy_core.py@c5c06462414832b495c243a86254a4b959ba7c9b (_IRPT_HOLDINGS_CLOSURE) and is present in the git tree",
+      "git config --show-origin core.sparseCheckout read file .git/config true (shared) before the disable; the pin worktree config.worktree read false after the disable"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only: the builder failed loudly and wrote nothing. A worker pinning a worktree on this box should check core.sparseCheckout before it builds from the pin."
+}
+```
+
+## IRPT_BCKEND-D2-W428-S2 -- The IB-pr-549 mints record states the landed bundles by version id and after_sha256_equals_built, not by a sha256 value, and its apply record is not in the folder.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W428-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~428",
+  "surfaced_at": "2026-10-15T16:22:27Z",
+  "one_line": "The IB-pr-549 mints record states the landed bundles by version id and after_sha256_equals_built, not by a sha256 value, and its apply record is not in the folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB-pr-589 worker face, Do step 3: the live bundle's sha256 must equal the sha256 the IB2 record of IB-pr-549 states as landed, and a difference is a STOP; the face names the record as the landed bundle sha256 per firm. The IB-pr-549 order names deliverables/0.7.0_AE_CloudOps~IB2/IB199-2_apply_record.json as its apply record.",
+  "world_is": "IB199-2_mints_and_business_date_statement.json holds per firm before_version_id, after_version_id, minted_from_pin and after_sha256_equals_built true; it holds no sha256 value. The IB-pr-549 apply record IB199-2_apply_record.json is not in the IB2 folder. The live IsLatest version id of each of the three bundles equals its after_version_id (3 of 3), so the comparison used the version id; the live sha256 is measured and recorded in IB222-1_holdings_bundles_candidate.json without a stated value to compare against.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB199-2_mints_and_business_date_statement.json@c5c06462414832b495c243a86254a4b959ba7c9b holds after_version_id and after_sha256_equals_built with no sha256 value",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-549.apply-holdings-producer-release-per-firm-pins.md@c5c06462414832b495c243a86254a4b959ba7c9b step 9 names IB199-2_apply_record.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only: the version-id match is the only landed identity the record states; the issuer decides whether a sha256 figure should be added to the IB2 record."
+}
+```
+
+## IRPT_BCKEND-D2-W428-S3 -- The three merges were expected to change only holdings_snapshot.py at the pin, but seven other closure members differ between the live bundles and the pin; each is named with a reason in the candidate record.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W428-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~428",
+  "surfaced_at": "2026-10-15T16:22:27Z",
+  "one_line": "The three merges were expected to change only holdings_snapshot.py at the pin, but seven other closure members differ between the live bundles and the pin; each is named with a reason in the candidate record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "IB-pr-589 worker face, Do step 4: holdings_snapshot.py is the member the merges IB-pr-576, 577 and 582 change after the pins; every other changed member is named in extra_changed_reasons with a reason of 30 or more characters (the drift guard).",
+  "world_is": "Between the minting pins and the base commit, seven further closure members changed: data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py, dim_mdpf_aum_metrics.py, mdpf_category_registry.py, infra/aws/lambda/investor-reporting/holdings/publication.py, infra/logic/registry/exemptions.json, reporting_policies.json and lib/opal_naming.py, each in one or two commits. The live bytes equal the minting pin blob for all 46 closure members of each firm (138 of 138 checks), so the seven are the drift the live bundles lack. Every firm's candidate names all seven with a reason; holdings_snapshot.py is among the changed members in each firm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~428/IB222-1_holdings_bundles_candidate.json@c5c06462414832b495c243a86254a4b959ba7c9b is the candidate record; its extra_changed_reasons holds seven entries per firm",
+      "git log between the minting pin and c5c06462414832b495c243a86254a4b959ba7c9b for each of the seven paths, counted by the harness ib222_1_holdings_candidate.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Visibility only: the candidate is a measured comparison and ships nothing. Whether the never-widen pair carries the seven is the CTO's to rule; the apply must name them."
+}
+```
+
 ## IRPT_BCKEND-D2-W430-S1 -- The import chain of IB-pr-587 reads data/firm_registry.json at the repo root, which no named sparse directory carries; the worker used the module's own IRPT_FIRM_REGISTRY override on a scratch copy of the tracked blob.
 
 ```json
