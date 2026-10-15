@@ -19270,3 +19270,31 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W197-S1 -- the r32 driver printed R32-BUILD-OK and the issuer's verifier FAILs AR-G92-AC1: intake/uploads.py changed at the pin (AR-g-95, 4bc49a99fb) after the trial build at cbf05a6afa, so the delta at the pin is 15 changed and 284 identical, not 14 and 285
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W197-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~197",
+  "surfaced_at": "2026-10-15T21:18:37Z",
+  "one_line": "The release-32 delta at pin 26d720a980 is 15 changed (intake/uploads.py added by AR-g-95 commit 4bc49a99fb, which landed after the trial pin cbf05a6afa) and 284 identical; the verifier's hard-coded CHANGED list has 14 and fails on that one member.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-92 and ar_g92_checks.py CHANGED/ADDED state the release-32 delta at pin 26d720a980 as exactly 14 members changed and 11 added, none removed, 285 identical, with the 14 changed listed as SHA256SUMS, reports/resident_bindings.json, intake/portfolio.py, reports/build_resident_package.py, reports/generate_installed.py, reports/resident_installed.py, ycharts/generate/acceptance.py, ycharts/generate/normalized_input.py, ycharts/generate/prospect_submission.py, ycharts/generate/resident_worker.py, ycharts/generate/submission_service.py, ycharts/research/layout_overview.py, ycharts/research/opal_producer.py, ycharts/research/runner.py. The cell's trial figure (310 members, 14 changed, 11 added at cbf05a6afa) is the basis of that statement.",
+  "world_is": "The driver run at 26d720a980 (record org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~197/r32/RESIDENT_R32_BUILD.json) printed R32-BUILD-OK with changed 15, added 11, removed 0, unchanged 284; its delta_vs_r31.changed lists intake/uploads.py as a fifteenth member. The verify run printed AR-G92-FAIL delta differs from the expected: changed ['intake/uploads.py'] added [] removed [] (rc=1). The member is in files_from_r32.txt line 5. Its blob at cbf05a6afa is 48f39329ea and its r31 tarball member ./intake/uploads.py is 48f39329ea too; its blob at 26d720a980 is 48211e08e4, the same as the r32 member, so the r32 content is the pin's and is correct for the pin. The change is 4bc49a99fb (AR-g-95, worker ~196), which is an ancestor of the pin and was not an ancestor of the trial pin. Nothing was edited: the driver, the verifier, the files-from list and the record's delta are as the tools produce them; no retry with other arguments was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~197/r32/RESIDENT_R32_BUILD.json (worktree HEAD before the record commit): delta_vs_r31 changed count 15 incl. intake/uploads.py; unchanged 284; release_members 310",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/checks/ar_g92_checks.py lines 25-29: CHANGED has 14 entries and no intake/uploads.py; verify output AR-G92-FAIL delta differs from the expected: changed ['intake/uploads.py'] added [] removed [] (rc=1)",
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r32/files_from_r32.txt@cbf05a6afa line 5: infra/aws/lambda/investor-reporting/intake/uploads.py",
+      "git rev-parse cbf05a6afa:infra/aws/lambda/investor-reporting/intake/uploads.py = 48f39329ea4c947dc30cba02e07ed499d6f683726204710b16656c29d6f3c0c1; 26d720a980:(same path) = 48211e08e459fe3a3a1d87663abce6c67caa90c1c50f50e4b93d48ed7514629d; r31 tarball member ./intake/uploads.py sha256 48f39329ea4c947dc30cba02e07ed499d6f683726204710b16656c29d6f3c0c1",
+      "git log c4c2afe896..26d720a980 -- infra/aws/lambda/investor-reporting/intake/uploads.py: 4bc49a99fb feat(IRPT_ANLREQ round 20, AR-g-95, 0.9.0_WK_IRPT_ANLREQ~196); git log c4c2afe896..cbf05a6afa on the same path: empty"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
