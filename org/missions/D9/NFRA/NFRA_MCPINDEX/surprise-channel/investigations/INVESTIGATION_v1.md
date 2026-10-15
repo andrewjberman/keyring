@@ -8161,6 +8161,28 @@ carries none.
       ]
     },
     "notes": "Ruling (issuer): fixed as an A1 on TO-MX-c-19 in the same file the F1 cell already ships (a string never_sum_rules becomes at most one caveat, and a NONE-prefixed string none); the shipped cut then carries it. Not a gate field: caveats are text."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~42",
+    "surfaced_at": "2026-10-15T09:52:48Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W42-S1",
+    "one_line": "MX-c-18 cannot record its own status flip: step 5.2 appends <status>complete</status> to the task order, and that file is not among the order's <paths>, so the flip is left to the issuer.",
+    "spec_asserts": "TO-MX-c-18 worker face section 5 step 2: 'APPEND <status>complete</status> only if all three criteria PASS'; section 3 <paths> names five surfaces (emit_catalog_v02.py, derive_nl_tags.py, tests/, the deliverables folder, INVESTIGATION_v1.md) and the task-order file is not one of them; bounds item 1: 'You change only the files in <paths>'.",
+    "world_is": "All three criteria PASS by output on this worktree: AC1 304 of 304 rows carry a non-empty nl_tags; AC2 44 of 44 empty base rows now have tags, marked inferred, and 260 of 260 tagged rows are byte-equal with no basis key; AC3 bad 0 of 44 inferred rows. The flip would append to org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-18.nl-tags-on-every-catalog-row.md, a path outside the write grant, so the worker did not write it. The order's status therefore stays open until the issuer lands the flip.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-18.nl-tags-on-every-catalog-row.md@2d9d5c4503 (worker face section 3 <paths> and section 5 step 2)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~42/NFRA_MCPINDEX.TO-MX-c-18.nl-tags-on-every-catalog-row.proof_of_spec.json (the three criteria, PASS by output, on this worktree)"
+      ]
+    },
+    "notes": "The worker followed the write grant and left the task-order file untouched. Landing the status flip is the issuer's act, or a grant that names the task-order path; nothing served changes either way."
   }
 ]
 ```
