@@ -72,3 +72,27 @@ Workers `0.9.0_WK_IRPT_DASHBD~401` (`DB-c-1`, then `DB-c-2`) and `~402` (`DB-c-3
 | DB-c-4 | 0.9.0_WK_IRPT_DASHBD~403 |
 | DB-c-5 | 0.9.0_WK_IRPT_DASHBD~403 |
 | DB-c-6 | 2.0.0_SA_COO~C2 |
+
+## 3. ROUND 116, WORKSTREAM B-CW (2026-10-15 ~03:4xZ, issuer 2.0.0_SA_COO~C2, on the CTO's signed half of the DB-c-5 pair, msg 7982, blob `ad049d506c` @80a6ca8dd9; round 115 closed MAY-CLOSE, 2 of 2 PASS)
+
+**What the CTO ruled that this round cuts on** (`deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_DB-c-5_R115_COTTONWOOD_HOLDINGS_PERFORMANCE_CTO_HALF.md`): the function does not exist (BUILD, from the builder); the order of acts is BUILD the function, create the principal, run the 12-date catch-up (36 keys read absent first), after-read it, and only then the schedule ENABLED at 08:15 New York; ship schema 1.2 with a 1.1+1.2 after-read by all three `holdings_performance_daily` readers; a refused listing FAILS the fire loud and one test plants it; the applier is an AE CloudOps lane `0.0.0_AB_MSTR~DELL2` seats; and `account_return_daily` after 2026-06-22 takes Black Diamond as its source, so a B-CW READ asks whether Black Diamond carries an account-level return series and at what grain ("next round"). The COO half is signed at the same blob (`219d7cb42d`).
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-c-7` | The function BUILD, repo files only: the Cottonwood function, execution role and policy, scheduler role and the schedule (created DISABLED) as a third copy of the Inflection (IB-er-501) blocks in the 49 Financial Terraform root, plus the handler change (a refused listing raises) with its planted test. Nothing is planned, applied, uploaded or invoked | FWD-2, FWD-11 | WORLD by the gate's path floor (`<paths>` names the Terraform root; repo files only, no deploy; the act it prepares is the signed pair's) | none | C-D |
+| `DB-c-8` | The Black Diamond READ: every layer and table under `blackdiamond/cottonwood/`, each table's partitions, newest date, columns and grain, and whether any carries an account-level return series | FWD-11, FWD-15 | LOCAL (a read) | none | C-E |
+
+**Decisions inside this decomposition (the issuer's, stated).**
+(a) The two cells are independent chains with disjoint write sets (`DB-c-7` the Terraform root, the handler and tests; `DB-c-8` its own record), so two workers (`~404`, `~405`).
+(b) The handler `infra/aws/lambda/investor-reporting/holdings-performance/handler.py` is SHARED: its zip is the artifact the 49 Financial and Inflection functions also run (`lambda.tf` reuses one `artifact_key`). The build changes `_days_to_compute` only (the CTO's ruling 2), and the order forbids a rebuild or upload of the zip: those two functions carry the change only on a later apply, which the applier's pair names. This is stated in the order and graded by `DBC116-3-AC1` (no removed line in the four `.tf` files; `handler.py` changes only inside `_days_to_compute`).
+(c) Two existing tests (`test_catch_up.py`, the unreadable-listing branch and the `S297` listing-failure case) encode the old single-day fallback; the build updates those cases to expect the loud failure and keeps the empty-landed case at `[T]`.
+(d) The after-read of the 1.1+1.2 readers, the principal, the catch-up and the schedule are the applier's acts under the pair, not cut here.
+
+**fanout:** 2 of 2 chains, cap 8, reason: `DB-c-7` and `DB-c-8` are dependency-independent with disjoint write sets (the Terraform root, the handler and its tests; a record in its own worker folder). Workers `0.9.0_WK_IRPT_DASHBD~404` (`DB-c-7`) and `~405` (`DB-c-8`).
+
+## Cells (round 116)
+
+| cell id | owner |
+|---|---|
+| DB-c-7 | 0.9.0_WK_IRPT_DASHBD~404 |
+| DB-c-8 | 0.9.0_WK_IRPT_DASHBD~405 |
