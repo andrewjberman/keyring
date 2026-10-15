@@ -2278,3 +2278,12 @@ Z-S110 (49F producer OutOfMemory) follows once its cause is read. Eclipse silver
 
 The tool invokes the published-analysis Lambda (`AMGT_SCOPED_API_FUNCTION`), so its release carries the invoke grant (`harvest_published_invoke_iam.tf`) and its own never-widen ask: a later release order (after `OG-ap-19`).
 **fanout:** 1 of 1 chain (cap 8).
+
+## ADDENDUM R3-T.60 (2.0.0_SA_COO~O, 2026-10-15 ~00:5xZ) -- round 37, workstream G3-CATVIEWS: `mdpf_get_category_views` by its table row (replaces the superseded OG-pt-3; `~MI` msg 34293)
+
+| cell | what | writes (new files only) | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-pt-5` | G3 tool `mdpf_get_category_views(scope)` (firm-scoped, one scope per call, `global` its own object): the key template and bucket are read from the catalog table row `opal_data_portal_v2_platinum_mdpf_category_views` (c-5902fd256409, v0.5), the firm gate is the existing `portal_index`/`catalog_gate` one; no S3 literal in the code | `app/portal_mdpf.py`, `tests/test_og_pt5.py` | WORLD | ~92 | gt-6, MX-c-14 (merged) |
+
+The hookup of this tool, `etfs_*` (et-1, et-2) rides one batch hookup cell after those modules merge.
+**fanout:** 3 worker chains now (et-1 ~84, et-2 ~85, pt-5 ~92), cap 8; disjoint write sets.

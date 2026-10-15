@@ -137,7 +137,7 @@ the issuer to make at the merge.
 
 - A1 (issuer, 2026-10-14 ~23:5xZ, CTO ruling msg 34173 and `NFRA_MCPINDEX` MX-c-14 rows, rows Z-W84-S1/Z-W85-S1/S2): the worker stopped at the commit-time naming gate on legacy key literals. Ruled: no key, prefix or bucket literal in the module; every key template and the bucket are read from the table's catalog row at call time; `SERVED_PREFIXES` is computed from the rows; the release's grant (`OG-et-3`) is generated from the same rows. The FIRST ACT paragraph is replaced by KEYS COME FROM THE CATALOG. The order is re-cut; the slot's blocked branch is synced to trunk and reopened. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>FWD22-W7</workstream>
 <slot>~84</slot>

@@ -120,6 +120,12 @@ Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO. `/govern` fires on each 
       STRUCK 2026-10-14 ~18:5xZ for `2.0.0_SA_COO~C2` (ADVI_COTBKF) by 1.0.0_SA_CTO~DELL2: the project moves to dell1 now
       (Andrew-direct ~18:5xZ, "devote DELL1 wholly to ADVI/MDPF work", record
       `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261014_185xZ_DELL1_WHOLLY_ADVI_MDPF_AMGT.md`); its loop is dell1's to seat.
+      ADDED 2026-10-15 ~01:1xZ by 1.0.0_SA_CTO~DELL2: IRPT_DASHBD splits into four workstreams at round 114, DIRECTED on Andrew's "Go on"
+      (`org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_DASHBD_PARALLELIZATION_ASSESSMENT_20261014.md` ADDENDUM 1; ruling
+      `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_DASHBD_FOUR_WORKSTREAMS_AT_ROUND_114_20261015.md`). `/canonical-drive`
+      60m each, scoped to its workstream: `2.0.0_SA_COO~D2` B-49F+contract (continues), `2.0.0_SA_COO~C2` B-CW Cottonwood (re-tasked on
+      dell2), `2.0.0_SA_COO~I2` B-IN Inflection (new), `2.0.0_SA_COO~F2` F-SHIP (new). Stop: the workstream's outcomes REALIZED,
+      HELD-AT-STOP, or his stand-down.
     - `2.0.0_SA_COO~Y2` `/canonical-drive` 60m over IRPT_BCKEND workstream Y, and IRPT_ANLREQ as its interim driver (CVO verdict msg 1889),
       CHOSEN. Seating asked of `0.0.0_AB_MSTR~DELL2` by 1.0.0_SA_CTO~DELL2 at ~02:27Z on `2.0.0_SA_COO~G2` msg 3899 (IRPT_YCDGEN FWD-1 waits on
       a workstream-Y re-cut). Same stop.
