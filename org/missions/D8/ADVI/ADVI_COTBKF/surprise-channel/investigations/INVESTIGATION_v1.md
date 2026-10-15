@@ -9051,3 +9051,76 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W173-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~173",
+  "surfaced_at": "2026-10-15T19:20:59Z",
+  "one_line": "The order's ARD mint path (silver files whose names contain 'ard') is not in the checkout. The only silver files with 'ard' in the name are two guards and the ARD tests; the mint module those tests import is data/assets/scripts/silver/commonwealth_account_return_daily.py, which imports the gold producer account_return_daily.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --name '*ard*' data/assets/scripts/silver/ at base b773d5864a: 9 hits; the non-test hits are commonwealth_calendar_guard.py and set_identity_guard.py only",
+      "data/assets/scripts/silver/tests/test_commonwealth_ard_mint_claims.py:24-25 imports commonwealth_account_return_daily as cw",
+      "data/assets/scripts/silver/commonwealth_account_return_daily.py:131 imports account_return_daily as ard (the producer)"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-2 read-first item 2: the valuation chain includes files under data/assets/scripts/silver/ whose names contain ard (the ARD mint path).",
+  "world_is": "No silver module whose name contains ard mints account returns. The mint is commonwealth_account_return_daily.py, which the record classes by its inputs. Not established: whether another mint path exists outside silver.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W173-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~173",
+  "surfaced_at": "2026-10-15T19:20:59Z",
+  "one_line": "The literal token census for yahoo/global returns 0 hits across 9172 scanned files, but every reader builds the Yahoo store address with opal_naming.address('yahoo','global','silver','price_history',...). A zero from a literal-token census reads as absence here and is out of corpus for address-built readers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find -i --files --all 'yahoo/global' data/ lib/ infra/aws/lambda/ integrations/ org/modules/ at base b773d5864a: DENOMINATOR 0 hit(s) across 9172 file(s) scanned",
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py:498 SPLIT_STORE = ('yahoo','global','silver','price_history'); data/assets/scripts/silver/commonwealth_price_need.py:68 index_uri() builds the address the same way",
+      "comp-find -i --files --all 'price_history' over the same scope: 13 files, which catches the address-built readers"
+    ]
+  },
+  "spec_asserts": "TO ADVI_COTBKF.TO-CB-ci-2 item 1 names yahoo/global as a census token; a zero is read as no reader carrying that literal.",
+  "world_is": "The literal form does not occur in the corpus; readers reach the store through opal_naming.address() and are caught by the price_history token. Not established: readers that build the address from other parts or through an intermediate file.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W173-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~173",
+  "surfaced_at": "2026-10-15T19:20:59Z",
+  "one_line": "The valuation's as-traded basis reads a Yahoo Close cache (read_yahoo_close, one ticker-keyed CSV per ticker, not CUSIP-keyed) into account-day values. The order's reader definition (the Yahoo store and its index) does not name this source, and the cache path has no use_class filter.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py:241 def read_yahoo_close; :329 ser, ao = read_yahoo_close(cache, t); :303 apply_price_basis; PRICE_BASIS_DEFAULT = as_traded at :211",
+      "data/assets/scripts/silver/commonwealth_price_basis_census.py:9-12 writes the Yahoo close cache under .scratch/advi_cotbkf/yahoo_census via yfinance",
+      "comp-find yahoo token census at b773d5864a: no use_class token in commonwealth_daily_valuation.py or in the cache reader"
+    ]
+  },
+  "spec_asserts": "CTO condition C3 (msg 6119): a NOT_FOR_ACTIVE Yahoo price never feeds an active account's return; TO ADVI_COTBKF.TO-CB-ci-2 defines the readers as those of the Yahoo store and its index.",
+  "world_is": "A Yahoo price reaches the as-traded account valuation from a ticker-keyed cache with no use_class filter, so the guard as written does not cover this source. Not established: whether the cache holds any ticker that is NOT_FOR_ACTIVE, and how a ticker maps to a CUSIP.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
