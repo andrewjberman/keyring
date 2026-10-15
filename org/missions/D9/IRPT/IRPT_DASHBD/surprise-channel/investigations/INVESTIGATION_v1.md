@@ -17533,3 +17533,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The worktree carries the org and tools paths and the write grant, but not the data and infra source paths the trace reads. Widening the sparse checkout would reconstruct the tree, so the worker stopped at the first act with no record, no S3 read and no write. Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W413-S2 -- OBSERVATION: The order names silver_locations() with no argument; the function takes one day argument a
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W413-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~413",
+  "surfaced_at": "2026-10-15T14:34:05Z",
+  "one_line": "The order names silver_locations() with no argument; the function takes one day argument and raises TypeError without it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/account-dim-cot/lambda_function.py: def silver_locations(day) at line 78 takes one required argument",
+      "python -c silver_locations() with no argument: TypeError, missing 1 required positional argument day (local call, no AWS call, measured 2026-10-15)",
+      "silver_locations('2000-01-03') returns the bucket and key of the two silver inputs; the trace used that placeholder and kept the prefix, as the checker does"
+    ]
+  },
+  "spec_asserts": "The TO's silver step calls lambda_function.silver_locations() with no argument to obtain the bucket and prefix of fact_holdings and fact_allocations.",
+  "world_is": "The function takes a required day argument. The trace passed the placeholder 2000-01-03 and kept the prefix. The silver values are the same as the checker's own. Counts, dates and words only."
+}
+```
+
+## IRPT_DASHBD-D2-W413-S3 -- OBSERVATION: The scheduled reporting-gold build does not take the Cottonwood households from the newest
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W413-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~413",
+  "surfaced_at": "2026-10-15T14:34:05Z",
+  "one_line": "The scheduled reporting-gold build does not take the Cottonwood households from the newest Cottonwood account_dim partition: the hop BREAKS, and the build writes no Cottonwood filled output",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py run(): firm = firm_scope(source_entry(doc, declared_sources(doc)[0])); filled_inputs() builds ad = frv.FirmAdapter(firm, ard.opal_naming) and calls ad.households(reader, None) at line 722",
+      "data/assets/scripts/gold/irpt_reporting/sources.json: one custody entry (the first declared source), keyed by a registry master that resolves to a firm other than cottonwood; no cottonwood key",
+      "infra/aws/terraform/investor-reporting/reporting-gold/schedule.tf: the schedule fires only this handler; the cottonwood reader is reached only through filled_report_values.adapter_for() in the module's own main(), which the handler does not call",
+      "COTTONWOOD_FWD1_TRACE_R126.json (this folder): scheduled_for_cottonwood false, output_prefix null, output_object_count 0; the Cottonwood reader alone returns 226 households from the 2026-10-14 partition"
+    ]
+  },
+  "spec_asserts": "The reporting-gold build takes the Cottonwood households from the newest Cottonwood account_dim partition (the order's premise for hop gold_to_reporting_gold_households), and it writes a Cottonwood filled report.",
+  "world_is": "The scheduled build takes its households from the built-in firm's crosswalk and never calls the Cottonwood reader; it writes no Cottonwood filled output. Two hop verdicts are BREAKS. No action taken. Counts, dates and words only."
+}
+```
