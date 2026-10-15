@@ -15113,3 +15113,58 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The act's substance was measured directly and holds: member diff exactly scopes.json at the signed sha, registry test rc 0 on the built zip, plan 0/3/0 on the three named addresses, three CodeSha256 equal, replan No changes, derivations identical (94 keys), 36 of 36 keys written and no other, 12 manifests schema 1.2, three readers clean on 1.1 and 1.2, schedule ENABLED. The record COTTONWOOD_APPLY_RECORD_R2.json carries those values; I did not change any value to satisfy the checker and did not flip the order's status. Ask: amend p120_bcw.py/p117_bcw.py (BASE to the order commit c0385c0168 or an allow-list that includes irpt-status, the ledger lookup by '*<slug>*', ledger_entry and scopes_member_sha256 in DIGIT_OK_KEYS), then re-run the three criteria. Row id note: next free IRPT_DASHBD-D2-S<k>."
 }
 ```
+
+## IRPT_DASHBD-D2-W408-S1 -- the 49 Financial account_dim writer sits at another prefix and token than the order names; DBC121-1-AC1's writer-naming arm cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W408-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~408",
+  "surfaced_at": "2026-10-15T06:45:56Z",
+  "one_line": "DB-c-15 finds the 49F scheduled account-dimension writer at a different prefix and token than the order names: the builder address irpt/49financial/gold/account_dim/ holds 0 partitions, the live 49F dimension is gold/advi/dimensions/dim_account/ (571 partitions, newest 2026-10-13), and its writer file a00_runner.py carries no literal account_dim token, so DBC121-1-AC1's writer-naming arm cannot pass as written; the record names the writer as measured and nothing was repaired",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/runners_49f/a00_runner.py@0241caf301 lines 44-57: GOLD_BUCKET opal-data-49financial, GOLD_ROOT gold/advi, OUT_PREFIX dimensions/dim_account/; literal account_dim count in the file 0",
+      "infra/aws/terraform/opal-assets/advi_49f_floor.tf@0241caf301 lines 325-402: aws_scheduler_schedule advi_49f_gold_floor, cron(45 12 * * ? *) UTC, no state attribute",
+      "S3 LIST, read-only, private script (not committed): irpt/49financial/gold/account_dim/ 0 date partitions; gold/advi/dimensions/dim_account/ 571 date partitions, newest 2026-10-13",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r121/p121_bcw.py@0241caf301 line 42: the writer file must contain the literal account_dim"
+    ]
+  },
+  "spec_asserts": "The order's writer rule: each named writer file must name account_dim, and the 49 Financial account_dim is the pattern to copy (TO-DB-c-15 worker face steps 1 to 3, and criterion DBC121-1-AC1).",
+  "world_is": "The 49F table is named dim_account and sits at gold/advi/dimensions/dim_account/ in the 49F bucket, written by a scheduled chain step; the builder address for 49F is empty. The writer file contains no literal account_dim token, so the naming arm fails as measured for that writer.",
+  "notes": "Ask for a ruling: whether the naming arm should accept dim_account as the same table. Not repaired in the record or the checker."
+}
+```
+
+## IRPT_DASHBD-D2-W408-S2 -- the CTO's branch 2 host, the Cottonwood holdings-performance function, is created DISABLED and reads and writes less than an account_dim emit needs
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W408-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~408",
+  "surfaced_at": "2026-10-15T06:45:56Z",
+  "one_line": "The Cottonwood holdings-performance function the CTO named as the emit host (branch 2) is a scheduled source whose schedule resource is created DISABLED pending a catch-up after-read; its role reads the holdings silver only and writes two gold prefixes, and its handler carries no account_dim path, so an emit would need a fact_allocations read grant, one more write grant and an emit path",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf@0241caf301 lines 283-292: aws_scheduler_schedule irpt_holdings_performance_cot, state DISABLED, cron(15 8 ? * MON-FRI *) America/New_York",
+      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf@0241caf301 lines 283-300: role irpt_holdings_performance_cot reads the Black Diamond holdings silver and writes the two Cottonwood gold prefixes",
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py@0241caf301: native Grep for account_dim or cottonwood returns 0 matches"
+    ]
+  },
+  "spec_asserts": "The CTO's branch 2 (TO-DB-c-15 Ordered-by line and worker face step 5): add an account_dim emit to the Cottonwood holdings-performance function, with one more gold write grant.",
+  "world_is": "That function's schedule is created DISABLED pending a catch-up after-read; its role grants no read of the allocations silver and no write of an account_dim prefix; its handler has no account_dim path.",
+  "notes": "Branch 2 needs the enable decision as well as the grant and the emit path."
+}
+```
