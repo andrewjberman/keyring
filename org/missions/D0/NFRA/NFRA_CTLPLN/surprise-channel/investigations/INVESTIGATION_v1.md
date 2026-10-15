@@ -11269,3 +11269,59 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The ARMED hazard of W113-S1 is disarmed by this reading; the mdpf gap is carried as an INERT, held-safe difference."
 }
 ```
+
+## NFRA_CTLPLN-S9130 -- TO-CT-ak-3 cannot be executed by its addressee: the order's <paths> grant admits only 0.9.0_WK_<CODE>~<n> worker serials, so safe-commit refuses the signed change (lane POD4) and the read test (lane TOOL_BATTERIES) for 0.7.0_AE_CloudOps~U7
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9130",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~U7",
+  "surfaced_at": "2026-10-15T16:37:30Z",
+  "one_line": "TO-CT-ak-3 is issued_to 0.7.0_AE_CloudOps~U7 and says its <paths> block IS the grant, but ADHC_OWNPTH.005 admits only 0.9.0_WK_* serials, so safe-commit REFUSED the read test (lane TOOL_BATTERIES) and a read-only --check-path REFUSES the signed-change script (lane POD4); the cell's step 3 cannot be made without a lane override, so the cell STOPPED before any ledger entry, commit of the script, push or S3 write.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run 2026-10-15T16:34:44Z by 0.7.0_AE_CloudOps~U7 on .tools/tests/test_round21_fwd5_positive_read.py: 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: ... lane=TOOL_BATTERIES ... agent=0.7.0_AE_CloudOps~U7 not in permitted_agents'; 'ERROR: safe-commit did NOT commit (rc=1)'; nothing staged in the shared index (two-phase private index)",
+      "python .tools/owned-paths-validate.py --check-path 0.7.0_AE_CloudOps~U7 <path>, run 16:36Z, six paths of the order: REFUSE data/black_diamond/scripts/gold/diag_sleeve_fix.py lane=POD4; REFUSE .tools/tests/test_round21_fwd5_positive_read.py lane=TOOL_BATTERIES; PERMIT the .open_deploys sentinel, the change_management entry, INVESTIGATION_v1.md and the proof_of_spec deliverable (lane ANY / TREE_DELIVERABLES)",
+      ".tools/owned-paths-validate.py lines 115-120 and 224-248: the task-order grant (ADHC_OWNPTH.005) is consulted only for a serial matching the registry worker_grant serial_glob (0.9.0_WK_*) that parses as 0.9.0_WK_<CODE>~<n>; the file's own message: 'a missing path is a cut defect, never an override'",
+      "the order text, RECORD FACE lane line: 'the <paths> block IS the grant (worker RULING 1). 0.7.0_AE_CloudOps~U7 is the NFRA_CTLPLN deploy seat'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ak-3 RECORD FACE: the <paths> block IS the write grant for 0.7.0_AE_CloudOps~U7, and the order's RULES say to use .tools/safe-commit.sh for every commit with explicit paths.",
+  "world_is": "The <paths> grant reaches a CloudOps seat for 4 of 6 path families (org/critical_paths, the surprise channel, the tree deliverable) because those are lane ANY or TREE_DELIVERABLES, and not for the two that carry the cell: the script (POD4, a DS lane) and the read test (TOOL_BATTERIES, owner 0.8.0_AE_CloudComp). Without the script commit there is no blob to pin, so steps 3-6 cannot run. No override was used: GIT_COMMIT_AUTHOR_OVERRIDE would put a seat in a lane the registry does not give it and the order says to STOP on a refusal.",
+  "notes": "STATE LEFT: no ledger entry opened, no sentinel, no push, no AWS write; S3 key code/gold/diag_sleeve_fix.py still 1 version (3.yZFEuxxfxUOEMd.NRY7bZucaDccGX., ETag 56cb170f95c0b112a36a0ee3973d5473, read 16:27Z and 16:33Z). The read test file exists UNTRACKED in the shared tree (.tools/tests/test_round21_fwd5_positive_read.py; py_compile, ds-precommit and ruff clean; baseline run prints versions=1 etag_equals_repo_md5=True other_changed=-1 ok=False). Step 1 (W113-S1) was completed and is PASS for black_diamond gold: hook map and CODE_TREES agree for black_diamond, inf, cot on bucket and code/<layer>/<name>; mdpf and advi are gated in the core and absent from the hook map (held). Shipped artifacts ride only when named (safe_deploy_core.py:1044-1086), so the deploy writes one key. Issuer options, each its own call: (a) re-cut the order to a seat the grant or a lane admits for POD4 and TOOL_BATTERIES; (b) a registry lane change for these two paths naming this serial, by its owner; (c) Andrew or the CTO rules a GIT_COMMIT_AUTHOR_OVERRIDE for the two commits, named in the order. Owner: 2.0.0_SA_COO~C (issuer). Also: the order prescribed the row id form NFRA_CTLPLN-U7-S<k>; the row gate REFUSED it on safe-commit (fabric laptop, coordinate 'U7' not in the device register D1, D2, Z), so this row carries the next plain sequential id; the order's id form cannot be committed by any seat on this fabric."
+}
+```
+
+## NFRA_CTLPLN-S9131 -- A ledgered box-diff deploy writes NO row to org/safe-deploy-bypass-audit.log, so TO-CT-ak-3 step 6 ("one deploy row naming your serial") cannot be met on that path and the actor of the deploy is not recoverable from the log
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9131",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~U7",
+  "surfaced_at": "2026-10-15T16:37:40Z",
+  "one_line": "The pre-push hook's box-diff deploy of a ledgered file (hook lines 224-227) goes through safe-deploy.sh and writes no audit row; only PINNED-DEPLOY (pinned_entry_deploy), HELD-DEPLOY and --allow-stale/SERVE-RELEASE/REFUSED-ARTIFACT rows exist, so the deploy's actor is unrecorded in org/safe-deploy-bypass-audit.log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/pre-push-safe-deploy.sh lines 224-227 (box-diff ledgered deploy: echo + bash safe-deploy.sh, no audit append) against lines 135 (the only PINNED-DEPLOY append) and 111/127/202/222 (HELD-DEPLOY appends)",
+      ".tools/safe_deploy_core.py write_bypass_audit callers at lines 1576, 1646 (--allow-stale), 1711 (SERVE-RELEASE): none on a normal deploy",
+      "org/safe-deploy-bypass-audit.log tail read 2026-10-15T16:3xZ: only HELD-DEPLOY rows, newest 2026-10-12T17:52:05Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ak-3 step 6 and CTak3-AC3: the audit log shows one deploy row for the path naming the pusher's serial; report the audit row's actor.",
+  "world_is": "A deploy that rides the box-diff path (the path this cell's commit would take, since the script is in the box diff against origin/CLOUD) leaves its proof in S3 (VersionId, LastModified) and in the hook's own output on the pusher's terminal, never in the audit log. The read test prints audit_actor=UNKNOWN for that case and says why. The pinned-entry path would write a PINNED-DEPLOY row, but the pinned step skips any path the box diff already handled.",
+  "notes": "Owner of the hook: 0.0.0_AB_MSTR / the D1-S8 author. Not changed here. Effect on the cell once it can run: the actor is proven by the push's own stderr ('deploying 1 ledgered file(s)') and the S3 version time inside the push window, and AC3's 'audit row's actor' is reported as none-written."
+}
+```
