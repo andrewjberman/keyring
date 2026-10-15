@@ -39774,3 +39774,107 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The check is ABSENT on this box, not empty: the list was set aside on 2026-10-11 and the default path is empty of it. The commit 654202d757 touched only the deliverables folder of this worker (record JSON, harness, candidate map writer, criteria output) and was written to carry counts, hashes and names only; the check did not grade it. The list is not moved back by this worker: it is outside the grant. Disarm needs the box owner's decision on where the list lives."
 }
 ```
+
+## IRPT_BCKEND-D2-W434-S1 -- The safe-commit of the six transplant files printed WARN: client-data-check hashed account-id list ABSENT on this box, so the commit was not checked for client account ids; the six files are code and carry no account id by hand re
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The safe-commit of the six transplant files printed WARN: client-data-check hashed account-id list ABSENT on this box, so the commit was not checked for client account ids; the six files are code and carry no account id by hand reading.",
+  "spec_asserts": "Worker face cell IB-pr-595 (client data rule): no real account id, household id, client id or security identifier in any tracked file. The commit gate of the tree is the check that enforces it, and it reads its list from the account-id hashes file or OPAL_ACCOUNT_ID_HASHES.",
+  "world_is": "safe-commit of fa610b01b4 (six files under deliverables/0.9.0_WK_IRPT_BCKEND~434/transplant/) printed: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids (absent is not empty). The commit then passed the other gates (pre-commit gate clean for 6 of 6 files; surprise-row gate and to-pipeline gate OK). The record was then written with counts only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at fa610b01b4 (this worktree): line beginning WARN: client-data-check: hashed account-id list ABSENT",
+      "commit fa610b01b4 on branch wk-IRPT_BCKEND-434: six files, 12170 insertions, all under org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~434/transplant/",
+      "the committed holdings_snapshot.py and publication.py were read by the harness for counts and hashes only; no account id appears in the harness output"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W434-S2 -- The Read of org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-595.holdings-transplant.md returned the whole file, the RECORD FACE included, though the instruction is to read only the WORKER FACE; the same surfacing
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The Read of org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-595.holdings-transplant.md returned the whole file, the RECORD FACE included, though the instruction is to read only the WORKER FACE; the same surfacing as IRPT_BCKEND-D2-W431-S1.",
+  "spec_asserts": "The order's launch instruction says to read the section headed WORKER FACE (from WORKER FACE to RECORD FACE) and not to read the RECORD FACE.",
+  "world_is": "A single Read call of the order file (no offset or limit) returned all 94 lines, the WORKER FACE and the RECORD FACE with its preflight block. No ordering of the worker's acts depended on the RECORD FACE: its record shape and the three criteria are repeated in the WORKER FACE, which was the source used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-595.holdings-transplant.md in worktree C:/dev/wk-IRPT_BCKEND-434 at base d327c250bc, first act",
+      "the WORKER FACE record shape at the order's lines 44 to 48 matches the RECORD FACE's own shape text",
+      "IRPT_BCKEND-D2-W431-S1 in INVESTIGATION_v1.md records the same whole-file return for IB-pr-590"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W434-S3 -- The order says scratch files go in a directory OUTSIDE the repository, while the worker rule says scratch lives in the worktree .scratch directory; the two rules name different places, the same conflict as IRPT_BCKEND-D2-W431-S2.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:08:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order says scratch files go in a directory OUTSIDE the repository, while the worker rule says scratch lives in the worktree .scratch directory; the two rules name different places, the same conflict as IRPT_BCKEND-D2-W431-S2.",
+  "spec_asserts": "Worker face: Scratch files go in a directory OUTSIDE the repository. Worker rule: scratch is <your worktree>/.scratch/ only.",
+  "world_is": "The three pin worktrees (git worktree add) had to sit outside the repository, so they went under the session scratchpad. The harness scratch and fragments went there too. A commit message file went in the worktree .scratch directory, which is gitignored (.gitignore line 450).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree list at the pins: C:/Users/Test/AppData/Local/Temp/claude/C--dev-ajb-workspace/47eeb1ac-c959-4795-ad75-ff16a015ad46/scratchpad/ir434/pins/{49financial,cottonwood,inflection}",
+      ".gitignore:450 .scratch/ (git check-ignore of .scratch/x.txt)",
+      "IRPT_BCKEND-D2-W431-S2 in INVESTIGATION_v1.md records the same conflict for IB-pr-590"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W434-S4 -- The record commit 1b5d1ac69a printed one-writer WARN: INVESTIGATION_v1.md is the laptop's unsuffixed file written from dell2, and the gate names the per-box file <stem>.dell2.<ext> (WARN until C-QUEUE); the rows were appended to t
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W434-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~434",
+  "surfaced_at": "2026-10-15T18:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The record commit 1b5d1ac69a printed one-writer WARN: INVESTIGATION_v1.md is the laptop's unsuffixed file written from dell2, and the gate names the per-box file <stem>.dell2.<ext> (WARN until C-QUEUE); the rows were appended to the named file, as the order says.",
+  "spec_asserts": "The order's BOUNDS and worker face name org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md as the channel file for this worker's rows.",
+  "world_is": "safe-commit of 1b5d1ac69a passed with the one-writer WARN on that unsuffixed path; the gate's per-box convention would put a dell2 writer in a suffixed file. The rows S1 to S3 were appended to the named file in the same commit, and the surprise-row gate reported no row problem.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output at 1b5d1ac69a (this worktree): line beginning [one-writer] WARN: org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md is the laptop's (unsuffixed) file",
+      "the surprise-row gate of commit 1b5d1ac69a: 3 new row(s) of 1526 total checked, OK: 1 file(s), all new rows carry their step-7/step-10 fields (the S4 row is appended after that commit)",
+      "the worker face channel-rows paragraph: append each row as its OWN block at the END of INVESTIGATION_v1.md"
+    ]
+  }
+}
+```
