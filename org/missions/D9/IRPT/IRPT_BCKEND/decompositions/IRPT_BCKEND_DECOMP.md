@@ -4219,3 +4219,16 @@ Check IB217-1 (`deliverables/2.0.0_SA_COO~P2/checks/r217/p217_cells.py`), dry-ru
 | `IB-pr-579` | APPLY the signed pair IB-pr-456 and ADDENDUM 1: the four members to `irpt-ycharts-generate` by its Terraform path, the reworded BEFORE record, the after-read, the health proof | FWD-4 | WORLD | none | PI1-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one function; the seat is a CloudOps seat, not a worker subagent.
+
+## 214. ROUND 1, WORKSTREAM ~PJ (the served DELTA of the two ~PH builds, measured by READ-ONLY dry runs; 2026-10-15 ~14:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msg 8302 and the ruling @9913bf3ed4)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). ~PH r1 built, at HEAD only, the `absent_at_source` exemption wired live with its listing (IB-pr-577) and the 49 Financial split adjustment (IB-pr-578). Each reaches the firms only by an apply under a never-widen pair whose blast radius is a measured served DELTA. The CTO ruled (msg 8302, CVO v118) that the exemption's DELTA is measured ALONE: the same candidate with and without it, per firm. Two READ cells with disjoint outputs: IB-pr-580 builds each firm's candidate once from the live pinned inputs, gates it without and with the evidence provider on a deep copy, and compares node by node, then simulates the second fire; IB-pr-581 runs the producer's return over the 47 split days of the READ IB-pr-572 before and after the adjustment and counts the account-days moved. Both are read-only, counts only, SERVED. The never-widen pairs, the release pins and the applies are later acts.
+
+Checks IB218-1 and IB218-2 (`deliverables/2.0.0_SA_COO~P2/checks/r218/p218_cells.py`), dry-run at the base: AC1 to AC3 of both cells all FAIL; the control (`control218.py`) passes all six positives and fourteen negatives plus the no-record cases each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-580` | READ the exemption ALONE per firm: counts with and without, nodes added, no other node changed, the second fire | FWD-21 | SERVED | none | PJ1-a |
+| `IB-pr-581` | READ the split adjustment before and after over the 47 split days of 49 Financial | FWD-21 | SERVED | none | PJ2-a |
+
+fanout: 2 of 2 chains, cap 8, reason: two read-only cells with disjoint outputs; workers slots ~422 and ~423 start now.

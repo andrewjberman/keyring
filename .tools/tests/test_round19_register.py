@@ -6,6 +6,8 @@
         OPAL_DEVICE_REGISTER pointing at the copy. A tool is REACHED when its output or its value names fixbox. A tool
         that cannot be pointed at a register copy is LISTED with its reason and counted NOT REACHED, never failed.
         The real register is never written (its sha1 is printed before and after).
+        The two box-list tools that read no register by default (test_box_lists_from_register.py and
+        fabric_value_census.py) are run with --register <the copy>; each is REACHED when its BOXES-READ line names fixbox.
         LAST line: FWD2-BOX-ADDED tools=<reached>/<listed> not_reached=<n> named=<k> ok=<True|False>
 
 --fwd7  Every OVERLAP line of .tools/placement-check.py (run unchanged) is classed:
@@ -97,13 +99,12 @@ def fwd2():
         ("crossbox-matrix.py", [py, os.path.join(ROOT, ".tools", "crossbox-matrix.py")], "token"),
         ("seat-list.py show --all", [py, os.path.join(ROOT, ".tools", "seat-list.py"), "show", "--all"], "absent"),
         ("box-status-report-check.py BOXES", [py, "-c", value_snip % "' '.join(sorted(m.BOXES))", boxstat], "token"),
+        ("tests/test_box_lists_from_register.py --register",
+         [py, os.path.join(ROOT, ".tools", "tests", "test_box_lists_from_register.py"), "--register", reg_copy], "boxes-read"),
+        ("tests/fabric_value_census.py --register",
+         [py, os.path.join(ROOT, ".tools", "tests", "fabric_value_census.py"), "--register", reg_copy], "boxes-read"),
     ]
-    not_reached = [
-        ("tests/test_box_lists_from_register.py",
-         "prints PASS/FAIL arms only and names no box; its two value arms are the gate FABRIC_ENUM and BOXES rows above"),
-        ("tests/fabric_value_census.py",
-         "scans tracked text for the token site-z/sitez; it reads no box list and cannot take a register copy"),
-    ]
+    not_reached = []
     rows, named = [], 0
     for label, argv, mode in tools:
         rc, out = run(argv, env)
@@ -113,9 +114,12 @@ def fwd2():
             hit = any(re.search(r"(?<![\w-])%s(?![\w-])" % FIXTURE_NAME, x) for x in out.splitlines())
         elif mode == "boxrow":
             hit = any(x.startswith("BOX %s " % FIXTURE_NAME) for x in out.splitlines())
+        elif mode == "boxes-read":
+            hit = any(x.startswith("BOXES-READ ") and FIXTURE_NAME in x.split() for x in out.splitlines())
         else:
             hit = ("ABSENT %s:" % FIXTURE_NAME) in out
-        hit = bool(hit and rc == 0)
+        # boxes-read is reached on the BOXES-READ line alone: the census's exit code is its own token verdict (rc printed)
+        hit = bool(hit and (rc == 0 or mode == "boxes-read"))
         named += int(hit)
         rows.append((label, rc, hit))
         shown = [x for x in out.splitlines() if FIXTURE_NAME in x][:2] or ["(no line names %s)" % FIXTURE_NAME]
