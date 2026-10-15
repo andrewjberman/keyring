@@ -84,7 +84,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO msg 6249 (round-106 analysis @08a12d383e, sections 1 and 2 item 1): `D1-S32` ruled, a team figure stands where a withheld vendor ratio's reason would print, with a visible source mark; the mark is round 107's cell. Lessons carried from round 106: the branch is cut from PROD, never from DEV; the order names the component after a measured look at the served body and the page code (this order read the live SHOP CN body and `ModelTab.tsx` at `e0b43076`); the worker files a BLOCKING row rather than patching around a premise that does not hold (round 106's `W441-S1` was exactly this premise on the PBR fixture, never ruled until D1-S32). The words `research team estimate` are the issuer's choice inside the CTO's "(team estimate)". AC5-style judgment: none on this order; the CTO re-grades bm-5 AC5 change 3 at the walk `AMGT-bn-4`.
 
-<status>pending</status>
+<status>complete</status>
 <round>107</round>
 <slot>0.9.0_WK_AMGT_RESAPP~471</slot>
 <fabric>dell1</fabric>
