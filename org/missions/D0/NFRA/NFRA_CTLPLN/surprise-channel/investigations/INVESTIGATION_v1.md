@@ -11213,3 +11213,59 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
  "notes": "Found by the CVO's L8 re-run of round 20; not changed here."
 }
 ```
+
+## NFRA_CTLPLN-S9128 -- Site Z's spawn audit log is tracked but its committed version on origin box/sitez ends at line 18991 (last com
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9128",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-15T16:28:31Z",
+  "one_line": "Site Z's spawn audit log is tracked but its committed version on origin box/sitez ends at line 18991 (last commit 2026-10-09), so the 2026-10-14 23:32Z respawn lines 19401-19404 that site Z's manager cites exist on site Z's disk only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer run 2026-10-15 ~16:3xZ: `git log origin/box/sitez -1 --format=%h %aI -- org/mcp/agent-spawn-audit.log` printed `574fe5ce6b 2026-10-09T13:09:28-04:00`; `git show origin/box/sitez:org/mcp/agent-spawn-audit.log | wc -l` printed 18991",
+      "the branch itself is current: `git ls-remote origin refs/heads/box/sitez` read b972ccb0b2 on 2026-10-15 (the CTO's round-20 wording 'origin box/sitez ends 2026-10-09' is true of the log file, not of the branch; the issuer's crossbox call body XB_FWD21_SITEZ_AUDIT_QUOTE.md says the branch had not advanced, which was imprecise)",
+      "site Z manager's report: msg 109429, audit lines 19401-19404, row Z-S12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.31 FWD-21: the manager's record for a day is read for project rulings; the reader needs the record, not the manager's account of it.",
+  "world_is": "The spawn audit log on site Z grows on disk but its committed copy on box/sitez is 6 days old, so a seat on another box cannot read the lines the FWD-21 exercise rests on. The issuer asked 0.0.0_AB_MSTR~Z by crossbox call XB-20261015T162412Z-f8a5 to quote the four lines into a committed record.",
+  "notes": "Owner 0.0.0_AB_MSTR (site Z's box-sync commits the file or the log is declared untracked). Not changed here."
+}
+```
+
+## NFRA_CTLPLN-S9129 -- Disposition of row NFRA_CTLPLN-W113-S1 (the pre-push hook's pinned-entry bucket and key map): the map for blac
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9129",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-15T16:28:31Z",
+  "one_line": "Disposition of row NFRA_CTLPLN-W113-S1 (the pre-push hook's pinned-entry bucket and key map): the map for black_diamond, inf and cot equals safe_deploy_core.py CODE_TREES; mdpf is gated in the core and absent from the hook's map, so the hook holds it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer read-only comparison 2026-10-15 ~15:1xZ of .tools/safe_deploy_core.py CODE_TREES lines 68-122 (bucket opal-data-bd / opal-data-inf / opal-data-cot; layers gold, silver, bronze at code/<layer>/) with the hook's BUCKETS and `code/<layer>/<name>` key in .tools/git-hooks/pre-push-safe-deploy.sh (pinned_entry_deploy)",
+      "CRO research R2 and R3 in org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_CTLPLN_R21_FWD5_ONE_SIGNED_CHANGE_ONE_SCRIPT_RESEARCH_20261015.md",
+      "round-21 order TO-CT-ak-3 step one repeats the comparison for black_diamond gold before the push"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "REMEDIATION_v10 W113-S1 remedy P3: the hook's map and PIPELINE_MAP agree for every entry, or the hook reads PIPELINE_MAP itself.",
+  "world_is": "The three trees the hook maps agree with the core; the fourth gated tree (mdpf) is missing from the hook, which prints pinned-s3-target-not-derivable and deploys nothing for it. A wrong read key could only cause a redundant idempotent deploy of an entry-pinned file, never a write to another key (the deploy itself goes through safe-deploy.sh and the core's own mapping). P3's 'agree for every entry' is not yet true for mdpf; making the hook read PIPELINE_MAP is a later hook cell (CRO gap R2).",
+  "notes": "The ARMED hazard of W113-S1 is disarmed by this reading; the mdpf gap is carried as an INERT, held-safe difference."
+}
+```
