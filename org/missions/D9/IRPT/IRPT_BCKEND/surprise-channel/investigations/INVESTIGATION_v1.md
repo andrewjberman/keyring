@@ -35418,3 +35418,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The 2026-07-01 positions hole predates the stated stop and is not explained by it. No artifact read gives another cause for that date. The 2026-09-28 positions hole is after the stop, when the raw feed ran on other days, so the stop alone does not explain it either."
 }
 ```
+
+## IRPT_BCKEND-D2-S180 -- Dispositions on worker 394's rows and the answer on W302-S2: the two Orion days never reached the mirror (parquet only; transactions and performance absent at the source)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S180",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T03:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 394's rows (D2-W394-S1 to S5) and the answer to the CTO's ask on W302-S2: the two days never reached the mirror because the Inflection source bucket holds only a .parquet positions object for them and no transactions or performance object at all, and the mirror copies .jsonl.gz only; the re-pull is not a re-run of one lambda.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB199-1 AC1 to AC3 on the worker's tree (PASS) and the proof instance (VALID); merge d3bbb5dd46; deliverables/0.9.0_WK_IRPT_BCKEND~394/IB199-1_orion_gap_read.json",
+      "the record: 12 of 12 target-partition counts read 0; source LIST (opal-data-inf bronze): positions 2026-07-01 and 2026-09-28 hold 1 key each, a .parquet, and 0 .jsonl.gz; transactions and performance hold 0 keys for either day; the mirror copies only .jsonl.gz (opal-assets-ingest-mirror lambda_function.py:77 and :493); the silver sweep builds its expected set from the bronze listing (mirror_conversion.py:875)"
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 7914: the Orion pull belongs to IRPT_BCKEND under the 6 AM ET fold; re-pull the two dates under a never-widen pair, and ask why the scheduled pull skipped them.",
+  "world_is": "DISPOSITIONS. D2-W394-S1 (stale schedule text), S3 (no repo writer of the flat .jsonl.gz positions key; the repo pull writes parquet), S4 (14-day log retention, the gap-day logs are gone), S5 (2026-07-01 is parquet-only and before the header's stated raw stop): INERT, recorded. D2-W394-S2 (the 16:00 UTC silver sweep cannot see a feed whose bronze key never landed): stays ARMED, owner me; disarm condition: the CTO rules the re-pull route and the sweep's expected set names the missing days or the feed is covered by the 06:00 ET fold (the fold covers none of the 155 live rules for this feed). THE ANSWER TO 'WHY': inferred, not measured: no artifact states why the raw producer wrote no .jsonl.gz for the two days; measured: the source holds only parquet for positions on both days and nothing for transactions and performance. THE RE-PULL: needs a raw .jsonl.gz writer that the repo does not hold (not located), at least 640 Orion positions requests (320 households times 2 dates; transactions and performance counts not read) and the vendor JWT object by name; it is a vendor-write pair, not one lambda re-run. Recommendation: the next cell locates the raw producer of the 2,358 existing .jsonl.gz objects and costs the re-pull per feed; the pair is cut after it."
+}
+```
