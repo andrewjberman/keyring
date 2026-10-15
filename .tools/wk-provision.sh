@@ -26,7 +26,13 @@ usage() {
   cat >&2 <<'EOF'
 usage:
   wk-provision.sh provision <CODE> <n> --path <abs-path> [--portal-ref <commit-ish>] [--node-modules link|none|install]
-                                        [--nested <path>=<ref> ...]
+                                        [--nested <path>=<ref> ...] [--order <task-order-file> ...]
+                                        [--sparse-add <folder> ...] [--full "<reason>"]
+
+provision is a SPARSE checkout by default: the base set is .tools/, lib/ and the project folder
+org/missions/D*/*/<CODE> (plus the root files). --order adds every folder its <paths> block names (a file
+contributes its parent folder; a path absent at HEAD is printed as SKIPPED). --sparse-add adds a folder.
+--full "<reason>" is a full checkout; the reason is required (an empty reason is refused, rc 2, nothing created).
   wk-provision.sh portal <worktree-path> [--portal-ref <commit-ish>] [--node-modules link|none|install]
   wk-provision.sh remove <worktree-path> [--portal-only]
   wk-provision.sh --self-test
@@ -265,14 +271,61 @@ provision_nested() {
   echo "NESTED: $npath -> $target_dir branch=$nested_branch"
 }
 
+# order_folders <task-order-file> -- one line per folder the order's <paths> block needs: "F <folder>" for a path present
+# at HEAD (a file contributes its parent folder, a folder contributes itself); a path absent at HEAD prints a SKIPPED line.
+order_folders() {
+  local file="$1" p t d
+  tr -d '\r' < "$file" | awk '/^<paths>/{f=1; next} /^<\/paths>/{f=0} f && NF {print}' \
+  | while IFS= read -r p; do
+      p="$(printf '%s' "$p" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+      p="${p%/}"
+      [ -n "$p" ] || continue
+      if ! git cat-file -e "HEAD:$p" 2>/dev/null; then
+        echo "SKIPPED: <paths> $p is absent at HEAD (not added to the sparse set)"
+        continue
+      fi
+      t="$(git cat-file -t "HEAD:$p")"
+      if [ "$t" = "tree" ]; then
+        echo "F $p"
+      else
+        d="$(dirname "$p")"
+        [ "$d" = "." ] || echo "F $d"
+      fi
+    done
+}
+
+# FOLDERS: the sparse set for the current provision (global; add_folder de-duplicates).
+FOLDERS=()
+add_folder() {
+  local f="${1%/}" x
+  [ -n "$f" ] || return 0
+  for x in "${FOLDERS[@]+"${FOLDERS[@]}"}"; do
+    [ "$x" = "$f" ] && return 0
+  done
+  FOLDERS+=("$f")
+}
+
+# checked_out_stats <worktree> -- prints "<files> <bytes>": the tracked blobs PRESENT in the worktree (ls-files H
+# entries), sized from HEAD's blob sizes (ls-tree -l), never from the disk's cluster size. A gitlink is not a file.
+checked_out_stats() {
+  local wt="$1" tl tt out
+  tl="$(mktemp)" || return 1
+  tt="$(mktemp)" || { rm -f "$tl"; return 1; }
+  git -C "$wt" ls-files -t | awk '$1=="H"{print substr($0,3)}' > "$tl"
+  git -C "$wt" ls-tree -r -l HEAD > "$tt"
+  out="$(awk -F'\t' 'FILENAME==ARGV[1]{want[$0]=1; next} { split($1,a," "); if (a[2]=="blob" && ($2 in want)) { n++; b+=a[4] } } END { printf "%d %d", n+0, b+0 }' "$tl" "$tt")"
+  rm -f "$tl" "$tt"
+  printf '%s' "$out"
+}
+
 cmd_provision() {
   if [ $# -lt 2 ]; then
     die 2 "provision: <CODE> <n> required"
   fi
   local code="$1"; shift
   local n="$1"; shift
-  local path="" portal_ref="" node_modules_mode=""
-  local nested_specs=()
+  local path="" portal_ref="" node_modules_mode="" full="false" full_reason=""
+  local nested_specs=() order_files=() sparse_adds=()
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -285,6 +338,15 @@ cmd_provision() {
       --nested)
         shift; [ $# -gt 0 ] || die 2 "provision: --nested requires a value (path=ref)"
         nested_specs+=("$1") ;;
+      --order)
+        shift; [ $# -gt 0 ] || die 2 "provision: --order requires a value (a task-order file)"
+        order_files+=("$1") ;;
+      --sparse-add)
+        shift; [ $# -gt 0 ] || die 2 "provision: --sparse-add requires a value (a folder)"
+        sparse_adds+=("$1") ;;
+      --full)
+        shift; [ $# -gt 0 ] || die 2 "provision: --full requires a reason"
+        full="true"; full_reason="$1" ;;
       *)
         die 2 "provision: unknown argument: $1" ;;
     esac
@@ -292,7 +354,51 @@ cmd_provision() {
   done
 
   [ -n "$path" ] || die 2 "provision: --path <abs-path> is required"
+  if [ "$full" = "true" ]; then
+    [ -n "$(printf '%s' "$full_reason" | tr -d '[:space:]')" ] \
+      || refuse 2 "--full needs a non-empty reason (a full checkout is recorded with its reason); nothing created"
+  fi
+  local o
+  for o in "${order_files[@]+"${order_files[@]}"}"; do
+    [ -f "$o" ] || refuse 2 "--order $o is not a file; nothing created"
+  done
   guard_install_mode "$node_modules_mode" "$(main_worktree)/portal"
+
+  # The project folder: exactly one org/missions/D*/*/<CODE> directory at HEAD. Checked BEFORE anything is created.
+  local pf_hits pf_count
+  pf_hits="$(git ls-tree -r -d --name-only HEAD -- org/missions | grep -E "^org/missions/D[^/]*/[^/]+/${code}\$" || true)"
+  pf_count="$(printf '%s\n' "$pf_hits" | grep -c . || true)"
+  [ "$pf_count" -le 1 ] || refuse 2 "org/missions/D*/*/$code names $pf_count directories at HEAD (one expected); nothing created"
+
+  FOLDERS=()
+  if [ "$full" = "false" ]; then
+    add_folder ".tools"
+    add_folder "lib"
+    if [ "$pf_count" -eq 1 ]; then
+      add_folder "$pf_hits"
+    else
+      echo "WARN: no org/missions/D*/*/$code directory at HEAD; the project folder is not in the sparse set"
+    fi
+    local line sa sa_c
+    for o in "${order_files[@]+"${order_files[@]}"}"; do
+      while IFS= read -r line; do
+        case "$line" in
+          "F "*) add_folder "${line#F }" ;;
+          *) echo "$line" ;;
+        esac
+      done < <(order_folders "$o")
+    done
+    for sa in "${sparse_adds[@]+"${sparse_adds[@]}"}"; do
+      sa_c="${sa%/}"
+      if git cat-file -e "HEAD:$sa_c" 2>/dev/null; then
+        add_folder "$sa_c"
+      else
+        echo "SKIPPED: --sparse-add $sa is absent at HEAD (not added to the sparse set)"
+      fi
+    done
+  elif [ "${#order_files[@]}" -gt 0 ] || [ "${#sparse_adds[@]}" -gt 0 ]; then
+    echo "NOTE: --order and --sparse-add are ignored in full mode"
+  fi
 
   # Validate EVERY --nested spec against the MAIN tree BEFORE anything is created (super
   # worktree included) -- OA-w-1 AC3: the refusal names the path and creates nothing.
@@ -309,8 +415,24 @@ cmd_provision() {
   local branch="wk-${code}-${n}"
   local base_sha
   base_sha="$(git rev-parse HEAD)"
-  git worktree add -b "$branch" "$path" HEAD || die 1 "git worktree add failed for $path"
+  if [ "$full" = "true" ]; then
+    git worktree add -b "$branch" "$path" HEAD || die 1 "git worktree add failed for $path"
+  else
+    git worktree add --no-checkout -b "$branch" "$path" HEAD || die 1 "git worktree add failed for $path"
+    git -C "$path" sparse-checkout init --cone || die 1 "sparse-checkout init --cone failed for $path"
+    git -C "$path" sparse-checkout set "${FOLDERS[@]}" || die 1 "sparse-checkout set failed for $path"
+    git -C "$path" checkout -q HEAD || die 1 "checkout of HEAD failed in $path"
+  fi
   echo "WORKTREE: $path branch=$branch base=$base_sha"
+  local stats files bytes
+  stats="$(checked_out_stats "$path")"
+  files="${stats% *}"
+  bytes="${stats#* }"
+  if [ "$full" = "true" ]; then
+    echo "PROVISIONED $path branch=$branch mode=full reason=$full_reason files=$files bytes=$bytes"
+  else
+    echo "PROVISIONED $path branch=$branch mode=sparse folders=${#FOLDERS[@]} files=$files bytes=$bytes"
+  fi
 
   local portal_args=("$path")
   [ -n "$portal_ref" ] && portal_args+=(--portal-ref "$portal_ref")
