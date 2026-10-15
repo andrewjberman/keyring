@@ -15707,3 +15707,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For 2.0.0_SA_COO~P2 (the route and hop 5 owner under the CTO's ruling on call 076d): decide, before hop 5's window, whether a print reads the frozen filled object through this route (then add the version_id parameter, the render-delegate refusal and X-Opal-Version-Id, as the series has them) or server-side (then the portal's version query is removed by an F-SHIP amendment and the print takes its document from the render host). The portal side follows either way by an issuer amendment. Counts and paths only."
 }
 ```
+
+## IRPT_DASHBD-D2-W192-S1 -- lib/trading_calendar.py answered prev_trading_day from its hardcoded NYSE fallback on this box (pandas_market_calendars absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W192-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~192",
+  "surfaced_at": "2026-10-15T07:54:00Z",
+  "one_line": "TO-DB-b-238 step 2 names lib/trading_calendar.py prev_trading_day for the previous trading day of the five other dates. On this box the module printed a WARN that pandas_market_calendars is absent and answered from its hardcoded NYSE fallback (covers 2010-2027). The six pairs it returned are weekday-consecutive with no holiday between them, so the read was not affected; the source of the answer was the fallback, not the library.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 120 order DB-b-238 step 2: the previous trading day of each of the five other dates is taken from lib/trading_calendar.py prev_trading_day.",
+  "world_is": "prev_trading_day(2026-07-02) = 2026-07-01, (2026-10-13) = 2026-10-12, (2026-09-22) = 2026-09-21, (2026-10-06) = 2026-10-05, (2026-09-16) = 2026-09-15 and (2026-04-21) = 2026-04-20, each printed with the warning WARN: trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027. The calendar's own note says the fallback must be regenerated before 2028.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py at bf61bc8845 (prev_trading_day line 191; _fallback_source line 141; _announce_fallback line 148), run from the worktree root on 2026-10-15",
+      "balance_lag_read_r120.py at bf61bc8845 (deliverables folder 0.9.0_WK_IRPT_DASHBD~192), its run printed the calendar WARN once and the other-date prior dates above"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as an observation of a capability that is not on this box. No repair is made by this seat; the calendar's owner decides whether the library is installed on the fabric or the fallback is the declared source."
+}
+```
+
+## IRPT_DASHBD-D2-W192-S2 -- the commit-time client-data check did not run on this box (the hashed account-id list is absent), so the client-id clause of the pre-commit scan was done by hand
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W192-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~192",
+  "surfaced_at": "2026-10-15T07:58:27Z",
+  "one_line": "The order's pre-commit scan for client figures and long identifier runs had a gate behind it, and on this box that gate could not run: safe-commit printed client-data-check WARN, the hashed account-id list is ABSENT at the operator's home .opal folder, so the commit was NOT checked for client account ids. This seat scanned the staged text by hand for long digit runs and for account-id-shaped values; it did not have the list to compare against.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Round 120 order DB-b-238 BOUNDS and WORKER FACE: before every commit, scan what you stage for a client figure and for long identifier runs; counts, dates and words only in the repo.",
+  "world_is": "The commit of the analysis script, the counts-only record and this row (commit e1dbfeff48) printed: WARN: client-data-check: hashed account-id list ABSENT at the operator's .opal folder -- this commit was NOT checked for client account ids (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there). The staged text carries no account identifier by construction: the script reads account ids only into memory and prints counts; the record carries counts, dates and words.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit e1dbfeff48 on wk-IRPT_DASHBD-192: the .tools/safe-commit.sh output carries the client-data-check WARN line quoted in world_is",
+      "deliverables folder 0.9.0_WK_IRPT_DASHBD~192 at e1dbfeff48: balance_lag_read_r120.py (print of counts only) and RD_BALANCE_LAG_R120.json (counts, dates and words only; a long-digit-run scan of the record returned no run, and the script's only run is inside its private folder path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed for the owner of the client-data gate on this fabric. No repair is made by this seat; the list is not copied into the worktree and no hash list is read by this seat."
+}
+```
