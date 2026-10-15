@@ -101,7 +101,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-gf-1.classified-remainder.proof
 
 - A1 (issuer, 2026-10-15 ~19:2xZ, worker rows Z-W110-S1..S4, all read): the first seat finished the three tools and its classification (15 of 15; covered 0, built 6 rows over 3 tools, deferred 9) and refused one criterion, rightly. Rulings: (1) `test_oggf1_ac04` and the `etfs_get_positioning` extension are WITHDRAWN from this cell: that tool is registered inside `app/integrations/portal_index/integration.py` (NFRA_MCPINDEX's file, not in this order's `<paths>`), and by Andrew's split the indexing and tooling work is `2.0.0_SA_COO~MI`'s; the issuer routes the extension to that seat by message. gf1.AC1 now reads 3 of 3. (2) RENAME `etfs_get_fund_bloomberg_profile` to `etfs_get_fund_bloomberg_characteristics`: the naming gate types a name ending `_profile` as an instance profile and REFUSES it (row Z-W110 note on `INSTANCE_PROFILE`); do the rename in `app/etfs_silver.py`, `tests/test_og_gf1.py`, `W/CLASSIFICATION.json` and `W/probe_built.py` with a whole-word replace and print the count per file; no BUILT tool name may end in `_group`, `_role` or `_profile`. (3) S1: the AC2 check now counts DISTINCT tools among the BUILT rows, not rows: one probe line per BUILT TOOL (3), as the order says. (4) S3: the cone now holds `tests/`. (5) S4: noted; the snapshot tool is `etfs_get_fund_snapshot`. The first seat's commit `2c4d7a0684` is inherited state: re-record the proof instance from the real outputs after the rename. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G3G5-REMAINDER</workstream>
 <slot>~110</slot>
