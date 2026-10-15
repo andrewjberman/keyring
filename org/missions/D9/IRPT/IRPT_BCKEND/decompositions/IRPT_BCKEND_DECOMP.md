@@ -4295,3 +4295,15 @@ Check IB224-1 (`deliverables/2.0.0_SA_COO~P2/checks/r224/p224_cells.py`), dry-ru
 | `IB-pr-590` | READ the overlay release candidates of the three holdings bundles (minting pin + the two files), BUILD ONLY, tested offline, against the live bundles | FWD-21 | SERVED | none | PJ5-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one read-only build cell; one worker (slot ~431) starts now.
+
+## 220. ROUND 1, WORKSTREAM ~PM (the served manifest names the ratio-absent split securities; 2026-10-15 ~17:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO half of the 49 Financial split pair @ab04a4b5a2, condition 3)
+
+A NEW WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179). The CTO signed the split pair (msg 8466) on the condition that the 13 ratio-absent security-days stay ungraded AND "the served manifest names them by security and day. They are never silent." The build (IB-pr-578 and 583) records only counts in the run manifest's `split_adjust` block. This cell adds the names (`ratio_absent`: day, security, accounts used; the unkeyed rows by day), LOCAL, grading unchanged. The release candidate of IB-pr-585 is then REBUILT (its digest changes) and the pair's COO half re-issued on the new digest for the CTO to re-bind; the apply order waits for that.
+
+Check IB225-1 (`deliverables/2.0.0_SA_COO~P2/checks/r225/p225_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control225.py`) passes the three positives and seven negatives each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-592` | BUILD the named ratio_absent list in the frame attrs and the run manifest (day, security, accounts used; unkeyed rows by day), grading unchanged | FWD-21 | LOCAL | none | PM1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one product file; one worker (slot ~432) starts now.

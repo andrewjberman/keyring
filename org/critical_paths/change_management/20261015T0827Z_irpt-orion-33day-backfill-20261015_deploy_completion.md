@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-15T08:27:19.183181+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261015T170923Z
 **Deploy:** IRPT_BCKEND TO-IB-pr-568: one-time 33-day dated backfill of the absent flat bronze keys in opal-data-inf (positions 4, transactions 7, performance 22), signed pair Orion V3 pair (a)
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -12,11 +12,16 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | verify | bronze/positions/<day>.jsonl.gz x4 in opal-data-inf | each key head-object read back |  | OPEN |
-| L2 | verify | bronze/transactions/<day>.jsonl.gz x7 in opal-data-inf | each key head-object read back |  | OPEN |
-| L3 | git | performance positive control result IB208-1_performance_control.json | commit hash before any performance day |  | OPEN |
-| L4 | verify | bronze/performance/<day>.jsonl.gz x22 in opal-data-inf | each key head-object read back |  | OPEN |
+| L1 | verify | bronze/positions/<day>.jsonl.gz x4 in opal-data-inf | each key head-object read back | 4 keys bronze/positions/{2026-07-01,2026-08-06,2026-09-28,2026-09-29}.jsonl.gz each absent first, one new key per write (4723->4727), head-object read back, length = local gzip size and rows = log line (37017 each), 1281 requests | CLOSED 20261015T101600Z |
+| L2 | verify | bronze/transactions/<day>.jsonl.gz x7 in opal-data-inf | each key head-object read back | 7 keys bronze/transactions/{2026-07-01,07-13,07-14,07-15,08-06,09-28,09-29}.jsonl.gz each absent first, one new key per write, head-object read back: length = local gzip size and rows = log line, 0 throttle lines, ~863 requests per day | CLOSED 20261015T123534Z |
+| L3 | git | performance positive control result IB208-1_performance_control.json | commit hash before any performance day | control result committed 7dbd9229001038d820f4a684ceab1d35bf290f8d 2026-10-15T10:15:41Z before any performance day | CLOSED 20261015T101600Z |
+| L4 | verify | bronze/performance/<day>.jsonl.gz x22 in opal-data-inf | each key head-object read back | bronze/performance/<day>.jsonl.gz x22 in opal-data-inf (2026-05-04..05-08, 05-11, 07-01, 07-02, 07-06, 07-07, 07-09, 07-13..07-15, 07-21..07-23, 08-06, 09-28..09-30, 10-13): each absent first, one new key per write, head-object read back (length = local gzip size, rows = log line); independent final head-object re-read of all 33 keys 0 mismatches; 16768 requests in all, 0 throttle | CLOSED 20261015T170857Z |
 
 ## Log
 
 - 20261015T082719Z OPENED by 0.7.0_AE_CloudOps~IB2 with 4 leg(s)
+- 20261015T101600Z LEG L1 closed: 4 keys bronze/positions/{2026-07-01,2026-08-06,2026-09-28,2026-09-29}.jsonl.gz each absent first, one new key per write 
+- 20261015T101600Z LEG L3 closed: control result committed 7dbd9229001038d820f4a684ceab1d35bf290f8d 2026-10-15T10:15:41Z before any performance day
+- 20261015T123534Z LEG L2 closed: 7 keys bronze/transactions/{2026-07-01,07-13,07-14,07-15,08-06,09-28,09-29}.jsonl.gz each absent first, one new key per 
+- 20261015T170857Z LEG L4 closed: bronze/performance/<day>.jsonl.gz x22 in opal-data-inf (2026-05-04..05-08, 05-11, 07-01, 07-02, 07-06, 07-07, 07-09, 07-
+- 20261015T170923Z CLOSED -- all 4 legs proven

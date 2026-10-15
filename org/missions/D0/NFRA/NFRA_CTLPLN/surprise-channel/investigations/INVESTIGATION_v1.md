@@ -11213,3 +11213,271 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
  "notes": "Found by the CVO's L8 re-run of round 20; not changed here."
 }
 ```
+
+## NFRA_CTLPLN-S9128 -- Site Z's spawn audit log is tracked but its committed version on origin box/sitez ends at line 18991 (last com
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9128",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-15T16:28:31Z",
+  "one_line": "Site Z's spawn audit log is tracked but its committed version on origin box/sitez ends at line 18991 (last commit 2026-10-09), so the 2026-10-14 23:32Z respawn lines 19401-19404 that site Z's manager cites exist on site Z's disk only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer run 2026-10-15 ~16:3xZ: `git log origin/box/sitez -1 --format=%h %aI -- org/mcp/agent-spawn-audit.log` printed `574fe5ce6b 2026-10-09T13:09:28-04:00`; `git show origin/box/sitez:org/mcp/agent-spawn-audit.log | wc -l` printed 18991",
+      "the branch itself is current: `git ls-remote origin refs/heads/box/sitez` read b972ccb0b2 on 2026-10-15 (the CTO's round-20 wording 'origin box/sitez ends 2026-10-09' is true of the log file, not of the branch; the issuer's crossbox call body XB_FWD21_SITEZ_AUDIT_QUOTE.md says the branch had not advanced, which was imprecise)",
+      "site Z manager's report: msg 109429, audit lines 19401-19404, row Z-S12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.31 FWD-21: the manager's record for a day is read for project rulings; the reader needs the record, not the manager's account of it.",
+  "world_is": "The spawn audit log on site Z grows on disk but its committed copy on box/sitez is 6 days old, so a seat on another box cannot read the lines the FWD-21 exercise rests on. The issuer asked 0.0.0_AB_MSTR~Z by crossbox call XB-20261015T162412Z-f8a5 to quote the four lines into a committed record.",
+  "notes": "Owner 0.0.0_AB_MSTR (site Z's box-sync commits the file or the log is declared untracked). Not changed here."
+}
+```
+
+## NFRA_CTLPLN-S9129 -- Disposition of row NFRA_CTLPLN-W113-S1 (the pre-push hook's pinned-entry bucket and key map): the map for blac
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9129",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-15T16:28:31Z",
+  "one_line": "Disposition of row NFRA_CTLPLN-W113-S1 (the pre-push hook's pinned-entry bucket and key map): the map for black_diamond, inf and cot equals safe_deploy_core.py CODE_TREES; mdpf is gated in the core and absent from the hook's map, so the hook holds it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer read-only comparison 2026-10-15 ~15:1xZ of .tools/safe_deploy_core.py CODE_TREES lines 68-122 (bucket opal-data-bd / opal-data-inf / opal-data-cot; layers gold, silver, bronze at code/<layer>/) with the hook's BUCKETS and `code/<layer>/<name>` key in .tools/git-hooks/pre-push-safe-deploy.sh (pinned_entry_deploy)",
+      "CRO research R2 and R3 in org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_CTLPLN_R21_FWD5_ONE_SIGNED_CHANGE_ONE_SCRIPT_RESEARCH_20261015.md",
+      "round-21 order TO-CT-ak-3 step one repeats the comparison for black_diamond gold before the push"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "REMEDIATION_v10 W113-S1 remedy P3: the hook's map and PIPELINE_MAP agree for every entry, or the hook reads PIPELINE_MAP itself.",
+  "world_is": "The three trees the hook maps agree with the core; the fourth gated tree (mdpf) is missing from the hook, which prints pinned-s3-target-not-derivable and deploys nothing for it. A wrong read key could only cause a redundant idempotent deploy of an entry-pinned file, never a write to another key (the deploy itself goes through safe-deploy.sh and the core's own mapping). P3's 'agree for every entry' is not yet true for mdpf; making the hook read PIPELINE_MAP is a later hook cell (CRO gap R2).",
+  "notes": "The ARMED hazard of W113-S1 is disarmed by this reading; the mdpf gap is carried as an INERT, held-safe difference."
+}
+```
+
+## NFRA_CTLPLN-S9130 -- TO-CT-ak-3 cannot be executed by its addressee: the order's <paths> grant admits only 0.9.0_WK_<CODE>~<n> worker serials, so safe-commit refuses the signed change (lane POD4) and the read test (lane TOOL_BATTERIES) for 0.7.0_AE_CloudOps~U7
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9130",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~U7",
+  "surfaced_at": "2026-10-15T16:37:30Z",
+  "one_line": "TO-CT-ak-3 is issued_to 0.7.0_AE_CloudOps~U7 and says its <paths> block IS the grant, but ADHC_OWNPTH.005 admits only 0.9.0_WK_* serials, so safe-commit REFUSED the read test (lane TOOL_BATTERIES) and a read-only --check-path REFUSES the signed-change script (lane POD4); the cell's step 3 cannot be made without a lane override, so the cell STOPPED before any ledger entry, commit of the script, push or S3 write.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run 2026-10-15T16:34:44Z by 0.7.0_AE_CloudOps~U7 on .tools/tests/test_round21_fwd5_positive_read.py: 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: ... lane=TOOL_BATTERIES ... agent=0.7.0_AE_CloudOps~U7 not in permitted_agents'; 'ERROR: safe-commit did NOT commit (rc=1)'; nothing staged in the shared index (two-phase private index)",
+      "python .tools/owned-paths-validate.py --check-path 0.7.0_AE_CloudOps~U7 <path>, run 16:36Z, six paths of the order: REFUSE data/black_diamond/scripts/gold/diag_sleeve_fix.py lane=POD4; REFUSE .tools/tests/test_round21_fwd5_positive_read.py lane=TOOL_BATTERIES; PERMIT the .open_deploys sentinel, the change_management entry, INVESTIGATION_v1.md and the proof_of_spec deliverable (lane ANY / TREE_DELIVERABLES)",
+      ".tools/owned-paths-validate.py lines 115-120 and 224-248: the task-order grant (ADHC_OWNPTH.005) is consulted only for a serial matching the registry worker_grant serial_glob (0.9.0_WK_*) that parses as 0.9.0_WK_<CODE>~<n>; the file's own message: 'a missing path is a cut defect, never an override'",
+      "the order text, RECORD FACE lane line: 'the <paths> block IS the grant (worker RULING 1). 0.7.0_AE_CloudOps~U7 is the NFRA_CTLPLN deploy seat'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ak-3 RECORD FACE: the <paths> block IS the write grant for 0.7.0_AE_CloudOps~U7, and the order's RULES say to use .tools/safe-commit.sh for every commit with explicit paths.",
+  "world_is": "The <paths> grant reaches a CloudOps seat for 4 of 6 path families (org/critical_paths, the surprise channel, the tree deliverable) because those are lane ANY or TREE_DELIVERABLES, and not for the two that carry the cell: the script (POD4, a DS lane) and the read test (TOOL_BATTERIES, owner 0.8.0_AE_CloudComp). Without the script commit there is no blob to pin, so steps 3-6 cannot run. No override was used: GIT_COMMIT_AUTHOR_OVERRIDE would put a seat in a lane the registry does not give it and the order says to STOP on a refusal.",
+  "notes": "STATE LEFT: no ledger entry opened, no sentinel, no push, no AWS write; S3 key code/gold/diag_sleeve_fix.py still 1 version (3.yZFEuxxfxUOEMd.NRY7bZucaDccGX., ETag 56cb170f95c0b112a36a0ee3973d5473, read 16:27Z and 16:33Z). The read test file exists UNTRACKED in the shared tree (.tools/tests/test_round21_fwd5_positive_read.py; py_compile, ds-precommit and ruff clean; baseline run prints versions=1 etag_equals_repo_md5=True other_changed=-1 ok=False). Step 1 (W113-S1) was completed and is PASS for black_diamond gold: hook map and CODE_TREES agree for black_diamond, inf, cot on bucket and code/<layer>/<name>; mdpf and advi are gated in the core and absent from the hook map (held). Shipped artifacts ride only when named (safe_deploy_core.py:1044-1086), so the deploy writes one key. Issuer options, each its own call: (a) re-cut the order to a seat the grant or a lane admits for POD4 and TOOL_BATTERIES; (b) a registry lane change for these two paths naming this serial, by its owner; (c) Andrew or the CTO rules a GIT_COMMIT_AUTHOR_OVERRIDE for the two commits, named in the order. Owner: 2.0.0_SA_COO~C (issuer). Also: the order prescribed the row id form NFRA_CTLPLN-U7-S<k>; the row gate REFUSED it on safe-commit (fabric laptop, coordinate 'U7' not in the device register D1, D2, Z), so this row carries the next plain sequential id; the order's id form cannot be committed by any seat on this fabric."
+}
+```
+
+## NFRA_CTLPLN-S9131 -- A ledgered box-diff deploy writes NO row to org/safe-deploy-bypass-audit.log, so TO-CT-ak-3 step 6 ("one deploy row naming your serial") cannot be met on that path and the actor of the deploy is not recoverable from the log
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9131",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~U7",
+  "surfaced_at": "2026-10-15T16:37:40Z",
+  "one_line": "The pre-push hook's box-diff deploy of a ledgered file (hook lines 224-227) goes through safe-deploy.sh and writes no audit row; only PINNED-DEPLOY (pinned_entry_deploy), HELD-DEPLOY and --allow-stale/SERVE-RELEASE/REFUSED-ARTIFACT rows exist, so the deploy's actor is unrecorded in org/safe-deploy-bypass-audit.log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/pre-push-safe-deploy.sh lines 224-227 (box-diff ledgered deploy: echo + bash safe-deploy.sh, no audit append) against lines 135 (the only PINNED-DEPLOY append) and 111/127/202/222 (HELD-DEPLOY appends)",
+      ".tools/safe_deploy_core.py write_bypass_audit callers at lines 1576, 1646 (--allow-stale), 1711 (SERVE-RELEASE): none on a normal deploy",
+      "org/safe-deploy-bypass-audit.log tail read 2026-10-15T16:3xZ: only HELD-DEPLOY rows, newest 2026-10-12T17:52:05Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ak-3 step 6 and CTak3-AC3: the audit log shows one deploy row for the path naming the pusher's serial; report the audit row's actor.",
+  "world_is": "A deploy that rides the box-diff path (the path this cell's commit would take, since the script is in the box diff against origin/CLOUD) leaves its proof in S3 (VersionId, LastModified) and in the hook's own output on the pusher's terminal, never in the audit log. The read test prints audit_actor=UNKNOWN for that case and says why. The pinned-entry path would write a PINNED-DEPLOY row, but the pinned step skips any path the box diff already handled.",
+  "notes": "Owner of the hook: 0.0.0_AB_MSTR / the D1-S8 author. Not changed here. Effect on the cell once it can run: the actor is proven by the push's own stderr ('deploying 1 ledgered file(s)') and the S3 version time inside the push window, and AC3's 'audit row's actor' is reported as none-written."
+}
+```
+
+## NFRA_CTLPLN-W116-S1 -- the check verb of intake_check.py writes no fetch-shaped record; the only intake-fetch/1 writer in that module is write_fetch_record, used by selftest-unsigned and the tests
+
+```json
+{
+  "id": "NFRA_CTLPLN-W116-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~116",
+  "surfaced_at": "2026-10-15T16:27:48Z",
+  "one_line": "The cell names the check step as a writer of intake-fetch/1 records. The check verb (intake_check.py check) writes only <file>.check.json, schema intake-check/1. The module's intake-fetch/1 writer is write_fetch_record, called by selftest-unsigned and by the test fixtures; no production verb calls it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@aba5a33dab run_check (writes cfg.records_dir(batch)/<file>.check.json, schema intake-check/1); main() verbs check, release, pack, selftest-unsigned, selftest-av",
+      "org/devices/intake/intake_check.py@aba5a33dab write_fetch_record (schema intake-fetch/1) called from selftest_unsigned and from test_intake_check.py Env.add_wheel"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-1 premise: the check step writes intake-fetch/1-shaped records with no device key, so the downloads reader counts them as unattributed.",
+  "world_is": "The check verb writes no fetch-shaped record. The device key was added to write_fetch_record (the fixture and selftest writer), which is the only intake-fetch/1 writer in intake_check.py. The journey's real fetch records come from intake_fetch.py, which already carried device at round 20."
+}
+```
+
+## NFRA_CTLPLN-W116-S2 -- the check record (intake-check/1) carries no device key and intake_request.py downloads reads only *.fetch.json, so a check record can never be counted for a box
+
+```json
+{
+  "id": "NFRA_CTLPLN-W116-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~116",
+  "surfaced_at": "2026-10-15T16:27:48Z",
+  "one_line": "The check verb's record, <file>.check.json (schema intake-check/1), has no device key. The downloads reader filters on the suffix .fetch.json, so no check record is counted for any box. The cell's criterion says a record written by the check step is counted for the device; that holds only for the fetch-shaped record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_request.py@aba5a33dab cmd_downloads: os.walk over <root>/records, only names ending .fetch.json are read, device taken from the fetch record",
+      "org/devices/intake/intake_check.py@aba5a33dab run_check: the record written is intake-check/1 at records_dir(batch)/<file>.check.json; no device key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-1 criterion: a record written by the check step carries the device and the reader counts it for that device.",
+  "world_is": "Only the fetch-shaped record is counted. The check record is not in the reader's denominator and was left without a device key, because the cell scopes the device key to the fetch shape. The test proves the counted fetch-shaped record; the check record's attribution is open."
+}
+```
+
+## NFRA_CTLPLN-W117-S1 -- the cut's premises do not hold in this worktree: the danger map reads fresh and the hygiene arm reads ok=True before any edit
+
+```json
+{
+  "id": "NFRA_CTLPLN-W117-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~117",
+  "surfaced_at": "2026-10-15T16:41:44Z",
+  "one_line": "At the cut, in worktree ctlpln-117 (branch wk-NFRA_CTLPLN-117), comp-pulse diff reads 'danger map: 0.1h old' and REFLEX CLEAN, and test_round20_hygiene.py --map reads tsx_classed=1 py_classed=1 ok=True; the order's base (STALE, ok=False) is not reproduced here. The reflex's age is the file mtime, and sparse checkout wrote the tracked map at 12:20 EDT today while its content is the 2026-08-03 build (blob 84186b88 at HEAD, last touched by 52f2b8a2f2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/comp-pulse diff .tools/wk-provision.sh at 2026-10-15T16:23:46Z in ctlpln-117 (pre-edit): 'danger map: 0.1h old', 'ANSWER STATE: PRESENT_WITH_ZERO_RESULTS', 'REFLEX CLEAN'; rc=0",
+      "python .tools/tests/test_round20_hygiene.py --map before any edit: 'HYGIENE-MAP tsx_classed=1 py_classed=1 ok=True' (.scratch/base_map.txt in ctlpln-117)",
+      "org/modules/graph/comp_pulse.py Source.age_h = (now - os.path.getmtime(path)) / 3600 (file mtime, not content vintage); ls -l org/modules/graph/nerves-risk-edges.json -> 2026-10-15 12:20 -0400 before the rebuild",
+      "git log -3 -- org/modules/graph/nerves-risk-edges.json at HEAD e4848abcad: 52f2b8a2f2 (2026-08-03 19:23 -0400) is the last commit that touched the tracked map"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ak-2 premise (order text): at the cut comp-pulse diff prints NOT-DECIDABLE: danger map STALE, and test_round20_hygiene.py --map reads tsx_classed=0 py_classed=0 ok=False; the map was written 2026-10-07 05:36Z by nerves_lexical build.",
+  "world_is": "In this worktree the staleness test passes on mtime, not on the map's content date, so the base premise does not reproduce. The map was rebuilt anyway (commit c83dfa714c, as the cell orders). A worktree that is provisioned from a checkout reads a fresh map whatever the content age, so a CLEAN reflex answer there is not evidence about the map's content. The 2026-10-07 date is the main checkout's file mtime, not a commit."
+}
+```
+
+## NFRA_CTLPLN-W117-S2 -- a build from a sparse worktree emits a 51-node danger map with no warning, because the corpus folders are not checked out
+
+```json
+{
+  "id": "NFRA_CTLPLN-W117-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~117",
+  "surfaced_at": "2026-10-15T16:41:44Z",
+  "one_line": "python org/modules/graph/nerves_lexical.py build in the sparse worktree (only CLAUDE.md of the corpus present) printed 'nerves-lexical: 51 nodes carry claims' with docs_scanned=2 and no warning; after git sparse-checkout add of org/critical_paths, org/tier0/ledger, docs/doctrine and docs/references the same command printed 3491 nodes with docs_scanned=2709. The 51-node output was not committed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/modules/graph/nerves_lexical.py _CORPUS = CLAUDE.md, org/critical_paths, org/tier0/ledger, docs/doctrine, docs/references (+ memory dir); _iter_docs skips a missing folder silently",
+      ".scratch/build_out.txt in ctlpln-117 (first build, 16:26Z): 'nerves-lexical: 51 nodes carry claims'; written map 26439 bytes, stats docs_scanned=2",
+      ".scratch/build_out2.txt in ctlpln-117 (second build, 16:28Z): 'nerves-lexical: 3491 nodes carry claims'; stats docs_scanned=2709, total_claims=24203",
+      "the HEAD map before the rebuild had 1662 nodes (52f2b8a2f2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "nerves_lexical.py build: emits the edge file from the corpus; the danger map is the estate's HOLD/RISK memory.",
+  "world_is": "A build run where the corpus folders are absent exits 0 and writes a map that drops about 97 percent of the danger nodes, with no sign in its output. A sparse worktree that commits its build therefore replaces the tracked map with a degraded one. The build's stats block shows docs_scanned, which is the only tell."
+}
+```
+
+## NFRA_CTLPLN-W117-S3 -- nothing in the diff path rebuilds the danger map, and the tracked map is still in git after the 2026-07-22 untrack ruling
+
+```json
+{
+  "id": "NFRA_CTLPLN-W117-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~117",
+  "surfaced_at": "2026-10-15T16:41:44Z",
+  "one_line": "The producer of nerves-risk-edges.json is a manual CLI (nerves_lexical.py build). Neither comp_pulse.py nor the .tools/comp-pulse wrapper calls it or refreshes the map (grep of both: no call site). The commit 2d8609a9eb (2026-07-22, 'UNTRACK the danger map ... auto-refresh live') is not in effect at HEAD: the file is tracked (git ls-files = 1, check-ignore rc=1), last written into git by 52f2b8a2f2 (2026-08-03).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep -n 'refresh|nerves_lexical|subprocess' org/modules/graph/comp_pulse.py (measured in ctlpln-117): no refresh path; the only nerves_lexical mention is a comment in the danger-map wording",
+      ".tools/comp-pulse wrapper (470 bytes, read in full): runs comp_pulse.py and comp_log_auto.py only",
+      "git ls-tree HEAD org/modules/graph/nerves-risk-edges.json -> 100644 blob 84186b88 (tracked); git log --oneline -3 -- that path: 52f2b8a2f2, 2d8609a9eb, 472906b5d8",
+      "CVO row S9127 (INVESTIGATION_v1.md, 2026-10-15T15:20:02Z): the map was 201.7h old at the CVO's re-run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "commit 2d8609a9eb: the danger map is a derived cache with its own vintage; 'absent/stale = rebuild, 120s-capped, degrade-never-block' (auto-refresh live at consumption).",
+  "world_is": "No consumer in the diff path rebuilds a stale map, so the map's age is only ever cured by a person running the build. The 2026-07-22 untrack ruling is recorded in git but the map was re-tracked by a later commit, so the file is both a derived cache and tracked. This worktree's rebuild (commit c83dfa714c) is the one cure measured here. Owner of the rebuild path is not named in this worktree's files."
+}
+```
+
+## NFRA_CTLPLN-W117-S4 -- a judgment call on the census: the retired two-box probe literal was classed FIXTURE, not a box-list literal
+
+```json
+{
+  "id": "NFRA_CTLPLN-W117-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~117",
+  "surfaced_at": "2026-10-15T16:41:44Z",
+  "one_line": "Of the four unclassified census hits, .tools/tests/test_manager_on_every_box.py:266 holds the tuple OLD_TWO_BOX that contains the literal 'laptop|sitez' among retired-wording probes. It is used only as a negative phrase search over the skill prose (test_skills), so it was classed FIXTURE in CLASS_BY_PATH with a stated reason. The order's STOP clause (a box-list literal that FWD-2 forbids) was read against that use, and the call was not escalated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_manager_on_every_box.py:266-267 (OLD_TWO_BOX tuple) and :276 (phrases = [(p, line[:80]) for line in lines for p in OLD_TWO_BOX if p in line]), read in ctlpln-117",
+      ".tools/tests/fabric_value_census.py CLASS_BY_PATH after commit 055ed9061c: '.tools/tests/test_manager_on_every_box.py:266': FIXTURE; census reads unclassified=0 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W114-S1 and the order: a value that is truly a box-list literal FWD-2 forbids is not hidden in the table; STOP and file a BLOCKING row naming file and line.",
+  "world_is": "The literal is a retired-phrase probe that decides no box value, so it is not a box list in the FWD-2 sense as this worker reads it. A reviewer who reads 'laptop|sitez' as a box-list literal should overrule the FIXTURE entry; the census would then need a different reason, not a removal of the probe."
+}
+```

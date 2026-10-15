@@ -4048,3 +4048,17 @@ bz-12 (`3d88eccbc3`, on `origin/CLOUD` as of the cut) limited the refresh to `ws
 - **Not orders:** a re-mint; a sign-in by any hand; FT; `bbg`, `sa` and `ft` are never refreshed (row D1-S16).
 - **Checks dry-run at the base before the cut:** bz-11 AC1 base FAIL as expected (`CLOSE=WAITING reason=no-t0-file`); AC2 base PASS as expected (`10 passed`). bz-10's AC1 and AC2 are site Z reads (base: `WorkingDirectory` is `...pin-995adcaeaa` and the task arguments carry no `--refresh-once`); AC3's file does not exist.
 - **After this round the project PARKS** (Andrew-direct ~21:1xZ, CTO msg 5209); collection keeps running at site Z.
+
+## 107. ROUND 86 -- the park lifts; the wsj and barrons refresh becomes the in-profile renew (`1.0.0_SA_CTO~DELL1` msg 6075, `ledger/ROUND_ANALYSIS.round85.ADDENDUM_1_UNPARK.md` and `ADDENDUM_2_R86_CODE_CELL.md`; Andrew-direct 2026-10-15 ~16:0xZ), 2026-10-15 ~16:4xZ
+
+Andrew placed the wsj and barrons ops on dell1 (`org/tier1_exec/2.0.0_SA_COO~W1/ANDREW_DIRECT_20261015_160xZ_WSJ_BARRONS_OPS_RUN_ON_DELL1.md` @94086281f2). The first dell1 read (`ledger/ROUND86_FIRST_DELL1_READ_20261015.md` @06d5850df2) found that `SessionManager.refresh` writes a bundle the tab job never reads, and that `verification.renew` writes the profile it does read (row `AMGT_HARVST-D1-S17` answers Z-S121). The CTO ruled one code cell.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-ca-1` | `ca-1` | **`SessionManager.refresh` of a publisher whose contract is `transport: tab` with `seed_from_bundle: false` is the in-profile renew** (keyed on the contract fields, not the names); the worker's `AuthExpired` branch records `profile_renewal` (`renewed`, `stale`, `operator_input_detected`, `post_renewal_status`); bundle-seeded publishers unchanged. | LOCAL (direct act, about 60 product lines) | worker `0.9.0_WK_AMGT_HARVST~141` | CUT, pending |
+| `HVST-ca-1` AC3 | (the issuer's run) | **One real job, refused expired, renewed in-profile with no person at the keyboard, ending `complete_candidates` with more than 0 accepted**, `operator_input_detected` recorded: `deliverables/2.0.0_SA_COO_W1/round86/ca1_real_job.py` from a linked worktree of the merged head. | LOCAL (real run) | `2.0.0_SA_COO~W1` at the drain | HELD for `0.0.0_AB_MSTR~DELL1`'s confirmation that site Z stopped wsj and barrons |
+
+- **Fan-out:** 1 worker, 1 chain of 1, cap 8.
+- **Why AC3 is not a worker criterion:** the worker runs every invocation under `timeout 120`; a headful sign-in job takes about 2.5 minutes. The CTO's ruling places the real job in the cell; it is graded here, by the issuer, on the merged head (dispatch Step 5, the one real run), and the CTO is told.
+- **Not in this round** (addendum 1): anything else from the enrichment list; the first full dell1 cycle (held for the site Z stop); FT, Bloomberg, Seeking Alpha, which stay at site Z.
+- **Checks dry-run at the base before the cut:** ca-1 AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`113 passed, 4 subtests passed`). AC3 base: NOT run (a real vendor job; held).

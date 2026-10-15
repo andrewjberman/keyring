@@ -67,6 +67,13 @@ CLASS_BY_PATH = {
     ".tools/tests/test_fabric_readers_dell.py:10": DISPLAY,
     ".tools/tests/test_fabric_readers_dell.py:92": FIXTURE,
     ".tools/tests/test_fabric_readers_dell.py:145": FIXTURE,
+    ".tools/tests/test_fabric_readers_dell.py:101": FIXTURE,
+    ".tools/tests/test_fabric_readers_dell.py:154": FIXTURE,
+    # the manager-on-every-box test: a probe list of RETIRED two-box wording that the skill prose must not carry
+    # (a negative phrase search over prose; no box list decides a value here)
+    ".tools/tests/test_manager_on_every_box.py:266": FIXTURE,
+    # the device register's own docstring: the alias form of a box name, described in prose
+    "lib/devices.py:84": DISPLAY,
     # the allowed sets
     ".tools/to-pipeline-gate.py": DISPLAY,
     ".tools/to-pipeline-gate.py:93": ENUM_SOURCE,

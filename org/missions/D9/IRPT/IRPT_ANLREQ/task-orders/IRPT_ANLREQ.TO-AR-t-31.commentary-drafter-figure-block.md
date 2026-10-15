@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~190</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-15</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -59,6 +59,17 @@ inside an object, and any value that is not a plain number (a bool, a string, a 
    - `test_provenance_lists_prompt_fields_by_name_only`: `draft(...)`'s `provenance["prompt_fields"]` names fields and counts, and no value from the figures appears in the provenance.
    - `test_abstract_request_carries_figures_from_basis`: `entry.abstract_request` fed a fake composition reader whose document has `commentary_basis.figures` returns a request with that block under `"figures"`; with no `figures` the request has no such key.
    Keep every existing `test_commentary_*.py` green.
+
+### AMENDMENT 1 (issuer, 2026-10-15 ~17:0xZ) -- RE-OPENED: the three rows you filed, ruled
+
+- **S1 (BLOCKING, your sparse cone).** My provisioning defect, not a grant change: the cone now includes `data/transcripts/scripts/outlook` (run `git sparse-checkout list` to see it; if it is still absent, run `git sparse-checkout add data/transcripts/scripts/outlook`). `<paths>` is unchanged. Re-run AC1 and AC2 from the real tree, not from a stub, and remove your stub from the evidence.
+- **S2 (OBSERVATION, `OPTIONAL_ABSTRACT_KEYS`).** Accepted as you built it: `figures` rides in `OPTIONAL_ABSTRACT_KEYS`, `ABSTRACT_KEYS` stays exactly as it is, and `test_commentary_classification.py` stays untouched. Build item 2's wording about `ABSTRACT_KEYS` is superseded by this.
+- **S3 (OBSERVATION, name-shaped labels) -- the label vocabulary is CLOSED, not a charset.** Replace the charset rule with these, drop-and-count on any miss (never repair):
+  - `allocation_pct` keys must be members of `ALLOWED_CATEGORIES` (`drafter.py:34`, the estate's asset-class values from the classification snapshot).
+  - `period_returns_pct` and `benchmark_returns_pct` keys must be one of `1M 3M 6M YTD 1Y 3Y 5Y 10Y SI` (the contract's v0.1 list; the producer may amend it).
+  - `sector_pct`: the estate holds no sector vocabulary (the classification snapshot carries `ticker`, `asset_class`, `sub_asset_class` only). Until the producer names a closed sector list the member is DROPPED ENTIRELY and counted as `figures.sector_pct`; the table row for it stays so the shape is ready.
+  - `model_names` stay a list of strings of at most 80 characters, no further rule this round.
+  Extend `test_figures_whitelist_drops_unknown_members_and_bad_tickers` with three arms: allocation key `"Smith Family Trust"` dropped, period key `"Smith"` dropped, a whole `sector_pct` member dropped and counted.
 
 ### ACCEPTANCE
 
