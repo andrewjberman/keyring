@@ -14227,3 +14227,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S55",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-15T04:03:14Z",
+  "one_line": "Disposition of the B-CW round-116 rows at the drain: W404-S1 resolved (the issuer's checker base and surface, fixed @1c3c117c0b), W404-S2 ruled (the producer's refusal of a day with no silver is the frontier hold; no build change), W404-S3 and S4 carried to the applier (terraform fmt and validate under safe-apply), W405-S1 to S4 noted; nothing ARMED remains from this round",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1c3c117c0b (box/dell2) amends p116_bcw.py: BASE 7f16db08c3, the surface arm watches the two holdings-performance folders and the producer folder; DBC116-1-AC1, -2-AC1, -3-AC1 and -4-AC1 PASS on the merged tree ce85c772f2 (DB-c-8 merged at 134beac885), re-run by the issuer",
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py and the handler's existing tests (the day in no_silver returns rc 1 and writes no key): a fire on an absent T-1 silver writes nothing and returns non-zero",
+      "python .tools/round-close-check.py --project IRPT_DASHBD --round 116 --workstream B-CW: verdict=MAY-CLOSE (2 orders, 0 judgment criteria)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A BLOCKING or ARMED row is dispositioned or carried to its owner before the round is counted finished.",
+  "world_is": "W404-S1 (BLOCKING on DBC116-3-AC1) was the issuer's defect, fixed; the worker's build needed no change. W404-S2: the packet's input-frontier hold is not a separate build; the existing producer already refuses a day with no silver (rc 1, nothing written), so a held fire fails visibly rather than stamping a stale day; the drain-end packet asks the CTO whether a distinct log line is wanted. W404-S3 (no terraform binary on dell2, the fmt arm skipped) and S4 (the existing Inflection block alignment in lambda.tf may already fail terraform fmt) are the applier's: terraform fmt, validate and plan run under safe-apply on the lane that has the binary. W405-S1 to S4 (bronze landings unread, five _s2 twins exposing only c1 and c2, the ambiguity of no return column against seven pattern-matched gain/loss and date columns, and two conflicting texts in the issuer's step 2) are noted: the verdict ACCOUNT_VALUE_ONLY stands on the checker's fresh recount. The DB-c-7 handler change is in a SHARED zip: the 49 Financial and Inflection functions carry it only when the applier rebuilds and applies; the pair's apply order names that."
+}
+```
