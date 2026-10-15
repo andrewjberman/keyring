@@ -89,6 +89,7 @@ def build_repo(base):
     write(repo / PROJ_DIR / "task-orders" / "PROJX.TO-e.md", ORDER_E)
     write(repo / "infra" / "aws" / "x" / "main.tf", "# tf\n")
     write(repo / "docs" / "readme.md", "docs\n")
+    write(repo / "org" / "ref" / "SEAT_ROLES.json", "{}\n")  # the base set carries org/ref (W105-S2)
     git(repo, "add", "-A")  # git records the portal repository as a gitlink
     p = git(repo, "commit", "-q", "-m", "fixture init")
     if p.returncode != 0:
@@ -113,10 +114,12 @@ def run_arms(base):
     a_ok = (p.returncode == 0 and (wt["a"] / ".tools" / "marker.txt").is_file()
             and (wt["a"] / "lib" / "common.py").is_file()
             and (wt["a"] / PROJ_DIR / "task-orders" / "PROJX.TO-b.md").is_file()
+            and (wt["a"] / "org" / "ref" / "SEAT_ROLES.json").is_file()
             and not (wt["a"] / "infra").exists() and not (wt["a"] / "docs").exists())
-    arms.append(check("a default provision: .tools, lib, project folder present; infra and docs absent", a_ok,
-                      "rc=%d infra=%s docs=%s" % (p.returncode, (wt["a"] / "infra").exists(),
-                                                  (wt["a"] / "docs").exists())))
+    arms.append(check("a default provision: .tools, lib, org/ref, project folder present; infra and docs absent", a_ok,
+                      "rc=%d infra=%s docs=%s org_ref=%s" % (p.returncode, (wt["a"] / "infra").exists(),
+                                                             (wt["a"] / "docs").exists(),
+                                                             (wt["a"] / "org" / "ref" / "SEAT_ROLES.json").is_file())))
 
     # (b) --order naming a path under infra/aws/x/
     p = bash(repo, "provision", CODE, "b", "--path", str(wt["b"]), "--order", str(o_b))
