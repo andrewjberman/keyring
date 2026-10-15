@@ -28060,3 +28060,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Worker-side workaround only: the scratch copy is byte-identical to the committed instance; no tool, path or setting was changed. Owner of the path or the checker to disposition."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S34",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-15T22:36:04Z",
+  "one_line": "PBR US's 2025 Key Figures P/E cell prints the research team's range 3.6x-5x with no source mark, because the served block carries no fiscal_unresolved entry for it; the mark follows the CTO's 'where withheld', so a team figure can still stand unmarked where the vendor ratio is absent for a reason the block does not state.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-106 analysis, D1-S32 ruled (msg 6249): a team-sheet forward value stands where a withheld vendor ratio's reason would print, with a visible source mark; AMGT-bn-1 marks a team P/E cell in a column whose vendor ratio the served block states as withheld (forecast_withheld or fiscal_unresolved).",
+  "world_is": "Read 2026-10-15 ~22:1xZ on the candidate build (bb56c53d), shot 042-PBR-US-Model.png: 2025 `3.6x-5x` (a team text range) carries no `research team estimate` line while 2026E 5.9x and 2027E 6.1x do. The live PBR_US body (round107_prep/fixtures/pbr_model_slice_live.json): fiscal_unresolved is [] and forecast_withheld names 2026, 2027, 2028; the team P/E row's 2025 value is the text `3.6x-5x`. The CTO's approval record (CTO_APPROVAL_A333_TEAM_ESTIMATE_MARK_20261015.md) reads the edge as correct under the ruling: nothing is withheld there.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tmp/ui-walk/20261015T221213Z/shots/042-PBR-US-Model.png (read with the Read tool; the 2025 cell and the 2026E/2027E cells)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round107_prep/fixtures/pbr_model_slice_live.json (fiscal_unresolved [], forecast_withheld 2026-2028)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_APPROVAL_A333_TEAM_ESTIMATE_MARK_20261015.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A reader sees a team figure with no source on PBR US 2025 and with one on 2026E and 2027E. Whether every team-filled Key Figures P/E cell should carry the mark (keyed on the cell being team-filled, not on a served withhold) is a reading of the ruling for the CTO and the CVO's re-grade at the bn-4 walk; no change is proposed here."
+}
+```
