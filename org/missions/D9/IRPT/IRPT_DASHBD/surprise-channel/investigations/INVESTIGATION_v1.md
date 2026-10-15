@@ -17058,3 +17058,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Disarms when the no-overwrite guard in write_day and the 2026-07-10 floor in owed_days (and in explicit day events) are merged and tested (round 125, cell DB-b-254). No landing packet is written before then. Counts, dates and words only."
 }
 ```
+
+## IRPT_DASHBD-D2-W207-S1 -- BLOCKING: the round-125 floor contradicts an earlier handler test (expects 5 owed days from 2026-06-01, the floor gives 3), so the handler suite is one failure red and DB-b-254 cannot flip complete
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W207-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~207",
+  "surfaced_at": "2026-10-15T11:31:27Z",
+  "one_line": "The start floor in owed_days contradicts an earlier handler test: test_owed_days_three_examples expects 5 owed days from 2026-06-01 and the floor gives 3, so the handler suite is one failure red and DB-b-254 cannot flip complete",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "DB-b-254 step 3 and BOUNDS: owed_days takes the later of the day after newest_landed and FLOOR_DAY 2026-07-10; the handler test file holds at least 15 tests and all pass; the earlier tests keep their meaning and only their fake S3 objects may gain a list_objects_v2 method.",
+  "world_is": "The earlier assertion of test_owed_days_three_examples (handler test file, working tree at base 945f619bbd) is len(owed_days(2026-06-01, 2026-07-15)) == 5 == MAX_DAYS_PER_FIRE. With the floor the result is 3 days (2026-07-10, 2026-07-13, 2026-07-14), so the floor and that assertion cannot both hold. The floor is in the code as the order and the DB125-1-AC2 staged probe require, and the probe part of that criterion passes. The assertion was not edited. Handler pytest: 15 passed, 1 failed. Adapter pytest: 37 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest in the worktree on infra/aws/lambda/investor-reporting/account-return-daily/tests/test_handler.py: 1 failed (test_owed_days_three_examples, assert 3 == 5), 15 passed; base 945f619bbd",
+      "infra/aws/lambda/investor-reporting/account-return-daily/handler.py owed_days with FLOOR_DAY, worktree at base 945f619bbd",
+      "order IRPT_DASHBD.TO-DB-b-254.cottonwood-write-guard-and-start-floor.md step 3 and BOUNDS, and the checker p125_guard.py probe owed_gap at base 945f619bbd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the earlier assertion needs an amendment (the floor changes the answer for that input) or the reading of the floor needs settling. The worker stopped on that point and did not edit the assertion. S79 stays ARMED until this is resolved and the handler suite is green. Counts and words only; no client figure is quoted."
+}
+```
+
+## IRPT_DASHBD-D2-W207-S2 -- OBSERVATION: the handler test fake already had a list method (a page queue for newest_landed_day), so the guard's undelimited LIST branches that method rather than adding one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W207-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~207",
+  "surfaced_at": "2026-10-15T11:31:27Z",
+  "one_line": "The handler test FakeS3 already had a list_objects_v2 that pops a page queue for newest_landed_day, so the guard's undelimited LIST had to be answered by a branch on the absence of Delimiter, not by a new method",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-254 step 2 and BOUNDS: where a fake S3 object lacks list_objects_v2, give it one that lists the keys put so far; only their fake S3 objects may gain a list_objects_v2 method.",
+  "world_is": "The handler test file's FakeS3 had list_objects_v2 already, answering newest_landed_day's paged LIST (with Delimiter) from a page queue. The guard's LIST carries no Delimiter. The method now answers an undelimited LIST from the keys planted or put so far and keeps the page queue for the delimited LIST, so the newest_landed tests keep their meaning. The adapter test FakeWriter had no list method and gained one, as the order allows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/account-return-daily/tests/test_handler.py FakeS3.list_objects_v2 at base 945f619bbd (the page queue before the edit)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_bd_account_return_daily.py FakeWriter at base 945f619bbd (put_object only before the edit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the order's text did not anticipate a fake that already had the method. No client figure is quoted."
+}
+```
