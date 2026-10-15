@@ -2693,3 +2693,28 @@
   "notes": "No act taken on the flip: the order status is NOT written to complete. The record face is out of this worker's read set, so the status element is not located here. Remedy belongs to the issuer (2.0.0_SA_COO~D1): state where the <status> element lives or flip it on the issuer's side after the proof instance is read."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S29",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-15T15:40:36Z",
+  "one_line": "Global Trend Variant 2 (non-internal session) draws the model stack AND the carried Models band on the 9 carried dates after 2026-05-15, so the daily chart spikes to about $3.1B against a $1.77B Total; Variant 1 has 0 such rows.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (cuts the round-11 cell for portal/src/lib/trendGrouping.ts buildGlobalTrendRows Variant 2; the PROD push is client-facing and waits on Andrew via 1.0.0_SA_CTO~DELL1)",
+  "spec_asserts": "PRD v2.22 override (d) and CN-p-2 AC4: Variant 2 draws one Models band before per-model detail begins (2026-05-15) and the model stack after it, and the groups partition the served Total.",
+  "world_is": "Read on portal DEV e0b033253b (same trendGrouping.ts text as PROD c3b21a40e2) over the served Global aggregate-aua-timeseries (497 dates, frontier 2026-10-14): buildGlobalTrendRows(variant2) returns 9 rows at or after 2026-05-15 with modelsBand > 0 (2026-05-30, 05-31, 06-06, 06-07, 06-13, 06-14, 06-19, 06-20, 06-21), exactly the 9 carried_dates. Each carries the five model lines (sum 1,448M) AND modelsBand 1,349,270,858.88 (the 2026-05-14 value, carried), with clientSupervised 266.9M and etfStrategies 25.0M: stack about 3.09B against total 1,766,813,072.41. The headless render on a stubbed non-internal demo session showed four spikes at those dates. The round-9 variants record counted the band only on the 383 pre-detail rows and did not test carried dates after 2026-05-15. A non-internal Global viewer (MDPF_GLOBAL_VIEW_FIRMS) sees it on PROD today.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun run round9/checks/measure_real_variants.ts (DATA_DIR with the served Global object, UNROLLED=1) in portal at e0b03325: v2 rows after 2026-05-15 with modelsBand>0 = 9 of 497, all in carried_dates (9); printed row 2026-05-30 total 1766813072.41 modelsBand 1349270858.88",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round10/ITEM6_RENDERS_20261015.md section B (the render, words only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer's own render and measure, not a worker row. Remedy: on a date at or after per-model detail begins, Variant 2 draws the model stack and drops modelsBand; one cell with a test over the real object (0 of 497 rows with both). Not fixed here."
+}
+```
