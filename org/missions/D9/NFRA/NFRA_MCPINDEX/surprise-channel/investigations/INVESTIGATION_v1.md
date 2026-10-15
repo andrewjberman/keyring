@@ -7965,6 +7965,49 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W41-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~41",
+    "surfaced_at": "2026-10-15T00:49:23Z",
+    "one_line": "The c17.AC2 DENOMINATOR reads table rows 226, not the 216 the order expects: the check counts every yaml in catalog_entries, and 10 tracked rows this generator does not write sit in that folder.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Section 4 criterion AC2: the output of c17.AC2.sh carries the DENOMINATOR line 'table rows 216; enriched 14; rows differing from the base 14' and CHECKS 15 of 15, RESULT PASS, exit 0.",
+    "world_is": "c17.AC2.sh at worktree HEAD 32af6d6df5 prints 'DENOMINATOR table rows 226; enriched 14; rows whose bytes differ from 0f40810fa2: 14', CHECKS pass 15 of 15, RESULT PASS, exit 0. c17_check.py counts every *.yaml in workflows/atom_decomposition/catalog_entries not prefixed need_ or harvest_: 226 names, all 226 present at base 0f40810fa2 and graded. The generator wrote 216 of them and 10 other tracked rows it does not write are unchanged. The 14 rows that differ from the base are exactly the 14 enriched entities.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round16/checks/c17_check.py@32af6d6df5 (DENOMINATOR line and the names glob)",
+        "workflows/atom_decomposition/catalog_entries@32af6d6df5 (226 non-prefixed yaml names measured by a read-only count in the worktree)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-17.g5r-rival-fund-row-enrichment.md@32af6d6df5 (section 4 AC2 expect)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W41-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~41",
+    "surfaced_at": "2026-10-15T00:49:23Z",
+    "one_line": "The order says an absent default enrichment file means no enrichment, but is silent on an explicit --g5r path that does not exist; the generator refuses that path with exit 2 rather than skip the enrichment silently.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "Section 1 'What to build': the file is read from g5r_enrichment.json next to the generator, with a new optional argument --g5r FILE to name another; an absent default file means no enrichment (not an error).",
+    "world_is": "The order does not state what an explicit --g5r path that does not exist does. The change in workflows/atom_decomposition/gen_silver_rows.py (load_g5r) returns no enrichment only when the path is the default file, and exits 2 for any other missing path. The test test_explicit_missing_file_exits_2 pins that choice.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/gen_silver_rows.py load_g5r in the worker worktree (uncommitted at filing; the commit follows this row)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-17.g5r-rival-fund-row-enrichment.md@32af6d6df5 (section 1 What to build)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
