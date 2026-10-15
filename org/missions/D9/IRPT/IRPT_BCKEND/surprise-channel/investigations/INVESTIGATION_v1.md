@@ -40645,3 +40645,133 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Owner re-point by appended row (CTO ruling msg 8739); the old rows are not edited."
 }
 ```
+
+## IRPT_BCKEND-D2-S212 -- D2-W411-S1 pre-read live: the export role irpt-export-render-role holds NO s3:GetObject on any filled_report.json object
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S212",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-15T23:30:43Z",
+  "one_line": "D2-W411-S1 pre-read live: the export role irpt-export-render-role holds NO s3:GetObject on any filled_report.json object; none of its 10 inline policies names the platinum reporting family.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~S2",
+  "spec_asserts": "IB-pr-567 reads the pinned filled report object by VersionId with the export function's own S3 client; the IB-pr-551 CTO half (condition 1) re-reads both grants live at STEP 0 of the deploy legs, and a gap is a STOP.",
+  "world_is": "Read-only live get of all 10 inline policies on irpt-export-render-role (list-role-policies printed 10; attached managed policies 0). S3 object grants: opal-data-irpt irpt/{49financial,inflection,cottonwood}/platinum/custody_reports/* (Put/Get/GetVersion) and state/request_compositions/* (Get/GetVersion), platinum/performance_reports/* (Get/GetVersion); opal-data-ycharts exports/receipt/render_grant keys; opal-data-{bd,inf,cot} directory and ownership_map keys. No statement covers a platinum/reporting/client=*/filled_report.json address. So a deployed export with a filled pin answers FilledReportUnavailable (fail closed) until the grant lands. This is a PRE-READ only: the STEP 0 re-read at the deploy leg stays owed. If the gap holds then, the deploy packet adds exactly one object-scoped grant under an addendum to the IB-pr-551 pair, no wildcard (CTO PO6/PS6 analysis). Whether the platinum fence should be breached for the export function at all is the CTO's, not read here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/aws iam list-role-policies / get-role-policy on irpt-export-render-role, 2026-10-15, 10 of 10 policies read",
+      "comp-iam service irpt-export-render: tf source infra/aws/terraform/investor-reporting/export/iam.tf",
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_BCKEND-D2-W411-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Nothing deployed, nothing written. Row S211 moved the owner; this row is the first measurement under the new owner."
+}
+```
+
+## IRPT_BCKEND-D2-W444-S1 -- A pin worktree cut by git worktree add from this base came out sparse: 76354 of 81551 tracked files were skip-worktree, so the candidate write into the pin failed until the bits were cleared.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W444-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~444",
+  "surfaced_at": "2026-10-15T23:31:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "A minting-pin worktree created with git worktree add from the dell2 base came out sparse (76354 skip-worktree entries), so infra/aws/lambda was absent until the skip bits were cleared.",
+  "spec_asserts": "Order IB-pr-608 step 1: a full detached worktree of the minting pin OUTSIDE the repository, sparse checkout disabled in that worktree alone (as IB-pr-595 did).",
+  "world_is": "git worktree add at b1d354cfc9 produced a sparse checkout: git ls-files -t reported 76354 S (skip-worktree) entries and the sparse patterns were present in the worktree's info/sparse-checkout. Setting core.sparseCheckout false afterwards only changed the config; the tree stayed unpopulated. Cleared with update-index --no-skip-worktree, then git checkout -- . restored the tree: 81551 tracked files present and the status clean. Any later pin cut from this base carries the same risk until its skip count reads 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/ir444-pin49f ls-files -t before the fix: 76354 entries with the S tag at b1d354cfc9341168a3b4c316a344876ce0049b97; after the fix 0, and git ls-files reports 81551",
+      "C:/dev/ajb_workspace/.git/worktrees/ir444-pin49f/info/sparse-checkout held sparse patterns (/*, !/*/, /data/) when read from the pin; the base worktree wk-IRPT_BCKEND-444 keeps its own config.worktree with core.sparsecheckout true"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W444-S2 -- The client-data commit gate printed WARN that the hashed account-id list is absent on this box, so addendum commit 36f65e8c1a was not checked against client account ids.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W444-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~444",
+  "surfaced_at": "2026-10-15T23:31:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The client-data check of the commit gate reads the hashed account-id list from the user profile; on this box that list is absent, so the commit passed without the check.",
+  "spec_asserts": "Order IB-pr-608 client data rule: no real account id, household id or client id in any tracked file; the commit gate is the check that a commit carries none.",
+  "world_is": "safe-commit printed WARN client-data-check: hashed account-id list ABSENT (absent is not empty) and continued; commit 36f65e8c1a was therefore not checked against it. Every commit on this box is in the same state until the list is placed or OPAL_ACCOUNT_ID_HASHES is set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of commit 36f65e8c1a on wk-IRPT_BCKEND-444: the line WARN client-data-check: hashed account-id list ABSENT followed by the commit line",
+      "the IB-pr-595 record notes (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~434/IB228-1_holdings_transplant_candidate.json) carry the same WARN for its transplant commit"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W444-S3 -- The order's record template sets functions_invoked to 0, but the BUILD ONLY step calls build_bundle_payload twice and the order does not define what the counter counts.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W444-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~444",
+  "surfaced_at": "2026-10-15T23:31:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The record counter functions_invoked has no stated definition; a literal count of the BUILD ONLY calls would read 2, not 0, so the record states the counter's meaning in its notes and reads 0.",
+  "spec_asserts": "Order IB-pr-608 record: functions_invoked, sign_ins_made, aws_writes_made, rows_written, figures_written and vendor_requests_sent are 0; the order defines none of them and says BUILD ONLY with no write function.",
+  "world_is": "The harness called core.build_bundle_payload twice in BUILD ONLY mode, which returns a local tar and writes nothing to AWS. Read literally, functions_invoked is 2; read as publish, mint, land or write calls it is 0. The record reads 0 and its notes name the meaning used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~444/ib239_1_addendum_candidate.py cmd_firm: two build_bundle_payload calls before the live read",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~434/IB228-1_holdings_transplant_candidate.json carries functions_invoked 0 beside the same BUILD ONLY call"
+    ]
+  }
+}
+```
+
+## IRPT_BCKEND-D2-W444-S4 -- The order puts scratch files outside the repository while the standing worker rule names the worktree's .scratch directory; this worker followed the order.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W444-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~444",
+  "surfaced_at": "2026-10-15T23:31:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two scratch locations are named for workers: the order names a directory outside the repository and the standing rule names <worktree>/.scratch; this worker used the order's location.",
+  "spec_asserts": "Order IB-pr-608 worker face: Scratch files go in a directory OUTSIDE the repository; the BOUNDS grant names the scratch directory outside the repository.",
+  "world_is": "The standing worker rule names <worktree>/.scratch/ as the only scratch directory. This worker wrote scratch to C:/dev/ir444-scratch and the pin worktree to C:/dev/ir444-pin49f, both outside the repository, and wrote nothing to .scratch.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-608.addendum-candidate-49f-v2.md BOUNDS and the Client data rule lines name a scratch directory outside the repository",
+      "worker rules as issued to this worker name <your worktree>/.scratch/ as the scratch location"
+    ]
+  }
+}
+```
