@@ -1278,6 +1278,93 @@
     "spec_asserts": "RV-y-3 standalone arm: no test file contains the string org/missions or deliverables/0.9.0, and the difference control fails on the y1 base for that reason.",
     "world_is": "The literal arm cannot discriminate the y1 pre-fix text. The standalone test also detects the same two segments written as separate quoted tokens, so the y1 control fails on that arm. No test in the folder names a workspace path after RV-y-3.",
     "notes": "Filed, not fixed in any other file. The split-token detector is a stronger form of the order's literal arm, not a weaker one; the literal check is still performed."
+  },
+  {
+    "id": "DSGN_RBNDV2-W20-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~20",
+    "surfaced_at": "2026-10-15T17:09:08Z",
+    "one_line": "portal/src/components/market-performance/ExecutiveSummary.tsx line 268 builds the Trending Topics footer as a template literal from formatSourcesForFootnote, which passes each data source name through unchanged, so a lower-case name in the data prints lower-case in the footer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/lib/sourceRanking.ts:103-119 formatSourcesForFootnote joins getTopSources output with no case normalisation (portal@86db3d1b)",
+        "portal/src/components/market-performance/ExecutiveSummary.tsx:245-268 builds the footer; line 268 is the template literal (portal@86db3d1b)",
+        "the top_sources feed values are not read in this worktree, so whether a live name is lower-case is not measured here"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-2 order: fix the class, not the strings; read how a template literal builds its names; if formatSourcesForFootnote can output a lower-case source name, write a surprise row naming the line and do not edit it.",
+    "world_is": "The function can output a lower-case source name whenever the data carries one. Not edited: sourceRanking.ts is read-only for this cell.",
+    "notes": "Filed, not fixed. The owner of sourceRanking.ts decides whether names are normalised at the source or at the footer."
+  },
+  {
+    "id": "DSGN_RBNDV2-W20-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~20",
+    "surfaced_at": "2026-10-15T17:09:08Z",
+    "one_line": "Six string literals and two JSX texts beginning Source: open with lower-case prose, not a source name (for example 'Source: the report is not named in this security's data' and 'Source: a vendor's report.'); the capitalization rule has no reading for a sentence.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx:68 'Source: a vendor's report.' (portal@86db3d1b)",
+        "portal/src/pages/SecurityAnalysis/components/DossierSections.tsx:56, portal/src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx:430, portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx:176 'Source: the report is not named in this security's data' (portal@86db3d1b)",
+        "portal/src/pages/SecurityAnalysis/components/ThesisCards.tsx:255 'Source: machine draft from a filing' and its template twin (portal@86db3d1b); JSX texts at ThesisCards.tsx:153 and portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx:499",
+        "portal/src/__tests__/dsgn-rbndv2/rb-6-y2.footer-source-case.test.ts header: a segment that opens in lower case is prose and is not checked"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-2 order: every footer source string reads with every word of the source name capitalized, small words excepted.",
+    "world_is": "These lines are sentences or prose clauses, not source names; title-casing them would change copy the order does not name. Left as written and counted as prose. NativeSections.tsx:68 is also compared by an existing test (rb iv-e-122, line 100), so changing it would edit a file outside the grant.",
+    "notes": "Filed, not fixed. Whether a prose fallback is a footer string is a ruling for the CVO."
+  },
+  {
+    "id": "DSGN_RBNDV2-W20-S3",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~20",
+    "surfaced_at": "2026-10-15T17:09:08Z",
+    "one_line": "Three footer strings carry a lower-case qualifier after a comma ('Source: Black Diamond, holdings as of ...' at PositioningSummary.tsx:1606 and HoldingsTab.tsx:310; 'Source: ${provider}, as of ${asOf}.' at MethodAndSources.tsx:72); the rule was applied to the source name only.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/Positioning/panels/PositioningSummary.tsx:1606 and portal/src/pages/Positioning/tabs/HoldingsTab.tsx:310 (portal@86db3d1b)",
+        "portal/src/pages/InvestorReporting/tabs/reporting/MethodAndSources.tsx:72 (portal@86db3d1b)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-2 order: in the source name after Source:, every word starts with a capital letter, small words excepted.",
+    "world_is": "The source-name segments (Black Diamond, Bloomberg, provider) obey the rule. The qualifier 'holdings as of' and ', as of' are not source names; a strict reading would print 'Holdings As of'. Not edited.",
+    "notes": "Filed, not fixed. The qualifier reading is a ruling for the CVO."
+  },
+  {
+    "id": "DSGN_RBNDV2-W20-S4",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~20",
+    "surfaced_at": "2026-10-15T17:09:08Z",
+    "one_line": "The order's premise says the portal worktree is branched from feature/dsgn-rbndv2-light at d0cb67d0; the worktree HEAD is 86db3d1b, one RV-y-1 drain above d0cb67d0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal/ rev-parse --short HEAD = 86db3d1b on branch wk-DSGN_RBNDV2-20-portal; git show -s --format=%s 86db3d1b = drain(DSGN_RBNDV2.TO-RV-y-1) merge of worker ~19",
+        "d0cb67d0 is the difference-control base and is an ancestor of 86db3d1b (the before counts read git show d0cb67d0:<file>)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RV-y-2 order environment: the portal worktree branched from the feature branch at d0cb67d0, the difference-control base.",
+    "world_is": "HEAD is one drain past d0cb67d0. The cell's edits sit on 86db3d1b; the difference against d0cb67d0 is the control only and does not change the verdict.",
+    "notes": "No action taken; recorded so the drain reads the base correctly."
   }
 ]
 ```
