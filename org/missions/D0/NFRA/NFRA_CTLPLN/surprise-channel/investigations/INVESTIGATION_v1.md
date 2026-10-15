@@ -10600,3 +10600,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "A worker push from a repository without a tracked order is refused fail-closed by the real gate. The test's admission is a fixture order inside the temporary repository, not a change to the serial or to the gate."
 }
 ```
+
+## NFRA_CTLPLN-W109-S1 -- CT-ai-4: the order's per-box login source holds no login
+
+```json
+{
+  "id": "NFRA_CTLPLN-W109-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~109",
+  "surfaced_at": "2026-10-15T12:51:26Z",
+  "one_line": "The FWD-27 laptop-side cell says the login each box accepts is in the CT-u-2 proof record and in the CVO table row 27. Neither names a per-box login, so the cell cannot pick one without guessing; the tool refuses a run with no login.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~61/NFRA_CTLPLN.TO-CT-u-2.ssh-tailnet-verify-tool.proof_of_spec.json line 40-41: the only live run uses --user probe-only (a login that exists nowhere); no per-box login is recorded",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_FWD_REGRADE_20261013.md row 27: names host names OPAL_BLOOMBERG, DESKTOP-HK1UU7N, DESKTOP-N8RJV0A and 'ssh -o BatchMode=yes' with no user; no login",
+      "the worker's run of .tools/tests/test_round19_fwd27_laptop_side.py at commit b265d96511 refused every box to the tool's 'no login' rule until the client default login was supplied"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face CT-ai-4: the login names used on 2026-10-13 are in the CT-u-2 proof record and in the CVO table; find the login each box accepts there.",
+  "world_is": "Neither record holds a login for sitez, dell1 or dell2. The worker used the client default login read by ssh -G (AzureAD+AndrewBerman), which the CVO row's no-user command implies, and that login is refused on all three (see NFRA_CTLPLN-W109-S2)."
+}
+```
+
+## NFRA_CTLPLN-W109-S2 -- CT-ai-4: the key login the CVO row 27 measured as rc 0 is DENIED today on sitez, dell1 and dell2
+
+```json
+{
+  "id": "NFRA_CTLPLN-W109-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~109",
+  "surfaced_at": "2026-10-15T12:51:26Z",
+  "one_line": "On 2026-10-15 a key login from the laptop is refused on all three site-Z/dell boxes for the client default login. The 2026-10-13 CVO row reads key login as answering on three boxes with no user given. The two readings cannot both hold for the same login.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round19_fwd27_laptop_side.py at b265d96511: BOX sitez 100.99.180.19 port22=OPEN key=DENIED; BOX dell1 100.79.95.44 port22=OPEN key=DENIED; BOX dell2 100.104.84.87 port22=OPEN key=DENIED; FWD27-LAPTOP-SIDE boxes=3 key_ok=0 password_refused=3 ok=False (rc 1)",
+      "ssh -v -o BatchMode=yes dell1 hostname (native Windows OpenSSH, login azuread\\andrewberman): 'Offering public key: C:\\Users\\AndrewBerman/.ssh/id_ed25519' then 'Permission denied (publickey,keyboard-interactive)'",
+      "the same denial for sitez with the Git ssh default login AzureAD+AndrewBerman (ssh -G user line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CVO regrade 2026-10-13 row 27: 'ssh -o BatchMode=yes -> OPAL_BLOOMBERG, DESKTOP-HK1UU7N, DESKTOP-N8RJV0A (rc 0)'; key login works on three of four boxes from the laptop.",
+  "world_is": "Key login from this laptop is refused for the client default login on sitez, dell1 and dell2 on 2026-10-15; password_arm reads KBDINT-NO-PROMPT on all three (keyboard-interactive offered, no prompt sent), so password_refused=3 by the tool's rule. FWD-27 key arm is not met by this read."
+}
+```

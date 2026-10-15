@@ -38295,3 +38295,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS. D2-W417-S6 RESOLVED (my check defect, AMENDMENT 1: the candidate-against-served difference is counted by kind). D2-W417-S1 and S7 stay ARMED, owner me, as the hinge of the Cottonwood pair: whether Cottonwood publishes after the IB-pr-549 mint depends on whether the minted pin-2 body of directory_marks_no_closures is HEAD's or the deployed one (the worker did not read pin 2's body; the CTO holds the Cottonwood pair until the mint and its next fire). D2-W417-S3 (no TERMINATED mark exists for the account and the writer marks only an entry the previous build carried: the account is in no directory entry and not in the directory's source client list) is the reason the closed_at_source exemption (IB-pr-576) is built instead of a mark. D2-W417-S2 (the offline rebuild gives 17,911 nodes against the refused revision's 17,904), S4 (for three days before the zero-position run the custody partition carries two no-position rows while the independent-total partition carries a nonzero value), S5 (the sparse grant widened locally): INERT, recorded. The CTO's 8290 changes the exemption's record to ABSENT_AT_SOURCE (never closed)."
 }
 ```
+
+## IRPT_BCKEND-D2-S200 -- IB-pr-549's pin bodies carry HEAD's directory_marks_no_closures; the acts that built the live bundles; what is not established
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S200",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T13:19:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Reading of IB-pr-549's pin bodies against HEAD before the mint (CTO msg 8296) and the acts that built the live bundles: both pins carry HEAD's directory_marks_no_closures body (651 characters, identical), so the mint lands the HEAD gate for the carried-forward-ignoring rule; the live 49 Financial bundle was minted by IB2's IB178 apply and the live Cottonwood bundle predates it (untouched by IB178); the live bytes match neither HEAD nor their pin because they were built from earlier trees, not from these pins.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show of data/assets/scripts/gold/investor_reporting/holdings_snapshot.py at b1d354cfc9341168a3b4c316a344876ce0049b97 (49 Financial pin), 5fad7eaaa8fb4c512190fa406b78c683c4b6ad1f (Cottonwood and Inflection pin 2) and HEAD: the directory_marks_no_closures function is byte-identical at all three (651 characters, one hash); it ignores carried-forward entries and returns True only when every source-marked entry is UNKNOWN",
+      "deliverables/0.7.0_AE_CloudOps~IB2/IB178-1_apply_record.json: the 49 Financial bundle put produced version UHOCIkWj3QiIzNucG1VjNnk_AufIg6oD (start version fMLoOI6a...), candidate sha256 f945da68...; the same record shows Cottonwood untouched, version oyIYMVdh_l2zCg5ZWvn3ISPPS6_9Q82_ before and after; IB193-1_apply_record.json (branch B re-read) names both ids as the IsLatest versions"
+    ]
+  },
+  "spec_asserts": "CTO msg 8296: read IB-pr-549's pinned holdings_snapshot.py body against HEAD's directory_marks_no_closures before the mint, and name from the ledgers the act that built each live bundle and whether the source map recorded it.",
+  "world_is": "PREDICTION: the IB-pr-549 mint lands, for Cottonwood and Inflection (pin 2) and for 49 Financial (pin 1), the HEAD body of directory_marks_no_closures, so Cottonwood's gate lists the lost account and publishes at the first fire after the mint if its directory carries only UNKNOWN source marks besides the two carried TERMINATED entries (the HEAD offline run did exactly this); 49 Financial publishes only if its directory's 73 TERMINATED entries are all carried-forward (not source-marked), which was not read, so 49 Financial is expected to stay refused. THE MINT LANDS NO THIRD UNREAD BODY for this function; the other members are IB-pr-549's own differential. THE LIVE BUNDLES: 49 Financial UHOCIkWj was put by IB2's IB178 apply (order IB-pr-512, the minimal holdings packages); Cottonwood oyIYMVdh predates IB178 and was untouched by it (the earlier IB-pr-404 narrow-bundle apply by the same seat, IB105-1 record); the bundle objects are declared in .tools/safe_deploy_core.py, not in the lambda source map, so no source-map record exists for them; which commit built each live holdings_snapshot.py is not named by these records beyond the packet's blob 3a19dcf5 for the IB193 re-read, and the live bytes differ from that blob, so the build input of each live bundle is NOT established here (a read of the IB2 ledgers under org/critical_paths/change_management/ for the two mints is the open part)."
+}
+```
