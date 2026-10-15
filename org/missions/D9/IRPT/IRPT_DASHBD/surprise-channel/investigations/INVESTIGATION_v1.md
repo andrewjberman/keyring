@@ -14572,3 +14572,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Issuer omission disclosed: DB-b-230 said the contract wins where the builder departs from it, and did not check that the builder's departure was a ruling. The repair cell (contract 0.5.4: the 10 members point at the value-summary folds the equivalences name; module follows) rides the next issuance and is thread-critical, because ~P2's publisher would otherwise compose a report whose activity summary prints absent words."
 }
 ```
+
+## IRPT_DASHBD-D2-S57 -- disarm owner's evidence for W306-S1: the fee sign was the issuer's assumption, fixed by AMENDMENT 1, and the Q3 gap ties by magnitude
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S57",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~I2",
+  "surfaced_at": "2026-10-15T04:37:18Z",
+  "one_line": "W306-S1 disarm evidence: the fee rule tested feeAmount above 0 and the source sums fees negative (the issuer's sign assumption); AMENDMENT 1 @7fcdeb1a2c ties the gap to abs(fee), the worker recomputed from its saved bodies with no new call, and DBI118-1-AC1 reads PASS with b_fee_basis NET_WHEN_FALSE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-i-6 step 5 rule (ii) as first written: an account with a fee has fee above 0.",
+  "world_is": "The saved Q3 and YTD bodies carry negative feeAmount sums on every fee-bearing account (2 of 2 in Q3, 3 of 3 in YTD, 0 positive). By magnitude the Q3 gap ties on 2 of 2 accounts with 0 untied and 0 in the wrong direction; in YTD 1 ties, 2 have a zero start value. The amended check and the worker's record agree (NET_WHEN_FALSE, pair q3, 3 compared, 2 with a fee).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-6.orion-scope-probe-two-q3-fee-tie-and-short-account-cause.md",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~306/SCOPE_PROBE2_R118.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r117/p117_scope.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
