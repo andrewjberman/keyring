@@ -35287,3 +35287,160 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "D2-W393-S1 is INERT: a page anchor is a value read at the release (the packet's four-leg ledger and the COO half's condition 5), and the rule admits a newer version only as the only newer one, written by that firm's scheduled fire of the day and dated T-1. Whether lyN4... is the same object as the manifest versions is not settled by file bytes; the releasing seat lists the versions. COO half v3 signed at the packet bytes (NEVER_WIDEN_IB_pr_532_V3_PER_FIRM_PINS_COO_HALF.md)."
 }
 ```
+
+## IRPT_BCKEND-D2-W394-S1 -- two schedule descriptions name pull times the live rules no longer carry
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W394-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~394",
+  "surfaced_at": "2026-10-15T02:48:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The mirror rule's description says the Orion pull is inf-api-txn-daily at 13:47Z and the inf-api-positions header says cron(50 12 * * ? *); live, inf-api-txn-daily is cron(32 11 * * ? *) and inf-api-positions-daily is cron(22 11 * * ? *). The clock text is stale; the order (pulls before the 13:05 mirror) still holds.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live describe-rule inf-api-txn-daily (read 2026-10-15): Description 'Daily TXN bronze pull + silver convert at 13:47 UTC', ScheduleExpression cron(32 11 * * ? *)",
+      "live describe-rule opal-assets-ingest-mirror-inf-daily (read 2026-10-15): Description names 'the last orion pull (inf-api-txn-daily 13:47Z)'",
+      "infra/aws/lambda/inf-pipeline/inf-api-positions/lambda_function.py:7 states 'EventBridge cron(50 12 * * ? *) = 12:50 UTC daily'; the live rule inf-api-positions-daily is cron(22 11 * * ? *)"
+    ]
+  },
+  "spec_asserts": "Rule descriptions and file headers state the clock time at which each Orion pull fires, and the mirror description places its run after the last Orion pull.",
+  "world_is": "The live rules fire the Orion API pulls between 11:02 and 11:32 UTC, before the 13:05 mirror run, so the ordering holds, but the stated clock times are stale. Nothing was changed by this read. Ruling 23eff24d0c (S2) moves these schedules to 06:00 New York, so the text should be corrected in that release."
+}
+```
+
+## IRPT_BCKEND-D2-W394-S2 -- the 16:00 UTC silver sweep cannot see a feed whose bronze key never landed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W394-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~394",
+  "surfaced_at": "2026-10-15T02:48:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The silver sweep builds its expected set from the bronze listing, so a bronze key that never landed is never expected. On 2026-09-28 the sweep recorded missing 0 and verdict FAIL on an unrelated alien partition, while two trading days are absent from three silver tables.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/opal-assets/opal-assets-silver-orion/mirror_conversion.py:875 'expected = expected_partitions(bronze, family)': the expected set is derived from the bronze listing taken at line 873",
+      "meta conversions/20260928T160043Z-cb627fe5.json (opal-data-assets, GET): mode sweep, set_identity_pre expected 4939, missing [], alien 1 (fact_assets date=2026-08-06), verdict FAIL",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_DASHBD-D2-W302-S2 (the two gap dates absent from three silver tables)"
+    ]
+  },
+  "spec_asserts": "The converter header describes the sweep as a per-folder set-identity reconciliation from bronze to silver that folds the day's truth into backfill status.",
+  "world_is": "Set identity reconciles only what bronze lists, so a feed-level hole (a bronze key that never arrived) yields no missing entry and no alarm. The FAIL verdict is carried by the 2026-08-06 alien partition and does not name the gap dates. Left alone, a missing feed day stays silent on every daily sweep. The disarm owner is the issuer by channel convention; that assignment is not confirmed by a ruling read here."
+}
+```
+
+## IRPT_BCKEND-D2-W394-S3 -- no repo writer of the flat jsonl.gz positions key; the repo's positions pull writes parquet
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W394-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~394",
+  "surfaced_at": "2026-10-15T02:48:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The repo's Orion positions pull writes only .parquet to opal-data-inf bronze (pull_inflection_positions_daily.py:437). The mirror copies only .jsonl.gz and the silver-chain reader expects .jsonl.gz (convert_orion_api_to_silver.py:785). No repo writer of the .jsonl.gz positions key was found, yet the source bucket holds 2,358 such objects.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/inf-api-positions/pull_inflection_positions_daily.py:437 bronze_key = f\"bronze/positions/{snap_iso}.parquet\" with put_object at line 441",
+      "infra/aws/lambda/inf-pipeline/inf-silver-chain/convert_orion_api_to_silver.py:785 POSITIONS_BRONZE_KEY_TPL = \"bronze/positions/{snap}.jsonl.gz\", and the split-brain note at lines 854-891",
+      "opal-data-inf bronze/positions LIST (read 2026-10-15): 4723 keys, 2358 .jsonl.gz and 2365 .parquet"
+    ]
+  },
+  "spec_asserts": "The mirror header says the flat bronze generation is the raw feed and the mirror takes raw keys only (lambda_function.py:19-30); the silver-chain comment says the jsonl reader and the parquet producer are an atomic pair that ship together.",
+  "world_is": "The writer of the flat .jsonl.gz positions objects is not in this repo's pull code. Its identity and schedule are not in any artifact read. The repo's own positions producer writes the other format, so the pair named as atomic is not one repo unit. INERT for this read; the skip cause in the record stays inferred."
+}
+```
+
+## IRPT_BCKEND-D2-W394-S4 -- the converter and mirror log groups keep 14 days, so the gap-date run logs are gone
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W394-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~394",
+  "surfaced_at": "2026-10-15T02:48:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The mirror and converter log groups have 14-day retention. Filter reads return 0 events for 2026-07-01 and 2026-09-28, so the per-run denominator lines for those days cannot be read from logs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "logs describe-log-groups (read 2026-10-15): /aws/lambda/opal-assets-ingest-mirror and /aws/lambda/opal-assets-silver-orion, retentionInDays 14 each",
+      "logs filter-log-events: 0 events in the 2026-07-01 and 2026-09-28 windows for both groups; the 2026-10-13 control window returns 28 (mirror) and 15 (converter) events",
+      "infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:581 prints the per-row DENOMINATOR line that carries each run's count"
+    ]
+  },
+  "spec_asserts": "The mirror prints its denominator every cycle, so each run's enumerated, written and skipped counts are recoverable after the fact.",
+  "world_is": "The per-cycle denominator lives only in a log with 14-day retention. The conversion ledger in opal-data-assets starts with a record on 2026-07-15, so no ledger record exists for the 2026-07-01 run. Past the retention horizon the run counts are lost unless an artifact kept them."
+}
+```
+
+## IRPT_BCKEND-D2-W394-S5 -- 2026-07-01 is parquet-only for positions and lies before the header's stated raw stop
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W394-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~394",
+  "surfaced_at": "2026-10-15T02:48:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The mirror header attributes the parquet-only holes to a raw producer that died on 2026-07-10. The source holds 2026-07-01 positions only as a .parquet, and 2026-07-01 is before that stated stop, so the header's account does not reach it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:22-24 states the raw producer died 2026-07-10 and that parquet-only dates follow",
+      "opal-data-inf bronze/positions LIST (read 2026-10-15): key 2026-07-01.parquet present, no 2026-07-01.jsonl.gz key",
+      "opal-data-inf bronze/positions LIST: .jsonl.gz positions keys dated on or after 2026-07-10 number 94, so the raw feed continued on other days after that date"
+    ]
+  },
+  "spec_asserts": "The mirror header states that the raw producer died on 2026-07-10 and that the parquet-only dates from that stop are the honest holes.",
+  "world_is": "The 2026-07-01 positions hole predates the stated stop and is not explained by it. No artifact read gives another cause for that date. The 2026-09-28 positions hole is after the stop, when the raw feed ran on other days, so the stop alone does not explain it either."
+}
+```
+
+## IRPT_BCKEND-D2-S180 -- Dispositions on worker 394's rows and the answer on W302-S2: the two Orion days never reached the mirror (parquet only; transactions and performance absent at the source)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S180",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-15T03:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "Dispositions on worker 394's rows (D2-W394-S1 to S5) and the answer to the CTO's ask on W302-S2: the two days never reached the mirror because the Inflection source bucket holds only a .parquet positions object for them and no transactions or performance object at all, and the mirror copies .jsonl.gz only; the re-pull is not a re-run of one lambda.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "I re-ran IB199-1 AC1 to AC3 on the worker's tree (PASS) and the proof instance (VALID); merge d3bbb5dd46; deliverables/0.9.0_WK_IRPT_BCKEND~394/IB199-1_orion_gap_read.json",
+      "the record: 12 of 12 target-partition counts read 0; source LIST (opal-data-inf bronze): positions 2026-07-01 and 2026-09-28 hold 1 key each, a .parquet, and 0 .jsonl.gz; transactions and performance hold 0 keys for either day; the mirror copies only .jsonl.gz (opal-assets-ingest-mirror lambda_function.py:77 and :493); the silver sweep builds its expected set from the bronze listing (mirror_conversion.py:875)"
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 7914: the Orion pull belongs to IRPT_BCKEND under the 6 AM ET fold; re-pull the two dates under a never-widen pair, and ask why the scheduled pull skipped them.",
+  "world_is": "DISPOSITIONS. D2-W394-S1 (stale schedule text), S3 (no repo writer of the flat .jsonl.gz positions key; the repo pull writes parquet), S4 (14-day log retention, the gap-day logs are gone), S5 (2026-07-01 is parquet-only and before the header's stated raw stop): INERT, recorded. D2-W394-S2 (the 16:00 UTC silver sweep cannot see a feed whose bronze key never landed): stays ARMED, owner me; disarm condition: the CTO rules the re-pull route and the sweep's expected set names the missing days or the feed is covered by the 06:00 ET fold (the fold covers none of the 155 live rules for this feed). THE ANSWER TO 'WHY': inferred, not measured: no artifact states why the raw producer wrote no .jsonl.gz for the two days; measured: the source holds only parquet for positions on both days and nothing for transactions and performance. THE RE-PULL: needs a raw .jsonl.gz writer that the repo does not hold (not located), at least 640 Orion positions requests (320 households times 2 dates; transactions and performance counts not read) and the vendor JWT object by name; it is a vendor-write pair, not one lambda re-run. Recommendation: the next cell locates the raw producer of the 2,358 existing .jsonl.gz objects and costs the re-pull per feed; the pair is cut after it."
+}
+```
