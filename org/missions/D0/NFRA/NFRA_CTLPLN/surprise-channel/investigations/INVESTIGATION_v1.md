@@ -9986,3 +9986,110 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "A root that starts its claude.exe through Start-Process would be a descendant of the worker's own session shell and protected; WMI creation keeps the root outside every session subtree. No real seat was touched: the claude.exe count before and after was 8 and 8."
 }
 ```
+
+## NFRA_CTLPLN-W102-S1 -- CT-af-3 base reference "git show HEAD:.tools/safe-commit.sh" moves with the WIP commit; the comparison base is the issuance commit cb843928c1
+
+```json
+{
+  "id": "NFRA_CTLPLN-W102-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~102",
+  "surfaced_at": "2026-10-15T06:42:22Z",
+  "one_line": "The order's base copy of safe-commit.sh is named as git show HEAD:.tools/safe-commit.sh. HEAD is the issuance commit only until the worker's first (WIP) commit lands; after it, HEAD holds the CT-af-3 change, so the base comparison would read the fixed file and compare it with itself. The suite pins the base to the issuance commit cb843928c1 instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-af-3.placement-refusal-unstages-all.md WORKER FACE, ACCEPTANCE: 'compare against the base by running the same fixture through git show HEAD:.tools/safe-commit.sh'",
+      ".tools/tests/test_placement_unstage.py@7eac4c0a1b BASE_REV = cb843928c1 (the pre-change safe-commit.sh); the WIP commit 36d453eea0 moved HEAD past it",
+      "measured 2026-10-15: git log --oneline -2 at 36d453eea0 shows the WIP commit at HEAD and cb843928c1 as its parent; arm (b) base rc=0 and staged set identical to the new run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO NFRA_CTLPLN.TO-CT-af-3 ACCEPTANCE, CTaf3-AC1 arm (b): the base copy is git show HEAD:.tools/safe-commit.sh extracted to a temporary file.",
+  "world_is": "HEAD moves on every commit, so a base named as HEAD is the pre-change script only before the first commit of the change. The suite reads the explicit issuance commit cb843928c1 (the parent of the WIP commit), which holds the pre-change stage (the placement branch loops over NGATE_FILES).",
+  "notes": "Arm (a) control confirms the base still leaves the .md staged on the placement fixture, so the pinned base is the defect's pre-change form. No other order premise failed: the cited line numbers moved by at most a few lines and the ENFORCE branch is unchanged."
+}
+```
+
+## NFRA_CTLPLN-W101-S1 -- the order's "keep the untagged seat-folder rule" is ambiguous once the scoping round can come from a decomposition: 8 untagged seat-folder orders that name a decomposition roundN leave the every-round count
+
+```json
+{
+  "id": "NFRA_CTLPLN-W101-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~101",
+  "surfaced_at": "2026-10-15T06:44:24Z",
+  "one_line": "TO CT-af-2 says keep the seat-folder untagged rule unchanged (an untagged flat-folder order is counted in every round and named untagged). The rule now keys on the scoping round, so an untagged seat-folder order that names a decomposition roundN is scoped to that round and no longer counted in every round. Eight such orders (TO-APPLY-3, 4, 5, 6, 7, 8, 10 and TO-DELL-1) move; the 23 orders with neither a tag nor a decomposition are unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/round-close-check.py@d7205c4365:356-362 -- the scoping round is the decomposition roundN when the order names one, else its <round> tag; the untagged exemption tests that scoping round, not the tag",
+      "measured 2026-10-15 by a read-only read_orders run over NFRA_CTLPLN at the pre-change base cb843928c1 and at d7205c4365: 144 orders read, 46 change scoping round, 8 of them untagged seat-folder orders with a decomposition roundN (none/2: TO-DELL-1; none/3: TO-APPLY-3; none/4: TO-APPLY-4, 5, 6, 7, 8, 10)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO NFRA_CTLPLN.TO-CT-af-2 BUILD item 1: derive each order's scoping round from its decomp_doc roundN, else its <round> tag exactly as today; keep the existing seat-folder rule (an untagged flat-folder order is counted in every round and named as untagged) unchanged.",
+  "world_is": "The order does not say whether an untagged seat-folder order that names a decomposition keeps the every-round count. The build reads the untagged rule as applying only to an order with NO scoping round (no tag and no decomposition roundN), so those 8 orders are scoped to their decomposition round. The alternative reading, every-round count plus the decomposition round, would keep them in all rounds. Verdicts are MAY-CLOSE for all 16 rounds under both the base and the build.",
+  "notes": "Judgment call recorded for the issuer. The 23 orders with neither a tag nor a decomposition are still counted in every round and named untagged. Not an ARMED hazard: no gate refuses, and the check's verdict is unchanged for every round."
+}
+```
+
+## NFRA_CTLPLN-W100-S1 -- worktree_gc --go still force-removes a dirty MERGED worktree while --check-removable refuses the same worktree (the two rules disagree; left as written)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W100-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~100",
+  "surfaced_at": "2026-10-15T06:49:22Z",
+  "one_line": "CT-af-1 leaves the MERGED class of --go as it is, per Andrew's standing word of 2026-10-08 (force-remove merged worktrees), and applies the dirty test to --check-removable only, per the CTO round-15 ruling 1 (a dirty worktree is never removed). For a worktree with own >= 1, merged into the trunk, uncommitted files and idle 24 h, --go force-removes it and --check-removable answers NOT-REMOVABLE MERGED. The two verdicts disagree until the owner rules.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/worktree_gc.py@72da6a005c run(): the MERGED branch of --go calls git worktree remove --force on a merged, idle, dirty worktree (the class is unchanged by CT-af-1)",
+      ".tools/worktree_gc.py@72da6a005c check_removable(): refuses any worktree with dirty or ignored non-cache paths, so the same worktree reads NOT-REMOVABLE MERGED",
+      ".tools/tests/test_worktree_gc_own_commit.py@12640b23f9 arm (d): one own commit merged, dirty -> NOT-REMOVABLE MERGED rc=1; the same worktree is force-removed by the --go run that follows (run output: arms=8/8 ok=True)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO NFRA_CTLPLN.TO-CT-af-1 BUILD item 4: leave --go's MERGED class as it is (Andrew 2026-10-08: force-removing merged worktrees is mandatory) and apply the dirty test to --check-removable only; the CTO round-15 ruling 1 says a dirty worktree is never removed. The two read against each other for that one class; the cell says do not resolve it.",
+  "world_is": "A merged, idle, dirty worktree with own >= 1 is removed by the next worktree_gc.py --go, with its uncommitted files, while worktree_gc.py --check-removable on the same path says NOT-REMOVABLE MERGED. The drain consults --check-removable before any removal only once it is wired to do so; until then --go alone decides.",
+  "notes": "Filed as the surprise row for the dirty-merged choice the order asks for. Not resolved by this worker. The removal reaches the dirty merged class only after 24 h idle, so it is armed for any such worktree on the box."
+}
+```
+
+## NFRA_CTLPLN-W100-S2 -- check-removable refuses a non-cache IGNORED file, a stricter reading than the literal git status --porcelain (which is empty for a worktree holding an ignored file; git worktree remove deletes that file without --force)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W100-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~100",
+  "surfaced_at": "2026-10-15T06:49:22Z",
+  "one_line": "The cell says REMOVABLE requires git status --porcelain to be empty. The literal command omits ignored files, and git worktree remove without --force deletes an ignored file without refusing. check-removable therefore reads the tree with --ignored=matching and refuses any non-cache ignored path, the same test the CLEAN class of --go already applies.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured 2026-10-15 in a scratch repository (.scratch/rl): a worktree holding an ignored local.env gave an EMPTY git status --porcelain; git status --porcelain --ignored=matching printed '!! local.env'; git worktree remove (no --force) returned rc=0 and deleted the directory",
+      ".tools/worktree_gc.py@72da6a005c check_removable(): the dirty-or-ignored refusal; classify() already counted ignored non-cache paths for CLEAN and MERGED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO NFRA_CTLPLN.TO-CT-af-1 BUILD item 3: REMOVABLE only when git status --porcelain is empty.",
+  "world_is": "Literal git status --porcelain is empty for a worktree that holds an ignored non-cache file, and git worktree remove deletes that file. The verb refuses such a worktree, so REMOVABLE implies no ignored non-cache path; it is a strict subset of the literal reading.",
+  "notes": "A conservative deviation from the literal text, stated here so the CTO can rule on the wording. Refusal can only keep a worktree, never remove one, so it cannot widen what --go removes."
+}
+```
