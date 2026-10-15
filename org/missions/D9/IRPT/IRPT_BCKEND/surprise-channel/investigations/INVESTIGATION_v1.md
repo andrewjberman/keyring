@@ -38889,3 +38889,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "DISPOSITIONS AND FINDINGS. (1) 49 Financial is NOT unblocked by the exemption: besides the one exempted account the gate still refuses on account_lost for other lost accounts and on classified_security_lost; neither is read yet (a READ cell follows: the anatomy of 49 Financial's remaining refusal, counts only). (2) Cottonwood publishes at HEAD's gate without the exemption: the live bundle's refusal is the deployed-gate difference of D2-S199, which the IB-pr-549 mint removes; the exemption adds four zero-value account nodes to a publication that would publish anyway (visibility, not unblocking); its second fire exempts again. (3) The split adjustment moves 1,291 account-days (0.48 percent of those run) and leaves 2 returns at or below -50 percent; 13 of 76 split security-days are ratio-absent (not graded) and now counted; the CTO's 920 for 2026-04-21 is not reproduced (985 here, as in the READ): ARMED, owner me, a figure to read with the CTO. W422-S1 and S2 are these findings; W422-S3 resolved (both second-fire readings recorded); W423-S1 inert (read-path calls only), S3 explained (2 holding account-days sit in ratio-absent securities); W424-S1 and W425-S1 to S3 inert or resolved (the producer writes one manifest per day, so the totals are summed over days by the reader). The workers' array-form channel rows made the union merge duplicate rows twice; the issuer re-formed them as blocks on the branches (a hazard to teach the next worker face: append each row as its own block)."
 }
 ```
+
+## IRPT_BCKEND-D2-W426-S1 -- IB-pr-584 premise: the READ FIRST harness is named IB218-1_exemption_delta_harness.py in the 422 folder, not ib218_1_exemption_delta.py.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W426-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~426",
+  "surfaced_at": "2026-10-15T15:55:11Z",
+  "one_line": "IB-pr-584 premise: the READ FIRST harness is named IB218-1_exemption_delta_harness.py in the 422 folder, not ib218_1_exemption_delta.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face, READ FIRST: the harness is deliverables/0.9.0_WK_IRPT_BCKEND~422/ib218_1_exemption_delta.py; reuse its set-up lines, do not edit it.",
+  "world_is": "The 422 folder holds IB218-1_exemption_delta_harness.py, and no file of the named name is tracked at base f2ef40fa28. The worker read the file that exists and reused its set-up lines; no edit was made to it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~422/IB218-1_exemption_delta_harness.py@f2ef40fa2804e0ec14a5e5478b8d83d96d500f3b",
+      "git ls-tree --name-only at f2ef40fa28 of the 422 folder lists four files, none named ib218_1_exemption_delta.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Path form only. The order names a path the tree does not hold; the issuer may correct the name in an amendment."
+}
+```
+
+## IRPT_BCKEND-D2-W426-S2 -- IB220-1 check AC2 counts a lost closed-directory account as remaining, but the gate never refuses a closed account, so the agreement it grades can false-fail on a correct record.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W426-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~426",
+  "surfaced_at": "2026-10-15T15:55:11Z",
+  "one_line": "IB220-1 check AC2 counts a lost closed-directory account as remaining, but the gate never refuses a closed account, so the agreement it grades can false-fail on a correct record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "Worker face: remaining = total minus exempted, and conditions_remaining must agree with the remaining lost accounts. Check p220_cells.py lines 44 and 56 grade account_lost as present iff total minus exempted is above zero.",
+  "world_is": "evaluate_publish_gate lists a lost account that is in closed_account_ids as closed_accounts_not_refused and removes it before the exemption and the account_lost test, so a closed lost account counts in remaining while no account_lost condition is raised. At base the closed directory holds 80 accounts and 0 of the 2 lost accounts are closed, so the check passes today; the mismatch is latent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r220/p220_cells.py@f2ef40fa2804e0ec14a5e5478b8d83d96d500f3b lines 44 and 56",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py@f2ef40fa2804e0ec14a5e5478b8d83d96d500f3b evaluate_publish_gate, the closed_accounts_not_refused branch and the account_lost test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not edited: the checks belong to the issuer. The disarm is the issuer's: either remaining excludes closed_by_directory, or the agreement is stated on lost minus closed."
+}
+```
+
+## IRPT_BCKEND-D2-W426-S3 -- The build module writes a ticker identifier to the process output for each security it cannot classify, so a run of the counts-only harness puts identifiers on the console.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W426-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~426",
+  "surfaced_at": "2026-10-15T15:55:11Z",
+  "one_line": "The build module writes a ticker identifier to the process output for each security it cannot classify, so a run of the counts-only harness puts identifiers on the console.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "Worker face, client data rule: the harness prints and writes counts only, and no real security identifier appears in any tracked file.",
+  "world_is": "Importing holdings_snapshot and running build_snapshot prints one line per unclassified ticker ('Classification not found for ticker') to the process output, several hundred lines in one run. The harness's own prints are counts only. The console capture is scratch and untracked; no tracked file holds an identifier. The printing source is not in the checked-out directories (a search of the gold, lib and investor-reporting Lambda trees finds no such string).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "console output of the read-only harness run at base f2ef40fa2804e0ec14a5e5478b8d83d96d500f3b, held in scratch outside the repository, carries the repeated line prefix",
+      "the search of data/assets/scripts/gold/investor_reporting, lib and infra/aws/lambda/investor-reporting at f2ef40fa28 finds no string of that text; the emitting module is outside the sparse checkout"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. A future counts-only run must redirect the console, or the emitting module must be named and its print removed by its owner."
+}
+```
