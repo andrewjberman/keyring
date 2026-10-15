@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN FWD-11: classify dell1's open ledger entries and seats in flight at the restart",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_FWD11_DELL1_PER_OWNER_READ.md",
  "opened_at": "2026-10-15T19:23:03Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-15T19:28:53Z",
   "bus_message_id": "ca553366-5d9c-4980-b6b6-68bcec02ae44"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-15T19:59:43Z",
+  "by": "0.0.0_AB_MSTR~DELL1",
+  "bus_message_id": "c67364c5-57d2-424e-bb1e-61daa6a8d5da"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
