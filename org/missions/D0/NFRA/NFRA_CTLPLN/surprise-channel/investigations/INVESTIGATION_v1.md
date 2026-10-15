@@ -10424,3 +10424,52 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "safe-commit.sh's author-seat check appends to a tracked audit log on each commit by a serial the roster does not know. In a sparse worktree that file is a tracked change the worker cannot commit under its lane, so it stays dirt until the worktree is removed."
 }
 ```
+
+## NFRA_CTLPLN-W107-S1 -- a sparse worktree without org/ref/ reads every seat kind as UNKNOWN, so the reviewer reads ABSENT
+
+```json
+{
+  "id": "NFRA_CTLPLN-W107-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~107",
+  "surfaced_at": "2026-10-15T12:41:22Z",
+  "one_line": "The first seat-list write in this worktree printed kind UNKNOWN for all 10 seats and reviewer=ABSENT, and round-close-check read REVIEWER-ON-BOX state=ABSENT, while CVO seats were LIVE. The cause was the sparse set without org/ref/. After git sparse-checkout add org/ref, a second write printed kind CVO/COO/CRO/MSTR/CLOUDOPS and reviewer=present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-list.py write (before sparse add) at 2026-10-15T12:33Z: every seat row kind UNKNOWN, last line 'reviewer=ABSENT ok=True'; safe-commit WARN org/ref/SEAT_ROLES.json unreadable (FileNotFoundError)",
+      "git sparse-checkout add org/ref, then python .tools/seat-list.py write: 'reviewer=present ok=True'; python .tools/round-close-check.py --project NFRA_CTLPLN --round 18: 'REVIEWER-ON-BOX device=laptop state=present' and ROUND-CLOSE ... reviewer=present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-2 BUILD 1: python .tools/seat-list.py write refreshes the laptop list, and the record's reviewer line reads present when a CVO-kind seat is live on the box.",
+  "world_is": "The worker sparse set (the order paths plus the standing folders) omits org/ref/, where SEAT_ROLES.json lives. The seat-list kind resolver then returns UNKNOWN for every seat, so a live CVO is not counted as a reviewer. The worker added org/ref to its sparse set and re-wrote the list. Same root as NFRA_CTLPLN-W105-S2."
+}
+```
+
+## NFRA_CTLPLN-W107-S2 -- round 18 carries no judgment criterion, so round-close-check prints no GRADED line for the record to copy
+
+```json
+{
+  "id": "NFRA_CTLPLN-W107-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~107",
+  "surfaced_at": "2026-10-15T12:41:22Z",
+  "one_line": "The cell asks the record to copy two GRADED (adjudication row ...) lines from round-close-check --round 18. That run printed no GRADED line: judgment=0 graded=0, because the round's one complete order TO-CT-ah-1 has no judgment=\"true\" criterion. The record carries the ROUND-CLOSE reviewer line and states that no GRADED line exists.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project NFRA_CTLPLN --round 18 (after sparse add org/ref): ORDERS scope round=18 workstream=all: 1 order(s), 1 complete; GRADING-ROWS adjudication=59 row(s); STRICT-GRADES judgment=0; last line 'ROUND-CLOSE project=NFRA_CTLPLN device=laptop reviewer=present orders=1 judgment=0 graded=0 ungraded=0 self_graded=0 verdict=MAY-CLOSE'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-ai-2 DONE WHEN: one finished piece of work shown with its grade, and BUILD 1: the record carries two GRADED (adjudication row ...) lines verbatim from round-close-check --round 18.",
+  "world_is": "Round 18 of NFRA_CTLPLN has no graded judgment criterion, so no GRADED line exists to copy. The DONE WHEN grade element is not met by round 18 as named. The criterion AC2 (ok=every seat named and reviewer present) does not read the GRADED lines and is unaffected."
+}
+```
