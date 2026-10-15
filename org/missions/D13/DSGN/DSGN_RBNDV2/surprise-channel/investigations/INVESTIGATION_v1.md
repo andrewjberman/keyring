@@ -707,6 +707,89 @@
       "disposition": "UNDER_INVESTIGATION",
       "spec_asserts": "TO RV-m-4 worker face: the frame's data-panel-surface turns the old dark grounds white and silver by token; a modal body written for a dark ground reads on the white surface; C6 keeps chart colours.",
       "world_is": "The literal navy ground is not a token, so the frame does not turn it white. The scoped rule turns the labels' text-white idioms to navy ink, so the labels on that ground are likely navy on dark navy. Not walked in a browser (no server, per the order); the judgment criterion RB2M4-AC3 is the check and it is the COO's."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S10",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T10:07:55Z",
+      "one_line": "ModelPortfolioModal's navy HeroDialog (the 2026-09-14 design) is replaced by the A-light ModalFrame in this file only; HeroDialog still serves SatelliteModal, EtfModal and the page modals, so the modal family now carries two designs.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git show adc70061:portal/src/components/ModelPortfolioModal.tsx: the render returns HeroDialog with eyebrow, icon, title, subtitle, meta and footer (the navy hero) and the file header states the 2026-09-14 design",
+          "portal/src/components/ModelPortfolioModal.tsx at ec15d42a: the render returns ModalFrame (title Model Portfolio, the target and code in the first body row, footer DialogStamp); the HeroDialog import is removed",
+          "native Grep for HeroDialog over portal/src lists 27 files, including components/SatelliteModal.tsx and components/EtfModal.tsx"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-5 worker face: each listed modal adopts ModalFrame and keeps its state, effects, handlers, props and behaviour; the cell's FWD-3 intent is one shared modal frame.",
+      "world_is": "The adoption replaces the hero of this one modal. Its content (target, code, the ruled six fields, Key Notes, the data-as-of stamp) is kept; the eyebrow icon and the navy hero band are no longer drawn. The other HeroDialog modals are untouched, so the family differs. The issuer decides whether the hero is kept for this modal."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S11",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T10:07:55Z",
+      "one_line": "SessionTimeoutWarning hides the frame's Close control with an arbitrary-variant class on the surface; the rule is checked as class text only (not walked), and if the variant does not emit, a dead X would show on a dialog that has no X by design.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~RB -- confirm in the live walk that the session warning shows no X; if it does, the frame needs a showClose option (the API is frozen by RV-m-1, so the issuer decides).",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "portal/src/components/SessionTimeoutWarning.tsx at ec15d42a: className=\"[&_button[aria-label=Close]]:hidden\" on ModalFrame (the className goes to the surface)",
+          "portal/package.json: tailwindcss ^4.2.1 (arbitrary variants are supported); the emitted CSS was not inspected and the page was not walked (no server, per the order)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-5 worker face: SessionTimeoutWarning keeps its behaviour (static backdrop, no X: the user must actively choose to continue).",
+      "world_is": "The Close control is hidden by a selector on the surface, which keeps the no-X behaviour if the variant emits as written. Onclose is a no-op, so even a visible Close control would not end the session. The walk decides."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S12",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T10:07:55Z",
+      "one_line": "SmallAccountsByRoleModal keeps its own window keydown Escape effect, and the frame adds a document Escape handler, so one Escape press calls onClose twice.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "git show adc70061:portal/src/pages/AdvisorIntelligence/_shared/SmallAccountsByRoleModal.tsx lines 21-27: useEffect adds a window keydown listener that calls onClose on Escape",
+          "portal/src/ui/components/modal/ModalFrame.tsx: the Escape effect adds a document keydown listener that calls onClose on Escape"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-5 worker face: every effect of the adopted modal stays exactly as it is.",
+      "world_is": "The effect is kept as written. The frame's Escape adds a second onClose call per press. The onClose handler of the page is idempotent in practice (it closes a modal), so the double call is inert; the issuer may remove one listener."
+    },
+    {
+      "id": "DSGN_RBNDV2-W8-S13",
+      "project": "DSGN_RBNDV2",
+      "fabric": "laptop",
+      "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~8",
+      "surfaced_at": "2026-10-15T10:07:55Z",
+      "one_line": "Other overlays in the files' directories, not on the list and not adopted: components/SatelliteModal.tsx and components/EtfModal.tsx (HeroDialog modals) and components/LoadingSpinner.tsx line 57 (a full-page fixed inset-0 loader, not a modal).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "native Grep of portal/src/components for HeroDialog lists SatelliteModal.tsx and EtfModal.tsx",
+          "native Grep of portal/src/components for fixed inset-0 at portal/src/components/LoadingSpinner.tsx line 57: className fixed inset-0 bg-[hsl(var(--bg-page))] with Z_INDEX.overlay (a loader, with no dialog role)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO RV-m-5 worker face: look in the files' own directories for any other overlay and name it in a surprise row, a wall you may not edit.",
+      "world_is": "SatelliteModal.tsx and EtfModal.tsx are modals on HeroDialog and are not on the RV-m-5 list; LoadingSpinner.tsx draws a full-page loader, which is not a modal. None is edited."
     }
 ]
+```
 ```
