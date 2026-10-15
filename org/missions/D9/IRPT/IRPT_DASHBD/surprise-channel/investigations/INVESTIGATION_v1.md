@@ -14095,3 +14095,109 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-i-5. Form only: no token was printed or stored, no client value is in the repo, and no call beyond the two POSTs was made. A CTO ruling is needed before any further call: whether the estate's inner-scope shape may be posted on up to two more calls under a new order. The worker did not widen the cap of four or the no-retry-on-4xx rule."
 }
 ```
+
+## IRPT_DASHBD-D2-W503-S1 -- The FE-s-31 export gate reads a report's availability, and a served FILLED report carries none, so the gate would hold a filled export closed; the gate is opened on the reader's served answer instead, which the order does not name.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W503-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~503",
+  "surfaced_at": "2026-10-15T04:22:22Z",
+  "one_line": "The FE-s-31 export gate reads a report's availability, and a served FILLED report carries none, so the gate would hold a filled export closed; the gate is opened on the reader's served answer instead, which the order does not name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "TO DB-f-503 step 4: the submit names filledReportSource(clientId) when a client is named; step 5: the preview resolves through the reader. The order is silent on the export gate (FE-s-31, exportGateFor over the resolved report's availability, which closes the submit when no report is resolved).",
+  "world_is": "FilledReport (dashboard/report/reportModel.ts) has no availability field, so exportGateFor(null) keeps a filled export closed forever. The branch added: Preview reports bundle.filledReport through onFilledResolved, and ExportButton opens the gate with FILLED_REPORT_GATE_OPEN (chrome null; ExportGate open chrome widened to nullable). A route that serves a report whose answer is not answer-bearing would therefore be exportable through the gate. Disarm for the issuer to decide: whether a served filled report must carry an availability before the gate opens.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/export/ExportButton.tsx@476f8388dd",
+      "portal/src/pages/InvestorReporting/export/submit.ts@476f8388dd (exportGateFor, ExportGate)",
+      "portal/src/pages/InvestorReporting/dashboard/report/reportModel.ts@d3c379663f (FilledReport, lines 68-76)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-503 (round 115). Inert while no route serves a report; ARMED because the open gate would reach a route that serves one."
+}
+```
+
+## IRPT_DASHBD-D2-W503-S2 -- A print naming only a client never reached resolveBundle: the print window gate refused it for want of a selection or an account, so the entry admits client as a window key.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W503-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~503",
+  "surfaced_at": "2026-10-15T04:22:22Z",
+  "one_line": "A print naming only a client never reached resolveBundle: the print window gate refused it for want of a selection or an account, so the entry admits client as a window key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-503 step 6: the print entry reads the optional query keys client and version and, for a Performance print naming client, calls resolveBundle with clientId. The order does not name the print window gate.",
+  "world_is": "render/PrintEntry.tsx parsePrintWindow refused any print with neither a selection nor an account before any request ('names no selection'). The change admits client as an alternative key there, and resolveBundle waives its selection requirement only when clientId is set. The print of a served filled report therefore needs start and end on the URL and no selection.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/PrintEntry.tsx@476f8388dd (parsePrintWindow, the client read)",
+      "portal/src/pages/InvestorReporting/export/resolveBundle.ts@476f8388dd (printWindowAttempted, the clientId waiver)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-503. The print URL contract for the FILLED_REPORT print is the issuer's to name (BUILD_R115.json print_query)."
+}
+```
+
+## IRPT_DASHBD-D2-W503-S3 -- The order says nothing else in the code spells FILLED_REPORT, but the issuer's checker requires export/submit.ts to carry that token; the token sits in a doc comment there, not in code.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W503-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~503",
+  "surfaced_at": "2026-10-15T04:22:22Z",
+  "one_line": "The order says nothing else in the code spells FILLED_REPORT, but the issuer's checker requires export/submit.ts to carry that token; the token sits in a doc comment there, not in code.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-503 step 2: nothing else in the code spells FILLED_REPORT or client_id for this purpose. Checker DBF115-1-AC1 (EXPORT_TOKENS) requires export/submit.ts to contain FILLED_REPORT.",
+  "world_is": "Both cannot hold literally for submit.ts. FILLED_REPORT is named in a doc comment on the performanceSource parameter; the code path uses filledReportSource() from export/filledReportSource.ts. The criterion passes on the comment.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/export/submit.ts@476f8388dd (performanceSource doc comment)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r115/p115_export.py (EXPORT_TOKENS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-503. Form only."
+}
+```
+
+## IRPT_DASHBD-D2-W503-S4 -- The print has no refusal worded for an unreadable source; a client print whose report is not served reaches the document's missing-payload panel, which names a missing performanceReport.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W503-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~503",
+  "surfaced_at": "2026-10-15T04:22:22Z",
+  "one_line": "The print has no refusal worded for an unreadable source; a client print whose report is not served reaches the document's missing-payload panel, which names a missing performanceReport.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-503 step 6: a print naming client whose report is not served shows the print's existing refusal for an unreadable source, never a blank page.",
+  "world_is": "No refusal worded for an unreadable source exists in the print. The reachable existing refusal is PerformanceDocument's error panel (data-error missing-payload, carries no performanceReport), reached because resolveBundle skips PATH A for a client print with no selection. The page is not blank; its words name the missing payload.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/performance/PerformanceDocument.tsx@476f8388dd (missing-payload panel)",
+      "portal/src/pages/InvestorReporting/export/resolveBundle.ts@476f8388dd (client print, no PATH A)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-503. A wording question for the issuer; the refusal is not blank."
+}
+```
