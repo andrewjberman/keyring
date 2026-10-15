@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.5.1",
+  "contract_version": "0.5.2",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -40,6 +40,11 @@
       "contract_version": "0.5.0",
       "sha256": "72ab629a45af32f07cc5948bd4240fe80e2690ed7926dce4e61c24c3ec647363",
       "reason": "the 0.5.0 bytes, before the 0.5.1 bump: the hold.return_<window> members (the holdings overview's household return) kept source ABSENT with no firm_sources, while the pvs.<window>.return_cumulative members carried Orion's client-grain figure, so the same household return printed as a number in one cell and as an absent form in another; 0.5.1 mirrors each pvs return's firm_sources or firm_absent onto its hold twin and adds one equivalence class per window"
+    },
+    {
+      "contract_version": "0.5.1",
+      "sha256": "0b515243b310bb95de8d9bebdb0f2725b70626307adcc9f4fb80298883692df4",
+      "reason": "the 0.5.1 bytes, before the gold_table block (0.5.2): the filled report is written as the gold table filled_report_values, one row per household, member and row, each holding the value or the absent form with its kind and its words; the table's columns, grain, address rule, reader and row forms are stated in gold_table; members, document and the absent-sourced set are unchanged"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -211,6 +216,16 @@
       "SOURCE_BREAK"
     ],
     "unheld_rule": "An asset-class entry in a by_row map (hold.allocation) that holds the text UNHELD means the household holds none of that asset class on as_of. It prints the baseline's dash, never a reason and never zero. UNHELD is not an absent form, so it carries no kind, and it may appear only as the value of an asset-class key of a by_row map."
+  },
+  "gold_table": {
+    "table": "filled_report_values",
+    "columns": ["firm", "household_ref", "as_of", "member_id", "row_key", "series_name", "point_date", "value_number", "value_text", "absent_kind", "absent_reason", "contract_version", "schema_version"],
+    "address_rule": "the partition is date=<as_of business date> at lib/opal_naming.py address(\"irpt\", <firm>, \"gold\", \"filled_report_values\", \"date=<as_of>\", \"data.parquet\"), one partition per as_of business date; no bucket or prefix is typed",
+    "grain": "one row per household_ref, member_id, row_key, series_name and point_date: row_key is the account_id for an account-grain member and the asset class for hold.allocation, series_name and point_date name one chart point, and each is the empty string where it does not apply",
+    "reader": "the platinum publisher of the serve path (IRPT_BCKEND ~P2) reads this table and composes the platinum filled_report.json from it; the tab and the export read that JSON by member id and derive no figure",
+    "row_forms": "exactly one of: value_number (a finite double, with value_text, absent_kind and absent_reason null); value_text (the member's text, or UNHELD only for a hold.allocation class the household does not hold, with the others null); or the absent form (absent_kind one of document.absent_kinds and absent_reason the words, with value_number and value_text null). Absent is never zero.",
+    "reserved_member_ids": ["household.first_data_date", "account.last4", "account.first_data_date", "account.window_status.qtd", "account.window_status.ytd", "account.window_status.last_12_months", "account.window_status.since_inception"],
+    "claim": "measured"
   },
   "members": [
     {

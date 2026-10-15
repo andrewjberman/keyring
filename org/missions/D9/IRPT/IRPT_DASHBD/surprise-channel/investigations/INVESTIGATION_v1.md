@@ -14068,3 +14068,111 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-8. Form only; the two texts of step 2 should be reconciled by the issuer."
 }
 ```
+
+## IRPT_DASHBD-D2-W185-S1 -- The contract names six activity-table folds for act.beginning_value, act.net_gain and act.ending_value (household and account); the sample builder folds the same six from the return table. The table follows the contract.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:13:49Z",
+  "one_line": "The contract names six activity-table folds for act.beginning_value, act.net_gain and act.ending_value (household and account); the sample builder folds the same six from the return table. The table follows the contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json 0.5.1: members act.beginning_value.household and .account (source ACCOUNT_ACTIVITY_DAILY beginning_value on the last-12-months opening anchor), act.net_gain.household and .account (source ACCOUNT_ACTIVITY_DAILY realized; fold: realized plus unrealized_change plus income across the last-12-months trading days), act.ending_value.household and .account (source ACCOUNT_ACTIVITY_DAILY ending_value on as_of).",
+  "world_is": "The builder org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py (build_values, the act branch and its round 105 note) folds these six from the account_return_daily window terms (the value summaries' folds) and says the activity table is not a second source for them. The module data/assets/scripts/gold/irpt_reporting/filled_report_values.py follows the contract text: the six are folded from the account_activity_daily window terms, and the return-table figures are not copied. The disagreement is on the source table.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@485629a40e (members act.* source and fold text)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py@485629a40e (build_values act branch)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (member_value act branch, this worker's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-230 under the order's contract-wins rule. Form only; the sample builder's source for these members is for the issuer to reconcile."
+}
+```
+
+## IRPT_DASHBD-D2-W185-S2 -- The contract folds hold.net_gain_last_12_months, _ytd, _qtd and _since_inception from the activity table; the sample builder reads the household value summary's return-table net gain for the same four.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:13:49Z",
+  "one_line": "The contract folds hold.net_gain_last_12_months, _ytd, _qtd and _since_inception from the activity table; the sample builder reads the household value summary's return-table net gain for the same four.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json 0.5.1: members hold.net_gain_last_12_months, hold.net_gain_ytd, hold.net_gain_qtd and hold.net_gain_since_inception (source ACCOUNT_ACTIVITY_DAILY realized; fold: the sum over the household's accounts of realized plus unrealized_change plus income across the window's trading days, before advisory fees).",
+  "world_is": "The builder org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py (build_values hold.net_gain_ branch, round 106 note) writes the household value summary's pvs.<window>.net_gain for these four, which is the return-table residual. The module follows the contract's activity fold; a window the activity table does not open is the absent form INSUFFICIENT_HISTORY in words, never zero.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@485629a40e (members hold.net_gain_* source and fold text)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py@485629a40e (build_values hold.net_gain_ branch)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (member_value hold.net_gain_ branch, this worker's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-230 under the order's contract-wins rule. Form only; the sample builder's source for these members is for the issuer to reconcile."
+}
+```
+
+## IRPT_DASHBD-D2-W185-S3 -- The sixteen avs benchmark members are account-grain by the contract's per-row rule; the sample builder writes each as one household scalar. The table writes one by_row entry per account.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:13:49Z",
+  "one_line": "The sixteen avs benchmark members are account-grain by the contract's per-row rule; the sample builder writes each as one household scalar. The table writes one by_row entry per account.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json 0.5.1, document.filled_report.per_row_member_form: a member whose grain is an account (the account value summaries) holds {by_row: {account_id: figure}}. The sixteen avs.<window>.benchmark_* members are account value summary members sourced to the served model series.",
+  "world_is": "The builder org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py tests the model-input branch before the avs branch, so each avs benchmark member is one household scalar and the account grain never applies. The module writes one by_row entry per account carrying the same served window figure (or its absent form). The figure does not vary by account, so the entries agree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@485629a40e (document.filled_report.per_row_member_form and the avs benchmark sources)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py@485629a40e (build_values, model branch before the avs branch)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (member_value model branch, this worker's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-230 under the order's contract-wins rule. Form only; the sample builder's source for these members is for the issuer to reconcile."
+}
+```
+
+## IRPT_DASHBD-D2-W185-S4 -- The contract sources cover.as_of_date and convention.inception_per_household_and_account to the client summary, which this build does not read; the sample builder computes both from gold account rows.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W185-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~185",
+  "surfaced_at": "2026-10-15T04:13:49Z",
+  "one_line": "The contract sources cover.as_of_date and convention.inception_per_household_and_account to the client summary, which this build does not read; the sample builder computes both from gold account rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json 0.5.1: cover.as_of_date (source CLIENT_SUMMARY field as_of; fold: the newest as_of among the account entries) and convention.inception_per_household_and_account (source CLIENT_SUMMARY field first_data_date; fold: per household the earliest first_data_date among its accounts). The client summary is not read by this build.",
+  "world_is": "The builder org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py computes both from the newest account_return_daily rows and the account first dates, while its own docstring writes client-summary members absent. The module computes the same two values from the gold rows under the fold text (the report date, and the earliest account first_data_date); no client-summary field is read. The disagreement is on the source naming, and the figure follows the fold.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json@485629a40e (cover.as_of_date and convention.inception_per_household_and_account source and fold)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~169/build_sample.py@485629a40e (build_values cover.as_of_date and inception branches)",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py (member_value client-summary branch, this worker's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-b-230 under the order's contract-wins rule. Form only; the sample builder's source for these members is for the issuer to reconcile."
+}
+```
