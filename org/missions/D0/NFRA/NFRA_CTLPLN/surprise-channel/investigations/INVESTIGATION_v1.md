@@ -11587,3 +11587,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The wheel is unreleased (record verdict not_checked; no release folder for the batch) and checks 1-7 passed with 0 failed. Check 8 is the tool's 'failed' verdict with reason 'the signature file does not exist', not a separate awaiting state. This seat did not write the check-8 file, did not run release or pack. The test .tools/tests/test_round22_journey_record.py prints check8=AWAITING only when check 8 is not passed AND the signature file is absent on disk; a signed file would print SIGNED only when check 8 also passes. The CTO's check-8 reading is unaffected: no signature file exists to be read."
 }
 ```
+
+## NFRA_CTLPLN-S9133 -- disposition of worker ~120's findings: moot, the manager-only ruling was withdrawn
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9133",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-15T20:25:45Z",
+  "one_line": "Disposition of worker ~120's findings (its rows W120-S1 and W120-S2 on the unmerged branch wk-NFRA_CTLPLN-120): moot. The CTO withdrew round-21 ruling 2 (managers acknowledge) in ROUND_ANALYSIS.round21.md ADDENDUM 1 @d9c20f887e: the managers carry a call and the named seat reads and acknowledges it, which crossbox-call.py already enforces. TO-CT-al-2 is withdrawn.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 109495 and ROUND_ANALYSIS.round21.md ADDENDUM 1 @d9c20f887e",
+      "issuer read of org/devices/crossbox/ at ~20:3xZ: the newest file of each of the 12 directed pairs is ACKED, carried (sent.bus_message_id present) and acknowledged by the very serial its to_serial names, 12 of 12"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The ruling the withdrawn order served (manager-only acknowledgement) was withdrawn by the CTO, so the two findings it produced have no live consequence. The findings are kept here in words: (1) the manager-only rule turned six cases red in .tools/tests/test_crossbox_call.py (64 of 65 to 65 of 69) and .tools/tests/test_round13_batch.py (10 of 15 to 7 of 15), outside the order's paths; (2) with the named-seat rule kept beside the manager-only rule, a call addressed to a seat could not be acknowledged by any admitted serial. Worker ~120 filed them as W120-S1 and W120-S2 on its unmerged branch wk-NFRA_CTLPLN-120 (commit 237684af81); a seat may not carry a worker coordinate on the main index, so they are restated here.",
+  "spec_asserts": "CTO round-21 ruling 2 (now withdrawn): crossbox-call.py ack refuses any serial that is not the receiving box's MSTR lane.",
+  "world_is": "The tool is unchanged. FWD-3's cell for round 22 is a read of each pair's manager path and its named-seat acknowledgement, and it reads 12 of 12."
+}
+```
