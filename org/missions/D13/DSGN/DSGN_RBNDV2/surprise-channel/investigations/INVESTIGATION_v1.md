@@ -239,6 +239,29 @@
     "spec_asserts": "TO RV-p-1 names SectionCard among the primitives to render the A-light surface and hairline; it does not name the accent.",
     "world_is": "The accent div sets a border colour with no border width, so it has no visible paint at the base; the cell removed only the rounded-l-lg class from that div and left the accent logic as it was.",
     "notes": "Observed while editing. Not fixed: changing the accent mechanism is outside the cell's stated change. Raised for the COO."
+  },
+  {
+    "id": "DSGN_RBNDV2-S2",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~RB",
+    "surfaced_at": "2026-10-15T05:57:00Z",
+    "one_line": "On /market, inside the now-white panels, the period chips (1D, WTD, 90D, 1Y) read near-invisible: the shared Segmented control's band ground paints the active chip in --palette-white and the idle chips in --palette-mediumGray, tokens the legibility rule (class-text based) does not reach.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB -- disarmed when the scoped token remap (addendum cell RV-r-1) lands and the chips read in the COO's close run on /market.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/ui/components/Controls.tsx on feature/dsgn-rbndv2-light @d2a3c2fe: SEG_ACTIVE.band = text-[hsl(var(--palette-white))] border-[hsl(var(--palette-white))]; SEG_IDLE.band = text-[hsl(var(--palette-mediumGray))]; BUTTON_KIND.band secondary and ghost the same",
+        "portal/design/themes/opal-capital.css:22 and :28: --palette-white 222 38% 93% (near white), --palette-mediumGray 220 18% 71% (#A8B0C0)",
+        "headless render of /market at 1440x900 on the merged branch (tokens, sidebar, panels; no heat cell yet), read by the COO at 05:5xZ: the WTD and 90D active chips and the idle chips of the Period controls are pale on the white panel header"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD FWD-3 ACCEPT and C-PANEL: panels are white and nothing inside a panel is left unreadable by the primitives alone; FWD-1 ACCEPT: the page shows real figures and Andrew can say whether it reads as Opal's work.",
+    "world_is": "Controls written with ground=band (the panel header used to be navy) spell their ink as palette tokens; inside a white panel they read as light grey on white, on the thread page itself.",
+    "notes": "Ruled inside the COO's own decomposition (obligation 7): an addendum DIRECT-ACT cell, scoped token remap inside [data-panel-surface=\"light\"], no page file edited. Other token-spelled light inks inside panels are the round-3 walk's population."
   }
 ]
 ```
