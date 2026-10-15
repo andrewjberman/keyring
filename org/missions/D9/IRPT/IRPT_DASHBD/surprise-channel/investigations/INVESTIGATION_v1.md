@@ -13515,3 +13515,84 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-f-502. Live host state was not read (no AWS call); the stopped state is the README's record. The row states the form only."
 }
 ```
+
+## IRPT_DASHBD-D2-W403-S1 -- the TO's scheduled wrapper for the Cottonwood gold fires a different declared channel, and no schedule or function in the repo names the Cottonwood source
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W403-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~403",
+  "surfaced_at": "2026-10-15T02:42:39Z",
+  "one_line": "The TO names handler.py as the scheduled wrapper of the producer that wrote the Cottonwood gold, but the only schedule that invokes it fires another declared channel, and no schedule or function in the repo names the Cottonwood source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-4 Facts: the producer's scheduled wrapper is infra/aws/lambda/investor-reporting/holdings-performance/handler.py, the scheduled wrapper of the producer that wrote the Cottonwood holdings_performance_daily gold.",
+  "world_is": "handler.py is a wrapper of the producer, but the Terraform schedule that invokes it (infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf, the first schedule from line 87) passes the source key of the first declared channel in its event input, and the second schedule passes the key of the other declared channel. The Cottonwood key (blackdiamond_z09) is in no schedule or function input in the repo. The Cottonwood gold has no scheduled producer in the repo.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf lines 87-107 (first schedule and its event input) @463b62f4da",
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf lines 191-210 (second schedule and its event input) @463b62f4da",
+      "infra/aws/terraform/investor-reporting/holdings-performance/lambda.tf lines 19-43 and 67-87 (two producer functions only) @463b62f4da"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-4. The record classes the writer as AD_HOC (inferred). The premise matters to the CTO's function decision. No change was made and nothing was written."
+}
+```
+
+## IRPT_DASHBD-D2-W403-S2 -- the Cottonwood gold manifests carry emission schema 1.1, so the writer was an earlier copy of the producer, not HEAD's file
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W403-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~403",
+  "surfaced_at": "2026-10-15T02:42:39Z",
+  "one_line": "The Cottonwood gold manifests carry schema 1.1 and lack two keys that HEAD's producer writes, so the code that wrote them is an earlier emission and HEAD's producer file is not the writer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "spec_asserts": "TO DB-c-4 Facts: the producer code is data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py, and it is the code that produced the gold up to 2026-09-25.",
+  "world_is": "The 2026-09-25 and 2026-08-27 manifests carry schema_version 1.1 and no partitions_read or span_trading_days key. HEAD's producer sets SCHEMA_VERSION 1.2 and writes both keys in emit_day. Git history shows 1.2 first at commit de3d423dce (2026-10-01); the producer file at f302ab14cd (2026-09-29) and at 032eed278a carries 1.1. The gold was written on 2026-09-29, so the writer was an emission-1.1 copy of the producer (inferred). A run from HEAD would write 1.2 partitions beside the 1.1 history.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py SCHEMA_VERSION line (1.2) and emit_day manifest keys @463b62f4da",
+      "git log -S over the producer file: de3d423dce (1.2, 2026-10-01) and f302ab14cd (1.1, 2026-09-29) @463b62f4da",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~403/PRODUCER_READ_R115.json (manifest schema_version and key sets read by GET)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-4. The disarm is the CTO's ruling on which emission a Cottonwood function builds, and on whether the 1.1 to 1.2 change is carried before any re-run from 2026-09-26. No re-run was made and nothing was written."
+}
+```
+
+## IRPT_DASHBD-D2-W403-S3 -- this worktree's interpreter has no pandas_market_calendars, so the library calendar answers from its hardcoded fallback
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W403-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~403",
+  "surfaced_at": "2026-10-15T02:42:39Z",
+  "one_line": "This worktree's interpreter has no pandas_market_calendars, so the library calendar answers from its hardcoded NYSE fallback, while the manifests were written with the package calendar.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-c-4 step 2: the prior trading day is the library calendar's prev_trading_day (lib/trading_calendar.py).",
+  "world_is": "The library prints a WARN that pandas_market_calendars is absent and answers from NYSE/hardcoded-fallback-2010-2027. The manifests record calendar_source NYSE/pandas_market_calendars. The answers used here (the prior trading day of 2026-06-09 and the 20-trading-day cut to 2026-08-27) are the same under both, so the record is unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I run from the worktree root printed the WARN line for lib/trading_calendar.py (PRODUCER_READ_R115 read) @463b62f4da",
+      "p115_bcw.py run from the worktree root printed the same WARN line before DBC115-1-AC1 PASS @463b62f4da"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the L7 worker on TO IRPT_DASHBD.TO-DB-c-4. States the form only."
+}
+```
