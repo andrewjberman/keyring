@@ -2385,3 +2385,27 @@
   "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pe-2."
 }
 ```
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-W33-S1",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~33",
+  "surfaced_at": "2026-10-15T20:59:16Z",
+  "one_line": "MP-pf-2 asks for each segment's margin-top to be one grid step; DESIGN.md names no grid step, so the margin is spacing.sm 20px, the gap DESIGN C10 names between two panels or sections.",
+  "class": "OBSERVATION",
+  "spec_asserts": "MP-pf-2 section 1 item 3: each segment has clear space around it, a hairline-bordered panel inside its bucket panel with a margin-top of one grid step.",
+  "world_is": "portal/DESIGN.md (the worker worktree copy, lines 381-383, clause C10) names spacing.sm 20px as the gap between two panels or sections on one page; the document names no grid-step token. gateway.css sets .gateway-segment margin-top to var(--space-sm, 20px), which is an interpretation of 'one grid step' and not a named step.",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ C:/tmp/mp-pf-33/portal/DESIGN.md lines 379-390 (C10, Space, shape, depth) in the worker worktree at the start of this cell",
+      "GREP C:/tmp/mp-pf-33/portal/DESIGN.md for grid|step|spacing.(xs|sm): hits at lines 382, 383, 388 and 420 name spacing.sm and spacing.xs; no hit names a grid step",
+      "mcportal commit 89dd5f5, file src/pages/gateway/gateway.css: .gateway-segment margin-top var(--space-sm, 20px)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a hazard and no disarm is owed. The issuer may name the step; the page reads the same at either value until a second value is chosen."
+}
+```
