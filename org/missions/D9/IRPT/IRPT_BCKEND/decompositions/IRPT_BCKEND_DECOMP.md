@@ -3948,3 +3948,27 @@ Checks `deliverables/2.0.0_SA_COO~P2/checks/r199/p199_cells.py` (with p199_apply
 
 fanout: 2 of 2 chains, cap 8, reason: chain P199-a is an order to the CloudOps seat 0.7.0_AE_CloudOps~IB2 (a seat, not a worker subagent; it waits on the mint window after today's 14:15Z fires and on the next fire), chain P199-b takes one worker now (slot ~394); one worker is spawned.
 
+## 192. ROUND 1, WORKSTREAM ~PS (the filled-report serve path; 2026-10-15 ~03:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's ruling 076d @fd4c44fb48 and msg 7974: XA-20261015T024033Z-ef7f ruled "one scope, one issuer")
+
+A SECOND WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179; the gate keys one issuance to the round and a second workstream issues its own round): the filled-report serve path, hops 2-4 (the platinum publisher, the /report route, the export source kind) as ONE never-widen pair, on the document shape hop 1's owner fixed (contract 0.5.1, msg 7970). Disjoint from workstream ~P (the holdings release and the Orion gap): its write surface is the worker's records only, and the files the pair will later change (reporting-publish, reporting-read, export) are not touched by any ~P cell. The workstream is a SCOPE; the issuer is the same seat. Hop 5 (the render host) is 0.7.0_AE_CloudOps~IB2's under the same pair's window; hop 6 is 2.0.0_SA_COO~F2's.
+
+Check IB199-3 (`deliverables/2.0.0_SA_COO~P2/checks/r199/p199_serve.py`), dry-run at the base: AC1 to AC3 all FAIL (no record, no packet); the control passes nine positives and fifty-three negatives (fourteen on IB199-3), each negative failing its own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-551` | hops 2-4 as ONE never-widen pair: the design record (files to change read at HEAD, the input contract 0.5.1, the scope rule, the blast radius, the rollback per key, 49 Financial first, the LOCAL build slices) and the packet, both halves UNSIGNED; READ ONLY | FWD-3 | SERVED (a design for a new served route and publication; the order writes only the worker's records) | none | PS1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one document; every file it reads is committed; one worker (slot ~395) starts now.
+
+## 193. ROUND 1, WORKSTREAM ~PO (the Orion Inflection raw feed and its 6 AM ET fold; 2026-10-15 ~04:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's msgs 7914 and 7980 (row D2-S180))
+
+A THIRD WORKSTREAM of IRPT_BCKEND (row IRPT_BCKEND-S179: a second workstream issues its own round): the Orion Inflection raw producer, the days the mirror silently dropped, the re-pull's cost per feed and the producer's place in the 6 AM ET fold. Disjoint from ~P (the holdings release) and ~PS (the filled-report serve path): its write surface is the worker's records only. The re-pull pair is NOT cut; it follows this READ (CTO: "locate the raw producer, then cost the re-pull per feed, then the pair"). One cell, five questions: the raw producer located; every other dropped parquet-only day (a format the mirror ignores is a defect to fix at the mirror, not per day); the re-pull cost per feed (requests, pacing, time); the fold design (one schedule, builder names from opal_naming, trading-day frontier); the account-performance feed that 2.0.0_SA_COO~I2's round 116 may add.
+
+Check IB199-4 (`deliverables/2.0.0_SA_COO~P2/checks/r199/p199_orion2.py`), dry-run at the base: AC1 to AC3 all FAIL (no record); the control passes twelve positives and sixty-six negatives (thirteen on IB199-4), each negative failing its own arm.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-552` | READ the Orion raw producer, the dropped-day census per feed, the re-pull cost per feed and the 6 AM ET fold design; READ ONLY | FWD-3 | SERVED (reads served prefixes and live schedule objects; writes only the worker's records) | none | PO1-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one document; one worker (slot ~396) starts now.
+

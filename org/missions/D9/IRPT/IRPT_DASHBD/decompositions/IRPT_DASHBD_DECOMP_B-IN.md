@@ -46,6 +46,18 @@ The CTO's one cell is cut as ONE order. No tolerance is set and the account page
 
 **fanout:** 1 of 1 chains, cap 8, reason: one independent read cell with a disjoint write set (its own worker folder and private folder). Worker `0.9.0_WK_IRPT_DASHBD~303` (`DB-i-3`).
 
+## 3. ROUND 116, WORKSTREAM B-IN (2026-10-15 ~03:2xZ, issuer 2.0.0_SA_COO~I2, on `CTO_ROUND_ANALYSIS_IRPT_DASHBD_B-IN_ROUND_116_20261015.md`, msg 7978, answering the round-115 drain-end packet @d64cf8f469: 1 of 1 PASS, 0 judgment criteria)
+
+The CTO's one cell is cut as ONE order. The ruling: stop reconstructing Inflection account returns; read whether Orion itself exposes an account-level performance series. If it does, `~P2` adds that feed to the Orion pull under a never-widen pair and the accounts switch to Orion's figure (`source: orion`); if not, the account pages stay `NO_SOURCE_YET` and the reconstruction is not shipped. The round-114 and round-115 decomposition stays recorded as the reason.
+
+| cell | what | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `DB-i-4` | The Orion account-level performance read: the endpoint, the grain, the fields (return, period, gross or net) and whether the pull's credential reaches it, from the estate's pull code, the investor-reporting performance adapter, its fixtures and the repo docs; the endpoint inventory of those directories as the denominator | FWD-2 | LOCAL (a read of repo code and docs; no vendor call, no AWS call, no secret read) | none | I-D |
+
+**Decisions inside this decomposition (the issuer's, stated).** (a) The CTO's phrase "as the existing pull reaches it" is read as BOTH code families that reach Orion: the `inf-pipeline` pull that feeds the silver, and the investor-reporting performance adapter, whose header already names `POST /api/v1/Reporting/Scope` with "native household and account scopes"; the answer to "does the pull call it" and "does the estate already hold it" are different facts and the order asks for both. (b) The endpoint inventory is the DENOMINATOR (every `/api/vN/` literal in the `*.py` files directly inside each `inf-pipeline` directory and the performance directory), so a "no such endpoint" cannot rest on a partial read. (c) The credential question is answered from code only, since the CTO ruled no new vendor call; the record names the secret and never reads it, and says what the code cannot prove. (d) Each section carries a claim word and verified evidence lines (the checker opens each cited line and requires the quote on it).
+
+**fanout:** 1 of 1 chains, cap 8, reason: one independent read cell with a disjoint write set (its own worker folder). Worker `0.9.0_WK_IRPT_DASHBD~304` (`DB-i-4`).
+
 ## Cells
 
 | cell id | owner |
@@ -53,3 +65,4 @@ The CTO's one cell is cut as ONE order. No tolerance is set and the account page
 | DB-i-1 | 0.9.0_WK_IRPT_DASHBD~301 |
 | DB-i-2 | 0.9.0_WK_IRPT_DASHBD~302 |
 | DB-i-3 | 0.9.0_WK_IRPT_DASHBD~303 |
+| DB-i-4 | 0.9.0_WK_IRPT_DASHBD~304 |
