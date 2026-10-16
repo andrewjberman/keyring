@@ -19869,7 +19869,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
-
 ## IRPT_DASHBD-D2-S102 -- FWD-3 hops 2-6 have owners, and the ruled producer meets an existing applied producer: one question for the CTO
 
 ```json
@@ -20568,3 +20567,163 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. The flow class is per word here; a per-row exclusion rule is for the contract ratification."
 }
 ```
+
+## IRPT_DASHBD-D2-W226-S1 -- the calendar answers from its hardcoded fallback on this box (pandas_market_calendars absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W226-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~226",
+  "surfaced_at": "2026-10-16T02:16:22Z",
+  "one_line": "pandas_market_calendars is absent on this box, so lib/trading_calendar answers from its hardcoded NYSE fallback (2010-2027)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py@78f2c2a9c3: _USE_PMC is True only when the pandas_market_calendars package imports; the fallback announces itself once per process and _require_covered raises past its covered years",
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py@78f2c2a9c3: unreported_days calls tc.trading_days_between, the same calendar source the publisher's new arithmetic reads"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-b-279 reads lib/trading_calendar.py as the read-only calendar for the unreported-days arithmetic (trading_days_between, inclusive of both ends) and names no calendar source.",
+  "world_is": "On this worktree's box the calendar printed its fallback WARN and answered from the hardcoded NYSE table covering 2010-2027, with the regeneration owed before 2028. The worker's tests and the issuer checker ran on that fallback. Which calendar source the publish Lambda's runtime holds is not read by this order."
+}
+```
+
+## IRPT_DASHBD-D2-W226-S2 -- the handler refuses on the HEAD contract, so DB147-2-AC1 cannot pass as written (the 0.3.0 pair is held)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W226-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~226",
+  "surfaced_at": "2026-10-16T02:39:41Z",
+  "one_line": "DB147-2-AC1 cannot pass as written: the handler refuses on the HEAD contract (0.2.0), and the 0.3.0 pair is held on wk-IRPT_DASHBD-225",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@45b34c2e5d: contract_version 0.2.0; series.optional names class_value, class_weight and class_names only, so the unreported-days pair is absent",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@b4895e7145: the held 0.3.0 form on branch wk-IRPT_DASHBD-225 names both unreported keys; read only, not merged, not edited",
+      "infra/aws/lambda/investor-reporting/reporting-publish-cot/handler.py@6b4e2f43f2: _contract() raises SystemExit REFUSED before any S3 call unless series.optional names both keys",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r147/p148_cothandler.py@36498ea07e: check_behaviour's first lambda_handler call runs against the repo contract and expects the dry run to complete"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DB147-2-AC1 (checker p148_cothandler.py, check_behaviour) runs the handler against the repo contract and expects the dry run, the upload and the account filter to complete. TO-DB-b-280 says the contract's 0.3.0 form is HELD on wk-IRPT_DASHBD-225, not to be merged, and that the contract is not edited.",
+  "world_is": "The first call refuses: SystemExit REFUSED, because the HEAD contract names neither unreported key. A scratch run of the same behaviour clauses, with the handler's contract root pointed at the held 0.3.0 copy, passes; that is a diagnostic only, not the criterion. AC1 cannot pass on this branch as written: it needs the 0.3.0 contract merged or the contract edited, and this order forbids both. AC2 PASSES on the handler as committed; AC3 is not reached (no test file was written, since the order stops on a blocked clause)."
+}
+```
+
+
+## IRPT_DASHBD-D2-W225-S1 -- TO-DB-b-278: the portal series-contract test (iv-e-124) fails once the contract reads 0.3.0
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W225-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~225",
+  "surfaced_at": "2026-10-16T00:40:26Z",
+  "one_line": "The portal's series-contract test iv-e-124 reads series.optional as three names; the 0.3.0 contract lists five (the two unreported-days fields are added). The test is red on the contract commit 2fd42fcb40. The portal file is outside this order's grant, so DB146-1-AC3 cannot be met as written and the order stops here.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the contract's sole writer); the owner of the portal page's series.optional list is not named in DB-b-278",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-124.series-contract.test.ts run from the worktree with bun test: exit 1, verdict line 'ARM(a): series.optional: page [class_names,class_value,class_weight] != contract [class_names,class_value,class_weight,unreported_trading_days,unreported_trading_days_basis]'; 0 pass, 1 fail",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json at commit 2fd42fcb40: contract_version 0.3.0; series.optional lists five names",
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher.py run with python -I -m pytest: 13 passed, exit 0 (the publisher side is not affected)"
+    ]
+  },
+  "spec_asserts": "DB-b-278 criterion DB146-1-AC3 and the refusal clause: the publisher's tests and the portal's series-contract test still pass against the new contract; if either fails, record a BLOCKING row and stop (those files are not in the grant).",
+  "world_is": "The portal test fails at its ARM(a) parity arm, the only failure its verdict names. The publisher's 13 tests pass. The worker made no portal edit, wrote no facts record and did not flip the order. The reconciling edit (the page's optional list, or a contract revert) is the owner's decision; the branch carries the red test until then."
+}
+```
+
+## IRPT_DASHBD-D2-W225-S2 -- TO-DB-b-278: the answer to row W225-S1 (the portal parity test) under Amendment 1
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W225-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~225",
+  "surfaced_at": "2026-10-16T01:06:27Z",
+  "one_line": "Answer to W225-S1: the portal series-contract test iv-e-124 is the page's cell, not this order's. Amendment 1 (f10a449ccf) removed it from DB146-1-AC3; this order edits no portal file and does not grade the page mirror. The contract's red mirror stays with the drain owner until the page's cell lands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the drain that merges this branch with the Cottonwood series publish and the page's mirror)",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-278.series-contract-030-unreported-trading-days-fields.md, AMENDMENT 1 paragraph (1): the page's mirror is the page's cell; W225-S1 is ruled; DB146-1-AC3 no longer runs the portal test",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r146/p146_series030.py at commit f10a449ccf: the AC3 branch runs the test file, the publisher test and the facts record, and no portal test",
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-124.series-contract.test.ts: not edited by this worker; the contract's optional list it compares against is now five names (commit 2fd42fcb40)"
+    ]
+  },
+  "spec_asserts": "DB-b-278 DB146-1-AC3 as first written: the portal's series-contract test still passes against the new contract; a failure is a BLOCKING row and a stop.",
+  "world_is": "The ruling moved the portal test out of this order's criteria, and the worker's branch no longer carries a portal grade. The portal test file is unchanged; its last measured run (on contract commit 2fd42fcb40) failed at the optional-list parity arm, the page naming three optional names against the contract's five. It was not re-run after the income amendment, and it is expected to stay red on the merged contract until the page's cell updates its mirror. Owner of that disarm: the drain's issuer."
+}
+```
+
+## IRPT_DASHBD-D2-W226-S3 -- DB147-2-AC3 grant clause walks the completed DB-b-279 commits, so AC3 cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W226-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~226",
+  "surfaced_at": "2026-10-16T02:58:42Z",
+  "one_line": "DB147-2-AC3 cannot pass as written: its grant clause walks every commit by this worker since the round's issuance, which includes the completed DB-b-279 commits",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r147/p148_cothandler.py@5eeb255c85: own_commits() takes --author=0.9.0_WK_IRPT_DASHBD~226 from the first add of the TO-DB-b-280 file (a989b48c08) to HEAD, and check_grant() then refuses any path outside this order's grant",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-279.publisher-unreported-days-and-nullable-income.md@36498ea07e: the completed order whose commits 88fee9c1ea and 36498ea07e touch publisher.py and its test, both issued in the same round commit a989b48c08",
+      "AC3 run at 5eeb255c85: FAIL: the worker's commits touch files outside its grant: publisher.py and test_publisher_unreported.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DB147-2-AC3 requires that the worker's commits change only the handler, its test file, the folder, the investigation file and task-order files. The order's own commits are the ones made for this order.",
+  "world_is": "The range from the round's issuance commit to HEAD carries two commits by this serial for the completed DB-b-279 order. The grant clause refuses them as outside the grant. The handler, the test file, the folder, the channel and the order touch only this order's grant, and the 14 tests and the facts record pass the other clauses. AC3 cannot pass without a change to the checker's commit selection, which this order does not name. Stopped on this clause; the status stays pending."
+}
+```
+
+## IRPT_DASHBD-D2-W226-S4 -- the naming gate's placement step needs a new Terraform root committed before it can grade it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W226-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~226",
+  "surfaced_at": "2026-10-16T03:31:44Z",
+  "one_line": "the naming gate's placement step cannot see a new Terraform root until its files are committed, so the uncommitted root refused as an unknown root",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_scope.py@f81e1ae194: _roots() derives the Terraform roots from _tf_files(), which reads _files(), which reads opal_naming._census_git_files() (git ls-files, tracked files only)",
+      "lib/opal_naming_scope.py@f81e1ae194: _norm_root() raises ValueError unknown Terraform root for a root not in that list",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r147/p149_pubroot.py@f81e1ae194: run_gate() passes the root to the gate in plan mode; the first run before the commit returned NAMING-PLAN: REFUSE 3 graded with NAMING PLACE ERROR"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-b-281 asks the root to be graded by the real naming gate in plan mode (DB147-3-AC2); it does not say the root must be committed first.",
+  "world_is": "Before the four root files were committed, the gate refused all three names with NAMING PLACE ERROR unknown Terraform root, so the plan-mode grade was REFUSE 3. After the root was committed (0f4324e7b0) the gate printed NAMING-PLAN PASS 7 graded and the checker's AC2 passed. No name was typed or changed to pass the gate; the names are the builder's. The sequence (commit the root, then grade) was taken without a registry edit."
+}
+```
+

@@ -1,0 +1,12 @@
+# 2.0.0_SA_COO~R1 drive log, 2026-10-16 hours 01Z to 03Z (host desktop-hk1uu7n), AMGT_RESAPP
+
+Per-tick lines are in the gitignored runtime file `org/mcp/drive_ticks/2.0.0_SA_COO~R1.md`; this is the substantive part of the span.
+
+- **bo-1 (round 108, the portal feature) built, verified, merged.** Worker `~476` (haiku) reported at ~02:2xZ; the issuer re-ran AC1 (18 of 18), AC2 (typecheck and lint clean, 24 of 27 harnesses pass, 0 regressions) and AC3 (10 of 10 page files), read the diff, and checked the instance (VALID). Candidate `cand/dell1/amgt-sa-withheld-reasons` @`01e06415` pushed from the nested worktree (on origin, ls-remote read). Approval row `dell1-20261016T013205Z-9365` registered once; the CTO approved it at ~02:4xZ. Order complete, merged `cdbeba8efd`; row `D1-S37` rules the worker's `W476-S1` (the live PBR US page shows 2025 as a Key Figures column).
+- **bo-2 (the promote) staged, given, verified, closed.** Staged `575fd588f3`, given `992896be95` after the approval; `0.0.0_AB_MSTR~DELL1` ran the merge-forward (DEV `39dab87f`); the DT promoted PROD `e0e69da7` to `ab2c43657e7b` (`portal-v2.1.228`, CI run 38842687915 success). The issuer re-read AC1 (10 of 10 EQUAL), AC2 and AC3 and flipped it complete `c1b32001b6`.
+- **bo-3 (the walk) staged** `75f6c344bc`: ten names drawn for 2026-10-17 plus six named (ZURN SW, 939 HK, ICT PM, 1299 HK, SHOP CN, PBR US), worker slot `~477`; the go needs the UTC date 2026-10-17.
+- **G4 enable-pair measurements** (`980564850f`, `f65f643209`, `0a2d486c7b`): management 14 of 243 would build; credits read on 14 of 14 records (5 CALLED at 2, 9 SKIPPED, sum 10), at most 28 credits and 14 SERP queries on a first fire; the Lusha and SERP prices are DRAFT-DEFERRED in the repository's budget file (Andrew-gated on the plan tier). Nothing spent, registered or enabled.
+- **A4 step 1 drafted, not applied** (`09cb344a59`); Q1's `LIMIT_STEP_DAYS.md` already shows A4 Tue 2026-10-20 at the earliest.
+- **Andrew-direct 30m loop** (MSTR msg 6415): cron `710d992b` at :23 and :53 replaces the hourly job; said back to MSTR.
+- **Waits:** the UTC date for bo-3; A4 step 1 (H1's manifest read, site Z's day-0 read, Tue 10-20); the Lusha plan-tier answer for the G4 figure in dollars; round 108 item 4 after the three G4 tasks have each run once. Round-close-check reads MAY-CLOSE for round 108 only because bo-3 is staged, outside its verdict: round 108 is NOT closed.
+- All commits are LOCAL on `box/dell1` until box-sync carries them; no shared branch pushed.
