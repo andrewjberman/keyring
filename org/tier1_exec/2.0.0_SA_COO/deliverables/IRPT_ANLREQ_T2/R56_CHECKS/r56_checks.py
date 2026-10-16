@@ -4,9 +4,15 @@
                       the run's go token, firm-a cottonwood (the principal's firm) and firm-b 49financial (the ticket's owner), a signed-in
                       session, exactly 7 REFUSED, 0 LEAK, 0 UNREACHED and 2 EXCLUDED rows of 9, rc 0, and nothing in the file that is a
                       body, token, password or address.
-  absent  R56-ABSENT  the minted principal (fwd5-cottonwood-r60@opal.invalid) is gone from opal-users-v2: no PROFILE row on a consistent
-                      read and a count of 0 on the email index. A control: it passes at the base (nothing was minted) and after the run.
-  --self-test         the report evaluator against a green case and six mutants.
+  control R56-CONTROL the driver's --control report (fwd5_control_report.json, same folder): schema fwd5_control_report/1, mode control, the
+                      go token, firm-a opal-capital, firm-b 49financial, signed in, ticket-read and ticket-list ALLOWED, rc 0, 9 rows with
+                      only ALLOWED/DENIED/UNREACHED/EXCLUDED verdicts, nothing in the file that is a body, token, password or address.
+  fence   R56-FENCE   per route, the fence is SHOWN iff the control read ALLOWED and the firm-B run read REFUSED; OK needs it SHOWN on
+                      ticket-read and ticket-list (the CTO's positive control, msg 9804); other routes are listed, not required.
+  absent  R56-ABSENT  BOTH minted principals (fwd5-cottonwood-r60@opal.invalid and fwd5-control-r60@opal.invalid) are gone from
+                      opal-users-v2: no PROFILE row on a consistent read and a count of 0 on the email index. A control: it passes at
+                      the base (nothing was minted) and after the run.
+  --self-test         the evaluators against green cases and mutants.
 
 Read-only: one file read (report), one get-item and one index-count query (absent). Prints R56-<ARM>-OK or -FAIL <reason>.
 """
@@ -19,6 +25,8 @@ import tempfile
 REPORT_PATH = "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5/fwd5_run_report.json"
 GO = "IRPT_ANLREQ.TO-RUN-FWD5.live-cross-firm-ib2"
 EMAIL = "fwd5-cottonwood-r60@opal.invalid"
+EMAIL_CONTROL = "fwd5-control-r60@opal.invalid"
+CONTROL_PATH = REPORT_PATH.replace("fwd5_run_report.json", "fwd5_control_report.json")
 TABLE = "opal-users-v2"
 CALL_KEYS = {"route", "method", "status", "verdict", "body_len", "reason"}
 FORBIDDEN = ("bearer", "password", "accesstoken", "refresh", "@opal.invalid", "set-cookie")
@@ -63,6 +71,72 @@ def evaluate(text):
     return True, "REFUSED=7 LEAK=0 UNREACHED=0 EXCLUDED=2 of 9, rc 0"
 
 
+def evaluate_control(text):
+    """(ok, why) over the control report's text."""
+    try:
+        rep = json.loads(text)
+    except ValueError:
+        return False, "the control report is not JSON"
+    if not isinstance(rep, dict):
+        return False, "the control report is not an object"
+    low = text.lower()
+    bad = [w for w in FORBIDDEN if w in low]
+    if bad:
+        return False, "the control report holds a forbidden token: %s" % ",".join(bad)
+    if rep.get("schema") != "fwd5_control_report/1" or rep.get("mode") != "control":
+        return False, "schema/mode are not fwd5_control_report/1 / control"
+    if rep.get("go") != GO:
+        return False, "go token is not %s" % GO
+    if rep.get("firm_a") != "opal-capital" or rep.get("firm_b") != "49financial":
+        return False, "firm-a/firm-b are not opal-capital/49financial"
+    if rep.get("sign_in") != "signed in":
+        return False, "sign_in is %r" % rep.get("sign_in")
+    calls = rep.get("calls")
+    if not isinstance(calls, list) or len(calls) != 9:
+        return False, "calls is not a list of 9"
+    for c in calls:
+        if not isinstance(c, dict) or set(c) != CALL_KEYS or c.get("verdict") not in ("ALLOWED", "DENIED", "UNREACHED", "EXCLUDED"):
+            return False, "a call row has keys or a verdict outside the closed set"
+    by = {c["route"]: c["verdict"] for c in calls}
+    if by.get("ticket-read") != "ALLOWED" or by.get("ticket-list") != "ALLOWED":
+        return False, "ticket-read/ticket-list are %s/%s, not ALLOWED" % (by.get("ticket-read"), by.get("ticket-list"))
+    if rep.get("rc") != 0:
+        return False, "rc is %r" % rep.get("rc")
+    return True, "ticket-read ALLOWED, ticket-list ALLOWED, rc 0; " + ",".join("%s=%s" % (k, v) for k, v in sorted(by.items()))
+
+
+def evaluate_fence(run_text, control_text):
+    """(ok, why): per route the fence is SHOWN iff control ALLOWED and run REFUSED; OK needs ticket-read and ticket-list SHOWN."""
+    okr, whyr = evaluate(run_text)
+    okc, whyc = evaluate_control(control_text)
+    if not okr:
+        return False, "run report: " + whyr
+    if not okc:
+        return False, "control report: " + whyc
+    run = {c["route"]: c["verdict"] for c in json.loads(run_text)["calls"]}
+    ctl = {c["route"]: c["verdict"] for c in json.loads(control_text)["calls"]}
+    shown = sorted(r for r in run if run[r] == "REFUSED" and ctl.get(r) == "ALLOWED")
+    inconclusive = sorted(r for r in run if run[r] == "REFUSED" and ctl.get(r) != "ALLOWED")
+    if "ticket-read" not in shown or "ticket-list" not in shown:
+        return False, "fence not shown on ticket-read and ticket-list; shown=%s inconclusive=%s" % (shown, inconclusive)
+    return True, "fence SHOWN on %s; INCONCLUSIVE (control not ALLOWED) on %s" % (shown, inconclusive)
+
+
+def control():
+    if not os.path.isfile(CONTROL_PATH):
+        return False, "no control report at %s" % CONTROL_PATH
+    with open(CONTROL_PATH, encoding="utf-8") as fh:
+        return evaluate_control(fh.read())
+
+
+def fence():
+    for pth in (REPORT_PATH, CONTROL_PATH):
+        if not os.path.isfile(pth):
+            return False, "no report at %s" % pth
+    with open(REPORT_PATH, encoding="utf-8") as a, open(CONTROL_PATH, encoding="utf-8") as b:
+        return evaluate_fence(a.read(), b.read())
+
+
 def report():
     if not os.path.isfile(REPORT_PATH):
         return False, "no report at %s" % REPORT_PATH
@@ -76,6 +150,14 @@ def aws(*args):
 
 
 def absent():
+    for email in (EMAIL, EMAIL_CONTROL):
+        ok, why = absent_one(email)
+        if not ok:
+            return False, "%s: %s" % (email.split("@")[0], why)
+    return True, "both principals: no PROFILE row (consistent), index count 0"
+
+
+def absent_one(EMAIL):
     fds = []
     try:
         fd1, k = tempfile.mkstemp(suffix=".json")
@@ -108,13 +190,25 @@ def absent():
 
 
 def _green():
-    calls = [{"route": "r%d" % i, "method": "GET", "status": 404, "verdict": "REFUSED", "body_len": 0, "reason": ""}
-             for i in range(7)]
+    names = ["ticket-read", "ticket-list", "form-as-filled", "original-upload", "opal-report", "report-pdf", "commentary-pdf"]
+    calls = [{"route": n, "method": "GET", "status": 404, "verdict": "REFUSED", "body_len": 0, "reason": ""}
+             for n in names]
     calls += [{"route": "x%d" % i, "method": "-", "status": None, "verdict": "EXCLUDED", "body_len": 0, "reason": "excluded"}
               for i in range(2)]
     return {"schema": "fwd5_run_report/1", "go": GO, "principal_digest": "abcdef012345", "firm_a": "cottonwood",
             "firm_b": "49financial", "sign_in": "signed in", "calls": calls, "guard_refused": [],
             "counts": {"REFUSED": 7, "LEAK": 0, "UNREACHED": 0, "EXCLUDED": 2}, "rc": 0}
+
+
+def _green_control():
+    names = ["ticket-read", "ticket-list", "form-as-filled", "original-upload", "opal-report", "report-pdf", "commentary-pdf"]
+    calls = [{"route": n, "method": "GET", "status": 200 if i < 2 else 404, "verdict": "ALLOWED" if i < 2 else "DENIED",
+              "body_len": 5, "reason": ""} for i, n in enumerate(names)]
+    calls += [{"route": "x%d" % i, "method": "-", "status": None, "verdict": "EXCLUDED", "body_len": 0, "reason": "excluded"}
+              for i in range(2)]
+    return {"schema": "fwd5_control_report/1", "mode": "control", "go": GO, "principal_digest": "abcdef012345",
+            "firm_a": "opal-capital", "firm_b": "49financial", "sign_in": "signed in", "calls": calls, "guard_refused": [],
+            "counts": {"ALLOWED": 2, "DENIED": 5, "UNREACHED": 0, "EXCLUDED": 2}, "rc": 0}
 
 
 def self_test():
@@ -147,16 +241,37 @@ def self_test():
         if got != want:
             print("R56-SELFTEST-FAIL %s" % name)
             return 1
-    print("R56-SELFTEST-OK green plus six mutants refused")
+    gc = _green_control()
+    ccases = [("control green", gc, True)]
+    for name, fn in (("control ticket-read DENIED", lambda d: d["calls"][0].update(verdict="DENIED")),
+                     ("control list UNREACHED", lambda d: d["calls"][1].update(verdict="UNREACHED")),
+                     ("control wrong firm", lambda d: d.update(firm_a="cottonwood")),
+                     ("control uses REFUSED", lambda d: d["calls"][2].update(verdict="REFUSED"))):
+        d = json.loads(json.dumps(gc))
+        fn(d)
+        ccases.append((name, d, False))
+    for name, d, want in ccases:
+        got, _ = evaluate_control(json.dumps(d))
+        if got != want:
+            print("R56-SELFTEST-FAIL %s" % name)
+            return 1
+    okf, _ = evaluate_fence(json.dumps(g), json.dumps(gc))
+    d = json.loads(json.dumps(gc))
+    d["calls"][1]["verdict"] = "DENIED"
+    badf, _ = evaluate_fence(json.dumps(g), json.dumps(d))
+    if not okf or badf:
+        print("R56-SELFTEST-FAIL fence")
+        return 1
+    print("R56-SELFTEST-OK green plus six mutants refused; control green plus four mutants; fence both ways")
     return 0
 
 
 if __name__ == "__main__":
     if len(sys.argv) == 2 and sys.argv[1] == "--self-test":
         sys.exit(self_test())
-    arms = {"report": ("REPORT", report), "absent": ("ABSENT", absent)}
+    arms = {"report": ("REPORT", report), "control": ("CONTROL", control), "fence": ("FENCE", fence), "absent": ("ABSENT", absent)}
     if len(sys.argv) != 2 or sys.argv[1] not in arms:
-        print("usage: r56_checks.py report|absent | --self-test")
+        print("usage: r56_checks.py report|control|fence|absent | --self-test")
         sys.exit(2)
     name, fn = arms[sys.argv[1]]
     ok, why = fn()
