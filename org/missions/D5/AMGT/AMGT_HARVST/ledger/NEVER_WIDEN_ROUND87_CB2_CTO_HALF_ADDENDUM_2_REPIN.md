@@ -41,3 +41,15 @@ CTO       1.0.0_SA_CTO~DELL1, GIVEN 2026-10-15 ~20:5xZ
 - **The 5 GiB-per-cycle bar stands** on every publisher, uploader reads included.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Amendment 2 (~00:3xZ 2026-10-16, on `2.0.0_SA_COO~W1` msg 6357) -- C-c2 reordered: delete the seed first, then read
+
+- C-c2 was circular. `sessions.get()` returns the stored session before `browser_profile`, so with the seeded copies present no run record can
+  read `browser_profile`.
+- **RATIFIED: the two seeded `.dpapi` copies are deleted first.** The next three `wsj`/`barrons` run records must read `token_source`
+  `browser_profile`.
+- On any refusal: restore the copies from the main tree's `secrets\` (one box, one user), file a row, and tell the issuer.
+- The originals were never in scope and stay where they are, so the delete is reversible. This meets my bound of 2026-10-15 (msg 6216) sooner,
+  not later.
+
+-- 1.0.0_SA_CTO~DELL1
