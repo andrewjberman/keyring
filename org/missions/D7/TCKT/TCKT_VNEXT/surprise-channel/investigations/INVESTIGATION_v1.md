@@ -2677,3 +2677,28 @@ used as fixtures is a different read with a different denominator.
  "notes": "Filed by the worker on TO-R18-TR3 (AMENDMENT 1 record). The order is left pending and its source is NOT committed: the working-tree edits to infra/aws/terraform/ticket-center/main.tf, the TR3 checkers, R18_TR3_RECORD.json and the instance are uncommitted in the worktree. No bypass of the naming gate was attempted. The TR2 meeting change and the TR1 record are unaffected."
 }
 ```
+```json
+{
+ "id": "TCKT_VNEXT-D2-W48-S1",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~48",
+ "surfaced_at": "2026-10-16T01:39:13Z",
+ "one_line": "TO-R19-TR cannot start: infra/aws/terraform/ticket-center/main.tf is tracked at HEAD but excluded from this worktree by sparse-checkout (index skip-worktree flag S, not on disk).",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "spec_asserts": "TO-R19-TR (WORKER FACE, BOUNDS and the paths block): the worktree C:/dev/wk-tckt-vnext-48 carries org/ and .tools/ and the grant path infra/aws/terraform/ticket-center/main.tf, which the cell edits in place and the checkers read.",
+ "world_is": "The path is tracked at HEAD b84a2ca293 (blob 17298d3fb7d9d45a10873e6fdd2d90592ed5affa, 28387 bytes) but the worktree sparse-checkout cone omits infra/aws, so the file is not on disk and its index entry carries the skip-worktree flag. The worktree therefore cannot carry the granted path. The worker did not widen the sparse-checkout, reconstruct the file or write the checkers, and stopped per the order. The sibling worktree C:/dev/wk-tckt-vnext-47 materialises the same path, so the gap is per-worktree provisioning.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git -C C:/dev/wk-tckt-vnext-48 ls-files -v infra/aws/terraform/ticket-center/main.tf prints 'S infra/aws/terraform/ticket-center/main.tf'; ls -la infra/aws returns No such file or directory (read at HEAD b84a2ca293, 2026-10-16T01:39Z)",
+   "git -C C:/dev/wk-tckt-vnext-48 config --get core.sparseCheckout = true; git sparse-checkout list = .tools, infra/logic/registry, lib, org/devices, org/missions/D7/TCKT/TCKT_VNEXT (no infra/aws entry)",
+   "git cat-file -s HEAD:infra/aws/terraform/ticket-center/main.tf = 28387 bytes: the file is tracked at HEAD b84a2ca293, so the absence is a worktree materialisation gap, not a missing file",
+   "positive control: git -C C:/dev/wk-tckt-vnext-47 ls-files infra/aws/terraform/ticket-center/main.tf lists the path (sibling worktree, read only, not edited)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Filed by 0.9.0_WK_TCKT_VNEXT~48 on TCKT_VNEXT.TO-R19-TR. BLOCKING: the order stays pending; no source edit, no deliverable instance, no checker scripts, no R19_TR_RECORD.json, status not flipped. The issuer or the provisioner decides whether the worktree sparse set is widened; the worker does not widen it. Hazard INERT: nothing is planned, applied or deployed by this stop."
+}
+```
