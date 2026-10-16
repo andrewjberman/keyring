@@ -65,7 +65,7 @@ Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/I
 ## 4. PROOF OF SPEC (literal; run from your WORKSPACE worktree root `C:/tmp/mp-pf-35` after your commits)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MP-pf-5"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pf/checks/pf5.AC1.sh; echo "exit=$?"</invocation><expect>named test present in sources 1 of 1.*fail=0.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MP-pf-5"><invocation>cd C:/tmp/mp-pf-35 && bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/pf/checks/pf5.AC1.sh; echo "exit=$?"</invocation><expect>named test present in sources 1 of 1.*fail=0.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
