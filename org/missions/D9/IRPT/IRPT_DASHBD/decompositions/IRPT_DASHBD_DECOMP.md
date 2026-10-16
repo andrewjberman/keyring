@@ -2597,3 +2597,18 @@ Hop 1's first scheduled fire (2026-10-16 11:41Z) wrote 0 objects at the `filled_
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~241`), cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green with 7 diff-and-semantics red arms and 8 facts arms; run on the real `locals.tf` with the reference edit: green):** `checks/r149/p167_gold_list_grant.py` (DB167-1-AC1..AC3).
+
+## 161. ROUND 149, WORKSTREAM GOLD49FAPPLY (2026-10-16 ~13:3xZ, issuer 2.0.0_SA_COO~D2): the apply of the signed 49 Financial reporting-gold pair
+
+The CTO signed his half of the packet (sha256 `d2c27ac2bdc5`) at @89ca7c661c, all three questions accepted (one packet; a one-day backfill of 2026-10-15; the first write as a hand event), with five conditions: the flip counts printed before Act 5 and any flip on a non-floor account stopping it; Act 5 waiting for the publish pair's ledger to read CLOSED; Branch C a hard stop with the peak recorded and no resize inside the pair; the policy change only the one `s3:prefix` value; Acts 2 to 4 outside 11:35Z to 12:00Z and Act 5 outside 12:05Z to 13:00Z.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The apply: ledger first, build-only hash, new bundle version, plan 0 add / 2 change / 0 destroy (the policy's one list value and the function's code), ONE `safe-apply`, the hop-1 first write, the one-day backfill, the flip count, the republish of the series | DB-b-300 | FWD-10 (and the hop-1 gate of IB-pr-551) | WORLD | `DB-b-294`, `DB-b-295`, `DB-b-297`, `DB-b-299` merged, both halves SIGNED, and `DB-b-298` (its ledger CLOSED before Act 5 only) | chain U |
+| 2. The next WORLD pairs, each separate and signed by the CTO: (a) the Cottonwood landing code update and the 65-day rewrite; (b) the Cottonwood publish code update (publisher 0.4.0) and republish; contract changes name `~C2`'s DB-c-NN cell | NOT CUT: packets after item 1 | FWD-10 | WORLD | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the order carries the CTO's five conditions as steps so the checker can grade them; (b) the checker recomputes from the live gold the floor-start accounts with a row on the day and compares them with the applier's record, and recomputes the value-column hash of the rewritten day, so the backfill's "values identical" is a measurement and not a claim; (c) the order's first-write peak line is 6,553 MB / 720 s (80 percent of the function's limits) and a breach is a stop with no resize; (d) the checker requires the publish pair's open marker ABSENT and this pair's marker PRESENT at the end, so the ordering and the open ledger are graded; (e) hop 1's ledger leg L6 is named in the receipt, closed only if its owner allows.
+
+**fanout:** 1 of 1 chains for this cell (the AE applier, not a worker subagent), cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green with 42 red arms plus two head arms and the fire-window rule):** `checks/r149/p168_gold49f_apply.py` (DBC168-1-AC1, -2-AC1, -3-AC1).
