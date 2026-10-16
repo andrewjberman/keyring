@@ -58,3 +58,16 @@
 | `comp-schedule --drift --budget 420` | PASS | 6 of 6 carriers in 253 s |
 | `iam list-attached-role-policies --query ... --output text` | trap | on a role with NO attached policies the text query exits non-zero through the `.tools/aws` shim; read it as `--output json` |
 | `proof-of-spec-check.py` | PASS | VALID first run |
+
+## OG-ap-27: the four denied prefixes granted to the internal reader
+
+7. **NFRA_OPLGTW.TO-OG-ap-27 (release-gap grants), complete.** The OG-ap-23 served read found four of 27 tools denied (row Z-S164). Phase A 08:41Z-08:50Z (GO 34855, follow-up 34858 to quote the CTO's model_composition ruling): two `aws_iam_role_policy` on `aws_iam_role.int_reader`, one per bucket, the four prefixes read from the committed catalog rows (`bbg/`, `snapshots/`, `mdpf/etfs/gold/new_securities/` of `opal-data-etfs`; `mdpf/feeds/model_composition/` of `opal-data-mdpf`), no `silver/*`, no firm token; plan 2/0/0; ask `7be8a06df4`. `ap27.AC1.sh` counted the condition key `s3:prefix` as an action and could not match its expect: row `Z-S165` (BLOCKING), the issuer fixed the script, the `.tf` was not bent. Halves signed CTO `c18e2e007c`, COO `b5652f6db9`, CVO `b121849fbe` at `.tf` be09d3dd3aaebdd9 / ask 38817328cc91. Phase B 08:58Z-09:12Z (GO 34868): C2 live re-read (7 inline policies, names absent), ledger `nfra-oplgtw-grants-ap27`, one targeted `safe-apply` (2 added), both policies read back (7 -> 9), simulator GetObject 4 of 4 and ListBucket 4 of 4 allowed, out-of-scope 2 of 2 and 2 of 2 not allowed, positive control allowed, re-plan No changes, ledger CLOSED (`e5d53534f6`). AC1 and AC2 PASS, instance VALID, status flipped. The COO was told AC2 was green at once (its C4: it reads AC2 itself before re-GO of OG-ap-23).
+
+| tool | result | notes |
+|---|---|---|
+| `safe-apply.sh` | PASS | one targeted apply of two resources, rc 0 |
+| `deploy_ledger.py` | PASS | 3 legs closed with proof |
+| `comp-schedule --drift --budget 420` | PASS | 6 of 6 carriers in 197 s (second run of the day within budget) |
+| `terraform init` | note | two new `opal_name` module calls needed it before any plan |
+| `proof-of-spec-check.py` | PASS | VALID first run |
+| catalog read | note | `DATA_CATALOG.yaml` rows are `- entity:` list items nested under `channels`; a `/tmp` file written by Git Bash is not visible to native Python on this box, so read the YAML straight from `git show` through a pipe or a scratchpad path |

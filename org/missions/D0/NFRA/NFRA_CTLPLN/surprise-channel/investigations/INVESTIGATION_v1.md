@@ -12383,3 +12383,58 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Owner by the file header: NFRA_CTLPLN workstream SEATS, cell CT-s-8. Filed so the gate's owner sees it; the dell2 round it surfaced on is held open by its CTO on the FAIL regardless."
 }
 ```
+
+## NFRA_CTLPLN-W134-S1 -- the intake check suite is red at the base: one stale assertion in case_check_8_signature_rules (a missing signature file reads awaiting, not failed)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W134-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~134",
+  "surfaced_at": "2026-10-16T08:32:45Z",
+  "one_line": "At the base 8ec35ee85f, python org/devices/intake/test_intake_check.py reads INTAKE-CHECK-TEST cases=56/57 skipped=0 ok=False: case_check_8_signature_rules asserts a signature file that does not exist reads check 8 failed, but check_8 reads it awaiting since CT-am-2 (row NFRA_CTLPLN-W119-S1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@8ec35ee85f lines 787-789 -- a signature path that does not exist returns rec('awaiting', 'check 8 awaits the signature: ...'), a recorded state of its own",
+      "org/devices/intake/test_intake_check.py@8ec35ee85f line 647-648 (base) -- record = env.check(w.name, signed=str(env.signer_dir / 'absent.txt')) then assert verdicts(record)[8] == 'failed': the stale assertion",
+      "measured: python org/devices/intake/test_intake_check.py at base 8ec35ee85f in worktree C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-134 -- FAIL case_check_8_signature_rules (AssertionError line 648); the same run also failed case_constants_appear_verbatim_in_the_brief on a sparse checkout that lacked docs/briefs/, a checkout artifact and not a base defect",
+      "CHANGED in the CT-av-1 cell (0.9.0_WK_NFRA_CTLPLN~134): that one assertion now reads awaiting; no other case changed; the suite reads cases=57/57 ok=True after the fix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The check suite's case_check_8_signature_rules asserts a signature file that does not exist reads check 8 failed (base line 648), so a green suite is the expected base state.",
+  "world_is": "check_8 reads a missing signature file as awaiting (CT-am-2, row NFRA_CTLPLN-W119-S1, a recorded state that is never a failed check). The base suite was red at 56/57 on that one assertion; the stale assertion is updated to awaiting in the CT-av-1 cell.",
+  "notes": "Observation only. The base red was not caught because the suite was not run after CT-am-2 changed check 8's missing-file state."
+}
+```
+
+## NFRA_CTLPLN-W134-S2 -- the receiving tool accepts a record that reads 'checked' without re-deriving checks 1 to 7
+
+```json
+{
+  "id": "NFRA_CTLPLN-W134-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~134",
+  "surfaced_at": "2026-10-16T08:48:43Z",
+  "one_line": "intake_receive.py _record_problems accepts a record whose verdict is 'checked' and whose check 8 reads passed, without reading the verdicts of checks 1 to 7: a synthetic record with check 1 failed and verdict 'checked' gives no problems.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_receive.py (the record test in _record_problems, base 8ec35ee85f lines 176-196; in the worktree at 11139cb7b5 the 'checked' branch is unchanged) -- it tests verdict, numbering and check 8 only",
+      "measured in the worktree at 11139cb7b5: ir._record_problems(rec, 'f.whl', 'ab') on a record with verdict 'checked', checks 2 to 8 passed and check 1 failed returns [] (no problems)",
+      "org/devices/intake/intake_check.py@11139cb7b5 compute_verdict/_derive never writes such a record; the gap is on the receiving side only, reachable by a hand-edited or foreign record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "intake_receive.py verifies a pack only when every wheel's record reads 'checked' (or 'released-with-waiver' re-derived) and every check is clear; a failed check never clears a wheel.",
+  "world_is": "For a 'checked' record the receiver reads the verdict string and check 8 only; a failed check 1 to 7 in a 'checked' record is accepted. The CT-av-1 cell re-derives only the 'released-with-waiver' record (the new verdict) and leaves the 'checked' branch as it was, because its synthetic fixtures carry string evidence the stricter derivation would refuse. Fixing the 'checked' branch is outside the cell's write grant.",
+  "notes": "Observation only; no change made. A later cell that owns intake_receive.py can add a verdict-level re-derivation for 'checked' (checks 1 to 7 passed or not_applicable with a reason; check 8 passed)."
+}
+```
