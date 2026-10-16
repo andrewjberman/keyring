@@ -23395,3 +23395,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W243-S1 -- run_filled_report catches only NotYetAvailable around the reader, so a refused household ends the pass
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W243-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~243",
+  "surfaced_at": "2026-10-16T15:28:44Z",
+  "one_line": "run_filled_report catches only NotYetAvailable around the reader call, so a PublishRefused raised by read_filled_report_gold for one household would end the whole pass once the switch is turned on.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-302 WORKER FACE steps 2 and 3: the reader raises publisher.PublishRefused for a household that cannot be composed, and run_filled_report stays byte for byte (its refused count covers a document the publisher refuses, and a reader refusal is not named by the order).",
+  "world_is": "In handler.py run_filled_report wraps only reader(firm, cid) in try/except NotYetAvailable; the PublishRefused branch wraps only publisher.publish_filled_report. A PublishRefused from the reader therefore escapes run_filled_report and no client after it is processed. The three refused cases in test_filled_report_reader.py call read_filled_report_gold directly, so no test exercises the pass with a refused household. The switch is off, so nothing runs yet. Not repaired here: the pass is outside this order's grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py run_filled_report at base 2cbe7bbcac43013a4fde53c3a73e70f4913827ba: try: document = reader(firm, cid) then except NotYetAvailable: continue",
+      "test_filled_report_reader.py: test_refused_household_with_a_duplicated_household_grain_member_raises_publish_refused calls h.read_filled_report_gold directly (pytest 35 passed, the four refusal shapes included)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The fix belongs to the issuer's switch cell: catch publisher.PublishRefused around the reader call and count it under refused, then test the pass with one refused household."
+}
+```
+
+## IRPT_DASHBD-D2-W243-S2 -- the locals.tf comment above the read list still says two prefixes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W243-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~243",
+  "surfaced_at": "2026-10-16T15:28:44Z",
+  "one_line": "locals.tf keeps the comment 'READ grant: the two gold prefixes (returns, method)' above irpt_rp_gold_read_prefixes, which now holds three entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-302 step 4: locals.tf takes two added lines and nothing else (the checker refuses any removed or changed line, comments included), so the comment was left as it stood.",
+  "world_is": "After the cell, irpt_rp_gold_read_prefixes lists three prefixes (returns, method, filled_report_values) under a comment that still reads 'the two gold prefixes' and 'the same two prefixes'. The comment is wrong and harmless: the list and the object arns are built from the list. The correction is a comment-only edit for the cell that owns locals.tf next.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-publish/locals.tf comment line above irpt_rp_gold_read_prefixes, unchanged by this cell (git diff shows two added lines only)",
+      "AC1 of the issuer checker p170 compares removed and changed lines of locals.tf, so the comment edit was refused by the order's own bound"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
