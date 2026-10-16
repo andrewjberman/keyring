@@ -87,7 +87,9 @@ Report once: the portal commit hash, the diff stat (one line), the output lines 
 
 **Fanout:** chain 1 of 2: `CN-s-4` -> `CN-s-5` -> `CN-s-3`, one worker, slot ~31. `portal_ref:` 39dab87f3b.
 
-<status>complete</status>
+**SUPERSEDED (issuer, 2.0.0_SA_COO~D1, 2026-10-16 ~15:2xZ):** the worker built this order to its criteria (wiring 10 of 10, pure 6 of 6; portal commit e206e06e; instance VALID), then the laptop CTO ruled the call it was held on (XA-20261016T143752Z-6cad, box CTO msg 6758): (C) now, (B) next, (A) refused. (C) is Variant 2's own form, which needs no portal change beyond CN-s-4, and this order's page change would draw the demo's pre-2026-05-15 span with no Models band. The commit stays on the worker's nested portal branch and is cherry-picked into NO landing candidate. Reading and measurement: `round11/CN_S_5_RULING_READ_20261016.md` @ac7b8e71ef.
+
+<status>superseded</status>
 <round>11</round>
 <to_id>MDPF_CANON.TO-CN-s-5</to_id>
 <slot>~31</slot>

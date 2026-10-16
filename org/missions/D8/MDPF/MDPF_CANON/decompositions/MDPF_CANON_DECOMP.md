@@ -676,3 +676,14 @@ Notes (the drafter's, read by the issuer):
 **Not cut this round, and what is missing (the CTO's "otherwise state what is missing"):** (a) *CN-s-2, the producer emission of Cottonwood carried legs* -- dissolved by ruling 1; if the CTO prefers a producer emission, the input missing is a ruling on how `apply_global_trend_groups` may preserve a scope's own `carried_dates` (it resets every scope), which edits CN-p-1's and CN-r-1's function. (b) *The edge decision for CN-s-5* -- queued, not mine (ruling 3). (c) *The optional extension in the CRO spec* ("Andrew's call; not in the base") -- not cut. Nothing for head (f) or (g) waits on a spec input: both are on file.
 
 **Checks:** `deliverables/2.0.0_SA_COO~D1/round11/checks/` (`r11_cn_s_4.py` modes `pure`, `real`, `wiring`; `r11_cn_s_3.py` mode `pure`; `r11_cn_s_1.py` modes `pure`, `seams`; `ref/` holds the two served-object fixtures, 2026-10-15; every script has a `selftest` with a scratch reference and planted mutants). Base results are in each order's preflight.
+
+
+## v11 AMENDMENT 1 -- the demo tenant's Trend: (C) final, (B) struck, `CN-s-5` superseded (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-16 ~15:3xZ)
+
+**Rests on:** the laptop CTO's ruling `XA-20261016T143752Z-6cad` (ruled 14:43:09Z; box CTO msg 6758: (C) now, (B) next, (A) refused), the issuer's read and measurement `deliverables/2.0.0_SA_COO~D1/round11/CN_S_5_RULING_READ_20261016.md` @ac7b8e71ef, and the CTO's final ruling on that read (box CTO msg 6762, 14:54Z: "(C) is final ... (B) struck as empty under the ruling's own condition; CN-s-4 ships alone").
+
+- *`CN-s-5` is SUPERSEDED.* Its build (portal `e206e06e`, wiring 10 of 10) is not cherry-picked into any landing candidate. As built it would give the demo `mode = variant1` with the stitch reads refused at the edge, which draws no Models band before 2026-05-15; the demo's own form is Variant 2, which `CN-s-4` repairs.
+- *Cell (B) is not cut.* The one-firm suppression condition empties it: all 1,865 pre-2026-05-15 per-model points (383 dates, five primary models) rest on exactly one firm (49 Financial), MEASURED on the served per-firm objects.
+- *`CN-s-4` ships alone* on the next portal promote (client-facing: Andrew's word). The demo's open call `dell1-20261016T143036Z-c7de` closes on the ruling.
+- **Round record, as the CTO asked:** before 2026-05-15 the demo tenant's Global Trend differs from the internal global view, because the per-model lines there are single-firm values (49 Financial's own series) and a non-internal session may not read them (FWD-3). The demo draws Variant 2's one Models band for that span.
+- *Chain 1 now reads:* `CN-s-4` (done, merged), `CN-s-5` (superseded), `CN-s-3` (done, merged). `CN-s-1` is merged. Remaining for the round: the typecheck and the one real run on 5174 of `CN-s-4` and `CN-s-3` (judgment criteria for the CVO), the CN-s-1 never-widen pair and the CloudOps deploy (no earlier than the 2026-10-17 13:30Z fire).
