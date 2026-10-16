@@ -38,3 +38,10 @@ at Cottonwood only, so no confirmed recipient exists for all three firms.
 
 `cand/dell2/ticket-hop-failure-read` @ac828834: commit `ac828834` adds `ANALYSIS_FAILED`, `ANALYSIS_REQUIRES_ATTENTION` and `DELIVERIES_EXHAUSTED`
 to the page set, with tests naming each code (6 references). 3 files, as before. Opal-internal (the Ticket Center). **APPROVED for DEV at ac828834.**
+
+## ADDENDUM -- a06e (the DEV-based re-cut of d870) APPROVED for DEV (2026-10-16 ~07:5xZ)
+
+`cand/dell2/ticket-hop-failure-read-dev` @bdeeaa88f359: 5 commits on DEV 34a6baf8; the diff from origin/DEV is the same 3 files (+410/-9) as the approved
+PROD-based head, with all 8 codes in `HOP_FAILURE_CODES`. The dev-overlap waiver of exactly 38 named commits is
+`CTO_RULING_DELL2_05CE_DEV_OVERLAP_WAIVER_TICKET_HOP_FAILURE_READ_DEV_20261016.md` (@03159120cf); XA-102b RULED; row 05ce CLOSED.
+**APPROVED for DEV only at bdeeaa88f359.** PROD stays with ac828834, after the overlapping features.

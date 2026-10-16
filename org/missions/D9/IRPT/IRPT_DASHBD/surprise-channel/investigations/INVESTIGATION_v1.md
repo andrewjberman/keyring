@@ -21800,3 +21800,263 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "The pin test iv-e-124 was not run (outside this grant). The reader's unknown-key rule carries the key, so the drift is between the pin and the contract, not a read failure. Recorded for the issuer."
 }
 ```
+
+## IRPT_DASHBD-D2-S111 -- round 148 B-CW: the 0.3.1 mirror and the test read of the real Cottonwood publish, workers 418 and 419 dispositioned
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S111",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T07:43:34Z",
+  "one_line": "Round 148 B-CW (DB-c-26 and DB-c-27, FWD-10 cell a): the page mirror takes on series contract 0.3.1 and the real Cottonwood publish is read through the page (939 of 939 read, 917 print the sentence, 0 mismatches, 0 income coerced); workers 418 and 419 rows dispositioned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.15 and v0.16, FWD-10 (a): the unreported-days sentence is printed from the served series, never computed in the portal, never filled; CTO msg 9022: a labelled test read of the published prefix; CTO msg 9056: the page mirror at the current contract with iv-e-124 green.",
+  "world_is": "Merges c2f31e3f1e (DB-c-26) and f3f033ac05 (DB-c-27); round-close-check MAY-CLOSE after the two proof instances were renamed to the stem the check expects (my order text named a shorter name: issuer defect, disclosed). W418-S1 (the status-flip rule differs between the order and the worker standing rule), W418-S2 (the mirror header still cites contract 0.1.0), W418-S3 (the portal pin lives in the nested repo so the workspace checker reports that artifact row UNRESOLVED-HERE), W419-S1 (all 939 manifests carry no calendar_source while every series carries the unreported-days pair) and W419-S2 (the page's optional list lacked income_claim at the worker's base; DB-c-26 closes it) are INERT and accepted. The test read (TEST READ, counts only, read 2026-10-16T06:06:50Z; the issuer's fresh re-measure equals it): 939 series and 939 manifests, 917 accounts with a non-empty list each print exactly one sentence, longest list 3 days (2529 listed days), income null on every entry of every document and never coerced, history scope PARTIAL_HISTORY on all 939, income_claim absent on all. Observations for the CTO: every Cottonwood screen will carry the round 146 note 'Returns from <date>.' (all scopes are PARTIAL_HISTORY); the income words, once a surface prints income, are the CTO's msg 9159 words.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~419/TEST_READ_R148.json and TEST_READ_R148.md; checks/r148/p149_bcw.py AC1 and AC2 PASS (issuer re-run, fresh S3 read)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~418/BUILD_R148.json; checks/r148/p148_bcw.py AC1 and AC2 PASS; org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/prod_promote/DB_C26_BUILD_BYTES_R148.md",
+      "python .tools/round-close-check.py --project IRPT_DASHBD --round 148 --workstream B-CW: MAY-CLOSE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO: the round 148 packet; the Returns-from note on every Cottonwood screen; the next B-CW cell (49 Financial FWD-10 census)."
+}
+```
+
+## IRPT_DASHBD-D2-W233-S1 -- the order says the source rule carries the old code to replace, but the live rule text carries none, so the rule is left byte-identical
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W233-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~233",
+  "surfaced_at": "2026-10-16T07:37:51Z",
+  "one_line": "DB-b-289 step 2 says conditional_columns[0].rule has the old code replaced by the new one; the live rule text at the base carries no old code, so the replacement is a no-op and the rule stays byte-identical.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@d1ef2aafa7 has SOURCE_REPORTS_NO_INCOME at three lines only: conditional_columns[0].reason, rule24_record.v044 and the 0.4.3 supersedes entry; the rule string is not among them",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-289.income-reason-rename-both-contracts.md step 2 names the rule as carrying the old code"
+    ]
+  },
+  "spec_asserts": "Step 2 of TO-DB-b-289: in conditional_columns[0] the rule has the old code replaced by the new one and keeps every clause it has.",
+  "world_is": "The base rule text carries no old code and every clause the check names (income_received, the Black Diamond source, optional_columns, never, zero, reject). The worker kept the rule byte-identical, which satisfies the clause-keeping half and leaves the replacement half with nothing to replace. Whether the order meant a different string is not measured here."
+}
+```
+
+## IRPT_DASHBD-D2-W231-S1 -- the mixed-income refusal in build_series also governs the 49 Financial path, which the order holds byte-identical
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W231-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~231",
+  "surfaced_at": "2026-10-16T07:21:00Z",
+  "one_line": "build_series now refuses a series whose income is null on some days and a number on others; that refusal is shared with the 49 Financial path, whose reach to live gold was not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-287 step 2: 'if some entries are None and some are numbers raise PublishRefused'; and 'numeric income writes no claim (the 49 Financial series stays BYTE-IDENTICAL to the base commit's on the checker's fixture)'.",
+  "world_is": "The checker's 49 Financial fixture (p147 fx49) is all-numeric, so the byte identity is proven on it. The base unit-test fixture of the same name in test_publisher_unreported.py (fx49, line 57 at the base) carries a null income on its second positive-value day beside numbers; the base built that frame and the new code refuses it. The refusal sits in build_series, which every caller reaches, so a 49 Financial account with null income on some days and numbers on others would be refused where the base built it. Live 49 Financial gold was not read (no AWS call in this order). The publisher is bundled into the 49 Financial function, so the refusal reaches that path only when this code is later deployed under a code-update pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_unreported.py@52586aaad3",
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py@52586aaad3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure: DB155-1-AC1 and AC2 PASS as written. The refusal is the order's own clause; this row records that its reach to the 49 Financial path on live gold was not measured."
+}
+```
+
+## IRPT_DASHBD-D2-W231-S2 -- two names left by the order's edit list are stale after the change: the publisher module docstring and a test name
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W231-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~231",
+  "surfaced_at": "2026-10-16T07:21:00Z",
+  "one_line": "The publisher module docstring and the test name test_manifest_carries_publisher_version_0_2_0 still describe the 0.2.0 document; the order does not let the docstring change, and the 14-line cap leaves no room to rename the test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-287 step 2: edit ONLY PUBLISHER_VERSION, build_series, build_manifest and validate_against_contract; step 4: the existing tests change by at most FOURTEEN lines, each edit commented with this order's id.",
+  "world_is": "The module docstring of publisher.py still says the optional class keys are absent and the document carries only the required keys; that text is outside the four names the order allows. In test_publisher_unreported.py the test named test_manifest_carries_publisher_version_0_2_0 now asserts 0.3.0. Renaming it would add two counted lines (one added, one deleted) beyond the cap, which the seven forced modified lines already reach exactly, so the name was kept and a comment says so.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py@52586aaad3",
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_unreported.py@52586aaad3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. The stale text is cosmetic to the served bytes; it is recorded so the docstring and the test name can be corrected in a later pass the order allows."
+}
+```
+
+## IRPT_DASHBD-D2-W1501-S1 -- two folders the round-127 producer and the class-daily test import were outside the sparse set, so both test modules failed at collection until each was added
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:39:33Z",
+  "one_line": "The worktree's sparse set held neither data/assets/scripts/lib nor infra/aws/lambda/v2_portal/_shared, so tests/test_account_transaction.py and tests/test_account_class_daily.py failed at collection (ModuleNotFoundError: stream_parquet; etf_classifications_dynamodb). Each folder was added with git sparse-checkout add; no file in either folder was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 91-95 import stream_parquet and trading_calendar from data/assets/scripts/lib and lib",
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py line 63 puts infra/aws/lambda/v2_portal/_shared on sys.path and line 76 names etf_classifications_dynamodb.py in that folder",
+      "first pytest run of test_account_transaction.py: collection error ModuleNotFoundError: No module named 'stream_parquet'; first run of test_account_class_daily.py: ModuleNotFoundError: No module named 'etf_classifications_dynamodb'"
+    ]
+  },
+  "spec_asserts": "The worktree materializes the folders the order names (org/standards, lib, data/assets/scripts/gold/irpt_reporting, infra/logic, org/tier1_exec/4.0.0_SA_CRO/deliverables), and the round-127 producer and the class-daily test run from that worktree.",
+  "world_is": "The producer's served dependency folder (data/assets/scripts/lib) and the shared classifier folder (infra/aws/lambda/v2_portal/_shared) were not in the sparse set, so both test modules could not be collected. After each git sparse-checkout add, test_account_transaction.py runs 38 passed and test_account_class_daily.py runs 25 passed; no edit was made under either folder."
+}
+```
+
+## IRPT_DASHBD-D2-W1501-S2 -- the ground read keys flow_class on a three-part key, while the mapping, the 30-pair derivation and the producer key it on tran_srcde alone
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:39:33Z",
+  "one_line": "The round-128 ground read's flow_class target names the classification key as (tran_srcde, tr_cd, sb_cd); the contract 0.2.0, its checker and the producer derive flow_class per tran_srcde alone, because the mapping and the checker's expected flow are keyed on tran_srcde. The contract carries the ground read's from_columns in sources as the checker requires and states the tran_srcde key in the column method.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RD_FWD5_GROUND_49FINANCIAL_R128.json targets flow_class: from_columns tran_srcde, tr_cd, sb_cd; method 'Per the three-part key (tran_srcde, tr_cd, sb_cd) through the classification table's (partition, rule) rows'",
+      "checks/r129/p129_contract.py expected_flow(cro_rows) keys on tran_srcde; the CRO table rows carry tr_cd and sb_cd as well as tran_srcde",
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json columns flow_class method (contract 0.2.0) keys on tran_srcde"
+    ]
+  },
+  "spec_asserts": "The 49 Financial flow_class of each code is the class the rule gives when the key is the three-part key (tran_srcde, tr_cd, sb_cd), one class when the key's rows agree and UNRESOLVED when they disagree.",
+  "world_is": "The mapping (one row per tran_srcde code, 160 rows) and the checker's per-code derivation key flow_class on tran_srcde alone; the producer reads the mapping's flow_class by tran_srcde. Whether any code's class changes under the three-part key is not measured here. The CVO's judgment sample (DBF129-1-J1) reads the producer's flow class against the rule over tran_srcde."
+}
+```
+
+## IRPT_DASHBD-D2-W1501-S3 -- transaction_words.json carried no fee_basis key, so the generator now writes one, equal to the contract's fee_basis, for the producer to read
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:39:33Z",
+  "one_line": "The order's step 8 asks the producer to read the fee columns from fee_basis through load_words() or the data file, and says that if transaction_words.json does not carry fee_basis a fee_basis key is added to the generation and to the data file, with a row. The data file carried only contract_version, type_action and source_mapping; it now also carries fee_basis, generated from the contract by script.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "transaction_words.json before this commit: keys contract_version, type_action, source_mapping (224 mapping rows)",
+      "gen_transaction_contract_0_2_0.py writes data = {contract_version, type_action, source_mapping, fee_basis} from the contract it generates",
+      "p129_contract.py data_problems compares source_mapping, type_action and contract_version only, so the extra key does not change its verdict"
+    ]
+  },
+  "spec_asserts": "transaction_words.json is regenerated from the contract by script and equals it; the producer reads the fee columns through load_words() or the data file.",
+  "world_is": "The data file now carries a fee_basis key equal to the contract's fee_basis (49financial 9 columns, cottonwood 2 columns, inflection null), and load_words() returns it. The data file holds the mapping and type_action exactly as the contract does."
+}
+```
+
+## IRPT_DASHBD-D2-W1501-S4 -- three round-127 test items changed, each because the contract change makes the old assertion wrong, and every other round-127 test body is unchanged
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:39:33Z",
+  "one_line": "Round-127 test items edited in tests/test_account_transaction.py: the _line helper gained the new source columns; test_the_four_absent_columns_are_none_on_every_row became test_the_absent_column_asset_name_is_none_on_every_row. The rest of the round-127 bodies are unchanged and the 23 round-127 functions pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_account_transaction.py: _line now sets settlmnt_date, cashiering_transaction_identifier and the fee_basis columns (None) because normalize_trn refuses a frame without the columns it reads",
+      "test_account_transaction.py: the four-absent test asserted settle_date, fee and source_txn_id were None; contract 0.2.0 reads all three, so only asset_name remains absent",
+      "pytest on test_account_transaction.py: 38 passed (23 round-127 functions and 15 round-129 functions); the one failure seen before the fixture fix was a test fixture integer coerced to float by pandas, corrected to a string identifier as the live column is typed string"
+    ]
+  },
+  "spec_asserts": "Keep the round-127 tests green; edit one only if the contract change requires it, and say which in a row.",
+  "world_is": "Two round-127 items changed (the _line helper's columns and the renamed absent-column test) and both are required by contract 0.2.0. No assertion of any other round-127 test was edited. The helper change makes the frame carry the columns the producer now requires, and the renamed test asserts NULL_COLUMNS equals asset_name only."
+}
+```
+
+## IRPT_DASHBD-D2-W1501-S5 -- the rule-24 census label is the order's word 'word-boundary' for an exact count of 160 codes, which reads no text and runs no word-boundary match
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:39:33Z",
+  "one_line": "Each rule-24 census in contract 0.2.0 carries method 'word-boundary' as the order names it, but the census is an exact count over the 160 49 Financial tran_srcde codes, grouped by coverage and by flow class. No text is matched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order step 7: census is {method 'word-boundary', denominator, per_value}, per_value computed from the mapping",
+      "gen_transaction_contract_0_2_0.py computes per_value from source_mapping rows of firm 49financial (flow_class counts; MEASURED, UNMAPPED_BY_TABLE and CODE_NOT_IN_MAPPING counts)",
+      "p129_contract.py census_problems checks method, the integer denominator and per_value equality, and does not check that a text match ran"
+    ]
+  },
+  "spec_asserts": "A rule-24 census is a word-boundary census of the value set's domain, with method word-boundary.",
+  "world_is": "The census of this contract is an exact count over the 160 live codes, so the label names the census form the order required and does not describe an operation performed on text. The counts are computed from the mapping (flow_class: 10 EXTERNAL_IN, 5 EXTERNAL_OUT, 65 INCOME, 12 FEE, 14 INTERNAL, 31 CORPORATE_ACTION, 23 UNRESOLVED; coverage: 144 MEASURED, 16 UNMAPPED_BY_TABLE, 0 CODE_NOT_IN_MAPPING; denominator 160)."
+}
+```
+
+## IRPT_DASHBD-D2-W1501-S6 -- the ratified Cottonwood record's reason for the pair Transfer Out | Transfer Out still argues UNRESOLVED after the CTO's ruling made its class EXTERNAL_OUT
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:48:07Z",
+  "one_line": "Amendment 1 orders the Transfer Out | Transfer Out pair to flow_class_none EXTERNAL_OUT with one change to the ratified record. The record's reason for that pair still says UNRESOLVED, so cottonwood_mapping in contract 0.2.0 carries a reason that argues the opposite of its class. The reason is copied verbatim, because the order names one change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~1402/FWD5_WORDS_COTTONWOOD_R128.json mapping row field type_pair, source_value 'Transfer Out | Transfer Out': flow_class_none UNRESOLVED; reason 'Transfer Out type and sub type. The word is an EXTERNAL_OUT word, but the 25 None rows are not marked external and no non-external class is decidable from the pair, so UNRESOLVED.'",
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json cottonwood_mapping.type_pairs for the same pair: flow_class_none EXTERNAL_OUT (the ruling), reason copied unchanged",
+      "amended order AMENDMENT 1 item (1): the pair has flow_class_none EXTERNAL_OUT, the one change; no text change is named"
+    ]
+  },
+  "spec_asserts": "The ratified Cottonwood section is copied from the ratified record with ONE change, the pair's flow_class_none, and its reasons are the record's.",
+  "world_is": "The contract's Transfer Out | Transfer Out row carries flow_class_none EXTERNAL_OUT and the record's reason, which says the class is UNRESOLVED. Two statements in one row disagree. Whether the issuer rewrites the reason is for the issuer; no Cottonwood producer reads it in this round."
+}
+```
