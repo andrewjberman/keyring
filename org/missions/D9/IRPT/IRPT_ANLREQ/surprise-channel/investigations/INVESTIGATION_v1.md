@@ -23112,3 +23112,57 @@
   "dismissal_reason": "The field is display only and the server decides authority; the CTO disarmed the row for DEV and window 5, and no PROD promote of the candidate is asked, so the hazard of a needless field for an unrestricted staff filer cannot reach a client."
 }
 ```
+
+## IRPT_ANLREQ-D2-W277-S1 -- two route-count asserts in test_fwd5_envelope.py moved from 7 GETs to 13 for the six new routes; both edited tests are named here
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W277-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~277",
+  "surfaced_at": "2026-10-16T23:44:52Z",
+  "one_line": "TO-AR-tz-74 item 4 allows an edit to an existing driver test only for the old route count or the old no-ok grading. Two route-count asserts were edited, both in test_fwd5_envelope.py: test_fwd5_envelope_every_get_carries_contract_version_run (GET count 7 to 13) and test_fwd5_envelope_every_get_carries_contract_version_control (GET count 7 to 13). No other existing test was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tz-74 item 4: the four existing driver test files MAY be edited ONLY where a test asserts the old route count (7 made, 9 rows) or the old grading of a 2xx JSON without ok on a report-side route; every edited test is listed by name in a surprise row.",
+  "world_is": "At base 66c870659c, org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~275/fwd5_driver/test_fwd5_driver_envelope.py asserted len(gets) == 7 in two tests (lines 154 and 164). With the six new GET routes the run makes 13 GETs, so both asserts now read 13. No test in the four files asserts the old no-ok grading: the envelope test named run_non_boolean_ok keeps a present-but-non-boolean ok, which is still UNREACHED. The edited tests are test_fwd5_envelope_every_get_carries_contract_version_run and test_fwd5_envelope_every_get_carries_contract_version_control.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_fwd5_driver_envelope.py@66c870659c lines 154 and 164 (read before the edit)",
+      "the four driver test files run after the edit: R46-TESTS-OK passed=54, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W277-S2 -- the row schema and the doctrine file the worker face names are absent from this worktree; the row follows the shape of the rows already in this channel file
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W277-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~277",
+  "surfaced_at": "2026-10-16T23:44:52Z",
+  "one_line": "The row schema the worker face names, org/surprise_channel/schemas/investigation_item.schema.json, and the doctrine file docs/doctrine/THE_SURPRISE_CHANNEL.md are absent from this worktree, so the row was written to the shape of the rows already in this channel file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The surprise-channel convention in the worker face names the row schema at org/surprise_channel/schemas/investigation_item.schema.json and the doctrine at docs/doctrine/THE_SURPRISE_CHANNEL.md.",
+  "world_is": "At worktree HEAD 66c870659c, the directory org/surprise_channel/ does not exist and a Glob of org/surprise_channel/schemas/* returns no file; docs/doctrine/THE_SURPRISE_CHANNEL.md does not exist. .tools/surprise-row-gate.py is present. The new rows follow the shape of the existing rows in INVESTIGATION_v1.md; the gate's verdict on them is read at commit, not assumed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob org/surprise_channel/schemas/* in the worktree: no files",
+      "ls org/surprise_channel and ls docs/doctrine/THE_SURPRISE_CHANNEL.md in the worktree: no such file or directory, @66c870659c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
