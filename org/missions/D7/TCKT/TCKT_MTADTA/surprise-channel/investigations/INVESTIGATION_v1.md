@@ -637,6 +637,29 @@
     "spec_asserts": "TO-MD-r1 item 5: read the CURRENT version ARN of AWSSDKPandas-Python312 with list-layer-versions and pin it.",
     "world_is": "The list call is refused, so currency cannot be read; 31 is the highest version the identity can read. A newer public version that answers AccessDenied would not be seen. The access Lambda runs on version 31 either way.",
     "notes": "If a newer version matters, the pin is one line in layer.auto.tfvars and an in-place update of aws_lambda_function.access."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S9",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~TM1",
+    "surfaced_at": "2026-10-16T09:04:14Z",
+    "one_line": "The IAM user Andrew_Berman, the door group's one member, holds two virtual MFA devices, mfa/Andrew_Phone and mfa/Yang_Phone, so the MFA gate on the door admits whoever holds either device.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~DELL1 (a CTO question for Andrew: whether the second device stays); this seat only surfaces and removes nothing",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws iam list-mfa-devices --user-name Andrew_Berman -> 2 devices (count 2 read at the 7b step of TO-MD-r1)",
+        "aws iam list-virtual-mfa-devices --assignment-status Assigned filtered to User Andrew_Berman -> mfa/Andrew_Phone (enabled 2025-11-12) and mfa/Yang_Phone (enabled 2025-11-05)",
+        "TO-MD-r1 AC4 R1-MFA-OK reads 'mfa_devices>=1', which a second device also satisfies"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ruling 6605 / TO-MD-r1 item 7b: the door is reachable by Andrew_Berman alone, with his MFA device.",
+    "world_is": "The MFA condition tests that some device was used, not whose. A second enabled device named for another person on the same user lets that person's phone satisfy the gate for any session of this user. It still needs the user's AWS credentials, so nothing is reachable by the device alone. The device name is the only evidence of whose phone it is; ownership is not established here.",
+    "notes": "Nothing changed. If the second device is not Andrew's, removing it is an IAM act on his user and is his word."
   }
 ]
 ```

@@ -81,7 +81,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-27.release-gap-grants-to-int
 - Phase A GO is the issuer's message. OG-ap-23's re-GO waits on `ap27.AC2` PASS.
 - Pre-cut: ap27.AC1 and ap27.AC2 base FAIL as expected (tf, plan, ask and GAP_APPLIED.json absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>RELEASE-GAP-GRANTS</workstream>
 <slot>~AE</slot>
