@@ -211,6 +211,49 @@
     "spec_asserts": "TO-MD-a1 BUILD 1: handler.py is stdlib plus boto3, imported lazily inside lambda_handler only; the silver reader is the worker's own code in handler.py.",
     "world_is": "Reading the silver parquet from S3 requires a parquet decoder. The stdlib has none, and the layer that provides one is the pandas layer the order names. The reader therefore needs pandas, imported inside read_day_rows; no test exercises that path, because the tests inject the reader.",
     "notes": "The default reader is untested in this round. The issuer should either accept the lazy pandas import in the reader, or move the decode to the silver builder's cell. The stdlib-only line of BUILD 1 is not met for read_day_rows and is recorded here rather than bent."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W1-S8",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~1",
+    "surfaced_at": "2026-10-16T07:26:19Z",
+    "one_line": "The naming gate refused three S3 key literals in handler.py (the gold coverage, silver and bronze tier prefixes), because the door carries them as typed strings; the builder's address() gives the same tails, but the Lambda package carries no lib/opal_naming.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "commit 9d4f20bdb8 safe-commit output: '[naming-gate] NAMING REFUSE infra/aws/lambda/globgrph-trino-access/handler.py:34 gold/collection_coverage/' and lines :35 silver/activity_events/ and :36 bronze/audit_events/date=%s/; '(WARN window: 3 REFUSE verdict(s) did not block; ENFORCE is --enforce ...)'",
+        "python lib/opal_naming.py address for ('m365-metadata','trino','silver','activity_events','date=2026-10-15', object='data.parquet') returns s3://opal-data-trino/m365-metadata/trino/silver/activity_events/date=2026-10-15/data.parquet; the gold and bronze forms match the handler's tails",
+        "build.sh packages handler.py and silver_builder.py and nothing else, per the order's BUILD 2; lib/opal_naming.py is not in the package"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md rule 30 and the LGIC rule: every S3 address is lib/opal_naming.py address() output; a builder refusal is a missing registry row, never a hand-typed workaround.",
+    "world_is": "The door builds its key prefixes from typed tier and table segments. The segments match the builder's output, and the gate grades them as REFUSE in the warn window, so the commit landed. The order's package list leaves no route for the door to call the builder at run time.",
+    "notes": "The issuer decides: package the builder's key function with the door, or have Terraform pass the builder-computed prefixes as environment variables. Nothing was changed to silence the gate."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W1-S9",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~1",
+    "surfaced_at": "2026-10-16T07:26:19Z",
+    "one_line": "The naming gate raised, not refused, the IAM resource pattern 'm365-metadata/trino/*' in access.tf as a secret, because its tokeniser cannot place the character star; a grader defect, not a verdict on the name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "commit 9d4f20bdb8 safe-commit output: '[naming-gate] NAMING RAISE infra/aws/terraform/trino/access.tf:106 m365-metadata/trino/* -> (rule or registry defect)' with why 'RAISE as SECRET: rule or registry defect, not a refusal: G3: the tokeniser cannot place a character of a secret star'",
+        "access.tf line 106 is the Resource of the ReadAndWriteTheTrinoPrefix statement of aws_iam_role_policy.access: an S3 object ARN suffix, the same shape as the transcripts pull policy"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The naming gate grades every name and address the diff writes, and a RAISE names a rule or registry defect to the owner of the gate.",
+    "world_is": "The IAM policy resource pattern is an S3 object wildcard, not a name. The gate reads it as a secret and cannot place the wildcard character, so it raises instead of grading it.",
+    "notes": "Owed to the naming gate's owner. The worker did not alter the resource pattern to silence it."
   }
 ]
 ```
