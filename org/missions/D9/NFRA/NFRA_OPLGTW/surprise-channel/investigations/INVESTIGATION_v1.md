@@ -20630,3 +20630,98 @@ name the one known failure instead of silently inheriting it.
   "notes": "Cost of the miss: the criterion could never pass on this store, for any principal. Fix is two lines in mg1.AC2.sh (TypeDeserializer on the scope; read dates.calendar_months). A revoke is available under the same role if the halves want the writes undone anyway."
 }
 ```
+
+
+  ```json
+  [
+    {
+      "id": "NFRA_OPLGTW-Z-W121-S1",
+      "project": "NFRA_OPLGTW",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~121",
+      "surfaced_at": "2026-10-16T12:10:16Z",
+      "one_line": "The muse narrowing also refuses the bearer REST route /query/v0 to the muse client (only /teams/poll stays open). The cell's BUILD names the tools and visible_tools; /query/v0 is a second channel to non-M365 catalog data, so the set would leak through it without this.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~O",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "CODE: infra/aws/ec2/opal-gateway/app/data_entitlement.py MUSE_ROUTES and muse_route_denial, added by this cell (worktree branch wk-NFRA_OPLGTW-121, base e08686be6a).",
+          "CALLERS: app/query_v0.py:124 and app/server.py:759 call data_entitlement.route_denial for GUARDED_ROUTES = /teams/poll and /query/v0.",
+          "TEST: tests/test_og_en8.py test_ogen8_ac01 asserts route_denial('/query/v0') returns 403 and route_denial('/teams/poll') returns None for the muse principal."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The cell's BUILD narrows the tools and visible_tools for the muse client, and its intro says the client may reach no other source.",
+      "world_is": "/query/v0 is the catalog query route, not an M365 surface, and any bearer token could reach it. The narrowing therefore refuses it for the muse client as well. Andrew's client and every other client keep it unchanged.",
+      "notes": "The COO should confirm the route refusal belongs in this cell. Removing it is one membership change: MUSE_ROUTES in data_entitlement.py."
+    },
+    {
+      "id": "NFRA_OPLGTW-Z-W121-S2",
+      "project": "NFRA_OPLGTW",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~121",
+      "surfaced_at": "2026-10-16T12:10:16Z",
+      "one_line": "The CTO's word 'attachments' under mail is ambiguous in app/tools.py: save_email_attachment_to_site writes a mail attachment into a SharePoint site, so the muse set leaves it out; the calendar and meeting-transcript tools are not mail or Teams chat and channel tools, so they are out too.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~O",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "TOOLS: app/tools.py save_email_attachment_to_site (line 372), list_email_attachments (line 360), inspect_email_attachment (line 424), list_calendar (line 501), find_online_meeting, list_meeting_transcripts, read_meeting_transcript (lines 542 to 595).",
+          "SET: MUSE_M365_TOOLS in app/data_entitlement.py holds 20 names: whoami, 9 mail and 10 Teams; the test test_ogen8_ac02 derives the same set from app/tools.py by the underscore tokens email, draft, chat, chats, channel, channels, team, teams, minus save_email_attachment_to_site."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The cell's READ FIRST (3) lists mail as list, read, search, filtered list, attachments, reply, send, create draft, and Teams as teams, channels, chats, channel and chat messages, send channel and chat message, polling of addressed messages.",
+      "world_is": "'Attachments' has two readings. The set takes the read pair (list_email_attachments, inspect_email_attachment) and leaves out the write into a site. read_teams_attachment and read_chat_message_images are in as Teams reads.",
+      "notes": "The boundary is the issuer's call at the never-widen ask. Moving save_email_attachment_to_site in is one set edit plus one line in the test's exclusion."
+    },
+    {
+      "id": "NFRA_OPLGTW-Z-W121-S3",
+      "project": "NFRA_OPLGTW",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~121",
+      "surfaced_at": "2026-10-16T12:10:16Z",
+      "one_line": "test_ogz1_ac08 in tests/test_data_entitlement_guard.py fails before this cell and still fails after it, at the same line 756 with the same assertion; this cell does not touch that test or the route set it compares.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~O",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "RUN AT BASE (before any edit of this cell): python -m pytest tests/test_data_entitlement_guard.py tests/test_data_entitlement_family.py tests/test_entitlement_admin.py tests/test_og_bd3.py tests/test_og_ad1.py from infra/aws/ec2/opal-gateway: '1 failed, 32 passed', FAILED test_ogz1_ac08 at tests/test_data_entitlement_guard.py:756.",
+          "RUN AFTER (same five files plus tests/test_og_en8.py): '1 failed, 35 passed', the same FAILED test_ogz1_ac08 at line 756; the three new tests pass."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The cell says: if a test elsewhere pins a set this changes, update it to the new truth; never weaken it.",
+      "world_is": "The failing assertion compares a set of route declarations under a restricted profile. No route and no restricted-profile decision changed in this cell, so the failure is not caused by it and was not edited.",
+      "notes": "Owner of the guard suite to decide. The cell's AC1 and AC2 name only tests/test_og_en8.py, so no criterion of this cell depends on it."
+    },
+    {
+      "id": "NFRA_OPLGTW-Z-W121-S4",
+      "project": "NFRA_OPLGTW",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~121",
+      "surfaced_at": "2026-10-16T12:10:16Z",
+      "one_line": "On an HTTP tools/call the MCP SDK fills its tool cache through list_tools for a name it has not cached, so a denied call also makes the discovery-list POLICY reads (current_access and person_access) before the denial. The denial itself reads no store.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~O",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: one tools/call for schwab_list_files by the muse client through the served app (test harness of tests/test_data_entitlement_guard.py): the reads during the call were RUNTIME refresh family, then POLICY principal_profile and POLICY person_access, and the SDK logged 'Tool schwab_list_files not listed, no validation will be performed'.",
+          "CODE: app/tools.py _PolicyGuardedMCP.list_tools calls data_entitlement.visible_tools, which reads the principal's profile and person record for the discovery list."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The cell's BUILD says the denial happens before any data read; the cell's tests do not say how reads are counted on the HTTP path.",
+      "world_is": "A store-read count taken around an HTTP tools/call over-counts, because the discovery reads come from the SDK, not from the denial. The test therefore measures zero store reads on the direct tool_denial call, and zero data touches on the HTTP call.",
+      "notes": "Instrument trap for any later read-count criterion on the MCP path. No behaviour changes; the discovery reads are existing behaviour."
+    }
+  ]
+  ```
