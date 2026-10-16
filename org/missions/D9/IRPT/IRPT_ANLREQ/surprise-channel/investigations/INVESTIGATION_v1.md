@@ -20043,3 +20043,83 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W163-S1 -- The AR-y-366 premise fails
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W163-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~163",
+  "surfaced_at": "2026-10-16T00:59:08Z",
+  "one_line": "The AR-y-366 premise fails: an unknown ticker does not disable the Submit control; the form holds Submit only for title, firm and file, so the driver would not stall at a disabled Submit.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-366 Context: for an unknown ticker the form shows its prompt, the signed driver has no way to press it, and 'a file with an unknown ticker would stall at a disabled Submit'.",
+  "world_is": "At portal 0ba0cb13 the Submit control is disabled only by heldReason = submitHeldReason(title, firm, firms, firmsFailed, hasFile) (TicketCenter.tsx lines 349-350; disabled at lines 623 and 778). submitHeldReason (analysisRequest.ts lines 344-356) has no prompt term. Choosing the holdings file posts nothing (TicketCenter.tsx chooseAnalysisFile reads bytes and mints a token). An unknown ticker therefore leaves Submit ENABLED; the first prompt can only appear after Submit is clicked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@0ba0cb13 src/pages/TicketCenter/TicketCenter.tsx:349-350 (heldReason from submitHeldReason, no prompt term)",
+      "portal@0ba0cb13 src/pages/TicketCenter/TicketCenter.tsx:623 and :778 (Submit disabled={creating || heldReason !== null})",
+      "portal@0ba0cb13 src/pages/TicketCenter/analysisRequest.ts:344-356 (submitHeldReason: title, firm, firms, hasFile only)",
+      "portal@0ba0cb13 src/pages/TicketCenter/TicketCenter.tsx:252-268 (chooseAnalysisFile reads the bytes and sets a token; no upload post)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W163-S2 -- The decisions cannot be answered before Submit
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W163-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~163",
+  "surfaced_at": "2026-10-16T00:59:08Z",
+  "one_line": "The decisions cannot be answered before Submit: the prompts come only from the Submit-triggered upload answer, and each Yes / Replace / No press is itself a live filing (a re-posted upload, and a ticket on NORMALIZED).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-366 step 2: answer the prompts BEFORE the Submit click only, by pressing the planned button; step 4B: after the Submit click the driver only reads (no click, fill or post).",
+  "world_is": "The prompts are the upload door's NEEDS_CORRECTION answer, which is produced only on the Submit path (analysisRequest.ts fileAndRequestAnalysis posts the upload at line 372 and returns hints at lines 380-390, shown by TicketCenter.tsx handleCreateAnalysis). A press runs chooseHint, which for staff calls handleCreateAnalysis(next) (TicketCenter.tsx lines 470-471): the same upload is re-posted with the choice and, on NORMALIZED, the ticket is created (analysisRequest.ts line 407). So no prompt exists before Submit, and a press is a live filing, not a form-only selection. The base driver's ticket listener is installed after the Submit click (fwd1_driver.mjs line 205 at 2b0a50b912), so a ticket created by a press would be missed. The amended driver therefore presses nothing before Submit in any run it can make; the press-files fact is the one a later design must carry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@0ba0cb13 src/pages/TicketCenter/TicketCenter.tsx:470-471 (chooseHint: staff press calls handleCreateAnalysis(next))",
+      "portal@0ba0cb13 src/pages/TicketCenter/analysisRequest.ts:372 and :380-390 (upload post; NEEDS_CORRECTION returns hints; nothing filed)",
+      "portal@0ba0cb13 src/pages/TicketCenter/analysisRequest.ts:407 (ticket created on NORMALIZED)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs at 2b0a50b912:205 (ticket listener set after Submit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W163-S3 -- AR-y-366 AC2 cannot read LABELS-OK as written
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W163-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~163",
+  "surfaced_at": "2026-10-16T00:59:08Z",
+  "one_line": "AR-y-366 AC2 cannot read LABELS-OK as written: its no-decisions rule covers every line from the Submit wait to the end of the file, and the selftest cases the cell requires sit in that region outside an if (o.decisions) guard.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-366 AC2 rule (3): every line from the Submit wait to the end is unchanged from the base apart from lines the new option adds inside an if (o.decisions) guard. Cell item 3: cover the new parts in the offline --selftest (at least 10 new cases).",
+  "world_is": "The base selftest() sits after the Submit wait (base line 199 at 2b0a50b912; selftest at base lines 268-336), so the 21 new selftest cases are unguarded lines in the rule's region. labels_check.py prints LABELS-BAD with 28 added line(s) outside an if (o.decisions) guard. A scratch copy with exactly those 28 lines removed prints LABELS-OK 9 labels, so the BAD verdict is that block and nothing else. The amended driver keeps the cases (SELFTEST-OK 58 cases) and AC2 reads FAIL; the rule was not edited to exempt them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~163/labels_check.py run output: LABELS-BAD region Submit wait..end of file: 28 added line(s) outside an if (o.decisions) guard",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~163/labels_check.py control: the same check on the amended driver with the 28 selftest lines removed prints LABELS-OK 9 labels",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs at 2b0a50b912:199 and :268-336 (Submit wait, then selftest)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
