@@ -73,16 +73,16 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-14T11:45:00Z. Graduated at ADJUDICATION_v8
     "owner": "2.0.0_SA_COO~B1",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B1",
       "round": "v8"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~B1",
-      "at": null
+      "at": "2026-10-16T17:16:04Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-W77-S2",
@@ -99,16 +99,16 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-14T11:45:00Z. Graduated at ADJUDICATION_v8
     "owner": "2.0.0_SA_COO~B1",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B1",
       "round": "v8"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~B1",
-      "at": null
+      "at": "2026-10-16T17:16:04Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_FIRMBKTS-D1-W77-S3",

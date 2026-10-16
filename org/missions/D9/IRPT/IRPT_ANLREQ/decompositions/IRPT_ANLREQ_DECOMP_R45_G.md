@@ -11,7 +11,7 @@ Issuer `2.0.0_SA_COO~G2`, 2026-10-16.
 - **Names:** root `0485393f3a-r34g`, tarball and sums `irpt-resident-0485393f3a-r34g.*`, ledger `irpt-resident-r34g-20261016`, stage folder `C:/dev/irpt-release-r34m`.
 - The issuer's own trial build of the pin (stage `C:/dev/irpt-release-r34l-issuer`): 314 members, changed 3, added 0, removed 0, builds identical 314 of 314, tarball `1e5b3ef4120b8799ebd5f1cf620044b01b5e1bfeac2e1d4169d3f576a802580b`; the verifier printed AR-G137-OK. The worker's official build must equal it.
 - **Rollback** is the r34f root, which stays on the host.
-- **The apply (`AR-g-139`) is held** behind run 3 (CTO msg 9600). The CTO half of the packet is asked for now; the GO to the applier (IB2, rule 34) waits on ~Y2's word that run 3's window has closed.
+- **The apply (`AR-g-139`) was held behind run 3 (CTO msg 9600) and is released**: run 3's window closed (CTO msg 9685, ~Y2 msg 9692) and the CTO signed his half (msg 9694, `d5c047fa37`). The applier is IB2 (rule 34). ~Y2's window 4 starts only after ledger `irpt-resident-r34g-20261016` reads CLOSED and the paced read (`AR-g-140`) has reported.
 
 ## Cells (this cut)
 
@@ -19,10 +19,11 @@ Issuer `2.0.0_SA_COO~G2`, 2026-10-16.
 |---|---|---|---|
 | `AR-g-138` | the r34g tarball, sums and four host scripts at the pin, record `RESIDENT_R34G_BUILD.json` in the worker's folder, stage folder `C:/dev/irpt-release-r34m` | the worker's folder, the order, the channel file | WORLD (nothing installed, no host touched, no AWS call) |
 | `AR-g-139` | the r34g resident applied to the host under the signed pair (applier order `TO-APPLY-R34G`, own pair), V2 inside the service's own environment with the four controls, the back-off, the door and the pricing checks | the applier's `deliverables/`, the ledger `irpt-resident-r34g-20261016` | WORLD (S3 write, a host root, a restart; rollback the r34f root) |
+| `AR-g-140` | the CRO's one measured read of the door's lookup count per window (`paced_lookup_probe.sh`, up to 12 cookieless lookups over about 21 minutes), read-only; applier order `TO-READ-PACING`; runs after the r34g ledger closes and before window 4 | the applier's `deliverables/irpt_anlreq_r34g/` | WORLD (YCharts lookups from the host; no host change) |
 
 ## Edges and chains
 
-- ONE chain: `AR-g-138` (the build) feeds the signed packet and `AR-g-139` (the apply, held behind run 3).
+- ONE chain: `AR-g-138` (the build) feeds the signed packet and `AR-g-139` (the apply; run 3's window closed, CTO msg 9685), then `AR-g-140` (the paced read, after the ledger closes). AMENDED by the issuer after the CTO's signing (msgs 9685, 9694): AR-g-139 is no longer held and AR-g-140 is added; no gate limb graded this amendment.
 
 ## Four-postulate record
 
