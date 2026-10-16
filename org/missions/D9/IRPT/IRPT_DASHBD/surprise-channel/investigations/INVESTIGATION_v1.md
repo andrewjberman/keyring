@@ -23476,3 +23476,34 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "No action taken. Materialising the channel folder is outside the order's named folders, so the worker did not run git sparse-checkout add for it."
 }
 ```
+
+## IRPT_DASHBD-D2-S126 -- S116 and S117 disarmed by their disarm owner: all 16 paths read at their intended bytes at HEAD
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S126",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL2",
+  "surfaced_at": "2026-10-16T16:06:30Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-S116 and IRPT_DASHBD-D2-S117 by their disarm owner: all 16 paths that merge 96a89eb451 dropped (10) or reverted (6) read at their intended bytes at HEAD; 8 equal the merge-tree blob of that merge's own two parents, 8 carry only later edits by their owning seats, each of which builds on the restored bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_DASHBD-D2-S116",
+    "IRPT_DASHBD-D2-S117"
+  ],
+  "spec_asserts": "CTO msgs 9304, 9314 and 9581: restore the 16 to the merge-tree blobs, one lane per commit under the audited override; where HEAD equals the merge-tree blob disarm; where it differs, restore. S117 notes: this row disarms with S116 when the 16 paths read at their intended bytes.",
+  "world_is": "Read at HEAD 2026-10-16T16:06:30Z: 16 of 16 paths present; 8 EQUAL to the git merge-tree blob (tree ba65fead37) of 96a89eb451's parents; 8 differ only because their owners edited them afterwards (1 to 5 commits each since 312daca454), and for each the parent blob of the first later edit equals the restored blob, so no later edit re-reverted anything. Restored by 7 audited commits (78de21831a, 27f988e66f, 0dc6ca910d, 7ea7a4bf2d, d82a6a2b96, 47c9d15c75, b55de57d3c) and by 2.0.0_SA_COO~D2 for the two task orders (08e613ad9c). Restoring the 8 to the merge-tree blobs would have undone their owners' later work, so none was restored again.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-tree --write-tree 96a89eb451^1 96a89eb451^2 -> tree ba65fead3781749fe67bd857286d15eaa620363d (two conflicted paths, both D2's)",
+      "per path: git rev-parse HEAD:<path> against ba65fead37:<path>: 8 equal, 8 differ; for each of the 8, git rev-parse <first later commit>^:<path> equals the merge-tree blob",
+      "git diff --name-only --diff-filter=D 312daca454 <repair tip 562bf59cec>: 0 before CLOUD was taken; origin/box/dell2 582155d0b7 merged into CLOUD bc7d19309f by the integrator, tree check dropped 0"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S116 and S117 are disarmed by their disarm owner: the 16 paths read at intended bytes. The two genuine conflicts of 96a89eb451 stay with 2.0.0_SA_COO~D2."
+}
+```
