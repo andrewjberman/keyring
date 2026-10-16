@@ -4171,3 +4171,14 @@ The CTO signed the re-pin for cb-12 and added C-d3: before the first upload to a
 
 - **Fan-out:** 1 worker, 1 chain, cap 8.
 - **Checks dry-run at the base before the cut:** cb-14 AC1 base FAIL as expected (the new test file does not exist); AC2 base PASS as expected (`110 passed`); the cb-12 file reads `9 passed` at the base.
+
+## 116. NAMED NEXT INCREMENT (not a round-87 cell) -- the `opal-harvest-security-metrics` read surface (cluster-lead ruling XA-20261016T024917Z-cdcc, CLOUD `08cba0ba64`; CTO msgs 6434 and 6437), recorded 2026-10-16
+
+The cluster lead ruled that the seven `served/*` rows of OG-ap-23 are site Z's to build and the DynamoDB table `opal-harvest-security-metrics` goes to this project "as that producer's own read surface", because dell1 now owns its key shape and cadence. The CTO ruled (A): no build today; the runner egress work (cb-13, then `sa` and `bbg`) keeps priority; this increment is carried to the next round analysis.
+
+| item | state |
+|---|---|
+| **The surface** | NOT cut. The typed readers already in `lib/research/api/scoped_amgt.py` (`read_generation_pointer`, `read_generation_rows`; the table is a generation-pointer store, pointer row `_CURRENT` per axis and date) come first. |
+| **Question 1 (to answer at the next analysis)** | WHO CALLS IT: site Z's gateway cannot call dell1 code, so likely an S3 or Lambda reader. |
+| **Question 2** | Does the caller need a never-widen IAM read grant (GetItem and Query on the table) for the gateway role? |
+| **Owner / condition** | `2.0.0_SA_COO~W1`; un-parks at the CTO's next round analysis that names the caller. |
