@@ -683,6 +683,30 @@
     "spec_asserts": "Card step 5 (TCKT_MTADTA.TO-MD-r2.andrew_consent_card.md): Andrew opens the printed consent URL and grants consent.",
     "world_is": "As reported by the laptop CTO, the printed consent URL is not usable (AADSTS1003031), yet the laptop CTO reports the role assigned and the grant made; how consent was reached is not stated in the relay. Also reported: card step 1 (the unified audit-log check, Get-AdminAuditLogConfig) was not run because Andrew holds no Exchange role; someone who does still owes it.",
     "notes": "Nothing changed by this seat. The client id is in a Taildrop file in dell1 Downloads and is not recorded here."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S11",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~TM1",
+    "surfaced_at": "2026-10-16T13:46:05Z",
+    "one_line": "The collector's first scheduled fire, 13:31:22Z, ran to the 300 s timeout and was retried twice; the fires check printed R2-FIRES-OK on it because it greps only errorMessage and Traceback.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1 (the issuer: who repairs the collector's hang and the fires check)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/aws/lambda/m365-metadata-trino-collector-lambda: START 13:31:22Z, REPORT Duration 300000.00 ms Status: timeout; same request id START 13:37:21Z, REPORT Duration 300000.00 ms Status: timeout; no application log line in either",
+        "/aws/lambda/globgrph-trino-access-lambda: op=get_state outcome=absent at 13:31:27Z, 13:37:24Z and 13:44:38Z, each about 2 s, so the door answered and the hang follows the cursor read in handler.py",
+        "CloudWatch AWS/Lambda Errors for the collector, 13:00Z hour: Sum 2.0; Invocations 2.0 (door 3.0)",
+        "org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R2_CHECKS/r2_check_r2.py lines 99-105: counts REPORT lines, greps '?errorMessage ?Traceback'; printed R2-FIRES-OK invocations_since_start=2 function_errors=0 at 13:43:48Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-r2 AC3: at least two scheduled collector invocations since the subscriptions started, and no function error since then.",
+    "world_is": "One scheduled fire exists, and it timed out; Lambda's two async retries are the second and third START lines, so the 2 counted invocations are one failed fire, not two scheduled fires. The check cannot tell a timeout from a success. Where the collector waits for 300 s is not established here: the Management API listing or the token call (source_client.py) are the calls after the cursor read, and neither logs.",
+    "notes": "No hand invoke, no retry, no code change. The next scheduled fire at about 14:31Z is expected to fail the same way and would be a second failed fire, not evidence for AC3. Disabling the rule is a Terraform change to collector.tf, outside this order's grant."
   }
 ]
 ```
