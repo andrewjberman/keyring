@@ -2300,6 +2300,56 @@ def catalog_exempt_line(rows):
                (" " + " ".join(repr(v) for v in _CATALOG_NEW[:200]) + (" ..." if len(_CATALOG_NEW) > 200 else "")) if _CATALOG_NEW else ""))
 
 
+# --------------------------------------------------------------------------- name_rulings.json (NFRA_OPLGTW OG-ng-2, XA-20261016T034740Z-28da)
+# The commit limb grades a name from its name_rulings.json row exactly as naming-apply-gate.py does: the row is keyed (name, node
+# type) and ruling_amend (imported from that file, never copied) gives the verdict. Read once per run, lazily.
+_RULINGS = {}  # {"rows": {(name, type): row}} once read, or {"error": text} when the file could not be read
+
+
+def _name_rulings():
+    """{(name, type): row} of infra/logic/registry/name_rulings.json, read on first need and once per run; {} when unreadable."""
+    if "rows" not in _RULINGS and "error" not in _RULINGS:
+        try:
+            _RULINGS["rows"] = _rootcheck().load_name_rulings()
+        except Exception as exc:  # the rows are unread: no name is graded from a row, and the run says so
+            _RULINGS["error"] = "%s: %s" % (type(exc).__name__, exc)
+    return _RULINGS.get("rows") or {}
+
+
+def _rulings_notice_line():
+    """The NAMING RULINGS-NOTICE line when name_rulings.json could not be read this run, else None."""
+    if "error" not in _RULINGS:
+        return None
+    return ("NAMING RULINGS-NOTICE name_rulings.json could not be read (%s); no name is graded from a row" % _RULINGS["error"])
+
+
+def _ruling_amend():
+    """naming-apply-gate.py's ruling_amend, imported with importlib (the file name has a hyphen); it is never copied here."""
+    path = os.path.join(TOOLS_DIR, "naming-apply-gate.py")
+    loader = importlib.machinery.SourceFileLoader("naming_apply_gate_for_rulings", path)
+    spec = importlib.util.spec_from_loader(loader.name, loader)
+    mod = importlib.util.module_from_spec(spec)
+    loader.exec_module(mod)
+    return mod.ruling_amend
+
+
+def _ruled(nm, lit, base):
+    """The verdict of one literal after its name_rulings.json row. `base` is judge()'s (verdict, canonical, why, counts-as) for a
+    literal the gate is about to REFUSE or WARN. A none_owed row, or a canonical equal to the name, is RULED (counts PASS) and
+    cites the row; a different canonical keeps the grade and names the row's canonical; no row leaves `base` as it is. The key is
+    exact, (name, node type): the carrier branch's type is 'hand-kept carrier', the typed branch's is the node type it grades as."""
+    typ, _graded_as = nm.classify(lit.value, lit.hint)
+    key_type = "hand-kept carrier" if typ is None else typ
+    rulings = _name_rulings()
+    if (lit.value, key_type) not in rulings:
+        return base
+    refused = base[3] == "REFUSE"
+    verdict, canon, why, _refuses = _ruling_amend()(rulings, key_type, lit.value, (base[0], base[1], base[2], refused), refused)
+    if verdict == "RULED":
+        return (verdict, canon, why, "PASS")
+    return (verdict, canon, "%s; %s" % (base[2], why), "REFUSE" if verdict == "REFUSE" else "WARN")
+
+
 def judge(nm, path, lit, pre_text, waivers=None):
     """(line verdict, canonical, why, counts-as) for one literal, or None when it is not graded. The live limb's one line
     joins the why text: RUNNING-LIVE on any row of a name the plane holds; LIVE-READ-FAILED on a REFUSE row only."""
@@ -2307,6 +2357,8 @@ def judge(nm, path, lit, pre_text, waivers=None):
     j = _judge(nm, path, lit, pre_text, waivers, note)
     if j is None:
         return None
+    if j[3] in ("REFUSE", "WARN"):
+        j = _ruled(nm, lit, j)  # a name_rulings.json row answers a REFUSE or a WARN (OG-ng-2)
     if j[3] == "REFUSE":
         held_in = catalog_held_in(path, lit.value)
         if held_in:
@@ -2896,6 +2948,7 @@ def run(args):
     _LEGACY.update(project=committing_project(files + staged_entries(args.staged_paths)), rows=None)
     _CATALOG_NEW.clear()
     _S3P["admitted"].clear()
+    _RULINGS.clear()  # name_rulings.json, read once for this run (OG-ng-2)
     for f in files:
         rows += grade_file(nm, f, args.post_from_index)
     meta = domain_meta(files)
@@ -2905,6 +2958,9 @@ def run(args):
     iam_line = _iam_prefix_line()
     if iam_line:
         meta.append(iam_line)
+    rulings_line = _rulings_notice_line()
+    if rulings_line:
+        meta.append(rulings_line)
     rows = place_step(rows, meta)
     return rows, meta
 
@@ -3386,10 +3442,47 @@ def catalog_held_self_test(nm):
     return ok_held and ok_scope and ok_absent and ok_near and ok_staged and ok_line
 
 
+def name_rulings_self_test(nm):
+    """The name_rulings arms (OG-ng-2): a planted NEW hand-kept carrier is RULED from a none_owed row keyed (name, 'hand-kept
+    carrier'); with no row it is REFUSE; a row keyed under ANOTHER type does not admit it. The rulings are injected into
+    _RULINGS for each arm; the registry file is never read here and never written."""
+    name, path = "bd_account_id", "infra/aws/ec2/opal-gateway/app/selftest_planted_client.py"
+    row = {"name": name, "type": "hand-kept carrier", "none_owed": "planted by the self-test; no name is owed for this arm"}
+    other = dict(row, type="INSTANCE_PROFILE")
+    lit = Lit(name, name, 1, None)
+    arms = []
+    try:
+        _RULINGS.clear()
+        _RULINGS["rows"] = {(name, "hand-kept carrier"): row}
+        got = judge(nm, path, lit, None)
+        arm = got is not None and got[0] == "RULED" and got[3] == "PASS"
+        arms.append(arm)
+        print("SELF-TEST arm name-rulings admit: a none_owed row for (name, type) grades the planted NEW carrier RULED -> PASS: %s"
+              % ("ok" if arm else "FAIL"))
+        _RULINGS["rows"] = {}
+        got = judge(nm, path, lit, None)
+        arm = got is not None and got[0] == "REFUSE" and got[3] == "REFUSE"
+        arms.append(arm)
+        print("SELF-TEST arm name-rulings control no-row: the same planted carrier with no row is REFUSE -> REFUSE: %s"
+              % ("ok" if arm else "FAIL"))
+        _RULINGS["rows"] = {(name, "INSTANCE_PROFILE"): other}
+        got = judge(nm, path, lit, None)
+        arm = got is not None and got[0] == "REFUSE" and got[3] == "REFUSE"
+        arms.append(arm)
+        print("SELF-TEST arm name-rulings control other-type: a row for (name, another type) does not admit it -> REFUSE: %s"
+              % ("ok" if arm else "FAIL"))
+    finally:
+        _RULINGS.clear()
+        _RULINGS["rows"] = {}
+    return all(arms)
+
+
 def self_test():
     """--self-test: judge() on a NEW group-A name takes the fourth verdict and passes, and (the difference control) a NEW
     group-B name is still refused. Reads no diff, writes no log. Returns 0 when both arms hold."""
     nm = Naming(load_opal())
+    _RULINGS.clear()
+    _RULINGS["rows"] = {}  # the arms below see no name_rulings rows (the registry file is not read by self-test)
     ok = True
     for name, typ, want_verdict, want_counts in (("s3-access", "IAM_POLICY", "NO-SYSTEM-ASKED", "PASS"),
                                                   ("pipeline-chain", "IAM_POLICY", "REFUSE", "REFUSE")):
@@ -3407,6 +3500,7 @@ def self_test():
     ok = rename_self_test(nm) and ok
     ok = adopt_self_test(nm) and ok
     ok = test_folder_self_test(nm) and ok
+    ok = name_rulings_self_test(nm) and ok
     print("NAMING-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
 
