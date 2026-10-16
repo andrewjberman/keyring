@@ -25602,3 +25602,138 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "A scope reading the issuer should confirm. The tests use no as_of, so no named test pins this choice."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T20:35:56Z",
+  "id": "NFRA_OPLGTW-Z-S317",
+  "one_line": "Round-39 disposition of worker row Z-W126-S1: CARRIED: tests/test_og_ch1.py is red at the base (ac02 registry collision, ac04 roster file absent), identical",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W126-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 592d79f192 (OG-en-13 and OG-en-15); both orders' AC1 pass 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "CARRIED: tests/test_og_ch1.py is red at the base (ac02 registry collision, ac04 roster file absent), identical before and after OG-en-13; the worker left it, as ruled. Carried to the round-39 enrichment list with the other pre-existing red tests (test_ogz1_ac08 and the gateway-set four).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CARRIED: tests/test_og_ch1.py is red at the base (ac02 registry collision, ac04 roster file absent), identical before and after OG-en-13; the worker left it, as ruled. Carried to the round-39 enrichment list with the other pre-existing red tests (test_ogz1_ac08 and the gateway-set four)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T20:35:56Z",
+  "id": "NFRA_OPLGTW-Z-S318",
+  "one_line": "Round-39 disposition of worker row Z-W126-S2: RULED: unit_cost and units stay unrounded; the E3 precision rule covers weights (6 decimals) and money (2 deci",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W126-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 592d79f192 (OG-en-13 and OG-en-15); both orders' AC1 pass 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "RULED: unit_cost and units stay unrounded; the E3 precision rule covers weights (6 decimals) and money (2 decimals) only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "RULED: unit_cost and units stay unrounded; the E3 precision rule covers weights (6 decimals) and money (2 decimals) only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T20:35:56Z",
+  "id": "NFRA_OPLGTW-Z-S319",
+  "one_line": "Round-39 disposition of worker row Z-W126-S3: ACCEPTED: setting as_of from partition_date through the shared _envelope also gives the resolve, transactions ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W126-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 592d79f192 (OG-en-13 and OG-en-15); both orders' AC1 pass 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "ACCEPTED: setting as_of from partition_date through the shared _envelope also gives the resolve, transactions and fees answers a real as_of when the caller gave none, which is what E3 asks of the answer family.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "ACCEPTED: setting as_of from partition_date through the shared _envelope also gives the resolve, transactions and fees answers a real as_of when the caller gave none, which is what E3 asks of the answer family."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T20:35:56Z",
+  "id": "NFRA_OPLGTW-Z-S320",
+  "one_line": "Round-39 disposition of worker row Z-W126-S4: ACCEPTED: only the 60-partition cap sets window_partial; a partition inside the window that cannot be read pro",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W126-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 592d79f192 (OG-en-13 and OG-en-15); both orders' AC1 pass 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "ACCEPTED: only the 60-partition cap sets window_partial; a partition inside the window that cannot be read propagates as a refusal rather than a silent partial answer, which is the safer fail-closed shape. The order's 'could not be read' clause is superseded by this.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "ACCEPTED: only the 60-partition cap sets window_partial; a partition inside the window that cannot be read propagates as a refusal rather than a silent partial answer, which is the safer fail-closed shape. The order's 'could not be read' clause is superseded by this."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T20:35:56Z",
+  "id": "NFRA_OPLGTW-Z-S321",
+  "one_line": "Round-39 disposition of worker row Z-W126-S5: ACCEPTED: as_of bounds an increment window by partition date (only partitions at or before as_of are read), th",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W126-S5"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 592d79f192 (OG-en-13 and OG-en-15); both orders' AC1 pass 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "ACCEPTED: as_of bounds an increment window by partition date (only partitions at or before as_of are read), the reading consistent with the existing single-partition behaviour.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "ACCEPTED: as_of bounds an increment window by partition date (only partitions at or before as_of are read), the reading consistent with the existing single-partition behaviour."
+}
+```
