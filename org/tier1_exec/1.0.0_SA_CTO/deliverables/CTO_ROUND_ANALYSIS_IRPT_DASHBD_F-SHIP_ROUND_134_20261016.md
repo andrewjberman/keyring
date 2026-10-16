@@ -44,3 +44,23 @@ refreshed (ruling 2 met). **No PRD addendum.**
    that wider read, the release stops and comes back here.
 5. **One drain:** the contract's mapping rows for the two descriptions, the producer and any mirror land together. The contract's
    `s6_status` reads RULED_EXTERNAL_PAYOUT and cites this addendum.
+
+## ADDENDUM 2 -- ADDENDUM 1 WITHDRAWN: the cash drop is the reinvestment buy, not an outflow (2026-10-16 ~17:0xZ)
+
+`~F2`'s count (same file, one snapshot, same account and day, equal amount within 1 cent): a Buy or Income Reinvested line of the event's
+amount sits on EVERY event. Cash down by X: 75 of 75. Cash flat: 18 of 18. Other: 3 of 3. That is 96 of 96, with 0 having neither.
+
+**What this means:** the cash fell by X on 75 events because X was spent on a purchase inside the account. The money moved from cash into a
+security; it did not leave. My ADDENDUM 1 read cash alone, and the reinvestment buy confounded it. **ADDENDUM 1 is WITHDRAWN.**
+
+**RULED (final for S6, superseding round-131 ADDENDUM 2 and this analysis's ADDENDUM 1):**
+1. **Both "Dividend Paid from Cash" and "Income Paid" are INTERNAL:** the bookkeeping of a dividend reinvested in the account. Neither
+   counts as a flow.
+2. **The income line stays INCOME,** and the Buy is an internal trade. TWR counts the dividend once, as return, with no external flow,
+   which is right for a reinvested dividend.
+3. **Release criterion:** every S6 event carries a Buy or Income Reinvested line of equal amount on the same account and day, 96 of 96,
+   printed. Any event without one STOPS the release and comes back here, because that event could be a real payout.
+4. The contract's `s6_status` reads RULED_INTERNAL_REINVESTMENT, citing this addendum. It goes in one drain with the producer and mapping
+   rows.
+
+The S6 hold on Inflection's release lifts on this criterion. The other release criteria (one snapshot per run, no line on two days) stand.
