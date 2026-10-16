@@ -272,6 +272,14 @@ def _open_to_index(exclude: set) -> tuple[dict, int, int, int, int]:
     return idx, scanned, held, unclassified, untracked_skipped
 
 
+CLOUDOPS_CLASS = "0.7.0_AE_CloudOps"
+
+
+def _macro_of(code: str) -> str:
+    """A project code's macro is its prefix before the first underscore (AMGT_HARVST -> AMGT)."""
+    return code.split("_", 1)[0]
+
+
 def seating_check(new_tos: list) -> tuple[list, list]:
     """ONE PROJECT PER TIER-2 SEAT INSTANCE (Andrew-direct 2026-08-24 ~19:29Z, verbatim:
     "it is a lot easier if they are simply brought on to complete one project at a time. For
@@ -301,6 +309,13 @@ def seating_check(new_tos: list) -> tuple[list, list]:
     pre-pipeline TOs across 34 projects, which would make every base serial permanently illegal
     and the refusal meaningless. DECLARED RESIDUAL: a seat carrying non-pipeline TOs is not
     counted as multi-project here.
+
+    CLOUDOPS EXCEPTION (CLAUDE.md rule 34, Andrew-direct 2026-10-16 ~15:4xZ, CTO msg 6805): an
+    instance of the CloudOps class (`0.7.0_AE_CloudOps`) is seated one lane per MACRO per box, so it
+    is refused only when it already holds an open TO on a project of a DIFFERENT macro than the new
+    TO's. The macro is the project code's prefix before the first underscore. Every other class keeps
+    the one-project test above. NOT enforced here: rule 34's "a fourth project with live orders at
+    once seats a second lane" -- that stays MSTR's seating call.
 
     NEW FILES ONLY (the caller's --diff-filter=A). A re-address EDITS an existing TO's
     issued_to, and that re-address is the REMEDY for the heaps -- a lint that blocked the fix
@@ -342,6 +357,10 @@ def seating_check(new_tos: list) -> tuple[list, list]:
             continue
         for s in serials:
             other = {q: ids for q, ids in idx.get(s, {}).items() if q != code}
+            if s.split("~", 1)[0] == CLOUDOPS_CLASS:
+                # CLAUDE.md rule 34: a CloudOps lane is seated by MACRO, so another project of the
+                # SAME macro does not occupy it; only a project of a different macro does.
+                other = {q: ids for q, ids in other.items() if _macro_of(q) != _macro_of(code)}
             if not other:
                 frames.append(f"seating: {rel} -> {s} holds 0 open TO(s) on any OTHER pipeline "
                               f"project. Legal target.")
