@@ -20238,3 +20238,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W226-S4 -- the naming gate's placement step needs a new Terraform root committed before it can grade it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W226-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~226",
+  "surfaced_at": "2026-10-16T03:31:44Z",
+  "one_line": "the naming gate's placement step cannot see a new Terraform root until its files are committed, so the uncommitted root refused as an unknown root",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_scope.py@f81e1ae194: _roots() derives the Terraform roots from _tf_files(), which reads _files(), which reads opal_naming._census_git_files() (git ls-files, tracked files only)",
+      "lib/opal_naming_scope.py@f81e1ae194: _norm_root() raises ValueError unknown Terraform root for a root not in that list",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r147/p149_pubroot.py@f81e1ae194: run_gate() passes the root to the gate in plan mode; the first run before the commit returned NAMING-PLAN: REFUSE 3 graded with NAMING PLACE ERROR"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-b-281 asks the root to be graded by the real naming gate in plan mode (DB147-3-AC2); it does not say the root must be committed first.",
+  "world_is": "Before the four root files were committed, the gate refused all three names with NAMING PLACE ERROR unknown Terraform root, so the plan-mode grade was REFUSE 3. After the root was committed (0f4324e7b0) the gate printed NAMING-PLAN PASS 7 graded and the checker's AC2 passed. No name was typed or changed to pass the gate; the names are the builder's. The sequence (commit the root, then grade) was taken without a registry edit."
+}
+```
+
