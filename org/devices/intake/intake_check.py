@@ -24,7 +24,8 @@ written. Paths:
                 real query (root/SecurityCenter2, class AntiVirusProduct)
   site-packages OPAL_INTAKE_SITE (os.pathsep list), else this interpreter's site-packages
   signer dir    OPAL_INTAKE_SIGNER_DIR (tests), else org/tier1_exec/1.0.0_SA_CTO/deliverables under the repository root
-The ONLY producer of the overall verdict "checked" is compute_verdict().
+The ONLY producer of the overall verdicts "checked" and "released-with-waiver" is compute_verdict() (over _derive()).
+A failed check 3 to 7 is carried to release only by a WAIVE line in the signed check-8 file (see parse_waivers).
 """
 from __future__ import annotations
 
@@ -92,6 +93,7 @@ DELIVERY_SENTENCE = (
     "They do not close it."
 )
 VERDICTS = ("passed", "failed", "not_applicable", "unsigned", "awaiting")
+ACCEPTED_VERDICTS = ("checked", "released-with-waiver")   # the two overall verdicts that release and pack accept
 # Check 7's limit, in the words the CTO ruled (msg 106549). It travels in the check record beside check 7 and in the delivery
 # text. The brief's own "Leaves" text for check 7 (CHECK_TABLE) stays as it is, beside it.
 LIMIT_SENTENCE = (
@@ -489,6 +491,20 @@ def _unsafe(name):
     return name.startswith("/") or "\\" in name or re.match(r"^[A-Za-z]:", name) is not None or ".." in name.split("/")
 
 
+def installed_platform_tag(inst_di):
+    """The platform part of the FIRST `Tag:` line of the installed copy's own WHEEL file; None when unreadable or absent.
+    Recorded by check 6 as evidence only: it never changes the verdict."""
+    try:
+        text = (pathlib.Path(inst_di) / "WHEEL").read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+    for line in text.splitlines():
+        if line.startswith("Tag:"):
+            tag = line[len("Tag:"):].strip()
+            return tag.rsplit("-", 1)[-1] if tag else None
+    return None
+
+
 def check_6(ctx):
     if not ctx.get("installed"):
         reason = ("check 3 was not applicable: the installed distribution is an editable install, not a copy of the published files"
@@ -506,6 +522,9 @@ def check_6(ctx):
         inst_eps = set()
     py_total = py_ident = 0
     py_diff, py_missing, py_extra, compiled, hooks_new, hooks_old, unsafe = [], [], [], [], [], [], []
+    crlf_only = []
+    installed_plat = installed_platform_tag(inst_di)
+    held_plat = (parse_wheel_name(ctx["file_name"]) or {}).get("platform_tag")
     with zipfile.ZipFile(ctx["path"]) as zf:
         infos = [i for i in zf.infolist() if not i.is_dir()]
         for info in infos:
@@ -543,10 +562,14 @@ def check_6(ctx):
                         py_extra.append(n)
                 elif info.file_size > MAX_PY_BYTES:
                     py_diff.append(n)
-                elif target.read_bytes() == zf.read(info):
-                    py_ident += 1
                 else:
-                    py_diff.append(n)
+                    held_bytes, inst_bytes = zf.read(info), target.read_bytes()
+                    if inst_bytes == held_bytes:
+                        py_ident += 1
+                    else:
+                        py_diff.append(n)
+                        if inst_bytes.replace(b"\r\n", b"\n") == held_bytes.replace(b"\r\n", b"\n"):
+                            crlf_only.append(n)   # recorded only: the verdict stays on the raw comparison
         di, _ = wheel_dist_info(zf)
         wheel_eps = set()
         if di and (di + "/entry_points.txt") in zf.namelist():
@@ -559,6 +582,9 @@ def check_6(ctx):
               "py_compared": compared, "py_missing_count": len(py_missing), "py_missing": py_missing,
               "py_extra_count": len(py_extra), "py_extra": py_extra, "installed_record_readable": record_readable,
               "py_differing_count": len(py_diff), "py_differing": py_diff, "compiled_count": len(compiled), "compiled": compiled,
+              "differ_after_crlf_normalisation": len(py_diff) - len(crlf_only),
+              "compared_across_platforms": bool(installed_plat and held_plat and installed_plat != held_plat),
+              "installed_platform": installed_plat, "held_platform": held_plat,
               "hooks_only_in_wheel": hooks_new, "hooks_also_in_installed_copy": hooks_old, "unsafe_member_names": unsafe}
     counts = "compared=%d missing=%d extra=%d differ=%d" % (compared, len(py_missing), len(py_extra), len(py_diff))
     absent = len(py_missing) + len(py_extra)
@@ -768,6 +794,35 @@ def has_sign_marker(text):
     return False
 
 
+WAIVABLE_CHECKS = (3, 4, 5, 6, 7)      # checks 1 and 2 (digest, identity) are never waivable; check 8 is the waiver itself
+WAIVE_RE = re.compile(r"^WAIVE (\S+) check ([0-9]+): (.*)$")
+
+
+def parse_waivers(text, file_name):
+    """The WAIVE lines of a signed check-8 file that name THIS file exactly. A line reads, after the same leading markdown
+    stripping has_sign_marker uses, `WAIVE <file name> check <N>: <reason>` (case-sensitive; no wildcard, no batch form).
+    Returns (waivers, refused, ignored): waivers = [{check, reason}] for checks 3 to 7; refused = the same for checks 1 and 2
+    (check 8 then reads failed); ignored = {check, reason, why} for check 8, a number outside 1 to 7, or an empty reason."""
+    waivers, refused, ignored = [], [], []
+    for line in text.splitlines():
+        lead = line.lstrip(" \t*`_#>-").rstrip()
+        m = WAIVE_RE.match(lead)
+        if m is None or m.group(1) != file_name:
+            continue
+        n = int(m.group(2))
+        reason = m.group(3).strip().rstrip("*`_").strip()
+        if not reason:
+            ignored.append({"check": n, "reason": "", "why": "empty reason"})
+        elif n in WAIVABLE_CHECKS:
+            waivers.append({"check": n, "reason": reason})
+        elif n in (1, 2):
+            refused.append({"check": n, "reason": reason})
+        else:
+            ignored.append({"check": n, "reason": reason, "why": "check 8 is the waiver itself" if n == 8 else
+                            "not a check number 1 to 7"})
+    return waivers, refused, ignored
+
+
 def check_8(ctx):
     signed = ctx.get("signed_by")
     if not signed:
@@ -804,6 +859,12 @@ def check_8(ctx):
         return rec("failed", "the signature file's text does not contain the %s" % " and the ".join(miss))
     if not has_sign_marker(text):
         return rec("failed", "the signature file has no line beginning 'CHECK 8 SIGNED' or 'SIGNED, check 8'")
+    # the waivers: a waiver line counts only in a file that has passed every rule above (the CHECK 8 SIGNED marker included)
+    waivers, refused, ignored = parse_waivers(text, ctx["file_name"])
+    if refused:
+        return rec("failed", "the signature file waives check %s for this file: checks 1 and 2 (the digest and the identity "
+                   "of the file) can never be waived" % ", ".join(str(w["check"]) for w in refused),
+                   signer=None, path=None, waivers=waivers, refused_waivers=refused, ignored_waivers=ignored)
     if cfg.signer_dir is None:
         rel = rp.relative_to(REPO_ROOT.resolve()).as_posix()
         parts = rel.split("/")
@@ -813,8 +874,12 @@ def check_8(ctx):
         rel = rp.name
         signer = "override-dir:" + rb.name
         author = "not read (override dir)"
-    return rec("passed", "signature file names the batch and the file and carries the signing line", signer=signer, path=rel,
-               signature_file_sha256=sha256_bytes(rp.read_bytes()), signature_file_git_author=author)
+    summary = "signature file names the batch and the file and carries the signing line"
+    if waivers:
+        summary += "; waives check %s for this file" % ", ".join(str(w["check"]) for w in waivers)
+    return rec("passed", summary, signer=signer, path=rel,
+               signature_file_sha256=sha256_bytes(rp.read_bytes()), signature_file_git_author=author,
+               waivers=waivers, ignored_waivers=ignored)
 
 
 CHECKS = [check_1, check_2, check_3, check_4, check_5, check_6, check_7, check_8]
@@ -823,26 +888,51 @@ CHECKS = [check_1, check_2, check_3, check_4, check_5, check_6, check_7, check_8
 # ---------------------------------------------------------------------------------------------------------------------
 # the verdict: the ONE place "checked" is produced
 # ---------------------------------------------------------------------------------------------------------------------
-def compute_verdict(checks):
-    """'checked' only when checks 1..7 are each passed, or not_applicable WITH a stated reason, and check 8 reads passed
-    with a signer and a file path. Anything else, including a malformed list, is 'not_checked'."""
+def _derive(checks):
+    """(verdict, carried): the one derivation. 'checked' when checks 1..7 are each passed, or not_applicable WITH a stated
+    reason, and check 8 reads passed with a signer and a file path. A failed check 3..7 is accepted ONLY when check 8 carries
+    a waiver line for exactly that check with a non-empty reason; then the verdict is 'released-with-waiver' and carried is
+    the sorted list of those checks. A failed check 1 or 2, or a check 8 that refused a waiver, is never accepted.
+    Anything else, including a malformed list, is 'not_checked' with carried []."""
     if not isinstance(checks, list) or len(checks) != 8:
-        return "not_checked"
+        return "not_checked", []
     for i, c in enumerate(checks):
         if not isinstance(c, dict) or c.get("n") != i + 1:
-            return "not_checked"
+            return "not_checked", []
+    c8 = checks[7]
+    ev8 = c8.get("evidence") or {}
+    if not (c8.get("verdict") == "passed" and isinstance(ev8, dict) and ev8.get("signer") and ev8.get("path")):
+        return "not_checked", []
+    if ev8.get("refused_waivers"):
+        return "not_checked", []
+    waived = set()
+    for w in ev8.get("waivers") or []:
+        if isinstance(w, dict) and w.get("check") in WAIVABLE_CHECKS and str(w.get("reason", "")).strip():
+            waived.add(w["check"])
+    carried = []
     for c in checks[:7]:
         ev = c.get("evidence") or {}
         if c.get("verdict") == "passed":
             continue
         if c.get("verdict") == "not_applicable" and isinstance(ev, dict) and str(ev.get("reason", "")).strip():
             continue
-        return "not_checked"
-    c8 = checks[7]
-    ev8 = c8.get("evidence") or {}
-    if c8.get("verdict") == "passed" and isinstance(ev8, dict) and ev8.get("signer") and ev8.get("path"):
-        return "checked"
-    return "not_checked"
+        if c.get("verdict") == "failed" and c["n"] in waived:
+            carried.append(c["n"])
+            continue
+        return "not_checked", []
+    if carried:
+        return "released-with-waiver", sorted(carried)
+    return "checked", []
+
+
+def compute_verdict(checks):
+    """The verdict string alone: 'checked', 'released-with-waiver' or 'not_checked' (see _derive)."""
+    return _derive(checks)[0]
+
+
+def waived_checks_of(checks):
+    """The failed checks carried by the signed waiver, when the record reads 'released-with-waiver'; else []."""
+    return _derive(checks)[1]
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -899,8 +989,9 @@ def run_check(cfg, batch, file_name, approved_by=None, signed_by=None, min_age=1
             print("c7 limit: %s" % LIMIT_SENTENCE, file=out)
     if path.is_file():
         held_sha = sha256_file(path)
+    verdict, carried = _derive(checks)
     record = {"schema": "intake-check/1", "batch": batch, "file_name": file_name, "held_sha256": held_sha,
-              "checks": checks, "verdict": compute_verdict(checks),
+              "checks": checks, "verdict": verdict, "waived_checks": carried,
               "checked_by": os.environ.get("OPAL_AGENT_SERIAL", "unknown"), "at": stamp()}
     write_json_atomic(cfg.records_dir(batch) / (file_name + ".check.json"), record)
     line = "INTAKE-CHECK batch=%s file=%s %s verdict=%s" % (
@@ -913,11 +1004,15 @@ def delivery_text(record, sha):
     lines = ["DELIVERY STATEMENT -- what was checked before this file was sent, and what was not",
              "batch: %s" % record["batch"], "file: %s" % record["file_name"], "sha256: %s" % sha,
              "overall: %s" % record["verdict"], ""]
+    waived = {w["check"]: w["reason"] for w in ((record["checks"][7].get("evidence") or {}).get("waivers") or [])
+              if isinstance(w, dict) and w.get("check") in (record.get("waived_checks") or [])}
     for c in record["checks"]:
         row = "%d. %s -- %s -- LEAVES: %s" % (c["n"], c["name"], c["verdict"], c["leaves"])
         if c["verdict"] == "not_applicable":
             row += " (not applicable: %s)" % (c.get("evidence") or {}).get("reason", "")
         lines.append(row)
+        if c["n"] in waived:
+            lines.append("   WAIVED BY THE SIGNED CHECK 8 FILE (the failure is kept above): %s" % waived[c["n"]])
         if c["n"] == 7:
             lines.append("   LIMIT OF CHECK 7: %s" % LIMIT_SENTENCE)
     lines += ["", DELIVERY_SENTENCE, ""]
@@ -935,11 +1030,16 @@ def load_check_record(cfg, batch, file_name):
 
 
 def record_is_checked(record, batch, file_name):
-    """Re-derive 'checked' from the record's own checks; never trust the verdict field alone."""
+    """Re-derive the verdict from the record's own checks ('checked' or 'released-with-waiver'); never trust the verdict field
+    alone. A waived record must also carry the waived_checks list that the re-derivation gives (absent reads as [])."""
     if record.get("schema") != "intake-check/1" or record.get("batch") != batch or record.get("file_name") != file_name:
         return False, "the check record is for another batch or file, or not intake-check/1"
-    if record.get("verdict") != "checked" or compute_verdict(record.get("checks")) != "checked":
-        return False, "the check record does not read 'checked'"
+    derived, carried = _derive(record.get("checks"))
+    if derived not in ACCEPTED_VERDICTS or record.get("verdict") != derived:
+        return False, "the check record does not read 'checked' or 'released-with-waiver'"
+    if list(record.get("waived_checks") or []) != carried:
+        return False, "the check record's waived_checks %r disagree with the re-derivation %r" % (
+            record.get("waived_checks"), carried)
     return True, ""
 
 
