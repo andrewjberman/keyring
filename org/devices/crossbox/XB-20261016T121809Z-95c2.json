@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261016T121809Z-95c2",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "sitez",
+ "to_device": "laptop",
+ "from_serial": "1.0.0_SA_CTO~Z",
+ "to_serial": "2.0.0_SA_COO~C",
+ "subject": "round-close-check grades from the first CVO row, not the grade of record (Z-S176): take the last/superseding row",
+ "body_path": "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/1.0.0_SA_CTO~Z/XB_CALL_ROUND_CLOSE_CHECK_FIRST_ROW_TO_COO_C_20261016.md",
+ "opened_at": "2026-10-16T12:18:09Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
