@@ -2517,3 +2517,20 @@ Item 2 of section 154 is cut as `DB-b-294`, its own workstream tag because the g
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~237`); with `DB-b-292` (235) and `DB-b-293` (236) three chains are live, cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the behaviour clauses validated against a scratch reference of the three edits (AC1 and AC2 green; the whole gold tests directory, 729 tests, and the landing handler's 16 tests green on it) and 14 single-fault mutants (all red)):** `checks/r149/p162_producers_scope.py` (DB162-1-AC1..AC3).
+
+## 156. ROUND 149, WORKSTREAM HSPUB (2026-10-16 ~10:3xZ, issuer 2.0.0_SA_COO~D2): the publisher carries the history-scope claim (item 3 of section 154)
+
+Item 3 of section 154 is cut as `DB-b-295`, its own workstream tag (one issuance per round and workstream). It is built on the tree that carries `DB-b-292` (the 49 Financial handler), `DB-b-293` (series contract 0.3.3) and is independent of `DB-b-294` except by the claim's name; the four land in ONE drain.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. publisher 0.4.0 writes `history_scope_claim` and `history_scope_basis` when the NEWEST gold row carries the claim and validates the pair; both publish handlers read the conditional gold column only where a partition's schema has it; tests; the three pinned-version test lines | DB-b-295 | FWD-10 | WORLD (`infra/` paths) | `DB-b-292` and `DB-b-293` (carried into its tree as file copies), `DB-b-294` only by name | chain P |
+| 2. THE DRAIN: `DB-b-292`, `DB-b-293`, `DB-b-294` and `DB-b-295` merged together (this seat HOLDS the branches until all four are verified) | the issuer's act | FWD-10 | LOCAL | item 1 and the three others | the drain |
+| 3. The source-map re-pin after the drain: the Cottonwood entry's staged publisher and series contract (and any other stale member), and the 49 Financial entry's staged pins if the drain moved a pinned file | NOT CUT: after the drain, like `DB-b-290` | FWD-10 | WORLD | item 2 | later |
+| 4. The WORLD acts, separate never-widen pairs (the CTO signs): the 49 Financial `reporting-publish` code update and republish of the 6,949 series; the 49 Financial `reporting-gold` code update and the gold rebuild of `history_scope`; the Cottonwood landing function's code update and the Cottonwood gold correction; the Cottonwood publish code update and republish | NOT CUT: packets after item 3 | FWD-10 | WORLD | item 3 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the NEWEST gold row decides the claim, because the series' `history_scope` is the newest row's already; (b) a legacy partition (no column) makes no statement and is not an error, because the gold is rebuilt in a separate pair and a mixed estate must publish meanwhile; (c) the claim word is checked at build (refusal) and at validation (failure), the way the income claim is; (d) the `publisher_version` pin lines in three earlier tests are forced edits and are inside the cell's grant (at most 20 lines); (e) the checkers of the round-147 and round-148 publisher cells assert `0.2.0` or `0.3.0` and are not re-run (their criteria are terminal); `p160_pub49f.py` now reads the module's own version.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~238`); with `DB-b-294` (237) two chains are live of the 4 cells of the drain, cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the behaviour clauses validated against a scratch reference of the edits on the 0.4.6 and 0.3.3 contracts (AC1 and AC2 green) and 11 single-fault mutants (all red)):** `checks/r149/p163_publisher_pair.py` (DB163-1-AC1..AC3).
