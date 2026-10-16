@@ -23927,3 +23927,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "The order's text and the checker's value are the same string; only the carrier changed. If the issuer prefers the literal, it needs a register entry acknowledged by Andrew, not a worker edit."
 }
 ```
+
+## IRPT_DASHBD-D2-W2102-S6 -- S1 and S2 are resolved by the issuer's AMENDMENT 2 and the coordinator's rulings; the worker's fixes are the extraction and the amended checker
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T19:18:30Z",
+  "one_line": "rulings on S1 and S2 received: S1 resolved by bootstrap extracting the verified zip into a repo-layout temporary directory; S2 resolved by the checker's fake ETag returning the body MD5 (trunk checker copied in, not committed)",
+  "spec_asserts": "Rows S1 and S2 (BLOCKING) against DBF135-2-AC2 (the zip put on sys.path) and DBF135-2-AC1 (the checker's upload step).",
+  "world_is": "Issuer amendment 943bd17f53 (trunk, order TO-DB-f-2102 AMENDMENT 2) and the coordinator's rulings: bootstrap verifies the sha256 and then extracts the zip into a fresh temporary directory in the repo layout; the checker's fake put_object returns the body MD5. The worker copied the amended checker over the worktree copy (uncommitted) and changed bootstrap accordingly. Measured after the change: DBF135-2-AC1 PASS, DBF135-2-AC2 PASS, launcher tests 58 of 58 pass, producer test file 60 of 60 pass, pin unchanged (dff4be9c8a1c14290e4c2ca335d631f5ec8236674d89de6fd1c628d50875c974). Rows S1 and S2 are not edited (append-only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coordinator ruling on rows S1 to S5 (issuer 2.0.0_SA_COO~F2, amendment 943bd17f53 on the trunk, order TO-DB-f-2102 AMENDMENT 2)",
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py bootstrap(): verify, then extract to a temporary repo-layout directory (carried by the commit that precedes this row)",
+      "python -I .../checks/r135/p135_step.py . DBF135-2-AC1 and . DBF135-2-AC2 at the worktree: DBF135-2-AC1 PASS, DBF135-2-AC2 PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so the issuer can see the two BLOCKING rows are closed on the worker's side; the disposition of S1 and S2 is the issuer's to set."
+}
+```
