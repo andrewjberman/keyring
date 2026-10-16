@@ -23,7 +23,7 @@ import sys
 import tempfile
 
 REPORT_PATH = "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s2/fwd5_run_report.json"
-GO = "IRPT_ANLREQ.TO-RUN-FWD5.live-cross-firm-ib2"
+GO = "IRPT_ANLREQ.TO-RUN-FWD5.live-cross-firm-s2-ib2"
 EMAIL = "fwd5-cottonwood-r60@opal.invalid"
 EMAIL_CONTROL = "fwd5-control-r60@opal.invalid"
 CONTROL_PATH = REPORT_PATH.replace("fwd5_run_report.json", "fwd5_control_report.json")
