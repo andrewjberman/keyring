@@ -24448,3 +24448,56 @@ name the one known failure instead of silently inheriting it.
   "dismissal_reason": "OG-en-4 A1 accepts orion's weight_unit null (its 0-100 scale is not established) as the honest answer, claiming no unit; carried to the enrichment list as: verify orion's weight scale against a real row, then name its unit. No false unit ships."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S292",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-16T13:35Z",
+    "one_line": "49F Black Diamond holdings and transactions cannot be served: client_adapter_bd49f reads the live opal-data-bd silver (<segment>-live) through role key blackdiamond49f (client_role.role_key strips '-live'), i.e. gateway-49f-blackdiamond-read-role, whose OG-ap-24 policy explicitly denies every opal-data-bd key -- simulate reads explicitDeny on opal-data-bd/silver/unrealized and /transactions, allowed on its own opal-data-assets prefix.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "spec_asserts": "PRD v3.6 (Andrew-direct): 49F Black Diamond reads opal-data-bd; OG-ap-24 granted the blackdiamond49f role only opal-data-assets blackdiamond/49f/silver/{dim_account_xref, fact_bd_allocation} (ask section 2: 'The 49F role no longer reaches the live opal-data-bd silver').",
+    "world_is": "Live release 38fe44d5cb: client_adapter_bd49f.py:11-12 (holdings = live silver/unrealized of opal-data-bd; transactions = live silver/transactions), :37 LIVE_SUFFIX '-live', :252 _live_prefix -> ctx.prefix(VENDOR, segment+'-live', ...); client_core.py:253 key = client_role.role_key(vendor, segment); client_role.py:37-44 strips '-live' so blackdiamond/49f-live -> blackdiamond49f -> BLACKDIAMOND49F_READER_ROLE_ARN = gateway-49f-blackdiamond-read-role. iam simulate-principal-policy on that role, this seat ~13:3xZ: s3:GetObject opal-data-bd/silver/unrealized/date=2026-10-15/part.parquet explicitDeny; opal-data-bd/silver/transactions/... explicitDeny; control opal-data-assets/blackdiamond/49f/silver/dim_account_xref/... allowed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 38fe44d5cb:infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py:11-12,37,252",
+        "git show 38fe44d5cb:infra/aws/ec2/opal-gateway/app/client_core.py:242-254; client_role.py:26,37-52",
+        "iam simulate-principal-policy gateway-49f-blackdiamond-read-role, three keys, one per call, this seat ~13:3xZ 2026-10-16",
+        "infra/aws/terraform/opal-gateway/client_vendor_roles_iam.tf (the blackdiamond49f policy: explicit Deny outside its two prefixes)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not exercised on the host yet (no served 49F BD holdings read on record: OG-ev-1's 49F body is SmartX). Remedy is a never-widen act or a code act, the issuer's to cut: grant the blackdiamond49f role read on the opal-data-bd live silver prefixes the adapter names (a new ask, all three halves), or route the -live segment to a role that already reads opal-data-bd (e.g. the live gateway-blackdiamond-read-role, if its grant covers them). It gates OG-en-11 and the CTO's round-19 reopen of the four 49F legacy rows. This seat's OG-ap-24 half checked the grant against the registry rows, not against the adapter's reads; that is how the mismatch passed."
+  }
+  ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T13:28:11Z",
+  "id": "NFRA_OPLGTW-Z-S293",
+  "one_line": "OG-en-11: none of the four 49F Black Diamond client tools reads any bucket on the live host -- holdings, transactions, allocation and fees each answer absent_reason no_catalog_row, because the DATA_CATALOG has no blackdiamond/49f-live/silver row for unrealized, transactions, allocations or fees.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN W/en11_run.py (host program W/en11_host.py) on i-07dccb1615503ac99 through the installed registered tools as a master_admin stand-in, firm 49financial, one Black Diamond account the resolver returned (the resolver found 2 candidates for the last4): all four tools returned absent_reason no_catalog_row, 0 source keys, 0 rows; no S3 client was created. W/BD49F_SERVED.json, en11.AC1 PASS.",
+      "READ app/client_adapter_bd49f.py:259-260 and the four call sites (:310, :361, :416, :471): each tool builds its prefix with _live_prefix -> ctx.prefix(VENDOR, '49f-live', 'silver', table), and app/client_core.py:242-247 raises CoreRefusal no_catalog_row unless a catalog row carries exactly that prefix.",
+      "READ app/refs/DATA_CATALOG.yaml: the only blackdiamond/49f rows are dim_account_xref, dim_advisor_fee_role, fact_bd_allocation and fact_taxsma_report, all bucket opal-data-assets; no '49f-live' string exists in that file. tests/test_og_cl2.py:129-132 plants the four 49f-live tables in a fake context, which is why the build cell's tests passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v3.6 / CTO msg 35014: the 49F Black Diamond adapter reads the live opal-data-bd silver tables; the CTO reads that, live, it reads the opal-data-assets copy.",
+  "world_is": "Live, the four tools read neither: they refuse at the catalog lookup and answer empty with absent_reason no_catalog_row. Only client_resolve_account (not one of the four) reads, and it reads the opal-data-assets copy of dim_account_xref. Cause established from the code path and the repository catalog; the host's runtime catalog was not read directly, but its answer (no_catalog_row on all four) agrees. Nothing was changed.",
+  "notes": "A code/catalog cell follows (not cut here): add DATA_CATALOG rows for blackdiamond/49f-live/silver/{unrealized,transactions,allocations,fees} on the opal-data-bd bucket (and widen gateway-blackdiamond-read-role only as OG-ap-24 signed). The adapter's own tests cannot see this class: they plant the catalog."
+}
+```
