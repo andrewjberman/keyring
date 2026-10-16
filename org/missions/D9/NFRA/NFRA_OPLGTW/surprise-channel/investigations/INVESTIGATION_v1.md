@@ -20833,6 +20833,110 @@ name the one known failure instead of silently inheriting it.
 }
 ```
 
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~118",
+  "surfaced_at": "2026-10-16T12:02:10Z",
+  "id": "NFRA_OPLGTW-Z-W118-S1",
+  "one_line": "No client adapter reads a currency column, so OG-en-4 emits currency null with currency_basis source_absent on every position row it builds; the premise that the source row carries its currency is supported by no read set and no fixture.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@e08686be6a UNREALIZED_COLUMNS (lines 44-45) names no currency; get_holdings reads columns=list(UNREALIZED_COLUMNS) at line 307.",
+      "READ: client_adapter_bdcottonwood.py@e08686be6a COLS_HOLD (lines 46-47), client_adapter_commonwealth.py@e08686be6a POSITION_COLS (line 40), client_adapter_orion.py@e08686be6a POSITION_COLUMNS (lines 23-25), client_adapter_schwab.py@e08686be6a POSITION_COLUMNS (lines 60-61): none names a currency column.",
+      "READ: client_adapter_smartx.py@e08686be6a _positions reads every source column (no column list, line 199), and its fixture rows in tests/test_og_cl5.py@e08686be6a (lines 85-92) carry no currency key.",
+      "READ: app/harvest_typed.py@e08686be6a read_parquet raises ValueError('unknown column') for a name the object schema lacks (lines 178-180), so adding currency to a read list is unsafe for any table that does not carry it.",
+      "RUN: python -m pytest tests/test_og_en4.py in the worktree: 3 passed; test_ogen4_ac02 pins currency None and currency_basis source_absent on the explicit-read adapters."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-4 section 1 item 2: currency is the code the adapter's SOURCE row carries for that position, read from the source column; null with currency_basis source_absent only if the source carries none.",
+  "world_is": "Every explicit-read adapter emits currency null and currency_basis source_absent, because its read never names a currency column. smartx emits the source value when one exists, and no fixture or read set shows one. Whether the live client tables carry a currency column is UNMEASURED: no live schema was read in this cell.",
+  "notes": "Owner to decide whether the read lists of the five explicit adapters gain a currency column once the live schemas are measured: a column that exists makes the read safe, a column that does not raises ValueError. Until then the rows say source_absent, never USD."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~118",
+  "surfaced_at": "2026-10-16T12:02:10Z",
+  "id": "NFRA_OPLGTW-Z-W118-S2",
+  "one_line": "OG-en-4 names eclipse among the adapters whose get_holdings position rows gain the keys, but eclipse get_holdings refuses before any read, so it builds no position row for the keys to ride on.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: infra/aws/ec2/opal-gateway/app/client_adapter_eclipse.py@e08686be6a get_holdings (lines 199-201) raises AdapterRefusal vendor_no_holdings before any read; its docstring (line 10) says Eclipse has no holdings table.",
+      "READ: tests/test_og_cl3.py@e08686be6a line 194 asserts the same vendor_no_holdings refusal for eclipse.get_holdings.",
+      "RUN: python -m pytest tests/test_og_en4.py: test_ogen4_ac01 asserts the keys on the six adapters that emit rows and pins the eclipse refusal; 3 passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-4 section 1 names seven adapters that build position rows for get_holdings, eclipse included; AC1 says a position row from each of the seven carries weight_unit, currency and currency_basis.",
+  "world_is": "Eclipse builds no position row, so the keys have no row to carry; eclipse code is unchanged. The six adapters that emit rows carry the keys. The seven-adapter reading of AC1 cannot be met for eclipse as written, and the order's refuse-and-file rule applies to that clause. The status is left staged pending the issuer's ruling.",
+  "notes": "Issuer to rule: either the eclipse clause is met by the refusal (as tested) or the adapter list drops eclipse. No eclipse change was made.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~118",
+  "surfaced_at": "2026-10-16T12:02:10Z",
+  "id": "NFRA_OPLGTW-Z-W118-S3",
+  "one_line": "The orion position rows pass the source assetPercentOfAccount through as weight_pct, and its 0-100 scale is not established, so OG-en-4 names no weight_unit for orion rows; without a unit, a consumer cannot tell a fraction from a percent on that adapter.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: infra/aws/ec2/opal-gateway/app/client_adapter_orion.py@e08686be6a get_holdings (line 277) emits weight_pct = r.get('assetPercentOfAccount') and computes no weight.",
+      "GREP: no catalog description or doc in infra/aws/ec2/opal-gateway names the unit of assetPercentOfAccount; the only occurrences are the orion adapter and tests/test_og_cl3.py@e08686be6a line 67.",
+      "READ: tests/test_og_cl3.py@e08686be6a line 67 sets assetPercentOfAccount 1.0 for a position worth 6000 of 10000, which does not corroborate a 0-100 scale; the fixture is synthetic, so this is no measurement."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-4 section 1 item 1: weight_unit is percent only if an adapter genuinely emits a 0-100 number, and fraction where the adapter divides market_value by the total.",
+  "world_is": "Orion emits the source percent unchanged and names weight_unit null, not percent, because the scale is unverified. Left alone, an orion consumer reads weight_pct with no unit, which is the ambiguity the round-37 ruling closed for the other adapters.",
+  "notes": "Disarm: measure the scale of silver fact_positions assetPercentOfAccount against currentValue over the account total on one partition, then set weight_unit to percent or fraction in client_adapter_orion.py.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~118",
+  "surfaced_at": "2026-10-16T12:02:10Z",
+  "id": "NFRA_OPLGTW-Z-W118-S4",
+  "one_line": "The sparse worktree does not materialize data/mdpf/config/partner_roster.json, which is tracked at HEAD, so tests/test_og_ch1.py test_ogch1_ac04 fails at its file lookup before any adapter code runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git ls-files -- data/mdpf/config/partner_roster.json in the worktree lists the path (tracked at e08686be6a); ls data/mdpf/config/ reports no such directory.",
+      "RUN: git sparse-checkout list in the worktree omits the data/ cone (.tools, infra/aws/ec2/opal-gateway, infra/aws/globgrph, infra/aws/lambda/ci, infra/aws/terraform, and others).",
+      "RUN: python -m pytest tests/test_og_ch1.py: 10 passed, 1 failed (test_ogch1_ac04: 'the repo roster file is not on this tree'); the cell changed no data file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "tests/test_og_ch1.py _repo_roster walks up from the app directory and expects data/mdpf/config/partner_roster.json on the tree.",
+  "world_is": "This worktree's sparse cone excludes data/, so the file the test reads is not on disk here. The failure is in a lookup, not in the client adapters; it is not caused by OG-en-4 and was not repaired, since the order names no data path.",
+  "notes": "Owner to decide whether the sparse cone for this worktree should carry data/mdpf/config; no action was taken in this cell."
+}
+```
+
   ```json
   {
     "id": "NFRA_OPLGTW-Z-S175",
