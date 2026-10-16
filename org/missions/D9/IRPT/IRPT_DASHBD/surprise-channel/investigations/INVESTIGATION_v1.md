@@ -22161,6 +22161,54 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+```json
+{
+  "id": "IRPT_DASHBD-D2-W236-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~236",
+  "surfaced_at": "2026-10-16T09:24:47Z",
+  "one_line": "AC3 line ceiling: the earlier-test edits that the mandated contract edits force measure 42 counted lines (21 changed) against the order's ceiling of 28",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-293 step 5 and DB161-1-AC3: the earlier contract tests may change by at most 28 lines in all, and only what the edit forces (the checker's MAX_EARLIER_LINES = 28, counted as added plus deleted lines of git diff --numstat).",
+  "world_is": "At commit 40476cbde7 the eight earlier files carry 21 changed lines, 42 counted: 042 1 line, 043 3, 044 4, test_income_reason_rename 4, test_series_contract_030 6, test_series_contract_031 3. Before those edits the eight files gave 36 failed and 134 passed; after them 170 of 170 pass. Each changed line is an assertion the mandated edit moves (a version pin, a supersedes or lineage index, a list or count, the earlier-fields hash, the basis helper, the optional constant). The checker prints FAIL: the earlier contract tests may change by at most 28 lines in all, read 42.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p161_histscope_contracts.py@508dc3aba1 (MAX_EARLIER_LINES = 28; the added-plus-deleted sum over the eight earlier files)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_series_contract_030.py@508dc3aba1 (pins the 0.3.2 version, the 19 fields, the optional list and the earlier-fields hash)",
+      "git diff --numstat 508dc3aba1 -- the eight earlier test files, measured at worktree commit 40476cbde7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AC3 is measured FAIL on the line clause and the order stays open. The forced set is neither trimmed nor padded to fit the ceiling: the ceiling as written sits below the minimum the mandated edits require. The ruling on the ceiling belongs to the issuer. Artifacts: 40476cbde7 (LOCAL on wk-IRPT_DASHBD-236)."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W236-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~236",
+  "surfaced_at": "2026-10-16T09:24:47Z",
+  "one_line": "The series test helper _declared finds a list's basis by declaration, so the two new history_scope fixed fields need a by-name exclusion in it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "test_series_contract_030.py _declared (DB-b-285): exactly one optional series field that declares fixed_value and no fixed_reason is the list's basis, found from the declarations and never from their names.",
+  "world_is": "Series contract 0.3.3 declares two more optional fields with fixed_value and no fixed_reason (history_scope_claim, fixed to inferred; history_scope_basis, a fixed text), so _declared counts three bases where it asserts one. The helper now excludes those two names by name (one changed line, marked DB-b-293). A declaration-only rule cannot tell a list's basis from a second fixed text, so the exclusion has to name them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_series_contract_030.py@508dc3aba1 (the _declared helper and its one-basis assertion)",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@40476cbde7 (history_scope_claim and history_scope_basis in series.optional, both with fixed_value and no fixed_reason)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The by-name exclusion is the minimum the edit forces and is counted in the AC3 line measurement of IRPT_DASHBD-D2-W236-S1. A declaration that binds a basis to its list would remove the need for the name."
+}
+```
 
 ## IRPT_DASHBD-D2-S114 -- TO-DB-b-291: gate (c) read literally trips on stale copies of a closed ledger's sentinel; iam.tf fails fmt -check inside a pinned file; the Lambda answers from the hardcoded calendar fallback
 
@@ -22317,3 +22365,320 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W235-S1 -- two existing union tests break on the new keyword call to _publish_one
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:11:12Z",
+  "one_line": "The handler's run() now calls _publish_one with present_dates and calendar_source keywords (TO-DB-b-292 requires it), which breaks two existing tests in test_publisher_account_union.py: their _publish_one stubs take six positional arguments and accept no keyword. That file is outside this order's grant, so it is filed here and not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the issuer: the two stubs in the union test file must accept present_dates and calendar_source, or an order that names that file must)",
+  "spec_asserts": "TO-DB-b-292 edits handler.py only within its grant and states that nothing else in the file changes; it names no other test of the reporting-publish folder, and its criteria run the new test file and the checker.",
+  "world_is": "Measured at 23571f5675 (the artifact commit): pytest over the reporting-publish tests folder gives 2 failed and 113 passed. Both failures are UnionTests in infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py (test_named_accounts_still_override_the_union and test_run_publishes_the_union_not_the_newest_partition), each a TypeError raised at the handler's run() pool.map lambda, because the stubs (lines 59 and 71 of that file) are lambda s3, firm, a, rows, up, c and take no present_dates keyword. The new file test_handler_unreported.py passes 10 of 10.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py lines 59 and 71 (the _publish_one stubs with six positional parameters)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py at 23571f5675, the run() pool.map call carrying present_dates and calendar_source",
+      "pytest over the reporting-publish tests folder at 23571f5675: 2 failed, 113 passed (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired by this worker: the stub file is outside the grant and the order says never widen. The row stays ARMED until the issuer's update lands."
+}
+```
+
+
+## IRPT_DASHBD-D2-W235-S2 -- DB160-1-AC2 cannot pass as written: the unpacked step needs the contract, the fixed file list does not package it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:11:12Z",
+  "one_line": "DB160-1-AC2 FAILS at its unpacked-handler step: the behaviour clause reads org/standards/IRPT_DASHBD_SERIES_CONTRACT.json from the unpacked root, but the entry's files list, which the same criterion fixes as the base list plus lib/trading_calendar.py, does not package that contract. The build-only, import and package steps pass; no route in the grant packages it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AC2: the BUILD_ONLY package holds exactly the entry's files with every member byte-equal to its source, and the handler UNPACKED from it passes AC1's behaviour; the entry's files are the base list plus lib/trading_calendar.py and nothing else (the checker's entry clause refuses any other added member).",
+  "world_is": "Measured: DB160-1-AC2 run from the worktree at 23571f5675 exits rc 1 with 'FAIL: the unpacked handler failed the behaviour clause ... FileNotFoundError ... org/standards/IRPT_DASHBD_SERIES_CONTRACT.json'. The checker's check_behaviour reads (root / CONTRACT_REL) from the unpacked directory; the package holds only the entry's 17 files, and the contract is not one of them. The deployed handler does not read the contract (lambda_handler passes no contract to run()), so no served state depends on this member; the failure is in the proof's clause, not in the bundle.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json entry irpt-49f-reporting-publish-lambda, files list (base 16 members plus lib/trading_calendar.py)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py check_behaviour (root / CONTRACT_REL) and check_entry (files equal the base list plus the calendar)",
+      "DB160-1-AC2 output at 23571f5675: rc 1, the unpacked-step FileNotFoundError on the series contract path (counts and names only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer decides the route: the unpacked step reads the contract from the repo, or an order that names the contract adds it to the entry. Not repaired here; DB160-1-AC2 stays FAIL and the order stays open."
+}
+```
+
+
+## IRPT_DASHBD-D2-W235-S3 -- the Lambda path publishes with no contract argument, so the deployed run skips the contract check
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:11:12Z",
+  "one_line": "lambda_handler calls run() without a contract, so _publish_one's validate_against_contract step is skipped on the Lambda path; main() loads the contract only from a repo path the package does not carry. Pre-existing at the base commit. A republish under the 49 Financial pair would reach S3 unvalidated against the series contract in the deployed function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the 49 Financial publisher's owner: the Lambda path's contract argument and its packaging must be decided before any republish under the pair)",
+  "spec_asserts": "TO-DB-b-292 and its checker assert that the handler's series validate against the series contract (AC1: validation against the series contract).",
+  "world_is": "Read of infra/aws/lambda/investor-reporting/reporting-publish/handler.py at 23571f5675 and at the base commit bc709d6a5a: lambda_handler's run(...) call passes no contract, so the default None applies and _publish_one skips validate_against_contract. main() reads the contract only when org/standards/IRPT_DASHBD_SERIES_CONTRACT.json exists beside the handler's root, and the package does not carry that file. AC1 passes the contract explicitly, so the check does not exercise the deployed path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py lambda_handler run() call (no contract argument) and _publish_one contract guard, at 23571f5675",
+      "the same call and guard at the base commit bc709d6a5a (unchanged by this order)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py check_behaviour, which passes contract explicitly"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Observed, not changed: this order does not touch the Lambda entry path. The issuer decides whether the deployed run carries the contract before the republish."
+}
+```
+
+
+## IRPT_DASHBD-D2-W235-S4 -- AC2 still fails after the checker fix: the unpacked step looks the contract up under a relative root
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:30:33Z",
+  "one_line": "DB160-1-AC2 still exits rc 1 after the amended checker is in the tree: the unpacked step reads the series contract from a relative path, because run() passes str(root) with root = '.' as contract_root to the --unpacked subprocess, which runs in the unpacked directory. This is a checker defect; the fix (an absolute root) is in the issuer's file, not this grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1 (issuer ruling, order commit 3115d34): S2 is a defect of the issuer's checker; the unpacked step of AC2 now grades the unpacked handler against the REPO's series contract, so AC2 is expected to PASS once the checker is fixed.",
+  "world_is": "Measured at 3115d34 with the S1 stub edit in the worktree: python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py . DB160-1-AC2 gives rc 1 and 'FAIL: the unpacked handler failed the behaviour clause: UNPACKED FAIL: [Errno 2] No such file or directory: org\\\\standards\\\\IRPT_DASHBD_SERIES_CONTRACT.json' (no drive prefix, so the path is relative). The checker reads Path(contract_root or root) at line 144; the subprocess call at line 330 passes str(root), and root is Path(sys.argv[1]) = '.', which the subprocess resolves against its own cwd (the unpacked directory). The AC1 run passes at the same commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py line 144 (contract read from Path(contract_root or root)) and line 330 (subprocess call passes str(root))",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py --unpacked branch (around line 433) passes sys.argv[3] as contract_root",
+      "DB160-1-AC2 output at 3115d34 plus the S1 stub edit in the worktree: rc 1, the UNPACKED FAIL line (counts and names only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired here: the checker is the issuer's file and outside the grant. The one-line fix is an absolute root in run(), for the issuer to decide."
+}
+```
+
+
+## IRPT_DASHBD-D2-W235-S5 -- the ruled stub names dates and source do not match the keywords the handler passes, so the union tests still fail
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:30:33Z",
+  "one_line": "The ruled signature lambda s3, firm, a, rows, up, c, dates=None, source=None does not accept the keywords the handler passes (present_dates and calendar_source), so the two union tests still raise TypeError: 2 failed, 113 passed on the whole reporting-publish tests folder. The stub edit is applied in the worktree and not committed; the names need the issuer's ruling.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the issuer: the stub parameter names must match the handler's keyword names, present_dates and calendar_source, or the handler's call must change by an order that names it)",
+  "spec_asserts": "AMENDMENT 1 (order commit 3115d34): change ONLY the signatures of the two stubs (lines 59 and 71) to lambda s3, firm, a, rows, up, c, dates=None, source=None, and AC3 requires the whole reporting-publish tests directory to pass.",
+  "world_is": "Measured with the ruled text applied to lines 59 and 71 of infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py: pytest over the reporting-publish tests folder gives 2 failed and 113 passed; both failures are TypeError at infra/aws/lambda/investor-reporting/reporting-publish/handler.py line 253 (got an unexpected keyword argument 'present_dates'). The handler's run() (lines 253 and 254) passes present_dates= and calendar_source= by keyword; a one-line probe of the ruled lambda raises the same TypeError.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py lines 59 and 71 (the ruled signatures, uncommitted in the worktree)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py lines 253 and 254 (the keyword call to _publish_one)",
+      "pytest over the reporting-publish tests folder at 3115d34 with the ruled text: 2 failed, 113 passed (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here: the ruled text is applied as written, and a different parameter name would be a change to the ruling. The issuer decides the names."
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S1 -- the worktree's materialised folders omit the two folders the offline tests import: data/assets/scripts/lib and infra/aws/lambda/v2_portal/_shared
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "The worker face's list of materialised folders omits data/assets/scripts/lib (stream_parquet, imported by account_return_daily) and infra/aws/lambda/v2_portal/_shared (etf_classifications_dynamodb, imported by account_class_daily), so the producer and class-daily test files fail at collection until both are added to the sparse checkout.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The materialised folders the worker face names are sufficient for the producers' offline tests and for tests/test_account_class_daily.py.",
+  "world_is": "account_return_daily.py imports stream_parquet from data/assets/scripts/lib, and account_class_daily.py imports etf_classifications_dynamodb from infra/aws/lambda/v2_portal/_shared. Neither folder was materialised in the worktree. The worker ran git sparse-checkout add for both (a read-only materialisation; no file was edited). The folder list is not changed by this row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest collection at worktree HEAD 46b175f775, before any edit: ModuleNotFoundError No module named 'stream_parquet', then No module named 'etf_classifications_dynamodb'",
+      "after git sparse-checkout add data/assets/scripts/lib and infra/aws/lambda/v2_portal/_shared the three baseline test files collect and report 102 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S2 -- the round-128 ground read still names avgPrice as Inflection's price source; the 0.4.0 contract corrects it to navPrice
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "RD_FWD5_GROUND_INFLECTION_R128.json names avgPrice for the price target; the round-131 census finds avgPrice null or blank on every row, so contract 0.4.0 sources price from navPrice and the ground read is left as the record of the round-128 read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The contract's sources entries equal the round-128 ground reads, the price included (the 0.3.0 wording).",
+  "world_is": "The ground-read record (read only, round 128) names avgPrice as the price source, and it read no value. The round-131 field census finds avgPrice null or blank on all 218,054,352 rows. Contract 0.4.0 states the price as navPrice where noUnits is non-zero and navPrice is positive, with the census figures in its method and served_note, and the generator overrides and asserts that one entry. The checker skips the price entry in its ground comparison.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RD_FWD5_GROUND_INFLECTION_R128.json targets[price].source is avgPrice (1401 record, unchanged in this round)",
+      "R131_INFLECTION_FIELD_CENSUS.json null_or_blank_rows_all.avgPrice is 218054352 of rows 218054352"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S3 -- keyed_map takes one more keyword, label, so the collision refusal names the firm's mapping
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "The order gives keyed_map(rows, field, fn); the refusal must name the firm or table, which the three arguments cannot carry, so keyed_map has a keyword-only label (default 'source values') as well.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "keyed_map(rows, field=source_value, fn=normalise_key) REFUSES a collision with a message naming collide, the firm or table, and the key.",
+  "world_is": "keyed_map(rows, field, fn, label) in account_transaction.py refuses with 'REFUSED: <label>: two source values collide: ... both normalise to one key ...'. The three positional and default arguments are as the order gives them; the label is a keyword with a default and no caller depends on it being absent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_transaction.py keyed_map at commit be2a2a6ef5 (the label keyword)",
+      "tests/test_account_transaction.py keyed_map collision test and tests/test_account_transaction_cottonwood.py collision tests match 'collide'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S4 -- the order's commit trailer names Claude Sonnet 5.5; this worker's model is Haiku 5.5, so the commits carry the Haiku trailer
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "The worker face asks each commit message to end with Co-Authored-By: Claude Sonnet 5.5; the environment and the attribution rule identify this worker as Haiku 5.5, so the trailer written is Co-Authored-By: Claude Haiku 5.5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Each commit message file ends with the line Co-Authored-By: Claude Sonnet 5.5 (worker face, commit rule).",
+  "world_is": "The worker's model is claude-haiku-5-5. An attribution line that names another model would be false, so the commits carry Co-Authored-By: Claude Haiku 5.5, as the attribution rule the session gives requires.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the session environment states the model as Haiku 5.5 with model ID claude-haiku-5-5",
+      "commit be2a2a6ef5 message ends with Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S5 -- the Inflection per-row claim of source_txn_id coverage said the producer was pending; the sentence is rewritten now that firms_pending is empty
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "source_txn_id_coverage is listed as unchanged, but the 0.3.0 Inflection per_row_claim says the producer is pending (firms_pending); in 0.4.0 firms_pending is empty, so the generator rewrites that one sentence from the round-130 counts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "source_txn_id_coverage is unchanged from 0.3.0 (the order's unchanged list).",
+  "world_is": "The Inflection per_row_claim sentence of 0.3.0 names the pending producer, which is false in 0.4.0. The generator states the round-130 count (zero repeated values in zero partitions) instead. The counts, the chosen column and the all-partition run are copied unchanged; the 49 Financial and Cottonwood entries come from the unchanged functions.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.3.0 contract at commit 46b175f775, source_txn_id_coverage.inflection.per_row_claim names firms_pending",
+      "0.4.0 contract at commit 92f6952b00, firms_pending is an empty list and the Inflection per_row_claim is rewritten"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S6 -- the Internal bucket's catch-all classes two income descriptions INTERNAL: Dividend Paid from Cash (word Dividend) and Income Paid (word Other income)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:18:21Z",
+  "one_line": "Applied as the order states it (Internal before Return by word), the rule gives INTERNAL to two taxonomy descriptions in the Internal bucket whose ratified words are income words: Dividend Paid from Cash (Dividend) and Income Paid (Other income).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "spec_asserts": "The Inflection flow rule places income by its word inside the Return bucket, and every other bucket by its own rule (order: (Internal, null, null) INTERNAL).",
+  "world_is": "Both descriptions sit in the taxonomy's Internal bucket with no account boundary, so the rule gives them INTERNAL, and the Return-by-word step is never reached for them. Contract 0.4.0 carries flow_class INTERNAL on their two source_mapping rows, and the Inflection producer serves those rows as INTERNAL. Whether a Dividend or an Other income line should read INCOME is a ruling for the CTO; the worker applies the rule as written and does not change it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml: type_desc Dividend Paid from Cash and Income Paid, bucket Internal, no nna_direction and no account_boundary",
+      "contract 0.4.0 source_mapping rows for Dividend Paid from Cash and Income Paid carry flow_class INTERNAL (commit 92f6952b00)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1701-S7 -- the naming gate printed a WARN (REFUSE, not enforced) on the literal "inflection" used as a subscript in account_transaction_inflection.py; the module now reads the row filter through FIRM
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:27:17Z",
+  "one_line": "At the step-5 commit the naming gate graded account_transaction_inflection.py line 92, words[row_filter][inflection], as a NEW hand-kept carrier of 'inflection' outside every permitted context (WARN window: not blocking). The row filter is now read through FIRM, the registry key, in a follow-up commit; the words file's keyed literals stay the class of IRPT_DASHBD-D2-W1601-S5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A carrier of the registry key 'inflection' reads it through lookup('inflection') or the module's FIRM, and the naming gate's live census runs at commit.",
+  "world_is": "Commit e1ba8ccd1d printed NAMING REFUSE x1 at account_transaction_inflection.py:92 with LIVE-READ-FAILED (the served-graph client blocked the live pull); the verdict was WARN because the ENFORCE switch is off. The follow-up reads words[row_filter][FIRM]; the lookup at FIRM is unchanged. The live census still cannot run on this box.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh output for commit e1ba8ccd1d: [naming-gate] NAMING REFUSE data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py:92 inflection -> lookup('inflection'); NAMING-GATE: WARN 1 graded",
+      "data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py line 92 at commit e1ba8ccd1d: rf = words[\"row_filter\"][\"inflection\"]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
