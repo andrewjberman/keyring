@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~127</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-127 @b49543f073) and again in the main tree after merge 5834b9f30e: CTao1-AC1 JOURNEY-FETCH wheels=1 file=tabulate-0.9.0-py3-none-any.whl device=laptop sha256=024ca478df22 requests=4 ok=True (2 of 2 mutants held); CTao1-AC2 JOURNEY-CHECK checks_run=7 failed=0 check8=AWAITING released=False ok=True; proof VALID; diff paths inside the order. The issuer listed C:/opal-intake/holding/intake-20261016-tabulate/ (exactly the one wheel) and C:/opal-intake/release/ (only the two earlier batches): nothing of this batch is released. Checks 1-7: c1, c2, c3, c4, c6, c7 passed; c5 not_applicable (no attestation published). Risks the checks leave, for the CTO's check-8 reading: c3 and c6 compare against a pre-existing pip-installed tabulate 0.9.0 on this laptop (dated 2026-02-28), so they show agreement with that copy, not an independent build; c7 shows the file was not removed or altered by the managed antivirus (no test-virus control), not that a product inspected it; no check rules out a compromised upstream release process (FWD-17). No row filed. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
