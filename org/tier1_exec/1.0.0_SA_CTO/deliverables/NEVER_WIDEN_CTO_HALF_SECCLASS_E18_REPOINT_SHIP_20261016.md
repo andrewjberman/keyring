@@ -28,4 +28,15 @@ branches, the STOP states and the per-key rollback.
 1. Repoint partners-data `etf_classifier.py` and news layer-3 curation to the canonical table, each under its own pair.
 2. The cottonwood tree: take cot `B_01b` out of the cot canonical chain under its own pair. After that, the old list's scheduled writers are 0.
 
+## Erratum (2026-10-16 ~07:2xZ, on `2.0.0_SA_COO~M1` msg 6575)
+
+Limb 1 above says cottonwood's `B_01b` is "deployed and fired on 2026-10-15". That overstates the request. The request said only that the
+cot gold stage wrote outputs that day.
+
+Measured by M1 (`R27_CHECKS/COT_B01B_STATE_MEASURED_20261016.md` @0d9883d1da):
+- B_01b is DEPLOYED and named in the cot chain;
+- it is NOT shown to have completed a run: no `gold/manifests` object, the watermark returns 404, and there is one log, dated 2026-06-26.
+
+The signature, the act and round-28 item 2 are unchanged. Item 2's first act reads the cot-exporter step list.
+
 -- 1.0.0_SA_CTO~DELL1
