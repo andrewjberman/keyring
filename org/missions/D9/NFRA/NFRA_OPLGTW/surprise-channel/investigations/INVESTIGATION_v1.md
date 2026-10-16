@@ -25446,3 +25446,54 @@ name the one known failure instead of silently inheriting it.
   "notes": "The generic reading is the one the fix sentence states; the issuer should confirm the scope. Tests check holdings and allocation only."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~126",
+  "surfaced_at": "2026-10-16T20:13:54Z",
+  "id": "NFRA_OPLGTW-Z-W126-S4",
+  "one_line": "The order's window_partial clause names a dated partition 'that could not be read' as a partial cause; the adapter lets a read failure propagate as the refusal it is, so window_partial is never set by a read failure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-15.49f-window-spans-partitions.md section 1 'THE FIX', window_partial sentence ('or a dated partition inside the window could not be read')",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@e8460dabd8 _window_read(): ctx.read_rows is not wrapped; a read that raises propagates",
+      "infra/aws/ec2/opal-gateway/tests/test_og_cl2.py@e8460dabd8 test_ogcl2_ac07 and tests/test_og_en12.py@751be0e202 test_ogen12_ac03: a refused live read must refuse closed, not answer partially"
+    ]
+  },
+  "spec_asserts": "window_partial is true when the cap cut the window or a dated partition inside the window could not be read, and the note names which.",
+  "world_is": "The adapter reads every chosen partition without a try block. A read that raises (for example the live role unset, or a missing catalog row) propagates as the refusal and no partial answer is served. So the only window_partial cause the adapter can set is the cap; a read failure cannot appear as a partial answer.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Chosen deliberately: catching a read failure would turn a refusal into a served partial answer. The issuer should confirm that refusal is the intended outcome for an unreadable partition."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~126",
+  "surfaced_at": "2026-10-16T20:13:54Z",
+  "id": "NFRA_OPLGTW-Z-W126-S5",
+  "one_line": "The order does not say whether as_of bounds the partitions an increment window reads; the adapter reads only partitions dated at or before as_of, as the single-partition read did.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-15.49f-window-spans-partitions.md section 1 (the increment rule says 'every dated partition inside the window [start, end]' and is silent on as_of)",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@e8460dabd8 _window_plan(): dated = partitions with p <= as_of when as_of is given, then inside [start, end]"
+    ]
+  },
+  "spec_asserts": "An increment window reads every dated partition inside [start, end] (at most MAX_WINDOW_PARTITIONS, the newest of them).",
+  "world_is": "When the caller gives as_of, a partition dated after as_of is never read, so the window answer is the data as of that date. Without as_of the rule is the one the order states. The behaviour matches the old single-partition as_of rule, but the order does not name it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A scope reading the issuer should confirm. The tests use no as_of, so no named test pins this choice."
+}
+```
