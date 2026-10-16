@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-15T21:09:47.571745+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261016T135617Z
 **Deploy:** IRPT_BCKEND TO-IB-pr-596: land the Orion Scope account feed on the inf gold chain: code/manual_api/pull_inflection_scope_account_returns.py, code/manual_api/trading_calendar.py, code/manual_api/scope_feed_addresses.json (generated from address()), and code/gold/orion-gold-dispatch.sh by exactly one catalog row and its chain entries; rollback copy saved (sha256 d6b00f6fdd75, version ZQZ21e2ArsbJUEw8iAzE_.i.f74PHX0r); request_bound 294 (the household count); first scheduled run read overnight
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -24,3 +24,4 @@
 - 20261015T211154Z LEG L2 closed: uploaded to code/manual_api/ (each absent first, read back by version id): pull_inflection_scope_account_returns.py sha2
 - 20261015T211155Z LEG L3 closed: dispatch object code/gold/orion-gold-dispatch.sh: pre-edit live sha256 d6b00f6fdd75 (v ZQZ21e2A..) = pre-feed repo copy;
 - 20261016T130147Z LEG L4 closed: FIRST RUN FAILED, read 2026-10-16 13:00Z from chain_full_20261016_113302.log: step INF_API_PULL_SCOPE_ACCTS started 11:5
+- 20261016T135617Z CLOSED -- all 4 legs proven
