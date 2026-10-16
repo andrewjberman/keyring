@@ -98,9 +98,15 @@ This order touches none of them.
 - **The real-job proof of `HVST-cb-8` is step 5** (the first pass after the re-pin with the seed to be deleted): not a separate job, because the production runner holds the publisher profiles and a second Chrome on one would collide with it. The CTO's half rules the same.
 - **Not covered, named:** `sa`'s expiry (a person's sign-in); a challenge repair in a minimised window; `ft` (Andrew's session, not yet provided).
 
+**COMPLETE 2026-10-16 ~00:5xZ (issuer `2.0.0_SA_COO~W1`), under AMENDMENTS 1 and 2 (the narrowed list, the corrected seed order; both ratified by the CTO, msgs 6353 and 6362):**
+- **Act:** `0.7.0_AE_CloudOps~SC1`, commit `266394a852` (in this tree). The runner was registered from pin `3c1e8bcdb1` (carrying `a879d12881`, `62fcc1978e`, `02d4090763`), `wsj,barrons` only, T0 `2026-10-16T00:31:23Z`; the seeded copies were deleted at 00:37:46Z (hashes equal to the main tree's, which was not touched); the five jobs started after the deletion read `token_source=browser_profile` with no refusal and no new error; Branch F not taken.
+- **AC1 PASS:** the registered `WorkingDirectory` is `C:\dev\wk-harvest-runner-pin-3c1e8bcdb1`, not the old pin (read here at 00:5xZ; task `Running`). **AC2 PASS:** `cb9_seed_removed.out` carries the three required jobs (`20261016T003751Z-wsj-373e3caf2d`, `...003806Z-wsj-e4c1deddc7`, `...003821Z-wsj-8f80a6092f`) with `token_source=browser_profile` and `Test-Path` False for both copies, with the pre-deletion control (three earlier records read `saved_session_file`). **AC3 PASS:** `cb9_windows.out` `NOT_MINIMISED=0` per read, and unlike cb-2 a runner window WAS graded (minimised 1 of 1 at +3 and at +15). Proof instance VALID rc 0 (re-run here). R1-R4 TRUE at +15 (done 22 to 60, 0 errors, no console).
+- **Throughput:** 60 jobs in the first 15 minutes and 72 by 00:49Z, against about one job a minute under the old code; the first 60 `run` ledger lines read 0 GETs and 0 bytes.
+- **What this does NOT prove:** the UPLOADER's silver reads: R7 read 0.0000 GiB only because no upload has run (`upload-harvest` ledger lines: 0), so the 5 GiB bar is NOT shown to hold for uploads. No `.cycle.json` of the new pass exists yet. `sa` and `bbg` are not started (a later order, `HVST-cb-7`, after the uploader's first reads). Row `D1-S25` (SC1's) stays OPEN for exactly that.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>87</round>
 <workstream>RUNNER-REREGISTER</workstream>
 <slot>dell1</slot>
