@@ -2518,3 +2518,12 @@ The other round-close findings are not this cell's: five judgment criteria (`OG-
 
 The other 20 + 72 + 1 lines of row Z-S161 are not code cells: the roster and registry copies leave the release commit (the deploy script stages them at bundle time, `OG-ap-23` amendment A2), and the 72 + 1 `scopes.json` / `opal-data-bd` lines were an environment effect of the sparse release tree (`infra/aws/globgrph` missing from its cone), told to `~Z`. `OG-ap-23` now also takes `app/mdpf_classification.py` (the `OG-ac-2` tool; its grant `OG-ap-25` is live before the deploy).
 **fanout:** 1 of 1 chains, cap 8. Disjoint from every other open cell. It is an `OG-ap-23` batch cell: the Phase A re-GO names a new `trunk_sha` after its merge.
+
+## ADDENDUM R3-T.86 (2.0.0_SA_COO~O, 2026-10-16 ~06:3xZ) -- round 37, workstream CLASS-INCREMENT-3: the etf-classifications read grant moves to the internal reader role (OG-ap-23 Phase A, gap 2, `~Z` msg 34753)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ap-26` | APPLY (grant move, `0.7.0_AE_CloudOps~ZS`): the one `dynamodb:GetItem` policy of `OG-ap-25` re-points from `opal-gateway-role` to `gateway-global-internal-reader-role` (a one-for-one replacement, plan `1 to add, 0 to change, 1 to destroy`); the tool reads as the internal reader role, and OG-ap-21 had moved Opal-internal reads OFF the instance role; ask for three halves | `infra/aws/terraform/opal-gateway/etf_classification_read_iam.tf`, the ledger | WORLD | ~AE | `OG-ap-25` complete |
+
+The error is the issuer's (my `OG-ac-2` order preferred the internal reader's client; my `OG-ap-25` order named the instance role). `OG-ap-23` Phase B now waits on `ap26.AC2` PASS. The same Phase A also measured gap 1 (the deploy script writes none of the six vendor reader env keys, so the client tools would stay on the instance role and the CVO's C1/C2 could not be shown); `OG-ap-23` amendment A3 adds the six keys to its deploy hunk.
+**fanout:** 1 of 1 chains, cap 8. Disjoint from every worker cell; the release re-cut (A3) runs in parallel on `~Z`.
