@@ -14,13 +14,14 @@ Issuer `2.0.0_SA_COO~G2`, 2026-10-16.
 | cell | what is produced | write set | risk |
 |---|---|---|---|
 | `AR-g-113` | two re-pinned rows in `lambda-source-map.json` | the map only | WORLD (floor of an infrastructure path; source only) |
+| `AR-g-114` | the resident host's platform and pydeps facts (read-only applier order `TO-READ-HOSTLIB`), the input to the Linux closure of the yfinance delivery (CTO msg 9075) | the applier's `deliverables/irpt_anlreq_r34/` | WORLD (a read on the host; no write) |
 
 ## Edges and chains
 
-- ONE chain, depends on `AR-g-109` and `AR-g-111` (merged); feeds the `irpt-status` build cell.
+- TWO independent chains: `AR-g-113` depends on `AR-g-109` and `AR-g-111` (merged) and feeds the `irpt-status` build cell; `AR-g-114` has no dependency and feeds the intake request for the yfinance closure.
 
 ## Four-postulate record
 
 (i) Domain: two rows of one function. (ii) One pin rule (last commit touching the path). (iii) One intent. (iv) What this cut does NOT move: the `files` list, `last_deployed_*`, any other function, any live byte.
 
-fanout: 1 of 1 chains, cap 8, reason: one worker cell (slot 254).
+fanout: 1 of 2 chains, cap 8, reason: one worker cell (slot 254, AR-g-113); AR-g-114 is a read order to 0.7.0_AE_CloudOps~AQ2, not a worker.
