@@ -1,0 +1,42 @@
+{
+ "absent_on_host": [
+  "yfinance",
+  "pandas",
+  "numpy",
+  "requests"
+ ],
+ "claim": "stated: transcribed by script from the requester's body line (read from the host by the requester); not re-read from the host by this cell",
+ "dists": {
+  "attrs": "26.1.0",
+  "boto3": "1.40.31",
+  "botocore": "1.40.31",
+  "cffi": "2.1.1",
+  "charset-normalizer": "3.5.1",
+  "cryptography": "50.0.1",
+  "jmespath": "1.1.0",
+  "jsonschema": "4.26.0",
+  "jsonschema-specifications": "2025.9.1",
+  "pdfminer-six": "20251230",
+  "pdfplumber": "0.11.9",
+  "pillow": "12.1.1",
+  "pyarrow": "18.1.0",
+  "pycparser": "3.0",
+  "pypdfium2": "5.7.1",
+  "python-dateutil": "2.9.0.post0",
+  "referencing": "0.37.0",
+  "rpds-py": "2026.6.3",
+  "s3transfer": "0.14.0",
+  "six": "1.17.0",
+  "typing-extensions": "4.16.0",
+  "urllib3": "2.8.0"
+ },
+ "host": "dell2 resident host (AWS instance; install folder /opt/investor-reporting-ycharts/pydeps)",
+ "platform": "linux x86_64, glibc 2.34",
+ "python": "3.12.14",
+ "schema": "intake-host-pydeps/1",
+ "source": {
+  "body": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/XB_YFINANCE_CLOSURE_REQUEST_20261016.md",
+  "body_commit": "a79b7b64c8495116624847518ae54643427cd363",
+  "section": "Already in the host's pydeps"
+ }
+}

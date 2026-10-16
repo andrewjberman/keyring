@@ -12276,3 +12276,58 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not a blocker for CT-aq-1: the criterion's own mutants are in code. Whether the dell1 flag should gain in-code mutants is the issuer's call (2.0.0_SA_COO~C); this worker did not edit the dell1 flag's logic."
 }
 ```
+
+## NFRA_CTLPLN-W130-S1 -- the linux manylinux list cannot come from packaging.tags on this host; it is written out and checked against packaging with the host probes pinned
+
+```json
+{
+  "id": "NFRA_CTLPLN-W130-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~130",
+  "surfaced_at": "2026-10-16T05:58:08Z",
+  "one_line": "The CT-ar-1 cell says supported_tags expands the linux platform through the existing packaging.tags calls; on this Windows host packaging 24.2 cannot produce the manylinux list for glibc 2.34, so linux_x86_64_platforms() writes it out and test arm 2 checks it against packaging with its host probes pinned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CT-ar-1 BUILD step 1: supported_tags for cp312-linux_x86_64 expands the platform to manylinux2014_x86_64, manylinux_2_17/2_28/2_34_x86_64 and the earlier manylinux_2_5..2_16 strings 'through the existing packaging.tags calls plus any'.",
+  "world_is": "packaging 24.2 tags.platform_tags() and packaging._manylinux.platform_tags(archs) read the RUNNING host: _get_glibc_version() (glibc of this process) and _have_compatible_abi(sys.executable, archs) (ELF of sys.executable). On a Windows host with Python 3.12.10 neither yields glibc 2.34, so passing platforms=['linux_x86_64'] to cpython_tags gives cp312-cp312-linux_x86_64, which no linux wheel carries. The tool now calls linux_x86_64_platforms((2, 34)) (33 strings, the packaging order for that glibc, legacy aliases included) and cpython_tags/compatible_tags receive that list. Test arm 2 pins _get_glibc_version to (2, 34) and _have_compatible_abi to True for one call and asserts the list equals packaging's own output. The Windows labels still pass the label itself; arm 2 and arm 7 check the Windows sets against the direct packaging call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Users/AndrewBerman/AppData/Local/Programs/Python/Python312/Lib/site-packages/packaging/_manylinux.py (packaging 24.2: platform_tags reads _get_glibc_version and _have_compatible_abi of the running host)",
+      "org/devices/kit_python_wheels.py@861e5ba64b (linux_x86_64_platforms, platform_list, supported_tags)",
+      ".tools/tests/test_round27_linux_closure.py@3152b95105 (arm 2: equality with packaging under pinned probes; 33 strings)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a blocker for CT-ar-1: the criteria read the closure and the Windows control, not the platform expansion as such. The list is fixed at glibc 2.34 (LINUX_X86_64_GLIBC), the requester's host; a different linux host needs its own glibc parameter, which is the issuer's call (2.0.0_SA_COO~C)."
+}
+```
+
+## NFRA_CTLPLN-W130-S2 -- the fetchlist verb names every compiled member's file with the Windows tag, so run on the linux closure it names Windows wheels
+
+```json
+{
+  "id": "NFRA_CTLPLN-W130-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~130",
+  "surfaced_at": "2026-10-16T05:58:08Z",
+  "one_line": "intake_closure.py fetchlist hard-codes the suffix -cp314-cp314-win_amd64.whl for every compiled member; run on closure_cp312_linux_x86_64_yfinance.json it prints INTAKE-FETCHLIST target=cp312-linux_x86_64 with Windows file names (cffi-2.0.0-cp314-cp314-win_amd64.whl and six more), not manylinux names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "spec_asserts": "CT-ar-1 scope: the closure tool gains a linux target; the later cell that reads wheel names for the host depends on the closure, and the tool's own fetchlist verb is the one that derives the wheel file names from a closure.",
+  "world_is": "build_fetchlist() sets file_name = wheel_name(name, version) + '-cp314-cp314-win_amd64.whl' for every COMPILED-OTHER-PYTHON member, whatever the closure's target. This cell did not change the verb (its write surface does not include it). Measured: fetchlist --from-file org/devices/intake/closure_cp312_linux_x86_64_yfinance.json wrote 7 compiled items, each with a -cp314-cp314-win_amd64 name (first four: cffi-2.0.0-cp314-cp314-win_amd64.whl, charset_normalizer-3.4.4-cp314-cp314-win_amd64.whl, curl_cffi-0.13.0-cp314-cp314-win_amd64.whl, numpy-2.4.2-cp314-cp314-win_amd64.whl). Its assessment file is outside this worktree's sparse set, so assessment_read=False and every status reads APPROVAL-UNREAD. Left alone, a later reader of that fetch list would ask the index for Windows files for a Linux host.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_closure.py@861e5ba64b (build_fetchlist: item['file_name'] = wheel_name(...) + '-cp314-cp314-win_amd64.whl')",
+      "org/devices/intake/closure_cp312_linux_x86_64_yfinance.json@3152b95105 (target cp312-linux_x86_64; 7 members COMPILED-OTHER-PYTHON)",
+      "run output: INTAKE-FETCHLIST target=cp312-linux_x86_64 compiled=7 approved=0 not_yet_approved=0 new_requests=0 other_needs_copy=0 assessment_read=False (scratch file, not committed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a blocker for CT-ar-1: none of its three criteria runs fetchlist. The fix (a target-aware suffix, and the assessment read for the host target) is outside this order's <paths>; whether it lands before the fetch cell is the issuer's call (2.0.0_SA_COO~C)."
+}
+```

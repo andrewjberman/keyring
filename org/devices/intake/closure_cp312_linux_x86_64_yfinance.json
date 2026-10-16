@@ -1,0 +1,903 @@
+{
+ "claim": "measured: a read of the installed copies' METADATA on this machine; no request to any index was made; no package code was executed",
+ "conflicts": [],
+ "counts": {
+  "COMPILED-OTHER-PYTHON": 7,
+  "FITS": 0,
+  "NO-METADATA": 0,
+  "PURE": 17,
+  "UNKNOWN-NOT-INSTALLED": 0
+ },
+ "fixed_point": true,
+ "generated_utc": "2026-10-16T05:52:45Z",
+ "host": {
+  "absent_on_host": [
+   "yfinance",
+   "pandas",
+   "numpy",
+   "requests"
+  ],
+  "conflicts": [],
+  "dists_read": 22,
+  "file": "HOST_PYDEPS.json",
+  "host": "dell2 resident host (AWS instance; install folder /opt/investor-reporting-ycharts/pydeps)",
+  "python": "3.12.14",
+  "satisfied": [
+   {
+    "closure_version": "2.0.0",
+    "host_version": "2.1.1",
+    "name": "cffi",
+    "norm": "cffi",
+    "specifiers": [
+     ">=1.12.0"
+    ]
+   },
+   {
+    "closure_version": "3.4.4",
+    "host_version": "3.5.1",
+    "name": "charset-normalizer",
+    "norm": "charset-normalizer",
+    "specifiers": [
+     "<4,>=2"
+    ]
+   },
+   {
+    "closure_version": "3.0",
+    "host_version": "3.0",
+    "name": "pycparser",
+    "norm": "pycparser",
+    "specifiers": [
+     "any"
+    ]
+   },
+   {
+    "closure_version": "2.9.0.post0",
+    "host_version": "2.9.0.post0",
+    "name": "python-dateutil",
+    "norm": "python-dateutil",
+    "specifiers": [
+     ">=2.8.2"
+    ]
+   },
+   {
+    "closure_version": "1.17.0",
+    "host_version": "1.17.0",
+    "name": "six",
+    "norm": "six",
+    "specifiers": [
+     ">=1.5"
+    ]
+   },
+   {
+    "closure_version": "4.16.0",
+    "host_version": "4.16.0",
+    "name": "typing_extensions",
+    "norm": "typing-extensions",
+    "specifiers": [
+     ">=4.0.0"
+    ]
+   },
+   {
+    "closure_version": "2.6.3",
+    "host_version": "2.8.0",
+    "name": "urllib3",
+    "norm": "urllib3",
+    "specifiers": [
+     "<3,>=1.21.1"
+    ]
+   }
+  ],
+  "sha256": "1601edb1141432402063eb12a5bfffa4226582aab6e4975fa69fae96ae070224",
+  "to_fetch": [
+   "beautifulsoup4",
+   "certifi",
+   "curl_cffi",
+   "frozendict",
+   "idna",
+   "multitasking",
+   "numpy",
+   "pandas",
+   "peewee",
+   "platformdirs",
+   "protobuf",
+   "pytz",
+   "requests",
+   "soupsieve",
+   "tzdata",
+   "websockets",
+   "yfinance"
+  ],
+  "to_fetch_rule": "closure minus HOST-SATISFIED; a HOST-CONFLICT member is kept in to_fetch and reported as a STOP"
+ },
+ "installed_sources": [
+  {
+   "distributions_read": 7,
+   "root": "<user-site-packages:3.12>",
+   "unreadable": 0
+  },
+  {
+   "distributions_read": 307,
+   "root": "<site-packages:3.12>",
+   "unreadable": 0
+  }
+ ],
+ "last_line": "INTAKE-CLOSURE target=cp312-linux_x86_64 lines=1 closure=24 dependencies_added=23 pure=17 fits=0 needs_fetch=7 unknown_not_installed=0 specifier_conflicts=0 fixed_point=True ok=True host_satisfied=7 host_conflicts=0 to_fetch=17",
+ "members": [
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=4.11.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/beautifulsoup4-4.14.3.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "beautifulsoup4",
+   "norm": "beautifulsoup4",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.14.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "curl-cffi",
+     "specifier": ">=2024.2.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requests",
+     "specifier": ">=2017.4.17"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/certifi-2026.1.4.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "certifi",
+   "norm": "certifi",
+   "other_copies": [],
+   "parents": [
+    "curl-cffi",
+    "requests"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2026.1.4"
+  },
+  {
+   "class": "COMPILED-OTHER-PYTHON",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "curl-cffi",
+     "specifier": ">=1.12.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/cffi-2.0.0.dist-info",
+   "host_class": "HOST-SATISFIED",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "cffi",
+   "norm": "cffi",
+   "other_copies": [],
+   "parents": [
+    "curl-cffi"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "2.0.0"
+  },
+  {
+   "class": "COMPILED-OTHER-PYTHON",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requests",
+     "specifier": "<4,>=2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/charset_normalizer-3.4.4.dist-info",
+   "host_class": "HOST-SATISFIED",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "charset-normalizer",
+   "norm": "charset-normalizer",
+   "other_copies": [],
+   "parents": [
+    "requests"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "3.4.4"
+  },
+  {
+   "class": "COMPILED-OTHER-PYTHON",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": "<0.14,>=0.7"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/curl_cffi-0.13.0.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "curl_cffi",
+   "norm": "curl-cffi",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": "compiled for another Python only: cp39-abi3-win_amd64",
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp39-abi3-win_amd64"
+   ],
+   "version": "0.13.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=2.3.4"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/frozendict-2.4.7.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "frozendict",
+   "norm": "frozendict",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.4.7"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requests",
+     "specifier": "<4,>=2.5"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/idna-3.11.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "idna",
+   "norm": "idna",
+   "other_copies": [],
+   "parents": [
+    "requests"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.11"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=0.0.7"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/multitasking-0.0.12.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "multitasking",
+   "norm": "multitasking",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.0.12"
+  },
+  {
+   "class": "COMPILED-OTHER-PYTHON",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": "python_version >= \"3.12\"",
+     "parent": "pandas",
+     "specifier": ">=1.26.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=1.16.5"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/numpy-2.4.2.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "numpy",
+   "norm": "numpy",
+   "other_copies": [],
+   "parents": [
+    "pandas",
+    "yfinance"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "2.4.2"
+  },
+  {
+   "class": "COMPILED-OTHER-PYTHON",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=1.3.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pandas-2.3.3.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pandas",
+   "norm": "pandas",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "2.3.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=3.16.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/peewee-4.0.0.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "peewee",
+   "norm": "peewee",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.0.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=2.0.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/platformdirs-4.9.2.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "platformdirs",
+   "norm": "platformdirs",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.9.2"
+  },
+  {
+   "class": "COMPILED-OTHER-PYTHON",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=3.19.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/protobuf-6.33.5.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "protobuf",
+   "norm": "protobuf",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": "compiled for another Python only: cp310-abi3-win_amd64",
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp310-abi3-win_amd64"
+   ],
+   "version": "6.33.5"
+  },
+  {
+   "class": "PURE",
+   "depth": 3,
+   "edges": [
+    {
+     "extras": [],
+     "marker": "implementation_name != \"PyPy\"",
+     "parent": "cffi",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pycparser-3.0.dist-info",
+   "host_class": "HOST-SATISFIED",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pycparser",
+   "norm": "pycparser",
+   "other_copies": [],
+   "parents": [
+    "cffi"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pandas",
+     "specifier": ">=2.8.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/python_dateutil-2.9.0.post0.dist-info",
+   "host_class": "HOST-SATISFIED",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "python-dateutil",
+   "norm": "python-dateutil",
+   "other_copies": [],
+   "parents": [
+    "pandas"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "2.9.0.post0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pandas",
+     "specifier": ">=2020.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=2022.5"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pytz-2025.2.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pytz",
+   "norm": "pytz",
+   "other_copies": [],
+   "parents": [
+    "pandas",
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "2025.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=2.31"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/requests-2.32.5.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "requests",
+   "norm": "requests",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.32.5"
+  },
+  {
+   "class": "PURE",
+   "depth": 3,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-dateutil",
+     "specifier": ">=1.5"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/six-1.17.0.dist-info",
+   "host_class": "HOST-SATISFIED",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "six",
+   "norm": "six",
+   "other_copies": [],
+   "parents": [
+    "python-dateutil"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "1.17.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "beautifulsoup4",
+     "specifier": ">=1.6.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/soupsieve-2.8.3.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "soupsieve",
+   "norm": "soupsieve",
+   "other_copies": [],
+   "parents": [
+    "beautifulsoup4"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.8.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "beautifulsoup4",
+     "specifier": ">=4.0.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/typing_extensions-4.16.0.dist-info",
+   "host_class": "HOST-SATISFIED",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "typing_extensions",
+   "norm": "typing-extensions",
+   "other_copies": [],
+   "parents": [
+    "beautifulsoup4"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.16.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pandas",
+     "specifier": ">=2022.7"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/tzdata-2025.3.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "tzdata",
+   "norm": "tzdata",
+   "other_copies": [],
+   "parents": [
+    "pandas"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "2025.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requests",
+     "specifier": "<3,>=1.21.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/urllib3-2.6.3.dist-info",
+   "host_class": "HOST-SATISFIED",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "urllib3",
+   "norm": "urllib3",
+   "other_copies": [],
+   "parents": [
+    "requests"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.6.3"
+  },
+  {
+   "class": "COMPILED-OTHER-PYTHON",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=13.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/websockets-16.0.dist-info",
+   "host_class": null,
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "websockets",
+   "norm": "websockets",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "16.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "--root",
+     "specifier": "==1.2.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/yfinance-1.2.0.dist-info",
+   "host_class": null,
+   "kind": "line",
+   "line": "yfinance==1.2.0",
+   "line_specifier": "==1.2.0",
+   "name": "yfinance",
+   "norm": "yfinance",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "1.2.0"
+  }
+ ],
+ "not_applicable_lines": [],
+ "passes": 24,
+ "requirements_file": {
+  "form": "root",
+  "installable_lines": 1,
+  "name": "<--root>",
+  "option_lines": 0,
+  "physical_lines": 1,
+  "sha256": "fa17bc65445cfa00686e52830813976530632da9de2928b6b97717ada52db35d"
+ },
+ "running_python": "3.12.10",
+ "schema": "intake-closure/1",
+ "target": {
+  "label": "cp312-linux_x86_64",
+  "marker_environment": {
+   "implementation_name": "cpython",
+   "implementation_version": "3.12.14",
+   "os_name": "posix",
+   "platform_machine": "x86_64",
+   "platform_python_implementation": "CPython",
+   "platform_system": "Linux",
+   "python_full_version": "3.12.14",
+   "python_version": "3.12",
+   "sys_platform": "linux"
+  },
+  "platform": "linux_x86_64",
+  "python_tag": "cp312",
+  "supported_tag_count": 906,
+  "tag_logic": "packaging.tags 24.2"
+ },
+ "unknown_not_installed": [],
+ "unparsed": []
+}
