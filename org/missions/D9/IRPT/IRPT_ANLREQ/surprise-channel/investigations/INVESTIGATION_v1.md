@@ -21967,3 +21967,54 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W234-S1 -- The worktree's sparse checkout omits org/surprise_channel, so the row schema the worker's face names (org/surprise_chann
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W234-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~234",
+  "surfaced_at": "2026-10-16T08:08:27Z",
+  "one_line": "The worktree's sparse checkout omits org/surprise_channel, so the row schema the worker's face names (org/surprise_channel/schemas/investigation_item.schema.json) is absent on disk; it was read at HEAD with git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker's face names the row schema at org/surprise_channel/schemas/investigation_item.schema.json as the form a surprise row takes, to be followed when a row is filed in the worktree.",
+  "world_is": "At 9971214f96 this worktree (wk-IRPT_ANLREQ-234) has core.sparseCheckout true and the cone omits org/surprise_channel; the directory is absent and test -e reads ABSENT for the schema. The tracked schema was read with git show HEAD:path and the row follows that read. The worktree sparse set was not changed. INERT: a missing reader does not change any row. Same condition as IRPT_ANLREQ-D2-W233-S4, surfaced in a second worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git@9971214f96:org/surprise_channel/schemas/investigation_item.schema.json (read by git show HEAD:path)",
+      "git config core.sparseCheckout -> true; git sparse-checkout list (cone omits org/surprise_channel)",
+      "test -e org/surprise_channel/schemas/investigation_item.schema.json -> ABSENT in C:/dev/wk-irpt-anlreq-234"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W234-S2 -- The order's dry-run quote for AR77-tf-AC1 (R46-TESTS-FAIL 11 passed, need 12) differs from the checker's live output at 
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W234-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~234",
+  "surfaced_at": "2026-10-16T08:08:27Z",
+  "one_line": "The order's dry-run quote for AR77-tf-AC1 (R46-TESTS-FAIL 11 passed, need 12) differs from the checker's live output at the base; the checker prints 'only 11 test functions defined, need 12'. Both are FAIL; the verdict is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR77-tf-AC1 dry-run at box/dell2 baf4fcf244 reads R46-TESTS-FAIL 11 passed, need 12 (order line 34).",
+  "world_is": "At 9971214f96 the same invocation prints R46-TESTS-FAIL only 11 test functions defined, need 12 and exits 1. The count of defined test_ functions in r46_checks.py check() runs before the pytest subprocess, so no pass count is printed on this path. The verdict is FAIL in both readings and the criterion expect R46-TESTS-OK is unaffected. INERT: the quoted line is a dry-run note, not a gate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 12 --prefix=test_hop_failure_ <grant test file> at 9971214f96 -> R46-TESTS-FAIL only 11 test functions defined, need 12 (rc=1)",
+      "r46_checks.py check(): the defined-function count (lines 25-50) returns before the pytest subprocess"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
