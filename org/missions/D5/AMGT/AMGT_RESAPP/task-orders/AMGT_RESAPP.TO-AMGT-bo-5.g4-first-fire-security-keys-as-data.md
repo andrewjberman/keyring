@@ -73,7 +73,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's msg 6673 (item 1: "Cut the cell for the 8 new analyzable names (about 5.6 USD), then a new COO half; I sign it, then re-enable"). The 8 names are the 13 fetchable names with a real expected form (read by `filings.batch --universe newest --dry-run`: 163 `none`, 7 `10-K`, 6 `20-F`) minus the 5 that `--plan-only` reads SKIP-UNCHANGED (ASML NA, BABA US, NU US, PBR US, SAP GY). Cost: about USD 5.6 is 8 x the mean of five stored 20-F analyses (0.6947); seven of the eight are 10-K filers whose per-analysis cost is NOT measured; the CTO's condition (a mean above 0.80 returns to the CTO before anything widens) stands. The batch's `--security-key` was read in `filings/batch.py` lines 513-518 and 555-558. The trigger keeps reading the unfiltered `--plan-only` count (171 WOULD-RUN): the task stays due daily while that count is above zero, and a second day's run over the 8 skips them as unchanged (no spend). The re-enable waits for a new COO half, which states whether the one HELD marker the first fire wrote is inside its blast radius (it is not in the first half's list: see `ledger/G4_FILINGS_FIRST_FIRE_RESULT_20261016.md`).
 
-<status>pending</status>
+<status>complete</status>
 <round>108</round>
 <slot>0.9.0_WK_AMGT_RESAPP~479</slot>
 <fabric>dell1</fabric>
