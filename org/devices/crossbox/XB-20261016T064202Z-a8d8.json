@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261016T064202Z-a8d8",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell2",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "1.0.0_SA_CTO~DELL2",
+ "subject": "NFRA_CTLPLN round 27: approve the final 17 wheels of the yfinance Linux closure (APPROVED or a named STOP)",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_YFINANCE_R27_DELL2_CTO_APPROVAL.md",
+ "opened_at": "2026-10-16T06:42:02Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-16T06:44:23Z",
+  "bus_message_id": "9160a61f-a520-4089-a6ac-7e633bc98567"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

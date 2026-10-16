@@ -71,7 +71,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-26.etf-classifications-grant
 - The Phase A GO is the issuer's message. OG-ap-23's Phase B waits on this cell closing (its precondition becomes `ap26.AC2` PASS).
 - Pre-cut: ap26.AC1 and ap26.AC2 base FAIL as expected (plan, ask and CLS2_APPLIED.json absent).
 
-<status>staged</status>
+<status>pending</status>
 <round>37</round>
 <workstream>CLASS-INCREMENT-3</workstream>
 <slot>~AE</slot>
