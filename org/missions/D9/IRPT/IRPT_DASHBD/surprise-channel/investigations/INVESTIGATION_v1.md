@@ -23288,3 +23288,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The validator accepts a shape the producer never writes and refuses the shape it does write. Hop 2 is OFF and wrote nothing, so no client is affected yet; the defect would show as refused for every client once the switch is on. The reader cell (DB-b-302) carries the validator's fix inside the same FILLED-REPORT-A block so the drain, the re-pin and the deploy pair are one."
 }
 ```
+
+## IRPT_DASHBD-D2-S124 -- TO-DB-b-300 STOPPED after Act 4: a one-day backfill changed six value columns, the PARTIAL count is off by one and the flip count is 4100; Monday's fires would apply it ungated
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S124",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T14:27:03Z",
+  "one_line": "TO-DB-b-300 STOPPED after Act 4: the one-day backfill of 2026-10-15 changed six value columns besides history_scope (the value hash differs), labelled 2851 rows PARTIAL_HISTORY against 2850 floor-start accounts, and the served series carry PARTIAL_HISTORY on all 6954 (not the FULL the order assumed), so the flip count reads 4100 non-floor flips; the new code and its schedules are LIVE, so Monday's 11:41Z gold fire and 12:15Z publish fire would apply the same flip without the order's gate.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "spec_asserts": "Packet section 1 Act 4: 'the returns rows differ only in history_scope and one added conditional column'; the order's step 7: after.rows equal before.rows, every value column identical (Branch D: a different hash STOPS Act 5), partial equal to the floor-start count; step 8 and the CTO's condition 1: the older series carry the old constant FULL and any flip on a non-floor account STOPS Act 5.",
+  "world_is": "MEASURED after the event (GOLD49F_STOP_EVIDENCE.json, counts, hashes and column names only): rows 6951 before and after; the value hash differs; against the 11:42:19Z version of the day's object (kept) the changed columns are total_return_daily 78 rows, return_basis 78, day_quality 78, holdings_price_return 6761, holdings_price_return_reason 6951, guard_state 6760, plus history_scope on 4100 and the new history_scope_claim on all 6951; PARTIAL_HISTORY 2851 and FULL 4100 against floor_start_with_row 2850 (one PARTIAL account's first positive value day is 2026-10-09); the 6954 served series read history_scope PARTIAL_HISTORY with no claim, so partial_to_full 4100, unchanged 2851, full_to_partial 0, non_floor_flips 4100. The function now runs the new code and irpt-49f-reporting-gold-daily (cron 41 7 MON-FRI, ENABLED) fires Monday 2026-10-19 11:41Z, followed by the publish fire at 12:15Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.7.0_AE_CloudOps~DB2/GOLD49F_STOP_EVIDENCE.json",
+      "backfill event RequestId d9d8ce16-ed15-4d16-a076-5e545e1462b7 at 2026-10-16T14:04:50Z (status 200, 5827 MB, 501 s, every failed map empty)",
+      "the prior version of account_return_daily date=2026-10-15 data.parquet written 11:42:19Z is kept beside the 14:05:31Z version (versioned bucket); the column-by-column comparison read both"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED until the CTO rules before Monday 2026-10-19 11:41Z: accept the changed value columns and the flips, or have the previous artifact version restored by a new pair (the packet's section 7) and the day's prior version copied back by listed key. The applier has rolled nothing back and started no Act 5."
+}
+```
