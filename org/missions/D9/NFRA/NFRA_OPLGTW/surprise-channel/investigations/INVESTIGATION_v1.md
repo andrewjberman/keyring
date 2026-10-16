@@ -19996,3 +19996,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "Cost: the test literal differs from the order's wording by the type wrapper only; the key is the ticker alone. Not verified here: whether a resource-level client would be admitted on the assumed role."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T05:11:58Z",
+  "id": "NFRA_OPLGTW-Z-S161",
+  "one_line": "OG-ap-23 Phase A: the release commit REFUSEs in ENFORCE on 23 lines of three taken files that ng2.AC2 does not grade (partner_roster.json 20, portal_served.py 2, etfs_silver.py 1), in a healthy tree as well as the release tree; the 10 client lines are RULED and pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN .tools/safe-commit.sh from C:/tmp/og-rel-code (release tree on live d577e0e729, trunk f1b3aeb579 overlaid for the gate: naming-gate.py, naming-apply-gate.py, infra/logic, NAMING_SCHEMA.json, DIRECTIVES.yaml, lib/opal_naming_*.py; manifest ap23_gate_overlay_manifest.txt): rc=1, NAMING-GATE REFUSE 129 graded, 96 REFUSE, 13 RULED, 1 RAISE (W/ap23_commit_gate_release_tree.out).",
+      "CONTROL, the same three files graded by the same gate in the MAIN tree, full add, --enforce: rc=1, 23 REFUSE (W/ap23_gate_main_tree_control.out). ng2.AC2 in the release tree: PASS, 0 REFUSE, 10 RULED.",
+      "READ the refused (name, type): app/refs/partner_roster.json (20 lines) hand-kept carriers of the firm tokens 49financial, 49f, inflection, inf, cottonwood, cot, bd, bd_model_roster, bd_holdings_s2 (type: firm token / config key, read it through lookup()) and four S3Key literals CONFORMANT but carrying a hand-kept firm token: eclipse/inflection/silver/fact_portfolios_full, orion/inflection/silver/fact_assets, blackdiamond/cottonwood/silver/fact_model_roster, blackdiamond/cottonwood/silver/fact_holdings_s2, fact_allocations_s2; app/portal_served.py:125-126 mdpf (hand-kept carrier, lookup('mdpf')); app/etfs_silver.py:313 bloomberg_profile (INSTANCE_PROFILE, NEW and OUT-OF-PATTERN).",
+      "READ in the release tree only, an environment effect: app/refs/scopes.json 72 REFUSE and admin_gateway_breakdown.py:164 opal-data-bd, because the live read fails there (CensusError, the served-graph client is blocked); in the main tree both grade without a REFUSE."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-23 Phase A step 2: the release commit runs the naming gate in ENFORCE and must print NO REFUSE; if the gate still refuses a string, STOP and file a BLOCKING row naming the (name, type).",
+  "world_is": "The commit grades every taken file as a new add against the live base: the roster copy and the registry copy are new files there, so every firm token in them reads as a NEW hand-kept carrier, and portal_served.py and etfs_silver.py carry three lines no name_rulings row covers. Nothing is committed on rel-nfra-oplgtw-code (still at d577e0e729); the tree holds the take uncommitted and nothing was deployed.",
+  "notes": "Cost: every release that stages these two data files hits this. Candidate rulings for the registry owner: none_owed rows for the roster tokens or an exempt context for app/refs/*.json, a row for (bloomberg_profile, INSTANCE_PROFILE), and a lookup() read or a row for the two mdpf lines in portal_served.py. I did not override the gate and will not: the only escape in the order is the lane override. Non-application: the 10 client lines (RULED), tools.py, destructive_ops.py, data_entitlement.py, integration.py and the pin tests grade without a REFUSE."
+}
+```
