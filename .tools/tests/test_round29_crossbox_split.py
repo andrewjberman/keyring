@@ -193,6 +193,7 @@ def closed_flow(mod, tmp, subject="Split arm call"):
     a_merge_rc = mod.sgit(p.a.root, "merge", "--no-edit", "FETCH_HEAD")[0]
     status_a = p.a.status(cid)[0]
     return {"cid": cid, "pair": p, "a_close": a_close, "a_files": a_files, "b_files": b_files, "fetch_rc": fetch_rc,
+            "a_commit_sha": a_commit, "b_commit_sha": b_commit,
             "merge_rc": merge_rc, "merge_out": (merge_out + merge_err).strip(), "unmerged": unmerged, "markers": markers,
             "status_b": status_b, "status_a": status_a, "a_merge_rc": a_merge_rc}
 
@@ -438,6 +439,73 @@ def arm_j(tmp):
         "mutant status_b=%s" % f["status_b"][:70])
 
 
+def arm_k(tmp):
+    """box-sync's known resolver (.tools/merge-resolve-known.py fold_crossbox): a crossbox/1 record folds as before; a
+    layout-2 file on either side is HELD, never folded by the crossbox/1 rule."""
+    mr = load("merge_resolve_split", TOOLS / "merge-resolve-known.py")
+    p = Pair(cb, Path(tmp) / "k1", False)
+    cid, line = p.open_call()
+    base = p.a.path(cid).read_text(encoding="utf-8")
+    d_ours = json.loads(base)
+    d_ours["ack"] = {"at": "2026-10-16T12:00:00Z", "by": SEAT + LANE, "bus_message_id": None}
+    d_theirs = json.loads(base)
+    d_theirs["closed"].update({"from_at": "2026-10-16T13:00:00Z", "from_by": "1.0.0_SA_CTO"})
+    text, how = mr.fold_crossbox(base, json.dumps(d_ours, indent=1), json.dumps(d_theirs, indent=1))
+    folded = json.loads(text) if text else {}
+    ok1 = text is not None and how == "crossbox-fold" and folded.get("ack", {}).get("by") == SEAT + LANE \
+        and folded.get("closed", {}).get("from_at") == "2026-10-16T13:00:00Z"
+    q = Pair(cb, Path(tmp) / "k2", True)
+    cid2, _line = q.open_call()
+    raw = q.a.path(cid2).read_text(encoding="utf-8")
+    moved = json.loads(raw)
+    moved["subject"] = "moved on the other side"
+    text2, how2 = mr.fold_crossbox(raw, raw, json.dumps(moved, indent=1))
+    ok2 = text2 is None and "HOLD" in how2
+    arm("(k) box-sync's known resolver folds a crossbox/1 record as before and HOLDs a layout-2 file (never folds it)",
+        ok1 and ok2, "crossbox/1 folded=%s | layout 2: %s" % (how, how2[:110]))
+
+
+def arm_l(tmp):
+    """crossbox-matrix.py reads the pair across two refs: the sender's branch holds the from-side close, the answering box's
+    branch holds its close; the one reader assembles them, and the matrix reports CLOSED-BOTH with no error."""
+    mx = load("crossbox_matrix_split", TOOLS / "crossbox-matrix.py")
+    f = closed_flow(cb, Path(tmp) / "l")
+    p = f["pair"]
+    cb.sgit(p.a.root, "update-ref", "refs/remotes/origin/box/laptop", f["a_commit_sha"])
+    cb.sgit(p.a.root, "update-ref", "refs/remotes/origin/box/sitez", f["b_commit_sha"])
+    files, bad = mx.union(str(p.a.root), ["origin/box/laptop", "origin/box/sitez"])
+    rec = files.get(f["cid"], {}).get("rec", {})
+    mine = [b for b in bad if f["cid"] in b[1] or f["cid"] in str(b[2])]
+    ok = rec.get("state") == "CLOSED-BOTH" and rec.get("schema") == "crossbox/2" and not mine
+    arm("(l) crossbox-matrix.py reads a layout-2 pair across two refs (from-side on one branch, answer on the other) as CLOSED-BOTH",
+        ok, "state=%s schema=%s refs=%s bad=%d" % (rec.get("state"), rec.get("schema"),
+                                                  ",".join(files.get(f["cid"], {}).get("refs", [])), len(mine)))
+
+
+def arm_m(tmp):
+    """crossbox-deploy-check.py's open-call read (measure_open_call): a live layout-2 call naming the root is a HIT; the same
+    call once both sides are closed is not live."""
+    dc = load("crossbox_deploy_check_split", TOOLS / "crossbox-deploy-check.py")
+    now = datetime.datetime(2026, 10, 16, 12, 0, 0)
+    root_rel = "infra/aws/terraform/rootx"
+    p = Pair(cb, Path(tmp) / "m1", True)
+    cid, line = p.open_call(subject="Hold the apply of " + root_rel)
+    hits_open, _ = dc.measure_open_call(str(p.a.root), root_rel, [], now)
+    p.b.receive(line)
+    p.b.ack(cid, SEAT + LANE)
+    p.commit(cb, p.b, p.answer_rel(cid))
+    p.push(cb, p.b.root)
+    p.pull(cb, p.a, p.b, ff=True)
+    hits_acked, _ = dc.measure_open_call(str(p.a.root), root_rel, [], now)
+    f = closed_flow(cb, Path(tmp) / "m2", subject="Hold the apply of " + root_rel)
+    hits_closed, _ = dc.measure_open_call(str(f["pair"].b.root), root_rel, [], now)
+    ok = any(cid in h for h in hits_open) and any(cid in h for h in hits_acked) and not any(f["cid"] in h for h in hits_closed)
+    arm("(m) crossbox-deploy-check.py: a live layout-2 call naming the root is a HIT (OPEN and ACKED); CLOSED-BOTH is not live",
+        ok, "open_hits=%d acked_hits=%d closed_hits_naming_call=%d" % (
+            sum(1 for h in hits_open if cid in h), sum(1 for h in hits_acked if cid in h),
+            sum(1 for h in hits_closed if f["cid"] in h)))
+
+
 def main() -> int:
     tmp_root = tempfile.mkdtemp(prefix="crossbox-split-")
     try:
@@ -451,7 +519,10 @@ def main() -> int:
                  ("g", lambda: arm_g(os.path.join(tmp_root, "g"), base)),
                  ("h", lambda: arm_h(os.path.join(tmp_root, "h"))),
                  ("i", lambda: arm_i(os.path.join(tmp_root, "i"))),
-                 ("j", lambda: arm_j(os.path.join(tmp_root, "j")))]
+                 ("j", lambda: arm_j(os.path.join(tmp_root, "j"))),
+                 ("k", lambda: arm_k(os.path.join(tmp_root, "k"))),
+                 ("l", lambda: arm_l(os.path.join(tmp_root, "l"))),
+                 ("m", lambda: arm_m(os.path.join(tmp_root, "m")))]
         for name, fn in steps:
             try:
                 fn()

@@ -79,6 +79,19 @@ def shape(rec):
     return rec, None
 
 
+def _advance(text) -> tuple:
+    """How far an answer file's copy has gone: a closed answer is the most advanced, an acked one next, a bare one least."""
+    try:
+        doc = json.loads(text)
+    except ValueError:
+        return (0,)
+    if not isinstance(doc, dict):
+        return (0,)
+    if (doc.get("closed_to") or {}).get("at"):
+        return (2,)
+    return (1,) if doc.get("ack") else (0,)
+
+
 def read_sources(root, refs):
     """Yield (source, path, text-or-None) for every crossbox file on every ref and in the working tree."""
     for ref in refs:
@@ -116,7 +129,22 @@ def union(root, refs):
             bad.append((source, path, "unreadable from this source"))
             continue
         by_source.setdefault(source, {})[path.rsplit("/", 1)[-1]] = text
-    entries = [(source, name, doc, err) for source, texts in by_source.items() for name, doc, err in CALLS.fold_texts(texts)]
+    # a layout-2 call can span refs: the sender's branch holds the from-side file, the answering box's branch its answer file.
+    # So every answer file is offered to every source's fold (the most advanced copy of a name wins), and an answer that a
+    # source does not hold is not that source's error.
+    answers = {}
+    for texts in by_source.values():
+        for name, text in texts.items():
+            if CALLS.ANSWER_RE.fullmatch(name) and (name not in answers or _advance(text) > _advance(answers[name])):
+                answers[name] = text
+    entries = []
+    for source, texts in by_source.items():
+        full = dict(answers)
+        full.update(texts)
+        for name, doc, err in CALLS.fold_texts(full):
+            if err is not None and CALLS.ANSWER_RE.fullmatch(name) and name not in texts:
+                continue
+            entries.append((source, name, doc, err))
     for source, name, doc, err in entries:
         if err is not None:
             bad.append((source, FOLDER + "/" + name, err))
