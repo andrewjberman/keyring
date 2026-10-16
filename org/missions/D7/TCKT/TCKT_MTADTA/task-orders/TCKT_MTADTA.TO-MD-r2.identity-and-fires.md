@@ -14,7 +14,7 @@
 <round>2</round>
 
 **Directive:** D7 | **Fabric:** dell1 | **Decomp cell:** `MD-r-2` (`decompositions/TCKT_MTADTA_DECOMP_R2.md`) |
-**outcome_ref:** FWD-1, FWD-7, FWD-9 | **depends_on:** `MD-r-1` complete. **STAGED: the issuer flips it to `pending` after MD-r-1 closes.**
+**outcome_ref:** FWD-1, FWD-7, FWD-9 | **depends_on:** `MD-r-1` complete. **STAGED: the issuer flips it to `pending` after MD-r-1 closes and its probe (item 7d) read AccessDenied.**
 
 ---
 
@@ -46,7 +46,10 @@ messages you when he has acted.
    `org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/subs_started_at.txt` and commit it. The Entra sign-in feed `Audit.AzureActiveDirectory` is NOT subscribed (PRD C-FIELDS (a)).
 5. **Two scheduled fires.** The collector fires hourly on its own clock. Do NOT invoke it by hand for the criterion (an ad-hoc run is QA only; the scheduled fire is the acceptance). Wait for two fires after the start time
    (about two hours), then run the three checks from the repository root. **The first content may take up to 12 hours to appear (the vendor's word); the criteria below do not need content, only two clean fires.**
-6. **Hand over.** Report to the issuer: the three check lines, the HTTP statuses of the starts, the time the subscriptions started. The issuer cards Andrew for his live read of FWD-1 and the first-content read.
+6. **The admin GetObject probe (the CTO's FWD-8 criterion, deferred from MD-r-1).** Once the first clean fire has written the cursor, run `r2_check_r1.py getobject` from the repository root: an admin `GetObject` on the EXISTING
+   cursor key must read AccessDenied (a missing key reads NoSuchKey, which proves nothing).
+7. **Hand over.** Report to the issuer: the check lines, the HTTP statuses of the starts, the time the subscriptions started. State in the report how Andrew runs the door scripts with his MFA session (the group's invoke now
+   requires `aws:MultiFactorAuthPresent`): the exact commands to obtain a session token with his MFA device and the environment variables boto3 reads, without any secret. The issuer cards Andrew for his live read of FWD-1 and the first-content read.
 
 ### ACCEPTANCE
 
@@ -62,10 +65,13 @@ messages you when he has acted.
 <criterion id="MD2-r2-AC4" cell_refs="MD-r-2" judgment="true"/>
 `MD2-r2-AC4` -- JUDGMENT, graded by the CVO at L9, never by you: Andrew names one of the eight and a trading day and reads that person's Microsoft 365 day in order from collection that is actually running, and recognises it as that person's day (PRD FWD-1). You do not run, grade or claim this one.
 
-<expected_criteria>MD2-r2-AC1,MD2-r2-AC2,MD2-r2-AC3,MD2-r2-AC4</expected_criteria>
+<criterion id="MD2-r2-AC5" cell_refs="MD-r-2"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R2_CHECKS/r2_check_r1.py getobject</invocation><expect>R1-GETOBJECT-OK</expect></criterion>
+`MD2-r2-AC5` -- (a fourth mechanical criterion, with this reason: the CTO's ruling, msg 6614, moved the admin GetObject probe here because it needs an object that exists) an admin `GetObject` on the existing cursor key reads AccessDenied.
+
+<expected_criteria>MD2-r2-AC1,MD2-r2-AC2,MD2-r2-AC3,MD2-r2-AC4,MD2-r2-AC5</expected_criteria>
 
 Dry-run at the base 2026-10-16 ~08:5xZ: AC1 `R2-APP-REFUSED the credential secret has no readable JSON value`, AC2 `R2-SUBS-REFUSED no credential`, AC3 `R2-FIRES-REFUSED ...` -- each FAIL as expected. All three are reads; they print no value.
-(AC4 carries a fourth criterion with the reason that FWD-1's live read is the round's exercised outcome and only Andrew can give it.)
+(AC4 is the judgment criterion: FWD-1's live read is the round's exercised outcome and only Andrew can give it.)
 
 ## BOUNDS
 
@@ -89,8 +95,8 @@ org/missions/D7/TCKT/TCKT_MTADTA/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: MD2-r2-AC1, MD2-r2-AC2, MD2-r2-AC3, MD2-r2-AC4. Instance at `org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/TCKT_MTADTA.TO-MD-r2.identity-and-fires.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> MD2-r2-AC1,MD2-r2-AC2,MD2-r2-AC3,MD2-r2-AC4` BEFORE the flip. AC1-AC3 mechanical; AC4 judgment (UNVERIFIABLE-BY-INSTRUMENT, graded by the CVO).
+Criterion ids: MD2-r2-AC1, MD2-r2-AC2, MD2-r2-AC3, MD2-r2-AC4, MD2-r2-AC5. Instance at `org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/TCKT_MTADTA.TO-MD-r2.identity-and-fires.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> MD2-r2-AC1,MD2-r2-AC2,MD2-r2-AC3,MD2-r2-AC4,MD2-r2-AC5` BEFORE the flip. AC1-AC3 and AC5 mechanical; AC4 judgment (UNVERIFIABLE-BY-INSTRUMENT, graded by the CVO).
 </proof_of_spec>
 
 **REPORT:** the commands Andrew runs (as in item 2); the three check lines; the subscription HTTP statuses; the start time; every refusal and denial verbatim. No secret, tenant or client value.

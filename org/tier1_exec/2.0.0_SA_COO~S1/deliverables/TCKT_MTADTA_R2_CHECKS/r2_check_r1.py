@@ -2,7 +2,8 @@
 Run from the repo root by the CloudOps seat, after the apply, under the box's own identity (a non-member of the access group).
 
   python r2_check_r1.py applied  -> R1-APPLIED-OK  (bucket policy, key policy, aliases, group read back as built)
-  python r2_check_r1.py refusals -> R1-REFUSALS-OK (an admin GetObject, a non-member invoke, the collector role's grants)
+  python r2_check_r1.py refusals -> R1-REFUSALS-OK (the no-MFA box identity is refused on both aliases; the collector role keeps only its own alias)
+  python r2_check_r1.py getobject -> R1-GETOBJECT-OK (run after the first clean fire: an admin GetObject on the existing cursor key reads AccessDenied)
   python r2_check_r1.py plan     -> R1-PLAN-OK     (a plan of the trino root after the policy lands exits 0: no lock-out, no drift)
   python r2_check_r1.py mfa      -> R1-MFA-OK      (the group's invoke needs MFA; the group holds Andrew_Berman alone, who has an MFA device)
 
@@ -96,16 +97,11 @@ def applied():
 
 def refusals():
     bad = []
-    rc, out, err = aws("s3api", "get-object", "--bucket", BUCKET, "--key", CURSOR, os.path.join(tempfile.gettempdir(), "r1_probe.out"))
-    if rc == 0 or "AccessDenied" not in err:
-        bad.append("an admin GetObject was not refused (rc=%d)" % rc)
     probe = os.path.join(tempfile.gettempdir(), "r1_invoke.out")
-    rc, out, err = aws("lambda", "invoke", "--function-name", FN, "--qualifier", "member", "--payload", "e30=", probe)
-    if rc == 0 or "AccessDenied" not in err:
-        bad.append("a non-member invoke of the member alias was not refused (rc=%d)" % rc)
-    rc, out, err = aws("lambda", "invoke", "--function-name", FN, "--qualifier", "collector", "--payload", "e30=", probe)
-    if rc == 0 or "AccessDenied" not in err:
-        bad.append("the box identity invoked the collector alias (rc=%d)" % rc)
+    for alias in ("member", "collector"):
+        rc, out, err = aws("lambda", "invoke", "--function-name", FN, "--qualifier", alias, "--payload", "e30=", probe)
+        if rc == 0 or "AccessDenied" not in err:
+            bad.append("the box identity (no MFA) invoked the %s alias or was not refused with AccessDenied (rc=%d)" % (alias, rc))
     rc, out, err = aws("iam", "get-role", "--role-name", CROLE)
     if rc != 0:
         bad.append("collector role missing")
@@ -115,12 +111,18 @@ def refusals():
     acct = (arn or "arn:aws:iam::313476888478:role/x").split(":")[4]
     fn_arn = "arn:aws:lambda:us-east-1:%s:function:%s" % (acct, FN)
     if arn:
-        def sim(action, resource):
-            rc, o, e = aws("iam", "simulate-principal-policy", "--policy-source-arn", arn, "--action-names", action, "--resource-arns", resource)
+        def sim(action, resource, alias=None):
+            args = ["iam", "simulate-principal-policy", "--policy-source-arn", arn, "--action-names", action, "--resource-arns", resource]
+            if alias:
+                rc, o, e = aws("lambda", "get-policy", "--function-name", FN, "--qualifier", alias)
+                if rc == 0:
+                    args += ["--resource-policy", json.loads(o)["Policy"],
+                             "--context-entries", "ContextKeyName=aws:MultiFactorAuthPresent,ContextKeyValues=false,ContextKeyType=boolean"]
+            rc, o, e = aws(*args)
             d = j(o) or {}
             return [r["EvalDecision"] for r in d.get("EvaluationResults", [])]
-        if sim("lambda:InvokeFunction", fn_arn + ":collector") != ["allowed"]:
-            bad.append("the collector role cannot invoke its own alias")
+        if sim("lambda:InvokeFunction", fn_arn + ":collector", "collector") != ["allowed"]:
+            bad.append("the collector role cannot invoke its own alias under the MFA-absent Deny (carve-out missing)")
         if sim("lambda:InvokeFunction", fn_arn + ":member") == ["allowed"]:
             bad.append("the collector role can invoke the member alias")
         if sim("s3:GetObject", "arn:aws:s3:::%s/%s" % (BUCKET, CURSOR)) == ["allowed"]:
@@ -131,6 +133,21 @@ def refusals():
         print("R1-REFUSALS-REFUSED " + "; ".join(bad))
         return 1
     print("R1-REFUSALS-OK")
+    return 0
+
+
+def getobject():
+    """Run after the first clean fire: the cursor exists, so an explicit Deny reads AccessDenied (a missing key reads NoSuchKey)."""
+    out_file = os.path.join(tempfile.gettempdir(), "r1_probe.out")
+    rc, out, err = aws("s3api", "head-object", "--bucket", BUCKET, "--key", CURSOR)
+    if "Not Found" in err or "NoSuchKey" in err or "404" in err:
+        print("R1-GETOBJECT-REFUSED the cursor does not exist yet; run after the first clean fire")
+        return 1
+    rc, out, err = aws("s3api", "get-object", "--bucket", BUCKET, "--key", CURSOR, out_file)
+    if rc == 0 or "AccessDenied" not in err:
+        print("R1-GETOBJECT-REFUSED an admin GetObject on an existing key was not refused (rc=%d)" % rc)
+        return 1
+    print("R1-GETOBJECT-OK")
     return 0
 
 
@@ -186,7 +203,7 @@ def mfa():
 
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else ""
-    fn = {"applied": applied, "refusals": refusals, "plan": plan, "mfa": mfa}.get(mode)
+    fn = {"applied": applied, "refusals": refusals, "plan": plan, "mfa": mfa, "getobject": getobject}.get(mode)
     try:
         sys.exit(fn() if fn else 2)
     except Exception as e:  # noqa: BLE001
