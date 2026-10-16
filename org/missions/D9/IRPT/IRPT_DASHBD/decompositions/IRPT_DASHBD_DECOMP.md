@@ -2800,3 +2800,17 @@ The CTO's ruling (msg 9866) builds the allocation and the positions panels now, 
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~249`), cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; AC1 and AC2 PASS on a reference component and mount in a scratch portal worktree):** `checks/r149/p180_portal_holdings_panels.py` (DBP180-1-AC1..AC3).
+
+## 174. ROUND 149, WORKSTREAM PORTALFIRMGATE (2026-10-16 ~22:2xZ, issuer 2.0.0_SA_COO~D2): the Performance tab mounts the 49 Financial template for a 49 Financial client only
+
+The page owner's R154 check (@84ff9c5bcc) found that `PerformanceTemplateView` mounts for any client with no firm test, so an Inflection page shows the SYNTHETIC PREVIEW banner and the 49 Financial fixture beside its PATH A performance (a regression against what Andrew saw: "An Inflection client (Andersen) shows performance"). The CTO ruled (msg 9933): the template block mounts for `49financial` only; Cottonwood joins when its filled report publishes; Inflection never; one test per firm; the new head replaces the served one and approval row `dell2-20261016T213548Z-8f16` is re-registered at the new head with the same waiver terms.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. A firm test around the one template mount in `ReportingTab.tsx` (at most 8 lines) and one test per firm; a follow-up commit on the `DB-b-309` branch, same branch name | DB-b-314 | FWD-10 (Andrew's smoke) | SERVED, client-facing | `DB-b-309` (merged, head `75a71ae3`) | chain AH |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the SAME branch (the served head Andrew smokes), not a stacked one, because the CTO's ruling replaces the head; the holdings-panels branch of `DB-b-313` descends from `75a71ae3` and will merge this follow-up (a small conflict at the mount line, resolved at its drain); (b) a NEW worker (`~250`) on its own worktree, so `~249` (on `DB-b-313`) is not interrupted.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~250`), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; AC1 and AC2 PASS on a reference edit in a scratch portal worktree):** `checks/r149/p181_template_firm_gate.py` (DBP181-1-AC1..AC3).
