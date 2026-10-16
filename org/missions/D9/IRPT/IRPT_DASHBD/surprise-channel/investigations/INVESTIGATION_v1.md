@@ -21150,3 +21150,132 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. Recorded for the issuer; the checker file is outside this grant and was not edited."
 }
 ```
+
+## IRPT_DASHBD-D2-W1201-S1 -- The TO names eleven Inflection fields as the columns the code reads; the gold producer reads four of them (plus status), and the other seven are named by the pull only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1201-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1201",
+  "surfaced_at": "2026-10-16T05:41:27Z",
+  "one_line": "The TO and the round-120 record say the Inflection code reads eleven columns; the eleven are the pull's confirmed field set, and the gold producer reads four of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-1201 (the Why paragraph and step 1): the Inflection code reads eleven columns (the pull about line 99), and the record states the source the code reads for each of the fourteen targets.",
+  "world_is": "The eleven names are the pull's CONFIRMED_FIELDS set (data/inf/manual_api/pull_inflection_transactions_rest.py lines 98 to 101), tested for presence in the pulled frame (line 561), not the gold producer's reads. The gold adapter flows_of (data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py lines 191 to 195) reads accountId, transactionDescription, transAmount and transDate from the eleven, and status, which is not in the set. Seven of the eleven (id, clientId, householdId, transTypeId, noUnits, navPrice, ticker) are named by the pull only. The record cites the pull for those seven and labels them as the pull's claim.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_transactions_rest.py@9fed5fbb43",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py@9fed5fbb43"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The contract should carry the seven pull-named fields as the pull's claim; whether the gold producer must read them is a CTO question on the producer's scope."
+}
+```
+
+## IRPT_DASHBD-D2-W1201-S2 -- The Inflection transactions silver read is not named in the irpt_reporting folder: the gold producer takes a frame, and its only caller in that folder is a test
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1201-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1201",
+  "surfaced_at": "2026-10-16T05:41:27Z",
+  "one_line": "No code in the irpt_reporting folder reads the Inflection transactions silver table; the gold adapter takes a frame, so the record's silver source cites the docstring and states the gap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-1201 step 3: silver_source names where the code reads the firm's transactions and from which prefix or API.",
+  "world_is": "flows_of (data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py line 179, docstring line 180) takes one fact_transactions frame; the root is ORION_SILVER (line 47). comp-find -i 'fact_transactions' over the irpt_reporting, data/inf and lib folders: 11 hits in 1105 files, none an Inflection transactions read. Within the irpt_reporting folder the only caller of flows_of is the test file test_inflection_account_return_daily.py (lines 83 and 98). The Inflection transactions silver partition is named silver/transactions at data/inf/scripts/gold/INF_build_canonical_prices.py line 432. The record's silver_source cites the docstring line and states this gap.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py@9fed5fbb43",
+      "data/inf/scripts/gold/INF_build_canonical_prices.py@9fed5fbb43"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The record is written on the gap, not on a guessed prefix. The CTO or the producer's order decides which silver read the Inflection account_transaction producer copies."
+}
+```
+
+## IRPT_DASHBD-D2-W228-S1 -- the 0.4.4 income_claim declaration is read by the 041 and 042 reference validators as an unconditional requirement, so three earlier tests fail on Black Diamond rows
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W228-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~228",
+  "surfaced_at": "2026-10-16T05:26:44Z",
+  "one_line": "The 0.4.4 income_claim declaration (required_when source Black Diamond, required_when_null income_received) is read by the 041 and 042 reference validators as an unconditional requirement; three earlier tests fail on Black Diamond rows that carry an income and no claim.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-b-284 step 2 fixes required_when {source: computed from Black Diamond values and flows} and required_when_null income_received. Step 4 says the four earlier tests change only what the 0.4.4 edit forces, and that any other failure of an earlier test is a BLOCKING row and the worker stops.",
+  "world_is": "Commit 44dab71e66 on wk-IRPT_DASHBD-228 carries the declaration as ordered. Tests 041 test_black_diamond_0_3_0_row_validates, 042 test_black_diamond_0_3_0_row_without_a_claim_validates and 042 test_black_diamond_row_carrying_a_measured_claim_validates fail with 'income_claim is required on this row'. The _required helper in 041 (line 53) and in 042 (line 52) returns true whenever every required_when key matches and never reads required_when_null, so a Black Diamond row with income 0.0 and no claim is required to carry the claim. Measured on the worktree: the four earlier files passed 84 at base; after the edit, the five contract files give 3 failed and 102 passed (the new file holds 21 of the 102); the whole irpt_reporting test directory gives 5 failed and 598 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_041.py@44dab71e66",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_contract_042.py@44dab71e66"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided by the worker. The refusal clause forbids repairing the validator, and the worker did not edit 041 or 042 for this. Either the reference validators learn required_when_null, which is a validator change beyond the named pinned-line edits, or the declaration takes a form the existing validators read. The issuer decides. AC3 is FAIL as written until then. The worker did not flip the order to complete."
+}
+```
+
+## IRPT_DASHBD-D2-W228-S2 -- the scope-feed adapter test pins the optional-column count at six and fails on the seven the 0.4.4 contract declares; the file is outside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W228-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~228",
+  "surfaced_at": "2026-10-16T05:26:44Z",
+  "one_line": "test_inflection_scope_feed_adapter.py asserts six optional columns and fails on the seven the 0.4.4 contract declares; the file is outside this order's grant and was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-b-284 bounds: the grant is the contract, the five contract test files, the folder, the investigation file and the task-order files; no adapter, producer, publisher or portal file is edited. Step 4 names the four earlier contract tests as the only earlier tests that may need a minimal edit.",
+  "world_is": "At commit 44dab71e66, test_inflection_scope_feed_adapter.py line 355 asserts len(optional) == 6 and CLAIM in optional. The test test_every_output_row_passes_the_contract_validator_and_carries_the_contract_columns fails with '(19 == 19 and 7 == 6)'. The adapter test is not one of the four named earlier tests, so the worker left it unedited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_adapter.py@44dab71e66"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided by the worker. The issuer decides whether this test moves to 0.4.4 in a later cell; this cell's grant does not cover it."
+}
+```
+
+## IRPT_DASHBD-D2-W228-S3 -- the scope-feed run test expects the written parquet to carry every declared optional column and to hash to the 0.4.4 value; the producer writes 25 fields and the contract now declares 26
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W228-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~228",
+  "surfaced_at": "2026-10-16T05:26:44Z",
+  "one_line": "test_inflection_scope_feed_run.py builds its declared field list from every contract optional column and asserts 25 written fields hashing to schema_hash_with_optional; with income_claim declared it fails 26 == 25. The file is outside the grant and was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-b-284 step 2: the contract gains one declared optional column, and no adapter, producer, publisher or portal file is edited; a producer that writes the column is a later cell.",
+  "world_is": "At commit 44dab71e66, test_inflection_scope_feed_run.py builds DECLARED from every contract optional column (line 49), so it now expects income_claim among the written fields. Its test test_written_fields_are_the_contract_declared_fields_and_hash_to_schema_hash_with_optional fails with 'assert 26 == 25' and asserts that the 25 written fields hash to the contract's schema_hash_with_optional. The producer writes 25 fields and does not write income_claim.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_run.py@44dab71e66",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@44dab71e66"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided by the worker. The contract now declares a column that no producer writes, which is the state the order names for a later producer cell. The issuer decides how the run test's declared-field assertion is to read a declared-but-unwritten optional column."
+}
+```

@@ -23,13 +23,18 @@ Served rows (read now): `daily_returns` 1,691,729; `month_grades` 82,593; `accou
 
 For each key, copy the prior VersionId above back as the current version: `s3api copy-object --copy-source opal-data-assets/<key>?versionId=<prior VersionId>`; then read the three objects back and compare size and ETag with the table above. No key is deleted.
 
-## 3. Expected outcome, BOTH branches (to be completed from the control record)
+## 3. Expected outcome, BOTH branches (rewritten after the CTO's ruling, msg 6530: round 97 carries the Yahoo source and relabels)
 
-- **Branch A, the control reads equal on all three tables.** The built tables equal the served ones on every pre-existing column, row for row, with ONE exception stated here so it is not read as a moved value: `run_commit` changes from `6f70d5cc01bb...` to the build's commit on every row. It is a provenance column, not a value. Two columns are APPENDED: `use_class` (immediately before `porting_verdict`) and `porting_verdict` (last). `porting_verdict` was built in round 83 and never applied, so it is new to the served tables too. Row counts do not change. Label counts: from the record.
-- **Branch B, the control reads a difference on any table.** NOT SIGNED. The difference is a finding for the CTO and nothing is written.
-- **Either way the act writes labels only.** The `interim` policy moves no value (builder docstring; round 89 record). `--yahoo-active-policy blank` is never applied (call `3adb` (a); the builder refuses it under `--apply`).
+The build to apply is round 97's local build (`.scratch/cotbkf_r97/build/`, off git), made by `CB-cs-1` from a regrade re-run at the served settings with the current code. Its `run_commit` is the order's worktree HEAD (the record states it); the applier runs `--dry-run` and `--apply` against that `--out` and never `--build`.
+
+- **Branch A, the control reads equal on all three tables AND the labels mark the Yahoo-sourced prices.** The built tables equal the served ones on every pre-existing column, row for row, with ONE exception stated here so it is not read as a moved value: `run_commit` changes from `6f70d5cc01bb...` to the build's commit on every row (a provenance column). Two columns are APPENDED: `use_class` (immediately before `porting_verdict`) and `porting_verdict` (last). Row counts do not change. The labels are non-trivial: `account_day_value` rows whose `price_source` names `yahoo_finance` or `linear_interpolation` equal its rows whose `use_class` is not `NOT_YAHOO` (AC2 of `CB-cs-1`, at least one such row); label counts per table and the NOT_FOR_ACTIVE account count: from the record.
+- **Branch B, the control reads a difference on any pre-existing column of any table.** NOT SIGNED. The difference is a finding for the CTO and nothing is written (CTO msg 6455: delta 0 or stop).
+- **Branch C, the control reads equal but the labels do not mark the Yahoo-sourced prices** (AC2 `equal=False`, or `yahoo_source_rows` 0). NOT SIGNED: a label that reads NOT_YAHOO over a Yahoo-sourced price serves a false claim (CTO msg 6530). Reported to the CTO.
+- **Either way the act writes labels only.** The `interim` policy moves no value (builder docstring; round 89 record). `--yahoo-active-policy blank` is never applied (call `3adb` (a); the builder refuses it under `--apply`). The labelled days stay labelled interim until Bloomberg replaces them (Andrew's `3adb`, `ANDREW_DIRECT_20261015_205xZ_CALLS_BCCC_3ADB_BBD5.md`).
 
 ## 4. Counts
+
+**Superseded by round 97 once its record is read (`deliverables/0.9.0_WK_ADVI_COTBKF~187/SERVED_MOVE_RELABEL_RECORD.json`); the round-96 reading below is kept as the finding that caused the recut.**
 
 From `deliverables/0.9.0_WK_ADVI_COTBKF~186/SERVED_MOVE_MEASURED_RECORD.json` @26f2781a61 (round 96, CB-cr-1; received run data 20,563 files, 4,478,568,892 bytes):
 
@@ -39,7 +44,7 @@ From `deliverables/0.9.0_WK_ADVI_COTBKF~186/SERVED_MOVE_MEASURED_RECORD.json` @2
 
 ## 5. Conditions
 
-- The round-96 control record reads `pre_existing_equal` true on all three tables, measured on run data copied from dell2 whose file count and total bytes equal dell2's own listing (CTO msg 6467).
+- The round-97 record (`SERVED_MOVE_RELABEL_RECORD.json`) reads `pre_existing_equal` true on all three tables, measured on run data copied from dell2 whose file count and total bytes equal dell2's own listing (CTO msg 6467; 20,563 files, 4,478,568,892 bytes, equal), and the label check (AC2) reads at least one Yahoo-sourced row with `equal=True`.
 - The applier runs `--dry-run` and `--apply` against the issuer's local build and never `--build`; the run_commit is part of the table content.
 - The reader gate and any consumer of the served tables are read at signing; the CVO grades the labelled served tables after the write.
 - The CTO half is signed against the same section-1 versions and section-3 branches.
