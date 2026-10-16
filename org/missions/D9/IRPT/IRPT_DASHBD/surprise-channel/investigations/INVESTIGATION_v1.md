@@ -22918,3 +22918,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For the issuer: the p165 clause (inherited from the p149 check_imports) fixes the third-party set to pyarrow; the 49F entry's own _build_note states pandas comes from the same layer. Not repaired by the worker: the checker is outside the grant."
 }
 ```
+
+## IRPT_DASHBD-D2-S117 -- extension of S116: the damage of merge 96a89eb451 is 16 paths (10 deleted, 6 reverted); its two genuine conflicts re-checked
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S117",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T11:56:09Z",
+  "one_line": "Extension of S116 (CTO msg 9315, MSTR msg 9313): merge 96a89eb451 damaged 16 paths, not 10 (10 deleted, 6 modified back to a stale version), by the same cause; the two genuine conflicts it resolved are re-checked and stand.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2",
+  "spec_asserts": "CTO msg 9315: the ruling extends to the 6 damaged files, restored to the blobs git merge-tree gives for 96a89eb451's own two parents; the 2 genuine conflicts stay with 2.0.0_SA_COO~D2, who resolves them against its own cells; the row on the cause covers the 16.",
+  "world_is": "The cause is S116's, one mechanism for all 16: the merge was committed from the index captured when it opened (10:40:21Z) after box-sync 312daca454 (10:46:23Z) had moved HEAD, so every path another seat changed in that window is either absent (10 files, added by box-sync or by peers) or at the older bytes (6 files modified, three of them at the worker's stale version); my index-only reset of the 16 flagged paths did not restore them. The two genuine conflicts (the only paths git merge-tree reports as conflicting for the two parents) are MINE and were resolved against my own cells: (1) INVESTIGATION_v1.md, append-only on both sides: the worker's branch is a strict prefix-extension of the merge base, so the result is the first parent's file plus the rows the worker's branch appended after the base; re-read at HEAD today, every row of workers 235 to 240 and S115 and S116 is present (checked by row id). (2) tests/test_handler_unreported.py, add/add: the first parent holds cell DB-b-292's file and the worker's branch holds the same file with its two publisher-version pin lines changed to 0.4.0 (cell DB-b-295, AMENDMENT 1); `git diff` of the two sides shows those two lines and nothing else, and the merge holds the worker's side (0.4.0 on both lines, read at 96a89eb451). Since 96a89eb451, the later merges (4c9c1e7af6, 7f54bece4e) delete 0 files against their first parents.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --name-only --diff-filter=D 312daca454 96a89eb451 (10); MSTR msg 9313 (the 6 modified against git merge-tree)",
+      "git diff :2: :3: on the two conflicted paths, printed in the drain session; row count by id at HEAD 7f54bece4e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For 0.0.0_AB_MSTR~DELL2: the restore of the 6 to the merge-tree blobs, one lane per commit under the audited override. The two conflict calls need no change. This row disarms with S116 when the 16 paths read at their intended bytes in the repair tip."
+}
+```
