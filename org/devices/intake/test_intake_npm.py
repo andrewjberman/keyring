@@ -49,6 +49,8 @@ SERIAL = "0.9.0_WK_NFRA_CTLPLN~147"
 BATCH = "npm-limb-test"
 UNSCOPED = ("limbprobe", "1.0.0")
 SCOPED = ("@limbprobe/core", "7.29.7")
+PUBLISHED_TIME = "2024-03-01T00:00:00.000Z"   # the packument's time[<version>] in every fixture: old enough to pass check 4
+EARLIER_TIME = "2023-06-01T00:00:00.000Z"
 ENV_KEYS = ("OPAL_INTAKE_ROOT", "OPAL_INTAKE_RECORDS", "OPAL_INTAKE_AV_JSON", "OPAL_INTAKE_SITE", "OPAL_INTAKE_SIGNER_DIR",
             "OPAL_AGENT_SERIAL")
 
@@ -158,6 +160,7 @@ class Env:
         self.approved = os.path.join(self.tmp, "approved.txt")
         self.lock = os.path.join(self.tmp, "bun.lock")
         self.reg = Registry()
+        self.packs = {}
         self.saved = {k: os.environ.get(k) for k in ENV_KEYS}
 
     def close(self):
@@ -183,14 +186,27 @@ class Env:
             fh.write(bun_lock_text(entries))
 
     def publish(self, name, version, data, reg_integrity=None, host_base=None):
-        """Publish one version: the version document at /<name quoted, @ kept>/<version>, its tarball at the URL it names."""
+        """Publish one version: the version document at /<name quoted, @ kept>/<version>, its tarball at the URL it names, and
+        the packument at /<name quoted, @ kept> (CT-cc-1 addendum 3: time[<version>] is the publish time check 4 reads)."""
         tar_path = "/%s/-/%s-%s.tgz" % (name, name.split("/")[-1], version)
         base = host_base or self.reg.base
-        dist = {"tarball": base + tar_path, "integrity": reg_integrity or sri(data), "shasum": sha1_hex(data)}
+        integ = reg_integrity or sri(data)
+        dist = {"tarball": base + tar_path, "integrity": integ, "shasum": sha1_hex(data)}
         doc = {"name": name, "version": version, "dist": dist}
         key = "/%s/%s" % (urllib.parse.quote(name, safe="@"), urllib.parse.quote(version, safe=""))
         self.reg.docs[key] = json.dumps(doc).encode("ascii")
         self.reg.blobs[tar_path] = data
+        pack = self.packs.get(name)
+        if pack is None:
+            # three earlier releases under the first one, so the earlier-release minimum (3) reads from the packument
+            pack = self.packs[name] = {"versions": {}, "time": {"created": EARLIER_TIME}}
+            for old in ("0.9.0", "0.9.1", "0.9.2"):
+                pack["versions"][old] = {"name": name, "version": old}
+                pack["time"][old] = EARLIER_TIME
+        pack["versions"][version] = {"name": name, "version": version, "dist": {"integrity": integ}}
+        pack["time"][version] = PUBLISHED_TIME
+        pdoc = {"name": name, "versions": pack["versions"], "time": pack["time"]}
+        self.reg.docs["/%s" % urllib.parse.quote(name, safe="@")] = json.dumps(pdoc).encode("ascii")
         return dist
 
     def fetch(self, name, version, registry_base=None, extra=()):
@@ -244,7 +260,7 @@ class Env:
             return json.load(fh)
 
 
-def signed_lines(name, version, waive=(4,), extra=()):
+def signed_lines(name, version, waive=(), extra=()):
     held = F.npm_held_name(name, version)
     lines = ["# CTO check 8 -- batch %s" % BATCH, "CHECK 8 SIGNED -- release may proceed for this file.", held]
     for n in waive:
@@ -290,9 +306,9 @@ def arm_a():
             both = sri(disk) == dist["integrity"] and lock_int == [sri(disk)]
             rc2, rec, _o2 = env.check(name, version, signed_lines=signed_lines(name, version))
             v = verdicts(rec) if rec else {}
-            expect_v = {1: "passed", 2: "passed", 3: "not_applicable", 4: "failed", 5: "not_applicable", 6: "passed",
+            expect_v = {1: "passed", 2: "passed", 3: "not_applicable", 4: "passed", 5: "not_applicable", 6: "passed",
                         7: "passed", 8: "passed"}
-            checks_ok = v == expect_v and rec.get("verdict") == "released-with-waiver" and rec.get("waived_checks") == [4]
+            checks_ok = v == expect_v and rec.get("verdict") == "checked" and rec.get("waived_checks") == []
             ok_one = held_ok and both and checks_ok
             good = good and ok_one
             details.append("%s@%s held=%s sha512_equal_registry_and_lockfile=%s verdicts=%s verdict=%s waived=%s" % (
@@ -458,7 +474,7 @@ def arm_h():
         env.write_lock([(name, version, dist["integrity"])])
         env.approve(["%s@%s" % (name, version)])
         env.fetch(name, version)
-        rc, rec, _o = env.check(name, version, signed_lines=signed_lines(name, version, waive=(4,)))
+        rc, rec, _o = env.check(name, version, signed_lines=signed_lines(name, version))
         e6 = ev(rec, 6)
         listed = [s["name"] for s in e6["lifecycle_scripts"]] == ["postinstall"]
         named = "package/build/probe.node" in e6["native_binaries"]
@@ -468,7 +484,7 @@ def arm_h():
         env.write_lock([(name, version, dist["integrity"]), (name2, version2, dist2["integrity"])])
         env.approve(["%s@%s" % (name, version), "%s@%s" % (name2, version2)])
         env.fetch(name2, version2)
-        rc2, rec2, _o2 = env.check(name2, version2, signed_lines=signed_lines(name2, version2, waive=(4,)))
+        rc2, rec2, _o2 = env.check(name2, version2, signed_lines=signed_lines(name2, version2))
         restricted = any("os/cpu restriction" in n for n in ev(rec2, 6)["native_binaries"])
         not_run = e6["executed"] is False and verdicts(rec)[6] == "passed"
         return listed and named and restricted and not_run, [
@@ -503,7 +519,7 @@ def arm_i():
             "LIFECYCLE %s: postinstall runs setup.js, signed by the CTO" % held])
         rc3, rec3, _o3 = env.check(name, version, signed_lines=both)
         c8c = rec3["checks"][7]
-        passed_with_lines = c8c["verdict"] == "passed" and rec3["verdict"] == "released-with-waiver"
+        passed_with_lines = c8c["verdict"] == "passed" and rec3["verdict"] == "checked"
         failed_alone = c8a["verdict"] == "failed" and names_both
         return failed_alone and missing_lifecycle and passed_with_lines, [
             "batch line only: check 8=%s" % c8a["verdict"],
@@ -563,7 +579,7 @@ def arm_k():
         for name, version in names:
             env.fetch(name, version)
             rc, rec, _o = env.check(name, version, signed_lines=signed_lines(name, version))
-            if rec.get("verdict") != "released-with-waiver":
+            if rec.get("verdict") != "checked":
                 return False, ["check of %s@%s read %s" % (name, version, rec.get("verdict"))]
             env.environ()
             with contextlib.redirect_stdout(io.StringIO()):

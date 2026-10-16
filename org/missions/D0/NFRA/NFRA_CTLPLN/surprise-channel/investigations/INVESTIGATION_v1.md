@@ -13564,3 +13564,131 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The shared name is used whenever no valid file name is known, PyPI and npm alike; a later refusal of that kind replaces the record of an earlier one. The PyPI behaviour is unchanged by this cell."
 }
 ```
+
+## NFRA_CTLPLN-W148-S1 -- the cut's sparse checkout omitted the precheck folder, the CTO and MSTR deliverables and docs/briefs; the base test_intake_check.py read 59/60 ok=False until docs/briefs was added
+
+```json
+{
+  "id": "NFRA_CTLPLN-W148-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~148",
+  "surfaced_at": "2026-10-16T19:31:04Z",
+  "one_line": "The worktree's sparse set omitted infra/aws/ec2/opal-gateway/ops (the precheck script the order names), org/tier0_exec/0.0.0_AB_MSTR/deliverables, org/tier1_exec/1.0.0_SA_CTO/deliverables and docs/briefs; the base run of test_intake_check.py read 59/60 ok=False (FileNotFoundError on the brief) until docs/briefs was added, and the other two folders were added before the reads that named them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at the cut (worktree ctlpln-148, HEAD dd4ee9a041): .tools, infra/logic/registry, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards",
+      "org/devices/intake/test_intake_check.py@dd4ee9a041 line 1038 (case_constants_appear_verbatim_in_the_brief): FileNotFoundError on docs/briefs/nfra-ctlpln-package-intake-and-download-tiers-brief-20261007.md; after git sparse-checkout add docs/briefs the same suite read INTAKE-CHECK-TEST cases=60/60 skipped=0 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worktree holds .tools, lib, the project folder, org/modules/graph, org/devices, infra/logic/registry, org/standards and the paths of the order; a worker that finds a folder missing adds it with git sparse-checkout add and names it in the report (the face's read-first and the W137-S1 rule).",
+  "world_is": "Four folders the face names as read first, or that a base test reads, were outside that set. Each was added before the read that needed it and named in the worker's report. The class is the one row NFRA_CTLPLN-W147-S3 records; this row is the recurrence on a new cut, not a new mechanism."
+}
+```
+
+## NFRA_CTLPLN-W148-S2 -- the dell1 answer the order names is in no commit and no ref; the worktree cannot read it, so the worker read the untracked copy in the base checkout
+
+```json
+{
+  "id": "NFRA_CTLPLN-W148-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~148",
+  "surfaced_at": "2026-10-16T19:31:04Z",
+  "one_line": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL1_BUN_CACHE_DETAILS_ANSWER_20261016.md, the answer the face names as its read, is an untracked file in the base checkout only; the worker read the base copy (read only) and cites it as such.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files in the worktree (HEAD dd4ee9a041) for the path: 0 rows; git log --all --oneline for the path: 0 commits",
+      "git status --short of the base checkout (C:/Users/AndrewBerman/Desktop/ajb_workspace) for the path: '?? org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL1_BUN_CACHE_DETAILS_ANSWER_20261016.md'",
+      "the tracked dell1 answer org/tier1_exec/1.0.0_SA_CTO/deliverables/XB_333B_ANSWER_DELL1_BUN_CACHE_LAYOUT_20261016.md@dd4ee9a041 carries the layout and the delivery facts the build follows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The dell1 bun cache facts are at org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL1_BUN_CACHE_DETAILS_ANSWER_20261016.md and are read from the worktree.",
+  "world_is": "The file is not in any commit, so no worktree can read it. The tracked dell1 answer (XB_333B) carries the same layout facts and the delivery method; the build follows it, and the untracked relay is cited only as the MSTR's record. Whether the relay is committed is for its owner, not for this worker."
+}
+```
+
+## NFRA_CTLPLN-W148-S3 -- the order's install signature has no --lockfile, but its first step (verify) requires one for npm; the install takes --lockfile too, and --from is no longer argparse-required
+
+```json
+{
+  "id": "NFRA_CTLPLN-W148-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~148",
+  "surfaced_at": "2026-10-16T19:31:04Z",
+  "one_line": "The install signature in the order lists --pack and --target but no --lockfile, while the order's first step, the pack verification, needs a lockfile for npm; the npm install therefore requires --lockfile and refuses without it, and install's --from is checked by hand so that --pack can stand for npm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_receive.py verify branch (verify --ecosystem npm without --lockfile prints REFUSED): the verify check requires the lockfile, so the install that runs it must carry one",
+      "org/devices/intake/intake_receive.py@dafbdd0356 run_install_npm: refuses without --pack, --lockfile or --target, and with --dry-run, --python or --user",
+      "org/devices/intake/test_intake_receive.py@dafbdd0356 36/36 ok=True: the pypi install branch is unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "intake_receive.py install --ecosystem npm --pack <pack dir> --target <bun cache dir> [--by <serial>], and --ecosystem pypi is byte-identical to today.",
+  "world_is": "--target is pip's NEW folder on the pypi path and the bun cache on the npm path, so the npm branch is routed before the pypi logic. The pypi tests are unchanged and green; the argparse usage text of install now lists the npm options and the --from error is printed by the same parser."
+}
+```
+
+## NFRA_CTLPLN-W148-S4 -- the precheck's total counts only the lock entries this host installs, while the install's present counts every tarball in the pack; the two denominators agree only when every packed tarball is one this host installs
+
+```json
+{
+  "id": "NFRA_CTLPLN-W148-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~148",
+  "surfaced_at": "2026-10-16T19:31:04Z",
+  "one_line": "The precheck skips lock entries whose os or cpu excludes the host, so its <total> is host-filtered; the install places every verified tarball and reports present=<p>/<k> over the pack. A pack holding a host-restricted package reads a different denominator from the precheck on the same cache.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/ops/bun_cache_precheck.py@dd4ee9a041 lock_entries (lines 62-84): an entry whose os or cpu excludes the host is not counted",
+      "org/devices/intake/intake_receive.py@dafbdd0356 install_npm: present is the count of the packed tarballs whose folder the precheck's per-package state reads ok; no host filter",
+      "org/devices/intake/test_intake_npm_install.py@dafbdd0356 arm f: 3 of 3 on a pack with no os or cpu restriction, so the arms do not exercise this difference"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The install's present=<p>/<k> and the precheck's <present> of <total> agree on the same cache, and dell1's batch reads 77 of 77.",
+  "world_is": "The two agree only when every packed tarball is one this host installs. The install does not filter by host, so a batch that carries a host-restricted package (the lockfile of a vite project names every platform's binaries) makes k larger than the precheck's total on that host. The receipt of the batch should be read from the precheck, not from the install's last line alone."
+}
+```
+
+## NFRA_CTLPLN-W148-S5 -- a packument with a publish time old enough for check 4 moved four npm arms of test_intake_npm.py from released-with-waiver to checked; the order allowed the fixture to change only as far as serving a packument
+
+```json
+{
+  "id": "NFRA_CTLPLN-W148-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~148",
+  "surfaced_at": "2026-10-16T19:31:04Z",
+  "one_line": "Serving the fixture's packument with an old time[version] makes check 4 pass for real, so the arms that asserted the waiver path (a, h, i, k) changed their expectations to check 4 passed with no WAIVE line; the order's 'change it only as far as that' was followed for the registry and these expectations followed from it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_npm.py@2358938a32 Env.publish: the packument at /<name> with time[<version>] = PUBLISHED_TIME (2024-03-01) and three earlier releases",
+      "org/devices/intake/test_intake_npm.py@2358938a32 signed_lines default waive=() and arms a, i, k verdict expectations; the suite reads INTAKE-NPM arms=13/13 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "test_intake_npm.py may need its fixture registry to serve a packument: change it only as far as that, and its 13 arms stay green.",
+  "world_is": "The 13 arms stay green, but four of them now assert a passing check 4 where they asserted a waiver. A too-new fixture time would have kept the waiver path and asserted a false publish-time story, so the old time was chosen; the choice is recorded for the issuer's review."
+}
+```

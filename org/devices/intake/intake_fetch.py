@@ -128,6 +128,15 @@ def npm_held_name(name, version):
     return "%s-%s.tgz" % (name.replace("@", "").replace("/", "__"), version)
 
 
+def iso_time(text):
+    """A timezone-aware datetime for an ISO 8601 time that states its zone (npm's 'Z' form included), else None."""
+    try:
+        dt = datetime.datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except (ValueError, AttributeError):
+        return None
+    return dt if dt.tzinfo is not None else None
+
+
 def npm_line_pattern(line):
     """The exact-line search for an npm approval line name@version: not preceded by a letter, digit, . _ - / @ or ~,
     not followed by a letter, digit, . _ + ! - or ~. A bare core@1.0.0 never matches a line @babel/core@1.0.0."""
@@ -535,6 +544,9 @@ class Fetch:
         last = urllib.parse.unquote(urllib.parse.urlparse(tarball).path.rsplit("/", 1)[-1])
         if not last.endswith(".tgz"):
             raise Refuse("dist.tarball is not a .tgz file: %s" % ascii_text(tarball)[:200])
+        # (b2) the packument (CT-cc-1 addendum 3, the CTO ruling of 2026-10-16): the same host, the name quoted as the version
+        # document's is. time[<version>] is the publish time check 4 reads. Refused before any tarball request.
+        self.rec["packument"], self.rec["project"] = self.read_packument(a.name, a.version, integrity)
         att = dist.get("attestations")
         att_url = att.get("url") if isinstance(att, dict) and isinstance(att.get("url"), str) else None
         self.rec["attestation"] = "present" if att_url else "absent"
@@ -561,6 +573,42 @@ class Fetch:
         self.rec["held_path"] = "holding/%s/%s" % (a.batch, self.file_name)
         self.rec["held_sha256"], self.rec["held_bytes"] = self.sha_seen, self.size_seen
         self.rec["outcome"], self.rec["reason"] = "held", "fetched from the registry host; NOT yet checked (intake_check.py reads it)"
+
+    def read_packument(self, name, version, integrity):
+        """The npm packument (CT-cc-1 addendum 3): GET <base>/<name> on the same host. Returns (packument block, project facts)
+        in the shape check 4 reads for PyPI: release_count (the packument's versions), first_release_at (the earliest time of
+        any version) and this_release_at (time[<version>]). Raises Refuse, with no tarball request made, when the packument is
+        unreadable, lacks versions[<version>] or time[<version>], or its versions[<version>].dist.integrity differs from the
+        version document's integrity (a registry that tells two stories)."""
+        url = "%s/%s" % (self.base, urllib.parse.quote(name, safe="@"))
+        try:
+            status, doc = self.get_json(url)
+        except Fail as exc:
+            raise Refuse("packument unreadable: %s" % exc)
+        if status != 200 or doc is None:
+            raise Refuse("packument unreadable: HTTP %s from %s" % (status, url[:200]))
+        versions, times = doc.get("versions"), doc.get("time")
+        if not isinstance(versions, dict) or not isinstance(versions.get(version), dict):
+            raise Refuse("packument has no versions[%s] object" % version)
+        if not isinstance(times, dict):
+            raise Refuse("packument has no time object")
+        this_at = times.get(version)
+        if not (isinstance(this_at, str) and iso_time(this_at) is not None):
+            raise Refuse("packument has no time[%s] publish time (a version document carries none; the packument is the source)"
+                         % version)
+        pdist = versions[version].get("dist")
+        pint = pdist.get("integrity") if isinstance(pdist, dict) else None
+        if pint != integrity:
+            raise Refuse("packument versions[%s].dist.integrity %s differs from the version document's %s: the registry tells two "
+                         "stories" % (version, ascii_text(pint)[:100], ascii_text(integrity)[:100]))
+        known = {v: t for v in versions for t in [times.get(v)] if isinstance(t, str) and iso_time(t) is not None}
+        first = min(known.values(), key=iso_time)
+        created = times.get("created")
+        block = {"url": url, "integrity_equal": True,
+                 "created": created if isinstance(created, str) else None,
+                 "published_times": {v: known.get(v) for v in sorted(versions)}}
+        facts = {"release_count": len(versions), "first_release_at": first, "this_release_at": this_at}
+        return block, facts
 
     @staticmethod
     def project_facts(proj, version):

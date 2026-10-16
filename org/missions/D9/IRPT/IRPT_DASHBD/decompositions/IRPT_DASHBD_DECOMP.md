@@ -2757,3 +2757,17 @@ Andrew's smoke of `DB-b-307` @49381cb5 on port 5174: "I have not seen a change o
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~246`, resumed), cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected):** `checks/r149/p177_portal_global_and_format.py` (DBP177-1-AC1..AC3).
+
+## 171. ROUND 149, WORKSTREAM FILLEDRD3 (2026-10-16 ~19:4xZ, issuer 2.0.0_SA_COO~D2): the hop-2 reader mints the account ids it composes
+
+The worker row `IRPT_DASHBD-D2-W247-S1` (on the drained `DB-b-306`, merge `0a1224e703`): the composed filled document carries the table's RAW custodial account id in three places (`household.accounts[].account_id`, the account-grain `by_row` keys, chart lines named by an account), where the directory and the summary builder carry the minted opaque id. The document is client-facing once the switch is on, so the reader mints with the handler's own `ids.opaque_account(firm, raw)` on the composed copy (the cached table keeps the raw ids). Asset-class keys and non-account lines are left as they are.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `_filled_mint` helper and the reader's return through it; the seven reader tests that compared with the raw document now expect the minted form; at least four new `mint` tests | DB-b-310 | FWD-10 (hop 2) | WORLD floor (path), no apply | `DB-b-306` (merged) | chain AE |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the minting runs after `_filled_compose`, so `_filled_compose` and its direct tests keep raw ids and the cache is not touched; (b) the account order stays the raw sort order (the checker's expected document keeps it), so no re-sort; (c) only keys equal to the household's own raw account ids are minted, so a class key can never be changed; (d) the contract question the worker row raised (minted or raw in the document) is settled by the summary builder's form, which the document must match; this is the issuer's ruling inside its own decomposition and is reported to the CTO in the next batch.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~248`), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on five handler mutants and one diff mutant):** `checks/r149/p178_filled_reader_mints_ids.py` (DB178-1-AC1..AC3). Base `923e562c61`.
