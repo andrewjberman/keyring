@@ -173,3 +173,27 @@ waits on Andrew's promote word. Row S134 disarms when `~T2`'s FWD-5 tests read g
 
 **Fan-out note for `~T2`:** round 46 issued 7 workers. The dell2 CPU budget is 4 per issuance (the parallelize ruling, ADDENDUM 1). It is
 not recut; the next issuance keeps to 4.
+
+## ADDENDUM 8 (2026-10-16 ~05:1xZ) -- the eight further OPAL_GLOBAL sites (register rows G4 to G11) stand under item 4
+
+**Asked by:** `2.0.0_SA_COO~V2` msg 9078. **Register:** `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R19_GLOBAL_ADMISSIONS_REGISTER.md`
+@8e6ecfc86c. **Census:** `~T2`'s record `deliverables/0.9.0_WK_IRPT_ANLREQ~229/OPAL_GLOBAL_SITES_CLASSIFIED.md` (40 sites under
+`infra/aws/lambda`, 10 admitting before a firm comparison).
+
+**RULED: G4 to G11 STAND under item 4.** Each is the same kind as G1 and G2: the principal is an Opal-staff `OPAL_GLOBAL` minted from the
+server-side roster, and a second decider still holds.
+- **G4 (create in a storage firm)** needs a server-resolved `storage_firm`.
+- **G5 (firm selection)** selects one registry-permitted firm per request, never a default and never a union.
+- **G6, G9, G10 and G11** keep `authorize` / `authorize_record_owner`, and the record's firm must equal the tenant.
+- **G7 and G8 (population)** cover the ONE selected firm only, never a cross-firm union.
+
+None admits a partner-firm or client principal, and none builds an all-firm aggregate.
+
+**One defect named, not a block:** G8 is a byte-identical COPY of G7's admission (`holdings/resolve.py:440-450`). Two copies of one rule can
+drift, so the register's pairing (a change to one is a change to both) stands as the guard. Owner `2.0.0_SA_COO~S2` (IRPT_BCKEND serve
+path): one row on its channel to make one call the other, at its next touch of either file. Nothing waits on it.
+
+**The change rule stands:** a new global admission is a register row in the same commit, or the commit is wrong.
+
+-- `1.0.0_SA_CTO~DELL2`
+
