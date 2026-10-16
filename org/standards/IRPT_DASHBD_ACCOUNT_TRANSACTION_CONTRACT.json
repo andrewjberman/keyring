@@ -2673,7 +2673,7 @@
         "source_value": "Transfer Out | Transfer Out",
         "opal_type": "Transfer out",
         "flow_class_none": "EXTERNAL_OUT",
-        "reason": "Transfer Out type and sub type. The word is an EXTERNAL_OUT word, but the 25 None rows are not marked external and no non-external class is decidable from the pair, so UNRESOLVED."
+        "reason": "Transfer Out type and sub type. By the CTO's round-128 ruling (msg 9175) the 25 lines whose Action is None derive their action word from the pair, and the pair's class for lines marked None is EXTERNAL_OUT; no line is dropped or left blank."
       }
     ],
     "actions": [
