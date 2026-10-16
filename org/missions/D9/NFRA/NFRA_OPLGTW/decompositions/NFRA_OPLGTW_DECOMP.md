@@ -2716,3 +2716,13 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 **Edge.** `OG-ev-3` precedes `OG-en-17` (the verdict). **fanout:** 1 of 2 chains started, cap 8 (the measure now; the worker is spawned on its verdict). The change rides the next batched gateway release together with MI's re-emitted catalog (frozen blob `3d47a95791` is stale after `MX-c-24`'s six lines, MI row Z-S136) and `NFRA_MCPINDEX` R20-1.
 
 **Carried, not cells.** The allocation weight scale (Z-S313), the roster for the browser exemption (Z-S322/Z-S325), the 429 limit choice (Z-S177: no 429 rows yet), the owner's browser run for `OG-ap-30`.
+
+## ADDENDUM R3-T.103 (2.0.0_SA_COO~O, 2026-10-17 ~00:0xZ) -- round 40, workstream ENRICH-R40-C: the third batched gateway release
+
+**Source.** `OG-ev-3` closed (the host measurement reads OUTSIDE: transactions one full-window run of 239.9 s, fees p95 147.2 s, threshold 30 s), so `OG-en-17` took the cursor branch and is merged (`4ebc1e781b`; AC1 3 of 3 in the main tree; the round-39/40 test set passes in both orders). `NFRA_MCPINDEX`'s re-emitted catalog (blob `2cbe275d03`, MI's half v2 signed) is on trunk.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-32` | APPLY: ONE code-only release on the live ref `4be300110e`: `OG-en-17` and the catalog taken whole at MI's blob; the two release-tree cures of `Z-S324` as steps; Phase A re-cut and ask for three halves, Phase B on the GO; then the served read of four arms (cursor first page, cursor chain to the window start, newest first, catalog on the host) with the host memory recorded | the release tree, the ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier |
+
+**fanout:** 1 of 1 chains, cap 8 (the release is one act; the builds are done). **Held.** The allocation weight unit (`Z-S313`), the browser-exemption roster (`Z-S322`, `Z-S325`), the 429 limit choice (`Z-S177`: no 429 rows yet), the per-partition prefix listing (`Z-S328`, a `client_core` cell).
