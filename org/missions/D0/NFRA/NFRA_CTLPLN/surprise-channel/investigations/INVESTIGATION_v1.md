@@ -13762,3 +13762,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (whether the sub-tool's runtime is a separate row for its owner)."
 }
 ```
+
+## NFRA_CTLPLN-W145-S16 -- disarm record for the ARMED rows W145-S1, W145-S3 and W145-S8: each hazard is removed in this cell's commits
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S16",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T21:22:54Z",
+  "one_line": "Rows NFRA_CTLPLN-W145-S1 (p170_filled_reader.py reads the whole map), NFRA_CTLPLN-W145-S3 (lambdamap_cli.py writes and reads the whole map through reconcile-deployed) and NFRA_CTLPLN-W145-S8 (the jq ban refuses parity-gates.sh) were filed ARMED with the issuer as disarm owner. Each hazard is removed in this seating: p170 afe01dd68d and 262f8bc1e6, lambdamap_cli.py 78896655a0, parity-gates.sh 114b926ec4, and the map itself deleted in fb20cba7b3 (the retired file no longer exists to be read or written).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log: 114b926ec4 parity-gates.sh (jq ban passes on this commit, safe-commit rc=0); afe01dd68d p170 (DB170-1-AC1 PASS rc=0); 262f8bc1e6 atomic_check.py and the p170 name-by-parts; 78896655a0 lambdamap_cli.py and test_lambdamap.py (11 passed, 3 failed, the same 3 as at the base)",
+      "fb20cba7b3 deletes infra/aws/lambda/ci/lambda-source-map.json; atomic_check.py default at 4dcd7f4e69: ATOMIC-SPLIT functions=240 equal=240 map_present=False census_other=0 live_old_path_users=0 ok=True",
+      "the disarm of each ARMED hazard is recorded here, not by editing the three rows (append-only); the issuer 2.0.0_SA_COO~C is the disarm owner named in each row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via the row's disarm_owner (CLAUDE.md section 2, surprise channel).",
+  "world_is": "The three hazards named in the ARMED rows no longer exist on this branch at HEAD of this seating. The disarm is a fact of the branch; the issuer confirms it at the drain, because the merge and the drain run the Terraform plans and the suites on the merged state.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (confirm the disarm of W145-S1, W145-S3 and W145-S8 at the merge)."
+}
+```
