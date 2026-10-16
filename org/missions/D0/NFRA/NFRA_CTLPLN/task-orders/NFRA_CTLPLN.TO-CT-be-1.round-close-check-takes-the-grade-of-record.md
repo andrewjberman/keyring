@@ -1,6 +1,6 @@
 # TO NFRA_CTLPLN.TO-CT-be-1.round-close-check-takes-the-grade-of-record -- workstream OUTCOME round 28 (cell CT-be-1): round-close-check.py grades a criterion from the grade of record (the last CVO row), not the first CVO row that names it (site Z call XB-20261016T121809Z-95c2)
 
-<to_id>NFRA_CTLPLN.TO-CT-be-1.round-close-check-takes-the-grade-of-record</to_id>
+<to_id>NFRA_CTLPLN.TO-CT-be-1</to_id>
 <project>NFRA_CTLPLN</project>
 <issued_to>0.9.0_WK_NFRA_CTLPLN~143</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>

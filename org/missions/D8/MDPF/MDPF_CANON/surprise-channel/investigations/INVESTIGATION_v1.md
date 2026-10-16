@@ -2718,3 +2718,28 @@
   "notes": "Issuer's own render and measure, not a worker row. Remedy: on a date at or after per-model detail begins, Variant 2 draws the model stack and drops modelsBand; one cell with a test over the real object (0 of 497 rows with both). Not fixed here."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W31-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~31",
+  "surfaced_at": "2026-10-16T15:17:40Z",
+  "one_line": "Global Trend carried tooltip: the five primary rows on a carried Global date cannot read '(carried)', by the same key-versus-display-name comparison that the Cottonwood repair fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-s-3 amendment 1 (order section 0): on a carried date the tooltip marks each carried series '(carried)'; the Cottonwood carried keys must match the names the tooltip entries carry. The Global Trend's carried keys are built the same way and are not in the order's scope.",
+  "world_is": "Global carried keys are the raw stack labels (carried.push(key) over the labels 'Ultra-Short Term' ... 'Ultra-Long Term'), while the tooltip compares carriedTooltipLabel(displayModelName(label)), i.e. 'Ultra Short-Term' ... 'Ultra Long-Term'. The primary rows of a Global carried date therefore read without '(carried)', as the Cottonwood ones did before the repair. Read from code; not rendered by this worker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/lib/trendGrouping.ts@af2ae947 lines 242-246: carried.push(key) over Object.keys(v), whose keys are the raw GLOBAL_PRIMARY_LABELS",
+      "portal/src/pages/ModelPortfolios.tsx@7a88ca75 line 1312: label: carriedTooltipLabel(entry.name === 'Non-Model' ? ... : String(entry.name ?? entry.dataKey), carried_keys); the Bar name is displayModelName(s.label)",
+      "portal/src/lib/modelPortfolioColors.ts displayModelName: 'Ultra-Short Term' -> 'Ultra Short-Term' (bun probe, 0.9.0_WK_MDPF_CANON~31, 2026-10-16)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Observed while repairing the Cottonwood tooltip (AMENDMENT 1). Not fixed here: the Global Trend is outside CN-s-3 (bounds 1). The issuer's amendment note said this 'may also exist' and was not checked; this row records the code read, not a render. Remedy belongs to the issuer (a Global carried-key change in trendGrouping.ts or ModelPortfolios.tsx)."
+}
+```
