@@ -684,6 +684,63 @@ def case_parent_pip_index_url_never_in_log():
     assert not [ln for ln in text.split("\n") if ln.startswith("Looking in indexes")], "an index line in the log"
 
 
+# ------------------------------------------- CT-av-1 (round 27): a released-with-waiver wheel and its record
+WAIVE_NOTE = "synthetic cross-platform difference"
+
+
+def waived_pack(label, fail_check=6, waive=True, waived_list=None, name="wvpkg"):
+    """A pack holding one wheel whose record reads released-with-waiver (check `fail_check` failed, carried by check 8's waiver
+    line when `waive`). Written by hand, as the check tool writes it; returns (pack dir, wheel name)."""
+    pack = os.path.join(TMP_ROOT, label, "pack")
+    os.makedirs(pack)
+    wheel = os.path.basename(ir.build_synthetic_wheel(pack, name, "1.0", {name: "X = 1\n"}))
+    checks = [{"n": n, "name": "check%d" % n, "verdict": "passed", "evidence": {"summary": "synthetic"},
+               "rules_out": "synthetic", "leaves": "synthetic"} for n in range(1, 9)]
+    checks[fail_check - 1]["verdict"] = "failed"
+    ev8 = {"signer": "synthetic signer", "path": "synthetic/signature.txt",
+           "waivers": [{"check": fail_check, "reason": WAIVE_NOTE}] if waive else []}
+    checks[7]["evidence"] = ev8
+    carried = waived_list if waived_list is not None else ([fail_check] if waive else [])
+    rec = {"schema": "intake-check/1", "batch": "synthetic", "file_name": wheel, "held_sha256": ir.sha256_file(
+        os.path.join(pack, wheel)), "checks": checks, "verdict": "released-with-waiver", "waived_checks": carried,
+           "checked_by": "synthetic", "at": ir.now_utc()}
+    with open(os.path.join(pack, wheel + ir.CHECK_SUFFIX), "w", encoding="ascii", newline="\n") as fh:
+        json.dump(rec, fh, indent=2)
+        fh.write("\n")
+    with open(os.path.join(pack, wheel + ".delivery.txt"), "w", encoding="ascii", newline="\n") as fh:
+        fh.write("synthetic delivery note\n")
+    ir.write_manifest(pack)
+    return pack, wheel
+
+
+@case
+def case_waived_wheel_verifies_and_prints_the_waived_line_before_the_last_line():
+    pack, wheel = waived_pack("waived_ok")
+    res = ir.verify_pack(pack)
+    assert res["ok"] and res["checked"] == 1 and res["verified"] == 1, res
+    rc, last, out = cli("verify", "--from", pack)
+    assert rc == 0 and last == "INTAKE-VERIFY pack=pack wheels=1 verified=1 checked=1 stray=0 ok=True", (rc, last, out)
+    lines = [ln for ln in out.splitlines() if ln.strip()]
+    waived = "INTAKE-VERIFY-WAIVED %s check 6: %s" % (wheel, WAIVE_NOTE)
+    assert lines.count(waived) == 1 and lines.index(waived) < len(lines) - 1, lines
+
+
+@case
+def case_waived_record_that_is_not_re_derived_is_refused():
+    cases = {
+        "no_waiver_in_check_8": {"waive": False, "waived_list": [6]},
+        "list_disagrees": {"waived_list": []},
+        "check_1_never_waivable": {"fail_check": 1},
+        "waived_list_names_an_unwaived_check": {"waived_list": [5]},
+    }
+    for label, kw in cases.items():
+        pack, wheel = waived_pack("waived_" + label, **kw)
+        res = ir.verify_pack(pack)
+        assert not res["ok"] and res["checked"] == 0 and res["wheels"][0]["reasons"], (label, res)
+        rc, last, _ = cli("verify", "--from", pack)
+        assert rc == 1 and last.endswith("ok=False"), (label, last)
+
+
 def main():
     shutil_ok = True
     try:
