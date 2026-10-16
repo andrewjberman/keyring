@@ -21189,3 +21189,86 @@
   "world_is": "r34_build.py opens the record path for writing without creating its parent; the stage was built before the failure, so the stage folder was left non-empty."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W229-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~229, cell AR-tz-65) the TO-AR-tz-65 paths block is spliced
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~229",
+  "surfaced_at": "2026-10-16T04:47:32Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W229-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The <paths> line of TO-AR-tz-65 splices the r45 check invocation into the surprise-channel path; the worker used the channel file and deliverables folder the block names.",
+  "spec_asserts": "TO-AR-tz-65 <paths> is the write grant: the surprise channel investigations file and the worker deliverables folder. The line reads 'org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R45_CHECKS/r45_checks.py rec org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~229/OPAL_GLOBAL_SITES_CLASSIFIED.md 15ESTIGATION_v1.md'.",
+  "world_is": "The block is one line at order line 52 with the checker invocation inserted into the channel path and the file name cut to 'ESTIGATION_v1.md'. The channel file exists at org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (glob at worktree HEAD 927be44c0a). The worker took the write grant as the deliverables folder plus that file, read the checker in place, and edited no source or test.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-tz-65.fwd5-opal-global-sites-classified.md line 52 (the spliced <paths> line)",
+      "Glob of org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/* in the worktree returned INVESTIGATION_v1.md",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R45_CHECKS/r45_checks.py exists and printed R45-REC-OK rows=40 on the record"
+    ]
+  },
+  "notes": "Row minted by the worker under its own coordinate. The issuer may want the paths line re-issued clean; the worker did not amend the order."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W229-S2 -- (worker 0.9.0_WK_IRPT_ANLREQ~229, cell AR-tz-65) the row schema the order cites is absent from the worktree
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~229",
+  "surfaced_at": "2026-10-16T04:47:32Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W229-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "org/surprise_channel/schemas/investigation_item.schema.json is not in the worktree, so the row was written to the field set of the existing rows.",
+  "spec_asserts": "The worker appends rows per org/surprise_channel/schemas/investigation_item.schema.json (TO-AR-tz-65 surprise instructions and the channel rules).",
+  "world_is": "At HEAD 927be44c0a the worktree has no org/surprise_channel/ folder: ls of org/ shows none, and a Glob for investigation_item.schema.json under org/ returns no file. The row was written as a JSON object with the fields the channel's existing rows carry (project, fabric, surfaced_by, surfaced_at, class, id, disposition, hazard_standing, one_line, spec_asserts, world_is, grounding, notes). No schema validation was run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of the worktree org/ at HEAD 927be44c0a: no surprise_channel entry",
+      "Glob org/**/investigation_item.schema.json in the worktree: no files",
+      "INVESTIGATION_v1.md row IRPT_ANLREQ-D2-W252-S1 cites the same schema path"
+    ]
+  },
+  "notes": "Surfaced for the issuer to confirm the schema location at the cited path or a replacement. Not a blocker for AR-tz-65: the record and the acceptance check do not depend on the channel row schema."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W229-S3 -- (worker 0.9.0_WK_IRPT_ANLREQ~229, cell AR-tz-65) the cell's premise count does not reproduce at HEAD
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~229",
+  "surfaced_at": "2026-10-16T04:47:32Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W229-S3",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell premise (the OPAL_GLOBAL test at 21 sites in 12 non-test files) measures 23 == sites in 13 files, or 40 comparison sites in 21 files, at HEAD 927be44c0a.",
+  "spec_asserts": "Cell AR-tz-65 states that the global-admissions test appears at 21 sites in 12 non-test files under infra/aws/lambda, round-47 snapshot (TO-AR-tz-65 worker face, line 25).",
+  "world_is": "Native Grep over infra/aws/lambda at HEAD 927be44c0a, tests/ folders excluded: 23 lines with the == form in 13 non-test files, and 40 comparison lines (23 ==, 14 != or not in, 3 in) in 21 files. The classified record OPAL_GLOBAL_SITES_CLASSIFIED.md carries all 40 with verdicts (10 ADMITS, 1 REFUSES-TESTED, 29 NOT-APPLICABLE).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~229/OPAL_GLOBAL_SITES_CLASSIFIED.md, DENOMINATOR line and counts section",
+      "Grep over the worktree infra/aws/lambda, pattern for OPAL_GLOBAL with ==, != or in on the same line, glob !**/tests/**: 40 hits"
+    ]
+  },
+  "notes": "The 8 ADMITS sites outside the register are listed in the record; they are findings for 2.0.0_SA_COO~V2 and were not fixed here."
+}
+```
