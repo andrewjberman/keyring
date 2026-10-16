@@ -28808,3 +28808,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "CTO msg 6678: KEEP (additive and true; shows only on the Opal-internal page; a delete needs Andrew's word for no gain). Answer to the CTO's third ask: bo-6 does NOT stop the marker write. The harvest module writes the sibling HELD marker BEFORE it raises (filings.py:445-446); bo-6 only catches the raise, so a skipped name still gets a marker. For the 8-key run no name can reach that path: none of the 8 has a stored filing_attempt state object (read 2026-10-16, 0 objects each), so a differing re-attempt cannot occur. A first-time failure to resolve one of the 8 would write its UNRESOLVED-SOURCE.json (a state object the signed radius also did not name)."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S49",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T12:14:00Z",
+  "one_line": "C-S145 (a) and (b) and C-S146 (b) re-measured on the 95 stored round-111 documents read from S3: no kept block ends on an abbreviation full stop, no two segments are joined with no space, and no OPAL_SOURCE management bio is kept (V US mgmt_bio is withheld); this seat disarms its part of those three.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "CVO rows C-S145 (a block cut after an abbreviation full stop, KOFUBL MM mgmt_team_view ends 'totaling Ps.'; two answer segments joined with no space in 7 blocks) and C-S146 (b) (an OPAL_SOURCE mgmt_bio restating the pack passage beneath it, V US), both graduated ARMED with this seat as disarm owner; they close when the stored documents no longer carry the defect.",
+  "world_is": "Read 12:14Z 2026-10-16 by this seat: all 95 AI-fill documents under s3://opal-data-harvest/amgt/harvest/gold/ai_fill/ read back from S3 (95 of 95). 134 kept text blocks (mgmt_bio 26, mgmt_recent 55, mgmt_team_view 22, thesis_pillars 31). Regex join `[a-z0-9)\\]][.!?](?=[A-Z][a-z])`: 0 matches; regex ending on Ps/Inc/Corp/Ltd/Co/No/St/Mr/Mrs/Ms/Dr/Jr/Sr/vs/approx/Rs/Cia/SA/Plc: 0 matches; blocks not ending in terminal punctuation: 0; kept OPAL_SOURCE mgmt_bio: 0 (KOFUBL MM mgmt_team_view and mgmt_bio are NONE blocks with a reason; V US mgmt_bio is NONE, 'The text opens without naming the person it describes'). Positive controls run first: the join regex matches 'revenue grew.Su said' and not 'grew. Su said'; the abbreviation regex matches 'totaling Ps.' and not 'one peso.'. NOT MEASURED: C-S146 (a), the page's ABOUT THIS DATA panel wording (a page defect; no page was looked at by this seat); C-S132 and C-S155 (not re-measured); a cut mid-sentence that ends on a word other than the listed abbreviations (the terminal-punctuation check covers an unterminated block, not a sentence truncated at a full stop that is not an abbreviation); the KOFUBL and AMD blocks named in the rows were replaced by later documents, so this is a re-measure of the class on the current set, not of the named blocks.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 get_object over all 95 keys via lib.research.aifill.store.address_for -> 95 of 95 read; kept blocks 134 = 26+55+22+31 (matches the round-111 manifest counts)",
+      "regex positive controls printed before the verdict (join True/True, abbreviation True/True)",
+      "AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v129.md rows C-S145, C-S146"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CVO closes its own adjudication rows; this row is this seat's disarm with evidence. Still ARMED with this seat as owner after this row: C-S132, C-S146 (a), C-S155."
+}
+```

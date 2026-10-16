@@ -41087,3 +41087,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Owner of the fix is hop 1's: 2.0.0_SA_COO~D2 issues, 0.7.0_AE_CloudOps~DB2 applies. This seat owes only the deploy after hop 1's first write exists."
 }
 ```
+
+## IRPT_BCKEND-D2-S220 -- The 49F role grant landed and the recovery invoke read clean; the S217 hazard is disarmed, the next scheduled 
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S220",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-16T12:35:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S217 (the 49F holdings-performance role had no grant for the split-adjust transactions prefix, so its first scheduled run errored 3 of 3). Disarmed by me, the disarm_owner, on my own reads at ~12:3xZ: the live inline policy of irpt-49f-holdings-performance-role now lists schwab/08335338/silver/fact_trn/* in the ListExactlyTheDeclaredSilverPrefixes prefix condition and in the ReadDeclaredSilverPartitionsOnly resources, beside dim_position and dim_balance, and nothing else (IB-pr-614, one safe-apply of a 1-change plan; criteria IB245-1 AC1 to AC3 re-run by me PASS, proof instance VALID rc 0); CloudWatch reads Errors 0 for the one recovery invoke; the record shows status 200, no FunctionError, one day written, the manifest split_adjust declared. What stays open and is NOT claimed: the next scheduled 49F fire (Monday 2026-10-19 11:30Z) has not run on the new grant; the Cottonwood (12:15Z) and Inflection (14:00Z) first runs and their DELTA = 0 replays are IB-pr-612's still-open L6 legs.",
+  "one_line": "The 49F role grant landed and the recovery invoke read clean; the S217 hazard is disarmed, the next scheduled fire is the remaining proof.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws iam get-role-policy irpt-49f-holdings-performance-role, read by 2.0.0_SA_COO~P2 2026-10-16 ~12:3xZ: both read statements carry the fact_trn prefix",
+      "aws cloudwatch get-metric-statistics AWS/Lambda Errors for irpt-holdings-performance-lambda, 12:00Z to 12:25Z window: 0",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB245-1_iam_record.json @5e34e9cf9c"
+    ]
+  },
+  "spec_asserts": "The role's read grants cover the prefixes its code reads.",
+  "world_is": "They now do: the fact_trn prefix is granted, derived from the declaration, for this one role."
+}
+```

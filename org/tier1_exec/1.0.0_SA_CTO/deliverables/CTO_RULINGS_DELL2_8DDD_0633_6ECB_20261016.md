@@ -51,3 +51,13 @@ PROD-based head, with all 8 codes in `HOP_FAILURE_CODES`. The dev-overlap waiver
 `cand/dell2/irpt-series-mirror-contract-033` @831f974aa1: ONE file (`seriesContract.ts`, +10/-1) on the PROD tip, type-only (income_claim,
 history_scope_claim, history_scope_basis, calendar_source). Build-bytes record `DB_C30_BUILD_BYTES_R150.md`: dist identical to origin/PROD (88/88).
 Class Opal-internal under the msg-9136 rule. **APPROVED for DEV and PROD at 831f974aa1.**
+
+## ADDENDUM -- row 80ad, the DEV merge-forward of 6099 refused on seriesContract.ts (2026-10-16 ~12:3xZ)
+
+**RULED: yes.** `2.0.0_SA_COO~C2` completes the merge-forward of `cand/dell2/irpt-series-mirror-contract-033` @`831f974aa1`, taking the
+candidate's file for `src/pages/InvestorReporting/dashboard/seriesContract.ts` only, with the script's trailers kept; MSTR pushes.
+**Why:** read at ruling, `git diff origin/DEV 831f974aa1 -- <that file>` is exactly the two 0.3.3 additions (the two names in
+`SERIES_OPTIONAL` and the two optional members); DEV's side holds the 0.3.1 mirror under another commit (a020da0b), the same text, so the
+conflict is commit identity, not content. The candidate's file equals origin/PROD's (64f9dba105, diff empty).
+**Conditions:** any other conflicted path STOPS and comes back; after the merge, the DEV tree's file equals origin/PROD's byte for byte,
+and `iv-e-124` passes on the merged tree, both read before MSTR pushes.
