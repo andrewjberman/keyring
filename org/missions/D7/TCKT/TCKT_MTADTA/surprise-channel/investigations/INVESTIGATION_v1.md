@@ -101,6 +101,29 @@
     "spec_asserts": "Every worker tree carries the surprise channel schema on disk, so a worker can validate its own row against it at commit.",
     "world_is": "The schema is not on disk in this worker's worktree. The row written here was not validated against the schema by this worker; the gate is run at commit and its output is recorded in the report.",
     "notes": "Nothing was changed in the sparse-checkout configuration. The fix belongs to the worktree provisioning owner (the sparse cone for worker worktrees)."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W4-S1",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~4",
+    "surfaced_at": "2026-10-16T07:05:03Z",
+    "one_line": "Worktree /c/tmp/wk-tckt-mtadta-4 is sparse-checked-out without infra/ and data/, so the TO-MD-s1 write paths (infra/aws/lambda/globgrph-trino-access/ and data/m365_metadata/scripts/) are absent and both acceptance checks refuse as missing files before any code runs.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list at worktree /c/tmp/wk-tckt-mtadta-4 (branch wk-TCKT_MTADTA-4) prints 9 cone entries: .tools, infra/logic/registry, lib, org/devices, org/missions/D7/TCKT/TCKT_MTADTA, org/modules/graph, org/ref, org/standards, org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R1_CHECKS; neither infra/aws nor data is a cone entry",
+        "ls -d infra/aws/lambda and ls data in the worktree: both 'No such file or directory'; git ls-files infra/aws/lambda lists 7434 tracked paths at HEAD, so the tree exists in the repository and not in this checkout",
+        "git ls-files data/m365_metadata returns 0 and git ls-files | grep trino-access returns 0 at HEAD: the globgrph-trino-access folder and the m365 scripts folder are new paths of this round, not tracked files left out",
+        "r1_check_s1.py silver run at the worktree root under timeout 120: 'SILVER-REFUSED missing C:\\tmp\\wk-tckt-mtadta-4\\infra\\aws\\lambda\\globgrph-trino-access\\silver_builder.py' rc=1; r1_check_s1.py readday: 'READDAY-REFUSED missing C:\\tmp\\wk-tckt-mtadta-4\\data\\m365_metadata\\scripts\\silver\\read_day.py' rc=1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worktree carries the paths the task order names (its <paths> grant sits inside a checkout that holds the Lambda's folder and the data scripts folder), so the order is executable as written.",
+    "world_is": "The worktree is a sparse checkout whose cone omits infra/aws and data. The worker was not permitted to widen the cone or rebuild the tree to make the order executable, so both silver files are unbuilt and AC1 and AC2 are FAIL (recorded, not weakened).",
+    "notes": "Filed under the refusal clause; nothing was created, edited or committed under infra/ or data/. The cone change (git sparse-checkout add infra/aws/lambda data/m365_metadata) is the owner's call: the COO or the integrator decides whether the worktree is reseated. The HEAD of the mission tree is not in question. Round-1 siblings MD-a-1 (globgrph-trino-access handler) would sit in the same folder and meet the same cone."
   }
 ]
 ```
