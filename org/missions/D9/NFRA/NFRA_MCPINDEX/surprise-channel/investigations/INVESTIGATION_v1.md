@@ -9188,6 +9188,50 @@ carries none.
     "spec_asserts": "MX-r-15 A1 and A3 asserted that the depth claims hold until the ~13:30Z daily publish, and that a deploy-only commit of the catalog blob alone ships exactly one file.",
     "world_is": "The daily publish ran before 11:35Z and the yield-curve object re-stamps near 23:01Z, so a depth claim is a point-in-time read; v3 was re-measured after the publish and graded against live AWS before it shipped. The deploy tree's scopes.json is the file the host already serves under commit B.",
     "dismissal_reason": "Z-S126: ruled B at MX-r-15 A2 and applied; the host serves the registry copy it served before. Z-S127 and Z-S128: the stale-measurement class is cured for this release by v2 and v3 and carried to the round-18 analysis as the enrichment 'stop pinning depth claims that age with each publish'; emit_final.sh now grades the candidate with r13.AC3 against live AWS first. The issuer is disarm_owner of all three."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W47-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~47",
+    "surfaced_at": "2026-10-16T14:06:23Z",
+    "one_line": "The MX-c-24 step-0 control is not green at its base: tests/test_opal_discover.py and tests/test_firm_catalog_visibility.py run 2 failed, 52 passed at 00113acb2f before any edit, so the order's premise that the pair passes before the cell starts is false.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd infra/aws/ec2/opal-gateway && PYTHONPATH=. python -m pytest -q -p no:cacheprovider tests/test_opal_discover.py tests/test_firm_catalog_visibility.py, run in worktree wk-NFRA_MCPINDEX-47 at HEAD 00113acb2f with no edit made: '2 failed, 52 passed in 9.09s' (rc=1); FAILED test_silver_row_fails_closed_on_cross_firm_visibility and FAILED test_schwab_ask_names_a_real_schwab_tool.",
+        "infra/aws/ec2/opal-gateway/tests/test_opal_discover.py@00113acb2f:435-462 -- the cross-firm test asserts no silver match for any known firm; its failure line 453 reads ('49financial', 'what fees did Black Diamond charge') with blackdiamond_fees listed as visible to the firm principal.",
+        "infra/aws/ec2/opal-gateway/tests/test_opal_discover.py@00113acb2f:471 -- assert == 'schwab_dim_position' got 'opal_data_assets_silver_schwab_08242234_dim_position' (the catalog's schwab silver rows now answer first)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-c-24 step 0: 'cd infra/aws/ec2/opal-gateway && PYTHONPATH=. python -m pytest -q -p no:cacheprovider tests/test_opal_discover.py tests/test_firm_catalog_visibility.py passes before you start (a control).'",
+    "world_is": "The pair is red before any MX-c-24 edit at 00113acb2f: two stale expectations in test_opal_discover.py, one for the cross-firm silver visibility rule (a firm principal now sees its own firm's bd row) and one for the schwab tool name (the catalog's schwab silver rows answer first). Neither failure is in this cell's diff.",
+    "notes": "OBSERVATION, INERT: no live state is read or changed; the failures are test-expectation drift against the catalog. The control is recorded as run; the cell proceeded on its own change. The two failures are the subject of row Z-W47-S2."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W47-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~47",
+    "surfaced_at": "2026-10-16T14:06:23Z",
+    "one_line": "MX-c-24 criterion AC3 cannot pass as written: it requires pytest rc=0 on tests/test_opal_discover.py, whose two stale expectations are outside this cell's <paths>, so the criterion is refused with its measurement.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~MI/round19/checks/c24.AC3.sh run in worktree wk-NFRA_MCPINDEX-47 after the MX-c-24 edit: 'pytest rc=1: 2 failed, 59 passed'; 'CHECK FAIL: the three test files pass'; 'new tests collected: 7'; 'CHECK ok: the new file holds at least 6 tests'; 'RESULT: FAIL'; exit=1.",
+        "The same two failures exist with no edit at 00113acb2f (see row Z-W47-S1), so the AC3 red is not caused by this cell's diff: tests/test_discover_echo.py 7 of 7 pass, and AC1 and AC2 PASS.",
+        "<paths> of the order names tests/test_discover_echo.py and the integration.py only; tests/test_opal_discover.py is not named, and the worker face's bounds forbid editing other gateway files."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MX-c-24 AC3: 'pytest rc=0 on test_discover_echo.py, test_opal_discover.py and test_firm_catalog_visibility.py -- RESULT: PASS -- exit=0'.",
+    "world_is": "tests/test_opal_discover.py carries the two stale expectations of Z-W47-S1, so pytest over that file exits 1 whatever the echo change does. Repairing them is an edit to a file outside this order's <paths>, which the cell may not make.",
+    "notes": "BLOCKING on AC3 only; AC1 and AC2 PASS by their own probes. INERT: no live state changed. The repair (two expectations in test_opal_discover.py) belongs to the issuer's grant, not this worker's. Disposition for the issuer: widen <paths> for that one file, or re-grade AC3 on the new file plus the firm test file."
   }
 ]
 ```
