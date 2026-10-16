@@ -20131,3 +20131,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W226-S2 -- the handler refuses on the HEAD contract, so DB147-2-AC1 cannot pass as written (the 0.3.0 pair is held)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W226-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~226",
+  "surfaced_at": "2026-10-16T02:39:41Z",
+  "one_line": "DB147-2-AC1 cannot pass as written: the handler refuses on the HEAD contract (0.2.0), and the 0.3.0 pair is held on wk-IRPT_DASHBD-225",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@45b34c2e5d: contract_version 0.2.0; series.optional names class_value, class_weight and class_names only, so the unreported-days pair is absent",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@b4895e7145: the held 0.3.0 form on branch wk-IRPT_DASHBD-225 names both unreported keys; read only, not merged, not edited",
+      "infra/aws/lambda/investor-reporting/reporting-publish-cot/handler.py@6b4e2f43f2: _contract() raises SystemExit REFUSED before any S3 call unless series.optional names both keys",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r147/p148_cothandler.py@36498ea07e: check_behaviour's first lambda_handler call runs against the repo contract and expects the dry run to complete"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DB147-2-AC1 (checker p148_cothandler.py, check_behaviour) runs the handler against the repo contract and expects the dry run, the upload and the account filter to complete. TO-DB-b-280 says the contract's 0.3.0 form is HELD on wk-IRPT_DASHBD-225, not to be merged, and that the contract is not edited.",
+  "world_is": "The first call refuses: SystemExit REFUSED, because the HEAD contract names neither unreported key. A scratch run of the same behaviour clauses, with the handler's contract root pointed at the held 0.3.0 copy, passes; that is a diagnostic only, not the criterion. AC1 cannot pass on this branch as written: it needs the 0.3.0 contract merged or the contract edited, and this order forbids both. AC2 PASSES on the handler as committed; AC3 is not reached (no test file was written, since the order stops on a blocked clause)."
+}
+```
+
