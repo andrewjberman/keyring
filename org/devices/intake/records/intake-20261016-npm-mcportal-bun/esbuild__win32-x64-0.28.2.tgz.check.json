@@ -1,0 +1,178 @@
+{
+  "schema": "intake-check/1",
+  "batch": "intake-20261016-npm-mcportal-bun",
+  "file_name": "esbuild__win32-x64-0.28.2.tgz",
+  "held_sha256": "7286c3611b6f1f4c4d9ec90adcbc478407ff0d28ead96567f361d53e67613e19",
+  "checks": [
+    {
+      "n": 1,
+      "name": "sha256 equals the digest the index publishes",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "re-read from disk now: sha512 equals the registry document's dist.integrity AND the lockfile's integrity for @esbuild/win32-x64@0.28.2",
+        "computed_sha512": "sha512-5ebpxr3nWMzrL/rnUI755Jkuee0bHL/Gq0WTF9lvcpv73wAp5eu8MfBUgWK9bhWvZjj7yX8etf/8tI8Ney695g==",
+        "registry_integrity": "sha512-5ebpxr3nWMzrL/rnUI755Jkuee0bHL/Gq0WTF9lvcpv73wAp5eu8MfBUgWK9bhWvZjj7yX8etf/8tI8Ney695g==",
+        "lockfile": "MCPORTAL_c66ca82952_bun.lock",
+        "lockfile_ident": "@esbuild/win32-x64@0.28.2",
+        "lockfile_entries": 1,
+        "lockfile_integrity": "sha512-5ebpxr3nWMzrL/rnUI755Jkuee0bHL/Gq0WTF9lvcpv73wAp5eu8MfBUgWK9bhWvZjj7yX8etf/8tI8Ney695g==",
+        "computed_sha256": "7286c3611b6f1f4c4d9ec90adcbc478407ff0d28ead96567f361d53e67613e19",
+        "computed_sha1": "b21affb804cc167c133d95f45b3a1dc1323b9a87",
+        "registry_shasum": "b21affb804cc167c133d95f45b3a1dc1323b9a87",
+        "record_held_sha256_matches_disk": true
+      },
+      "rules_out": "a file altered in transit or served by an impostor",
+      "leaves": "anything the real project published"
+    },
+    {
+      "n": 2,
+      "name": "name, version and tags are exactly the approved line",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "file name, package/package.json and the approved list all say @esbuild/win32-x64@0.28.2",
+        "requested_name": "@esbuild/win32-x64",
+        "requested_version": "0.28.2",
+        "ident": "@esbuild/win32-x64@0.28.2",
+        "file_name_expected": "esbuild__win32-x64-0.28.2.tgz",
+        "package_json_name": "@esbuild/win32-x64",
+        "package_json_version": "0.28.2",
+        "approved_line_sought": "@esbuild/win32-x64@0.28.2",
+        "approved_list": "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_NPM_MCPORTAL_BUN_20261016.md",
+        "on_approved_list": true
+      },
+      "rules_out": "a near-name package; a resolver substituting another version or pulling an unlisted package",
+      "leaves": "a wrong approval"
+    },
+    {
+      "n": 3,
+      "name": "the version is one this machine already runs",
+      "verdict": "not_applicable",
+      "evidence": {
+        "summary": "npm tarball: check 3 reads the Python site-packages of this machine, and this route installs no npm package into them",
+        "reason": "npm tarball: check 3 reads the Python site-packages of this machine, and this route installs no npm package into them"
+      },
+      "rules_out": "a brand-new release nobody has used",
+      "leaves": "a build for Python 3.14 that differs from the 3.12 build of the same version"
+    },
+    {
+      "n": 4,
+      "name": "the release's age and the project's earlier releases",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "release 69.03 days old (min 14); 111 earlier releases (min 3)",
+        "this_release_at": "2026-08-08T20:00:43.500Z",
+        "first_release_at": "2022-12-06T00:00:29.199Z",
+        "release_count": 112,
+        "earlier_releases": 111,
+        "age_days": 69.03,
+        "min_release_age_days": 14,
+        "min_earlier_releases": 3,
+        "yanked": false,
+        "release_age_source": "registry packument time[<version>] (the packument read by the fetch, same host)"
+      },
+      "rules_out": "a package or release published days ago",
+      "leaves": "an old compromise not yet found"
+    },
+    {
+      "n": 5,
+      "name": "build attestation present or absent",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "the index shows a build attestation for this file",
+        "attestation": "present",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@esbuild%2fwin32-x64@0.28.2"
+      },
+      "rules_out": "where present: a file uploaded by hand from a stolen account",
+      "leaves": "where absent: nothing; many projects publish none"
+    },
+    {
+      "n": 6,
+      "name": "the archive opened and listed, never installed",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "3 members, 11695109 bytes expanded, read in memory and never extracted; no unsafe member name or link; lifecycle script(s): none; native binary(ies) named: package/esbuild.exe; package/package.json os/cpu restriction: cpu, os",
+        "members": 3,
+        "expanded_bytes": 11695109,
+        "unsafe_member_names": [],
+        "archive_error": null,
+        "lifecycle_scripts": [],
+        "native_binaries": [
+          "package/esbuild.exe",
+          "package/package.json os/cpu restriction: cpu, os"
+        ],
+        "restricted": {
+          "os": [
+            "win32"
+          ],
+          "cpu": [
+            "x64"
+          ]
+        },
+        "package_json_error": null,
+        "executed": false
+      },
+      "rules_out": "code added outside the compiled files",
+      "leaves": "code inside the compiled files"
+    },
+    {
+      "n": 7,
+      "name": "Windows' own malware scan of the file",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "on-access scan by Little Dog Tech Managed Antivirus Antimalware, state enabled and current; file present and unchanged after 20 s; no on-demand verdict available",
+        "decoding": "productState is read as six hex digits 0xAABBCC: BB is real-time protection (0x10 or 0x11 on; 0x00 or 0x01 off; any other byte unknown); CC is the definitions (0x00 current; 0x10 out of date; any other byte unknown); unknown is never treated as on or current. Worked examples: 393472 = 0x060100 -> off; 266240 = 0x041000 -> on, definitions current.",
+        "scan_wait_seconds": 20,
+        "limit": "No test-virus file was planted as a control, because it would raise the managed product's alarm; so this check shows that an enabled, current product did not remove or alter the file within the wait, and does not show that the product inspected it.",
+        "products": [
+          {
+            "display_name": "Windows Defender",
+            "name_non_ascii_replaced": false,
+            "state": 393472,
+            "hex": "0x060100",
+            "realtime": "off",
+            "definitions": "current"
+          },
+          {
+            "display_name": "Little Dog Tech Managed Antivirus Antimalware",
+            "name_non_ascii_replaced": false,
+            "state": 266240,
+            "hex": "0x041000",
+            "realtime": "on",
+            "definitions": "current"
+          }
+        ],
+        "products_count": 2,
+        "active": [
+          "Little Dog Tech Managed Antivirus Antimalware"
+        ],
+        "copy_name": "esbuild__win32-x64-0.28.2.tgz.scan-copy",
+        "stale_copy_removed": false,
+        "problems": [],
+        "held_after": "unchanged",
+        "copy_after": "unchanged",
+        "copy_cleanup": "removed",
+        "held_sha256_before": "7286c3611b6f1f4c4d9ec90adcbc478407ff0d28ead96567f361d53e67613e19",
+        "copy_sha256_readback": "7286c3611b6f1f4c4d9ec90adcbc478407ff0d28ead96567f361d53e67613e19"
+      },
+      "rules_out": "known malware",
+      "leaves": "anything new or targeted"
+    },
+    {
+      "n": 8,
+      "name": "a person reads the result of 1 to 7 and signs the batch",
+      "verdict": "awaiting",
+      "evidence": {
+        "summary": "check 8 awaits the signature: the signature file does not exist",
+        "signer": null,
+        "path": null
+      },
+      "rules_out": "a tool's silent failure being read as a pass",
+      "leaves": "what none of 1 to 7 can see"
+    }
+  ],
+  "verdict": "not_checked",
+  "waived_checks": [],
+  "checked_by": "0.9.0_WK_NFRA_CTLPLN~149",
+  "at": "2026-10-16T20:48:43Z",
+  "ecosystem": "npm"
+}
