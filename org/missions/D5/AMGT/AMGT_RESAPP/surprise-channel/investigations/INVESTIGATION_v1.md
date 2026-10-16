@@ -28860,3 +28860,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Still ARMED with this seat as owner after this row: C-S132, C-S146 (a), and the W452-S1 half of C-S155."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S51",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T13:14:00Z",
+  "one_line": "W452-S1 half of C-S155 re-measured on the 95 stored documents read from S3: all 10 CONTRADICTED sentences record a shown source and a quote (none null), so with D1-S50 (W451-S1) this seat disarms C-S155 in full. C-S132 and C-S146 (a) stay ARMED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "CVO row C-S155 (graduated to REMEDIATION_v44 (2)): W451-S1 (a 2xx image or zip body reads OK with binary text) and W452-S1 (a CONTRADICTED sentence records no source and no quote); D1-S41 measured 22 of 23 CONTRADICTED sentences recording the shown source and quote and 1 (1299_HK_Equity mgmt_recent) recording null.",
+  "world_is": "Read 13:14Z 2026-10-16 by this seat: all 95 AI-fill documents read back from S3 (95 of 95). Sentence verdicts across them: SUPPORTED 256, UNSUPPORTED 250, CONTRADICTED 10. The 10 CONTRADICTED sentences all carry a non-null source index and a non-empty quote (0 null). Positive control: a synthetic CONTRADICTED sentence with source null and quote null is flagged by the same predicate. Side measure, NOT independent evidence: the 134 kept text blocks all carry a grounding record, and the 256 sentences found in kept text are exactly the 256 SUPPORTED ones (0 kept sentences with another verdict); that is the producer's own record, so it bears on C-S132 only as consistency, and the independent evidence on C-S132 remains the CVO's reads (v136, v137, v138), which sample 11, 8 and 11 blocks and are not a census. NOT MEASURED: that the code path itself (not only the stored set) still records source and quote for a new CONTRADICTED sentence (the 1299_HK null of D1-S41 was a case in an earlier set that is gone from this one; its cause was not re-run by this seat); C-S132 (a census of claims against their sources); C-S146 (a), the page panel wording.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 get_object over all 95 keys -> 95 of 95; sentence verdicts SUPPORTED 256, UNSUPPORTED 250, CONTRADICTED 10; CONTRADICTED with null source or no quote: 0",
+      "synthetic control row (CONTRADICTED, source None, quote None) is flagged by the predicate",
+      "INVESTIGATION_v1.md rows D1-S39, D1-S41 and the D1-S50 row for W451-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Still ARMED with this seat as owner after this row: C-S132 (needs the CVO's judgment, or a census this seat cannot grade because it did the work) and C-S146 (a) (needs the page looked at). The CVO closes its own adjudication rows."
+}
+```
