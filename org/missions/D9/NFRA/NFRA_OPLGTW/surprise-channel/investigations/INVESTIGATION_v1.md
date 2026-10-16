@@ -25865,3 +25865,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "A cut-time step for the issuer or the order text: add the trunk halt gate and a CloudOps home folder to the release tree recipe."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T22:29:12Z",
+  "id": "NFRA_OPLGTW-Z-S325",
+  "one_line": "Round-39 disposition (CARRIED) of Z-S322: the owner exemption reaches andrew@ only; widening the roster is a later ask.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S322"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/NEVER_WIDEN_ASK_OG-ap-31.md (the reach is stated); org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_OG-ap-31_20261016.md (the condition)"
+    ]
+  },
+  "spec_asserts": "A worker or applier row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "CARRIED, stated in the OG-ap-31 ask and in all three halves: the host MASTER_ADMIN_EMAILS holds one entry (andrew@), so OG-en-14's owner exemption reaches andrew@ only; opalbloomberg@ has no deny record today (deleted by OG-ap-30) and is not exempt if a later restricted-principal write gives it one. Widening the roster is an env change and a separate ask (the CVO's condition: any MASTER_ADMIN_EMAILS edit widens the deny exemption and its ask must say so). Carried to the round-40 enrichment list as the roster question for the owner (Andrew): whether the Bloomberg account's browser access should be exempt by roster or by a scoped deny.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CARRIED, stated in the OG-ap-31 ask and in all three halves: the host MASTER_ADMIN_EMAILS holds one entry (andrew@), so OG-en-14's owner exemption reaches andrew@ only; opalbloomberg@ has no deny record today (deleted by OG-ap-30) and is not exempt if a later restricted-principal write gives it one. Widening the roster is an env change and a separate ask (the CVO's condition: any MASTER_ADMIN_EMAILS edit widens the deny exemption and its ask must say so). Carried to the round-40 enrichment list as the roster question for the owner (Andrew): whether the Bloomberg account's browser access should be exempt by roster or by a scoped deny."
+}
+```
