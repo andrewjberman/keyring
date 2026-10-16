@@ -19944,3 +19944,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The code refuses on the day of a row against its partition only, and accepts any pull_date. The docstring was not updated by the round-130 change. No code or docstring was changed here. IRPT_DASHBD-W317-S1 (a stale docstring, recorded by the DB-i-17 drain) may name this same text; not checked."
 }
 ```
+
+## IRPT_DASHBD-D2-W318-S4 -- the issuer's amendment 1 to TO-DB-i-18 (commit 4e13c27d91) is applied: DIM_IDS, a multi-day chain test, and a rows_present test that names NO_EOD_VALUE
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W318-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~318",
+  "surfaced_at": "2026-10-16T01:08:07Z",
+  "one_line": "The issuer's amendment 1 to TO-DB-i-18 is applied in the test file only: the DIM_IDS constant is the dimension frame's input; a ten-calendar-day feed run grades the chain on 8 trading days for account 7001; a rows_present test on the 3-day ended-series fixture asserts 1 and explains the NO_EOD_VALUE row. The seven earlier tests and their assertions are unchanged; 9 pass, and the three r131 criteria PASS on two runs each.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-i-18.scope-feed-wrapper-and-run-script-tests-on-the-feeds-own-writer-output.md@4e13c27d91: AMENDMENT 1 (two additions, the multi-day fixture and the DIM_IDS and NO_EOD_VALUE explanation)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_inflection_scope_feed_real_shape.py@8c1a16b129: DIM_IDS; _feed_multiday and test_a_series_account_present_on_all_eight_trading_days_of_a_ten_day_feed_run_chains_to_the_silver; test_rows_present_on_the_ended_series_fixture_is_one_not_the_two_returned_rows_because_one_has_no_end_value",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~I2/checks/r131/p131_feedwriter.py@4e13c27d91: multiday_partitions and grade_multiday; the string checks for DIM_IDS, NO_EOD_VALUE and rows_present"
+    ]
+  },
+  "spec_asserts": "TO-DB-i-18 AMENDMENT 1: the feed-writer fixture carries a multi-day series so the chain is graded; the test file records its dimension input as DIM_IDS and explains rows_present against the RETURNED rows, naming NO_EOD_VALUE.",
+  "world_is": "Applied in the test file only; no feed, wrapper, run script, adapter or checker file was edited. The multi-day run gives 7001 PRESENT on all 8 trading days with carried_days summing to 10 and the chain within 1e-12 of the silver's factors. The 3-day fixture reads rows_present 1 (7004 on the pull day), and 7001 on 10-12 reads ABSENT NO_EOD_VALUE. The amendment's rule that the file names NO_EOD_VALUE and rows_present is met by the test text."
+}
+```
