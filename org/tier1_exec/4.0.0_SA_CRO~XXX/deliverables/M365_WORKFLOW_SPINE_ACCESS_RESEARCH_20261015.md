@@ -108,7 +108,7 @@ through Graph. Ownership of M365-MCP-Graph is not what grants any of this; the r
 NEW app, never on the gateway's user-facing app, so the gateway's secret does not carry tenant-wide reach. Every
 consent is written to the Entra audit log (visible to the tenant's Global Admins).
 
-## 5b. Do we already collect this? No (measured 2026-10-16 ~01:3xZ)
+## 5b. Do we already collect this? No (measured 2026-10-16 ~01:2xZ)
 
 Read directly: the Nessie warehouse `s3://opal-313476888478-globgrph/warehouse/` (branch head
 `de096ea838...`, committed 2026-10-16T01:19:00Z) and the served graph (vintage 2026-10-16T01:19:00Z). Trino

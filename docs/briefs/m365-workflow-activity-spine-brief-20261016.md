@@ -1,7 +1,7 @@
 # M365 workflow activity spine -- every employee's Microsoft 365 actions as one timeline (L1 brief, NEW)
 
 **Author:** `4.0.0_SA_CRO~XXX` (dell1). **For:** `1.0.0_SA_CTO`, `/endpoint --forward` at L2.
-**Asked by:** Andrew, Claude Code terminal on dell1, 2026-10-16 ~01:4xZ, VERBATIM, after the research below:
+**Asked by:** Andrew, Claude Code terminal on dell1, 2026-10-16 ~01:2xZ, VERBATIM, after the research below:
 "yes do it" (to "Want me to write the `/brief-create` for the spine now?"). His founding request (2026-10-15
 ~23:5xZ) is quoted in full in the research note, section 0: *"create a timeline "spine" of all actions all employees
 take on Microsoft, with the guiding purpose being to reverse engineer every workflow ... common tasks that happen
@@ -106,7 +106,7 @@ population setting (O8); the coverage record (O7).
 
 ## PART IV -- THE SUBSTRATE: is this in a canonical pattern?
 
-**F1. Nothing collects this today.** Measured 2026-10-16 ~01:3xZ. The Nessie warehouse
+**F1. Nothing collects this today.** Measured 2026-10-16 ~01:2xZ. The Nessie warehouse
 (`s3://opal-313476888478-globgrph/warehouse/`, branch head `de096ea838...` committed 2026-10-16T01:19:00Z) holds
 namespaces `axes_history, code_heat, cse_ingest, cse_ingest_staging, fedobs_obs_findings, fedobs_signals, globgrph,
 ms_heat, snap_ingest, tool_activity`. None is an M365 activity log. The served graph's M365 slice is a snapshot of
@@ -169,11 +169,11 @@ s.2, 2026-09-29).
 
 ## PART VI -- STATUS (NOT OUTCOME-BEARING)
 
-Measured 2026-10-15 23:5xZ to 2026-10-16 01:4xZ unless stated.
+Measured 2026-10-15 23:5xZ to 2026-10-16 01:2xZ unless stated.
 - No app, subscription, collector or table for the M365 audit log exists (F1).
 - Gateway: delegated-only, 17 scopes; Andrew is its master admin (deployed `.env` read 2026-09-29, held).
 - Warehouse branch head `de096ea838...` at 2026-10-16T01:19:00Z; `globgrph-trino` task `7174173c...` and
-  `globgrph-nessie` task `f27c3077...` RUNNING (`ecs list-tasks`, 2026-10-16 ~01:3xZ).
+  `globgrph-nessie` task `f27c3077...` RUNNING (`ecs list-tasks`, 2026-10-16 ~01:2xZ).
 - Andrew's role: verified 2026-09-14, not re-read.
 - Audit logging on/off, licence tier, per-person event volume: unmeasured.
 
@@ -207,5 +207,5 @@ Measured 2026-10-15 23:5xZ to 2026-10-16 01:4xZ unless stated.
   PRIOR ART         MS_FILE snapshot in the served graph; warehouse/ms_heat (2026-07-17); gateway ms_ingest (/ms/*, delegated)
   SOURCE DOCS       https://learn.microsoft.com/en-us/office/office-365-management-api/office-365-management-activity-api-reference
                     https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/grant-admin-consent
-  MEASURED AT       2026-10-15 23:5xZ .. 2026-10-16 01:4xZ (Part VI per line)
+  MEASURED AT       2026-10-15 23:5xZ .. 2026-10-16 01:2xZ (Part VI per line)
 ```
