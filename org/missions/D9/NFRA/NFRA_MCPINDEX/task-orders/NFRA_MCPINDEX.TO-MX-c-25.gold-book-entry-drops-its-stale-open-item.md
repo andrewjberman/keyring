@@ -87,3 +87,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-16 ~15:0xZ); MX-c-25 COMPLETE.** Worker ~48 removed the one stale `open_items` item (two source lines) from the gold book entry: `0761bf4c0e`. Its first run read AC2 FAIL because the validator reads `app/refs/DATA_CATALOG.yaml` outside the sparse cone (row Z-W48-S1, the order's defect, ruled in amendment A1 and re-run PASS at `58d8f95972`). Drained by `safe-merge.sh` at `7309ccc274` (4 files, none foreign). Issuer re-run on the merged tree: c25.AC1 PASS (1 entry file differs from `0afc0f3a19`, open_items 2 to 1, no line added) and c25.AC2 PASS (validator rc 0, gold book OK, 0 FAIL); proof-of-spec VALID (checked inside the worker tree, whose checker scope matches the instance). Gate limb that graded this ruling: the flip-needs-a-VALID-instance limb of to-pipeline-gate.
+
+<status>complete</status>
