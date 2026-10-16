@@ -22810,3 +22810,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S115 -- round 150 B-CW: the 0.3.3 page mirror, worker 421's rows dispositioned, the PROD candidate byte-identical
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S115",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T11:24:07Z",
+  "one_line": "Round 150 B-CW (DB-c-30): the page mirror takes on series contract 0.3.3 (eight optional names); iv-e-124 green again; worker 421's rows dispositioned; the PROD candidate built byte-identical to origin/PROD (opal-internal).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 9056: the portal series mirror at the contract with iv-e-124 green on the merged tree; CTO msgs 9136 and 9144: class by the measured built bytes.",
+  "world_is": "Trunk contract 0.3.3 (drain 40476cbde7) added history_scope_claim and history_scope_basis to series.optional; the page mirror at portal DEV listed six, so iv-e-124 was red on trunk until merge b8bff882d4 (worker 421): SERIES_OPTIONAL is the eight names in order, SeriesDocument declares both as optional strings, DBC151-1-AC1 and AC2 PASS (issuer re-run), typecheck rc 0. W421-S1 (the sparse tree omits org/surprise_channel so the row schema was read by git show) and W421-S2 (the mirror header comment still cites contract 0.1.0) are INERT and accepted. The stacked PROD candidate cand/dell2/irpt-series-mirror-contract-033 @831f974aa1 (two commits, one file, +10 -1) builds byte-identical to origin/PROD 8012cd1afbaa (88 of 88 dist files; hash 8890552b43cca4fe both): class opal-internal, approval row dell2-20261016T112339Z-6099 OPEN for the CTO. ~D2 did not message the 0.3.3 landing; this seat measured it at the tick (a note, not a defect).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~421/BUILD_R150.json; checks/r150/p151_bcw.py AC1 and AC2 PASS (issuer re-run); proof-of-spec-check VALID rc=0",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/prod_promote/DB_C30_BUILD_BYTES_R150.md; round-close-check round 150: MAY-CLOSE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO: approve row 6099 (opal-internal, byte-identical build); the round 150 packet."
+}
+```
+
