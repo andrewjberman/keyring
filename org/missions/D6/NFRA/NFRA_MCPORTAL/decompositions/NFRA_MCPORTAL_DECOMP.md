@@ -1793,3 +1793,38 @@ chain R   MP-pf-6        (the principal-set read; no edge)
 1. No served segment. The live page shows segments only after `TO-MX-r-15` and `OG-ap-23`; the served arm is run then, by me, and is graded by the CVO.
 2. R2 does not close Z-C-S40: it measures the second plane and finds it is not independent. A source that is (the writer made the only writer, or another enumeration) is the CTO's to name.
 3. S2's cue is judged by my look at 390 px, not by a test; the test pins the rule, not the reading.
+
+
+# v14 -- WORKSTREAM PF, ROUND 4: the People view's principal set against a raw read under a different credential (2026-10-16 ~04:0xZ, 2.0.0_SA_COO~MP)
+
+Source: the CTO's PF round-3 analysis `org/missions/D6/NFRA/NFRA_MCPORTAL/ledger/ROUND_ANALYSIS.pf-round3.md` @0a775f4f7b (msg 34710), on the CVO's slug msg 34708 (`ADJUDICATION_v7.Z.md` @3cae7d7992). PRD v0.9 unchanged. ENDPOINT unchanged.
+That analysis WITHDRAWS round-2 ruling 4 (the premise "the grant writer is the only writer" was never measured, and MP-pf-6 measured it false) and names the independent source for Z-C-S40: a raw full read of the table under a different credential, outside the page's code path.
+
+## PF4.0 WHAT IS MEASURED BEFORE THE CUT (issuer, ~04:0xZ)
+
+1. This box's AWS identity (what the workers' `.tools/aws` shim resolves to) is the IAM user `Andrew_Berman`, not the gateway host role. `iam simulate-principal-policy` for it on `gateway-access-state-table` reads `dynamodb:Scan` allowed and `DescribeTable` allowed. The negative control is NOT a nonexistent action (this user allows `NoSuchAction99` too): it is the same `Scan` for the operator role `opal-gateway-access-admin`, which reads `implicitDeny` (it matches row Z-W25-S1's measured AccessDenied), so the simulator discriminates.
+2. The table holds 1,669 items (3 `--no-paginate` pages of 945, 483 and 241, no filter). The raw grant-bearing set (distinct (tid, oid) of `POLICY#<tid>#<oid>` items of record type `principal_profile`, `data_entitlement` or `person_access`) is 1 principal, digest b43a6e7dd649; the same 9 POLICY items hold no other principal (`audit_only_principals` 0). The page set (`_scan_principals` under the host role over SSM) is 1 principal, the same digest. EQUAL today.
+3. The sanctioned writer of `POLICY#` records is `infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py` (the operator role only; it writes a profile and its grant together, DELETES NOTHING, and appends an `operator_audit` row for every change). So the analysis's live plant ("write a planted grant item through the one sanctioned writer, then confirm both sets show it, and that removing it removes it from both") cannot be done as written: the audit rows would keep a planted principal in any raw read for good, and a profile plus grant written together can never be the "page misses a holder" case the arm exists for.
+
+## PF4.1 CELL `MP-pf-7` (R3) -- the raw read, the comparison, and the planted principal both ways  (chain R3; risk SERVED, read-only)
+
+A worker reads and records; the instruments are the issuer's (`pf7.run.sh`, `_r3_page_probe.py`). Built by the worker in its deliverables dir:
+1. `r3_principal_sets.py`: `compare(page_set, raw_set)` returns `{page_n, raw_n, only_page_n, only_raw_n, equal, vacuous}` (`vacuous` when both are empty; `equal` only when both differences are 0 and not vacuous); a command line turns the output of `pf7.run.sh` into `r3_run.json`, exits 3 and writes no run file when the SIM line says Scan is not allowed.
+2. `test_r3_principal_sets.py`: five named tests, the planted principal checked BOTH ways (in the raw set only = the page misses a holder; in the page set only), the empty case, and the STOP branch.
+3. The one real read: `pf7.run.sh`, read-only, three reads (SIM, RAW, PAGE), recorded as `r3_read.txt` (digests and counts only) and `r3_run.json`.
+
+## PF4.2 EDGES, CHAINS, AND WHAT DEPARTS FROM THE ANALYSIS
+
+```
+chain R3   MP-pf-7   (no edge; the S1 served arm of MP-pf-4 still waits on MX-r-15 and OG-ap-23)
+```
+`N = 1 of M = 1 chains, cap 8`. Departures, ruled by the issuer inside this decomposition and reported to the CTO in the L10 slug:
+- **The executor is a worker subagent (`~37`), not the `0.7.0_AE_CloudOps~Z` seat.** The property the analysis needs is "a different credential, outside the page's code path": the worker's read runs under the IAM user above with no app import, which is that. A seat adds a message round and a dependency for the same credential on this box. Whether CloudOps~Z's own shell resolves to a different identity than the IAM user is NOT measured here.
+- **No live plant** (PF4.0 item 3). The both-ways arm is planted in the comparator (offline) and graded by AC1. The control that the raw read can see a holder the page misses is the comparator's own `only_raw_n` arm; a live arm would add a permanent audit row to the production store.
+- **Checks anchor to their own root** (the analysis's template fix): `_root.sh` now derives the worktree root from its own file's location, not the shell's cwd; proven by running `pf7.run.sh` from `/c/Users`.
+
+## PF4.3 WHAT THIS CUT DOES NOT CLAIM
+
+1. It is one read at one instant: equal today is not equal after F2 adds a principal. Re-run it then (a measurement, not a monitor).
+2. The raw set is the principals holding a profile, a data grant or a person-access record. A principal holding only an `operator_audit` row is counted separately (`audit_only_principals`, 0 today) and is not a holder.
+3. `RUNTIME#` principals (OAuth families and catalog snapshots, 1,650 items) are sessions, not grants, and are outside both sets.
