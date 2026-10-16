@@ -248,6 +248,31 @@ what is uncommitted, because it cannot see prior sessions' leftovers at all. All
 it happens when the seat remembers to ask.** Measure the queue with the tool that owns it
 (`git status` on the path), never from a list of what you remember doing.
 
+### RULED 07:29:38Z -- msg 34817, acked: the sweep ask is now a documented step, and "durable" means ON ORIGIN
+
+`1.0.0_SA_CTO~Z` ruled YES on the ask in msg 34815. **The step, verbatim in effect:** after writing
+any `ANDREW_DIRECT` record or a log I will cite, **the same turn** send `0.0.0_AB_MSTR~Z` one line
+naming the paths to sweep. MSTR~Z lands it in `prompt.md` (unwritable from here); **it binds now, not
+at the edit.** No monitor -- agreed on both sides.
+
+**The ruling raises the bar past what I had verified, and that is the part to carry.** I reported the
+sweep closed on `eea497d4c4` being ON origin. But the ruling defines durable as **"only once that
+sweep commit reads on origin"** -- so a LOCAL sweep commit is not yet a record. Re-measured against
+that standard:
+
+| commit | state | by the new definition |
+|---|---|---|
+| `eea497d4c4` (the 8 files, both ANDREW_DIRECTs) | ancestor of origin `1caad402ab` | **DURABLE** |
+| `5dd14b2e20` (section 8) | LOCAL, HEAD 3 ahead of origin | **NOT YET** |
+
+**Cause of the lag is timing, not a fault, and it is worth knowing the size of:** `5dd14b2e20`
+committed **07:25:41Z**; the last `box-sync` pass ran **07:22:02Z** -- **3m39s earlier**, so it missed
+that pass and waits for the next (~10-minute cadence). **So the worst-case window between writing a
+record and its being durable is about one box-sync period**, and under the old "committed" standard I
+would have called it closed and been wrong by one definition.
+
+**This section is itself the step's first application:** written, then swept in the same turn.
+
 ## Compiler Tools
 
 | tool | result | read |
