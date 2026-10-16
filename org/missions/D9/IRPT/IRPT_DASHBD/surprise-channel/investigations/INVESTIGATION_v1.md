@@ -21822,3 +21822,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The census of this contract is an exact count over the 160 live codes, so the label names the census form the order required and does not describe an operation performed on text. The counts are computed from the mapping (flow_class: 10 EXTERNAL_IN, 5 EXTERNAL_OUT, 65 INCOME, 12 FEE, 14 INTERNAL, 31 CORPORATE_ACTION, 23 UNRESOLVED; coverage: 144 MEASURED, 16 UNMAPPED_BY_TABLE, 0 CODE_NOT_IN_MAPPING; denominator 160)."
 }
 ```
+
+## IRPT_DASHBD-D2-W1501-S6 -- the ratified Cottonwood record's reason for the pair Transfer Out | Transfer Out still argues UNRESOLVED after the CTO's ruling made its class EXTERNAL_OUT
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:48:07Z",
+  "one_line": "Amendment 1 orders the Transfer Out | Transfer Out pair to flow_class_none EXTERNAL_OUT with one change to the ratified record. The record's reason for that pair still says UNRESOLVED, so cottonwood_mapping in contract 0.2.0 carries a reason that argues the opposite of its class. The reason is copied verbatim, because the order names one change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~1402/FWD5_WORDS_COTTONWOOD_R128.json mapping row field type_pair, source_value 'Transfer Out | Transfer Out': flow_class_none UNRESOLVED; reason 'Transfer Out type and sub type. The word is an EXTERNAL_OUT word, but the 25 None rows are not marked external and no non-external class is decidable from the pair, so UNRESOLVED.'",
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json cottonwood_mapping.type_pairs for the same pair: flow_class_none EXTERNAL_OUT (the ruling), reason copied unchanged",
+      "amended order AMENDMENT 1 item (1): the pair has flow_class_none EXTERNAL_OUT, the one change; no text change is named"
+    ]
+  },
+  "spec_asserts": "The ratified Cottonwood section is copied from the ratified record with ONE change, the pair's flow_class_none, and its reasons are the record's.",
+  "world_is": "The contract's Transfer Out | Transfer Out row carries flow_class_none EXTERNAL_OUT and the record's reason, which says the class is UNRESOLVED. Two statements in one row disagree. Whether the issuer rewrites the reason is for the issuer; no Cottonwood producer reads it in this round."
+}
+```

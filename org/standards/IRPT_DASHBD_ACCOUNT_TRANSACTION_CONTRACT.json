@@ -2470,6 +2470,650 @@
       "not_observed": false
     }
   ],
+  "cottonwood_mapping": {
+    "external_flow_rule": {
+      "Contribution": "EXTERNAL_IN",
+      "Withdrawal": "EXTERNAL_OUT"
+    },
+    "action_derivation": "A Cottonwood line whose vendor Action is None derives its action word from its (Transaction Type, Transaction Sub Type) pair through the type table (type_action), the same rule as a 49 Financial code with no action field.",
+    "type_pairs": [
+      {
+        "source_value": "Buy | Buy",
+        "opal_type": "Buy",
+        "flow_class_none": "INTERNAL",
+        "reason": "Buy type and Buy sub type: a purchase of a security. Contribution rows are EXTERNAL_IN by the rule, None rows INTERNAL."
+      },
+      {
+        "source_value": "Buy | Dividend Reinvestment",
+        "opal_type": "Reinvestment",
+        "flow_class_none": "INTERNAL",
+        "reason": "Buy type with a Dividend Reinvestment sub type: income used to buy more of the same holding; no cash leaves the account."
+      },
+      {
+        "source_value": "Capital Gains | Long-Term",
+        "opal_type": "Capital gain",
+        "flow_class_none": "INCOME",
+        "reason": "Capital Gains type, Long-Term sub type: a long-term capital gain distribution."
+      },
+      {
+        "source_value": "Capital Gains | Short-Term",
+        "opal_type": "Capital gain",
+        "flow_class_none": "INCOME",
+        "reason": "Capital Gains type, Short-Term sub type: a short-term capital gain distribution."
+      },
+      {
+        "source_value": "Cash Deposit | Cash Deposit",
+        "opal_type": "Deposit",
+        "flow_class_none": null,
+        "reason": "Cash added to the account from outside; all rows are Contribution, so EXTERNAL_IN by the rule."
+      },
+      {
+        "source_value": "Cash Withdrawal | Cash Withdrawal",
+        "opal_type": "Withdrawal",
+        "flow_class_none": null,
+        "reason": "Cash paid out of the account to the client; all rows are Withdrawal, so EXTERNAL_OUT by the rule."
+      },
+      {
+        "source_value": "Corporate Action | Cash in Lieu",
+        "opal_type": "Corporate action",
+        "flow_class_none": "CORPORATE_ACTION",
+        "reason": "Corporate Action type: cash paid in lieu of a fractional share from an issuer event."
+      },
+      {
+        "source_value": "Corporate Action | Conversion In",
+        "opal_type": "Corporate action",
+        "flow_class_none": "CORPORATE_ACTION",
+        "reason": "Corporate Action type: a conversion into the holding, caused by the issuer."
+      },
+      {
+        "source_value": "Corporate Action | Conversion Out",
+        "opal_type": "Corporate action",
+        "flow_class_none": "CORPORATE_ACTION",
+        "reason": "Corporate Action type: a conversion out of the holding, caused by the issuer."
+      },
+      {
+        "source_value": "Corporate Action | Merger",
+        "opal_type": "Corporate action",
+        "flow_class_none": "CORPORATE_ACTION",
+        "reason": "Corporate Action type: a merger of holdings, caused by the issuer."
+      },
+      {
+        "source_value": "Corporate Action | Reverse Split",
+        "opal_type": "Corporate action",
+        "flow_class_none": "CORPORATE_ACTION",
+        "reason": "Corporate Action type: a reverse split, caused by the issuer."
+      },
+      {
+        "source_value": "Corporate Action | Spinoff",
+        "opal_type": "Corporate action",
+        "flow_class_none": "CORPORATE_ACTION",
+        "reason": "Corporate Action type: a spin-off, caused by the issuer."
+      },
+      {
+        "source_value": "Corporate Action | Split",
+        "opal_type": "Corporate action",
+        "flow_class_none": "CORPORATE_ACTION",
+        "reason": "Corporate Action type: a split, caused by the issuer."
+      },
+      {
+        "source_value": "Dividend | Dividend",
+        "opal_type": "Dividend",
+        "flow_class_none": "INCOME",
+        "reason": "Dividend type and sub type: a dividend paid by a holding."
+      },
+      {
+        "source_value": "Dividend | Non-Taxable",
+        "opal_type": "Dividend",
+        "flow_class_none": "INCOME",
+        "reason": "Dividend type with a Non-Taxable sub type: a dividend with a tax status, still a dividend."
+      },
+      {
+        "source_value": "Dividend | Qualified",
+        "opal_type": "Dividend",
+        "flow_class_none": "INCOME",
+        "reason": "Dividend type with a Qualified sub type: a dividend with a tax status, still a dividend."
+      },
+      {
+        "source_value": "Dividend Reinvestment | Dividend Reinvestment",
+        "opal_type": "Reinvestment",
+        "flow_class_none": "INTERNAL",
+        "reason": "Dividend paid and reinvested in the same holding; no cash leaves the account."
+      },
+      {
+        "source_value": "Expense | Buy of Accrued Interest",
+        "opal_type": "UNMAPPED",
+        "flow_class_none": "UNRESOLVED",
+        "reason": "Expense type with a Buy of Accrued Interest sub type: the vendor words do not say whether the row is a trading cost, an income item or a cost-basis movement, so it is left undecided rather than guessed."
+      },
+      {
+        "source_value": "Expense | Expense",
+        "opal_type": "Fee",
+        "flow_class_none": "FEE",
+        "reason": "Expense type: a charge against the account. Withdrawal rows are EXTERNAL_OUT by the rule, None rows FEE."
+      },
+      {
+        "source_value": "Expense | Tax Withholding",
+        "opal_type": "Tax withheld",
+        "flow_class_none": null,
+        "reason": "Tax Withholding sub type: tax taken from the account; all rows are Withdrawal, so EXTERNAL_OUT by the rule. The ratified Tax withheld word is INTERNAL; the conflict is filed as a surprise row."
+      },
+      {
+        "source_value": "Income | Income",
+        "opal_type": "Other income",
+        "flow_class_none": "INCOME",
+        "reason": "Income type: income paid to the account that is not a dividend, interest or capital gain."
+      },
+      {
+        "source_value": "Interest | Buy of Accrued Interest",
+        "opal_type": "UNMAPPED",
+        "flow_class_none": "UNRESOLVED",
+        "reason": "Interest type with a Buy of Accrued Interest sub type: the buyer pays accrued interest, which the vendor words do not place as income or as a cost-basis movement, so it is left undecided rather than guessed."
+      },
+      {
+        "source_value": "Interest | Interest",
+        "opal_type": "Interest",
+        "flow_class_none": "INCOME",
+        "reason": "Interest type and sub type: interest credited or paid."
+      },
+      {
+        "source_value": "Interest | Sale of Accrued Interest",
+        "opal_type": "Interest",
+        "flow_class_none": "INCOME",
+        "reason": "Interest type with a Sale of Accrued Interest sub type: accrued interest received on a sale, read as interest."
+      },
+      {
+        "source_value": "Interest | Tax-Exempt",
+        "opal_type": "Interest",
+        "flow_class_none": "INCOME",
+        "reason": "Interest type with a Tax-Exempt sub type: municipal bond interest, interest with a tax status only."
+      },
+      {
+        "source_value": "Journal | Journal",
+        "opal_type": "Journal",
+        "flow_class_none": "INTERNAL",
+        "reason": "Journal type and sub type: a book entry between accounts or sub-accounts."
+      },
+      {
+        "source_value": "Management Fee | Management Fee",
+        "opal_type": "Management fee",
+        "flow_class_none": null,
+        "reason": "Management Fee type: a fee for management; all rows are Withdrawal, so EXTERNAL_OUT by the rule."
+      },
+      {
+        "source_value": "Management Fee | Rebate",
+        "opal_type": "Fee credit",
+        "flow_class_none": null,
+        "reason": "Management Fee type with a Rebate sub type: a reversal that returns part of a fee; all rows are Contribution, so EXTERNAL_IN by the rule."
+      },
+      {
+        "source_value": "Return of Capital | Return of Capital",
+        "opal_type": "Return of capital",
+        "flow_class_none": "INTERNAL",
+        "reason": "Return of Capital type: a repayment of principal, not income; it lowers cost basis."
+      },
+      {
+        "source_value": "Sale | Redemption",
+        "opal_type": "Sell",
+        "flow_class_none": "INTERNAL",
+        "reason": "Sale type with a Redemption sub type: a holding sold back to its issuer or fund."
+      },
+      {
+        "source_value": "Sale | Sale",
+        "opal_type": "Sell",
+        "flow_class_none": "INTERNAL",
+        "reason": "Sale type and sub type: a sale of a security. Withdrawal rows are EXTERNAL_OUT by the rule, None rows INTERNAL."
+      },
+      {
+        "source_value": "Transfer In | Transfer In",
+        "opal_type": "Transfer in",
+        "flow_class_none": null,
+        "reason": "Transfer In type and sub type; all rows are Contribution, so EXTERNAL_IN by the rule."
+      },
+      {
+        "source_value": "Transfer Out | Transfer Out",
+        "opal_type": "Transfer out",
+        "flow_class_none": "EXTERNAL_OUT",
+        "reason": "Transfer Out type and sub type. The word is an EXTERNAL_OUT word, but the 25 None rows are not marked external and no non-external class is decidable from the pair, so UNRESOLVED."
+      }
+    ],
+    "actions": [
+      {
+        "source_value": "044S - 021",
+        "opal_action": "UNMAPPED",
+        "reason": "A code with no description in the value; the value names no kind of event."
+      },
+      {
+        "source_value": "10 - TFR~",
+        "opal_action": "Transfer",
+        "reason": "TFR in the value reads as a transfer."
+      },
+      {
+        "source_value": "ACAT In",
+        "opal_action": "Transfer",
+        "reason": "ACAT is an account transfer between institutions, inbound."
+      },
+      {
+        "source_value": "ADR tax/fee",
+        "opal_action": "UNMAPPED",
+        "reason": "The value names both a tax and a fee; the vendor words do not say which the row is."
+      },
+      {
+        "source_value": "Bank Interest",
+        "opal_action": "Income",
+        "reason": "Interest credited on cash."
+      },
+      {
+        "source_value": "Buy",
+        "opal_action": "Trade",
+        "reason": "A purchase of a security."
+      },
+      {
+        "source_value": "Buy Money Market ",
+        "opal_action": "Trade",
+        "reason": "A purchase of a money market holding (trailing space kept)."
+      },
+      {
+        "source_value": "Buy of Accrued Interest",
+        "opal_action": "Trade",
+        "reason": "A purchase; the accrued interest paid on it is part of the purchase."
+      },
+      {
+        "source_value": "CREDIT - ",
+        "opal_action": "UNMAPPED",
+        "reason": "A credit with no kind stated (trailing space kept)."
+      },
+      {
+        "source_value": "Cancelled Dividend Reinvestment",
+        "opal_action": "Adjustment",
+        "reason": "A cancelled reinvestment is a reversal, a bookkeeping change."
+      },
+      {
+        "source_value": "Cash Deposit",
+        "opal_action": "Contribution",
+        "reason": "Cash in from outside the firm."
+      },
+      {
+        "source_value": "Cash Withdrawal",
+        "opal_action": "Withdrawal",
+        "reason": "Cash out to the client."
+      },
+      {
+        "source_value": "Cash in Lieu of Fractional Shares",
+        "opal_action": "Adjustment",
+        "reason": "A corporate-action cash item; the ratified Corporate action word takes the Adjustment action."
+      },
+      {
+        "source_value": "Check Paid",
+        "opal_action": "Withdrawal",
+        "reason": "A check paid out of the account."
+      },
+      {
+        "source_value": "Check Paid Adjustment",
+        "opal_action": "Adjustment",
+        "reason": "A correction to a check paid."
+      },
+      {
+        "source_value": "Check Received",
+        "opal_action": "Contribution",
+        "reason": "A check received into the account."
+      },
+      {
+        "source_value": "Contribution",
+        "opal_action": "Contribution",
+        "reason": "The vendor word Contribution."
+      },
+      {
+        "source_value": "Corporate/Government Bond Interest",
+        "opal_action": "Income",
+        "reason": "Interest on a bond holding."
+      },
+      {
+        "source_value": "Corporate/Government Bond Interest Adjustment",
+        "opal_action": "Adjustment",
+        "reason": "A correction to bond interest."
+      },
+      {
+        "source_value": "Current Year Contribution",
+        "opal_action": "Contribution",
+        "reason": "A contribution for the current year."
+      },
+      {
+        "source_value": "DST Other Fee",
+        "opal_action": "Fee",
+        "reason": "A fee."
+      },
+      {
+        "source_value": "DST TRANSFER IN",
+        "opal_action": "Transfer",
+        "reason": "A transfer in."
+      },
+      {
+        "source_value": "Direct Deposit",
+        "opal_action": "Contribution",
+        "reason": "A deposit into the account from outside."
+      },
+      {
+        "source_value": "Direct Deposit Adjustment",
+        "opal_action": "Adjustment",
+        "reason": "A correction to a direct deposit."
+      },
+      {
+        "source_value": "Direct Rollover Cash",
+        "opal_action": "Transfer",
+        "reason": "A rollover of cash from another plan or account."
+      },
+      {
+        "source_value": "Dividend",
+        "opal_action": "Income",
+        "reason": "A dividend paid by a holding."
+      },
+      {
+        "source_value": "Dividend Adjustment",
+        "opal_action": "Adjustment",
+        "reason": "A correction to a dividend."
+      },
+      {
+        "source_value": "Dividend Reinvestment",
+        "opal_action": "Income",
+        "reason": "Income used to buy more of the same holding."
+      },
+      {
+        "source_value": "Dividend Reversal",
+        "opal_action": "Adjustment",
+        "reason": "A reversal of a dividend, a bookkeeping change."
+      },
+      {
+        "source_value": "EF Transfer In",
+        "opal_action": "Transfer",
+        "reason": "An electronic funds transfer in, read as a transfer."
+      },
+      {
+        "source_value": "EF Transfer Out",
+        "opal_action": "Transfer",
+        "reason": "An electronic funds transfer out, read as a transfer."
+      },
+      {
+        "source_value": "Exchange",
+        "opal_action": "Trade",
+        "reason": "An exchange of one holding for another: a sale and a purchase."
+      },
+      {
+        "source_value": "Exchange To Fund",
+        "opal_action": "Trade",
+        "reason": "An exchange into a fund: a sale and a purchase."
+      },
+      {
+        "source_value": "Exchange from Fund",
+        "opal_action": "Trade",
+        "reason": "An exchange out of a fund: a sale and a purchase."
+      },
+      {
+        "source_value": "FT Withheld",
+        "opal_action": "Tax",
+        "reason": "Foreign tax withheld."
+      },
+      {
+        "source_value": "Federal Tax Withholding",
+        "opal_action": "Tax",
+        "reason": "Federal tax withheld."
+      },
+      {
+        "source_value": "Fee Charged",
+        "opal_action": "Fee",
+        "reason": "A charge against the account."
+      },
+      {
+        "source_value": "Foreign Dividend",
+        "opal_action": "Income",
+        "reason": "A dividend from a foreign holding."
+      },
+      {
+        "source_value": "Foreign Dividend Adjustment",
+        "opal_action": "Adjustment",
+        "reason": "A correction to a foreign dividend."
+      },
+      {
+        "source_value": "Foreign Tax Paid",
+        "opal_action": "Tax",
+        "reason": "Foreign tax paid."
+      },
+      {
+        "source_value": "Funds Received from Bank Acount",
+        "opal_action": "Contribution",
+        "reason": "Money received from an outside bank (the vendor spelling is kept)."
+      },
+      {
+        "source_value": "Funds Sent to Bank Account",
+        "opal_action": "Withdrawal",
+        "reason": "Money sent to an outside bank."
+      },
+      {
+        "source_value": "IRA Transfer - Cash",
+        "opal_action": "Transfer",
+        "reason": "A cash transfer between IRA accounts or institutions."
+      },
+      {
+        "source_value": "Interest",
+        "opal_action": "Income",
+        "reason": "Interest credited or paid."
+      },
+      {
+        "source_value": "Journal",
+        "opal_action": "Transfer",
+        "reason": "A book entry between accounts; the ratified Journal word takes the Transfer action."
+      },
+      {
+        "source_value": "Long Term Capital Gains",
+        "opal_action": "Income",
+        "reason": "A long-term capital gain distribution."
+      },
+      {
+        "source_value": "MGFEE - DEBIT",
+        "opal_action": "Fee",
+        "reason": "A management fee debit."
+      },
+      {
+        "source_value": "Management Fee",
+        "opal_action": "Fee",
+        "reason": "A management fee."
+      },
+      {
+        "source_value": "Management Fee Adjustment",
+        "opal_action": "Adjustment",
+        "reason": "A correction to a management fee."
+      },
+      {
+        "source_value": "Management Fee Reversal",
+        "opal_action": "Fee",
+        "reason": "A reversal of a fee; the ratified Fee credit word takes the Fee action."
+      },
+      {
+        "source_value": "Merger",
+        "opal_action": "Adjustment",
+        "reason": "A corporate action, non-cash."
+      },
+      {
+        "source_value": "Normal Distribution",
+        "opal_action": "Withdrawal",
+        "reason": "A distribution paid out to the client."
+      },
+      {
+        "source_value": "OID Amount Calculated",
+        "opal_action": "Income",
+        "reason": "An original issue discount accrual."
+      },
+      {
+        "source_value": "OTHER - ",
+        "opal_action": "UNMAPPED",
+        "reason": "A value with no kind stated (trailing space kept)."
+      },
+      {
+        "source_value": "Other Activity",
+        "opal_action": "UNMAPPED",
+        "reason": "A generic label with no kind stated."
+      },
+      {
+        "source_value": "Other Fee",
+        "opal_action": "Fee",
+        "reason": "A fee."
+      },
+      {
+        "source_value": "Partial Distribution",
+        "opal_action": "Withdrawal",
+        "reason": "A partial distribution paid out."
+      },
+      {
+        "source_value": "Premature Distribution",
+        "opal_action": "Withdrawal",
+        "reason": "A distribution paid out before the due date."
+      },
+      {
+        "source_value": "Principal Payment",
+        "opal_action": "Adjustment",
+        "reason": "A return of principal, read as the ratified Return of capital word."
+      },
+      {
+        "source_value": "QDV - DEBIT",
+        "opal_action": "UNMAPPED",
+        "reason": "A code with no vendor description; the value does not name its kind."
+      },
+      {
+        "source_value": "Redemption",
+        "opal_action": "Trade",
+        "reason": "A holding sold back to its issuer or fund."
+      },
+      {
+        "source_value": "Return of Capital",
+        "opal_action": "Adjustment",
+        "reason": "A repayment of principal, as the ratified Return of capital word."
+      },
+      {
+        "source_value": "Reverse Split",
+        "opal_action": "Adjustment",
+        "reason": "A corporate action, non-cash."
+      },
+      {
+        "source_value": "Roth Conversion",
+        "opal_action": "Transfer",
+        "reason": "A movement between account types."
+      },
+      {
+        "source_value": "Royalty Trust Payment",
+        "opal_action": "Income",
+        "reason": "A royalty trust payment."
+      },
+      {
+        "source_value": "Sale",
+        "opal_action": "Trade",
+        "reason": "A sale of a security."
+      },
+      {
+        "source_value": "Sale of Accrued Interest",
+        "opal_action": "Income",
+        "reason": "Accrued interest received on a sale, read as interest income."
+      },
+      {
+        "source_value": "Sep-IRA Contribution",
+        "opal_action": "Contribution",
+        "reason": "A contribution to a SEP-IRA."
+      },
+      {
+        "source_value": "Short Term Capital Gains",
+        "opal_action": "Income",
+        "reason": "A short-term capital gain distribution."
+      },
+      {
+        "source_value": "Special Memorandum Account",
+        "opal_action": "Adjustment",
+        "reason": "A memo entry with no cash flow."
+      },
+      {
+        "source_value": "Spinoff",
+        "opal_action": "Adjustment",
+        "reason": "A corporate action, non-cash."
+      },
+      {
+        "source_value": "Split",
+        "opal_action": "Adjustment",
+        "reason": "A corporate action, non-cash."
+      },
+      {
+        "source_value": "Systematic Withdrawal Plan",
+        "opal_action": "Withdrawal",
+        "reason": "A scheduled withdrawal paid out to the client."
+      },
+      {
+        "source_value": "TOA - LONG",
+        "opal_action": "UNMAPPED",
+        "reason": "A code with no vendor description; the value does not spell out its kind."
+      },
+      {
+        "source_value": "Tax-Exempt Municipal Bond Interest",
+        "opal_action": "Income",
+        "reason": "Municipal bond interest."
+      },
+      {
+        "source_value": "Transfer Cash to Custodian",
+        "opal_action": "Transfer",
+        "reason": "A cash transfer to a custodian."
+      },
+      {
+        "source_value": "Transfer In",
+        "opal_action": "Transfer",
+        "reason": "A transfer in."
+      },
+      {
+        "source_value": "Transfer In of Accrued Interest",
+        "opal_action": "Transfer",
+        "reason": "A transfer in carrying accrued interest."
+      },
+      {
+        "source_value": "Transfer Memo",
+        "opal_action": "Adjustment",
+        "reason": "A memo entry with no value of its own."
+      },
+      {
+        "source_value": "Transfer Out",
+        "opal_action": "Transfer",
+        "reason": "A transfer out."
+      },
+      {
+        "source_value": "Transfer Purchase",
+        "opal_action": "Trade",
+        "reason": "A purchase made by transfer."
+      },
+      {
+        "source_value": "Transfer Redemption",
+        "opal_action": "Trade",
+        "reason": "A sale made by transfer."
+      },
+      {
+        "source_value": "Valuation Decrease",
+        "opal_action": "Adjustment",
+        "reason": "A revaluation with no cash flow."
+      },
+      {
+        "source_value": "Wire Transfer",
+        "opal_action": "Transfer",
+        "reason": "A wire between institutions; its direction is not in the value (the External Flow column carries it)."
+      },
+      {
+        "source_value": "Wire Transfer to Bank",
+        "opal_action": "Withdrawal",
+        "reason": "A wire to an outside bank."
+      },
+      {
+        "source_value": "exc-in",
+        "opal_action": "Adjustment",
+        "reason": "A conversion in: the non-cash corporate-action word."
+      },
+      {
+        "source_value": "exc-out",
+        "opal_action": "Adjustment",
+        "reason": "A conversion out: the non-cash corporate-action word."
+      }
+    ]
+  },
   "unmapped_display": "Unclassified",
   "new_code_reason": "CODE_NOT_IN_MAPPING",
   "firms_served": [
@@ -2478,7 +3122,7 @@
   "firms_pending": [
     {
       "firm": "cottonwood",
-      "reason": "No producer exists yet. Its ground read is round 128 (RD_FWD5_GROUND_COTTONWOOD_R128.json) and its table fills all 14 targets. Its re-cut words (33 type pairs and 87 Action values) are a proposal awaiting ratification, so no Cottonwood row is in source_mapping."
+      "reason": "Words ratified in the round-128 analysis (msg 9175) at pair grain and carried in cottonwood_mapping, with Transfer Out | Transfer Out EXTERNAL_OUT by that ruling. Producer not yet built (its ground read is round 128, all 14 targets). No Cottonwood row is in source_mapping, which keeps 49 Financial and Inflection."
     },
     {
       "firm": "inflection",
@@ -2523,6 +3167,26 @@
           "EXTERNAL_IN": 10
         }
       }
+    }
+  },
+  "reads": {
+    "49financial": {
+      "partitions_read": 572,
+      "objects_read": 572,
+      "rows": 3349750,
+      "read_at_utc": "2026-10-16T07:45:31Z"
+    },
+    "cottonwood": {
+      "partitions_read": 125,
+      "objects_read": 125,
+      "rows": 1096830,
+      "read_at_utc": "2026-10-16T07:45:39Z"
+    },
+    "inflection": {
+      "partitions_read": 154,
+      "objects_read": 154,
+      "rows": 218054352,
+      "read_at_utc": "2026-10-16T07:45:55Z"
     }
   },
   "schema_hash": "8861518a4ef58baad75b8cf7f91e697fd197191a0fc18a64eb1384ace164d6b4",
