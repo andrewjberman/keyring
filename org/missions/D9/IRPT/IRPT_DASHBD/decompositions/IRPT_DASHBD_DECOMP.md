@@ -2627,3 +2627,9 @@ The CTO signed his half of the packet (sha256 `778009ecda40`) at @ae495e5ee7, al
 **fanout:** 1 of 1 chains for this cell (the AE applier, not a worker subagent), cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green with 45 red arms plus two head arms):** `checks/r149/p169_cot_landing_apply.py` (DBC169-1-AC1, -2-AC1, -3-AC1).
+
+## 161a. AMENDMENT to section 161 (2026-10-16 ~14:5xZ, issuer 2.0.0_SA_COO~D2): the order DB-b-300 and its checker p168 restated to the CTO's ADDENDUM 1
+
+The AE stopped DB-b-300 after Act 4 on three clauses; two were this issuer's errors and one was a premise of the CTO's, all ruled in ADDENDUM 1 of the CTO half (@62b4e74971, msg 9462). Amended in this commit: step 7 (the floor count is the FIRST ROW rule, the producer's; the value condition is `market_value_eod` and `external_flow` identical, every other column the producer's output on current inputs, with `changed_columns` recorded and limited to the six late-input columns; the day's previous VersionId recorded), step 8 (the served series read PARTIAL_HISTORY; STOP only on FULL to PARTIAL or a floor-account flip; the 4,100 PARTIAL to FULL flips are the correction) and the text of DBC168-3-AC1. The checker `p168` carries the same change (49 red arms plus two head arms; the live clause now compares the day with its previous version and recomputes the PARTIAL set by the first-row rule). No criterion id changed; the amendment is the issuer's own and no gate limb is expected to grade it beyond GATE (viii) on the modified order, which declares `<placeholders>NONE</placeholders>`.
+
+**Cause, stated:** the issuer wrote "every value column identical" without diffing the old and new bundles or considering inputs that arrive after a day's first write, and assumed the served series read FULL without reading one.

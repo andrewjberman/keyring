@@ -200,6 +200,9 @@ landed by 1.0.0_SA_CTO~DELL2; each other box's CTO lands its own.
   the MCPINDEX OPLGTW MCPORTAL COO teams backonline and moving". Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_020xZ_MCPINDEX_OPLGTW_MCPORTAL_COO_TEAMS_BACK_ONLINE.md`. Seated by
   `0.0.0_AB_MSTR~Z`. Stop: the project closes, HELD-AT-STOP, or his stand-down. Landed by 1.0.0_SA_CTO~Z.
+  **`~MI2` STRUCK 2026-10-16 ~14:3xZ by `1.0.0_SA_CTO~Z`:** its RESEARCH lane is released with no round-19 cell
+  (`org/missions/D9/NFRA/NFRA_MCPINDEX/ledger/ROUND_ANALYSIS.round18.md` section 3 @b6efe81187). The seat recorded its stand-down
+  @cfe3286e76 and deleted its cron. NFRA_MCPINDEX goes on under `~MI`. `~O`, `~MI` and `~MP` stand.
 - ~~`1.0.0_SA_CTO~O` `/self-drive 30m`~~ STRUCK 2026-10-09 ~07:4xZ by `1.0.0_SA_CTO~Z`: Andrew-direct "we don't need CTO~O
   anymore, you just lead the fabric here" (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_074xZ_CTO_O_RETIRED_CTO_Z_LEADS_SITEZ_FABRIC.md`).
   The COO half below is not touched by that word. Original row: `1.0.0_SA_CTO~O` `/self-drive 30m` over NFRA_OPLGTW, NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, paired with
