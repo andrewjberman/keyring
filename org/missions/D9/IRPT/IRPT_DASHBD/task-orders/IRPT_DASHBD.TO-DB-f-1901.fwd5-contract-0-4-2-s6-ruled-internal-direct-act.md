@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~1901</issued_to>
 <issued_by>2.0.0_SA_COO~F2</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
@@ -28,7 +28,8 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-1901` (branch `wk-IRPT_DASHBD-
 **The cell (`DB-f-1901`).**
 1. Adapt the generator to `gen_transaction_contract_0_4_2.py` and run it: it writes the contract AND `transaction_words.json`. Changes from 0.4.1, and only these: `contract_version` "0.4.2"; `supersedes` begins "0.4.1"; `authored_by` your serial; `round_132_censuses.s6_status` is "RULED_INTERNAL" when the two descriptions' paired rows over their total rows is below 0.95 (it stays "STANDS" at or above 0.95; `offsets_status` unchanged); `served_note` gains one sentence naming the ruling; and a NEW top-level key `s6_ruling` (the checker's `KEYS` list is the list) equal to: `{"addendum": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_131_20261016.md", "addendum_number": 2, "pin": "a5475b2fdd", "class": "INTERNAL", "descriptions": [the two description names, sorted], "rows_per_description": {name: rows}, "legs_with_the_other_legs_key": {name: same_key_as_a_row_of_the_other_description}, "income_booked_by": "Dividend to Cash", "reason": ..., "release_criterion": ...}` with the two count objects copied unchanged from `R132_INFLECTION_S6_CENSUS_V2.json` `per_description`. The `reason` is one or two sentences: the two descriptions are two legs of one event (every row of each has a row of the other with the same account, day and absolute amount) and counting a leg as income would count the dividend twice. The `release_criterion` is one sentence: per event the two legs' signed amounts sum to zero, printed as N of 14,920 (use the figure with its thousands comma, from the census), and any miss stops the release.
 2. The words file keeps its sections; its `contract_version` becomes "0.4.2" (the checker compares it). Two runs of the generator are byte-identical.
-3. Do not touch any other file. Run `python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r132/p132_dates.py" . DBF132-1-AC2` and `python -I ".../checks/r132/p132_inflection.py" . DBF132-1-AC3` once each as a regression check (both PASSED before and must still print PASS); report their last lines.
+3. **Amendment (issuer, after worker row W1901-S2):** `data/assets/scripts/gold/irpt_reporting/tests/test_account_transaction_cottonwood.py` line 86 pins the contract version as a literal (`== "0.4.1"`), so any contract bump breaks it; the grant now names that file. Change that ONE assertion so it no longer pins a literal: `assert WORDS["contract_version"] == CONTRACT["contract_version"]` and `assert tuple(int(x) for x in CONTRACT["contract_version"].split(".")) >= (0, 4, 1)`. Touch nothing else in the file. The Cottonwood test file must again pass with at least 51 tests (it passes 51 of 52 today).
+4. Do not touch any other file. Run `python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r132/p132_dates.py" . DBF132-1-AC2` and `python -I ".../checks/r132/p132_inflection.py" . DBF132-1-AC3` once each as a regression check (both PASSED before and must still print PASS); report their last lines.
 
 <criterion id="DBF133-1-AC1" cell_refs="DB-f-1901" judgment="false"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r133/p133_contract.py" . DBF133-1-AC1</invocation><expect>DBF133-1-AC1 PASS</expect></criterion>
 `DBF133-1-AC1` -- the contract 0.4.2 in one verdict: its form (the keys, version 0.4.2 superseding 0.4.1, the same 18 columns and schema hash), then every binding of 0.4.1 (keys, row filter and offset rule, the Inflection flow rule table, the 49 Financial classes, the Cottonwood section, reads, coverage, `business_date_rule`, `price_rule`, the census records, the words file equal to the contract's sections) plus `round_132_censuses.s6_status` `RULED_INTERNAL` and the `s6_ruling` section equal to the CTO addendum's terms and the census v2's counts. Base: FAIL (the contract is 0.4.1).
@@ -47,6 +48,7 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-1901` (branch `wk-IRPT_DASHBD-
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1901/
 org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json
 data/assets/scripts/gold/irpt_reporting/transaction_words.json
+data/assets/scripts/gold/irpt_reporting/tests/test_account_transaction_cottonwood.py
 org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1901.fwd5-contract-0-4-2-s6-ruled-internal-direct-act.md
 </paths>
