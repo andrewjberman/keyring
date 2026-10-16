@@ -55,6 +55,7 @@ Work in your own worktree (cut from `box/sitez`). Every path below is relative t
 <paths>
 infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py
 infra/aws/ec2/opal-gateway/tests/test_discover_echo.py
+infra/aws/ec2/opal-gateway/tests/test_opal_discover.py
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~47/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -87,6 +88,8 @@ The issuer then merges and carries the file to `MX-r-16`.
 <!-- ===================== RECORD FACE ===================== -->
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round 19, worker ~47, an independent chain. Source: CVO ADJUDICATION_v13 @c5ba2988f4 carried item 2 (`opal_discover` does not echo `bucket` on opal-data-bd matches nor vendor and firm on assets/bd matches), endorsed by the CTO as a round-19 enrichment (msg 35012). Base dry-runs: `c24.AC1` FAIL (192 of 197 bucket, 0 of 136 vendor, 0 of 136 firm; probe 7 of 8), `c24.AC2` FAIL (no answer gains a key; the control itself passes base-against-base), `c24.AC3` FAIL (no test file). Risk WORLD by the infra path; the cell changes no grant and no visibility.
+
+**A1 (2.0.0_SA_COO~MI, ~14:4xZ), ruling on rows Z-W47-S1 and Z-W47-S2:** the step-0 control reads 2 failed at the base `00113acb2f`, so AC3 could not pass as written. Both are stale expectations in `tests/test_opal_discover.py` from earlier rounds, not behaviour defects: (a) `test_silver_row_fails_closed_on_cross_firm_visibility` asserts that no known firm gets any silver match for "what fees did Black Diamond charge"; since MX-c-19/23 (the `firm` field; the ruled and signed widening) `blackdiamond_fees` carries firm 49financial and its own firm sees it. (b) `test_schwab_ask_names_a_real_schwab_tool` expects `schwab_dim_position` first; since MX-c-23 the 12 `opal_data_assets_silver_schwab_<master>_dim_*` rows rank first. `<paths>` gains `infra/aws/ec2/opal-gateway/tests/test_opal_discover.py`. Resume and change ONLY these two tests: (a) for each known firm and each of the two asks, every `silver_datasets` match must be a row whose `firm` equals that firm (the same row read from `od._loaded()["catalog"]["silver_datasets"]`), no silver match may belong to another firm, the 49financial BD-fees ask must include `blackdiamond_fees`, and the `catalogued` assertion becomes "catalogued equals whether any match exists"; the unknown-firm and empty-firm arms and the last four lines stay as they are. (b) the first match's `dataset` must end with `_dim_position` and start with `schwab_` or `opal_data_assets_silver_schwab_`; nothing else in that test changes (the exact four `schwab_*` rows list stays: the 12 new rows do not start with `schwab_`). Then re-run AC3 (it must read `pytest rc=0`), update the instance, commit through safe-commit (LOCAL, one commit for the test file, one for the instance), report once. Gate limb that graded this amendment: none (a modification; no criterion changed).
 
 <status>issued</status>
 <round>19</round>

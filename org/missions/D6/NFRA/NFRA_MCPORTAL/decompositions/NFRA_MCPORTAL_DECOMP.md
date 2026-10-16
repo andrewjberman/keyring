@@ -1897,3 +1897,10 @@ Criteria: AC1 the six named tests PASSED and each file 0 failed; AC2 the whole a
 ## PF7.2 EDGES AND WHAT THIS CUT DOES NOT CLAIM
 
 No edge to MP-pf-9: the release is bundle-only and excused these six at A1; this cell lands on the trunk after the release's close and is not part of it. The five `FileNotFoundError` tests named in the release ASK are sparse-tree artifacts of the release tree, not stale tests (they pass at HEAD), and are not in this cell. It does not claim the real-inventory tests guard the catalog's content: they guard the placement rule's invariants, which is what they were for.
+
+## PF6.4 WHAT THE RELEASE TAUGHT THE NEXT RELEASE ORDER (issuer, ~14:2xZ, at the close of MP-pf-9; rows Z-S68, Z-S69, Z-S72)
+
+1. The sparse list for a gateway release tree adds `/data/mdpf/config/` (`deploy-to-ec2.sh` stages `data/mdpf/config/partner_roster.json` into the artifact; without it the act is refused before any upload).
+2. A release tree cut on an older trunk cannot run the tree-local naming gate: commits there run the TRUNK's `.tools/safe-commit.sh` from inside the tree.
+3. A release branch is cut on the live-base lineage and does NOT merge to `box/sitez` (MP-pf-9: 24 conflicting gateway paths). The record of a release lands through a LANDING branch cut from `box/sitez` HEAD carrying only the release's three artifacts (the `opal-gateway` block of `EC2_MANIFEST.json`, the completion entry, the pre-act record), committed by the APPLIER under its own lane (the issuer's lane may not commit `EC2_MANIFEST.json` or the applier's folder), then drained by the issuer. The release branch is kept: the manifest's `deployed_commit` names its commit.
+4. The manifest's `file_checksums` are taken from the trunk, not from a release tree cut earlier: a release that moves no gateway file leaves the files of the live base deployed (MP-pf-9: the release block's md5 values mismatched the files at `38fe44d5cb`; the trunk's matched 10 of 10).
