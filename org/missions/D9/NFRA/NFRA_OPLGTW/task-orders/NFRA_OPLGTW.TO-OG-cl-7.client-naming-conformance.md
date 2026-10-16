@@ -80,7 +80,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cl-7.client-naming-conformance.
 - Slot ~111, spawned when `OG-cl-1` (the core) and the other adapters are merged on trunk, so the files exist in one place.
 - Pre-cut: cl7.AC1 base: PASS-or-FAIL read; cl7.AC2 base: FAIL as expected (the hand-kept literals are present).
 
-<status>pending</status>
+<status>complete</status>
+<status_reason>closed by the issuer 2026-10-16: the worker's AC2 FAIL was the commit-time naming gate not reading name_rulings.json; OG-ng-2 (merged f1b3aeb579, XA-20261016T034740Z-28da) fixed the gate and the issuer re-ran cl7.AC2 on trunk f1b3aeb579: rc=0, REFUSE 0, firm literals 0, PASS. AC1 PASS in the worker's instance and re-run.</status_reason>
 <round>37</round>
 <workstream>G2-CONFORM</workstream>
 <slot>~111</slot>

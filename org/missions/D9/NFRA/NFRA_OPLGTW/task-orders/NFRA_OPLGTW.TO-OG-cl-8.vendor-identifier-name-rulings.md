@@ -67,7 +67,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cl-8.vendor-identifier-name-rul
 - Round 37, workstream G2-CONFORM-2 (decomposition addendum R3-T.78). The CTO named this cell as an OG-ap-23 batch cell (msg 34699); it merges before OG-ap-23's release cut. When it passes, the issuer closes `OG-cl-7` (its AC2 is the same check).
 - Pre-cut: cl8.AC3 base FAIL as expected; cl7.AC2 base FAIL as expected (8 REFUSE); cl7.AC1 base PASS (the suites, unchanged by the cut).
 
-<status>pending</status>
+<status>complete</status>
+<status_reason>closed by the issuer 2026-10-16: the worker's AC2 FAIL was the commit-time naming gate not reading name_rulings.json; OG-ng-2 (merged f1b3aeb579, XA-20261016T034740Z-28da) fixed the gate and the issuer re-ran cl7.AC2 on trunk f1b3aeb579: rc=0, REFUSE 0, firm literals 0, PASS. AC1 PASS in the worker's instance and re-run.</status_reason>
 <round>37</round>
 <workstream>G2-CONFORM-2</workstream>
 <slot>~111</slot>
