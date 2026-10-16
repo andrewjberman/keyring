@@ -19250,3 +19250,31 @@ name the one known failure instead of silently inheriting it.
     "notes": "Supersedes nothing: OG-eg-1 stays complete as built; this row narrows what its grade proves. Owner of the fix: dell1 AMGT_HARVST cb-11."
   }
   ```
+
+```json
+  {
+    "id": "NFRA_OPLGTW-Z-S156",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-16T00:28:00Z",
+    "one_line": "ap21.AC2's contract_staging_test_green clause cannot be read GREEN at the release commit d577e0e729 and is red at shared HEAD too, for two DIFFERENT reasons, neither of which the release owns: at the release the trunk-era test runs against the base-era builder (AttributeError: module grant_writer_build_package has no attribute _Source), and at shared HEAD the builder stages the contract from the manifest's deployed_commit, which is still the OLD base c4c106aea1, so the staged bytes are the old contract 42bba721f1 while the test compares against org/standards at 1d83cd7aa6 (byte diff at index 7913).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BLOB IDENTITY, measured: build_package.py is bcba173aaa at BOTH the base c4c106aea1 and the release d577e0e729, and 7d0412a308 at shared HEAD -- the _Source refactor is a trunk-only change that landed after the base, and build_package.py is NOT among the release's 20 files, so no release cut on this base can carry it.",
+        "tests/test_schwab_host_inputs.py is d192b07b39 at the base, the release AND shared HEAD -- one blob. So the test is the trunk test everywhere, and at the release it is paired with a builder older than itself. That pairing, not a defect in the release, is the AttributeError.",
+        "Run at the release worktree C:/tmp/og-rel-p21: 1 failed, AttributeError at tests/test_schwab_host_inputs.py:159. Run at shared HEAD (the positive control that the trunk pairing is the one that can work): 1 failed, AssertionError, a byte diff at index 7913 -- a DIFFERENT signature, so the two failures are two mechanisms and not one.",
+        "The shared-HEAD cause is the manifest, read directly: build_package.py:100 takes services.opal-gateway.deployed_commit from infra/aws/ec2/EC2_MANIFEST.json and builds from THAT commit; at shared HEAD that value is still c4c106aea1 (deployed_at 2026-10-15T19:50:39Z), whose org/standards contract blob is 42bba721f1, while HEAD's org/standards is 1d83cd7aa6 -- the exact blob the release carries.",
+        "The ONE-SOURCE property the test actually guards is intact for this release and is provable without the test: at the release commit org/standards/NFRA_OPLGTW_CONTRACT.json and deploy/NFRA_OPLGTW_CONTRACT.json are the SAME blob 1d83cd7aa6, as they are at the base (42bba721f1 both) and at shared HEAD (1d83cd7aa6 both). Whichever copy the builder reads, it stages identical bytes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ap21.AC2 line 7: test_grant_writer_stages_the_contract_only_from_the_standard reads GREEN at the new deployed commit, and the flag carrying it (contract_staging_test_green) is read out of W/P21_SERVED.json, which the order's step 6 writes at the served read -- BEFORE step 8's standing clauses.",
+    "world_is": "The clause has no plane on which it is green at the moment step 6 runs. At the release commit it is structurally unsatisfiable (trunk test, base builder). At shared HEAD it is red until the standing-clauses leg lands deployed_commit=d577e0e729 in the manifest, because the builder resolves the commit it stages from out of that field. So the order's own step sequence puts the WRITE of the flag before the ACT that can make it true. The fix is an ordering one and costs nothing: land the standing clauses, re-run the named test at shared HEAD, then fill the flag and re-run AC2. This seat does that and reports the measured result either way -- it does not write the flag true on a prediction. Everything else in the served read is green and measured: registry 75 to 76, both new statements live, the six tools served through an assumed identity that reads arn:aws:sts::313476888478:assumed-role/gateway-global-internal-reader-role/ap21-identity-probe against an instance identity of .../opal-gateway-role/i-07dccb1615503ac99, a non-Opal refused by BOTH seams (typed_opal_only and harvest_opal_only) with 0 DynamoDB reads and 0 Lambda invokes, and three person-reader arms green against a stub store that wrote no record.",
+    "notes": "Not a BLOCKING row: nothing in Phase B waits on it. The destroy leg's gate is the CVO's -- a news tool answers through the internal reader -- and that is proven, so the sequence continues. Raised because a grader clause that cannot be true when its flag is written would otherwise be read as a failed release. Second-order note for the issuer: build_package.py's _Source refactor being trunk-only means ANY release cut on a base older than it carries this AttributeError, so the clause will recur on the next gateway release unless it is re-pointed at the shared tree after the manifest lands."
+  }
+  ```
