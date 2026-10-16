@@ -93,7 +93,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-21.person-roles-release.proo
 
 - A3 (issuer, 2026-10-15 ~22:0xZ, `0.7.0_AE_CloudOps~Z` msgs 34586 and 34587, rows Z-S153 and Z-S154): TWO RULINGS. (1) THE GUARD: step 3 keeps the BASE guard in `app/data_entitlement.py` (tier computed only `if (not access.restricted and tool in TIER_ADMITTED_TOOLS)`), so live behaviour is unchanged: a profiled master_admin stays DENIED for the tier-admitted tool. Allowing it is a WIDENING that this release's never-widen ask does not cover; the ruled behaviour (CTO msg 33941 route (a), row Z-W67-S1) ships only under its own release and its own halves, never as a rider on the person reader. In the release tree, `tests/test_og_cp1.py::test_ogcp1_ac02` is taken with its one assertion set to the base behaviour (`entitlement_denied`), a comment citing Z-W67-S1, so the take-list suite is GREEN and nothing ships red; the trunk copy is not touched here. State the divergence by file in the ask's diff. (2) THE TAKE-LIST: `tests/test_admin_people_access.py` is DROPPED from step 3 and `app/admin_people_access.py` is NOT added: that module is `NFRA_MCPORTAL` cell MP-pd-3 (`b6dd9f9249`), which rides its own release. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>PERSON-ROLES</workstream>
 <slot>~AE</slot>
