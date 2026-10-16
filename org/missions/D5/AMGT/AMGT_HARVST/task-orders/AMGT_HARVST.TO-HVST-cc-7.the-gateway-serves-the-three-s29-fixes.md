@@ -7,7 +7,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
 <owned_cells>HVST-cc-7</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~HV1</issued_to>
+<issued_to>0.7.0_AE_CloudOps~SC1</issued_to>
 <issued_by>2.0.0_SA_COO~W1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -34,11 +34,11 @@ Read `docs/deployment/` and `infra/aws/ec2/opal-gateway/deploy/` first. Then: (1
    - `harvest_get_research(security_key="KMB_US_Equity")` -> `fbd50086c4065785` is absent from `research_reports` and the response names the exclusion (identity mismatch).
 (5) Write `cc7_served.out` ending with exactly these three lines: `SERVED_RESOLVE_PG=PASS|FAIL`, `SERVED_EPS_CLAIM=PASS|FAIL`, `SERVED_KMB_RESEARCH=PASS|FAIL`. A FAIL is rolled back to the previous tarball at once if the cause is the deploy itself, and the cell stays `pending`; otherwise it is reported.
 
-Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/`.
+Write every file in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/`.
 
 <paths>
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 org/critical_paths/.open_deploys/harvst-cc7-gateway-s29-20261016.json
 org/critical_paths/change_management/
@@ -47,13 +47,13 @@ org/critical_paths/change_management/
 ## PROOF OF SPEC (each invocation LITERAL, on dell1, from the repo root)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="HVST-cc-7"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/cc7_served.out</invocation><expect>(?m)^SERVED_RESOLVE_PG=PASS$</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-cc-7"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/cc7_served.out</invocation><expect>(?m)^SERVED_EPS_CLAIM=PASS$</expect></criterion>
-  <criterion id="AC3" cell_refs="HVST-cc-7"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/round88/cc7_served.out</invocation><expect>(?m)^SERVED_KMB_RESEARCH=PASS$</expect></criterion>
+  <criterion id="AC1" cell_refs="HVST-cc-7"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_served.out</invocation><expect>(?m)^SERVED_RESOLVE_PG=PASS$</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-cc-7"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_served.out</invocation><expect>(?m)^SERVED_EPS_CLAIM=PASS$</expect></criterion>
+  <criterion id="AC3" cell_refs="HVST-cc-7"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_served.out</invocation><expect>(?m)^SERVED_KMB_RESEARCH=PASS$</expect></criterion>
 </proof_of_spec>
 
 - The checker reads `<expect>` as a regular expression. At the base the file does not exist (all FAIL as expected).
-- INSTANCE NAMED EXACTLY `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~HV1/AMGT_HARVST.TO-HVST-cc-7.the-gateway-serves-the-three-s29-fixes.proof_of_spec.json` with `to_id` `AMGT_HARVST.TO-HVST-cc-7.the-gateway-serves-the-three-s29-fixes` and `decomp_ref.to_ref` `org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-7.the-gateway-serves-the-three-s29-fixes.md`. Run `python .tools/proof-of-spec-check.py <instance> --governing-order <that to_ref>` and report its last line.
+- INSTANCE NAMED EXACTLY `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/AMGT_HARVST.TO-HVST-cc-7.the-gateway-serves-the-three-s29-fixes.proof_of_spec.json` with `to_id` `AMGT_HARVST.TO-HVST-cc-7.the-gateway-serves-the-three-s29-fixes` and `decomp_ref.to_ref` `org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-7.the-gateway-serves-the-three-s29-fixes.md`. Run `python .tools/proof-of-spec-check.py <instance> --governing-order <that to_ref>` and report its last line.
 - A surprise row's `surfaced_at` is `date -u +%FT%TZ` at filing. The channel file has MIXED line endings and is append-only: append a row by BYTES and check the diff reads N insertions and 0 deletions.
 - Do not edit this order file: the issuer flips its status.
 
@@ -66,7 +66,7 @@ This order touches none of them.
 <!-- ===================== RECORD FACE -- does NOT travel to the seat ===================== -->
 
 **ISSUER NOTES:**
-- **STAGED, not sent.** It waits on the three build cells' merges and on the never-widen pair (start condition b). The receiving seat is `0.7.0_AE_CloudOps~HV1` (the fresh lane seated for this project because `0.7.0_AE_CloudOps~SC1` also holds an `MDPF_SECCLASS` order); it holds `HVST-cc-5` for about 12 hours, so the issuer may seat a second lane for this order at the send (one project per Tier-2 seat instance; a new lane carries only this project).
+- **STAGED, not sent.** It waits on the three build cells' merges and on the never-widen pair (start condition b). The receiving seat is `0.7.0_AE_CloudOps~SC1`, the AMGT CloudOps lane on dell1 (CLAUDE.md rule 34, Andrew-direct 2026-10-16 ~15:4xZ: one CloudOps lane per macro per box). The runner hold of `HVST-cc-5` is `0.7.0_AE_CloudOps~HV1`'s, so this order does not wait on it.
 - Authority: CTO round-87 analysis (msg 6766) rulings for `D1-S29` and ERRATUM 1 (msg 6780); close condition of REMEDIATION_v19 (the surfacing seat reads each on the served data). After `AC1` to `AC3` the issuer asks `4.0.0_SA_CRO~DELL1` (the surfacing seat) to read the three names itself.
 - **Not covered, named:** a silver REBUILD for KMB's misfiled report (the cc-2 on-the-fly check serves without it when the stored row carries the header; otherwise a rebuild is owed and is a later cell); adding Procter & Gamble or `KIMBERA MM` to the universe; the `modelSheet.ts` label.
 - **SENT:** NOT YET.
