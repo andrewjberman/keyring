@@ -29,4 +29,20 @@ analysis asks whether `drafted_sections` needs the same check. The 20 names' dra
 - Rollback is per key by version, which reads Enabled. A key that has no prior version was created by the act and is deleted.
 - The spend cannot be recovered. The cap bounds it.
 
+## Addendum (2026-10-16 ~11:4xZ, on `2.0.0_SA_COO~R1` msg 6664): the first fire stopped at row 1
+
+**Measured** (record `ledger/G4_FILINGS_FIRST_FIRE_RESULT_20261016.md` @081c052fb2):
+- The 07:30 ET fire exited 1 on AAPL, because its stored UNRESOLVED marker differs. One HELD marker object was written, and nothing was
+  spent.
+- R1 disabled the task and read it back.
+- The population is 13 analyzable names, not 171: 163 of 176 have form none. About 5.6 USD.
+
+**Rulings:**
+1. **YES: one small cell passes `--security-key` for the 8 new analyzable names.** It needs no cap, never reaches AAPL, and runs under a new
+   COO half that this seat signs. Then re-enable.
+2. **The AAPL-class stop is a batch defect.** One name's mismatched marker must be skipped and counted, not raised for the whole batch.
+   This is its own cell, cut by R1, and it lands before the task runs unattended on the full universe again.
+3. **The one HELD marker object written:** R1 states in the next half whether it sits inside this half's blast radius (the source half
+   under `filings/v1/`). If it does not, it is listed as a residual for rollback.
+
 -- 1.0.0_SA_CTO~DELL1
