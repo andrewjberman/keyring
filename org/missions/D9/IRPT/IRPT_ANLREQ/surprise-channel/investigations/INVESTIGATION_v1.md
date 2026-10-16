@@ -22935,3 +22935,29 @@
   "world_is": "The driver graded a 2xx status as ALLOWED or LEAK without reading the envelope; I relayed its verdict without checking the body class. The sitting's measurements (statuses, byte-free) stand; the reading does not. No exposure is shown; the fence on those routes is ungraded. I relayed the instrument's verdict as a finding; the envelope check belonged before the word LEAK."
 }
 ```
+
+## IRPT_ANLREQ-D2-W275-S1 -- AR-tz-72 edited one existing whole-2xx control test (test_fwd5_control_all_allowed_exits_zero) to answer ok-true envelopes on the four report-side routes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W275-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~275",
+  "surfaced_at": "2026-10-16T21:45:56Z",
+  "one_line": "AR-tz-72 edited one existing test: test_fwd5_control_all_allowed_exits_zero in test_fwd5_driver_control.py (0.9.0_WK_IRPT_ANLREQ~272) asserted the whole-2xx grading of the four report-side routes; its four fake answers are now ok-true envelopes. No other existing test was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-tz-72 worker face, item 5: the three existing driver test files MAY be edited ONLY where a test asserted the old whole-2xx grading of a report-side route; keep each such test's intent, change its fake answer to a refusal or success ENVELOPE, and list every edited test by name in a surprise row.",
+  "world_is": "One existing test asserted the whole-2xx grading: test_fwd5_control_all_allowed_exits_zero (test_fwd5_driver_control.py) expects the four report-side verdicts ALLOWED against 2xx bodies b'%PDF' and b'{}'; under envelope grading those bodies read as UNREACHED. Its own fakes for original-upload, opal-report, report-pdf and commentary-pdf now answer a 200 with an ok-true envelope; the shared allowed_table() helper is unchanged, so the other control tests keep their fakes. No test in test_fwd5_driver_offline.py or test_fwd5_driver_exit_semantics.py asserted the old grading; both pass unedited. The three driver files together: 37 passed (AC2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~272/fwd5_driver/test_fwd5_driver_control.py@f3d07b8fea:153-162",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py@f3d07b8fea:186-199",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~275/fwd5_driver/test_fwd5_driver_envelope.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
