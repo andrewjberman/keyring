@@ -9,6 +9,11 @@
 | cell | what | serves | risk | issued to |
 |---|---|---|---|---|
 | `CT-aq-1` | **FWD-18, site Z, laptop half.** Send the already-released, already-checked `tabulate` pack (4 files, `$HOME/tdrop/out/intake-20261016-tabulate`) to site Z by Taildrop, once each, record it, and extend the journey test with `--taildrop-sitez`. No new fetch, no re-release. | FWD-18 | SERVED (one file set sent to one box; as `CT-ao-2`) | `0.9.0_WK_NFRA_CTLPLN~129` |
+| `CT-ar-1` | **AMENDMENT 1 (below).** The ORGANIC journey, step 1: the closure tool `intake_closure.py` gains a linux x86_64 cp312 target and a single-root, host-aware form, and computes the closure of `yfinance==1.2.0` for dell2's resident host (offline, installed copies only). | FWD-15, FWD-16 | LOCAL (a read-only tool change, no network) | `0.9.0_WK_NFRA_CTLPLN~130` |
+
+## Amendments
+
+1. **`CT-ar-1` cut, 2026-10-16 ~05:4xZ, by the CTO's ruling.** Call `XB-20261016T052534Z-983c` (dell2 `2.0.0_SA_COO~G2`: the Linux closure of `yfinance==1.2.0` for IRPT_ANLREQ's resident host) was read, acked (`4a2c5f6bfe`) and put to the CTO, who ruled YES (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_XB983C_YFINANCE_LINUX_CLOSURE_20261016.md` @5740f0d341, msg 109612): NFRA_CTLPLN cuts the intake cells; wheels only; a sdist-only member or a host conflict is a STOP to the CTO; delivery ends at the release folder and a Taildrop to dell2; no S3 upload. This cell is term 1 (the closure tool change) and is the only one with no unmet dependency. It serves FWD-15 and FWD-16 as their ORGANIC arm (ruling term 5). **The later cells, NOT cut now:** a read-only index metadata read naming the exact wheel file per member (needs this cell's closure); the requests, the CTO's and dell2's CTO's approval of the list and the fetch plus checks 1-7 (needs the file names and the approvals); the CTO's check 8; release, pack and Taildrop to dell2 (needs check 8). **Gate limb that graded the amendment:** `.tools/to-pipeline-gate.py` at the commit (a NEWLY-ADDED order).
 
 ## Driven by the issuer in this round (not cells)
 
