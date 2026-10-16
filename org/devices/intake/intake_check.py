@@ -1320,11 +1320,12 @@ def check_3_npm(ctx):
 
 
 def check_4_npm(ctx):
-    """release age: the route reads the version document only (registry.npmjs.org/<name>/<version>), which carries no publish
-    time and no release count. The check cannot pass without a source, so it reads failed; a WAIVE line may carry it."""
-    reason = ("no release age can be read: the npm route fetches the version document only, which carries no publish time and "
-              "no release count; a CTO ruling must name the source before this check can pass")
-    return rec("failed", reason, reason=reason, release_age_source="none under the ruled fetch set")
+    """release age (CT-cc-1 addendum 3, the CTO ruling of 2026-10-16): the publish time is time[<version>] of the registry
+    packument, which the fetch read and recorded as the project facts; the earlier releases are the packument's other
+    versions. The same rule and the same evidence as check 4 for PyPI: nothing here is waived."""
+    verdict, ev = check_4(ctx)
+    ev["release_age_source"] = "registry packument time[<version>] (the packument read by the fetch, same host)"
+    return verdict, ev
 
 
 def check_6_npm(ctx):
