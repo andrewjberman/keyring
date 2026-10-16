@@ -3322,5 +3322,47 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
       ]
     }
   }
+  ,
+  {
+    "id": "MDPF_DEMQUE-D1-W61-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~61",
+    "surfaced_at": "2026-10-16T01:18:29Z",
+    "one_line": "inactive_request.py keeps NIGHTLY_CAP = 380, a fourth value of the shared pacer's daily request count, used by the nights arithmetic; the order names three places (the Pacer default, extend_frontier.DAILY_CAP, inactive_request.DAILY_CAP) and the build leaves NIGHTLY_CAP unchanged, so the nights figure now divides by 380 while the shared pacer admits 600 a day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t71 Build: the cap is a default in three places and they must agree; inactive_request.py changes DAILY_CAP only.",
+    "world_is": "data/mdpf/scripts/demque/inactive_request.py at the worktree line 42 reads NIGHTLY_CAP = 380 with the comment 'the shared pacer's vendor requests a day for the draw', and line 127 computes nights = ceil(kept / NIGHTLY_CAP). After this order yahoo_pull.Pacer admits 600 requests a day, so the nights figure reads high by the ratio 600/380. Not changed: it is not one of the three named defaults.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/inactive_request.py@worktree branch wk-MDPF_DEMQUE-61 line 42: NIGHTLY_CAP = 380; line 127: nights = -(-len(kept) // NIGHTLY_CAP)",
+        "data/mdpf/scripts/demque/yahoo_pull.py@worktree branch wk-MDPF_DEMQUE-61 line 155: Pacer daily_cap default 600 after this order"
+      ]
+    }
+  }
+  ,
+  {
+    "id": "MDPF_DEMQUE-D1-W61-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~61",
+    "surfaced_at": "2026-10-16T01:18:29Z",
+    "one_line": "demand_queue.py's quote CLI keeps --daily-cap default=400, outside this order's grant; the pacer path quotes with the Pacer's own daily_cap (600 after this order), so a bare CLI quote and a Pacer-driven quote now disagree on the finish date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t71 Build: the cap is a default in three places and they must agree; the Pacer's default is the cap the quote counts.",
+    "world_is": "data/mdpf/scripts/demque/demand_queue.py line 346 reads ap.add_argument('--daily-cap', type=int, default=400); line 285 quotes with pacer.daily_cap. demand_queue.py is not in this order's <paths>, so it is not edited.",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/demand_queue.py@worktree branch wk-MDPF_DEMQUE-61 line 346: --daily-cap default=400; line 285: quote(req, 0, pacer.daily_cap, today_s)",
+        "data/mdpf/scripts/demque/yahoo_pull.py@worktree branch wk-MDPF_DEMQUE-61 line 155: Pacer daily_cap default 600 after this order"
+      ]
+    }
+  }
 ]
 ```
