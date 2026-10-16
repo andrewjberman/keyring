@@ -22467,3 +22467,27 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+## IRPT_DASHBD-D2-W1701-S7 -- the naming gate printed a WARN (REFUSE, not enforced) on the literal "inflection" used as a subscript in account_transaction_inflection.py; the module now reads the row filter through FIRM
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1701-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1701",
+  "surfaced_at": "2026-10-16T10:27:17Z",
+  "one_line": "At the step-5 commit the naming gate graded account_transaction_inflection.py line 92, words[row_filter][inflection], as a NEW hand-kept carrier of 'inflection' outside every permitted context (WARN window: not blocking). The row filter is now read through FIRM, the registry key, in a follow-up commit; the words file's keyed literals stay the class of IRPT_DASHBD-D2-W1601-S5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A carrier of the registry key 'inflection' reads it through lookup('inflection') or the module's FIRM, and the naming gate's live census runs at commit.",
+  "world_is": "Commit e1ba8ccd1d printed NAMING REFUSE x1 at account_transaction_inflection.py:92 with LIVE-READ-FAILED (the served-graph client blocked the live pull); the verdict was WARN because the ENFORCE switch is off. The follow-up reads words[row_filter][FIRM]; the lookup at FIRM is unchanged. The live census still cannot run on this box.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh output for commit e1ba8ccd1d: [naming-gate] NAMING REFUSE data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py:92 inflection -> lookup('inflection'); NAMING-GATE: WARN 1 graded",
+      "data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py line 92 at commit e1ba8ccd1d: rf = words[\"row_filter\"][\"inflection\"]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
