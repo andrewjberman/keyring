@@ -20631,6 +20631,132 @@ name the one known failure instead of silently inheriting it.
 }
 ```
 
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~119",
+  "surfaced_at": "2026-10-16T11:55:39Z",
+  "id": "NFRA_OPLGTW-Z-W119-S1",
+  "one_line": "The task order's <paths> names infra/aws/ec2/opal-gateway/tests/test_og_nw3.py, which is not in the tree; no OG-nw-3 test file exists, so there was nothing to update in it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-5.news-coverage-floor.md section 3 (<paths>) lists tests/test_og_nw3.py beside nw1 and nw2.",
+      "TREE: infra/aws/ec2/opal-gateway/tests at e08686be6a lists test_og_nw1.py, test_og_nw2.py and test_og_gt8.py as the news tests; no nw3 file (ls of the worktree, 2026-10-16 11:55Z)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 3 names test_og_nw3.py as one of the existing news tests the cell may update 'only to follow the new truth'.",
+  "world_is": "The file is absent at the cut base, so no existing test pins an empty answer's key set and none was updated. I did not create it: the cell writes only the news tests that exist. The AC2 write-set regex admits nw[0-9]+, so the grant is not the blocker.",
+  "notes": "INERT: no criterion depends on nw3. Whether the path is a stale name or a file that another round has not yet committed is the issuer's to check."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~119",
+  "surfaced_at": "2026-10-16T11:55:39Z",
+  "id": "NFRA_OPLGTW-Z-W119-S2",
+  "one_line": "The cell asks for a coverage_floor on every empty answer of the news tools, but only news_search_articles takes a date window; news_trending_topics and news_keyword_intelligence have no from/to window for the floor's window field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO: NFRA_OPLGTW.TO-OG-en-5.news-coverage-floor.md section 1 THE FIX: 'where a tool of that file returns an empty result (read news_search_articles, _search_core, news_trending_topics, news_keyword_intelligence and _serve)'; the floor's first field is window [from ISO date, to ISO date].",
+      "CODE: infra/aws/ec2/opal-gateway/app/news_typed.py:346-400 news_trending_topics takes date and days, no from/to; :415-459 news_keyword_intelligence takes keyword and date, no window (at e08686be6a)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The floor applies to every empty answer of the tools in app/news_typed.py, with a window of two dates.",
+  "world_is": "The floor is added to news_search_articles only, the one tool whose answer has a date window. The two siblings have an absent_reason on an empty answer but no window to put in the floor, and the cell's tests name news_search_articles alone.",
+  "notes": "INERT: nothing deploys in this cell. Whether the siblings get a floor with a different window shape (for example the requested date) is the issuer's call."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~119",
+  "surfaced_at": "2026-10-16T11:55:39Z",
+  "id": "NFRA_OPLGTW-Z-W119-S3",
+  "one_line": "The floor's sentence 'no articles in window W, newest article at T' is written for every empty answer, but a filter that matches nothing (text, source or sentiment) over a window that holds rows is also an empty answer, so the sentence is inaccurate for that case.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/news_typed.py:330-334 at e08686be6a: absent_reason 'no article matched the window and filters' is set whenever core['returned'] is empty, whatever the cause.",
+      "CODE: news_typed.py _search_core per_day counts (:275) are taken before the filters apply (:294), so a window can hold rows while every row fails the filter."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The message is exactly 'no articles in window <from>..<to>, newest article at <T>' on an EMPTY answer.",
+  "world_is": "I implemented the sentence verbatim and keyed the floor on an empty returned list, as the cell's absent_reason condition does. A filter miss in a window with articles therefore reads 'no articles in window'. The denominator (per_day_counts, items_by_count) beside the floor shows the rows, so no number is hidden, but the sentence is not true for that case.",
+  "notes": "INERT: the floor is informational and nothing consumes it as a gate yet. The issuer may want the floor keyed on zero rows in the window (sum of per_day_counts) rather than zero returned rows, or a second sentence for a filter miss; that is a spec choice, not made here."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~119",
+  "surfaced_at": "2026-10-16T11:55:39Z",
+  "id": "NFRA_OPLGTW-Z-W119-S4",
+  "one_line": "The cell's 'never raise' rule for a failing _newest_day forced the freshness call in news_search_articles to be guarded too, so a NON-empty answer whose newest-day read fails now returns with a lag_absent_reason where HEAD raised.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE at e08686be6a: news_typed.py:321 fresh = _freshness('articles', _newest_day(table, 'article_date')) was unguarded; a raise propagated out of news_search_articles.",
+      "TEST: tests/test_og_en5.py test_ogen5_ac03 monkeypatches _newest_day to raise and expects the empty answer to return with floor_absent_reason and the non-empty answer to return too (RUN: 3 of 3 passed at the worktree, 2026-10-16)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A failing _newest_day gives the floor a floor_absent_reason and the answer still returns (never raise); the change is named as code only and no other tool changes.",
+  "world_is": "One guarded read (_newest_or_reason) now feeds both the freshness block and the floor, so the freshness block of a non-empty answer carries lag_absent_reason 'the newest-day read failed (<class>)' on that failure, instead of an exception. The unguarded HEAD path is not reachable from a non-empty answer any more. On a failed read the floor's message says 'unknown', not 'none', so a failure is never read as an empty table; the cell did not name that word.",
+  "notes": "INERT on the healthy path: the non-empty answer is byte-equal to HEAD (test_ogen5_ac02 golden 8ca222c30e...). Whether a failing newest read should raise for a non-empty answer, as before, is the issuer's call."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~122",
+  "surfaced_at": "2026-10-16T12:01:03Z",
+  "id": "NFRA_OPLGTW-Z-W122-S1",
+  "one_line": "OG-ts-1 criterion (a) names the registry as app/tools.py, but 5 of the 14 still-present gp1 read_tools (etfs_get_positioning, mdpf_get_aum_metrics, mdpf_get_account_distribution, mdpf_get_aggregate_aua, mdpf_get_model_benchmarks) are defined only under app/integrations/portal_index/, not in app/tools.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ts-1.tests-follow-the-v2-catalog.md section 1 item 1: (a) is 'a read_tool that names a registered tool (app/tools.py)'.",
+      "GREP app/tools.py (worktree C:/tmp/wk-oplgtw-122, HEAD 0cc50b3652) for the five names: 0 occurrences; tools.py line 70 names 'integration (app/integrations)' as a registration path.",
+      "GREP app/integrations/portal_index/integration.py: def mdpf_get_aum_metrics (line 456), mdpf_get_account_distribution (463), mdpf_get_aggregate_aua (468), mdpf_get_model_benchmarks (473), etfs_get_positioning (492); the existing ac01 COVERED check uses a def search over app/ and finds all five.",
+      "RAN python test_og_gp1.py and test_og_gf1.py after the rewrite (13 passed incl. the two ac01 pins and the two controls); the pin counts (a) 14 and (b) 18 for gp1 with the def search over app/**/*.py, and 6 and 9 for gf1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ts-1 section 1 (a): a classified key present in the catalog with a read_tool that names a registered tool, the registry named as app/tools.py.",
+  "world_is": "The five read_tools are registered through the integration path (app/integrations/portal_index/integration.py), which app/tools.py mentions only as a category at line 70. The pin therefore tests registration as a def named in app/ (the standard the existing COVERED check already uses); a literal app/tools.py text check would have placed these five in neither (a) nor (b) and failed the pin.",
+  "notes": "No test or catalog change follows from this row; the pin keeps the def-in-app/ standard. Whether the integration path should be named in the order's parenthetical is the issuer's call (disarm_owner not required: INERT)."
+}
+```
+
   ```json
   {
     "id": "NFRA_OPLGTW-Z-S175",
@@ -20651,5 +20777,29 @@ name the one known failure instead of silently inheriting it.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Relayed from the Bloomberg seat's handover (its section 2); filed by this seat because no row carried it. Remedy, the tool's owner (built under NFRA_MCPINDEX MX-q-3, served by this gateway): map an off-catalog key to 404 or a non-authorization 4xx, or add an error_class field consumers branch on. Not ARMED: nothing is mis-served; the hazard is a mis-read."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S176",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-16T12:20Z",
+    "one_line": "round-close-check credits each judgment criterion to the FIRST CVO-kind grading row in file order, so a later superseding grade is invisible: TO-OG-ap-14 AC3 reads NOT MET (Z-C-S76, v29) after Z-C-S79 (v32, MET) adjudicated it, and round 37 would close on the withdrawn verdict.",
+    "class": "OBSERVATION",
+    "spec_asserts": "A round's per-criterion verdict is the CVO's current grade; a later grading row that adjudicates an earlier one replaces it.",
+    "world_is": ".tools/round-close-check.py:535-554 grade_criterion iterates adjudication then investigation rows and returns GRADED on the first CVO-kind non-doer row that grades the criterion. At ~12:1xZ 2026-10-16 it printed 'JUDGMENT TO-OG-ap-14 AC3 -> GRADED (adjudication row NFRA_OPLGTW-Z-C-S76 ... (verdict NOT MET))' with Z-C-S79 (MET, adjudicates Z-C-S76) present in ADJUDICATION_v32.Z.md.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/round-close-check.py:518-557",
+        "round-close-check --project NFRA_OPLGTW --round 37 output at ~12:1xZ",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/adjudications/ADJUDICATION_v29.Z.md (Z-C-S76), ADJUDICATION_v32.Z.md (Z-C-S79)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Remedy, the tool's owner: prefer the latest grading row (by surfaced_at or file version), or let a row whose adjudicates names an earlier grading row replace it, and print the superseded row id. Until then a CVO re-grade must be read from the adjudication file, not from the checker's JUDGMENT line. Not ARMED: verdicts are recorded correctly; the checker mis-reports which one is current."
   }
   ```
