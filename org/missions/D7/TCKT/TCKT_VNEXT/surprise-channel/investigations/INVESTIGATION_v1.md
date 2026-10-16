@@ -2998,3 +2998,30 @@ used as fixtures is a different read with a different denominator.
  "notes": "Options for the issuer and CTO, none taken by the applier: (a) lift the hide on DEV (a portal candidate and an Andrew word, since the hide was Andrew-direct) and re-measure the start gate; (b) amend the pair to run FWD-11 alone now and FWD-10 after (a); (c) run FWD-10 from a scratch copy of the DEV checkout with the one filter line removed (a modified build, not DEV; the CTO's call). The order says do not retry with a changed method, so I hold at the start gate."
 }
 ```
+
+## TCKT_VNEXT-D2-S57 -- A meeting ticket's outcome line is drawn only while the ticket is not completed, so once a meeting_request completes the Ticket Center shows no confirmed or rescheduled outcome anywhere (FWD-11 ACCEPT: the filer reads the outcome on the ticket).
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-16T21:15:00Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-S57",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "A meeting ticket's outcome line is drawn only while the ticket is not completed, so once a meeting_request completes the Ticket Center shows no confirmed or rescheduled outcome anywhere (FWD-11 ACCEPT: the filer reads the outcome on the ticket).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal origin/DEV src/pages/TicketCenter/TicketCenter.tsx lines 909-915: {t.ticket_type === 'meeting_request' && t.status !== 'completed' && (<tr>...<MeetingOutcomeLine ticket={t} />...)}: the only mount of MeetingOutcomeLine on the board",
+      "portal origin/DEV src/pages/TicketCenter/MeetingRequestParts.tsx lines 219-222: MeetingOutcomeLine reads ticket.meeting and draws outcomeLineWords(ticket.meeting)",
+      "the CVO's ADJUDICATION_v8 (3.0.0_SA_CVO~DELL2, 21:05Z), section FWD-11: 'The filer sees the outcome on the same ticket: NOT EXERCISED'; the source note that MeetingOutcomeLine shows only while status !== 'completed'",
+      "TCK-20261016-9d7654eb: the part-1 meeting ticket was confirmed 19:24Z and COMPLETED 20:2xZ by the issuer's part 1b (to exercise the pickup notice), which is the state in which no outcome line is drawn"
+    ]
+  },
+  "spec_asserts": "TCKT_VNEXT PRD v0.6 FWD-11 ACCEPT: the filer reads confirmed or rescheduled on the ticket.",
+  "world_is": "The board's meeting block is mounted only for tickets whose status is not completed. A meeting_request that a coordinator confirmed and staff then completed shows its outcome on neither the open/in-progress tabs (it has left them) nor the Completed tab (the block is not mounted there). The data is stored (ticket.meeting.status, .time, .by); only the page omits it. Not yet decided whether completing a meeting ticket is the normal end of its life or whether the outcome must stay readable after it; that is the CTO's reading of FWD-11 for the round-N analysis."
+}
+```
