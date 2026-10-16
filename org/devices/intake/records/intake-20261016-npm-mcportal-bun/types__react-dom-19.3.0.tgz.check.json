@@ -27,18 +27,16 @@
     {
       "n": 2,
       "name": "name, version and tags are exactly the approved line",
-      "verdict": "failed",
+      "verdict": "passed",
       "evidence": {
-        "summary": "package/package.json is absent or unreadable (absent)",
-        "problems": [
-          "package/package.json is absent or unreadable (absent)"
-        ],
+        "summary": "file name, react-dom/package.json and the approved list all say @types/react-dom@19.3.0",
         "requested_name": "@types/react-dom",
         "requested_version": "19.3.0",
         "ident": "@types/react-dom@19.3.0",
         "file_name_expected": "types__react-dom-19.3.0.tgz",
-        "package_json_name": null,
-        "package_json_version": null,
+        "package_root": "react-dom",
+        "package_json_name": "@types/react-dom",
+        "package_json_version": "19.3.0",
         "approved_line_sought": "@types/react-dom@19.3.0",
         "approved_list": "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_NPM_MCPORTAL_BUN_20261016.md",
         "on_approved_list": true
@@ -62,12 +60,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 37.12 days old (min 14); 186 earlier releases (min 3)",
+        "summary": "release 37.17 days old (min 14); 186 earlier releases (min 3)",
         "this_release_at": "2026-09-09T18:07:51.886Z",
         "first_release_at": "2016-05-17T18:44:31.682Z",
         "release_count": 187,
         "earlier_releases": 186,
-        "age_days": 37.12,
+        "age_days": 37.17,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false,
@@ -166,7 +164,7 @@
   ],
   "verdict": "not_checked",
   "waived_checks": [],
-  "checked_by": "0.9.0_WK_NFRA_CTLPLN~149",
-  "at": "2026-10-16T20:54:21Z",
+  "checked_by": "0.9.0_WK_NFRA_CTLPLN~150",
+  "at": "2026-10-16T22:13:57Z",
   "ecosystem": "npm"
 }

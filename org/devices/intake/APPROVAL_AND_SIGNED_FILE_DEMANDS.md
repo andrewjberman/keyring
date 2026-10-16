@@ -195,7 +195,7 @@ in place of step 9. It places each verified `.tgz` as the unpacked folder `<name
 
 - **Refusal first:** the pack must verify exactly as `verify` does (`intake_receive.py` `verify_pack`). The member plan
   (`intake_receive.py` `npm_plan_members`, line 514) refuses a `..` or absolute member, a link of any kind, a name outside
-  `package/`, a member over 64 MiB, or an expanded total over 256 MiB. A refusal is for the WHOLE install: when any tarball is
+  the package root (below), a member over 64 MiB, or an expanded total over 256 MiB. A refusal is for the WHOLE install: when any tarball is
   not cleared, or any destination exists and is not present, nothing is written to the target.
 - **Placement:** each tarball is unpacked (`_npm_unpack_into`, line 570) into a hidden sibling folder, then renamed into place
   (`_npm_place`, line 642), so a half-unpacked folder is never visible under its final name. A scoped name keeps its slash as a
@@ -205,6 +205,15 @@ in place of step 9. It places each verified `.tgz` as the unpacked folder `<name
   `INTAKE-NPM-INSTALL tarballs=<k> unpacked=<u> already=<a> refused=<r> present=<p>/<k> ok=<True|False>`.
 - **Nothing runs:** no lifecycle script, no `bun`, no package manager, no socket. The receipt (`install-npm.<device>.<stamp>.json`,
   in `--receipt-dir` or beside the pack) records each package's outcome and the sha256 of its `package.json`.
+
+**The package root.** npm and bun strip the first path component of a tarball, and that component is not always `package/`
+(the DefinitelyTyped tarballs carry `bun/`, `react/`, `node v24.13/`). The package root is therefore the tarball's single top-level
+folder, whatever its name: `intake_check.py` `npm_package_root` names it, with a standalone mirror in `intake_receive.py` (that tool
+ships alone); check 2 reads `<root>/package.json`, and verify and install read the same root, so the three never disagree. A tarball
+is refused, with its reason and nothing written, when it has no top-level folder (a member at the archive root), more than one
+top-level folder, an absolute or drive-qualified name, a first component of `.` or `..`, a backslash, or a regular file where the
+folder should be. A folder name with a space, a dot or a version string is accepted as written. The install removes that one root
+folder, whatever its name, and writes `<name>@<version>@@@1/`, so no root name reaches a destination.
 
 ## 5. The dry-run commands
 

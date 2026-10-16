@@ -13744,3 +13744,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "45 of the 50 tarballs carry package/package.json and pass check 2. Five carry it under their own folder: bun/, estree/, 'node v24.13/', react-dom/, react/. check 2 reads absent for each and fails it; check 2 is never waivable, so those five cannot reach checked on this batch. Nothing was waived, repaired or re-run; the five are findings for the CTO (NPM_BATCH_FACTS.md, failed-checks section)."
 }
 ```
+
+## NFRA_CTLPLN-W150-S1 -- a plain check re-run reads check 8 unsigned; the batch's records read awaiting, reproduced only by naming a signer path that does not exist
+
+```json
+{
+  "id": "NFRA_CTLPLN-W150-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~150",
+  "surfaced_at": "2026-10-16T22:20:16Z",
+  "one_line": "A plain intake_check.py check with no --signed-by reads check 8 unsigned, while the 45 unchanged batch records read check 8 awaiting; the awaiting state was reproduced only by naming a signer-folder file that is not yet written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@9998a3cab6 check_8 (lines 949-967): no --signed-by returns unsigned (line 952); a signer path under the signer folder that is not a file returns awaiting (line 967)",
+      "org/devices/intake/records/intake-20261016-npm-mcportal-bun/babel__code-frame-7.29.7.tgz.check.json@9998a3cab6 check 8 verdict awaiting, checked_by 0.9.0_WK_NFRA_CTLPLN~149; the record does not carry the --signed-by argument",
+      "re-run at 0.9.0_WK_NFRA_CTLPLN~150 on types__bun-1.4.2.tgz: check 8 unsigned with no --signed-by; check 8 awaiting with --signed-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NOT_YET_WRITTEN_intake-20261016-npm-mcportal-bun.md (absent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "APPROVAL_AND_SIGNED_FILE_DEMANDS.md section 4 step 4 says a check of checks 1-7 reads check 8 unsigned, and the batch's facts file reads AWAITING for all 50 checks 8 with nothing released.",
+  "world_is": "The five re-run records read check 8 awaiting, the same as the 45, only because the worker named a signer path that does not exist. No record states which --signed-by argument produced the 45 awaiting verdicts, so that route is unrecorded. Both verdicts refuse release (intake_check.py lines 1576 and 1621), so the batch is not released on either reading.",
+  "notes": "No signature file was written and nothing was released. Owner of the route or the document: the issuer 2.0.0_SA_COO~C at the round-30 analysis, or the CTO for the wording of check 8."
+}
+```
+
+## NFRA_CTLPLN-W150-S2 -- the worker sparse checkout omits folders the intake suites and the install verb read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W150-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~150",
+  "surfaced_at": "2026-10-16T22:20:16Z",
+  "one_line": "The worker sparse checkout omits folders that the install verb, the batch test and the intake suite read, so a read fails or a suite reads red until each folder is added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_receive.py@9998a3cab6 NPM_PRECHECK (line 497): the install verb loads infra/aws/ec2/opal-gateway/ops/bun_cache_precheck.py by path, and reads it as absent when the folder is not checked out",
+      "org/devices/intake/test_intake_npm_install.py@9998a3cab6 PRECHECK path and .tools/tests/test_round30_npm_batch.py: read org/tier0_exec/0.0.0_AB_MSTR/deliverables and org/tier1_exec/1.0.0_SA_CTO/deliverables, both absent from the sparse set",
+      "org/devices/intake/test_intake_check.py base run: 58 of 60, with case_check_8_real_cto_files and case_constants_appear_verbatim_in_the_brief failing on missing docs/briefs and CTO files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker worktree carries org/, .tools/, lib/, the project folder and the order paths; a command that finds a folder missing is fixed by git sparse-checkout add, named in the report.",
+  "world_is": "Four folders were added by git sparse-checkout add during this order: infra/aws/ec2/opal-gateway/ops, org/tier1_exec/1.0.0_SA_CTO, org/tier0_exec/0.0.0_AB_MSTR/deliverables and org/surprise_channel/schemas. docs/briefs was not added, so case_constants_appear_verbatim_in_the_brief still fails at base and after this order.",
+  "notes": "Owner: the provisioning step (.tools/wk-provision.sh) for the sparse set of a worker that runs the intake suites. The fix is a provisioning entry, not a code change in the intake folder."
+}
+```

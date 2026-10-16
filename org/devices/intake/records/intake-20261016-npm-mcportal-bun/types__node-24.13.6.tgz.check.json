@@ -27,18 +27,16 @@
     {
       "n": 2,
       "name": "name, version and tags are exactly the approved line",
-      "verdict": "failed",
+      "verdict": "passed",
       "evidence": {
-        "summary": "package/package.json is absent or unreadable (absent)",
-        "problems": [
-          "package/package.json is absent or unreadable (absent)"
-        ],
+        "summary": "file name, node v24.13/package.json and the approved list all say @types/node@24.13.6",
         "requested_name": "@types/node",
         "requested_version": "24.13.6",
         "ident": "@types/node@24.13.6",
         "file_name_expected": "types__node-24.13.6.tgz",
-        "package_json_name": null,
-        "package_json_version": null,
+        "package_root": "node v24.13",
+        "package_json_name": "@types/node",
+        "package_json_version": "24.13.6",
         "approved_line_sought": "@types/node@24.13.6",
         "approved_list": "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_NPM_MCPORTAL_BUN_20261016.md",
         "on_approved_list": true
@@ -62,12 +60,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 27.86 days old (min 14); 2380 earlier releases (min 3)",
+        "summary": "release 27.92 days old (min 14); 2380 earlier releases (min 3)",
         "this_release_at": "2026-09-19T00:12:26.120Z",
         "first_release_at": "2016-05-17T18:26:38.670Z",
         "release_count": 2381,
         "earlier_releases": 2380,
-        "age_days": 27.86,
+        "age_days": 27.92,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false,
@@ -166,7 +164,7 @@
   ],
   "verdict": "not_checked",
   "waived_checks": [],
-  "checked_by": "0.9.0_WK_NFRA_CTLPLN~149",
-  "at": "2026-10-16T20:53:59Z",
+  "checked_by": "0.9.0_WK_NFRA_CTLPLN~150",
+  "at": "2026-10-16T22:13:36Z",
   "ecosystem": "npm"
 }

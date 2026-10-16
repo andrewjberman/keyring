@@ -1118,12 +1118,49 @@ def _link_escapes(base_dir, target):
     return joined == ".." or joined.startswith("../") or joined.startswith("/")
 
 
+def npm_package_root(members):
+    """The package root of one npm tarball: its single top-level folder, whatever its name (npm and bun strip the FIRST path
+    component of a tarball, and that component is not always package/). members: (name, is_dir) for every member, in archive
+    order. Returns (root, None), or (None, the reason) when the tarball has no single top-level folder. Refused: no members;
+    an absolute, drive-qualified or backslashed name; a first component of '', '.' or '..'; a regular file at the archive root;
+    a file where the top-level folder should be; more than one top-level folder. A name with a space, a dot or a version string
+    is accepted as written. intake_receive.py carries a STANDALONE MIRROR (that tool ships alone); the parity arms are in
+    test_intake_npm_topdir.py."""
+    if not members:
+        return None, "the archive holds no members"
+    bare_files, with_children, firsts = set(), set(), set()
+    for name, is_dir in members:
+        if is_dir:
+            name = name.rstrip("/")
+        if name.startswith("/") or re.match(r"^[A-Za-z]:", name) or "\\" in name:
+            return None, "a member name is absolute, drive-qualified or backslashed: %s" % ascii(name)
+        parts = name.split("/")
+        if parts[0] in ("", ".", ".."):
+            return None, "the first component of %s is %s: no top-level folder" % (ascii(name), ascii(parts[0]))
+        firsts.add(parts[0])
+        if len(parts) > 1:
+            with_children.add(parts[0])
+        elif not is_dir:
+            bare_files.add(parts[0])
+    if bare_files:
+        clash = sorted(bare_files & with_children)
+        if clash:
+            return None, "a file where the top-level folder should be: %s" % ascii(clash[0])
+        return None, "a member at the archive root, not inside a folder: %s" % ascii(sorted(bare_files)[0])
+    if len(firsts) > 1:
+        return None, "more than one top-level folder: %s" % ", ".join(ascii(n) for n in sorted(firsts))
+    return sorted(firsts)[0], None
+
+
 def npm_listing(path):
-    """Read the tarball's members IN MEMORY. Returns the listing dict; error is None or a reason (not gzip, a bomb, empty)."""
-    out = {"members": 0, "expanded_bytes": 0, "unsafe": [], "error": None, "package_json": None,
-           "package_json_error": None, "lifecycle": [], "lifecycle_commands": {}, "native_members": [], "restricted": None}
+    """Read the tarball's members IN MEMORY. Returns the listing dict; error is None or a reason (not gzip, a bomb, empty).
+    root is the package root (npm_package_root); root_error is the reason it is refused, and None when it is accepted."""
+    out = {"members": 0, "expanded_bytes": 0, "unsafe": [], "error": None, "root": None, "root_error": None,
+           "package_json": None, "package_json_error": None, "lifecycle": [], "lifecycle_commands": {}, "native_members": [],
+           "restricted": None}
     try:
         with tarfile.open(str(path), "r:gz") as tf:
+            members = []
             for m in tf:
                 out["members"] += 1
                 if out["members"] > NPM_MEMBER_CAP:
@@ -1133,6 +1170,7 @@ def npm_listing(path):
                 if out["expanded_bytes"] > NPM_EXPANDED_CAP:
                     out["error"] = "more than %d bytes expanded: refused as a tarball bomb" % NPM_EXPANDED_CAP
                     break
+                members.append(m)
                 name = m.name
                 if m.issym() or m.islnk():
                     base_dir = posixpath.dirname(name) if m.issym() else ""
@@ -1143,13 +1181,17 @@ def npm_listing(path):
                 elif m.isreg():
                     if name.lower().endswith(NPM_NATIVE_SUFFIXES):
                         out["native_members"].append(name)
-                    if name == "package/package.json":
-                        if m.size > NPM_PKG_JSON_CAP:
-                            out["package_json_error"] = "package/package.json is larger than %d bytes" % NPM_PKG_JSON_CAP
-                        else:
-                            _npm_package_json(tf.extractfile(m).read(), out)
-        if out["members"] == 0 and out["error"] is None:
-            out["error"] = "the archive holds no members"
+            if out["members"] == 0 and out["error"] is None:
+                out["error"] = "the archive holds no members"
+            if out["error"] is None:
+                root, reason = npm_package_root([(m.name, m.isdir()) for m in members])
+                out["root"], out["root_error"] = root, reason
+                pj = next((m for m in members if root and m.isreg() and m.name == root + "/package.json"), None)
+                if pj is not None:
+                    if pj.size > NPM_PKG_JSON_CAP:
+                        out["package_json_error"] = "%s/package.json is larger than %d bytes" % (root, NPM_PKG_JSON_CAP)
+                    else:
+                        _npm_package_json(tf.extractfile(pj).read(), out)
     except (tarfile.TarError, OSError, EOFError, zlib.error, ValueError) as exc:
         out["error"] = "not a readable gzip tar (%s)" % type(exc).__name__
     return out
@@ -1159,10 +1201,10 @@ def _npm_package_json(data, out):
     try:
         pkg = json.loads(data.decode("utf-8"))
     except (UnicodeDecodeError, ValueError):
-        out["package_json_error"] = "package/package.json is not readable JSON"
+        out["package_json_error"] = "%s/package.json is not readable JSON" % out["root"]
         return
     if not isinstance(pkg, dict):
-        out["package_json_error"] = "package/package.json is not a JSON object"
+        out["package_json_error"] = "%s/package.json is not a JSON object" % out["root"]
         return
     out["package_json"] = pkg
     scripts = pkg.get("scripts") if isinstance(pkg.get("scripts"), dict) else {}
@@ -1179,7 +1221,7 @@ def npm_named_native(listing):
     """The native binaries the record NAMES: every native member, and the package itself when its os or cpu is restricted."""
     named = sorted(set(listing["native_members"]))
     if listing["restricted"]:
-        named.append("package/package.json os/cpu restriction: %s" % ", ".join(sorted(listing["restricted"])))
+        named.append("%s/package.json os/cpu restriction: %s" % (listing["root"], ", ".join(sorted(listing["restricted"]))))
     return named
 
 
@@ -1261,8 +1303,8 @@ def check_1_npm(ctx):
 
 
 def check_2_npm(ctx):
-    """identity: the file name is the held name of the request, package/package.json names the requested name and version,
-    and the approved list has the exact line name@version."""
+    """identity: the file name is the held name of the request, <root>/package.json (the package root, npm_package_root) names
+    the requested name and version, and the approved list has the exact line name@version."""
     fr, file_name = ctx["fetch"], ctx["file_name"]
     req = fr.get("requested") or {}
     name, version = req.get("name", ""), req.get("version", "")
@@ -1280,8 +1322,10 @@ def check_2_npm(ctx):
     pkg = listing["package_json"]
     if listing["error"]:
         problems.append("the archive cannot be read: %s" % listing["error"])
+    elif listing["root_error"]:
+        problems.append("no package root: %s" % listing["root_error"])
     elif pkg is None:
-        problems.append("package/package.json is absent or unreadable (%s)" % (listing["package_json_error"] or "absent"))
+        problems.append("%s/package.json is absent or unreadable (%s)" % (listing["root"], listing["package_json_error"] or "absent"))
     else:
         if pkg.get("name") != name:
             problems.append("package.json name %r != requested %r" % (pkg.get("name"), name))
@@ -1305,12 +1349,13 @@ def check_2_npm(ctx):
         if not on_list and not any(p.startswith("approved list unreadable") for p in problems):
             problems.append("no line of the approved list reads %s" % ident)
     detail = {"requested_name": name, "requested_version": version, "ident": ident, "file_name_expected": want_file,
-              "package_json_name": pkg.get("name") if pkg else None, "package_json_version": pkg.get("version") if pkg else None,
+              "package_root": listing["root"], "package_json_name": pkg.get("name") if pkg else None,
+              "package_json_version": pkg.get("version") if pkg else None,
               "approved_line_sought": ident, "approved_list": os.path.basename(approved) if approved else None,
               "on_approved_list": on_list}
     if problems:
         return rec("failed", "; ".join(problems), problems=problems, **detail)
-    return rec("passed", "file name, package/package.json and the approved list all say %s" % ident, **detail)
+    return rec("passed", "file name, %s/package.json and the approved list all say %s" % (listing["root"], ident), **detail)
 
 
 def check_3_npm(ctx):
