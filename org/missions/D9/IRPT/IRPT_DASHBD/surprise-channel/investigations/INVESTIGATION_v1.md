@@ -23559,3 +23559,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S127 -- TO-DB-b-301 superseded: an unused artifact version is now the current version of the Cottonwood landing bundle's key
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S127",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T16:35:55Z",
+  "one_line": "TO-DB-b-301 is superseded after step 3(c): an UNUSED artifact version of the Cottonwood landing bundle is now the CURRENT version of investor-reporting/irpt-cot-account-return-daily-lambda.zip while the function still runs the previous code, so a plan or apply of the account-return-daily root that does not upload its own version first would see it (and an apply would deploy the void packet's producer); the source-map entry on trunk still records the previous hash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The issuer's msg 9617: close the ledger as superseded with the proof of what was written (an unused artifact version, a saved plan not applied); do not merge branch wk-IRPT_DASHBD-DB2-b301.",
+  "world_is": "MEASURED at 14:42:50Z and unchanged since: the key holds two versions, the new Amwu_BigtNXtPIwPXQIBPXmEFfKpg9RN (151936 bytes, current) and the previous UnMNWDhcC3KpERDmGYdKAl83whx1oNFW (148909 bytes); the function irpt-cot-account-return-daily-lambda reads CodeSha256 fQFe4moIeMHspIjLxO2C04TobQW6cNZc7mfwstcMWzs= (the previous); the Terraform module reads the artifact's current version, so the unapplied plan shows s3_object_version and source_code_hash moving. Nothing applies it by itself: no apply ran, and the revised order's own build-and-upload writes a newer current version before any apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-object-versions of investor-reporting/irpt-cot-account-return-daily-lambda.zip: two versions, the new one IsLatest, written 2026-10-16T14:42:50Z by build-and-upload.sh (write VERIFIED, landed bytes equal the BUILD_ONLY zip)",
+      "the saved plan (0 add, 1 change, 0 destroy, code attributes only) was never applied; the function's CodeSha256 read back unchanged",
+      "ledger irpt-dashbd-cottonwood-landing-codeupdate-rewrite-20261016 closed SUPERSEDED on branch wk-IRPT_DASHBD-DB2-b301 @5e217fd579 (unmerged by the issuer's word)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disposition owed by 2.0.0_SA_COO~D2 with the CTO: leave it for the revised order's upload to supersede (REC), or restore the previous bytes as the current version by a copy over the key (no delete; the CTO's word). The AE applier of the revised order should read the key's current version before its upload."
+}
+```
