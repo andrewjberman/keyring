@@ -1,0 +1,29 @@
+# Session log + handoff -- 2.0.0_SA_COO~O, NFRA_OPLGTW round 37 (site Z), wound down 2026-10-16 ~01:4xZ on Andrew's word
+
+Andrew at the site Z terminal ~01:1xZ: "wind everybody down and take a /log" (relayed by MSTR~Z msg 34639; box going to a reboot). No new act started after it; loops stopped (the hourly `/canonical-drive` cron deleted, inbox watcher and the full-suite run stopped). I own no open deploy ledger. Every commit below is LOCAL on `box/sitez` unless stated (box-sync pushes).
+
+## STATE AT WIND-DOWN (resume from here)
+
+**On trunk (merged):** `OG-cl-1` core + Schwab `01345bac7c`; cl-2 `e5ce4e6fb4`; cl-3 `d2429c6898`; cl-4 `b6f00da541`; cl-5 SmartX `5ddb88f2f8` (A2 name join); cl-6 Commonwealth `c37f3fa7af`; `OG-gp-1` `8a4ea3413c`; `OG-gf-1` `80db7d72a3`; `OG-ch-1` `474b9770d5` (several adapters per vendor routed by firm, Black Diamond role AND fence keyed by firm, roster name map). Live on the gateway: `OG-ap-21` Phase B COMPLETE at `d577e0e729` (applier msg 34635): the person reader, `harvest_get_published_analysis`, internal-reader news and invoke policies. MP and MI were told.
+
+**NOT merged, in worktree `C:/tmp/wk-oplgtw-112` (branch `wk-NFRA_OPLGTW-112`, commit `09ba70ca30`, LOCAL):** the issuer HOOKUP: nine tools (`client_*` x5, `mdpf_get_model_composition`, three etfs silver tools), seven adapters registered after the imports, pins 105 to 114 and 96 to 105, `app/refs/partner_roster.json` byte-equal copy, and ONE line in `client_core._runtime_catalog` (the loader returns `{catalog, rows_by_key}`, `silver_rows` saw 0 rows: worker row Z-W111-S4). Measured there: entitlement suites 13 of 13; default `Ctx` reads 278 rows; fence names `49f` and `cottonwood`; roster maps "49 Financial Group" to `49financial`. Full gateway suite there: **982 passed, 61 failed** (test_deploy_base_guard 8, the schwab_* files, route tests): NOT yet compared with the base. FIRST ACT on resume: run the same suite on `474b9770d5` (or any clean trunk worktree) and diff the failing ids; merge `wk-NFRA_OPLGTW-112` with `bash .tools/safe-merge.sh` only if the new failures are 0. The script that made it: `r37/hookup_ch.py <gateway-root> <repo-root>` (fixed to put the register loop after the imports; its output differs from the commit by one blank line).
+
+**Cells pending:** `OG-cl-7` (naming conformance of the client modules via `lookup()`, slot ~111, `TO-OG-cl-7`, pending): run AFTER the hookup merges (same files), re-seat worker 111 (the helper `r37/helpers/prov_g2.sh`/`sync103.sh` show the recipe). `OG-ap-22` (staged) is superseded by the code batch `OG-ap-23`, NOT YET CUT: the release commit on the live ref `d577e0e729` carrying the G2 modules, hookup, ch-1, cl-7, gp-1, gf-1, rival tools (ap-22), MI's `etfs_get_positioning` extension (`a183b3cf85`, MX-c-22) and MP's gateway-breakdown handlers (`8310672247`, `3317942ecc`, `54a75d46ba`); one never-widen ask for the batch (code only, no new IAM beyond ap-24's roles). Note the recurring AC2 defect (row Z-S156): `contract_staging_test_green` cannot be true at the step that writes it (it goes green after the manifest lands at step 8); fix that clause in the ap-23 and later AC2 scripts.
+
+**OG-ap-24 (six vendor read roles, applier `0.7.0_AE_CloudOps~ZS`):** Phase A closed; ask sha256 `692cce61ddf8`, `.tf` `21a54e8f197eeea2`, plan 12 to add. **My COO half SIGNED `947810faa8`** (C1-C6). CTO and CVO halves are NOT yet signed (the CTO wound down for the reboot). When both land, send the Phase B GO to `~ZS` naming all three, citing `NFRA_OPLGTW.TO-OG-ap-24` (a message without the order id is refused by LD-0529). The roles stay unused until `OG-ap-23`.
+
+**Open asks for me:** none unanswered. Rulings issued this stretch: ap-21 A3 (keep the base guard, drop test_admin_people_access), ap-24 A2/A3 (the BD role keyed by firm; the live BD policy is NOT edited), ch-1 A1.
+
+## KEY FACTS FOR WHOEVER RESUMES
+
+- The finish-by is Fri 2026-10-16 ~22:00Z (CTO GO msg 34552, PRD v3.12). Critical path: hookup merge -> cl-7 -> cut + sign `OG-ap-23` -> `OG-ap-24` Phase B -> `OG-ap-23` release -> MI/MP catalog and view releases.
+- Known gaps, named not covered: the 49F live `opal-data-bd` tables (`49f-live`) have no catalog row so 49F holdings, transactions and fees answer `no_catalog_row`; Schwab `fact_*` is uncovered (MX-c-23, MX-r-15); Z-S155 (dell1: harvest jobs read silver uncached, fix is dell1 cb-11).
+- Traps met, each cost a retry: a stale-branch sync merge duplicates a channel row (abort the merge in the worker worktree and re-sync against current trunk); a drain waits on any other seat's safe-merge; the issuance gate floors a core path at `<risk>WORLD</risk>` and wants a unique `<workstream>` per issuance; safe-commit refuses while any merge is open in the shared tree; `send_message` to a Tier-2 seat must cite the order id.
+- Helper scripts (they lived in `C:/tmp`): `r37/helpers/` (`merge_batch3.sh` list format `slot|short|id|slug|what`, `drain.sh`, `sync103.sh`, `sync_branch.py.txt`, `resolve_merge.py.txt`, `prov_g2.sh`, `gen_ch1.py.txt`, `gen_cl7.py.txt` (the Python ones carry a .txt suffix so the lint gate skips them: rename to .py to use)). They hard-code the scratchpad path of this session for `sync_branch.py`: copy it next to the script and change `S=`.
+- Workers: 103 to 111 are finished; worktrees `C:/tmp/wk-oplgtw-103..112` remain (112 holds the unmerged hookup; do not remove it).
+- Surprise rows this stretch: Z-S155 (mine); worker rows Z-W103-S*, Z-W107-S*, Z-W111-S1 to S6 (S4 fixed in the hookup; S6 the live-segment catalog gap); AE Z-S153/S154/S156.
+- Hourly logs: `drive_log_20261015T20Z_*`, `drive_log_20261015T21Z_*`.
+
+## Commits this stretch (LOCAL)
+
+ap-21 A3 `b39af50e9d`, COO half `c9c5cb0e07`, GO sent 23:06Z; ap-24 A2 `2776c47dd8`, A3 (after it), COO half `947810faa8`; ch-1 cut `705ef2c190`, A1 `3f81cf45a1`; row Z-S155 `550f6f8794`; drive logs `9a0ddd8d54`, `42700996b0`.
