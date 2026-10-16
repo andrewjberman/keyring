@@ -23794,3 +23794,136 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-W2102-S1 -- the zip put on sys.path cannot run the Inflection producer: its registry reads are open() calls on zip members
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T18:49:56Z",
+  "one_line": "bootstrap() puts the verified bundle zip on sys.path, but the Inflection producer reads its registry, words and declaration with open(); the flat-directory run (DBF135-2-AC2) fails at the first import",
+  "spec_asserts": "Step 3 of DB-f-2102: bootstrap() verifies INF_G_01.bundle.zip against the pin and only then puts the verified zip on sys.path; the flat-directory run with only the launcher and the zip plans the Saturday line under Monday (DBF135-2-AC2).",
+  "world_is": "account_transaction_inflection.py sets FIRM = opal_naming.lookup('inflection') at import (line 93 at f362eb8cb5); lookup reads infra/logic/registry/systems.json with open() (lib/opal_naming.py line 247 at f362eb8cb5). From the zip that path is zip/infra/logic/registry/systems.json and open() raises FileNotFoundError, so the producer cannot import from a zip on sys.path. account_return_daily.py (DECLARATION, read_text) and load_words (read_text) are the same kind of read. Measured: python -I checker AC2 flat run rc 1 (FileNotFoundError on the zip member). The manifest closure, the pin, the member set and build_bundle determinism PASS before that step (zip sha256 dff4be9c8a1c14290e4c2ca335d631f5ec8236674d89de6fd1c628d50875c974, 19 members). The mechanism as written cannot satisfy the flat-run step; the order does not name an extraction route and this worker has not added one.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@f362eb8cb5 line 247: _read_text opens the registry path with open(path, 'rb')",
+      "data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py@f362eb8cb5 line 93: FIRM = opal_naming.lookup('inflection')['key'] at import",
+      "python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_step.py . DBF135-2-AC2 on the worktree: rc 1, FileNotFoundError on <zip>/infra/logic/registry/systems.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not wired; nothing is deployed. A release that ships the launcher as written would fail loudly on the first run (a refusal, not a silent write). The issuer decides the route; the worker did not extract the zip or patch the producer."
+}
+```
+
+## IRPT_DASHBD-D2-W2102-S2 -- the checker's fake S3 returns the ETag x, which the producer's writer refuses, so DBF135-2-AC1 cannot pass its upload step
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T18:49:56Z",
+  "one_line": "p135_step.py FakeS3.put_object returns ETag 'x'; the producer writer (stream_parquet finalize) verifies the ETag against the local MD5 and raises StreamWriteUnverified, so AC1's upload=True run fails",
+  "spec_asserts": "DBF135-2-AC1: the one-snapshot run, run by the checker against a fake S3 holding two cumulative snapshots, includes an upload=True run that emits lines under their business dates.",
+  "world_is": "The checker's fake returns {'ETag': 'x'} from put_object. data/assets/scripts/lib/stream_parquet.py finalize (line 146) raises StreamWriteUnverified when the ETag is not the local MD5 (measured: '... S3 ETag x != local MD5 b743f5b3a74ba41b70f7caf1d06d5b07'). A single-part S3 put returns the body MD5 as its ETag, so the fake is not faithful to S3. In a DIAGNOSTIC copy of the checker in .scratch (not committed, checker unedited) that returns the body MD5, AC1 reaches the launcher pytest step; the only failing launcher test is the flat-directory run of S1. The launcher's own fake returns the MD5 ETag.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p135_step.py put_object at the trunk (returns {'ETag': 'x', 'VersionId': 'v'})",
+      "data/assets/scripts/lib/stream_parquet.py@f362eb8cb5 finalize: the ETag check raises StreamWriteUnverified (line 146)",
+      "python -I .../checks/r135/p135_step.py . DBF135-2-AC1 on the worktree: reason StreamWriteUnverified for date=2026-10-12/data.parquet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The producer writer is not edited (read-only). The fix of the fake is the issuer's: the order says a checker rule and the order that disagree are followed and filed, and this one is filed."
+}
+```
+
+## IRPT_DASHBD-D2-W2102-S3 -- the launcher's repo root is parents[4] of data/inf/scripts/gold, not parents[3]
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T18:49:56Z",
+  "one_line": "step 2 says parents[3] of the launcher holds data/assets/scripts/gold/irpt_reporting; the launcher sits four levels below the repo root, so the root is parents[4]",
+  "spec_asserts": "Step 2 of DB-f-2102: the producers are read from the repo layout when parents[3] holds data/assets/scripts/gold/irpt_reporting/.",
+  "world_is": "For data/inf/scripts/gold/INF_G_01.account_transaction_gold.py, parents[0] is gold, parents[3] is data and parents[4] is the repo root. The launcher checks parents[4] for the producer directory. No other behaviour depends on the index.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py _repo_root(): parents[4] checked for data/assets/scripts/gold/irpt_reporting",
+      "ls of the worktree: data/inf/scripts/gold is the launcher's directory, data/assets is the producer's root"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The index is the only difference from the order's text; the producer's own _ROOT = parents[5] is unchanged."
+}
+```
+
+## IRPT_DASHBD-D2-W2102-S4 -- the bundle closure carries twelve registry and naming files the order did not name, because the Inflection path reads them at run time
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T18:49:56Z",
+  "one_line": "the manifest lists 19 files: the five named modules, the import closure (account_return_daily, stream_parquet) and the registry the naming reader opens at run time (11 files plus NAMING_SCHEMA.json)",
+  "spec_asserts": "Step 3 of DB-f-2102: the manifest is the producer closure, add what the imports need, NO test files; the checker requires the five named modules.",
+  "world_is": "opal_naming.lookup and address read infra/logic/registry/*.json (load_registry, REGISTRY_FILES) and org/standards/NAMING_SCHEMA.json (_schema) at run time, so the closure of a run includes them. Measured: an extracted closure in repo layout plans the Saturday line (test_bundle_extracted_closure_in_repo_layout_plans_the_saturday_line PASS). sources.json and the other registry files (catalog_fork_keys, event_rules, key_rulings, name_rulings, root_map, mail_parties) are not read on the Inflection path and are not in the bundle. Consequence: the pin changes when any of those twelve files changes; the zip is then refused (sha256) until the manifest and the pin are re-cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@f362eb8cb5 REGISTRY_FILES and load_registry; _schema reads SCHEMA_PATH",
+      "data/inf/scripts/gold/INF_G_01.bundle.json at the commit that carries it: 19 files, basename_collisions_with_synced_dirs empty"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so the issuer can decide whether the registry belongs in the zip or in the release beside it."
+}
+```
+
+## IRPT_DASHBD-D2-W2102-S5 -- the order's literal Orion prefix and manifest folder are firm tokens the naming gate refuses in a new carrier
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T19:04:25Z",
+  "one_line": "the commit-time naming gate (LGIC_ENFORCE, ENFORCE) refused the launcher's typed prefix and typed manifest folder; the launcher now reads them through the registry and its own location",
+  "spec_asserts": "Step 1 of DB-f-2102: the module constants are ORION_PREFIX = 'orion/inflection/silver/fact_transactions/' and the manifest is data/inf/scripts/gold/INF_G_01.bundle.json, typed as literals.",
+  "world_is": "The first commit attempt of the launcher was refused by the naming limb: the prefix line is a NEW hand-kept carrier of the firm token outside every permitted context ('read it through lookup(inflection)'), and the manifest path carries the vendor-folder token. The gate's own rule is to read the firm through lookup. The registry row for the firm (infra/logic/registry/scopes.json, key inflection, short inf, long inflection) gives the same values. The launcher now computes ORION_PREFIX on first use (module __getattr__ over orion_prefix(), value unchanged) and locates the manifest beside itself (manifest_path). The checker's value check and the bundle pin are unchanged (zip sha256 dff4be9c8a1c14290e4c2ca335d631f5ec8236674d89de6fd1c628d50875c974). The lookup needs the repo layout; a flat-directory import does not read it because no attribute is read at import.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit-gate log of the first attempt (.scratch of the worktree): naming-gate REFUSE of the launcher at the prefix line and the manifest line; commit aborted, files unstaged",
+      "infra/logic/registry/scopes.json: row key inflection, short inf, long inflection, bucket opal-data-inflection",
+      "commit 2cee65234d (launcher and manifest) carries the registry-read form"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The order's text and the checker's value are the same string; only the carrier changed. If the issuer prefers the literal, it needs a register entry acknowledged by Andrew, not a worker edit."
+}
+```
