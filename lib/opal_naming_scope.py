@@ -5,7 +5,7 @@
 Terraform root: the root's own .tf names plus the names in the Lambda source folders the root deploys. The tie from a root
 to a source folder is DERIVED from the repository, never typed; three kinds of evidence are read:
 
-  source-map   infra/aws/lambda/ci/lambda-source-map.json: a function whose tf_file sits in the root and whose source_dir
+  source-map   infra/aws/lambda/ci/function-map/<name>.json: a function whose tf_file sits in the root and whose source_dir
                is a real tracked folder.
   tf-path      a non-comment line of the root's .tf files that names a tracked folder under infra/aws/lambda/
                (a `../lambda/<dir>/...` path, an `infra/aws/lambda/<dir>` path or `lambda_base_dir}/<dir>`).
@@ -39,11 +39,12 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 import opal_naming  # noqa: E402
+import opal_lambda_map  # noqa: E402  -- CT-ca-1: the Lambda function map, one file per function
 
 REPO = opal_naming.REPO
 TF_ROOT = "infra/aws/terraform/"
 LAMBDA_ROOT = "infra/aws/lambda/"
-SOURCE_MAP = "infra/aws/lambda/ci/lambda-source-map.json"
+SOURCE_MAP = "infra/aws/lambda/ci/function-map"  # the folder: one <name>.json per function (CT-ca-1)
 NOT_JUDGED = ("org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/NOT_JUDGED_R13.json")
 
 _TF_PATH_RE = re.compile(r"(?:infra/aws/lambda/|\.\./lambda/|lambda_base_dir\}/)([A-Za-z0-9_./-]+)")
@@ -52,6 +53,11 @@ _PASCAL_RE = re.compile(r"^[A-Z][a-z0-9]+(?:[A-Z][a-z0-9]*)*$")
 _BLANK_RE = re.compile(r"\{([a-z_]+)\}")
 
 _CACHE = {}
+
+
+def _lambda_functions():
+    """{name: entry} of the Lambda function map: one file per function under SOURCE_MAP (CT-ca-1). Raises when absent or empty."""
+    return opal_lambda_map.load_all(root=REPO)
 
 
 def _read_text(rel):
@@ -159,7 +165,7 @@ def _ties():
         if ev not in ties[root][d]:
             ties[root][d].append(ev)
 
-    smap = json.loads(_read_text(SOURCE_MAP)).get("functions", {})
+    smap = _lambda_functions()
     for fn in sorted(smap):
         row = smap[fn]
         sd, tfile = row.get("source_dir"), row.get("tf_file")
@@ -1889,7 +1895,7 @@ def unassigned_rows(map_path=None):
     mdirs = _map_dirs(map_path)
     ties = _ties()
     _per, contested = _resolve()
-    smap = json.loads(_read_text(SOURCE_MAP)).get("functions", {})
+    smap = _lambda_functions()
     groups = {}
     for it, r in zip(items, asg):
         if r is not None:
