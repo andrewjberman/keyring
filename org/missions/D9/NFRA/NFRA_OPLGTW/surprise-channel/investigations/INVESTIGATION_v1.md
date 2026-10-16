@@ -20202,3 +20202,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "This row records the disarm of the code placement and names what still closes Z-S162: CODE_SERVED.json client_admission all three true, read by the CVO before close. Z-W113-S10 (the 63 failed of the worker's sparse tree) is explained: the main-tree baseline is 61 and unchanged."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T08:27:42Z",
+  "id": "NFRA_OPLGTW-Z-S164",
+  "one_line": "OG-ap-23 Phase B: 4 of the 27 added tools are denied by IAM on the host (the internal reader role holds no s3:ListBucket for the 3 etfs_silver tools on opal-data-etfs and none at all for mdpf_get_model_composition on opal-data-mdpf), so the per-tool trigger reads 23 of 27 and the order's rollback fires.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN W/ap23_served_harness.py on i-07dccb1615503ac99 under /opt/opal-gateway/.venv/bin/python after the deploy of 3d5c9c8bf1 (W/CODE_SERVED.json, W/CODE_SERVED.json.raw.txt, SSM command in the raw file): registry 76 to 103, 27 of 27 present, per_tool_good 23 of 27. The four misses carry AccessDenied from S3 ListObjectsV2 made as assumed-role/gateway-global-internal-reader-role/gw-internal-reader: etfs_get_new_securities, etfs_get_fund_bloomberg_characteristics and etfs_get_fund_snapshot on resource arn:aws:s3:::opal-data-etfs, mdpf_get_model_composition on resource arn:aws:s3:::opal-data-mdpf, each 'because no identity-based policy allows the s3:ListBucket action'.",
+      "READ the catalog rows at the release (app/refs/DATA_CATALOG.yaml): mdpf_new_securities is opal-data-etfs prefix mdpf/etfs/gold/new_securities/date={D}/; the Bloomberg silver tables are opal-data-etfs prefix bbg/{as_of}/ (fund_daily.parquet and constituents/derived_*.parquet); snapshots are opal-data-etfs snapshots/snapshot_{date}.json; model composition is opal-data-mdpf mdpf/feeds/model_composition/<firm>/. OG-ap-20's etfs grant on the internal reader names daily/, gold/book/, gold/holding/, platinum/, rivalfunds/etfs/ and silver/holdings/ with ListBucket confined to those prefixes: none of the four prefixes above is in it, and opal-data-mdpf appears in no internal-reader statement.",
+      "The other 23 tools serve, the five client tools refuse an unprofiled non-admin with 0 reads and serve a master_admin stand-in, the classification call runs as gateway-global-internal-reader-role, C1 and C2 are true, reader_env_keys_present is 6, host md5 141 of 141 equal: the failure is exactly the four missing grants."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-23 preflight: comp-iam DECLARED-NOT-APPLICABLE, this release changes NO IAM; the rival tools read the prefixes OG-ap-20 granted and the json family reads prefixes the gateway role holds. COO condition C5: per tool 27 of 27, IAM unchanged by this release; any trigger red: redeploy the base and file an ARMED row naming the COO.",
+  "world_is": "Three of the four G2 remainder tools (etfs_silver) and mdpf_get_model_composition read prefixes that no internal-reader statement covers, so on the host each answers AccessDenied (fail closed: no data returned, nothing exposed). The release is otherwise sound. The rollback to d577e0e729 is being run under C5; a re-release without the grants reproduces the same four denials.",
+  "notes": "Cost: the next release of this batch needs one more grant cell first (internal reader: s3:GetObject and a prefix-confined s3:ListBucket on the three opal-data-etfs prefixes and on opal-data-mdpf mdpf/feeds/model_composition/); the four tools were never served, so no consumer loses anything by the rollback. Non-application: the 23 other tools. Not verified here: whether the grant should name the per-firm sub-prefixes of model_composition or the whole prefix; that is the grant author's read of the catalog row."
+}
+```
