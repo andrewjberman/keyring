@@ -70,12 +70,33 @@ def resolve(label: str, reg: dict | None = None) -> str | None:
     return None
 
 
+def _inbox_sender(label: str, reg: dict | None = None) -> dict | None:
+    """The `senders` row a label names (by name or tailnet_name, case-insensitive) when that sender carries an
+    `inbound_queue`: a bus DESTINATION that is still not a box (it is never in names() or placement_values())."""
+    want = (label or "").strip().lower()
+    for s in senders(reg):
+        if s.get("inbound_queue") and want in [str(s.get("name", "")).lower(), str(s.get("tailnet_name", "")).lower()]:
+            return s
+    return None
+
+
 def inbound_queue(label: str, reg: dict | None = None) -> str | None:
     name = resolve(label, reg)
     for d in devices(reg):
         if d["name"] == name:
             return d["inbound_queue"]
-    return None
+    sender = _inbox_sender(label, reg)
+    return sender["inbound_queue"] if sender else None
+
+
+def tailnet_of(label: str, reg: dict | None = None) -> str | None:
+    """The tailnet name a bus message to `label` is stamped with: the box's, else an inbox-carrying sender's."""
+    name = resolve(label, reg)
+    for d in devices(reg):
+        if d["name"] == name and d.get("tailnet_name"):
+            return d["tailnet_name"]
+    sender = _inbox_sender(label, reg)
+    return sender.get("tailnet_name") if sender else None
 
 
 def placement_values(reg: dict | None = None) -> tuple:
