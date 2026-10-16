@@ -28573,3 +28573,56 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Sparse checkout hygiene for a worker that files rows: the row schema folder is not in the default sparse set. Recorded so the row gate's schema read is not assumed to be satisfied by a worktree that lacks it."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S44",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T09:35:00Z",
+  "one_line": "C-S158 DISARMED: the clause-level and recency remedy is merged (AMGT-gu-1 @0fd6ae013a), the 95 documents were re-made and stored, the CVO's fresh five-new-name read is MET (ADJUDICATION_v136, row C-S159), and the AI-fill hold is removed (AMGT-ar-8, @77cac6580b) with the stored set served.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "REMEDIATION_v46 row AMGT_RESAPP-D1-C-S158 (ARMED, owner this seat): a SUPPORTED sentence only when every stated fact is in the source, plus the round-107 item (g) recency rule, then a re-run of the affected names; close when the CVO reads five new names drawn by sha256 over that day's date and finds no unsupported or stale claim; the hold stays until then.",
+  "world_is": "Read 2026-10-16 ~09:3xZ. gu-1 merged @0fd6ae013a (drain 869 passed, check 20 of 20). The 95 re-made documents (metered 63.16 USD) stored under the round-109 pair, read back 95 of 95. CVO v136 @dd04f311a6: ZTS, ENEL, TSM, VLO and SAN FP, 11 filled blocks, no unsupported or stale claim, the three C-S158 defects gone; three INERT quality rows (C-S160). Restore pair signed both halves; leg 1 (SAN_FP_Equity mgmt_recent as the contract's NONE block) read back 4 versions to 5; leg 2 by CloudOps~RA1: the live function holds only HARVEST_METRICS_TABLE and HARVEST_ARTICLES_TABLE, CodeSha256 UIkRgr9g..., memory 1769, timeout 29 equal to the pre values, Terraform diff 7 deletions in scoped-amgt-api.tf, and this seat's own run of check_restore_served.py against its own pre-capture reads AIFILL RESTORE SERVED: YES (16 of 16). NOT MEASURED: the Security Analysis page rendering the blocks (the served API and the stored documents were read; no page was looked at by this seat); the 85 names no reader has read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ADJUDICATION_v136.md @dd04f311a6 (row C-S159)",
+      "aws lambda get-function-configuration opal-amgt-scoped-api -> Environment holds the two HARVEST tables only, Sha UIkRgr9gbz2RbsaOJq2uRe3aZPOgNE/YoCAG6j7HyO4=, memory 1769, timeout 29, LastModified 2026-10-16T09:12:01Z",
+      "PYTHONPATH=. AIFILL_SERVED_FUNCTION=opal-amgt-scoped-api python round109_close/restore/check_restore_served.py verify --pre <this seat's pre-capture> --docs round109_close/restore/docs -> AIFILL RESTORE SERVED: YES (16 of 16)",
+      "git diff e1c5324f19 77cac6580b -- infra -> scoped-amgt-api.tf, 7 deletions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CVO's row C-S158 closes by the CVO's own read (v136); this row records this seat's disarm with the evidence. Round 110 (AMGT-gv-1, @e1c5324f19) carries the CVO's three quality rows."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S45",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T09:36:00Z",
+  "one_line": "My own AMGT-gu-1 specifics check withholds a true sentence whose name carries a diacritic (the folded sentence says Belen, the source says Belen with its accent), and the pack text reaches the check JSON-escaped; this is the cause of the pronoun-opening bios the CVO graded as quality rows (C-S160), and it is in the stored round-109 set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "AMGT-gu-1 (decomposition section 17): a SUPPORTED sentence stands only when its cited source carries every number and name it states; the cell's reference arms proved the QXO case (a name absent from the source drops the sentence) and a carried sentence staying SUPPORTED.",
+  "world_is": "Measured 2026-10-16 ~09:2xZ with the shipped functions on a synthetic source: contract.fold_text turns Bel+e-acute+n Garijo L+o-acute+pez into Belen Garijo Lopez in every stored sentence, while grounding._missing_specifics compares it with the source's own accented text and returns ['belen', 'lopez'], for the plain page text and for the pack text built by orchestrate._opal_sources with json.dumps' default ASCII escaping. So the sentence that names a person with a diacritic is withheld, and the bio opens on He or She (the SAN, ENEL and TSM bios the CVO read; ENEL's naming sentence may also have failed for another reason, an unread cause). The stored round-109 set carries the effect; no stored document records why a sentence was withheld, and the source texts are not stored, so the size of the false-drop rate over the 95 is NOT MEASURED. The CVO's read judged the kept text correct; the effect is lost content, not a false claim. Fix: AMGT-gv-1 (round 110, issued @e1c5324f19, worker ~484): fold the source text with contract.fold_text before the check and keep the pack text's characters.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PYTHONPATH=. python probe: _missing_specifics(Belen Garijo Lopez sentence, norm(plain accented source)) and (norm(json-escaped source)) -> ['belen', 'lopez'] both",
+      "round109_close/live95/stamped/SAN_FP_Equity.json mgmt_bio grounding: naming sentence UNSUPPORTED, kept text opens on 'Sanofi said her priority...'",
+      "REMEDIATION_v47 row C-S160 (the pronoun-opening bios)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A defect of the seat's own cell, found while reading the CVO's rows against the stored documents. Closes when gv-1 merges and the affected names are re-run under a metered run and a new pair, then re-read."
+}
+```
