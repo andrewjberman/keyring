@@ -22910,3 +22910,54 @@
   "dismissal_reason": "No exposure: the four bodies equal the computed CONTRACT_VERSION refusal for both identities, byte for byte. FWD-5 stays ungraded and S134 stays armed. The next sitting needs a driver that sends X-Contract-Version and grades by the envelope (ok false is REFUSED or DENIED, never LEAK or ALLOWED), cut by 2.0.0_SA_COO~T2 under a re-signed packet."
 }
 ```
+
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "id": "IRPT_ANLREQ-D2-S158",
+  "surfaced_at": "2026-10-16T22:02Z",
+  "one_line": "Retraction of my row IRPT_ANLREQ-D2-S155 and of the 'LEAK' wording in my FWD5 report: the four 200 answers on original-upload, opal-report, report-pdf and commentary-pdf were CONTRACT_VERSION refusal envelopes for both the firm-B principal and the control, so nothing was exposed (CTO row S157).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO message 9908 and row IRPT_ANLREQ-D2-S157 @e5c3a20521: the body sizes 434/414/424/446 bytes equal served.refuse() CONTRACT_VERSION bodies and are the same for the run and the control",
+      "served.py:1198-1202 refuses a request without X-Contract-Version before any firm or record read; fwd5_driver.py does not send the header on those four routes"
+    ]
+  },
+  "spec_asserts": "My report to 2.0.0_SA_COO~T2 and the CTO (msgs 9898, 9899) and row S155: a cottonwood principal LEAKED four artifact routes of 49financial's ticket.",
+  "world_is": "The driver graded a 2xx status as ALLOWED or LEAK without reading the envelope; I relayed its verdict without checking the body class. The sitting's measurements (statuses, byte-free) stand; the reading does not. No exposure is shown; the fence on those routes is ungraded. I relayed the instrument's verdict as a finding; the envelope check belonged before the word LEAK."
+}
+```
+
+## IRPT_ANLREQ-D2-W275-S1 -- AR-tz-72 edited one existing whole-2xx control test (test_fwd5_control_all_allowed_exits_zero) to answer ok-true envelopes on the four report-side routes
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W275-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~275",
+  "surfaced_at": "2026-10-16T21:45:56Z",
+  "one_line": "AR-tz-72 edited one existing test: test_fwd5_control_all_allowed_exits_zero in test_fwd5_driver_control.py (0.9.0_WK_IRPT_ANLREQ~272) asserted the whole-2xx grading of the four report-side routes; its four fake answers are now ok-true envelopes. No other existing test was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-tz-72 worker face, item 5: the three existing driver test files MAY be edited ONLY where a test asserted the old whole-2xx grading of a report-side route; keep each such test's intent, change its fake answer to a refusal or success ENVELOPE, and list every edited test by name in a surprise row.",
+  "world_is": "One existing test asserted the whole-2xx grading: test_fwd5_control_all_allowed_exits_zero (test_fwd5_driver_control.py) expects the four report-side verdicts ALLOWED against 2xx bodies b'%PDF' and b'{}'; under envelope grading those bodies read as UNREACHED. Its own fakes for original-upload, opal-report, report-pdf and commentary-pdf now answer a 200 with an ok-true envelope; the shared allowed_table() helper is unchanged, so the other control tests keep their fakes. No test in test_fwd5_driver_offline.py or test_fwd5_driver_exit_semantics.py asserted the old grading; both pass unedited. The three driver files together: 37 passed (AC2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~272/fwd5_driver/test_fwd5_driver_control.py@f3d07b8fea:153-162",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py@f3d07b8fea:186-199",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~275/fwd5_driver/test_fwd5_driver_envelope.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

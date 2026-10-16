@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~COMM1</issued_to>
 <issued_by>2.0.0_SA_COO~CA</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -15,7 +15,7 @@
 
 **Directive:** D9 | **Fabric:** laptop | **Decomp cell:** `CA-n-2` (`decompositions/COMM_ASSIST_DECOMP.round21.md`) | **outcome_ref:** FWD-3, FWD-13 |
 **depends_on:** CA-n-1 (merged `1aa63bde67`); the GO waits on the three halves signed on the pin
-**STAGED:** the GO is written here when the CTO and CVO halves are SIGNED on the pin `1aa63bde67`.
+**GO WRITTEN** (see below). The three halves are SIGNED on the pin `1aa63bde67`; this order is `pending`.
 
 ---
 
@@ -23,13 +23,19 @@
 
 ### GO
 
-(not yet written)
+GO -- written by 2.0.0_SA_COO~CA 2026-10-16 ~21:5xZ. All three halves SIGNED on the pin `1aa63bde67`: COO
+(`2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R21_THREADS_DEPLOY_20261016.md` @f6d80f2b0b), CTO
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_CTO_HALF_COMM_ASSIST_R21_THREADS_DEPLOY_20261016.md` @314121c000), CVO
+(`3.0.0_SA_CVO~L/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R21_THREADS_DEPLOY_20261016.md` @e0df2cbf9b). The CTO half adds condition 9 (BINDS): if the
+gateway's `replies` route refuses (403 or 404) on threads OTHER than the pinned End of Day parent too, file a defect row naming
+`2.0.0_SA_COO~CA` and report it; that is not a rollback (the fix isolates a failing thread) but it holds the retest. The CVO half adds
+none. Timing: never between 20:00Z and 21:45Z; apply only when you can finish in one sitting.
 
 The three halves BIND, and the COO half's Branch A / Branch B, rollback and conditions ARE the procedure. Read all three in full (all
 under `org/missions/D9/COMM/COMM_ASSIST/deliverables/`):
 - COO `2.0.0_SA_COO~CA/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R21_THREADS_DEPLOY_20261016.md`
-- CTO `1.0.0_SA_CTO/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R21_THREADS_DEPLOY_20261016.md`
-- CVO `3.0.0_SA_CVO/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R21_THREADS_DEPLOY_20261016.md`
+- CTO `org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_CTO_HALF_COMM_ASSIST_R21_THREADS_DEPLOY_20261016.md` (outside this folder)
+- CVO `3.0.0_SA_CVO~L/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R21_THREADS_DEPLOY_20261016.md`
 
 ### THE CELL
 
