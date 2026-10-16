@@ -2771,3 +2771,17 @@ The worker row `IRPT_DASHBD-D2-W247-S1` (on the drained `DB-b-306`, merge `0a122
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~248`), cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on five handler mutants and one diff mutant):** `checks/r149/p178_filled_reader_mints_ids.py` (DB178-1-AC1..AC3). Base `923e562c61`.
+
+## 172. ROUND 149, WORKSTREAM PUB49FHOP2 (2026-10-16 ~20:5xZ, issuer 2.0.0_SA_COO~D2): the apply of the signed 49 Financial publish pair -- the hop-2 reader code (switch OFF) and the read grant on the filled prefix
+
+Both halves of the never-widen pair are signed (COO @a30664edac; CTO @6aaa28e481, packet sha256 `e6af7a92148d`). The reader code (`DB-b-302`, `-305`, `-306`, `-310`) is merged and verified; this cell lands it in the function and widens the role's READ and LIST by the one filled prefix. The switch stays OFF, nothing is written, no served output moves; the first pass (switch ON) and the served route (`IB-pr-551`, hops 3 and 4) are separate later acts.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Gates, ledger, build, ONE safe-apply (plan 0/2/0), the switch-OFF probe, one dry-run shard, the after-read, the record | DB-b-312 | FWD-10 (hop 2) | WORLD | `DB-b-306`, `DB-b-310` (merged); both halves signed | chain AF |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the applier is the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2` (rule 34); (b) the probe `{"filled_report": true}` is the evidence that the deployed code reads the switch as OFF (the packet's question 2, accepted by the CTO); (c) the packet's count of 18,257 objects belongs to the platinum prefix, not the filled prefix (the CTO's correction); the order has the applier print both counts before the probe.
+
+**fanout:** 0 workers (an applier order), 1 of 1 chains, cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected, no record exists; selftest green on a synthetic record and red on 26 single-fault arms):** `checks/r149/p179_pub49f_hop2_apply.py` (DBC179-1-AC1, -2-AC1, -3-AC1).
