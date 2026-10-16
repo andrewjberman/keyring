@@ -1,9 +1,9 @@
 {
-  "contract_version": "0.5.0",
-  "supersedes": "0.4.2 (the round-133 contract, which recorded the CTO's final S6 ruling, pin a5475b2fdd, in s6_ruling): 0.5.0 makes the business-date claim PER ROW (the CTO round-132 ruling 1, msg 9498) by adding business_date_claim as the 19th column and restating the claim of business_date, and changes nothing else of 0.4.2",
+  "contract_version": "0.5.1",
+  "supersedes": "0.5.0 (the round-134 contract, which made the business-date claim PER ROW): 0.5.1 restates every Inflection count on the latest snapshot (round_132_censuses, row_filter, price_rule, offset_rule), records the final S6 ruling (both legs INTERNAL, pin 5d8adf5722, withdrawn pins 1881c0fc01 and a5475b2fdd, RULED_INTERNAL_REINVESTMENT), adds inflection_table_shape, and changes nothing else of 0.5.0",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
-  "authored_by": "0.9.0_WK_IRPT_DASHBD~2001",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~2101",
   "authored_under": "IRPT_DASHBD.TO-DB-f-1801 (round 132, workstream ~F2, F-SHIP), cell DB-f-1801 of IRPT_DASHBD_DECOMP_R132_F.md, following the CTO round-131 analysis for F-SHIP (msg 9342: rulings (b) the fund-only price, (c) one business_date by the function in lib/trading_calendar.py, (1) the Reversed offsets with their originals, (5) contract, producers and mirror in one merge) and the round-132 issuer's censuses.",
   "table": "account_transaction",
   "grain": "account x transaction line",
@@ -447,7 +447,7 @@
           "fundFamilyName"
         ],
         "claim": "inferred",
-        "method": "The price is navPrice ONLY on a line that carries a fund family: the fundFamilyName is non-blank, noUnits is non-zero and navPrice is positive. Every other line serves null, never zero, with the reason NAV_PRICE_FUND_ONLY (units non-zero, navPrice positive, no fund family), ZERO_UNITS (no units) or NAV_NOT_POSITIVE (units non-zero, navPrice not positive). The round-128 ground read named avgPrice for this target and read no value; the round-131 census (values-free, R131_INFLECTION_FIELD_CENSUS.json) finds avgPrice null or blank on every one of 218,054,352 rows, so the producer never reads it. The round-132 census (values-free, R132_INFLECTION_CENSUS.json) finds 154,828,670 unit-bearing rows with a positive navPrice, of which 154,828,670 carry a fund family and 0 do not; navPrice times noUnits equals transAmount within one percent on 154,808,844 of the 154,828,670 fund-family lines, so navPrice is the unit price the amount is booked at."
+        "method": "The price is navPrice ONLY on a line that carries a fund family: the fundFamilyName is non-blank, noUnits is non-zero and navPrice is positive. Every other line serves null, never zero, with the reason NAV_PRICE_FUND_ONLY (units non-zero, navPrice positive, no fund family), ZERO_UNITS (no units) or NAV_NOT_POSITIVE (units non-zero, navPrice not positive). The round-128 ground read named avgPrice for this target and read no value; the round-135 census (values-free, R135_INFLECTION_LATEST_PRICE_CENSUS.json, latest snapshot 2026-10-16) finds avgPrice null or blank on every one of 1,336,782 Complete rows, so the producer never reads it. The same census finds 1,080,128 unit-bearing rows with a positive navPrice, of which 1,080,128 carry a fund family and 0 do not; navPrice times noUnits equals transAmount within one percent on 1,079,919 of the 1,080,128 fund-family lines, so navPrice is the unit price the amount is booked at."
       },
       {
         "target": "amount",
@@ -1022,15 +1022,16 @@
       "keep": [
         "Complete"
       ],
-      "rows": 218054352,
-      "kept_rows": 191360953,
+      "rows": 1521297,
+      "kept_rows": 1336782,
       "excluded_rows_per_status": {
-        "Inactive": 308,
-        "Pending": 12542026,
-        "Pending Corporate Action": 616,
-        "Rejected": 13991249,
-        "Reversed": 159200
+        "Pending": 92616,
+        "Rejected": 90783,
+        "Reversed": 1110,
+        "Pending Corporate Action": 4,
+        "Inactive": 2
       },
+      "basis": "latest snapshot 2026-10-16",
       "unknown_status": "REFUSED",
       "reason": "Inflection's status column has six values. The Inflection adapter (adapters/inflection_account_return_daily.py, STATUS_COMPLETE) keeps Complete rows only, and so does this table: a Complete line is a transaction that happened. The five other statuses (Inactive, Pending, Pending Corporate Action, Rejected, Reversed) are not transactions that happened; they are counted per status in excluded_rows_per_status and never served. A status outside the six is refused. No other firm has a status column.",
       "offset_rule": {
@@ -1042,7 +1043,7 @@
         ],
         "negate": "transAmount",
         "counted_as": "OFFSET_OF_REVERSED",
-        "candidate_rows": 106,
+        "candidate_rows": 1,
         "distinct_keys_with_a_candidate": 1,
         "reason": "An original and its offset leave the served set together. A Reversed line is out as Reversed (its own status, already counted in excluded_rows_per_status). A Complete line whose (accountId, ticker, noUnits, negated transAmount) equals the key of a Reversed line is the offset of that original and is counted OFFSET_OF_REVERSED. The CALLER supplies the Reversed keys (reversed_keys_of) to split_complete; the producer neither reads the table nor stores a set. The round-132 pairing census counts the candidates below (CTO round-131 ruling 1: the Reversed offsets leave the served set with their originals)."
       }
@@ -3834,47 +3835,37 @@
         "NAV_NOT_POSITIVE"
       ],
       "counts": {
-        "unit_bearing_positive_nav_rows": 154828670,
-        "with_fund_family": 154828670,
+        "unit_bearing_positive_nav_rows": 1080128,
+        "with_fund_family": 1080128,
         "without_fund_family": 0,
-        "fund_rows_within_1pct": 154808844
+        "fund_rows_within_1pct": 1079919
       }
     }
   },
   "round_132_censuses": {
+    "basis": "latest snapshot 2026-10-16",
     "fund_family": {
-      "unit_bearing_positive_nav_rows": 154828670,
-      "with_fund_family": 154828670,
+      "unit_bearing_positive_nav_rows": 1080128,
+      "with_fund_family": 1080128,
       "without_fund_family": 0,
-      "fund_rows_within_1pct": 154808844
+      "fund_rows_within_1pct": 1079919
     },
     "s6_pairing": {
       "Dividend Paid from Cash": {
-        "rows": 14920,
-        "paired_in_any_partition": 13201,
-        "share_paired": 0.884786
+        "rows": 96,
+        "paired_with_income_class_row": 85
       },
       "Income Paid": {
-        "rows": 14920,
-        "paired_in_any_partition": 13201,
-        "share_paired": 0.884786
+        "rows": 96,
+        "paired_with_income_class_row": 85
       }
     },
     "reversed_offsets": {
-      "rows": 159200,
-      "distinct_keys": 910,
-      "offset_candidate_rows": 106,
-      "distinct_keys_with_a_candidate": 1,
-      "keys_with_one_original_and_one_candidate": 0,
-      "originals_per_matched_key_max": 106,
-      "candidates_per_matched_key_max": 106,
-      "candidate_day_gap_to_nearest_original": {
-        "same_day": 1,
-        "within_7_days": 0,
-        "more_than_7_days": 0
-      },
-      "candidates_per_description": {
-        "Foreign Dividend Tax": 106
+      "reversed_rows": 1110,
+      "distinct_keys": 893,
+      "offset_candidate_rows": 1,
+      "offset_candidate_descriptions": {
+        "Foreign Dividend Tax": 1
       }
     },
     "f49_business_date": {
@@ -3890,28 +3881,91 @@
         "no_trading_day_in_window": 0
       }
     },
-    "s6_status": "RULED_INTERNAL",
+    "s6_status": "RULED_INTERNAL_REINVESTMENT",
     "offsets_status": "EXCLUDED_BY_RULE"
   },
   "s6_ruling": {
-    "addendum": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_131_20261016.md",
+    "addendum": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_134_20261016.md",
     "addendum_number": 2,
-    "pin": "a5475b2fdd",
-    "class": "INTERNAL",
-    "descriptions": [
-      "Dividend Paid from Cash",
-      "Income Paid"
+    "pin": "5d8adf5722",
+    "withdrawn_pins": [
+      "1881c0fc01",
+      "a5475b2fdd"
     ],
-    "rows_per_description": {
-      "Dividend Paid from Cash": 14920,
-      "Income Paid": 14920
-    },
-    "legs_with_the_other_legs_key": {
-      "Dividend Paid from Cash": 14920,
-      "Income Paid": 14920
+    "legs": {
+      "Dividend Paid from Cash": {
+        "flow_class": "INTERNAL",
+        "basis": "reinvested inside the account: an equal-amount Buy or Income Reinvested line",
+        "claim": "inferred"
+      },
+      "Income Paid": {
+        "flow_class": "INTERNAL",
+        "basis": "reinvested inside the account: an equal-amount Buy or Income Reinvested line",
+        "claim": "inferred"
+      }
     },
     "income_booked_by": "Dividend to Cash",
-    "reason": "The two descriptions are two legs of one event: every row of each has a row of the other with the same account, day and absolute amount (census v2). Counting a leg as income would count the dividend twice, because the income is booked by Dividend to Cash (INCOME).",
-    "release_criterion": "Per event the two legs' signed amounts sum to zero, printed as N of 14,920; any miss stops the release."
+    "events": 96,
+    "sign_evidence": {
+      "legs_net_to_zero": 0,
+      "sign_combinations": {
+        "A=neg B=neg INCOME_partner=pos": 85,
+        "A=neg B=neg INCOME_partner=none": 11
+      }
+    },
+    "cash_evidence": {
+      "events": 96,
+      "cash_fell_by_about_X": 75,
+      "cash_flat": 18,
+      "other": 3
+    },
+    "reinvestment_evidence": {
+      "events": 96,
+      "events_with_an_equal_amount_buy_or_income_reinvested_line": 96,
+      "by_cash_group": {
+        "cash_fell_by_about_X": {
+          "events": 75,
+          "income_reinvested_line": 73,
+          "buy_line": 75,
+          "either": 75,
+          "neither": 0
+        },
+        "cash_flat": {
+          "events": 18,
+          "income_reinvested_line": 9,
+          "buy_line": 18,
+          "either": 18,
+          "neither": 0
+        },
+        "other": {
+          "events": 3,
+          "income_reinvested_line": 3,
+          "buy_line": 1,
+          "either": 3,
+          "neither": 0
+        }
+      }
+    },
+    "release_status": "CRITERION_MET",
+    "release_criterion": "96 of 96 events carry an equal-amount line, printed, and any event without one stops the release",
+    "reason": "Both legs are INTERNAL because the cash drop was a purchase (a reinvestment) inside the account, not money leaving it: the same event carries an equal-amount Buy or Income Reinvested line."
+  },
+  "inflection_table_shape": {
+    "kind": "cumulative_snapshot",
+    "snapshots": 155,
+    "latest_snapshot": "2026-10-16",
+    "latest_snapshot_rows": 1521297,
+    "distinct_ids_ever_seen": 1549903,
+    "ids_in_latest_snapshot": 1521297,
+    "ids_seen_but_absent_from_latest": 28606,
+    "ids_whose_status_changed_first_to_last": 2032,
+    "status_changes_by_first_and_last": {
+      "Complete -> Reversed": 68,
+      "Pending -> Complete": 1019,
+      "Pending -> Rejected": 913,
+      "Pending -> Reversed": 32
+    },
+    "statement": "The Orion silver table fact_transactions is not a partition-per-day table: every partition is a cumulative snapshot of the whole history (155 snapshots, the latest 2026-10-16). The reads and the counts taken over every partition, in the earlier rounds and in contract 0.5.0, are snapshot-weighted and were too large; the ratios held. Every Inflection count in this contract is on the latest snapshot.",
+    "gold_run_domain": "A gold run reads ONE snapshot: the newest partition for the run day. It emits its lines by trade date, and it never treats a partition as that day's transactions, because a partition is the whole history as it stood, not one day's activity."
   }
 }
