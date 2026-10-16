@@ -20439,3 +20439,54 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W164-S1 -- The order's source-order rule reads the helper's presses before the Submit click, though they run after it; the checker counts each press at its call site
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W164-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~164",
+  "surfaced_at": "2026-10-16T01:44:13Z",
+  "one_line": "AR-y-367 step 4(b) reads the source order literally, but the after-Submit presses sit in a helper defined above run(); labels_check.py counts each press at its call site (the one loop call after the click), and the rule's literal text would fail the signed design.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-367 step 4(b): in the source order submit.click() comes BEFORE the first press (.click( of a decision button), and the listener waitForResponse for the tickets POST comes before submit.click().",
+  "world_is": "The after-Submit loop is the function answerAfterSubmit, defined at line 238 of fwd1_driver.mjs (working tree of worktree C:/dev/wk-irpt-anlreq-164, the commit carrying this row), above run(). Its decision press lines therefore precede submit.click() (line 389) textually, while they run after it, because run() calls the loop once at line 392, after the click. A literal textual reading of (b) fails the signed design. labels_check.py rule (b) resolves each press in the helper to its call site and checks that call against the click; the listener check and the mutant check (a press moved into run() above the click) are read the same way. The mutant fires; the amended driver passes (9 labels, 3 presses).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-164 working tree: fwd1_driver.mjs line 238 (export async function answerAfterSubmit), line 389 (await submit.click()), line 392 (const loop = await answerAfterSubmit(page, ...))",
+      "C:/dev/wk-irpt-anlreq-164 working tree: deliverables/0.9.0_WK_IRPT_ANLREQ~164/labels_check.py check_order (rule b, press counted at its call site); run output LABELS-OK 9 labels (3 presses)",
+      "C:/dev/wk-irpt-anlreq-164 working tree: deliverables/0.9.0_WK_IRPT_ANLREQ~164/mutant_check.py output MUTANT-FIRES (a press moved above submit.click() fails the order check)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W164-S2 -- A replacement equal to its own symbol passes the signed validator, but the form refuses it and sends nothing; the driver now refuses that decision before any run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W164-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~164",
+  "surfaced_at": "2026-10-16T01:44:13Z",
+  "one_line": "The form's replaceChoice refuses a replacement equal to its symbol and sends nothing, so a planned replace with that replacement would leave the prompt open after Check; the decisions validator admitted it. The validator now refuses it before any run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-366 validator (signed): replace needs a replacement ticker of 1 to 12 upper-case letters, digits, . or -; AR-y-367 presses only the planned buttons until the ticket answer, and the replace round presses Replace, fills the one input and presses Check.",
+  "world_is": "Portal 0ba0cb13 src/pages/TicketCenter/analysisRequest.ts lines 184-189 (replaceChoice): when to === h.value.toUpperCase() it returns the refusal 'Type a different ticker; the same symbol, or a change of case alone, is not sent.' and nothing is sent. The signed validator admitted {symbol: EFGH, answer: replace, replacement: EFGH}. The amended fwd1_driver.mjs validateDecisions refuses a replacement equal to the symbol (case-insensitive), and the replace round presses Replace only while that button is still shown (after a first Replace press the input is open and only Check is pressed). Selftest case 'decisions: a replacement equal to its own symbol is refused' passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@0ba0cb13 src/pages/TicketCenter/analysisRequest.ts:184-189 (replaceChoice: the same-symbol refusal, nothing sent)",
+      "C:/dev/wk-irpt-anlreq-164 working tree: fwd1_driver.mjs validateDecisions (the replacement equal to the symbol is refused) and the selftest case 'decisions: a replacement equal to its own symbol is refused'; SELFTEST-OK 67 cases"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
