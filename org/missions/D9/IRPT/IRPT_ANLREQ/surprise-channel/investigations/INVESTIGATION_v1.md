@@ -22881,3 +22881,32 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S157",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-16T21:27Z",
+  "one_line": "S156 DISARMED: the four FWD-5 200s were the guard's own refusal envelope (CONTRACT_VERSION, before any firm or record read) for BOTH identities; no exposure, and the sitting proved neither the fence nor the control.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S156"
+  ],
+  "spec_asserts": "PRD FWD-5: another firm never sees the request, the package or the commentary; the control must read the routes ALLOWED so a refusal is shown to be the fence.",
+  "world_is": "served.py:1198-1202 refuses a request without a valid X-Contract-Version at step 1, before the tenant is resolved or any record is read. refuse() (served.py:483-499) returns a dict with ok false and no statusCode, which the HTTP API passes as 200. Computed by this seat by importing served and calling refuse(op, None, reason): CONTRACT_VERSION gives 434, 414, 424 and 446 bytes for analysis-request-original, analysis-report, analysis-request-pdf and analysis-request-commentary-pdf; FIRM_BINDING gives 430, 410, 420 and 442. The run and the control both read exactly 434, 414, 424 and 446. So both identities were refused at the contract-version check: no link and no content was returned to either. The driver sends no X-Contract-Version and grades any 2xx as LEAK (run) or ALLOWED (control) (fwd5_driver.py:186-199), so on these four routes the run's LEAK and the control's ALLOWED are both false. The ticket-service routes (ticket-read 403, form-as-filled 403, ticket-list without the id) are unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:483-499, 1198-1202",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5/fwd5_run_report.json",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5/fwd5_control_report.json",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py:186-199"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "No exposure: the four bodies equal the computed CONTRACT_VERSION refusal for both identities, byte for byte. FWD-5 stays ungraded and S134 stays armed. The next sitting needs a driver that sends X-Contract-Version and grades by the envelope (ok false is REFUSED or DENIED, never LEAK or ALLOWED), cut by 2.0.0_SA_COO~T2 under a re-signed packet."
+}
+```

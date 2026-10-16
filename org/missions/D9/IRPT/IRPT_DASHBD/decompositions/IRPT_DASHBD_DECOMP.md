@@ -2785,3 +2785,18 @@ Both halves of the never-widen pair are signed (COO @a30664edac; CTO @6aaa28e481
 **fanout:** 0 workers (an applier order), 1 of 1 chains, cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected, no record exists; selftest green on a synthetic record and red on 26 single-fault arms):** `checks/r149/p179_pub49f_hop2_apply.py` (DBC179-1-AC1, -2-AC1, -3-AC1).
+
+## 173. ROUND 149, WORKSTREAM PORTALPANELS (2026-10-16 ~21:3xZ, issuer 2.0.0_SA_COO~D2): the Performance tab's holdings panels -- the allocation by asset class and the Largest positions
+
+The CTO's ruling (msg 9866) builds the allocation and the positions panels now, with the page owner's write set (R152 @7e39422526). Two premises of the ruling were wrong and are corrected by the page owner (MEASURED on the branch): `ReportChart` is a line chart, not a donut (no stand-alone donut exists to reuse), and the holdings snapshot carries no change field, so "top movers" cannot be derived; the panel is "Largest positions". The allocation reuses the existing `ClassTotals` over `classTotalsView`; the snapshot is the identity card's own (no second fetch), read with the client's firm since `DB-b-309`. Allocation-over-time and Attribution keep one worded line each; Sector is a data cell (the research found no usable source: row to the CTO, msg `[DECISION] Sector data cell`).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. ONE new component `PerformanceHoldingsPanels`, ONE mount in `ReportingTab.tsx`, one test file; a NEW stacked branch `cand/dell2/irpt-performance-holdings-panels` on the `DB-b-309` head `75a71ae3` | DB-b-313 | FWD-10 (Andrew's point 4) | SERVED, client-facing | `DB-b-309` (merged, head pushed) | chain AG |
+| 2. The Sector panel | none yet | Andrew's point 4 | n/a | the CTO's ruling on the sector sources | after the ruling |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) a NEW stacked branch, not more commits on the `DB-b-309` branch, so the approval row and the head Andrew smokes stay what they are; (b) the cell is assigned to a new worker (`~249`, one author on one branch); (c) no donut: the page owner's recommendation (bars plus table reuse) is taken because the ruling's donut premise is false; (d) the panel's name "Largest positions" replaces "top movers" (a wrong claim on a client page otherwise).
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~249`), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; AC1 and AC2 PASS on a reference component and mount in a scratch portal worktree):** `checks/r149/p180_portal_holdings_panels.py` (DBP180-1-AC1..AC3).
