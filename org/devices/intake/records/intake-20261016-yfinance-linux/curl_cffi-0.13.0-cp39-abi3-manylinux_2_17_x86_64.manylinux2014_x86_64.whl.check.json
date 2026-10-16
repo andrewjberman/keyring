@@ -67,12 +67,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 435.76 days old (min 14); 101 earlier releases (min 3)",
+        "summary": "release 435.79 days old (min 14); 101 earlier releases (min 3)",
         "this_release_at": "2025-08-06T13:05:28.985800Z",
         "first_release_at": "2022-08-23T16:28:49.787327Z",
         "release_count": 102,
         "earlier_releases": 101,
-        "age_days": 435.76,
+        "age_days": 435.79,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false
@@ -184,17 +184,19 @@
     {
       "n": 8,
       "name": "a person reads the result of 1 to 7 and signs the batch",
-      "verdict": "awaiting",
+      "verdict": "passed",
       "evidence": {
-        "summary": "check 8 awaits the signature: the signature file does not exist",
-        "signer": null,
-        "path": null
+        "summary": "signature file names the batch and the file and carries the signing line",
+        "signer": "1.0.0_SA_CTO",
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md",
+        "signature_file_sha256": "518350087889b46da2d2ee2616209ba8a0e31a7bc99762e246173ca34c3b6701",
+        "signature_file_git_author": "1.0.0_SA_CTO"
       },
       "rules_out": "a tool's silent failure being read as a pass",
       "leaves": "what none of 1 to 7 can see"
     }
   ],
   "verdict": "not_checked",
-  "checked_by": "0.9.0_WK_NFRA_CTLPLN~132",
-  "at": "2026-10-16T07:15:45Z"
+  "checked_by": "0.9.0_WK_NFRA_CTLPLN~133",
+  "at": "2026-10-16T08:04:32Z"
 }

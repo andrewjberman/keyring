@@ -12387,3 +12387,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The coordinator held Taildrop pending dell2's CTO answer (dell2 record 565cae62e0). No tailscale command was run. Checks 1-7 in the scratch dry run read the same verdicts as the earlier record for frozendict (c1 passed, c2 passed, c3 passed, c4 passed, c5 not_applicable, c6 passed, c7 passed); the other 16 were not re-run."
 }
 ```
+
+## NFRA_CTLPLN-W133-S2 -- check 6 failed on four wheels that the signed check 8 accepts; the tool has no override
+
+```json
+{
+  "id": "NFRA_CTLPLN-W133-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~133",
+  "surfaced_at": "2026-10-16T08:12:05Z",
+  "one_line": "CT-au-1: intake_check.py refuses release of 4 of 17 wheels (curl_cffi, numpy, pandas, websockets) because check 6 reads failed, although the CTO's check-8 signature accepts those four check-6 differences; the tool's verdict rule has no path for a signature to override a failed check 6. 13 released, 4 held; no pack, no Taildrop.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md@0f1ce30022 -- 'Check 6's four failures' section names curl_cffi, numpy, pandas and websockets; the file lists the 17 names and reads CHECK 8 SIGNED",
+      "org/devices/intake/intake_check.py@HEAD compute_verdict -- a record reads 'checked' only when checks 1-7 are each passed or not_applicable with a reason, and check 8 passed; a failed check 6 yields not_checked whatever check 8 says",
+      "run_release printed for each of the four: 'INTAKE-RELEASE REFUSED ... reason=the check record does not read checked' (curl_cffi, numpy, pandas, websockets); check 6 summary identical to the earlier record a10bc6886d (checks 1-7 verdicts: 0 differences across 17 files)",
+      "the 13 other files released: release folder holds 13 wheels plus 13 .delivery.txt (26 entries); holding folder holds the 4 refused wheels"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-au-1 build step 1: each of the 17 wheels is checked with the CTO's signed check-8 file and released; the pack holds all 52 files; the Taildrop sends all 52.",
+  "world_is": "The CTO accepted the four check-6 differences for this one delivery (Windows-versus-Linux build differences). The tool reads check 6 failed for those four, so it does not write 'checked' and refuses release, which blocks the 17-file pack and the 52-file Taildrop. Clearing needs the CTO: a ruling and a tool change that lets a check-8 signature naming a check-6 failure stand as the check's accepted outcome, or a re-decision on the four files. The worker did not edit the tool, the signed file, or any record by hand.",
+  "notes": "Check 8 now passes for all 17 (BLOCKING W133-S1 cleared by the CTO's file block at 0f1ce30022). The four refused records read check 8 passed with the signed path; their verdict is not_checked because of check 6. Dell2 CTO's PROCEED (11f0240cd4) was received; the Taildrop was not sent because the 52-file pack does not exist."
+}
+```
