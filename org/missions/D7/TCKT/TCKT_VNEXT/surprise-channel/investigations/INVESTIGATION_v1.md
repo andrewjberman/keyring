@@ -2677,3 +2677,29 @@ used as fixtures is a different read with a different denominator.
  "notes": "Filed by the worker on TO-R18-TR3 (AMENDMENT 1 record). The order is left pending and its source is NOT committed: the working-tree edits to infra/aws/terraform/ticket-center/main.tf, the TR3 checkers, R18_TR3_RECORD.json and the instance are uncommitted in the worktree. No bypass of the naming gate was attempted. The TR2 meeting change and the TR1 record are unaffected."
 }
 ```
+```json
+{
+ "id": "TCKT_VNEXT-D2-W45-S1",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~45",
+ "surfaced_at": "2026-10-16T01:45:08Z",
+ "one_line": "TO-R19-L1 names infra/aws/lambda/ticket_center/ (lambda_function.py and tests/) in its paths and cell, but this worktree is a sparse checkout whose cone excludes infra/aws: the files exist at HEAD b84a2ca293 and are not on disk, so the cell cannot be built or its criteria run here.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "C:/dev/wk-tckt-vnext-45: git config core.sparseCheckout = true; git sparse-checkout list = .tools, infra/logic/registry, lib, org/devices, org/missions/D7/TCKT/TCKT_VNEXT, org/modules/graph, org/ref, org/standards (no infra/aws) @ HEAD b84a2ca293",
+   "git ls-files -v infra/aws | grep -c ^S = 9277 and git ls-files infra/aws = 9277: every infra/aws index entry carries skip-worktree; ls infra/aws = No such file or directory",
+   "git cat-file -e HEAD:infra/aws/lambda/ticket_center/lambda_function.py rc=0 (present in the commit); git show HEAD:infra/aws/lambda/ticket_center/lambda_function.py defines _client_recipients at line 1182, _recipient_digest 1195, notify_client 1204, notify_client_isolated 1225, and the body requester_email at 1373",
+   "positive control: git cat-file -e HEAD:org/missions/D7/TCKT/TCKT_VNEXT/task-orders/TCKT_VNEXT.TO-R19-L1.client-notice-recipient-derived-from-the-firms-contacts.md rc=0, and that order file is on disk in this worktree",
+   "python -m pytest C:/dev/wk-tckt-vnext-45/infra/aws/lambda/ticket_center/tests/test_notice_recipient_firm.py -q -p no:cacheprovider rc=4 'file or directory not found'; python C:/dev/wk-tckt-vnext-45/org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~45/mutant_check.py rc=2 'No such file or directory'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The worktree carries every path the task order names in its <paths> grant (infra/aws/lambda/ticket_center/lambda_function.py and infra/aws/lambda/ticket_center/tests/), so the cell can be built in it and its acceptance criteria run in it.",
+ "world_is": "The worktree materialises only the sparse cone listed in the evidence; infra/aws is excluded by skip-worktree on all 9277 entries, so the named paths exist in HEAD and not on disk. The worker did not change the sparse-checkout, copy files from another checkout or reconstruct the tree; no product path was edited.",
+ "notes": "Provisioning owner: the issuer 2.0.0_SA_COO~V2 (the worktree is issuer-provisioned). Not checked: whether sibling worktrees -46, -47 and -48 share the cone (no census run). The order stays pending; the proof instance records AC1 and AC2 as FAIL and AC3J as UNVERIFIABLE-BY-INSTRUMENT."
+}
+```
