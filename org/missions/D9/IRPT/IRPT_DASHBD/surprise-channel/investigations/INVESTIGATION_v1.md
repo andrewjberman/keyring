@@ -21431,3 +21431,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The default list is absent on this box, so the client-data check was skipped for commit d960a015c0. The commit carries no client account id by the worker's reading and the checker's digit rule, not by the gate. Whether other commits on this box went unchecked is not measured here."
 }
 ```
+
+## IRPT_DASHBD-D2-W1401-S2 -- the row schema the order names is absent from this worktree, so the row was shaped on the rows already in the file
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1401-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1401",
+  "surfaced_at": "2026-10-16T07:10:24Z",
+  "one_line": "The row schema the order names (org/surprise_channel/schemas/investigation_item.schema.json) is not in this worktree; the order's own carrier path and the schema path do not exist here, so the surprise rows were shaped on the fields of the rows already in INVESTIGATION_v1.md.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob for investigation_item.schema.json under the worktree org tree returned no files; org/surprise_channel is absent from the worktree at commit 46d83ece2f",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md rows IRPT_DASHBD-D2-W418-S2 and -S3 carry the field set this row uses"
+    ]
+  },
+  "spec_asserts": "A surprise row takes the shape of org/surprise_channel/schemas/investigation_item.schema.json, which the worker reads before it appends a row.",
+  "world_is": "The schema is absent at that path in this worktree, so it could not be read; the row follows the fields of the rows already in the file and passes the surprise-row gate at commit fa0edef3a2. Whether the gate's own schema matches those fields is not measured here."
+}
+```
