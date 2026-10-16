@@ -1,0 +1,13 @@
+{
+  "prd": "NFRA_WFSPINE_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "aaa7e636257aefc283ec9788a0a18da2b3610423",
+  "half": "ratified-text",
+  "half_hash": "d7f784c8ff9a1fbbc0d0514fef94df9204f52565f0e667a916b132936fbf5b0d",
+  "endpoint_hash": "7f1759ceae60360919b3f678491a31dde8c13c64d571238a220d932d33f33456",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_WFSPINE_v0.1_RATIFIED_TEXT_20261016.md@9fbcb7c2bf",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-16T04:08:23Z",
+  "reason": "C-POPULATION keeps excluded accounts' raw events in bronze; FWD-8's approved head says everyone else is absent everywhere"
+}
