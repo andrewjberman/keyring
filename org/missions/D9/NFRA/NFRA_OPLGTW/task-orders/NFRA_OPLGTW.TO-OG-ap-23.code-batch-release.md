@@ -66,7 +66,7 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </proof_of_spec>
 
 - `AC1`: the re-cut carries exactly the tools and files trunk adds beyond the live ref, no Terraform, with the roster, the registry copy and `lib/opal_naming.py` staged by the deploy script (not committed as data). `AC2`: the release landed and closed; the installed code serves every added tool to an Opal principal and refuses a non-Opal one; the CVO's C1 and C2 are met.
-- `AC3` (judgment, `3.0.0_SA_CVO~Z`): the first client and rival answers read as an analyst would want them (a firm's data date stated, figures with units, rows never merged across firms, Schwab masters never summed). Graded on a real call; never simulated here.
+- `AC3` (judgment, `3.0.0_SA_CVO~Z`): the first client and rival answers read as an analyst would want them (a firm's data date stated, figures with units, rows never merged across firms). Graded on a real call; never simulated here. (A8 drops "Schwab masters never summed": the catalog holds no Schwab dim_position row, so the installed tools answer `no_catalog_row` for Schwab; it is shown when MX-c-23 lands that row.)
 
 ## 5. WHEN YOU ARE DONE
 
@@ -79,6 +79,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-23.code-batch-release.proof_
 - Staged: the GO for Phase A is the issuer's message citing this order and naming `trunk_sha`, sent after the hookup of the json-served tools and the `OG-cl-8` registry rows are on trunk.
 - Finish-by: Fri 2026-10-16 ~22:00Z (CTO GO msg 34552, PRD v3.12).
 - Pre-cut: ap23.AC1 and ap23.AC2 base FAIL as expected (ap23_release.json and CODE_SERVED.json absent).
+
+- A8 (issuer, 2026-10-16 ~10:5xZ, row Z-S169 of `0.7.0_AE_CloudOps~Z` in `OG-ev-1`): the AC3 marker "Schwab masters never summed" cannot be shown today because the data catalog holds no Schwab dim_position row for the firm (the batch's own "Not covered" names Schwab `fact_*` under MX-c-23), so no account reference can be minted and the installed client tools answer `no_catalog_row`. The marker leaves AC3 now and returns to the CVO's reading when MX-c-23's catalog row lands (a later release's AC3, not this one). The other three markers stand. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>complete</status>
 <round>37</round>
