@@ -129,6 +129,10 @@ try:
     rc, out = run(tmp, fixed)
     check("the fixed checker: SPY KEPT, ZQXWVK NOT_KEPT, V2S OK, rc 0", rc == 0 and "V2S OK SPY KEPT and ZQXWVK NOT_KEPT" in out, "rc=%d %s" % (rc, out[-500:]))
     check("no class line is printed when nothing failed", "V2S CLASS" not in out, out[-400:])
+    check("the four in-service controls pass: one NOT_KEPT, three stay CHECK_FAILED", "V2S CONTROLS OK 4 of 4" in out and out.count("V2S CONTROL ") >= 4 and "WRONG" not in out, out[-900:])
+    check("the 429 control reads PUSHBACK and the other-symbol and chart controls read EXCEPTION",
+          "429 on its own quoteSummary URL: CHECK_FAILED PUSHBACK" in out and "404 on another symbol's quoteSummary URL: CHECK_FAILED EXCEPTION" in out
+          and "404 on the chart endpoint: CHECK_FAILED EXCEPTION" in out, out[-900:])
     unfixed = fixed.replace("return symbol is not None and _symbol_404(exc, symbol)", "return False")
     check("the unfixed variant differs from the fixed text", unfixed != fixed)
     rc, out = run(tmp, unfixed)
@@ -139,6 +143,9 @@ try:
     check("the MRO and the checker's own answer are printed", "MRO curl_cffi.requests.exceptions.HTTPError,curl_cffi.requests.exceptions.RequestException" in out
           and "_is_ticker_missing=False _failure_reason=EXCEPTION" in out, out[-700:])
     check("the secret in the URL query never reaches the output", "SECRETVALUE" not in out, out[-300:])
+    broad = fixed.replace("return symbol is not None and _symbol_404(exc, symbol)", "return True")
+    rc, out = run(tmp, broad)
+    check("an over-broad checker (every exception reads as missing) fails the controls: V2S FAIL, rc 1", rc == 1 and "V2S CONTROLS FAIL" in out and "WRONG" in out and "V2S FAIL" in out, "rc=%d %s" % (rc, out[-900:]))
     rc, out = run(tmp, fixed, want_root="/opt/irpt-resident/0485393f3a-r34e")
     check("the root guard refuses a root that is not the wanted r34e root (rc 62)", rc == 62 and "V2S FAIL" in out, "rc=%d %s" % (rc, out[-300:]))
 finally:

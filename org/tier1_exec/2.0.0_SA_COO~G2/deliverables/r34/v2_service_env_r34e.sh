@@ -3,7 +3,7 @@ set -u
 # Not a shell run: the user, the working directory and every Environment= entry are READ from the unit (systemctl show) and handed to a transient unit
 # (systemd-run) that runs the same interpreter over the same root, so the process has the service's identity, cwd and import path, not the operator's.
 # The code under test is the root's own intake/yfinance_check.py, loaded by path (the file the door imports), with the DEFAULT history port (the real yfinance call).
-# Expected: SPY KEPT (HISTORY_ROWS) and ZQXWVK NOT_KEPT (NO_ROWS). Prints V2S OK only when both hold. Writes nothing on the host except the transient unit's own journal lines.
+# Expected: SPY KEPT (HISTORY_ROWS), ZQXWVK NOT_KEPT (NO_ROWS) and four no-Yahoo controls (see below). Prints V2S OK only when all hold. Writes nothing on the host except the transient unit's own journal lines.
 # On any CHECK_FAILED the script asks the default port once more for that symbol and prints the exception's module, name, MRO, HTTP status, the response URL without its query, and the first
 # 200 characters of its message (a crumb= token redacted): the CTO's rule (msg 9354) that a failed V2 names the class it met.
 # Written for IRPT_ANLREQ round 40 (issuer 2.0.0_SA_COO~G2). NOT RUN: a CloudOps applier runs it under a signed never-widen pair, as root (systemd-run needs it).
@@ -66,7 +66,47 @@ for symbol in sorted(out):
         print("V2S CLASS %s checker _is_ticker_missing=%s _failure_reason=%s" % (symbol, mod._is_ticker_missing(exc, symbol), mod._failure_reason(exc)))
 spy, bad = out.get("SPY", {}), out.get("ZQXWVK", {})
 ok = fixed and spy.get("state") == "KEPT" and spy.get("reason") == "HISTORY_ROWS" and bad.get("state") == "NOT_KEPT" and bad.get("reason") == "NO_ROWS"
-print("V2S " + ("OK SPY KEPT and ZQXWVK NOT_KEPT" if ok else "FAIL want SPY KEPT HISTORY_ROWS and ZQXWVK NOT_KEPT NO_ROWS"))
+
+
+# The in-service CONTROLS (no Yahoo call): the real default_history code path, with yfinance's Ticker.history replaced by a function that raises the host's REAL
+# curl_cffi HTTPError, built the way curl_cffi's Response.raise_for_status builds it (HTTPError("HTTP Error N: ", 0, response)). One control must read NOT_KEPT
+# (a 404 on its own symbol's quoteSummary URL) and three must STAY CHECK_FAILED (a 429 on that URL, a 404 on another symbol's URL, a 404 on the chart endpoint).
+class _Resp:
+    def __init__(self, status, url):
+        self.status_code, self.url, self.reason = status, url, ""
+
+
+def controls():
+    import curl_cffi.requests.exceptions as ce
+    base = "https://query2.finance.yahoo.com/v10/finance/"
+    cases = [("404 on its own quoteSummary URL", 404, base + "quoteSummary/CTLSYM", "NOT_KEPT", "NO_ROWS"),
+             ("429 on its own quoteSummary URL", 429, base + "quoteSummary/CTLSYM", "CHECK_FAILED", "PUSHBACK"),
+             ("404 on another symbol's quoteSummary URL", 404, base + "quoteSummary/OTHERSYM", "CHECK_FAILED", "EXCEPTION"),
+             ("404 on the chart endpoint", 404, base + "chart/CTLSYM", "CHECK_FAILED", "EXCEPTION")]
+    original = yfinance.Ticker.history
+    passed = 0
+    try:
+        for label, status, url, state, reason in cases:
+            def raiser(self, *args, **kwargs):
+                raise ce.HTTPError("HTTP Error %s: " % status, 0, _Resp(status, url))
+            yfinance.Ticker.history = raiser
+            got = mod.YfinanceChecker(sleep=lambda s: None).check(["CTLSYM"])["CTLSYM"]
+            good = got.get("state") == state and got.get("reason") == reason
+            passed += good
+            print("V2S CONTROL %s: %s %s (want %s %s) %s" % (label, got.get("state"), got.get("reason"), state, reason, "ok" if good else "WRONG"))
+    finally:
+        yfinance.Ticker.history = original
+    return passed, len(cases)
+
+
+try:
+    cpass, ctotal = controls()
+except BaseException as exc:  # a control that cannot run is a failed control
+    print("V2S CONTROLS could not run: %s.%s" % (type(exc).__module__, type(exc).__name__))
+    cpass, ctotal = 0, 4
+print("V2S CONTROLS %s %d of %d" % ("OK" if cpass == ctotal else "FAIL", cpass, ctotal))
+ok = ok and cpass == ctotal
+print("V2S " + ("OK SPY KEPT and ZQXWVK NOT_KEPT" if ok else "FAIL want SPY KEPT HISTORY_ROWS, ZQXWVK NOT_KEPT NO_ROWS and all four controls"))
 sys.exit(0 if ok else 1)
 PYEOF
 chmod 644 "$PYF"
