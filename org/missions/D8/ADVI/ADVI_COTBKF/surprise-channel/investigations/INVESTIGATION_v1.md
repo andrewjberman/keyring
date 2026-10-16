@@ -10446,3 +10446,29 @@ round.** Never edit an existing row.
   "dismissal_reason": "S1 was the issuer's order text and the worker handled it; S2 and S3 are stated limits of the census, carried in the record's not_established and in the CTO message; nothing about a served value follows."
 }
 ```
+
+## ADVI_COTBKF-D1-W193-S1 -- The issuer partition's definition of a reported-side clause names four reason-text fragments, but the module commonwealth_monthly_grade.py emits a fifth reported-side text, 'reported value is null' (line 118); it is not in the partition's list. Measured on the served month_grades: 0 of 78,622 UNGRADABLE months carry it, so no served count moves; a future run with a null reported value would count such a month as blank_only_unpriced although a price fill cannot grade it.
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W193-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~193",
+  "surfaced_at": "2026-10-16T09:44:14Z",
+  "one_line": "The issuer partition's definition of a reported-side clause names four reason-text fragments, but the module commonwealth_monthly_grade.py emits a fifth reported-side text, 'reported value is null' (line 118); it is not in the partition's list. Measured on the served month_grades: 0 of 78,622 UNGRADABLE months carry it, so no served count moves; a future run with a null reported value would count such a month as blank_only_unpriced although a price fill cannot grade it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_monthly_grade.py@85c0226f915ed6392f3391d28b1cfbf390cba480 lines 111, 118, 120: the module emits 'no reported monthly return', 'reported value is null' and 'reported value %r is not finite'; lines 57 and 81 emit 'reported span' and 'reported rows disagree'",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/cy2_month_partition.py@85c0226f915ed6392f3391d28b1cfbf390cba480 docstring line 11: 'A reported-side clause is any of: ...' (four fragments)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~193/OWN_REPRODUCTION_OUTPUT.txt (written by cy2_own_partition.py in this folder, committed with this row): SENSITIVITY unknown_clause_months=0 reported_value_null_months=0 null_reported_in_blank_only_unpriced=0 over the served month_grades at nkTE.F82uFSboXr9PEamIENCwFL9cwcC"
+    ]
+  },
+  "spec_asserts": "The issuer's partition definition (cy2_month_partition.py docstring) treats a reported-side clause as one of four reason-text fragments: 'no reported monthly return', 'reported span', 'reported rows disagree', 'not finite'.",
+  "world_is": "The module emits a fifth reported-side text, 'reported value is null', when a reported PerfNum is null (commonwealth_monthly_grade.py line 118). The served month_grades carries 0 UNGRADABLE months with that text, and 0 reason clauses outside the module's emitted texts, so the six categories and the bound are unchanged in the served data. Not established: whether the issuer intends a fifth fragment in the definition; this worker did not change the issuer's script.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
