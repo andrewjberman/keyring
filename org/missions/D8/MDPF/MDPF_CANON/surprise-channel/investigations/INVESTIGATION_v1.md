@@ -2768,3 +2768,27 @@
   "notes": "Appended on the CTO half's condition 2 (ledger/NEVER_WIDEN_R11_CN_S_1_CTO_HALF.md @ac8c4c5b3d). Not a gate on the CN-s-1 pair. It also corrects the pair's prediction that Global by_model gains the new key: it does not (addendum section 2 (c)). The Snapshot-tab read is the CVO's to place."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S31",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-16T15:52:02Z",
+  "one_line": "The Cottonwood Trend module (CN-s-3) reads two provenance-bearing arrays directly; the portal's pre-push provenance guard refuses the push of its candidate branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal/scripts/provenance-read-guard.mjs (bun run test:provenance-guard): no src/**/*.ts(x) file but src/lib/pairedProvenanceRead.ts may read .model_value, .partner_custody_total, .non_model_aua or .cohort_provenance; a value travels with its point_class.",
+  "world_is": "MEASURED at the candidate branch cand/dell1/mdpf-canon-cottonwood-trend-upgrade (portal a7f4de88): the guard prints 2 violations, src/lib/cottonwoodTrend.ts:43 (partner_custody_total) and :67 (by_model[key].model_value), exit 1, and the push was refused. The CN-s-4 candidate (62b3dd53) reads exit 0 and pushed. The CN-s-3 order's AC1 (7 of 7) and the typecheck do not run the guard, so the cell passed its own criteria; the guard runs only at push. NOT read: whether the same two reads reach DEV (no CN-s-3 commit has been pushed to DEV).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/scripts/provenance-read-guard.mjs lines 22-28 (the allowlist and the access pattern)",
+      "the pre-push output of git -C /c/dev/wk-cand-cwtrend push, 2026-10-16 ~16:0xZ, two violations named by file and line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Remedy: AMENDMENT 2 of MDPF_CANON.TO-CN-s-3 reopens the order (cottonwoodTrend.ts only, reads through readFirmAggregateSeries / readModelSeries; AC3 added: the guard). The amendment is the issuer's own order edit, graded by no gate limb (GATE (viii) placeholders: NONE); the CTO reads it at the round-N analysis. The landing candidate waits on it; CN-s-4's candidate is unaffected."
+}
+```
