@@ -20710,3 +20710,107 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W165-S1 -- AR-y-368 step 2 premise fails: no pinned fixture shows a door suggestion, so A1 and A2 cannot be established offline
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W165-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~165",
+  "surfaced_at": "2026-10-16T02:37:38Z",
+  "one_line": "AR-y-368 step 2 premise fails: no pinned fixture shows a door suggestion, so A1 (a NOT_FOUND ticker with a suggestion) and A2 (the same without one) cannot be established offline; the suggestion is a live Kimi reply verified by a live securities_info read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-368 step 2 (the cell): name a ticker for A1 and for A2 whose branch the source plus a pinned fixture establish without a live call, for example a symbol a fixture shows as NOT_FOUND with a suggestion.",
+  "world_is": "No pinned file holds a suggestion. The only producer is upload_suggestions.py:58, advisory('check', ...), a Kimi reply that resident_worker.py:821 passes in as advisory.call; a suggestion is kept only when a live securities_info read answers it FOUND exact (upload_suggestions.py:68-81). The two typeahead captures 03_suggest_ALPPL.json and 04_suggest_BREIT.json are /search/suggest/main responses, not that path, and the source refuses a typeahead as a securities_info receipt (test_security_resolution.py:47-48). A1 and A2 are UNESTABLISHED-OFFLINE in deliverables/0.9.0_WK_IRPT_ANLREQ~165/r41/RUN3_TICKER_BRANCHES.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda/investor-reporting/intake/upload_suggestions.py at 2ba399d785: lines 58, 63-64, 68-81",
+      "git show HEAD:infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py at 2ba399d785: lines 816-822",
+      "git show HEAD:infra/aws/lambda/investor-reporting/intake/tests/test_security_resolution.py at 2ba399d785: lines 47-48"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W165-S2 -- The yfinance checker of C-SWAP step 2 is not wired in the HEAD door, so a NOT_FOUND ticker that yfinance would keep is filed TICKER_NOT_FOUND
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W165-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~165",
+  "surfaced_at": "2026-10-16T02:37:38Z",
+  "one_line": "C-SWAP step 2, the yfinance checker of AR-y-293, is not wired in the HEAD door: no production module constructs YfinanceChecker or passes a checker, so a NOT_FOUND ticker that yfinance would keep is filed TICKER_NOT_FOUND.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (wire the checker or retire the step; the rows of the door that name it stay as they are until then)",
+  "spec_asserts": "security_resolution.py (AR-y-293, C-SWAP step 2) and yfinance_check.py:3-4: the yfinance step runs for a symbol the provider answered NOT_FOUND and the registry did not resolve, one history call per distinct symbol.",
+  "world_is": "security_resolution.py:304 runs the checker only when self.checker is not None, and the default is checker=None (security_resolution.py:204). resident_session.py:145-146 builds SecurityResolver with no checker argument. At 2ba399d785 git grep finds YfinanceChecker( constructed only in tests (test_kept_holding.py, test_yfinance_check.py), and no non-test module imports yfinance_check. A real symbol that YCharts omits and yfinance knows therefore gets TICKER_NOT_FOUND, with Replace and No offered for a holding that may be real, on every upload. Read from source only; the deployed Lambda was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda/investor-reporting/intake/security_resolution.py at 2ba399d785: lines 204, 304-307, 213-214",
+      "git show HEAD:infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py at 2ba399d785: lines 145-146",
+      "git grep -n 'YfinanceChecker(' HEAD -- infra/aws/lambda/investor-reporting/ at 2ba399d785: test files only (test_kept_holding.py:146, test_yfinance_check.py:47)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W165-S3 -- The TIMXX entitlement branch rests on a recorded measurement, not on a pinned securities_info capture; the only pinned gated fixture is a typeahead of a different shape
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W165-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~165",
+  "surfaced_at": "2026-10-16T02:37:38Z",
+  "one_line": "The TIMXX entitlement branch rests on a recorded measurement (IRPT_BCKEND-S287), not on a pinned securities_info capture: the only pinned gated-fund fixture is a typeahead whose row shape (integer id, search_id) differs from the row the classifier reads (id and security_id both M:<ticker>).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-368 step 2 (the cell): branch B is established by source plus a pinned fixture, for example a symbol a fixture shows as entitlement-unverified.",
+  "world_is": "The only pinned gated row is 04_suggest_BREIT.json lines 20-34: a typeahead with integer id 184380 and search_id M:BREIT.S, and no security_id. The classifier needs security_id equal to id (security_resolution.py:72-73). test_security_resolution.py:121-126 builds a securities_info fund row by hand with id and security_id both M:<bare>. The TIMXX row is a measured answer (IRPT_BCKEND-S287, journal 2026-10-03T00:20:39Z, gated=1); gated=1 counts only a fund row that passed those checks (security_resolution.py:170, 177), so the measurement itself confirms the shape. No pinned securities_info capture of a gated row exists in the door tree. TIMXX is recorded as established on the measurement, graded RECORDED MEASUREMENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda/investor-reporting/intake/tests/fixtures/lookup_capture/04_suggest_BREIT.json at 2ba399d785: lines 20-34",
+      "git show HEAD:infra/aws/lambda/investor-reporting/intake/tests/test_security_resolution.py at 2ba399d785: lines 121-126",
+      "git show HEAD:org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md at 2ba399d785: lines 15636, 15641, 15648"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W165-S4 -- portfolio.py still says a gated fund row needs a user-named proxy, which contradicts the retirement of NAME_PROXY that the door's own test states
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W165-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~165",
+  "surfaced_at": "2026-10-16T02:37:38Z",
+  "one_line": "portfolio.py:361-362 still says a gated fund row needs a user-named proxy, which contradicts the PRD v0.19 retirement of NAME_PROXY that the door's own test states (test_decision_tree_findings.py:4).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD v0.19 (C-FILING-HINT), as the door's test states it: NAME_PROXY is retired from every finding the door emits.",
+  "world_is": "portfolio.py:361-362 is a stale comment: 'A gated fund row (the account lacks the provider's data feature) is a real security that needs a user-named proxy'. The code offers no proxy: a gated row files UNRESOLVED with REVIEW (portfolio.py:535, 538), and TICKER_DATA_NOT_ENTITLED is outside CORRECTABLE_FINDINGS (portfolio.py:364-365). No code path reads the comment.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda/investor-reporting/intake/portfolio.py at 2ba399d785: lines 361-362, 364-365, 535, 538",
+      "git show HEAD:infra/aws/lambda/investor-reporting/intake/tests/test_decision_tree_findings.py at 2ba399d785: line 4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
