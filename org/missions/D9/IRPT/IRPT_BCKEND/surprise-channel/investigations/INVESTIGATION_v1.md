@@ -41197,3 +41197,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Append-only: S222 is not edited. The reader cell and the switch pair are ~D2's and the CTO's; this seat owes the hop 3 and hop 4 deploys after hop 1's first write."
 }
 ```
+
+## IRPT_BCKEND-D2-S224 -- S218's 49F AccessDenied is fixed by the IB-pr-614 grant and read clean on the recovery invoke; the organic Mon
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S224",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-16T14:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S218 (IB2's row on the same 49F scheduled-run failure as my S217, already resolved by D2-S220; I am S218's disarm_owner). The cause S218 asked about is read and fixed: the denied call was the split-adjust transactions read; the role irpt-49f-holdings-performance-role now carries list (prefix-conditioned) and get on schwab/08335338/silver/fact_trn/ (IB-pr-614, one safe-apply of a 1-change plan; the live policy read by me; criteria IB245-1 AC1 to AC3 re-run PASS); the recovery invoke returned 200 with no FunctionError, one day written, the manifest split_adjust declared, CloudWatch Errors 0. S218's own statement that the issuer 'did not trace the call site' is closed by the CTO-ruled fix working on exactly that read. Branch B of Act 1 was cancelled by the CTO (msg 9350). What stays open and is NOT claimed: the first ORGANIC scheduled 49F fire on the new grant is Monday 2026-10-19 11:30Z; I grade it before the Act 2 close.",
+  "one_line": "S218's 49F AccessDenied is fixed by the IB-pr-614 grant and read clean on the recovery invoke; the organic Monday fire is the remaining proof.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws iam get-role-policy irpt-49f-holdings-performance-role, read by 2.0.0_SA_COO~P2 2026-10-16 ~12:3xZ: both read statements carry the fact_trn prefix",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB245-1_iam_record.json @5e34e9cf9c; IB243-1 record @aa5a3b847b",
+      "IRPT_BCKEND-D2-S220 (the sibling resolving row for S217)"
+    ]
+  },
+  "spec_asserts": "The 49F first scheduled run completes with the manifest declaring split_adjust (IB-pr-612 step 9).",
+  "world_is": "The run that failed is recovered by one invoke on the fixed role; the scheduled fire on the new grant is Monday."
+}
+```
