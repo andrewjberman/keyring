@@ -45,6 +45,10 @@ You are a RE-SEATED worker. Inherited state (already merged, in your tree): `see
 4. Re-run `plan --fold-map` once for real (read-only AWS) and overwrite `SEED22_PLAN.json`.
 5. Update the proof-of-spec instance to carry `SC27-e107-AC1`, `SC27-e107-AC2` and `SC27-e107-AC3`, and re-validate it with all three.
 
+### AMENDMENT 2 (issuer, 2026-10-16 ~05:1xZ): the check defect is fixed; close the order
+
+Your predecessor's last run read AC2 FAIL because `check_seed22_plan.py` demanded a non-empty `sub_asset_class` on every planned row, which the fold ruling forbids for HPI, LCFYX, PFF, VRP and CPXIX (the issuer's defect, row D1-W97-S2). The check is amended at HEAD (it still requires an `asset_class` and the provenance on each planned row). **What you do, and nothing else:** (1) run the three acceptance invocations once under `timeout 120` and record each output verbatim; (2) in the proof-of-spec instance set the `SC27-e107-AC2` row's `status` to PASS with the new output in `output_evidence` (keep the old FAIL text in the evidence as history, say that the issuer amended the check), and replace every `PENDING-THIS-COMMIT` in `artifacts_produced` by the real hash of the commit that landed that file (`7db826a659` for `seed22.py`, `SEED22_PLAN.json` and the investigation file); (3) re-validate with `python .tools/proof-of-spec-check.py <instance> SC27-e107-AC1,SC27-e107-AC2,SC27-e107-AC3` (rc 0); (4) set this order's `<status>` to `complete` (every mechanical criterion PASSES) and commit the instance and the order file together. Change no script, plan, check, map or baseline.
+
 ### ACCEPTANCE
 
 <criterion id="SC27-e107-AC1" cell_refs="SC-e-107"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/seed22.py selftest</invocation><expect>SEED22-SELFTEST ok=True</expect></criterion>
