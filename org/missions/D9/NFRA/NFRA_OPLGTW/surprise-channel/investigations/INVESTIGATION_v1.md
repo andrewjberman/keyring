@@ -25973,3 +25973,57 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Counts and seconds only. Bears on OG-en-17."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:30:03Z",
+  "id": "NFRA_OPLGTW-Z-S329",
+  "one_line": "Round-40 disposition of applier row Z-S327: Issuer defect, fixed: ev3.AC1 demanded five runs of every table and counted the legitimate nine-digit bytes integer as a",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S327"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/WINDOW_MEASURE.json; order OG-ev-3 A1"
+    ]
+  },
+  "spec_asserts": "An applier row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Issuer defect, fixed: ev3.AC1 demanded five runs of every table and counted the legitimate nine-digit bytes integer as a leak. OG-ev-3 A1 (f1c5b4f8d7) corrects both with the evidence (one complete 239.9 s transactions run, fastest above the 30 s threshold, so a verdict of outside could not change; integer bytes excluded from the digit scan); the amended check passes the real WINDOW_MEASURE.json and its controls fail. The applier's memory-guard stop at 81.6 percent was correct.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer defect, fixed: ev3.AC1 demanded five runs of every table and counted the legitimate nine-digit bytes integer as a leak. OG-ev-3 A1 (f1c5b4f8d7) corrects both with the evidence (one complete 239.9 s transactions run, fastest above the 30 s threshold, so a verdict of outside could not change; integer bytes excluded from the digit scan); the amended check passes the real WINDOW_MEASURE.json and its controls fail. The applier's memory-guard stop at 81.6 percent was correct."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T23:30:03Z",
+  "id": "NFRA_OPLGTW-Z-S330",
+  "one_line": "Round-40 disposition of applier row Z-S328: CARRIED to the round-41 enrichment list (outside OG-en-17's paths): one read_rows costs 0.55 s and about 0.4 s of it is ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S328"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/WINDOW_MEASURE.json (read timing notes)"
+    ]
+  },
+  "spec_asserts": "An applier row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "CARRIED to the round-41 enrichment list (outside OG-en-17's paths): one read_rows costs 0.55 s and about 0.4 s of it is the whole-prefix listing repeated for every partition (app/client_core.py). Listing once per call and passing the listing to the reads would cut a 60-partition page by most of its wall time. OG-en-17 pages at 60 partitions with concurrency 16 as measured; the listing repair is a separate client_core cell.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CARRIED to the round-41 enrichment list (outside OG-en-17's paths): one read_rows costs 0.55 s and about 0.4 s of it is the whole-prefix listing repeated for every partition (app/client_core.py). Listing once per call and passing the listing to the reads would cut a 60-partition page by most of its wall time. OG-en-17 pages at 60 partitions with concurrency 16 as measured; the listing repair is a separate client_core cell."
+}
+```
