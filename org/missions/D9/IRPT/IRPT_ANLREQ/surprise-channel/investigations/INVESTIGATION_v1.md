@@ -20306,3 +20306,136 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W218-S1 -- the AC1 checker named by TO-AR-ty-55 is outside the ~218 sparse cone, so the criterion cannot run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W218-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~218",
+  "surfaced_at": "2026-10-16T00:59:10Z",
+  "one_line": "The acceptance checker org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py named by TO-AR-ty-55 AC1 is absent from the ~218 worktree (sparse cone excludes org/tier1_exec); the criterion cannot run and the test file was not written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-ty-55 (WORKER FACE, ACCEPTANCE) runs python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 3 infra/aws/lambda/ticket_center/tests/test_cross_firm_meeting_scope.py from the worktree root, expect R46-TESTS-OK. The worker bar says a worktree that does not carry the paths the order names is a BLOCKING row and a stop, never a rebuild.",
+  "world_is": "Worktree C:/dev/wk-irpt-anlreq-218 is at HEAD 9d0664b2ff on branch wk-IRPT_ANLREQ-218 with core.sparseCheckout true (cone). The checker path is tracked in the index with the skip-worktree flag (git ls-files -v prints S) but is not materialised: org/tier1_exec does not appear in git sparse-checkout list and ls -d org/tier1_exec returns no such file. The invocation exits rc=2 with 'can't open file ... r46_checks.py: [Errno 2] No such file or directory'. The order's base box/dell2 39eef25c48 is not this worktree's HEAD. The test file's folder infra/aws/lambda/ticket_center/tests/ and the investigation file are inside the cone and present. Nothing was written to infra/, no sparse-checkout widening was run, and no test file was created.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -v org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py at HEAD 9d0664b2ff prints S (skip-worktree): tracked, not checked out",
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-218 at 9d0664b2ff: entries .tools, data/transcripts/scripts, docs/contracts, infra/aws/lambda/investor-reporting, infra/aws/lambda/ticket_center, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/ref, org/standards; no org/tier1_exec entry",
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 3 infra/aws/lambda/ticket_center/tests/test_cross_firm_meeting_scope.py run from the worktree root under timeout 120: rc=2, Errno 2 No such file or directory",
+      "infra/aws/lambda/ticket_center/tests/test_meeting_request.py:179 is the create-scope test the order cites, present at 9d0664b2ff (premise holds); lambda_function.py:1962 carries the cited if cur is None or not _in_profile_scope guard (premise holds)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W218-S2 -- the outcome-route out-of-scope refusal is already tested at test_meeting_request.py:343, so the order's no-test premise is half wrong
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W218-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~218",
+  "surfaced_at": "2026-10-16T01:28:15Z",
+  "one_line": "TO-AR-ty-55 says the outcome route's out-of-scope refusal has no test; test_meeting_request.py:343 already tests it, so only the create-scope half of the premise holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-ty-55 WORKER FACE, 'What to test': the row 'POST meeting, out-of-scope caller' of FWD5_FRONT_DOOR_AND_PORTAL_MAP.md is covered by no test (test_meeting_request.py tests scope on CREATE only, line 179).",
+  "world_is": "test_meeting_request.py:179 is the create-scope test (premise holds). But test_meeting_request.py:343, test_a_refusal_reveals_nothing_about_a_ticket_outside_the_callers_scope, already exercises the outcome route's out-of-scope refusal: the coordinator is scoped to another firm, the ticket belongs to inflection, a confirm answers 404 with a body equal to the unknown-id body, the meeting is unchanged, and a same-scope confirm succeeds as the positive control. The order's claim that the outcome-route refusal has no test is therefore false at 1c87891c77. The order still required its test file, which was written as specified (5 tests, all passing); the overlap is recorded here, not acted on.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_meeting_request.py:179 at 1c87891c77 is test_create_with_a_firm_outside_the_callers_scope_is_refused_as_for_every_typed_ticket (the create-scope test the order cites)",
+      "infra/aws/lambda/ticket_center/tests/test_meeting_request.py:343 at 1c87891c77 is test_a_refusal_reveals_nothing_about_a_ticket_outside_the_callers_scope (the outcome-route out-of-scope 404, with a positive control in the same test)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1962 at 1c87891c77 carries the cited scope guard (premise holds)",
+      "infra/aws/lambda/ticket_center/tests/test_cross_firm_meeting_scope.py, committed with this row: a firm-a caller on a firm-b meeting ticket gets 404 (3 of 5 tests fail when the guard is removed in a scratch copy)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W215-S1 -- the AC1 checker r46_checks.py is tracked at HEAD but absent from the worker worktree (sparse cone), so AR-ty-52's criterion cannot run and no test file was written
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W215-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~215",
+  "surfaced_at": "2026-10-16T00:57:00Z",
+  "one_line": "TO-AR-ty-52 AC1 invokes org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py from the worktree root. The file is tracked at HEAD 9d0664b2ff but the worktree's sparse-checkout cone does not carry org/tier1_exec, so the file does not exist in the worktree. The worker stopped at the first act (TREE-OK holds, the checker path does not) and wrote no test file.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The TO-AR-ty-52 acceptance invocation `python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 10 infra/aws/lambda/investor-reporting/ops/tests/test_cross_firm_owned_reads.py` runs from the worker worktree root and the worktree carries the checker it names.",
+  "world_is": "Worktree C:/dev/wk-irpt-anlreq-215 (branch wk-IRPT_ANLREQ-215, HEAD 9d0664b2ff) is a sparse checkout. `git sparse-checkout list` returns .tools, data/transcripts/scripts, docs/contracts, infra/aws/lambda/investor-reporting, infra/aws/lambda/ticket_center, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards. org/tier1_exec and org/surprise_channel are outside the cone: `ls -d org/tier1_exec` and `ls -d org/surprise_channel` both fail, and `org/surprise_channel/schemas/investigation_item.schema.json` named by the channel contract cannot be read in the worktree. `git ls-tree -r --name-only HEAD` does list org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py (count 1). The cited code under test (infra/aws/lambda/investor-reporting/ops/owned_requests.py, owned_report.py), the neighbour tests and the record files ~211 and ~212 are present.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only HEAD at 9d0664b2ff lists org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py (1 match)",
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-215 returns the cone above, with no org/tier1_exec entry; core.sparseCheckout=true",
+      "ls -d org/tier1_exec/2.0.0_SA_COO/deliverables in C:/dev/wk-irpt-anlreq-215 -> No such file or directory",
+      "task order org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-ty-52.fwd5-owned-readers-cross-firm-tests.md AC1 invocation names the checker path; its <paths> block names only the test file and this channel"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W217-S1 -- the R46 checker folder was outside the sparse cone at the re-ground read and inside it at the acceptance run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W217-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~217",
+  "surfaced_at": "2026-10-16T01:26:10Z",
+  "one_line": "The R46 checker folder was absent from this worktree's sparse cone at the re-ground read and present at the acceptance run; this worker ran no sparse command.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-ty-54 AC1 runs org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py from the worktree root, so the checker is a readable file of this worktree.",
+  "world_is": "At the re-ground read the checker blob 417fffb48cfda08eb898835e2465fd38780daa9e was tracked at HEAD 9d0664b2ff (git ls-files, git ls-tree) but was not materialised: ls org/tier1_exec failed, and the sparse-checkout list named no org/tier1_exec entry. At the acceptance run the same list named org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2, the file was present (mtime 2026-10-15 21:12), and the invocation printed R46-TESTS-OK passed=14 rc=0. This worker ran no sparse-checkout command and did not widen the cone; which actor changed the cone between the two reads is not measured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-217 at the re-ground read (no org/tier1_exec entry) and at the acceptance run (entry org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2)",
+      "git ls-tree HEAD -- org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/ at 9d0664b2ff: 100644 blob 417fffb48cfda08eb898835e2465fd38780daa9e r46_checks.py",
+      "ls -la of org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/ at the acceptance run: r46_checks.py, 3634 bytes, mtime 2026-10-15 21:12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W217-S2 -- the packager's draft read passes the tenant as both principal firm and data_firm, so the service allow's firm equality never refuses it and data_firm=tenant is redundant on that path
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W217-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~217",
+  "surfaced_at": "2026-10-16T01:26:10Z",
+  "one_line": "The packager's draft read passes the tenant as both principal firm and data_firm, so the service allow's firm check never refuses it and data_firm=tenant at opal_packager.py:379 changes no outcome on that path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD5_REPORT_SIDE_BINDING_MAP.md row 28 (cited at 0f71f135b3 and read in 0.9.0_WK_IRPT_ANLREQ~211) says the binding of the packager's read of the stored draft bytes is the repository's service allow for svc-irpt-packager (row 6), and that live_read_artifact passes the tenant as data_firm.",
+  "world_is": "At HEAD 9d0664b2ff, opal_packager.py:379 builds the principal as repository.service_principal(PACKAGER_SUBJECT, tenant) and passes data_firm=tenant, so the principal's firm and the data_firm are the same firm on every call. repository.py:57 (firm == owner firm_id in _service_allows) therefore always holds on this path, and the cross-firm refusals that fire are the storage firm binding (repository.py:464) for an index row filed under the caller's partition, and the index partition miss (repository.py:460-462) otherwise. The service allow refuses a cross-firm packager only when it is reached directly with another data_firm, which the live reader never does. Removing data_firm=tenant at opal_packager.py:379 in a scratch copy leaves all 14 new tests passing, so that argument is not load-bearing on the live path. The tests written for row 28 (test_cross_firm_packager_*) state each refusal by its actual line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:371-379 at 9d0664b2ff (live_read_artifact; principal from repository.service_principal(PACKAGER_SUBJECT, tenant); data_firm=tenant)",
+      "infra/aws/lambda/investor-reporting/reports/repository.py:50-57 (_service_allows, firm == owner.get('firm_id')), :459-465 (_get storage firm binding)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_cross_firm_packager_read.py (6 tests, 6 passed at the run; the mutant with data_firm removed in a scratch copy: 14 passed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
