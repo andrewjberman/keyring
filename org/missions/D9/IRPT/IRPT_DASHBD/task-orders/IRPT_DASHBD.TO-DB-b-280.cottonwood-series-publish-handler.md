@@ -21,6 +21,8 @@
 
 **AMENDMENT 2 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~03:3xZ, on worker row IRPT_DASHBD-D2-W226-S3; gate limb: an existing order modified, placeholders NONE unchanged, no criterion id, cell or path change):** `DB147-2-AC3`'s grant clause walked from the round's issuance and so counted your two DB-b-279 commits (`publisher.py` and its test file) as outside this order's grant. That is a defect of the issuer's checker, not of your commits: the checker now also admits those two files as the earlier cell's. Nothing else changes. Re-run `DB147-2-AC3`, and flip the status to complete when it passes.
 
+**AMENDMENT 3 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~03:5xZ; gate limb: an existing order modified, no criterion id, cell or path change):** the checker's grant clause for `DB147-2-AC3` now admits the other chain-B cells' files (the publisher and its tests, the `reporting-publish-iso` root, the source map): they are the same worker's earlier and later cells on the same branch. Nothing else changes.
+
 ---
 
 ## WORKER FACE
