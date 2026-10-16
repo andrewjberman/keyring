@@ -100,6 +100,7 @@ Checks dry-run at the base (run from /c/Users): pf9.AC1 FAIL as expected (no ent
 The graded read at 390 and 1280 px is the issuer's real run after the release (the served body, rendered through the deployed CSS, measured), not a criterion here. ~O's round-38 release then carries the same pin with no delta (CTO). Gate G-REL9, holder the issuer.
 
 <status>staged</status>
+<status>complete</status>
 <round>6</round>
 <workstream>PF</workstream>
 <fabric>site-z</fabric>
