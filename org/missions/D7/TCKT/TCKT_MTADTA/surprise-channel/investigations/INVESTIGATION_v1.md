@@ -324,6 +324,115 @@
     "spec_asserts": "TO-MD-h1 BUILD step 6: read section 4 (the entry schema) and section 6 (the register) of infra/logic/06_CONFORMANCE_LEDGER.md, then add one R20 entry.",
     "world_is": "The entry schema is in infra/logic/02_DOCTRINE.md section 4; the ledger's section 4 is a different plane. The entry was written to the ledger's section 6 register table, the carrier the doctrine names.",
     "notes": "The entry follows the doctrine schema (pipeline, axis, departure, why, acknowledged, kind, state). Registered as X18."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W1-S5",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~1",
+    "surfaced_at": "2026-10-16T07:26:19Z",
+    "one_line": "The coordinator reports TO-MD-h1 merged at issuer commit 77716ab496 on this branch, but that commit is not an ancestor of wk-TCKT_MTADTA-1 HEAD (7ffa70368d); the merge was not performed here, the order's files are read from the branch as it stands.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file -t 77716ab496 returns commit; git merge-base --is-ancestor 77716ab496 HEAD returns not-ancestor in C:/tmp/wk-tckt-mtadta-1",
+        "the sparse cone of the worktree lists infra/aws/lambda/globgrph-trino-access, infra/aws/lambda/m365-metadata-collector and infra/aws/terraform/trino, but the first two directories are absent on disk at HEAD 7ffa70368d",
+        "infra/aws/lambda/globgrph-trino-access/silver_builder.py is absent in the worktree; build.sh refused with rc=1 on its cp step"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-a1 BOUNDS: silver_builder.py is another cell's file, already merged in the issuer's tree; the worker creates nothing there and injects a stub in its tests. Coordinator message: the order runs in the same worktree on the same branch, after TO-MD-h1 is merged.",
+    "world_is": "The issuer's merge is a commit the branch does not contain. The branch carries the h1 rows, the R20 entry and trino/main.tf (commits 21c6720238 and 7ffa70368d), and not the issuer's copy of silver_builder.py. The worker's rule forbids a merge, so the a1 files are written on the branch as it stands.",
+    "notes": "The drain or the issuer must merge 77716ab496 into the branch before the a1 commit is merged to CLOUD, or the two copies of the h1 rows meet at the merge. Nothing was merged, rebased or reset."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W1-S6",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~1",
+    "surfaced_at": "2026-10-16T07:26:19Z",
+    "one_line": "TO-MD-a1 asks for a Deny of non-TLS requests to every principal and forbids a wildcard principal, but a Deny for every principal needs Principal star, which the order's own AC2 check refuses as a wildcard; the bucket policy names the role under NotPrincipal and the role's policy denies its own non-TLS requests.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "order TCKT_MTADTA.TO-MD-a1 BUILD 4, bucket policy bullet: 'plus a Deny of any non-TLS request' and BOUNDS-level 'No wildcard principal'",
+        "r1_check_a1.py tf: refuses a Principal assignment of the literal star in any form the regex reads (Principal = star-in-quotes or Principal = AWS star-in-quotes)",
+        "infra/aws/terraform/trino/access.tf aws_s3_bucket_policy.trino: statement DenyNonTLSRequestsToEveryPrincipalButTheAccessRole uses NotPrincipal = the role ARN; aws_iam_role_policy.access statement DenyNonTLSRequestsByTheRole covers the role"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-a1 BUILD 4: the bucket policy carries an explicit Deny of the data actions to every principal whose aws:PrincipalArn is not the role, plus a Deny of any non-TLS request; no wildcard principal.",
+    "world_is": "In AWS a Deny that reaches every principal is written with a wildcard principal, the only form of 'every principal' the policy grammar has. The order forbids that form on the same resource. The worker used NotPrincipal (every principal but the role) for both statements, and split the non-TLS deny for the role into the role's own policy.",
+    "notes": "The residual is the same as C-RESIDUAL for the data actions. The issuer should confirm that NotPrincipal plus the role-side deny meet 'every principal' before the drain; the check was not weakened."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W1-S7",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~1",
+    "surfaced_at": "2026-10-16T07:26:19Z",
+    "one_line": "TO-MD-a1 says handler.py imports stdlib plus boto3 only, but the silver reader must read parquet, which needs the AWS-managed pandas layer; the reader imports pandas lazily inside read_day_rows, not at module level.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "order TCKT_MTADTA.TO-MD-a1 BUILD 1: 'the contract above, stdlib plus boto3 imported lazily inside lambda_handler only'; the silver_reader is 'of your own in handler.py'",
+        "order WORKER FACE step 2 and the silver builder: the silver builder uses the AWS-managed pandas layer, which carries pyarrow; build.sh does not package pyarrow",
+        "infra/aws/lambda/globgrph-trino-access/handler.py _DaySilverReader.read_day_rows: 'import pandas' inside the function body; tests inject a stub reader and never call read_day_rows"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-a1 BUILD 1: handler.py is stdlib plus boto3, imported lazily inside lambda_handler only; the silver reader is the worker's own code in handler.py.",
+    "world_is": "Reading the silver parquet from S3 requires a parquet decoder. The stdlib has none, and the layer that provides one is the pandas layer the order names. The reader therefore needs pandas, imported inside read_day_rows; no test exercises that path, because the tests inject the reader.",
+    "notes": "The default reader is untested in this round. The issuer should either accept the lazy pandas import in the reader, or move the decode to the silver builder's cell. The stdlib-only line of BUILD 1 is not met for read_day_rows and is recorded here rather than bent."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W1-S8",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~1",
+    "surfaced_at": "2026-10-16T07:26:19Z",
+    "one_line": "The naming gate refused three S3 key literals in handler.py (the gold coverage, silver and bronze tier prefixes), because the door carries them as typed strings; the builder's address() gives the same tails, but the Lambda package carries no lib/opal_naming.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "commit 9d4f20bdb8 safe-commit output: '[naming-gate] NAMING REFUSE infra/aws/lambda/globgrph-trino-access/handler.py:34 gold/collection_coverage/' and lines :35 silver/activity_events/ and :36 bronze/audit_events/date=%s/; '(WARN window: 3 REFUSE verdict(s) did not block; ENFORCE is --enforce ...)'",
+        "python lib/opal_naming.py address for ('m365-metadata','trino','silver','activity_events','date=2026-10-15', object='data.parquet') returns s3://opal-data-trino/m365-metadata/trino/silver/activity_events/date=2026-10-15/data.parquet; the gold and bronze forms match the handler's tails",
+        "build.sh packages handler.py and silver_builder.py and nothing else, per the order's BUILD 2; lib/opal_naming.py is not in the package"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md rule 30 and the LGIC rule: every S3 address is lib/opal_naming.py address() output; a builder refusal is a missing registry row, never a hand-typed workaround.",
+    "world_is": "The door builds its key prefixes from typed tier and table segments. The segments match the builder's output, and the gate grades them as REFUSE in the warn window, so the commit landed. The order's package list leaves no route for the door to call the builder at run time.",
+    "notes": "The issuer decides: package the builder's key function with the door, or have Terraform pass the builder-computed prefixes as environment variables. Nothing was changed to silence the gate."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W1-S9",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~1",
+    "surfaced_at": "2026-10-16T07:26:19Z",
+    "one_line": "The naming gate raised, not refused, the IAM resource pattern 'm365-metadata/trino/*' in access.tf as a secret, because its tokeniser cannot place the character star; a grader defect, not a verdict on the name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "commit 9d4f20bdb8 safe-commit output: '[naming-gate] NAMING RAISE infra/aws/terraform/trino/access.tf:106 m365-metadata/trino/* -> (rule or registry defect)' with why 'RAISE as SECRET: rule or registry defect, not a refusal: G3: the tokeniser cannot place a character of a secret star'",
+        "access.tf line 106 is the Resource of the ReadAndWriteTheTrinoPrefix statement of aws_iam_role_policy.access: an S3 object ARN suffix, the same shape as the transcripts pull policy"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The naming gate grades every name and address the diff writes, and a RAISE names a rule or registry defect to the owner of the gate.",
+    "world_is": "The IAM policy resource pattern is an S3 object wildcard, not a name. The gate reads it as a secret and cannot place the wildcard character, so it raises instead of grading it.",
+    "notes": "Owed to the naming gate's owner. The worker did not alter the resource pattern to silence it."
   }
 ]
 ```
