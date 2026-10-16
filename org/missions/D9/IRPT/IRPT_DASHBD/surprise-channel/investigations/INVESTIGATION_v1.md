@@ -21279,3 +21279,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not decided by the worker. The contract now declares a column that no producer writes, which is the state the order names for a later producer cell. The issuer decides how the run test's declared-field assertion is to read a declared-but-unwritten optional column."
 }
 ```
+
+## IRPT_DASHBD-D2-W230-S1 -- the handler's emit_classes passes acd.default_table().as_of(), but class_days reads through a fresh acd.ClassTable(), so the process-wide table is never read on the live path and as_of() is None on every emitted day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W230-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~230",
+  "surfaced_at": "2026-10-16T06:41:22Z",
+  "one_line": "The handler's emit_classes passes acd.default_table().as_of(), but class_days reads through a fresh acd.ClassTable(), so the process-wide table is never read on the live path and as_of() is None on every emitted day.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Order DB-b-286 step 3 and CTO ADDENDUM 1 (round 148): the reporting-gold handler passes ClassTable.as_of() of the process-wide table to every emit_class_day call in emit_classes, so the day's manifest class_source.as_of is the producer's own oldest GetItem read date.",
+  "world_is": "At base 99783542eb, handler.py class_days() (lines 296-298) calls acd.compute_classes(..., table=acd.ClassTable(), ...): a fresh table per call, so the process-wide default_table() is never read on that path (no handler line other than the new call references default_table()). In this worktree the one emit_classes call site reads classification_as_of=acd.default_table().as_of(), which returns None on every emitted day. The module's default_table() is process-wide, so on a warm Lambda container a cached identifier would keep the date of its first read, not the run-day's. The order fixes the call-site text and bounds handler edits to that one line, so the wiring is not repaired here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@99783542eb",
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py@99783542eb"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided by the worker. The issuer decides whether class_days passes a run-scoped ClassTable whose as_of() reaches emit_classes, before the code-update pair ships the handler. Built as the order names it: DB154-1-AC1 passes on the literal call text, and the mechanical criteria do not observe the runtime value."
+}
+```
