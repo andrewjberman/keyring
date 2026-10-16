@@ -12249,3 +12249,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Precedent: the duckdb batch's check record was re-run the same way (commit 6dfadc6c66 on 0.9.0_WK_NFRA_CTLPLN~122). The re-run rewrites checks 1-7 at the re-run time; checked_by is now this worker. OWNER of the decision that the cell's premise is stale: 2.0.0_SA_COO~C (the issuer), not this worker."
 }
 ```
+
+## NFRA_CTLPLN-W129-S1 -- the cell says the --taildrop flag carries two kinds of mutant cases; in the test file it carries none, so the site Z flag carries its own
+
+```json
+{
+  "id": "NFRA_CTLPLN-W129-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~129",
+  "surfaced_at": "2026-10-16T05:10:13Z",
+  "one_line": "The --taildrop flag of test_round25_journey_record.py has no in-code mutant case; the two mutants the cell names were added to the new --taildrop-sitez flag instead, and that flag reads held=True on both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CT-aq-1 BUILD step 3: --taildrop-sitez is added 'with the same two kinds of mutant cases the --taildrop flag carries (a row with a nonzero exit code; a row naming another device) and require held=True'.",
+  "world_is": "At base 22d4a89963 cmd_taildrop (.tools/tests/test_round25_journey_record.py, the function after cmd_pack) prints no JOURNEY-TAILDROP-MUTANT line and builds no mutant; only cmd_fetch (FETCH_MUTANTS) and cmd_check (MUTANT_CASES) carry in-code mutants. The dell1 mutant was a run-time control in the CT-ao-2 proof (controls.mutant: a copy of TAILDROP_RECORD.md with one exit code set to 1, read through OPAL_INTAKE_RECORDS). The new flag carries nonzero_exit_row and other_device_row in code; on af1ad26e99 both print ok=False held=True. The dell1 flag is unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/tests/test_round25_journey_record.py@22d4a89963 (cmd_taildrop, lines 318-339: no mutant construction; grep MUTANT shows FETCH and CHECK only)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~128/NFRA_CTLPLN.TO-CT-ao-2.tabulate-release-pack-and-taildrop.proof_of_spec.json@22d4a89963 (controls.mutant: run-time copy read through OPAL_INTAKE_RECORDS)",
+      ".tools/tests/test_round25_journey_record.py@af1ad26e99 (SITEZ_MUTANTS; --taildrop-sitez prints two JOURNEY-TAILDROP-SITEZ-MUTANT lines, both held=True)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a blocker for CT-aq-1: the criterion's own mutants are in code. Whether the dell1 flag should gain in-code mutants is the issuer's call (2.0.0_SA_COO~C); this worker did not edit the dell1 flag's logic."
+}
+```

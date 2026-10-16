@@ -8238,3 +8238,60 @@ by dell1 or by this seat.
   "world_is": "Measured in this worktree: the seven failing or erroring tests read paths the sparse checkout omits. None of them imports E_18 or gold_dispatch.sh. Their status on a full checkout is not measured here; the drain should run them there."
 }
 ```
+
+## MDPF_SECCLASS-D1-W97-S2 -- the amendment-1 plan cannot be green on both AC2 and AC3: five null-sub-class seeds fail check_seed22_plan.py
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W97-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~97",
+  "surfaced_at": "2026-10-16T05:02:31Z",
+  "one_line": "The amendment-1 plan (planned 13, seed_pending 9, unresolved 0) seeds five rows with no sub-class (HPI, LCFYX, PFF, VRP, CPXIX) as the fold map and check_seed22_fold.py require, and check_seed22_plan.py (AC2) fails each of them as 'class incomplete', so AC2 and AC3 cannot both pass as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/check_seed22_plan.py @13b4c04fc0 line 48: `if not row.get('asset_class') or not row.get('sub_asset_class'):` appends 'class incomplete'",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/check_seed22_fold.py @13b4c04fc0 line 40: `(row.get('sub_asset_class') or None) != spec['sub_asset_class']`, so a null map sub-class requires the attribute absent or null",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/seed22_fold_map_20261016.json @13b4c04fc0: HPI, LCFYX, PFF, VRP, CPXIX carry sub_asset_class null ('old-list class kept, no sub-class')",
+      "run at the worktree (read-only): check_seed22_plan.py on SEED22_PLAN.json -> SEED22-PLAN ok=False planned=13 unresolved=0 seed_pending=9 dollars=413341.59 problems=['CPXIX class incomplete', 'HPI class incomplete', 'LCFYX class incomplete', 'PFF class incomplete', 'VRP class incomplete'] rc=1; check_seed22_fold.py on the same file -> SEED22-FOLD ok=True rc=0",
+      "live etf-classifications scan with FilterExpression attribute_not_exists(sub_asset_class), Limit 50 (read-only, one page): canonical rows with no sub-class carry the attribute ABSENT, none NULL-typed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e107 AC2 (check_seed22_plan.py): the real plan covers the 22 baseline tickers once each, provenance equals the live old row, none is canonical now, dollars within $1. Amendment 1 and the CTO fold ruling: a null sub-class in the fold map means the attribute is OMITTED from the row, and AC3 (check_seed22_fold.py) requires exactly that.",
+  "world_is": "AC2's check adds a rule the criterion text does not state: every planned row must carry a non-empty sub_asset_class. For the five null-sub map rows that rule and AC3's absent-attribute rule are mutually exclusive, so no row written to the ruling passes both. The other AC2 arms pass (22 = 13 + 9 partition, dollars 413341.59, provenance equal to the live old row, 0 in the canonical table). Per the refusal clause the check was not weakened or edited, the row was not given a sub-class it does not have, and TO-SC-e107 stays pending.",
+  "notes": "Filed by the R27 SC-e-107 worker on amendment 1 (the plan itself follows the ruling). Disarm, for the issuer 2.0.0_SA_COO~M1: either amend AC2's check to accept an absent sub-class on a null-sub map row (the issuer amends its own criteria and states the gate limb), or the CTO rules a sub-class for the five. No pair has been cut and nothing was written to AWS. Hazard if left: an apply pair cut on this plan would be asked to pass a check that cannot pass. W97-S1 is not disarmed by this row; the fold map is its disposition path."
+}
+```
+
+## MDPF_SECCLASS-D1-S43 -- D1-W97-S1 and D1-W97-S2 disarm: the CTO fold ruling resolved the 18 plan_rows could not plan (9 seeded by a co
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S43",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-16T05:05Z",
+  "one_line": "D1-W97-S1 and D1-W97-S2 disarm: the CTO fold ruling resolved the 18 plan_rows could not plan (9 seeded by a committed map, 9 held out), and the AC2 conflict was the issuer's own check demanding a sub-class the ruling forbids; the check is amended and all three criteria read PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_MDPF_SECCLASS_SEED22_FOLDS_20261016.md @1b45af4766 (F1 yes, F2 narrowed, F3 no, F4 F5 F6 yes)",
+      "SEED22-PLAN ok=True planned=13 unresolved=0 seed_pending=9 dollars=413341.59 (check_seed22_plan.py amended: a null sub-class is allowed, the fold check grades each class against the map)",
+      "SEED22-FOLD ok=True planned=13 seed_pending=9 unresolved=0; SEED22-SELFTEST ok=True (35 of 35)",
+      "merged @283e087af6 (first worker) and @e6c7448985 (re-seated worker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D1-W97-S1: plan_rows accepts an old-list row only on a direct canonical match, so the seed as built writes 4 rows. D1-W97-S2: AC2 and AC3 cannot both pass for the ruled plan.",
+  "world_is": "Both met by the CTO's ruling and the issuer's check amendment, not by any weakening of a grade: AC2 now requires an asset_class and provenance on each planned row, AC3 requires each class to equal the map. D1-S42 (the E_18 repoint makes the old-list-only tickers live candidates) stays ARMED until the seed is applied and read and the 9 held-out rows are named seed_pending on the pair."
+}
+```

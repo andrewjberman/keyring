@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~97</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -44,6 +44,10 @@ You are a RE-SEATED worker. Inherited state (already merged, in your tree): `see
 3. Extend `selftest` (it must still print `SEED22-SELFTEST ok=True`) with: (vi) a map fixture: a seeded ticker gets the MAP's classes, the provenance and the `fold_*` attributes; a null sub-class omits the attribute; a held-out ticker lands in `seed_pending` and `apply` writes nothing for it; (vii) the OVERRIDE case: a seeded entry whose note starts with `OVERRIDE` keeps that text in `fold_note` of the planned row.
 4. Re-run `plan --fold-map` once for real (read-only AWS) and overwrite `SEED22_PLAN.json`.
 5. Update the proof-of-spec instance to carry `SC27-e107-AC1`, `SC27-e107-AC2` and `SC27-e107-AC3`, and re-validate it with all three.
+
+### AMENDMENT 2 (issuer, 2026-10-16 ~05:1xZ): the check defect is fixed; close the order
+
+Your predecessor's last run read AC2 FAIL because `check_seed22_plan.py` demanded a non-empty `sub_asset_class` on every planned row, which the fold ruling forbids for HPI, LCFYX, PFF, VRP and CPXIX (the issuer's defect, row D1-W97-S2). The check is amended at HEAD (it still requires an `asset_class` and the provenance on each planned row). **What you do, and nothing else:** (1) run the three acceptance invocations once under `timeout 120` and record each output verbatim; (2) in the proof-of-spec instance set the `SC27-e107-AC2` row's `status` to PASS with the new output in `output_evidence` (keep the old FAIL text in the evidence as history, say that the issuer amended the check), and replace every `PENDING-THIS-COMMIT` in `artifacts_produced` by the real hash of the commit that landed that file (`7db826a659` for `seed22.py`, `SEED22_PLAN.json` and the investigation file); (3) re-validate with `python .tools/proof-of-spec-check.py <instance> SC27-e107-AC1,SC27-e107-AC2,SC27-e107-AC3` (rc 0); (4) set this order's `<status>` to `complete` (every mechanical criterion PASSES) and commit the instance and the order file together. Change no script, plan, check, map or baseline.
 
 ### ACCEPTANCE
 
