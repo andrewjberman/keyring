@@ -20439,3 +20439,82 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W164-S1 -- The order's source-order rule reads the helper's presses before the Submit click, though they run after it; the checker counts each press at its call site
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W164-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~164",
+  "surfaced_at": "2026-10-16T01:44:13Z",
+  "one_line": "AR-y-367 step 4(b) reads the source order literally, but the after-Submit presses sit in a helper defined above run(); labels_check.py counts each press at its call site (the one loop call after the click), and the rule's literal text would fail the signed design.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-367 step 4(b): in the source order submit.click() comes BEFORE the first press (.click( of a decision button), and the listener waitForResponse for the tickets POST comes before submit.click().",
+  "world_is": "The after-Submit loop is the function answerAfterSubmit, defined at line 238 of fwd1_driver.mjs (working tree of worktree C:/dev/wk-irpt-anlreq-164, the commit carrying this row), above run(). Its decision press lines therefore precede submit.click() (line 389) textually, while they run after it, because run() calls the loop once at line 392, after the click. A literal textual reading of (b) fails the signed design. labels_check.py rule (b) resolves each press in the helper to its call site and checks that call against the click; the listener check and the mutant check (a press moved into run() above the click) are read the same way. The mutant fires; the amended driver passes (9 labels, 3 presses).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-164 working tree: fwd1_driver.mjs line 238 (export async function answerAfterSubmit), line 389 (await submit.click()), line 392 (const loop = await answerAfterSubmit(page, ...))",
+      "C:/dev/wk-irpt-anlreq-164 working tree: deliverables/0.9.0_WK_IRPT_ANLREQ~164/labels_check.py check_order (rule b, press counted at its call site); run output LABELS-OK 9 labels (3 presses)",
+      "C:/dev/wk-irpt-anlreq-164 working tree: deliverables/0.9.0_WK_IRPT_ANLREQ~164/mutant_check.py output MUTANT-FIRES (a press moved above submit.click() fails the order check)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W164-S2 -- A replacement equal to its own symbol passes the signed validator, but the form refuses it and sends nothing; the driver now refuses that decision before any run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W164-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~164",
+  "surfaced_at": "2026-10-16T01:44:13Z",
+  "one_line": "The form's replaceChoice refuses a replacement equal to its symbol and sends nothing, so a planned replace with that replacement would leave the prompt open after Check; the decisions validator admitted it. The validator now refuses it before any run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-366 validator (signed): replace needs a replacement ticker of 1 to 12 upper-case letters, digits, . or -; AR-y-367 presses only the planned buttons until the ticket answer, and the replace round presses Replace, fills the one input and presses Check.",
+  "world_is": "Portal 0ba0cb13 src/pages/TicketCenter/analysisRequest.ts lines 184-189 (replaceChoice): when to === h.value.toUpperCase() it returns the refusal 'Type a different ticker; the same symbol, or a change of case alone, is not sent.' and nothing is sent. The signed validator admitted {symbol: EFGH, answer: replace, replacement: EFGH}. The amended fwd1_driver.mjs validateDecisions refuses a replacement equal to the symbol (case-insensitive), and the replace round presses Replace only while that button is still shown (after a first Replace press the input is open and only Check is pressed). Selftest case 'decisions: a replacement equal to its own symbol is refused' passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@0ba0cb13 src/pages/TicketCenter/analysisRequest.ts:184-189 (replaceChoice: the same-symbol refusal, nothing sent)",
+      "C:/dev/wk-irpt-anlreq-164 working tree: fwd1_driver.mjs validateDecisions (the replacement equal to the symbol is refused) and the selftest case 'decisions: a replacement equal to its own symbol is refused'; SELFTEST-OK 67 cases"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S135 -- DISARMS IRPT_ANLREQ-D2-W163-S1, S2 and S3: the FWD-1 driver answers the form's prompts after the Submit click; the checker rule is reworded
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S135",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-16T02:02:00Z",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-W163-S1, S2 and S3: the cell AR-y-367 (worker 164, merged b6500a74b9) moved the driver's decisions loop to after the Submit click, and its own labels checker holds the reworded rule; the signed rule 'after Submit only reads' is amended for run 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W163-S1: an unknown ticker does not disable Submit. W163-S2: the prompts appear only after the Submit click and each press files. W163-S3: AR-y-366's AC2 rule 3 forbade the selftest cases the cell required.",
+  "world_is": "Re-run by this seat on the merged tree: the driver at org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs has sha256 455f660940bf34dd0de126d81ec0667df95d3030c7eb40621e26c1cb8eee1247 and prints SELFTEST-OK 67 cases (the 58 of AR-y-366 unchanged, 9 new). Worker 164's record reads LABELS-OK 9 labels with POST_ALLOWED identical to the signed base, nothing between the sign-in and the holdings file, 3 of 3 presses after submit.click(), the ticket listener set before the click (240 s, or 780 s with --decisions). The issuer's ruling, for pair addendum 3: after the Submit click the driver presses only the planned decision buttons, and fills only the one replacement input, until the ticket answer arrives; after the ticket answer it only reads; without --decisions the flow is the signed one. NOT read: any live run; how the form behaves between a press and the next prompt. Worker rows W164-S1 (the checker counts each press at its call site) and W164-S2 (the validator refuses a replacement equal to its symbol, as the form does) stay as observations.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's node --selftest and sha256sum of the merged driver (455f6609..., 67 cases)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~164/r41/DECISIONS_AFTER_SUBMIT.json",
+      "safe-merge b6500a74b9 (worker 164's branch drained)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The three rows described the AR-y-366 design; AR-y-367 replaced it and the merged driver and its checker carry the corrected design. The run itself still needs the pair addendum and the CTO's half.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W163-S1, IRPT_ANLREQ-D2-W163-S2 and IRPT_ANLREQ-D2-W163-S3."
+}
+```
