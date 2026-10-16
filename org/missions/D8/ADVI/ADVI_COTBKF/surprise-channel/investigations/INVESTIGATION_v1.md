@@ -9873,3 +9873,57 @@ round.** Never edit an existing row.
   "dismissal_reason": "Disarmed by the disarm owner's read of the fix and its passing test at HEAD, before any zip was read; the CVO closes the remediation row."
 }
 ```
+
+## ADVI_COTBKF-D1-W186-S1 -- no row of the served or rebuilt FWD-3 tables carries a Yahoo-sourced price_source, so every use_class and porting_verdict label reads NOT_YAHOO and no account has a NOT_FOR_ACTIVE row
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W186-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~186",
+  "surfaced_at": "2026-10-16T05:40:58Z",
+  "one_line": "no row of the served or rebuilt FWD-3 tables carries a Yahoo-sourced price_source, so every use_class and porting_verdict label reads NOT_YAHOO and no account has a NOT_FOR_ACTIVE row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Dev/ajb_workspace/.scratch/cotbkf_r96_build/account_day_value.parquet (local build, run_commit 923f06e998ec, read 2026-10-16): price_source counts cottonwood-silver-canonical-prices 3,743,063; cash-at-par 1,363,843; etfs-bbg-testpull-ticker-history 4,262; cottonwood-gold-canonical-holdings 3,122; null 15,987,751; no yahoo_finance and no linear_interpolation value",
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py YAHOO_SOURCES = ['linear_interpolation', 'yahoo_finance'], read at call time; data/assets/scripts/silver/commonwealth_fwd3_serve.py yahoo_priced() (lines 320-333) marks a row Yahoo-priced only on those sources",
+      "served control (org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~186/SERVED_MOVE_MEASURED_RECORD.json): the price_source column of the served account_day_value equals the build row for row (21,102,041 rows, rows_differing 0), so the served table carries the same absence",
+      "the same record: use_class and porting_verdict NOT_YAHOO counts 1,691,729 / 21,102,041 / 82,593 across the three tables; account_day_value_accounts_not_for_active 0",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~165/NEVER_WIDEN_R83_PORTING_VERDICT_COO_HALF.md line 55: WIDE = yahoo_finance and linear_interpolation"
+    ]
+  },
+  "spec_asserts": "CB-cr-1 Why (ADVI_COTBKF.TO-CB-cr-1): the three served FWD-3 tables carry served Yahoo-priced days, and the use_class and porting_verdict labels separate them from the others under call 3adb (a)",
+  "world_is": "In the served and the rebuilt tables no row carries a Yahoo-sourced price_source, so the labels cannot separate any served day and the NOT_FOR_ACTIVE count is 0. Whether served days are Yahoo-priced under another attribution is not established by this read; no further trace was run (counts only).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-W186-S2 -- the local FWD-3 --build does not finish inside the order's timeout 120 bound on this box; it was run under a 1500 s bound instead, and that departure is recorded here
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W186-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~186",
+  "surfaced_at": "2026-10-16T05:40:58Z",
+  "one_line": "the local FWD-3 --build does not finish inside the order's timeout 120 bound on this box; it was run under a 1500 s bound instead, and that departure is recorded here",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Dev/ajb_workspace/.scratch/cotbkf_r96_build.log: the builder prints nothing until it completes; the BUILD-RC=0 line was written after the build ended, several minutes after start (the 120 s bound would have ended it first)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~97/CONTROL_RECORD.json: the round-97 --build of the same builder is recorded at 376 s",
+      "ADVI_COTBKF.TO-CB-cr-1 item 2 and the worker bar (timeout 120 per invocation) do not name a bound for a build of this size"
+    ]
+  },
+  "spec_asserts": "the worker bar: each criterion's invocation runs under timeout 120, and a timeout is the recorded output (retried at most once)",
+  "world_is": "The one local --build of the three tables needs more than 120 s here. It ran under timeout 1500 in the background; no criterion was timed out, and the build's refusals and checks all printed their normal lines (BUILD-RC=0). The bound used is recorded in this row and in the worker report.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
