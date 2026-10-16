@@ -20384,3 +20384,101 @@ name the one known failure instead of silently inheriting it.
   "notes": "If the lane gate refuses the order-file path, the flip is not landed and the order stays staged; the report carries that as the outcome."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T10:38:27Z",
+  "id": "NFRA_OPLGTW-Z-S168",
+  "one_line": "OG-ev-1: the AC3 marker 'data_status on a quiet day' of OG-ap-19 cannot be shown, because the portal and news tools carry no field called data_status (it exists only in the harvest chatter and figures answers).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ app/*.py at release 3d5c9c8bf1: the string data_status occurs only in harvest_press.py, harvest_figures.py, harvest_identity.py and harvest_typed.py; news_typed.py and portal_*.py carry none.",
+      "RAN news_search_articles for a Sunday (2026-10-11) and the other ap-19 tools on the live host (W/ANSWER_BODIES.json, ap-19 entries): the answers carry absent_reason and freshness, and no data_status key."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-19 AC3: the first portal and news answers show freshness in trading days, data_status on a quiet day, and the 14-day news cap stated.",
+  "world_is": "The quiet-day answer of the news tools is absent_reason plus a freshness block; data_status is a harvest chatter field (ap-18's tools). The record carries the real quiet-day body with a note; it is not a different call substituted for the marker.",
+  "notes": "Cost: the CVO cannot grade this marker as worded; the criterion should name absent_reason and freshness, or the tools should carry data_status. Non-application: the other two ap-19 markers."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T10:38:27Z",
+  "id": "NFRA_OPLGTW-Z-S169",
+  "one_line": "OG-ev-1: the AC3 marker 'Schwab masters never summed' of OG-ap-23 cannot be shown, because the installed client tools answer no_catalog_row for Schwab: the catalog holds no Schwab dim_position row for the firm, so no account reference can be minted.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN the Schwab adapter's account index through the installed code on the host: it raised CoreRefusal no_catalog_row (W/ev1_meta.json notes.schwab_error); a client_get_holdings call with a well-formed Schwab reference answers absent_reason no_catalog_row (W/ANSWER_BODIES.json, ap-23, the Schwab entry).",
+      "The COO half of OG-ap-23 already names 'Schwab fact_* (MX-c-23)' as not covered: the client tools answer no_catalog_row for them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-23 AC3: rows never merged across firms and Schwab masters never summed, shown on a real call.",
+  "world_is": "Until MX-c-23 lands the Schwab catalog rows, no Schwab master's rows are served, so the never-summed marker has nothing to show. The two-firm marker is shown with SmartX (firm A served rows, firm B none).",
+  "notes": "Cost: this marker stays NOT MEASURED until the catalog rows exist. Non-application: the other three ap-23 markers."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T10:38:27Z",
+  "id": "NFRA_OPLGTW-Z-S170",
+  "one_line": "OG-ev-1: the news tool news_for_security applies a 30-day cap (an ask of 999 days is applied as 30, window_days_applied 30) where OG-ap-19's AC3 names a '14-day news cap'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN news_for_security (ticker AAPL, window_days 999, 30 and 21) on the live host: window_days 30 and window_days_applied 30 for the ask of 999; no string of any answer says 14-day (W/ev1_meta.json attempts ap-19.cap). The tool's default window is 14 days."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-19 AC3: the 14-day news cap stated in an answer.",
+  "world_is": "The cap this release applies is 30 days; 14 is the default window. The record shows the real answer and its window fields; the CVO may read the discrepancy as a defect of the criterion's wording or of the tool.",
+  "notes": "Not a failure of this cell: the call is the real one. Cost: a reader told 14 days would be wrong by 16."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T10:38:27Z",
+  "id": "NFRA_OPLGTW-Z-S171",
+  "one_line": "OG-ev-1: harvest_get_published_analysis answers harvest_published_unavailable ('the published layer did not answer this call') for sections=peers on a covered name, while ledger, versions, thesis, overlay and timeline answer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN harvest_get_published_analysis (security AAPL_US_Equity) for six sections on the live host in the discovery pass (W/EV1_DISCOVER2.json, tag 21.peers): code harvest_published_unavailable; the other five sections answered. Seen once; not re-run (the cell forbids retry loops)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-21 serves the sections overlay, thesis, peers, ledger, versions and timeline.",
+  "world_is": "The peers section failed once with the published-layer-unavailable code. Whether it is a transient or a defect of that section is not established by one call.",
+  "notes": "Not part of the three ap-21 markers, which are shown with ledger, versions and timeline."
+}
+```
