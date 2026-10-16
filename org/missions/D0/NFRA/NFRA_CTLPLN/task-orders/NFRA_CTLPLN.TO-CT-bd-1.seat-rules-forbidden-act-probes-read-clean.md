@@ -5,8 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~142</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>open</status>
-<status_reason>Issued by the issuer 2.0.0_SA_COO~C in the round-29 issuance, per the CTO's round-28 analysis (ROUND_ANALYSIS.round28.md @3894648aa3, msg 109677).</status_reason>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-142 @d3e96e0354: validate, suite, proof) and again in the main tree after merge 7ba72f2e61, where the full exercise was re-run: CTbd1-AC1 `SEAT-RULES rules=47 gate=25 skill=11 launcher=11 pairs_covered=24/24 probes_pass=60 probes_pending=0 probes_fail=0 probes_unread=0 needs_andrew=2 ok=True` (base: 56 pass, 1 fail, 1 unread, 58 probes; 79 s on the main tree); CTbd1-AC2 `SEAT-RULES-VALIDATE rules=47 pairs_covered=24/24 problems=0 ok=True` (base problems=1); CTbd1-AC3 `SEAT-RULES-TEST cases=26/26 ok=True` (base 25/26); proof VALID. R-AWSDEVOPS-7 now states what the policy holds after Andrew's 2026-10-13 ruling (three Denies kept: CloudTrail writes, S3 deletes on production data, table and database deletes), as ONE row with three probes (the checker refuses split ids: W142-S1); R-WORKFLOW-19's probe has a 220 s bound (its selftest measured 107 s alone). Per-kind table: deliverables/0.9.0_WK_NFRA_CTLPLN~142/FWD25_FORBIDDEN_ACT_PROBES_BY_KIND.md (CTO 11, COO 5, CVO 7, CRO 5, CLOUDOPS 4, TIER2 5, WORKER 5, MSTR 9, no-serial 9 = 60; every kind has probes). One existing assertion moved with the retired question (the needs_andrew count 3 -> 2: W142-S3). W142-S4: test_crossbox_call.py is red at the base (the anchor `msg_path.write_text(msg_content` is absent from org/mcp/server.py): cell CT-ba-1 repairs it. The three Denies are read from the policy FILE; whether they are applied live is not read. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
