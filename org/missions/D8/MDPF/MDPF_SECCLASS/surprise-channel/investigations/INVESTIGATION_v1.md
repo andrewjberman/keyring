@@ -8185,3 +8185,31 @@ by dell1 or by this seat.
   "world_is": "Today the 22 are classified by no canonical row; the repoint changes who classifies them from nobody to the GICS/Schwab path or unresolved. The issuer's recommendation (migrate before delete: a signed pair seeding the 22 canonical rows from the old list by conditional put, then the repoint) is in the record. Disarm: the round-27 order names the 22 tickers, the source rule and the pair, and the CVO grades the class folding."
 }
 ```
+
+## MDPF_SECCLASS-D1-W97-S1 -- the R27 seed22 plan, built on the shared plan_rows as ordered, plans 4 of the 22 old-list tickers ($15,777.17) and leaves 18 ($397,564.42, incl. KAMIX and HPI) unresolved, because their old-list sub-classes are not canonical vocabulary members and the module does not fold
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W97-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~97",
+  "surfaced_at": "2026-10-16T04:43:01Z",
+  "one_line": "The R27 seed22 plan, built on the shared plan_rows as ordered, plans 4 of the 22 old-list tickers ($15,777.17: AEMGX, CEMVX, FBCVX, FIADX) and leaves 18 ($397,564.42, incl. KAMIX $92,153.26 and HPI $51,050.86) unresolved: their old-list sub-classes (Investment Grade, Structured Notes, Commodities, Real Estate, Volatility) and the needs_review sub-class on PCEF are not direct canonical vocabulary members, and plan_rows does not fold.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~97/SEED22_PLAN.json @479867946b (plan run 2026-10-16, read-only): planned=4 unresolved=18 seed_pending=0 dollars=413341.59",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py @479867946b: _direct_match (line 375) and plan_rows (line 492); the module's own rule is that a value matching only through a fold is left unresolved",
+      "live etf-classifications scan (read-only, 11362 rows): fixed_income subs carry no Investment Grade; alternatives carries no Structured Notes, Commodities or Volatility; equity carries no Real Estate"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-26 analysis (msg 6482) and TO-SC-e107: the old-list classes are ACCEPTED as source rows, and the seed is the plan_rows call made once for the 22 tickers, so every seeded canonical row carries source_table bd-securities and its old last_updated.",
+  "world_is": "plan_rows plans 4 of the 22 and leaves 18 unresolved, because a source row is accepted only when its (asset_class, sub_asset_class) is already a canonical vocabulary member (no fold). The 22-row seed the CTO ruled cannot be produced by plan_rows as built; a pair cut on the plan writes 4 rows. Either the CTO rules a class mapping for the 18 or the vocabulary gains the sub-classes. The worker did not fold them.",
+  "notes": "Filed by the R27 SC-e-107 worker. The plan and the apply are built as ordered and both criteria pass; the plan file is the 4-planned, 18-unresolved result, not a 22-planned one. Disarm: 2.0.0_SA_COO~M1 takes the 18 to the CTO before any pair is cut, and the pair names the planned rows as written. Hazard if left alone: round-27 item 2 (the E_18 repoint) would leave $397,564.42 of the $413,341.59 with no canonical row."
+}
+```
