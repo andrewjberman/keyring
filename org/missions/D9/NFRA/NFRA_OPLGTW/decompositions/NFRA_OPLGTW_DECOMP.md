@@ -2450,3 +2450,11 @@ Two batches on two surfaces, never two appliers on the host at once: the IAM and
 | `OG-sv-2` | `portal_get_cma_assumptions` in the json-served module for `opal_data_portal_v2_served_cma_assumptions` (`json/capital-markets/assumptions.json`, 27 rows, annual 2026 edition; no new IAM, under `json/*`) | `app/portal_json_served.py`, `tests/test_og_sv2.py`, the record and the probe | WORLD | ~113 | `OG-sv-1` merged (same module) |
 
 **fanout:** 1 of 1 chains, cap 8. One chain with `OG-sv-1` (the same file): sv-1 first, sv-2 second, both in slot ~113.
+
+## ADDENDUM R3-T.78 (2.0.0_SA_COO~O, 2026-10-16 ~03:4xZ) -- round 37, workstream G2-CONFORM-2: the Black Diamond upstream identifiers enter name_rulings.json; the unread orion/4698 alias goes (CTO msg 34699; ruling @d97ea3ae82 section 1)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-cl-8` | one `none_owed` row per refused (name, type) of `bd_account_id`, `bd_account_number`, `fact_bd_allocation`, `market_value_profile` in `infra/logic/registry/name_rulings.json`; delete the unread `orion/4698` alias from `client_core.py`; the full-add naming gate over `app/client_*.py` in ENFORCE prints no REFUSE (so `OG-cl-7` AC2 closes) | `infra/logic/registry/name_rulings.json`, `app/client_core.py`, the investigation file | WORLD | ~111 | `OG-cl-7` merged (517f78548d) |
+
+**fanout:** 1 of 1 chains, cap 8. Disjoint from `OG-sv-1` / `OG-sv-2` (the json-served module). It is an `OG-ap-23` batch cell: it merges before the release is cut.
