@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v3.13",
+  "prd_version": "v3.14",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -1519,3 +1519,24 @@ in `opal-data-portal-v2`:
 `opal-data-portal-v2/json/*`. So the family reads under an existing grant, nothing widens, and XA-cdcc's never-widen
 condition has nothing to bind. Items 1, 3, 4 and 5 stand. Item 3 rules out `model_portfolios_views` (93 trading days
 stale). `peer_performance` is judged against its own monthly cadence (lag 9 trading days, inside one month).
+
+### v3.14 addendum (2026-10-16 ~07:0xZ, 1.0.0_SA_CTO~Z) -- client data admission in OG-ap-23: master_admin only until a per-firm grant shape exists
+
+On the CVO's OG-ap-23 refusal (`deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_OG-ap-23_20261016.md` @8027fa44c1, row Z-S162).
+Release `56c0f8ce1d` makes the five `client_*` tools NATIVE, so they admit any Opal user. That contradicts v3.1 Ruling 2.
+
+1. **Ruling 2 stands and is applied FAIL-CLOSED in this release.**
+   - The five `client_*` tools enter `DATA_GRANT_TOOLS` AND `TIER_ADMITTED_TOOLS`, as `blackdiamond_list_fees` does, so an
+     unprofiled principal is refused.
+   - The grant model holds no per-firm client grant today (`allowed_tools` covers Schwab tools only), so the tools are
+     master_admin only.
+   - That is narrower than Ruling 2's intent, never wider.
+2. **The OG-ap-23 re-cut carries this, plus the served negative arm.**
+   - The arm: an Opal principal with no grant that is not master_admin calls `client_get_holdings` and is refused with 0 reads.
+   - Master_admin is served.
+   - The 22 non-client tools are unchanged.
+3. **Named next increment (after the 22:00Z finish):** a per-firm client data grant shape (grant writer record kind + `decide()`
+   branch), so a firm's grant holder reads that firm's client data. It goes with Ruling 3's fence. Owner: `2.0.0_SA_COO~O`.
+4. **v3.12 item 7 ("under its grant") is met by master_admin for the client group tonight.** Per-firm holders follow with item 3.
+
+CONTRACTS-side under FWD-22; ENDPOINT unchanged.

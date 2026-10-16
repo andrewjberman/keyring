@@ -1,0 +1,81 @@
+# TO NFRA_CTLPLN.TO-CT-at-1 -- workstream OUTCOME round 22 (cell CT-at-1): the organic journey, step 3 -- the 17 approved yfinance-closure wheels are fetched through the checked route and run checks 1-7; check 8 (the CTO's one signature for the batch) and the release wait (FWD-15, FWD-16)
+
+<to_id>NFRA_CTLPLN.TO-CT-at-1</to_id>
+<project>NFRA_CTLPLN</project>
+<issued_to>0.9.0_WK_NFRA_CTLPLN~132</issued_to>
+<issued_by>2.0.0_SA_COO~C</issued_by>
+<issued_date>2026-10-16</issued_date>
+<status>pending</status>
+<direct_act>false</direct_act>
+<risk>SERVED</risk>
+<worker_class>worker</worker_class>
+<placeholders>NONE</placeholders>
+<round>22</round>
+<workstream>OUTCOME</workstream>
+
+**Directive:** D0 | **Fabric:** laptop | **Decomp cell:** `CT-at-1` (`decompositions/NFRA_CTLPLN_DECOMP.round27.md`, amendment 3) | **outcome_ref:** FWD-15, FWD-16 |
+**depends_on:** CT-ar-1, CT-as-1 (both complete)
+
+---
+
+## WORKER FACE
+
+### THE CELL
+
+The organic journey of dell2's `yfinance==1.2.0` Linux closure (call `XB-20261016T052534Z-983c`). Done so far: the closure (24 members, 7 left out because the host satisfies them, 17 to fetch), the real index read that named every file (`org/devices/intake/records/intake-20261016-yfinance-linux/RESOLVED_cp312_linux_x86_64.md` and `.json`, with sha256 and size per file), the laptop CTO's fetch approval WITH its two addenda that fix the 17 exact file names (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md`: read it whole, including the conditions), and dell2's CTO's approval of the same 17 (his ack answer is recorded in git at `f6871291ff`; his own record file is NOT on origin yet, so do not rely on it). THIS cell fetches the 17 wheels through the checked route into the holding folder and runs checks 1-7 on each; check 8 is the laptop CTO reading ALL the per-wheel records and signing ONCE for the batch, after you finish. Read first: `org/devices/intake/README.md`, `python org/devices/intake/intake_fetch.py fetch --help` and `python org/devices/intake/intake_check.py check --help`, the records of the earlier batch (`org/devices/intake/records/intake-20261016-tabulate/` `*.fetch.json` and `*.check.json`) and the journey test `.tools/tests/test_round25_journey_record.py` (its `--fetch` and `--check` flags are the shape you copy for 17 files).
+
+YOUR WORKTREE WAS CUT BY `.tools/wk-provision.sh` AND IS A SPARSE CHECKOUT: it holds `.tools/`, `lib/`, the project folder `org/missions/D0/NFRA/NFRA_CTLPLN/`, `org/modules/graph/`, `org/devices/`, `infra/logic/registry/`, `org/standards/` and the paths of this order. If a command fails because a file or folder is missing, run `git sparse-checkout add <folder>`, retry, and name the folder, the command and the error in your final report. The CTO's approval file is under `org/tier1_exec/1.0.0_SA_CTO/deliverables/`: add that folder.
+
+### BUILD
+
+1. **The list.** From the approval file's ADDENDUM 1 (16 file names with the resolve table's sha256 values) and ADDENDUM 2 (`multitasking-0.0.13-py3-none-any.whl`, sha256 `ec9243af140c67bfe52dc98d7173c294512735a88e8425c458b250db99dc2b48`, 16380 bytes) build the 17 rows `name`, `version`, `file_name`, `sha256`, `size` (the sizes and sha256 values of the 16 are in `RESOLVED_cp312_linux_x86_64.json`; the names in both must agree: if they do not, STOP with a BLOCKING row). From each file name derive the three tags (`python-tag`, `abi-tag`, `platform-tag`; a compound platform tag such as `manylinux_2_27_x86_64.manylinux_2_28_x86_64` is ONE value). Print the 17 rows before any fetch.
+2. **Fetch ONE wheel at a time, in the printed order, never in parallel:** `python org/devices/intake/intake_fetch.py fetch --batch intake-20261016-yfinance-linux --name <n> --version <v> --python-tag <t> --abi-tag <t> --platform-tag <t> --approved-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md` (each under `timeout 120`). These are real requests to the public package index from the laptop (the laptop alone fetches; egress is open on this channel): 4 per wheel. Never `pip install` anything. If the tool REFUSES or FAILS on a wheel, record its printed line, retry that one wheel at most ONCE after reading the refusal, and if it still does not hold, STOP the cell and file a BLOCKING row naming the wheel and the printed refusal; do not edit the approval file, do not pick another file, do not fetch a source archive. Commit the fetch records after each 5 wheels and at the end (`org/devices/intake/records/intake-20261016-yfinance-linux/<file>.fetch.json`). The wheels land in the holding folder outside every git tree (`<workspace drive>/opal-intake/holding/intake-20261016-yfinance-linux/`); never copy one into the repository. Records resolve to the worktree's `org/devices/intake/records`; if the tool resolves them to the main tree, set `OPAL_INTAKE_RECORDS` to your worktree's folder and say so.
+3. **Run checks 1-7 on each held wheel** with `python org/devices/intake/intake_check.py check --batch intake-20261016-yfinance-linux --file <file_name> --approved-by <the approval file above> --signed-by org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md` (each under `timeout 280`; a check includes a 20 second scanner wait). That check-8 file does NOT exist; do NOT write it, do NOT run `release` or `pack`. Read the check tool and its first record before you start, and stop if any check imports or runs a wheel outside the tool's own sandbox. Commit the check records after each 5 wheels and at the end. For EACH wheel report each of checks 1-7 as the record states it (passed, failed or not_applicable and its evidence line): a failed check is a FINDING for the CTO, not a defect you repair; do not re-run to make it pass. Expect check 3 ("the version is one this machine already runs") to read unlike the tabulate run for members whose installed copy is a different version or a Windows build; report exactly what the record says.
+4. **A NEW test** `.tools/tests/test_round27_yfinance_batch.py` (standard library plus the kit tool for marker evaluation; READ-ONLY on the records and the holding folder; no network; ASCII output; Python 3.12). Flag `--fetch` prints `BATCH-FETCH wheels=<n> expected=17 names_equal=<True|False> sha_equal=<True|False> held=<h> device=<d> ok=<True|False>`: ok when exactly the 17 approved file names are in the holding folder (or, after a later release, the release folder) and no other file, each file's SHA-256 equals both the approval's/resolve's value and its fetch record's, every fetch record's outcome is `held`, and the device equals this box; with two mutant cases (an 18th file; one record whose SHA-256 differs) that must read `held=True`. Flag `--check` prints `BATCH-CHECK wheels=<n> checks_run_each=<k> failed_total=<f> not_applicable_total=<m> check8=<AWAITING|SIGNED|OTHER> released=<True|False> ok=<True|False>`: ok when all 17 check records exist with checks 1-7 each carrying a verdict, check 8 AWAITING (or SIGNED and released after a later release), nothing released before the signature; a `failed_total` above 0 does NOT make ok False (it is printed, with one `BATCH-CHECK-FAIL <file> check <n> <evidence>` line per failure, for the CTO). Flag `--requires` prints `BATCH-REQUIRES wheels=<n> new_deps=<d> specifier_mismatches=<s> host_conflicts=<h> multitasking_requires=<its Requires-Dist lines, or NONE> ok=<True|False>`: for each held wheel read `*.dist-info/METADATA` from the zip (read only: no extraction to disk, no import, no run), take the `Requires-Dist` lines, drop any whose marker is false for the Linux cp312 target and any `extra == ...` line, and require that every named distribution is one of the 17 or one of the 7 host-satisfied (`org/devices/intake/records/intake-20261016-yfinance-linux/HOST_PYDEPS.json`) AND that its version (the chosen wheel's, or the host's) meets the specifier. A new dependency, a mismatch or a host conflict prints one STOP line each and makes ok False; the CTO's addendum 2 condition is that any new dependency of multitasking is a STOP, so print its Requires-Dist lines in the summary line.
+
+### RULES FOR THIS CELL
+
+Write surface = the `<paths>` plus your own folder `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~132/`. Every experiment runs in a temporary folder or repository unless the cell says otherwise. The ONLY network acts are the 17 `fetch` runs of step 2. No push, no deploy, no AWS write. Use `.tools/safe-commit.sh` for every commit, with explicit file paths, and read its whole output (do not pipe it through tail or head). Do NOT commit the `portal` gitlink or `org/git-author-override-audit.laptop.log`. ASCII only; Python 3.12; bash is Git Bash 3.6.7 (default utilities only). CLAUDE.md and org/XXX.md are LOCKED. COMMIT A WORK-IN-PROGRESS COMMIT AS SOON AS A FILE EXISTS, and again after each criterion passes. COPY the proof instance's field names from an existing VALID instance, `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~127/NFRA_CTLPLN.TO-CT-ao-1.tabulate-fetch-and-checks-one-to-seven.proof_of_spec.json` (`config` is not an artifact kind; each control carries `determinism` and `mutant`). The `<status>` flip is the issuer's (your order file is outside your `<paths>`): do not edit it and do not report it as a defect. When you write your proof instance, pin every artifact row to the commit that carried it, never `PENDING-THIS-COMMIT` for a file an earlier commit carried. If a gate REFUSES, STOP and file a BLOCKING row. FOUND SOMETHING ODD OFF-TASK? Append ONE row to `org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md` (id `NFRA_CTLPLN-W132-S<k>`, `surfaced_at` = `date -u +%FT%TZ`, `disposition` `UNDER_INVESTIGATION`) and keep working. A WARN from safe-commit that the client-data check had no account-id list is the standing WARN-only state (ruled): quote it in your report, file no row for it. Your final report names, per wheel, the checks 1-7 verdicts and the risks the checks leave, and the `BATCH-REQUIRES` line (the CTO's check-8 reading needs all of it).
+
+### ACCEPTANCE
+
+<proof_of_spec>
+<criterion id="CTat1-AC1" cell_refs="CT-at-1"><invocation>python .tools/tests/test_round27_yfinance_batch.py --fetch</invocation><expect>ok=True</expect></criterion>
+`CTat1-AC1` -- exactly the 17 approved wheels were fetched, each with a record naming this device and a SHA-256 equal to the approved value (base: the test does not exist); report the whole line.
+
+<criterion id="CTat1-AC2" cell_refs="CT-at-1"><invocation>python .tools/tests/test_round27_yfinance_batch.py --check</invocation><expect>ok=True</expect></criterion>
+`CTat1-AC2` -- checks 1-7 ran on all 17 with each verdict recorded, check 8 awaits the CTO's one signature and nothing was released (base: the test does not exist); report the whole line and every `BATCH-CHECK-FAIL` line.
+
+<criterion id="CTat1-AC3" cell_refs="CT-at-1"><invocation>python .tools/tests/test_round27_yfinance_batch.py --requires</invocation><expect>ok=True</expect></criterion>
+`CTat1-AC3` -- no held wheel's own Requires-Dist names a distribution outside the 17 and the 7 host-satisfied, or one the chosen or host version fails (base: the test does not exist); report the whole line.
+</proof_of_spec>
+
+<expected_criteria>CTat1-AC1,CTat1-AC2,CTat1-AC3</expected_criteria>
+
+Each invocation runs from the worktree root under `timeout 280`; record the criterion text as the invocation. Write the proof instance to `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~132/NFRA_CTLPLN.TO-CT-at-1.yfinance-linux-fetch-and-checks-one-to-seven.proof_of_spec.json`, validate it with `python .tools/proof-of-spec-check.py <instance> CTat1-AC1,CTat1-AC2,CTat1-AC3` on the COMMITTED state.
+
+<decomp_ref>
+<decomp_doc>org/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.round27.md</decomp_doc>
+<owned_cells>CT-at-1</owned_cells>
+</decomp_ref>
+
+<paths>
+org/devices/intake/records/intake-20261016-yfinance-linux/
+.tools/tests/test_round27_yfinance_batch.py
+org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+---
+
+## RECORD FACE
+
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE this cell schedules nothing.
+comp-iam: DECLARED-NOT-APPLICABLE no AWS call; HTTPS requests to the public package index through the checked fetch tool, 4 per wheel; no credentials.
+comp-adversary: RUN -- an 18th file or a source archive fetched (the tool builds the exact file name and refuses another; the test counts files in the holding folder); a wheel executed or installed on the laptop by the check step (the checks read the file; the worker reads the check tool first and stops if one imports or runs a wheel outside its sandbox; arm `--requires` reads METADATA from the zip only); a wheel copied into a git tree (the holding folder is outside every tree); a check releasing a file without the CTO's signature (the tool must refuse; the test requires released=False); a failed check repaired by re-running (the face forbids it: a failure is a finding); a wheel's own Requires-Dist naming a dependency outside the 17 and the 7 (arm `--requires`: a STOP, the CTO's addendum 2 condition); dell2's own approval record not being on origin yet (this cell relies on the committed ack record f6871291ff only; the issuer reads dell2's record when it lands and halts the later steps if it differs); BLIND: the checks cannot rule out a taken-over maker account (FWD-17's limit), the compiled wheels (curl_cffi, numpy, pandas) carry native code the check 6 lists but does not run, check 3 compares against THIS machine's installed copies (Windows builds, other versions), and the wheels' fitness for the host's CPU is the install's later read.
+risk: SERVED -- 17 real wheels (about 39 MB) from the public index into a quarantine folder outside the repository, reversible by deleting the folder; nothing is installed anywhere; the issuer re-reads the records and the holding folder at close.
+lane: the <paths> block IS the grant (worker RULING 1). `org/devices/intake/records/` is NFRA_CTLPLN's intake record folder (C-INTAKE); the approval file is the CTO's; the fetch and check tools are `org/devices/intake/intake_fetch.py` and `intake_check.py` (read, not edited).
+</preflight>
+
+Base checks, dry-run by the issuer before the cut: CTat1-AC1, AC2 and AC3 FAIL as expected (the test file does not exist; no fetch record exists for the 17 wheels).
+Source: CTO ruling @5740f0d341 and approval addenda 1-2 (@828fc2092c, @1fb283d47c); dell2 CTO's answer (ack record `f6871291ff`); FWD-15, FWD-16.
