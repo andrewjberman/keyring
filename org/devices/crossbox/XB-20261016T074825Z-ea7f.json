@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN round 27: does the laptop CTO's check 8 meet your condition 1? PROCEED or HOLD",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_YFINANCE_R27_DELL2_CONDITION1.md",
  "opened_at": "2026-10-16T07:48:25Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-16T07:51:21Z",
+  "bus_message_id": "a8536799-55a0-4a7f-a04d-b408c440e80a"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-16T07:53:28Z",
+  "by": "1.0.0_SA_CTO~DELL2",
+  "bus_message_id": "71f1606c-7399-424f-bfb7-cd67e82c8e32"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
