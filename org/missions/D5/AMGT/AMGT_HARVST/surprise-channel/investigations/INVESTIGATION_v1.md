@@ -100,6 +100,48 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "UNDER_INVESTIGATION"
     },
     {
+      "id": "AMGT_HARVST-D1-W151-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+      "surfaced_at": "2026-10-16T16:21:29Z",
+      "one_line": "The amended order names the next row id as AMGT_HARVST-D1-W151-S1, but S1 to S3 already exist in this channel from the first pass of this slot. The re-seat instruction names S4, so this row takes S4 and no id is reused.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Amended order, the proof-of-spec paragraph: 'Your next surprise row id is AMGT_HARVST-D1-W151-S1'.",
+      "world_is": "INVESTIGATION_v1.md at 42a6ff937c holds AMGT_HARVST-D1-W151-S1, -S2 and -S3 (the rows of the first pass, at lines 38, 62 and 82 of that file). The next free id of this slot is S4.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md@42a6ff937c:38,62,82",
+          "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-2.a-research-report-attaches-to-the-security-it-is-about.md@d10b16f3f0 (the amended order, the next-row-id sentence of the proof-of-spec paragraph)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W151-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+      "surfaced_at": "2026-10-16T16:21:29Z",
+      "one_line": "Amendment 1 step 2b names run.note as the existing note mechanism, but run.note only carries a listing prefix into source_keys and no text. The exclusion note is written to denominator_note, the body's free-text note, and the excluded list to misfiled_reports_excluded.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Amended order step 2b: say the exclusion 'in the tool's existing note mechanism (read how run.note and run.miss are used in _research)', never silent.",
+      "world_is": "At 4516893b3b, harvest_research.py run.note(prefix) (lines 110-111) appends a prefix to the sources list and holds no text; it is called only for listing prefixes (lines 247 and 273). run.miss(part, reason) records a reason for an ABSENT part only. The one free-text note in the body is body['denominator_note'] (line 309). At cfa61fbc79 the exclusion and attachment notes are appended to denominator_note, each with its number and the key.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@4516893b3b:110-111 (run.note appends to sources)",
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@4516893b3b:247,273 (the two run.note calls)",
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@4516893b3b:309 (body denominator_note)",
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@cfa61fbc79 (_research appends the exclusion note)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
       "id": "AMGT_HARVST-Z-S1",
       "project": "AMGT_HARVST",
       "fabric": "site-z",
