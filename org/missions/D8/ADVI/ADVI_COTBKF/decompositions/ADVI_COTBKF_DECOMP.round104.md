@@ -1,0 +1,15 @@
+# ADVI_COTBKF decomposition -- ROUND 104 (issuer 2.0.0_SA_COO~C1 on dell1; drafted 2026-10-16) -- the account-match review sheet a person can read
+
+**Status: DRAFT -> ISSUED in one issuance.**
+
+**Cut on:** Andrew-direct 2026-10-16 ~16:30Z, recorded verbatim in `org/tier1_exec/2.0.0_SA_COO~C1/ANDREW_DIRECT_20261016_1630Z_MATCH_PACKET_NOT_READABLE.md` @ffae57dacc: "The match packet is not very easy to read, its a bunch of account strings, no human being is going to read that. there has to be an easier mechanism to present that information." And the CTO's ruling (msg 6874): "one LOCAL read-only cell, off git, with output to Andrew's desktop only. The confirmer's name changes who receives the sheet, not what it says, so do not wait for it. One Excel workbook: a cover tab in plain words (what a match is, how to answer, how many rows to confirm); one row per proposed pair, grouped by household, showing each side's account name or registration, its value, top shared holdings, and match strength as strong, likely or weak, with a Yes/No/Unsure column; competing pairs side by side. Link ids go only in a last hidden column. No rule change, no link applied, no contact."
+
+**What exists today (read by the issuer).** The committed packet `deliverables/0.9.0_WK_ADVI_COTBKF~180/NEAR_MATCH_REVIEW_PACKET.csv` has 118 rows (107 to confirm, 11 deterministic) with columns `link_id, routes, r4_tier, r4_household_via, r4_window_ok, r4_fingerprint_band, name_corroborations, in_219, bd_account_state, competing_pairs`: link ids and bands. The two accounts behind each link id are in the off-git key `C:/dev/_cotbkf_match_20261015/NEAR_MATCH_REVIEW_KEY.csv` (columns `link_id, commonwealth_account, bd_account_id, crm_confidence, crm_hhid, crm_household, crm_pair_siblings, crm_bd_household_check`). The local cache `C:/Dev/ajb_workspace/.scratch/advi_cotbkf/cache/` holds `accounts.parquet` (Black Diamond: `account_id, relationship_id, account_open_date`), `holdings.parquet` (Black Diamond: `date, account_id, asset_name, ticker, units, cusip`), `positions.parquet` and `transactions.parquet` (Commonwealth). Where each side's human-readable account name or registration lives is for the worker to find by following the code that produced the packet (`data/assets/scripts/silver/cotbkf_review_packet.py` and the R4 route it reads) and to report.
+
+**Rule 24.** Domain: presenting the 107 pairs to confirm (and the 11 deterministic ones for information) to a person. Subtraction: the workbook, its cover, its rows, its strength words and its answer column -> `CB-da-1`. Uncovered here by design: who confirms and how the answers come back (Andrew's), applying any link (only on a person's word), any change to the matching rules, any contact with Cottonwood or Commonwealth.
+
+| cell | item | serves | risk | depends_on | slot |
+|---|---|---|---|---|---|
+| `CB-da-1` | read-only LOCAL: build the review workbook from the key, the packet and the local and served tables; write it to the desktop only; write a counts-only record in the repo | FWD-8, FWD-9 | LOCAL | none | `0.9.0_WK_ADVI_COTBKF~194` |
+
+**Fan-out (to state at the cut):** `1 of 1 chains, cap 8`.
