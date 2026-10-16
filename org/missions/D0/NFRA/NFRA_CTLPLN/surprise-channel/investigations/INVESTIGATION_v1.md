@@ -12743,3 +12743,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "W135-S3 stays as filed (append-only). The cell's rule clears its one residual line (pandas/__init__.py, wheel line 2) through the wheel-side collapse at the one seam; the CTO dispositions W135-S3 and this row. The rule was not widened beyond the one seam."
 }
 ```
+
+## NFRA_CTLPLN-W141-S1 -- the register expectation read as a tree home under ROOT shrinks with a sparse org/missions
+
+```json
+{
+  "id": "NFRA_CTLPLN-W141-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~141",
+  "surfaced_at": "2026-10-16T12:31:25Z",
+  "one_line": "CT-bc-1 BUILD step 2 defines the register expectation as non-terminal register rows with a tree home under ROOT. In a sparse worktree that holds part of org/missions, that expectation shrinks with the tree it is checked against, so the W137-S1 silent zero would survive. The worker took the expectation from each row's declared home field (org/missions/...), united with any tree home under ROOT. Both sets are 30 on the main tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/placement-check.py at 833181d311, sparse worktree holding only org/missions/D0/NFRA/NFRA_CTLPLN (read only, before the edit): 'placement-check | live projects: 1 | ...', 'FINDINGS: 0 unplaced/unreadable, 0 cross-box write overlap(s)', rc=0",
+      "python .tools/placement-check.py after the edit, same sparse worktree (read only): 'ERROR: placement-check read 1 live project(s) but the register lists 30 with a tree home; first not read: ADVI_BDPRCE, ADVI_BILLING, ADVI_COTBKF', rc=3",
+      "read-only register measure on the main tree: 73 non-terminal rows; 30 carry a declared home under org/missions/ and 30 have a tree home; the two sets coincide row for row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-bc-1 BUILD step 2: the expectation is the number of non-terminal register rows that carry a tree home org/missions/D*/<MACRO>/<CODE>/project.json in ROOT; a healthy main tree passes with rc 0, and a short read exits 3.",
+  "world_is": "A tree-home test in ROOT counts only the rows whose tree folder is present. A sparse worktree that holds one project folder would expect one project, read one, and match. The declared home field is the register's own list and does not move with the checkout. The worker used the union of the two and ruled nothing about the CTO's definition beyond that.",
+  "notes": "Surfaced for the CTO's reading of ruling 3 (ROUND_ANALYSIS.round28.md). Row ids are W141 (this worker). The declared home is present on 30 of 73 non-terminal rows; the other 43 have no tree home in either sense and are not expected by the tool, as before."
+}
+```
+
+## NFRA_CTLPLN-W141-S2 -- the worktree cut lacks folders that the placement read and a neighbouring suite read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W141-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~141",
+  "surfaced_at": "2026-10-16T12:31:25Z",
+  "one_line": "The sparse set cut by .tools/wk-provision.sh (.tools, lib, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/devices, infra/logic/registry, org/standards and the order paths) lacks org/projects, which the placement read needs, and infra/aws/lambda/ci, which .tools/tests/test_round19_register.py --fwd7 reads. Adding each folder with git sparse-checkout add was needed to run them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at wk-NFRA_CTLPLN-141 before the add: .tools, infra/logic/registry, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards",
+      "python .tools/tests/test_round19_register.py --fwd7 before 'git sparse-checkout add infra/aws/lambda/ci': rc=1, FileNotFoundError: [Errno 2] No such file or directory ... infra\\aws\\lambda\\ci\\lambda-source-map.json; after the add (rc=0): 'FWD7-OVERLAPS total=62 shared=58 split=0 not_same_file=4 unclassified=0 ok=True'",
+      "ls org/projects in the cut worktree before 'git sparse-checkout add org/projects': No such file or directory; the placement read reached it only after the add"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-bc-1 PROOF (CTbc1-AC1, CTbc1-AC2) and the BUILD rule that a neighbouring suite is re-run at the merge: the order's cut is the set the worker needs to run the named invocations.",
+  "world_is": "The cut omits org/projects and infra/aws/lambda/ci. A full org/missions (38,331 files at HEAD) was added as well, so the healthy read could reach 30 live projects in the worktree. The worker named each add in its report.",
+  "notes": "Recorded for the CTO and the issuer: the cut's folder list is a provisioning input, not a worker decision. No neighbour suite was edited."
+}
+```
