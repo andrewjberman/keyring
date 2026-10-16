@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell2",
- "written_at": "2026-10-16T16:05:38Z",
+ "written_at": "2026-10-16T16:26:57Z",
  "written_by": "1.0.0_SA_CTO~DELL2",
  "rows": [
   {
@@ -4757,7 +4757,7 @@
    "source": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~S2/NEVER_WIDEN_IB_pr_551_ADDENDUM_1_EXPORT_FILLED_READ_GRANT_DRAFT.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-16T15:30:48Z",
    "kind": "fork",
    "context": "Hop 1's gold exists (date=2026-10-15, 14:13Z), so the CTO half's condition 3 is met; hop 2 left the release (msg 9438). The export role holds no filled-object read (row D2-S212). Gates the deploy order for hops 3 and 4, and ~F2's export candidate waits on the export server deploy.",
@@ -4813,7 +4813,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-16T16:20:31Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T1548Z_XA-20261016T154100Z-904f.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T154100Z-904f"
+   },
    "escalation": {
     "to": "xadj",
     "ref": "XA-20261016T154100Z-904f",
@@ -4830,7 +4837,7 @@
    "source": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~V2/AR_V32/AR_V32_PAIR.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-16T15:47:28Z",
    "kind": "fork",
    "context": "t55 leg A is DONE (the failure stands on REQ-d47252fe... since 15:44:44Z, AQ2 ledger OPEN); my order TO-RUN-AR-v32 (staged, 052ac6d8b4) cannot get its GO until the CTO half is signed; it mints ONE opal-users-v2 row, one dev server on 5174, two status reads; msg 9542 queued, CTO not live on the broker",
@@ -4858,7 +4865,14 @@
      "shared": []
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-16T16:26:57Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T1614Z_XA-20261016T160537Z-f98b.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T160537Z-f98b"
+   },
    "escalation": {
     "to": "xadj",
     "ref": "XA-20261016T160537Z-f98b",
