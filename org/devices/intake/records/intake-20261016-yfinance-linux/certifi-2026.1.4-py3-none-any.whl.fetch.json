@@ -1,0 +1,77 @@
+{
+  "schema": "intake-fetch/1",
+  "batch": "intake-20261016-yfinance-linux",
+  "requested": {
+    "name": "certifi",
+    "version": "2026.1.4",
+    "python_tag": "py3",
+    "abi_tag": "none",
+    "platform_tag": "any",
+    "file_name": "certifi-2026.1.4-py3-none-any.whl"
+  },
+  "index_base": "https://pypi.org",
+  "requests": [
+    {
+      "url": "https://pypi.org/pypi/certifi/2026.1.4/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 4578,
+      "at": "2026-10-16T07:00:24Z"
+    },
+    {
+      "url": "https://pypi.org/pypi/certifi/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 113109,
+      "at": "2026-10-16T07:00:24Z"
+    },
+    {
+      "url": "https://pypi.org/integrity/certifi/2026.1.4/certifi-2026.1.4-py3-none-any.whl/provenance",
+      "method": "GET",
+      "status": 200,
+      "bytes": 9736,
+      "at": "2026-10-16T07:00:24Z"
+    },
+    {
+      "url": "https://files.pythonhosted.org/packages/e6/ad/3cc14f097111b4de0040c83a525973216457bbeeb63739ef1ed275c1c021/certifi-2026.1.4-py3-none-any.whl",
+      "method": "GET",
+      "status": 200,
+      "bytes": 152900,
+      "at": "2026-10-16T07:00:24Z"
+    }
+  ],
+  "published": {
+    "sha256": "9943707519e4add1115f44c2bc244f782c0249876bf51b6599fee1ffbedd685c",
+    "size": 152900,
+    "upload_time": "2026-01-04T02:42:40.150433Z",
+    "yanked": false,
+    "requires_python": ">=3.7"
+  },
+  "project": {
+    "release_count": 75,
+    "first_release_at": "2011-12-28T07:27:42.157563Z",
+    "this_release_at": "2026-01-04T02:42:40.150433Z"
+  },
+  "attestation": "present",
+  "attestation_url": "https://pypi.org/integrity/certifi/2026.1.4/certifi-2026.1.4-py3-none-any.whl/provenance",
+  "held_path": "holding/intake-20261016-yfinance-linux/certifi-2026.1.4-py3-none-any.whl",
+  "held_sha256": "9943707519e4add1115f44c2bc244f782c0249876bf51b6599fee1ffbedd685c",
+  "held_bytes": 152900,
+  "outcome": "held",
+  "reason": "digest and size equal the published values",
+  "fetched_by": "0.9.0_WK_NFRA_CTLPLN~132",
+  "device": "laptop",
+  "at": "2026-10-16T07:00:24Z",
+  "approval": {
+    "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md",
+    "sha256": "2c354d03c2f427537f55b14c576669e66b7ddbdc18dfdfb38453cf0e6cdfc47e",
+    "matched": true
+  },
+  "release_files": [
+    "certifi-2026.1.4-py3-none-any.whl",
+    "certifi-2026.1.4.tar.gz"
+  ],
+  "index_file_name": "certifi-2026.1.4-py3-none-any.whl",
+  "received_sha256": "9943707519e4add1115f44c2bc244f782c0249876bf51b6599fee1ffbedd685c",
+  "received_bytes": 152900
+}

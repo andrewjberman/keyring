@@ -12331,3 +12331,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not a blocker for CT-ar-1: none of its three criteria runs fetchlist. The fix (a target-aware suffix, and the assessment read for the host target) is outside this order's <paths>; whether it lands before the fetch cell is the issuer's call (2.0.0_SA_COO~C)."
 }
 ```
+
+## NFRA_CTLPLN-W132-S1 -- CT-at-1: the batch approval file cannot pass intake_fetch.py's exact-line gate for the 17th wheel (multitasking 0.0.13), so the cell stops at 16 of 17
+
+```json
+{
+  "id": "NFRA_CTLPLN-W132-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~132",
+  "surfaced_at": "2026-10-16T07:06:12Z",
+  "one_line": "CT-at-1: the batch approval file names multitasking==0.0.12 on its approved-lines list and carries 0.0.13 only as the wheel file name in ADDENDUM 2, so intake_fetch.py refuses the 17th wheel (multitasking-0.0.13-py3-none-any.whl) before any request; 16 of 17 are held, unchecked, and the cell stops.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/records/intake-20261016-yfinance-linux/multitasking-0.0.13-py3-none-any.whl.fetch.json@2d981d32d7 -- outcome refused, reason 'approval file does not contain the exact multitasking==0.0.13', requests [] (zero requests); the same refusal printed on the first run and on the one retry with identical arguments, same session",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md@1fb283d47c line 27 reads 'multitasking==0.0.12'; line 103 (ADDENDUM 2) names the file 'multitasking-0.0.13-py3-none-any.whl' only; the text 'multitasking==0.0.13' does not occur in the file",
+      "org/devices/intake/intake_fetch.py@HEAD line 357: approval() matches the exact 'name==version' text with name and version boundaries; gate_public() refuses on no match (lines 370-371) before any socket is opened",
+      "holding: 16 wheels in C:/opal-intake/holding/intake-20261016-yfinance-linux/, each digest and size equal to the resolve table; their 16 held fetch records are committed at a2c586b610 (5), e575ed966f (5), bb4ef3eaa6 (5) and 2d981d32d7 (yfinance)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-at-1 steps 1 and 2: the 17 rows are the 16 ADDENDUM 1 file names plus multitasking-0.0.13-py3-none-any.whl (ADDENDUM 2), each fetched through intake_fetch.py with --approved-by the CTO approval file, which names each exact name==version.",
+  "world_is": "The approval file's approved lines carry multitasking==0.0.12 (its SDIST-ONLY version) and ADDENDUM 2 gives the 0.0.13 wheel by file name only, so the tool's exact-line gate refuses 0.0.13. The worker did not edit the approval file, did not pick another approval file, and did not fetch a source archive. The 16 approved wheels for the other lines were fetched and held. No check, release, pack or Taildrop was run on any wheel; check 8 was not written.",
+  "notes": "The worker face's STOP rule applies: the cell stops at this refusal and runs no checks on the 16 held wheels. Clearing needs the CTO: either the approval file names multitasking==0.0.13 as an approved line, or a ruling that says otherwise. The refused record is committed as the measured state; no record was rewritten."
+}
+```

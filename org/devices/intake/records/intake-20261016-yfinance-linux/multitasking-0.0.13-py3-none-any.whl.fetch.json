@@ -1,0 +1,77 @@
+{
+  "schema": "intake-fetch/1",
+  "batch": "intake-20261016-yfinance-linux",
+  "requested": {
+    "name": "multitasking",
+    "version": "0.0.13",
+    "python_tag": "py3",
+    "abi_tag": "none",
+    "platform_tag": "any",
+    "file_name": "multitasking-0.0.13-py3-none-any.whl"
+  },
+  "index_base": "https://pypi.org",
+  "requests": [
+    {
+      "url": "https://pypi.org/pypi/multitasking/0.0.13/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 18707,
+      "at": "2026-10-16T07:27:36Z"
+    },
+    {
+      "url": "https://pypi.org/pypi/multitasking/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 29850,
+      "at": "2026-10-16T07:27:36Z"
+    },
+    {
+      "url": "https://pypi.org/integrity/multitasking/0.0.13/multitasking-0.0.13-py3-none-any.whl/provenance",
+      "method": "GET",
+      "status": 404,
+      "bytes": 78,
+      "at": "2026-10-16T07:27:36Z"
+    },
+    {
+      "url": "https://files.pythonhosted.org/packages/d3/1c/24dbf69b247f287401c904a396233a43c89fd4fb9b7cd2e50e430e9cd57c/multitasking-0.0.13-py3-none-any.whl",
+      "method": "GET",
+      "status": 200,
+      "bytes": 16380,
+      "at": "2026-10-16T07:27:36Z"
+    }
+  ],
+  "published": {
+    "sha256": "ec9243af140c67bfe52dc98d7173c294512735a88e8425c458b250db99dc2b48",
+    "size": 16380,
+    "upload_time": "2026-04-23T12:14:13.776575Z",
+    "yanked": false,
+    "requires_python": null
+  },
+  "project": {
+    "release_count": 13,
+    "first_release_at": "2016-12-21T19:21:16.010876Z",
+    "this_release_at": "2026-04-23T12:14:13.776575Z"
+  },
+  "attestation": "absent",
+  "attestation_url": "https://pypi.org/integrity/multitasking/0.0.13/multitasking-0.0.13-py3-none-any.whl/provenance",
+  "held_path": "holding/intake-20261016-yfinance-linux/multitasking-0.0.13-py3-none-any.whl",
+  "held_sha256": "ec9243af140c67bfe52dc98d7173c294512735a88e8425c458b250db99dc2b48",
+  "held_bytes": 16380,
+  "outcome": "held",
+  "reason": "digest and size equal the published values",
+  "fetched_by": "0.9.0_WK_NFRA_CTLPLN~132",
+  "device": "laptop",
+  "at": "2026-10-16T07:27:36Z",
+  "approval": {
+    "path": "C:/Users/AndrewBerman/Desktop/ajb_workspace/org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md",
+    "sha256": "866d478fc743969c2ef520da2d8ce5ca5470b5fa760f24d689a6c784fa9596de",
+    "matched": true
+  },
+  "release_files": [
+    "multitasking-0.0.13-py3-none-any.whl",
+    "multitasking-0.0.13.tar.gz"
+  ],
+  "index_file_name": "multitasking-0.0.13-py3-none-any.whl",
+  "received_sha256": "ec9243af140c67bfe52dc98d7173c294512735a88e8425c458b250db99dc2b48",
+  "received_bytes": 16380
+}
