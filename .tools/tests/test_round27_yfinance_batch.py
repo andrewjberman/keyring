@@ -25,6 +25,15 @@ Flags (each prints one summary line; exit 0 only when every requested line says 
               specifier) or one of the 7 host-satisfied (the host version meets it). Each violation prints one
               BATCH-REQUIRES-STOP line. ok also needs all 17 wheels read and exactly 7 host-satisfied members.
 
+  --release   BATCH-RELEASE released=<n> check8=<SIGNED|OTHER> names_equal=<True|False> sha_equal=<True|False> ok=<True|False>
+              read-only. ok: the release folder holds exactly the 17 approved wheels plus one <name>.delivery.txt each, each
+              wheel's bytes equal its fetch record's held_sha256, every check record reads 'checked' with check 8 passed and
+              naming the CTO's signed check-8 file, and the holding folder holds none of the 17. Opt-in: not in the default run.
+  --pack      BATCH-PACK files=<n> manifest_ok=<True|False> verify=<INTAKE-VERIFY last line> ok=<True|False>
+              read-only; runs intake_receive.py verify locally on ~/tdrop/out/<batch> (never sends). ok: 52 files in the pack
+              folder, MANIFEST.json names the 17 wheels with their on-disk SHA-256, and verify's last line reads wheels=17
+              verified=17 checked=17 stray=0 ok=True. Opt-in: not in the default run.
+
 Paths: records  OPAL_INTAKE_RECORDS (a base; batch folder under it), else org/devices/intake/records beside this repo.
        holding  OPAL_INTAKE_ROOT (a root; holding/<batch>/ and release/<batch>/ under it), else <drive of this repo>/opal-intake.
 Standard library plus the kit (org/devices/kit_python_wheels.py) for markers and specifiers; Python 3.12; ASCII output.
@@ -38,6 +47,7 @@ import json
 import os
 import pathlib
 import re
+import subprocess
 import sys
 import zipfile
 
@@ -333,14 +343,96 @@ def cmd_requires() -> bool:
     return ok
 
 
+# ------------------------------------------------------------------------------------------------------- --release
+
+DELIVERY_SUFFIX = ".delivery.txt"
+PACK_EXPECTED_FILES = EXPECTED * 3 + 1   # per wheel: wheel, .check.json, .delivery.txt; plus MANIFEST.json
+VERIFY_WANT = "wheels=17 verified=17 checked=17 stray=0 ok=True"
+
+
+def pack_dir() -> pathlib.Path:
+    return pathlib.Path(os.path.expanduser("~")) / "tdrop" / "out" / BATCH
+
+
+def cmd_release() -> bool:
+    exp = expected_table()
+    rel = release_dir()
+    rel_names = set(p.name for p in rel.iterdir() if p.is_file()) if rel.is_dir() else set()
+    delivery = set(n for n in rel_names if n.endswith(DELIVERY_SUFFIX))
+    wheels_on_disk = rel_names - delivery
+    names_equal = (set(exp) == wheels_on_disk and delivery == set(fn + DELIVERY_SUFFIX for fn in exp))
+    hold = holding_dir()
+    held_left = [fn for fn in exp if (hold / fn).exists()]
+    sha_equal = True
+    check8_ok = True
+    records_checked = True
+    released = 0
+    for fn, e in sorted(exp.items()):
+        frec = read_json(records_dir() / (fn + ".fetch.json")) or {}
+        crec = read_json(records_dir() / (fn + ".check.json")) or {}
+        by_n = {c.get("n"): c for c in crec.get("checks", []) if isinstance(c, dict)}
+        c8 = by_n.get(8) or {}
+        c8_ev = c8.get("evidence") or {}
+        if not (c8.get("verdict") == "passed" and c8_ev.get("path") == CHECK8_SIG_REL and c8_ev.get("signer")):
+            check8_ok = False
+            print("BATCH-RELEASE-FAIL %s check 8 verdict=%s path=%s" % (fn, c8.get("verdict"), c8_ev.get("path")))
+        if crec.get("verdict") != "checked":
+            records_checked = False
+        if fn in wheels_on_disk:
+            released += 1
+            got = sha256_of(rel / fn)
+            if got != e["sha256"] or got != frec.get("held_sha256") or got != crec.get("held_sha256"):
+                sha_equal = False
+                print("BATCH-RELEASE-FAIL %s sha256 differs from the index value or its records" % fn)
+    check8 = "SIGNED" if (check8_ok and records_checked and (REPO_ROOT / CHECK8_SIG_REL).is_file()) else "OTHER"
+    ok = (released == EXPECTED and names_equal and sha_equal and check8 == "SIGNED" and not held_left)
+    if held_left:
+        print("BATCH-RELEASE-FAIL still in holding: %s" % ", ".join(held_left))
+    print("BATCH-RELEASE released=%d check8=%s names_equal=%s sha_equal=%s ok=%s"
+          % (released, check8, names_equal, sha_equal, ok))
+    return ok
+
+
+# ---------------------------------------------------------------------------------------------------------- --pack
+
+def cmd_pack() -> bool:
+    exp = expected_table()
+    pdir = pack_dir()
+    files = sorted(p for p in pdir.iterdir() if p.is_file()) if pdir.is_dir() else []
+    n = len(files)
+    man = read_json(pdir / "MANIFEST.json") if pdir.is_dir() else None
+    man = man if isinstance(man, dict) else {}
+    entries = [e for e in man.get("files", []) if isinstance(e, dict)]
+    man_names = set(e.get("name") for e in entries)
+    man_ok = (man.get("schema") == "intake-manifest/1" and man.get("batch") == BATCH and man_names == set(exp)
+              and all((pdir / e["name"]).is_file() and sha256_of(pdir / e["name"]) == e.get("sha256") for e in entries))
+    if pdir.is_dir() and (pdir / "MANIFEST.json").is_file():
+        vline = "NONE"
+        env = dict(os.environ, AGENTBUS_DEVICE="laptop")
+        proc = subprocess.run([sys.executable, str(REPO_ROOT / "org" / "devices" / "intake" / "intake_receive.py"),
+                               "verify", "--from", str(pdir)],
+                              capture_output=True, text=True, encoding="utf-8", errors="replace", env=env, timeout=200)
+        lines = [ln for ln in proc.stdout.splitlines() if ln.strip()]
+        if lines:
+            vline = lines[-1]
+    else:
+        vline = "NO-PACK"
+    verify_ok = vline.startswith("INTAKE-VERIFY") and VERIFY_WANT in vline
+    ok = n == PACK_EXPECTED_FILES and man_ok and verify_ok
+    print("BATCH-PACK files=%d manifest_ok=%s verify=%s ok=%s" % (n, man_ok, ascii_text(vline), ok))
+    return ok
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--fetch", action="store_true")
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--requires", action="store_true")
+    ap.add_argument("--release", action="store_true")
+    ap.add_argument("--pack", action="store_true")
     a = ap.parse_args()
     flags = [a.fetch, a.check, a.requires]
-    if not any(flags):
+    if not any(flags) and not (a.release or a.pack):
         flags = [True, True, True]
     results = []
     if flags[0]:
@@ -349,6 +441,10 @@ def main() -> int:
         results.append(cmd_check())
     if flags[2]:
         results.append(cmd_requires())
+    if a.release:
+        results.append(cmd_release())
+    if a.pack:
+        results.append(cmd_pack())
     return 0 if all(results) else 1
 
 

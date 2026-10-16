@@ -12359,3 +12359,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The worker face's STOP rule applies: the cell stops at this refusal and runs no checks on the 16 held wheels. Clearing needs the CTO: either the approval file names multitasking==0.0.13 as an approved line, or a ruling that says otherwise. The refused record is committed as the measured state; no record was rewritten."
 }
 ```
+
+## NFRA_CTLPLN-W133-S1 -- check 8 cannot read passed: the signed file names no wheel file
+
+```json
+{
+  "id": "NFRA_CTLPLN-W133-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~133",
+  "surfaced_at": "2026-10-16T07:50:37Z",
+  "one_line": "CT-au-1: the CTO's signed check-8 file CTO_CHECK8_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md names the batch but none of the 17 wheel file names, so intake_check.py check 8 reads 'failed' for every file and release refuses; no file was released, packed or sent.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md@4c20c2bb3c -- a text search finds none of the 17 '*.whl' names (17 of 17 MISSING); the tabulate signed file CTO_CHECK8_NFRA_CTLPLN_INTAKE_TABULATE_20261016.md names its wheel and its check 8 reads passed",
+      "org/devices/intake/intake_check.py@HEAD lines 801-804 -- check_8 requires the file name to occur in the signature text: 'the signature file's text does not contain the file name'",
+      "scratch dry run, worktree .scratch/wk133 only (OPAL_INTAKE_ROOT and OPAL_INTAKE_RECORDS pointed at a scratch copy): intake_check.py check --batch intake-20261016-yfinance-linux --file frozendict-2.4.7-py3-none-any.whl prints 'c8 failed the signature file's text does not contain the file name' and verdict=not_checked; release on that scratch record prints 'INTAKE-RELEASE REFUSED ... reason=the check record does not read checked'",
+      "holding: all 17 held wheels equal their fetch records on sha256, size and published digest (read-only, 17 of 17); the committed check records at a10bc6886d still read check 8 awaiting and were NOT overwritten"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-au-1 build step 1: each of the 17 wheels is re-checked with --signed-by the CTO's signed check-8 file, then released; the CTO's signed file is the signature the cell records as check 8.",
+  "world_is": "The signed file carries the batch id and the signing line but not the 17 wheel file names that intake_check.py's check 8 requires, so check 8 cannot read passed for any file and release refuses. Clearing needs the CTO: a signed file that names each wheel file (an addendum that lists the 17 names is sufficient for the tool as written), or a ruling on the tool's text rule. The worker did not edit the signed file, did not hand-write any check record, and did not run the real check.",
+  "notes": "The coordinator held Taildrop pending dell2's CTO answer (dell2 record 565cae62e0). No tailscale command was run. Checks 1-7 in the scratch dry run read the same verdicts as the earlier record for frozendict (c1 passed, c2 passed, c3 passed, c4 passed, c5 not_applicable, c6 passed, c7 passed); the other 16 were not re-run."
+}
+```
