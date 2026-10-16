@@ -22162,3 +22162,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-S114 -- TO-DB-b-291: gate (c) read literally trips on stale copies of a closed ledger's sentinel; iam.tf fails fmt -check inside a pinned file; the Lambda answers from the hardcoded calendar fallback
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S114",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T09:25:00Z",
+  "one_line": "TO-DB-b-291 odd finds, none blocking: (1) step 0(c) says any open marker at ANY live worktree naming the surface is a STOP, but four ANLREQ worker worktrees (wk-irpt-anlreq-230 to 233) carry a stale copy of the FIRST pair's sentinel for a ledger already CLOSED on trunk (b-276's order had the sentence 'stale OPEN marker copies are named, never closed'; this order lacks it); (2) terraform fmt -check reads rc 3 on iam.tf, a file the signed packet pins by hash 0008681b0b01 (the first pair's root read rc 0); (3) the Lambda's trading calendar is the hardcoded fallback (every manifest reads calendar_source fallback_2010_2027), the W226-S1 class the CTO's condition 2 anticipated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "marker scan over 74 live worktrees (git grep at HEAD of .open_deploys for the root, the function name and the platinum reporting prefix): 4 hits, all the file irpt-dashbd-cottonwood-reporting-publish-20261016.json at wk-irpt-anlreq-230, -231, -232 and -233; the same ledger's change_management entry on trunk reads 'CLOSED -- nothing stranded -- closed 20261016T071926Z' and box/dell2 HEAD carries no sentinel; positive control on a known marker token hit 41 worktrees; the packet's section 3 states the first pair's ledger CLOSED (6650d1aac6)",
+      "terraform fmt -check -recursive on infra/aws/terraform/investor-reporting/reporting-publish-iso: prints iam.tf, rc 3; the file's sha256 first 12 hex 0008681b0b01 equals the packet's pin; not rewritten (fmt writes by default; only -check was run)",
+      "after the full republish: all 939 manifests carry calendar_source, the sorted distinct values answered are [fallback_2010_2027]; the Lambda log reads 'trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027...)'; the dry run's unreported days equal the report-build function's list, so the CTO's condition 2 stop did not fire"
+    ]
+  },
+  "spec_asserts": "Order step 0(c): no ledger and no .open_deploys marker at ANY live worktree names the root, the function or the prefix; any one open is a STOP. Step 4: fmt -check is a step. Packet section 10 and the CTO half condition 2: which calendar the Lambda answers from is read from calendar_source.",
+  "world_is": "The gate's literal reading and its intent differ when a closed ledger's sentinel survives in a worker worktree cut during the open window; I read it as the intent (an open change on the surface) and named the four copies in the ledger and here. The fmt deviation is in a pinned file and waits on a pair that may touch it. The deployed publisher computes its unreported days from the fallback calendar, correct through 2027 and then needing the regenerate step the log names (lib/tests/gen_nyse_closures.py --write before 2028)."
+}
+```
