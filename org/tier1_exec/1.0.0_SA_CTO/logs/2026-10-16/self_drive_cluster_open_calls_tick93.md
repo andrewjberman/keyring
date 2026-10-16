@@ -35,7 +35,6 @@ arming record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_
 - `dell1 142a`: acknowledge the R9 departure (R20; CLAUDE.md rule 30).
 - dell1 scratch delete (`SCRATCH2`, `SCRATCH_TARGET`): recursive delete (CLAUDE.md Agent Autonomy). Put to him, no answer yet.
 - NFRA_TRNSPT S11: arrange that Lauren adds him to the Research series invite, or grant admin consent for fix 2.
-- `FIDELES_IMAP_SECRET`: his credential.
 - Sittings, sign-ins and sends: `21d9`, `21c5`, `8ed7`, `f0d2`, `def4`, `a519`, `44eb`, `8f2b`, `c9a4`, `b87f`, `e260`.
 - `dell2 c02c`: postponed on his word.
 
