@@ -79,7 +79,7 @@ RULE NUMBERS ARE STABLE IDs, NOT READING ORDER. Rules 4-12 and 18 live in `/clou
       under different `~lane` instances.
     - **Seating: ONE PROJECT PER TIER-2 SEAT INSTANCE**, enforced by `.tools/to-decomp-ref-lint.py`'s seating check.
       It does NOT reach Tier 1: a Tier-1 seat may hold several projects and seat several Tier-1 lanes. Record:
-      `ANDREW_DIRECT_20260910_173xZ_*` (tier1 CTO).
+      `ANDREW_DIRECT_20260910_173xZ_*` (tier1 CTO). CloudOps is the exception, seated by macro: rule 34.
     - A worker's write surface is exactly the `<paths>` its non-terminal order names (`.tools/owned-paths-validate.py`);
       its rows mint `<CODE>-W<n>-S<k>`; it writes no telemetry (L7 reads from git). The eight v3 carriers refuse (spine
       section 3), as does the drain's refuser on the merged index (`.tools/safe-merge.sh`); spine section 4 binds by
@@ -89,6 +89,11 @@ RULE NUMBERS ARE STABLE IDs, NOT READING ORDER. Rules 4-12 and 18 live in `/clou
     the ones that touch only it, a cross-fabric call going MSTR to MSTR; COOs work by a drive skill; every fabric
     seats a CVO; the CRO briefs, and researches S3+ or WORLD operations.** Mechanism: launchers, skills and gates
     (DESIRED; binds by reading). Spec: `org/missions/D0/NFRA/NFRA_CTLPLN/prd/NFRA_CTLPLN_PRD.md` C-SEATS.
+34. **CLOUDOPS IS SEATED ONE LANE PER MACRO PER BOX, never one per task: every CloudOps order of that macro's projects
+    goes to the live macro lane (`0.7.0_AE_CloudOps~<MACRO><n>`); a fourth project with live orders at once seats a
+    second lane for the macro.** Mechanism: MSTR's seating, and the seating check in `.tools/to-decomp-ref-lint.py`, which
+    refuses a CloudOps order outside the lane's macro (DESIRED until landed there). Order:
+    `ANDREW_DIRECT_20261016_154xZ_CLOUDOPS_ONE_SEAT_PER_MACRO_PER_BOX.md` (tier1 CTO).
 
 ## 2. HOW MUCH TO CHECK -- the speed governor
 
