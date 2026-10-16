@@ -21406,3 +21406,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The carrying commit for a portal file is in the nested portal repo (branch wk-IRPT_DASHBD-418-portal), outside the workspace store. The workspace checker cannot resolve it, so that row is announced and not asserted; the workspace-side BUILD record row resolves at its pin."
 }
 ```
+
+## IRPT_DASHBD-D2-W1402-S1 -- the ratified Tax withheld word is INTERNAL, but the per-code rule gives every Cottonwood Tax Withholding row EXTERNAL_OUT
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1402-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1402",
+  "surfaced_at": "2026-10-16T07:05:15Z",
+  "one_line": "The ratified type word Tax withheld is INTERNAL and its definition says it is neither an external flow nor income, while the order's per-code External Flow rule makes the pair's Withdrawal rows EXTERNAL_OUT; the record keeps the rule and carries the word unchanged for ratification.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R128_LIVE_SOURCE_CENSUS_3FIRMS.json@4ee228f63c firms.cottonwood.pairs: Expense | Tax Withholding, rows 1279, external_flow {Withdrawal: 1279}",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1001/FWD5_WORDS_PROPOSAL_R124.json@4d272723b3 opal_types: Tax withheld, flow_class INTERNAL",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1402.fwd5-cottonwood-words-recut-type-subtype-pairs-and-action-values.md@4ee228f63c step 3: external_flow_rule and the per-code flow class"
+    ]
+  },
+  "spec_asserts": "The ratified type word Tax withheld carries flow class INTERNAL and the definition: the repository's withholding rule makes it neither an external flow nor income. The order's external_flow_rule maps a Withdrawal row to EXTERNAL_OUT and takes the pair's class only when External Flow is None.",
+  "world_is": "Cottonwood's Expense | Tax Withholding pair has 1279 rows, all External Flow Withdrawal. Mapped to Tax withheld, every row is EXTERNAL_OUT by the rule, which the word's INTERNAL class does not match. The record maps the pair to Tax withheld with flow_class_none null and files this row; the word is not changed here."
+}
+```
+
+## IRPT_DASHBD-D2-W1402-S2 -- the order gives no None-row flow class for a pair whose type word is an external word, so the Transfer Out pair is set UNRESOLVED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1402-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1402",
+  "surfaced_at": "2026-10-16T07:05:15Z",
+  "one_line": "The order says flow_class_none is the pair's own class from INTERNAL, INCOME, FEE, CORPORATE_ACTION or UNRESOLVED, but for a pair whose ratified word is EXTERNAL_OUT (Transfer out) the pair has no such class; the record sets UNRESOLVED for its 25 None rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R128_LIVE_SOURCE_CENSUS_3FIRMS.json@4ee228f63c firms.cottonwood.pairs: Transfer Out | Transfer Out, rows 4763, external_flow {None: 25, Withdrawal: 4738}",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1001/FWD5_WORDS_PROPOSAL_R124.json@4d272723b3 opal_types: Transfer out, flow_class EXTERNAL_OUT",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1402.fwd5-cottonwood-words-recut-type-subtype-pairs-and-action-values.md@4ee228f63c step 3: flow_class_none rule"
+    ]
+  },
+  "spec_asserts": "flow_class_none is the pair's own class, one of INTERNAL, INCOME, FEE, CORPORATE_ACTION or UNRESOLVED, and never EXTERNAL_IN or EXTERNAL_OUT. The order does not say what class a pair's None rows take when the pair's ratified word is an EXTERNAL_IN or EXTERNAL_OUT word.",
+  "world_is": "Transfer Out | Transfer Out carries 4763 rows: 4738 Withdrawal and 25 None. Its ratified word Transfer out is EXTERNAL_OUT, so no permitted class fits the 25 None rows. The record sets flow_class_none UNRESOLVED (counted, never signed) for this pair; the question is for the CTO's ratification."
+}
+```
