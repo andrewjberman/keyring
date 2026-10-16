@@ -21406,3 +21406,133 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The carrying commit for a portal file is in the nested portal repo (branch wk-IRPT_DASHBD-418-portal), outside the workspace store. The workspace checker cannot resolve it, so that row is announced and not asserted; the workspace-side BUILD record row resolves at its pin."
 }
 ```
+
+## IRPT_DASHBD-D2-W1302-S1 -- the worktree's four materialized folders do not cover the existing class test's imports (lib and the v2_portal _shared folder added by sparse checkout)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1302-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1302",
+  "surfaced_at": "2026-10-16T06:44:47Z",
+  "one_line": "The worker face names four folders as materialized; the gate test test_account_class_daily.py imports two more, so it failed at collection until both were added with git sparse-checkout add.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1302 WORKER FACE: org/standards, lib, data/assets/scripts/gold/irpt_reporting and infra/logic are materialized; the step-4 gate runs tests/test_account_class_daily.py.",
+  "world_is": "data/assets/scripts/lib (stream_parquet, read by account_return_daily.py) and infra/aws/lambda/v2_portal/_shared (etf_classifications_dynamodb, read by account_class_daily.py) were outside the sparse checkout. The existing test failed at collection (no module stream_parquet, then no module etf_classifications_dynamodb). Both folders were added with git sparse-checkout add, and the existing test then passed 25 of 25. The sparse config is worktree-local; no tracked file changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1302.fwd5-49-financial-account-transaction-producer-offline-tests-not-wired.md",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_class_daily.py@abb61b3bc0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. DBF127-2-AC1 and AC2 both PASS; the row records the choice made under the refusal clause."
+}
+```
+
+## IRPT_DASHBD-D2-W1302-S2 -- the contract's cash-sign rule needs the tr_cd column, which the order's fact_trn column list omits; the normaliser requires it and refuses a frame without it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1302-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1302",
+  "surfaced_at": "2026-10-16T06:44:47Z",
+  "one_line": "The order lists the frame columns the normaliser reads without tr_cd; the contract's amount meaning signs only cash rows, and the cash marker is tr_cd.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1302 step 2: normalize_trn reads account_id, business_date, trade_date, tran_srcde, quantity, price, gross_amount, debit_credit and ticker_symbol; the frame may carry others.",
+  "world_is": "The contract says the amount sign is taken from debit_credit on a cash row and not on an in-kind row. The declaration's cash_code_column is tr_cd with cash_code_value FC, so without tr_cd no row can be classed cash or in-kind. The producer requires tr_cd (the declared column) in addition to the listed nine and refuses a frame that lacks it. The contract shape wins, as the refusal clause says.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1302.fwd5-49-financial-account-transaction-producer-offline-tests-not-wired.md",
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json@abb61b3bc0",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@abb61b3bc0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. DBF127-2-AC1 and AC2 both PASS; the row records the choice made under the refusal clause."
+}
+```
+
+## IRPT_DASHBD-D2-W1302-S3 -- the firm literal is not typed in the module: the supported firm is derived from the declaration's registry key, as the naming convention requires
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1302-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1302",
+  "surfaced_at": "2026-10-16T06:44:47Z",
+  "one_line": "The order's firm == '49financial' is a typed firm token in a new .py file, which the naming convention keeps out of this file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1302 step 2: only firm == '49financial' is supported (any other firm: SystemExit REFUSED).",
+  "world_is": "sources.json states that no firm token appears in a source file and that the commit-time naming limb refuses one outside the registry and a lookup() argument. account_transaction.py derives the supported firm with account_return_daily.firm_scope over the one declared custody entry, which resolves to the same value the contract's mapping carries. The refusal behaviour for any other firm is unchanged, and the tests use the derived value and a made-up other firm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1302.fwd5-49-financial-account-transaction-producer-offline-tests-not-wired.md",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@abb61b3bc0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. DBF127-2-AC1 and AC2 both PASS; the row records the choice made under the refusal clause."
+}
+```
+
+## IRPT_DASHBD-D2-W1302-S4 -- the contract gives no amount sign for a security trade leg (tr_cd TR): the producer carries its gross_amount unsigned
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1302-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1302",
+  "surfaced_at": "2026-10-16T06:44:47Z",
+  "one_line": "The contract says the sign is taken from debit_credit on cash rows and not on in-kind rows; a trade leg is neither FC nor IC.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT amount meaning: On a cash row the sign is taken from debit_credit as account_return_daily takes it; on an in-kind row debit_credit is a position side.",
+  "world_is": "The declaration names a trade leg (trade_code_value TR, direction on trade_typcd BUY or SELL, read by account_class_daily). The contract does not say how a TR row's amount is signed. The producer applies the cash sign only to FC rows and carries gross_amount unsigned on every other row, so a trade row's amount has no direction. Served data would carry that, so the contract owner should state the rule before any release.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json@abb61b3bc0",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@abb61b3bc0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. DBF127-2-AC1 and AC2 both PASS; the row records the choice made under the refusal clause."
+}
+```
+
+## IRPT_DASHBD-D2-W1302-S5 -- four mapping rows pair a word with a flow class of another kind (INTR, SO, GUP, DFRAJ); the producer reproduces them as the mapping states
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1302-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1302",
+  "surfaced_at": "2026-10-16T06:44:47Z",
+  "one_line": "The mapping's flow_class is taken as the row's flow class, as the order says; some pairings look inconsistent with their word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1302 step 2: a mapped code gets its word, its derived action and the row's flow class.",
+  "world_is": "In the contract's 49financial mapping, INTR is Fee with flow INCOME, SO is Corporate action with flow INCOME, GUP is Fee credit with flow CORPORATE_ACTION, and DFRAJ is Dividend with flow UNRESOLVED while DFR is Dividend with flow INCOME. Each is a stated mapping row, so the producer copies it and the contract owner decides whether the pairing is right. Not a producer defect; recorded for the CRO's review.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json@abb61b3bc0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. DBF127-2-AC1 and AC2 both PASS; the row records the choice made under the refusal clause."
+}
+```
