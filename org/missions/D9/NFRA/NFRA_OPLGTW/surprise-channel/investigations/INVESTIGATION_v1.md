@@ -25892,3 +25892,30 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "CARRIED, stated in the OG-ap-31 ask and in all three halves: the host MASTER_ADMIN_EMAILS holds one entry (andrew@), so OG-en-14's owner exemption reaches andrew@ only; opalbloomberg@ has no deny record today (deleted by OG-ap-30) and is not exempt if a later restricted-principal write gives it one. Widening the roster is an env change and a separate ask (the CVO's condition: any MASTER_ADMIN_EMAILS edit widens the deny exemption and its ask must say so). Carried to the round-40 enrichment list as the roster question for the owner (Andrew): whether the Bloomberg account's browser access should be exempt by roster or by a scoped deny."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T22:57:11Z",
+  "id": "NFRA_OPLGTW-Z-S326",
+  "one_line": "Round-39 disposition (RULED) of Z-S324: the release tree recipe gains the trunk halt gate and a CloudOps home folder for the next release order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S324"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/AP31_PHASE_B_NOTES.md (the two refusals and the cure); OG-ap-31 closed with the ledger CLOSED, no override"
+    ]
+  },
+  "spec_asserts": "A worker or applier row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "RULED, a recipe repair for the next release order (issuer): a release tree cut on the live ref carries the live ref's .tools/halt-gate-check.sh, which rejects a rule-34 lane (~<MACRO><n>), and its sparse cone needs one org/<tier>/ home folder matching the base. Both refusals came before any upload and were cured with no override. The next batched release order's step 2 therefore says: lay the TRUNK copy of .tools/halt-gate-check.sh into the release tree UNCOMMITTED, add a CloudOps home folder to the cone, and restore both before the deploy tree's clean check (as the naming-gate overlay already is). Not a defect of OG-ap-31: nothing half-landed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "RULED, a recipe repair for the next release order (issuer): a release tree cut on the live ref carries the live ref's .tools/halt-gate-check.sh, which rejects a rule-34 lane (~<MACRO><n>), and its sparse cone needs one org/<tier>/ home folder matching the base. Both refusals came before any upload and were cured with no override. The next batched release order's step 2 therefore says: lay the TRUNK copy of .tools/halt-gate-check.sh into the release tree UNCOMMITTED, add a CloudOps home folder to the cone, and restore both before the deploy tree's clean check (as the naming-gate overlay already is). Not a defect of OG-ap-31: nothing half-landed."
+}
+```
