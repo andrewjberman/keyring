@@ -3142,3 +3142,31 @@
   "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pf-8."
 }
 ```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S67",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-16T12:43:26Z",
+  "one_line": "MP-pf-9 step 1 STOPS at the tests: on the release tree rel-nfra-mcportal-pf (cut on live 38fe44d5cb, commit 3cc7017f1f) 11 of 109 tests in tests/test_admin*.py + tests/test_owner_gate.py fail; 5 are the order's excused FileNotFoundError class, 6 are AssertionError and are NOT excused, so the ASK is not written and the pair is not requested.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run in C:/tmp/mp-pf-rel/infra/aws/ec2/opal-gateway: python -m pytest tests/test_admin*.py tests/test_owner_gate.py -q -p no:cacheprovider => 11 failed, 98 passed.",
+      "EXCUSED class (5): test_admin_fabric.py::test_roster_equals_devices_register, test_admin_fabric_calls.py::test_real_capture_calls, test_admin_fabric_calls.py::test_request_accepted_by_open_calls_scan, test_admin_fabric_gitstate.py::test_real_capture_gitstate, test_admin_fabric_overlap.py::test_real_capture_overlap. FileNotFoundError on org/devices/DEVICES.json, .../2.0.0_SA_COO~MP/cp2/fixtures/s3_capture_20261009T0728Z.json, .tools/open-calls-scan.py: git ls-tree reads 0 at live base 38fe44d5cb and 0 in the release tree, 1 at box/sitez HEAD 1a535637fd; all five pass in the main tree at box/sitez HEAD (the second run below, 74 passed).",
+      "NOT EXCUSED (6), AssertionError: test_admin_gateway_breakdown.py::test_every_live_tool_in_exactly_one_channel, ::test_real_server_tool_inventory; test_admin_people.py::test_people_lists_every_candidate_even_holding_nothing, ::test_cadence_reads_absent_with_reason, ::test_real_server_people_inventory, ::test_people_principal_never_leaks_into_other_fields. Example: test_real_server_tool_inventory asserts ['opal-data-assets', 'opal-data-etfs', ..., 'dynamodb', ...] == ['m365'] ('environment-as-left'); test_cadence_reads_absent_with_reason asserts {'m365','plantint'} == a set that also holds 'undeclared'.",
+      "the same 6 fail when the same selection is run in the main tree at box/sitez HEAD (6 failed, 74 passed over the 6 affected files), so they are not an effect of the release tree's frozen org/ vintage.",
+      "census: git diff --stat 38fe44d5cb HEAD names only infra/aws/ec2/EC2_MANIFEST.json (1 insertion, 1 deletion); the diff over infra/aws/ec2/opal-gateway names nothing. Neither failing file contains the string EC2_MANIFEST (grep -c = 0 on both), so the pin change cannot move them. That they also fail at the bare live base is INFERRED from the identical tree, not run."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO MP-pf-9 step 1 Tests: run tests/test_admin*.py tests/test_owner_gate.py on the release tree: 0 failed, except a FileNotFoundError on a repo path outside infra/aws/ec2/opal-gateway/ that reads 0 at the live base and 1 at HEAD and passes at HEAD; 'Any other failure STOPS.'",
+  "world_is": "6 AssertionError failures outside that exception, present in the live gateway code and at box/sitez HEAD alike; not caused by this release. Done so far and unaffected: release commit 3cc7017f1f (one pin, 090b9cdc85 -> c66ca82952); resolve-only prints MCPORTAL-RESOLVED @c66ca82952; bun_cache_precheck on the c66ca82952 lockfile reads 77 of 77. NOT done: step 2 (ASK, pair) and step 3 (rollback proof); nothing opened, nothing deployed.",
+  "notes": "Ask of the issuer, one line: rule that these 6 are a known pre-existing class for this release (amend the order's test rule and name them), or re-cut the criterion. Nothing is repaired by this seat (BOUNDS 3). On the ruling I resume at step 2 on live base 38fe44d5cb, or on whatever the manifest reads at the GO."
+}
+```
