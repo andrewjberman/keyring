@@ -124,3 +124,7 @@ PHASE A ends at the ANNOUNCE: report, and stop. After PHASE B, write the proof i
 - **Halves, v3:** the COO half is SIGNED on these pins (`NEVER_WIDEN_ASK_MX-r-15_20261016.md` section 7), VOID unless the deploy-only commit is exactly as stated; the CTO half is asked on the same pins. **Starts when** the CTO half names the v3 blob and the applier has cut and verified the commit against the pins. No ANNOUNCE round-trip: report the commit sha and proceed. Apply as soon as both are true: a source that re-stamps between my 11:38Z read and the apply will fail `r13.AC3` again, and the check on the host names it.
 - Gate limb that graded this modification: none. LIMB 6 does not fire on a modification, and `<placeholders>NONE`, so GATE (viii) does not grade it.
 <status>issued</status>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-16 ~12:5xZ); MX-r-15 COMPLETE.** The applier (`0.7.0_AE_CloudOps~MI`, msg 35002) delivered the proof instance at `ec7e8a1b1f`; the issuer re-ran `proof-of-spec-check.py` on it: VALID rc=0, 4 of 4 criteria PASS on the v3 bytes (`38fe44d5cb`, live since 2026-10-16T12:19:15Z): AC1 24 of 24 sentinels, three ledgers CLOSED; AC2 127 of 127 tools; AC3 depth 11 of 11, answer-time 17 of 17; AC4 host catalog equals the tree catalog. The applier's rows Z-S126, Z-S127, Z-S128 are disarmed by Z-S129 (`17474ee51a`). Gate limb that graded this ruling: the flip-needs-a-VALID-instance limb of to-pipeline-gate.
+
+<status>complete</status>
