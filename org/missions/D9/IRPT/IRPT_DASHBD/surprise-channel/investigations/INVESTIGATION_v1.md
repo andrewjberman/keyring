@@ -21719,3 +21719,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not a criterion failure. DB156-1-AC1 PASS on the written HCL. The COO or the CTO may rule whether the face's local name was meant as a new local, which would be a locals.tf edit outside this grant."
 }
 ```
+
+## IRPT_DASHBD-D2-S110 -- disarm of W230-S1: the class handler dates the manifest from the run's own ClassTable
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S110",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T07:37:18Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W230-S1 (the class handler's classification_as_of read default_table(), a table the run never read through, so the manifest date would be None on every emitted day), on the landed tree of DB-b-286 (merged 3c9dce985d): class_days now builds ONE ClassTable per run, holds it in the module global _CLASS_TABLE and passes that same object to compute_classes, and emit_classes passes _CLASS_TABLE.as_of().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "W230-S1: the handler's emit_classes passes acd.default_table().as_of() while class_days reads through a fresh acd.ClassTable(), so as_of() is None on every emitted day.",
+  "world_is": "On the merged tree DB154-1-AC1 PASS (the handler clause: emit_classes' classification_as_of is _CLASS_TABLE.as_of(), never default_table(); class_days declares global _CLASS_TABLE, assigns it, and passes the same table object; the module defines _CLASS_TABLE), AC2 PASS (13 new tests; the new file fails on each of four mutants of class_contribution), AC3 PASS (25 existing class tests unedited). Synthetic fixtures only; the deployed function does not write the date yet (a later code-update pair).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_DASHBD-D2-W230-S1",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r148/p154_classdated.py",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-D2-W230-S1: its condition (the handler dating the manifest from a table the run did not read through) is absent on the landed tree of DB-b-286, measured by the checker's handler clause (AC1) and the class tests; the defect was the issuer's order, ruled by Amendment 1."
+}
+```
