@@ -41060,3 +41060,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S219 -- Hop 1's first scheduled fire (2026-10-16 11:41:48Z to 11:46:46Z) wrote 0 objects at the filled_report_values prefix and 
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S219",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-16T11:57:57Z",
+  "one_line": "Hop 1's first scheduled fire (2026-10-16 11:41:48Z to 11:46:46Z) wrote 0 objects at the filled_report_values prefix and logged FILLED_CATCHUP_LIST_FAILED AccessDenied on s3:ListBucket of opal-data-49financial for irpt-49f-reporting-gold-role, so the IB-pr-551 deploy gate stays closed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Ledger irpt-dashbd-hop1-filled-report-values-20261015 leg L6: the first scheduled 07:41 America/New_York fire after the apply writes the new partition (REPORT line plus the filled_report_values partition), read by 2.0.0_SA_COO~D2. The IB-pr-551 deploy waits on that first cloud write (CTO PO6/PS6 analysis, B-49F round-121 ruling 1).",
+  "world_is": "Read-only, 2026-10-16 ~11:55Z. Log group /aws/lambda/irpt-49f-reporting-gold-lambda, request 356ad20d-4c68-48dc-adf0-7de8acaafdea: START 11:41:48, five tables computed for newest landed date 2026-10-14 (7646 accounts), then FILLED_CATCHUP_LIST_FAILED 'AccessDenied ... ListObjectsV2 ... is not authorized to perform: s3:ListBucket on resource arn:aws:s3:::opal-data-49financial because no identity-based [policy allows it]; owing only the written days' at 11:46:46, END, REPORT Duration 298214 ms, Memory Size 8192 MB, Max Memory Used 1455 MB. The naming builder gives the prefix s3://opal-data-49financial/irpt/49financial/gold/filled_report_values/ (address('irpt','49financial','gold','filled_report_values',...)); list-objects-v2 on it, 5 keys max, returned KeyCount 0. The IAM read-back in the ledger (L5) listed eleven statements and the six write prefixes; it did not name a ListBucket statement for the catch-up list on this bucket. Whether the filled stage computed anything after the failed list is not read here (no filled_report_values object exists to say so). L6 is the ledger's, not mine; nothing in this row changes it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events on /aws/lambda/irpt-49f-reporting-gold-lambda from 11:38Z, 48 events, the FILLED_CATCHUP_LIST_FAILED line printed in full",
+      "aws s3api list-objects-v2 (rail-checked, one prefix) KeyCount 0",
+      "org/critical_paths/.open_deploys/irpt-dashbd-hop1-filled-report-values-20261015.json L5 and L6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the fix is hop 1's: 2.0.0_SA_COO~D2 issues, 0.7.0_AE_CloudOps~DB2 applies. This seat owes only the deploy after hop 1's first write exists."
+}
+```
