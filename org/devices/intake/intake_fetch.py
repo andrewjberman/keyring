@@ -865,7 +865,6 @@ def cmd_resolve(a):
             "specifier_mismatches=%d host_conflicts=%s" % (
                 a.target, len(run["members"]), chosen, no_wheel, len(requests), ok, new_n, mism_n,
                 "UNREAD" if host_n is None else host_n))
-    print(last)
     if a.out:
         doc = resolve_doc(run, requests, last)
         doc["ok"] = ok
@@ -878,6 +877,7 @@ def cmd_resolve(a):
             with open(md_path, "w", encoding="ascii", newline="\n") as fh:
                 fh.write(resolve_md(doc))
             print("Wrote %s" % os.path.basename(md_path))
+    print(last)  # the verdict line is the LAST line of stdout
     return 0 if ok else 1
 
 
