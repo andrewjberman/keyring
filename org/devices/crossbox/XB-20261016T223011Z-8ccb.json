@@ -11,16 +11,16 @@
  "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~U7/task_orders/IRPT_ANLREQ.TO-DELETE-SYNTH-INTAKE.fwd1-sets-r33-and-run3-u7.md",
  "opened_at": "2026-10-16T22:30:11Z",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-16T22:36:04Z",
+  "bus_message_id": "c395eeaf-cce2-4834-9125-571ab5103cd3"
  },
  "ack_bus_message_id": null,
  "closed_from": {
-  "at": null,
-  "by": null
+  "at": "2026-10-16T22:43:55Z",
+  "by": "2.0.0_SA_COO~Y2"
  },
  "closed_to_issuer": {
-  "at": null,
-  "by": null
+  "at": "2026-10-16T22:43:55Z",
+  "by": "2.0.0_SA_COO~Y2"
  }
 }

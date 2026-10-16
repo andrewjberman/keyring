@@ -9770,6 +9770,28 @@ carries none.
         "Worker report: c39.AC1 1 failed (test_c_group DeclaredBucketSource, 15 bucket-source files absent), p21.AC1 test files 0; after the widening c39.AC1 80 passed and p21.AC1 PASS in the same tree; merged at 0e4490e678."
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S136",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T22:39:41Z",
+    "one_line": "After OG-ap-31 (4be300110e) the host's catalog names opal_discover and opal_describe at integration.py:934 and :944 but MX-c-24's 6 added lines moved them to :941 and :951, so r13.AC2's index check reads 125 of 127 definitions located.",
+    "spec_asserts": "MX-c-24's order bounded the change to the silver-row answer and its tests and did not name the tool index's definition anchors, which the emitter reads as <path>:<line> from the gateway tree at services.opal-gateway.deployed_commit and the index check requires within 5 lines of the tool name.",
+    "world_is": "r13.AC2 on the host after the release (ssm c9123e58-c768-4ab1-82fe-c94f7dae2c48, 22:4xZ): definitions located 125 of 127; MISSING opal_describe and opal_discover (def=0); discover reads good 3 of 3; /health 200. The tracked and served catalog blob b81c48aa3c (and the frozen candidate 3d47a95791, emitted at deployed_commit bf9d23b518) carry :934 and :944; the live source has the defs at :941 and :951 (7 lines off, limit 5). The release commit 4be300110e sits on rel-nfra-oplgtw-batch3, not yet on box/sitez, so the manifest deployed_commit there still names bf9d23b518.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "round21/post_release/r13.AC2_host_after_og-ap-31.txt: RC index=1, MISSING opal_describe(member=b ... def=0), MISSING opal_discover(member=b ... def=0)",
+        "git grep of integration.py on trunk: INTEGRATION_ID at 102, def opal_discover at 941, def opal_describe at 951; the catalog tool_index entries read :934 and :944",
+        "same run: discover_buckets_host.sh 8 of 8 buckets echo the bucket, vendor and firm echoed 2 of 2 (MX-c-24 served); r13.AC3 monotone PASS (39 claims equal, 17 answer-time equal)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
