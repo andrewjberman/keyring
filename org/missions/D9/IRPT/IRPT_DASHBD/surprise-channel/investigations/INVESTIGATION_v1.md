@@ -22733,3 +22733,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_DASHBD-D2-W239-S1 -- the order's step 3(b) call shape breaks the DB-b-294 spy test that AC3 requires green, so AC3 cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W239-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~239",
+  "surfaced_at": "2026-10-16T10:21:33Z",
+  "one_line": "Step 3(b) passes rewrite=rewrite to cbd.run_day on every call, and the carried DB-b-294 test test_the_landing_handler_passes_its_floor_day_and_a_landed_day_carries_the_claim replaces cbd.run_day with a spy that has no rewrite parameter, so the scheduled, day and days paths raise TypeError in that test; AC3 (the whole gold tests directory green) fails as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 3(b): _run(s3, reader, days, upload, rewrite=False) passes rewrite to cbd.run_day(..., floor_day=FLOOR_DAY, rewrite=rewrite), and the scheduled, day and days paths are unchanged. AC3: the whole gold tests directory passes (one known red deselected), and the grant is data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_rewrite.py plus the three code files.",
+  "world_is": "data/assets/scripts/gold/irpt_reporting/tests/test_history_scope_derivation.py at 2cde0789d0 (not in the grant) monkeypatches cbd.run_day with spy(reader, s3, day, upload=True, floor_day=None), which has no rewrite parameter. The literal call in _run at 2cde0789d0 raises TypeError in that test: 783 passed, 1 failed, 1 deselected. The production run_day accepts rewrite, so no production call fails; the break is the spy's fixed signature. Satisfying AC3 needs either the spy widened (a file outside the grant) or _run to omit the keyword on the non-rewrite paths (a call shape step 3(b) does not state). Neither was taken; the order is left open for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I -m pytest on data/assets/scripts/gold/irpt_reporting/tests/test_history_scope_derivation.py -k test_the_landing_handler_passes_its_floor_day at 2cde0789d0: TypeError spy() got an unexpected keyword argument 'rewrite' (handler.py _run, the call to cbd.run_day)",
+      "checker p164_cot_rewrite.py check AC3 output at 2cde0789d0: FAIL: tests failed ... 783 passed, 1 failed, 1 deselected"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the DB-b-294 spy predates the rewrite keyword. The fix is a grant decision (widen the spy's signature in test_history_scope_derivation.py, or the order's 3(b) states the keyword is passed only when true). Not repaired by the worker."
+}
+```
