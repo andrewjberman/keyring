@@ -20018,3 +20018,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W218-S2 -- the outcome-route out-of-scope refusal is already tested at test_meeting_request.py:343, so the order's no-test premise is half wrong
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W218-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~218",
+  "surfaced_at": "2026-10-16T01:28:15Z",
+  "one_line": "TO-AR-ty-55 says the outcome route's out-of-scope refusal has no test; test_meeting_request.py:343 already tests it, so only the create-scope half of the premise holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-ty-55 WORKER FACE, 'What to test': the row 'POST meeting, out-of-scope caller' of FWD5_FRONT_DOOR_AND_PORTAL_MAP.md is covered by no test (test_meeting_request.py tests scope on CREATE only, line 179).",
+  "world_is": "test_meeting_request.py:179 is the create-scope test (premise holds). But test_meeting_request.py:343, test_a_refusal_reveals_nothing_about_a_ticket_outside_the_callers_scope, already exercises the outcome route's out-of-scope refusal: the coordinator is scoped to another firm, the ticket belongs to inflection, a confirm answers 404 with a body equal to the unknown-id body, the meeting is unchanged, and a same-scope confirm succeeds as the positive control. The order's claim that the outcome-route refusal has no test is therefore false at 1c87891c77. The order still required its test file, which was written as specified (5 tests, all passing); the overlap is recorded here, not acted on.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_meeting_request.py:179 at 1c87891c77 is test_create_with_a_firm_outside_the_callers_scope_is_refused_as_for_every_typed_ticket (the create-scope test the order cites)",
+      "infra/aws/lambda/ticket_center/tests/test_meeting_request.py:343 at 1c87891c77 is test_a_refusal_reveals_nothing_about_a_ticket_outside_the_callers_scope (the outcome-route out-of-scope 404, with a positive control in the same test)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1962 at 1c87891c77 carries the cited scope guard (premise holds)",
+      "infra/aws/lambda/ticket_center/tests/test_cross_firm_meeting_scope.py, committed with this row: a firm-a caller on a firm-b meeting ticket gets 404 (3 of 5 tests fail when the guard is removed in a scratch copy)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
