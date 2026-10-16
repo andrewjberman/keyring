@@ -41005,3 +41005,85 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No file is changed by this row. It is a debt note with an owner and the condition that un-parks it."
 }
 ```
+
+## IRPT_BCKEND-D2-S217 -- The split pair's Act 1 left the 49F holdings-performance function failing: its first scheduled run (11:30Z, pl
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S217",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-16T11:47:00Z",
+  "one_line": "The split pair's Act 1 left the 49F holdings-performance function failing: its first scheduled run (11:30Z, plus two retries) errored 3 of 3 with AccessDenied s3:ListBucket on opal-data-assets from the new split-adjust transactions read; the role has no grant for that prefix and the signed pair granted none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "The signed pair (COO half sha256 8f645588ab; CTO halves; ADDENDUM 2) states no IAM change rides and that the release moves two members; IB-pr-612 step 9 expects the first scheduled run to complete with split_adjust declared.",
+  "world_is": "Measured by me 2026-10-16 ~11:4xZ: CloudWatch AWS/Lambda for irpt-holdings-performance-lambda from 05:15Z: Invocations 3, Errors 3, Throttles 0 (the 11:30Z fire and two automatic retries). The function log shows [ERROR] AccessDenied on s3:ListBucket for opal-data-assets, raised in holdings_performance.py read_partition (line 706) called from _frame_for (line 1334), the split_adjust transactions read. Cause: infra/aws/terraform/investor-reporting/holdings-performance/locals.tf lines 60 to 70 derive the role's s3:GetObject and s3:ListBucket grants from each source's positions_prefix and balance_prefix only; split_adjust.transactions_prefix is not among them. The READ (IB-pr-572) and the DELTA (IB-pr-581) ran with operator credentials, which hid it; the pair did not test the function's own role. The siblings (orion, blackdiamond_z09 entries) declare no split_adjust, so they read no transactions partition and are not affected by this cause. No served data is damaged: the failing run wrote nothing; the 49F daily gold for the run's day is absent until a working run (the handler's catch-up writes days after the newest landed partition, capped). Next scheduled fire: Monday 2026-10-19 11:30Z (Mon-Fri). ESCALATED to the CTO the same hour (NEVER-2: a half-landed deploy finishes in-session or rolls back): options (a) a forward IAM pair adding list and get on the one prefix, (b) Branch B for all three. Armed until a working 49F scheduled run lands or Branch B is read back.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws cloudwatch get-metric-statistics AWS/Lambda Invocations, Errors, Throttles for irpt-holdings-performance-lambda, 2026-10-16T05:15Z to 11:45Z (read by 2.0.0_SA_COO~P2)",
+      "aws logs filter-log-events on /aws/lambda/irpt-holdings-performance-lambda since 2026-10-16T11:00Z (exception lines only)",
+      "infra/aws/terraform/investor-reporting/holdings-performance/locals.tf lines 60 to 70 and iam.tf lines 56 to 90",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-612.apply-split-adjust-act-1.md @17a450546e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Mine: the pair's blast radius omitted the function's own role. The fix is an IAM change under its own never-widen pair, or Branch B."
+}
+```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S218",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-16T11:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "IB-pr-612 first scheduled 49F run FAILED: the new split-adjust code lists opal-data-assets, which irpt-49f-holdings-performance-role has no s3:ListBucket grant for; 3 invocations, 3 errors since the apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch AWS/Lambda for irpt-holdings-performance-lambda, 2026-10-16T05:15:36Z to 11:46Z (60 s periods): Invocations 3, Errors 3, Throttles 0; the log group holds 3 START lines, all RequestId 666ad20a (one fire plus two retries)",
+      "log group /aws/lambda/irpt-holdings-performance-lambda: [ERROR] AccessDenied ... ListObjectsV2 ... irpt-49f-holdings-performance-role ... not authorized to perform s3:ListBucket on arn:aws:s3:::opal-data-assets because no identity-based policy allows the s3:ListBucket action; traceback holdings_performance.py main() pool.map(one, days), handler.py line 150",
+      "2.0.0_SA_COO~P2 msg 9317 reports the same read from its own side"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-612 AMENDMENT 1 step 9: the 49F first scheduled run completes (run_ok true) with the manifest declaring split_adjust; ADDENDUM 2 and the pair assert the release needs no IAM change (bounds: NO IAM change).",
+  "world_is": "The first scheduled 49F fire after the apply (11:30Z) failed on all three attempts with AccessDenied s3:ListBucket on opal-data-assets. The ListObjectsV2 on opal-data-assets is, per the issuer's reading (msg 9317), the new split-adjust transactions read (I did not trace the call site); the role's policy grants object reads on the silver dim_position and dim_balance prefixes only (iam.tf outputs: read_arns schwab/08335338/silver/dim_position/* and dim_balance/*) and no ListBucket on that bucket for the transactions read. So 49F's scheduled production run for 2026-10-16 produced nothing; the pre-apply code ran clean. Nothing was rolled back by me: the issuer reports the CTO is ruling between a forward IAM pair and Branch B (prior version MP3woT7ipkN4N3hcclPj3.LFigL3MEqO made newest by copy-object, one safe-apply returning all three). The next 49F fire is Monday 2026-10-19 11:30Z and fails the same way until one of the two lands. The siblings' first runs (Cottonwood 12:15Z, Inflection 14:00Z) are not yet read; their declarations carry no split_adjust, so the transactions read should not run for them.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S219 -- Hop 1's first scheduled fire (2026-10-16 11:41:48Z to 11:46:46Z) wrote 0 objects at the filled_report_values prefix and 
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S219",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-16T11:57:57Z",
+  "one_line": "Hop 1's first scheduled fire (2026-10-16 11:41:48Z to 11:46:46Z) wrote 0 objects at the filled_report_values prefix and logged FILLED_CATCHUP_LIST_FAILED AccessDenied on s3:ListBucket of opal-data-49financial for irpt-49f-reporting-gold-role, so the IB-pr-551 deploy gate stays closed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Ledger irpt-dashbd-hop1-filled-report-values-20261015 leg L6: the first scheduled 07:41 America/New_York fire after the apply writes the new partition (REPORT line plus the filled_report_values partition), read by 2.0.0_SA_COO~D2. The IB-pr-551 deploy waits on that first cloud write (CTO PO6/PS6 analysis, B-49F round-121 ruling 1).",
+  "world_is": "Read-only, 2026-10-16 ~11:55Z. Log group /aws/lambda/irpt-49f-reporting-gold-lambda, request 356ad20d-4c68-48dc-adf0-7de8acaafdea: START 11:41:48, five tables computed for newest landed date 2026-10-14 (7646 accounts), then FILLED_CATCHUP_LIST_FAILED 'AccessDenied ... ListObjectsV2 ... is not authorized to perform: s3:ListBucket on resource arn:aws:s3:::opal-data-49financial because no identity-based [policy allows it]; owing only the written days' at 11:46:46, END, REPORT Duration 298214 ms, Memory Size 8192 MB, Max Memory Used 1455 MB. The naming builder gives the prefix s3://opal-data-49financial/irpt/49financial/gold/filled_report_values/ (address('irpt','49financial','gold','filled_report_values',...)); list-objects-v2 on it, 5 keys max, returned KeyCount 0. The IAM read-back in the ledger (L5) listed eleven statements and the six write prefixes; it did not name a ListBucket statement for the catch-up list on this bucket. Whether the filled stage computed anything after the failed list is not read here (no filled_report_values object exists to say so). L6 is the ledger's, not mine; nothing in this row changes it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events on /aws/lambda/irpt-49f-reporting-gold-lambda from 11:38Z, 48 events, the FILLED_CATCHUP_LIST_FAILED line printed in full",
+      "aws s3api list-objects-v2 (rail-checked, one prefix) KeyCount 0",
+      "org/critical_paths/.open_deploys/irpt-dashbd-hop1-filled-report-values-20261015.json L5 and L6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the fix is hop 1's: 2.0.0_SA_COO~D2 issues, 0.7.0_AE_CloudOps~DB2 applies. This seat owes only the deploy after hop 1's first write exists."
+}
+```

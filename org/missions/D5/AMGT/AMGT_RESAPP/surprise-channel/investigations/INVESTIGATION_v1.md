@@ -28730,3 +28730,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Row-append only; the register's ARMED listing for D1-S40 closes through the disarm this row records. Gap for a successor: C-S132, C-S145, C-S146 and C-S155 (CVO adjudication rows owned for disarm by this seat) remain ARMED and unmeasured since the round-104/105 documents they graded were replaced by the round-107 to 111 sets."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W480-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~480",
+  "surfaced_at": "2026-10-16T11:50:14Z",
+  "one_line": "AMGT-bo-6 does not say what unit the held counter counts for a held fetch group: the order says one HELD entry per group, while the summary says n name(s) held. The batch counts names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Section 1 item 1 of AMGT-bo-6 catches FilingAttemptChangedError around each run_group call, one entry per group. Item 2 prints one HELD line per caught name and counts it in a held counter. Item 3 prints HELD DONE: <n> name(s) held.",
+  "world_is": "lib/research/filings/batch.py main() adds len(group security_keys) to the held counter for each caught group and prints one HELD line naming every key the group holds. A two-key group caught once therefore reads HELD DONE: 2 name(s) held; a count of caught groups would read 1 for the same run. test_t6_a_held_group_names_every_key_and_counts_every_name pins the names reading. The order does not settle which reading it wants.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/batch.py main() fetch loop: held += len(group[\"security_keys\"]) inside the except branch for FilingAttemptChangedError (worktree C:/dev/wk-resapp-480, branch wk-AMGT_RESAPP-480, uncommitted at filing; commits with this row)",
+      "lib/research/filings/tests/test_batch_held_continue.py::test_t6_a_held_group_names_every_key_and_counts_every_name -- 6 passed under the AC1 invocation"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not resolved here. If the COO wants a count of caught groups, the change is one line in the fetch loop of batch.py plus the T6 expectation."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W480-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~480",
+  "surfaced_at": "2026-10-16T11:50:14Z",
+  "one_line": "The worktree's sparse checkout does not carry org/surprise_channel, so the investigation item schema that the channel rules name is absent at its path inside this worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The channel rules name org/surprise_channel/schemas/investigation_item.schema.json as the schema every new row is written against, and the row gate reads that schema when it validates a channel commit.",
+  "world_is": "In C:/dev/wk-resapp-480, test -f on org/surprise_channel/schemas/investigation_item.schema.json reads absent, and the sparse-checkout list read in this worktree does not name org/surprise_channel. The same schema is present at HEAD: git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json prints it, with required id, surfaced_by, surfaced_at, one_line, class, grounding and disposition. This row was written against that HEAD read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test -f org/surprise_channel/schemas/investigation_item.schema.json in C:/dev/wk-resapp-480 printed nothing (absent)",
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json printed the schema with the seven required keys",
+      "AMGT_RESAPP-D1-W484-S2 (channel line 28658) records the same sparse-checkout observation in a second worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not a block: the schema was read from HEAD and the row is written to the shape it names. The row gate's own read of the schema in this worktree is the part the commit will show."
+}
+```
