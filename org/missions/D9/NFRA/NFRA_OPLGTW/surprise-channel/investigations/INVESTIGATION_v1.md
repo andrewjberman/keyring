@@ -21103,3 +21103,3292 @@ name the one known failure instead of silently inheriting it.
   "notes": "Cost of the proposed instrument: three keys of audit per refusal, folded to one row per identity per 10 s; it rides the batched round-38 gateway release (no separate deploy). Until then the 429 is a seat-side retry (Retry-After is sent). Disarm: OG-en-10 landed live and a read of its rows, then the limit decision recorded as a ruling."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S178",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S67: The r28 deploy's restart at 21:49Z revoked the scoped concierge's whole gateway session (reason refresh_token_reuse); another identity refreshing in t",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S67"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROUND_ANALYSIS.round31.md R50/R51 (:35-41)",
+      "41b0c7903b; server.py _within_send_budget present at 3d5c9c8bf1",
+      "OG-rl-15 proof_of_spec AC2: concierge_families_revoked_since_deploy 0 (717 items)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Remedy R50 (the answer is sent once the consuming transaction is sent) is in the live release, and the r29 release read 0 concierge families revoked, which was this row's disarm condition.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Remedy R50 (the answer is sent once the consuming transaction is sent) is in the live release, and the r29 release read 0 concierge families revoked, which was this row's disarm condition."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S179",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W35-S1: The gateway's stop at the 21:49Z restart was already a SIGTERM that drained in about one second and ended 'Deactivated successfully'; the journal does",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W35-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROUND_ANALYSIS.round31.md R50, R51",
+      "41b0c7903b",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/server.py _within_send_budget",
+      "TO-OG-rf-1 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "CTO ruling R50 was built as OG-rf-1 (complete) and its send-gate code is in the live release 3d5c9c8bf1, closing the 503-while-rotation-commits route; OG-dr-1 was closed superseded (R51).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CTO ruling R50 was built as OG-rf-1 (complete) and its send-gate code is in the live release 3d5c9c8bf1, closing the 503-while-rotation-commits route; OG-dr-1 was closed superseded (R51)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S180",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W42-S1: The grant-writer Lambda ships its own copy of data_entitlement.py and the contract, pinned at the manifest's deployed_commit; until it is rebuilt from",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W42-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "14d604be9a",
+      "0815986418",
+      "TO-OG-ap-9 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The grant-writer Lambda was rebuilt and redeployed so 13-month grants now parse; OG-ap-9 is complete with its proof instance valid.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The grant-writer Lambda was rebuilt and redeployed so 13-month grants now parse; OG-ap-9 is complete with its proof instance valid."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S181",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W39-S5: The opal-assets and opal-gateway Terraform roots each carry one unrelated unapplied change that a whole-root apply would also make (cot-rebalancer-run",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W39-S5"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "14d604be9a",
+      "ROUND_ANALYSIS.round32.md W39-S5 ruling",
+      "f19cedfddc (HG-t-5 already applied)",
+      "f3afa83d59",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Both unrelated drifts ended: the opal-gateway half was the grant-writer code hash, applied by OG-ap-9; the opal-assets cron change was applied by MDPF_HEALGAP HG-t-5.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Both unrelated drifts ended: the opal-gateway half was the grant-writer code hash, applied by OG-ap-9; the opal-assets cron change was applied by MDPF_HEALGAP HG-t-5."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S182",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W43-S7: Z-W42-S2 measured: a COLD 13-month availability read for Alyssa's grant costs about 221-235 s per master (443-470 s for both masters, 8 master/dataset",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W43-S7"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROUND_ANALYSIS.round32.md ADDENDUM 1",
+      "97aa917773",
+      "975fb09fca",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Ruled on the CRO research (prime once, then measure); OG-wr-1 primed the window 274 of 274 on 8 pairs and measured a warm read of at most 12.1 s, under the 60 s ALB limit.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled on the CRO research (prime once, then measure); OG-wr-1 primed the window 274 of 274 on 8 pairs and measured a warm read of at most 12.1 s, under the 60 s ALB limit."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S183",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W49-S1: The transcripts bucket's KMS key policy gives the gateway role no use of the key, so no IAM s3:PutObject grant alone can make the .pptx pair write onc",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W49-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROUND_ANALYSIS.round32.md W49-S1 row",
+      "d8f0b20b8a",
+      "TO-OG-ap-10 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The KMS key policy now carries a GatewayWritesTranscripts statement for the gateway role (NFRA_TRNSPT apply ka21 complete); the .pptx pair has since gone live and written.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The KMS key policy now carries a GatewayWritesTranscripts statement for the gateway role (NFRA_TRNSPT apply ka21 complete); the .pptx pair has since gone live and written."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S184",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W49-S3: Two writers will share the market_update prefix with different object-name rules: TR-i-19 intake names deck_<sha16>.pptx, this tool keeps the sanitize",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W49-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROUND_ANALYSIS.round32.md W49-S3 ruling",
+      "ROUND_ANALYSIS.round34.md Z-W55-S2 line",
+      "d8f0b20b8a",
+      "c5c64c7d5d",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Ruled one content-addressed key rule (deck_<sha16>.pptx, original name in metadata) for both writers; the .pptx pair that carries it is live and OG-ap-10 is complete.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled one content-addressed key rule (deck_<sha16>.pptx, original name in metadata) for both writers; the .pptx pair that carries it is live and OG-ap-10 is complete."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S185",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W49-S4: Step 3's grant was NOT added: the only registry-read form the order names puts the hand-kept scope token transcripts in advi_billing_gateway_iam.tf, a",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W49-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROUND_ANALYSIS.round32.md W49-S4 ruling",
+      "a62894577a",
+      "fd3f189ece (market_update grant live)",
+      "d8f0b20b8a",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Ruled to add the registry row first, then the PutObject grant; OG-ap-8 applied the market_update grant (complete) and the pptx pair writes through it.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled to add the registry row first, then the PutObject grant; OG-ap-8 applied the market_update grant (complete) and the pptx pair writes through it."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S186",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S85: OG-tl-1's transcript-allowlist deploy hunk (deploy-to-ec2.sh reads data/transcripts/scripts/teams/meeting_allowlist.json into TRANSCRIPT_MEETING_ALLOW",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S85"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "53beca075e",
+      "931cd62c85",
+      "ROUND_ANALYSIS.round34.md line 9 (Z-S85 disarmed)",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (5 meeting_allowlist hits)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The allowlist hunk was drained back onto trunk by OG-db-1: trunk deploy-to-ec2.sh now carries 5 allowlist references where it had 0, so a trunk-cut release no longer revokes the allowlist.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The allowlist hunk was drained back onto trunk by OG-db-1: trunk deploy-to-ec2.sh now carries 5 allowlist references where it had 0, so a trunk-cut release no longer revokes the allowlist."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S187",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W57-S2: OG-bd-1 STOPS at step 2: the caller census of blackdiamond_list_fees finds 2 distinct callers (5 calls, 2026-10-01..10-08), both unprofiled. Denying t",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W57-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROUND_ANALYSIS.round35.md OG-bd-1 re-cut paragraph",
+      "TO-OG-bd-2 status complete",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/data_entitlement.py:683-697",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Andrew answered the admission call (yes); the CTO ruled master_admin admitted by tier plus deny for the unlinked caller; OG-bd-2 and OG-bd-3 are complete and the tier rule is in the live release.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Andrew answered the admission call (yes); the CTO ruled master_admin admitted by tier plus deny for the unlinked caller; OG-bd-2 and OG-bd-3 are complete and the tier rule is in the live release."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S188",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W64-S1: No roster or record names the Opal asset-manager principals, so every row of HV1_PRINCIPALS.json reads asset_manager 'unknown' and the FWD-21 driven c",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W64-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-hv-2 A1 and A3",
+      "drive_log_20261014T12Z (call 232a answered, @44abf5ef07)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Andrew named the asset manager on call 232a; OG-hv-2 A1 and A3 rule the stand-in read and the named person's driven call as acts owed under hv-2 AC3, not as a blocked cell.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Andrew named the asset manager on call 232a; OG-hv-2 A1 and A3 rule the stand-in read and the named person's driven call as acts owed under hv-2 AC3, not as a blocked cell."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S189",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W65-S4: OG-cd-1 AC2's <expect> pattern cannot match any real output: it needs 'record=\\S+ live=\\S+' but the schedule value is an EventBridge expression with s",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W65-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "c71851702c (OG-cd-1 A1)",
+      "641116840d",
+      "TO-OG-cd-1 A1 (:146)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The issuer amended the unmatchable AC2 expect pattern to accept a cron value with spaces; AC1 and AC2 then passed and OG-cd-1 is complete.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer amended the unmatchable AC2 expect pattern to accept a cron value with spaces; AC1 and AC2 then passed and OG-cd-1 is complete."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S190",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S102: Re-vendoring orion and eclipse ADDS two hardcoded cottonwood bronze address patterns their live packages do not carry, so the LGIC naming gate refuses",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S102"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-ap-15 A1 (:160-172), A2 (:177)",
+      "87c8b3bf5f",
+      "26dc3fc8ab",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Ruled route (a): blackdiamond, orion and eclipse ship drain-only instead of a re-vendor, so no gate override was needed; all five families were released and graded, OG-ap-15 complete.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled route (a): blackdiamond, orion and eclipse ship drain-only instead of a re-vendor, so no gate override was needed; all five families were released and graded, OG-ap-15 complete."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S191",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S104: OG-mg-1 step 3's two declared differences from the template are both no-ops: Alyssa's revision-4 scope ALREADY carries calendar_months 13 and ALREADY ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S104"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-mg-1 A3 (:177)",
+      "24fb7df258",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The issuer ruled route (i): no branch exists, R1 and R2 mirror the contract-maximal template; step 4 was struck and OG-mg-1 completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer ruled route (i): no branch exists, R1 and R2 mirror the contract-maximal template; step 4 was struck and OG-mg-1 completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S192",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W67-S1: BLOCKING on AC1: OG-bd-3's ruled change makes OG-bd-2's test_ogbd2_ac03 fail (its line 70 asserts a PROFILED master_admin is DENIED blackdiamond_list_",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W67-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-bd-3 A1 (:93)",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/data_entitlement.py:683-697",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The issuer re-pinned the one test line that encoded the reversed rule and added test_og_bd2.py to the paths; bd-3 is complete and its tier admission is in the live release.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer re-pinned the one test line that encoded the reversed rule and added test_og_bd2.py to the paths; bd-3 is complete and its tier admission is in the live release."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S193",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S105: OG-ap-14 step 5 names the deploy source as C:/tmp/og-rel-r30, which is the V1 worktree on base 7eff14b2e6; following it literally at B2 would ship 8 f",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S105"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-ap-14 A6 (:198)",
+      "TO-OG-hv-2 A2 (:152)",
+      "b3ec5263f6",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ap-14 A6 re-pinned step 5 to the correct tree and base, and OG-hv-2 A2 added a deploy-source guard (HEAD equals release_sha, parent equals live); OG-ap-14 completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ap-14 A6 re-pinned step 5 to the correct tree and base, and OG-hv-2 A2 added a deploy-source guard (HEAD equals release_sha, parent equals live); OG-ap-14 completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S194",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S107: OG-hv-2 grants the harvest read to the WRONG principal: harvest_read.py _client() makes its S3 calls through internal_role.s3_client(), which assumes ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S107"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-hv-2 A5 (:179)",
+      "TO-OG-hv-2 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-hv-2 A5 retargeted the harvest read grant and its simulation to the internal reader role that harvest_read actually assumes; OG-hv-2 is complete.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-hv-2 A5 retargeted the harvest read grant and its simulation to the internal reader role that harvest_read actually assumes; OG-hv-2 is complete."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S195",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W74-S2: article_sentiment is an append-batch table (5 parts, 13,235 rows over all parts in the contract census); the face's rule 'the newest part of the datas",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W74-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-gt-3 A1 (:79,:157)",
+      "TO-OG-gt-2 A1",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/harvest_figures.py:546",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Ruled: article_sentiment reads every part and keeps the newest batch per article_key (not the newest-part rule); the shipped tool states this in its dataset_note and the release carries it.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled: article_sentiment reads every part and keeps the newest batch per article_key (not the newest-part rule); the shipped tool states this in its dataset_note and the release carries it."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S196",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W72-S4: The commit-time naming gate (LGIC_ENFORCE) refuses four hyphenated harvest prefixes that app/harvest_identity.py reads, so the OG-gt-1 module cannot l",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W72-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4a503cc0f5",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/harvest_identity.py _live_prefix (:158-170)",
+      "TO-OG-gt-1 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Ruled that gt-1 writes canonical underscore prefixes only and resolves the live spelling at run time; the live release carries no hyphenated harvest literal and the module landed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled that gt-1 writes canonical underscore prefixes only and resolves the live spelling at run time; the live release carries no hyphenated harvest literal and the module landed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S197",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W77-S1: The spec's HARVEST constructor captures harvest_read._client and harvest_typed.TYPED_MAX_BYTES at import, so a test that patches harvest_read._client ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W77-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/typed_scope.py:48-49",
+      "e6f3b2b1b7",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "HARVEST still captures harvest_read._client at import in the live seam, so a test that patches that function does not reach it; late rebinding or test guidance was never added. Test-only hazard. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "HARVEST still captures harvest_read._client at import in the live seam, so a test that patches that function does not reach it; late rebinding or test guidance was never added. Test-only hazard. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S198",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W75-S1: The 50 KB envelope projection nulls a dict-carried body and empties the list fields before it: a research dossier carried as one dict came back with i",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W75-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4a503cc0f5 (S1, S2 accepted as base limits)",
+      "TO-OG-gt-4 text (:84)",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/harvest_typed.py project()",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Accepted as a known limit of the base: harvest_typed.project still nulls a dict-carried bulky body over 50 KB (truncated says so); the projection fix belongs on the enrichment list. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Accepted as a known limit of the base: harvest_typed.project still nulls a dict-carried bulky body over 50 KB (truncated says so); the projection fix belongs on the enrichment list. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S199",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W75-S2: A typed read over TYPED_MAX_BYTES returns harvest_over_cap with no audit row: harvest_typed has no deny-audit helper, and a tool module may not reach ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W75-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4a503cc0f5 (S1, S2 accepted as base limits)",
+      "TO-OG-gt-4 text (:84)",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/harvest_typed.py (no deny helper)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Accepted as a known limit: harvest_typed has no deny-audit helper, so an over-cap typed read returns harvest_over_cap with no audit row; the helper is enrichment, not live-hazardous. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Accepted as a known limit: harvest_typed has no deny-audit helper, so an over-cap typed read returns harvest_over_cap with no audit row; the helper is enrichment, not live-hazardous. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S200",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W75-S3: research_dossier holds several objects per (security_key, as_of) with distinct content hashes, against the contract grain of one object per (security_",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W75-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4a503cc0f5",
+      "TO-OG-gt-4 text (:84)",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/harvest_research.py:15-24,174-190",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Ruled: keep the newest object per (key, as_of) and state duplicates_dropped; the shipped research tool does both, so the duplicate grain no longer yields an arbitrary pick.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled: keep the newest object per (key, as_of) and state duplicates_dropped; the shipped research tool does both, so the duplicate grain no longer yields an arbitrary pick."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S201",
+  "one_line": "Round-37 close disposition (BENIGN) of Z-W75-S4: OBSERVATION (order-required): the retired hyphen research-dossier table is older than the underscore research_dossier table, and for ASML its field na",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W75-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-gt-4 text (:84, row S4 CONFIRMS the supersession)",
+      "4a503cc0f5",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict BENIGN from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "An order-required confirmation that the underscore dossier table supersedes the hyphen table for ASML; the ruling accepted it and the tool serves the underscore table only. No standing hazard. No standing hazard to anything shipped.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "An order-required confirmation that the underscore dossier table supersedes the hyphen table for ASML; the ruling accepted it and the tool serves the underscore table only. No standing hazard. No standing hazard to anything shipped."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S202",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W75-S5: sec/harvest/silver/filing_source repeats one (security_key, accession) across date partitions: ASML's one accession sits in 4 rows, against the contra",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W75-S5"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4a503cc0f5",
+      "TO-OG-gt-4 text (:84)",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/harvest_research.py:15-24",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Ruled: keep the newest object per accession and state duplicates_dropped in the denominator; the shipped research tool implements the rule.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled: keep the newest object per accession and state duplicates_dropped in the denominator; the shipped research tool implements the rule."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S203",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W76-S5: The naming limb refuses the literal opal-amgt-scoped-api in harvest_published.py as a NEW out-of-pattern name, so the module and its test cannot land;",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W76-S5"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4a503cc0f5",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/harvest_published.py:41",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:491",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Ruled that the Lambda name is read from the env key AMGT_SCOPED_API_FUNCTION written by deploy-to-ec2.sh, so no out-of-pattern literal is typed; the module is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled that the Lambda name is read from the env key AMGT_SCOPED_API_FUNCTION written by deploy-to-ec2.sh, so no out-of-pattern literal is typed; the module is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S204",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W75-S6: BLOCKING: the commit gate's naming limb refuses the two existing hyphenated harvest prefixes the research tools read (research-continuation and resear",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W75-S6"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4a503cc0f5",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/harvest_research.py (0 hyphen-prefix literals)",
+      "TO-OG-gt-4 A1 (:152)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Ruled: gt-4 writes the canonical spelling only and resolves the live hyphen spelling at run time (no hyphenated literal); the research tools landed and are in the live release.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled: gt-4 writes the canonical spelling only and resolves the live hyphen spelling at run time (no hyphenated literal); the research tools landed and are in the live release."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S205",
+  "one_line": "Round-37 close disposition (BENIGN) of Z-W83-S1: The order's node-type token IamRole matches no graph node type: the same enumeration with IAM_ROLE scans 297 role nodes, while IamRole scans 0 and exi",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W83-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-cl-0 status complete; IamRole at its role-inventory step (cl-0:1 occurrence)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict BENIGN from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "A wrong node-type token (IamRole for IAM_ROLE) in the invocation text of OG-cl-0, which is complete; its inventory used IAM_ROLE and live IAM, so nothing shipped depends on the zero read. No standing hazard to anything shipped.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "A wrong node-type token (IamRole for IAM_ROLE) in the invocation text of OG-cl-0, which is complete; its inventory used IAM_ROLE and live IAM, so nothing shipped depends on the zero read. No standing hazard to anything shipped."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S206",
+  "one_line": "Round-37 close disposition (BENIGN) of Z-W83-S2: The served graph's IAM role nodes do not carry S3 grant statements, so a search over the client-data bucket names returns zero of 297 roles; the role ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W83-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-cl-0 status complete",
+      "row world_is (304 roles read from live IAM)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict BENIGN from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "A measured limit of the served graph (role nodes carry no inline S3 statements); the cell took its inventory from live IAM, so no hazard to anything shipped. No standing hazard to anything shipped.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "A measured limit of the served graph (role nodes carry no inline S3 statements); the cell took its inventory from live IAM, so no hazard to anything shipped. No standing hazard to anything shipped."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S207",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W83-S3: The served graph holds 297 IAM role nodes and live IAM lists 304 roles; the two sets are not reconciled, so a graph-only role inventory is incomplete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W83-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row world_is (297 vs 304); no later record found in ledger or drive logs",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The served graph holds 297 role nodes against 304 live roles, unreconciled; the graph owner's reconciliation is not done, so any graph-only role inventory stays incomplete. Not a gateway hazard. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The served graph holds 297 role nodes against 304 live roles, unreconciled; the graph owner's reconciliation is not done, so any graph-only role inventory stays incomplete. Not a gateway hazard. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S208",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S115: OG-zs-1 step 3 cannot read 0/1/0 and step 4 targeting cannot fix it: the portal-auth root plan reads 0 to add, 2 to CHANGE, 0 to destroy, and the seco",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S115"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-zs-1 A1 (:106)",
+      "626c8897af",
+      "25fbfca0ce",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The issuer ruled route (c): the WebACL identical-block churn is accepted on recorded conditions; the edge auth hole is closed, the WebACL was never written, and OG-zs-1 is complete.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer ruled route (c): the WebACL identical-block churn is accepted on recorded conditions; the edge auth hole is closed, the WebACL was never written, and OG-zs-1 is complete."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S209",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W72-S5: Ruling A1's premise fails for research_dossier: its canonical underscore spelling holds objects (both spellings hold ASML keys), so the prefer-canonic",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W72-S5"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/harvest_identity.py _live_prefix (:158-170)",
+      "4a503cc0f5 (W72-S5 not listed among rows dispositioned)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The shipped identity module reads the canonical research_dossier spelling only whenever it holds a key, so hyphen-only as_of dates (ASML from 2026-09-24) are omitted; the undercount was not measured or ruled. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The shipped identity module reads the canonical research_dossier spelling only whenever it holds a key, so hyphen-only as_of dates (ASML from 2026-09-24) are omitted; the undercount was not measured or ruled. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S210",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S117: CITES Z-S111 and widens it with the error text that row says was not re-read: the eclipse vendor drift is not confined to fact_portfolios_simple. Toda",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S117"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1f1bbd15be",
+      "e82cf5f4e1",
+      "TO-OG-ec-2 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ec-2 deployed the eclipse converter with the vendor column admitted; one sweep was driven and the guard read PASS 552 of 552, so the stale silver is cleared.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ec-2 deployed the eclipse converter with the vendor column admitted; one sweep was driven and the guard read PASS 552 of 552, so the stale silver is cleared."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S211",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S120: Runbook 7.2 now names a release that is NOT live: it says the live release is 7c558b4e21 while the host has run bacec95ccd since 15:43Z. The document ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S120"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "365b8c133a",
+      "infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md section 7.2 (read at HEAD)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Runbook 7.2 now names the live release 3d5c9c8bf1 and its rollback target, and the release process lands the standing clause so each release updates it.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Runbook 7.2 now names the live release 3d5c9c8bf1 and its rollback target, and the release process lands the standing clause so each release updates it."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S212",
+  "one_line": "Round-37 close disposition (BENIGN) of Z-W78-S1: hookup_g1.py has no --check mode: its docstring advertises [--check], but the script reads only argv[1] and applies all five file edits on every run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W78-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-ap-18 A8 (:152)",
+      "TO-OG-gt-7 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict BENIGN from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "hookup_g1.py is a one-shot script already applied once; OG-ap-18 took the committed hookup content (patch-id equal to gt-7's), so the missing --check mode harms nothing shipped. No standing hazard to anything shipped.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "hookup_g1.py is a one-shot script already applied once; OG-ap-18 took the committed hookup content (patch-id equal to gt-7's), so the missing --check mode harms nothing shipped. No standing hazard to anything shipped."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S213",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W81-S1: The naming commit limb refuses both served portal key literals OG-pt-3 must hold, platinum/mdpf/ and platinum/mdpf/{scope}/category-views.json, as NEW",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W81-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-pt-3 SUPERSEDED note (:144)",
+      "TO-OG-pt-5 status complete",
+      "drive_log_20261015T05Z (pt-5 merged)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-pt-3 was superseded by OG-pt-5, which reads the served key from its catalog row instead of typing a literal (CTO ruling msg 34173); pt-5 is complete.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-pt-3 was superseded by OG-pt-5, which reads the served key from its catalog row instead of typing a literal (CTO ruling msg 34173); pt-5 is complete."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S214",
+  "one_line": "Round-37 close disposition (BENIGN) of Z-W78-S2: TO-OG-gt-7 bounds say the five hookup files are not this cell's and the issuer lands the registrations at the merge; step 1 and step 4 direct this cel",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W78-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-ap-18 A8 (:152)",
+      "TO-OG-gt-12 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict BENIGN from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The order conflict was reconciled at merge: the hookup was taken once from the committed content (patch-id equals gt-7's), and registry pins passed, so no duplicate registration shipped. No standing hazard to anything shipped.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The order conflict was reconciled at merge: the hookup was taken once from the committed content (patch-id equals gt-7's), and registry pins passed, so no duplicate registration shipped. No standing hazard to anything shipped."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S215",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W79-S1: The naming gate's --enforce probe over the twelve S3 bucket, key and prefix literals of portal_models.py graded ONE literal (the bucket, CONFORMANT) a",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W79-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log of .tools/naming-gate.py since 2026-10-14 (43c527377a, b7cbb3e93f, 2bd24f66b2, df822c81b3: none grade bare keys)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The commit-time naming gate still grades only the bucket literal and gives no verdict on bare key or prefix literals; no later gate change addresses it, so it is a naming-owner enrichment. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The commit-time naming gate still grades only the bucket literal and gives no verdict on bare key or prefix literals; no later gate change addresses it, so it is a naming-owner enrichment. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S216",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W79-S2: Two objects the order's portal_get_model_positioning and portal_get_market_regime read, opal_aggregate.json and market-regime.json, carry no catalog r",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W79-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:16835,17137",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The served catalog shipped in the live release carries entity rows for both objects (served_market_regime and served_opal_aggregate), so the catalog gap no longer exists.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The served catalog shipped in the live release carries entity rows for both objects (served_market_regime and served_opal_aggregate), so the catalog gap no longer exists."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S217",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W79-S3: typed_scope.read_json decides gzip by the key suffix only, so a gzip-encoded body under a plain .json key (the portal's served form) raises UnicodeDec",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W79-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/typed_scope.py:158-170",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/portal_models.py:137-142",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "typed_scope.read_json still picks gzip by key suffix; portal_models and portal_macro work around it with magic-byte sniffing, so the seam stays a trap for any future tool. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "typed_scope.read_json still picks gzip by key suffix; portal_models and portal_macro work around it with magic-byte sniffing, so the seam stays a trap for any future tool. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S218",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W79-S5: Under the 50 KB projection, portal_get_model_positioning() answers holdings for only 3 of the 5 models (truncated=True) and portal_get_market_regime(i",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W79-S5"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/portal_models.py:270-273",
+      "ROUND_ANALYSIS.round37.md (no cell for it)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "portal_get_model_positioning still has no per-model argument and the 50 KB projection keeps holdings for 3 of 5 models with truncated=True; a per-model argument or larger cap was never added. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "portal_get_model_positioning still has no per-model argument and the 50 KB projection keeps holdings for 3 of 5 models with truncated=True; a per-model argument or larger cap was never added. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S219",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W80-S1: The commit-time naming gate grades the bucket literal of an S3 key but no bare S3 key literal, so a new out-of-pattern key with no s3:// prefix produc",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W80-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log of .tools/naming-gate.py since 2026-10-14 (no bare-key grading)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Same naming-gate limit as Z-W79-S1: a bare out-of-pattern S3 key literal gets no verdict line; no gate change grades bare keys, so it is a naming-owner enrichment. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Same naming-gate limit as Z-W79-S1: a bare out-of-pattern S3 key literal gets no verdict line; no gate change grades bare keys, so it is a naming-owner enrichment. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S220",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W80-S2: The typed seam picks the gzip decoder by key suffix, but the served macro timeseries objects are gzip under a plain .json key, so read_json raises Uni",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W80-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/typed_scope.py:158-170",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/portal_macro.py:141-153",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Same seam limit as Z-W79-S3: read_json decodes by key suffix, so served macro timeseries gzip bodies under .json keys fail there; portal_macro sniffs magic bytes locally. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Same seam limit as Z-W79-S3: read_json decodes by key suffix, so served macro timeseries gzip bodies under .json keys fail there; portal_macro sniffs magic bytes locally. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S221",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W84-S1: The naming gate refuses two served-prefix literals of the OG-et-1 module (platinum/etf_ownership_dashboard.json and platinum/reports/) as out-of-patte",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W84-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-et-1 A1 (:138)",
+      "13979abd45",
+      "TO-OG-et-1 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-et-1 A1 (CTO ruling msg 34173): the module types no key or bucket and reads every template from the catalog row at call time; the order was re-cut, merged and is complete.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-et-1 A1 (CTO ruling msg 34173): the module types no key or bucket and reads every template from the catalog row at call time; the order was re-cut, merged and is complete."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S222",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W85-S1: The naming gate refuses 9 of the 10 S3 literals the etfs_funds module must hold (the bucket literal passes), so FIRST ACT stops OG-et-2 before any bui",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W85-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-et-2 A1 (:134)",
+      "9a16c77a6a",
+      "TO-OG-et-2 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-et-2 A1 (CTO ruling msg 34173): keys and bucket come from the catalog row at call time, with no S3 literal in the module; the cell was re-cut, merged and is complete.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-et-2 A1 (CTO ruling msg 34173): keys and bucket come from the catalog row at call time, with no S3 literal in the module; the cell was re-cut, merged and is complete."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S223",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S122: A2 fixed zs1.AC2's branch LOGIC but not the <expect> REGEX that grades it. The fixed check prints 'WebACL rules identical before and after, updateweba",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S122"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fd4e8e0bcb",
+      "25fbfca0ce",
+      "TO-OG-zs-1 A2 (:109)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The issuer's A2 amended both the check and the AC2 expect; the filer had graded a stale pin. AC2 then read PASS, the instance was valid and OG-zs-1 is complete.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer's A2 amended both the check and the AC2 expect; the filer had graded a stale pin. AC2 then read PASS, the instance was valid and OG-zs-1 is complete."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S224",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W82-S1: The OG-nw-1 preflight says the cell changes no IAM and adds no AWS call beyond S3 reads, but its body requires a DynamoDB read grant and DynamoDB Quer",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W82-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-nw-1 A1 (:146)",
+      "ADJUDICATION_v31.Z.md (news_search_articles AC3 MET)",
+      "TO-OG-ap-21 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-nw-1 A1 corrected the preflight (the DynamoDB read grant is part of the cell); the grant was applied in the G3/G6 release and moved to the internal reader role in OG-ap-21; news tools serve.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-nw-1 A1 corrected the preflight (the DynamoDB read grant is part of the cell); the grant was applied in the G3/G6 release and moved to the internal reader role in OG-ap-21; news tools serve."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S225",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W82-S2: The source_date_index GSI that the order says to use for a source filter is sparse: it holds a small fraction of the articles table, so a source filte",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W82-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-nw-1 A1 (:146-147)",
+      "e02fec87ae",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-nw-1 A1 accepted the base-table read (the sparse source_date_index is never read) and narrowed the grant to drop the source_date_index ARN.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-nw-1 A1 accepted the base-table read (the sparse source_date_index is never read) and narrowed the grant to drop the source_date_index ARN."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S226",
+  "one_line": "Round-37 close disposition (BENIGN) of Z-W82-S8: The order's last step flips the task order's status tag to complete, but the task-order file is not in this worker's write grant, so the flip cannot b",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W82-S8"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-nw-1 status complete",
+      "e02fec87ae",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict BENIGN from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "A procedural note that the status flip sits outside the worker paths; OG-nw-1 is complete at HEAD with its proof instance valid, so nothing is left owed. No standing hazard to anything shipped.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "A procedural note that the status flip sits outside the worker paths; OG-nw-1 is complete at HEAD with its proof instance valid, so nothing is left owed. No standing hazard to anything shipped."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S227",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W87-S1: The same parents[5] line that OG-gt-8 removes from harvest_identity.py and news_typed.py also sits in app/portal_macro.py and app/portal_models.py, ou",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W87-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-gt-10 status complete",
+      "d7aec6640c",
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app (0 parents[5] in the four modules)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-gt-10 removed the host-shaped parents[5] line from portal_macro and portal_models; the live release carries 0 occurrences in app/, and ops/ is not on the host import path.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-gt-10 removed the host-shaped parents[5] line from portal_macro and portal_models; the live release carries 0 occurrences in app/, and ops/ is not on the host import path."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S228",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W88-S2: Silver parts are pruned by their name stamp against a measured lateness bound: the bound holds on every sampled row (under one second), but it is a me",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W88-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3d5c9c8bf1:infra/aws/ec2/opal-gateway/app/harvest_press.py:66-69",
+      "TO-OG-gt-9 A1 (no disarm)",
+      "TO-OG-sa-1 SUPERSEDED note (harvest moved to dell1)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The shipped silver prune relies on a measured one-hour lateness bound (SILVER_LATENESS, PRUNE=True) with no guarantee; measuring it over every partition or dropping the prune was never done, and harvest has since moved to dell1. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The shipped silver prune relies on a measured one-hour lateness bound (SILVER_LATENESS, PRUNE=True) with no guarantee; measuring it over every partition or dropping the prune was never done, and harvest has since moved to dell1. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S229",
+  "one_line": "Round-37 close disposition (BENIGN) of Z-W88-S5: BLOCKING for the final step only: the task order's <status> flip to complete is in the task-order file, which is outside this order's <paths>, so this",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W88-S5"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-gt-9 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict BENIGN from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "A procedural note that the status flip is outside the worker paths; OG-gt-9 is complete at HEAD, so no step is owed. No standing hazard to anything shipped.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "A procedural note that the status flip is outside the worker paths; OG-gt-9 is complete at HEAD, so no step is owed. No standing hazard to anything shipped."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S230",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S127: OG-sa-1 step 1 cannot be read as written: at the runner's pin the sa publisher is a browser-TAB publisher whose account id comes from the profile's ow",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S127"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-sa-1 A1-A3 and SUPERSEDED note (:92-102)",
+      "998d8aa0e2",
+      "9e71fa7215",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The issuer ruled the read through the main tree profile and a profile copy; the runner then held, and the whole Seeking Alpha capture and the site Z runner were later retired (OG-sa-1 superseded, OG-eg-3 complete).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer ruled the read through the main tree profile and a profile copy; the runner then held, and the whole Seeking Alpha capture and the site Z runner were later retired (OG-sa-1 superseded, OG-eg-3 complete)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S231",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S130: A4 tells me to take tests/test_og_gt8.py but NOT app/news_typed.py, and two of that suite's three tests assert on BOTH modules -- so test_oggt8_ac01 a",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S130"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-ap-18 A6 (:147)",
+      "TO-OG-ap-18 status complete",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ap-18 A6 ruled that tests/test_og_gt8.py is not in this release because news_typed rides OG-ap-19; the harvest_identity half is covered by the host-shaped import check. Both releases completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ap-18 A6 ruled that tests/test_og_gt8.py is not in this release because news_typed rides OG-ap-19; the harvest_identity half is covered by the host-shaped import check. Both releases completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S232",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S131: OG-ec-2 Phase B cannot satisfy its own AC2 as written: it applies one Terraform resource but has no step that puts the new package into S3, and the mo",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S131"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-ec-2 A1 (:81)",
+      "9121e4f6ac",
+      "e82cf5f4e1",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ec-2 A1 ruled the package is built and uploaded to the artifact key before the apply; Phase B ran and the order completed with AC2 PASS.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ec-2 A1 ruled the package is built and uploaded to the artifact key before the apply; Phase B ran and the order completed with AC2 PASS."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S233",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S132: A SPARSE release worktree cannot run deploy-to-ec2.sh. The script resolves two .env S3 roots through lib/opal_naming.py address(), which loads every f",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S132"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-ap-18 A7 (:150)",
+      "TO-OG-ap-19 A1 (:101)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Ruled: a release worktree must carry infra/logic/ in its sparse cone and prove it with a no-upload dry read; OG-ap-18 A7 and OG-ap-19 A1 carry the rule and both releases landed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled: a release worktree must carry infra/logic/ in its sparse cone and prove it with a no-upload dry read; OG-ap-18 A7 and OG-ap-19 A1 carry the rule and both releases landed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S234",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S133: The /yearinreview page's SERVED bytes depend on which worktree deploys, so OG-ap-18's Phase B would silently change them. The path carries .gitattribu",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S133"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-OG-ap-18 A8 (:152)",
+      "TO-OG-yr-1 A4 (:95)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "CTO ruled route (a): the LF form of /yearinreview (3bbd5ab2) is the stable served form; OG-ap-18 A8 and OG-yr-1 A4 record it, and the oracle accepts either value.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CTO ruled route (a): the LF form of /yearinreview (3bbd5ab2) is the stable served form; OG-ap-18 A8 and OG-yr-1 A4 record it, and the oracle accepts either value."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S235",
+  "one_line": "Round-37 close disposition (BENIGN) of Z-W84-S6: The order asks this worker to flip its own <status> tag to complete, but the task-order file is not in the order's <paths> write grant, so this worker",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W84-S6"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-et-1.etfs-ownership-tools.md:140 (<status>complete</status>)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict BENIGN from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The row only notes the status flip was outside the worker's paths; the OG-et-1 order reads complete at HEAD, so nothing is left pending. No standing hazard to anything shipped.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The row only notes the status flip was outside the worker's paths; the OG-et-1 order reads complete at HEAD, so nothing is left pending. No standing hazard to anything shipped."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S236",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W92-S1: The category-views catalog row is not indexed by the gate loader, so the firm verdict of mdpf_get_category_views is the per-scope aggregate-AUA row's ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W92-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/portal_mdpf.py:13-15,45 (GATE_ROW proxy still in HEAD)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-pt-5.mdpf-category-views-by-row.md:139 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "mdpf_get_category_views still takes its firm gate from the aggregate-AUA row because the entity row has no artifact row; enrichment for the catalog owner (NFRA_MCPINDEX), nothing live is mis-served. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "mdpf_get_category_views still takes its firm gate from the aggregate-AUA row because the entity row has no artifact row; enrichment for the catalog owner (NFRA_MCPINDEX), nothing live is mis-served. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S237",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-S134: OG-ap-15 step 6 says to update each family's lambda-source-map entry at its live grade, and for the four families I closed earlier only artifact_sha25",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S134"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json (functions opal-assets-silver-orion/eclipse/blackdiamond read e0750442c9 / 2026-09-27; schwab a11240c01c)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Source-map last_deployed_commit/at still stale for schwab, orion, eclipse and blackdiamond; cosmetic since the map is not a currency control, backfill from ap15_build.json is an enrichment. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Source-map last_deployed_commit/at still stale for schwab, orion, eclipse and blackdiamond; cosmetic since the map is not a currency control, backfill from ap15_build.json is an enrichment. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S238",
+  "one_line": "Round-37 close disposition (BENIGN) of Z-W93-S2: The issuer's hookup script is not idempotent: run again on the committed tree it passes its import and registration anchors and writes duplicate regis",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W93-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-gt-12.g5cv-hookup.md:82 (complete)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/hookup_g5cv.py",
+      "3532daff79",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict BENIGN from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The hookup script is a one-shot; OG-gt-12 is complete and its registrations are committed, so the only hazard is a pointless re-run, which no open order calls for. No standing hazard to anything shipped.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hookup script is a one-shot; OG-gt-12 is complete and its registrations are committed, so the only hazard is a pointless re-run, which no open order calls for. No standing hazard to anything shipped."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S239",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S136: OG-ap-19 step 2 tells me to commit the legacy_addresses.json row FIRST and on its own, and this seat mechanically CANNOT: infra/logic/** is lane PLATF",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S136"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bb0e3bd764 (4.0.0_SA_CRO~Z, ancestor of HEAD)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-19.g3-g6-tools-release.md:107 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The CRO seat committed the legacy_addresses.json row itself, ahead of the .tf, which was the ordering OG-ap-19 step 2 needed; OG-ap-19 then completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The CRO seat committed the legacy_addresses.json row itself, ahead of the .tf, which was the ordering OG-ap-19 step 2 needed; OG-ap-19 then completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S240",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S137: OG-ap-19's take-list omits app/typed_scope.py, and the release CANNOT IMPORT without it: portal_models.py:33 does `from . import typed_scope as ts` an",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S137"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ap-19 A2 @68a7d83f97",
+      "row NFRA_OPLGTW-Z-S138 (GRADUATED)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ap-19 amendment A2 ruled route (a): app/typed_scope.py and its test ride the release whole, so the release imports; row Z-S138 graduated it.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ap-19 amendment A2 ruled route (a): app/typed_scope.py and its test ride the release whole, so the release imports; row Z-S138 graduated it."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S241",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W94-S1: The identity-scope floor has a second call site outside this order's paths: integrations/base.py run_integration_tool denies a scoped identity's integ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W94-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-cp-1 A2 (task order line 191)",
+      "a445101400",
+      "infra/aws/ec2/opal-gateway/app/integrations/base.py:163-170 (person_widens, person_record_rev)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-cp-1 A2 added integrations/base.py to the paths and the worker landed the per-person widening at the integration floor with test_ogcp1_ac07.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-cp-1 A2 added integrations/base.py to the paths and the worker landed the per-person widening at the integration floor with test_ogcp1_ac07."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S242",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W97-S1: OG-cp-2 AC1 cannot be met as written: test_grant_writer_stages_the_contract_only_from_the_standard compares the staged zip member to the working stand",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W97-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-cp-2 A1 @22787c367e",
+      "infra/aws/ec2/EC2_MANIFEST.json (opal-gateway deployed_commit 1bc2df0b13)",
+      "git show 1bc2df0b13:org/standards/NFRA_OPLGTW_CONTRACT.json cmp working file = identical",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-cp-2 A1 ruled the staging test release-anchored; the deployed commit is now 1bc2df0b13 whose contract is byte-equal to the working standard, so the premise of the red test is gone.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-cp-2 A1 ruled the staging test release-anchored; the deployed commit is now 1bc2df0b13 whose contract is byte-equal to the working standard, so the premise of the red test is gone."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S243",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S140: The commit-time naming limb REFUSES four s3:prefix FILTER PATTERNS in etfs_read_iam.tf's ListBucket condition as OUT-OF-PATTERN S3Keys (gold/book/*, g",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S140"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ng-1 A1/A2 (order complete, line 78)",
+      "f12b5d39bd (etfs_read_iam.tf grant, naming PASS)",
+      "8c2ab4855e (CTO ruling on the grant)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ng-1 added the s3:prefix clause that admits the four registered ETF prefixes, and the etfs_read_iam.tf grant then committed under the ENFORCE naming gate.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ng-1 added the s3:prefix clause that admits the four registered ETF prefixes, and the etfs_read_iam.tf grant then committed under the ENFORCE naming gate."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S244",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W98-S1: The cycle record's s3_get_count and s3_get_bytes count only the GETs that store.py issues; the cycle path also issues GETs outside store.py, and those",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W98-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-eg-2.harvest-runner-silver-cache-apply.md:89,91 (superseded)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-eg-3.harvest-runner-retire.md:72 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Cycle-record s3_get_count remains a lower bound because GETs outside store.py are not counted; the site Z runner is retired, so only the dell1 GET-bytes proof owed there depends on it. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Cycle-record s3_get_count remains a lower bound because GETs outside store.py are not counted; the site Z runner is retired, so only the dell1 GET-bytes proof owed there depends on it. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S245",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W99-S1: ng1.AC2 probe carries no org/missions project home, so the S3PREFIX reader clause cannot derive a committing project and the four registered ETF prefi",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W99-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ng-1 A2 (task order line 76)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ng-1.naming-s3prefix-clause.md:78 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ng-1 A2 ruled the worker's code right and changed ng1.AC2 to stage a path under the project home; the order then completed with both criteria passing.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ng-1 A2 ruled the worker's code right and changed ng1.AC2 to stage a path under the project home; the order then completed with both criteria passing."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S246",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W99-S2: An s3:prefix value that is a bare '*' or an unregistered non-tier-first prefix is NOT GRADED at HEAD (PASS, 0 graded), so the order's REFUSES cannot b",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W99-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ng-1 A2 (task order line 76)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ng-1 A2 ruled that bare '*' and unregistered prefixes are simply not admitted by the clause and graded as before; no new refusal class is added, so the order's wording is met.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ng-1 A2 ruled that bare '*' and unregistered prefixes are simply not admitted by the clause and graded as before; no new refusal class is added, so the order's wording is met."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S247",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W99-S3: At HEAD the MX-c-9 legacy precedent already grades a bare registered key part ('gold/book/', no '*') CONFORMANT for its own reader inside an s3:prefix",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W99-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ng-1 A2 (task order line 76); A1 condition 7",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ng-1 A2 ruled the clause passes a name, never access, and ac02 asserts only not-admitted-by-this-clause; the older MX-c-9 grading of a bare key part is acknowledged and left as is.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ng-1 A2 ruled the clause passes a name, never access, and ac02 asserts only not-admitted-by-this-clause; the older MX-c-9 grading of a bare key part is acknowledged and left as is."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S248",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W99-S4: The existing tf_literals block tracker resets its bracket count at every '{', so a second element of a list of maps loses the key it sits under; the c",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W99-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/naming-gate.py:612-657 (bracket reset at '{', comment at 614-616)",
+      "OG-ng-1 A2 (left unchanged and recorded)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The tf_literals block tracker still resets its bracket count at each '{' and loses the key of a second list element; the S3PREFIX clause uses its own frame stack, so this is a latent tool defect. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The tf_literals block tracker still resets its bracket count at each '{' and loses the key of a second list element; the S3PREFIX clause uses its own frame stack, so this is a latent tool defect. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S249",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W100-S1: The 50 KB envelope projection trims a 106-position holdings answer to 99 rows; the tool keeps every row only with a narrower position row, and funds l",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W100-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "no later row measures a larger rival fund (INVESTIGATION_v1 scanned after Z-W100-S1)",
+      "row evidence: typed_scope/harvest_typed PROJECT_LIMIT 51200",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The 50 KB projection still trims large funds; INEQ at 106 rows was fixed by narrowing the position row, but no larger rival fund was measured, so a paging or cap decision is an open enrichment. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The 50 KB projection still trims large funds; INEQ at 106 rows was fixed by narrowing the position row, but no larger rival fund was measured, so a paging or cap decision is an open enrichment. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S250",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S141: ap20.AC1 CANNOT PASS AS WRITTEN -- three defects in the check script, none of them in the release. (1) the grant census is captured into `reg` on line",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S141"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4ffb7a40c0",
+      "row NFRA_OPLGTW-Z-S143 (GRADUATED, RESOLVES Z-S141)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-20.g5a-category-views-release.md:104 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The issuer repaired ap20.AC1.sh and the applier re-ran it at the release: PASS with every grant and count field populated; the applier filed the confirming row.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer repaired ap20.AC1.sh and the applier re-ran it at the release: PASS with every grant and count field populated; the applier filed the confirming row."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S251",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S144: THE CTO HALF'S CONDITION 2 CANNOT BE MET AS WRITTEN. It asks that the release commit be graded by the naming gate in ENFORCE and not be the one commit",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S144"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "8c2ab4855e (1.0.0_SA_CTO~Z ruling)",
+      "org/tier1_exec/1.0.0_SA_CTO/logs/2026-10-15/ctoZ_self_drive_sitez_open_calls_tick39.md:14-16",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The CTO ruled condition 2 satisfied on the cone fix, the trunk ENFORCE pass at f12b5d39bd and the equal grant blob; OG-ap-20 then completed and went live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The CTO ruled condition 2 satisfied on the cone fix, the trunk ENFORCE pass at f12b5d39bd and the equal grant blob; OG-ap-20 then completed and went live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S252",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W102-S1: The worktree does not carry the gateway tree the order names: infra/aws/ec2 is outside the sparse-checkout cone, so every gateway app and test file in",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W102-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-rv-3 A1 (task order line 81)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rv-3.rival-hookup.md:85 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-rv-3 A1 had the issuer add the gateway folder to the worktree cone and re-issue the order, which then completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-rv-3 A1 had the issuer add the gateway folder to the worktree cone and re-issue the order, which then completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S253",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W102-S2: The order's proof_of_spec invocations run gt12.AC1.sh and gt12.AC2.sh, which grade the six OG-gt-12 tools and print of 6, not the ten OG-rv-3 tools; a",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W102-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-rv-3 A1 item S2 (task order line 81)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-rv-3 A1 re-pointed the proof invocations from gt12 to rv3.AC1.sh and rv3.AC2.sh, which grade ten of ten; the order completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-rv-3 A1 re-pointed the proof invocations from gt12 to rv3.AC1.sh and rv3.AC2.sh, which grade ten of ten; the order completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S254",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-W102-S5: The commit-time author check printed WARN that serial 0.9.0_WK_NFRA_OPLGTW~102 names no known seat, because org/ref/SEAT_ROLES.json is outside this wo",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W102-S5"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh:284-294 (WARN-only, 1.0.0_SA_CTO msg 107910)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The author-seat check is still WARN-only and reads org/ref/SEAT_ROLES.json; if the announced refusal lands, worker worktrees without org/ref in the cone would be judged on an unreadable file, so add it to worker cones. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The author-seat check is still WARN-only and reads org/ref/SEAT_ROLES.json; if the announced refusal lands, worker worktrees without org/ref in the cone would be judged on an unreadable file, so add it to worker cones. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S255",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-S148: BOX-WIDE, FAIL-OPEN: the python first on PATH is gutted and .tools/commit-gate.sh RETURNS rc=0 WITHOUT RUNNING ANY OF ITS THREE SUB-GATES. C:/Program ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S148"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row NFRA_OPLGTW-Z-S146 (latent half NOT resolved)",
+      "C:/Program Files/Python314/Lib has 191 entries, python 3.14.8 (read 2026-10-16)",
+      ".tools/commit-gate.sh:70",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The interpreter is restored (3.14.8, Lib 191 entries) so the practical cause ended; the commit gate's fail-open direction on a broken interpreter was never repaired by its owner (a bad-PYTHONHOME control here exited 1). Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The interpreter is restored (3.14.8, Lib 191 entries) so the practical cause ended; the commit gate's fail-open direction on a broken interpreter was never repaired by its owner (a bad-PYTHONHOME control here exited 1). Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S256",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S145: The sitez Python 3.14 standard library is GONE: C:/Program Files/Python314/Lib holds only site-packages since 14:02:45Z, every python call fails with ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S145"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row NFRA_OPLGTW-Z-S145 world_is (RESOLVED 15:06Z)",
+      "row NFRA_OPLGTW-Z-S146 (GRADUATED)",
+      "C:/Program Files/Python314/Lib: 191 entries; python.exe 3.14.8 (read 2026-10-16)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The Python 3.14.8 standard library came back by 15:03Z and the runner and commit gates run again; I confirmed Lib holds 191 entries and python 3.14.8 starts.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The Python 3.14.8 standard library came back by 15:03Z and the runner and commit gates run again; I confirmed Lib holds 191 entries and python 3.14.8 starts."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S257",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S149: OG-ap-21 step 2 cannot read '1 to add, 1 to change': the invoke policy it retargets was NEVER APPLIED. aws_iam_role_policy.gw_harvest_published_invoke",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S149"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ap-21 A2 (task order line 92)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-21.person-roles-release.md:96 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ap-21 A2 ruled step 2(c) to expect '2 to add' since the invoke policy was never applied; the order then completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ap-21 A2 ruled step 2(c) to expect '2 to add' since the invoke policy was never applied; the order then completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S258",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S150: The harvest runner runs real jobs again on Python 3.14.8 (since 15:02:46Z) but three of the four publishers stop at once on a vendor sign-in: bbg at 1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S150"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-eg-2.harvest-runner-silver-cache-apply.md:87,89,91 (A1, superseded)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-eg-3.harvest-runner-retire.md:72 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Andrew moved all harvest operations to dell1 and OG-eg-3 retired the site Z runner, so OG-eg-2 was superseded; the vendor sign-ins are no longer a site Z runner defect.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Andrew moved all harvest operations to dell1 and OG-eg-3 retired the site Z runner, so OG-eg-2 was superseded; the vendor sign-ins are no longer a site Z runner defect."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S259",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W107-S1: The named test path infra/aws/ec2/opal-gateway/tests/test_og_cl5.py cannot be written in this worktree: its parent directory opal-gateway/tests/ is tr",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W107-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-cl-5 A1 (task order line 94)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-cl-5.client-smartx.md:98 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-cl-5 A1 had the issuer add the tests folder to the cone (item S1); the order completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-cl-5 A1 had the issuer add the tests folder to the cone (item S1); the order completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S260",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W107-S2: The firm ids that the task order says to read from partner_roster.json have no path in the contract, and the census path data/mdpf/config/partner_rost",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W107-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-cl-5 A1 (task order line 94)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-cl-5 A1 ruled the roster path data/mdpf/config/partner_roster.json, added it to paths, and placed it in the cone; the adapter reads it via ctx.firm_roster().",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-cl-5 A1 ruled the roster path data/mdpf/config/partner_roster.json, added it to paths, and placed it in the cone; the adapter reads it via ctx.firm_roster()."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S261",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W107-S3: The task order's seam (app/typed_scope.py) and the protocol's ctx (G2_ADAPTER_PROTOCOL.md, implemented by app/client_core.py OG-cl-1) do not meet: the",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W107-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-cl-5 A1 (task order line 94)",
+      "infra/aws/ec2/opal-gateway/app/client_core.py:228-247",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-cl-5 A1 ruled that the probe writes its own ProbeCtx and cited the catalog's 13 smartx rows; the real core later shipped in client_core.py.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-cl-5 A1 ruled that the probe writes its own ProbeCtx and cited the catalog's 13 smartx rows; the real core later shipped in client_core.py."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S262",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W105-S1: The catalog mechanism the cell names reaches none of the Orion or Eclipse silver rows: runtime_catalog() indexes 48 portal_datasets artifacts, and the",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W105-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/client_core.py:209-247 (silver_rows over catalog sections)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-cl-3.client-orion-eclipse.md:93 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The client core Ctx builds its prefix index from the catalog's own sections, silver rows included, rather than the 48 channel artifacts, so Orion and Eclipse prefixes resolve; no served Orion answer was read.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The client core Ctx builds its prefix index from the catalog's own sections, silver rows included, rather than the 48 channel artifacts, so Orion and Eclipse prefixes resolve; no served Orion answer was read."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S263",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W110-S2: OG-gf-1 criterion AC1 cannot be met in this cell: the CRO spec's extension of etfs_get_positioning (fund_ticker and as_of with gold book and holding h",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W110-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-gf-1 A1 (task order line 102)",
+      "d0a3c864eb",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-gf-1 A1 withdrew test_oggf1_ac04 and the etfs_get_positioning extension from this cell (MCPINDEX's file) and routed it to the owning seat, so AC1 was re-scoped.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-gf-1 A1 withdrew test_oggf1_ac04 and the etfs_get_positioning extension from this cell (MCPINDEX's file) and routed it to the owning seat, so AC1 was re-scoped."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S264",
+  "one_line": "Round-37 close disposition (BENIGN) of Z-W106-S9: The status flip of this task order to complete is outside this cell's write grant: the task order file is not in <paths>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W106-S9"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-cl-4.client-bd-cottonwood.md:92 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict BENIGN from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Only the status flip was outside the worker's paths; the OG-cl-4 order reads complete at HEAD. No standing hazard to anything shipped.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Only the status flip was outside the worker's paths; the OG-cl-4 order reads complete at HEAD. No standing hazard to anything shipped."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S265",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W103-S1: The worktree's sparse cone did not carry the gateway tests folder the order names, so AC1's test file had no directory; the issuer widened the cone (A",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W103-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-cl-1 A2 (task order line 101)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-cl-1.client-core-schwab.md:103 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The issuer widened the worktree cone to include the gateway tests folder and the worker resumed; OG-cl-1 completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer widened the worktree cone to include the gateway tests folder and the worker resumed; OG-cl-1 completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S266",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W103-S2: No DATA_CATALOG row carries a prefix for the Schwab dim_position, dim_balance or dim_transaction tables, so every holdings, balances, allocation and t",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W103-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-cl-1 A2 (task order line 101)",
+      "git show 1bc2df0b13:infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml (3 dim_position rows)",
+      "infra/aws/ec2/EC2_MANIFEST.json deployed_commit 1bc2df0b13",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-cl-1 A2 kept production refusing no_catalog_row until MX-c-23 landed the Schwab rows; the deployed catalog at 1bc2df0b13 now carries dim_position, dim_balance and dim_transaction rows for three masters.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-cl-1 A2 kept production refusing no_catalog_row until MX-c-23 landed the Schwab rows; the deployed catalog at 1bc2df0b13 now carries dim_position, dim_balance and dim_transaction rows for three masters."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S267",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W103-S3: The probe cannot mint an account reference in this shell: SCHWAB_ACCOUNT_REF_SECRET_ID is unset, so the alias key raises KeyUnavailable before the fir",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W103-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-cl-1 A2 (task order line 101)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-cl-1 A2 (S3-S5) ruled the probe sets a throwaway in-process secret through the adapter's seam to mint a Schwab account reference; the order completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-cl-1 A2 (S3-S5) ruled the probe sets a throwaway in-process secret through the adapter's seam to mint a Schwab account reference; the order completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S268",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W107-S8: partner_roster.json carries no advisor_id: its only SmartX join key is the advisor_name alias, so a byte-equal copy of the file cannot serve the advis",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W107-S8"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-cl-5 A2 (task order line 96)",
+      "deliverables/0.7.0_AE_CloudOps~Z/CODE_SERVED.json smartx_two_firm_detail",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-cl-5 A2 ruled the SmartX firm map is by advisor name from the roster aliases, built by ctx.firm_roster(); live SmartX holdings served 12 rows for one firm and none for another.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-cl-5 A2 ruled the SmartX firm map is by advisor name from the roster aliases, built by ctx.firm_roster(); live SmartX holdings served 12 rows for one firm and none for another."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S269",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W110-S5: gf1.AC1.sh names four tests, so once test_oggf1_ac04 is withdrawn (A1) it reads 'named tests passed 3 of 4' and RESULT: FAIL; the A1 statement that AC",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W110-S5"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/gf1.AC1.sh:4",
+      "d0a3c864eb",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "gf1.AC1.sh now names only the three tests (test_oggf1_ac01 to ac03), so it reads 3 of 3 as A1 states.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "gf1.AC1.sh now names only the three tests (test_oggf1_ac01 to ac03), so it reads 3 of 3 as A1 states."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S270",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S153: OG-ap-21 CUT IS THE FIRST RELEASE TO CARRY BOTH SIDES OF THE OPEN CONTRADICTION IN ROW NFRA_OPLGTW-Z-W67-S1, and this seat will not pick a side. The l",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S153"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ap-21 A3 (task order line 94)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-21.person-roles-release.md:96 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ap-21 A3 ruled the release keeps the base guard and takes test_ogcp1_ac02 at the base behaviour, so the release picks no side of the Z-W67-S1 contradiction; the order completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ap-21 A3 ruled the release keeps the base guard and takes test_ogcp1_ac02 at the base behaviour, so the release picks no side of the Z-W67-S1 contradiction; the order completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S271",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S154: A MISSING SEAM THE TAKE-LIST OMITS, and the static scan meant to catch it cannot see the import. tests/test_admin_people_access.py is IN the take-list",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S154"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ap-21 A3 (task order line 94)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ap-21 A3 dropped test_admin_people_access.py from the take-list and kept app/admin_people_access.py out (MCPORTAL's own release), so the missing seam no longer applies.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ap-21 A3 dropped test_admin_people_access.py from the take-list and kept app/admin_people_access.py out (MCPORTAL's own release), so the missing seam no longer applies."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S272",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W111-S1: The named test test_ogch1_ac04 asserts that the repo roster yields at least one name mapped to None; under the order's mapping rule every name in the ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W111-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ch-1 A1 (task order line 95)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ch-1.client-core-hookup-fix.md:97 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ch-1 A1 withdrew the AC04 clause as an issuer error, since every repo roster name maps to a canonical firm; the order completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ch-1 A1 withdrew the AC04 clause as an issuer error, since every repo roster name maps to a canonical firm; the order completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S273",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W111-S7: After every firm-name literal of the client modules reads through lookup(), the full-add naming gate in ENFORCE still REFUSEs 8 lines of client_adapte",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W111-S7"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/name_rulings.json (bd_account_id, bd_account_number, fact_bd_allocation, market_value_profile)",
+      "ng3.AC1.sh run at HEAD: rc=0, REFUSE 0, RULED 11, RESULT: PASS",
+      "OG-ng-2 complete (line 80)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The four Black Diamond upstream identifiers now have none_owed rows in name_rulings.json that the gate consults; the full-add gate over the 17 release modules reads REFUSE 0 at HEAD.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The four Black Diamond upstream identifiers now have none_owed rows in name_rulings.json that the gate consults; the full-add gate over the 17 release modules reads REFUSE 0 at HEAD."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S274",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W111-S8: The alias orion/4698, the core's spelling of the inflection Orion master 4698, is not a registry spelling: lookup('orion/4698') raises KeyError, so it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W111-S8"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/client_core.py:180-195",
+      "app/client_adapter_orion.py:12",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The core's alias map no longer holds the orion/4698 literal; client_core now maps only the bare 4698 through lookup(), and no adapter reads the vendor-prefixed spelling.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The core's alias map no longer holds the orion/4698 literal; client_core now maps only the bare 4698 through lookup(), and no adapter reads the vendor-prefixed spelling."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S275",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S158: ap24.AC2 cannot be graded PASS as written: its expect regex requires the field '; policy live yes', which ap24.AC2.sh never prints; the script also co",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S158"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "d55475e545",
+      "row NFRA_OPLGTW-Z-S159",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-24.client-grants-batch.md:86 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "ap24.AC2.sh was amended to print '; policy live yes' and name the 49F role; AC2 re-ran PASS and OG-ap-24 completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "ap24.AC2.sh was amended to print '; policy live yes' and name the 49F role; AC2 re-ran PASS and OG-ap-24 completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S276",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W113-S1: The naming gate REFUSES the served json field name 'etfs' in app/portal_json_served.py (verdicts at lines 366 and 368) as a hand-kept carrier; the gat",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W113-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/name_rulings.json (name 'etfs')",
+      "OG-ng-2 note (task order line 76), complete line 80",
+      "ng3.AC1.sh run at HEAD: REFUSE 0",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ng-2 made the gate read name_rulings.json, which now holds a none_owed row for the served 'etfs' field; the full-add gate over portal_json_served.py reads REFUSE 0.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ng-2 made the gate read name_rulings.json, which now holds a none_owed row for the served 'etfs' field; the full-add gate over portal_json_served.py reads REFUSE 0."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S277",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W111-S11: The commit-time naming gate does not consult name_rulings.json: bd_account_id (hand-kept carrier) still REFUSEs at client_adapter_bd49f.py:54, :269 an",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W111-S11"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ng-2 (task order line 80, complete)",
+      "infra/logic/registry/name_rulings.json (bd_account_id)",
+      "ng3.AC1.sh run at HEAD: rc=0, REFUSE 0, RULED 11",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ng-2 made the commit-time gate consult name_rulings.json; bd_account_id has its none_owed row and the full-add gate over the release modules now reads REFUSE 0 with RULED verdicts.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ng-2 made the commit-time gate consult name_rulings.json; bd_account_id has its none_owed row and the full-add gate over the release modules now reads REFUSE 0 with RULED verdicts."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S278",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W111-S12: The commit-time naming gate does not consult name_rulings.json: bd_account_number (hand-kept carrier) still REFUSEs at client_adapter_bd49f.py:54 and ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W111-S12"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ng-2 (task order line 80, complete)",
+      "infra/logic/registry/name_rulings.json (bd_account_number)",
+      "ng3.AC1.sh run at HEAD: rc=0, REFUSE 0, RULED 11",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ng-2 made the commit-time gate consult name_rulings.json; bd_account_number has its none_owed row and the full-add gate over the release modules now reads REFUSE 0 with RULED verdicts.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ng-2 made the commit-time gate consult name_rulings.json; bd_account_number has its none_owed row and the full-add gate over the release modules now reads REFUSE 0 with RULED verdicts."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S279",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W111-S13: The commit-time naming gate does not consult name_rulings.json: fact_bd_allocation (hand-kept carrier) still REFUSEs at client_adapter_bd49f.py:409 af",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W111-S13"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ng-2 (task order line 80, complete)",
+      "infra/logic/registry/name_rulings.json (fact_bd_allocation)",
+      "ng3.AC1.sh run at HEAD: rc=0, REFUSE 0, RULED 11",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ng-2 made the commit-time gate consult name_rulings.json; fact_bd_allocation has its none_owed row and the full-add gate over the release modules now reads REFUSE 0 with RULED verdicts.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ng-2 made the commit-time gate consult name_rulings.json; fact_bd_allocation has its none_owed row and the full-add gate over the release modules now reads REFUSE 0 with RULED verdicts."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S280",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W111-S14: The commit-time naming gate does not consult name_rulings.json: market_value_profile (INSTANCE_PROFILE) still REFUSEs at client_adapter_bd49f.py:412 a",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W111-S14"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ng-2 (task order line 80, complete)",
+      "infra/logic/registry/name_rulings.json (market_value_profile)",
+      "ng3.AC1.sh run at HEAD: rc=0, REFUSE 0, RULED 11",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ng-2 made the commit-time gate consult name_rulings.json; market_value_profile has its none_owed row and the full-add gate over the release modules now reads REFUSE 0 with RULED verdicts.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ng-2 made the commit-time gate consult name_rulings.json; market_value_profile has its none_owed row and the full-add gate over the release modules now reads REFUSE 0 with RULED verdicts."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S281",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S161: OG-ap-23 Phase A: the release commit REFUSEs in ENFORCE on 23 lines of three taken files that ng2.AC2 does not grade (partner_roster.json 20, portal_s",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S161"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ng-3 issuer note (task order line 64)",
+      "ng3.AC1.sh run at HEAD: REFUSE 0, RESULT: PASS",
+      "3d5c9c8bf1 (live, 27 of 27 per ledger/ROUND_ANALYSIS.round37.md)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ng-3 took the data copies out of the release commit and fixed the mdpf and profile spellings; the full-add gate over all 17 release modules reads REFUSE 0 and release 3d5c9c8bf1 is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ng-3 took the data copies out of the release commit and fixed the mdpf and profile spellings; the full-add gate over all 17 release modules reads REFUSE 0 and release 3d5c9c8bf1 is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S282",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W111-S16: The full-add naming gate over the 17 release modules still REFUSEs one line outside OG-ng-3's three: admin_gateway_breakdown.py:164 types the legacy b",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W111-S16"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ng-3 issuer note (task order line 64) and A1 (line 68)",
+      "ng3.AC1.sh run at HEAD: rc=0, REFUSE 0",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ng-3 A1 read the admin_gateway_breakdown refusal as a sparse-tree effect; the full-add gate over all 17 release modules, that file included, reads REFUSE 0 at HEAD in a full tree.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ng-3 A1 read the admin_gateway_breakdown refusal as a sparse-tree effect; the full-add gate over all 17 release modules, that file included, reads REFUSE 0 at HEAD in a full tree."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S283",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W113-S8: BLOCKING: moving the five client_* tools out of NATIVE_TOOLS breaks test_entitlement_admin::test_ogz2_ac08, whose registered count (122) is the union ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W113-S8"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "432f273f7e",
+      "infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py:315,366",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ad-1.client-tools-data-grant-class.md:76 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Commit 432f273f7e extended the registered-tool union in test_entitlement_admin.py with CLIENT_TOOLS, restoring the 122 count without weakening an assertion; OG-ad-1 completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Commit 432f273f7e extended the registered-tool union in test_entitlement_admin.py with CLIENT_TOOLS, restoring the 122 count without weakening an assertion; OG-ad-1 completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S284",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-W113-S9: BLOCKING for the release gate: three guard-suite tests pin the old NATIVE_TOOLS membership of the five client tools and go red (test_ogz1_ac06, test_o",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W113-S9"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "432f273f7e",
+      "infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py:681,700-706,946-959",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Commit 432f273f7e updated the three guard-suite pins (ogz1_ac06, ac07, ac11) to the client tools' DATA_GRANT and TIER_ADMITTED truth, no assertion weakened.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Commit 432f273f7e updated the three guard-suite pins (ogz1_ac06, ac07, ac11) to the client tools' DATA_GRANT and TIER_ADMITTED truth, no assertion weakened."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S285",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S164: OG-ap-23 Phase B: 4 of the 27 added tools are denied by IAM on the host (the internal reader role holds no s3:ListBucket for the 3 etfs_silver tools o",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S164"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row NFRA_OPLGTW-Z-S167 (DISMISSED_WITH_REASON)",
+      "ledger/ROUND_ANALYSIS.round37.md section 1",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-27.release-gap-grants-to-internal-reader.md:84 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "After OG-ap-27 the four IAM-denied tools serve; release 3d5c9c8bf1 is live with 27 of 27 tools served and the issuer's ap23.AC2 re-run passed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "After OG-ap-27 the four IAM-denied tools serve; release 3d5c9c8bf1 is live with 27 of 27 tools served and the issuer's ap23.AC2 re-run passed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S286",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S165: ap27.AC1.sh counts the condition key \"s3:prefix\" as an s3 ACTION, so it prints actions ['s3:GetObject','s3:ListBucket','s3:prefix'] and can never matc",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S165"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "b5652f6db9",
+      "row NFRA_OPLGTW-Z-S166 (DISMISSED_WITH_REASON)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The ap27.AC1.sh action scan was the issuer's defect and was fixed in the script only at b5652f6db9; AC1 passes on the unchanged .tf and OG-ap-27 completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The ap27.AC1.sh action scan was the issuer's defect and was fixed in the script only at b5652f6db9; AC1 passes on the unchanged .tf and OG-ap-27 completed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S287",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S168: OG-ev-1: the AC3 marker 'data_status on a quiet day' of OG-ap-19 cannot be shown, because the portal and news tools carry no field called data_status ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S168"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ap-19 A3 (task order line 98 region) and OG-ev-1 A1 (line 70)",
+      "surprise-channel/adjudications/ADJUDICATION_v31.Z.md (ap-19 AC3 MET)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ap-19 A3 reworded the marker to an empty window with as_of and absent_reason, and the CVO graded OG-ap-19 AC3 MET on the replaced bodies.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ap-19 A3 reworded the marker to an empty window with as_of and absent_reason, and the CVO graded OG-ap-19 AC3 MET on the replaced bodies."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S288",
+  "one_line": "Round-37 close disposition (CARRIED) of Z-S169: OG-ev-1: the AC3 marker 'Schwab masters never summed' of OG-ap-23 cannot be shown, because the installed client tools answer no_catalog_row for Schwab",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S169"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ap-23 A8",
+      "ADJUDICATION_v30.Z.md (Schwab marker carried)",
+      "git show 1bc2df0b13:...DATA_CATALOG.yaml has Schwab dim rows",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict CARRIED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-ap-23 A8 moved the 'Schwab masters never summed' marker off AC3; it stays ungraded until a real Schwab call is read, now that the Schwab catalog rows are live on the deployed catalog. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-ap-23 A8 moved the 'Schwab masters never summed' marker off AC3; it stays ungraded until a real Schwab call is read, now that the Schwab catalog rows are live on the deployed catalog. Carried to the round-38 enrichment list (named in the L10 slug); not a hazard to what is live."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:50:53Z",
+  "id": "NFRA_OPLGTW-Z-S289",
+  "one_line": "Round-37 close disposition (RESOLVED) of Z-S174: OG-mg-1 mg1.AC2.sh cannot pass against the live store's shape: it reads calendar_months at the scope's top level and compares typed DynamoDB maps, but",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S174"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "f30d9fdce8",
+      "deliverables/2.0.0_SA_COO~O/r37/checks/mg1.AC2.sh:46-48",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-mg-1.r30-grant-writes.md:189 (complete)",
+      "issuer triage 2026-10-16: the cited commits and paths were verified to exist by the issuer; verdict RESOLVED from a read of each source by a read-only triage pass"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 37 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "mg1.AC2.sh was fixed to read calendar_months under the scope's dates map; the applier's reading was right and OG-mg-1 completed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "mg1.AC2.sh was fixed to read calendar_months under the scope's dates map; the applier's reading was right and OG-mg-1 completed."
+}
+```
