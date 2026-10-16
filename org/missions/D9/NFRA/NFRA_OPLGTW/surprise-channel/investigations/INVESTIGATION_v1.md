@@ -24705,3 +24705,28 @@ name the one known failure instead of silently inheriting it.
     "notes": "Same class as Z-S158 and Z-S165 (a check script out of step with what the order's own rules let the file say). Also recorded: the registry commit bd93455796 needed the audited lane override GIT_COMMIT_AUTHOR_OVERRIDE=PLATFORM_LOGIC_DOCS, because the lane infra/logic/** admits only the CRO lanes; the same act (the ap-24 rows, 4de28d210d) passed the lane gate at 00:23Z, and this seat did not find which clause admitted it then. A repeat override for a standing action is, by that lane's own description, a coverage gap to close."
   }
   ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T14:25:43Z",
+  "id": "NFRA_OPLGTW-Z-S295",
+  "one_line": "Lane PLATFORM_LOGIC_DOCS (infra/logic/**) admits only the CRO lanes, so an applier's order that names infra/logic/registry/ in its paths still cannot commit its registry rows without the audited GIT_COMMIT_AUTHOR_OVERRIDE; ap-24's identical commit passed at 00:23Z and ap-29's was refused at ~14:10Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~ZS msg 35049 (ap-29 Phase A): the registry rows commit bd93455796 needed GIT_COMMIT_AUTHOR_OVERRIDE=PLATFORM_LOGIC_DOCS, recorded in the override audit at 14:10Z; the applier could not find why ap-24's identical commit passed at 00:23Z.",
+      "CLAUDE.md rule 30: a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround; this order's <paths> names infra/logic/registry/; the lane description names the CRO lanes as the permitted agents."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A cell whose <paths> names infra/logic/registry/ can commit the registry rows that the standing naming rule tells it to add, without an override.",
+  "world_is": "The lane and the rule disagree for any applier or worker that must add a registry row: the rule sends it to the registry, the lane admits only the CRO. The override is audited and was used once, with the rows read-only attributions on pairs the catalog already carries. The inconsistency between ap-24 (passed) and ap-29 (refused) is unexplained (a lane config change between the two, or a difference in the author serial, are the two readings to measure).",
+  "notes": "Owner of the decision: the lane config belongs to 0.0.0_AB_MSTR (the CTO for the rule). The issuer's act: record it and carry it in the L10 slug. Not blocking ap-29: the override is the audited escape and the rows are signed over in the ask."
+}
+```

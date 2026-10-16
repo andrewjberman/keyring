@@ -23235,3 +23235,163 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The wrapper's CHANGELOG write is a standing out-of-grant carrier (S89, S96, S99 and now a committed one); what stops it differs by firm entry, so the guard is accidental. The count and partition differences are explained and inside the order's bounds."
 }
 ```
+
+## IRPT_DASHBD-D2-S122 -- three NYSE trading days inside the Cottonwood landed range have no gold partition (2026-08-19, 2026-09-24, 2026-09-25)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S122",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T13:33:10Z",
+  "one_line": "Reading the Cottonwood landing gold prefix for the rewrite packet: 66 date= partitions from 2026-07-10 to 2026-10-15 against 69 NYSE trading days in that range; the three missing days are 2026-08-19, 2026-09-24 and 2026-09-25. The silver fact_allocations table holds a partition for each of the three; fact_transactions holds none. The handler's owed-days rule starts at the day after the newest landed partition, so no scheduled fire will ever fill them, and a rewrite event refuses a range holding a day that is not landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list_objects_v2 Delimiter / on opal-data-cottonwood irpt/cottonwood/gold/account_return_daily/ (paginated client-side): 3391 date= partitions, 66 of them from 2026-07-10 on; lib/trading_calendar.py trading_days_between(2026-07-10, 2026-10-15) = 69 days, 3 not in the listing, no listed day outside the calendar",
+      "list_objects_v2 Delimiter / on opal-data-assets blackdiamond/cottonwood/silver/fact_allocations/ (146 partitions) holds date=2026-08-19, date=2026-09-24 and date=2026-09-25; fact_transactions/ (126 partitions) holds none of the three",
+      "CloudWatch log group of irpt-cot-account-return-daily-lambda holds 3 streams (created 2026-10-15); no line names any of the three days"
+    ]
+  },
+  "spec_asserts": "Handler docstring: no day key runs the trading days after the newest landed partition through T-1; _rewrite: a rewrite changes landed days only (a not-landed trading day in the range is a ValueError). The 2026-10-15 landing pair's catch-up named days up to the newest silver partition.",
+  "world_is": "Three trading days are absent from a gold table the page may read as a daily series, and the code has no path that fills them. Whether the adapter holds a day with no transactions partition, or the catch-up events skipped them, is not read. The rewrite packet therefore rewrites the 66 landed days in ranges that avoid the three; filling the three is a separate question for the CTO."
+}
+```
+
+## IRPT_DASHBD-D2-S123 -- the hop-2 publisher's validator refuses the filled document the producer writes: window_status is one word there, an object of four words in the contract and the table
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S123",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T14:15:18Z",
+  "one_line": "While specifying the hop-2 reader (CTO msg 9439): publisher.validate_filled_report (IB-pr-553) requires each account entry's window_status to be ONE of MEASURED, NOT_SPANNED, BREAK, but the contract's window_status_rule defines it per window (qtd, ytd, last_12_months, since_inception) and filled_report_values.py writes and reads back an object of those four keys. Run on a producer-shaped document the validator raises PublishRefused 'an account entry carries an unknown window_status', so run_filled_report would count every client as refused and write nothing, whatever the reader returns.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python run in this tree: publisher.validate_filled_report on {household:{accounts:[{window_status:{qtd,ytd,last_12_months,since_inception: MEASURED}}]}, values:{}} raises PublishRefused: an account entry carries an unknown window_status",
+      "org/standards/IRPT_DASHBD_PERFORMANCE_REPORT_CONTRACT.json document.filled_report: account_entry_fields [account_id, last4, first_data_date, window_status], window_status_values [MEASURED, NOT_SPANNED, BREAK], window_status_rule 'for each of the four windows ...'",
+      "data/assets/scripts/gold/irpt_reporting/filled_report_values.py: build_document sets window_status to the per-window STATUS[a] dict (line 714); to_rows writes one row per window (account.window_status.<w>); _one_document reads them back as that dict",
+      "publisher.py FILLED_WINDOW_STATUS check at validate_filled_report: entry['window_status'] not in FILLED_WINDOW_STATUS"
+    ]
+  },
+  "spec_asserts": "Contract: the filled report's account entry carries window_status per window with the three words. IB-pr-553: validate_filled_report refuses a document that is not the contract's shape.",
+  "world_is": "The validator accepts a shape the producer never writes and refuses the shape it does write. Hop 2 is OFF and wrote nothing, so no client is affected yet; the defect would show as refused for every client once the switch is on. The reader cell (DB-b-302) carries the validator's fix inside the same FILLED-REPORT-A block so the drain, the re-pin and the deploy pair are one."
+}
+```
+
+## IRPT_DASHBD-D2-S124 -- TO-DB-b-300 STOPPED after Act 4: a one-day backfill changed six value columns, the PARTIAL count is off by one and the flip count is 4100; Monday's fires would apply it ungated
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S124",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T14:27:03Z",
+  "one_line": "TO-DB-b-300 STOPPED after Act 4: the one-day backfill of 2026-10-15 changed six value columns besides history_scope (the value hash differs), labelled 2851 rows PARTIAL_HISTORY against 2850 floor-start accounts, and the served series carry PARTIAL_HISTORY on all 6954 (not the FULL the order assumed), so the flip count reads 4100 non-floor flips; the new code and its schedules are LIVE, so Monday's 11:41Z gold fire and 12:15Z publish fire would apply the same flip without the order's gate.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "spec_asserts": "Packet section 1 Act 4: 'the returns rows differ only in history_scope and one added conditional column'; the order's step 7: after.rows equal before.rows, every value column identical (Branch D: a different hash STOPS Act 5), partial equal to the floor-start count; step 8 and the CTO's condition 1: the older series carry the old constant FULL and any flip on a non-floor account STOPS Act 5.",
+  "world_is": "MEASURED after the event (GOLD49F_STOP_EVIDENCE.json, counts, hashes and column names only): rows 6951 before and after; the value hash differs; against the 11:42:19Z version of the day's object (kept) the changed columns are total_return_daily 78 rows, return_basis 78, day_quality 78, holdings_price_return 6761, holdings_price_return_reason 6951, guard_state 6760, plus history_scope on 4100 and the new history_scope_claim on all 6951; PARTIAL_HISTORY 2851 and FULL 4100 against floor_start_with_row 2850 (one PARTIAL account's first positive value day is 2026-10-09); the 6954 served series read history_scope PARTIAL_HISTORY with no claim, so partial_to_full 4100, unchanged 2851, full_to_partial 0, non_floor_flips 4100. The function now runs the new code and irpt-49f-reporting-gold-daily (cron 41 7 MON-FRI, ENABLED) fires Monday 2026-10-19 11:41Z, followed by the publish fire at 12:15Z.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.7.0_AE_CloudOps~DB2/GOLD49F_STOP_EVIDENCE.json",
+      "backfill event RequestId d9d8ce16-ed15-4d16-a076-5e545e1462b7 at 2026-10-16T14:04:50Z (status 200, 5827 MB, 501 s, every failed map empty)",
+      "the prior version of account_return_daily date=2026-10-15 data.parquet written 11:42:19Z is kept beside the 14:05:31Z version (versioned bucket); the column-by-column comparison read both"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED until the CTO rules before Monday 2026-10-19 11:41Z: accept the changed value columns and the flips, or have the previous artifact version restored by a new pair (the packet's section 7) and the day's prior version copied back by listed key. The applier has rolled nothing back and started no Act 5."
+}
+```
+
+## IRPT_DASHBD-D2-W1901-S1 -- TO-DB-f-1901: the 0.4.2 generator's producer import and its CRO input sit in two folders the order does not list as materialized; both were added with git sparse-checkout add, no tracked file edited
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1901-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1901",
+  "surfaced_at": "2026-10-16T13:47:39Z",
+  "one_line": "The 0.4.2 generator imports the producer account_transaction.py, which imports account_return_daily.py, which imports stream_parquet from data/assets/scripts/lib; it also loads the CRO table under org/tier1_exec/4.0.0_SA_CRO. Neither folder is in the worktree sparse set the order describes; both were added with git sparse-checkout add and no tracked file was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run of gen_transaction_contract_0_4_2.py failed: ModuleNotFoundError No module named stream_parquet, raised through account_transaction.py line 65 and account_return_daily.py line 94; data/assets/scripts/lib was absent from the sparse set (git sparse-checkout list at HEAD 7b47813ad1 shows no such folder)",
+      "second run failed: FileNotFoundError on org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json, the CRO constant of the generator; the file is in HEAD at 7b47813ad1",
+      "git sparse-checkout add data/assets/scripts/lib and git sparse-checkout add org/tier1_exec/4.0.0_SA_CRO each exited 0; the third run wrote the contract and the words file; git diff --stat over org/standards and the gold irpt_reporting folder: 2 files, 27 insertions, 6 deletions"
+    ]
+  },
+  "spec_asserts": "Order DB-f-1901 worker face: the folders org/standards, lib, data/assets/scripts/gold/irpt_reporting, data/inf and infra/logic are materialized (if one is missing, run git sparse-checkout add <folder>: not a grant to edit); run the generator with python -I from the worktree root.",
+  "world_is": "The generator's producer import chain and its CRO input lie outside the five named folders, so the sparse set held neither data/assets/scripts/lib nor org/tier1_exec/4.0.0_SA_CRO. Both were materialized with the order's own remedy; no tracked file was edited and the order's grant is unchanged.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1901-S2 -- TO-DB-f-1901: the 0.4.2 words file breaks a neighbouring test that pins contract_version 0.4.1, so the regression DBF132-1-AC2 prints FAIL; the test file is outside the grant and was not edited
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1901-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1901",
+  "surfaced_at": "2026-10-16T13:47:39Z",
+  "one_line": "data/assets/scripts/gold/irpt_reporting/tests/test_account_transaction_cottonwood.py line 86 asserts the words file contract_version equals '0.4.1'; the order moves it to 0.4.2, so one of the 52 tests in that file fails and the regression DBF132-1-AC2 prints FAIL. The test is outside the grant and was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_account_transaction_cottonwood.py line 86 reads: assert WORDS['contract_version'] == CONTRACT['contract_version'] == '0.4.1'",
+      "python -I -m pytest on that file after the generator run: 51 passed, 1 failed; AssertionError: assert '0.4.2' == '0.4.1' in test_load_words_carries_the_cottonwood_mapping_and_fee_basis",
+      "python -I checks/r132/p132_dates.py . DBF132-1-AC2 last lines: reason pytest on test_account_transaction_cottonwood.py rc=1 failed=1 errors=0, then DBF132-1-AC2 FAIL; checks/r132/p132_inflection.py . DBF132-1-AC3 prints PASS; checks/r133 p133_contract.py . DBF133-1-AC1 prints PASS"
+    ]
+  },
+  "spec_asserts": "Order DB-f-1901 step 3: run p132_dates.py DBF132-1-AC2 once as a regression check; both regression checks PASSED before and must still print PASS. The grant is the paths block, which names the words file and not this test.",
+  "world_is": "A neighbouring test in the irpt_reporting tests folder pins the contract version this order changes from 0.4.1 to 0.4.2. Left alone, the regression stays FAIL on this branch and the test is red on the drain; the pin update lies outside the grant and is the issuer's call.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1901-S3 -- TO-DB-f-1901: row S2 (the Cottonwood test's literal 0.4.1 pin) is resolved by the issuer's amendment f7d784393c; the one assertion is changed, the file grant is named, and the regression and the criterion pass again
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1901-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1901",
+  "surfaced_at": "2026-10-16T14:03:29Z",
+  "one_line": "Row IRPT_DASHBD-D2-W1901-S2 is resolved by the issuer's amendment f7d784393c: the grant now names the Cottonwood test file, and its line 86 literal pin is replaced by a comparison with the contract's version and a floor of 0.4.1. S2 itself is not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat f7d784393c: the order file only, 4 insertions and 2 deletions; the amendment text names the file and the replacement assertions; the order is reopened to status pending",
+      "git diff of test_account_transaction_cottonwood.py: 2 insertions, 1 deletion; line 86 'assert WORDS[contract_version] == CONTRACT[contract_version] == 0.4.1' is now two assertions, the comparison and the tuple floor (0, 4, 1); no other line changed",
+      "python -I -m pytest on that file: 52 passed in 1.01s (rc 0), against the 51 required; p132_dates.py DBF132-1-AC2 PASS (rc 0); p132_inflection.py DBF132-1-AC3 PASS (rc 0); p133_contract.py DBF133-1-AC1 PASS (rc 0)"
+    ]
+  },
+  "spec_asserts": "Amended order DB-f-1901 step 3: change line 86 so it no longer pins a literal version, with the two named assertions; touch nothing else in that file; the Cottonwood test file must pass with at least 51 tests; then re-run DBF133-1-AC1 and the two regression commands of step 4.",
+  "world_is": "The step is done as written: one line became the two named assertions, the file passes 52 of 52, and both regression checks and the criterion print PASS. Row S2 remains as filed (ARMED in its own text); this row records its resolution.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
