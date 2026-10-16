@@ -28235,3 +28235,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Pointer, not graded here: the worker also saw an overlay EV in dollars on PHP, HKD and CHF listings (31.68B, 110B, 335B) while the Model block says Figures in USD; unverified by the issuer. Candidates for the round-108 enrichment list: a Key Figures reason line for a withheld name with no P/E row, and a name for the What Changed line. The CVO and CTO read the shots at the re-grade; no change is proposed by the issuer."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W476-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~476",
+  "surfaced_at": "2026-10-16T01:13:17Z",
+  "one_line": "AMGT-bo-1 premise does not reproduce on the PBR US fixture as shipped: the 2025 team range 3.6x-5x is not a Key Figures column without an envelope fiscal_years declaration; the cell sits in the All-figures grid only.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT-bo-1 section 1 and check M4: the team P/E cell 3.6x-5x (PBR US, 2025) sits in the Key Figures table and prints research team estimate under it (the 2025 column is 'the cell that prints no mark today').",
+  "world_is": "On teamMarkFixture.PBR_US_Equity.json as committed (no envelope fiscal_years; the model block carries no fiscal_year_figures), summarizeSheet gives Key Figures the columns 2026E and 2027E only, and the 2025 team word cell 3.6x-5x (data-model-text=word, title row 28 period column N) renders only inside the All-figures grid. The cell enters Key Figures only when the envelope declares fiscal years including 2025. The harness declares 2016 to 2025 for PBR (the same method the round 107 harness uses for SHOP) so M4 can be graded; whether the live served PBR envelope declares those years is NOT verified by this worker. The grid P/E cells are unmarked by this order's scope (Key Figures only).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/SecurityAnalysis/modelSheet.ts@e0e69da7 lines 689-701 (summarizeSheet: years = last actual + next two forecast years of sheet.years; no actual year when fiscal years are not declared)",
+      "portal/src/pages/SecurityAnalysis/__harness__/teamMarkFixture.PBR_US_Equity.json@e0e69da7 (model keys carry no fiscal_year_figures; top level carries no fiscal_years)",
+      "C:/dev/wk-resapp-476/.scratch/explore_c.cjs run at worktree HEAD ca233b2bd5: PBR with fiscal_years null renders Key Figures heads 2026E | 2027E only; with fiscal_years 2016 to 2025 the heads are 2025 | 2026E | 2027E and the 2025 cell reads 3.6x-5x with data-model-source team and no mark",
+      "C:/dev/wk-resapp-476/portal/src/pages/SecurityAnalysis/__harness__/withheldReasons.harness.cjs unchanged-page run: CHECK M4_pbr_2025_range_prints_mark FAIL (2025 cell: 3.6x-5x) with the declared years"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the worker, not graded here. The other premises reproduce: the four withheld slices carry no P/E row in Key Figures and the one served sentence each; the ZURN compare carries 33 changed rows with three BEST_PE_RATIO rows for 2026 to 2028. The disposition of M4 (declared years versus the live envelope) is the issuer's call."
+}
+```
