@@ -65,10 +65,18 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~153, worktree `C:/dev/wk-harvst-153`, branch `wk-AMGT_HARVST-153`. Widen the sparse set at provision with `org/tier1_exec/4.0.0_SA_CRO/scripts`, `org/missions/D5/AMGT/AMGT_HARVST/surprise-channel`, `org/missions/D5/AMGT/AMGT_HARVST/ledger`.
 - **SENT:** with the round-88 issuance.
 
+**COMPLETE 2026-10-16T16:03:33Z (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~153` (worker, haiku, high), branch `wk-AMGT_HARVST-153`, head `341e87e97a`, merged `76a2aed71a` (safe-merge fast lane on the second attempt after losing a race to other seats' commits; index check 0 of 6 paths differ). Record: `deliverables/0.9.0_WK_AMGT_HARVST~153/triage.json`, `triage.md`, `triage_counts.txt`, `triage_check.out`.
+- **AC1 PASS:** `TRIAGE OK rows=32 population=32 met=1 reowned=28 dismissed=3` (worker; this seat re-ran). **AC2 PASS:** `met=1 reowned=28 dismissed=3 total=32` (re-run here). Proof instance VALID rc 0 (re-run here).
+- **Read by this seat (the cell's close):** all 32 reasons and next acts in `triage.json`; four HEAD reads spot-checked against the code: `install-cycle-schedule.ps1:16` (`StopFile` defaults to the repo root's `STOP`, Z-S110), `transport.py:165-175` (`request_kind` labels any `/news` path `listing`, Z-W90-S14), `worker.py:957-959` (the job entry carries `finished_at`, the one `met` row Z-W108-S2), `backfill_driver.py:45-49` (the transient-stop resume, Z-S113). All four match the worker's stated line.
+- **Result:** met 1 (`Z-W108-S2`), dismissed 3 (`Z-S19`, `Z-S20`, `Z-S21`: other projects' surfaces), re-owned 28: to `2.0.0_SA_COO~W1` 20, `0.7.0_AE_CloudOps~SC1` 4, `1.0.0_SA_CTO~DELL1` 3, `0.0.0_AB_MSTR~DELL1` 1 (`Z-S111`, the worktree-GC hazard). Ten of mine are the `ft` captcha and session-death rows held on the qualified wait `HVST-RECHECK-OCILAR-1` (2026-11-01); the code rows (`request_kind` labelling, the installer's STOP parent and default, the bv-1 requeue test, the failure-detail trace, the transient-stop test) are candidates for the round-89 enrichment list.
+- **Rows** `D1-W153-S1` and `-S2` (INERT notes: sparse cone; the population's round tags name none of the remediation files) and `D1-W153-S3` (ARMED, the worktree-GC hazard on `Z-S111`, its `disarm_owner` `0.0.0_AB_MSTR~Z` is not live; the triage re-owns it to `0.0.0_AB_MSTR~DELL1`): the issuer dispositions them after the round's merges.
+- **What this does NOT do:** change any row's STATE. The remediation documents are the CVO's (lane `TREE_CVO`); the issuer sends this record to the CVO for its next sweep. The shape check is shape only; the CVO reads whether each verdict is right.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <direct_act>true</direct_act>
-<status>pending</status>
+<status>complete</status>
 <round>88</round>
 <workstream>ROW-TRIAGE</workstream>
 <slot>dell1</slot>
