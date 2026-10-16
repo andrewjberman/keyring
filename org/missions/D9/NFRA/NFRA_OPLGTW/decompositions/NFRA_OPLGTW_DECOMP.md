@@ -2554,3 +2554,12 @@ The gap is the issuer's: the `OG-ap-23` preflight declared no IAM change and its
 
 Held since ~07:0xZ so the file did not move under the release commit. `OG-rr-2` (the gate refuses an unresolved `ruling_ref`) follows this cell's merge.
 **fanout:** 1 of 1 chains, cap 8. Disjoint from every other open cell; the muse cell stays behind the 22:00Z finish.
+
+## ADDENDUM R3-T.90 (2.0.0_SA_COO~O, 2026-10-16 ~10:2xZ) -- round 37, workstream RULING-REF-GATE: the commit-time naming gate checks `ruling_ref` (CTO ruling @8b9adcbd8d section 3 cell 2, scoped by CTO msg 34906)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-rr-2` | `.tools/naming-gate.py` refuses (a) a present `ruling_ref` that does not resolve (`git cat-file -e <commit>:<path>`) and (b) a `name_rulings.json` row added by the graded commit with no resolving `ruling_ref`; the 111 legacy rows keep today's grade; four self-test arms; full-add re-grade of the 17 release modules moves 0 names | `.tools/naming-gate.py`, `.tools/tests/test_naming_gate_rulings.py` | WORLD | ~116 | `OG-rr-1` merged (ecd2aad5d0) |
+
+The 111 legacy rows are not refused: the CTO ruled (msg 34906) that backfill stays open on the CRO's list rather than moving 111 grades.
+**fanout:** 1 of 1 chains, cap 8. Disjoint from every other open cell.
