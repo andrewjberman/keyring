@@ -19871,3 +19871,78 @@ name the one known failure instead of silently inheriting it.
   "notes": "Non-application: the order's bounds are held by the commit; the gitlink is left as found and not staged, reset or cleaned."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T04:42:38Z",
+  "id": "NFRA_OPLGTW-Z-W113-S3",
+  "one_line": "The order's 'projection-limited sample scan' cannot yield the attribute-name union: DynamoDB projects only the attributes it is named, so the 200-item sample ran unprojected (Limit 200) and was reduced in memory to names and counts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "census pass run 2026-10-16T04:41Z from C:/tmp/wk-oplgtw-113/.scratch/census_probe.py: scan with TableName and Limit 200 and no ProjectionExpression; 200 items; 15 attribute names and four classified_by counts printed; no item value stored or printed.",
+      "W/ETF_CLASS_CENSUS.json attribute_names and classified_by_counts carry the claim measured and a note naming the 200-item sample scope."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 2 BOUNDS: one projection-limited sample scan of at most 200 items for attribute and classified_by names.",
+  "world_is": "A DynamoDB projection needs the attribute names up front, so a union of unknown attribute names over a sample is read from full items. The bound as written cannot be met by a projection; a table-wide union would need a full scan, which the bound excludes.",
+  "notes": "Recorded in the census notes and not hidden. Cost: attribute_names and classified_by_counts are sample measurements, not table-wide. Non-application: a known attribute set needs only its own projection."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T04:42:38Z",
+  "id": "NFRA_OPLGTW-Z-W113-S4",
+  "one_line": "The CRO's G4 spec, the source of the tool name and its inputs, is tracked at HEAD but absent from this sparse worktree; it was read as the committed blob with git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/wk-oplgtw-113: the path org/tier1_exec/4.0.0_SA_CRO~Z/deliverables is absent from the working tree (test -e false), while git ls-files lists org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_DATA_CONTRACTS_20261014/G4_mdpf_delta.md at HEAD 00883c0c0d.",
+      "git show HEAD:<that path> read 422 lines into the scratch directory; section 3.3 and the proposed-tool block were read from that copy."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 3 SURFACES lists the G4 spec among the paths the worker reads.",
+  "world_is": "The G4 spec is in git but outside this worktree's sparse checkout, so a plain read of the named path fails.",
+  "notes": "No tree was rebuilt: one committed blob was read. Cost: none to the census. Candidate for the owner: a sparse-cone entry for the CRO deliverables folder."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T04:42:38Z",
+  "id": "NFRA_OPLGTW-Z-W113-S5",
+  "one_line": "The contract's measured row count for etf-classifications (3,507, read 2026-10-07) is 11,362 on this run's Select=COUNT scan, about three times larger in nine days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/MDPF_SECCLASS_CONTRACT.json (HEAD 00883c0c0d) and G4 spec section (c) quote the 2026-10-07 read of 3,507 rows.",
+      "census pass 2026-10-16T04:41Z: paginated Select=COUNT scan total 11362 over 3 pages; DescribeTable ItemCount estimate 11362."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The contract and the G4 spec describe the table at 3,507 rows (2026-10-07).",
+  "world_is": "The table holds 11,362 items on 2026-10-16. The contract's figure is a stale measurement, not a bound on the table.",
+  "notes": "The census records 11362 with its claim measured. Cost: a count-based claim written from the contract would be wrong by about 7,855 rows. Non-application: the ticker-keyed tool is not sized by this count."
+}
+```

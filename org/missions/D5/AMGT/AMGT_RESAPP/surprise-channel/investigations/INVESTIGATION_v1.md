@@ -28444,3 +28444,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not acted on. The task order's own paths (lib/research/aifill, the D5 AMGT_RESAPP folder, the standards folder) are all on disk, so the order ran. The gap is the schema path only; whether the sparse cone should carry org/surprise_channel for workers is the issuer's call."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S41",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T04:10:00Z",
+  "one_line": "D1-S39's NOT MEASURED is measured: over the 95-name live re-run 23 sentences were CONTRADICTED, 22 record the shown source index and quote, 1 (1299_HK_Equity mgmt_recent) records source null and quote null, and none of the 23, nor any of 302 UNSUPPORTED sentences, survives in a block's text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "D1-S39 (AMGT-gs-1, merged b44008b3cd): a CONTRADICTED sentence records the list index of the shown source and a quote checked against that source's full text; any other CONTRADICTED row keeps source null and quote null; the sentence stays out of the block text. NOT MEASURED then: a real model reply naming a contradicting source.",
+  "world_is": "Read by this seat 2026-10-16 ~04:0xZ over the 95 stamped files in deliverables/2.0.0_SA_COO~R2/round107_aifill_close/live95/stamped/ (a python read of every block's grounding.sentences): 95 files, 475 blocks, 803 judged sentences = 478 SUPPORTED, 302 UNSUPPORTED, 23 CONTRADICTED. Of the 23 CONTRADICTED, 22 carry a non-null source index and quote; 1 carries both null (1299_HK_Equity, mgmt_recent, WEB_SEARCH), which is the rule's stated fallback when the model's label names no shown source or its quote is not in that source's text. Surviving check: for every non-SUPPORTED sentence, its text is not a substring of the block's text (0 survivors in 95 files). NOT MEASURED: whether each of the 22 recorded quotes truly contradicts its sentence (the CVO's five-name read is the judge of that, not this seat); the 23 were not each read for meaning.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PYTHONPATH=. python read of deliverables/2.0.0_SA_COO~R2/round107_aifill_close/live95/stamped/*.json (95 files): sentence verdict counts and the survivor check",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R2/round107_aifill_close/live95/spend_ledger.jsonl"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Closes D1-S39's open line. W452-S1 stays disarmed. No act."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S42",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T04:11:00Z",
+  "one_line": "The 95-name local re-run logged 3 names FAILED that were not model failures: run.py cannot write a local file for a key containing '*' on Windows (WALMEX*_MM_Equity raised OSError after the model spend), and this seat's run95.py looked for the raw key where run.py writes the slash-safe name (BP/_LN_Equity, NG/_LN_Equity); the script's printed total of 119.40 USD left those three out.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "run.py --out writes <slash-safe key>.json for any security key (its help text); this seat's run95.py assumed the file is named by the raw key and that its own printed spend total covers every name.",
+  "world_is": "2026-10-16 ~04:0xZ on dell1 (Windows): crosswalk.slash_safe_key replaces '/' only, so WALMEX*_MM_Equity gives a local file name with '*', and run.py line 120 path raised OSError [Errno 22] after the model calls (the first WALMEX document was lost; its spend is in no total). BP/_LN_Equity and NG/_LN_Equity wrote BP-SLASH-_LN_Equity.json and NG-SLASH-_LN_Equity.json, which run95.py did not look for. Recovery: finish95.py stamped the two existing files and re-ran WALMEX with the LOCAL file name only changed ('*' to -STAR-; the security_key field inside the document stays WALMEX*_MM_Equity). All 95 now have a raw and a stamped file. The live store already holds the literal-star key (aws s3 ls: security_key=WALMEX*_MM_Equity/ai_fill.json, 2026-10-13) and store.address_for builds that same address, so the S3 write path is unaffected; only the local file name differs. Spend at the assumed upper rates (15 and 75 USD per Mtok, 0.01 per search): 122.41 USD summed from the 95 documents' recorded calls plus the lost first WALMEX run (about 1.4 USD, unmeasured) = about 124 USD, under the 150 ceiling. NOT MEASURED: the real Anthropic bill (the rates are assumptions, no console read); whether opus-5's actual rates are lower.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live95/spend_ledger.jsonl (98 rows: 95 OK, 3 FAILED) and finish95_stdout.txt",
+      "lib/research/aifill/run.py line 120; lib/research/identity/crosswalk.py slash_safe_key (read with the Grep tool)",
+      "aws s3 ls s3://opal-data-harvest/amgt/harvest/gold/ai_fill/ --recursive: 95 lines, WALMEX* key present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed in run.py (a Windows-only local --out defect, not in this order's paths). The store-write step must take each document's own security_key field for its address, never the local file name; the never-widen half says so."
+}
+```
