@@ -55,7 +55,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-7.smartx-cross-firm-count.pr
 - Round 38 (CTO round-37 analysis, E7), workstream ENRICH-R38 (decomposition addendum R3-T.93). One mechanical criterion (the record's existence and hygiene); the number itself is the finding and the CVO reads it.
 - Pre-cut: en7.AC1 base FAIL as expected (`SMARTX_CROSSFIRM.json` absent).
 
-<status>staged</status>
+<status>complete</status>
 <round>38</round>
 <workstream>ENRICH-R38</workstream>
 <slot>~AE</slot>
