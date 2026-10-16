@@ -82,7 +82,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-12.bd49f-live-address-and-ro
 - Round 38 (CTO rulings @ed33f552ae, @8b2865e461; rows Z-S292, Z-S293), workstream ENRICH-R38-D (decomposition addendum R3-T.96; a fourth workstream for the L6 gate's one-issuer-per-workstream key). Risk WORLD by the L6 floor (a gateway infrastructure path), no deploy in this cell. Order of the chain: NFRA_MCPINDEX writes the `address` field on the four rows; this cell; `OG-ap-29` (the dedicated role, three halves, applied BEFORE the release); the batched release (with the `BLACKDIAMOND49FLIVE_READER_ROLE_ARN` env key in its deploy hunk); then the `OG-en-11` re-run, which closes Z-S292.
 - Pre-cut: AC1 base FAIL as expected (the test file is absent); AC2 base FAIL as expected (no commit of this serial yet).
 
-<status>staged</status>
+<status>complete</status>
 <round>38</round>
 <workstream>ENRICH-R38-D</workstream>
 <slot>~125</slot>
