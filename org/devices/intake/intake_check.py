@@ -795,7 +795,7 @@ def has_sign_marker(text):
 
 
 WAIVABLE_CHECKS = (3, 4, 5, 6, 7)      # checks 1 and 2 (digest, identity) are never waivable; check 8 is the waiver itself
-WAIVE_RE = re.compile(r"^WAIVE (\S+) check ([0-9]+): (.*)$")
+WAIVE_RE = re.compile(r"^WAIVE (\S+) check ([0-9]+):(?: (.*))?$")   # no text after the colon reads as an empty reason
 
 
 def parse_waivers(text, file_name):
@@ -810,7 +810,7 @@ def parse_waivers(text, file_name):
         if m is None or m.group(1) != file_name:
             continue
         n = int(m.group(2))
-        reason = m.group(3).strip().rstrip("*`_").strip()
+        reason = (m.group(3) or "").strip().rstrip("*`_").strip()
         if not reason:
             ignored.append({"check": n, "reason": "", "why": "empty reason"})
         elif n in WAIVABLE_CHECKS:

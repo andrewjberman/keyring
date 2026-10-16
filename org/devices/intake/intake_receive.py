@@ -183,7 +183,8 @@ def _derive_waived(checks):
     checks 3..7 that check 8's waiver lines carry, or 'not_checked' and []. The parity arms in
     .tools/tests/test_round27_waiver.py hold the two derivations equal."""
     ev8 = checks[7].get("evidence") or {}
-    if not isinstance(ev8, dict) or not (ev8.get("signer") and ev8.get("path")) or ev8.get("refused_waivers"):
+    if checks[7].get("verdict") != "passed" or not isinstance(ev8, dict) or not (ev8.get("signer") and ev8.get("path")) \
+            or ev8.get("refused_waivers"):
         return "not_checked", []
     waived = set()
     for w in ev8.get("waivers") or []:

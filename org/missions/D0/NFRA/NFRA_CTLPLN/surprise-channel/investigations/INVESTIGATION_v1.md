@@ -12387,3 +12387,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Observation only. The base red was not caught because the suite was not run after CT-am-2 changed check 8's missing-file state."
 }
 ```
+
+## NFRA_CTLPLN-W134-S2 -- the receiving tool accepts a record that reads 'checked' without re-deriving checks 1 to 7
+
+```json
+{
+  "id": "NFRA_CTLPLN-W134-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~134",
+  "surfaced_at": "2026-10-16T08:48:43Z",
+  "one_line": "intake_receive.py _record_problems accepts a record whose verdict is 'checked' and whose check 8 reads passed, without reading the verdicts of checks 1 to 7: a synthetic record with check 1 failed and verdict 'checked' gives no problems.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_receive.py (the record test in _record_problems, base 8ec35ee85f lines 176-196; in the worktree at 11139cb7b5 the 'checked' branch is unchanged) -- it tests verdict, numbering and check 8 only",
+      "measured in the worktree at 11139cb7b5: ir._record_problems(rec, 'f.whl', 'ab') on a record with verdict 'checked', checks 2 to 8 passed and check 1 failed returns [] (no problems)",
+      "org/devices/intake/intake_check.py@11139cb7b5 compute_verdict/_derive never writes such a record; the gap is on the receiving side only, reachable by a hand-edited or foreign record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "intake_receive.py verifies a pack only when every wheel's record reads 'checked' (or 'released-with-waiver' re-derived) and every check is clear; a failed check never clears a wheel.",
+  "world_is": "For a 'checked' record the receiver reads the verdict string and check 8 only; a failed check 1 to 7 in a 'checked' record is accepted. The CT-av-1 cell re-derives only the 'released-with-waiver' record (the new verdict) and leaves the 'checked' branch as it was, because its synthetic fixtures carry string evidence the stricter derivation would refuse. Fixing the 'checked' branch is outside the cell's write grant.",
+  "notes": "Observation only; no change made. A later cell that owns intake_receive.py can add a verdict-level re-derivation for 'checked' (checks 1 to 7 passed or not_applicable with a reason; check 8 passed)."
+}
+```
