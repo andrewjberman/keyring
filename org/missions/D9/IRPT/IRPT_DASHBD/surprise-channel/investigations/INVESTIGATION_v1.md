@@ -23794,3 +23794,108 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W2103-S1 -- DBF135-3-AC1 cannot pass as written: its ASCII clause conflicts with its pure-insertion clause (the pinned base is not ASCII)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T17:39:40Z",
+  "one_line": "DBF135-3-AC1 cannot pass as written: the pinned base copy dispatch_base.sh.txt already holds 10 non-ASCII lines, so a pure insertion over it cannot make the dispatch script ASCII. The lines this cell adds are ASCII; the whole-file ASCII check stays FAIL and is not repaired.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBF135-3-AC1 (checker p135_dispatch.py, ac1): the dispatch edit is a pure insertion over the pinned base copy but for the unknown-chain line, and the script is ASCII (new.isascii()). The worker face asks for ASCII in anything written.",
+  "world_is": "The pinned base copy (sha256 e9aef66b...) already holds 10 non-ASCII lines (base lines 50, 650, 921, 1189, 1205, 1281, 1362, 1523, 1525, 1928: em-dash and section-sign characters). A pure insertion leaves them in place, so the whole-file ASCII check cannot pass without editing base lines, which the order does not name. Measured: p135_dispatch.py prints 'reason: the dispatch script must stay ASCII' and 'DBF135-3-AC1 FAIL'; the diff and block checks and bash -n pass before that line. All added lines are ASCII (test_insertion_added_lines_are_ascii PASS).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/dispatch_base.sh.txt@f0cd10473c: grep -nP '[^\\x00-\\x7F]' reports the 10 base lines listed in world_is",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_dispatch.py@f0cd10473c line 119: need(new.isascii(), 'the dispatch script must stay ASCII')",
+      "data/inf/scripts/gold/tests/test_dispatch_txn_block.py@c973be5435: test_syntax_file_is_ascii_as_written FAILS (measured); test_insertion_added_lines_are_ascii PASSES"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired: the refusal clause names no route for base-line encoding. Decision for the issuer: a named encoding edit of the base lines, or an amendment of the ASCII clause to the added lines."
+}
+```
+
+## IRPT_DASHBD-D2-W2103-S2 -- run_txn_step omits the Eclipse CloudWatch failure metric; a txn failure is visible only in the status marker
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T17:39:40Z",
+  "one_line": "run_txn_step is modelled on run_eclipse_step but does not copy its EclipseStepFailed CloudWatch put: a failed or timed-out txn step is recorded in TXN_RESULTS and in the TXN-BLOCK status marker only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-2103 step 1: run_txn_step is 'modelled on the Eclipse step runner' and the TXN-BLOCK writes its marker 'the way the Eclipse block writes its marker'.",
+  "world_is": "run_eclipse_step puts the EclipseStepFailed metric (aws cloudwatch put-metric-data) on a non-zero rc. run_txn_step has no metric call, because a new metric is a new alarm surface and the standing moratorium forbids building alert or monitor surfaces unless Andrew asks. No alarm in the estate reads dispatch_txn_status.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/orion-gold-dispatch.sh@c973be5435: run_eclipse_step, the EclipseStepFailed put (the aws cloudwatch line under the rc check)",
+      "data/inf/scripts/gold/orion-gold-dispatch.sh@c973be5435: run_txn_step, which records TXN_RESULTS and returns 0 with no aws cloudwatch call"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so the issuer can decide whether a txn metric is wanted. Building one is an alert surface and needs Andrew's word."
+}
+```
+
+## IRPT_DASHBD-D2-W2103-S3 -- The comp-pulse risk reflex prints an open HOLD on orion-gold-dispatch.sh (collision check citation)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T17:39:40Z",
+  "one_line": "The pre-commit risk reflex printed [HOLD] on orion-gold-dispatch.sh, citing org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md:78 (the collision check at lines 560-571 of the base, which a deletion or copy of build_assets_dim.py would clear).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-2103 BOUNDS: offline edit only, NOT DEPLOYED, no AWS call; the grant is the dispatch script, its test and the investigation file.",
+  "world_is": "The HOLD concerns deletion or copy of the build_assets_dim.py collision in the S3 gold prefix, not the dispatch file text. This cell's diff leaves the collision check's content unchanged (every hunk is an addition or the unknown-chain error line, checked by test_insertion_diff_is_pure_but_for_the_error_line). Nothing is uploaded, so the HOLD's deploy-scope question does not arise here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md:78 (the citation the reflex printed; read at the worktree)",
+      "data/inf/scripts/gold/tests/test_dispatch_txn_block.py@c973be5435: test_insertion_diff_is_pure_but_for_the_error_line PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The gate's HOLD line is advisory; the commit gate refused the commit only on the test file's future import, which the re-run fixed. The release pair owns any upload."
+}
+```
+
+## IRPT_DASHBD-D2-W2103-S4 -- S1 resolved by the issuer's amendment: the ASCII clause now covers the added lines
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T18:00:20Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W2103-S1: the issuer's amendment d58c1dda9c makes the ASCII clause the lines the edit adds, and the amended checker prints DBF135-3-AC1 PASS on this tree; the whole-file ASCII test is replaced by test_syntax_added_lines_are_ascii_against_base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBF135-3-AC1 ASCII clause as the issuer amended it (d58c1dda9c): every line the edit ADDS is ASCII; the base's own non-ASCII lines stay.",
+  "world_is": "Measured at 92ed9d18b4: the amended checker prints DBF135-3-AC1 PASS (rc 0, run twice, identical); --selftest PASS (9 arms); test_dispatch_txn_block.py 28 of 28 pass; the three existing dispatch-related files pass 64, 22 and 19. The amended checker copy is an uncommitted input in the worktree and is not part of any commit of this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_dispatch.py@d58c1dda9c (trunk amendment; the worktree copy is a read-only copy of it)",
+      "data/inf/scripts/gold/tests/test_dispatch_txn_block.py@92ed9d18b4: test_syntax_added_lines_are_ascii_against_base"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Records the resolution of IRPT_DASHBD-D2-W2103-S1 by the issuer's amendment; nothing further to investigate in this cell.",
+  "notes": "Written on the coordinator's ruling. S2 and S3 stand as observations."
+}
+```
