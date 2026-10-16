@@ -16,6 +16,10 @@ Resume from this file, the ledger and branch `box/dell1` only. Nothing is uncomm
 2. **Otherwise:** dispatch nothing. Tick with `python .tools/unblock.py tick --serial 2.0.0_SA_COO~C1 --project ADVI_COTBKF --result work --owed-call <id>` (a dated wait on a live owner is not an empty tick); do not count it.
 3. **If Andrew acts** (CRM archive landed, or the packet sent): the CTO's next analysis cuts the cells; FWD-4 will need a CRM silver builder, which does not exist in `data/assets/scripts/silver/` (only `cotbkf_crm_match_job.py`).
 
+## Update 16:2xZ: the Bloomberg budget changed the timing of the history pull
+
+Andrew-direct ~15:5xZ (CTO ruling `org/missions/D8/MDPF/MDPF_DEMQUE/ledger/CTO_RULING_BBG_DAILY_BUDGET_2_5M_IMPLEMENTATION_20261016.md` @67b7eee51c): a 2.5M-cell daily Bloomberg budget is the TARGET; the ceiling climbs by measured steps (the standing 11,716, 23,432, 29,290, then 100,000, 300,000, 1,000,000, 2,500,000), each step after one clean drawing day. B's Cottonwood share still waits on the first tranche's resolve rate clearing 50%. The "about 372 days" in the 12Z drive log was the old 5,858-cell ceiling; with the ramp the whole 1,857,629-cell ask could take days to a couple of weeks. Q1 issued DQ-t-73 (the allowance file). The first measurable result is still the tranche's resolve rate (slice T1-01 first), not the whole fill.
+
 ## Rule 34 (CLAUDE.md, Andrew-direct 2026-10-16 ~15:4xZ, CTO msg 6814)
 
 CloudOps is seated one lane per macro per box, never one per task. The next CloudOps order for ADVI_COTBKF (the apply of a rebuild under a pair) goes to the ADVI lane `0.7.0_AE_CloudOps~<MACRO><n>` that `0.0.0_AB_MSTR` names, shared with ADVI_FIRMBKTS, not to a fresh lane. `0.7.0_AE_CloudOps~CB1` closes as idle; do not address new orders to it. Ask MSTR~DELL1 for the lane name when the rebuild is cut.
@@ -36,3 +40,20 @@ Cron `b6082e41` (`11,41 * * * *`, `/canonical-drive ADVI_COTBKF once`) dies with
 ## Compiler Tools
 
 - Written from the ledger, the round analyses, the drive logs and the broker mail of this session; checked with `git status` and `git log` only; no tool was run to produce this note beyond reading origin and local heads.
+
+## OWED NEXT ROUND (added 2026-10-16 ~17:40Z)
+
+1. **Round 104 (CB-da-1, worker 0.9.0_WK_ADVI_COTBKF~194, branch wk-ADVI_COTBKF-194, worktree C:/dev/wk-cotbkf-194):** the account-match review workbook, desktop only (`Cottonwood_Account_Match_Review_20261016.xlsx`). Amendment 1 (`ledger/CB_DA_1_AMENDMENT_1_20261016.md` @3be9c112f0) sent to the worker: old account value on the last day it held a security; shared-account rows adjacent. On its report: run `cz1_review_sheet_check.py` (AC2 and AC3), check the strengths split, merge the branch with `.tools/safe-merge.sh`, close the round. Report to the CTO: 95 of 107 read weak because the packet's own fingerprint band is under 0.5 for 82 of 107; the strength rule is the issuer's and unchanged unless the CTO or Andrew redefines it.
+2. **CTO msg 6923 (FIRMBKTS row S59, `org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md` line 8389):** cut ONE cell in the next round: Cottonwood silver `account_attributes` stopped at 2026-08-20 because the SSM document `opal-cot-silver-run` never runs `--table account_attributes` (writer `data/cot/scripts/silver/cot_silver_merge.py` TABLE_CONFIG; document at the cot-pipeline `ssm.tf` lines 236-251). Close on a silver partition newer than 2026-08-20 (the row expects the next partition to carry 2026-10-13's 1,119 rows). It is a Terraform and live-document change on served data: a never-widen pair (COO half and CTO half) before the apply; apply by the CloudOps lane MSTR names for this macro (rule 34); bare `terraform apply` is forbidden (`safe-apply`).
+
+## ROUND 106 STATE (added 2026-10-16 ~19:00Z)
+
+Round 105 closed MAY-CLOSE, merged @90831503eb. Round 106 issued @5b64371c0c: `TO-CB-dc-1` (WORLD apply of the one-line ssm.tf change) to `0.7.0_AE_CloudOps~FB1` (re-seated by MSTR 18:43:55Z, msg 6974). Pair signed: COO half @7a14b821b4, CTO half SIGNED with C-1 (msg 6968): NO early dispatch; read the organic silver fire about 2026-10-17 midday.
+
+**On the lane's report:** run `dc1_apply_check.py doc` (AC1) and `state` (AC2) in `deliverables/2.0.0_SA_COO~C1/`, then `.tools/safe-merge.sh <its branch>`, then `round-close-check --round 106`.
+
+**The close read (COO and CVO; the CloudOps lane does none of it).** Baseline is already taken (`.scratch/cotbkf_r106/dim_baseline.parquet`, dimension VersionId begins QyyWrPzI, 1,005 rows, 942 with attributes). After the first scheduled silver fire (about 2026-10-17 midday) and the gold run that follows: `python -I deliverables/2.0.0_SA_COO~C1/dc1_fire_read.py fire` (expect silver_partitions about 46, added_filled 62/62, changed_agree 171/171), then `snapshot` after EACH gold build; after the second build `compare` prints the C-1 count (how many of the 122 multi-book accounts change portfolio_group between two consecutive builds). Nonzero, or a consumer appearing first, means the next round cuts an `A_00` cell making the choice deterministic (CTO half). Branch B (the gold build refuses on disagreeing flags) is reported to the CTO; removing a partition is an S3 delete and Andrew's. Record the dated wait with `unblock.py tick --wait-until <UTC> --owner schedule:cot-silver-run`.
+
+## CRM ARCHIVE (added 2026-10-16 ~21:45Z)
+
+Andrew-direct ~21:40Z (`ANDREW_DIRECT_20261016_2140Z_CRM_ARCHIVE_UPLOAD_FROM_LAPTOP.md`, LOCAL @2bc556fe20): the CRM archive is in Downloads on the laptop; the laptop CTO works out the upload. Relayed through `0.0.0_AB_MSTR~DELL1`; waiting for the landed key. CTO msg 7011 confirmed the routing and added (build ladder rung 2): before FWD-4/7 cut a new CRM silver builder, the laptop CTO is asked whether its existing Cottonwood account-to-household mapping (a README plus 11 scripts, revision 2, 76 of 83 accounts HIGH or MEDIUM) is, or contains, that builder; reuse if so; the mapping files stay off git. FWD-7's reader naming stays Andrew's. On the landed key: cut FWD-2/4/7 next round (the reuse answer decides whether FWD-4/7 need a builder cell).

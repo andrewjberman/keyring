@@ -24880,3 +24880,962 @@ name the one known failure instead of silently inheriting it.
   "dismissal_reason": "Check defect, mine, fixed: ap29.AC1.sh now reads the four prefixes through the registry rows gateway-client-bdlive-<t> and the .tf references local.bdlive_objects/prefixes (the naming limb forbids a typed address); ap29.AC2 PASS by my run and by 0.7.0_AE_CloudOps~ZS (applied, ledger nfra-oplgtw-grants-ap29 CLOSED, proof VALID at e497bc910d)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T16:38:09Z",
+  "id": "NFRA_OPLGTW-Z-S297",
+  "one_line": "Round-38 disposition of worker row Z-W123-S1: OG-en-9 A1 puts app/query_v0.py in the grant and the fix landed: a key with no catalog row answers 404; merged b74ef25060, named tests PASS in the mai",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W123-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-9.not-found-is-not-403.md",
+      "merge commits b74ef25060 (OG-en-9) and 5c345724a6 (OG-en-12) on box/sitez"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "OG-en-9 A1 puts app/query_v0.py in the grant and the fix landed: a key with no catalog row answers 404; merged b74ef25060, named tests PASS in the main tree.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-en-9 A1 puts app/query_v0.py in the grant and the fix landed: a key with no catalog row answers 404; merged b74ef25060, named tests PASS in the main tree."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T16:38:09Z",
+  "id": "NFRA_OPLGTW-Z-S298",
+  "one_line": "Round-38 disposition of worker row Z-W123-S2: OG-en-9 A1 puts tests/test_query_v0_tool.py in the grant; test_mx_q3_uncatalogued_key_refused was updated to the new truth (404, no guard_denied) with",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W123-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-9.not-found-is-not-403.md",
+      "merge commits b74ef25060 (OG-en-9) and 5c345724a6 (OG-en-12) on box/sitez"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "OG-en-9 A1 puts tests/test_query_v0_tool.py in the grant; test_mx_q3_uncatalogued_key_refused was updated to the new truth (404, no guard_denied) without weakening any other assertion; merged b74ef25060.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-en-9 A1 puts tests/test_query_v0_tool.py in the grant; test_mx_q3_uncatalogued_key_refused was updated to the new truth (404, no guard_denied) without weakening any other assertion; merged b74ef25060."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T16:38:09Z",
+  "id": "NFRA_OPLGTW-Z-S299",
+  "one_line": "Round-38 disposition of worker row Z-W123-S4: Ruled in OG-en-9 A1 (b): only a key with NO catalog row moves to 404; a resolved-row gate denial and the entitlement chokepoint denial stay 403 and di",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W123-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-9.not-found-is-not-403.md",
+      "merge commits b74ef25060 (OG-en-9) and 5c345724a6 (OG-en-12) on box/sitez"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Ruled in OG-en-9 A1 (b): only a key with NO catalog row moves to 404; a resolved-row gate denial and the entitlement chokepoint denial stay 403 and differ from the 404 in status and wording. The absent class marker on a resolved-row gate refusal is unchanged and is not carried as a defect (the 403 body does not say not found).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled in OG-en-9 A1 (b): only a key with NO catalog row moves to 404; a resolved-row gate denial and the entitlement chokepoint denial stay 403 and differ from the 404 in status and wording. The absent class marker on a resolved-row gate refusal is unchanged and is not carried as a defect (the 403 body does not say not found)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T16:38:09Z",
+  "id": "NFRA_OPLGTW-Z-S300",
+  "one_line": "Round-38 disposition of worker row Z-W125-S1: OG-en-12 A1 put tests/test_og_ch1.py:170 in the grant so the pin follows the ruled key blackdiamond49flive; merged 5c345724a6, test_ogch1_ac03 passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W125-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-12.*.md amendment A1",
+      "merge commits b74ef25060 (OG-en-9) and 5c345724a6 (OG-en-12) on box/sitez"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "OG-en-12 A1 put tests/test_og_ch1.py:170 in the grant so the pin follows the ruled key blackdiamond49flive; merged 5c345724a6, test_ogch1_ac03 passes.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-en-12 A1 put tests/test_og_ch1.py:170 in the grant so the pin follows the ruled key blackdiamond49flive; merged 5c345724a6, test_ogch1_ac03 passes."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T16:50:13Z",
+  "id": "NFRA_OPLGTW-Z-S301",
+  "one_line": "OG-ap-28 Phase A STOP: the release commit is REFUSED by the naming gate (ENFORCE) on 16 DATA_CATALOG.yaml string literals -- the registry the gate reads at HEAD does not exist at the live ref, and 4 of the literals (blackdiamond/49f-live/silver/{unrealized,transactions,allocations,fees}/, type S3Key) are RAISED as a rule/registry defect: '49f-live' is not a tier (K3/V7).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN the release commit in C:/tmp/og-rel-batch2 (live ref d14445961d + the take from trunk 066649b10f, catalog blob b81c48aa3c verified) under GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL: LGIC_ENFORCE DEC-6 REFUSE, 46 graded, CATALOG-EXEMPT admitted=0 refused=16 literals=46 registry_head=d14445961dd6. The 16 (name, type): 4 x silver/<table>/ and 8 x blackdiamond/49financial/silver_legacy/<table>/date=<d>/... (EXISTING, OUT-OF-PATTERN, S3Key), 4 x blackdiamond/49f-live/silver/<table>/ (S3Key).",
+      "READ .tools/naming-gate.py:2228-2286: the catalog exemption reads infra/logic/registry/catalog_fork_keys.json and legacy_addresses.json with git show HEAD:<path> only, 'never the index or working tree'. Both files are ABSENT at the live ref (5535 and 2073 lines at trunk), so the working-tree overlay used in OG-ap-23 cannot help here.",
+      "RAN a probe branch rel-nfra-oplgtw-batch2-probe in the release tree (not the release): one prelude commit 191eedf892 carries the two registry files at trunk bytes; the release commit then reads admitted=12 refused=4 new_via_registry=8, and the 4 left are the 49f-live literals with 'RAISE as S3Key: rule or registry defect, not a refusal: K3: 49f-live is not a tier (V7)'.",
+      "AC1 as written cannot take that route: base..release would then differ in 2 files outside its ALLOW set (infra/logic/registry/*.json), so 'outside the batch set' reads 2, not 0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ap-28 step 2: 'the naming gate runs in ENFORCE and must print NO REFUSE (if it refuses a string, STOP and file a BLOCKING row naming the (name, type))'; AC1: outside the batch set 0.",
+  "world_is": "The gate refuses. Nothing else in the re-cut fails: 18 of 18 app files fully attributed (0 unattributable hunks), 167 of 169 taken tests pass and 2 fail identically at the live ref, the deploy hunk and the manifest pin are in place uncommitted. No release commit exists, so no release_sha, no ap28_release.json and no AC1 run yet.",
+  "notes": "Two separate causes, neither mine to change: (1) the two registry files are new to the live ref and must be at HEAD for the exemption to read them -- either the release carries them (the COO amends ap28.AC1's ALLOW; they are not shipped, the tar excludes infra) or the gate's registry source changes; (2) the 4 new live literals fail the tier grammar even with the registry present -- a registry row that holds each exact literal as a whole string (the REGISTRY-HELD route that admitted the 8 legacy ones), a grammar/registry fix to accept the 49f-live segment, or a different emitted prefix from 2.0.0_SA_COO~MI. I did not override the gate, edit the catalog or edit the registry."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T17:01:46Z",
+  "id": "NFRA_OPLGTW-Z-S302",
+  "one_line": "Round-38 disposition (CARRIED) of Z-W111-S15: the renamed gf-1 instance reads INVALID because the checker takes the rename commit as its creating commit; carried as a checker repair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W111-S15"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md row NFRA_OPLGTW-Z-W111-S15 (worker 0.9.0_WK_NFRA_OPLGTW~111): rename commit 21c41f4851, original instance commit 72096aefa4",
+      "lane TREE_DELIVERABLES: deliverables/<serial>/ is written by that serial alone"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Issuer decision (CARRIED): the gf-1 instance reads INVALID only because proof-of-spec-check takes the instance's creating commit from the path history, which starts at the rename commit 21c41f4851; the four PENDING-THIS-COMMIT artifact rows predate it. Re-pinning them would change content the order keeps unchanged, and the lane gives that instance to its owning worker serial alone, so no row is re-pinned. Nothing live depends on it (the release carries the gf-1 code and its tests, which pass). Carried to the round-38 enrichment list (named in the L10 slug) as a checker repair: follow renames (git log --follow) when reading an instance's creating commit.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer decision (CARRIED): the gf-1 instance reads INVALID only because proof-of-spec-check takes the instance's creating commit from the path history, which starts at the rename commit 21c41f4851; the four PENDING-THIS-COMMIT artifact rows predate it. Re-pinning them would change content the order keeps unchanged, and the lane gives that instance to its owning worker serial alone, so no row is re-pinned. Nothing live depends on it (the release carries the gf-1 code and its tests, which pass). Carried to the round-38 enrichment list (named in the L10 slug) as a checker repair: follow renames (git log --follow) when reading an instance's creating commit."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T17:07:09Z",
+  "id": "NFRA_OPLGTW-Z-S303",
+  "one_line": "OG-ap-28 A2 Phase A STOP, second cause: the prelude's four blackdiamond_live_<t>.yaml entry files cannot be committed under the ENFORCE naming gate (12 REFUSE: they are NEW to the tree), so the release commit still RAISES on the four 49f-live catalog literals (K3, '49f-live' is not a tier). Registry prelude committed; entry-file prelude and release commit refused. Cites Z-S301.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN prelude commit 1 of 2 on rel-nfra-oplgtw-batch2 (the two registry files, byte-equal to trunk 066649b10f, GIT_COMMIT_AUTHOR_OVERRIDE=PLATFORM_LOGIC_DOCS): exit 0, commit 46be947ba9.",
+      "RAN the entry-file prelude (the four workflows/atom_decomposition/catalog_entries/blackdiamond_live_{unrealized,transactions,allocations,fees}.yaml, byte-equal to trunk) under the same override, both as one commit with the registry (the A2 form) and as a second commit after it: LGIC_ENFORCE DEC-6 REFUSE, 12 graded, exit 1. Per file: line 2 silver/<table>/ (S3Key, NEW and OUT-OF-PATTERN, -> {source}/{scope}/silver/<table>/), line 3 blackdiamond/49f-live/silver/<table>/ (S3Key, -> lookup('49financial')), line 48 49financial (hand-kept carrier). 4 files x 3 = 12.",
+      "RAN the release commit on top of prelude 1 only, GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL: CATALOG-EXEMPT admitted=12 refused=4 new_via_registry=8 registry_head=46be947ba955; the 4 REFUSE are DATA_CATALOG.yaml:3372, :3437, :3503, :3570 blackdiamond/49f-live/silver/{allocations,fees,transactions,unrealized}/ (S3Key), 'RAISE as S3Key: rule or registry defect, not a refusal: K3: 49f-live is not a tier (V7)'. Exit 1.",
+      "READ git show e717bd2fb2 --stat: MI's trunk commit that gave these files their current names is a pure rename (0 changed lines), graded against content already committed in the WARN window, which is why MI measured 0 REFUSE there. At the live ref the files do not exist, so any add is NEW."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ap-28 A2 step 2: the six prelude files are committed byte-equal to trunk, then the release commit 'must exit 0, no REFUSE'; if a literal still blocks, STOP with the exact lines.",
+  "world_is": "Prelude 1 of 2 is committed on the release branch (46be947ba9); the entry-file prelude and the release commit are refused by the gate, which I did not override. No release_sha, ask or AC1 run exists. The branch and probe are local.",
+  "notes": "Options for the ruling, none taken by me: (1) bring the four entry files in as existing content (a cherry-pick or merge of MI's trunk commits) so the gate grades them EXISTING/WARN as it did on trunk -- an audited route round the NEW-literal refusal, the CTO's to name; (2) a registry row holding the 49f-live segment (the K3 tier defect) and the three literal forms as whole strings, so the gate admits them REGISTRY-HELD; (3) the CTO/CRO durable fix to the tier grammar first. The release is otherwise ready: re-cut, take, deploy hunk, pin and 167 of 169 tests."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-16T17:32:38Z",
+  "id": "NFRA_OPLGTW-Z-S304",
+  "one_line": "K3 (condition iii of XA-20261016T171531Z-7acd): is '49f-live' a legal key segment? grade() RAISES on blackdiamond/49f-live/silver/<t>/ ('K3: 49f-live is not a tier (V7)') while blackdiamond/49financial/silver/<t>/ grades CONFORMANT; four LOOKUP ALIAS rows (ca679b6560) admit the catalog literals until this is answered, and the answer retires or keeps them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "4.0.0_SA_CRO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN python -c \"import opal_naming as on; on.grade('blackdiamond/49f-live/silver/unrealized/','S3Key')\" at box/sitez ~17:3xZ: RaiseDefect 'K3: 49f-live is not a tier (V7)'. Control: on.grade('blackdiamond/49financial/silver/unrealized/','S3Key') returns ('CONFORMANT', 'blackdiamond/49financial/silver/unrealized/').",
+      "READ infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py:16: the live tables are addressed as the firm segment plus LIVE_SUFFIX, ctx.prefix(VENDOR, \"49f-live\", \"silver\", t); DATA_CATALOG.yaml:3372/3437/3503/3570 carry address: blackdiamond/49f-live/silver/<t>/ (CTO ruling @ed33f552ae: a lookup field; the prefix stays the true S3 path opal-data-bd/silver/<t>/).",
+      "RAN lib/opal_naming.py legacy_address('gateway-client-bdlive-unrealized-alias') after ca679b6560: returns s3://opal-data-bd/blackdiamond/49f-live/silver/unrealized/, a location no object is under (the physical prefix is s3://opal-data-bd/silver/unrealized/, row gateway-client-bdlive-unrealized). The builder cannot tell an alias row from a store row; only the row's evidence and note say so."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "XA-20261016T171531Z-7acd condition (iii): 4.0.0_SA_CRO~Z opens its own row on K3 (is 49f-live a legal segment?); its answer retires or keeps the alias rows. NAMING_SCHEMA key grammar: the segment after the source is a scope (or tier) the registry holds.",
+  "world_is": "'49f-live' fuses a firm scope (49financial's short form 49f) with a variant word (live, versus the legacy silver feed) in one segment. The registry holds no scope, tier or variant word for it, so every catalog literal carrying it raises. Route (2) admits the four strings whole through legacy_addresses.json; nothing else changed. The alias rows sit in a file whose builder emits S3 locations, and an alias resolves to a non-existent one.",
+  "notes": "Question for this seat (registry owner), not answered here. Candidate answers, none taken: (a) the logical address carries the canonical scope and the variant elsewhere (e.g. a live/legacy word the grammar already holds, or a source word), so the aliases retire once the catalog and adapter re-key (a reviewed-code change, OG-cl-2's owner); (b) the grammar gains a variant slot, which is NAMING_SCHEMA.json law across four boxes; (c) keep the aliases as the logical-address carrier and move them out of legacy_addresses.json into a lookup-alias carrier the builder never emits as S3. Whatever is ruled, the alias rows' INERT standing depends on nobody passing their keys to legacy_address(); a reader census of those four keys belongs with the answer."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T18:22:30Z",
+  "id": "NFRA_OPLGTW-Z-S305",
+  "one_line": "OG-ap-28 Phase B: arm e4 reads FALSE and ap28.AC2 FAILs (arms true 6 of 7): the position rows of the 49F Black Diamond and SmartX adapters carry weight_unit 'fraction' but currency null with currency_basis source_absent -- the order's 'currency set' cannot be met by either vendor; the other vendors were not exercised.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN W/ap28_arms.py on i-07dccb1615503ac99 through the installed code after the deploy (W/ap28_arms.json, ssm command in the record): e12 true, e5 true, e6 true, e8 true, e9 true, e10 true, e4 FALSE. On the 49F Black Diamond holdings answer (34 position rows) weight_unit is 'fraction' and currency is null with currency_basis 'source_absent' on every row; on a SmartX holdings answer (the ap-23 harness path) weight_unit is 'fraction' and currency is null with basis 'source_absent' on every row.",
+      "READ app/client_adapter_bd49f.py:44-47 (UNREALIZED_COLUMNS and TXN_COLUMNS name no currency column) and :143-147 (_currency_keys reads row['currency'], else null with source_absent); RAN a column-name probe on the live unrealized table: 0 columns with 'curr' or 'ccy' in the name. So for this vendor the answer cannot carry a currency until its source does.",
+      "READ the other adapters: schwab has no resolve source in the gateway (resolve_account raises no_resolve_source), orion's weight_unit is null by design (OG-en-4), commonwealth's weight_unit is null; bdcottonwood sets weight_unit 'fraction' but I did not exercise it (no account-discovery path written in this phase)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ap-28 step 5, arm e4: 'a client position answer for a vendor whose adapter carries a unit has weight_unit in {fraction, percent} and currency set (orion's unit stays null: use another vendor)'; AC2: arms true 7 of 7.",
+  "world_is": "weight_unit is set where a weight is computable; currency is null with currency_basis source_absent for the two vendors exercised, by the OG-en-4 design ('never a default: a row that names no currency is never reported as USD'). The arm as worded cannot be true for them. Not a deploy trigger (C6): health 200, 27 of 27 tools, 65 env keys, tools/list 103 before and after. I did not redeploy.",
+  "notes": "For the COO to rule: (1) re-word e4 to what the code promises (weight_unit set, currency a code OR null with a currency_basis naming why) and re-run AC2; or (2) name a vendor whose source carries a currency (cottonwood Black Diamond?) and have me exercise it; or (3) cut a code cell to request a currency column where one exists. The other six arms are true. The order stays pending until then."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T18:30:07Z",
+  "id": "NFRA_OPLGTW-Z-S306",
+  "one_line": "Correction to row Z-S305: arm e4 of OG-ap-28 is re-graded TRUE under the COO's A4 (msg 35177) on the counts already recorded; the earlier FALSE was correct against the first wording and was a wording defect, not a release defect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ order OG-ap-28 A4 and msg 35177: e4 is weight_unit in {fraction, percent}, currency_basis in {source, source_absent}, currency non-null iff the basis is source (OG-en-4's ruled spec: never assume USD).",
+      "RAN W/ap28_served_build.py on the recorded counts (no new host read): 49F Black Diamond weight_unit fraction, currency_basis source_absent, currency values all null; SmartX the same. CODE2_SERVED.json carries e4_regrade with the rule, the raw arm under the old wording (false) and the re-grade (true)."
+    ]
+  },
+  "spec_asserts": "Z-S305 (mine): arm e4 reads FALSE because currency is not set.",
+  "world_is": "The release behaves as OG-en-4 specified; the arm's first wording asked for a currency the spec says is null where the source has none.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The COO's A4 (msg 35177) corrected the arm's wording; the recorded counts satisfy it; nothing in the release changes.",
+  "notes": "A correction is a new row citing the old id. Z-S305 is left as written; this row supersedes it."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S307",
+  "one_line": "Round-38 disposition of Z-S292 after OG-ap-28 Phase B: The release bf9d23b518 (live since 17:57Z) routes the -live segment to the dedicated role gateway-49f-blackdiamond-live-",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S292"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/CODE2_SERVED.json (arm e12, arm_counts)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_OG-ap-28_20261016.md (condition), ap28.AC2 PASS by the issuer's run"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The release bf9d23b518 (live since 17:57Z) routes the -live segment to the dedicated role gateway-49f-blackdiamond-live-read-role (OG-en-12 + OG-ap-29). The CVO's closing condition is met by the served read: (a) a master_admin 49F call returned rows above 0 through that role for all four tools (rows 34, 2, 7, 2 from opal-data-bd, the newest flat dated file, dedicated role on all four); (b) a non-admin principal was refused with 0 S3 requests. The CVO's AC3 reading of the answers remains the CVO's.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The release bf9d23b518 (live since 17:57Z) routes the -live segment to the dedicated role gateway-49f-blackdiamond-live-read-role (OG-en-12 + OG-ap-29). The CVO's closing condition is met by the served read: (a) a master_admin 49F call returned rows above 0 through that role for all four tools (rows 34, 2, 7, 2 from opal-data-bd, the newest flat dated file, dedicated role on all four); (b) a non-admin principal was refused with 0 S3 requests. The CVO's AC3 reading of the answers remains the CVO's."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S308",
+  "one_line": "Round-38 disposition of Z-S293 after OG-ap-28 Phase B: OG-en-11 measured the four 49F BD tools answering no_catalog_row and reading nothing. With MX-c-26's four catalog rows (",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S293"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/CODE2_SERVED.json (arm e12)",
+      "MI msg 35178: the host serves the release catalog, visibility matrix equal"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-en-11 measured the four 49F BD tools answering no_catalog_row and reading nothing. With MX-c-26's four catalog rows (blob b81c48aa3c) and OG-en-12's address resolution live in bf9d23b518, the same four tools read opal-data-bd and returned rows (34, 2, 7, 2) in the e12 arm, so the catalog gap is closed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-en-11 measured the four 49F BD tools answering no_catalog_row and reading nothing. With MX-c-26's four catalog rows (blob b81c48aa3c) and OG-en-12's address resolution live in bf9d23b518, the same four tools read opal-data-bd and returned rows (34, 2, 7, 2) in the e12 arm, so the catalog gap is closed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S309",
+  "one_line": "Round-38 disposition of Z-S301 after OG-ap-28 Phase B: Phase A's naming-gate refusal of the four catalog 49f-live literals was resolved by route (2): the CRO's four lookup-ali",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S301"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-ap-28.md (gate state)",
+      "CTO msg 35145, 35158"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Phase A's naming-gate refusal of the four catalog 49f-live literals was resolved by route (2): the CRO's four lookup-alias rows (ca679b6560, XA-20261016T171531Z-7acd), carried byte-equal in the prelude. The release commit exited 0 with 0 REFUSE. The tier-grammar question (K3) is the CRO's row Z-S304 and is carried to the L10 slug.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Phase A's naming-gate refusal of the four catalog 49f-live literals was resolved by route (2): the CRO's four lookup-alias rows (ca679b6560, XA-20261016T171531Z-7acd), carried byte-equal in the prelude. The release commit exited 0 with 0 REFUSE. The tier-grammar question (K3) is the CRO's row Z-S304 and is carried to the L10 slug."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S310",
+  "one_line": "Round-38 disposition of Z-S303 after OG-ap-28 Phase B: The entry-file prelude was dropped (OG-ap-28 A3) and the registry-row route ruled by the CTO and the laptop CTO; the two",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S303"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/ap28_release.json",
+      "order OG-ap-28 amendment A3 (1a74cf39b7)"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The entry-file prelude was dropped (OG-ap-28 A3) and the registry-row route ruled by the CTO and the laptop CTO; the two registry files went in as the prelude 2dc919cf26, byte-equal to trunk 858e927558. The four entry files are not part of the release.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The entry-file prelude was dropped (OG-ap-28 A3) and the registry-row route ruled by the CTO and the laptop CTO; the two registry files went in as the prelude 2dc919cf26, byte-equal to trunk 858e927558. The four entry files are not part of the release."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S311",
+  "one_line": "Round-38 disposition of Z-S305 after OG-ap-28 Phase B: The e4 arm's 'currency set' wording was the issuer's defect against OG-en-4's ruled spec (currency null with currency_ba",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S305"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-28.round-38-batched-release.md (A4)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/CODE2_SERVED.json"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The e4 arm's 'currency set' wording was the issuer's defect against OG-en-4's ruled spec (currency null with currency_basis source_absent when the source carries none). Order amendment A4 (4102a9e8f1) corrected the definition; the applier re-graded on its recorded counts with no re-deploy (arm true, Z-S306); ap28.AC2 PASS 7 of 7 by the issuer's run.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The e4 arm's 'currency set' wording was the issuer's defect against OG-en-4's ruled spec (currency null with currency_basis source_absent when the source carries none). Order amendment A4 (4102a9e8f1) corrected the definition; the applier re-graded on its recorded counts with no re-deploy (arm true, Z-S306); ap28.AC2 PASS 7 of 7 by the issuer's run."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T19:01:10Z",
+  "id": "NFRA_OPLGTW-Z-S312",
+  "one_line": "OG-mg-1 Phase B (11:22Z) made the owner principals andrew@ and opalbloomberg@ restricted; C2 wrote their email_deny records; the email-only browser routes (/login, /sprint, /rivalfunds, /yearinreview) now refuse the owners themselves.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_BROWSER_DENY_LIST_CAUSE_20261016.md (live access-state table read, GetItem and Query only: active email_deny for andrew@, opalbloomberg@, alyssa@; profiles restricted, operator_audit 11:22:29Z and 11:22:55Z, Phase B GO msg 34954)",
+      "NFRA_OPLGTW_PRD.md C2: a principal made restricted also gets an email_deny record; app/server.py:206-229: a denied email is refused before anything else",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-mg-1.md and the COO half name the email_deny records for the rollback only; neither states that the owners lose the browser routes"
+    ]
+  },
+  "spec_asserts": "A restricted Schwab data-grant profile for an owner principal does not remove that owner's access to the Opal-internal browser pages.",
+  "world_is": "The email_deny record carries no scope, so the guard cannot tell restricted for Schwab data from denied the browser. Both owner principals are refused on four browser routes since 11:22Z (Andrew-direct ~18:5xZ noticed it through MC Portal). The defect is the issuer's: the OG-mg-1 ask and the COO half did not state the effect. Remedy is the CTO's ruling: (b) an audited operator act deactivating the two owner records now, then (a) a route-class guard; alyssa@ stays denied.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks NFRA_MCPORTAL MP-v-2 (a second account served /sprint, PRD A2)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-16T19:34:56Z",
+  "id": "NFRA_OPLGTW-Z-S313",
+  "one_line": "OG-ev-2: the live allocation weights are on a 0-to-1 scale but a per-account sum of account_allocation + cash_allocation is NOT 1 for 5775 of 7345 accounts, so the order's rule reads weight_scale unclear.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/E1_PARTITION_MEASURE.json (counts and ratios only; read 2026-10-16T19:31Z under the applier's own identity)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ev-2.measure-49f-partitions-and-allocation-scale.md section 1 steps 1 and 2",
+      "Diagnostic read of the same newest allocations partition (2026-10-09, 7345 rows, one row per account): account_allocation in (0,1.05] for 7115 rows, zero for 187, above 1.05 for 9, max 4.33; cash_allocation in (0,1.05] for 6664, zero for 641, above 1.05 for 1; per-account sums: 0 for 187, in (0,0.95) for 5357, in [0.95,1.05] for 1570, in (1.05,5] for 196, in (5,95) for 1, in [95,105] for 0, above 105 for 0."
+    ]
+  },
+  "spec_asserts": "The weight scale is decidable by the near-1 versus near-100 test on the per-account sum of account_allocation and cash_allocation (OG-ev-2 step 2).",
+  "world_is": "near_1 1570, near_100 0, other 5775, so the rule's answer is unclear. No weight sits near 100 (0 of 7345 sums in [95,105], none above 105), so a percent scale is not supported; the values read as fractions that do not sum to 1 per account, which means the two columns are not the whole of an account's weight (the remainder is not in these two columns or the denominator is not the account). OG-en-15 should not name a unit from the sum test.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts only; no account id, amount or name. Does not block OG-ev-2's own AC1 (the record is self-consistent)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-16T19:34:56Z",
+  "id": "NFRA_OPLGTW-Z-S314",
+  "one_line": "OG-ev-2: transaction_id is not unique within one daily partition (newest transactions partition 14359 rows, 2954 distinct ids), and fees repeats it too (3081 rows, 2982 distinct); the overlap test reads distinct-id sets.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/E1_PARTITION_MEASURE.json (counts and ratios only; read 2026-10-16T19:31Z under the applier's own identity)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ev-2.measure-49f-partitions-and-allocation-scale.md section 1 steps 1 and 2",
+      "Newest transactions partition 2026-10-16: 14359 rows, 0 null ids, 2954 distinct; newest fees partition 2026-10-14: 3081 rows, 0 null ids, 2982 distinct. The silver/transactions prefix also lists 1 object that is not a flat dated parquet file (1931 listed, 1930 dated)."
+    ]
+  },
+  "spec_asserts": "transaction_id is the natural key that identifies one row (OG-ev-2 step 1: `transaction_id` for transactions; for fees the column that identifies one fee row).",
+  "world_is": "transaction_id repeats about 4.9 times per row set in transactions and about 1.03 times in fees, so it identifies a transaction, not a row. The overlap ratio was computed on the SET of distinct ids per partition, which the order's formula (|keys(A) AND keys(B)| / |keys(B)|) reads as a set. The classification is unaffected (all 5 pairs of both tables read 0.0 overlap, increment), but any tool that dedupes or joins on transaction_id alone will collapse rows.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts only. Bears on OG-en-13's span-of-partitions design."
+}
+```
+
+Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its order (site Z).
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W127-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~127",
+    "surfaced_at": "2026-10-16T19:40:39Z",
+    "one_line": "The gateway route test test_ogz1_ac08 fails at the base this order cut from: the app registers four routes (/hx/teams/teams, /hx/teams/teams/{team_id}/channels, /hx/teams/channels/{team_id}/{channel_id}/messages and /{path:path}) that its ROUTE_CLASS map does not hold.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TEST: infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py:756 @29fcd5d688 -- assert len(routes) == len(ge.server.app.routes) and set(ROUTE_CLASS) == set(routes)",
+        "RUN: pytest tests/test_data_entitlement_guard.py::test_ogz1_ac08 with app/data_entitlement.py and app/server.py at HEAD 29fcd5d688 in a scratch copy of the gateway tree: 1 failed; 'Extra items in the right set' lists the four routes above (57 app routes)",
+        "RUN: the same test in the order worktree with this order's edits applied: 1 failed; the seven gateway suites run together gave 1 failed, 47 passed"
+      ]
+    },
+    "spec_asserts": "The gateway route-denial test test_ogz1_ac08 passes at the cut base, so a whole-suite regression check names only the failures its own order caused.",
+    "world_is": "test_ogz1_ac08 fails at HEAD 29fcd5d688 with the app files at HEAD, so the failure predates OG-en-14. Its failing assertion names route declarations only; OG-en-14 edits a keyword argument of email_denial and _email_denied and adds no route. The file is not in this order's paths and no criterion of the order runs it.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Pre-existing at HEAD 29fcd5d688; not caused by OG-en-14. Not in this order's <paths>; AC1 and AC2 do not run it."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W127-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~127",
+    "surfaced_at": "2026-10-16T19:40:39Z",
+    "one_line": "The order names tests/test_owner_gate.py and tests/test_login_admit_r24.py as the source of the fake store for OG-en-14, but neither holds a deny-record store fake: owner_gate uses a no-deny client and login_admit stubs _email_denied. The deny-record fake is _FakeTable and _seed_deny in tests/test_email_deny.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TREE: infra/aws/ec2/opal-gateway/tests/test_owner_gate.py:38 @29fcd5d688 -- class _NoDenyClient, the store that reports no deny record",
+        "TREE: infra/aws/ec2/opal-gateway/tests/test_login_admit_r24.py:84-87 @29fcd5d688 -- async def _email_denied stub over a denied dict; no store object",
+        "TREE: infra/aws/ec2/opal-gateway/tests/test_email_deny.py @29fcd5d688 -- class _FakeTable and def _seed_deny, the DynamoDB fake and deny-record seeder the new file imports"
+      ]
+    },
+    "spec_asserts": "The test files the order names for the fake store and request fixtures hold a deny-record store fake that the new test can reuse.",
+    "world_is": "The reusable fake is in tests/test_email_deny.py; tests/test_og_en14.py imports _FakeTable and _seed_deny from it, the pattern tests/test_og_en8.py uses. The two named files were read for their request fixtures only. Their one edit is the _email_denied stub signature, which the order's rule for pinned signatures covers. No criterion is affected.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Premise narrowed by reading, not a blocker: the fake store lives in a file the order does not list in its paths, so the new test imports it rather than copying it."
+  }
+]
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T19:56:23Z",
+  "id": "NFRA_OPLGTW-Z-S315",
+  "one_line": "Round-39 disposition of worker row Z-W127-S1: CARRIED: tests/test_data_entitlement_guard.py::test_ogz1_ac08 fails at trunk independently of OG-en-14 (its route table ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W127-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-ap-28.md section 8 (the two carried failures)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "CARRIED: tests/test_data_entitlement_guard.py::test_ogz1_ac08 fails at trunk independently of OG-en-14 (its route table lacks the /hx/teams and catch-all routes); the same test is carried by name since OG-ap-28 (fails identically at the live ref). Not in OG-en-14's paths. Carried to the round-39 enrichment list for the next release's take check.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CARRIED: tests/test_data_entitlement_guard.py::test_ogz1_ac08 fails at trunk independently of OG-en-14 (its route table lacks the /hx/teams and catch-all routes); the same test is carried by name since OG-ap-28 (fails identically at the live ref). Not in OG-en-14's paths. Carried to the round-39 enrichment list for the next release's take check."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T19:56:23Z",
+  "id": "NFRA_OPLGTW-Z-S316",
+  "one_line": "Round-39 disposition of worker row Z-W127-S2: OBSERVATION closed: the deny-record fake store is _FakeTable/_seed_deny in tests/test_email_deny.py, not in the two file",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W127-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 6510ce187f; tests/test_og_en14.py passes 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "OBSERVATION closed: the deny-record fake store is _FakeTable/_seed_deny in tests/test_email_deny.py, not in the two files OG-en-14's face named; the worker imported it and the new tests pass (merged 6510ce187f). Issuer's pointer error, no defect in the code.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OBSERVATION closed: the deny-record fake store is _FakeTable/_seed_deny in tests/test_email_deny.py, not in the two files OG-en-14's face named; the worker imported it and the new tests pass (merged 6510ce187f). Issuer's pointer error, no defect in the code."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~126",
+  "surfaced_at": "2026-10-16T19:57:19Z",
+  "id": "NFRA_OPLGTW-Z-W126-S1",
+  "one_line": "tests/test_og_ch1.py fails 2 of 6 at HEAD 99f261e135 before any OG-en-13 edit: ac02 (a different adapter is already registered for this vendor) and ac04 (the repo roster file is not on this tree).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_og_ch1.py@99f261e135 (run alone under python -m pytest: 2 failed, 4 passed, identical before and after commit e59189ed21)",
+      "infra/aws/ec2/opal-gateway/tests/test_og_ch1.py@99f261e135 test_ogch1_ac04 raises AssertionError 'the repo roster file is not on this tree' from its own search for data/mdpf/config/partner_roster.json",
+      "test_ogch1_ac02 raises ValueError 'a different adapter is already registered for this vendor'"
+    ]
+  },
+  "spec_asserts": "The order lists tests/test_og_ch1.py among the existing tests it may update to the new truth; its premise is a gateway test set that is green at the base it is cut from.",
+  "world_is": "ch1 is red on this worktree before any change of this serial. Both failure signatures are independent of the OG-en-13 change: the registry collision and the missing roster file reproduce on the base commit. No change of this serial touches ch1.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Signatures and counts only. ch1 is left unchanged by this serial; no assertion weakened."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~126",
+  "surfaced_at": "2026-10-16T19:57:19Z",
+  "id": "NFRA_OPLGTW-Z-W126-S2",
+  "one_line": "The order's precision rule names weights and money only, so unit_cost (holdings) and units (transactions) have no stated precision; they are served as JSON numbers, unrounded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-13.49f-units-currency-numbers-as-of.md section 1 'Numbers': weights (weight, account_allocation, cash_allocation) at 6 decimals; money (market_value, account_market_value, cash_market_value, amount) at 2 decimals; 'every figure as a JSON number, never a string'",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@e59189ed21 get_holdings unit_cost is _num(); get_transactions units is _num()"
+    ]
+  },
+  "spec_asserts": "Every figure is served as a JSON number at the order's precision: weights at 6 decimals and money at 2 decimals, and the rule 'never a string' reaches every figure.",
+  "world_is": "unit_cost is a per-unit price and units a quantity. Neither is in the money or weight list, so neither has a stated precision. Both are parsed to float and served unrounded, so a per-unit price or a fractional quantity may carry more than 2 decimals.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A judgment the issuer should confirm or direct. The three named tests check the JSON number type of both fields, and the 2-decimal rule on money only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~126",
+  "surfaced_at": "2026-10-16T19:57:19Z",
+  "id": "NFRA_OPLGTW-Z-W126-S3",
+  "one_line": "The order's as_of rule names holdings and allocation answers; the shared envelope serves the partition date for every undated answer, so resolve, transactions and fees change too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-13.49f-units-currency-numbers-as-of.md section 1 'as_of' (the gap names holdings and allocation answers; the fix reads 'where the answer's as_of is null because the caller gave none')",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@e59189ed21 _envelope() is the one envelope of all five answers and now serves _as_of = _partition_date when the caller gave none"
+    ]
+  },
+  "spec_asserts": "as_of is set from the partition date where the answer's as_of is null because the caller gave none; holdings and allocation answers are the gap named.",
+  "world_is": "_envelope() is shared by resolve_account, get_holdings, get_transactions, get_allocation and get_fees, so the generic rule lands in all of them. A caller-supplied as_of and an absent answer are unchanged. The other adapters are untouched.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The generic reading is the one the fix sentence states; the issuer should confirm the scope. Tests check holdings and allocation only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~126",
+  "surfaced_at": "2026-10-16T20:13:54Z",
+  "id": "NFRA_OPLGTW-Z-W126-S4",
+  "one_line": "The order's window_partial clause names a dated partition 'that could not be read' as a partial cause; the adapter lets a read failure propagate as the refusal it is, so window_partial is never set by a read failure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-15.49f-window-spans-partitions.md section 1 'THE FIX', window_partial sentence ('or a dated partition inside the window could not be read')",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@e8460dabd8 _window_read(): ctx.read_rows is not wrapped; a read that raises propagates",
+      "infra/aws/ec2/opal-gateway/tests/test_og_cl2.py@e8460dabd8 test_ogcl2_ac07 and tests/test_og_en12.py@751be0e202 test_ogen12_ac03: a refused live read must refuse closed, not answer partially"
+    ]
+  },
+  "spec_asserts": "window_partial is true when the cap cut the window or a dated partition inside the window could not be read, and the note names which.",
+  "world_is": "The adapter reads every chosen partition without a try block. A read that raises (for example the live role unset, or a missing catalog row) propagates as the refusal and no partial answer is served. So the only window_partial cause the adapter can set is the cap; a read failure cannot appear as a partial answer.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Chosen deliberately: catching a read failure would turn a refusal into a served partial answer. The issuer should confirm that refusal is the intended outcome for an unreadable partition."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~126",
+  "surfaced_at": "2026-10-16T20:13:54Z",
+  "id": "NFRA_OPLGTW-Z-W126-S5",
+  "one_line": "The order does not say whether as_of bounds the partitions an increment window reads; the adapter reads only partitions dated at or before as_of, as the single-partition read did.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-15.49f-window-spans-partitions.md section 1 (the increment rule says 'every dated partition inside the window [start, end]' and is silent on as_of)",
+      "infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@e8460dabd8 _window_plan(): dated = partitions with p <= as_of when as_of is given, then inside [start, end]"
+    ]
+  },
+  "spec_asserts": "An increment window reads every dated partition inside [start, end] (at most MAX_WINDOW_PARTITIONS, the newest of them).",
+  "world_is": "When the caller gives as_of, a partition dated after as_of is never read, so the window answer is the data as of that date. Without as_of the rule is the one the order states. The behaviour matches the old single-partition as_of rule, but the order does not name it.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A scope reading the issuer should confirm. The tests use no as_of, so no named test pins this choice."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T20:35:56Z",
+  "id": "NFRA_OPLGTW-Z-S317",
+  "one_line": "Round-39 disposition of worker row Z-W126-S1: CARRIED: tests/test_og_ch1.py is red at the base (ac02 registry collision, ac04 roster file absent), identical",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W126-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 592d79f192 (OG-en-13 and OG-en-15); both orders' AC1 pass 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "CARRIED: tests/test_og_ch1.py is red at the base (ac02 registry collision, ac04 roster file absent), identical before and after OG-en-13; the worker left it, as ruled. Carried to the round-39 enrichment list with the other pre-existing red tests (test_ogz1_ac08 and the gateway-set four).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CARRIED: tests/test_og_ch1.py is red at the base (ac02 registry collision, ac04 roster file absent), identical before and after OG-en-13; the worker left it, as ruled. Carried to the round-39 enrichment list with the other pre-existing red tests (test_ogz1_ac08 and the gateway-set four)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T20:35:56Z",
+  "id": "NFRA_OPLGTW-Z-S318",
+  "one_line": "Round-39 disposition of worker row Z-W126-S2: RULED: unit_cost and units stay unrounded; the E3 precision rule covers weights (6 decimals) and money (2 deci",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W126-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 592d79f192 (OG-en-13 and OG-en-15); both orders' AC1 pass 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "RULED: unit_cost and units stay unrounded; the E3 precision rule covers weights (6 decimals) and money (2 decimals) only.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "RULED: unit_cost and units stay unrounded; the E3 precision rule covers weights (6 decimals) and money (2 decimals) only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T20:35:56Z",
+  "id": "NFRA_OPLGTW-Z-S319",
+  "one_line": "Round-39 disposition of worker row Z-W126-S3: ACCEPTED: setting as_of from partition_date through the shared _envelope also gives the resolve, transactions ",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W126-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 592d79f192 (OG-en-13 and OG-en-15); both orders' AC1 pass 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "ACCEPTED: setting as_of from partition_date through the shared _envelope also gives the resolve, transactions and fees answers a real as_of when the caller gave none, which is what E3 asks of the answer family.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "ACCEPTED: setting as_of from partition_date through the shared _envelope also gives the resolve, transactions and fees answers a real as_of when the caller gave none, which is what E3 asks of the answer family."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T20:35:56Z",
+  "id": "NFRA_OPLGTW-Z-S320",
+  "one_line": "Round-39 disposition of worker row Z-W126-S4: ACCEPTED: only the 60-partition cap sets window_partial; a partition inside the window that cannot be read pro",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W126-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 592d79f192 (OG-en-13 and OG-en-15); both orders' AC1 pass 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "ACCEPTED: only the 60-partition cap sets window_partial; a partition inside the window that cannot be read propagates as a refusal rather than a silent partial answer, which is the safer fail-closed shape. The order's 'could not be read' clause is superseded by this.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "ACCEPTED: only the 60-partition cap sets window_partial; a partition inside the window that cannot be read propagates as a refusal rather than a silent partial answer, which is the safer fail-closed shape. The order's 'could not be read' clause is superseded by this."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T20:35:56Z",
+  "id": "NFRA_OPLGTW-Z-S321",
+  "one_line": "Round-39 disposition of worker row Z-W126-S5: ACCEPTED: as_of bounds an increment window by partition date (only partitions at or before as_of are read), th",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W126-S5"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge 592d79f192 (OG-en-13 and OG-en-15); both orders' AC1 pass 3 of 3 in the main tree"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "ACCEPTED: as_of bounds an increment window by partition date (only partitions at or before as_of are read), the reading consistent with the existing single-partition behaviour.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "ACCEPTED: as_of bounds an increment window by partition date (only partitions at or before as_of are read), the reading consistent with the existing single-partition behaviour."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~128",
+  "surfaced_at": "2026-10-16T20:39:43Z",
+  "id": "NFRA_OPLGTW-Z-W128-S1",
+  "one_line": "The order places the RuntimeError in the mods fixture's import of app.config; live it is raised in the test_ogen14_ac03 body, at the import of app.server.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-16.en14-tests-order-independent.md section 1 'THE DEFECT' (says the raise is at app/config.py:17 when fixture mods runs importlib.import_module('app.config'))",
+      "infra/aws/ec2/opal-gateway/tests/test_og_en14.py@a10173850b test_ogen14_ac03 line importlib.import_module('app.server') and fixture mods line importlib.import_module('app.config')",
+      "infra/aws/ec2/opal-gateway/app/server.py@a10173850b line 72 _cfg.validate(), reached through the import of app.server"
+    ]
+  },
+  "spec_asserts": "test_ogen14_ac03 fails with RuntimeError: Missing required env var: TENANT_ID raised at app/config.py:17 when its fixture mods runs importlib.import_module('app.config').",
+  "world_is": "The fixture's import of app.config does not raise: config.py reads the environment at import and calls _req only inside validate(). The raise happens in the test body of test_ogen14_ac03 at importlib.import_module('app.server'): server.py line 72 calls _cfg.validate(), which calls _req('TENANT_ID') because the cached Config carries MOCK_GRAPH False. Measured at base a10173850b, order en4 en12 en14: 10 passed, 1 failed, FAILED test_ogen14_ac03 with the RuntimeError at app/config.py:17 and the traceback through app/server.py:72.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The location in the order does not change the fix (the fixture must make the cached config MOCK_GRAPH True before any app module with import-time validate() is read). Recorded because the order's premise names the wrong frame."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~128",
+  "surfaced_at": "2026-10-16T20:39:43Z",
+  "id": "NFRA_OPLGTW-Z-W128-S2",
+  "one_line": "Setting MOCK_GRAPH through monkeypatch.setenv as the fixture's first line cannot reach the failing read; the cached Config instance must be set as well.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/config.py@a10173850b line 355 MOCK_GRAPH class attribute read from the environment once, at the first import of app.config; line 445 get_config() is lru_cache'd",
+      "infra/aws/ec2/opal-gateway/app/server.py@a10173850b line 71-72 _cfg = get_config(); _cfg.validate()",
+      "forward-order traceback at base a10173850b: app/config.py:410 validate() reached from app/server.py:72"
+    ]
+  },
+  "spec_asserts": "In tests/test_og_en14.py the mods fixture's first line is monkeypatch.setenv('MOCK_GRAPH', '1') and the module-level setdefault may stay; that is the whole fix for the order-dependent failure.",
+  "world_is": "The setenv line alone cannot reach the failing read. Config.MOCK_GRAPH is a class attribute evaluated once at the first import of app.config; in the failing order an earlier file imported app.config before this file's collection-time setdefault ran, so the cached instance says False, and the validate() call at server.py:72 reads that instance. The fixture also sets the cached instance with monkeypatch.setattr(cfg, 'MOCK_GRAPH', True), which the order's robust clause allows. This is inferred from the class-attribute line and the traceback; the setenv-only variant was not run as a separate experiment.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Both forms are in the committed fixture: the setenv first line the order names, and the cached-instance setattr. Forward, reverse and solo runs of en4, en12, en14 pass with 11 passed in both multi-file orders."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-16T21:30:03Z",
+  "id": "NFRA_OPLGTW-Z-S322",
+  "one_line": "OG-ap-31 Phase A: the host's MASTER_ADMIN_EMAILS holds 1 entry (andrew@), so OG-en-14's internal-page exemption reaches andrew@ only; opalbloomberg@ is not on the roster.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap31_roster.json (SSM read-only of the host .env key MASTER_ADMIN_EMAILS: entries 1; andrew@opalinvest.com member true; opalbloomberg@opalinvest.com member false; alyssa@opalinvest.com member false; no other value printed)",
+      "infra/aws/ec2/opal-gateway/app/data_entitlement.py at the release commit 4be300110e: _master_admin_email(email) is true only for an EXACT MASTER_ADMIN_EMAILS entry; email_denial(route_class='internal_page') returns None only then",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-31.round-39-batched-release.md section 1 step 3 (the exemption is for the master_admin owner roster)"
+    ]
+  },
+  "spec_asserts": "OG-en-14 exempts the master_admin OWNER roster on the four internal browser routes, so both owner accounts (andrew@ and opalbloomberg@) pass them even when a deny record names them.",
+  "world_is": "The host roster has one entry, andrew@. After the release, andrew@ passes the four routes regardless of a deny record; opalbloomberg@ does not. Its deny record was deleted at OG-ap-30 (count 3 to 1), so it is not refused today, but any later deny written for it (for example a future restricted-principal write under contract C2) would refuse it on /login, /sprint, /rivalfunds and /yearinreview again. Widening the roster is an env change and out of this order's bounds; the ask states the reach plainly.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Booleans and a count only; the .env was not otherwise read. Does not block Phase A."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T21:30:09Z",
+  "id": "NFRA_OPLGTW-Z-S323",
+  "one_line": "Z-S177 measure-first read after OG-en-10 went live (17:57Z): 0 gw_ratelimit audit rows in 2000 audit objects to 21:30Z; no 429 has been observed on the live gateway since the release, so the limit choice has no data yet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-mcp-audit/audit/dt=2026-10-16/ (objects whose key time is 17:57Z or later; 2000 objects read, 0 read errors, listing denominator printed); row shapes: tool-call rows (args, detail, outcome, tier, tool, ts, user) and a few event-keyed rows (4 gw_cred_observe); 0 rows with event gw_ratelimit",
+      "OG-en-10 (merged 580e2f91a7, live in bf9d23b518): a 429 writes one audit row event=gw_ratelimit with the hashed by_client split; the e10 arm of OG-ap-28 drove the installed limiter in-process (130 POSTs, 10 429s, 1 audit row) with the audit emit captured, not read back from the lake"
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 35000: choose between raising the 120 per 60 s limit, exempting initialize and tools/list, or distinct identities from the first rows OG-en-10 writes.",
+  "world_is": "No 429 has occurred on the live gateway since 17:57Z (or none reached the audit stream), so there are no first rows to choose from. Z-S177 stays UNDER_INVESTIGATION and ARMED. What would measure it: an interactive session that hits the limit writes a row; or a deliberate drive of the live limiter by a stand-in bearer through the public endpoint (the order OG-ap-28 e10 forbade because a stand-in bearer needs an access-state write). The read lake-side proves the emit path only once a real 429 happens.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

@@ -42,8 +42,9 @@ rollout_phase: 2  # 2026-04-30: flipped to fail-closed per Andrew directive (TO 
 # closed. No lane enumerates a worker serial, here or anywhere.
 # =========================================================================
 worker_grant:
-  serial_glob: "0.9.0_WK_*"
+  serial_glob: ["0.9.0_WK_*", "0.7.0_AE_CloudOps*"]
   source: task-order-paths
+  executor_note: "2026-10-16, 0.0.0_AB_MSTR~Z as grantor: the second glob admits a CloudOps executor through the <paths> of a NON-TERMINAL task order issued_to it (CRO~Z ruling REGISTRY_LANE_GAP_RULING_20261016, CTO~Z msg 35154; code c45003275a). An order whose last committer is the executor or a lane of its base grants it nothing. Remove the second glob to switch it off."
   note: "Spine v3 L7 (Andrew-direct 2026-09-04 ~04:58Z at the CTO terminal, 'recs approved', record @9ef9a40aae): a worker serial 0.9.0_WK_<CODE>~<n> is admitted to exactly the <paths> a NON-TERMINAL task order under <CODE>, issued_to that serial, names at HEAD -- resolved by .tools/owned-paths-validate.py from the order itself, never from a lane. Deliverables/<serial>/ stays the tree convention (ADHC_OWNPTH.004). A path the order does not name is a lane refusal; the override stays audited and singular. The COO's /dispatch pre-spawn census reads the same rule: the <paths> block is the worker's whole write surface."
 
 # =========================================================================

@@ -23559,3 +23559,895 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S127 -- TO-DB-b-301 superseded: an unused artifact version is now the current version of the Cottonwood landing bundle's key
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S127",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T16:35:55Z",
+  "one_line": "TO-DB-b-301 is superseded after step 3(c): an UNUSED artifact version of the Cottonwood landing bundle is now the CURRENT version of investor-reporting/irpt-cot-account-return-daily-lambda.zip while the function still runs the previous code, so a plan or apply of the account-return-daily root that does not upload its own version first would see it (and an apply would deploy the void packet's producer); the source-map entry on trunk still records the previous hash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The issuer's msg 9617: close the ledger as superseded with the proof of what was written (an unused artifact version, a saved plan not applied); do not merge branch wk-IRPT_DASHBD-DB2-b301.",
+  "world_is": "MEASURED at 14:42:50Z and unchanged since: the key holds two versions, the new Amwu_BigtNXtPIwPXQIBPXmEFfKpg9RN (151936 bytes, current) and the previous UnMNWDhcC3KpERDmGYdKAl83whx1oNFW (148909 bytes); the function irpt-cot-account-return-daily-lambda reads CodeSha256 fQFe4moIeMHspIjLxO2C04TobQW6cNZc7mfwstcMWzs= (the previous); the Terraform module reads the artifact's current version, so the unapplied plan shows s3_object_version and source_code_hash moving. Nothing applies it by itself: no apply ran, and the revised order's own build-and-upload writes a newer current version before any apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-object-versions of investor-reporting/irpt-cot-account-return-daily-lambda.zip: two versions, the new one IsLatest, written 2026-10-16T14:42:50Z by build-and-upload.sh (write VERIFIED, landed bytes equal the BUILD_ONLY zip)",
+      "the saved plan (0 add, 1 change, 0 destroy, code attributes only) was never applied; the function's CodeSha256 read back unchanged",
+      "ledger irpt-dashbd-cottonwood-landing-codeupdate-rewrite-20261016 closed SUPERSEDED on branch wk-IRPT_DASHBD-DB2-b301 @5e217fd579 (unmerged by the issuer's word)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disposition owed by 2.0.0_SA_COO~D2 with the CTO: leave it for the revised order's upload to supersede (REC), or restore the previous bytes as the current version by a copy over the key (no delete; the CTO's word). The AE applier of the revised order should read the key's current version before its upload."
+}
+```
+
+## IRPT_DASHBD-D2-S128 -- the drained hop-2 reader's mapping (client to relationship id to sha256) matches 0 of 4,012 households: the real join is through the account ids, minted
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S128",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T16:59:08Z",
+  "one_line": "Measured against the real filled_report_values partition (2026-10-15, 4,694,024 rows, 4,012 household refs) and the real 49 Financial directory (4,776 clients, each one entry, 4,246 with a relationship_id): sha256 of the directory's relationship_id equals NONE of the 4,012 household refs, so the reader drained in DB-b-302 (merge aec0df87fc) would return NotYetAvailable for every client. The accounts join instead: the table's account row keys are raw custodial ids (10 characters), the directory's account_ids are minted opaque ids (28 characters); minting each table account with the handler's own ids.opaque_account makes all 6,616 table accounts equal directory account ids, and 4,012 clients reach exactly one household, 764 reach none, none reaches two.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "set intersection of sha256(str(relationship_id)) over the 4,246 directory clients that carry one with the 4,012 distinct household_ref values of the 2026-10-15 partition: 0 (table refs not in the directory 4,012; directory refs not in the table 4,246)",
+      "member_id account.last4 rows, row_key vs directory ids.account_ids: raw intersection 0 (shapes 10 and 28 characters); after ids.opaque_account(49financial, raw) on the 6,616 table accounts (0 mint failures): intersection 6,616 of the directory's 7,732 distinct account ids",
+      "clients by number of households reached through the minted account ids: 0 households 764, 1 household 4,012, 2 or more 0"
+    ]
+  },
+  "spec_asserts": "The issuer's rule on DB-b-302 and its message to the CTO: client id to the directory entry's relationship_id to sha256 hex to household_ref; the id-space match was unmeasured until hop 1's first write.",
+  "world_is": "The id spaces do not match through the relationship id. The measured join is account based and exact. Hop 2 is OFF, so no client is affected; the reader is re-cut (a new cell) before any deploy pair carries it, with a per-pass cache because the partition holds 4.7 million rows and a per-client scan would not finish."
+}
+```
+
+## IRPT_DASHBD-D2-W244-S1 -- the 49 Financial publish entry has no pinned handler or publisher; only its lib/trading_calendar.py member was stale
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W244-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~244",
+  "surfaced_at": "2026-10-16T16:54:11Z",
+  "one_line": "The order expects the handler and the shared publisher.py of irpt-49f-reporting-publish-lambda to be stale staged members; neither is a staged_from member, so the re-pin moved one member of that entry (lib/trading_calendar.py), not three.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-304 Summary and WORKER FACE step 2: the stale members of the 49 Financial publish entry are expected to include its handler.py and publisher.py, each re-pinned in staged_from.",
+  "world_is": "At HEAD of this branch (commit 73efc8e1a7 carries the re-pin), irpt-49f-reporting-publish-lambda lists 15 staged_from members and neither handler.py nor publisher.py is among them. Both are source_dir files (infra/aws/lambda/investor-reporting/reporting-publish) that the build reads from the tree and that carry no pin. Of the 15 staged members only lib/trading_calendar.py was stale; it is re-pinned. The checker's AC1 and AC2 pass on this entry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json at 73efc8e1a7: irpt-49f-reporting-publish-lambda staged_from has 15 members; the files list has 17 entries, of which handler.py, publisher.py, ids.py, raw_keys.json, data/custodian_key_seam.json and firm_registry.json are not staged",
+      "the entry's _staged_from_note: handler.py and publisher.py are source_dir files, and the staged members are materialized at build time only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action in this order. The issuer decides whether the source_dir files need pins; the order's premise for this entry is recorded as failed in form, not in the checker's clauses."
+}
+```
+
+## IRPT_DASHBD-D2-W244-S2 -- the order's step 1 names irpt-49f-reporting-gold-lambda where the summary and the checker name irpt-49f-reporting-publish-lambda
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W244-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~244",
+  "surfaced_at": "2026-10-16T16:54:11Z",
+  "one_line": "The order's WORKER FACE step 1 lists irpt-49f-reporting-gold-lambda among the three entries to re-pin; the order's entries field, its summary and the checker's ENTRIES list name irpt-49f-reporting-publish-lambda.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-304 WORKER FACE step 1 names irpt-cot-reporting-publish-lambda, irpt-49f-reporting-gold-lambda and irpt-cot-account-return-daily-lambda as the entries whose staged_from to read; the entries field and the checker's ENTRIES name irpt-49f-reporting-publish-lambda.",
+  "world_is": "The checker p172_repin_after_reader.py has ENTRIES = irpt-cot-account-return-daily-lambda, irpt-49f-reporting-publish-lambda, irpt-cot-reporting-publish-lambda. I re-pinned the publish entry as the checker requires and left irpt-49f-reporting-gold-lambda byte-identical (AC1 confirms no entry outside the three moved). The gold entry's staged members were not measured in this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p172_repin_after_reader.py ENTRIES constant, read at the checker path in the worktree",
+      "AC1 PASS on 73efc8e1a7: no entry outside the three moved"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer names the intended entry; the gold entry is out of this order's grant."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S1 -- contract 0.5.0 reads and source_txn_id_coverage for Inflection are all-partition counts that the order does not restate
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "The Inflection reads and source_txn_id_coverage hold all-partition row counts (218,054,352 rows over 154 partitions), the same snapshot-weighted basis the order restates for the counts; the order names neither section, and the checker pins both to the round-130 reads, so 0.5.1 carries them unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order restates every Inflection count over every partition on the latest snapshot, and lists the sections that change; reads and source_txn_id_coverage are not in that list.",
+  "world_is": "In the 0.5.1 contract reads.inflection.rows and source_txn_id_coverage.inflection.rows are 218054352 over 154 partitions (the round-130 all-partition read). The checker reads_problems and coverage_problems pin them to RD_READS_R130.json and RD_ID_COVERAGE_R130.json, so the criterion passes with these values.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json reads.inflection and source_txn_id_coverage.inflection at f0cd10473c",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_contract.py reads_problems and coverage_problems at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left unchanged by this cell. Whether a later round restates them is for the issuer to rule."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S2 -- offset_rule keeps its all-partition distinct-key figure and its round-132 reason text; only candidate_rows is restated
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "The 0.5.0 offset_rule holds distinct_keys_with_a_candidate (1) and a reason that names the round-132 pairing census; the round-135 latest-snapshot records carry no distinct-key figure. The order restates candidate_rows only, so 0.5.1 keeps the other two unchanged and the reason's provenance is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order says offset_rule.candidate_rows is the latest-snapshot figure only and lists the changed sections; the other offset_rule fields are not named.",
+  "world_is": "In 0.5.1 row_filter.inflection.offset_rule has candidate_rows 1 (the R135 latest snapshot), distinct_keys_with_a_candidate 1 (copied from 0.5.0, the all-partition pairing census) and the 0.5.0 reason text. The checker rules_problems reads only candidate_rows, so it passes either way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json row_filter.inflection.offset_rule at f0cd10473c",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R135_INFLECTION_SNAPSHOT_CENSUS.json at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stated in the generator's docstring. The issuer may want the distinct-key figure restated or dropped in a later cell."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S3 -- checker requires the sources price method to carry latest-snapshot figures; the order lists sources as unchanged
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "DBF135-1-AC1 cannot PASS as the order writes it: p135_contract.py price_correction_problems requires the sources.inflection price method to state 1,080,128 and 1,079,919 (the latest-snapshot fund-family figures), while the order lists sources as unchanged, and the 0.5.0 method states 154,828,670 and 154,808,844.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's Unchanged list keeps sources from 0.5.0, and its refusal clause says a checker rule that disagrees with the order is followed as the order writes it and filed as a row.",
+  "world_is": "The 0.5.1 contract, as the order writes it, has sources identical to 0.5.0 (the price method is the 0.5.0 text). The checker prints the two reason lines inflection price method must state '1,080,128' and '1,079,919' and DBF135-1-AC1 FAIL (rc 1). A control with only that method's figures patched, reverted after the run, prints DBF135-1-AC1 PASS, so this rule is the only blocker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_contract.py price_correction_problems and source_problems at f0cd10473c",
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json sources.inflection price entry at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Decision for the issuer: restate the sources price method on the latest snapshot (a sources change the order does not list), or amend the checker. No route taken in this cell. The order stays open."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S4 -- served_note is unchanged and does not name contract 0.5.1
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "The 0.5.0 served_note records the 0.4.2 and 0.5.0 history only; the order lists everything else as unchanged, so 0.5.1 does not add its own history sentence to the note.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order keeps everything in 0.5.0 that it does not list (served false included) unchanged.",
+  "world_is": "In 0.5.1 served_note is byte-identical to the 0.5.0 text, and served is false. The contract's contract_version, supersedes and authored_by name 0.5.1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json served_note at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A documentation-only point. The version history is carried by supersedes and contract_version."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S5 -- S3 is resolved by the issuer's amendment: the sources price method is restated on the latest snapshot
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:57:36Z",
+  "one_line": "Row S3 (BLOCKING) is resolved by the issuer: the coordinator's ruling restated the sources.inflection price method with the latest-snapshot figures, and the issuer's AMENDMENT 1 (trunk commit d58c1dda9c) names that entry in the order; the 0.5.1 contract carries the restated method and DBF135-1-AC1 PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W2101-S3 (BLOCKING): DBF135-1-AC1 cannot PASS while the order lists sources as unchanged, because the checker requires the sources.inflection price method to state the latest-snapshot figures.",
+  "world_is": "The coordinator's ruling and the issuer's AMENDMENT 1 (trunk commit d58c1dda9c, order TO-DB-f-2101) make the price method restatement part of the cell. The generator restates only that method (source, from_columns, claim and reason unchanged); the contract schema_hash stays ac652e2f71b18427b52f321858163768158f850ec173d1e592c7c3abe815bb6a; DBF135-1-AC1 prints PASS. Row S3 is not edited (the channel is append-only); its disposition is the issuer's to set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show d58c1dda9c -- the order file TO-DB-f-2101 (AMENDMENT 1, the sources.inflection price entry named)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_contract.py price_correction_problems at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Records the resolution of S3. S1, S2 and S4 stand as observations."
+}
+```
+
+## IRPT_DASHBD-D2-W2103-S1 -- DBF135-3-AC1 cannot pass as written: its ASCII clause conflicts with its pure-insertion clause (the pinned base is not ASCII)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T17:39:40Z",
+  "one_line": "DBF135-3-AC1 cannot pass as written: the pinned base copy dispatch_base.sh.txt already holds 10 non-ASCII lines, so a pure insertion over it cannot make the dispatch script ASCII. The lines this cell adds are ASCII; the whole-file ASCII check stays FAIL and is not repaired.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBF135-3-AC1 (checker p135_dispatch.py, ac1): the dispatch edit is a pure insertion over the pinned base copy but for the unknown-chain line, and the script is ASCII (new.isascii()). The worker face asks for ASCII in anything written.",
+  "world_is": "The pinned base copy (sha256 e9aef66b...) already holds 10 non-ASCII lines (base lines 50, 650, 921, 1189, 1205, 1281, 1362, 1523, 1525, 1928: em-dash and section-sign characters). A pure insertion leaves them in place, so the whole-file ASCII check cannot pass without editing base lines, which the order does not name. Measured: p135_dispatch.py prints 'reason: the dispatch script must stay ASCII' and 'DBF135-3-AC1 FAIL'; the diff and block checks and bash -n pass before that line. All added lines are ASCII (test_insertion_added_lines_are_ascii PASS).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/dispatch_base.sh.txt@f0cd10473c: grep -nP '[^\\x00-\\x7F]' reports the 10 base lines listed in world_is",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_dispatch.py@f0cd10473c line 119: need(new.isascii(), 'the dispatch script must stay ASCII')",
+      "data/inf/scripts/gold/tests/test_dispatch_txn_block.py@c973be5435: test_syntax_file_is_ascii_as_written FAILS (measured); test_insertion_added_lines_are_ascii PASSES"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired: the refusal clause names no route for base-line encoding. Decision for the issuer: a named encoding edit of the base lines, or an amendment of the ASCII clause to the added lines."
+}
+```
+
+## IRPT_DASHBD-D2-W2103-S2 -- run_txn_step omits the Eclipse CloudWatch failure metric; a txn failure is visible only in the status marker
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T17:39:40Z",
+  "one_line": "run_txn_step is modelled on run_eclipse_step but does not copy its EclipseStepFailed CloudWatch put: a failed or timed-out txn step is recorded in TXN_RESULTS and in the TXN-BLOCK status marker only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-2103 step 1: run_txn_step is 'modelled on the Eclipse step runner' and the TXN-BLOCK writes its marker 'the way the Eclipse block writes its marker'.",
+  "world_is": "run_eclipse_step puts the EclipseStepFailed metric (aws cloudwatch put-metric-data) on a non-zero rc. run_txn_step has no metric call, because a new metric is a new alarm surface and the standing moratorium forbids building alert or monitor surfaces unless Andrew asks. No alarm in the estate reads dispatch_txn_status.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/orion-gold-dispatch.sh@c973be5435: run_eclipse_step, the EclipseStepFailed put (the aws cloudwatch line under the rc check)",
+      "data/inf/scripts/gold/orion-gold-dispatch.sh@c973be5435: run_txn_step, which records TXN_RESULTS and returns 0 with no aws cloudwatch call"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so the issuer can decide whether a txn metric is wanted. Building one is an alert surface and needs Andrew's word."
+}
+```
+
+## IRPT_DASHBD-D2-W2103-S3 -- The comp-pulse risk reflex prints an open HOLD on orion-gold-dispatch.sh (collision check citation)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T17:39:40Z",
+  "one_line": "The pre-commit risk reflex printed [HOLD] on orion-gold-dispatch.sh, citing org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md:78 (the collision check at lines 560-571 of the base, which a deletion or copy of build_assets_dim.py would clear).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-2103 BOUNDS: offline edit only, NOT DEPLOYED, no AWS call; the grant is the dispatch script, its test and the investigation file.",
+  "world_is": "The HOLD concerns deletion or copy of the build_assets_dim.py collision in the S3 gold prefix, not the dispatch file text. This cell's diff leaves the collision check's content unchanged (every hunk is an addition or the unknown-chain error line, checked by test_insertion_diff_is_pure_but_for_the_error_line). Nothing is uploaded, so the HOLD's deploy-scope question does not arise here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md:78 (the citation the reflex printed; read at the worktree)",
+      "data/inf/scripts/gold/tests/test_dispatch_txn_block.py@c973be5435: test_insertion_diff_is_pure_but_for_the_error_line PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The gate's HOLD line is advisory; the commit gate refused the commit only on the test file's future import, which the re-run fixed. The release pair owns any upload."
+}
+```
+
+## IRPT_DASHBD-D2-W2103-S4 -- S1 resolved by the issuer's amendment: the ASCII clause now covers the added lines
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T18:00:20Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W2103-S1: the issuer's amendment d58c1dda9c makes the ASCII clause the lines the edit adds, and the amended checker prints DBF135-3-AC1 PASS on this tree; the whole-file ASCII test is replaced by test_syntax_added_lines_are_ascii_against_base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBF135-3-AC1 ASCII clause as the issuer amended it (d58c1dda9c): every line the edit ADDS is ASCII; the base's own non-ASCII lines stay.",
+  "world_is": "Measured at 92ed9d18b4: the amended checker prints DBF135-3-AC1 PASS (rc 0, run twice, identical); --selftest PASS (9 arms); test_dispatch_txn_block.py 28 of 28 pass; the three existing dispatch-related files pass 64, 22 and 19. The amended checker copy is an uncommitted input in the worktree and is not part of any commit of this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_dispatch.py@d58c1dda9c (trunk amendment; the worktree copy is a read-only copy of it)",
+      "data/inf/scripts/gold/tests/test_dispatch_txn_block.py@92ed9d18b4: test_syntax_added_lines_are_ascii_against_base"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Records the resolution of IRPT_DASHBD-D2-W2103-S1 by the issuer's amendment; nothing further to investigate in this cell.",
+  "notes": "Written on the coordinator's ruling. S2 and S3 stand as observations."
+}
+```
+
+## IRPT_DASHBD-D2-W247-S1 -- the composed filled report carries the table's RAW custodial account id as account_id
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W247-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~247",
+  "surfaced_at": "2026-10-16T17:54:57Z",
+  "one_line": "The hop-2 reader composes each account entry's account_id from the table's row_key, and the table's account.last4 row_key is the RAW custodial account id, so the filled document carries the raw id where the directory and the summary builder carry the minted one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "publisher.py at ba3478dab4 (the summary builder, line 514) writes each account entry's account_id as the directory's minted opaque id; the order's checker p174 builds its contract documents with raw account_id values and expects the reader to return them unchanged.",
+  "world_is": "_filled_compose (handler.py, base ba3478dab4, the account_entries append) sets account_id from row_key; the table's account.last4 rows carry RAW custodial ids (measured in the S128 row, 05be852c08). validate_filled_report checks the key set and the window forms only, never the id form. The filled-report switch is OFF, so no document is written today; nothing in this order changed the id form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "handler.py@ba3478dab4 _filled_compose: account_entries.append({\"account_id\": key, ...}) with key = row_key",
+      "publisher.py@ba3478dab4 line 514: the summary builder writes \"account_id\": a for a directory account id",
+      "p174_filled_reader_accounts.py doc_of: account_id values are RAW ids and the reader result must equal the document"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The composed id form is the contract's question for the CTO or CVO; the reader was not changed to mint or drop it, because the order's checker fixes the document as the producer's inverse."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S1 -- the checker resolves the portal from a RELATIVE repo root "." and reads the branch as empty, so AC1 FAILS as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T17:49:28Z",
+  "one_line": "The order's invocation `python -I <checker> . DBP175-1-AC1` (and AC2, AC3 the same way) fails before any clause is graded: with the relative root '.', the checker's portal() returns the relative path 'portal' and git() runs `git -C portal ...` with cwd=portal, so git resolves portal/portal, the branch read is empty and the first clause prints 'the portal branch must be named cand/dell2/<slug>, it is '. The same checker with the absolute root C:/dev/wk-irpt-dashbd-246 prints DBP175-1-AC1 PASS and DBP175-1-AC2 PASS.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's criteria DBP175-1-AC1, AC2 and AC3 each name the invocation `python -I \"<checker>\" . <id>`, expected to print '<id> PASS' at the workspace root.",
+  "world_is": "Checker lines 44-52 (portal(root) = Path(root)/'portal'; git(p, ...) = run(['git','-C',str(p)]+..., cwd=p)) break for a relative root: the cwd and the -C argument both name 'portal', so the -C target is portal/portal. Measured: AC1 with '.' -> 'FAIL: the portal branch must be named cand/dell2/<slug>, it is' and 'DBP175-1-AC1 FAIL' (rc=1). AC1 with the absolute root -> 'DBP175-1-AC1 PASS' (rc=0). AC2 with the absolute root -> 'DBP175-1-AC2 PASS' (rc=0). The clause logic itself was not found wrong; the root handling is. The checker was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "checker p175_portal_template_mount.py lines 44-52 (portal, git) at org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/ in the worktree",
+      "measured output of the relative-root run and the absolute-root runs, recorded in this row's world_is (verbatim lines above)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "BLOCKING on the order as written: the as-written AC1 result is FAIL. The absolute-root runs are reported beside it as a measurement, not a repair. The issuer owns the checker; a relative-root fix there would clear the defect."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S2 -- the export button's document has no path to the tab's state: Preview and PrintDocument accept a template state that nothing passes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T17:49:28Z",
+  "one_line": "Order step 5 requires the dev smoke's export button to produce PerformanceReportDocument from the same state as the tab (served report, else the DEV fixture). The mount that carries that state to the export button is outside this order's grant, so the export button still prints the bundle's PerformanceDocument on the live route.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 5: the Performance export gets PerformanceReportDocument behind the export button; in the dev smoke the export button must produce the document from the same state as the tab; the lane lists export/Preview.tsx, render/PrintEntry.tsx, render/manifest.ts and export/ExportButton.tsx only if needed.",
+  "world_is": "Built in this order: manifest.ts registers TEMPLATE_PERFORMANCE_DOCUMENT; Preview.tsx takes an optional `template` prop and PrintEntry.tsx's PrintDocument takes an optional `template` prop, and each renders PerformanceReportDocument for a live or preview state on a performance bundle. Nothing passes `template`: the Export mount (index.tsx, which receives the tab's onExportTarget) and the print route's bundle carry no FilledReport, and index.tsx is not in the grant. The tab's template state lives only inside PerformanceTemplateView. So the template document is reachable only from a caller that passes a state, and the live export path is unwired.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "export/Preview.tsx Preview props (optional template, default null) and its ready branch, at the portal worktree commit 14443687",
+      "render/PrintEntry.tsx PrintDocument signature (bundle, template = null), at commit 14443687",
+      "tabs/reporting/ReportingTab.tsx onExportTarget prop is the only link from the tab to the export mount; index.tsx is not in the order's <paths>"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The template document is registered and tested as reachable (manifest and PrintDocument test); the export mount that would pass the state is the missing edit. Not repaired here: the order's refusal clause names a candidate file that must change as a BLOCKING row, not an edit."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S3 -- the served template read sends the bare route with no selected_tenant, unlike every sibling scoped read
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T17:49:28Z",
+  "one_line": "The template view reads GET /api/scoped/investor-reporting/reporting/client/<client id>/report with no selected_tenant query. The sibling reads in dashboard/reportingRead.ts (reportingReadPath, reportingSummaryPath) add ?selected_tenant=<registry tenant> when the tenant is known.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 3 names the route GET /api/scoped/investor-reporting/reporting/client/<client id>/report, with no query string.",
+  "world_is": "The route is built by the IB-pr-551 hops and does not exist yet, so no tenant contract for it is measured. If it requires selected_tenant, the live read refuses and the view falls back to the dev fixture (dev) or to nothing (built tier). The tab's scope.registryTenant is not threaded into the view.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dashboard/reportingRead.ts reportingSummaryPath and reportingReadPath append selected_tenant when set, at commit fcbf2bce (DEV) as carried into the portal branch",
+      "PerformanceTemplateView.tsx clientReportPath builds the bare route, at commit 14443687"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left as the order names it. The issuer decides whether the served route takes selected_tenant when IB-pr-551 lands."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S4 -- the firm and client ids sit at scope.scope.firmId and scope.scope.clientId on the ResolvedScope prop, not at scope.firmId
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T17:49:28Z",
+  "one_line": "The order says scope.firmId and the client id are already in the Performance tab's context. On the tab's ResolvedScope prop they are at scope.scope.firmId and scope.scope.clientId (ContractEnvelope.scope), and the mount reads them there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order summary and step 4: the scope.firmId and the client id are already in that tab's context, so the mount needs no new global.",
+  "world_is": "contracts/index.ts: ResolvedScope extends ContractEnvelope, whose scope is ContractScope {tenant, scopeFingerprint, firmId, clientId, relationshipId, accountIds}. ReportingTab's scope prop is that ResolvedScope; the mount passes scope?.scope.clientId and scope?.scope.firmId. Both are typed OpaqueId | null. The tab reads the client id from header.selection.scope.clientId elsewhere; the mount does not use that path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "contracts/index.ts ContractScope (firmId, clientId) and ContractEnvelope.scope, read at the worktree",
+      "tabs/reporting/ReportingTab.tsx mount line after the dashboard block, at commit 14443687"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action. The premise's wording differs from the type; the ids are the same values."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S5 -- narrows S1: with the relative root only AC1 fails as written; AC2 and AC3 PASS as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T17:55:25Z",
+  "one_line": "Correction scope for IRPT_DASHBD-D2-W246-S1 (not edited): run exactly as written, with the relative root '.', DBP175-1-AC2 and DBP175-1-AC3 PASS; only DBP175-1-AC1 fails, because its git -C calls resolve against portal/portal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row S1 states that the order's invocation with the relative root fails AC1, AC2 and AC3.",
+  "world_is": "Measured as written, from the workspace root: `python -I <checker> . DBP175-1-AC2` printed 'DBP175-1-AC2 PASS' (rc 0), and `python -I <checker> . DBP175-1-AC3` printed 'DBP175-1-AC3 PASS' (rc 0; the irpt-dashbd suite, the typecheck and the production build with the banner and fixture scan). `python -I <checker> . DBP175-1-AC1` printed 'FAIL: the portal branch must be named cand/dell2/<slug>, it is' and 'DBP175-1-AC1 FAIL' (rc 1). Only the three git-based clauses of AC1 depend on the root spelling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "as-written runs at the worktree: AC2 and AC3 logs read 'PASS' with rc 0; AC1 log reads 'FAIL' with rc 1",
+      "checker lines 44-52 (portal, git) and lines 61-62 and 72-73 (candidate_files and the branch read) at the checker path in the worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S1 stays as filed. The as-written verdict for the order is: AC1 FAIL, AC2 PASS, AC3 PASS."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S6 -- the shared template state is per page load: the print route in its own window reads null and prints the bundle document
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T18:34:43Z",
+  "one_line": "templateState.ts is one module-level variable in one page load. Preview (the export preview on the reporting page) reads the tab's published state; the print route (render/PrintEntry.tsx opened in its own window) is a separate page load, so its PrintDocument reads null and prints the bundle's own PerformanceDocument.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1 (b): PrintEntry.tsx or Preview.tsx reads readTemplateState() to produce PerformanceReportDocument from the SAME state as the tab.",
+  "world_is": "Preview on the reporting page shares the tab's module instance and sees the published state. The print page is opened by URL in its own window and imports its own module instance, so readTemplateState() there is always null. Consequence: the print window never shows the template document; the in-page preview does. Measured by the mounted-tab test (publish, unmount clear) and the PrintDocument test (null reads the bundle document); the cross-window case was not run in a browser.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/reporting/templateState.ts at commit 32a7ff5d (module-level variable, no storage)",
+      "portal/src/pages/InvestorReporting/render/PrintEntry.tsx PrintDocument reads readTemplateState() at commit 32a7ff5d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action in this order. The issuer decides whether the print route should carry the tab's state (a URL or storage read) or stay on the bundle document; the export button's in-page preview is covered."
+}
+```
+
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "id": "IRPT_DASHBD-D2-S129",
+  "surfaced_at": "2026-10-16T19:50Z",
+  "one_line": "TO-DB-b-308 step 6: the dry run of the 25-day first range hit the 900 s Lambda timeout (Max Memory Used 640 MB of 1024); nothing was written; the pair stops at Act 3 with the new code live.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REPORT RequestId 6fe8d9df-05b1-4472-a663-a3d816eb1b39: Duration 900000.00 ms, Memory Size 1024 MB, Max Memory Used 640 MB; invoke status 200 with FunctionError Unhandled (Task timed out); the function log holds only INIT, START, the trading_calendar WARN, END, REPORT (no per-day line)",
+      "whole gold prefix read after: 6650 history keys with the before digest e6ed5513.., 132 landed keys each at one version, 0 delete markers, 0 keys beyond 2026-10-15; function CodeSha256 +iYXakKx7.. , schedule ENABLED",
+      "sent 2026-10-16T19:32:16Z with {rewrite {start 2026-07-10, end 2026-08-13}, dry_run true}, one invocation, not retried"
+    ]
+  },
+  "spec_asserts": "The packet (Act 3 and section 6 Branch C): the dry run derives 25 days within 720 s and 819 MB.",
+  "world_is": "The 25-day derive does not finish in 900 s at 1024 MB; memory is not the limit (640 MB at the kill), time is, and a resize cannot lift the 900 s timeout. The per-day cost is unmeasured (at least 36 s a day on average if every day completes). A smaller range, a faster derive, or another route is a new ruling and pair; no event was run."
+}
+```
+
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "id": "IRPT_DASHBD-D2-S130",
+  "surfaced_at": "2026-10-16T19:50Z",
+  "one_line": "TO-DB-b-308 step 4: terraform fmt -check flags the pinned file iam.tf of account-return-daily; not edited, not part of the plan.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform fmt -check on infra/aws/terraform/investor-reporting/account-return-daily printed iam.tf, rc 3; iam.tf sha256 be6fe3f38597 equals the packet pin; the plan read 0 add 1 change 0 destroy on the function only"
+    ]
+  },
+  "spec_asserts": "Step 4: fmt -check passes, or a failure on a pinned file is recorded as a row and the file left alone.",
+  "world_is": "iam.tf carries a formatting deviation that predates this order and was left untouched."
+}
+```
+
+## IRPT_DASHBD-D2-W2102-S1 -- the zip put on sys.path cannot run the Inflection producer: its registry reads are open() calls on zip members
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T18:49:56Z",
+  "one_line": "bootstrap() puts the verified bundle zip on sys.path, but the Inflection producer reads its registry, words and declaration with open(); the flat-directory run (DBF135-2-AC2) fails at the first import",
+  "spec_asserts": "Step 3 of DB-f-2102: bootstrap() verifies INF_G_01.bundle.zip against the pin and only then puts the verified zip on sys.path; the flat-directory run with only the launcher and the zip plans the Saturday line under Monday (DBF135-2-AC2).",
+  "world_is": "account_transaction_inflection.py sets FIRM = opal_naming.lookup('inflection') at import (line 93 at f362eb8cb5); lookup reads infra/logic/registry/systems.json with open() (lib/opal_naming.py line 247 at f362eb8cb5). From the zip that path is zip/infra/logic/registry/systems.json and open() raises FileNotFoundError, so the producer cannot import from a zip on sys.path. account_return_daily.py (DECLARATION, read_text) and load_words (read_text) are the same kind of read. Measured: python -I checker AC2 flat run rc 1 (FileNotFoundError on the zip member). The manifest closure, the pin, the member set and build_bundle determinism PASS before that step (zip sha256 dff4be9c8a1c14290e4c2ca335d631f5ec8236674d89de6fd1c628d50875c974, 19 members). The mechanism as written cannot satisfy the flat-run step; the order does not name an extraction route and this worker has not added one.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@f362eb8cb5 line 247: _read_text opens the registry path with open(path, 'rb')",
+      "data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py@f362eb8cb5 line 93: FIRM = opal_naming.lookup('inflection')['key'] at import",
+      "python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_step.py . DBF135-2-AC2 on the worktree: rc 1, FileNotFoundError on <zip>/infra/logic/registry/systems.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not wired; nothing is deployed. A release that ships the launcher as written would fail loudly on the first run (a refusal, not a silent write). The issuer decides the route; the worker did not extract the zip or patch the producer."
+}
+```
+
+## IRPT_DASHBD-D2-W2102-S2 -- the checker's fake S3 returns the ETag x, which the producer's writer refuses, so DBF135-2-AC1 cannot pass its upload step
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T18:49:56Z",
+  "one_line": "p135_step.py FakeS3.put_object returns ETag 'x'; the producer writer (stream_parquet finalize) verifies the ETag against the local MD5 and raises StreamWriteUnverified, so AC1's upload=True run fails",
+  "spec_asserts": "DBF135-2-AC1: the one-snapshot run, run by the checker against a fake S3 holding two cumulative snapshots, includes an upload=True run that emits lines under their business dates.",
+  "world_is": "The checker's fake returns {'ETag': 'x'} from put_object. data/assets/scripts/lib/stream_parquet.py finalize (line 146) raises StreamWriteUnverified when the ETag is not the local MD5 (measured: '... S3 ETag x != local MD5 b743f5b3a74ba41b70f7caf1d06d5b07'). A single-part S3 put returns the body MD5 as its ETag, so the fake is not faithful to S3. In a DIAGNOSTIC copy of the checker in .scratch (not committed, checker unedited) that returns the body MD5, AC1 reaches the launcher pytest step; the only failing launcher test is the flat-directory run of S1. The launcher's own fake returns the MD5 ETag.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p135_step.py put_object at the trunk (returns {'ETag': 'x', 'VersionId': 'v'})",
+      "data/assets/scripts/lib/stream_parquet.py@f362eb8cb5 finalize: the ETag check raises StreamWriteUnverified (line 146)",
+      "python -I .../checks/r135/p135_step.py . DBF135-2-AC1 on the worktree: reason StreamWriteUnverified for date=2026-10-12/data.parquet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The producer writer is not edited (read-only). The fix of the fake is the issuer's: the order says a checker rule and the order that disagree are followed and filed, and this one is filed."
+}
+```
+
+## IRPT_DASHBD-D2-W2102-S3 -- the launcher's repo root is parents[4] of data/inf/scripts/gold, not parents[3]
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T18:49:56Z",
+  "one_line": "step 2 says parents[3] of the launcher holds data/assets/scripts/gold/irpt_reporting; the launcher sits four levels below the repo root, so the root is parents[4]",
+  "spec_asserts": "Step 2 of DB-f-2102: the producers are read from the repo layout when parents[3] holds data/assets/scripts/gold/irpt_reporting/.",
+  "world_is": "For data/inf/scripts/gold/INF_G_01.account_transaction_gold.py, parents[0] is gold, parents[3] is data and parents[4] is the repo root. The launcher checks parents[4] for the producer directory. No other behaviour depends on the index.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py _repo_root(): parents[4] checked for data/assets/scripts/gold/irpt_reporting",
+      "ls of the worktree: data/inf/scripts/gold is the launcher's directory, data/assets is the producer's root"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The index is the only difference from the order's text; the producer's own _ROOT = parents[5] is unchanged."
+}
+```
+
+## IRPT_DASHBD-D2-W2102-S4 -- the bundle closure carries twelve registry and naming files the order did not name, because the Inflection path reads them at run time
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T18:49:56Z",
+  "one_line": "the manifest lists 19 files: the five named modules, the import closure (account_return_daily, stream_parquet) and the registry the naming reader opens at run time (11 files plus NAMING_SCHEMA.json)",
+  "spec_asserts": "Step 3 of DB-f-2102: the manifest is the producer closure, add what the imports need, NO test files; the checker requires the five named modules.",
+  "world_is": "opal_naming.lookup and address read infra/logic/registry/*.json (load_registry, REGISTRY_FILES) and org/standards/NAMING_SCHEMA.json (_schema) at run time, so the closure of a run includes them. Measured: an extracted closure in repo layout plans the Saturday line (test_bundle_extracted_closure_in_repo_layout_plans_the_saturday_line PASS). sources.json and the other registry files (catalog_fork_keys, event_rules, key_rulings, name_rulings, root_map, mail_parties) are not read on the Inflection path and are not in the bundle. Consequence: the pin changes when any of those twelve files changes; the zip is then refused (sha256) until the manifest and the pin are re-cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py@f362eb8cb5 REGISTRY_FILES and load_registry; _schema reads SCHEMA_PATH",
+      "data/inf/scripts/gold/INF_G_01.bundle.json at the commit that carries it: 19 files, basename_collisions_with_synced_dirs empty"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so the issuer can decide whether the registry belongs in the zip or in the release beside it."
+}
+```
+
+## IRPT_DASHBD-D2-W2102-S5 -- the order's literal Orion prefix and manifest folder are firm tokens the naming gate refuses in a new carrier
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T19:04:25Z",
+  "one_line": "the commit-time naming gate (LGIC_ENFORCE, ENFORCE) refused the launcher's typed prefix and typed manifest folder; the launcher now reads them through the registry and its own location",
+  "spec_asserts": "Step 1 of DB-f-2102: the module constants are ORION_PREFIX = 'orion/inflection/silver/fact_transactions/' and the manifest is data/inf/scripts/gold/INF_G_01.bundle.json, typed as literals.",
+  "world_is": "The first commit attempt of the launcher was refused by the naming limb: the prefix line is a NEW hand-kept carrier of the firm token outside every permitted context ('read it through lookup(inflection)'), and the manifest path carries the vendor-folder token. The gate's own rule is to read the firm through lookup. The registry row for the firm (infra/logic/registry/scopes.json, key inflection, short inf, long inflection) gives the same values. The launcher now computes ORION_PREFIX on first use (module __getattr__ over orion_prefix(), value unchanged) and locates the manifest beside itself (manifest_path). The checker's value check and the bundle pin are unchanged (zip sha256 dff4be9c8a1c14290e4c2ca335d631f5ec8236674d89de6fd1c628d50875c974). The lookup needs the repo layout; a flat-directory import does not read it because no attribute is read at import.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit-gate log of the first attempt (.scratch of the worktree): naming-gate REFUSE of the launcher at the prefix line and the manifest line; commit aborted, files unstaged",
+      "infra/logic/registry/scopes.json: row key inflection, short inf, long inflection, bucket opal-data-inflection",
+      "commit 2cee65234d (launcher and manifest) carries the registry-read form"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The order's text and the checker's value are the same string; only the carrier changed. If the issuer prefers the literal, it needs a register entry acknowledged by Andrew, not a worker edit."
+}
+```
+
+## IRPT_DASHBD-D2-W2102-S6 -- S1 and S2 are resolved by the issuer's AMENDMENT 2 and the coordinator's rulings; the worker's fixes are the extraction and the amended checker
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2102-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2102",
+  "surfaced_at": "2026-10-16T19:18:30Z",
+  "one_line": "rulings on S1 and S2 received: S1 resolved by bootstrap extracting the verified zip into a repo-layout temporary directory; S2 resolved by the checker's fake ETag returning the body MD5 (trunk checker copied in, not committed)",
+  "spec_asserts": "Rows S1 and S2 (BLOCKING) against DBF135-2-AC2 (the zip put on sys.path) and DBF135-2-AC1 (the checker's upload step).",
+  "world_is": "Issuer amendment 943bd17f53 (trunk, order TO-DB-f-2102 AMENDMENT 2) and the coordinator's rulings: bootstrap verifies the sha256 and then extracts the zip into a fresh temporary directory in the repo layout; the checker's fake put_object returns the body MD5. The worker copied the amended checker over the worktree copy (uncommitted) and changed bootstrap accordingly. Measured after the change: DBF135-2-AC1 PASS, DBF135-2-AC2 PASS, launcher tests 58 of 58 pass, producer test file 60 of 60 pass, pin unchanged (dff4be9c8a1c14290e4c2ca335d631f5ec8236674d89de6fd1c628d50875c974). Rows S1 and S2 are not edited (append-only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coordinator ruling on rows S1 to S5 (issuer 2.0.0_SA_COO~F2, amendment 943bd17f53 on the trunk, order TO-DB-f-2102 AMENDMENT 2)",
+      "data/inf/scripts/gold/INF_G_01.account_transaction_gold.py bootstrap(): verify, then extract to a temporary repo-layout directory (carried by the commit that precedes this row)",
+      "python -I .../checks/r135/p135_step.py . DBF135-2-AC1 and . DBF135-2-AC2 at the worktree: DBF135-2-AC1 PASS, DBF135-2-AC2 PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so the issuer can see the two BLOCKING rows are closed on the worker's side; the disposition of S1 and S2 is the issuer's to set."
+}
+```
+
+## IRPT_DASHBD-D2-W248-S1 -- the checker's --selftest cannot run on an equivalent implementation: its mutant anchors are the reference handler's text
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W248-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~248",
+  "surfaced_at": "2026-10-16T20:04:54Z",
+  "one_line": "The checker p178 --selftest aborts on the first anchor check: it looks for the reference handler's exact text, which this equivalent minting implementation does not carry, so no mutant is ever applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Checker p178 --selftest is green on a reference tree and red on single-fault mutants of its handler (five handler mutants and one diff mutant), per the checker's own usage line.",
+  "world_is": "At commit 96ba8dc8ce the selftest exits rc=1 with 'selftest: the reference lacks the anchor for account_id is left raw', before any mutant is written. The anchor is the issuer's text a[\"account_id\"] = mint[a[\"account_id\"]]; this implementation mints in _filled_mint with minted[entry[\"account_id\"]]. The three criteria DB178-1-AC1, AC2 and AC3 each PASS at this commit. The selftest wrote nothing: infra/ is clean after the run, since the anchor check precedes every write.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p178_filled_reader_mints_ids.py selftest muts dict, the first anchor 'a[\"account_id\"] = mint[a[\"account_id\"]]', run at the worktree rc=1 (2026-10-16 about 20:0x UTC)",
+      "handler.py@96ba8dc8ce _filled_mint: minted[entry[\"account_id\"]] (the anchor text is absent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The criteria the order grades (AC1, AC2, AC3) pass; the selftest is a control the order does not name. The issuer decides whether the checker's anchors follow the minted form. No handler edit was made to fit the anchors."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S7 -- dsgn-irptv1 IV2-AC1 pins the raw unformatted money strings, so it fails by the intended dollar format; the file is outside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T19:40:01Z",
+  "one_line": "The suite run of the InvestorReporting folder has one failure that this cell causes: IV2-AC1 (__tests__/dsgn-irptv1/iv-t-2.headline.test.ts) asserts that the injected beginning and ending values print as the raw strings 9143207.18 and 9821455.63; the headline now prints them through formatUsd as $9,143,207.18 and $9,821,455.63. The test file is outside this order's grant (only the firm-binding tests of dsgn-irptv1 are in the write set), so it is not edited here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-309 step 2(e) and Andrew's msg 9754: every printed money value of the tab goes through formatUsd with a dollar sign and grouping; the suite's failing names are a subset of the base's (page owner's gate).",
+  "world_is": "Measured: bun test over src/pages/InvestorReporting: 1431 tests in 419 files; failing names include IV2-AC1 (PerformanceHeadline, the injected-supported-values arm: 'INJECTED SUPPORTED VALUES: beginning present=false ending present=false currency present=true'). The other failing names (IVE26-AC3, IVE98, producer fixtures, F14-AC3, AR-y-248) read wire folders, fixtures, the allowlist file or the prospect upload, none of which this cell changes. Every irpt-dashbd test passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal test output of the InvestorReporting folder run, the IV2-AC1 block (headline) at the worktree",
+      "portal commit 23a95f72: PerformanceHeadline.tsx currencyText now returns formatUsd(value, currency)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The expectation needs the formatted strings ($9,143,207.18 and $9,821,455.63) in the dsgn-irptv1 test; that edit is outside this grant. The issuer or the page owner decides whether to widen the grant for that one file, or to accept the failure as the intended change."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S8 -- at Global the tab's account focus context is null, so the focus POST and the per-account YTD never run; only the dashboard, summary and template reads carry the client firm
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T19:40:01Z",
+  "one_line": "ReportingTab builds its account focus context (focusCtx) only when the scope is non-null. At Global the scope is null, so focusCtx is null: the one-account focus POST (settleAccountFocus) and the per-account YTD reads (resolveAccountYtd) do not run at Global, and the account-scoped report request never starts. The tenant the ruling named for the focus POST therefore changes nothing at Global.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-309 ruling 1 step 3: ReportingTab reads header?.selectedTenant for the focus POST context and the per-account YTD line follows the same value.",
+  "world_is": "Measured by the mounted-tab test (Global, header tenant set, scope null): the manifest, client summary and template reads carry selected_tenant; no /selections POST and no per-account YTD read is issued in that run. The Preview and print template reads take the export target's selectedTenant, which is the focus-derived accountRef.selectedTenant, so at Global it is absent and those reads go out bare unless the target carries the tenant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tabs/reporting/ReportingTab.tsx focusCtx = scope ? {...} : null, and the focus effect returns early when focusCtx is null (commit 23a95f72)",
+      "the mounted-tab test performance-tab-global-and-firm (commit 23a95f72): the reads listed above, none of them a /selections POST"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired: building focusCtx from the header at Global is a larger change to the account focus, outside the ruling's named edits. The issuer decides whether the Global account picker needs it."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S9 -- the print URL carries no client id; the print window takes the client from the bundle's performance report scope
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T19:40:01Z",
+  "one_line": "Ruling 4 asks the print window to read the client and the tenant the export's own target or receipt carries, and to file BLOCKING if the target lacks the client id. The print URL does not carry a client id (bundle, tenant, scope, revision, selection, selected_tenant, account, version only). The print window takes the client from scope.clientId of the performance report inside the bundle it already resolves for the print, and the tenant from the selected_tenant the URL carries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-309 step 4: the print window resolves the template with the client and the tenant the export's own target or receipt carries; if the target lacks the client id, file a BLOCKING row naming the missing field and stop on it.",
+  "world_is": "The print entry's PrintReady reads bundle.performanceReport.scope.clientId (the bundle's own report names the client it covers) and params selected_tenant. The fresh-window test passes the client from the bundle fixture (cli-4a2) through resolvePrintTemplate with an injected read. The BLOCKING stop was not taken because the bundle, which is the export's own state, carries the client; the URL itself does not.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "render/PrintEntry.tsx PrintReady: clientId = bundle.performanceReport?.scope.clientId (commit 23a95f72)",
+      "render/PrintEntry.tsx params: bundle, tenant, scope, revision, selection, selected_tenant, account, version (read at the same commit; no client parameter)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer decides whether a fresh print window should also carry the client id on its URL (a route change, outside this order) or keep the bundle's report as the source."
+}
+```
+
+
+## IRPT_DASHBD-D2-W246-S10 -- disposition of S7: the grant was widened by one test file and the two pinned strings were changed
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T20:16:51Z",
+  "one_line": "Disposition of IRPT_DASHBD-D2-W246-S7 (BLOCKING, left as filed): the coordinator widened the grant by one file, dsgn-irptv1/iv-t-2.headline.test.ts (order AMENDMENT 2026-10-16); its lines 88 and 89 now expect the formatted strings $9,143,207.18 and $9,821,455.63. The test passes at portal commit b16965e5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "S7: the dsgn-irptv1 IV2-AC1 test pins the raw money strings and fails by the intended dollar format; the file was outside the grant.",
+  "world_is": "After the amendment: iv-t-2.headline.test.ts passes (1 pass, 0 fail); the irpt-dashbd folder passes (162 pass, 0 fail, 21 files); typecheck rc 0. The one-firm test in performance-tab-global-and-firm.test.tsx was also restated on the reachable state (portal commit 75a71ae3), with no product file changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit b16965e5 (headline test lines 88-89) and 75a71ae3 (one-firm test), pushed to origin cand/dell2/irpt-49f-performance-template-mount (ls-remote read 75a71ae3)",
+      "order amendment at the trunk commit eddc17e627 (AMENDMENT 2026-10-16 row S7)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The coordinator widened the grant by one test file (order AMENDMENT 2026-10-16); the test now expects the intended formatted money, and the one-firm test is restated; row S7 is left as filed.",
+  "notes": "Dismissed because the grant was widened by the coordinator's ruling and the test now expects the intended format; row S7 itself is left as filed."
+}
+```
+
+
+## IRPT_DASHBD-D2-W2202-S1 -- iam.tf still describes the write list as six gold tables after DB-f-2202 adds the transaction prefix
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2202-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2202",
+  "surfaced_at": "2026-10-16T21:05:21Z",
+  "one_line": "iam.tf (a neighbour of the cell, read only, not in the grant) names the write list as six gold prefixes: its comment at line 90 says the sixth prefix joins, and the output description at line 175 lists six tables. After DB-f-2202 the list carries seven, with account_transaction last. Left as filed; iam.tf is byte-identical to the base by the order's bounds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf comment line 90 and output irpt_reporting_gold_write_arns description line 175 describe the write list as the six gold prefixes (returns, class, activity, realized lots, unrealized lots, filled_report_values).",
+  "world_is": "At be99bf5767 those words match the six-element list in locals.tf. After the DB-f-2202 edit in locals.tf the list has seven elements (account_transaction added last); the iam.tf words are stale by one table. The statement's resources and sid are unchanged, so the grant itself is correct; only the wording lags.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf@be99bf5767 lines 90 and 175 (the comment and the output description)",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf@be99bf5767 lines 106-113 (six-element irpt_rg_gold_write_arns before the edit); the worktree edit adds the seventh element"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

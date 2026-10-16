@@ -22,6 +22,8 @@ VERSION_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._+!-]*$")
 ID_RE = re.compile(r"^REQ-[0-9TZ]+-[A-Za-z0-9._-]+$")
 PIN_RE = re.compile(r"^([A-Za-z0-9][A-Za-z0-9._-]*)==([^\s;]+)")
 DAY_RE = re.compile(r"^[0-9]{8}$")
+NPM_NAME_RE = re.compile(r"^(?:@[a-z0-9][a-z0-9._-]*/)?[a-z0-9][a-z0-9._-]*$")   # the npm limb (CT-cc-1)
+NPM_VERSION_RE = re.compile(r"^[0-9A-Za-z][0-9A-Za-z.+-]*$")
 
 
 def utc_now():
@@ -79,22 +81,29 @@ def all_requests(root):
 
 
 def cmd_file(a):
-    if not NAME_RE.match(a.name) or not VERSION_RE.match(a.version):
+    npm = getattr(a, "ecosystem", "pypi") == "npm"
+    name_ok = NPM_NAME_RE.match(a.name) if npm else NAME_RE.match(a.name)
+    ver_ok = NPM_VERSION_RE.match(a.version) if npm else VERSION_RE.match(a.version)
+    if not name_ok or not ver_ok:
         return refuse("name or version has characters not allowed")
     if not (a.needed_by.strip() and a.why_no_approved.strip() and a.by.strip()):
         return refuse("--needed-by, --why-no-approved and --by are required")
     if not os.path.isdir(a.root):
         return refuse("intake folder missing: " + a.root)
     os.makedirs(req_dir(a.root), exist_ok=True)
-    rid = "REQ-%s-%s" % (utc_stamp(), a.name)
+    # an npm name has @ and / (CT-cc-1): the request id carries the held-name form of it (@ removed, / as __)
+    slug = a.name.replace("@", "").replace("/", "__") if npm else a.name
+    rid = "REQ-%s-%s" % (utc_stamp(), slug)
     path = os.path.join(req_dir(a.root), rid + ".json")
     if os.path.exists(path):
         return refuse("request already exists: " + rid)
     rec = {"schema": SCHEMA, "id": rid, "name": a.name, "version": a.version,
            "needed_by": one_line(a.needed_by), "why_no_approved": one_line(a.why_no_approved),
            "requested_by": a.by, "requested_at": utc_now(), "decisions": []}
+    if npm:
+        rec["ecosystem"] = "npm"
     save(path, rec)
-    print("FILED id=%s package=%s==%s" % (rid, a.name, a.version))
+    print("FILED id=%s package=%s%s%s" % (rid, a.name, "@" if npm else "==", a.version))
     return 0
 
 
@@ -129,16 +138,22 @@ def pinned(req_path, name, version):
 
 
 def cmd_status(a):
-    if not os.path.isfile(a.requirements):
+    npm = getattr(a, "ecosystem", "pypi") == "npm"
+    if not npm and not os.path.isfile(a.requirements):
         return refuse("requirements file missing: " + a.requirements)
     if not os.path.isdir(a.root):
         return refuse("intake folder missing: " + a.root)
-    pkg = "PACKAGE %s==%s" % (a.name, a.version)
-    if pinned(a.requirements, a.name, a.version):
+    pkg = "PACKAGE %s%s%s" % (a.name, "@" if npm else "==", a.version)
+    # requirements.txt is the Python pin list: an npm line is never read from it
+    if not npm and pinned(a.requirements, a.name, a.version):
         print("%s APPROVED by=requirements.txt at=- reason=listed in requirements.txt" % pkg)
         return 0
-    hits = [r for r in all_requests(a.root)
-            if canon(str(r.get("name", ""))) == canon(a.name) and r.get("version") == a.version]
+    if npm:
+        hits = [r for r in all_requests(a.root)
+                if str(r.get("name", "")) == a.name and r.get("version") == a.version]
+    else:
+        hits = [r for r in all_requests(a.root)
+                if canon(str(r.get("name", ""))) == canon(a.name) and r.get("version") == a.version]
     decs = [d for r in hits for d in (r.get("decisions") or [])]
     if decs:
         d = max(decs, key=lambda x: str(x.get("at", "")))
@@ -248,6 +263,7 @@ def main(argv=None):
     f.add_argument("--needed-by", required=True)
     f.add_argument("--why-no-approved", required=True)
     f.add_argument("--by", required=True)
+    f.add_argument("--ecosystem", choices=("pypi", "npm"), default="pypi", help="npm: a name@version request (CT-cc-1)")
     d = sub.add_parser("decide", parents=[common])
     d.add_argument("--id", required=True)
     d.add_argument("--verdict", required=True, choices=["APPROVED", "REFUSED"])
@@ -259,6 +275,7 @@ def main(argv=None):
     s.add_argument("--version", required=True)
     s.add_argument("--device", default=None, help="accepted; does not change the answer")
     s.add_argument("--requirements", default=DEFAULT_REQUIREMENTS)
+    s.add_argument("--ecosystem", choices=("pypi", "npm"), default="pypi", help="npm: no requirements.txt is read")
     w = sub.add_parser("show", parents=[common])
     w.add_argument("--id", required=True)
     g = sub.add_parser("downloads", parents=[common])

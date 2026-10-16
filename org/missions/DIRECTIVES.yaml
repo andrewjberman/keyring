@@ -574,7 +574,13 @@ directives:
       was not derivable from criterion (a) or (b) alone."
     members:
       subgroups: []
-      projects: [PLATFORM_OPS_USERMGMT, D12_PHONE_OTP_ALL_AWS, NFRA_OPSEC202609, NFRA_REPORT, NFRA_IAMROLES202609]
+      projects: [PLATFORM_OPS_USERMGMT, D12_PHONE_OTP_ALL_AWS, NFRA_OPSEC202609, NFRA_REPORT, NFRA_IAMROLES202609, SOC2_MSLOGS]
+      members_note_soc2_mslogs: "SOC2_MSLOGS ADDED 2026-10-16 by 1.0.0_SA_CTO~DELL1 at L3: Microsoft 365 audit logs as compromise exposure
+        and proof of internal security (brief docs/briefs/soc2-mslogs-compromise-exposure-brief-20261016.md @0113e9f438; endpoint
+        confirmed by Andrew-direct ~16:2xZ 'all recs approved', record ANDREW_DIRECT_20261016_162xZ_ALL_RECS_APPROVED_SOC2_MSLOGS_*). Macro
+        SOC2 ratified into D12's enum on the same word. Placement DELL1, a per-member exception to D12's SITEZ placement, on his ~16:0xZ word
+        'have it sent to CTO on this box and handled on this bxo'. Supersedes TCKT_MTADTA (D7), which closes on his word 'that project is
+        closed' and whose live resources this project inherits."
     stance: "MINTED 2026-08-31 by 0.0.0_AB_MSTR (register owner) on Andrew-direct ~19:2xZ (a new directive entry
       D12) and 1.0.0_SA_CTO transcript readback @1f6541bf16, sourced from three named Whisper transcripts on
       Andrew Desktop. FIRST PROJECT PLATFORM_OPS_USERMGMT: email/SMS OTP MFA at login with a remembered-device

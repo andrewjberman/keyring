@@ -4,7 +4,7 @@
   "directive": "D7",
   "fabric": "dell1",
   "pipeline": null,
-  "status": "active",
+  "status": "closed",
   "dep_stage": "EXECUTING",
   "created": "2026-10-16",
   "registered_under_tree": "2026-10-16",
@@ -18,7 +18,7 @@
   ],
   "name": "Ticket Center metadata: the eight operations team members' Microsoft 365 activity, read as sequences, to find the workflows Ticket Center should absorb",
   "description": "Registered at L3 by 1.0.0_SA_CTO~DELL1 on Andrew-direct 2026-10-16 ~05:4xZ, ~06:0xZ and ~06:2xZ (laptop 1.0.0_SA_CTO terminal, relayed). Supersedes NFRA_WFSPINE. Collects the Office 365 audit feed under a new single-purpose app (the gateway stays delegated-only) for Andrew's eight named ops accounts only, every other account dropped at collection and never stored (R9 departure, his R20 acknowledgement), into opal-data-trino/m365-metadata (bronze, silver parquet, gold later); only the IAM globgrph group can access, and every read and write goes through the reader/writer Lambda. D7 placement is DELL2; this member runs on DELL1 by his word (per-member placement exception). No alerting. The AWS Organization is a separate, later project.",
-  "phase": "2026-10-16 ~08:5xZ (2.0.0_SA_COO~S1): round 2 issued -- 5 task orders (3 worker slots, 2 staged for a CloudOps seat); 2026-10-16 ~06:4xZ (1.0.0_SA_CTO~DELL1): PRD v0.2 @86f3caec3a ADMITTED (3.0.0_SA_CVO signed the ratified-text half after refusing v0.1 on non-eight internal addresses; brief half accepted); round 1 to 2.0.0_SA_COO~S1. 2026-10-16 ~06:3xZ (1.0.0_SA_CTO~DELL1): L4 PRD v0.1 written @315f7a19af (DRAFT); ratified-text half owed by 3.0.0_SA_CVO; two registry rows and the R20 entry owed at round 1 cell 1. 2026-10-16 ~06:2xZ (1.0.0_SA_CTO~DELL1): L3 registered; endpoint FWD-1..10 confirmed by Andrew; L4 PRD next.",
+  "phase": "2026-10-16 ~16:2xZ (1.0.0_SA_CTO~DELL1): CLOSED, superseded by SOC2_MSLOGS (D12) on Andrew-direct ~16:1xZ 'i dont care abt tckt metadata anymore that project is closed'; its live resources pass to SOC2_MSLOGS, unchanged and running. 2026-10-16 ~08:5xZ (2.0.0_SA_COO~S1): round 2 issued -- 5 task orders (3 worker slots, 2 staged for a CloudOps seat); 2026-10-16 ~06:4xZ (1.0.0_SA_CTO~DELL1): PRD v0.2 @86f3caec3a ADMITTED (3.0.0_SA_CVO signed the ratified-text half after refusing v0.1 on non-eight internal addresses; brief half accepted); round 1 to 2.0.0_SA_COO~S1. 2026-10-16 ~06:3xZ (1.0.0_SA_CTO~DELL1): L4 PRD v0.1 written @315f7a19af (DRAFT); ratified-text half owed by 3.0.0_SA_CVO; two registry rows and the R20 entry owed at round 1 cell 1. 2026-10-16 ~06:2xZ (1.0.0_SA_CTO~DELL1): L3 registered; endpoint FWD-1..10 confirmed by Andrew; L4 PRD next.",
   "blocking": null,
   "brief_ref": "docs/briefs/tckt-mtadta-ticket-center-metadata-brief-20261016.md@4ec9c9f461",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_TCKT_MTADTA_20261016.md@a7a7df4e6f",
@@ -40,5 +40,6 @@
     "SCOPE AND HOME -- Andrew-direct 2026-10-16 ~05:4xZ (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_054xZ_SPINE_BECOMES_TCKT_MTADTA_OPS_EIGHT_DROP_AT_OUTSET_GLOBGRPH_ROLE_ONLY.md @0092da40fe): ticket-center analytics; eight accounts; 'all other domains/accounts should be dropped at the outset and not stored'; opal-data-trino, folder m365-metadata.",
     "PLACEMENT DELL1 -- Andrew-direct 2026-10-16 ~06:0xZ, VERBATIM: 'let's get that brief refactored into this tckt center metadata project and kicked off on dell1' (ANDREW_DIRECT_20261016_06xxZ_TCKT_MTADTA_KICKOFF_DELL1_ORG_PROJECT_LATER.md @5dfb4237f5).",
     "DONE WHEN CONFIRMED AND ACCESS -- Andrew-direct 2026-10-16 ~06:2xZ, VERBATIM: 'yes, only iam globgrph group can access, if you want to access you have to go through the reader/writer lambda' (ANDREW_DIRECT_20261016_062xZ_TCKT_MTADTA_ENDPOINT_CONFIRMED_GLOBGRPH_GROUP_READER_WRITER_LAMBDA.md @f4fbcdfde4)."
-  ]
+  ],
+  "superseded_by": "SOC2_MSLOGS"
 }

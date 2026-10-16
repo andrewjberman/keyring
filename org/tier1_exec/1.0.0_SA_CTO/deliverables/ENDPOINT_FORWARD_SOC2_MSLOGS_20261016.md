@@ -90,3 +90,15 @@
 **NOT READ:** the project's task orders, decompositions, `project.json` phase and blocking, and its surprise channel.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## AMENDMENT 1 (~16:1xZ, on Andrew-direct at the CRO's terminal, `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261016_1612Z_SOC2_MSLOGS_METADATA_ONLY_PROOF_OF_INTERNAL_SECURITY.md` @0f2f158dc2)
+
+- **His words:** "this is metadata focused/analytics focused, do not need anything further. this is just a remediation strategy so we
+  have something to prove that we have internal security"; "get the raw audit pull, dont redact it unnecessarily".
+- **Content is out, for good:** no email body, Teams message text or document content is ever read or stored. FWD-2's "opened" means
+  the audit record of the open (who, which item, when, from where), never the item itself.
+- **The population and raw-bronze ruling above now rests on his own word.** The raw audit pull is the tenant's whole feed, every account,
+  as Microsoft ships it. That card is settled.
+- **Scope is capped at FWD-1 to FWD-9,** and "do not need anything further" adds none. FWD-8 and FWD-9 carry the purpose: proof of
+  internal security.
+- The FWD-1 to FWD-9 DONE WHEN lines still wait on his "yes".

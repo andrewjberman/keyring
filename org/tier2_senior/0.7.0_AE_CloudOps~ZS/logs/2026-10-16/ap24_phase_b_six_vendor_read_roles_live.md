@@ -84,3 +84,12 @@
 | naming limb (`safe-commit.sh`) | note | refuses ANY typed S3 address in a new `.tf`; the form that passes is `jsondecode(file(legacy_addresses.json))` locals over registry rows committed first; a literal that equals a registered template is still refused |
 | `GIT_COMMIT_AUTHOR_OVERRIDE` | note | used once, for the registry rows (`PLATFORM_LOGIC_DOCS`); audited at 14:10Z |
 | `proof-of-spec-check.py` | PASS | VALID first run |
+
+## Close-out: OG-ec-2 build tree removed, lane retired (rule 34)
+
+9. **`C:/tmp/og-rel-ec2` torn down** on the issuer's message 35127 (CTO 35126). Checked first: tip `4fd05be0d3` is an ancestor of `HEAD` and of `origin/box/sitez`; 0 tracked changes, 0 untracked entries, 0 commits ahead of origin; the only content not in git was ignored and regenerable (`.terraform/` provider cache, `__pycache__`, two log files; 76 MB). `git worktree unlock`, `git worktree remove` (no force), `git branch -d rel-nfra-oplgtw-ec2` (was `4fd05be0d3`): worktree and branch absent, the commit still resolves. This is the cleanup skill's `merged-worktrees` pool and the "ref already contained in its trunk" case.
+10. **Retired.** Andrew-direct 2026-10-16 ~15:4xZ (rule 34): idle single-task CloudOps lanes close. Orders OG-ap-24, -25, -26, -27 and -29 are complete; nothing is held open (no ledger, no worktree, no scheduled task). Owed to others, handed to the COO in the reply: disposition of rows Z-S158, Z-S165, Z-S294; the CTO's note that the four `gateway-client-bdlive-*` registry rows should name the new live catalog rows once `NFRA_MCPINDEX` lands them (this seat will not be here to do it); the local tag `opal-gateway-v1.7.1` (not pushed); the `PLATFORM_LOGIC_DOCS` lane gap behind the one audited override.
+
+| tool | result | notes |
+|---|---|---|
+| `git worktree remove` | PASS | no `--force` needed: ignored files do not block it |

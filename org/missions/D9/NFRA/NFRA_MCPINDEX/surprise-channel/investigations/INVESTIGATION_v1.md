@@ -9474,6 +9474,302 @@ carries none.
     },
     "spec_asserts": "The order bounds (item 1) and the face name the group map as the only bucket source for the four new live rows, and do not list the fork registry as a surface for the eight legacy rows.",
     "world_is": "The fork registry join restores bucket and key_template for every table row by hashed contract id, so the eight legacy rows took the live bucket and layout from the registry, not from their entries. The worker did not run the loader path before A3; the registry edit is limited to those eight rows, and c26.AC2 now grades the loader path."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S131",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T16:20Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W49-S8",
+      "NFRA_MCPINDEX-Z-W49-S9"
+    ],
+    "one_line": "ISSUER DISPOSITION of worker ~49's rows S8 (firm: null made the group map conflict) and S9 (the fork registry restored the live bucket for the eight legacy contracts), and RECORD of its row S10 (the enforcing naming gate refuses the entity names opal_data_bd_silver_<t>): three defects of the issuer's order face, each fixed and re-graded on the merged tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S8: the issuer's trial emit crashed in attach_tool_buckets (TypeError, a None bucket); A3 a608e7bc84 deleted the four 'firm: null' lines; c26.AC1 now builds the rows through the emitter's own functions (4 of 4 applied, 0 conflicts).",
+        "S9: the second trial emit was REFUSED with 8 errors (the group map would move the valid S3 bucket opal-data-bd); A4 d1092a10f6 corrected the eight registry rows (bucket opal-data-assets, the frozen copy's key_template); c26.AC2 now builds the eight rows through the loader (0 conflicts).",
+        "S10 (row filed on the archived branch arch-wk-NFRA_MCPINDEX-49-a5-oldnames at f02d1c0cd6, not on trunk): run in ENFORCE the naming gate printed 4 REFUSE on the first placed catalog (the entity names, because the token bd aliases 49financial); the entities were renamed blackdiamond_live_<t> (e717bd2fb2) and the enforcing gate on the final placed diff exits 0 with 0 REFUSE (worker log logs/naming_enforce.log, merge 68d5c5dfa8)."
+      ]
+    },
+    "spec_asserts": "The orders MX-c-26 (A2, A3) and the face written by the issuer asserted that the four new live entries could carry firm: null and an entity name with the token bd, and that a clean table row needs no fork-registry entry.",
+    "world_is": "The emitter's group map treats a present firm: None against a mapped firm as a conflict; the loader joins the fork registry by contract id and the join overrides bucket and key_template; the naming gate's alias table makes bd a carrier of 49financial. All three were found by running the emitter and the enforcing gate on the candidate, not by the worker's criteria as first written.",
+    "dismissal_reason": "The faces were the issuer's; each defect was fixed by an amendment and the placed catalog (blob b81c48aa3c, md5 910ed6e3) re-graded PASS by r16.AC1, r16.AC2, c23.AC4, c21.AC2 and r13.AC3 strict on the emit, the enforcing naming gate exit 0, and c26.AC1 to AC3 plus r16.AC1/AC2 on the merged tree. The lesson is carried to the round-19 analysis: run the emitter AND the enforcing gate on a candidate before a cell that feeds them is flipped."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W50-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~50",
+    "surfaced_at": "2026-10-16T19:14:07Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The hand overlay that c27.AC1 and c27.AC2 require (workflows/atom_decomposition/hand_overlay.json) is REFUSED by the enforcing naming gate: 40 NEW hand-kept carriers (the firm tokens 49financial and blackdiamond in the entity names, the prefixes, the key templates and the firm values), so the file is not committed; commit 308da62f7d carries the generator and the test file only.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/naming-gate.py --diff <patch adding workflows/atom_decomposition/hand_overlay.json> --enforce --staged-paths <list of that path> printed NAMING-GATE: REFUSE 40 graded (every refusal on the overlay's lines 4-88; the context rule permits a firm token only in infra/logic/registry/*.json, a generated file, or a key()/address()/name()/lookup() argument) and exited 1; order bound 4 requires exit 0.",
+        "The same gate on the committed generator and test file (commit 308da62f7d) exits 0 with 0 graded refusals; .tools/commit-gate.sh is clean for both files.",
+        "The overlay values are read from the tracked files at 5eafe7e416: the eight workflows/atom_decomposition/catalog_entries/opal_data_assets_silver_49financial_<t>_silver_legacy.yaml prefixes (blackdiamond/49financial/silver_legacy/<t>/) and opal_data_etfs_gold_book.yaml open_items. The file is held at .scratch/mx50/hand_overlay.json in the worktree."
+      ]
+    },
+    "spec_asserts": "Order bound 4 and the Steps: the overlay file is a NEW .json that the naming gate must pass with exit 0 under --enforce; c27.AC1 requires the eight tracked prefixes and the gold open_items to be restored (0 entries differing).",
+    "world_is": "A .json outside the registry context may not carry a firm token, and the tracked values the overlay must restore carry one, so the gate and c27.AC1 cannot both be met by the file as specified. Where the file may live, or how its values are carried, is the issuer's decision: the registry folder is outside this order's paths."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W50-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~50",
+    "surfaced_at": "2026-10-16T19:14:07Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "With the overlay applied, the existing integration assertion IntegrationTests::test_every_clean_row_is_carrier_free (workflows/atom_decomposition/tests/test_gen_silver_rows.py lines 436-438) FAILS, because the eight restored legacy prefixes carry carrier tokens. c27.AC3 therefore cannot pass while c27.AC1 passes; the test file is outside this order's paths and shared with worker ~51.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Overlay applied in the worktree at commit 308da62f7d plus the overlay: pytest over test_regen_preserves.py, test_gen_silver_rows.py, test_read_links.py and test_read_links_repeat.py gave 1 failed, 76 passed; the failure is test_every_clean_row_is_carrier_free, with the eight opal_data_assets_silver_49financial_<t>_silver_legacy rows as its dirty set (catalog_tokens.carrier() reads True for their prefix).",
+        "Overlay held out (the committed state): c27.AC3.sh gave pytest rc=0: 77 passed, RESULT PASS.",
+        "The tracked state already holds the carrier prefixes: 12 tracked entries under workflows/atom_decomposition/catalog_entries/ carry carrier tokens at 5eafe7e416 (the eight legacy entries and the four blackdiamond_live_<t> entries)."
+      ]
+    },
+    "spec_asserts": "Steps 1 and 3 of the order: the control line, with tests/test_regen_preserves.py added, passes; c27.AC3 expects pytest rc=0 on test_gen_silver_rows.py. Item 2 of the cell: the overlay is applied by default when hand_overlay.json sits beside the script.",
+    "world_is": "The default overlay restores tracked values that the carrier-free assertion forbids, so the existing test and c27.AC1 conflict. Resolving it needs a decision the order does not make (an assertion scoped to generated values, or an overlay that is not the default); nothing in this order's paths resolves it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W50-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~50",
+    "surfaced_at": "2026-10-16T19:14:07Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A regeneration is not a fixed point on the catalog-* rows of legacy_addresses.json: the replace behaviour the order keeps drops 36 of the 143 tracked catalog-* rows and writes 120; no criterion grades those rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Trial of the committed generator into a temp copy of infra/logic/registry/legacy_addresses.json (.scratch/mx50/v1/legacy.json, run with the overlay): 120 catalog-* rows written, 20 distinct pairs held by another row and not added; the tracked file holds 143 catalog-* rows at 5eafe7e416.",
+        "36 tracked catalog-* keys are not produced (for example catalog-opal-data-assets-silver-49financial-allocations-silver-legacy and catalog-opal-data-etfs-gold-book); the 120 produced keys are equal to their tracked rows (0 changed).",
+        "The hazard is standing: a run with --registry-file pointed at the repo registry performs the same replacement (write_registry in workflows/atom_decomposition/gen_silver_rows.py at 308da62f7d), so every such run drops the 36 rows."
+      ]
+    },
+    "spec_asserts": "Cell section 1 ('Why'): a regeneration must be a fixed point on the tracked state. Item 4: the legacy-address file keeps its current behaviour.",
+    "world_is": "The current behaviour is a replacement of every catalog-* row, so the fixed-point premise holds for the entries and the fork registry but not for the catalog-* rows. c27.AC2 grades only the non-catalog-* rows, so no criterion sees the 36 dropped rows."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W50-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~50",
+    "surfaced_at": "2026-10-16T19:14:07Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "write_fork_registry still replaces labels with the --labels-from group map values when that argument is named, although item 4 of the order says the merge keeps labels as they are; the order's rule holds when --labels-from is absent, and the check does not name it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/gen_silver_rows.py at 308da62f7d, write_fork_registry: the labels branch 'if labels is not None: doc[labels] = sorted(labels)' is the MX-c-23 contract, kept unchanged; without --labels-from the file's labels are kept.",
+        "c27_check.py regen() passes no --labels-from; c27.AC2 check 'the fork registry's other top-level keys are equal' printed ok (labels equal)."
+      ]
+    },
+    "spec_asserts": "Cell item 4: the merge keeps every other top-level key of the file (_about, entities, labels) as it is.",
+    "world_is": "The MX-c-23 contract (a run that names --labels-from writes labels) and the order's keep-labels rule differ only for that run. The code keeps the MX-c-23 contract and the issuer decides which one stands."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S132",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T20:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W50-S1",
+      "NFRA_MCPINDEX-Z-W50-S2",
+      "NFRA_MCPINDEX-Z-W50-S3",
+      "NFRA_MCPINDEX-Z-W50-S4",
+      "NFRA_MCPINDEX-Z-W50-S5"
+    ],
+    "one_line": "ISSUER DISPOSITION of worker ~50's five MX-c-27 rows: S2 and S3 (BLOCKING) were two collisions of the order's design, ruled in A1 and re-graded PASS; S1, S4 and S5 are accepted observations.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S2: the enforcing naming gate refused hand_overlay.json as a new workflows/ file (40 firm-token carriers); at org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round20/hand_overlay.json the same gate grades 0 lines (the issuer ran --enforce on a diff of it: exit 0, 0 REFUSE). A1 0561aced58 moved the file.",
+        "S3: an overlay applied by default put the tokened legacy prefixes into generated entries and broke tests/test_gen_silver_rows.py::test_every_clean_row_is_carrier_free; A1 made --hand-overlay an explicit option with NO default. c27.AC1, AC2, AC3 PASS on the merged tree f5e5872dd4 (0 of 192 differ; fork registry 226 of 226 unchanged; 78 tests); a real regeneration into catalog_entries/ changed 0 of 319 files.",
+        "S4: the catalog-* rows of legacy_addresses.json are generator-owned and not a fixed point (36 of 143 dropped when --registry-file is named); the issuer's landing procedure passes only the entries folder, and the overlay-aware regeneration is graded without that flag.",
+        "S5: --labels-from replaces the fork registry's labels only when named, an explicit option (MX-c-23). S1: the gate's K7 membership list is absent in a sparse cone; a sparse-worktree environment note."
+      ]
+    },
+    "spec_asserts": "MX-c-27's face asserted that a tracked overlay file under workflows/ could be applied by default and committed under the enforcing gate.",
+    "world_is": "The enforcing gate refuses a new workflows/ file carrying firm tokens, and a default overlay contaminates the carrier-free rows the generator tests assert. Data the issuer maintains belongs in the issuer's deliverables folder, applied only when named.",
+    "dismissal_reason": "S2 and S3 were the order's design and are fixed and re-graded; S1, S4 and S5 change no graded criterion. The issuer is disarm_owner of all five. Lesson carried to the round-20 analysis: a new file under workflows/ that carries data with firm tokens meets the enforcing gate; run naming-gate --enforce on the planned file at the cut."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W53-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~53",
+    "surfaced_at": "2026-10-16T20:20:25Z",
+    "one_line": "MX-c-39 step 1 places depth_kind right after a depth spec's method line; the mdpf_get_aggregate_aua depth spec has no method line, so depth_kind: series_start was placed as the spec's last line, after its field line.",
+    "spec_asserts": "Order section 1, step 1: every depth spec dict naming a row and a field where the field is total.series_start or as_of_first gains the line depth_kind: series_start (right after its method line).",
+    "world_is": "workflows/atom_decomposition/tool_index/members.yaml@1071edbdbc: the mdpf_get_aggregate_aua depth spec (lines 294-306) names row mp.03.aggregate-aua-timeseries, scope global and field as_of_first and has no method key; depth_kind is its line 306. The three other series specs (gateway_query_catalog mp.01 and mp.03 at lines 152-165, mdpf_get_aum_metrics mp.01 at lines 307-320) each carry method body-field and take the line after it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tool_index/members.yaml@1071edbdbc lines 294-306 (mdpf_get_aggregate_aua: depth spec with row, scope, field and no method line; depth_kind at line 306)",
+        "workflows/atom_decomposition/tool_index/members.yaml@1071edbdbc lines 152-165 and 307-320 (the three other series specs, each with method body-field and depth_kind on the next line)",
+        "c39.AC2 at 1071edbdbc: kind differs from its member spec 0 of 39 measured history_depth claims; series_start claims 6, the anchor, so the mdpf_get_aggregate_aua spec is graded as declared"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S133",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T20:32:38Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W53-S3"
+    ],
+    "dismissal_reason": "Placement only: YAML mapping order carries no meaning and the emitter and c39.AC2 read the depth spec as a mapping; the spec is graded as declared (39 of 39 claims carry the declared kind, 6 series_start). The issuer is disarm_owner.",
+  "one_line": "ISSUER DISPOSITION of worker ~53's MX-c-39 row: the mdpf_get_aggregate_aua depth spec has no method line, so depth_kind: series_start sits after its field line; accepted, graded as declared.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-39's face placed depth_kind right after a spec's method line and assumed every series spec has one.",
+    "world_is": "members.yaml has no method key on the mdpf_get_aggregate_aua depth spec; the key order of a YAML mapping carries no meaning, and the emitter and c39.AC2 read the spec as a mapping.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-c-39 merged at 8906f5fb80 (7 files, 0 foreign); c39.AC1 PASS (80 passed, 17 new) and c39.AC2 PASS (39 of 39 claims carry the kind their spec declares, 6 series_start) in the worker tree and re-run by the issuer on the merged tree; the atom_decomposition suite 363 passed; ruff clean.",
+        "trial emit round21/emit_final.sh: r21.AC1, r21.AC2, c23.AC4, c21.AC2 and r13.AC3 PASS on the candidate (md5 b014f6379707e9071cb73b3a94516182), not landed."
+      ]
+    }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W52-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~52",
+    "surfaced_at": "2026-10-16T20:20:06Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tests/test_gen_silver_rows.py@4e9017ac2f IntegrationTests.setUpClass runs gen.main with --registry-file on a copy of infra/logic/registry/legacy_addresses.json and no --allow-registry-drop. Measured in the worktree at 4e9017ac2f: the same invocation returns rc=2 with 36 REGISTRY-DROP lines and an ERROR line naming 36 rows. Two of its tests fail: test_contract_ids_are_hashed_and_registry_holds_one_entry_per_row (FileNotFoundError on the fork file, which the refused run did not write) and test_rc_zero_and_180_files_with_unique_names (2 != 0).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round21/checks/c29.AC3.sh measured at 4e9017ac2f: pytest rc=1, 2 failed, 58 passed (60 tests: 51 existing in the two named files and 9 new). Criterion AC3 expects rc=0 over test_registry_drop_guard.py, test_gen_silver_rows.py and test_regen_preserves.py.",
+        "c29.AC1 run 1 at 4e9017ac2f: exit 2, REGISTRY-DROP rows printed 36. The tracked legacy file holds 143 catalog-* rows; the generator produces 107."
+      ]
+    },
+    "spec_asserts": "MX-c-29 (order section 1) requires a regeneration that would drop a registry row to refuse, and a run that drops nothing to behave as today. AC3 of the order expects pytest rc=0 on tests/test_gen_silver_rows.py, whose integration tests run the generator over the tracked registry with no allow file.",
+    "world_is": "Both cannot hold at once on the tracked registry: any run without --allow-registry-drop over the tracked legacy file is refused with 36 drops, so the two integration tests exit 2. tests/test_gen_silver_rows.py is outside the order's paths, so the worker did not edit it and did not add an allow file to it. AC3 is recorded FAIL; the choice between an allow list in that test, a regenerated registry and a scoped test belongs to the issuer.",
+    "one_line": "AC3 of MX-c-29 is FAIL: two IntegrationTests in tests/test_gen_silver_rows.py run the generator with no allow file against the tracked registry, which the new guard refuses (36 drops); that test file is outside the order's paths."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W52-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~52",
+    "surfaced_at": "2026-10-16T20:20:06Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls org/surprise_channel and ls org/surprise_channel/schemas in the worktree at 4e9017ac2f each return 'No such file or directory'; the comp-find search for *investigation*schema* under org/surprise_channel was denied twice by the rail (pipe form) and did not run.",
+        "The worktree is a sparse cone (workflows, lib, .tools, infra/aws/ec2, infra/logic and the project folder); org/surprise_channel is outside it. The order's section 3 and the surprise-channel rule name org/surprise_channel/schemas/investigation_item.schema.json as the row's schema."
+      ]
+    },
+    "spec_asserts": "The surprise-channel rule names org/surprise_channel/schemas/investigation_item.schema.json as the schema every investigation row must satisfy, and the order's section 3 directs the row to it.",
+    "world_is": "That schema file is not in this worker's worktree, so the rows in this file were written to the field list the existing rows carry, with the commit-time gate (.tools/surprise-row-gate.py) as the only validator the worker could run. Not validated against the schema text.",
+    "one_line": "The investigation_item schema named by the surprise-channel rule is absent from the sparse worktree, so the worker's rows could not be checked against it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S134",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T20:45:31Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W52-S3",
+      "NFRA_MCPINDEX-Z-W52-S4"
+    ],
+    "one_line": "ISSUER DISPOSITION of worker ~52's two MX-c-29 rows: S3 (BLOCKING) was the order's omission of the integration-test fixture from its paths, ruled in A1 and re-graded PASS; S4 is an accepted sparse-cone environment note.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "S3: two IntegrationTests of test_gen_silver_rows.py ran the generator on the 180-row round-14 fixture against a copy of the tracked registry, so the new guard rightly refused the 36 other catalog-* rows; A1 (e48fe1117d) granted the test file and the re-seated worker passes an allow file in setUpClass only (a1e42d21dc); c29.AC1, AC2, AC3 PASS on the merged tree 28d19f4834 (60 tests, 9 new). S4: the investigation_item schema is absent from a sparse cone; the rows were graded by the commit gate on trunk. The issuer is disarm_owner of both.",
+    "spec_asserts": "MX-c-29's face bounded the change to gen_silver_rows.py and the new test file and asserted the existing generator tests would pass unchanged.",
+    "world_is": "The pinned round-14 fixture makes 180 rows against the tracked registry's 143 catalog-* rows, so a guarded regeneration of it drops 36; the fixture predates the guard.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "issuer re-run on the merged tree 28d19f4834: c29.AC1 PASS (36 REGISTRY-DROP rows printed, 36 really dropped with the allow file, one key withheld refuses naming exactly that key), c29.AC2 PASS (the planted catalog-planted-row-c29 refused alone), c29.AC3 PASS (60 passed, 9 new); the atom_decomposition suite 372 passed; ruff clean; the proof instance VALID inside the worker tree."
+      ]
+    }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W53-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~53",
+    "surfaced_at": "2026-10-16T21:19:23Z",
+    "one_line": "The worktree sparse cone is narrower than MX-c-39 A1 states: it holds opal-gateway/app/refs and the top level of app/, not infra/aws/ec2, so the gateway tests and app/integrations are not materialized and AC1 and AC3 cannot PASS here.",
+    "spec_asserts": "MX-c-39 order line 22 says the worktree sparse cone already holds infra/aws/ec2 and that the worker may add nothing else; A1 AC3 expects r21.AC2 to PASS with the candidate catalog placed in this tree.",
+    "world_is": "The sparse cone of wk-NFRA_MCPINDEX-53 at 9295c840a9 lists /infra/aws/ec2/opal-gateway/app/ with !/infra/aws/ec2/opal-gateway/app/*/ and /infra/aws/ec2/opal-gateway/app/refs/ only. infra/aws/ec2/opal-gateway/tests/ is absent on disk (the index holds test_portal_index.py, test_opal_discover.py, test_discover_echo.py and test_firm_catalog_visibility.py there) and app/integrations/ is absent (the 15 bucket_source files that members.yaml names there). Measured: c39.AC1 pytest rc=1, 1 failed 79 passed (test_c_group DeclaredBucketSource, 15 errors); r21.AC2 DENOMINATOR test files 0, pytest rc=5 no tests ran. The cone was NOT widened (the order says add nothing).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git sparse-checkout list and the worktree sparse-checkout file at wk-NFRA_MCPINDEX-53 HEAD 9295c840a9: cone roots /infra/aws/ec2/opal-gateway/app/ and /infra/aws/ec2/opal-gateway/app/refs/, no /infra/aws/ec2/opal-gateway/tests/ entry",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-39.two-depth-kinds-latest-and-series-start.md@9295c840a9 line 22 (the cone claim) and lines 96-98 (AMENDMENT A1, criteria AC3 and the placement)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round21/checks/r21_check.py@9295c840a9 lines 102-104 (the ac2 test list resolved under the gateway folder, filtered by existence)",
+        "workflows/atom_decomposition/tests/test_c_group.py@9295c840a9 line 216 (the DeclaredBucketSource assertion that lists the 15 missing bucket-source files)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S135",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T21:38:25Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W53-S4"
+    ],
+    "one_line": "ISSUER DISPOSITION of worker ~53's A1 row: the placing worktree's sparse cone was narrower than the order stated; the issuer provisioned it without the cone additions.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "The defect was the issuer's: wk-provision.sh was run without --sparse-add, so app/refs only was materialized and c39.AC1 and p21.AC1 could not run. The worker rightly refused to widen the cone. The issuer widened it (workflows, lib, .tools, infra/aws/ec2, infra/logic), re-ran both criteria PASS, and a second seat committed the catalog (7b5d6724c7) and the proof (3560f950be). Lesson: run the provisioning line the round's other workers used, and run the order's criteria in the fresh tree before the spawn.",
+    "spec_asserts": "MX-c-39 A1 asserted the worktree's sparse cone already held workflows, lib, .tools, infra/aws/ec2 and infra/logic.",
+    "world_is": "The tree provisioned with `wk-provision.sh provision NFRA_MCPINDEX 53 --path C:/tmp/wk-mx21-53b --order ...` and no --sparse-add held only app/refs of the gateway; the stated cone needed --sparse-add.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report: c39.AC1 1 failed (test_c_group DeclaredBucketSource, 15 bucket-source files absent), p21.AC1 test files 0; after the widening c39.AC1 80 passed and p21.AC1 PASS in the same tree; merged at 0e4490e678."
+      ]
+    }
   }
 ]
 ```

@@ -35,6 +35,113 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
 ```json
   [
     {
+     "id": "AMGT_HARVST-D1-W151-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+     "surfaced_at": "2026-10-16T15:45:51Z",
+     "one_line": "HVST-cc-2 step 2 is STOPPED: the guard cannot be built from what a stored silver research_report row carries. The misfiled KMB report fbd50086c4065785 stores no exchange-qualified ticker in any field, and the silver row holds no header or body text, so the step-1g stop rule applies.",
+     "class": "BLOCKING",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "Order step 1d-1e and the preamble: the guard reads the report's own identity from the stored silver row (a header ticker, or header fields the row carries); step 1g: if the report carries no stored header and no ticker, STOP step 2 and file a row.",
+     "world_is": "Silver research-report (5 parts, 355 rows, parts_read 5 of 5; org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out). The 25 stored fields hold no body or header text. Title ticker only in source_relpath, and KMB's five rows carry none. fbd50086c4065785 stores fund_evidence 'RECOMMENDATION: MAINTAIN 2.25% POSITION IN IDVZ' (IDVZ is the fund, not the security) and source_relpath 'Kimberly Clark KMB/Kimberly Clark Mexico Q2 2026 Earnings Update.docx' (a company name). Its extract object (extract_key, a pointer the row stores, not the text) names 'Kimberly-Clark de Mexico SAB (KCM)' and does NOT contain KIMBERA MM. A stored-field rule returns unknown, so the report is served on KMB's list and arm (1) cannot pass. Step 2 not built; tests AC2 not written.",
+     "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+               "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out",
+               "lib/research/corpus/typed.py@4516893b3b:403-462 (record() stores the fund/period/author evidence, not the header)",
+               "infra/aws/ec2/opal-gateway/app/harvest_research.py@4516893b3b:193-212 (_research_reports; REPORT_FIELDS served)",
+               "s3://opal-data-harvest/amgt/harvest/silver/research-report/ (5 parts; read-only GET, 2026-10-16)",
+               "s3://opal-data-harvest/amgt/harvest/bronze/research-report-extract/security_key=KMB_US_Equity/fbd50086c4065785/extract.json (1 GET, 8677 bytes)"
+          ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W151-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+     "surfaced_at": "2026-10-16T15:45:51Z",
+     "one_line": "A strict equal-ticker rule (title ticker present and different from the key ticker) fires on 22 of the 199 silver rows with a title ticker, and every one of the 22 is another listing of the same issuer (PBR_US vs PETR3 BZ, JD_US vs 9618 HK, WALMEX*_MM vs WALMEX MM, AMXB_MM vs AXMB MM, RWE_GR vs RWE GY, NG/_LN vs NG LN).",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "CTO ruling as cited in the order: a research report attaches to a security by its exchange-qualified ticker; order step 1c MEASURE rule: mismatched = header ticker present and differs from the ticker of the row's security_key.",
+     "world_is": "Measured over 355 silver rows (org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out): with_header_ticker=199, mismatched=22. The 22 keys are ADR, cross-listed or differently spelled keys (PBR_US, JD_US, WALMEX*_MM, AMXB_MM, RWE_GR, NG/_LN) whose titles name the same issuer's local line. An equality guard built on this rule would hide 22 correct reports from their own securities. No guard built, so nothing is hidden yet.",
+     "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+               "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out",
+               "s3://opal-data-harvest/amgt/harvest/silver/research-report/ (5 parts; read-only GET, 2026-10-16)"
+          ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W151-S3",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+     "surfaced_at": "2026-10-16T15:45:51Z",
+     "one_line": "The order's premise that the other KMB rows are correct does not hold: KMB_US_Equity holds a second silver row with the same Kimberly Clark Mexico title as a .pdf (1a3b56044db679a5), carrying the same IDVZ fund evidence. Its body was not read.",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "Order step 1b: print 4 other KMB reports that are correctly KMB's; decomposition note: the misfile is the one report fbd50086c4065785 and stays in bronze under KMB's partition.",
+     "world_is": "KMB_US_Equity holds 5 silver rows (org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out). fbd50086c4065785 (.docx) and 1a3b56044db679a5 (.pdf) share the title 'Kimberly Clark Mexico Q2 2026 Earnings Update' and fund_evidence 'RECOMMENDATION: MAINTAIN 2.25% POSITION IN IDVZ'. The other three rows are KIMBERLY CLARK ONE PAGER 2026 02 09 (.xlsx and .pdf) and PR2Q26.pdf, all fund None. The .pdf's body was not read (no GET spent on it). A KMB served list read today carries both.",
+     "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+               "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out",
+               "s3://opal-data-harvest/amgt/harvest/silver/research-report/ (5 parts; read-only GET, 2026-10-16) part date=2026-09-23/part-20260923T044515Z.parquet, report_id 1a3b56044db679a5"
+          ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W151-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+      "surfaced_at": "2026-10-16T16:21:29Z",
+      "one_line": "The amended order names the next row id as AMGT_HARVST-D1-W151-S1, but S1 to S3 already exist in this channel from the first pass of this slot. The re-seat instruction names S4, so this row takes S4 and no id is reused.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Amended order, the proof-of-spec paragraph: 'Your next surprise row id is AMGT_HARVST-D1-W151-S1'.",
+      "world_is": "INVESTIGATION_v1.md at 42a6ff937c holds AMGT_HARVST-D1-W151-S1, -S2 and -S3 (the rows of the first pass, at lines 38, 62 and 82 of that file). The next free id of this slot is S4.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md@42a6ff937c:38,62,82",
+          "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-2.a-research-report-attaches-to-the-security-it-is-about.md@d10b16f3f0 (the amended order, the next-row-id sentence of the proof-of-spec paragraph)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W151-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+      "surfaced_at": "2026-10-16T16:21:29Z",
+      "one_line": "Amendment 1 step 2b names run.note as the existing note mechanism, but run.note only carries a listing prefix into source_keys and no text. The exclusion note is written to denominator_note, the body's free-text note, and the excluded list to misfiled_reports_excluded.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Amended order step 2b: say the exclusion 'in the tool's existing note mechanism (read how run.note and run.miss are used in _research)', never silent.",
+      "world_is": "At 4516893b3b, harvest_research.py run.note(prefix) (lines 110-111) appends a prefix to the sources list and holds no text; it is called only for listing prefixes (lines 247 and 273). run.miss(part, reason) records a reason for an ABSENT part only. The one free-text note in the body is body['denominator_note'] (line 309). At cfa61fbc79 the exclusion and attachment notes are appended to denominator_note, each with its number and the key.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@4516893b3b:110-111 (run.note appends to sources)",
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@4516893b3b:247,273 (the two run.note calls)",
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@4516893b3b:309 (body denominator_note)",
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@cfa61fbc79 (_research appends the exclusion note)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
       "id": "AMGT_HARVST-Z-S1",
       "project": "AMGT_HARVST",
       "fabric": "site-z",
@@ -10145,6 +10252,72 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disarm_owner": "4.0.0_SA_CRO~DELL1",
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S34",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-16T16:20:52Z",
+     "one_line": "HVST-cc-4 Arm C wrote one run-record object to the harvest bucket: the order says no S3 write of any kind, and the trace harness ran the runner's own command, which persists its run record.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-4 step 1: no S3 write of any kind; Never run upload-harvest.",
+     "world_is": "The harness (cc4_harness.py) called the pin's CLI main() with the runner's own argument list including --harvest-grammar, so worker.Worker._persist_run_record put the run record: s3://opal-data-harvest/amgt/harvest/bronze/run_record/date=2026-10-16/20261016T161321Z-run-03342e31.json, 1670 bytes, LastModified 2026-10-16T16:13:29Z (head-object read at 16:13:52Z), run 20261016T161321Z-run-03342e31 (bbg, security-b0fe721e1f2a0d8b, status no_new_articles, scratch runtime root). It is a never-overwrite conditional put of the same kind every runner job makes. Found from the stdout line run_record_persisted put_performed true, read after the run. The harness now replaces _persist_run_record with a no-op and refuses every AWS write-named call (AWS_WRITE_BLOCKED); Arms A and B run with both. This seat did NOT delete the object (an S3 delete needs a human word); the issuer chooses keep or delete. Arm C was not re-run (a fourth job run would exceed the budget).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc4_arm_C.stdout",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc4_harness.py",
+       "lib/opal_data_harvest/worker.py:1014-1036 at C:/dev/wk-harvest-runner-pin-ddd7dcdc38"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S35",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-16T17:00:06Z",
+     "one_line": "HVST-cc-7 cannot start as signed: the live opal-gateway commit d14445961d (and its base 38fe44d5cb) is not in dell1's object store and no ref on origin points to it, so the release cannot be cut on it.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-7 step 0: cut a release branch from the live deployed commit read from EC2_MANIFEST.json and the instance; git diff <live commit>..<release branch> lists exactly the six paths. Both halves (COO a84dbdc1e7, CTO msg 6895) bind that cut.",
+     "world_is": "EC2_MANIFEST.json at HEAD names services.opal-gateway.deployed_commit d14445961dd6d04275ca8186372a4df4c4fcc5cc (13:24:05Z, 0.7.0_AE_CloudOps~MQ) and previous_deployed_commit 38fe44d5cb8d37b6007fb7e5fa47a25316e01054; the S3 live ref (git-ref metadata on opal-313476888478-lambda-artifacts ec2/opal-gateway/opal-gateway-latest.tar.gz, LastModified 13:23:35Z) is the same d14445961dd6d04275ca8186372a4df4c4fcc5cc, so manifest and artifact plane AGREE. But git cat-file -t on both hashes answers 'could not get object info' on dell1, git ls-remote origin (1931 refs) lists no ref at d14445961d, and no rel-*pf* branch or /c/tmp release tree exists here: the release commits were made in the MQ lane's own worktree (C:/tmp/mp-pf-rel, LOCAL, per its log mq_pf9_bundle_only_gateway_release.md) on another device and never pushed. The deployed bytes are retrievable (s3://opal-313476888478-lambda-artifacts/ec2/opal-gateway/opal-gateway-d14445961d.tar.gz, 883434 bytes; previous opal-gateway-38fe44d5cb.tar.gz), the commit is not. Nothing was built, uploaded or deployed; ledger harvst-cc7-gateway-s29-20261016 is OPEN with no leg run.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway at HEAD",
+       "org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-10-16/mq_pf9_bundle_only_gateway_release.md",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_before.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S36",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-16T17:30:11Z",
+     "one_line": "HVST-cc-7: the release is cut and tested, but the gateway deploy is refused on dell1 before any upload: bun cache holds 27 of 77 packages for mcportal@c66ca82952's lockfile (50 absent); two earlier refusals were tooling vintage (jq not on PATH; the live commit's older halt gate rejects lane ~SC1).",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-7 step 0 and 2: deploy with infra/aws/ec2/safe-ec2-deploy.sh opal-gateway from the release branch, DEPLOY_BASE_REF the live ref; the script builds the dashboard bundle from the manifest's mcportal_commit.",
+     "world_is": "Release rel-amgt-harvst-cc7 @b5aa696c90 (parent d14445961d, six-path diff, 33 tests pass) is cut in C:/tmp/cc7-rel. Attempt 1 (17:23:22Z) refused: jq not on PATH in this shell (.tools/jq.exe exists; rerun with it on PATH). Attempt 2 (17:24:30Z) refused by the HALT gate at the pre-act checkpoint, rc=3: the release tree carries the live commit's older .tools/halt-gate-check.sh whose lane rule is 1 to 3 uppercase letters, so ~SC1 (a digit) fails; the trunk's gate (CTO ruling CTO_RULING_HALT_GATE_MULTI_LETTER_LANE_20261007) accepts it. Attempt 3 (17:27:44Z) copied the TRUNK's halt-gate-check.sh into the release worktree (uncommitted, restored after): the gate passed, the stale-base guard passed (declared base == live ref d14445961d), then mcportal @c66ca82952 resolved (it was absent from dell1's nested repo; a git fetch of origin made it local) and ops/bun_cache_precheck.py refused the dashboard build: 27 of 77 packages present in dell1's bun cache, 50 absent (@babel/*, esbuild, rollup, react 19.3.0, react-router 7.18.4, vite 7.3.6 and others: the list is cc7_bun_miss.txt). The script's own instruction: send this list to the laptop's package intake, then redeploy. The refusal came BEFORE any upload: S3 opal-gateway-latest git-ref still d14445961d at 13:23:35Z, 84 objects under the prefix as at the start, manifest unchanged, 0 SSM commands issued by this seat. The earlier release (MP-pf-9) built the same bundle on another device whose cache held all 77.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_deploy.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_bun_miss.txt",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_before.out"
+      ]
+     },
      "disposition": "UNDER_INVESTIGATION"
     }
 ]

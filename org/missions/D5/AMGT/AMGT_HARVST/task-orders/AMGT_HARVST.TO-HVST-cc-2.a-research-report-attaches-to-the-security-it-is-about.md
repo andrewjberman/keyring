@@ -68,9 +68,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - **AMENDED 2026-10-16T16:08:57Z (issuer; CTO ERRATUM 2, msg 6843):** the worker stopped at the order's own gate (a stored row carries no ticker; the measurement is in `measure.out`), and the CTO ruled a named exclusion list. Criteria amended by the issuer (gate limb expected: GATE (viii) on a modify). The `typed.py` and corpus-test paths are dropped. The library filing error (the Mexico report filed under KMB) is a row for `4.0.0_SA_CRO~DELL1` (the issuer files it). Re-seat: the first worker is finished, so a fresh worker takes slot ~151 and inherits branch `wk-AMGT_HARVST-151`.
 - **SENT:** with the round-88 issuance; re-sent 2026-10-16T16:08:57Z after the amendment.
 
+**COMPLETE 2026-10-16T16:41:26Z (issuer `2.0.0_SA_COO~W1`):**
+- **Acts:** worker `0.9.0_WK_AMGT_HARVST~151` (worker, haiku, high), two passes on branch `wk-AMGT_HARVST-151`. Pass 1 (`42a6ff937c`): the read-only measurement (`measure.out`: 355 rows, 94 securities, 5 of 5 parts, 11 GETs, 142,139 bytes; a stored row carries no ticker and no header text; a title-ticker rule would flag 22 rows that are other listings of one issuer) and a stop at the order's own gate. CTO ERRATUM 2 (msg 6843) ruled a named exclusion list; the order was amended by the issuer (`e3f05f3829`). Pass 2 (`cfa61fbc79`, `a312a860f5`), merged `44a1048df9` (safe-merge fast lane on the fourth attempt, after three lost races to other seats' commits and one refusal for an uncommitted foreign append to the channel file; index check 0 of 6 paths differ).
+- **Diff read by this seat** (`harvest_research.py`, +85/-10): `MISFILED_REPORTS` holds the two KMB Mexico files (`fbd50086c4065785` docx, `1a3b56044db679a5` pdf) with their reason and `correct_security_key` None; `_validate_misfiled` runs at import; `_research_reports` excludes a listed report from its security, returns the excluded list, and serves a report on its `correct_security_key` from the original security's rows with `attached_from`; `_research` adds the response field `misfiled_reports_excluded`, a distinct absence note when every report of a key is excluded, and a sentence in `denominator_note` naming the number excluded and the key.
+- **AC1 PASS:** `MEASURE rows_scanned=355 ... bytes=142139` (inherited). **AC2 PASS:** `6 passed` (worker; this seat re-ran), including the mutant arm (empty list) that fails arm 1. **AC3 PASS:** `16 passed` (re-run here). Proof instance VALID rc 0 (re-run here).
+- **Rows:** pass 1 `D1-W151-S1` (BLOCKING, ARMED: the ticker guard cannot be built from a stored row; answered by the ruled exclusion list), `-S2` (the strict rule flags 22 same-issuer rows), `-S3` (ARMED: KMB's second row, the .pdf, now listed); pass 2 `-S4` (the order's next-row-id was stale), `-S5` (`run.note` carries no text, so the exclusion note went to `denominator_note`). The issuer files the dispositions after the round's merges; `D1-S33` names the library filing error for `4.0.0_SA_CRO~DELL1`.
+- **What this does NOT prove:** the served tool. The exclusion is merged, not deployed; the served read of KMB's research is `HVST-cc-7`. It is exact and does not generalise: a new misfile is a new list row, and the ticker-attach the first ruling named is not buildable from stored rows. A silver rebuild is not owed (the rows stay as stored).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>88</round>
 <workstream>S29-ATTRIB</workstream>
 <slot>dell1</slot>

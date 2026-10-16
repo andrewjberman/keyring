@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-16T15:57:40Z",
+ "written_at": "2026-10-16T18:37:45Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -5791,7 +5791,7 @@
    "source": "org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/TCKT_MTADTA.TO-MD-r2.andrew_consent_card.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-16T15:46:56Z",
    "kind": "act",
    "context": "Two clean scheduled fires have landed bronze and silver for 2026-10-09 to 10-16. No seat can read stored data by design; only your MFA session can. This read is the round's exercised outcome and the CVO grades it. Commands: the card's last section, then read_day.py --person <upn> --date <day> and first_content.py --date <day>.",
@@ -5812,7 +5812,263 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-16T16:17:32Z",
+    "by": "2.0.0_SA_COO~S1",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO~S1/ANDREW_DIRECT_20261016_1559Z_REFRAME_M365_LOGS_AS_SOC2_COMPROMISE_EXPOSURE_MACRO_SOC2_MSLOGS.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261016T155819Z-e8af",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/mdpf-canon-v2-band-repair",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "cand/dell1/mdpf-canon-v2-band-repair",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T15:58:19Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/mdpf-canon-v2-band-repair",
+    "purpose": "MDPF_CANON CN-s-4: on the Variant 2 Trend, the Models band is never carried forward on or after a date where the band label is absent (one condition in trendGrouping.ts); one commit, cut from PROD fa21a303",
+    "pages": [
+     "ModelPortfolios (Global Trend",
+     "Variant 2)"
+    ],
+    "class": "client-facing",
+    "how": "bun run dev:live --port 5174, Global view, Trend Variant 2 Monthly; hover the carried-date bars: the Models band does not draw a carried value. Checks: r11_cn_s_4.py pure 6 of 6, real 5 of 5, typecheck 0",
+    "head_sha": "62b3dd53461cae63327f0258a1c2f693098e7463",
+    "commits": 1
+   },
+   "scope": {
+    "measured_at": "2026-10-16T15:58:19Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T16:19:42Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_162xZ_ALL_RECS_APPROVED_SOC2_MSLOGS_ENDPOINT_RAW_ALL_ACCOUNTS_DEV_APPROVALS_NAMING.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261016T160708Z-c39d",
+   "project": "NFRA_DEVPLN",
+   "subject": "approval: cand/dell1/mdpf-canon-cottonwood-trend-upgrade",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "cand/dell1/mdpf-canon-cottonwood-trend-upgrade",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T16:07:08Z",
+   "kind": "approval",
+   "approval": {
+    "box": "dell1",
+    "branch": "cand/dell1/mdpf-canon-cottonwood-trend-upgrade",
+    "purpose": "MDPF_CANON CN-s-3: the Cottonwood AUM Trend starts at its first measured total (2026-06-09), fills Other AUM on every date with a total, and carries the 12 absent model-leg dates with their measured Total, marked carried; new cottonwoodTrend.ts plus the page wiring; the five carried primary lines now carry their display names (tooltip marks them carried); reads through the paired provenance accessor. Three commits cut from PROD fa21a303",
+    "pages": [
+     "ModelPortfolios (Cottonwood view",
+     "AUM Trend)"
+    ],
+    "class": "client-facing",
+    "how": "bun run dev:live --port 5174, Cottonwood firm, AUM Trend Monthly: the window starts 2026-06-09; hover 2026-08-31, every leg reads (carried). Checks: r11_cn_s_3.py pure 7 of 7, provenance guard exit 0, typecheck 0; CVO v21 graded the render MET",
+    "head_sha": "1510cd7a8573a00282e66ec1a9b97c9e7f24a3c7",
+    "commits": 3
+   },
+   "scope": {
+    "measured_at": "2026-10-16T16:07:08Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project NFRA_DEVPLN is placed on laptop, this box is dell1"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T16:19:53Z",
+    "by": "andrew",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_162xZ_ALL_RECS_APPROVED_SOC2_MSLOGS_ENDPOINT_RAW_ALL_ACCOUNTS_DEV_APPROVALS_NAMING.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null,
+    "decision": "approved"
+   }
+  },
+  {
+   "id": "dell1-20261016T161045Z-fb18",
+   "project": "NONE",
+   "subject": "SOC2_MSLOGS: confirm the 9 DONE WHEN lines (and with them all-accounts raw collection, the SOC2 / SOC2_MSLOGS naming)",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_SOC2_MSLOGS_20261016.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T16:10:45Z",
+   "kind": "fork",
+   "context": "CRO brief @0113e9f438 from Andrew's 15:59Z reframe; endpoint @8d3109cc66. L2 is Andrew's confirmation; nothing is built until it lands.",
+   "rec": "Yes: the outcomes are the brief's O1-O9, every one provable by a drill or a read, and his reframe words already name the population and raw bronze.",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-16T16:10:45Z"
+   },
+   "closed": {
+    "at": "2026-10-16T16:19:54Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_162xZ_ALL_RECS_APPROVED_SOC2_MSLOGS_ENDPOINT_RAW_ALL_ACCOUNTS_DEV_APPROVALS_NAMING.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261016T164723Z-cc02",
+   "project": "AMGT_RESAPP",
+   "subject": "What does validation.state CLEARED assert for the served AI-fill documents, and are the 95 to be re-stamped HELD to CLEARED?",
+   "asked_by": "2.0.0_SA_COO~R2",
+   "source": "org/tier1_exec/2.0.0_SA_COO~R2/drive_log_20261016T16Z_desktop-hk1uu7n.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T16:47:23Z",
+   "kind": "fork",
+   "context": "All 475 blocks of the 95 served round-111 AI-fill documents still read validation HELD/PASS; contract.py defines CLEARED with a stamping function, and the gateway passes the field through beside served text. A re-stamp moves served bytes of 95 keys (a never-widen pair). The CVO has read at most about 25 of the 95 names; the producer's grounding contract was applied to all.",
+   "rec": "Leave HELD until you state what CLEARED means. If it means 'passed the producer grounding contract', re-stamp all 95 (no model call, no spend, one 95-key pair); if it means 'a reader graded it', re-stamp only the names the CVO read.",
+   "scope": {
+    "measured_at": "2026-10-16T16:47:23Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/filings/analyze.py is on the shared branch (lib)",
+      "lib/research/filings/tests/test_reverify_stated_value.py is on the shared branch (lib)",
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_classification_withheld.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_names_read_agreement.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T16:57:57Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_RULING_CC02_AIFILL_VALIDATION_CLEARED_MEANING_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T165007Z-ff09"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T165007Z-ff09",
+    "at": "2026-10-16T16:50:07Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261016T182557Z-4f7e",
+   "project": "MDPF_CANON",
+   "subject": "Which identity applies the orion/ ReadOnly trail selector (cloudops-dell1-agent-user is denied cloudtrail writes), before 06Z 2026-10-17?",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/canon_r11_orion_trail/BLOCKED_NOTE.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T18:25:57Z",
+   "kind": "fork",
+   "context": "CTO msg 6957 ruled the step; the targeted plan is exactly 0 add 1 change 0 destroy; the apply is AccessDenied by DenyCloudTrailWrites on the dell1 CloudOps user (simulate: explicitDeny). Gates ADHOC.canon-r11-orion-reader-trail steps 1-3; the 06Z-16Z window of 2026-10-17 is lost if it is not live by 06Z. The FB-j-15 applier (lane ~FBL, 10-13) is the precedent.",
+   "rec": "Name the identity outside the Deny that applied FB-j-15 and have its seat apply the saved patch; otherwise drop the step and keep the E4 prefix and hours as the finding.",
+   "scope": {
+    "measured_at": "2026-10-16T18:25:57Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "portal/src/lib/cottonwoodTrend.ts overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/pages/ModelPortfolios.tsx overlaps the write set of IRPT_BCKEND placed on dell2 (portal)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T18:37:45Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/MDPF/MDPF_CANON/ledger/CTO_RULING_4F7E_ORION_READER_BY_ACCESS_LOGGING_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T182850Z-66b6"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T182850Z-66b6",
+    "at": "2026-10-16T18:28:50Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
   }
  ]
 }

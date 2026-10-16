@@ -13,6 +13,9 @@ receipts/ inside the pack is this tool's to create.
 Verbs:
   verify  --from <pack>                       read-only; one INTAKE-VERIFY-WAIVED line per waived check; LAST line INTAKE-VERIFY ...
           (a record reads 'checked' or 'released-with-waiver'; the waiver is re-derived from the record's own checks)
+  verify  --from <pack> --ecosystem npm --lockfile <bun.lock>
+          the npm limb (CT-cc-1): each .tgz is re-read against its check record AND its lockfile entry (sha512); the LAST
+          line reads INTAKE-VERIFY pack=... tarballs=... ; the pack is verified and stops there (no placement verb here)
   prove   --from <pack> --scratch <new dir>   verify, then install each wheel with no index into its own scratch target,
                                               import it, write one receipt per wheel into <pack>/receipts/; LAST line INTAKE-PROVE ...
   install --from <pack> --python <exe> | --target <new dir> | --user [--dry-run]
@@ -24,6 +27,12 @@ Verbs:
                                               The old default (a --user install with no target) is gone. Each real install writes
                                               receipts/<wheel>.install.<device>.json with install.target_form and the interpreter;
                                               LAST line INTAKE-INSTALL ...
+  install --ecosystem npm --pack <pack> --lockfile <bun.lock> --target <bun cache dir> [--by <serial>] [--receipt-dir <dir>]
+                                              the npm limb (CT-cc-2): verifies the pack as 'verify' does, then unpacks each
+                                              tarball into <target>/<name>@<version>@@@1 (a scoped name keeps its slash as a
+                                              folder), the layout ops/bun_cache_precheck.py reads. Whole-install refusal: nothing
+                                              is written when any tarball is not cleared or any destination exists and is not
+                                              present. Never runs a script, bun or a package manager. LAST line INTAKE-NPM-INSTALL
   selftest-unchecked                          synthetic pack with one "not_checked" wheel; proves it is refused
 
 The device name comes from the environment variable AGENTBUS_DEVICE and from nothing else.
@@ -32,6 +41,7 @@ import argparse
 import base64
 import csv
 import hashlib
+import importlib.util
 import io
 import json
 import os
@@ -40,8 +50,10 @@ import re
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import zipfile
+import zlib
 from datetime import datetime, timezone
 
 MANIFEST_NAME = "MANIFEST.json"
@@ -249,13 +261,107 @@ def _record_problems(rec, wheel_name, wheel_sha):
     return out
 
 
-def verify_pack(pack):
-    """Read-only verification. Returns a dict (see keys below); never raises on a bad pack."""
+NPM_EXT = ".tgz"
+NPM_FILE_RE = re.compile(r"^[A-Za-z0-9_.+-]+\.tgz$")
+
+
+def load_bun_lock(path):
+    """STANDALONE MIRROR of intake_check.load_bun_lock (this tool ships alone): the bun text lockfile as a dict with a packages
+    object. Trailing commas are removed outside strings, then JSON is read. Parity arms are in test_intake_npm.py."""
+    with open(path, "r", encoding="utf-8") as fh:
+        text = fh.read()
+    out, in_str, esc, i, n = [], False, False, 0, len(text)
+    while i < n:
+        ch = text[i]
+        if in_str:
+            out.append(ch)
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+            i += 1
+            continue
+        if ch == '"':
+            in_str = True
+        elif ch == ",":
+            j = i + 1
+            while j < n and text[j] in " \t\r\n":
+                j += 1
+            if j < n and text[j] in "}]":
+                i += 1
+                continue
+        out.append(ch)
+        i += 1
+    data = json.loads("".join(out))
+    if not isinstance(data, dict) or not isinstance(data.get("packages"), dict):
+        raise ValueError("the lockfile has no packages object")
+    return data
+
+
+def lock_integrities(lock, ident):
+    """STANDALONE MIRROR of intake_check.lock_integrities: the distinct integrity strings of the entries whose first element is
+    ident (name@version); the fourth element is the integrity, None when absent."""
+    found = []
+    for _key, val in lock["packages"].items():
+        if isinstance(val, list) and val and val[0] == ident:
+            integ = val[3] if len(val) > 3 and isinstance(val[3], str) else None
+            if integ not in found:
+                found.append(integ)
+    return found
+
+
+def _sha512_sri(path):
+    h = hashlib.sha512()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return "sha512-" + base64.b64encode(h.digest()).decode("ascii")
+
+
+def _npm_tarball_problems(rec, path, lock):
+    """The reasons one npm tarball is not cleared against its record and its lockfile entry (empty = cleared)."""
+    checks = rec.get("checks") if isinstance(rec, dict) else None
+    if not isinstance(checks, list) or len(checks) < 2 or not all(isinstance(c, dict) for c in checks[:2]):
+        return ["check record lacks the npm check 1 and check 2 evidence"]
+    ev1 = checks[0].get("evidence") or {}
+    ev2 = checks[1].get("evidence") or {}
+    ident = ev2.get("ident")
+    if not isinstance(ident, str):
+        return ["check 2 record names no name@version"]
+    if lock is None:
+        return ["no lockfile: the tarball cannot be read against its lockfile entry"]
+    found = lock_integrities(lock, ident)
+    actual = _sha512_sri(path)
+    out = []
+    if ev1.get("computed_sha512") != actual:
+        out.append("tarball sha512 differs from the check record's computed_sha512")
+    if len(found) != 1 or found[0] is None:
+        out.append("lockfile holds %d integrity entr%s for %s" % (len(found), "y" if len(found) == 1 else "ies", ident))
+    elif found[0] != actual:
+        out.append("tarball sha512 differs from the lockfile's integrity for %s" % ident)
+    return out
+
+
+def verify_pack(pack, ecosystem="pypi", lockfile=None):
+    """Read-only verification. Returns a dict (see keys below); never raises on a bad pack. ecosystem npm reads .tgz files and
+    re-reads each against its check record and its lockfile entry; pypi (the default) is unchanged."""
+    npm = ecosystem == "npm"
     res = {"pack": os.path.basename(os.path.normpath(pack)), "wheels": [], "stray": [], "pack_defects": [],
-           "verified": 0, "checked": 0, "ok": False}
+           "verified": 0, "checked": 0, "ok": False, "ecosystem": "npm" if npm else "pypi"}
     if not os.path.isdir(pack):
         res["pack_defects"].append("pack dir does not exist")
         return res
+    lock = None
+    if npm:
+        if not lockfile:
+            res["pack_defects"].append("npm verify needs --lockfile <bun.lock>: a missing lockfile is a refusal, never a skip")
+        else:
+            try:
+                lock = load_bun_lock(lockfile)
+            except (OSError, ValueError) as exc:
+                res["pack_defects"].append("lockfile unreadable: %s" % type(exc).__name__)
     entries, defect = _read_manifest(pack)
     if defect:
         res["pack_defects"].append(defect)
@@ -270,7 +376,10 @@ def verify_pack(pack):
     for n in present:
         if os.path.isdir(os.path.join(pack, n)) or n not in listed:
             res["stray"].append(n)
-    wheel_names = sorted(n for n in present if n.endswith(".whl") and os.path.isfile(os.path.join(pack, n)))
+    if npm:
+        wheel_names = sorted(n for n in present if n.endswith(NPM_EXT) and os.path.isfile(os.path.join(pack, n)))
+    else:
+        wheel_names = sorted(n for n in present if n.endswith(".whl") and os.path.isfile(os.path.join(pack, n)))
     # per-file manifest result: name -> None (good) or reason
     file_bad = {}
     for nm, e in listed.items():
@@ -299,7 +408,7 @@ def verify_pack(pack):
         info = {"name": w, "path": wpath, "file_ok": False, "record_ok": False, "reasons": [],
                 "check_record_sha256": None, "wheel_sha256": None, "modules": [], "waived": []}
         reasons = info["reasons"]
-        if not WHEEL_RE.match(w):
+        if not (NPM_FILE_RE if npm else WHEEL_RE).match(w):
             reasons.append("wheel file name has unexpected characters")
         if w not in listed:
             reasons.append("wheel not listed in manifest")
@@ -329,11 +438,13 @@ def verify_pack(pack):
                 rec = None
             if rec is not None:
                 probs = _record_problems(rec, w, info["wheel_sha256"])
+                if npm and not probs:
+                    probs = _npm_tarball_problems(rec, wpath, lock)
                 reasons.extend(probs)
                 if not probs and rname in listed and rname not in file_bad:
                     info["record_ok"] = True
                     info["waived"] = _waiver_lines(rec)
-        if info["file_ok"] and not reasons:
+        if info["file_ok"] and not reasons and not npm:
             info["modules"] = wheel_top_level_modules(wpath)
         res["wheels"].append(info)
     res["verified"] = sum(1 for i in res["wheels"] if i["file_ok"])
@@ -346,6 +457,9 @@ def verify_pack(pack):
 
 
 def verify_last_line(res):
+    if res.get("ecosystem") == "npm":
+        return "INTAKE-VERIFY pack=%s tarballs=%d verified=%d checked=%d stray=%d ok=%s" % (
+            res["pack"], len(res["wheels"]), res["verified"], res["checked"], len(res["stray"]), res["ok"])
     return "INTAKE-VERIFY pack=%s wheels=%d verified=%d checked=%d stray=%d ok=%s" % (
         res["pack"], len(res["wheels"]), res["verified"], res["checked"], len(res["stray"]), res["ok"])
 
@@ -365,6 +479,284 @@ def print_verify_detail(res):
     for i in res["wheels"]:
         for n, reason in i.get("waived", []):
             print("INTAKE-VERIFY-WAIVED %s check %d: %s" % (ascii_line(i["name"]), n, ascii_line(reason, limit=1000)))
+
+
+# ---------------------------------------------------------------- npm install (the CTO ruling item 5, 2026-10-16)
+# install --ecosystem npm --pack <pack> --lockfile <bun.lock> --target <bun cache dir> [--by <serial>] [--receipt-dir <dir>]
+# Places each verified npm tarball into a bun install cache as the UNPACKED folder <name>@<version>@@@1 (a scoped name keeps
+# its slash as a folder), the layout ops/bun_cache_precheck.py reads. The 'present' rule is that script's own, loaded by path.
+# Nothing runs: no lifecycle script, no bun, no package manager, no socket. Whole-install refusal: when any tarball is not
+# cleared, or any destination exists and is not present, nothing is written to the target.
+
+NPM_INSTALL_SCHEMA = "intake-npm-install/1"
+NPM_INSTALL_NAME_RE = re.compile(r"^(?:@[a-z0-9][a-z0-9._-]*/)?[a-z0-9][a-z0-9._-]*$")
+NPM_INSTALL_VER_RE = re.compile(r"^[0-9A-Za-z][0-9A-Za-z.+-]*$")
+NPM_MAX_MEMBER = 64 * 1024 * 1024
+NPM_MAX_EXPANDED = 256 * 1024 * 1024
+HERE_RECEIVE = os.path.dirname(os.path.abspath(__file__))
+NPM_PRECHECK = os.path.normpath(os.path.join(
+    HERE_RECEIVE, "..", "..", "..", "infra", "aws", "ec2", "opal-gateway", "ops", "bun_cache_precheck.py"))
+
+
+def load_precheck():
+    """ops/bun_cache_precheck.py loaded by path. Returns (module, None), or (None, the reason it cannot be used)."""
+    if not os.path.isfile(NPM_PRECHECK):
+        return None, "bun_cache_precheck.py is absent at %s" % NPM_PRECHECK
+    spec = importlib.util.spec_from_file_location("bun_cache_precheck", NPM_PRECHECK)
+    mod = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(mod)
+    except Exception as exc:  # a precheck that cannot load is a refusal, never a skip
+        return None, "bun_cache_precheck.py cannot be loaded: %s: %s" % (type(exc).__name__, exc)
+    return mod, None
+
+
+def npm_plan_members(tgz_path):
+    """Read one npm tarball IN MEMORY and name what it would place. Returns a dict: files (path inside the package, size),
+    dirs, package_json (bytes or None) and problems. A non-empty problems list refuses the tarball. A member is refused when its
+    name is absolute, drive-qualified, backslashed, has a '..' or an empty component, is outside the package/ folder, is a link
+    of any kind (links are refused outright, so none can leave the package), is not a regular file or folder, or is over
+    NPM_MAX_MEMBER; the expanded total is capped at NPM_MAX_EXPANDED. Nothing is written."""
+    files, dirs, problems, seen = [], [], [], set()
+    package_json, total = None, 0
+    try:
+        with tarfile.open(tgz_path, mode="r:gz") as tf:
+            for m in tf:
+                shown = ascii_line(m.name, 120)
+                name = m.name.rstrip("/") if m.isdir() else m.name
+                parts = name.split("/")
+                reason = None
+                if name.startswith("/") or re.match(r"^[A-Za-z]:", name) or "\\" in name:
+                    reason = "absolute, drive-qualified or backslashed name"
+                elif ".." in parts:
+                    reason = "a '..' component"
+                elif parts[0] != "package":
+                    reason = "member outside the package/ folder"
+                elif m.issym() or m.islnk():
+                    reason = "a link member (links are refused, never unpacked)"
+                elif not (m.isreg() or m.isdir()):
+                    reason = "member is not a regular file or folder"
+                elif m.size > NPM_MAX_MEMBER:
+                    reason = "member over %d bytes" % NPM_MAX_MEMBER
+                elif len(parts) > 1 and "" in parts[1:]:
+                    reason = "an empty path component"
+                if reason:
+                    problems.append("%s: %s" % (shown, reason))
+                    continue
+                rel = "/".join(parts[1:])
+                if not rel:
+                    continue  # the package/ folder itself
+                if rel in seen:
+                    problems.append("%s: duplicate member" % shown)
+                    continue
+                seen.add(rel)
+                if m.isdir():
+                    dirs.append(rel)
+                    continue
+                total += m.size
+                if total > NPM_MAX_EXPANDED:
+                    problems.append("expanded size over %d bytes" % NPM_MAX_EXPANDED)
+                    break
+                files.append((rel, m.size))
+                if rel == "package.json":
+                    package_json = tf.extractfile(m).read()
+    except (tarfile.TarError, OSError, EOFError, zlib.error) as exc:
+        problems.append("not a readable gzip tar: %s" % type(exc).__name__)
+    if package_json is None and not problems:
+        problems.append("package/package.json is absent")
+    return {"files": files, "dirs": dirs, "package_json": package_json, "problems": problems}
+
+
+def _npm_unpack_into(tgz_path, folder):
+    """Write the members of one tarball (already cleared by npm_plan_members) into an EXISTING empty folder, the leading
+    package/ removed. Regular files and folders only; no permission or time is restored from the archive."""
+    with tarfile.open(tgz_path, mode="r:gz") as tf:
+        for m in tf:
+            name = m.name.rstrip("/") if m.isdir() else m.name
+            rel = "/".join(name.split("/")[1:])
+            if not rel:
+                continue
+            out = os.path.join(folder, *rel.split("/"))
+            if m.isdir():
+                os.makedirs(out, exist_ok=True)
+                continue
+            os.makedirs(os.path.dirname(out), exist_ok=True)
+            with open(out, "wb") as fh:
+                shutil.copyfileobj(tf.extractfile(m), fh)
+
+
+def _npm_sha256_bytes(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def _npm_plan_item(pack, fn, pc, target):
+    """One tarball's plan, read-only: name@version from its check record (check 2's requested fields), the in-memory member
+    plan, the package.json that must name the same name and version, and the destination's state by the precheck's rule."""
+    item = {"file_name": fn, "name": None, "version": None, "dest": None, "outcome": None, "reason": None,
+            "package_json_sha256": None, "files": [], "dirs": [], "package_json": None}
+
+    def refuse(why):
+        item["outcome"], item["reason"] = "refused", why
+        return item
+
+    try:
+        with open(os.path.join(pack, fn + CHECK_SUFFIX), "rb") as fh:
+            rec = json.loads(fh.read().decode("utf-8"))
+    except (OSError, ValueError):
+        return refuse("check record absent or unreadable")
+    checks = rec.get("checks") if isinstance(rec, dict) else None
+    ev2 = checks[1].get("evidence") if isinstance(checks, list) and len(checks) > 1 and isinstance(checks[1], dict) else None
+    name = ev2.get("requested_name") if isinstance(ev2, dict) else None
+    version = ev2.get("requested_version") if isinstance(ev2, dict) else None
+    if not (isinstance(name, str) and NPM_INSTALL_NAME_RE.match(name) and isinstance(version, str)
+            and NPM_INSTALL_VER_RE.match(version)):
+        return refuse("check record names no valid npm name and version")
+    item["name"], item["version"] = name, version
+    plan = npm_plan_members(os.path.join(pack, fn))
+    if plan["problems"]:
+        return refuse("; ".join(plan["problems"][:3]))
+    try:
+        doc = json.loads(plan["package_json"].decode("utf-8-sig"))
+    except ValueError:
+        return refuse("package/package.json does not parse")
+    if not isinstance(doc, dict) or doc.get("name") != name or doc.get("version") != version:
+        return refuse("package/package.json does not name %s@%s" % (name, version))
+    item["files"], item["dirs"], item["package_json"] = plan["files"], plan["dirs"], plan["package_json"]
+    dest = os.path.abspath(os.path.join(target, *("%s@%s@@@1" % (name, version)).split("/")))
+    item["dest"] = dest
+    state = pc._state(target, name, version)
+    if state == "ok":
+        item["outcome"], item["reason"] = "already", "present by the precheck's own definition; left untouched"
+        pj = os.path.join(dest, "package.json")
+        if os.path.isfile(pj):
+            with open(pj, "rb") as fh:
+                item["package_json_sha256"] = _npm_sha256_bytes(fh.read())
+    elif os.path.lexists(dest):
+        return refuse("destination exists and is not present (%s); never overwritten: the issuer or the cache's owner decides" % state)
+    else:
+        item["outcome"], item["reason"] = "unpack", "absent; to be unpacked"
+        item["package_json_sha256"] = _npm_sha256_bytes(plan["package_json"])
+    return item
+
+
+def _npm_place(item, target):
+    """Unpack one planned package into a hidden sibling folder, then rename it into place: a half-unpacked folder is never
+    visible under its final name. Raises on any failure, after removing the sibling."""
+    parent = os.path.dirname(item["dest"])
+    os.makedirs(parent, exist_ok=True)
+    tmp = tempfile.mkdtemp(prefix=".intake-unpack-", dir=parent)
+    try:
+        _npm_unpack_into(item["pack_path"], tmp)
+        if not os.path.isfile(os.path.join(tmp, "package.json")):
+            raise OSError("unpacked folder holds no package.json")
+        os.rename(tmp, item["dest"])
+    except Exception:
+        shutil.rmtree(tmp, ignore_errors=True)
+        raise
+
+
+def install_npm(pack, target, lockfile, by, receipt_dir=None):
+    """Verify the npm pack, plan every tarball, and place the planned packages only when every one is cleared. Returns
+    (summary, verify result, per-tarball items). Writes one receipt; never runs anything."""
+    summ = {"schema": NPM_INSTALL_SCHEMA, "pack": os.path.basename(os.path.normpath(pack)), "target": os.path.abspath(target),
+            "lockfile": os.path.basename(lockfile) if lockfile else None, "by": by, "tarballs": 0, "unpacked": 0,
+            "already": 0, "refused": 0, "present": 0, "ok": False, "reason": None}
+    if not os.path.isdir(pack):
+        summ["reason"] = "pack dir does not exist"
+        return summ, None, []
+    pc, why = load_precheck()
+    tgzs = sorted(n for n in os.listdir(pack) if n.endswith(NPM_EXT) and os.path.isfile(os.path.join(pack, n)))
+    summ["tarballs"] = len(tgzs)
+    if pc is None:
+        summ["reason"] = why
+        return summ, None, []
+    res = verify_pack(pack, "npm", lockfile)
+    items = [_npm_plan_item(pack, fn, pc, target) for fn in tgzs]
+    for it in items:
+        it["pack_path"] = os.path.join(pack, it["file_name"])
+    cleared = res["ok"] and all(it["outcome"] in ("unpack", "already") for it in items)
+    write_failed = False
+    if not cleared:
+        for it in items:
+            if it["outcome"] == "unpack":
+                it["outcome"], it["reason"] = "refused", "not written: the install is refused as a whole"
+    else:
+        for it in items:
+            if it["outcome"] != "unpack":
+                continue
+            if write_failed:
+                it["outcome"], it["reason"] = "refused", "not written: an earlier package failed to write"
+                continue
+            try:
+                _npm_place(it, target)
+                it["outcome"], it["reason"] = "unpacked", "unpacked into place"
+            except Exception as exc:
+                write_failed = True
+                it["outcome"], it["reason"] = "refused", "write failed: %s: %s" % (type(exc).__name__, exc)
+    for it in items:
+        it.pop("files", None)
+        it.pop("dirs", None)
+        it.pop("package_json", None)
+        it.pop("pack_path", None)
+        it["present"] = bool(it["name"] and it["version"] and pc._state(target, it["name"], it["version"]) == "ok")
+    summ["unpacked"] = sum(1 for it in items if it["outcome"] == "unpacked")
+    summ["already"] = sum(1 for it in items if it["outcome"] == "already")
+    summ["refused"] = sum(1 for it in items if it["outcome"] == "refused")
+    summ["present"] = sum(1 for it in items if it["present"])
+    summ["ok"] = bool(res["ok"] and cleared and not write_failed and summ["tarballs"] > 0
+                      and summ["refused"] == 0 and summ["unpacked"] + summ["already"] == summ["tarballs"]
+                      and summ["present"] == summ["tarballs"])
+    if not res["ok"]:
+        summ["reason"] = "the pack does not verify (see the verify lines)"
+    summ["items"] = items
+    device, _problem = device_name()
+    summ["device"] = device
+    summ["at"] = now_utc()
+    folder = receipt_dir or os.path.join(pack, RECEIPTS_DIR)
+    os.makedirs(folder, exist_ok=True)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    path = os.path.join(folder, "install-npm.%s.%s.%d.json" % (device or "unnamed", stamp, os.getpid()))
+    receipt = {k: v for k, v in summ.items() if k != "items"}
+    receipt["packages"] = [{k: it[k] for k in ("file_name", "name", "version", "dest", "outcome", "reason",
+                                               "package_json_sha256", "present")} for it in items]
+    with open(path, "w", encoding="ascii", newline="\n") as fh:
+        json.dump(receipt, fh, indent=2, ensure_ascii=True)
+        fh.write("\n")
+    summ["receipt"] = path
+    return summ, res, items
+
+
+def npm_install_last_line(summ):
+    return "INTAKE-NPM-INSTALL tarballs=%d unpacked=%d already=%d refused=%d present=%d/%d ok=%s" % (
+        summ["tarballs"], summ["unpacked"], summ["already"], summ["refused"], summ["present"], summ["tarballs"], summ["ok"])
+
+
+def run_install_npm(args):
+    """The CLI of install --ecosystem npm: usage refusals first, then the install, then the per-package lines and the last line."""
+    bad = []
+    if not args.npm_pack:
+        bad.append("--pack <pack dir>")
+    if not args.lockfile:
+        bad.append("--lockfile <bun.lock> (the verify check reads the tarballs against it; a missing lockfile is a refusal)")
+    if not args.target:
+        bad.append("--target <bun cache dir>")
+    if args.dry_run or args.python or args.user:
+        bad.append("none of --dry-run, --python, --user (those are pip's)")
+    if bad:
+        print("REFUSED: install --ecosystem npm needs %s" % "; ".join(bad))
+        return 1
+    by = args.by or os.environ.get("OPAL_AGENT_SERIAL") or "unknown"
+    summ, res, items = install_npm(args.npm_pack, args.target, args.lockfile, by, args.receipt_dir)
+    if res is not None:
+        print_verify_detail(res)
+    if summ.get("reason"):
+        print("REASON: %s" % ascii_line(summ["reason"]))
+    for it in items:
+        label = "%s@%s" % (it["name"], it["version"]) if it["name"] else it["file_name"]
+        print("PACKAGE %s %s reason=%s" % (ascii_line(label, 160), it["outcome"], ascii_line(it["reason"] or "", 240)))
+    print("RECEIPT %s" % ascii_line(summ.get("receipt", "none")))
+    print(npm_install_last_line(summ))
+    return 0 if summ["ok"] else 1
 
 
 # ---------------------------------------------------------------- pip and import plumbing
@@ -860,11 +1252,19 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="verb", required=True)
     v = sub.add_parser("verify")
     v.add_argument("--from", dest="pack", required=True)
+    v.add_argument("--ecosystem", choices=("pypi", "npm"), default="pypi")
+    v.add_argument("--lockfile", default=None, help="npm: the bun text lockfile the tarballs are re-read against")
     p = sub.add_parser("prove")
     p.add_argument("--from", dest="pack", required=True)
     p.add_argument("--scratch", required=True)
     i = sub.add_parser("install", formatter_class=argparse.RawDescriptionHelpFormatter, description=INSTALL_HELP)
-    i.add_argument("--from", dest="pack", required=True)
+    i.add_argument("--from", dest="pack", default=None)
+    i.add_argument("--ecosystem", choices=("pypi", "npm"), default="pypi",
+                   help="pypi (default): the wheel install below; npm: unpack each verified tarball into a bun install cache")
+    i.add_argument("--pack", dest="npm_pack", default=None, help="npm only: the verified npm pack folder")
+    i.add_argument("--lockfile", default=None, help="npm only: the bun text lockfile the verify check reads the tarballs against")
+    i.add_argument("--receipt-dir", default=None, help="npm only: where the install receipt is written (default <pack>/receipts)")
+    i.add_argument("--by", default=None, help="npm only: the serial that placed the packages (default OPAL_AGENT_SERIAL)")
     i.add_argument("--dry-run", action="store_true", dest="dry_run")
     i.add_argument("--python", metavar="EXE", default=None,
                    help="install with this interpreter's own site and no --user (a fresh venv's python); "
@@ -876,7 +1276,9 @@ def main(argv=None):
     sub.add_parser("selftest-unchecked")
     args = ap.parse_args(argv)
     if args.verb == "verify":
-        res = verify_pack(args.pack)
+        if args.ecosystem == "npm" and not args.lockfile:
+            print("REFUSED: --ecosystem npm needs --lockfile <bun.lock>; a missing lockfile is a refusal, never a skip")
+        res = verify_pack(args.pack, args.ecosystem, args.lockfile)
         print_verify_detail(res)
         print(verify_last_line(res))
         return 0 if res["ok"] else 1
@@ -885,6 +1287,10 @@ def main(argv=None):
         print_prove_last(summ)
         return rc
     if args.verb == "install":
+        if args.ecosystem == "npm":
+            return run_install_npm(args)
+        if args.pack is None:
+            i.error("the following arguments are required: --from")
         form, interp, target_dir, problem = resolve_install_target(args.python, args.target, args.user)
         if problem:
             print(problem)

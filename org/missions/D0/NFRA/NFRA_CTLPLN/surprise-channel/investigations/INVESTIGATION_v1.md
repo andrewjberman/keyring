@@ -13789,3 +13789,393 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (confirm the disarm of W145-S1, W145-S3 and W145-S8 at the merge)."
 }
 ```
+
+## NFRA_CTLPLN-W146-S1 -- The face's consumer list for the ROUND-CLOSE line is partly wrong: three of the four named files print their own graded= fields
+
+```json
+{
+  "id": "NFRA_CTLPLN-W146-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~146",
+  "surfaced_at": "2026-10-16T16:48:45Z",
+  "one_line": "The face's consumer list for the ROUND-CLOSE line is partly wrong: box-sync.sh, safe-merge.sh, seat-gates-dry-pass.py and test_apply_who_and_crossbox.py print their own graded= or ungraded= fields and never read the checker's line; .tools/git-hooks/missions-tree-check.sh reads the line and is not on the face's list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/box-sync.sh@ca239c0486 line 118: GRADED_NOTE=\"graded=${n}/...\" is built inside box-sync from its own merge path count, not a read of the ROUND-CLOSE line",
+      ".tools/safe-merge.sh@ca239c0486 line 239: _SM_GRADED is written into its own MERGE-ATTEMPT row, not parsed from the checker",
+      ".tools/seat-gates-dry-pass.py@ca239c0486 line 244: prints SEAT-GATES-DRY ranges=... ungraded=...; no ROUND-CLOSE token in the file",
+      ".tools/git-hooks/missions-tree-check.sh@ca239c0486 lines 105-110: reads the line with case patterns ROUND-CLOSE\\ *verdict=MAY-CLOSE and ROUND-CLOSE\\ *verdict=REFUSED; the new field breaks neither"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "THE LINE HAS CONSUMERS: box-sync.sh, safe-merge.sh, seat-gates-dry-pass.py and the tests test_apply_who_and_crossbox.py, test_round29_grade_of_record.py, test_round19_seat_record.py and test_round_close_and_research.py name ROUND-CLOSE project= or graded=; READ each; a consumer whose regex breaks gets the smallest change in the cell's paths, and a consumer outside them that would break is a BLOCKING row.",
+  "world_is": "Three of the four named files (box-sync.sh, safe-merge.sh, seat-gates-dry-pass.py) do not read the ROUND-CLOSE line: their graded= and ungraded= strings are their own output. test_apply_who_and_crossbox.py names no ROUND-CLOSE token at all (its graded= and ungraded= hits are SEAT-GATES-DRY lines). The consumer outside the list, missions-tree-check.sh, matches the line by a glob with a prefix and a verdict suffix, which the new field does not break. The four tests that read the line pass after the change. No consumer needed a change.",
+  "notes": "Recorded for the issuer's consumer list at the merge. The cell changed no file outside its paths."
+}
+```
+
+## NFRA_CTLPLN-W146-S2 -- The base run of test_round_close_and_research.py read CLOSE-GATES-TEST cases=23/24 ok=False until org/tier0 joined the worktree sparse set
+
+```json
+{
+  "id": "NFRA_CTLPLN-W146-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~146",
+  "surfaced_at": "2026-10-16T16:48:45Z",
+  "one_line": "The worktree sparse checkout omits org/tier0, which the research-owed.py selftest reads through test_round_close_and_research.py; the base run failed one case on a missing file, and the case passed after git sparse-checkout add org/tier0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "base run in worktree wk-NFRA_CTLPLN-146: CLOSE-GATES-TEST cases=23/24 ok=False; the failing case is research-owed.py --selftest, which reads org/tier0/STAKES_MATRIX.md (error: No such file or directory); scratch record .scratch/base/t_rcr.txt",
+      "after git sparse-checkout add org/tier0 (worktree sparse list now holds .tools, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards, infra/logic/registry, org/tier0): CLOSE-GATES-TEST cases=24/24 ok=True; scratch record .scratch/base/t_rcr2.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A neighbouring suite named by the face runs green at the base of the cell, and a worker's sparse checkout holds the folders a named suite reads (a missing folder is added with git sparse-checkout add and named in the report).",
+  "world_is": "The base run of test_round_close_and_research.py failed one case because org/tier0 was outside the worktree's sparse set; the case reads a file the round-close tool does not touch. The defect is the sparse set of the worktree, not round-close-check.py. The folder was added and the suite then read 24/24 ok=True.",
+  "notes": "Recorded because the worktree cut by wk-provision.sh does not hold org/tier0, which a neighbouring suite reads. Decision owner: the issuer 2.0.0_SA_COO~C, for whether the provision set should carry org/tier0."
+}
+```
+
+## NFRA_CTLPLN-W146-S3 -- not_met= under --loose-grades reads the verdict word of the grade of record with the strict readings, which the loose test does not read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W146-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~146",
+  "surfaced_at": "2026-10-16T16:48:45Z",
+  "one_line": "The face asked not_met= to use the SAME verdict reading the checker already applies and no new reading of prose; under --loose-grades that checker reads no verdict word for a fenced row, so the reading is applied to the grade of record for not_met= only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/round-close-check.py@b1f11f01dd grade_criterion: the record's word is structured_grade(...) or verdict_after(...), the two readings the strict candidate test uses (the function body after the candidate loop)",
+      ".tools/round-close-check.py@b1f11f01dd --loose-grades (argparse line): a fenced row grades by any mention of the criterion, and the report prints LOOSE-GRADES IN USE; the JUDGMENT lines carry no verdict for such a row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "not_met=<n> counts the criteria that read GRADED whose grade of record reads NOT MET, using the SAME reading the checker already applies to the grade of record; add no new reading of prose. It changes no verdict.",
+  "world_is": "Under the default strict grades the word is the one the candidate test already reads. Under --loose-grades a fenced row can grade by a bare mention that the checker records with no verdict, so the same two functions are applied to the record for not_met= only: a loose run can count a NOT MET verdict that the loose grade test itself did not read. The JUDGMENT lines, graded, ungraded, self_graded and the verdict are unchanged.",
+  "notes": "Ruling wanted: whether not_met= under --loose-grades should read nothing (0 by construction) instead of the strict reading. Decision owner: the issuer 2.0.0_SA_COO~C with the CTO."
+}
+```
+
+## NFRA_CTLPLN-D2-S7 -- round-close-check scopes a workstream round by the orders it can see: IRPT_ANLREQ TICKET round 4 reads MAY-CLOSE with its two tier-2 seat orders counted 'not complete and outside the verdict' and judgment=0, while the CVO's ADJUDICATION_v25 grade of AR33-v-AC4J is not counted; the CTO reports the gate also refused the round on another workstream's AR200-y-AC2J.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-16T18:15:00Z",
+  "class": "OBSERVATION",
+  "id": "NFRA_CTLPLN-D2-S7",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "round-close-check scopes a workstream round by the orders it can see: IRPT_ANLREQ TICKET round 4 reads MAY-CLOSE with its two tier-2 seat orders counted 'not complete and outside the verdict' and judgment=0, while the CVO's ADJUDICATION_v25 grade of AR33-v-AC4J is not counted; the CTO reports the gate also refused the round on another workstream's AR200-y-AC2J.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project IRPT_ANLREQ --round 4 --workstream TICKET read 2026-10-16 ~17:5xZ by the issuer: 'ORDERS scope round=4 workstream=TICKET: 2 order(s), 0 complete, 2 not complete and outside the verdict (TO-RUN-AR-v32, TO-RUN-AR-v33)'; 'SEAT-FOLDER orders counted: 2'; 'ROUND-CLOSE ... orders=2 judgment=0 graded=0 not_met=0 ungraded=0 self_graded=0 verdict=MAY-CLOSE'",
+      "the CVO graded AR33-v-AC4J in ADJUDICATION_v25 @6408f97626 (FAIL overall, unproven, not refuted), which the check does not count (judgment=0)",
+      "the CTO's round-4 analysis org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_TICKET_ROUND_4_20261016.md ruling 2: the gate refused round 4 for another workstream's AR200-y-AC2J and cannot see the tier-2 AR-v-33 order (the same class as row NFRA_CTLPLN-D2-S6); the issuer did NOT reproduce the AR200 refusal (the run above reads MAY-CLOSE)"
+    ]
+  },
+  "spec_asserts": "round-close-check grades a round of a workstream by the judgment criteria of that workstream's orders for that round (CLAUDE.md rule 27, L9: a judgment criterion is graded by the CVO and the round closes on it).",
+  "world_is": "For a workstream whose round runs its orders in a Tier-2 applier's own folder (org/tier2_senior/<seat>/task_orders), the check lists them as 'seat-folder orders', counts them 'not complete and outside the verdict' until the issuer flips their status, and sees judgment=0, so MAY-CLOSE is printed before any judgment of the round is counted (the round-3 sitting printed MAY-CLOSE on a FAIL for the same family of reason, row NFRA_CTLPLN-D2-S6). The CTO's rule stands: the round is graded by the CVO's verdict, not the gate."
+}
+```
+
+## NFRA_CTLPLN-W147-S1 -- the ruled npm fetch set reads no publish time, so check 4 (release age) cannot read its facts
+
+```json
+{
+  "id": "NFRA_CTLPLN-W147-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~147",
+  "surfaced_at": "2026-10-16T18:27:49Z",
+  "one_line": "Check 4 (release age and earlier releases) has no source under the ruled npm fetch set: the version document carries no publish time and no release count, so the limb records check 4 failed with that reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO: name the release-age source for npm (a ruling on the packument or a time field), or rule that a per-file WAIVE check 4 line is the accepted state, before the next cell signs its batch",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@488f3fb25c check_4_npm: the failed reason names the version-document-only fetch",
+      "org/devices/intake/intake_fetch.py@488f3fb25c Fetch.run_npm: requests <base>/<name>/<version> then dist.tarball only; the record's project is None",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_INTAKE_NPM_TARBALL_LIMB_FOR_DELL1_BUN_20261016.md@0c771fe5fb item 2 (Fetch: only the version document, then dist.tarball)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Checks 1-8 run in npm mode in each existing check's place, with the same record shape and verdict vocabulary (CTO ruling 2026-10-16, Ruling item 3).",
+  "world_is": "The ruled fetch set reads only the version document and its dist.tarball; the publish time and release count that check 4 reads are not in that set. check_4_npm therefore reads failed, and a WAIVE check 4 line is the only way a tarball releases today.",
+  "notes": "Measured at the cell's tests: test_intake_npm.py arm a releases both packages only with a WAIVE check 4 line. Decision owner: 1.0.0_SA_CTO."
+}
+```
+
+## NFRA_CTLPLN-W147-S2 -- check 3 (already on this machine) is a Python site-packages read, not in the wheel-only list the ruling named
+
+```json
+{
+  "id": "NFRA_CTLPLN-W147-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~147",
+  "surfaced_at": "2026-10-16T18:27:49Z",
+  "one_line": "The ruling names platform tags, the .py byte compare and RECORD as the wheel-only checks that are not_applicable in npm mode; check 3 is not in that list, and the limb makes it not_applicable as well.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@488f3fb25c check_3_npm: returns not_applicable with the reason that no npm package is installed into the Python site-packages",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_INTAKE_NPM_TARBALL_LIMB_FOR_DELL1_BUN_20261016.md@0c771fe5fb item 3 (the wheel-only checks named there)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The wheel-only checks (platform tags, .py byte compare, RECORD) are not_applicable with a reason in npm mode; every other check keeps its place (CTO ruling item 3).",
+  "world_is": "Check 3 measures whether this machine already runs the version, through find_installed over site-packages. Npm packages reach no site-packages here, so the limb reads not_applicable for it, which the ruling did not name."
+}
+```
+
+## NFRA_CTLPLN-W147-S3 -- the sparse worktree omitted the CTO deliverables, docs/briefs and the surprise schema folders the tests and the gate read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W147-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~147",
+  "surfaced_at": "2026-10-16T18:27:49Z",
+  "one_line": "The base run of test_intake_check.py read 58/60 ok=False until org/tier1_exec/1.0.0_SA_CTO/deliverables and docs/briefs were added to the sparse checkout; the surprise schema folder was also absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_check.py@b003101721 line 913: assert REAL_SIGNATURE.is_file() and REAL_APPROVAL.is_file(), 'the two CTO files must be in this tree'",
+      "org/devices/intake/test_intake_check.py@b003101721 line 29: BRIEF = REPO_ROOT / docs/briefs/nfra-ctlpln-package-intake-and-download-tiers-brief-20261007.md (FileNotFoundError at base)",
+      "worktree sparse-checkout list at the cut (.tools, docs/briefs added, org/tier1_exec/1.0.0_SA_CTO/deliverables added, org/surprise_channel added)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTcc1-AC3 base control: INTAKE-CHECK-TEST cases=60/60 skipped=0 ok=True, on a worktree that holds the paths the task order names.",
+  "world_is": "The cut's sparse checkout omitted two folders the test reads. Base read cases=58/60 ok=False (two cases: the CTO files and the brief); after git sparse-checkout add of the two folders the base read cases=60/60 ok=True. The surprise schema folder was added for the same reason."
+}
+```
+
+## NFRA_CTLPLN-W147-S4 -- refusals whose file name does not validate all write one shared record, invalid_request.whl.fetch.json
+
+```json
+{
+  "id": "NFRA_CTLPLN-W147-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~147",
+  "surfaced_at": "2026-10-16T18:27:49Z",
+  "one_line": "A fetch refused before its held file name is known writes its record to invalid_request.whl.fetch.json, so each such refusal replaces the one before it; the npm limb now names the held file first, which leaves the shared name for invalid names only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_fetch.py@488f3fb25c write_record: base = (requested file_name or 'invalid_request.whl') + '.fetch'; a non-held prior record is overwritten",
+      "worker run at the cell: two refusals against one records folder left one file, invalid_request.whl.fetch.json (requested file_name None for the second)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A refusal writes its record beside the file it concerns (<file name>.fetch.json), so the audit trail of one refusal is not lost to another.",
+  "world_is": "The shared name is used whenever no valid file name is known, PyPI and npm alike; a later refusal of that kind replaces the record of an earlier one. The PyPI behaviour is unchanged by this cell."
+}
+```
+
+## NFRA_CTLPLN-W148-S1 -- the cut's sparse checkout omitted the precheck folder, the CTO and MSTR deliverables and docs/briefs; the base test_intake_check.py read 59/60 ok=False until docs/briefs was added
+
+```json
+{
+  "id": "NFRA_CTLPLN-W148-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~148",
+  "surfaced_at": "2026-10-16T19:31:04Z",
+  "one_line": "The worktree's sparse set omitted infra/aws/ec2/opal-gateway/ops (the precheck script the order names), org/tier0_exec/0.0.0_AB_MSTR/deliverables, org/tier1_exec/1.0.0_SA_CTO/deliverables and docs/briefs; the base run of test_intake_check.py read 59/60 ok=False (FileNotFoundError on the brief) until docs/briefs was added, and the other two folders were added before the reads that named them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at the cut (worktree ctlpln-148, HEAD dd4ee9a041): .tools, infra/logic/registry, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards",
+      "org/devices/intake/test_intake_check.py@dd4ee9a041 line 1038 (case_constants_appear_verbatim_in_the_brief): FileNotFoundError on docs/briefs/nfra-ctlpln-package-intake-and-download-tiers-brief-20261007.md; after git sparse-checkout add docs/briefs the same suite read INTAKE-CHECK-TEST cases=60/60 skipped=0 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worktree holds .tools, lib, the project folder, org/modules/graph, org/devices, infra/logic/registry, org/standards and the paths of the order; a worker that finds a folder missing adds it with git sparse-checkout add and names it in the report (the face's read-first and the W137-S1 rule).",
+  "world_is": "Four folders the face names as read first, or that a base test reads, were outside that set. Each was added before the read that needed it and named in the worker's report. The class is the one row NFRA_CTLPLN-W147-S3 records; this row is the recurrence on a new cut, not a new mechanism."
+}
+```
+
+## NFRA_CTLPLN-W148-S2 -- the dell1 answer the order names is in no commit and no ref; the worktree cannot read it, so the worker read the untracked copy in the base checkout
+
+```json
+{
+  "id": "NFRA_CTLPLN-W148-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~148",
+  "surfaced_at": "2026-10-16T19:31:04Z",
+  "one_line": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL1_BUN_CACHE_DETAILS_ANSWER_20261016.md, the answer the face names as its read, is an untracked file in the base checkout only; the worker read the base copy (read only) and cites it as such.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files in the worktree (HEAD dd4ee9a041) for the path: 0 rows; git log --all --oneline for the path: 0 commits",
+      "git status --short of the base checkout (C:/Users/AndrewBerman/Desktop/ajb_workspace) for the path: '?? org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL1_BUN_CACHE_DETAILS_ANSWER_20261016.md'",
+      "the tracked dell1 answer org/tier1_exec/1.0.0_SA_CTO/deliverables/XB_333B_ANSWER_DELL1_BUN_CACHE_LAYOUT_20261016.md@dd4ee9a041 carries the layout and the delivery facts the build follows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The dell1 bun cache facts are at org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL1_BUN_CACHE_DETAILS_ANSWER_20261016.md and are read from the worktree.",
+  "world_is": "The file is not in any commit, so no worktree can read it. The tracked dell1 answer (XB_333B) carries the same layout facts and the delivery method; the build follows it, and the untracked relay is cited only as the MSTR's record. Whether the relay is committed is for its owner, not for this worker."
+}
+```
+
+## NFRA_CTLPLN-W148-S3 -- the order's install signature has no --lockfile, but its first step (verify) requires one for npm; the install takes --lockfile too, and --from is no longer argparse-required
+
+```json
+{
+  "id": "NFRA_CTLPLN-W148-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~148",
+  "surfaced_at": "2026-10-16T19:31:04Z",
+  "one_line": "The install signature in the order lists --pack and --target but no --lockfile, while the order's first step, the pack verification, needs a lockfile for npm; the npm install therefore requires --lockfile and refuses without it, and install's --from is checked by hand so that --pack can stand for npm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_receive.py verify branch (verify --ecosystem npm without --lockfile prints REFUSED): the verify check requires the lockfile, so the install that runs it must carry one",
+      "org/devices/intake/intake_receive.py@dafbdd0356 run_install_npm: refuses without --pack, --lockfile or --target, and with --dry-run, --python or --user",
+      "org/devices/intake/test_intake_receive.py@dafbdd0356 36/36 ok=True: the pypi install branch is unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "intake_receive.py install --ecosystem npm --pack <pack dir> --target <bun cache dir> [--by <serial>], and --ecosystem pypi is byte-identical to today.",
+  "world_is": "--target is pip's NEW folder on the pypi path and the bun cache on the npm path, so the npm branch is routed before the pypi logic. The pypi tests are unchanged and green; the argparse usage text of install now lists the npm options and the --from error is printed by the same parser."
+}
+```
+
+## NFRA_CTLPLN-W148-S4 -- the precheck's total counts only the lock entries this host installs, while the install's present counts every tarball in the pack; the two denominators agree only when every packed tarball is one this host installs
+
+```json
+{
+  "id": "NFRA_CTLPLN-W148-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~148",
+  "surfaced_at": "2026-10-16T19:31:04Z",
+  "one_line": "The precheck skips lock entries whose os or cpu excludes the host, so its <total> is host-filtered; the install places every verified tarball and reports present=<p>/<k> over the pack. A pack holding a host-restricted package reads a different denominator from the precheck on the same cache.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/ops/bun_cache_precheck.py@dd4ee9a041 lock_entries (lines 62-84): an entry whose os or cpu excludes the host is not counted",
+      "org/devices/intake/intake_receive.py@dafbdd0356 install_npm: present is the count of the packed tarballs whose folder the precheck's per-package state reads ok; no host filter",
+      "org/devices/intake/test_intake_npm_install.py@dafbdd0356 arm f: 3 of 3 on a pack with no os or cpu restriction, so the arms do not exercise this difference"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The install's present=<p>/<k> and the precheck's <present> of <total> agree on the same cache, and dell1's batch reads 77 of 77.",
+  "world_is": "The two agree only when every packed tarball is one this host installs. The install does not filter by host, so a batch that carries a host-restricted package (the lockfile of a vite project names every platform's binaries) makes k larger than the precheck's total on that host. The receipt of the batch should be read from the precheck, not from the install's last line alone."
+}
+```
+
+## NFRA_CTLPLN-W148-S5 -- a packument with a publish time old enough for check 4 moved four npm arms of test_intake_npm.py from released-with-waiver to checked; the order allowed the fixture to change only as far as serving a packument
+
+```json
+{
+  "id": "NFRA_CTLPLN-W148-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~148",
+  "surfaced_at": "2026-10-16T19:31:04Z",
+  "one_line": "Serving the fixture's packument with an old time[version] makes check 4 pass for real, so the arms that asserted the waiver path (a, h, i, k) changed their expectations to check 4 passed with no WAIVE line; the order's 'change it only as far as that' was followed for the registry and these expectations followed from it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_npm.py@2358938a32 Env.publish: the packument at /<name> with time[<version>] = PUBLISHED_TIME (2024-03-01) and three earlier releases",
+      "org/devices/intake/test_intake_npm.py@2358938a32 signed_lines default waive=() and arms a, i, k verdict expectations; the suite reads INTAKE-NPM arms=13/13 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "test_intake_npm.py may need its fixture registry to serve a packument: change it only as far as that, and its 13 arms stay green.",
+  "world_is": "The 13 arms stay green, but four of them now assert a passing check 4 where they asserted a waiver. A too-new fixture time would have kept the waiver path and asserted a false publish-time story, so the old time was chosen; the choice is recorded for the issuer's review."
+}
+```
+
+## NFRA_CTLPLN-S9136 -- seat-liveness places a lane on the wrong box from the shared spawn log
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9136",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-16T20:42Z",
+  "one_line": "seat-liveness.py on the laptop placed MDPF_DEMQUE.TO-DQ-t34's holder 0.7.0_AE_CloudOps~ZQ on dell1 from the shared repo's spawn log, while dell1 and sitez both read no live holder; a spawn-log row is read as a seat.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier0_exec/0.0.0_AB_MSTR/deliverables/FINDING_TO_DQ_t34_NO_LIVE_HOLDER_20261016.md (laptop row: seat-liveness.py reads the order as placed on dell1; dell1's manager: it reads the shared spawn log, not a seat)",
+      "dell1 manager bus 6ce39226: no claude.exe for the serial, no spawn marker, broker NOT REGISTERED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat-liveness read answers whether a seat is live on a box.",
+  "world_is": "For a lane spawned on one box and logged in the shared repo, the laptop read names another box as the holder; the box placement comes from a shared log row, not from that box's process or broker registration.",
+  "notes": "Owner of the fix: NFRA_CTLPLN's issuer (2.0.0_SA_COO~C) at its next cut; the order itself is ruled in CTO_RULING_TO_DQ_T34_OWNER_AND_BOX_20261016.md."
+}
+```
+
+## NFRA_CTLPLN-W149-S1 -- five @types tarballs keep package.json under their own folder, so check 2 fails them
+
+```json
+{
+  "id": "NFRA_CTLPLN-W149-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~149",
+  "surfaced_at": "2026-10-16T21:15:59Z",
+  "one_line": "Five of the 50 npm tarballs (the @types/* DefinitelyTyped packages) carry package.json under a top-level folder named for the package, not package/, so check 2 fails each of them and their check records cannot read checked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@f418537712 check_2_npm (line 1263): package/package.json is the path it reads; absent reads failed",
+      "org/devices/intake/records/intake-20261016-npm-mcportal-bun/types__bun-1.4.2.tgz.check.json@fb5373cc12 check 2 evidence: package/package.json is absent or unreadable (absent); check 1 passed",
+      "in-memory member listing (names only, no extraction) of the five held tarballs: bun/package.json, estree/package.json, 'node v24.13/package.json', react-dom/package.json, react/package.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An npm tarball's package.json sits at package/package.json, the top-level folder npm packs, so check 2 can read the name and version it must match (APPROVAL_AND_SIGNED_FILE_DEMANDS.md section 1a; intake_check.py check_2_npm).",
+  "world_is": "45 of the 50 tarballs carry package/package.json and pass check 2. Five carry it under their own folder: bun/, estree/, 'node v24.13/', react-dom/, react/. check 2 reads absent for each and fails it; check 2 is never waivable, so those five cannot reach checked on this batch. Nothing was waived, repaired or re-run; the five are findings for the CTO (NPM_BATCH_FACTS.md, failed-checks section)."
+}
+```

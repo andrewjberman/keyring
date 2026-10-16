@@ -13,3 +13,4 @@ Holding root: `<workspace drive>/opal-intake/`, outside every git tree. `OPAL_IN
 
 `intake_fetch.py` against the public index refuses unless `--approved-by <file>` names an existing file containing the exact `name==version`; it makes no request on a refusal. `--index-base` is for a loopback test index. A release's `release_count` counts versions that carry at least one file.
 The approval-file line and the signed check-8 file, with what the tools demand of each: `APPROVAL_AND_SIGNED_FILE_DEMANDS.md` (this folder).
+The npm tarball limb (`--ecosystem npm` on `intake_fetch.py fetch`, `intake_check.py check|release|pack`, `intake_receive.py verify`; `--lockfile <bun.lock>`, `--registry-base` for loopback only) takes `name@version` lines and held `.tgz` files named per `APPROVAL_AND_SIGNED_FILE_DEMANDS.md` section 1a; its proof is `test_intake_npm.py` (a loopback registry). Placement into a receiving cache is not part of this route yet.

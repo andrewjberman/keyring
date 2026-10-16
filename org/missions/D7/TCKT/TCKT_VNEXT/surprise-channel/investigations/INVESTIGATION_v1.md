@@ -2972,3 +2972,56 @@ used as fixtures is a different read with a different denominator.
  "notes": "Decision for the issuer, one of: (a) amend the check to exclude the string-valued service row and re-run it (the release will still refuse that row with 403 malformed, which matters only if that service identity calls the ticket service); (b) a separate pair to rewrite that row's allowedFirmIds as a list or add the marker after removing the string (CTO half needed); (c) rule the row out of scope in the release pair. The applier decides none of them. Key is the first 12 hex of sha256(PK): 7 of the 23 internal PKs embed an address, so no raw key is recorded."
 }
 ```
+```json
+{
+ "id": "TCKT_VNEXT-D2-S56",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+ "surfaced_at": "2026-10-16T18:45:00Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~V2 (rules the method; lifting the hide is a portal change on Andrew's word through the CTO, not this seat's)",
+ "one_line": "TO-R18-RUN STEP 3 cannot be run as the pair writes it: the Ticket Center's New Ticket type select does not offer Trade Request on portal DEV (the hide of 4d601023 is still in the committed code), so no browser click can choose it, and the pair forbids any call replacing a click.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git show origin/DEV:src/pages/TicketCenter/TicketCenter.tsx (origin/DEV fcbf2bcecb, tree clean): line 730 `Object.entries(TICKET_TYPE_LABELS).filter(([v]) => v !== 'trade_request').map(...)` fills the New Ticket select; lines 728-729 carry the comment 'Andrew-direct 2026-10-13 ~18:5xZ: Trade Request is not offered until it has a working channel (NFRA_OPSWKF); the form and its labels stay'",
+   "git log -S: the filter was added by 4d601023 (2026-10-13 14:56 -0400, 1.0.0_SA_CTO~DELL2, 'hide(TicketCenter): Trade Request is not offered in the new-ticket type list until it has a working channel')",
+   "git show --stat c05e3dda and 12c164a0 (the two candidates, both ancestors of origin/DEV): each edits TicketCenter.tsx (6 and 23 lines) and neither removes the filter; line 742 mounts TradeRequestForm only when newType === 'trade_request', which the select can no longer produce",
+   "nothing was minted, written or opened by this seat: no ledger, no identity row, no token, no dev server"
+  ]
+ },
+ "spec_asserts": "R18_RUN_PAIR.md section 3 step 3 and the order's STEP 3: in a browser on portal DEV, signed in as the filer, choose New Ticket, Trade Request, the firm cottonwood, choose the placeholder PDF, submit; the page makes the three calls and no call replaces a click.",
+ "world_is": "On the DEV checkout the select offers every ticket type except Trade Request, so the Trade Request form cannot be reached by a click; FWD-11 (the meeting request and the coordinator's confirm) is reachable and unaffected.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Options for the issuer and CTO, none taken by the applier: (a) lift the hide on DEV (a portal candidate and an Andrew word, since the hide was Andrew-direct) and re-measure the start gate; (b) amend the pair to run FWD-11 alone now and FWD-10 after (a); (c) run FWD-10 from a scratch copy of the DEV checkout with the one filter line removed (a modified build, not DEV; the CTO's call). The order says do not retry with a changed method, so I hold at the start gate."
+}
+```
+
+## TCKT_VNEXT-D2-S57 -- A meeting ticket's outcome line is drawn only while the ticket is not completed, so once a meeting_request completes the Ticket Center shows no confirmed or rescheduled outcome anywhere (FWD-11 ACCEPT: the filer reads the outcome on the ticket).
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-16T21:15:00Z",
+  "class": "OBSERVATION",
+  "id": "TCKT_VNEXT-D2-S57",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "A meeting ticket's outcome line is drawn only while the ticket is not completed, so once a meeting_request completes the Ticket Center shows no confirmed or rescheduled outcome anywhere (FWD-11 ACCEPT: the filer reads the outcome on the ticket).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal origin/DEV src/pages/TicketCenter/TicketCenter.tsx lines 909-915: {t.ticket_type === 'meeting_request' && t.status !== 'completed' && (<tr>...<MeetingOutcomeLine ticket={t} />...)}: the only mount of MeetingOutcomeLine on the board",
+      "portal origin/DEV src/pages/TicketCenter/MeetingRequestParts.tsx lines 219-222: MeetingOutcomeLine reads ticket.meeting and draws outcomeLineWords(ticket.meeting)",
+      "the CVO's ADJUDICATION_v8 (3.0.0_SA_CVO~DELL2, 21:05Z), section FWD-11: 'The filer sees the outcome on the same ticket: NOT EXERCISED'; the source note that MeetingOutcomeLine shows only while status !== 'completed'",
+      "TCK-20261016-9d7654eb: the part-1 meeting ticket was confirmed 19:24Z and COMPLETED 20:2xZ by the issuer's part 1b (to exercise the pickup notice), which is the state in which no outcome line is drawn"
+    ]
+  },
+  "spec_asserts": "TCKT_VNEXT PRD v0.6 FWD-11 ACCEPT: the filer reads confirmed or rescheduled on the ticket.",
+  "world_is": "The board's meeting block is mounted only for tickets whose status is not completed. A meeting_request that a coordinator confirmed and staff then completed shows its outcome on neither the open/in-progress tabs (it has left them) nor the Completed tab (the block is not mounted there). The data is stored (ticket.meeting.status, .time, .by); only the page omits it. Not yet decided whether completing a meeting ticket is the normal end of its life or whether the outcome must stay readable after it; that is the CTO's reading of FWD-11 for the round-N analysis."
+}
+```

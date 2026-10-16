@@ -9,5 +9,5 @@
  "name": "The first migration: three legacy firm buckets (opal-data-bd, -inf, -cot) into the spelled-out firm buckets under the ruled key string, each firm cut over so its users cannot tell, and each legacy bucket retired only on a proven quiet window",
  "generated_from": "org/missions/D8/ADVI/ADVI_FIRMBKTS/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-11T12:13:44Z"
+ "generated_at": "2026-10-16T17:54:04Z"
 }

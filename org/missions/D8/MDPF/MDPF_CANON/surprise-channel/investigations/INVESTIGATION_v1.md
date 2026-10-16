@@ -2792,3 +2792,29 @@
   "notes": "Remedy: AMENDMENT 2 of MDPF_CANON.TO-CN-s-3 reopens the order (cottonwoodTrend.ts only, reads through readFirmAggregateSeries / readModelSeries; AC3 added: the guard). The amendment is the issuer's own order edit, graded by no gate limb (GATE (viii) placeholders: NONE); the CTO reads it at the round-N analysis. The landing candidate waits on it; CN-s-4's candidate is unaffected."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S32",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-16T16:33:03Z",
+  "one_line": "D4 of the CN-s-1 deploy (gold function at pin 66ae82d62d) shows the Global headline moving: opal_aggregate_aua, aum-metrics total/aum and non_model_assets_detail enterprise_total rise 63.47M on 2026-10-15 (and by the account's value on the 6 other dates 10-07..10-14), where the signed pair predicted opal_aggregate_aua equal and the CTO half says headline totals cannot move.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps~DELL1 (runs the order's section 4 rollback on D4-STOP, sent 16:32Z; disarmed when CodeSha256 reads vNRXwWymIRmgptYv8+PEyFWH73IpIVHOpdT5mL/B7uk= and MDPF_GOLD_COMMIT reads b6352de8f843f3726ad5c51c650d9035ca8336db; it must be before the 2026-10-17 13:30Z fire)",
+  "spec_asserts": "Pair section 1 (COO half, sha256 e6b2ea36ad5e): Global model_aua rises and non_model_aua falls by the account's value on the same 7 dates, opal_aggregate_aua equal. CTO half condition 1: a leaf outside section 1's set, a move before 2026-10-07 or an errors entry stops the deploy; 'Cannot move: partner_custody_total, the headline totals'.",
+  "world_is": "MEASURED from the saved D4 response (qa_local + qa_return_bodies, 16 bodies, 2,031,968 B, sha256 30d39b04...bdf89; the dry run wrote nothing) against the 16 saved baselines, by checks/diff_d4.py plus a probe printing aggregates only. Cottonwood behaves as predicted: model_aua +X and non_model_aua -X on the seven dates 2026-10-07..10-15, partner_custody_total delta 0.0 on all seven. GLOBAL does not: non_model_aua is UNCHANGED (not in the diff), while model_aua, opal_aggregate_aua and base_excluding_tax_aua each rise by the same X on the seven dates (X = 63,473,980.96 on 2026-10-15), by_model.other_models.model_value rises by X (no new Global by_model key), account_count_total +1 on the seven dates, and Global aum-metrics total/aum and total/model_aum rise 2,174,027,397.88 -> 2,237,501,378.84 (+X, with q0..q3 change and growth and fee_basis_components.cottonwood following) and non_model_assets_detail.latest enterprise_total +X with non_model_aum unchanged (the account is added to the model side and not removed from the non-model side of Global). No dated leaf before 2026-10-07 moved: the one BEFORE flag of diff_d4.py is registered_custom_models.keys, an unordered key list (a key inserted, not a dated cell). Also outside the predicted set, not a headline: the four non-Global scopes' category-views Custom group gains one member (an unserved registry row), at 49financial and inflection too. NOT read: whether the account is counted in Global's non-model source (the double count would then be real); the Global fold's rule for opal_aggregate_aua.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/_deploy_artifacts/canon_r11_muni/d4_response.json sha256 30d39b0410324d4fbe13493c262b240fc327a463c7ac40029e469e5d4c2bdf89 (outside the repo; client-scale bytes)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round11/checks/diff_d4.py (tested on four controls)",
+      "org/missions/D8/MDPF/MDPF_CANON/ledger/NEVER_WIDEN_R11_CN_S_1_CTO_HALF.md lines 20-22 and 47"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Issuer's D4-STOP sent to 0.7.0_AE_CloudOps~DELL1 at 16:32Z (the rollback is the order's section 4). The fix is a producer or fold change or a new CTO ruling that accepts the Global headline moving; it is the CTO's (a leaf outside the signed set, SERVED work). Window: D2 and D4 by 12:44Z on 2026-10-17; the fire at 13:30Z then runs the round-10 bytes unless a ruling lands."
+}
+```

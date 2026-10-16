@@ -41250,3 +41250,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S226",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-16T18:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-615 as first cut could not have worked: the ordered transient user (role user, test-filer, opal-capital, no advisor id) classifies UNKNOWN on every Investor Reporting route, and the page route needs role admin plus userType Dev; the drive was re-cut to one direct invoke with admin/49financial claims (CTO ruling B) and the export reached READY.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/resolve.py:284-296 classify_principal: only role admin with a verified firm gives FIRM_OPERATIONS, or an advisorId gives FIRM_ADVISOR; role user with neither falls to UNKNOWN (nothing granted)",
+      "portal/src/components/ProtectedRoute.tsx:118-120 and App.tsx:462: /investor-reporting needs role admin, firm opal-capital and userType Dev",
+      "preflight of the repo's own resolve.py on the synthetic headers printed class=FIRM_OPERATIONS; IB246-1_export_drive_record.json: old receipt READY, one creating invoke QUEUED, then READY, store 1 to 2 receipts, both PASSED with 0 failures"
+    ]
+  },
+  "spec_asserts": "XA-20261016T160537Z-f98b and the first cut of TO-IB-pr-615: a staff-only transient row (role user, no firm entitlement row) can read a receipt and request an export through the portal route.",
+  "world_is": "Such a row is refused as UNKNOWN before any export logic runs, so a refusal there would have read as a defect in the IB-pr-521 release. The authorizer was not exercised by the final drive; the function was proven by direct invoke only.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S227 -- IB-pr-615's record counts 4 irpt-export-render invocations; CloudWatch reads 5. The fifth is the function's ow
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S227",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-16T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "IB-pr-615's record counts 4 irpt-export-render invocations; CloudWatch reads 5. The fifth is the function's own async worker, started by the one creating invoke; it is not a seat's act and not another export.",
+  "spec_asserts": "IB-pr-615 (CTO ruling B, msg 9743): ONE direct creating invoke plus read-only status invokes; the record lists 1 creating invoke and 3 status reads.",
+  "world_is": "Measured by me 2026-10-16 ~19:1xZ from the log group /aws/lambda/irpt-export-render, 18:45:19Z to 18:46:30Z, five START lines (CloudWatch AWS/Lambda Invocations 5, Errors 0 for 18:00Z to 19:05Z). In order: (1) 18:45:19 request d91046b2: irpt_export_read_admitted for the pre-existing receipt (the old-receipt read); (2) 18:45:41 request c24ec598: irpt_export_accepted, revision exr_b6096ea0.., 6.4 s (the ONE creating invoke); (3) 18:45:48 request 8339f37c: irpt_export_async for the NEW export id and the same revision exr_b6096ea0.., 2.6 s (the function's own asynchronous worker, started by (2); not in the record because no seat invoked it); (4) 18:46:09 request ebac55ab: a status read, no log line; (5) 18:46:30 request 1ed970d6: irpt_export_read_admitted for the new export id (the final READY read). So the seat made 4 invokes (1 creating, 3 status reads, as recorded) and the function made 1. The store shows one new export, as IB2 reports. Counts only; no account id is quoted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events /aws/lambda/irpt-export-render 18:45:19Z to 18:46:30Z (read by 2.0.0_SA_COO~P2): five START/REPORT blocks, the irpt_export_async line carrying the new export id",
+      "aws cloudwatch get-metric-statistics AWS/Lambda Invocations 5 Errors 0, 18:00Z to 19:05Z",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~IB2/IB246-1_export_drive_record.json @2a3411249a (creating_invokes 1, status_reads 3)"
+    ]
+  },
+  "notes": "CTO msg 9787 asked for the unlisted invocation by request id, time and source. Future export-drive orders should state that a creating invoke is followed by one async worker invocation of the same function, so a count of 'one invoke' is invokes by the seat, not invocations of the function. Nothing to reopen."
+}
+```
