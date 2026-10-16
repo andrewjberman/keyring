@@ -24083,3 +24083,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "No action in this order. The issuer decides whether the print route should carry the tab's state (a URL or storage read) or stay on the bundle document; the export button's in-page preview is covered."
 }
 ```
+
+## IRPT_DASHBD-D2-W248-S1 -- the checker's --selftest cannot run on an equivalent implementation: its mutant anchors are the reference handler's text
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W248-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~248",
+  "surfaced_at": "2026-10-16T20:04:54Z",
+  "one_line": "The checker p178 --selftest aborts on the first anchor check: it looks for the reference handler's exact text, which this equivalent minting implementation does not carry, so no mutant is ever applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Checker p178 --selftest is green on a reference tree and red on single-fault mutants of its handler (five handler mutants and one diff mutant), per the checker's own usage line.",
+  "world_is": "At commit 96ba8dc8ce the selftest exits rc=1 with 'selftest: the reference lacks the anchor for account_id is left raw', before any mutant is written. The anchor is the issuer's text a[\"account_id\"] = mint[a[\"account_id\"]]; this implementation mints in _filled_mint with minted[entry[\"account_id\"]]. The three criteria DB178-1-AC1, AC2 and AC3 each PASS at this commit. The selftest wrote nothing: infra/ is clean after the run, since the anchor check precedes every write.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p178_filled_reader_mints_ids.py selftest muts dict, the first anchor 'a[\"account_id\"] = mint[a[\"account_id\"]]', run at the worktree rc=1 (2026-10-16 about 20:0x UTC)",
+      "handler.py@96ba8dc8ce _filled_mint: minted[entry[\"account_id\"]] (the anchor text is absent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The criteria the order grades (AC1, AC2, AC3) pass; the selftest is a control the order does not name. The issuer decides whether the checker's anchors follow the minted form. No handler edit was made to fit the anchors."
+}
+```
