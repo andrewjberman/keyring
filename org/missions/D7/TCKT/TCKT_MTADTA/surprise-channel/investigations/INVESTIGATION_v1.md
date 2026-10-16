@@ -731,6 +731,29 @@
     "spec_asserts": "Two scheduled fires land cleanly within the Lambda limit; a fire that cannot finish leaves the work it did.",
     "world_is": "With no cursor the fire lists seven days of blobs and fetches them sequentially before writing bronze or the cursor; the fetch total exceeds 300 s, so a timeout loses everything and each retry starts over. The tenant's unified audit feed holds content for all seven days (so audit logging is on: the earlier unrun check is answered by this read). The fires check counted REPORT lines and greps for errorMessage/Traceback, which a timeout never writes.",
     "notes": "Repair: a time budget with save-as-you-go and parallel fetch (TO-MD-x2 reopened, criterion AC4), timeout 900 in collector.tf, one counts-only log line per fire. The seat then rebuilds the zip and applies the in-place update (TO-MD-r2). Attempts 2 and 3 of fire 1 spent the same 300 s each; the 14:31Z and later scheduled fires fail the same way until the repair lands."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S13",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-16T15:45:50Z",
+    "one_line": "read_day.py (round 1) invoked the door unqualified, so Andrew's FWD-1 day read would have been served nothing: the round-2 door decides from the invoked alias and the members' alias is 'member'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1 (fixed in the same commit)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/m365_metadata/scripts/silver/read_day.py _lambda_invoker at HEAD before the fix: client.invoke(FunctionName=function, Payload=...) with no Qualifier",
+        "infra/aws/lambda/globgrph-trino-access/handler.py _alias(): an unqualified ARN yields no alias and every op is refused",
+        "first_content.py (MD-x-3) already passed Qualifier='member'; the read_day tests injected the invoker and never exercised the real one"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Andrew names one of the eight and a day and reads that person's day through the door (FWD-1).",
+    "world_is": "The round-1 day-read script was written before the door had aliases. Its unit tests inject the invoker, so nothing exercised the real call. Caught by reading the script before sending Andrew to run it.",
+    "notes": "Fixed with Qualifier='member' and a test that stubs boto3 and asserts the qualifier and function name. A live run needs Andrew's MFA session, which no seat has; the first live use is his read."
   }
 ]
 ```

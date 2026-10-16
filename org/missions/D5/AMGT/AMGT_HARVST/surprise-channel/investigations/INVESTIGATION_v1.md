@@ -10002,6 +10002,47 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      ],
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "The hazard is disarmed by the signed Branch G action; the open question (vendor or runner cause) is carried as a named round-88 cell in the L10 slug, not a round-87 act."
+    },
+    {
+        "id": "AMGT_HARVST-D1-W150-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~150",
+        "surfaced_at": "2026-10-16T15:39:22Z",
+        "one_line": "Two paths the order names as reads sit outside the worktree sparse checkout; read via git show HEAD, no worktree change.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Worker face, section 1 and preflight: the producer FIELD_BASIS is read at integrations/bloomberg/research/model_block_pull.py, and the standing rules are read first from .claude/agents/worker-light.md. The provision sparse set (.tools, infra/aws/ec2/opal-gateway, infra/logic/registry, lib, org/devices, org/missions/D5/AMGT/AMGT_HARVST, org/modules/graph, org/ref, org/standards, org/tier1_exec/4.0.0_SA_CRO/scripts) is expected to carry the named paths.",
+        "world_is": "git sparse-checkout list in worktree C:/dev/wk-harvst-150 (HEAD 4516893b3b) does not include integrations/ or .claude/. Both files are tracked at HEAD (integrations/bloomberg/research/model_block_pull.py blob a1312b7755, .claude/agents/worker-light.md blob 1f65ee3c8a). Both were read with git show HEAD:<path>. No file in the worktree was changed to make them readable.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "integrations/bloomberg/research/model_block_pull.py@4516893b3b (FIELD_BASIS lines 364-445, IS_EPS line 389, IS_DIL_EPS_CONT_OPS line 443)",
+                ".claude/agents/worker-light.md@4516893b3b",
+                "git -C C:/dev/wk-harvst-150 sparse-checkout list (sparse set printed at the first act)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-D1-W150-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~150",
+        "surfaced_at": "2026-10-16T15:39:22Z",
+        "one_line": "Standing rules and the task order disagree on who flips the order status to complete; the order's explicit line was followed (status left pending).",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "Worker face line 59: do not edit this order file, the issuer flips its status. Standing worker-light rules: on a PASS, flip the task order status to complete and commit the instance, deliverables and flip together.",
+        "world_is": "The two instructions conflict on the status flip. The face's explicit line governs this worker's act: the order file is not edited and its status stays pending. The issuer's flip is outstanding and is the issuer's to make after the checker verdict.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-1.a-model-figure-carries-its-claim-and-the-continuing-ops-eps-is-not-diluted-eps.md@4516893b3b (worker face line 59)",
+                ".claude/agents/worker-light.md@4516893b3b (the final paragraph of the Proof section)"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
     }
 ]
 ```
