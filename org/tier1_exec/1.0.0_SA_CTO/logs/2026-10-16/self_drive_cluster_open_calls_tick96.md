@@ -20,9 +20,6 @@ arming record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_
   - The site Z delete (`ae72`) was relayed; no receipt yet.
 - NFRA_CTLPLN yfinance Linux batch: nine requests APPROVED and the 17-line approval written (@7d012e8f36). The wheel names
   follow by addendum after COO~C's index read.
-- The `/fideles` Gmail credential was given by Andrew in session. It is NOT stored or committed anywhere, on his word. He was
-  told that it reads as an account password rather than an app password, and asked to create the Secrets Manager secret
-  himself.
 
 ## Calls this tick
 
@@ -30,7 +27,6 @@ No call is unruled. `sitez ae72` waits for site Z's delete receipt and close.
 
 ## Acts only Andrew can do (each with its citation)
 
-- `FIDELES_IMAP_SECRET`: create the secret with a Gmail app password, or name one (his credential).
 - NFRA_TRNSPT S11: the Research series invite through Lauren, or admin consent for fix 2.
 - Sittings, sign-ins and sends: `21d9`, `21c5`, `8ed7`, `f0d2`, `def4`, `a519`, `44eb`, `8f2b`, `c9a4`, `b87f`, `e260`.
 - `dell2 c02c`: postponed.
