@@ -28626,3 +28626,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "A defect of the seat's own cell, found while reading the CVO's rows against the stored documents. Closes when gv-1 merges and the affected names are re-run under a metered run and a new pair, then re-read."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W484-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~484",
+  "surfaced_at": "2026-10-16T09:26:09Z",
+  "one_line": "Write and Edit both decode a backslash-u escape in their text to the character, so the ASCII-only rule for a source file cannot be met by writing the escapes through either tool.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "Section 2 of task order AMGT-gv-1 says the new test module is ASCII-only, non-ASCII characters written as backslash-u escapes, and that the Write tool can render an escape as the character. It names a one-line python check as the test, and no other route to an ASCII file.",
+  "world_is": "The Write tool rendered four escapes of lib/research/aifill/tests/test_gv1_quality.py as the literal characters (lines 127, 128, 141 and 144 at first write). The Edit tool also decoded the escapes in its new_string: an Edit whose new_string held backslash-u escapes was refused as no change because its old_string held the characters. The isascii check then read False. A scratch python rewrite (.scratch/ascii_escape.py, code points written as escapes) made the file ASCII; the module then passed 15 of 15 under pytest.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python isascii check on lib/research/aifill/tests/test_gv1_quality.py printed False; a per-line scan listed non-ASCII on lines 127, 128, 141 and 144",
+      "Edit reported old_string and new_string exactly the same after new_string was written with backslash-u escapes and old_string with the characters",
+      "after python .scratch/ascii_escape.py the isascii check printed True and pytest reported 15 passed in the module"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not a defect in the cell: the order's check caught the problem and the worker repaired the bytes with a scratch script. The order's stated route (the Write tool with escapes) does not keep the escapes, and neither does Edit."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W484-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~484",
+  "surfaced_at": "2026-10-16T09:26:09Z",
+  "one_line": "The sparse worktree C:/dev/wk-resapp-484 lacks org/surprise_channel, so the row schema the surprise-channel rule names cannot be read there until the folder is added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "The worker definition says a surprise row is filed per org/surprise_channel/schemas/investigation_item.schema.json, and the task order's paths block names no schema folder. The sparse set the order's preflight describes covers the aifill folders, infra/logic, org/standards and the project folder.",
+  "world_is": "git sparse-checkout list in C:/dev/wk-resapp-484 returned .tools, infra/logic, lib, org/devices, org/missions/D5/AMGT/AMGT_RESAPP, org/modules/graph, org/ref and org/standards, with no org/surprise_channel. I ran git sparse-checkout add org/surprise_channel to read the schema; that addition is read-only and is not committed. The same missing folder is recorded by the existing sparse checkout hygiene row of this file, for worktree C:/dev/wk-resapp-483.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-resapp-484 printed eight folders and no org/surprise_channel entry",
+      "after git sparse-checkout add org/surprise_channel the file org/surprise_channel/schemas/investigation_item.schema.json printed with its required list (id, surfaced_by, surfaced_at, one_line, class, grounding, disposition)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recurrence in a second worktree of the observation the sparse checkout hygiene row of this file records. Recorded against W484 so the row gate's schema read is not assumed satisfied by this worktree."
+}
+```
