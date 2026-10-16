@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.3.0",
+  "contract_version": "0.3.1",
   "lineage": [
     {
       "contract_version": "0.1.0",
@@ -10,6 +10,11 @@
       "contract_version": "0.2.0",
       "sha256": "2f0cb189ad07bef091269d5db9b36ccf23748c836af0fa7b3791f1df2f9764ea",
       "note": "the bytes of 0.2.0 before the unreported-days fields (series.fields.unreported_trading_days and its basis, and the top-level unreported_days_rule) were added (TO-DB-b-278, round 146); the series section below keeps its required, array_keys and shape unchanged from them"
+    },
+    {
+      "contract_version": "0.3.0",
+      "sha256": "09e98980902dba9f9e0bc21936efd5a1cc482b1f683ea4abb468e8cf6559f4af",
+      "note": "the bytes of 0.3.0 before income_claim, the const mark on unreported_trading_days_basis and calendar_source were added (TO-DB-b-285, round 148); the series section keeps its required, array_keys and shape unchanged from them"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -47,7 +52,8 @@
       "class_weight",
       "class_names",
       "unreported_trading_days",
-      "unreported_trading_days_basis"
+      "unreported_trading_days_basis",
+      "income_claim"
     ],
     "array_keys": [
       "date",
@@ -149,7 +155,16 @@
         "kind": "scalar string",
         "source": "a fixed text",
         "fixed_value": "trading calendar minus present partitions",
+        "const": true,
+        "rule24_note": "rule 24: one value, one intent -- the basis is the fixed text 'trading calendar minus present partitions', so it has one value and no other state exists.",
         "sentence": "The fixed text 'trading calendar minus present partitions': how the list was derived (the trading calendar from `first_data_date` to `as_of`, minus the date partitions present); fixed, never free text, and present exactly when `unreported_trading_days` is."
+      },
+      "income_claim": {
+        "kind": "scalar string",
+        "source": "the source table contract's income_claim column (0.4.4, cell DB-b-284), carried unchanged; that column is declared by that amendment, not by the 0.4.3 source file this contract was cut against",
+        "fixed_value": "absent",
+        "fixed_reason": "SOURCE_REPORTS_NO_INCOME",
+        "sentence": "Present exactly when every income entry is null: the source reports no income for the series, so the claim is absent and says so; a null is never read as zero, filled or carried, and the income array is never summed as zero."
       }
     }
   },
@@ -159,6 +174,12 @@
     "empty": "[] is written when there are none, never omitted",
     "window": "each date is a trading day strictly after `first_data_date`, at or before `as_of`, and not in `date`; the list is strictly increasing",
     "absent_means": "no statement is made: the page says nothing about unreported days and never guesses"
+  },
+  "income_claim_rule": {
+    "present_when": "every income entry of the series is null (the source reports no income for it)",
+    "value": "absent",
+    "reason": "SOURCE_REPORTS_NO_INCOME",
+    "absent_means": "no statement is made about income: the page says nothing about it and never reads it as zero"
   },
   "manifest": {
     "required": [
@@ -172,6 +193,9 @@
       "byte_sizes",
       "built_at",
       "publisher_version"
+    ],
+    "optional": [
+      "calendar_source"
     ],
     "fields": {
       "account_id": {
@@ -203,6 +227,10 @@
       },
       "publisher_version": {
         "sentence": "The version string of the publisher code that wrote the files; never null."
+      },
+      "calendar_source": {
+        "values": ["pandas_market_calendars", "fallback_2010_2027"],
+        "sentence": "Which trading calendar answered the unreported-day derivation: pandas_market_calendars when the library answered, or fallback_2010_2027 when the hardcoded calendar table answered; the fallback is that hardcoded table, never the library. Absent when no derivation ran."
       }
     }
   },
