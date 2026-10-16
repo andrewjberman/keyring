@@ -49,6 +49,19 @@ holding Yahoo knows. YCharts is then asked only about what Yahoo misses, which i
 | Report pricing | The chain is built Yahoo first (`ycharts/research/price_source.py:15`, `CHAIN = ("estate", "yfinance", "ycharts")`), but it is OFF in the resident build | `reports/build_resident_package.py:119`, `"opal_pricing": {"enabled": False, ...}` |
 | Report generation | Builds the portfolio in YCharts by YCharts security id (`ycharts/generate/*`). INFERRED: this is why the door resolves YCharts ids first | not traced to the line |
 
+## Addendum 1 (2026-10-16 ~18:4xZ): the paced read came back 12 of 12 clean
+
+`org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_r34g/PACED_READ.txt` (bb06dae32c): after a 390 s rest, six known
+symbols were looked up 90 s apart, then, after the same rest, six more 5 s apart. All 12 answered 200, with no cutoff in either
+phase. This disproves "4 to 6 LOOKUPS per window" as section 2 wrote it.
+
+It is still consistent with a cutoff counted in CALLS. An unknown symbol costs two `securities_info` calls: the lookup
+(`intake/resolution_broker.py:102`, one call per batch) and the suggestion verify (`intake/upload_suggestions.py:69`). So the
+challenged fifth lookups of SETs 2 and 3 were likely about the 8th or 9th call. INFERRED: the journals do not log verify calls.
+The earlier run was challenged on its 7th call (`runner.py:209-211`). A cutoff of about 7 calls per window fits all three
+reads. `~G2` reads the trigger as unknown symbols instead (msg 9753). The unknown-symbol paced read settles it, provided it logs
+every call, verify calls included (this seat's msg 9758).
+
 **The decision for the CTO.** Is "yfinance first" (1) a door-only reorder, keeping a YCharts id lookup only for holdings
 YCharts must carry? Or (2) Opal pricing switched on, so a holding Yahoo prices never needs a YCharts id? Option (1) alone
 leaves the report needing YCharts ids. Option (2) is the general rule as Andrew stated it. The DONE WHEN of FWD-7 already
