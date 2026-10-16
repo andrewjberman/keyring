@@ -28495,3 +28495,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not fixed in run.py (a Windows-only local --out defect, not in this order's paths). The store-write step must take each document's own security_key field for its address, never the local file name; the never-widen half says so."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S43",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-16T07:04:10Z",
+  "one_line": "The UI walker account (opal-ui-walker@opal.test, role admin) read ARMED for 368 minutes under holder Andrew:42584:722c96eb, a walk that did not disarm; the issuer disarmed it at 07:00:57Z under the skill's stale-lease protocol and proved the login refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ui-walk SKILL.md: the account is dormant at rest; a walker disarms itself in a finally block; if a walk dies mid-run, `status` reads status=active and `disarm <armedBy from status>` follows at once; a lease over 60 minutes is stale.",
+  "world_is": "At 2026-10-16T06:59Z `ui_walker_account.py status` read status=active, armed=yes (367.3 min ago, so armed about 00:52Z), armedBy=Andrew:42584:722c96eb, with the WARN `armed longer than 60 min`. The bn-4 walks of this seat ended at about 00:25Z with `armed=no` read after the last one; no walk of this seat's was running; the holder host name is not this box's (this box is desktop-hk1uu7n). The issuer ran `disarm Andrew:42584:722c96eb` (rc 0): `DISARM: row status=disabled`, `LOGIN WITH THE WALK PASSWORD AFTER DISARM: HTTP 401 ... -> REFUSED`, then status read armed=no armedBy=none.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ui_walker_account.py status read at 2026-10-16T06:59:47Z and 07:00:42Z (printed above)",
+      "ui_walker_account.py disarm output at 2026-10-16T07:00:57Z",
+      "C:/dev/ajb_workspace/.claude/skills/ui-walk/SKILL.md lines 30 and 36-38"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Whose walk it was is NOT known: the holder host is `Andrew`, not a dell1 name; a walk of another seat or box started about 00:52Z and never reached its finally block (the machine slept or the terminal closed). The one reading made: the holder was not live (368 minutes against walks of at most about 10). If that walk was in fact running, it will print a login failure and re-arm itself; no data was written by the disarm. Owner of the question who held it: whichever seat walked at about 00:52Z; 0.0.0_AB_MSTR~DELL1 can read the hosts. No monitor is proposed."
+}
+```
