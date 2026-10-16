@@ -22,3 +22,13 @@ supersedes the 2026-10-13 record's arm (`ANDREW_DIRECT_20261013_2034Z_SELF_DRIVE
 | stop condition | Andrew's stand-down word (or `/keep-driving off`), or HELD-AT-STOP per the skill's section 4 |
 
 -- 1.0.0_SA_CTO~DELL2
+
+## CADENCE CHANGE (2026-10-16 ~02:4xZ)
+
+Andrew-direct, relayed by `0.0.0_AB_MSTR~DELL2` msg 8926 (record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261016_024xZ_KEEP_DRIVING_ON_30M_SELF_DRIVE_CANONICAL_DRIVE.md`
+@def0cd29c2 on origin/box/laptop), verbatim: "ON, all CTO COO agents should now be on 30m loops for /self-drive {Each CTO adjudicates their box
+activities} /canonical-drive {the project the COO is assigned}, respectively".
+
+**Cadence: 30 minutes** (cron `23,53 * * * *`, replacing the hourly `:23` job). The paired COO `/canonical-drive` loops go to 30m on the same word.
+Every other term is unchanged. state: ARMED.
+
