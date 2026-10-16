@@ -16,13 +16,14 @@ Issuer `2.0.0_SA_COO~G2`, 2026-10-16.
 | cell | what is produced | write set | risk |
 |---|---|---|---|
 | `AR-g-122` | the r34d tarball, sums and four host scripts at the pin, record `RESIDENT_R34D_BUILD.json` in the worker's folder, stage folder `C:/dev/irpt-release-r34g` | the worker's folder, the order, the channel file | WORLD (nothing installed, no host touched, no AWS call) |
+| `AR-g-123` | the r34d resident applied to the host under the signed pair (applier order `TO-APPLY-R34D`, own pair; CTO msg 9291), V2 inside the service's own environment | the applier's `deliverables/irpt_anlreq_r34d/`, the ledger `irpt-resident-r34d-20261016` | WORLD (S3 write, a host root, a restart; rollback the r34c root) |
 
 ## Edges and chains
 
-- ONE chain. The signed packet, the AQ2 apply order and the in-service V2 follow this build.
+- ONE chain: `AR-g-122` (the build) feeds the signed packet and `AR-g-123` (the apply, whose V2 runs in the service's own environment). The apply order is held until both halves of the packet are signed.
 
 ## Four-postulate record
 
 (i) Domain: one resident tarball of 314 members. (ii) One pin and one verifier. (iii) One intent: ship the checker fix. (iv) What this cut does NOT move: any host, S3 object, the r34c artifacts, the Lambdas.
 
-fanout: 1 of 1 chains, cap 8, reason: one worker cell (slot 259).
+fanout: 1 of 1 chains, cap 8, reason: one worker cell (slot 259); the apply cell AR-g-123 is the issuer's applier order, not a worker cell.
