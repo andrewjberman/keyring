@@ -64,7 +64,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rc-1.round-close-proof-hygiene.
 - Round 37, workstream ROUND-CLOSE-HYGIENE (decomposition addendum R3-T.84). The lane TREE_DELIVERABLES admits a deliverables folder only to its serial, so the issuer cannot rename or re-prove another seat's instance; a worker under an order naming the paths can. The remaining PROOF-BAD lines (OG-ap-14 and OG-hv-2: no acceptance row for AC3, a judgment criterion) and the 5 ungraded judgment criteria are the CVO's L9 and the appliers' to clear, not this cell's.
 - Pre-cut: rc1.AC1 base FAIL as expected (cl-7, cl-8 and gf-1 listed PROOF-BAD).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>ROUND-CLOSE-HYGIENE</workstream>
 <slot>~111</slot>
