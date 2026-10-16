@@ -77,7 +77,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-9.not-found-is-not-403.proof
 - Round 38 (CTO update msg 34989, E9; row Z-S175 by the CVO), workstream ENRICH-R38-B (decomposition addendum R3-T.94; a second workstream because the L6 gate keys one issuer to a round and workstream). Risk WORLD by the L6 floor (a gateway infrastructure path), no deploy in this cell; rides the batched gateway release with E4, E5, E6, E8 and E10.
 - Pre-cut: AC1 base FAIL as expected (the test file is absent); AC2 base FAIL as expected (no commit of this serial yet).
 
-<status>staged</status>
+<status>complete</status>
 <round>38</round>
 <workstream>ENRICH-R38-B</workstream>
 <slot>~123</slot>
