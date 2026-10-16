@@ -10142,3 +10142,102 @@ round.** Never edit an existing row.
   "dismissal_reason": "The difference is a property of the cell's derivation (no substitution), not of the served labels: with the as-traded basis applied the sets are equal. No served write, no correction."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W189-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~189",
+  "surfaced_at": "2026-10-16T08:28:05Z",
+  "one_line": "CB-cv-1 cannot flip its own order to complete within its write grant: the order file is outside the paths block, while the face says the flip is inside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-cv-1.completion-report-fwd-1-to-9.md @bd82a6b1f8 (paths block: deliverables folder and INVESTIGATION_v1.md only)",
+      "same order, proof_of_spec paragraph: YOU flip your own order status to complete in the commit that carries the proof instance",
+      "same order, BOUNDS: You change no code, test, order or committed file besides your record"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-cv-1 face: the order's <status> is flipped to complete by the worker in the proof commit, inside the grant. BOUNDS and the standing lane rule: the write grant is the paths block only, and a path outside it is a BLOCKING row, never an override.",
+  "world_is": "The order file is not in the paths block, so the worker did not edit it. The three criteria are validated on the proof instance; the status stays pending for the issuer to flip. The conflict is for the issuer to resolve.",
+  "notes": "Not an override. The issuer decides whether the flip is granted or made by the issuer."
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W189-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~189",
+  "surfaced_at": "2026-10-16T08:28:05Z",
+  "one_line": "The CVO L9 grade files that the adjudications and round analyses cite are outside the worktree sparse checkout; they were read at HEAD with git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at bd82a6b1f8 has no org/tier1_exec entry",
+      "git ls-tree -r --name-only HEAD -- org/tier1_exec/3.0.0_SA_CVO/deliverables returns 69 ADVI_COTBKF grade files",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_9_L9_GRADE_20261007.md @06df00ba81161c6098b8003f6d23ab3d946a8d73"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-cv-1 record face: grades are read from the CVO adjudications, the round analyses and the worker deliverables and CloudOps folders beside them, in the worktree.",
+  "world_is": "The FWD-6 grade (round 9) and the earlier FWD-5, FWD-8, FWD-9 and FWD-3 grades are stated only in those files. The report cites them by path and commit.",
+  "notes": "Read-only. Nothing was written under org/tier1_exec."
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W189-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~189",
+  "surfaced_at": "2026-10-16T08:28:05Z",
+  "one_line": "FWD-8 has two conflicting statements: the endpoint read grades it REALIZED, and the CTO round-99 analysis carries it as waiting on Andrew's send.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~49/ENDPOINT_READ_20261009.md @82049024b3 (row FWD-8, line 14)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/ledger/ROUND_ANALYSIS.round99.md @1725436e78 (section 2, item 2, line 22)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/ledger/ROUND_ANALYSIS.round96-98.md @aae37d1818 (section 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-cv-1 item 2: a grade is the one the latest artifact states; REALIZED only when the cited artifact states the DONE WHEN exercised and met.",
+  "world_is": "No artifact after round 99 grades FWD-8 in terms. The report grades FWD-8 NOT_REALIZED on the latest CTO statement and names the conflict for the CTO to grade.",
+  "notes": "The CTO grades the row at the next analysis."
+}
+```
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W189-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~189",
+  "surfaced_at": "2026-10-16T08:28:05Z",
+  "one_line": "The FWD-3 NOT rests on a premise that round 98 changed: the served daily-return tables now exist, but no record reads one account across the span on them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~49/ENDPOINT_READ_20261009.md @82049024b3 (row FWD-3, line 9: no daily-returns table in the store)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/R98_DRAIN_PACKET_FOR_CVO.md (served tables by VersionId, LastModified 2026-10-16T07:13Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-cv-1 item 1: a NOT_REALIZED row is grounded in the artifact that records the exercise; an exercise that is not run is NOT_REALIZED with the act to run it.",
+  "world_is": "The served tables are on the record, but the one-account read against the monthly figures on them is not. The FWD-3 row stays NOT_REALIZED with the act: one account's daily returns read across the span on the served table, checked against the monthly figures.",
+  "notes": "The S3 objects were not read or head-checked by this worker."
+}
+```
