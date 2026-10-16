@@ -20100,3 +20100,78 @@ name the one known failure instead of silently inheriting it.
     "notes": "Disarm: a re-cut whose client_* tools refuse an unprofiled, non-master_admin Opal principal with 0 reads (the DATA_GRANT_TOOLS move alone does not, decide() :685-698), or the client tools carried out of the batch; or Andrew re-rules Ruling 2. The design of a per-firm grant shape is the CTO's. The same NATIVE placement sits on trunk (box/sitez), so any later release carrying these tools with the reader keys inherits it."
   }
   ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T07:25:27Z",
+  "id": "NFRA_OPLGTW-Z-W113-S8",
+  "one_line": "BLOCKING: moving the five client_* tools out of NATIVE_TOOLS breaks test_entitlement_admin::test_ogz2_ac08, whose registered count (122) is the union NATIVE|INTEGRATION|INDEX; the count is 117 now, and the order forbids editing that file (AC2 red: 18 passed, 1 failed).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 0a18a57a24 (data_entitlement.py: CLIENT_TOOLS; family pin test). ad1.AC2.sh run on the committed tree: 'entitlement suites: pytest rc=1; passed 18; failed 1 (want 0)'. The failing test: tests/test_entitlement_admin.py::test_ogz2_ac08, 'assert 117 == 122' at line 378.",
+      "The count at line 315 is de.NATIVE_TOOLS | de.INTEGRATION_TOOLS | de.INDEX_TOOLS. Line 366 (len(union) == len(NATIVE) + the per-integration sum) still holds. Two edits would restore 122 and keep line 366: add de.CLIENT_TOOLS to the union at line 315 and add len(de.CLIENT_TOOLS) to the equality at line 366. Both lines are in tests/test_entitlement_admin.py, which the order names as do-not-change."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ad-1 section 2 and section 1 step 3: do not change tests/test_entitlement_admin.py; 'the registered-tool count 122 is unchanged'; AC2 requires the entitlement suites to pass.",
+  "world_is": "The 122 is computed from the sets, so it is not invariant under the move: the five leave NATIVE_TOOLS and enter no other set in that union. The premise that the count is unchanged holds only with the union extended, which needs an edit the order forbids. Nothing was edited in that file; AC2 is recorded FAIL.",
+  "notes": "Blocks the gateway release until the issuer rules: either an authorised edit of the two lines above, or a different count. The client tools stay classified legacy and the family membership is correct; only the pin is red. Non-application: the other entitlement suites pass."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T07:25:27Z",
+  "id": "NFRA_OPLGTW-Z-W113-S9",
+  "one_line": "BLOCKING for the release gate: three guard-suite tests pin the old NATIVE_TOOLS membership of the five client tools and go red (test_ogz1_ac06, test_ogz1_ac07, test_ogz1_ac11); they sit outside this order's write grant, so they are named here for the issuer to add.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/test_data_entitlement_guard.py run on commit 0a18a57a24: ogz1_ac06 'assert set(legacy_names) == set(registered) - set(SCHWAB)' (the five missing from the legacy-in-NATIVE list); ogz1_ac07 'len(others) == len(native) + len(integration)' (113 == 98 + 10; the five are in others but in neither native nor integration); ogz1_ac11 'sorted(before_list) == sorted(after_list)' for an unlisted principal (the five appear in the list).",
+      "The order's step 4 says such a test is to be named in the report and added by the issuer, and the file is not in the order's <paths>. Not edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ad-1 section 1 step 4: an entitlement test elsewhere that pins the five in NATIVE_TOOLS is named in the report and the issuer adds it to the order.",
+  "world_is": "Those three guard tests fail on the committed tree; the full guard file also carries test_ogz1_ac08, red before this change (route-class pin missing three routes).",
+  "notes": "Blocks the release suite until the issuer adds the three tests to the order and updates their pins to the new truth (the five are in CLIENT_TOOLS, classified legacy, DATA_GRANT and TIER_ADMITTED members)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T07:25:27Z",
+  "id": "NFRA_OPLGTW-Z-W113-S10",
+  "one_line": "OBSERVATION: the full gateway test directory on the committed tree reads 63 failed and 1012 passed; test_ogpf1_ac01 passes alone but fails after test_schwab_wiring.py (order-dependent), and the remaining failures sit in unrelated modules; no HEAD baseline of the full directory was run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest tests (full directory) on 0a18a57a24: '63 failed, 1012 passed, 138 warnings, 34 subtests passed in 261.37s'; output kept at .scratch/full_after.txt in the worktree.",
+      "tests/test_data_entitlement_family.py alone: 4 passed. The same file after tests/test_schwab_wiring.py: test_ogpf1_ac01 fails on the Schwab serving assertion (assert False), and test_schwab_wiring's own failure is 'AttributeError: str has no attribute get' at line 92."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's step 4 runs the entitlement suites; it names no full-directory run.",
+  "world_is": "The full directory is red in modules unrelated to the client tools (deploy base guard, Schwab fixtures, mail, teams, admin fabric captures), and test ordering leaks Schwab state into a family test. Whether the 63 pre-date this change was not measured: a HEAD baseline would need a second tree.",
+  "notes": "Cost: a full-directory count cannot be quoted as this change's effect. Candidate for the owner: a baseline of the full directory at the base commit."
+}
+```
