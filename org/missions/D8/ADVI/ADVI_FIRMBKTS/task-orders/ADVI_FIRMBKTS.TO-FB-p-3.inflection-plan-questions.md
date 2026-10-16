@@ -69,7 +69,7 @@ Commit the record FIRST, your rows and the proof instance second. Report once: h
 
 **ISSUER NOTES:** Round 9 item 2 (CTO analysis @bc6444b8e2). The plan's "30 open questions" are 15 real questions and 15 NO-MOVE notes (`FB-p-4`). A carried decision goes to its decider through the issuer's round-9 packet, not by the worker.
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <workstream>PLANQ</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-p-3</to_id>

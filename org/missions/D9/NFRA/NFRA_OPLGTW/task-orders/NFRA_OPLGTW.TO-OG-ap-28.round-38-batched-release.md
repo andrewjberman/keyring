@@ -89,7 +89,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-28.round-38-batched-release.
 
 - A4 (issuer, 2026-10-16 ~18:3xZ, `0.7.0_AE_CloudOps~Z`'s `CODE2_SERVED.json` read-only): the e4 arm as first written demanded `currency` set, which contradicts `OG-en-4`'s own ruled spec (currency null with `currency_basis: source_absent` when the source carries none; never assume USD). The applier recorded the arm false honestly (BD49F and SmartX: unit `fraction`, basis `source_absent`, no currency-like source column). The definition is corrected above; the applier re-grades the arm on its recorded counts and does not re-deploy. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>staged</status>
+<status>complete</status>
 <round>38</round>
 <workstream>ENRICH-R38-E</workstream>
 <slot>~AE</slot>

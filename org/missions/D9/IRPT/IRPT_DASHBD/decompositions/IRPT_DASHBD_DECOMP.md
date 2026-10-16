@@ -2725,3 +2725,18 @@ Row `IRPT_DASHBD-D2-S128` (@`05be852c08`): measured against the real filled part
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~247`), cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; run on a reference tree: green; four single-fault reader mutants and one diff mutant: red):** `checks/r149/p174_filled_reader_accounts.py` (DB174-1-AC1..AC3).
+
+## 169. ROUND 149, WORKSTREAM COTLANDAPPLY2 (2026-10-16 ~18:4xZ, issuer 2.0.0_SA_COO~D2): the apply of the signed Cottonwood landing pair, REVISION 2, to the one IRPT CloudOps lane
+
+The CTO signed revision 2 of the packet (sha256 `962ef131ff27`) at @f362eb8cb5: the first-row rule, the late-input allowance as a per-day table (844 `external_flow` and 798 `total_return_daily` rows on ten October days), all 3,325 history days read in Act 5, the writer count, no client sentence moved, IB2 as applier, Acts 2 to 4 outside 12:05Z to 12:45Z. This order replaces `DB-b-301` (superseded) and is addressed to `0.7.0_AE_CloudOps~IB2` under Andrew-direct rule 34.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The apply: ledger first, build-only hash `+iYXakKx...`, a NEW bundle version over the key's unused current version, plan 0 add / 1 change / 0 destroy, ONE `safe-apply`, a 25-day dry run, four rewrite events over the 66 landed days, the whole-prefix after-read on all 3,325 history days | DB-b-308 | FWD-10 | WORLD | `DB-b-303`, `DB-b-304` merged and both halves of revision 2 SIGNED | chain AC |
+| 2. The Cottonwood publish pair (publisher 0.4.0 code update and republish) with its before-write flip count, naming the returns that move on the Performance tab beside the "Returns from" count | NOT CUT: packet after item 1 | FWD-10 | WORLD | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the checker `p176` reads the allowance table from the issuer's offline-diff record in the repo, so the packet's table and the checker's ceilings are one source; (b) the record carries, per event, only the days that changed and by how many rows; the checker recomputes them against each day's OLDEST version in the versioned bucket, so the statement is a measurement; (c) `before` records both the key's current version (the unused upload) and the version the function runs, and the landed version must differ from both; (d) the PARTIAL set is the first-row rule (every account with a row in the floor-day silver partition), recomputed by the checker with the adapter's own `_key`.
+
+**fanout:** 1 of 1 chains for this cell (the CloudOps applier, not a worker subagent), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; self-test green with 51 red arms plus two head arms):** `checks/r149/p176_cot_landing_r2_apply.py` (DBC176-1-AC1, -2-AC1, -3-AC1).

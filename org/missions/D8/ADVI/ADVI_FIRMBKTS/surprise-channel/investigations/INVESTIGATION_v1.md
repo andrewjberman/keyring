@@ -8761,3 +8761,80 @@ Rows are appended after the earlier rows; each is one fenced json object.
   }
 ]
 ```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~86 (FB-p-3, inflection plan questions Q1 to Q15)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W86-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~86",
+  "surfaced_at": "2026-10-16T18:23:04Z",
+  "one_line": "The plan's R5 says the Door 6 marker gold/meta/pipeline-complete.json has one consumer, inf-portal-publisher, through a bucket S3 notification entry; live, opal-data-inf carries no Lambda notification that targets inf-portal-publisher, and the marker's only EventBridge rule is mdpf-feeder-accelerator.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.md@31ff5a4067 section 3 row R5 and section 4 open question Q7 (the plan's claim, read as committed)",
+      "aws s3api get-bucket-notification-configuration on opal-data-inf, 2026-10-16: LambdaFunctionConfigurations 1 (inf-silver-aggregator, silver/_silver_complete/ and .json), EventBridgeConfiguration present; no Lambda entry names inf-portal-publisher",
+      "aws events list-rules, 156 rules listed: 1 rule whose EventPattern names the marker key (mdpf-feeder-accelerator, ENABLED); aws events list-targets-by-rule on it: 1 target (mdpf-feeder-trigger)",
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py@31ff5a4067 line 5 docstring still says the publisher is triggered by S3 ObjectCreated on the marker key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLAN_INFLECTION.md section 3 row R5 (and the publisher docstring) state that the marker's one consumer is inf-portal-publisher through its S3 bucket notification entry; section 2 counts 2 bucket notification entries on opal-data-inf.",
+  "world_is": "Live on 2026-10-16 the bucket notification names one Lambda entry (inf-silver-aggregator) plus an EventBridge configuration; no bucket notification reaches inf-portal-publisher. The marker's only EventBridge consumer is mdpf-feeder-accelerator, targeting mdpf-feeder-trigger. The consumer map that the M03 and M04 moves rest on is not the live one.",
+  "notes": "Recorded in the Q7 answer of PLAN_INFLECTION_Q01_15.json (0.9.0_WK_ADVI_FIRMBKTS~86, commit a6c41087f1). The plan rows to correct are R5 and the M03 and M04 consumer notes. Nothing is moved or disarmed here, and the marker delete stays Andrew's word (DEC-17). Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W86-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~86",
+  "surfaced_at": "2026-10-16T18:23:04Z",
+  "one_line": "The plan's live denominators have drifted since its 2026-10-14 read: the default scheduler group now lists 40 schedules (plan 33) and Lambda list-functions now returns 244 functions (plan 237); the 12-function portal-role count is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PLAN_INFLECTION.md@31ff5a4067 section 6 denominators: scheduler_default_group_schedules_live 33; lambda_functions_listed_live 237; iam and eventbridge figures unchanged where re-read",
+      "aws scheduler list-schedules --group-name default, 2026-10-16: 40 listed; aws scheduler get-schedule read on each of the 40",
+      "aws lambda list-functions, 2026-10-16: 244 listed; client-side role match on opal-portal-lambda-role: 12 (plan 12)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLAN_INFLECTION.md section 6 gives the live denominators the moves were sized against: 33 default-group schedules and 237 listed Lambda functions.",
+  "world_is": "On 2026-10-16 the default group lists 40 schedules and the account lists 244 Lambda functions. Any move sized on the 33 and 237 counts needs a re-count before it is cut.",
+  "notes": "Not a move. The FB-p-3 answers carry the 2026-10-16 counts and say so. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W86-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~86",
+  "surfaced_at": "2026-10-16T18:23:04Z",
+  "one_line": "The FB-p-3 worker face says to flip the order's <status> to complete in the proof commit, but the face carries no <status> element, and the order file is outside this order's <paths>; the flip is not made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-p-3.inflection-plan-questions.md@31ff5a4067 line 4 names the <status> flip; a head of the worker face (lines 1 to 67) holds no <status> element (grep returned no match)",
+      "the same file's section 3 <paths> lists the record folder and this channel file only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face's first line says to flip this order's <status> to complete in the same commit as the proof instance, only when AC1 passes.",
+  "world_is": "The order carries no <status> element to flip, and the order file is not in the write grant, so the flip cannot be made by this worker.",
+  "notes": "The proof instance is committed with AC1 as its verdict. The status flip is left to the issuer. Disarm: none (INERT)."
+}
+```
