@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~270</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -52,10 +52,12 @@ In `portal/src/pages/TicketCenter/AnalysisRequestParts.tsx` (read first: `Packag
 5. **Look at the page (portal law).** Render the changed block and READ the result against `portal/DESIGN.md` (cite a clause number for anything you reject). Use the repo's `scripts/ui-smoke.mjs` if it can reach a ticket in this state (its output prints `CANVAS:`, which must read `rgb(244, 246, 250)`); if it cannot, say so in your record and say exactly what you did instead (for example a DOM render in the test with the markup printed). Never claim a render you did not do. Put the path of any screenshot you read in your record.
 6. **Write `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~270/mutant_check.py`** (AC3 below) and a short `R3_V_RECORD.json`: the lines you changed in each worktree, the test counts, the before-arm (the six tests on the base: every one FAILS or the file is absent), the edited existing tests, what you rendered and read, `not_read`.
 
+7. **AMENDMENT 1 (issuer, 2026-10-16; the contract is `IRPT_ANLREQ_DECOMP_R3_V.md`, section AMENDMENT 1, item 6).** Review of your first commits found that the failure block can never show for a ticket with NEITHER a draft NOR a package, which is where three of the five codes land (`READY_SIGNAL_SEND_FAILED`, `COMMENTARY_DRAFT_FAILED`, `COMMENTARY_DRAFT_REFUSED` happen before any draft exists). Two guards hide it: `AnalysisRequestParts.tsx` `if (!draft && !pkg) return null` in `AnalysisDraftAndPackage`, and `TicketCenter.tsx` rendering the row only when `(t.draft_commentary || t.package)` holds. Change both so that an `analysis_request` ticket with a `report_ref.request_id` reaches the read whether or not it has a draft, the failure shows while it has no package, and a ticket with neither a draft nor a package and no failure leaves NO blank row (no empty `<tr>`, no stray padding: look at what you render). The row condition in `TicketCenter.tsx` is now in your grant beyond the pass-through, for this one condition only. Add two tests to the same file, EXACTLY named `shows the failure on a ticket with neither a draft nor a package` and `leaves no blank row for a ticket with neither a draft nor a package and no failure`; the six existing tests keep passing unchanged. Then re-run `AR31-v-AC1`, `AC2` and `AC3`, update your record and the proof instance with the new results, validate, and flip the status to `complete` only when it prints VALID. Your first-session commits are inherited state.
+
 ### ACCEPTANCE
 
 <criterion id="AR31-v-AC1" cell_refs="AR-v-31"><invocation>python C:/dev/wk-irpt-anlreq-270/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~V2/AR_V_CHECKS/ar_v_checks.py v31-failure --portal C:/dev/wk-irpt-anlreq-270/portal</invocation><expect>^V31-FAILURE-OK</expect></criterion>
-`AR31-v-AC1`: the six named tests exist and pass.
+`AR31-v-AC1`: the eight named tests exist and pass (the six of step 4 and the two of step 7).
 
 <criterion id="AR31-v-AC2" cell_refs="AR-v-31"><invocation>python C:/dev/wk-irpt-anlreq-270/org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~V2/AR_V_CHECKS/ar_v_checks.py portal-tsc --portal C:/dev/wk-irpt-anlreq-270/portal</invocation><expect>^PORTAL-TSC-OK</expect></criterion>
 `AR31-v-AC2`: the portal typechecks (`tsc -b`). Also run, once, the existing TicketCenter tests in the portal worktree (`bun test src/pages/TicketCenter`) and record the counts in your record (a drain check; the issuer re-runs it).
@@ -64,7 +66,7 @@ In `portal/src/pages/TicketCenter/AnalysisRequestParts.tsx` (read first: `Packag
 `AR31-v-AC3` (the one mutant that fails): you write `mutant_check.py`. It records the sha256 of `AnalysisRequestParts.tsx` in the portal worktree, removes the clause-5 guard (the failure then shows even when `ticket.package` is attached), runs `bun test` on the new test file, and RESTORES the file byte-for-byte in a `finally` block, verifying the sha256 equals the recorded one. It prints `MUTANT-FIRES` only when the mutated run FAILED and the restore verified; otherwise `MUTANT-SURVIVES` or `MUTANT-RESTORE-FAILED` and exit 1.
 
 <criterion id="AR31-v-AC4J" cell_refs="AR-v-31" judgment="true"/>
-`AR31-v-AC4J` (judgment, graded at L9, never by you): the ticket page names the failed step and what happens next only while no package is attached, makes no call it should not, never breaks the page, and adds no route, write, principal or colour.
+`AR31-v-AC4J` (judgment, graded at L9, never by you): the ticket page names the failed step and what happens next only while no package is attached, for a ticket with or without a draft, makes no call it should not, leaves no blank row when there is nothing to say, never breaks the page, and adds no route, write, principal or colour.
 
 <expected_criteria>AR31-v-AC1 AR31-v-AC2 AR31-v-AC3 AR31-v-AC4J</expected_criteria>
 
