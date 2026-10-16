@@ -386,3 +386,17 @@ Source: the CVO's five-new-name read after the store write, `surprise-channel/ad
 **Check, dry-run at the base and proven satisfiable:** `deliverables/2.0.0_SA_COO~R2/round108_aifill_prep/checks/check_gu1_remedy.py`, 20 arms. At the base: `AIFILL GU-1 ARMS: NO (8 of 20)` (the eight passing arms are controls and two behaviours the base already has). The issuer's reference edit in a sparse scratch tree (`lib/research/aifill/{contract,grounding,orchestrate}.py`, +124 lines, -14): 20 of 20, ruff clean, ASCII, and the 813 existing aifill tests pass unchanged, so no existing test needs an edit.
 
 **What this cell does not do:** the re-run of the affected names and the re-read (the issuer's act after the merge, a spend the CTO sets); the HELD to CLEARED re-stamp; the hold's restore (`NEVER_WIDEN_ROUND108_AIFILL_HOLD_RESTORE_COO_HALF_DRAFT.md`, void until a read is MET); any change to the served API, the gateway or the page.
+
+## 18. ADDENDUM 9 -- THE LIFT SCOPE `AIFILLHOLD` (round 109): THE HOLD REMOVED (CVO `ADJUDICATION_v136` MET, CTO ruling `CTO_RULING_AIFILL_HOLD_LIFT_20261016.md`, msgs 6620 and 6624), 2026-10-16 ~09:3xZ
+
+Source: the CVO's fresh five-new-name read, MET on correctness (row `AMGT_RESAPP-D1-C-S159`); the CTO's ruling: LIFT through the restore never-widen pair, with SAN FP `mgmt_recent` withheld in the same act. The pair: `ledger/NEVER_WIDEN_ROUND109_AIFILL_HOLD_RESTORE_{COO,CTO}_HALF.md` (COO half sha256 `d4281bce...0e05` @247b2f6a4f, CTO half signed, msg 6624). Leg 1 (this seat, DONE and read back, @c7c8c8b7be): the one `SAN_FP_Equity` re-store, `mgmt_recent` as the contract's NONE block. Leg 2 is this scope's one cell.
+
+| id | cell | slot | class | risk | write set | serves | item |
+|---|---|---|---|---|---|---|---|
+| `AMGT-ar-8` | remove the one environment entry `AMGT_AIFILL_ROOT` from `opal-amgt-scoped-api` (one targeted `safe-apply` of `module.scoped_amgt_api`) and read back that the stored documents are served | `0.7.0_AE_CloudOps~RA1` | worker (a CloudOps seat) | WORLD (a deploy) | `infra/aws/terraform/harvest/scoped-amgt-api.tf`, the change-management ledger, `.open_deploys/`, the RA1 deliverables folder | FWD-41 hold lift | CTO 6620 |
+
+**Chain read:** M = 1, N = 1, cap 8. **No schema is authored:** no value enum, key set or contract changes; the restore removes a configuration value and the NONE block already exists in the block contract (the CTO confirmed it, msg 6624). **The undoing of `AMGT-ar-7`:** the hold was added by one entry and is removed by deleting it; the stored documents are read by the handler's own reader unchanged.
+
+**Check, dry-run at the base and proven satisfiable:** `deliverables/2.0.0_SA_COO~R2/round109_close/restore/check_restore_served.py`. At the base (the hold in place, four names captured live): `AIFILL RESTORE SERVED: NO (8 of 16)`; on responses simulated from the stored documents with the capture as the base for every other key: `YES (16 of 16)`; with one served block altered: `NO (12 of 16)` (the negative control). The earlier-serves census (R97, R95, R94) reads YES at the base and is kept as a control.
+
+**What this cell does not do:** any S3 write (leg 1 was the only one); the HELD to CLEARED re-stamp; round 110 (the generic "describes only its source" rule, the pack-restatement and pronoun rules, the SAN naming sentence); any client-facing page (Security Analysis is Opal-internal).
