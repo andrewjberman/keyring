@@ -8938,3 +8938,31 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Why the partition carries no rows for this advisor was not read (the gold holdings builder is a separate writer). Disarm: none (INERT). Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1."
 }
 ```
+
+## Row filed by 2.0.0_SA_COO~B1 (FB-p-2 preparation, the live read of inf-gold-trigger)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S61",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-16T19:25:30Z",
+  "one_line": "The Door 6 census and the CTO's step 1 say inf-gold-trigger reads the marker gold/meta/pipeline-complete.json as its already-done record; the DEPLOYED function (Active, modified 2026-07-16, 545 lines) has no reference to the marker and dedupes with a conditional-put lock, gold/dispatch-lock.json. The repo copy that does read it is a stale May version.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function --function-name inf-gold-trigger (read only, 2026-10-16 ~19:2xZ): State Active, LastModified 2026-07-16T13:05:07Z, one member lambda_function.py of 545 lines downloaded from Code.Location; a search of those 545 lines for pipeline-complete, pipeline_complete, gold/meta and COMPLETE_KEY returns 0 matches; the S3 keys it names are DISPATCH_LOCK_KEY gold/dispatch-lock.json (lines 24, 110, 118, 141, 153, 508).",
+      "infra/aws/lambda/inf-gold-trigger/lambda_function.py at HEAD is 163 lines, last changed c6500c3136 (2026-05-07), and its _check_idempotency (lines 31-43) reads COMPLETE_KEY; it is NOT the deployed code (the two differ).",
+      "s3://opal-data-inf/gold/meta/pipeline-complete.json, all 17 retained versions (2026-09-25 to 2026-10-16) carry the keys chain, completed_at, git_sha, instance_id, run_date and none carries snapshot_date or chain_date, so even the repo copy's check (snapshot_date or chain_date equals today) could not have matched.",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~85/DOOR6_CENSUS.json (its not_read list says the 244 Lambda functions were matched by name only and their code was not scanned live) and org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/CTO_DECISION_DOOR6_RETIREMENT_ORDER_20261016.md section 1 (read at the repo copy)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "inf-gold-trigger skips a same-day dispatch by reading the marker's snapshot_date, so stopping the marker write would allow a second gold run the same day; therefore the retirement's step 1 moves that idempotency to its own record first (census consumer inf-gold-trigger; CTO decision text section 1 and step 1).",
+  "world_is": "The live inf-gold-trigger never reads the marker and the marker has never carried the field the repo copy compares, so stopping the marker write changes nothing for that function; its same-day protection is the dispatch lock. The census record's inf-gold-trigger consumer entry is wrong for the live account, and its live-reader coverage of the other 243 functions was repo-side only.",
+  "notes": "This seat holds FB-p-2 staged; the order's step 1 is built on the false premise and is not to be cut as ordered. To the CTO: drop step 1 or replace it with a live reader read; the decision is his. The deployed-versus-repo drift of inf-gold-trigger is a separate finding for the Lambda's owner (the repo copy is not what runs). Disarm: none (INERT); the cell is not running."
+}
+```
