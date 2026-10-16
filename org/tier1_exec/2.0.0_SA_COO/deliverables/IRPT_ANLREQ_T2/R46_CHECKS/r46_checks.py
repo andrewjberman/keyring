@@ -41,7 +41,7 @@ def check(min_passed, files, cwd=None):
     tail = ANSI.sub("", lines[-1])
     m = re.search(r"(\d+) passed", tail)
     passed = int(m.group(1)) if m else 0
-    if r.returncode != 0 or "failed" in tail or "error" in tail.lower():
+    if r.returncode != 0 or re.search(r"\d+ failed", tail) or "error" in tail.lower():
         return False, tail
     if passed < min_passed:
         return False, "%d passed, need %d: %s" % (passed, min_passed, tail)

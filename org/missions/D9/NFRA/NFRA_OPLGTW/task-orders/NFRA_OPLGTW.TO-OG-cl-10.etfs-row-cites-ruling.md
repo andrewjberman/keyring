@@ -54,7 +54,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-cl-10.etfs-row-cites-ruling.pro
 - Round 37, workstream G2-CONFORM-4 (decomposition addendum R3-T.82). The issuer cannot commit `infra/logic/registry/` (lane PLATFORM_LOGIC_DOCS); the lane that admitted the four rows is a worker order that names the path (CTO msg 34732: "land it through the lane that admitted the four rows, with no new override"). dell1's after-the-fact review ACCEPTED the gate fix and put a lane finding (no ruling_ref on the file) with the CVO; nothing is held on it.
 - Pre-cut: cl10.AC1 base FAIL as expected (the row's evidence does not cite the ruling).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G2-CONFORM-4</workstream>
 <slot>~111</slot>
