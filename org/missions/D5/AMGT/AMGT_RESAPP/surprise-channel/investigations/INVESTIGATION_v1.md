@@ -28287,3 +28287,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by the worker, not graded here. The other premises reproduce: the four withheld slices carry no P/E row in Key Figures and the one served sentence each; the ZURN compare carries 33 changed rows with three BEST_PE_RATIO rows for 2026 to 2028. The disposition of M4 (declared years versus the live envelope) is the issuer's call."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S37",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-16T01:34:14Z",
+  "one_line": "W476-S1 ruled by the issuer: the harness's declared fiscal years for PBR US match the live page, where 2025 is a Key Figures column printing 3.6x-5x; the row stays as filed and is not a defect of the order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "bo-1 order step 2 check M4: PBR US 2025 `3.6x-5x` prints the mark; the worker's fixture (a live slice with no envelope) declares no fiscal years, so the cell fell in the All-figures grid until the harness declared 2016 to 2025.",
+  "world_is": "The bn-4 walk's PBR US Model shot (evidence bn-4/D, read with the Read tool by the issuer 2026-10-16) shows Key Figures columns 2025, 2026E and 2027E with P/E 3.6x-5x, 5.9x and 6.1x: the live envelope does declare 2025. M4 therefore grades what the page prints.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bn-4/D/20261016T001622Z/shots/069-PBR-US-Model.png",
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md AMGT_RESAPP-D1-W476-S1"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The walk bo-3 reads PBR US 2025 on the promoted page; that read, not the harness, is the proof."
+}
+```
