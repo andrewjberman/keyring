@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN journey run 2: have one lane name a one-off read needing a package absent from requirements.txt",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_DELL1_NAME_AN_ABSENT_PACKAGE_READ.md",
  "opened_at": "2026-10-16T00:22:32Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-16T00:28:38Z",
   "bus_message_id": "78b9503b-48d3-4726-ada1-b2bad6f6efd0"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-16T01:42:46Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": "38e8cead-38fa-4673-a51a-bd43355a3d03"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,

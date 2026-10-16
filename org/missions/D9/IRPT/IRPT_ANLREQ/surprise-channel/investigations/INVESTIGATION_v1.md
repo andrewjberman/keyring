@@ -20123,3 +20123,186 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W214-S1 -- the AR-ty-51 acceptance checker is tracked at HEAD but outside this worktree's sparse cone, so AR51-ty-AC1 cannot run here
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W214-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~214",
+  "surfaced_at": "2026-10-16T01:00:00Z",
+  "one_line": "The AR-ty-51 acceptance checker org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py is tracked at HEAD but outside this worktree's sparse cone, so the AR51-ty-AC1 invocation cannot run here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-ty-51 AC1 runs from the worktree root: python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 8 infra/aws/lambda/investor-reporting/reports/tests/test_cross_firm_report_reads.py, expecting R46-TESTS-OK. The checker is the grader of the test file.",
+  "world_is": "Worktree C:/dev/wk-irpt-anlreq-214, branch wk-IRPT_ANLREQ-214, HEAD 9d0664b2ff. git sparse-checkout list names .tools, data/transcripts/scripts, docs/contracts, infra/aws/lambda/investor-reporting, infra/aws/lambda/ticket_center, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/ref and org/standards; org/tier1_exec is not in the cone. git ls-tree HEAD lists the checker as blob 417fffb48cfda08eb898835e2465fd38780daa9e, but the file is absent on disk. The checker was not copied, widened or reconstructed. The test file passes 10 of 10 under pytest on its own; the checker's R46-TESTS-OK verdict is not obtained in this worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in worktree C:/dev/wk-irpt-anlreq-214 (read 2026-10-16T01:00Z) omits org/tier1_exec",
+      "git ls-tree HEAD org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/ returns 100644 blob 417fffb48cfda08eb898835e2465fd38780daa9e r46_checks.py",
+      "ls of org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/ in the worktree returns No such file or directory"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W219-S1 -- the AR-ty-56 acceptance checker is not materialized in this sparse worktree, so the order's invocation cannot run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W219-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~219",
+  "surfaced_at": "2026-10-16T01:03:54Z",
+  "one_line": "The AR-ty-56 acceptance checker r46_checks.py is tracked at HEAD but absent from this sparse worktree, so the order's invocation returns rc=2 and the acceptance criterion cannot run here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order runs `python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 5 <test file>` from the worktree root and expects R46-TESTS-OK; its dry-run at box/dell2 39eef25c48 reads R46-TESTS-FAIL absent.",
+  "world_is": "Worktree C:/dev/wk-irpt-anlreq-219 at HEAD dbf56b0a3d has core.sparseCheckout=true; its sparse set (git sparse-checkout list) does not include org/tier1_exec. The checker is tracked at that path (git ls-files) but not materialized, so the invocation prints `can't open file ... [Errno 2] No such file or directory` and exits 2. The checker source was read with git show HEAD:<path> into the worker scratch folder only and was not run. The sparse set was not widened and no tree was rebuilt. The offline tests were run at their own path: 15 passed, rc 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --get core.sparseCheckout = true; git sparse-checkout list (C:/dev/wk-irpt-anlreq-219, HEAD dbf56b0a3d) lists .tools, data/transcripts/scripts, docs/contracts, infra/aws/lambda/investor-reporting, infra/aws/lambda/ticket_center, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards; org/tier1_exec is not among them",
+      "git ls-files -- '*R46_CHECKS*' = org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py (tracked; no file in the worktree; ls org/tier1_exec: No such file or directory)",
+      "acceptance invocation output: can't open file '...\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\IRPT_ANLREQ_T2\\R46_CHECKS\\r46_checks.py': [Errno 2] No such file or directory; rc=2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W219-S2 -- the order asks for allowedFirmIds as a string set; the ticket service reads a list, so the helper writes an L
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W219-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~219",
+  "surfaced_at": "2026-10-16T01:03:54Z",
+  "one_line": "The cell says to write allowedFirmIds as a DynamoDB string set (SS); the ticket service reads it as a Python list, which a boto3 resource returns for an L and not for an SS, so the helper writes {\"L\": [{\"S\": id}, ...]}.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 2 of the cell says to write allowedFirmIds as a DynamoDB string set ({\"SS\": [...]}) and to use another type only if the service reads another type, saying so in the report; it cites lambda_function.py:419.",
+  "world_is": "The service reads a LIST. lambda_function.py:71 builds the table with boto3.resource; _profile_scope (def at :391) takes val = got.get(\"allowedFirmIds\") at :418, returns unscoped only when val is None (:419-420), accepts only isinstance(val, list) whose elements are all non-empty str (:421-425), and otherwise returns 403 'firm scope malformed' (:426). Line :129 names the same LIST shape. Measured offline with boto3 TypeDeserializer: SS deserializes to a Python set (refused by the list test, so a scoped principal would be refused with 403), L deserializes to a Python list (accepted). The helper writes the L shape; the readback accepts only that shape. No AWS call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:71 (_ddb = boto3.resource('dynamodb')), :391 (def _profile_scope), :418-426 (the allowedFirmIds read, the None branch, the list test, the 403 malformed return), :129 (LIST named in a comment), at worktree HEAD dbf56b0a3d",
+      "offline run (no AWS): boto3 TypeDeserializer().deserialize({'SS': ['a','b']}) -> set {'a','b'}; deserialize({'L': [{'S':'a'},{'S':'b'}]}) -> list ['a','b']",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~219/fwd5_driver/fwd5_mint.py item_for and readback_ok; test_cross_firm_mint_item_carries_parameter_firm_and_ids_as_list passes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W220-S1 -- the R45 acceptance checker named by AR57-ty-AC1 is tracked at HEAD but outside this worktree's sparse cone
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W220-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~220",
+  "surfaced_at": "2026-10-16T01:08:08Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The acceptance invocation of TO-AR-ty-57 (AR57-ty-AC1) names org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R45_CHECKS/r45_checks.py; that folder is outside this worktree's sparse cone, so the file is absent on disk and the invocation returns rc=2.",
+  "spec_asserts": "TO-AR-ty-57 runs python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R45_CHECKS/r45_checks.py rec <record> 6 from the worktree root; its refusal clause says that if the cone lacks a folder, the worker files a BLOCKING surprise row naming it.",
+  "world_is": "The checker is tracked at HEAD dbf56b0a3d (blob fcf32aed6e), but git sparse-checkout list of wk-IRPT_ANLREQ-220 has no org/tier1_exec entry and the file is not on disk. The named invocation printed 'can't open file' and exited 2. The record passes a read-only copy of the same check logic (R45-REC-OK rows=23, non-authoritative); AC1 is therefore FAIL for the order, not PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R45_CHECKS/ at dbf56b0a3d lists r45_checks.py (blob fcf32aed6e)",
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-220 holds no org/tier1_exec entry (grep -c tier1_exec returned 0)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~220/FWD4_TICKET_WRITE_ROUTES_MAP.md is the record; the named invocation was run from the worktree root and returned rc=2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not widened by this worker: the order names a sparse-add only for portal/src, and the refusal clause names a BLOCKING row. The order stays open until the checker is reachable at its named path or the order names another checker."
+}
+```
+
+## IRPT_ANLREQ-D2-W220-S2 -- the order says the resident has its own principal; the ticket service names none and the resident code makes no ticket call
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W220-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~220",
+  "surfaced_at": "2026-10-16T01:08:08Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The ticket service admits no resident principal; the only service subjects that can write a ticket are svc-ticket-form, svc-analyst-intake, svc-commentary and svc-irpt-packager, and the resident's code makes no ticket-service call.",
+  "spec_asserts": "TO-AR-ty-57 worker face: the resident and the packager have their own principals (svc-*), and the enumeration covers the resident's principal and any other svc-* the service names.",
+  "world_is": "infra/aws/lambda/ticket_center/lambda_function.py names svc-ticket-form, svc-analyst-intake and svc-commentary in the CREATE matrix row (line 185) and svc-irpt-packager as type data (line 130); principal_class returns UNRESOLVABLE for any other service subject (line 355). A named-folder search of infra/aws/lambda/investor-reporting/ycharts/generate (tests excluded) found no svc- token and no tickets/ path. FWD-1 hops 6 to 9 therefore hold no ticket-service write; the record's row for the resident is NOT-APPLICABLE.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:185 and :130 and :355 at dbf56b0a3d, read in the worktree",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:220 at dbf56b0a3d: the READY path prints a warning when no queue URL is set",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~220/FWD4_TICKET_WRITE_ROUTES_MAP.md rows 11 and 12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W216-S1 -- the R46 checker path was absent from this worktree at the first grounding read and present at the acceptance run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W216-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~216",
+  "surfaced_at": "2026-10-16T01:26:00Z",
+  "one_line": "The TO-AR-ty-53 acceptance checker path was absent from this worktree at the first grounding read and present at the acceptance run; the sparse-checkout cone does not list org/tier1_exec.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order runs org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py from the worktree root, and the worktree carries the paths the order names.",
+  "world_is": "The first read (ls of org/tier1_exec/ and of its 2.0.0_SA_COO child) returned No such file or directory. The sparse-checkout list names no org/tier1_exec or org/surprise_channel entry, and the checker is an index entry flagged skip-worktree. At the acceptance run the folder listed with a 21:12 local mtime, git hash-object of the checker equals index blob 417fffb4 (HEAD 9d0664b2ff), and two runs returned R46-TESTS-OK passed=10 rc=0. This worker wrote nothing under that folder; the cause of the change is not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -s org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py at 9d0664b2ff: mode 100644, blob 417fffb48cfda08eb898835e2465fd38780daa9e",
+      "git sparse-checkout list in worktree wk-IRPT_ANLREQ-216 (cone mode): org/missions/D9/IRPT/IRPT_ANLREQ, org/standards, org/ref, org/devices, org/modules/graph and others; no org/tier1_exec entry",
+      "acceptance run from worktree root: r46_checks.py tests 6 with the three AR-ty-53 test files printed R46-TESTS-OK passed=10 (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W216-S2 -- the cell cites retention.py:102 and owner_reads.py:28 for refusals whose raise lines are 103 and 33
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W216-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~216",
+  "surfaced_at": "2026-10-16T01:26:00Z",
+  "one_line": "The TO-AR-ty-53 cell cites retention.py:102 and owner_reads.py:28 for refusals whose raise lines are 103 and 33; the cited lines open the decision conditions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order names retention.py:102 for ReportDenied('retention owner access denied') and owner_reads.py:28 for ProspectOwnershipRefused('issued record not currently authorized').",
+  "world_is": "retention.py line 102 is the second clause of the service-branch condition (or firm != owner[firm_id]); the ReportDenied raise is at line 103. owner_reads.py line 28 opens the owner-firm condition; the ProspectOwnershipRefused raise is at line 33. The binding map (rows 29 and 34) gives the same raise lines. The tests were written against what the code does: the retention test is decided by the line-102 clause and the owner-read OPAL_GLOBAL test by line 28. No code under test was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/retention.py lines 100-103 at 9d0664b2ff (cat -n read): line 102 is the clause, line 103 the raise",
+      "infra/aws/lambda/investor-reporting/_scope/owner_reads.py lines 28 and 33 at 9d0664b2ff (cat -n read): line 28 opens the condition, line 33 raises",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~211/FWD5_REPORT_SIDE_BINDING_MAP.md rows 29 and 34 at 9d0664b2ff"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
