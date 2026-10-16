@@ -22342,3 +22342,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W238-S2 -- the pinned-line clause counts a carried-in file copy as worker edits (223 read against a ceiling of 20)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W238-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~238",
+  "surfaced_at": "2026-10-16T10:14:45Z",
+  "one_line": "The checker's pinned-line clause counts the whole of test_handler_unreported.py (215 lines carried in by DB-b-292) as lines the worker changed, so DB163-1-AC3 reads 223 against a ceiling of 20; the worker's own pin edits are 12.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The forced version-pin lines are at most 20 (additions plus deletions, as git diff --numstat counts them against the worker's base), and the facts record pinned_test_lines equals the checker's recount.",
+  "world_is": "The checker's base is 43ef690262, the commit that first added the order. test_handler_unreported.py is absent there and was first added by carry commit 3bc1c80d41 (DB-b-292 file copy). numstat against the base reads 215 insertions, so the checker reads 223 (215 carried + 4 claim_calendar + 4 unreported + 0 cot). The worker's own edits to the four pinned tests are 12 lines (4 + 4 + 4 + 0 across the four files). AC1 and AC2 pass; the directory run reads 146 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_handler_unreported.py@3bc1c80d41 (first add; absent at 43ef690262)",
+      "DB163-1-AC3 output at 941111fa16: 'FAIL: the earlier tests may change by at most 20 lines (the version pins), read 223'",
+      "git diff --numstat 43ef690262 HEAD on test_handler_unreported.py: 215 insertions, 0 deletions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
