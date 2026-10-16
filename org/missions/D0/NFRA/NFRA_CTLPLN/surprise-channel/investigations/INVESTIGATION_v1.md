@@ -12797,3 +12797,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Recorded for the CTO and the issuer: the cut's folder list is a provisioning input, not a worker decision. No neighbour suite was edited."
 }
 ```
+
+## NFRA_CTLPLN-W141-S3 -- a read-back suite rewrites a tracked deliverable of another round, so a plain run dirties the worktree
+
+```json
+{
+  "id": "NFRA_CTLPLN-W141-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~141",
+  "surfaced_at": "2026-10-16T12:39:09Z",
+  "one_line": "python .tools/tests/test_round19_register.py --fwd7 writes its overlap table into a tracked file, org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~106/FWD7_OVERLAP_CLASSES.md, so a run of a neighbour suite leaves git status showing a modified deliverable that belongs to another worker's order. The worker restored that file to its HEAD bytes and did not commit it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status --short in the worktree after 'python .tools/tests/test_round19_register.py --fwd7' (rc=0, FWD7-OVERLAPS total=62 shared=58 split=0 not_same_file=4 unclassified=0 ok=True): ' M org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~106/FWD7_OVERLAP_CLASSES.md'; git diff --stat: 52 insertions, 46 deletions",
+      "the test source: 'Writes the table to the CT-ai-1 deliverables folder' (TABLE = DELIV ~106 FWD7_OVERLAP_CLASSES.md), at .tools/tests/test_round19_register.py in the worktree at 90a53291b2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": ".tools/tests/test_round19_register.py --fwd7 (its header): every OVERLAP line of .tools/placement-check.py is classed and the table is written to the CT-ai-1 deliverables folder; the run's verdict is its LAST line.",
+  "world_is": "The --fwd7 mode writes the overlap table into a tracked deliverable of the CT-ai-1 order. Each run therefore changes a committed file. The write is not in any worker's paths unless that worker is the CT-ai-1 owner.",
+  "notes": "Recorded for the CTO and the issuer. Not fixed here: the suite is outside this order's paths. The worktree is now clean of this change; the file was not committed."
+}
+```
