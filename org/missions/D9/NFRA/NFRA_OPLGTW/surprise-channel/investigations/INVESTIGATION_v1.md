@@ -25152,3 +25152,143 @@ name the one known failure instead of silently inheriting it.
   "notes": "A correction is a new row citing the old id. Z-S305 is left as written; this row supersedes it."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S307",
+  "one_line": "Round-38 disposition of Z-S292 after OG-ap-28 Phase B: The release bf9d23b518 (live since 17:57Z) routes the -live segment to the dedicated role gateway-49f-blackdiamond-live-",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S292"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/CODE2_SERVED.json (arm e12, arm_counts)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_OG-ap-28_20261016.md (condition), ap28.AC2 PASS by the issuer's run"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The release bf9d23b518 (live since 17:57Z) routes the -live segment to the dedicated role gateway-49f-blackdiamond-live-read-role (OG-en-12 + OG-ap-29). The CVO's closing condition is met by the served read: (a) a master_admin 49F call returned rows above 0 through that role for all four tools (rows 34, 2, 7, 2 from opal-data-bd, the newest flat dated file, dedicated role on all four); (b) a non-admin principal was refused with 0 S3 requests. The CVO's AC3 reading of the answers remains the CVO's.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The release bf9d23b518 (live since 17:57Z) routes the -live segment to the dedicated role gateway-49f-blackdiamond-live-read-role (OG-en-12 + OG-ap-29). The CVO's closing condition is met by the served read: (a) a master_admin 49F call returned rows above 0 through that role for all four tools (rows 34, 2, 7, 2 from opal-data-bd, the newest flat dated file, dedicated role on all four); (b) a non-admin principal was refused with 0 S3 requests. The CVO's AC3 reading of the answers remains the CVO's."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S308",
+  "one_line": "Round-38 disposition of Z-S293 after OG-ap-28 Phase B: OG-en-11 measured the four 49F BD tools answering no_catalog_row and reading nothing. With MX-c-26's four catalog rows (",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S293"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/CODE2_SERVED.json (arm e12)",
+      "MI msg 35178: the host serves the release catalog, visibility matrix equal"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-en-11 measured the four 49F BD tools answering no_catalog_row and reading nothing. With MX-c-26's four catalog rows (blob b81c48aa3c) and OG-en-12's address resolution live in bf9d23b518, the same four tools read opal-data-bd and returned rows (34, 2, 7, 2) in the e12 arm, so the catalog gap is closed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-en-11 measured the four 49F BD tools answering no_catalog_row and reading nothing. With MX-c-26's four catalog rows (blob b81c48aa3c) and OG-en-12's address resolution live in bf9d23b518, the same four tools read opal-data-bd and returned rows (34, 2, 7, 2) in the e12 arm, so the catalog gap is closed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S309",
+  "one_line": "Round-38 disposition of Z-S301 after OG-ap-28 Phase B: Phase A's naming-gate refusal of the four catalog 49f-live literals was resolved by route (2): the CRO's four lookup-ali",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S301"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-ap-28.md (gate state)",
+      "CTO msg 35145, 35158"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Phase A's naming-gate refusal of the four catalog 49f-live literals was resolved by route (2): the CRO's four lookup-alias rows (ca679b6560, XA-20261016T171531Z-7acd), carried byte-equal in the prelude. The release commit exited 0 with 0 REFUSE. The tier-grammar question (K3) is the CRO's row Z-S304 and is carried to the L10 slug.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Phase A's naming-gate refusal of the four catalog 49f-live literals was resolved by route (2): the CRO's four lookup-alias rows (ca679b6560, XA-20261016T171531Z-7acd), carried byte-equal in the prelude. The release commit exited 0 with 0 REFUSE. The tier-grammar question (K3) is the CRO's row Z-S304 and is carried to the L10 slug."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S310",
+  "one_line": "Round-38 disposition of Z-S303 after OG-ap-28 Phase B: The entry-file prelude was dropped (OG-ap-28 A3) and the registry-row route ruled by the CTO and the laptop CTO; the two",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S303"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/ap28_release.json",
+      "order OG-ap-28 amendment A3 (1a74cf39b7)"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The entry-file prelude was dropped (OG-ap-28 A3) and the registry-row route ruled by the CTO and the laptop CTO; the two registry files went in as the prelude 2dc919cf26, byte-equal to trunk 858e927558. The four entry files are not part of the release.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The entry-file prelude was dropped (OG-ap-28 A3) and the registry-row route ruled by the CTO and the laptop CTO; the two registry files went in as the prelude 2dc919cf26, byte-equal to trunk 858e927558. The four entry files are not part of the release."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S311",
+  "one_line": "Round-38 disposition of Z-S305 after OG-ap-28 Phase B: The e4 arm's 'currency set' wording was the issuer's defect against OG-en-4's ruled spec (currency null with currency_ba",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S305"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-28.round-38-batched-release.md (A4)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/CODE2_SERVED.json"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The e4 arm's 'currency set' wording was the issuer's defect against OG-en-4's ruled spec (currency null with currency_basis source_absent when the source carries none). Order amendment A4 (4102a9e8f1) corrected the definition; the applier re-graded on its recorded counts with no re-deploy (arm true, Z-S306); ap28.AC2 PASS 7 of 7 by the issuer's run.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The e4 arm's 'currency set' wording was the issuer's defect against OG-en-4's ruled spec (currency null with currency_basis source_absent when the source carries none). Order amendment A4 (4102a9e8f1) corrected the definition; the applier re-graded on its recorded counts with no re-deploy (arm true, Z-S306); ap28.AC2 PASS 7 of 7 by the issuer's run."
+}
+```
