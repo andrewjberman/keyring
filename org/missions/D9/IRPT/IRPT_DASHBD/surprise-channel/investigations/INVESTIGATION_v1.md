@@ -23796,3 +23796,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "S1 stays as filed. The as-written verdict for the order is: AC1 FAIL, AC2 PASS, AC3 PASS."
 }
 ```
+
+## IRPT_DASHBD-D2-W246-S6 -- the shared template state is per page load: the print route in its own window reads null and prints the bundle document
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T18:34:43Z",
+  "one_line": "templateState.ts is one module-level variable in one page load. Preview (the export preview on the reporting page) reads the tab's published state; the print route (render/PrintEntry.tsx opened in its own window) is a separate page load, so its PrintDocument reads null and prints the bundle's own PerformanceDocument.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1 (b): PrintEntry.tsx or Preview.tsx reads readTemplateState() to produce PerformanceReportDocument from the SAME state as the tab.",
+  "world_is": "Preview on the reporting page shares the tab's module instance and sees the published state. The print page is opened by URL in its own window and imports its own module instance, so readTemplateState() there is always null. Consequence: the print window never shows the template document; the in-page preview does. Measured by the mounted-tab test (publish, unmount clear) and the PrintDocument test (null reads the bundle document); the cross-window case was not run in a browser.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/reporting/templateState.ts at commit 32a7ff5d (module-level variable, no storage)",
+      "portal/src/pages/InvestorReporting/render/PrintEntry.tsx PrintDocument reads readTemplateState() at commit 32a7ff5d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action in this order. The issuer decides whether the print route should carry the tab's state (a URL or storage read) or stay on the bundle document; the export button's in-page preview is covered."
+}
+```
