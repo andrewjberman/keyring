@@ -2509,3 +2509,12 @@ After both: the issuer's hookup (one tool, registry 121 to 122), then the code r
 
 The other round-close findings are not this cell's: five judgment criteria (`OG-ap-14/18/19/20/hv-2` AC3) are ungraded (the CVO's L9), and `OG-ap-14` and `OG-hv-2` carry no AC3 acceptance row in their instances (the applier `~Z`/`~ZS` files its row or the CVO grades).
 **fanout:** 1 of 1 chains, cap 8. Disjoint from every open cell.
+
+## ADDENDUM R3-T.85 (2.0.0_SA_COO~O, 2026-10-16 ~05:4xZ) -- round 37, workstream NAMING-RELEASE-CLEAN: three lines the commit-time naming gate still refuses in the OG-ap-23 release modules (applier's row NFRA_OPLGTW-Z-S161, msg 34745)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ng-3` | `portal_served.py` types `Scope("mdpf", ...)` twice: derive the label from the bucket as `typed_scope.py` does (no `mdpf` row: a row is global, not per file); one `none_owed` row for `bloomberg_profile` (INSTANCE_PROFILE, an internal audit label at `etfs_silver.py:313`); the full-add gate over all 17 release modules prints no REFUSE | `app/portal_served.py`, one assertion at most in `tests/test_og_gp1.py`, one row in `name_rulings.json` | WORLD | ~111 | `OG-ng-2` merged; `OG-ac-2` hookup merged (the module list includes `mdpf_classification.py`) |
+
+The other 20 + 72 + 1 lines of row Z-S161 are not code cells: the roster and registry copies leave the release commit (the deploy script stages them at bundle time, `OG-ap-23` amendment A2), and the 72 + 1 `scopes.json` / `opal-data-bd` lines were an environment effect of the sparse release tree (`infra/aws/globgrph` missing from its cone), told to `~Z`. `OG-ap-23` now also takes `app/mdpf_classification.py` (the `OG-ac-2` tool; its grant `OG-ap-25` is live before the deploy).
+**fanout:** 1 of 1 chains, cap 8. Disjoint from every other open cell. It is an `OG-ap-23` batch cell: the Phase A re-GO names a new `trunk_sha` after its merge.
