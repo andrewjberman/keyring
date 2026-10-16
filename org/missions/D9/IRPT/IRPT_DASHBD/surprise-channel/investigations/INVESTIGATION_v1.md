@@ -23665,3 +23665,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-W247-S1 -- the composed filled report carries the table's RAW custodial account id as account_id
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W247-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~247",
+  "surfaced_at": "2026-10-16T17:54:57Z",
+  "one_line": "The hop-2 reader composes each account entry's account_id from the table's row_key, and the table's account.last4 row_key is the RAW custodial account id, so the filled document carries the raw id where the directory and the summary builder carry the minted one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "publisher.py at ba3478dab4 (the summary builder, line 514) writes each account entry's account_id as the directory's minted opaque id; the order's checker p174 builds its contract documents with raw account_id values and expects the reader to return them unchanged.",
+  "world_is": "_filled_compose (handler.py, base ba3478dab4, the account_entries append) sets account_id from row_key; the table's account.last4 rows carry RAW custodial ids (measured in the S128 row, 05be852c08). validate_filled_report checks the key set and the window forms only, never the id form. The filled-report switch is OFF, so no document is written today; nothing in this order changed the id form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "handler.py@ba3478dab4 _filled_compose: account_entries.append({\"account_id\": key, ...}) with key = row_key",
+      "publisher.py@ba3478dab4 line 514: the summary builder writes \"account_id\": a for a directory account id",
+      "p174_filled_reader_accounts.py doc_of: account_id values are RAW ids and the reader result must equal the document"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The composed id form is the contract's question for the CTO or CVO; the reader was not changed to mint or drop it, because the order's checker fixes the document as the producer's inverse."
+}
+```
+
