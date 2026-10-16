@@ -8268,3 +8268,30 @@ by dell1 or by this seat.
   "notes": "Filed by the R27 SC-e-107 worker on amendment 1 (the plan itself follows the ruling). Disarm, for the issuer 2.0.0_SA_COO~M1: either amend AC2's check to accept an absent sub-class on a null-sub map row (the issuer amends its own criteria and states the gate limb), or the CTO rules a sub-class for the five. No pair has been cut and nothing was written to AWS. Hazard if left: an apply pair cut on this plan would be asked to pass a check that cannot pass. W97-S1 is not disarmed by this row; the fold map is its disposition path."
 }
 ```
+
+## MDPF_SECCLASS-D1-S43 -- D1-W97-S1 and D1-W97-S2 disarm: the CTO fold ruling resolved the 18 plan_rows could not plan (9 seeded by a co
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S43",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-16T05:05Z",
+  "one_line": "D1-W97-S1 and D1-W97-S2 disarm: the CTO fold ruling resolved the 18 plan_rows could not plan (9 seeded by a committed map, 9 held out), and the AC2 conflict was the issuer's own check demanding a sub-class the ruling forbids; the check is amended and all three criteria read PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_MDPF_SECCLASS_SEED22_FOLDS_20261016.md @1b45af4766 (F1 yes, F2 narrowed, F3 no, F4 F5 F6 yes)",
+      "SEED22-PLAN ok=True planned=13 unresolved=0 seed_pending=9 dollars=413341.59 (check_seed22_plan.py amended: a null sub-class is allowed, the fold check grades each class against the map)",
+      "SEED22-FOLD ok=True planned=13 seed_pending=9 unresolved=0; SEED22-SELFTEST ok=True (35 of 35)",
+      "merged @283e087af6 (first worker) and @e6c7448985 (re-seated worker)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D1-W97-S1: plan_rows accepts an old-list row only on a direct canonical match, so the seed as built writes 4 rows. D1-W97-S2: AC2 and AC3 cannot both pass for the ruled plan.",
+  "world_is": "Both met by the CTO's ruling and the issuer's check amendment, not by any weakening of a grade: AC2 now requires an asset_class and provenance on each planned row, AC3 requires each class to equal the map. D1-S42 (the E_18 repoint makes the old-list-only tickers live candidates) stays ARMED until the seed is applied and read and the 9 held-out rows are named seed_pending on the pair."
+}
+```
