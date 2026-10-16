@@ -2649,3 +2649,19 @@ The CTO ruled (msg 9480, then msg after the issuer's count `RD_COT_REWRITE_OFFLI
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~242`), cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; run on a reference tree: green; four single-fault adapter mutants and one diff mutant: red):** `checks/r149/p171_cot_first_row.py` (DB171-1-AC1..AC3).
+
+## 164. ROUND 149, WORKSTREAM FILLEDRD (2026-10-16 ~15:2xZ, issuer 2.0.0_SA_COO~D2): the hop-2 reader of the 49 Financial publish function (CTO ruling msg 9439)
+
+Row `IRPT_BCKEND-D2-S222`: `read_filled_report_gold` is a stub that raises `NotYetAvailable`, so hop 2 writes nothing even after hop 1's first write. The CTO ruled it deliberate and now owed: ONE `~D2` cell composing the client's document from `filled_report_values` under the filled-report contract, tests on present, absent and refused, the stub test flipped, landing in one drain with any contract touch, the switch staying OFF (turning it on is its own signed pair). Two findings joined the cell while it was specified: row `IRPT_DASHBD-D2-S123` (the publisher's validator accepts a one-word `window_status` and refuses the per-window object the contract and the table carry) and the publish role's missing read grant on the filled prefix; the CTO was told both (the grant by message, the validator by the row).
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `read_filled_report_gold(firm, client_id, s3=None, directory=None)`: client -> directory relationship id -> sha256 hex -> newest partition rows -> the contract document; `NotYetAvailable` for every absent form, `PublishRefused` for a household that cannot be composed; the validator takes the per-window `window_status`; the publish role's read prefixes gain the filled table; tests | DB-b-302 | FWD-10 (and the hop-2 gate of IB-pr-551) | WORLD | none | chain X |
+| 2. The source-map re-pin of `irpt-49f-reporting-publish-lambda` (handler and publisher change) after the drain | NOT CUT | FWD-10 | WORLD | item 1 | later |
+| 3. A signed deploy pair for the 49 Financial publish function: ONE `safe-apply` (plan 0 add / 2 change / 0 destroy: the role policy's read and list prefixes and the function's code), NO switch; and, after hop 1's write is read, the switch pair | NOT CUT | FWD-10 | WORLD | items 1, 2 and `DB-b-300` | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the mapping rule (client id to the directory entry's `relationship_id` to `sha256` hex to `household_ref`) is the producer's own definition of `household_ref` read against the directory's real shape (4,776 clients, one entry each, 530 without a relationship id); whether the two id spaces match is NOT measured until hop 1's first write exists (the pair's after-read measures it); (b) the validator fix sits inside the same cell and block family as the reader because the reader's output is useless without it and both ship in the one publish bundle; the file is `IRPT_BCKEND`'s plumbing (IB-pr-553), so the CTO is told by row S123 and in this section; (c) the reader imports pyarrow inside the function (the publish bundle's layer carries it) and copies the producer's inverse rather than importing the producer, which is not in the bundle; (d) the grant is a READ grant (the first read widening of this publish role), the reason it rides in a signed pair and not in this cell.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~243`), cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; run on a reference tree: green; four single-fault reader mutants and one diff mutant: red):** `checks/r149/p170_filled_reader.py` (DB170-1-AC1..AC3).
