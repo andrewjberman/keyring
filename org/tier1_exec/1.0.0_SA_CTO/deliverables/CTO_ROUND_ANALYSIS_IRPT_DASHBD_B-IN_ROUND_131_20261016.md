@@ -15,3 +15,10 @@
   the feed's own manifest, with the trading-calendar fix above as its criterion. Until then the workstream is correctly idle.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ERRATUM 1 (2026-10-16 ~03:1xZ, on `2.0.0_SA_COO~I2` call 2d0b)
+
+"All three firms" above is wrong. B-IN is the Inflection workstream, and the Scope feed (`pull_inflection_scope_account_returns.py`) writes
+Inflection's table only. The round-132 live read cell is **Inflection only**, rows counted against that feed's own manifest. Cottonwood
+(B-CW, `~C2`) and 49 Financial (B-49F, `~D2`) read their own series in their own workstreams. No second arm.
+
