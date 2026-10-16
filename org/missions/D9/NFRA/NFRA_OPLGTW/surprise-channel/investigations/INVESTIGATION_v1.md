@@ -24501,3 +24501,55 @@ name the one known failure instead of silently inheriting it.
   "notes": "A code/catalog cell follows (not cut here): add DATA_CATALOG rows for blackdiamond/49f-live/silver/{unrealized,transactions,allocations,fees} on the opal-data-bd bucket (and widen gateway-blackdiamond-read-role only as OG-ap-24 signed). The adapter's own tests cannot see this class: they plant the catalog."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W124-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~124",
+  "surfaced_at": "2026-10-16T13:00:43Z",
+  "one_line": "The OG-en-10 surfaces name tests/test_rate_limit.py and tests/test_server_guard.py as existing tests to update; neither exists at the base, so no test pinned the old 429 and none was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/ listing in worktree at 060e0ba6e2: test_ratelimit.py, test_data_entitlement_guard.py, test_deploy_base_guard.py, test_auth_hardening.py; no test_rate_limit.py and no test_server_guard.py",
+      "infra/aws/ec2/opal-gateway/tests/test_ratelimit.py:60@060e0ba6e2: the only enforce_identity assertion (fail-open), kept unchanged",
+      "infra/aws/ec2/opal-gateway/tests/test_og_en10.py (new, this cell): the three named tests drive the real GuardMiddleware refusal branch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell's <paths> name tests/test_rate_limit.py and tests/test_server_guard.py as the existing rate-limit and guard tests to update where they pin a refusal that writes no audit row.",
+  "world_is": "Neither file is in the worktree at 060e0ba6e2, and no existing test pins an identity 429 with no audit row. The new behaviour is covered by tests/test_og_en10.py, which drives the GuardMiddleware refusal branch directly with a stubbed bearer.",
+  "notes": "Owner to decide whether the two named paths should be struck from the cell's surfaces or created by a later cell. No criterion of this cell depends on them: AC2 bounds the write set by regex, and the regex admits them but does not require them."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W124-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~124",
+  "surfaced_at": "2026-10-16T13:00:43Z",
+  "one_line": "OG-en-10 AC02 asks that a burst inside 10 s write ONE row carrying a suppressed count; the synchronous limiter path has no timer, so the burst's folded count is written on the principal's NEXT row, and a burst with no later refusal leaves it unwritten.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/ratelimit.py record_identity_refusal (worktree, this cell): the first refusal of each 10 s span writes a row with suppressed 0; later refusals in the span increment a per-principal count, written as suppressed on that principal's next row",
+      "infra/aws/ec2/opal-gateway/tests/test_og_en10.py test_ogen10_ac02: a burst of five refusals writes one row with suppressed 0; a refusal 11 s later writes a second row with suppressed 4",
+      "infra/aws/ec2/opal-gateway/app/ratelimit.py: no background task or timer exists in the limiter (single in-process worker, prune-on-access)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A burst of refusals inside 10 s writes ONE row carrying a suppressed count (not one row per refusal); a refusal after the 10 s span writes a new row.",
+  "world_is": "Built as the leading-edge form: the burst's first refusal is the one row (suppressed 0), and the folded count is carried by the next row for that principal. A flush-at-window-end form needs a timer the limiter does not have, and a deferred write would lose the first refusal's count if no later refusal arrived. The count_in_window of the first refusal of every span is therefore always written.",
+  "notes": "Instrument trap for any read of suppressed: a principal whose last burst had no later refusal shows no suppressed count for it in the lake. Any reading of the folded refusals must count the 429 responses or the rows, never the suppressed field alone. Remedy, the cell's owner: accept the leading-edge form or name a timer."
+}
+```
