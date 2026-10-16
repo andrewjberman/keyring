@@ -20149,3 +20149,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W219-S1 -- the AR-ty-56 acceptance checker is not materialized in this sparse worktree, so the order's invocation cannot run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W219-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~219",
+  "surfaced_at": "2026-10-16T01:03:54Z",
+  "one_line": "The AR-ty-56 acceptance checker r46_checks.py is tracked at HEAD but absent from this sparse worktree, so the order's invocation returns rc=2 and the acceptance criterion cannot run here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order runs `python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 5 <test file>` from the worktree root and expects R46-TESTS-OK; its dry-run at box/dell2 39eef25c48 reads R46-TESTS-FAIL absent.",
+  "world_is": "Worktree C:/dev/wk-irpt-anlreq-219 at HEAD dbf56b0a3d has core.sparseCheckout=true; its sparse set (git sparse-checkout list) does not include org/tier1_exec. The checker is tracked at that path (git ls-files) but not materialized, so the invocation prints `can't open file ... [Errno 2] No such file or directory` and exits 2. The checker source was read with git show HEAD:<path> into the worker scratch folder only and was not run. The sparse set was not widened and no tree was rebuilt. The offline tests were run at their own path: 15 passed, rc 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --get core.sparseCheckout = true; git sparse-checkout list (C:/dev/wk-irpt-anlreq-219, HEAD dbf56b0a3d) lists .tools, data/transcripts/scripts, docs/contracts, infra/aws/lambda/investor-reporting, infra/aws/lambda/ticket_center, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards; org/tier1_exec is not among them",
+      "git ls-files -- '*R46_CHECKS*' = org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py (tracked; no file in the worktree; ls org/tier1_exec: No such file or directory)",
+      "acceptance invocation output: can't open file '...\\org\\tier1_exec\\2.0.0_SA_COO\\deliverables\\IRPT_ANLREQ_T2\\R46_CHECKS\\r46_checks.py': [Errno 2] No such file or directory; rc=2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W219-S2 -- the order asks for allowedFirmIds as a string set; the ticket service reads a list, so the helper writes an L
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W219-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~219",
+  "surfaced_at": "2026-10-16T01:03:54Z",
+  "one_line": "The cell says to write allowedFirmIds as a DynamoDB string set (SS); the ticket service reads it as a Python list, which a boto3 resource returns for an L and not for an SS, so the helper writes {\"L\": [{\"S\": id}, ...]}.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 2 of the cell says to write allowedFirmIds as a DynamoDB string set ({\"SS\": [...]}) and to use another type only if the service reads another type, saying so in the report; it cites lambda_function.py:419.",
+  "world_is": "The service reads a LIST. lambda_function.py:71 builds the table with boto3.resource; _profile_scope (def at :391) takes val = got.get(\"allowedFirmIds\") at :418, returns unscoped only when val is None (:419-420), accepts only isinstance(val, list) whose elements are all non-empty str (:421-425), and otherwise returns 403 'firm scope malformed' (:426). Line :129 names the same LIST shape. Measured offline with boto3 TypeDeserializer: SS deserializes to a Python set (refused by the list test, so a scoped principal would be refused with 403), L deserializes to a Python list (accepted). The helper writes the L shape; the readback accepts only that shape. No AWS call was made.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:71 (_ddb = boto3.resource('dynamodb')), :391 (def _profile_scope), :418-426 (the allowedFirmIds read, the None branch, the list test, the 403 malformed return), :129 (LIST named in a comment), at worktree HEAD dbf56b0a3d",
+      "offline run (no AWS): boto3 TypeDeserializer().deserialize({'SS': ['a','b']}) -> set {'a','b'}; deserialize({'L': [{'S':'a'},{'S':'b'}]}) -> list ['a','b']",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~219/fwd5_driver/fwd5_mint.py item_for and readback_ok; test_cross_firm_mint_item_carries_parameter_firm_and_ids_as_list passes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
