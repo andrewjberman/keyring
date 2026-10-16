@@ -80,6 +80,24 @@ def subs():
     return 0
 
 
+def log_events(ms, pattern):
+    """Every event of the collector log group since ms matching pattern, following nextToken (a filtered read can return a partial page)."""
+    events, token, pages = [], None, 0
+    while True:
+        args = ["logs", "filter-log-events", "--log-group-name", LOG_GROUP, "--start-time", ms, "--filter-pattern", pattern]
+        if token:
+            args += ["--next-token", token]
+        rc, out, err = aws(*args)
+        if rc != 0:
+            return None, pages
+        d = json.loads(out)
+        events += d.get("events", [])
+        pages += 1
+        token = d.get("nextToken")
+        if not token or pages > 200:
+            return events, pages
+
+
 def fires(since_file=None):
     import datetime as dt
 
@@ -92,18 +110,18 @@ def fires(since_file=None):
         print("R2-FIRES-REFUSED no readable start time in the file")
         return 1
     ms = str(int(started.timestamp() * 1000))
-    rc, out, err = aws("logs", "filter-log-events", "--log-group-name", LOG_GROUP, "--start-time", ms, "--filter-pattern", "REPORT RequestId", "--limit", "50")
-    if rc != 0:
+    events, pages_r = log_events(ms, "REPORT RequestId")
+    if events is None:
         print("R2-FIRES-REFUSED no collector log group yet")
         return 1
-    reports = [e["message"] for e in json.loads(out).get("events", [])]
+    reports = [e["message"] for e in events]
     bad_reports = [r for r in reports if "Status: timeout" in r or "Status: error" in r]
-    rc, out, err = aws("logs", "filter-log-events", "--log-group-name", LOG_GROUP, "--start-time", ms, "--filter-pattern", "?errorMessage ?Traceback ?\"Task timed out\"", "--limit", "5")
-    errs = len(json.loads(out).get("events", [])) if rc == 0 else -1
+    err_events, _pages = log_events(ms, '?errorMessage ?Traceback ?"Task timed out"')
+    errs = len(err_events) if err_events is not None else -1
     if len(reports) < 2 or errs != 0 or bad_reports:
-        print("R2-FIRES-REFUSED invocations_since_start=%d timed_out_or_errored_reports=%d function_error_lines=%d" % (len(reports), len(bad_reports), errs))
+        print("R2-FIRES-REFUSED invocations_since_start=%d (pages=%d) timed_out_or_errored_reports=%d function_error_lines=%d" % (len(reports), pages_r, len(bad_reports), errs))
         return 1
-    print("R2-FIRES-OK invocations_since_start=%d function_errors=0 timeouts=0" % len(reports))
+    print("R2-FIRES-OK invocations_since_start=%d (pages=%d) function_errors=0 timeouts=0" % (len(reports), pages_r))
     return 0
 
 
