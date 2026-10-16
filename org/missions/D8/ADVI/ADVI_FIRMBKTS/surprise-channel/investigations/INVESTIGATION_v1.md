@@ -8560,3 +8560,77 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Owner: the issuer 2.0.0_SA_COO~B1, for the round-9 issuance: either the face names the order file in <paths> for the flip, or the face states that the issuer flips it (as FB-f-7 AMENDMENT 1 item 4 states for that order). Recurrence of the mechanism, filed as a new row because the open rows D1-W16-S4 and D1-W17-S4 cannot be edited here. Disarm: none (INERT)."
 }
 ```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~85 (FB-p-1, door6 consumer census, round 9)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-W85-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~85",
+  "surfaced_at": "2026-10-16T18:20:00Z",
+  "one_line": "The writer of gold/meta/pipeline-complete.json is not in the paths the FB-p-1 search names: comp-find over infra/, lib/, integrations/ and .tools/ finds no writer; the writer is data/inf/scripts/gold/orion-gold-dispatch.sh:1906.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/orion-gold-dispatch.sh:1906 at c8ed695f93 (worktree wk-ADVI_FIRMBKTS-85): aws s3 cp - s3://INF_S3_BUCKET/gold/meta/pipeline-complete.json, guarded at :1894-1902 by MODE chain, TARGET full, DRY_RUN 0, chain_exit 0",
+      "comp-find -i 'pipeline-complete' over infra/ (51 hits, 7905 files), lib/ (0 hits, 831 files), integrations/ (0 hits, 127 files), .tools/ (0 hits, 590 files): every infra hit is a reader, a mention or config; no writer"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-p-1 step 5 searches infra/, lib/, integrations/ and .tools/ for the key and expects the gold chain's tail writer to be found there.",
+  "world_is": "The only writer of the key in the repository is data/inf/scripts/gold/orion-gold-dispatch.sh, a path outside the searched set. The census record names it with file and line.",
+  "notes": "The census record (DOOR6_CENSUS.json, writer_determined true) carries the writer from data/. No disarm is needed; the retirement's writer-stop step should name this script and line. Disarm: none (INERT)."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~85 (FB-p-1, worker bar)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-W85-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~85",
+  "surfaced_at": "2026-10-16T18:20:00Z",
+  "one_line": "The surprise-row schema the worker bar names, org/surprise_channel/schemas/investigation_item.schema.json, is absent from this worktree, so the row shape was taken from the sibling rows of this file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of the worktree path org/surprise_channel/ at c8ed695f93 (wk-ADVI_FIRMBKTS-85): No such file or directory; the gate .tools/surprise-row-gate.py is present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker bar says each row is written per org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "That schema path is not in the worktree this worker was cut from; the schema could not be read and the fields were copied from the existing rows of INVESTIGATION_v1.md.",
+  "notes": "The gate .tools/surprise-row-gate.py is the check at commit; its verdict on these two rows is the test of the shape. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-W85-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~85",
+  "surfaced_at": "2026-10-16T18:24:00Z",
+  "one_line": "The FB-p-1 order's worker face says to flip its <status> to complete in the proof commit, but the worker face carries no <status> element.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-p-1.door6-consumer-census.md lines 1-73 at 3a9b155680 (wk-ADVI_FIRMBKTS-85): line 4 says flip <status> to complete; a grep of lines 1-73 for status returns prose and JSON-field matches only (lines 4, 31, 33, 42, 46, 72), with no <status> element"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's flip step names a <status> element of the task order to change to complete in the same commit as the proof instance.",
+  "world_is": "The element is not in the worker face (lines 1-73); the worker did not read the record face below the boundary, so the flip was not performed and is left for the issuer or the drain.",
+  "notes": "The proof instance and the census record are committed; the order's status flip is the open step. Disarm: none (INERT)."
+}
+```
