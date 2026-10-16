@@ -20832,3 +20832,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. The registry_row_exists field records false with the probe's denominator; the zero is not evidence of a refusal either way."
 }
 ```
+
+## IRPT_DASHBD-D2-W229-S1 -- the source table contract at 0.4.3 holds no income_claim column, so the 0.3.1 source words cite a column that no commit carries
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W229-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~229",
+  "surfaced_at": "2026-10-16T05:22:32Z",
+  "one_line": "The source table contract at this base is 0.4.3 and holds no income_claim column; the 0.4.4 amendment that the series claim cites (DB-b-284) is in no commit on any branch, so the series income_claim source words cite a column this tree does not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-285 Why (1) and worker face step 2: the claim is carried from the source table contract's income_claim column (0.4.4; the origin is cell DB-b-284), and the series field's source words carry that column unchanged.",
+  "world_is": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json at 857e3085b3 reads contract_version 0.4.3 and contains no income_claim text (zero matches). git log --all -S income_claim over that path finds no commit, so no 0.4.4 bytes exist on any branch at this read. The 0.3.1 source words therefore say the column is declared by that amendment and is not in the 0.4.3 file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json@857e3085b3",
+      "git log --all -S income_claim -- org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (no commit found)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. DB153-1-AC1 to AC3 PASS with the words as written. The ARMED standing is the rule that a contract may not name a source its source file does not hold; the disarm is the DB-b-284 landing or the issuer's amendment of the source words."
+}
+```
+
+## IRPT_DASHBD-D2-W229-S2 -- the checker's docstring counts six and nine for the reference validator; the order and the checker's own code count seven and eight
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W229-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~229",
+  "surfaced_at": "2026-10-16T05:22:32Z",
+  "one_line": "The issuer's checker p153_series031.py docstring says its reference validator accepts six documents and rejects nine; the order's AC2 and the checker's own code and selftest say seven and eight.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-285 criterion DB153-1-AC2: a reference validator driven only by the contract's declarations accepts seven documents and rejects eight.",
+  "world_is": "p153_series031.py at 857e3085b3, line 9 (module docstring), reads 'accepts six and rejects nine'. Its selftest asserts check_behaviour(good) == (7, 8) (line 261), and the AC2 run prints 7 accepted and 8 rejected. The docstring is stale; no criterion result depends on it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r148/p153_series031.py@857e3085b3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. Recorded for the issuer; the checker file is outside this grant and was not edited."
+}
+```
