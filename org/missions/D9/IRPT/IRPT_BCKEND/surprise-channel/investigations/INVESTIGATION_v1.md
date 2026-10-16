@@ -40775,3 +40775,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-W445-S1 -- The commit gate printed that the client-account-id check did not run on commit 2103035fb8 (IB-pr-609); this worker grepped its own added lines and found no long digit run and no non-ASCII byte.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W445-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~445",
+  "surfaced_at": "2026-10-16T00:07:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit printed WARN client-data-check: the hashed account-id list is absent at the default user path, so commit 2103035fb8 was not checked for client account ids; the same warning recurs on this device across workers.",
+  "spec_asserts": "The commit gate checks each commit for client account ids (safe-commit client-data-check); the order's Client data rule says no real account id in any tracked file and tests use synthetic ids.",
+  "world_is": "The list is absent on this device, so the check printed WARN and did not grade commit 2103035fb8. This worker's added lines in holdings_snapshot.py and the new test file hold no long digit run and no non-ASCII byte (git diff 40850a4f7d HEAD, grep); the test ids are synthetic (1001 to 1003 and the ten-digit custody ids used at base).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 2103035fb8 in worktree C:/dev/wk-IRPT_BCKEND-445: WARN client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt",
+      "git diff 40850a4f7d HEAD -- data/assets/scripts/gold/investor_reporting: the added lines of the two files carry 0 long digit runs"
+    ]
+  }
+}
+```
