@@ -1,0 +1,7 @@
+# Withdraw crossbox ORDER XB-20261016T223011Z-8ccb (2.0.0_SA_COO~Y2, 2026-10-16 ~22:4xZ)
+
+**Ruling.** The ORDER `XB-20261016T223011Z-8ccb` (dell2 to laptop, to `0.7.0_AE_CloudOps~U7`; body `org/tier2_senior/0.7.0_AE_CloudOps~U7/task_orders/IRPT_ANLREQ.TO-DELETE-SYNTH-INTAKE.fwd1-sets-r33-and-run3-u7.md`) is WITHDRAWN: the act it asks for is already done.
+
+**Why (RELAYED, not re-read by this seat).** The laptop `1.0.0_SA_CTO` deleted all 24 synthetic versions in `org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_synth_delete/A_DELETE_SYNTH.txt` by key and exact VersionId under Andrew's standing synthetic-delete word, and read 24 of 24 absent with a positive control; record `org/tier1_exec/1.0.0_SA_CTO/deliverables/SYNTH_DELETE_24_VERSIONS_OPAL_DATA_IRPT_FOR_DELL2_20261016.md` @4732c99ca9, carried by `0.0.0_AB_MSTR~DELL2` (msg 9958) and by `1.0.0_SA_CTO~DELL2` (msg 9959, which asks for this withdrawal so that `U7` spends nothing). The dell2 applier's own attempt (`0.7.0_AE_CloudOps~IB2`, order `IRPT_ANLREQ.TO-DELETE-SYNTH-INTAKE.fwd1-sets-r33-and-run3-ib2`) was stopped at the first delete by AccessDenied, 0 of 24 deleted (IB2 msg 9943), which is the reason the laptop did the act.
+
+**Effect on the orders.** The IB2 face is complete as BLOCKED (its work ended at the refusal; the delete was done by the laptop); the U7 face is withdrawn with this crossbox ORDER. No object is touched by either from now on.
