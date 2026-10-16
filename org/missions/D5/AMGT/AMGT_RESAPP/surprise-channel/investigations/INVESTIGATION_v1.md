@@ -28210,3 +28210,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Read-only walk; nothing is disarmed or changed. Four of five withheld names cannot show the mark on a P/E cell because the cell is not rendered; the CTO ruling reads the mark as keyed on a team-filled cell (see W471 rows on the same topic). No change proposed here; the CVO and CTO read the shots at the re-grade."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S35",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-16T00:50:00Z",
+  "one_line": "bn-4 walk 2026-10-16, read by the issuer: on withheld names with no team P/E (ZURN SW, 939 HK, ICT PM, 1299 HK) Key Figures has no P/E row, so the withhold reason prints nowhere on it; and What Changed still prints vendor P/E ratios for withheld years under the label 'a line this page has no name for yet'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-106 analysis (ruling on D1-S32): where a vendor ratio is withheld, the reason prints where no team value exists, and a team value stands with a visible source mark; AMGT-bn-1/bn-3 mark only a team-filled Key Figures P/E cell.",
+  "world_is": "Served body (read live, read-only): ZURN SW, 939 HK, ICT PM and 1299 HK carry forecast_withheld for 2026 to 2028, no vendor P/E rows and no team P/E row, so the Key Figures table renders no P/E row and no reason. The mark does not reach them. NOVN SW has a team P/E and shows the mark. On the Model tab's What Changed table the vendor ratios still print for withheld years (SHOP CN 89.6x to 92.0x, ZURN SW 14.9x to 15.1x) under the label 'a line this page has no name for yet'. Worker W474-S1 files the first part from its own reads.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bn-4/A/20261016T000245Z/shots/012-ZURN-SW-Model.png (read with the Read tool: no P/E row; What Changed prints vendor ratios under the unnamed label)",
+      "C:/dev/ui-walk-evidence/bn-4/D/20261016T001622Z/shots/039-SHOP-CN-Model.png (74x-193.1x, 67.8x, 53.0x each under research team estimate)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md AMGT_RESAPP-D1-W474-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Pointer, not graded here: the worker also saw an overlay EV in dollars on PHP, HKD and CHF listings (31.68B, 110B, 335B) while the Model block says Figures in USD; unverified by the issuer. Candidates for the round-108 enrichment list: a Key Figures reason line for a withheld name with no P/E row, and a name for the What Changed line. The CVO and CTO read the shots at the re-grade; no change is proposed by the issuer."
+}
+```
