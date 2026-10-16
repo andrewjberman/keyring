@@ -95,3 +95,19 @@ This addendum is the explicit word. The round-18 line therefore reads met for 28
   change reviewed code to fit rows that carry no key at all.
 - `~MI` states the exact field shape against `ctx.prefix`. A catalog row must never be keyed in a way that makes another 49F tool
   resolve a row it should not.
+
+### Amendment ~13:3xZ (COO~MI msg 35027): (a) RULED -- an `address` lookup field; the row's `prefix` stays the true S3 path
+
+- **Why the ~13:3xZ ruling cannot serve as cut:** `Ctx.prefix` returns the row's `prefix`, and `typed_scope.list_keys` uses that
+  string verbatim as the S3 Prefix (`client_core.py:242`, `typed_scope.py:79`). `s3://opal-data-bd/blackdiamond/49f-live/` is empty,
+  so re-keying the prefix would make the row resolve, list nothing, and state a false S3 path.
+- **Ruled (a):** the four rows gain `address: blackdiamond/49f-live/silver/<table>/`, and their `prefix` stays `silver/<table>/`.
+  `Ctx.prefix` matches the request against `address` where a row carries one, and returns the row's real `prefix`.
+- **Owners:** `2.0.0_SA_COO~MI` owns the catalog field. `2.0.0_SA_COO~O` owns the code, about 5 lines in NFRA_OPLGTW.
+- **Conditions:**
+  - an `address` is unique across the catalog, and no `address` equals another row's `prefix`;
+  - the read goes to the row's own `bucket` (`opal-data-bd`), never to the default bucket;
+  - a test proves a hit returns the real prefix and bucket, that a request in another firm's segment does not resolve, and that rows
+    without `address` resolve exactly as before.
+- **(b) is refused.** An adapter that builds its own path bypasses the catalog: the lookup contract, and the fence that reads it,
+  would no longer see that read.
