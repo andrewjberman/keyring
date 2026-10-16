@@ -1,0 +1,77 @@
+{
+  "schema": "intake-fetch/1",
+  "batch": "intake-20261016-yfinance-linux",
+  "requested": {
+    "name": "pytz",
+    "version": "2025.2",
+    "python_tag": "py2.py3",
+    "abi_tag": "none",
+    "platform_tag": "any",
+    "file_name": "pytz-2025.2-py2.py3-none-any.whl"
+  },
+  "index_base": "https://pypi.org",
+  "requests": [
+    {
+      "url": "https://pypi.org/pypi/pytz/2025.2/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 24981,
+      "at": "2026-10-16T07:02:35Z"
+    },
+    {
+      "url": "https://pypi.org/pypi/pytz/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 564844,
+      "at": "2026-10-16T07:02:35Z"
+    },
+    {
+      "url": "https://pypi.org/integrity/pytz/2025.2/pytz-2025.2-py2.py3-none-any.whl/provenance",
+      "method": "GET",
+      "status": 200,
+      "bytes": 9399,
+      "at": "2026-10-16T07:02:35Z"
+    },
+    {
+      "url": "https://files.pythonhosted.org/packages/81/c4/34e93fe5f5429d7570ec1fa436f1986fb1f00c3e0f43a589fe2bbcd22c3f/pytz-2025.2-py2.py3-none-any.whl",
+      "method": "GET",
+      "status": 200,
+      "bytes": 509225,
+      "at": "2026-10-16T07:02:35Z"
+    }
+  ],
+  "published": {
+    "sha256": "5ddf76296dd8c44c26eb8f4b6f35488f3ccbf6fbbd7adee0b7262d43f0ec2f00",
+    "size": 509225,
+    "upload_time": "2025-03-25T02:24:58.468169Z",
+    "yanked": false,
+    "requires_python": null
+  },
+  "project": {
+    "release_count": 125,
+    "first_release_at": "2005-08-19T06:03:07Z",
+    "this_release_at": "2025-03-25T02:24:58.468169Z"
+  },
+  "attestation": "present",
+  "attestation_url": "https://pypi.org/integrity/pytz/2025.2/pytz-2025.2-py2.py3-none-any.whl/provenance",
+  "held_path": "holding/intake-20261016-yfinance-linux/pytz-2025.2-py2.py3-none-any.whl",
+  "held_sha256": "5ddf76296dd8c44c26eb8f4b6f35488f3ccbf6fbbd7adee0b7262d43f0ec2f00",
+  "held_bytes": 509225,
+  "outcome": "held",
+  "reason": "digest and size equal the published values",
+  "fetched_by": "0.9.0_WK_NFRA_CTLPLN~132",
+  "device": "laptop",
+  "at": "2026-10-16T07:02:35Z",
+  "approval": {
+    "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md",
+    "sha256": "2c354d03c2f427537f55b14c576669e66b7ddbdc18dfdfb38453cf0e6cdfc47e",
+    "matched": true
+  },
+  "release_files": [
+    "pytz-2025.2-py2.py3-none-any.whl",
+    "pytz-2025.2.tar.gz"
+  ],
+  "index_file_name": "pytz-2025.2-py2.py3-none-any.whl",
+  "received_sha256": "5ddf76296dd8c44c26eb8f4b6f35488f3ccbf6fbbd7adee0b7262d43f0ec2f00",
+  "received_bytes": 509225
+}

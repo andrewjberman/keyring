@@ -1,0 +1,228 @@
+{
+  "schema": "intake-check/1",
+  "batch": "intake-20261016-yfinance-linux",
+  "file_name": "websockets-16.0-py3-none-any.whl",
+  "held_sha256": "1637db62fad1dc833276dded54215f2c7fa46912301a24bd94d45d46a011ceec",
+  "checks": [
+    {
+      "n": 1,
+      "name": "sha256 equals the digest the index publishes",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "re-read from disk now: sha256 and size equal the index's published values",
+        "computed_sha256": "1637db62fad1dc833276dded54215f2c7fa46912301a24bd94d45d46a011ceec",
+        "published_sha256": "1637db62fad1dc833276dded54215f2c7fa46912301a24bd94d45d46a011ceec",
+        "computed_size": 171598,
+        "published_size": 171598,
+        "record_held_sha256_matches_disk": true
+      },
+      "rules_out": "a file altered in transit or served by an impostor",
+      "leaves": "anything the real project published"
+    },
+    {
+      "n": 2,
+      "name": "name, version and tags are exactly the approved line",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "file name, METADATA, WHEEL tags and the approved list all say websockets==16.0",
+        "parsed_file_name": {
+          "dist": "websockets",
+          "version": "16.0",
+          "build": "",
+          "python_tag": "py3",
+          "abi_tag": "none",
+          "platform_tag": "any"
+        },
+        "metadata_name": "websockets",
+        "metadata_version": "16.0",
+        "wheel_tags": [
+          "py3-none-any"
+        ],
+        "approved_line_sought": "websockets==16.0",
+        "approved_list": "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md",
+        "on_approved_list": true
+      },
+      "rules_out": "a near-name package; a resolver substituting another version or pulling an unlisted package",
+      "leaves": "a wrong approval"
+    },
+    {
+      "n": 3,
+      "name": "the version is one this machine already runs",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "an installed distribution of the same name and version exists here: websockets-16.0.dist-info",
+        "installed": [
+          "websockets-16.0.dist-info"
+        ],
+        "installed_versions": [
+          "16.0"
+        ]
+      },
+      "rules_out": "a brand-new release nobody has used",
+      "leaves": "a build for Python 3.14 that differs from the 3.12 build of the same version"
+    },
+    {
+      "n": 4,
+      "name": "the release's age and the project's earlier releases",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "release 278.92 days old (min 14); 52 earlier releases (min 3)",
+        "this_release_at": "2026-01-10T09:22:21.280709Z",
+        "first_release_at": "2013-11-14T16:29:28.649221Z",
+        "release_count": 53,
+        "earlier_releases": 52,
+        "age_days": 278.92,
+        "min_release_age_days": 14,
+        "min_earlier_releases": 3,
+        "yanked": false
+      },
+      "rules_out": "a package or release published days ago",
+      "leaves": "an old compromise not yet found"
+    },
+    {
+      "n": 5,
+      "name": "build attestation present or absent",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "the index shows a build attestation for this file",
+        "attestation": "present",
+        "url": "https://pypi.org/integrity/websockets/16.0/websockets-16.0-py3-none-any.whl/provenance"
+      },
+      "rules_out": "where present: a file uploaded by hand from a stolen account",
+      "leaves": "where absent: nothing; many projects publish none"
+    },
+    {
+      "n": 6,
+      "name": "the archive opened and listed, never installed",
+      "verdict": "failed",
+      "evidence": {
+        "summary": "compared=48 missing=0 extra=0 differ=46: 46 of 48 .py files differ from the installed copy: ['websockets/__init__.py', 'websockets/__main__.py', 'websockets/auth.py', 'websockets/cli.py', 'websockets/client.py', 'websockets/connection.py', 'websockets/datastructures.py', 'websockets/exceptions.py', 'websockets/frames.py', 'websockets/headers.py', '... (+36 more; full list in the record)']",
+        "installed_copy": "<site-packages>/websockets-16.0.dist-info",
+        "py_in_wheel": 48,
+        "py_identical": 2,
+        "py_compared": 48,
+        "py_missing_count": 0,
+        "py_missing": [],
+        "py_extra_count": 0,
+        "py_extra": [],
+        "installed_record_readable": true,
+        "py_differing_count": 46,
+        "py_differing": [
+          "websockets/__init__.py",
+          "websockets/__main__.py",
+          "websockets/auth.py",
+          "websockets/cli.py",
+          "websockets/client.py",
+          "websockets/connection.py",
+          "websockets/datastructures.py",
+          "websockets/exceptions.py",
+          "websockets/frames.py",
+          "websockets/headers.py",
+          "websockets/http.py",
+          "websockets/http11.py",
+          "websockets/imports.py",
+          "websockets/protocol.py",
+          "websockets/proxy.py",
+          "websockets/server.py",
+          "websockets/streams.py",
+          "websockets/typing.py",
+          "websockets/uri.py",
+          "websockets/utils.py",
+          "websockets/version.py",
+          "websockets/asyncio/async_timeout.py",
+          "websockets/asyncio/client.py",
+          "websockets/asyncio/compatibility.py",
+          "websockets/asyncio/connection.py",
+          "websockets/asyncio/messages.py",
+          "websockets/asyncio/router.py",
+          "websockets/asyncio/server.py",
+          "websockets/extensions/__init__.py",
+          "websockets/extensions/base.py",
+          "websockets/extensions/permessage_deflate.py",
+          "websockets/legacy/__init__.py",
+          "websockets/legacy/auth.py",
+          "websockets/legacy/client.py",
+          "websockets/legacy/exceptions.py",
+          "websockets/legacy/framing.py",
+          "websockets/legacy/handshake.py",
+          "websockets/legacy/http.py",
+          "websockets/legacy/protocol.py",
+          "websockets/legacy/server.py",
+          "websockets/sync/client.py",
+          "websockets/sync/connection.py",
+          "websockets/sync/messages.py",
+          "websockets/sync/router.py",
+          "websockets/sync/server.py",
+          "websockets/sync/utils.py"
+        ],
+        "compiled_count": 0,
+        "compiled": [],
+        "hooks_only_in_wheel": [],
+        "hooks_also_in_installed_copy": [
+          "entry_point console_scripts:websockets = websockets.cli:main"
+        ],
+        "unsafe_member_names": []
+      },
+      "rules_out": "code added outside the compiled files",
+      "leaves": "code inside the compiled files"
+    },
+    {
+      "n": 7,
+      "name": "Windows' own malware scan of the file",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "on-access scan by Little Dog Tech Managed Antivirus Antimalware, state enabled and current; file present and unchanged after 20 s; no on-demand verdict available",
+        "decoding": "productState is read as six hex digits 0xAABBCC: BB is real-time protection (0x10 or 0x11 on; 0x00 or 0x01 off; any other byte unknown); CC is the definitions (0x00 current; 0x10 out of date; any other byte unknown); unknown is never treated as on or current. Worked examples: 393472 = 0x060100 -> off; 266240 = 0x041000 -> on, definitions current.",
+        "scan_wait_seconds": 20,
+        "limit": "No test-virus file was planted as a control, because it would raise the managed product's alarm; so this check shows that an enabled, current product did not remove or alter the file within the wait, and does not show that the product inspected it.",
+        "products": [
+          {
+            "display_name": "Windows Defender",
+            "name_non_ascii_replaced": false,
+            "state": 393472,
+            "hex": "0x060100",
+            "realtime": "off",
+            "definitions": "current"
+          },
+          {
+            "display_name": "Little Dog Tech Managed Antivirus Antimalware",
+            "name_non_ascii_replaced": false,
+            "state": 266240,
+            "hex": "0x041000",
+            "realtime": "on",
+            "definitions": "current"
+          }
+        ],
+        "products_count": 2,
+        "active": [
+          "Little Dog Tech Managed Antivirus Antimalware"
+        ],
+        "copy_name": "websockets-16.0-py3-none-any.whl.scan-copy",
+        "stale_copy_removed": false,
+        "problems": [],
+        "held_after": "unchanged",
+        "copy_after": "unchanged",
+        "copy_cleanup": "removed",
+        "held_sha256_before": "1637db62fad1dc833276dded54215f2c7fa46912301a24bd94d45d46a011ceec",
+        "copy_sha256_readback": "1637db62fad1dc833276dded54215f2c7fa46912301a24bd94d45d46a011ceec"
+      },
+      "rules_out": "known malware",
+      "leaves": "anything new or targeted"
+    },
+    {
+      "n": 8,
+      "name": "a person reads the result of 1 to 7 and signs the batch",
+      "verdict": "awaiting",
+      "evidence": {
+        "summary": "check 8 awaits the signature: the signature file does not exist",
+        "signer": null,
+        "path": null
+      },
+      "rules_out": "a tool's silent failure being read as a pass",
+      "leaves": "what none of 1 to 7 can see"
+    }
+  ],
+  "verdict": "not_checked",
+  "checked_by": "0.9.0_WK_NFRA_CTLPLN~132",
+  "at": "2026-10-16T07:21:20Z"
+}
