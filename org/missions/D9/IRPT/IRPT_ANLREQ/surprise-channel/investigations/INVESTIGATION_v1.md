@@ -19991,3 +19991,56 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W220-S1 -- the R45 acceptance checker named by AR57-ty-AC1 is tracked at HEAD but outside this worktree's sparse cone
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W220-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~220",
+  "surfaced_at": "2026-10-16T01:08:08Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The acceptance invocation of TO-AR-ty-57 (AR57-ty-AC1) names org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R45_CHECKS/r45_checks.py; that folder is outside this worktree's sparse cone, so the file is absent on disk and the invocation returns rc=2.",
+  "spec_asserts": "TO-AR-ty-57 runs python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R45_CHECKS/r45_checks.py rec <record> 6 from the worktree root; its refusal clause says that if the cone lacks a folder, the worker files a BLOCKING surprise row naming it.",
+  "world_is": "The checker is tracked at HEAD dbf56b0a3d (blob fcf32aed6e), but git sparse-checkout list of wk-IRPT_ANLREQ-220 has no org/tier1_exec entry and the file is not on disk. The named invocation printed 'can't open file' and exited 2. The record passes a read-only copy of the same check logic (R45-REC-OK rows=23, non-authoritative); AC1 is therefore FAIL for the order, not PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree HEAD org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R45_CHECKS/ at dbf56b0a3d lists r45_checks.py (blob fcf32aed6e)",
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-220 holds no org/tier1_exec entry (grep -c tier1_exec returned 0)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~220/FWD4_TICKET_WRITE_ROUTES_MAP.md is the record; the named invocation was run from the worktree root and returned rc=2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not widened by this worker: the order names a sparse-add only for portal/src, and the refusal clause names a BLOCKING row. The order stays open until the checker is reachable at its named path or the order names another checker."
+}
+```
+
+## IRPT_ANLREQ-D2-W220-S2 -- the order says the resident has its own principal; the ticket service names none and the resident code makes no ticket call
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W220-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~220",
+  "surfaced_at": "2026-10-16T01:08:08Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The ticket service admits no resident principal; the only service subjects that can write a ticket are svc-ticket-form, svc-analyst-intake, svc-commentary and svc-irpt-packager, and the resident's code makes no ticket-service call.",
+  "spec_asserts": "TO-AR-ty-57 worker face: the resident and the packager have their own principals (svc-*), and the enumeration covers the resident's principal and any other svc-* the service names.",
+  "world_is": "infra/aws/lambda/ticket_center/lambda_function.py names svc-ticket-form, svc-analyst-intake and svc-commentary in the CREATE matrix row (line 185) and svc-irpt-packager as type data (line 130); principal_class returns UNRESOLVABLE for any other service subject (line 355). A named-folder search of infra/aws/lambda/investor-reporting/ycharts/generate (tests excluded) found no svc- token and no tickets/ path. FWD-1 hops 6 to 9 therefore hold no ticket-service write; the record's row for the resident is NOT-APPLICABLE.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:185 and :130 and :355 at dbf56b0a3d, read in the worktree",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:220 at dbf56b0a3d: the READY path prints a warning when no queue URL is set",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~220/FWD4_TICKET_WRITE_ROUTES_MAP.md rows 11 and 12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
