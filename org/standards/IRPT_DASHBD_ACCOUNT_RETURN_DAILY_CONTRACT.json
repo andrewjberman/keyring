@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.4.2",
+  "contract_version": "0.4.3",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
   "authored_by": "0.4.0_DS_ClientPlatform~S",
@@ -57,6 +57,11 @@
         "source": "orion",
         "flow_claim": "absent"
       },
+      "also_nullable_when": [
+        {
+          "source": "computed from Black Diamond values and flows"
+        }
+      ],
       "nullable_when_absent": true
     },
     {
@@ -422,7 +427,8 @@
         }
       },
       "token_census_finding": "measured and inferred are existing words of the repo's claim vocabulary (measured / inferred / held / absent, THRESHOLD_CLAIMS in account_return_daily.py), and the sampled hits use that same meaning, so the new column adds a field and no new meaning. The one name hit, market_value_eod_claim, is the Scope adapter's own field carrying the same two values; the census was measured by git grep -c -w at the census commit, one scan per token."
-    }
+    },
+    "v043": "v043 (IRPT_DASHBD round 147, cell DB-b-282): income_received is nullable where source is 'computed from Black Diamond values and flows'. That method states no separate income basis (its adapter says so: income is inside V through the cash the account holds), so income_received is null on every row of that source. The declaration is the attribute also_nullable_when on income_received, beside nullable_when; nullable_when itself is unchanged and nullable stays false in general, so a null income on any other source is still invalid. No enum member is added: source, flow_claim, reason_class and every other enum are byte-identical, so the word-boundary census of the earlier records is untouched."
   },
   "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
   "schema_hash_with_optional": "13bb195f137e2352b5775a2b2e4291a225079bedf8974d20e9987473470818a6",
@@ -475,6 +481,12 @@
         "0.4.1 added the optional columns row_status (PRESENT | ABSENT) and reason_class (eight values, required exactly when row_status is ABSENT), and VENDOR_REPORTED as a return_basis value.",
         "0.4.1 made account_id nullable only where reason_class is UNMAPPED_ACCOUNT (source_account_id required there), made market_value_eod and the two flow columns nullable on an ABSENT row, and required return_basis VENDOR_REPORTED on every Orion row; the 19 columns, their types and schema_hash were unchanged."
       ]
+    },
+    {
+      "contract_version": "0.4.2",
+      "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
+      "schema_hash_with_optional": "13bb195f137e2352b5775a2b2e4291a225079bedf8974d20e9987473470818a6",
+      "changes": "income_received became nullable for the Black Diamond-computed source (computed from Black Diamond values and flows), declared by also_nullable_when; neither schema hash changes."
     }
   ],
   "schema_hash_control": "THE METHOD IS CONTROLLED, not asserted: recomputing it over the same ARROW_SCHEMA with guard_state removed reproduces 0.1.0's published hash b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058 exactly. A hash whose method could not reproduce the previous published value would be unverifiable.",

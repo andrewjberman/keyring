@@ -20410,3 +20410,81 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "S103 stays ARMED until the condition holds. Next acts of this seat: the rule-24 record (four postulates plus a word-boundary token census) for Opal's action and type enums over this denominator, then the contract, then the per-firm producer. DISARMS WHEN: S103 disarms when IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json and the per-firm producer are committed and the CVO has graded the cell that landed them (L9)."
 }
 ```
+
+## IRPT_DASHBD-D2-W801-S1 -- repo-wide lint carries one error outside the grant (TO DB-f-801 step 4)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W801-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~801",
+  "surfaced_at": "2026-10-16T02:59:14Z",
+  "one_line": "TO DB-f-801 step 4 asks for bun run lint with 0 errors; the repo-wide lint of the candidate branch reports 1 error, in a file this order does not touch, so the gate reads 1 error as measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-f-801 step 4: from the portal worktree, bun run typecheck and bun run lint with 0 errors each, after the last portal commit.",
+  "world_is": "bun run typecheck rc=0. bun run lint (eslint .) rc=1: 360 problems, 1 error, 359 warnings. The error is no-regex-spaces at src/pages/TicketCenter/__tests__/filing-hint.test.tsx line 147 column 35; that file has no commit in 7fa808c9..HEAD. The two files this cell adds carry 0 lint findings.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/__tests__/filing-hint.test.tsx@7fa808c949fbe5d9c9d4ea1aea3aa3006be7d2e8",
+      "portal/src/pages/InvestorReporting/tabs/reporting/classes/classSeriesRead.ts@6e0e4ab9756f9f1372276346de0eeabe187fe538"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as measured, not repaired: the lint script is repo-wide and the error predates this cell. Not an order criterion (DBF121-1-AC1 and DBF121-1-AC2 do not include lint). Whether the candidate push gate runs lint was not read."
+}
+```
+
+## IRPT_DASHBD-D2-W801-S2 -- the cone sparse checkout lacks tracked contract paths; the InvestorReporting suite fails before and after
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W801-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~801",
+  "surfaced_at": "2026-10-16T02:59:14Z",
+  "one_line": "The worktree is a cone sparse checkout: org/surprise_channel and docs/contracts/investor-reporting are tracked at HEAD but absent on disk, and the InvestorReporting suite shows 68 failing tests and 27 errors with or without this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-801 step 4: bun test src/pages/InvestorReporting once before and once after the cell, with the failing-test names after a subset of those before.",
+  "world_is": "git config core.sparseCheckout and core.sparseCheckoutCone are both true. ls of org/surprise_channel/ and docs/contracts/investor-reporting/ reports no such directory, while git ls-files lists tracked files under both (87626 tracked files at HEAD ea9ee35903). Suite at 7fa808c9 without the cell's files: 1032 pass, 68 fail, 27 errors, 1125 tests across 403 files. Suite with the cell's files: 1045 pass, 68 fail, 27 errors, 1138 tests across 404 files. The named failing tests are the same 53 lines in both runs; the 27 errors are ENOENT reads of workspace contract and fixture paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/surprise_channel/schemas/investigation_item.schema.json@ea9ee359030d33deaaa35ffe322d9379afd7ccb7",
+      "portal/src/pages/InvestorReporting/__tests__/irpt-dashbd/class-series-read.test.ts@6e0e4ab9756f9f1372276346de0eeabe187fe538"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. No sparse-checkout setting was changed and no missing path was restored; the regression check is the failing-name diff, which is empty. The schema the row is written against was read from the index (git show), not from disk."
+}
+```
+
+## IRPT_DASHBD-D2-W801-S3 -- the portal commit recipe needs a committer identity the order does not give
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W801-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~801",
+  "surfaced_at": "2026-10-16T02:59:14Z",
+  "one_line": "The order's plain-git portal commit (author line only) fails on this box with Committer identity unknown; the commit was made with the worker serial set as committer in the command environment only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-801 worker face: commit the portal files in the portal repo with plain git and the author line 0.9.0_WK_IRPT_DASHBD~801 <0.9.0_WK_IRPT_DASHBD~801@opal.agent>.",
+  "world_is": "git commit with --author only returned rc=128 (Committer identity unknown); nothing was committed and the two files stayed staged. The retry set GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL to the worker serial for that one command; commit 6e0e4ab9756f9f1372276346de0eeabe187fe538 shows author and committer both as 0.9.0_WK_IRPT_DASHBD~801. No git config was written on this box.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/reporting/classes/classSeriesRead.ts@6e0e4ab9756f9f1372276346de0eeabe187fe538",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-801.class-series-reader-columnar-document-to-class-rows-not-mounted.md@ea9ee359030d33deaaa35ffe322d9379afd7ccb7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The recipe in the order works only where a committer identity is configured; the environment-variable form is the one used here and is recorded in the proof's compiler_tools."
+}
+```
