@@ -2458,3 +2458,11 @@ Two batches on two surfaces, never two appliers on the host at once: the IAM and
 | `OG-cl-8` | one `none_owed` row per refused (name, type) of `bd_account_id`, `bd_account_number`, `fact_bd_allocation`, `market_value_profile` in `infra/logic/registry/name_rulings.json`; delete the unread `orion/4698` alias from `client_core.py`; the full-add naming gate over `app/client_*.py` in ENFORCE prints no REFUSE (so `OG-cl-7` AC2 closes) | `infra/logic/registry/name_rulings.json`, `app/client_core.py`, the investigation file | WORLD | ~111 | `OG-cl-7` merged (517f78548d) |
 
 **fanout:** 1 of 1 chains, cap 8. Disjoint from `OG-sv-1` / `OG-sv-2` (the json-served module). It is an `OG-ap-23` batch cell: it merges before the release is cut.
+
+## ADDENDUM R3-T.79 (2.0.0_SA_COO~O, 2026-10-16 ~03:5xZ) -- round 37, workstream G2-CONFORM-3: the `etfs` field key of the served etf_returns object enters name_rulings.json (CTO msg 34709; row Z-W113-S1)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-cl-9` | one `none_owed` row for `etfs` (type `hand-kept carrier`, the served object's own key, evidence `portal_json_served.py:374` and `:376`) in `infra/logic/registry/name_rulings.json`; no code, no override | `infra/logic/registry/name_rulings.json` | WORLD | ~111 | `OG-sv-1` merged (40051277fc), `OG-cl-8` merged (2ed472c4b9) |
+
+**fanout:** 1 of 1 chains, cap 8. One chain with `OG-cl-8` (the same file): cl-8 first, cl-9 second, both in slot ~111. The issuer's hookup of the seven json-served tools is on trunk (`7200f493d2`).
