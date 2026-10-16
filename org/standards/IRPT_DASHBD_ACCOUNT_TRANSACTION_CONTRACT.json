@@ -1,9 +1,9 @@
 {
-  "contract_version": "0.4.1",
-  "supersedes": "0.4.0 (withheld by the issuer on the CTO round-131 rulings, round 132: one business_date for all three firms, the Inflection price on a fund-family line only, the Reversed offsets with their originals; the 0.4.0 Inflection business_date (no roll) and price are superseded, the rest of 0.4.0 stands)",
+  "contract_version": "0.4.2",
+  "supersedes": "0.4.1 (the round-132 contract, whose round_132_censuses.s6_status read REOPENED_FOR_CTO: the CTO's final S6 ruling (ADDENDUM 2, pin a5475b2fdd) makes both legs of the Dividend Paid from Cash / Income Paid event INTERNAL and the status RULED_INTERNAL, recorded in s6_ruling; the rest of 0.4.1 stands)",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
-  "authored_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~1901",
   "authored_under": "IRPT_DASHBD.TO-DB-f-1801 (round 132, workstream ~F2, F-SHIP), cell DB-f-1801 of IRPT_DASHBD_DECOMP_R132_F.md, following the CTO round-131 analysis for F-SHIP (msg 9342: rulings (b) the fund-only price, (c) one business_date by the function in lib/trading_calendar.py, (1) the Reversed offsets with their originals, (5) contract, producers and mirror in one merge) and the round-132 issuer's censuses.",
   "table": "account_transaction",
   "grain": "account x transaction line",
@@ -3796,7 +3796,7 @@
   "schema_hash": "58790f62fe63c9ca342caaa9e91c6084d348163924bc7153e0013591807a7fac",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines of columns joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries (the same method as the account_class_daily and account_return_daily contracts).",
   "served": false,
-  "served_note": "Nothing is written. No object of this table exists in any bucket. 0.4.1 supersedes 0.4.0 on the CTO round-131 rulings (round 132, DB-f-1801): one business_date for all three firms by first_trading_day_on_or_after; the Inflection price on a fund-family line only (NAV_PRICE_FUND_ONLY); the Reversed offsets counted with their originals. The round-132 censuses are stated as measured claims with the statuses the numbers give (round_132_censuses). The release is a never-widen act that waits on the CVO's judgment at L9 (DBF132-1-J1 and J2) and on a CTO and COO sign-off.",
+  "served_note": "Nothing is written. No object of this table exists in any bucket. 0.4.1 supersedes 0.4.0 on the CTO round-131 rulings (round 132, DB-f-1801): one business_date for all three firms by first_trading_day_on_or_after; the Inflection price on a fund-family line only (NAV_PRICE_FUND_ONLY); the Reversed offsets counted with their originals. The round-132 censuses are stated as measured claims with the statuses the numbers give (round_132_censuses). The release is a never-widen act that waits on the CVO's judgment at L9 (DBF132-1-J1 and J2) and on a CTO and COO sign-off. 0.4.2 records the CTO's final S6 ruling (ADDENDUM 2 to the round-131 analysis, pin a5475b2fdd): both legs of the Dividend Paid from Cash / Income Paid event stay INTERNAL, so round_132_censuses.s6_status reads RULED_INTERNAL.",
   "business_date_rule": {
     "function": "first_trading_day_on_or_after",
     "module": "trading_calendar",
@@ -3875,7 +3875,28 @@
         "no_trading_day_in_window": 0
       }
     },
-    "s6_status": "REOPENED_FOR_CTO",
+    "s6_status": "RULED_INTERNAL",
     "offsets_status": "EXCLUDED_BY_RULE"
+  },
+  "s6_ruling": {
+    "addendum": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_131_20261016.md",
+    "addendum_number": 2,
+    "pin": "a5475b2fdd",
+    "class": "INTERNAL",
+    "descriptions": [
+      "Dividend Paid from Cash",
+      "Income Paid"
+    ],
+    "rows_per_description": {
+      "Dividend Paid from Cash": 14920,
+      "Income Paid": 14920
+    },
+    "legs_with_the_other_legs_key": {
+      "Dividend Paid from Cash": 14920,
+      "Income Paid": 14920
+    },
+    "income_booked_by": "Dividend to Cash",
+    "reason": "The two descriptions are two legs of one event: every row of each has a row of the other with the same account, day and absolute amount (census v2). Counting a leg as income would count the dividend twice, because the income is booked by Dividend to Cash (INCOME).",
+    "release_criterion": "Per event the two legs' signed amounts sum to zero, printed as N of 14,920; any miss stops the release."
   }
 }
