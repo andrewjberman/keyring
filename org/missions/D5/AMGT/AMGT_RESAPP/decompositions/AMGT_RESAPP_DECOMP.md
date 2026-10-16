@@ -10965,3 +10965,27 @@ Cells and their classes:
 ### 116b. ADDENDUM 2 -- THE CUT OF `AMGT-bn-6` (G4, the batch tasks' code half; CTO ruling on call `dell1-20261015T233836Z-7f8a`), 2026-10-15 ~23:5xZ
 
 `AMGT-bn-6` is cut as the CODE HALF of G4, slot `~475`, workstream `G4`, risk LOCAL, write surface the new package `lib/research/llm_batch/` only (a registration script that creates the tasks DISABLED and names their owner `2.0.0_SA_COO~R1`, and an event-driven trading-day trigger that runs a batch only when its input changed), disjoint from `bn-1`, `bn-2` and `bn-5` (done) and `bn-4` (staged). The CTO's ruling (`ledger/CTO_RULING_G4_CUT_BN6_20261015.md` @842cf564f3): host dell1, tasks DISABLED, the enable a separate act under its own never-widen pair naming the first fire's measured Anthropic spend and a stop figure. **Scope read at HEAD, narrower than the card:** the cut covers the three batches that have a whole-population entry (filings, management, scores); drafting (two required directories) and posture (one `--security-key`) have none and are filed as an observation, not covered. Only filings and management make model calls; scores is S3 reads and math. fanout: 4 of 4 chains, cap 8, reason: the new package is disjoint from the other three lines.
+
+## 117. ROUND 108 -- THE CTO'S ROUND-107 ENRICHMENT LIST (`ledger/ROUND_ANALYSIS.round107.md`, msg 6373), 2026-10-16 ~01:3xZ
+
+**Frozen at the issuance commit.** Round 107 (this seat's keys bn-1..bn-6) is terminal: 6 of 6 orders complete; the CVO graded bn-4 AC6 NOT MET (`ADJUDICATION_v134` @b19f2a82df, row `D1-C-S156`). The CTO ruled `D1-S34`: every Key Figures P/E cell filled from the team sheet carries the mark, a withheld column or not (PBR US's 2025 range included): a reading, not an ENDPOINT change.
+
+| # | item | cell | what the cell is |
+|---|---|---|---|
+| 1 | the mark on every team-filled P/E cell | `AMGT-bo-1` | one Opal-internal portal feature, page side only |
+| 2 | What Changed drops a withheld vendor ratio; a name with no Key Figures P/E row prints the withhold reason once (graded on ZURN SW, 939 HK, ICT PM, 1299 HK, with SHOP CN and PBR US as controls) | `AMGT-bo-1` (the same candidate: same file `ModelTab.tsx`, one approval row) | the same feature; its harness covers both |
+| 3 | proof instances at canonical names on a short path | none: a DIRECT ACT of the issuer (LOCAL, under the size floor), `dfa6219e82` | bn-3, bn-4 and bn-6 copied to their canonical names in the COO's own folder; bn-1's canonical path is 276 characters (its order's own slug) and no serial folder holds it under MAX_PATH; renaming the order is refused by `to-pipeline-gate` (born terminal, a second issuance in round 107, `to_ref` names the old file), so bn-1 is put to the CTO |
+| 4 | the drafting and posture whole-population runners | not cut: unmet dependency | waits on the three G4 tasks having each run once (the enable is its own never-widen pair, not yet signed) |
+
+Cells and their classes:
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-bo-1` | the feature branch `cand/dell1/amgt-sa-withheld-reasons` cut from PROD `e0e69da7`, its harness `withheldReasons.harness.cjs` and receipt; the approval row is the issuer's | `~476` | worker (portal) | LOCAL | the branch in the nested portal (`src/pages/SecurityAnalysis/` only), the receipt | FWD-40 (a) on the four withheld names |
+| `AMGT-bo-2` | the promote of the approved `bo-1` feature to PROD (a DT seat act) | a DT named by the CTO | seat (DT) | SERVED | the portal release branch and PROD | FWD-40 (a) |
+| `AMGT-bo-3` | the walk on a local build of PROD, FRESH draw plus the six named names, the grid OPENED, the CTO reads it | a worker | worker | LOCAL | the deliverables folder and `C:/dev/ui-walk-evidence/bo-3/` | the CTO's re-grade of FWD-40 |
+
+**Edges:** bo-1 -> approval row (CTO) -> merge-forward onto DEV (box manager) -> bo-2 -> bo-3. `bo-2` and `bo-3` are PLACED, not cut: `bo-2` is cut when the approval row closes (round 107's `bn-3` precedent) and `bo-3` when `bo-2` is complete, because its walk date and draw are the UTC date of the walk. fanout: 1 of 1 chains, cap 8, reason: the three items that can be built are one chain (one feature, one file, one approval); the placed cells are its later links and the proof-instance item was a direct act.
+
+**Decisions this decomposition takes (the issuer's, inside the CTO's reading).** (a) What Changed DROPS the withheld vendor rows (the CTO allows "dropped, or replaced by the withhold reason"): no new wording, the tile and the rows agree, and a compare whose every row went prints the served reason once. (b) No team value is printed in What Changed: a compare carries no team before/after, so the mark's place is Key Figures. (c) The no-P/E-row reason is one line under the Key Figures table, one per distinct served reason for the years the table shows (forecast years from `forecast_withheld`, historical from `fiscal_unresolved` `PE_RATIO`). (d) The round-107 harness check T5 (a team cell in a column with no withhold entry prints NO mark) is the old rule and is changed to the ruled one by this cell's worker.
+**Not this round's:** the AIFILL workstream (`~R2`, FWD-41), the Terminal sign-in (Andrew), the G4 enable pair, A4's step 1 (Tue 2026-10-20 at the earliest) and step 2.
