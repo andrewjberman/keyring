@@ -10115,3 +10115,30 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-S15 -- the issuer dispositions D1-W188-S1 and S2: the 184-point difference is the as-traded basis dropping silver interpolation days; with it applied the store-derived Yahoo set equals the served labels
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S15",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T08:02:18Z",
+  "one_line": "the issuer dispositions D1-W188-S1 and D1-W188-S2: the 184 store-Yahoo points the served labels did not mark are the silver linear_interpolation days the as-traded basis drops; with the basis applied to the fresh stores the Yahoo set equals the labelled set, 471,195 = 471,195",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~188/STORE_DERIVED_YAHOO_RECORD.json (worker ~188, merged @868216cda4): X 475,103; S 2,034,027; A 471,379; B 471,195; A minus B 184 (151 points / 79 securities silver linear_interpolation priced from the gold store; 33 points / 3 securities priced from the bbg testpull store); B minus A 0; all six stores' row counts equal round 97's",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/cu1_issuer_asttraded_reconcile.py, run by the issuer on the same fresh store cache with dv.apply_price_basis('as_traded') before security_day_prices: as_traded stats tickers 911, replaced 1,049,193, rederived 477,980, dropped_unbracketed 3,962 (all equal to round 97's regrade); store-derived Yahoo points S' 2,030,243; A' 471,195; B 471,195; A' and B 471,195; A' minus B 0; B minus A' 0",
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py as_traded_store: a silver linear_interpolation day not bracketed by a replaced Yahoo point is dropped, so security_day_prices takes the next store's price for it and the day is not Yahoo-priced"
+    ]
+  },
+  "spec_asserts": "CB-cu-1 (round 99): re-derive the Yahoo point set from the price stores' own source field, without the as-traded substitution (the order's item 1), and compare it with the served labels; equal, or the difference listed.",
+  "world_is": "The order's derivation omitted the as-traded basis the served run was built on, so it counted 184 silver linear_interpolation days that the basis drops and that the served rows therefore price from the gold or bbg store. With the basis applied to the fresh stores the two sets are equal, and the stores' substitution counts equal round 97's. So the served labels equal the Yahoo-sourced points of the as-traded price series derived from the stores' own source field. Not established: same-count content changes in the stores since round 97 (the substitution counts and the equal sets argue against one that reaches a served point, but content was not hashed); the 6,303 security-days by which the fresh frame (2,123,860) differs from round 97's price file (2,130,163) were not decomposed; the equality above is over the served priced points and does not depend on them.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The difference is a property of the cell's derivation (no substitution), not of the served labels: with the as-traded basis applied the sets are equal. No served write, no correction."
+}
+```
