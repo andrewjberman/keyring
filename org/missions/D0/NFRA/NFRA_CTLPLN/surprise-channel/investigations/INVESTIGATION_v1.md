@@ -13573,3 +13573,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not decided here: who migrates the EC2 jq calls and whether the one-file exception is granted. Decision owner: the issuer 2.0.0_SA_COO~C."
 }
 ```
+
+## NFRA_CTLPLN-W145-S9 -- a probe of the committed parity gate sent one read-only aws lambda list-functions through the shim
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T19:20:00Z",
+  "one_line": "A probe of the committed copy of .tools/parity-gates.sh was run without the no-aws stub on PATH. The gate's P9 section calls aws lambda list-functions before its jq step, and aws resolves to the repo shim, so one read-only AWS API call was sent. The output was discarded (jq was not installed) and nothing was written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "command -v aws on this box: /c/Users/AndrewBerman/bin/aws (the forwarder to .tools/aws)",
+      "the probe output (.scratch/parity_head_probe.txt): 'jq: command not found' at line 135, then 'WARN: aws lambda list-functions returned nothing (or call failed)'",
+      "the committed gate calls aws lambda list-functions --output json 2>/dev/null before its jq pipe; the probe ran the committed file, not the worktree copy"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell runs no aws command (worker face and RULES FOR THIS CELL); a probe of a gate that makes an AWS call runs under a stub on PATH.",
+  "world_is": "One read-only list-functions call may have reached the AWS API from this worker's probe. No write, deploy or terraform command was run. The worker did not repeat the probe after noticing.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (whether the call is recorded in the cell's proof). Disclosed in the worker report."
+}
+```
