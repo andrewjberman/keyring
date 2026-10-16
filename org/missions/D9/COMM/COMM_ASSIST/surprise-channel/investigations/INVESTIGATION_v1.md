@@ -1827,3 +1827,109 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "The commit adds ten small evidence files (command outputs, status words, file names and row counts); the seat read no item text and none is recorded. The row records that the check was not run, not that a leak occurred. Nothing was installed or placed to cure it: the order forbids edits beyond its paths."
 }
 ```
+
+## COMM_ASSIST-W32-S1 -- the order's "raise active to it" reads two ways, and the literal one keeps every read thread tracked forever
+
+```json
+{
+  "id": "COMM_ASSIST-W32-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~32",
+  "surfaced_at": "2026-10-16T20:53:08Z",
+  "one_line": "TO-CA-n-1 item 3 says the thread cursor is set to the newest created seen, or a.iso(now) on an empty page, and then 'raise active to it when newer'; read literally, active would become the read time on every empty page, so the drop rule never fires and the thread budget starves.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-n-1.read-replies-of-recent-threads.md@1ca38ef17f item 3 (WHAT TO BUILD) and item 4 (drop rule)",
+      "data/transcripts/scripts/teams_chat/channel_mentions.py@c08d686f69 _read_threads: 't[\"cursor\"] = max(t[\"cursor\"] or \"\", newest or a.iso(now))' then 'if newest > t[\"active\"]' (raise only to the newest created seen)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CA-n-1 item 3: 'Then set the thread's cursor to the newest created seen (or a.iso(now) when the page is empty) and raise active to it when newer'; item 4: drop a tracked root that is not pinned and whose active is older than THREAD_DAYS.",
+  "world_is": "Read with 'it' = the parenthetical cursor value, every thread read on an empty page gets active = the read time, so it is never older than THREAD_DAYS and is never dropped, and the ordering by active (newest first) keeps the most recently read threads first, so unread tracked threads starve at THREAD_MAX. The build takes 'it' = the newest created seen (an empty page raises nothing). Not run against live traffic; read from the code.",
+  "notes": "The build follows the second reading. The order should say which value active carries. No hazard is live: commit c08d686f69 is not deployed by this order."
+}
+```
+
+## COMM_ASSIST-W32-S2 -- a thread whose replies call keeps failing holds its whole channel's cursor, so no top-level mention in that channel is read either
+
+```json
+{
+  "id": "COMM_ASSIST-W32-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~32",
+  "surfaced_at": "2026-10-16T20:53:08Z",
+  "one_line": "A GatewayError from one thread's replies read counts as a channel failure, so the channel keeps its old cursor and is read again first next poll; a replies route that keeps failing for one root blocks every mention in that channel, measured in a scratch run: 3 polls, cursor None, the new mention never sent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-n-1.read-replies-of-recent-threads.md@1ca38ef17f item 4: 'A GatewayError from _read_threads counts in failed and errors exactly like a channel read failure, and the other channels still run.'",
+      "data/transcripts/scripts/teams_chat/channel_mentions.py@c08d686f69 poll: the GatewayError branch restores threads[ck] and continues; the channel cursor is not advanced",
+      "scratch run .scratch/ground_freeze.py in the worktree (one root whose replies always raises; one new top-level mention): first poll and polls at 300s, 600s, 900s each failed=1 route=replies status=500; cursors t1|c1 None; mention p2 sent=0; replies attempts p1,p2,p1,p2,p1,p2,p1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CA-n-1 item 4: a GatewayError from _read_threads counts like a channel read failure, and the other channels still run.",
+  "world_is": "The other channels run, but the failing channel itself is blocked for as long as the replies route fails for any one of its tracked roots (the cursor never moves, so its top-level mentions are never read). The worker also restores that channel's thread state on failure, which the order does not say; without the restore the cursor freeze is the same.",
+  "notes": "Form only. The order was built as written. The freeze needs a persistent per-thread replies failure (a deleted root, a permission change); the owner decides whether a failing thread should be skipped for the poll instead. Not deployed: the hazard is inert until a deploy of c08d686f69, which this order does not perform."
+}
+```
+
+## COMM_ASSIST-W32-S3 -- a reply can be sent twice across polls when the thread read is cut by the call budget after the channel read sent it
+
+```json
+{
+  "id": "COMM_ASSIST-W32-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~32",
+  "surfaced_at": "2026-10-16T20:53:08Z",
+  "one_line": "The emitted set is per poll, so a reply that _read_channel sent in one poll can be sent again by _read_threads in a later poll when the thread's cursor did not move; the repeat carries the same event id, so it depends on event-id de-duplication downstream.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/missions/D9/COMM/COMM_ASSIST/task-orders/COMM_ASSIST.TO-CA-n-1.read-replies-of-recent-threads.md@1ca38ef17f item 3: 'its id is added to emitted' (the set is built in poll from the channel's events of that poll)",
+      "data/transcripts/scripts/teams_chat/channel_mentions.py@c08d686f69 poll: emitted = {ev[2][\"message\"].get(\"id\") for ev in events} then _read_threads; the channel cursor advances in the same poll"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CA-n-1 item 3: each reply 'becomes ONE event', and its id is added to emitted.",
+  "world_is": "Across polls the only guard is the event id ('mention-<reply id>'), not the emitted set: when the channel read advances the channel cursor past a reply and the same poll's thread read is cut by MAX_CALLS before that root, the next poll sends the reply again under the same event id. Not run; read from the code.",
+  "notes": "The poll's own comment states that event ids de-duplicate, which is the only guard this path has. Not deployed; hazard inert."
+}
+```
+
+## COMM_ASSIST-W32-S4 -- BLOCKING for CAn1-AC3: this worktree's sparse checkout omits daily_reports/, so the assistant flow tests cannot import post_format
+
+```json
+{
+  "id": "COMM_ASSIST-W32-S4",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_COMM_ASSIST~32",
+  "surfaced_at": "2026-10-16T21:00:47Z",
+  "one_line": "CAn1-AC3 (check_i2_regression.py) prints I2-REGRESSION ok=False passed=0 failed=1 in this worktree: assist.py _post_format() raises ModuleNotFoundError for post_format, because the worktree's sparse checkout does not materialise daily_reports/eod/.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Users/AndrewBerman/Desktop/ajb_wk/commassist-32 at c08d686f69: timeout 280 python -m pytest data/transcripts/scripts/tests/test_teams_chat_tenant.py -q -x -p no:cacheprovider -> 'ModuleNotFoundError: No module named post_format' at data/transcripts/scripts/teams_chat/assist.py:861 (_post_format), 1 failed in 0.65s",
+      "git config core.sparseCheckout = true; git sparse-checkout list = .tools, data/transcripts/scripts, infra/aws/terraform/modules/ldo, infra/logic/registry, lib; daily_reports/eod/ is absent on disk (ls: cannot access) though git ls-tree HEAD lists daily_reports/eod/post_format.py",
+      "diagnostic only, no write: PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=<main workspace>/daily_reports/eod python -B -m pytest data/transcripts/scripts/tests/test_teams_chat_tenant.py -q -p no:cacheprovider -> 64 passed in 66.33s (rc 0) at c08d686f69"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CA-n-1 CAn1-AC3: the I2 regression is a control that PASSES at the base (64 passed); the order names the worktree paths it may write, and a path it needs that the worktree lacks is a BLOCKING row on that criterion.",
+  "world_is": "The control cannot pass in this worktree as written: the worktree is a sparse checkout that does not carry daily_reports/eod/, a runtime import of assist.py that is outside the order's grant. The worker did not rebuild or copy the directory in. With the module put on the path (diagnostic only), the same 64 tests pass at c08d686f69, so the two-file diff does not break them. The base-commit run in this sparse tree was not measured; the failure is at the module import, not in any line the order changes.",
+  "notes": "Blocks CAn1-AC3 only; CAn1-AC1 (7 of 7) and CAn1-AC2 (7/7, 4/4) pass at c08d686f69. The order stays open. The owner decides whether the worktree is re-cut with daily_reports/eod in its sparse set, or the criterion is re-cut. Nothing was widened or repaired by this worker."
+}
+```

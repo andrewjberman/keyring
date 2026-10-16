@@ -25789,3 +25789,29 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Both forms are in the committed fixture: the setenv first line the order names, and the cached-instance setattr. Forward, reverse and solo runs of en4, en12, en14 pass with 11 passed in both multi-file orders."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-16T21:30:03Z",
+  "id": "NFRA_OPLGTW-Z-S322",
+  "one_line": "OG-ap-31 Phase A: the host's MASTER_ADMIN_EMAILS holds 1 entry (andrew@), so OG-en-14's internal-page exemption reaches andrew@ only; opalbloomberg@ is not on the roster.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap31_roster.json (SSM read-only of the host .env key MASTER_ADMIN_EMAILS: entries 1; andrew@opalinvest.com member true; opalbloomberg@opalinvest.com member false; alyssa@opalinvest.com member false; no other value printed)",
+      "infra/aws/ec2/opal-gateway/app/data_entitlement.py at the release commit 4be300110e: _master_admin_email(email) is true only for an EXACT MASTER_ADMIN_EMAILS entry; email_denial(route_class='internal_page') returns None only then",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-31.round-39-batched-release.md section 1 step 3 (the exemption is for the master_admin owner roster)"
+    ]
+  },
+  "spec_asserts": "OG-en-14 exempts the master_admin OWNER roster on the four internal browser routes, so both owner accounts (andrew@ and opalbloomberg@) pass them even when a deny record names them.",
+  "world_is": "The host roster has one entry, andrew@. After the release, andrew@ passes the four routes regardless of a deny record; opalbloomberg@ does not. Its deny record was deleted at OG-ap-30 (count 3 to 1), so it is not refused today, but any later deny written for it (for example a future restricted-principal write under contract C2) would refuse it on /login, /sprint, /rivalfunds and /yearinreview again. Widening the roster is an env change and out of this order's bounds; the ask states the reach plainly.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Booleans and a count only; the .env was not otherwise read. Does not block Phase A."
+}
+```
