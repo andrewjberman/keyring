@@ -41250,3 +41250,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S226",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-16T18:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-615 as first cut could not have worked: the ordered transient user (role user, test-filer, opal-capital, no advisor id) classifies UNKNOWN on every Investor Reporting route, and the page route needs role admin plus userType Dev; the drive was re-cut to one direct invoke with admin/49financial claims (CTO ruling B) and the export reached READY.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/resolve.py:284-296 classify_principal: only role admin with a verified firm gives FIRM_OPERATIONS, or an advisorId gives FIRM_ADVISOR; role user with neither falls to UNKNOWN (nothing granted)",
+      "portal/src/components/ProtectedRoute.tsx:118-120 and App.tsx:462: /investor-reporting needs role admin, firm opal-capital and userType Dev",
+      "preflight of the repo's own resolve.py on the synthetic headers printed class=FIRM_OPERATIONS; IB246-1_export_drive_record.json: old receipt READY, one creating invoke QUEUED, then READY, store 1 to 2 receipts, both PASSED with 0 failures"
+    ]
+  },
+  "spec_asserts": "XA-20261016T160537Z-f98b and the first cut of TO-IB-pr-615: a staff-only transient row (role user, no firm entitlement row) can read a receipt and request an export through the portal route.",
+  "world_is": "Such a row is refused as UNKNOWN before any export logic runs, so a refusal there would have read as a defect in the IB-pr-521 release. The authorizer was not exercised by the final drive; the function was proven by direct invoke only.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```

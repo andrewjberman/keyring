@@ -22410,3 +22410,55 @@
   "world_is": "core.sparseCheckout is true in this worktree and infra/ is not materialized: the lambda file and org/surprise_channel/schemas/ are tracked in the index but absent from disk. The order's grant paths (org/ and .tools/ and the one helper file) are on disk, so the cell's edit and the checkers were unaffected; the reader's text was taken from git show at HEAD and not from a file in the worktree."
 }
 ```
+
+## IRPT_ANLREQ-D2-W271-S1 -- AR-tz-69: the required scope line broke two existing exact-match stdout assertions, which I relaxed to the first line
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W271-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~271",
+  "surfaced_at": "2026-10-16T17:58:06Z",
+  "one_line": "AR-tz-69 makes the green mint print a second line, MINT-SCOPE allowedFirmIds=<ids> entitlement_rows=0, but two existing tests (test_cross_firm_mint_two_emails_give_two_keys and test_cross_firm_mint_readback_ok_when_shape_matches) asserted the whole green stdout as the exact string MINT-OK READBACK-OK. I changed only those two assertions to check the first line; their expected READBACK-OK text is unchanged and no other existing test was touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-tz-69 says keep every existing test green, and the worker face names only the fake's query and cmd_remove as untouchable. The order does not name the two exact-match assertions it would break.",
+  "world_is": "test_cross_firm_mint.py:75 and :145 at base f3e0d5b8d1 compared out.strip() to MINT-OK READBACK-OK. With the scope line printed on green, that whole-stdout comparison is false, so both now compare splitlines()[0]. cmd_remove and FakeDDB.query are unchanged. Worktree pytest: 25 passed. A grep of the ~219 deliverables folder finds no reader of the green stdout outside the test file; a reader elsewhere in the repo was not checked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~219/fwd5_driver/test_cross_firm_mint.py:75 and :145 @f3e0d5b8d1 (base; the exact-match asserts)",
+      "same file, worktree branch wk-IRPT_ANLREQ-271-portal: lines 75 and 145 now compare splitlines()[0]; the scope tests start near line 205"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S152 -- disposition of W271-S1: the mint's green stdout is now two lines, and two exact-match asserts read the first line
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S152",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T18:53:38Z",
+  "one_line": "Disposes of IRPT_ANLREQ-D2-W271-S1 (INERT): after AR-tz-69 the green mint prints MINT-OK READBACK-OK and then MINT-SCOPE allowedFirmIds=.. entitlement_rows=0; the two existing tests that compared the whole stdout now compare the first line, expected text unchanged. Ruled ACCEPTED by the issuer: a direct consequence of the order's own required output; merged 59b330f528.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order said keep every existing test green and named only the fake's query and cmd_remove as untouchable; the required second stdout line made two whole-stdout comparisons false, so the order's two demands collide on those two asserts.",
+  "world_is": "Measured on the merged tree at 59b330f528: test_cross_firm_mint.py reads R46-TESTS-OK passed=25 (base had 15 defined); the worker's proof instance reads VALID; the two relaxed asserts keep the READBACK-OK text and no assertion was removed. Printed lines under the module fake: green MINT-OK READBACK-OK plus MINT-SCOPE allowedFirmIds=firm-a,firm-c entitlement_rows=0; two non-PROFILE rows give MINT-OK READBACK-BAD entitlement, rc 1; a query error gives MINT-OK READBACK-BAD query <type>, rc 1. NOT done: the helper has never run against the real users table; the live run is a WORLD act by the IRPT CloudOps lane under a pair (draft R58_FWD5_LIVE_EXERCISE_PACKET_DRAFT_20261016.md). A reader of the green stdout elsewhere in the repo was grepped for only in the helper's folder by the worker; the only consumer named in the packet is the applier reading the line by eye.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~219/fwd5_driver/fwd5_mint.py (merged 59b330f528)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~219/fwd5_driver/test_cross_firm_mint.py (merged 59b330f528)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
