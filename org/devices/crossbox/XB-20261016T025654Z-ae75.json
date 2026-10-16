@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN journey round 25: a one-off read needing a package absent from requirements.txt? YES or NONE",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_R25_ORGANIC_ASK_DELL2_SITEZ.md",
  "opened_at": "2026-10-16T02:56:54Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-16T03:00:04Z",
   "bus_message_id": "4654bda2-ed9d-4f4f-b91d-2112e3827dec"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-16T03:05:57Z",
+  "by": "1.0.0_SA_CTO~Z",
+  "bus_message_id": "ae015f0d-5c12-47a1-9459-0055e0c67a14"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
