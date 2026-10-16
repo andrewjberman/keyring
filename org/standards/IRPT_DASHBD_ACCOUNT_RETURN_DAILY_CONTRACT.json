@@ -225,7 +225,9 @@
         "source": "orion"
       },
       "required_unless_absent": true
-    },
+    }
+  ],
+  "conditional_columns": [
     {
       "name": "income_claim",
       "type": "string",
@@ -235,11 +237,14 @@
         "absent"
       ],
       "reason": "SOURCE_REPORTS_NO_INCOME",
-      "required_when": {
+      "emitted_when": {
         "source": "computed from Black Diamond values and flows"
       },
-      "required_when_null": "income_received",
-      "rule": "Required exactly when income_received is null and the source is 'computed from Black Diamond values and flows'; a row carrying the claim with an income is invalid; a consumer that needs income rejects a row carrying this claim and says so in words; it never treats the null as zero.",
+      "required_when": {
+        "source": "computed from Black Diamond values and flows",
+        "income_received": null
+      },
+      "rule": "Required exactly when income_received is null and the source is 'computed from Black Diamond values and flows'; a row carrying the claim with an income is invalid; a consumer that needs income rejects a row carrying this claim and says so in words; it never treats the null as zero. It sits in conditional_columns, not optional_columns, because one source emits it, so it is outside the hash basis optional_columns.",
       "since_schema_version": "1.5"
     }
   ],
@@ -445,10 +450,10 @@
       "token_census_finding": "measured and inferred are existing words of the repo's claim vocabulary (measured / inferred / held / absent, THRESHOLD_CLAIMS in account_return_daily.py), and the sampled hits use that same meaning, so the new column adds a field and no new meaning. The one name hit, market_value_eod_claim, is the Scope adapter's own field carrying the same two values; the census was measured by git grep -c -w at the census commit, one scan per token."
     },
     "v043": "v043 (IRPT_DASHBD round 147, cell DB-b-282): income_received is nullable where source is 'computed from Black Diamond values and flows'. That method states no separate income basis (its adapter says so: income is inside V through the cash the account holds), so income_received is null on every row of that source. The declaration is the attribute also_nullable_when on income_received, beside nullable_when; nullable_when itself is unchanged and nullable stays false in general, so a null income on any other source is still invalid. No enum member is added: source, flow_claim, reason_class and every other enum are byte-identical, so the word-boundary census of the earlier records is untouched.",
-    "v044": "v044 (IRPT_DASHBD round 148, cell DB-b-284): income_claim is the claim beside a null income_received where source is 'computed from Black Diamond values and flows', the method that reports no income. The claim has ONE value, absent, with the fixed reason SOURCE_REPORTS_NO_INCOME, and NO OTHER STATE: a row either carries absent or carries no claim, because there is no 'present' value (a number is its own claim). A null income_received without the claim is invalid on that source, and a claim beside an income is invalid on every source. It is the same device as flow_claim (v040), and it adds no enum member, so the word-boundary census of the earlier records is untouched."
+    "v044": "v044 (IRPT_DASHBD round 148, cell DB-b-284): income_claim is the claim beside a null income_received where source is 'computed from Black Diamond values and flows', the method that reports no income. The claim has ONE value, absent, with the fixed reason SOURCE_REPORTS_NO_INCOME, and NO OTHER STATE: a row either carries absent or carries no claim, because there is no 'present' value (a number is its own claim). A null income_received without the claim is invalid on that source, and a claim beside an income is invalid on every source. It sits in its own section conditional_columns, not in optional_columns, because one source emits it: the hash basis of optional_columns is untouched, and it adds no enum member, so the word-boundary census of the earlier records is untouched."
   },
   "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
-  "schema_hash_with_optional": "45b325dbdba178b45966fb5b62bac0da88027fee673619539315bfb03a2b3677",
+  "schema_hash_with_optional": "13bb195f137e2352b5775a2b2e4291a225079bedf8974d20e9987473470818a6",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries. The check recomputes it against the landed parquet, so contract and artifact cannot drift.",
   "firm_specific_columns": "NONE. A firm-specific column is a contract violation (C-SHAPE); no sb_cd, tr_cd or any Schwab code survives into this table -- they live only in the adapter's sources.json.",
   "supersedes": [
@@ -509,7 +514,7 @@
       "contract_version": "0.4.3",
       "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
       "schema_hash_with_optional": "13bb195f137e2352b5775a2b2e4291a225079bedf8974d20e9987473470818a6",
-      "changes": "0.4.3 made income_received nullable for the Black Diamond-computed source (also_nullable_when); 0.4.4 appends the optional column income_claim (absent, SOURCE_REPORTS_NO_INCOME), which states why that null is there; schema_hash is unchanged and schema_hash_with_optional moves."
+      "changes": "0.4.3 made income_received nullable for the Black Diamond-computed source (also_nullable_when); 0.4.4 adds the conditional column income_claim (absent, SOURCE_REPORTS_NO_INCOME), which states why that null is there and sits in conditional_columns, outside optional_columns; schema_hash and schema_hash_with_optional are both unchanged."
     }
   ],
   "schema_hash_control": "THE METHOD IS CONTROLLED, not asserted: recomputing it over the same ARROW_SCHEMA with guard_state removed reproduces 0.1.0's published hash b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058 exactly. A hash whose method could not reproduce the previous published value would be unverifiable.",
