@@ -71,7 +71,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-30.reverse-email-deny-side-e
 - Pre-cut: `ap30.AC1` base FAIL as expected (ask and before-record absent); PASS arm on a real shape against the live table (all three present, count 3); controls FAIL for their reasons (a third e-mail in the ask; writes 3). `ap30.AC2` base FAIL as expected (record absent; and with a record against the real table, nothing deleted: FAIL); PASS arm via a live-state override; controls FAIL (alyssa also gone; no rollback file).
 - Browser read-back (the CTO's "one browser request per route by each account answers non-deny") cannot be driven by the applier (the ALB email comes from Entra sign-in); it is the issuer's close run, by the owner account through MC Portal.
 
-<status>staged</status>
+<status>complete</status>
 <round>39</round>
 <workstream>ENRICH-R39-E5</workstream>
 <slot>~AE</slot>
