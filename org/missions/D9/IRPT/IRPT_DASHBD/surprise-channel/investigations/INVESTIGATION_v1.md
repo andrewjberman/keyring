@@ -22134,3 +22134,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-S113 -- 49 Financial history_scope is a constant PARTIAL_HISTORY in the gold producer; three series end early on a positive day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S113",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T08:47:05Z",
+  "one_line": "49 Financial: history_scope is PARTIAL_HISTORY on all 6,949 series because the gold producer writes the literal on every row (HISTORY_FULL is defined and never assigned); it is not the floor, the window or the accounts' start dates. The three series with an earlier as_of end on a positive MEASURED value: the account has no row after that day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the 49 Financial gold producer and publisher; the CTO decides the rule)",
+  "spec_asserts": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 174: history_scope is 'how much of this account's life does the table hold', one grain (account); the CTO's msg 9223 read: why all 6,949 are PARTIAL_HISTORY.",
+  "world_is": "Read of source at HEAD (box/dell2): account_return_daily.py line 1355 writes \"history_scope\": HISTORY_PARTIAL on every emitted row, inside the account loop at lines 1336 to 1357, with no condition; HISTORY_FULL is assigned at line 175 and used only in the closed vocabulary HISTORY_SCOPE (line 177, checked at line 1769); no other line assigns it (a search of the file for FULL finds only those two lines). The publisher takes the newest row's value, so every series reads PARTIAL_HISTORY. Measured on the published prefix (counts and booleans only): 2,852 of 6,949 series start on the gold floor (2024-07-08) and are PARTIAL_HISTORY too, so the scope does not follow the start date; the producer's rule is a constant, not a derivation. The three series with an earlier as_of (2026-10-13, 2026-10-12, 2026-10-02) each end on a positive end-of-day value with day_quality MEASURED and return_basis TWR (not zero, not a break): the producer writes a row only for an account that holds a value that day (the loop is over v_now, line 1336), so an account that stops appearing in the source after a day simply ends there. Why each stopped appearing (closed, transferred or unreported) is NOT established by this read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 174 to 177, 1336 to 1357 and 1766 to 1773",
+      "this seat's read of the published prefix, counts and booleans only, 2026-10-16 ~08:5xZ (6,949 series; 2,852 start on the floor, all PARTIAL_HISTORY; 3 with an earlier as_of, each ending on a positive MEASURED TWR day)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Answer to the CTO's msg 9223. A rule that derives FULL (an account whose first value is the table's first day, or whose book is complete) is the CTO's ruling and ~D2's producer change; this seat changes no producer."
+}
+```
+
