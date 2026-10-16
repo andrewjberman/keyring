@@ -93,3 +93,4 @@ The issuer then merges after `MX-c-31`; the ASSETS issuer's one emitter run uses
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete</status>
