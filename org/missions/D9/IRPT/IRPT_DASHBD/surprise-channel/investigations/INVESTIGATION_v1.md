@@ -21150,3 +21150,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. Recorded for the issuer; the checker file is outside this grant and was not edited."
 }
 ```
+
+## IRPT_DASHBD-D2-W1201-S1 -- The TO names eleven Inflection fields as the columns the code reads; the gold producer reads four of them (plus status), and the other seven are named by the pull only
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1201-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1201",
+  "surfaced_at": "2026-10-16T05:41:27Z",
+  "one_line": "The TO and the round-120 record say the Inflection code reads eleven columns; the eleven are the pull's confirmed field set, and the gold producer reads four of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-1201 (the Why paragraph and step 1): the Inflection code reads eleven columns (the pull about line 99), and the record states the source the code reads for each of the fourteen targets.",
+  "world_is": "The eleven names are the pull's CONFIRMED_FIELDS set (data/inf/manual_api/pull_inflection_transactions_rest.py lines 98 to 101), tested for presence in the pulled frame (line 561), not the gold producer's reads. The gold adapter flows_of (data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py lines 191 to 195) reads accountId, transactionDescription, transAmount and transDate from the eleven, and status, which is not in the set. Seven of the eleven (id, clientId, householdId, transTypeId, noUnits, navPrice, ticker) are named by the pull only. The record cites the pull for those seven and labels them as the pull's claim.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/manual_api/pull_inflection_transactions_rest.py@9fed5fbb43",
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py@9fed5fbb43"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The contract should carry the seven pull-named fields as the pull's claim; whether the gold producer must read them is a CTO question on the producer's scope."
+}
+```
+
+## IRPT_DASHBD-D2-W1201-S2 -- The Inflection transactions silver read is not named in the irpt_reporting folder: the gold producer takes a frame, and its only caller in that folder is a test
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1201-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1201",
+  "surfaced_at": "2026-10-16T05:41:27Z",
+  "one_line": "No code in the irpt_reporting folder reads the Inflection transactions silver table; the gold adapter takes a frame, so the record's silver source cites the docstring and states the gap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-1201 step 3: silver_source names where the code reads the firm's transactions and from which prefix or API.",
+  "world_is": "flows_of (data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py line 179, docstring line 180) takes one fact_transactions frame; the root is ORION_SILVER (line 47). comp-find -i 'fact_transactions' over the irpt_reporting, data/inf and lib folders: 11 hits in 1105 files, none an Inflection transactions read. Within the irpt_reporting folder the only caller of flows_of is the test file test_inflection_account_return_daily.py (lines 83 and 98). The Inflection transactions silver partition is named silver/transactions at data/inf/scripts/gold/INF_build_canonical_prices.py line 432. The record's silver_source cites the docstring line and states this gap.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/adapters/inflection_account_return_daily.py@9fed5fbb43",
+      "data/inf/scripts/gold/INF_build_canonical_prices.py@9fed5fbb43"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The record is written on the gap, not on a guessed prefix. The CTO or the producer's order decides which silver read the Inflection account_transaction producer copies."
+}
+```
