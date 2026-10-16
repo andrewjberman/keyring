@@ -166,7 +166,10 @@ ins = rep(ins, "(the package's 298 plus the host's pydeps; the release-19 root h
 ins = rep(ins, "import opal_producer  # noqa: F401\n",
           "import opal_producer  # noqa: F401\nimport portfolio_series  # noqa: F401\nimport price_source  # noqa: F401\nimport swap_replacement  # noqa: F401\n"
           "import tr_level  # noqa: F401\nimport price_adapter_bbg  # noqa: F401\nimport price_adapter_demque  # noqa: F401\nimport price_adapter_yfinance  # noqa: F401\n"
-          "import price_adapter_ycharts  # noqa: F401\nimport swap_pass  # noqa: F401\nimport yahoo_history_days  # noqa: F401\n")
+          "import price_adapter_ycharts  # noqa: F401\nimport swap_pass  # noqa: F401\nimport yahoo_history_days  # noqa: F401\n"
+          "import yfinance_check  # noqa: F401\nimport resident_session  # noqa: F401\n")
+ins = rep_line(ins, 'echo "V1 P4 yfinance_check.py absent from the root', [
+    'echo "V1 P4 yfinance_check.py present in the root: $(test -f $RUN/intake/yfinance_check.py && echo yes || echo no) (want yes; release 34 ships it with the door checker wiring)"'])
 UPLOADS_R31 = "48f39329ea4c947dc30cba02e07ed499d6f683726204710b16656c29d6f3c0c1"
 if ins.count(UPLOADS_R31) != 1:
     refuse("the stale uploads.py value appears %d times, want 1 (the reader label; the member table was rewritten above)" % ins.count(UPLOADS_R31))
