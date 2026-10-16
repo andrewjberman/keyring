@@ -26,3 +26,12 @@ chooser Andrew. Stop: the project closes, HELD-AT-STOP, or his stand-down.
 
 Whether the sibling seats these COOs depend on (`3.0.0_SA_CVO~Z` for halves and slugs; `0.7.0_AE_CloudOps~Z`/`~ZS` for ap-21
 Phase B and ap-24) come back with them. That question goes to Andrew; nothing here seats them.
+
+## Answered ~02:2xZ, same terminal, verbatim
+
+> "yes bring CVO and CloudOps back too"
+
+Seats: `3.0.0_SA_CVO~Z`, `0.7.0_AE_CloudOps~Z`, `0.7.0_AE_CloudOps~ZS`. Each is event-driven with `/watcher` once and zero crons
+(`org/XXX.md` F, "every other serial"); he named no loop. First acts: CVO~Z takes the OG-ap-24 CVO half and its open L8 work;
+CloudOps~Z resumes the p21 ledger `nfra-oplgtw-gateway-release-p21` from its recorded leg state (NEVER-2: measure the artifact
+first); CloudOps~ZS holds ap-24 Phase B until a GO names all three halves signed.
