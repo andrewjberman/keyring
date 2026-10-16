@@ -66,12 +66,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 278.92 days old (min 14); 52 earlier releases (min 3)",
+        "summary": "release 278.99 days old (min 14); 52 earlier releases (min 3)",
         "this_release_at": "2026-01-10T09:22:21.280709Z",
         "first_release_at": "2013-11-14T16:29:28.649221Z",
         "release_count": 53,
         "earlier_releases": 52,
-        "age_days": 278.92,
+        "age_days": 278.99,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false
@@ -157,6 +157,10 @@
         ],
         "compiled_count": 0,
         "compiled": [],
+        "differ_after_crlf_normalisation": 0,
+        "compared_across_platforms": true,
+        "installed_platform": "win_amd64",
+        "held_platform": "any",
         "hooks_only_in_wheel": [],
         "hooks_also_in_installed_copy": [
           "entry_point console_scripts:websockets = websockets.cli:main"
@@ -212,17 +216,29 @@
     {
       "n": 8,
       "name": "a person reads the result of 1 to 7 and signs the batch",
-      "verdict": "awaiting",
+      "verdict": "passed",
       "evidence": {
-        "summary": "check 8 awaits the signature: the signature file does not exist",
-        "signer": null,
-        "path": null
+        "summary": "signature file names the batch and the file and carries the signing line; waives check 6 for this file",
+        "signer": "1.0.0_SA_CTO",
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md",
+        "signature_file_sha256": "f3a3b23123e33427a55a1d9c78b60d733eb099f32c2efad9aa49d5270412006f",
+        "signature_file_git_author": "1.0.0_SA_CTO",
+        "waivers": [
+          {
+            "check": 6,
+            "reason": "compared across platforms; all 46 differing .py files are equal after CRLF normalisation"
+          }
+        ],
+        "ignored_waivers": []
       },
       "rules_out": "a tool's silent failure being read as a pass",
       "leaves": "what none of 1 to 7 can see"
     }
   ],
-  "verdict": "not_checked",
-  "checked_by": "0.9.0_WK_NFRA_CTLPLN~132",
-  "at": "2026-10-16T07:21:20Z"
+  "verdict": "released-with-waiver",
+  "waived_checks": [
+    6
+  ],
+  "checked_by": "0.9.0_WK_NFRA_CTLPLN~133",
+  "at": "2026-10-16T09:11:24Z"
 }
