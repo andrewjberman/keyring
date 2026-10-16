@@ -31,4 +31,4 @@ Issuer `2.0.0_SA_COO~G2`, 2026-10-16.
 
 (i) Domain: one resolver constructor; one job-row attribute with three writers (resident ready-send, packager, commentary [another seat's]); one status shape. (ii) One closed code set (`HOP_FAILURE_CODES`) read by writer and reader. (iii) One intent per cell. (iv) What this cut does NOT move: the signed r34 until it is re-signed, IAM, the commentary writer, the ticket page, the classifier.
 
-fanout: 2 of 3 chains, cap 8, reason: workers 226 (AR-g-110) and 227 (AR-g-109) spawn now; AR-g-111 is cut in the next commit, AR-g-112 waits on AR-g-110's merge.
+fanout: 2 of 3 chains, cap 8, reason: workers 250 (AR-g-110) and 251 (AR-g-109) spawn now; AR-g-111 is cut in the next commit, AR-g-112 waits on AR-g-110's merge.

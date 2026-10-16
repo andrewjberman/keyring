@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-g-110</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~226</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~250</issued_to>
 <issued_by>2.0.0_SA_COO~G2</issued_by>
 <issued_date>2026-10-16</issued_date>
 <status>pending</status>
@@ -20,14 +20,14 @@
 
 ## WORKER FACE
 
-You are `0.9.0_WK_IRPT_ANLREQ~226`.
-- **Worktree:** `C:/dev/wk-irpt-anlreq-226` (branch `wk-IRPT_ANLREQ-226`), provisioned by the issuer with `infra/`, `docs/`, `data/`, `lib/`, `org/standards` and the project folder on disk. Work only there. First confirm `org/` and `.tools/` exist in it.
-- Commit with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~226 <0.9.0_WK_IRPT_ANLREQ~226@opal.agent>" -F <msgfile> -- <paths>`. Write the message file with the Write tool. Do not pre-`git add`. The workspace worktree may show ` M portal` and a modified `.parquet` fixture: never commit either. (A provisioner error about a portal sub-worktree does not concern you.)
-- A row id has the form `IRPT_ANLREQ-D2-W226-S<k>` (take the next free `<k>`; check the channel file for `W226` first); `surfaced_at` of any row = `date -u +%FT%TZ` at filing. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` (Python 3.9 syntax). No non-ASCII in what you add.
+You are `0.9.0_WK_IRPT_ANLREQ~250`.
+- **Worktree:** `C:/dev/wk-irpt-anlreq-250` (branch `wk-IRPT_ANLREQ-250`), provisioned by the issuer with `infra/`, `docs/`, `data/`, `lib/`, `org/standards` and the project folder on disk. Work only there. First confirm `org/` and `.tools/` exist in it.
+- Commit with `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~250 <0.9.0_WK_IRPT_ANLREQ~250@opal.agent>" -F <msgfile> -- <paths>`. Write the message file with the Write tool. Do not pre-`git add`. The workspace worktree may show ` M portal` and a modified `.parquet` fixture: never commit either. (A provisioner error about a portal sub-worktree does not concern you.)
+- A row id has the form `IRPT_ANLREQ-D2-W250-S<k>` (take the next free `<k>`; check the channel file for `W250` first); `surfaced_at` of any row = `date -u +%FT%TZ` at filing. Every `.py` you add or change passes `bash .tools/commit-gate.sh <file>` (Python 3.9 syntax). No non-ASCII in what you add.
 - No live call, NO PUSH, no deploy, no AWS call, no network (the yfinance library is never imported or called by your tests), no install. Scratch outside the product tree.
 - Run each test file ON ITS OWN (`python -m pytest -q <one file>`). The checker is run WITHOUT `-I`.
 
-### Read first (under `C:/dev/wk-irpt-anlreq-226/infra/aws/lambda/investor-reporting/`)
+### Read first (under `C:/dev/wk-irpt-anlreq-250/infra/aws/lambda/investor-reporting/`)
 
 - `ycharts/session/resident_session.py` (`template_resolver`, the only place the door builds a `SecurityResolver`) and `ycharts/session/tests/test_resident_session.py` (`test_resident_factory_uses_canonical_secret_and_durable_lookup_boundary` is the fixture pattern: `Dynamo`, `Secrets`, `ResidentSession(...)`, and `monkeypatch.setattr(deadline_transport, '_run_child', offline_child)` to answer the provider lookup).
 - `intake/security_resolution.py` (`SecurityResolver.__init__(..., checker=None)` and `_check_unknown`: what a KEPT / NOT_KEPT / CHECK_FAILED verdict does to a symbol's result) and `intake/yfinance_check.py` (`YfinanceChecker(history=None, sleep=..., cap=10, pace_seconds=1.0)`, `check(symbols)`, `CheckerUnavailable`, `default_history`).
@@ -64,7 +64,7 @@ You are `0.9.0_WK_IRPT_ANLREQ~226`.
 <paths>
 infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py
 infra/aws/lambda/investor-reporting/ycharts/session/tests/test_resident_session_checker.py
-org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~226/
+org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~250/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-110.door-resolver-yfinance-checker.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -76,7 +76,7 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
 Criterion ids: AR110-g-AC1, AR110-g-AC2. Instance at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~226/IRPT_ANLREQ.TO-AR-g-110.door-resolver-yfinance-checker.proof_of_spec.json`.
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~250/IRPT_ANLREQ.TO-AR-g-110.door-resolver-yfinance-checker.proof_of_spec.json`.
 - Set its `to_id` to exactly `IRPT_ANLREQ.TO-AR-g-110`, and its `decomp_ref` to the order's `<decomp_ref>` block (the proof gate requires it).
 - Each acceptance entry's `invocation` is the criterion's text EXACTLY (put the `timeout` bound in the evidence line, not in the invocation).
 - In `artifacts_produced`, name each file with the hash of the commit that holds it, never a placeholder (use `kind` `test` for a test file): commit the product files first, then the proof and the status flip.
