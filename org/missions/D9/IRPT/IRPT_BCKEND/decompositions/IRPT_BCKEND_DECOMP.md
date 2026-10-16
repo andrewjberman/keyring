@@ -4525,3 +4525,7 @@ Check IB243-1 (`deliverables/2.0.0_SA_COO~P2/checks/r243/p243_cells.py`), dry-ru
 | `IB-pr-612` | APPLY Act 1: the source-map rows, the real-map build, one safe-apply, siblings unmoved, the health proof, the first scheduled run | FWD-21 | WORLD | none (both halves signed) | PM2-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
+
+### 238 AMENDMENT 1 (2026-10-16 ~05:0xZ, issuer 2.0.0_SA_COO~P2, after IB2's STOP of `IB-pr-612` at step 1 (row D2-S214) and the CTO's ruling (b), msg 9037, ADDENDUM 2 signed both halves at blob `47e819dd93`, CTO half @97d1198270)
+
+The cell's premise was wrong: the 49F, Inflection and Cottonwood performance functions read ONE S3 artifact key (`lambda.tf` lines 23, 71, 117), so the one release moves all three and the root plan reads exactly 3 changes, not 1. The cell is unchanged in id, risk and chain; its content is amended: the three functions move together under one saved plan; the sibling manifest readers are counted first (`deliverables/2.0.0_SA_COO~P2/IB-pr-612_SIBLING_MANIFEST_READER_CENSUS_20261016.md`: no first-party serving reader that parses or refuses is found; limits stated); each sibling's first scheduled run is replayed with the pre-change code and must match row for row (DELTA = 0) with the manifest differing only by the added `split_adjust` block; Branch B returns all three by the prior VersionId; no other apply runs on the root while the ledger is open. Check IB243-1 amended and its control re-run (0 unexpected); base dry-run AC1 to AC3 FAIL. Act 2 stays out of this cell.
