@@ -36,6 +36,15 @@ HISTORICAL_MARKET_CAP  PE_RATIO  EV_TO_T12M_EBITDA  DIVIDEND_YIELD  GROSS_MARGIN
 Consensus row fields: `BEST_SALES BEST_EBIT BEST_EBITDA BEST_NET_INCOME BEST_EPS BEST_EPS_NUMEST BEST_DPS
 BEST_ESTIMATE_FCF BEST_CAPEX BEST_BPS BEST_PE_RATIO BEST_DIV_YLD BEST_PERIOD_END_DATE`.
 
+Traps measured on the first live run (BA, 2026-10-16):
+- `status: exact` means the **identity** is held, not the data: RTX and LMT resolved `exact` but had no `consensus`
+  and no `model` block. Check each call's `absent_reason`; an absent dataset is a web item.
+- Bloomberg BEST EPS carries no GAAP/core label. Show it as its own row ("Consensus EPS (Bloomberg BEST)") and say
+  so in Notes, not under a GAAP row; consensus net income / EPS can imply a nonsensical share count when the bases differ.
+- Bloomberg `EBITDA` includes one-off gains (BA 2025 carried a $9.6bn divestiture gain): read the 10-K analysis
+  (`harvest_get_filing_analysis`) for gains and charges before computing margins or leverage, and footnote them.
+- The harvest peer list is size/sector-based (BA got UNP, UBER, DE): replace it by business whenever it is off.
+
 What the harvest does **not** hold (go to the web for these even when the name is covered): quarterly or interim
 figures (H1, latest 10-Q balance sheet, LTM), the debt maturity ladder, credit ratings and outlooks, company-defined
 adjusted metrics (e.g. "Core Adjusted EBITDA", "Adjusted FCF") and KPI lines, guidance from the latest quarter,
