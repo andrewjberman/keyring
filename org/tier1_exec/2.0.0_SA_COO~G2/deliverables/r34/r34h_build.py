@@ -152,8 +152,8 @@ def main():
     keys_added = sorted(set(bindings) - set(bindings32))
     keys_changed = sorted(k for k in bindings if k in bindings32 and bindings[k] != bindings32[k])
     prov_changed = sorted(k for k in set(bindings["provenance"]) | set(bindings32["provenance"]) if bindings["provenance"].get(k) != bindings32["provenance"].get(k))
-    if keys_added != ["ycharts_window_budget"] or keys_changed != ["opal_pricing", "provenance"] or prov_changed != ["package_pin"]:
-        bad("the bindings differ from r34g beyond provenance.package_pin, opal_pricing and the new ycharts_window_budget: added %s changed %s provenance %s" % (keys_added, keys_changed, prov_changed))
+    if keys_added != ["ycharts_window_budget"] or keys_changed != ["opal_pricing", "provenance"] or prov_changed != ["files_from_count", "files_from_sha256", "package_pin"]:
+        bad("the bindings differ from r34g beyond provenance (package_pin and the files-from list's count and sha256, which grew by two lines), opal_pricing and the new ycharts_window_budget: added %s changed %s provenance %s" % (keys_added, keys_changed, prov_changed))
     if bindings["opal_pricing"] != {"enabled": True, "tiers": ["estate", "yfinance", "ycharts"]} or bindings32["opal_pricing"] != {"enabled": True, "tiers": ["estate", "yfinance"]}:
         bad("opal_pricing is not exactly the tiers estate, yfinance in r34g and estate, yfinance, ycharts (enabled) in r34h: %r -> %r" % (bindings32["opal_pricing"], bindings["opal_pricing"]))
     if bindings["ycharts_window_budget"] != {"calls": 6, "window_s": 390}:
