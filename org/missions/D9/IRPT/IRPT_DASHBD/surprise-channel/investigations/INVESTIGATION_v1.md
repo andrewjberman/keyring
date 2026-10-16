@@ -20727,3 +20727,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W417-S1 -- bun run lint in the portal exits 1 on the DEV base: 2 errors, both in TicketCenter test files outside this order's grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W417-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~417",
+  "surfaced_at": "2026-10-16T04:57:56Z",
+  "one_line": "bun run lint in the portal exits 1 with 2 errors (372 problems); both errors sit in TicketCenter test files this order does not touch, so the 0-errors premise of TO-DB-c-25 step 6 does not hold at the DEV base. The six files this order changes carry no lint error.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@dd417a10 bun run lint (eslint .) -> 372 problems (2 errors, 370 warnings); error 1 no-control-regex at src/pages/TicketCenter/__tests__/filing-decision-tree.test.tsx 299:12; error 2 no-regex-spaces at src/pages/TicketCenter/__tests__/filing-hint.test.tsx 190:37",
+      "portal diff 03f92d82..dd417a10 (git -C portal diff --name-only) names six files, all under src/pages/InvestorReporting; none under TicketCenter",
+      "measured output: .scratch/lint_final.txt in the worktree (lint_rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-c-25 step 6: from the portal worktree, bun run typecheck and bun run lint with 0 errors each.",
+  "world_is": "bun run typecheck exits 0. bun run lint exits 1 with 2 errors and 370 warnings across the repo; the two errors are pre-existing in TicketCenter test files at the base, which this order did not edit. No lint error is in a file this order changes."
+}
+```
+
+## IRPT_DASHBD-D2-W417-S2 -- the full-folder bun test run has no base measured by the same command; 35 of its failing names sit outside the two-folder base
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W417-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~417",
+  "surfaced_at": "2026-10-16T04:57:56Z",
+  "one_line": "TO-DB-c-25 step 6 compares bun test src/pages/InvestorReporting with a base; the base measured in step 1 was the two named folders only, so the full-folder subset claim cannot be closed from this order's measurements. The 35 extra failing names are ENOENT and DOM-global failures in files that import none of the changed modules.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SUITE_NAMES_R147.txt in the deliverables folder: two-folder base 10 unique names, after 9 unique names, subset True, only IV-e-124 removed",
+      "portal@dd417a10 bun test src/pages/InvestorReporting: 1023 pass, 25 skip, 68 fail, 27 errors over 1116 tests in 403 files; the failing names outside the base run are in fe-s-1, fe-s-11, fe-s-13, fe-s-14, fe-s-19, fe-s-25, fe-s-35, fe-s-38, fe-s-49, fe-s-50, mvp-selection and tabs/analysis",
+      "workspace git sparse-checkout list at HEAD omits docs/ and org/surprise_channel/; the ENOENT paths are docs/contracts/investor-reporting/v1/*.json and infra/aws/lambda/investor-reporting/_contracts/* (sparse-cone cause as recorded by IRPT_DASHBD-D2-W416-S1)",
+      "tabs/analysis/tests/prospect-suggested-swaps.test.tsx fails with ReferenceError document is not defined at its line 52 (AR-y-248)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-c-25 step 6: the failing-test names after bun test src/pages/InvestorReporting are a subset of the names before.",
+  "world_is": "The two-folder base and after runs satisfy the subset (9 names after, all within the 10 before; IV-e-124 leaves the set). The full-folder after run fails 68 tests and errors 27; their base was not run, so the subset over the full folder is not measured here. None of the 35 names imports seriesContract or DashboardPerformance, and their errors are environmental."
+}
+```
+
