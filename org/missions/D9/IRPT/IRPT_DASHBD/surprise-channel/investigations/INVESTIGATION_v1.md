@@ -20354,3 +20354,59 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "The materialized set now also carries that one CRO deliverables folder in the worktree."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S106 -- disarm condition for S102 (FWD-3 class keys through the route)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S106",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-16T02:03:00Z",
+  "one_line": "Disarm condition for IRPT_DASHBD-D2-S102, as the CTO's rounds 116-118 analysis asks: S102 disarms when a served series carries the class keys through the route, from the EXISTING producer (the CTO ruled in call 3596 that no new producer is built), with ~D2 publishing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "CTO analysis for F-SHIP rounds 116-118 (msg 8839) and call 3596 (msg 8826): the existing account_class_daily producer stays the one producer; ~D2 adds the sum-to-account test and the dated classification read (held, as_of) and publishes the class object; ~F2 builds only the reader and the tab.",
+  "world_is": "Round 120 measured the gap (record 0.9.0_WK_IRPT_DASHBD~702/RD_FWD3_PRODUCER_GAP_R120.json): classification read is one GetItem per ticker, undated (account_class_daily.py line 164); the sum test covers the identity and null path only; the swap snapshot is dated by an operator --as-of from a scan export, so the same-path premise does not hold. ~D2 names the object class_series.json.gz and the contract section class_object v0.4.0 (msg 8846); ~S2 cuts the OBJECTS member after the v0.4.0 file is committed (msg 8848). Nothing is served yet.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~702/RD_FWD3_PRODUCER_GAP_R120.json",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUNDS_116_117_118_20261016.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S102 stays ARMED until the condition holds. ~F2's own part (the reader and the mount of AssetClassSection) is cut in round 121, against route key which=class_series. DISARMS WHEN: S102 disarms when a GET of the reporting route with which=class_series returns the class object for a sample account, carrying class_names, coverage, market_value_eod and class_return_daily, from the existing producer; the disarm is read from that response, not from a seat's report."
+}
+```
+
+
+## IRPT_DASHBD-D2-S107 -- disarm condition for S103 (FWD-5 contract and producer)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S107",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~F2",
+  "surfaced_at": "2026-10-16T02:03:00Z",
+  "one_line": "Disarm condition for IRPT_DASHBD-D2-S103, as the CTO's rounds 116-118 analysis asks: S103 disarms when the transaction contract and the per-firm producer land with their L9.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "spec_asserts": "CTO analysis for F-SHIP rounds 116-118 (msg 8839): ~F2 is the sole writer of IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json and its per-firm producer; any enum carries its rule-24 record; CTO msg 8826 adds: search for an existing contract or producer first and print the denominator.",
+  "world_is": "Round 120 read (record 0.9.0_WK_IRPT_DASHBD~701/RD_FWD5_FIELDS_R120.json): 49 Financial 14 columns, 3 action codes (tr_cd), 15 type codes (sb_cd); Cottonwood 5 columns, 0 action codes, 16 type codes; Inflection 11 columns, 0 action codes, 48 type codes; the backend brief names 7 flow classes and says action and txn_type are Opal closed enums without listing their values; no file defines Opal's words for action and type (search denominators in the record). No existing transaction contract or producer was found.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~701/RD_FWD5_FIELDS_R120.json",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUNDS_116_117_118_20261016.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "S103 stays ARMED until the condition holds. Next acts of this seat: the rule-24 record (four postulates plus a word-boundary token census) for Opal's action and type enums over this denominator, then the contract, then the per-firm producer. DISARMS WHEN: S103 disarms when IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json and the per-firm producer are committed and the CVO has graded the cell that landed them (L9)."
+}
+```
