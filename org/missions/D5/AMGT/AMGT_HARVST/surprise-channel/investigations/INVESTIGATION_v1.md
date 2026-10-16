@@ -10002,6 +10002,67 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      ],
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "The hazard is disarmed by the signed Branch G action; the open question (vendor or runner cause) is carried as a named round-88 cell in the L10 slug, not a round-87 act."
-    }
+    },
+  {
+    "id": "AMGT_HARVST-D1-W153-S1",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~153",
+    "surfaced_at": "2026-10-16T15:45:26Z",
+    "one_line": "The worker face names .claude/agents/worker.md as the first read, but the worktree's sparse checkout does not materialise .claude/agents/; the file was read from HEAD by git show, and the same is true of the infra/aws lambda path the population cites.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "HVST-cc-6 WORKER FACE: read .claude/agents/worker.md first from the worktree; the worktree C:/dev/wk-harvst-153 carries the tree the order names.",
+    "world_is": "C:/dev/wk-harvst-153 carries org/ and .tools/ (TREE-OK) but its sparse set (git sparse-checkout list: .tools, infra/logic/registry, lib, org/devices, org/missions/D5/AMGT/AMGT_HARVST, org/modules/graph, org/ref, org/standards, org/tier1_exec/4.0.0_SA_CRO/scripts) omits .claude/agents/ and infra/aws/lambda/research; both are tracked at HEAD and were read with git show HEAD:<path>.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-files .claude/agents/worker.md lists the file at HEAD 4516893b3b; ls .claude/agents in the worktree reports no such directory",
+        "git show HEAD:.claude/agents/worker.md read by this seat, 0.9.0_WK_AMGT_HARVST~153 at 4516893b3b"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "AMGT_HARVST-D1-W153-S2",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~153",
+    "surfaced_at": "2026-10-16T15:45:26Z",
+    "one_line": "The HVST-cc-6 population's round tags (v7 to v85) do not name the remediation file that holds each row (v1 to v18), so the order's rule of finding REMEDIATION_v<N>.md by the population's tag returns nothing for all 32 rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "HVST-cc-6 section 1 step 1: the round tag v<N> is in the population file; for each row read the full row in REMEDIATION_v<N>.md, found by its id.",
+    "world_is": "All 32 population rows carry a round tag (remediation.round) that differs from the file the row sits in: rounds v7, v49, v55, v65, v66, v79, v80, v83, v84, v85 against files REMEDIATION_v1, v5, v11 to v18. The rows were located by a search of the remediations folder for each id, and each id occurs once.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cc6_population.json round fields (deliverables/2.0.0_SA_COO_W1/round88/cc6_population.json at 4516893b3b)",
+        "REMEDIATION_v1.md through REMEDIATION_v18.md under surprise-channel/remediations at 4516893b3b; each population id found once by json block parse"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "AMGT_HARVST-D1-W153-S3",
+    "project": "AMGT_HARVST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_AMGT_HARVST~153",
+    "surfaced_at": "2026-10-16T15:45:26Z",
+    "one_line": "The ARMED hazard of AMGT_HARVST-Z-S111 (worktree GC force-removing a live runner's pin worktrees) names a disarm owner 0.0.0_AB_MSTR~Z that is not on the live roster; HVST-cc-6 re-owns the row to 0.0.0_AB_MSTR~DELL1, but the disarm itself is not made by this worker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR~Z",
+    "spec_asserts": "An ARMED item carries a disarm owner who disarms it same-turn via the row's disarm_owner (CLAUDE.md section 2, surprise channel).",
+    "world_is": "The REMEDIATION_v14 row of Z-S111 reads hazard_standing ARMED, disarm owner 0.0.0_AB_MSTR~Z, state ARMED. Per the round-88 population, MSTR~Z is not live at the cut; the live MSTR seat is 0.0.0_AB_MSTR~DELL1. The worktree_gc.py SKIP for an in-use tree (lines 10-13) is present at HEAD, but a dry run on site Z that proves it is not yet read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "REMEDIATION_v14.md Z-S111 row: hazard_standing ARMED, disarm {state ARMED, owner 0.0.0_AB_MSTR~Z}, at 4516893b3b",
+        ".tools/worktree_gc.py lines 10-13 at 4516893b3b (SKIP in-use tree)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
 ]
 ```
