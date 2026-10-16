@@ -5,8 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~137</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>open</status>
-<status_reason>Issued by the issuer 2.0.0_SA_COO~C in the round-28 issuance, per the CTO's round-27 analysis ruling 4 (ROUND_ANALYSIS.round27.md @22207d353b, msg 109661).</status_reason>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-137 @efb0a434cd) and again in the main tree after merge 7dbffb535f: CTay1-AC1 FWD7-CLASSES total=64 carrier=40 not_same_file=15 project_same_file=9 unclassified=0 findings_line=64 ok=True (the tool's own FINDINGS count agrees); CTay1-AC2 FWD7-SELFTEST arms=9/9 ok=True; proof VALID. The 9 project-same-file lines name two shared infra files, infra/aws/lambda/ci/lambda-source-map.json (8 lines) and infra/aws/lambda/ci/record-terraform-deploy.sh (1): NON-ZERO, so per the CTO's ruling 4 it goes to him to decide whether it becomes a cell. Worker count in its tree was 62 (a sparse tree; row W137-S1: org/missions absent made placement-check under-report silently; the main-tree read is 64); W137-S2 INERT; W137-S3 (13 vs 15 directory claims classed NOT-SAME-FILE: the reused prefix rule never lets the directory-claim clause fire) is the CTO's. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

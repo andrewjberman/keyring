@@ -78,7 +78,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rr-2.gate-checks-ruling-ref.pro
 - Pre-cut: rr2.AC1 base FAIL as expected (0 of the four arms present, self-test green otherwise); rr2.AC2 base PASS as expected (a control: the pinned gate and the unchanged gate agree, 0 moved; 11 verdict lines).
 - A weakness stated: the PASS arm of rr2.AC1 and the "moved 0" arm are both exercised only by the worker's run; the issuer re-runs both in the main tree at the drain, and plants one row of each kind in a throwaway staged commit if the self-test arms leave doubt.
 
-<status>staged</status>
+<status>complete</status>
 <round>37</round>
 <workstream>RULING-REF-GATE</workstream>
 <slot>~116</slot>

@@ -2913,6 +2913,95 @@ def enforcing(flag):
     return bool(flag) or os.environ.get("NAMING_GATE_ENFORCE") == "1" or os.path.exists(ENFORCE_FILE)
 
 
+# --------------------------------------------------------------------------- name_rulings.json ruling_ref (NFRA_OPLGTW OG-rr-2)
+# The CTO ruling (@8b9adcbd8d section 3 cell 2, msg 34906) adds exactly two refusals to the name_rulings.json limb. (a) A ruling_ref
+# PRESENT on a row of the STAGED file must resolve: `git cat-file -e <commit>:<path>` succeeds for <path>@<commit>, split at the LAST
+# "@", the commit being 40 hex. (b) A row ADDED by the commit (keyed (name, type), absent from HEAD's file) must carry a ruling_ref
+# that resolves. A legacy row (present at HEAD, no ruling_ref) is not refused and its grade is unchanged: this limb adds REFUSE rows
+# only for (a) and (b) and reads no verdict of any name. Graded only when the commit stages the registry file.
+RULINGS_REL = "infra/logic/registry/name_rulings.json"
+RULING_REF_COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
+
+
+def ruling_ref_resolves(ref):
+    """(True, '') when ref is <path>@<40-hex commit> and git cat-file -e <commit>:<path> succeeds in REPO; else (False, phrase)."""
+    if not isinstance(ref, str) or "@" not in ref:
+        return False, "is not a path@commit string"
+    path, _sep, commit = ref.rpartition("@")
+    if not path or not RULING_REF_COMMIT_RE.match(commit):
+        return False, "is not a path@commit string"
+    rc, _out, _err = git("cat-file", "-e", "%s:%s" % (commit, path))
+    return (True, "") if rc == 0 else (False, "does not resolve")
+
+
+def ruling_ref_refusals(staged, head):
+    """The OG-rr-2 refusals for the STAGED rows {(name, type): row} against the HEAD rows of the same file, in file order. Each is
+    (key, limb, canonical, why): limb "(a)" for a present ref that does not resolve, "(b)" for an added row with no ref."""
+    out = []
+    for key, row in staged.items():
+        if "ruling_ref" in row:
+            ok, phrase = ruling_ref_resolves(row["ruling_ref"])
+            if not ok:
+                out.append((key, "(a)", "ruling_ref %s %s" % (row["ruling_ref"], phrase),
+                            "OG-rr-2 (a): the ruling_ref %r on the row (%s, %s) %s at its commit (git cat-file -e <commit>:<path>)"
+                            % (row["ruling_ref"], key[0], key[1], phrase)))
+        elif key not in head:
+            out.append((key, "(b)", "added with no ruling_ref",
+                        "OG-rr-2 (b): the row (%s, %s) is added by this commit and carries no ruling_ref; a new row names its ruling"
+                        % (key[0], key[1])))
+    return out
+
+
+def _ruling_rows_of(raw):
+    """{(name, type): row} of name_rulings.json bytes, read as rootcheck's load_name_rulings reads them; ValueError when the bytes do
+    not parse or a (name, type) is held twice."""
+    doc = json.loads(text_of(raw))
+    out = {}
+    for r in doc.get("name_rulings") or []:
+        key = (r.get("name"), r.get("type"))
+        if key in out:
+            raise ValueError("two name rulings for %r" % (key,))
+        out[key] = r
+    return out
+
+
+def ruling_ref_rows(staged_all):
+    """(rows, meta) of OG-rr-2 for a commit whose staged paths (`staged_all`: diff entries plus --staged-paths entries) include
+    name_rulings.json: REFUSE rows for the refusals, or one NOTICE line when the staged or HEAD bytes cannot be read (no row, the
+    grade as today). ([], []) when the commit does not stage the file. Reads the index and HEAD, never the working tree."""
+    if not any(RULINGS_REL in (e.get("new"), e.get("old")) for e in staged_all):
+        return [], []
+    if _diff_repo() != REPO:
+        return [], []
+
+    def unread(why):
+        return [], ["NAMING RULINGS-NOTICE name_rulings.json could not be read (%s); no ruling_ref is graded" % why]
+
+    rc, raw, _err = git_in(REPO, "show", ":" + RULINGS_REL)
+    if rc != 0:
+        return unread("the staged copy: git show failed")
+    try:
+        staged = _ruling_rows_of(raw)
+    except (ValueError, AttributeError, TypeError) as exc:
+        return unread("the staged copy: %s: %s" % (type(exc).__name__, exc))
+    rc, listed, _err = git_in(REPO, "ls-tree", "HEAD", "--", RULINGS_REL)
+    if rc != 0:
+        return unread("HEAD: git ls-tree failed")
+    head = {}
+    if listed.strip():  # HEAD holds the file; an absent file at HEAD is a new file, so every row is added
+        rc, raw_head, _err = git_in(REPO, "show", "HEAD:" + RULINGS_REL)
+        if rc != 0:
+            return unread("HEAD: git show failed")
+        try:
+            head = _ruling_rows_of(raw_head)
+        except (ValueError, AttributeError, TypeError) as exc:
+            return unread("the HEAD copy: %s: %s" % (type(exc).__name__, exc))
+    rows = []
+    for (name, typ), _limb, canon, why in ruling_ref_refusals(staged, head):
+        rows.append(("REFUSE", RULINGS_REL, 0, "(%s, %s)" % (name, typ), canon, why, "REFUSE"))
+    return rows, []
+
+
 def run(args):
     if not args.diff:
         raise GateError("no --diff FILE given")
@@ -2945,12 +3034,15 @@ def run(args):
     _live_reset(_live_read_plane)  # the live limb is on for a graded commit; self-test arms keep it off unless they inject a plane
     # MX-c-9 A4: derived from the staged paths, once per run. CT-ad-2: the staged set is the diff's own paths PLUS every path
     # --staged-paths lists (the whole index of the commit, any extension). The derivation reads these paths and nothing else.
-    _LEGACY.update(project=committing_project(files + staged_entries(args.staged_paths)), rows=None)
+    staged = files + staged_entries(args.staged_paths)
+    _LEGACY.update(project=committing_project(staged), rows=None)
     _CATALOG_NEW.clear()
     _S3P["admitted"].clear()
     _RULINGS.clear()  # name_rulings.json, read once for this run (OG-ng-2)
     for f in files:
         rows += grade_file(nm, f, args.post_from_index)
+    ref_rows, ref_meta = ruling_ref_rows(staged)  # OG-rr-2: the staged registry file's ruling_ref refusals, added rows only
+    rows += ref_rows
     meta = domain_meta(files)
     exempt_line = catalog_exempt_line(rows)
     if exempt_line:
@@ -2961,6 +3053,7 @@ def run(args):
     rulings_line = _rulings_notice_line()
     if rulings_line:
         meta.append(rulings_line)
+    meta.extend(ref_meta)
     rows = place_step(rows, meta)
     return rows, meta
 
@@ -3477,6 +3570,37 @@ def name_rulings_self_test(nm):
     return all(arms)
 
 
+def ruling_ref_self_test():
+    """The ruling_ref arms (NFRA_OPLGTW OG-rr-2): the planted rows and the HEAD rows are dicts; a ref is RULINGS_REL at HEAD (resolves)
+    or a path HEAD does not hold (does not resolve). Nothing is read from or written to the registry file here."""
+    rc, head_out, _err = git("rev-parse", "--verify", "-q", "HEAD^{commit}")
+    head_commit = head_out.decode("ascii", "replace").strip() if rc == 0 else ""
+    good = "%s@%s" % (RULINGS_REL, head_commit)
+    bad = "infra/logic/registry/planted_absent_selftest.json@%s" % head_commit
+    key = ("selftest-ruling-name", "hand-kept carrier")
+    base = {"name": key[0], "type": key[1], "canonical": key[0]}
+    arms = []
+    got = ruling_ref_refusals({key: dict(base, ruling_ref=bad)}, {})
+    arm = len(got) == 1 and got[0][1] == "(a)"
+    arms.append(arm)
+    print("SELF-TEST arm ruling-ref refuse-unresolved: a planted row whose ruling_ref names a path@commit that does not exist -> REFUSE: %s"
+          % ("ok" if arm else "FAIL"))
+    got = ruling_ref_refusals({key: dict(base, ruling_ref=good)}, {})
+    arm = got == []
+    arms.append(arm)
+    print("SELF-TEST arm ruling-ref admit-resolved: a planted row whose ruling_ref resolves -> admitted: %s" % ("ok" if arm else "FAIL"))
+    got = ruling_ref_refusals({key: dict(base)}, {})
+    arm = len(got) == 1 and got[0][1] == "(b)"
+    arms.append(arm)
+    print("SELF-TEST arm ruling-ref refuse-new-row-no-ref: a planted row added with no ruling_ref -> REFUSE: %s" % ("ok" if arm else "FAIL"))
+    got = ruling_ref_refusals({key: dict(base)}, {key: dict(base)})
+    arm = got == []
+    arms.append(arm)
+    print("SELF-TEST arm ruling-ref legacy-row-unchanged: a planted row present at HEAD with no ruling_ref -> not refused, grade unchanged: %s"
+          % ("ok" if arm else "FAIL"))
+    return all(arms)
+
+
 def self_test():
     """--self-test: judge() on a NEW group-A name takes the fourth verdict and passes, and (the difference control) a NEW
     group-B name is still refused. Reads no diff, writes no log. Returns 0 when both arms hold."""
@@ -3501,6 +3625,7 @@ def self_test():
     ok = adopt_self_test(nm) and ok
     ok = test_folder_self_test(nm) and ok
     ok = name_rulings_self_test(nm) and ok
+    ok = ruling_ref_self_test() and ok
     print("NAMING-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
 

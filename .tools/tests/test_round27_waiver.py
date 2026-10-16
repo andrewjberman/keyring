@@ -287,7 +287,9 @@ def arm_g1_cross_platform_check_6_records_the_comparison_and_the_crlf_count():
         rec = env.check(w.name)
         c6 = rec["checks"][5]
         ev = c6["evidence"]
-        assert c6["verdict"] == "failed", c6["verdict"]        # the raw comparison is unchanged: it still fails
+        # a cross-platform CRLF-only difference is platform-normalised-equal (check 6 is platform-aware, CT-aw-1)
+        assert c6["verdict"] == "passed", c6["verdict"]
+        assert ev["platform_normalised_equal"] == [ic.SYN_NAME + "/__init__.py"], ev["platform_normalised_equal"]
         assert ev["py_differing_count"] == 1, ev["py_differing_count"]
         assert ev["differ_after_crlf_normalisation"] == 0, ev["differ_after_crlf_normalisation"]
         assert ev["compared_across_platforms"] is True, ev

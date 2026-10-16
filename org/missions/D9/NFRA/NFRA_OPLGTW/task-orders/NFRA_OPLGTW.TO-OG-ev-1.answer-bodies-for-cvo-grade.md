@@ -67,7 +67,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-1.answer-bodies-for-cvo-grad
 - One criterion, mechanical (the existence and hygiene of the record); the grade itself is the CVO's judgment on the bodies, never this cell's.
 - Pre-cut: ev1.AC1 base FAIL as expected (`ANSWER_BODIES.json` absent). The PASS arm is the applier's run; the issuer re-runs the check at the close.
 
-<status>staged</status>
+- A1 (issuer, 2026-10-16 ~10:5xZ, rows Z-S168 to Z-S170; edits `OG-ap-19` A3 and `OG-ap-23` A8): (1) the `ap-19` marker "the 14-day news cap stated" belongs to `news_search_articles` (PRD G6 (c): a 14-day window cap); the recorded body came from `news_for_security`, which applies a 30-day window by its own contract (Z-S170, an observation, no defect). REPLACE that one body with a `news_search_articles` call asking for a window longer than 14 days, so the answer shows the cap applied. (2) The `ap-19` marker "`data_status` on a quiet day" is reworded in the order to an empty window with its as-of; the Sunday `news_search_articles` body already recorded stands. (3) The `ap-23` marker "Schwab masters never summed" leaves AC3 (no Schwab catalog row; Z-S169); its body stays as the recorded `no_catalog_row` answer. (4) Z-S171 (`harvest_get_published_analysis` peers unavailable once) is carried as an observation for the round-N analysis. The record keeps 16 bodies after the replacement; `ev1.AC1` is unchanged. Gate limb: none graded (a note on a completed order).
+
+<status>complete</status>
 <round>37</round>
 <workstream>ANSWER-BODIES</workstream>
 <slot>~AE</slot>

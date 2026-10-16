@@ -84,7 +84,7 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 
 - `AC1`: the re-cut carries exactly the G3 and G6 build on the live ref with thirteen registrations and the two grants as one policy each, no wildcard, the G3 one confined to its prefix.
 - `AC2`: the release landed and closed, both policies are live, and the installed code serves all thirteen tools to an Opal principal and refuses a non-Opal one.
-- `AC3` (judgment, `3.0.0_SA_CVO~Z`): the first portal and news answers read as an analyst would want them (freshness in trading days, `data_status` on a quiet day, the 14-day news cap stated). Graded on a real call; never simulated here.
+- `AC3` (judgment, `3.0.0_SA_CVO~Z`): the first portal and news answers read as an analyst would want them (freshness in trading days, a quiet day answered as an empty window with its as-of and not as an error, the 14-day news cap stated by `news_search_articles`). Graded on a real call; never simulated here. (Reworded by A3: the portal and news tools carry no `data_status` field.)
 
 ## 5. WHEN YOU ARE DONE
 
@@ -101,6 +101,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-19.g3-g6-tools-release.proof
 - A1 (issuer, 2026-10-15 ~00:1xZ, row Z-S132): the release worktree carries `infra/logic/` in its cone (its registry feeds `lib/opal_naming.py address()`, which `deploy-to-ec2.sh` calls for the `.env` S3 roots); prove it with a no-upload dry read of the script's naming step before Phase B. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 - A2 (issuer, 2026-10-15 ~03:5xZ, msg 34323, row Z-S137): `app/typed_scope.py` (OG-gt-6, merged `d8b0b28c32`) is the seam the portal and news modules import, and ap-18 deliberately left it out; it is in neither the base nor the take-list, and `portal_models.py` imports it, so without it the service would not start. Ruled route (a): take `app/typed_scope.py` WHOLE and its test `tests/test_og_gt6.py` WHOLE from `box/sitez` HEAD into this release (code only: no IAM, no grant, no tool of its own; it is what makes the thirteen tools' admission uniform). The ask names the two files under `diff`. ap19.AC1's allow-list gains both. Add the host-shaped import check of `app.typed_scope` itself. `app/harvest_published.py` stays out (its own ask). Gate limb: GATE (viii) on the modified order (placeholders NONE).
+
+- A3 (issuer, 2026-10-16 ~10:5xZ, row Z-S168 and Z-S170 of `0.7.0_AE_CloudOps~Z` in `OG-ev-1`): the AC3 text named `data_status` on a quiet day, a field only the harvest answers carry (ap-18 shows it); the portal and news tools express a quiet day as an empty window with its as-of. The AC3 marker is reworded to that, a wording change of a judgment line (no mechanical criterion moves; the CVO still grades on the real answers). The 14-day cap is the `news_search_articles` tool's (PRD v3.x G6 (c)); `news_for_security` applies a 30-day window by its own contract, so the marker's body comes from `news_search_articles` (`OG-ev-1` A1). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
 <status>complete</status>
 <round>37</round>

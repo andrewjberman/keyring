@@ -12494,3 +12494,252 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Check 8 now passes for all 17 (BLOCKING W133-S1 cleared by the CTO's file block at 0f1ce30022). The four refused records read check 8 passed with the signed path; their verdict is not_checked because of check 6. Dell2 CTO's PROCEED (11f0240cd4) was received; the Taildrop was not sent because the 52-file pack does not exist."
 }
 ```
+
+## NFRA_CTLPLN-W137-S1 -- the sparse set omits org/missions and placement-check reads it silently as empty
+
+```json
+{
+  "id": "NFRA_CTLPLN-W137-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~137",
+  "surfaced_at": "2026-10-16T10:33:08Z",
+  "one_line": "CT-ay-1: the worktree's sparse set had no org/missions, and placement-check.py read that folder silently as empty: 1 live project and 0 cross-box overlaps with rc 0 and no error, against 30 live projects and 62 overlaps once org/missions was added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ay-1.fwd7-cross-box-overlaps-by-class.md@7d4aef5b93 -- the worker face says a missing folder is cured by git sparse-checkout add, and the retry is named in the report",
+      ".tools/placement-check.py@7d4aef5b93 lines 80 and 96 -- read_projects globs org/missions/D*/*/*/project.json and each home's task-orders; an absent folder yields no rows and no error",
+      "worktree ctlpln-137 at 7d4aef5b93 before the fix: git sparse-checkout list = .tools, infra/logic/registry, lib, org/devices, org/modules/graph, org/ref, org/standards, org/missions/D0/NFRA/NFRA_CTLPLN; the read printed 'live projects: 1', 'FINDINGS: 0 unplaced/unreadable, 0 cross-box write overlap(s)', rc 0",
+      "the same worktree after git sparse-checkout add org/missions (worktree only, no commit): 'live projects: 30', 'FINDINGS: 0 unplaced/unreadable, 62 cross-box write overlap(s)', rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face, the cell: if a command fails because a file or folder is missing, run git sparse-checkout add <folder> (likely org/projects and org/missions), retry, and name the folder in the report. The read is run from the worktree root over every live project row.",
+  "world_is": "The command did not fail; it printed a complete-looking read over 1 of 30 live projects. The tool reads no org/projects path (its project rows come from the glob over org/missions and its register from org/devices/DEVICES.json), and org/mcp/drive_mode does not exist at HEAD. org/missions is the one folder the sparse set lacked. A worktree cut by .tools/wk-provision.sh with the same set reads a false zero for every cross-box overlap check, with rc 0.",
+  "notes": "The worker added org/missions to the worktree's sparse checkout only (git sparse-checkout add org/missions); no tracked file, register or project row changed. The hazard is for the next reader of a sparse worktree: a placement read there is not evidence of zero overlaps until the folder set is checked. Fix (the provision set or a refusal on an absent folder) is the issuer's call; not proposed here."
+}
+```
+
+## NFRA_CTLPLN-W137-S2 -- the cell's cut count of 64 does not match the live read (62) at the pin
+
+```json
+{
+  "id": "NFRA_CTLPLN-W137-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~137",
+  "surfaced_at": "2026-10-16T10:33:08Z",
+  "one_line": "CT-ay-1: the cell says the placement read prints 64 cross-box overlaps at the cut; at HEAD 7d4aef5b93 with org/missions present it prints 62 over 30 live projects, and the round-27 ruling says 58 and the earlier FWD-7 read says 56.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ay-1.fwd7-cross-box-overlaps-by-class.md@7d4aef5b93 -- the cell text: 'at the cut it reads 64 (FINDINGS: 0 unplaced/unreadable, 64 cross-box write overlap(s))'",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~137/FWD7_PROJECT_PATH_OVERLAPS.md@09b6330807 -- the live read: 62 OVERLAP lines; the tool's FINDINGS line counts 62; live projects 30",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/ledger/ROUND_ANALYSIS.round27.md@22207d353b ruling 4 -- 'the 58 cross-box write overlaps'",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~106/FWD7_OVERLAP_CLASSES.md@7d4aef5b93 -- the earlier read: 'Denominator: 56 OVERLAP lines read'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face, THE CELL: at the cut python .tools/placement-check.py (read-only) reads 64 (FINDINGS: 0 unplaced/unreadable, 64 cross-box write overlap(s)).",
+  "world_is": "At HEAD 7d4aef5b93 with org/missions in the sparse set, the read prints FINDINGS: 0 unplaced/unreadable, 62 cross-box write overlap(s) over 30 live projects, and the classifier's total (62) agrees with it. The 64 is not reproduced at this pin. Its cause is not established by this worker; the live state moved between the cut and this read.",
+  "notes": "The classifier does not depend on the figure 64: it checks its total against the tool's own FINDINGS line on every run, and the report prints both. The three figures (56, 58, 64) and the live 62 are recorded as read, not reconciled."
+}
+```
+
+## NFRA_CTLPLN-W137-S3 -- a directory claim over a file is NOT-SAME-FILE by the reused rule, so the directory-claim clause of PROJECT-SAME-FILE cannot fire
+
+```json
+{
+  "id": "NFRA_CTLPLN-W137-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~137",
+  "surfaced_at": "2026-10-16T10:33:08Z",
+  "one_line": "CT-ay-1: 13 of the 62 overlap lines are NOT-SAME-FILE only because one path is a directory claim over a path under it (for example infra/aws/lambda/ci over infra/aws/lambda/ci/lambda-source-map.json); the reused prefix rule reads them as different files, and rule 3's directory-claim clause can never fire because rule 2 is checked first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~137/FWD7_PROJECT_PATH_OVERLAPS.md@09b6330807 -- the NOT-SAME-FILE table: 13 lines, each with a directory claim in the relation column; lines naming lambda-source-map.json under infra/aws/lambda/ci or infra/aws/lambda are among them",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~137/fwd7_classify.py@baed654d2b -- classify(): rule 2 (strict directory-prefix parent, differing) precedes rule 3 (equal path)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-ay-1.fwd7-cross-box-overlaps-by-class.md@7d4aef5b93 -- BUILD 1: 'NOT-SAME-FILE when one path is a strict directory-prefix parent ... the two projects change different files'; PROJECT-SAME-FILE 'or one is a directory claim over the other's directory and neither rule above fired'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face, BUILD 1: NOT-SAME-FILE when one path is a strict directory-prefix parent of the other and the two differ, meaning the two projects change different files; PROJECT-SAME-FILE when the two paths are the same file, or one is a directory claim over the other's directory and neither rule above fired.",
+  "world_is": "A directory claim covers every file under it, so the prefix relation does not show that the two projects change different files. Of the 62 lines, 13 are NOT-SAME-FILE on this basis, several naming lambda-source-map.json that the PROJECT-SAME-FILE table also lists. Because the prefix rule is checked first, the directory-claim clause of PROJECT-SAME-FILE is unreachable, so every directory claim reads NOT-SAME-FILE by construction. The classifier follows the rule as written and prints the relation on each such line; it does not reclassify.",
+  "notes": "Consequence for the CTO: PROJECT-SAME-FILE = 9 counts equal paths only. Whether the 13 directory-claim lines are same-file overlaps is a rule question for the CTO, who decides whether any becomes a cell. The worker proposes no change to the rule, the tool or the register."
+}
+```
+
+## NFRA_CTLPLN-W136-S1 -- the fetch approval gate and check 2 read the approval file by different rules
+
+```json
+{
+  "id": "NFRA_CTLPLN-W136-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~136",
+  "surfaced_at": "2026-10-16T10:37:22Z",
+  "one_line": "The fetch approval gate and check 2 read the same approval file by different rules: fetch refuses 'ExamplePkg==1.2.3' and 'examplepkg == 1.2.3' and passes 'examplepkg==1.2.3 --hash=sha256:...'; check 2 accepts the first two and refuses the hash-suffixed line, so a line can pass the fetch and then fail check 2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_fetch.py@7d4aef5b93 lines 355-357 (Fetch.approval) and 630-641 (approval_gate): a case-sensitive regex for name==version, not preceded by [A-Za-z0-9._-] and not followed by [A-Za-z0-9._+!]",
+      "org/devices/intake/intake_check.py@7d4aef5b93 lines 385-402 (check_2): cuts each line at '#', strips, partitions at '==', folds the name with norm_name (line 202: case and [-_.] folded) and compares the version exactly after strip",
+      "measured at 2026-10-16T10:3xZ in worktree C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-136 by calling intake_fetch.approval_gate and intake_check.check_2 on a synthetic wheel in a temporary folder: 'examplepkg==1.2.3' fetch=True check2=True; 'ExamplePkg==1.2.3' fetch=False check2=True; 'examplepkg == 1.2.3' fetch=False check2=True; 'examplepkg==1.2.3 --hash=sha256:<64 zeros>' fetch=True check2=False"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-27 analysis ruling 2 and TO CT-ax-1 build step 1.1: the page states the exact name==version form the tool matches, what it does with case, extras, hashes and a trailing comment, so one line is written once and accepted by every reader it meets.",
+  "world_is": "Two readers, two rules, one file. The fetch reader is case-sensitive and strict on spaces and suffixes except a trailing space or comment; check 2 folds case and spaces and refuses a hash suffix. A hash-suffixed line therefore passes the fetch (which writes the held file and its record) and fails check 2 at check time. The page documents both rules and says a line must pass both; the tools are unchanged.",
+  "notes": "Observation only; no tool was changed (the worker's write grant forbids it). The divergence is for the owner of intake_check.py and intake_fetch.py to decide whether the two readers should share one rule."
+}
+```
+
+## NFRA_CTLPLN-W136-S2 -- no tool offers a read-only dry run of one approval-file line or of one signed check-8 file
+
+```json
+{
+  "id": "NFRA_CTLPLN-W136-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~136",
+  "surfaced_at": "2026-10-16T10:37:22Z",
+  "one_line": "The CTO round-27 ruling 2 and TO CT-ax-1 ask for the dry-run command each tool offers to test one approval-file line and one signed check-8 file; no such verb exists, so the page reports NONE for both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_fetch.py@7d4aef5b93 lines 6-8: every fetch writes a FETCH record, also when refused before any request; lines 13-20: resolve reads the approval file before any socket and then makes one release-document GET per member",
+      "org/devices/intake/intake_check.py@7d4aef5b93 header lines 11-17: the verbs check, release, pack, selftest-unsigned and selftest-av; check writes a check record (lines 19-20), and neither selftest tests a line or a signed file",
+      "org/devices/intake/intake_request.py@7d4aef5b93: status and show read request records and requirements.txt; no verb reads an approval file or a signed file",
+      "org/devices/intake/APPROVAL_AND_SIGNED_FILE_DEMANDS.md@5a453d324a sections 1, 2 and 5: each reports NONE for the line and the signed file; the table lists the read-only verbs that do exist"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-27 analysis ruling 2 (the page covers 'the dry-run command each tool offers') and TO CT-ax-1 build step 1: 'the dry-run command the tool offers to test one line before a cut' and 'the dry-run command to test them' (the signed file).",
+  "world_is": "No tool offers a dry run of either file. The nearest verbs write or read other things: fetch writes a record even when refused; check writes a check record; resolve makes index requests. The read-only verbs the page lists test a pack, a synthetic wheel or a request record, never a line or a signed file.",
+  "notes": "The issuer's stated practice of dry-running every gate on every line before a cut has no tool verb behind it. The test .tools/tests/test_round28_intake_page.py calls the gate functions in temporary folders; it is a test, not a tool verb, and it writes nothing else."
+}
+```
+
+## NFRA_CTLPLN-W135-S1 -- the existing check-6 case pins the base cross-platform verdict that the ruled rule reverses
+
+```json
+{
+  "id": "NFRA_CTLPLN-W135-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~135",
+  "surfaced_at": "2026-10-16T10:36:52Z",
+  "one_line": "CT-aw-1: the existing suite case case_check_6_records_the_cross_platform_comparison_and_the_crlf_count asserts check 6 'failed' for a cross-platform CRLF-only difference; the ruled platform rule (TO arm a) reads that same pair as passed. The suite reads 59/60 with the rule in place; the order forbids changing an existing case.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_check.py@7d4aef5b93 lines 1170-1181 (case_check_6_records_the_cross_platform_comparison_and_the_crlf_count): installed WHEEL Tag win_amd64, held manylinux_2_17_x86_64, installed __init__.py 'VALUE = 1' with CRLF, wheel 'VALUE = 1' with LF; asserts record checks[5] verdict == 'failed'",
+      "org/devices/intake/intake_check.py@8144b24967 check_6: the same pair is cross-platform, CRLF-normalised equal, so it is listed in platform_normalised_equal and check 6 reads passed",
+      "python org/devices/intake/test_intake_check.py in the worktree at 8144b24967: INTAKE-CHECK-TEST cases=59/60 skipped=0 ok=False; the only FAIL is case_check_6_records_the_cross_platform_comparison_and_the_crlf_count",
+      "the order's build step 6 says 'change no existing case', and its arm (a) says a cross-platform CRLF-only difference is passed: both cannot hold at once"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-aw-1 build step 6: add only the cases the change needs; change no existing case. CTaw1-AC3: the check tool's own suite passes with the new cases added (base 60/60).",
+  "world_is": "The case pins the base verdict for the exact pair the ruled rule reverses, so the rule and the unchanged case cannot both pass. The worker did not edit the case and did not weaken the rule. The new arms live in .tools/tests/test_round28_check6_platform.py (8/8 at dc48c3b47f). Clearing needs the issuer or the CTO: move that case's expectation to passed (a deliberate edit), or narrow the rule.",
+  "notes": "Found while running the existing suite after the rule landed. The base suite read 60/60 only after a sparse-checkout add of org/tier1_exec/1.0.0_SA_CTO/deliverables and docs/briefs (the worker's worktree lacked them); that add is not a finding of this row."
+}
+```
+
+## NFRA_CTLPLN-W135-S2 -- the ruled rule clears CRLF and the delvewheel block but not the blank lines the block leaves, so 2 of 4 real wheels stay failed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W135-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~135",
+  "surfaced_at": "2026-10-16T10:36:52Z",
+  "one_line": "CT-aw-1 real arm: 2 of 4 yfinance wheels pass check 6 on the ruled rule. numpy/__init__.py and pandas/__init__.py still differ after the platform rule, by empty lines the installed copy keeps around its delvewheel block (numpy 3 lines, pandas 2 lines). curl_cffi and websockets pass. The rule was not widened.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round28_check6_platform.py --real4 at dc48c3b47f (read only): 'REAL4 curl_cffi check6=passed ... residual=0 metadata=0'; 'REAL4 numpy check6=failed compared_across_platforms=True residual=1 metadata=1'; 'REAL4 pandas check6=failed compared_across_platforms=True residual=1 metadata=0'; 'REAL4 websockets check6=passed ... residual=0 metadata=0'; 'REAL4 passed=2/4 ok=False'",
+      "C:/opal-intake/release/intake-20261016-yfinance-linux/numpy-2.4.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl member numpy/__init__.py against C:/Users/AndrewBerman/AppData/Local/Programs/Python/Python312/Lib/site-packages/numpy/__init__.py: after _platform_normalise on both sides the installed side has 3 extra empty lines after wheel line 87; the installed raw file holds 2 delvewheel markers, the wheel holds 0",
+      "the same comparison for pandas-2.3.3 pandas/__init__.py: after normalisation the installed side has 2 extra empty lines at line 2; installed raw holds 2 delvewheel markers",
+      "org/devices/intake/intake_check.py@8144b24967 _platform_normalise removes only the lines from the start marker through the end marker; it does not remove empty lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-aw-1 CTaw1-AC2 and build step 5: the four real yfinance wheels pass check 6 on the new rule with no waiver (expected 4 of 4). If one does not, report its residual files and file a row; do not widen the rule.",
+  "world_is": "Two of the four residual files differ only by empty lines around the delvewheel block, which the ruled normalisation keeps. Clearing needs a CTO ruling on whether empty-line-only residue is a platform difference (a rule change). The worker did not change the rule, did not touch the four waiver records, and wrote nothing under C:/opal-intake/.",
+  "notes": "The four curl_cffi, numpy, pandas, websockets waivers stay on their records as issued. The residual names are numpy/__init__.py and pandas/__init__.py."
+}
+```
+
+## NFRA_CTLPLN-W135-S3 -- the ruled empty-line padding rule clears numpy/__init__.py but leaves one empty line of pandas/__init__.py, so REAL4 reads 3 of 4
+
+```json
+{
+  "id": "NFRA_CTLPLN-W135-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~135",
+  "surfaced_at": "2026-10-16T10:57:33Z",
+  "one_line": "CT-aw-1 amendment 1 (CTO msg 109671, W135-S2): with the block removed together with up to 4 empty lines directly before and after it, numpy/__init__.py now compares equal, but pandas/__init__.py still differs by ONE empty line (wheel line 2). --real4 reads REAL4 passed=3/4 ok=False. The rule was not widened.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round28_check6_platform.py --real4 at 0577033587 (read only): 'REAL4 curl_cffi check6=passed compared_across_platforms=True residual=0 metadata=0'; 'REAL4 numpy check6=passed compared_across_platforms=True residual=0 metadata=1'; 'REAL4 pandas check6=failed compared_across_platforms=True residual=1 metadata=0'; 'REAL4 websockets check6=passed compared_across_platforms=True residual=0 metadata=0'; 'REAL4 passed=3/4 ok=False'",
+      "read-only census (.scratch/diag_pandas.py at 0577033587) on C:/opal-intake/release/intake-20261016-yfinance-linux/pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl member pandas/__init__.py against the laptop installed pandas/__init__.py: installed copy has 2 empty lines directly before the delvewheel block and 1 directly after; wheel has 28 empty lines in the file; after _platform_normalise the wheel has 368 lines, the installed side 367, first differing line index 1: wheel '' (empty), installed 'import os'",
+      "the same census for numpy-2.4.2 numpy/__init__.py: installed copy 2 empty lines before the block and 1 after, wheel has no empty line at that place; after _platform_normalise both sides are 943 lines and equal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-aw-1 AMENDMENT 1, W135-S2 ruling (CTO msg 109671): the block is removed together with up to 4 empty lines directly before it and up to 4 directly after it, then compared exactly; the real numpy/__init__.py and pandas/__init__.py compare equal with no waiver (CTaw1-AC2, REAL4 passed=4/4).",
+  "world_is": "The ruled padding removal clears numpy/__init__.py. It does not clear pandas/__init__.py: its wheel keeps one empty line directly after 'from __future__ import annotations' (wheel line 2), at the seam where the installed copy holds the block's padding (2 empty lines before, 1 after). Removing all three padding lines leaves the wheel one empty line longer than the installed side. The residual is exactly one empty line, wheel line 2. The worker did not keep a padding line (that would widen the ruled rule) and did not touch the four waiver records or anything under C:/opal-intake/.",
+  "notes": "Clearing needs a CTO ruling on how a wheel-side empty line at the padding seam is treated (the rule as ruled removes the full padding run; the real pandas file needs one of its padding lines kept). The arms h to k of .tools/tests/test_round28_check6_platform.py (12/12 at 0577033587) pin the ruled behaviour, so a change to the seam rule must re-grade them. The W135-S2 row stays as filed."
+}
+```
+
+## NFRA_CTLPLN-W135-S4 -- the ruled seam collapse has no before and after split on the wheel side, where the wheel carries no block
+
+```json
+{
+  "id": "NFRA_CTLPLN-W135-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~135",
+  "surfaced_at": "2026-10-16T11:12:58Z",
+  "one_line": "CT-aw-1 amendment 2 (CTO msg 109673) collapses the empty-line run at a delvewheel seam on the wheel side too, but the wheel has no block there, so 'up to 4 each side' has no before and after split on that side; the cell takes up to 4 empty lines from the run's start and up to 4 from its end. --real4 reads REAL4 passed=4/4 with no waiver.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round28_check6_platform.py --real4 at 03e01a85b2 (read only): REAL4 curl_cffi check6=passed, numpy check6=passed, pandas check6=passed, websockets check6=passed; REAL4 passed=4/4 ok=True; exit 0",
+      "python .tools/tests/test_round28_check6_platform.py at 03e01a85b2: CHECK6-PLATFORM arms=14/14 ok=True, with arm l (a non-empty line at the seam on one side fails) and arm m (the real pandas seam shape passes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-aw-1 AMENDMENT 2 (CTO msg 109673): at the position where the delvewheel block was removed from the installed copy, collapse the run of empty lines on BOTH sides, the wheel's lines at the same seam included, at most 4 empty lines each side, then compare exactly; only that one seam is touched.",
+  "world_is": "The wheel has no block at that seam, so it records no before and after split there. The cell takes the run that follows the seam-th non-empty line of the wheel (seam = the installed copy's non-empty lines before its block) and drops up to 4 empty lines from its start and up to 4 from its end. The installed split can keep lines beyond four (5 or more before the block) while the wheel run is one run, so a wheel run of 5 to 8 empty lines is fully collapsed and can match where the installed side keeps one. No real file takes that path: the four real wheels pass 4/4.",
+  "notes": "W135-S3 stays as filed (append-only). The cell's rule clears its one residual line (pandas/__init__.py, wheel line 2) through the wheel-side collapse at the one seam; the CTO dispositions W135-S3 and this row. The rule was not widened beyond the one seam."
+}
+```

@@ -28677,3 +28677,56 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recurrence in a second worktree of the observation the sparse checkout hygiene row of this file records. Recorded against W484 so the row gate's schema read is not assumed satisfied by this worktree."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S46",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T11:09:00Z",
+  "one_line": "C-S160 and D1-S45 DISARMED: the round-111 documents (gw-1 @08a3b6df06, 37 changed keys stored) read MET on the CVO's fresh five-new-name read (ADJUDICATION_v138, row C-S162); no source-describing block, no pack restatement, no unnamed opener on the drawn names, and the AZN, ISRG and ZTS bios are withheld.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "D1-S45 (this seat, ARMED): close when the CVO's fresh read of the re-made set finds the pronoun-opening, source-describing and pack-restating bio classes of C-S160 gone; the page keeps serving the round-110 set until the new write.",
+  "world_is": "Read 2026-10-16T11:09Z. gw-1 merged @08a3b6df06 (drain 905 passed; checks 17 of 17, 12 of 12, 20 of 20). Store write under the round-111 pair: 37 of 37 keys read back equal by a separate S3 read, the other 58 unchanged, function configuration unchanged, served API 16 of 16 (record @ea2a601225). CVO v138 (row C-S162): 11 blocks on 8316 JP, GSK LN, IMB LN, ICICIBC IN, IBE SM, correctness holds, one clause unverifiable (HTTP 403 to the CVO: ICICI Kochhar), quality classes none, kept bios open on the person's name. Carried, minor, INERT: LLY bio opens with a stray quote mark; IMB mgmt_recent opens on a surname. NOT MEASURED: the Security Analysis page rendering the blocks (the served API and stored documents were read; no page was looked at by this seat); the 58 eligible names beyond the five drawn; D1-S41 and D1-S42 are not touched by this row and stay OBSERVATION.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ADJUDICATION_v138.md (row C-S162), CVO relay msg 6664",
+      "round111_close/store_write/verify_readback.json -> 37 of 37 ok; 58 other keys equal the round-110 documents",
+      "check_restore_served.py verify -> AIFILL RESTORE SERVED: YES (16 of 16)",
+      "git log -1 ea2a601225 (store record), 4a7128dcd9 (gw-1 close)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CVO's row C-S160 closes by the CVO's own read; this row records this seat's disarm of D1-S45. The LLY quote-mark opener is the only carried item; the CTO said the next round is only that fix, at the COO's discretion, metered."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S47",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T11:45:00Z",
+  "one_line": "D1-S40 DISARMED: the Opal gateway's harvest_get_research, the second reader that bypassed the hold, now serves the grounded round-111 AI-fill document for AMD_US_Equity (generated 2026-10-16T09:41:23Z, validation checked 2026-10-16T10:48:30Z), not the held round-105 blocks the row recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "D1-S40 (this seat, ARMED): the gateway reads amgt/harvest/gold/ai_fill/ straight from S3 and returned the held, ungrounded round-105 blocks (ASML_NA_Equity read live), so a 95-key store write would reach it at once; the store write was to wait on the CTO's ruling on that second reader.",
+  "world_is": "Read 11:45Z 2026-10-16 by this seat: mcp harvest_get_research security_key=AMD_US_Equity returned ai_fill_key amgt/harvest/gold/ai_fill/security_key=AMD_US_Equity/ai_fill.json, ai_fill_as_of 2026-10-16, ai_fill_generated_at 2026-10-16T09:41:23Z; mgmt_bio is source_class NONE with the reason 'The text opens without naming the person it describes, so it was withheld' (the round-111 subject rule), mgmt_recent is a WEB_SEARCH block with its grounding record (1 SUPPORTED sentence kept, 3 UNSUPPORTED dropped), every block validation HELD/PASS with checked_at 2026-10-16T10:48:30Z. The CTO ruled the lift and accepted the second reader (CTO_RULING_AIFILL_HOLD_LIFT_20261016); the three store writes since went to the served set under signed pairs. NOT MEASURED: the gateway read for any other name (one name, AMD, read); D1-S40 was ruled accepted earlier, so this row records that the hazard it named no longer exists, not a new ruling. W451-S1: D1-S38 already records its disarm; the register still lists it ARMED. The ARMED C-S132, C-S145, C-S146 and C-S155 are NOT touched by this row: this seat has not re-measured them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "mcp__opalgateway__harvest_get_research(AMD_US_Equity) -> ai_fill_generated_at 2026-10-16T09:41:23Z; ai_fill_blocks validation.checked_at 2026-10-16T10:48:30Z; mgmt_bio reason 'The text opens without naming the person it describes, so it was withheld.'",
+      "round111_close/store_write/verify_readback.json -> 37 of 37 ok (AMD_US_Equity among them); store record ea2a601225",
+      "AMGT_RESAPP/ledger/CTO_RULING_AIFILL_HOLD_LIFT_20261016.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Row-append only; the register's ARMED listing for D1-S40 closes through the disarm this row records. Gap for a successor: C-S132, C-S145, C-S146 and C-S155 (CVO adjudication rows owned for disarm by this seat) remain ARMED and unmeasured since the round-104/105 documents they graded were replaced by the round-107 to 111 sets."
+}
+```

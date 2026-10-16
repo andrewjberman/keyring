@@ -20384,3 +20384,249 @@ name the one known failure instead of silently inheriting it.
   "notes": "If the lane gate refuses the order-file path, the flip is not landed and the order stays staged; the report carries that as the outcome."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T10:38:27Z",
+  "id": "NFRA_OPLGTW-Z-S168",
+  "one_line": "OG-ev-1: the AC3 marker 'data_status on a quiet day' of OG-ap-19 cannot be shown, because the portal and news tools carry no field called data_status (it exists only in the harvest chatter and figures answers).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ app/*.py at release 3d5c9c8bf1: the string data_status occurs only in harvest_press.py, harvest_figures.py, harvest_identity.py and harvest_typed.py; news_typed.py and portal_*.py carry none.",
+      "RAN news_search_articles for a Sunday (2026-10-11) and the other ap-19 tools on the live host (W/ANSWER_BODIES.json, ap-19 entries): the answers carry absent_reason and freshness, and no data_status key."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-19 AC3: the first portal and news answers show freshness in trading days, data_status on a quiet day, and the 14-day news cap stated.",
+  "world_is": "The quiet-day answer of the news tools is absent_reason plus a freshness block; data_status is a harvest chatter field (ap-18's tools). The record carries the real quiet-day body with a note; it is not a different call substituted for the marker.",
+  "notes": "Cost: the CVO cannot grade this marker as worded; the criterion should name absent_reason and freshness, or the tools should carry data_status. Non-application: the other two ap-19 markers."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T10:38:27Z",
+  "id": "NFRA_OPLGTW-Z-S169",
+  "one_line": "OG-ev-1: the AC3 marker 'Schwab masters never summed' of OG-ap-23 cannot be shown, because the installed client tools answer no_catalog_row for Schwab: the catalog holds no Schwab dim_position row for the firm, so no account reference can be minted.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN the Schwab adapter's account index through the installed code on the host: it raised CoreRefusal no_catalog_row (W/ev1_meta.json notes.schwab_error); a client_get_holdings call with a well-formed Schwab reference answers absent_reason no_catalog_row (W/ANSWER_BODIES.json, ap-23, the Schwab entry).",
+      "The COO half of OG-ap-23 already names 'Schwab fact_* (MX-c-23)' as not covered: the client tools answer no_catalog_row for them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-23 AC3: rows never merged across firms and Schwab masters never summed, shown on a real call.",
+  "world_is": "Until MX-c-23 lands the Schwab catalog rows, no Schwab master's rows are served, so the never-summed marker has nothing to show. The two-firm marker is shown with SmartX (firm A served rows, firm B none).",
+  "notes": "Cost: this marker stays NOT MEASURED until the catalog rows exist. Non-application: the other three ap-23 markers."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T10:38:27Z",
+  "id": "NFRA_OPLGTW-Z-S170",
+  "one_line": "OG-ev-1: the news tool news_for_security applies a 30-day cap (an ask of 999 days is applied as 30, window_days_applied 30) where OG-ap-19's AC3 names a '14-day news cap'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN news_for_security (ticker AAPL, window_days 999, 30 and 21) on the live host: window_days 30 and window_days_applied 30 for the ask of 999; no string of any answer says 14-day (W/ev1_meta.json attempts ap-19.cap). The tool's default window is 14 days."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-19 AC3: the 14-day news cap stated in an answer.",
+  "world_is": "The cap this release applies is 30 days; 14 is the default window. The record shows the real answer and its window fields; the CVO may read the discrepancy as a defect of the criterion's wording or of the tool.",
+  "notes": "Not a failure of this cell: the call is the real one. Cost: a reader told 14 days would be wrong by 16."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T10:38:27Z",
+  "id": "NFRA_OPLGTW-Z-S171",
+  "one_line": "OG-ev-1: harvest_get_published_analysis answers harvest_published_unavailable ('the published layer did not answer this call') for sections=peers on a covered name, while ledger, versions, thesis, overlay and timeline answer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN harvest_get_published_analysis (security AAPL_US_Equity) for six sections on the live host in the discovery pass (W/EV1_DISCOVER2.json, tag 21.peers): code harvest_published_unavailable; the other five sections answered. Seen once; not re-run (the cell forbids retry loops)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-21 serves the sections overlay, thesis, peers, ledger, versions and timeline.",
+  "world_is": "The peers section failed once with the published-layer-unavailable code. Whether it is a transient or a defect of that section is not established by one call.",
+  "notes": "Not part of the three ap-21 markers, which are shown with ledger, versions and timeline."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~117",
+  "surfaced_at": "2026-10-16T10:35:28Z",
+  "id": "NFRA_OPLGTW-Z-W117-S1",
+  "one_line": "Path grant: the order's <paths> lists the registry file and this investigation file, yet section 5 flips the order's own <status> tag, a file outside <paths>; same grant as the rr-1 order (NFRA_OPLGTW-Z-W115-S3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rr-3.apply-cro-ruling-refs.md section 3 lists two surfaces, neither of them the order file; line 62 carries the single <status>staged</status> tag.",
+      "Section 5 of the same order: flip the ONE <status> tag to complete only if both criteria PASS; the closing procedure says commit instance, deliverables and flip together."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "<paths> is the write grant for this order (section 3); the <status> flip in section 5 is part of the procedure and is made on the order file.",
+  "world_is": "The status flip touches the order file, which is outside <paths>. It is made in the same commit as the instance and the deliverables; the commit's lane gate result is stated in the report, and a refusal leaves the order staged.",
+  "notes": "The registry commit (5060b9fc41) carries the ruling_ref writes and W/RR3_UNRESOLVED.json only; the order file is not in it. Class to carry: an order whose procedure flips its own status names that file in <paths>."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~116",
+  "surfaced_at": "2026-10-16T10:31:54Z",
+  "id": "NFRA_OPLGTW-Z-W116-S1",
+  "one_line": "The ruling refuses a PRESENT ruling_ref that does not resolve and an ADDED row with no ruling_ref; it does not say what happens when a ref is removed from a row that carries one at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rr-2.gate-checks-ruling-ref.md section 1 (a) and (b): exactly two refusals, nothing else.",
+      ".tools/naming-gate.py ruling_ref_refusals (worktree branch wk-NFRA_OPLGTW-116, base 20063a578b): a staged row that is not an added row and has no ruling_ref falls through with no refusal, whatever its HEAD copy carried."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Two refusals are added: a present ruling_ref must resolve; a row added by the commit must carry a resolving ruling_ref. A legacy row (present at HEAD, no ruling_ref) is not refused.",
+  "world_is": "The limb is silent on a row that carried a ruling_ref at HEAD and carries none in the staged file. It is not an added row, so it is not refused, and the order names no refusal for removal. The implementation follows the order and adds nothing for removal.",
+  "notes": "Left to the issuer: whether a removed ref is a third refusal (out of this cell's scope) or is covered by another limb. No name's grade moves either way (rr2.AC2 moved 0)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~116",
+  "surfaced_at": "2026-10-16T10:31:54Z",
+  "id": "NFRA_OPLGTW-Z-W116-S2",
+  "one_line": "The ruling says PRESENT and a path@commit string, without saying whether an explicit null ruling_ref counts as present or whether the commit must be a full 40-hex hash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rr-2.gate-checks-ruling-ref.md section 1 STATE: a ruling_ref is a repo-relative path @ 40-hex commit.",
+      ".tools/naming-gate.py ruling_ref_resolves (worktree): key presence decides PRESENT, so ruling_ref null is refused under (a) as not a path@commit string; a commit that is not 40 lowercase hex is refused under (a) before git is asked."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A ruling_ref that is PRESENT on a row must RESOLVE, and a present ref that is not a path@commit string makes the gate REFUSE.",
+  "world_is": "The implementation reads key presence as PRESENT, and reads a path@commit string as one whose commit is 40 lowercase hex (the STATE definition). Both readings are interpretations the order does not spell out. The 25 current refs all resolve (25 of 25 by git cat-file -e), so neither reading moves the current file's grade.",
+  "notes": "Recorded for the issuer to confirm or amend. Verdict: no name's grade moved (rr2.AC2)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T10:56:26Z",
+  "id": "NFRA_OPLGTW-Z-S172",
+  "one_line": "OG-ev-1 correction to row Z-S168: the Sunday news_search_articles call I recorded as the quiet-day answer returned rows (716 items matched, 5 returned), so it was not a quiet-day answer and my marker text 'no article matched the window' was wrong.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ W/ANSWER_BODIES.json, ap-19 news_search_articles entry for 2026-10-11: denominator items_matched 716, returned 5, absent_reason null. The marker text and Z-S168's evidence line said no article matched the window; the answer shows otherwise."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S168 (mine): the quiet-day answer of the news tools is absent_reason plus freshness.",
+  "world_is": "The recorded Sunday call is a populated answer. The finding of Z-S168 that stands is the field one: the portal and news tools carry no data_status key. The marker text in the record and its note are corrected in the file; the ap-19 marker is reworded and dropped by order ap-19 A3.",
+  "notes": "A correction is a new row citing the old id. Cost: a reader of Z-S168 would believe a quiet-day call had been made; it had not."
+}
+```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S173",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-16T11:25Z",
+    "one_line": "A ratified rule has no carrier: PRD v2.2 item 4 (kept by v2.3's Unchanged list) holds 'Alyssa's no-download', but her live grant's operations include download_filtered and no profile, grant or contract field carries a no-download, so the rule is not enforced (measured by OG-mg-1's ask, section 3).",
+    "class": "OBSERVATION",
+    "spec_asserts": "NFRA_OPLGTW_PRD.md v2.2 item 4: 'Unchanged ... Alyssa's no-download (his ~19:2xZ \"no downloads needed yet\")'; v2.3 Unchanged: 'Alyssa's grant and her no-download'.",
+    "world_is": "OG-mg-1 ask @a8798df9d0 section 3 (live store re-read 2026-10-16): Alyssa's operations = [describe, download_filtered, list, query] (contract-maximal); her principal_profile carries only status, revision, grant_revision, tid, oid; the contract's portal_only_schwab_tools is []; only forbidden_field_classes are in force, and they are field rules, not a download rule. No surface enforces a no-download for her.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-mg-1.md @a8798df9d0 section 3",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md v2.2 item 4 and v2.3 'Unchanged'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "For 1.0.0_SA_CTO~Z to rule: enforce the no-download on Alyssa's grant (drop download_filtered from her operations via the one writer), or record that Andrew's 'no downloads needed yet' was a statement of need, not a prohibition, and strike it from the PRD's Unchanged lists. Low hazard (one internal user; downloads go through the ticket transport), so not ARMED. It does not bear on OG-mg-1's R1/R2, which mirror Andrew."
+  }
+  ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T11:28:14Z",
+  "id": "NFRA_OPLGTW-Z-S174",
+  "one_line": "OG-mg-1 mg1.AC2.sh cannot pass against the live store's shape: it reads calendar_months at the scope's top level and compares typed DynamoDB maps, but the stored scope keeps calendar_months inside dates, so it grades FAIL (andrew active+13mo: no, bbg scope == andrew scope: no) while a direct typed read-back shows both writes correct.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN deliverables/2.0.0_SA_COO~O/r37/checks/mg1.AC2.sh after the ledger CLOSED (8e44440e66): status CLOSED=yes; sentinel at HEAD=no; andrew active+13mo: no; bbg active: yes; bbg scope == andrew scope: no; alyssa unchanged: yes; RESULT: FAIL.",
+      "READ the stored scope: the data_entitlement scope attribute is a DynamoDB M whose keys are accounts, columns, datasets, dates, masters, operations, portal_channels; the script's val() returns the typed map and ga.get('calendar_months') on it is None (measured: top-level calendar_months None). The same read of Alyssa's revision-4 grant, which the order calls already 13 months, would grade 'no' too.",
+      "READ W/MG1_READBACK.json (deserialized, strongly consistent, 1723 items): andrew and bbg each active restricted revision 1, grant revision 1, dates.calendar_months 13, 4 operations; R2 scope equals R1 scope by whole-object equality; R1 vs Alyssa changes no top-level key; Alyssa's 9 items hash b93cd3cbf990 before and after."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-mg-1 AC2 expects 'andrew active+13mo: yes; bbg active: yes; bbg scope == andrew scope: yes; alyssa unchanged: yes'; A3 itself states the window lives in dates {mode: rolling_complete_window, calendar_months: 13}.",
+  "world_is": "Both records are written and read back correct, so I did NOT revoke (the order says revoke on a FAIL, but this FAIL is the instrument's, and a revoke would undo a correct, signed act). The check needs the scope deserialized and calendar_months read from scope.dates; it is the issuer's file, so I left it unedited. The proof instance is written with AC2 reported as the check's literal FAIL plus the direct read-back, and the order status stays pending until the issuer amends the check.",
+  "notes": "Cost of the miss: the criterion could never pass on this store, for any principal. Fix is two lines in mg1.AC2.sh (TypeDeserializer on the scope; read dates.calendar_months). A revoke is available under the same role if the halves want the writes undone anyway."
+}
+```
