@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~46</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -52,6 +52,7 @@ In `infra/aws/lambda/ticket_center/lambda_function.py` (read first: the `COMMENT
    - the response still carries `cutoff_et` and `count` equal to the length of the list.
 5. **Re-pin** the one existing assertion that pins the intake principal as unscoped: `infra/aws/lambda/ticket_center/tests/test_list_scoped_firm.py` near line 240. Change it to the new rule (the intake principal sees only the configured set; give its fixture the set it needs) and list the old and the new lines in your record. No other existing assertion may change; edit another existing test only where a fixture needs the new env var, and list that too.
 6. **Write `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~46/mutant_check.py`** (AC2 below) and a short `R19_L2_RECORD.json`: the lines you changed, the test counts, the before-arm (the new tests on the base: every case FAILS), the re-pinned lines, `not_read`.
+7. **AMENDMENT 1 (issuer, 2026-10-16; the order is re-opened because the drain found a merge seam; you are re-seated in slot 46 on the merged tip, and your first-session commits are inherited state).** `TO-R19-L3` is now merged: a PROFILE row with neither a non-empty `allowedFirmIds` list nor the attribute `scope_all_firms` exactly `True` is a 403. Your test `test_an_internal_caller_is_unchanged_by_the_set` in `tests/test_analyst_intake_scoped.py` uses the stub class `_UsersStub` (about lines 98-106) whose `get_item` returns a PROFILE row with no list and no marker, so the whole-folder run on the merged tree reads 451 passed, 1 failed (`assert 403 == 200` at that test). Fix: add `"scope_all_firms": True` to the Item `_UsersStub.get_item` returns, and extend the class docstring to say why (R19: a row with neither a list nor the marker is refused, so the marker keeps the stub unscoped). ASCII only. Change NOTHING else: no assertion, no other test, no product code. Then re-run `R19L2-AC1` and `R19L2-AC2` (the mutant must still fire), run the folder once and record the counts, overwrite `R19_L2_RECORD.json` and the proof instance with the new results, validate, and flip the status to `complete` only when it prints VALID. If a further failure of another shape appears, STOP and file a BLOCKING row.
 
 ### ACCEPTANCE
 

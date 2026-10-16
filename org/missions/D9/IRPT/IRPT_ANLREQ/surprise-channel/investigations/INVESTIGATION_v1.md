@@ -20814,3 +20814,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S138 -- DISARMS IRPT_ANLREQ-D2-W165-S2: the yfinance checker gap is ruled (CTO msg 8969); ~G2 wires it, FWD-1 run 3 is held until that release
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S138",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-16T03:00:00Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W165-S2 (C-SWAP step 2's yfinance checker is not wired in the HEAD door): the CTO verified it and ruled that ~G2 cuts one cell wiring the checker into every session the door builds, folded into r34 if its D1 has not started and otherwise released as r35; this seat holds FWD-1 run 3 until that release is applied, so the unknown-ticker branches test what PRD v0.19 says.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W165-S2: security_resolution.py:304 runs the checker only when one is passed (default None, line 204; resident_session.py:145-146 passes none), so a symbol yfinance knows and YCharts omits is filed TICKER_NOT_FOUND with Replace and No offered.",
+  "world_is": "CTO ruling 1.0.0_SA_CTO~DELL2 msg 8969 (answering this seat's msg 8966): the CTO verified that across investor-reporting YfinanceChecker is constructed only in tests and that neither r33's nor r34's changed members wire it. Ruled: (1) 2.0.0_SA_COO~G2 cuts one cell wiring the checker into every session the door builds (resident_session.py and any Lambda path), acceptance a yfinance-known symbol that YCharts omits is KEPT and never offered Replace or No; (2) if r34's D1 has not started the cell folds into r34 and is re-packeted for the CTO's re-sign, otherwise it ships as r35; (3) this seat holds FWD-1 run 3 until that release. NOT read: whether ~G2 has accepted the cell, the release vehicle chosen, or the deployed Lambda.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 8969 (inbox read and acked by this seat)",
+      "worker row IRPT_ANLREQ-D2-W165-S2 (merged 2ba8b8e5af)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The gap is ruled and owned by ~G2's engine lane; run 3 is held behind its release, so the hazard of testing the branches against a door that mis-files known symbols cannot reach a run.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W165-S2."
+}
+```
