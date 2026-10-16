@@ -91,9 +91,9 @@
         "sentence": "The net external flow of the day in US dollars, capital in positive; never null, 0.0 on a day with no flow."
       },
       "income": {
-        "kind": "per-day array of number",
+        "kind": "per-day array of number or null",
         "source": "income_received",
-        "sentence": "Income recognised on cash receipt that day in US dollars; never null, 0.0 on a day with none."
+        "sentence": "Income recognised on cash receipt that day in US dollars, 0.0 on a day with none; null exactly where the source table's `income_received` is null (the method states no income for that day), and a null is never read as zero, filled, carried or summed as zero."
       },
       "holdings_price_return": {
         "kind": "per-day array of number or null",
