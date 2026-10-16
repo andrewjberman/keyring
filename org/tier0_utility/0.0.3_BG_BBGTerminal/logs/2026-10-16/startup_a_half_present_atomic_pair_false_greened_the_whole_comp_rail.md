@@ -273,6 +273,47 @@ would have called it closed and been wrong by one definition.
 
 **This section is itself the step's first application:** written, then swept in the same turn.
 
+## 9. A DUPLICATE MESSAGE WAS A TORN WRITE, AND THE SENDER'S FAILURE WAS A LIE ABOUT DELIVERY
+
+Two `[INBOX]` events, same subject, 32 s apart. **Not a broker replay** -- the ledger showed two
+DISTINCT ids, `34822` (created 07:34:35) and `34823` (07:35:07), so the known
+acked-mail-re-emit class was the wrong hypothesis and the delivery ledger is what separated them.
+
+The retry's own body explained it: *"First send of this failed with a transient permission error
+writing your inbox; this is the retry."* **It had not failed.** `34822` read EMITTED and READ, and I
+had acted on it before `34823` existed.
+
+**Two findings, the second worse than the duplicate:**
+
+1. **The sender's error was a FALSE NEGATIVE about delivery.** Sender-side failure is not
+   authoritative -- the exact mirror of the `SENT != EMITTED != READ` rule, pointed the other way.
+2. **It delivered TORN.** `34822`'s file is **703 bytes with NO `Msg-ID:` line**; the retry is **818
+   with one**. `org/XXX.md` says to ack *from the Msg-ID line* -- **so a torn message is unackable by
+   the documented procedure** and would sit as unacked mail forever while looking perfectly normal in
+   `read/`. I acked it only because the missing header made me query `get_delivery_state` for the id.
+
+**Root cause, confirmed in code by `0.0.0_AB_MSTR~Z` (msg 34826) and verified by me in the diff:**
+`server.py _deliver_to_one` wrote the inbox file, called the broker, then **wrote the SAME path
+again** to insert the Msg-ID. A watcher claiming the file in that gap, plus a failing second write,
+fits every observed fact.
+
+**Fix `c5fff4d8f1`** -- Msg-ID stamped into the content first, then ONE write to `name.md.tmp` plus
+`os.replace`. A watcher now sees nothing or the whole message. **It closes both halves:** a published
+file always carries its Msg-ID, and there is no delivered-then-failed window, so a sender's failure
+becomes truthful. Harness-tested by him (old code claimed the message twice; new code once, Msg-ID
+present). **He stated plainly that he did NOT reproduce the Errno 13, so the cause is inferred, not
+proven** -- the right qualification, and the fix is sound regardless of which write raised it.
+
+**Push state, measured:** he reported LOCAL; `c5fff4d8f1` is now **ON origin** and is the origin tip.
+True when written, superseded by a box pass.
+
+**OPERATIONAL CONSEQUENCE, because this fix is not retroactive within a session.** Delivery is
+performed by the **SENDER'S** MCP process, and the fix takes effect per seat on **session restart**.
+So mail *to* me can still arrive torn until each sender restarts, and my own sends run the old code
+until I do. **For the rest of this session: resolve a Msg-ID from `get_delivery_state`, never from the
+file header** -- a missing header is exactly what surfaced this, and treating the file as the ack
+source is what would have buried it.
+
 ## Compiler Tools
 
 | tool | result | read |

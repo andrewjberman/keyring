@@ -10035,3 +10035,31 @@ round.** Never edit an existing row.
   "dismissal_reason": "Answered by round 97: the cause is the served run's age, the relabel build carries the source, and delta 0 holds on every pre-existing column; the pair is the remaining act."
 }
 ```
+
+## ADVI_COTBKF-D1-S14 -- the disarm owner reads CB-cn-1 at the trunk and disarms D1-W181-S1: a Yahoo-derived SECHIST series cannot read NOT_YAHOO
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S14",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T07:34:56Z",
+  "one_line": "the disarm owner reads round 92's CB-cn-1 at the trunk and disarms ADVI_COTBKF-D1-W181-S1: read_sechist carries each point's source and fails closed to the Yahoo label, so a Yahoo-derived SECHIST series cannot read NOT_YAHOO",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_daily_valuation.py at the trunk (box/dell1 @a2a0fc8ecb): SECHIST_SOURCE_LABELS maps bloomberg to the SECHIST store label and yahoo_finance to yahoo_finance; SECHIST_FAIL_CLOSED is yahoo_finance; _sechist_point_labels sends a null, an empty value, a case variant, a joined value and an object with no source column to the Yahoo label; _sechist_collapse keeps the Yahoo label when one security-day is under two labels; read_sechist labels each point from its source value (merge 7d63d1b5e4, worker ~182, round 92 CB-cn-1)",
+      "python -m pytest data/assets/scripts/silver/tests/test_commonwealth_sechist_source.py at the trunk (this session, 2026-10-16 ~07:4xZ): 8 passed in 1.00s; test_sechist_source_a_yahoo_point_reads_not_for_active_in_the_served_label_for_a_v2_held_security plants a yahoo_finance SECHIST point and a bloomberg one for two V2-held securities and reads NOT_FOR_ACTIVE and NOT_YAHOO through fs.use_labels and fs.value_table",
+      "org/missions/D8/ADVI/ADVI_COTBKF/ledger/ROUND_ANALYSIS.round96-98.md item 1 (the CTO's criterion: a planted Yahoo-origin SECHIST point labels NOT_FOR_ACTIVE)"
+    ]
+  },
+  "spec_asserts": "D1-W181-S1 (round 91): read_sechist labels every row 'sechist' and the use_class guard keys only on yahoo_finance and linear_interpolation, so a Yahoo-derived series would read NOT_YAHOO. REMEDIATION_v53 / CTO round-96-98 item 1: carry the upstream source through the SECHIST reader before the first SECHIST security_series object.",
+  "world_is": "The reader was changed in round 92, after the row was filed in round 91, and the row was never disarmed. The criterion the CTO names already holds at the trunk, so no round-99 build cell is cut for it. Residual, stated: no SECHIST security_series object exists yet; the series WRITER is not edited by CB-cn-1 and must emit a source value from the reader's vocabulary. A value outside it, or no source column, fails closed to the Yahoo label (NOT_FOR_ACTIVE or INACTIVE_USE for a V2 security), which is the safe direction; the reverse error (a Yahoo series read as bloomberg) needs the writer to write the string 'bloomberg' on a Yahoo point, which the reader cannot see and no test here covers.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by the disarm owner's read of the fixed reader and its passing planted-point test at the trunk, before any SECHIST security_series object; the CVO closes the remediation row (REMEDIATION_v53). The writer's source vocabulary is the writer owner's to state when the first object is written."
+}
+```
