@@ -12359,3 +12359,27 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The worker face's STOP rule applies: the cell stops at this refusal and runs no checks on the 16 held wheels. Clearing needs the CTO: either the approval file names multitasking==0.0.13 as an approved line, or a ruling that says otherwise. The refused record is committed as the measured state; no record was rewritten."
 }
 ```
+
+```json
+{
+  "id": "NFRA_CTLPLN-D2-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-16T08:21:00Z",
+  "one_line": "round-close-check reads MAY-CLOSE on a round whose only judgment criterion was graded FAIL: it counts a graded verdict word, not a PASS (CT-s-8).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "3.0.0_SA_CVO~IRPT msg 9198: IRPT_ANLREQ TICKET round 3 (TO-AR-v31), L9 AR31-v-AC4J graded FAIL (unproven), and round-close-check printed graded=1 MAY-CLOSE",
+      "adjudication org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/adjudications/ADJUDICATION_v24.md @2264221fd0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "round-close-check grades a round MAY-CLOSE only when every judgment criterion reads PASS at L9.",
+  "world_is": "It counts that a judgment verdict exists (graded=1) and reads MAY-CLOSE on a FAIL verdict, as relayed by the CVO; the tool's code was not read by this seat.",
+  "notes": "Owner by the file header: NFRA_CTLPLN workstream SEATS, cell CT-s-8. Filed so the gate's owner sees it; the dell2 round it surfaced on is held open by its CTO on the FAIL regardless."
+}
+```
