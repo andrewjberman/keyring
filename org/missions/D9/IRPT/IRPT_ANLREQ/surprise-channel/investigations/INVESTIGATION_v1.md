@@ -19915,3 +19915,53 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W212-S1 -- the investigation row schema the worker face names is absent from this worktree, as IRPT_ANLREQ-D2-W161-S2 already records
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W212-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~212",
+  "surfaced_at": "2026-10-16T00:01:00Z",
+  "one_line": "The worker face names org/surprise_channel/schemas/investigation_item.schema.json as the row schema; that path does not exist in the worktree at base b1ad686188, so the row could not be checked against it. The row was shaped on the existing rows of this file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face says a surprise row is validated against org/surprise_channel/schemas/investigation_item.schema.json, and the legacy flat path is org/surprise_channel/<CODE>/INVESTIGATION_v{N}.md.",
+  "world_is": "Neither path is in this worktree: org/surprise_channel does not exist, and a Glob for **/investigation_item.schema.json under org/ returned no file. The gate .tools/surprise-row-gate.py is present at its path; its schema switch was not run in this cell. This is the same absence IRPT_ANLREQ-D2-W161-S2 records for another worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob C:/dev/wk-irpt-anlreq-212/org for **/investigation_item.schema.json: No files found (this worker, 2026-10-15)",
+      "ls -d org/surprise_channel in C:/dev/wk-irpt-anlreq-212: No such file or directory",
+      "INVESTIGATION_v1.md row IRPT_ANLREQ-D2-W161-S2 records the same absence in another worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+  "id": "IRPT_ANLREQ-D2-W212-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~212",
+  "surfaced_at": "2026-10-16T00:01:30Z",
+  "one_line": "The portal's ticket client says the CloudFront /api/scoped/tickets routes are not yet applied and calls 4xx at the edge; the repository's edge configuration carries both ticket behaviors at the base commit. Live application was not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "portal/src/api/endpoints/tickets.ts:7-8 says the CloudFront /api/scoped/tickets* behaviors land via portal-auth on a CTO apply, and until then calls 4xx at the edge.",
+  "world_is": "At base b1ad686188 infra/aws/terraform/portal-auth/cloudfront-distribution.tf:540 defines the /api/scoped/tickets/* behavior and :559 the /api/scoped/tickets behavior, both to APIGateway-portal with the auth viewer-request function; infra/aws/terraform/ticket-center/main.tf:6-7 says the behavior is in portal-auth. Whether they are applied on DEV is not read in this cell (no AWS read), so the comment and the repository disagree about the edge state.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/endpoints/tickets.ts:7-8 (the comment text, this worktree)",
+      "infra/aws/terraform/portal-auth/cloudfront-distribution.tf:540 and :559 (the two ordered_cache_behavior blocks, this worktree)",
+      "infra/aws/terraform/ticket-center/main.tf:6-7 (the behavior is named as living in portal-auth)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
