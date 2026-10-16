@@ -8134,3 +8134,54 @@ by dell1 or by this seat.
   "world_is": "Record AC1 ran ok=True with census=8 rows=8 missing=[] extra=[] after the prose-only treatment. Found by a bare-token search (\\bmix_summary\\b and quoted mix_summary over data/ infra/ lib/ at HEAD) and by reading every consumer of getPlatinumFirmMixSummary in portal src (ClientsTab.tsx, AuthContext.tsx). All census-missed readers have verdict no; none is order-dependent."
 }
 ```
+
+## MDPF_SECCLASS-D1-S41 -- D1-W93-S2 disarms on its measurement, and its stated consequence is corrected: E_18 skips every pair whose key
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S41",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-16T04:35Z",
+  "one_line": "D1-W93-S2 disarms on its measurement, and its stated consequence is corrected: E_18 skips every pair whose key is in the old list (E_18:247, known = the old list's keys, E_18:215), so a candidate that reaches plan_rows is never in the old list and the lookup at E_18:291 always returns None; removing the lookup changes nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R26_CHECKS/W93S2_MEASUREMENT_AND_PACKET_CORRECTION_20261016.md: w93s2_old_list_only_candidates.py output (22 tickers in the old list and not in etf-classifications, $413,341.59 on the 2026-10-09 lots; no real ticker in neither table)",
+      "data/black_diamond/scripts/gold/E_18.detect_new_securities.py:215,247,276 at HEAD (git grep read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "D1-W93-S2: removing E_18's lookup stops canonical rows for tickers whose only class source is the old list, unmeasured.",
+  "world_is": "Measured: zero such tickers can reach the lookup, because the known-set skip precedes it. The consequence the disposition record states for the lookup is wrong; the real one belongs to repointing the known set (D1-S42)."
+}
+```
+
+## MDPF_SECCLASS-D1-S42 -- 22 tickers ($413,341.59 on the 2026-10-09 lots, including HPI, CUBE, GLPI and PCEF) are in the old list bd-sec
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S42",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-16T04:35Z",
+  "one_line": "22 tickers ($413,341.59 on the 2026-10-09 lots, including HPI, CUBE, GLPI and PCEF) are in the old list bd-securities and not in etf-classifications, so the page classifier has no canonical row for them; repointing E_18's known set (round-27 item 2) makes all 22 live candidates the same night, with no old-list class source once the lookup is removed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R26_CHECKS/W93S2_MEASUREMENT_AND_PACKET_CORRECTION_20261016.md: the 22-ticker table; get_item on bd-securities for the four: all classified by an outside model (gpt-4o-mini or gpt-5.4-mini), PCEF fixed_income with sub_asset_class needs_review at confidence 0.5",
+      "CLAUDE.md section 5: never move served output without never-widen sign-off naming the blast radius"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-5: before the old copy is deleted, every figure that moved when its last users were switched was listed before and read after; FWD-4/FWD-5 repoint of E_18's known set is round-27 item 2 of FWD45_B01B_E18_DISPOSITION.md.",
+  "world_is": "Today the 22 are classified by no canonical row; the repoint changes who classifies them from nobody to the GICS/Schwab path or unresolved. The issuer's recommendation (migrate before delete: a signed pair seeding the 22 canonical rows from the old list by conditional put, then the repoint) is in the record. Disarm: the round-27 order names the 22 tickers, the source rule and the pair, and the CVO grades the class folding."
+}
+```
