@@ -69,7 +69,7 @@ Commit the record FIRST, your rows and the proof instance second. Report once: c
 
 **ISSUER NOTES:** Round 9 item 2 (CTO analysis @bc6444b8e2), the second half of the plan's 30 entries (`FB-p-3` holds the first 15). A CONTRADICTED note is a correction to the plan, ruled by the issuer in the round-9 packet.
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <workstream>PLANQ</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-p-4</to_id>

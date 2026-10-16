@@ -75,7 +75,7 @@ Commit the record FIRST, your rows and the proof instance second. Report once: t
 
 **ISSUER NOTES:** Round 9 item 1, first half (CTO analysis @bc6444b8e2). `FB-p-2` is staged behind this census, the CTO's read of it and the recorded decision. The census may find the key's writer undetermined; that is a finding, not a failure, and the retirement then needs the writer named first.
 
-<status>pending</status>
+<status>complete</status>
 <round>9</round>
 <workstream>DOOR6</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-p-1</to_id>
