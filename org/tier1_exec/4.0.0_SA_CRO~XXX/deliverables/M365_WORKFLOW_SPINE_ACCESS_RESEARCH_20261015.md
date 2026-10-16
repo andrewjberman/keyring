@@ -108,6 +108,25 @@ through Graph. Ownership of M365-MCP-Graph is not what grants any of this; the r
 NEW app, never on the gateway's user-facing app, so the gateway's secret does not carry tenant-wide reach. Every
 consent is written to the Entra audit log (visible to the tenant's Global Admins).
 
+## 5b. Do we already collect this? No (measured 2026-10-16 ~01:3xZ)
+
+Read directly: the Nessie warehouse `s3://opal-313476888478-globgrph/warehouse/` (branch head
+`de096ea838...`, committed 2026-10-16T01:19:00Z) and the served graph (vintage 2026-10-16T01:19:00Z). Trino
+(`globgrph-trino`, task `7174173c...`) reads the same warehouse read-only; dell1 has no ECS Exec plugin, so the
+warehouse bytes were read instead of a Trino session.
+
+| plane | what it holds | employee activity spine? |
+|---|---|---|
+| `warehouse/globgrph` (`graph_nodes`, `graph_edges`, `graph_contracts`, `cse`) | the estate graph: AWS resources, code, fabric; 30,879 CloudNodes + 20,837 FabricNodes | no. Its M365 slice is 6,929 `MS_FILE`, 1,390 `MS_FOLDER`, 19 `MS_USER`, 1 `MS_SITE`, 1 `MS_LIBRARY`: a **snapshot** of one SharePoint site (`Shared`) with each file's `last_modified_dt` and `owner_upn`. No actor per change, no history, no mail/Teams |
+| `warehouse/ms_heat/ms_heat_index.json` | one-off write-heat score over that snapshot, generated 2026-07-17; its own params say "content/comms NEVER read"; 5,604 rows | no; three months old, last-modified only |
+| `warehouse/tool_activity`, `code_heat`, `fedobs_*`, `cse_ingest`, `snap_ingest`, `axes_history` | agent comp-tool telemetry, git heat, fabric observations | no; agents and repos, not employees |
+| Graph CloudTrail feed into Nessie | AWS API activity | no; AWS, not Microsoft 365 |
+| `opal-mcp-audit` (Athena-queryable) | the gateway's own audit of tool calls | only the gateway's users' tool calls |
+| `teams-global-transcripts-pull` (hourly), `outlook-global-transcripts-pull` (daily) -> `opal-data-transcripts` | meeting transcripts and admitted mail through the gateway's single ingest identity (delegated) | one identity's data, not every employee |
+| gateway catalog (`opal_discover`) | "not catalogued" for an M365 activity log | no |
+
+The Management Activity API leaves no trace anywhere read: no `ActivityFeed.Read` app, no subscription, no table.
+
 ## 6. Unmeasured, each closed by the first Layer-1 act
 
 | item | state |
