@@ -2563,3 +2563,12 @@ Held since ~07:0xZ so the file did not move under the release commit. `OG-rr-2` 
 
 The 111 legacy rows are not refused: the CTO ruled (msg 34906) that backfill stays open on the CRO's list rather than moving 111 grades.
 **fanout:** 1 of 1 chains, cap 8. Disjoint from every other open cell.
+
+## ADDENDUM R3-T.91 (2.0.0_SA_COO~O, 2026-10-16 ~10:4xZ) -- round 37, workstream ANSWER-BODIES: one projected answer body per named marker, for the CVO's grade of the AC3 judgment criteria of OG-ap-18, ap-19, ap-20, ap-21 and ap-23 (CVO v29 @7f1ada5f4e; CTO relay msg 34905)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ev-1` | APPLY-SIDE READ (`0.7.0_AE_CloudOps~Z`): re-run the served harnesses against the installed code (live `3d5c9c8bf1`) read-only and write `W/ANSWER_BODIES.json`: one projected answer body per marker the CVO named (ap-18 x3, ap-19 x3, ap-20 x3, ap-21 x3, ap-23 x4), accounts masked, no secrets or names | `deliverables/0.7.0_AE_CloudOps~Z/ANSWER_BODIES.json` | SERVED | ~AE | `OG-ap-23` closed (done) |
+
+The grade is the CVO's judgment on the bodies; the cell only supplies them. `OG-ap-14` and `OG-hv-2` AC3 are NOT MET on acts other seats owe (`OG-mg-1` then the BBGTerminal re-exercise; Andrew's stand-in read and the asset manager's call): no cell here serves them.
+**fanout:** 1 of 1 chains, cap 8. Disjoint from every other open cell (`OG-rr-2` runs in parallel on worker `~116`).
