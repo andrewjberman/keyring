@@ -40,7 +40,7 @@
 #
 # P9 -- Lambda source-map vs deployed AWS Lambda set
 #   Trigger    : on demand / scheduled infra audit
-#   Input      : infra/aws/lambda/ci/lambda-source-map.json -- .functions{} keys
+#   Input      : infra/aws/lambda/ci/function-map/ -- .functions{} keys
 #                UNION the top-level function-object keys (schema-split tolerant)
 #   Reference  : aws lambda list-functions (deployed function names, all pages)
 #   Comparison : set diff, both directions
@@ -67,6 +67,14 @@ set -u
 
 WORKSPACE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+# CLAUDE.md rule 16: jq is not installed in Git Bash; the VENDORED .tools/jq.exe is the only jq. Resolved here, first,
+# and fail-closed loud when absent (a missing jq never reads as a clean empty result).
+JQ="$WORKSPACE/.tools/jq.exe"
+if [ ! -f "$JQ" ]; then
+  printf 'ERROR: vendored jq not found at %s (CLAUDE.md rule 16) -- parity gates cannot run\n' "$JQ" >&2
+  exit 1
+fi
+
 export AWS_EC2_METADATA_DISABLED="${AWS_EC2_METADATA_DISABLED:-true}"
 export AWS_METADATA_SERVICE_NUM_ATTEMPTS="${AWS_METADATA_SERVICE_NUM_ATTEMPTS:-1}"
 export AWS_PAGER=""
@@ -84,11 +92,11 @@ gate_ec2_manifest() {
   if [ ! -f "$manifest" ]; then warn "EC2_MANIFEST.json not found at $manifest"; return; fi
 
   local declared running iid
-  declared="$(jq -r '.services | to_entries[] | select(.value.instance_id != null) | .value.instance_id' "$manifest" | tr -d '\r' | sort -u)"
+  declared="$("$JQ" -r '.services | to_entries[] | select(.value.instance_id != null) | .value.instance_id' "$manifest" | tr -d '\r' | sort -u)"
 
   running="$(aws ec2 describe-instances \
       --filters "Name=instance-state-name,Values=running" \
-      --output json 2>/dev/null | jq -r '.Reservations[].Instances[].InstanceId' 2>/dev/null | tr -d '\r' | sed '/^$/d' | sort -u)"
+      --output json 2>/dev/null | "$JQ" -r '.Reservations[].Instances[].InstanceId' 2>/dev/null | tr -d '\r' | sed '/^$/d' | sort -u)"
   if [ -z "$running" ]; then
     warn "aws ec2 describe-instances returned no running instances (or call failed) -- parity not verifiable"
     return
@@ -111,31 +119,29 @@ gate_ec2_manifest() {
       warn "service '$svc' source_path does not resolve on disk: $sp"
       found_drift=1
     fi
-  done < <(jq -r '.services | to_entries[] | select(.value.source_path != null) | "\(.key)\t\(.value.source_path)"' "$manifest")
+  done < <("$JQ" -r '.services | to_entries[] | select(.value.source_path != null) | "\(.key)\t\(.value.source_path)"' "$manifest")
 
   [ "$found_drift" -eq 0 ] && ok "all running instances registered; all source_paths resolve"
 }
 
 # ---- P9 -- Lambda source-map vs deployed AWS Lambda set ------------------------
 gate_lambda_sourcemap() {
-  # PARITY_LAMBDA_SOURCEMAP overrides the source-map path (synthetic-drift verification only).
-  local sm="${PARITY_LAMBDA_SOURCEMAP:-$WORKSPACE/infra/aws/lambda/ci/lambda-source-map.json}"
+  # CT-ca-1 (NFRA_CTLPLN round 30): the source map is one JSON file per function under infra/aws/lambda/ci/function-map/.
+  # PARITY_FUNCTION_MAP overrides the folder (synthetic-drift verification only). A missing or empty folder is an ERROR that
+  # exits 1 -- it is never a clean result and never a WARN that returns (the old single-file gate warned and returned).
+  local fm="${PARITY_FUNCTION_MAP:-$WORKSPACE/infra/aws/lambda/ci/function-map}"
   printf '== P9: Lambda source-map vs deployed AWS Lambda set ==\n'
-  if [ ! -f "$sm" ]; then warn "lambda-source-map.json not found at $sm"; return; fi
+  if [ ! -d "$fm" ] || ! ls "$fm"/*.json >/dev/null 2>&1; then
+    printf 'ERROR: function-map folder missing or empty: %s\n' "$fm"
+    exit 1
+  fi
 
-  # Declared = .functions{} keys UNION any top-level function-object keys (the
-  # source-map has a schema split: functions under .functions + siblings of it).
+  # Declared = one function per <name>.json file (the file name is the function name; the file is the entry object alone).
   local declared deployed
-  declared="$(jq -r '
-      (.functions // {} | keys[]),
-      (to_entries[] | select(.key != "functions")
-                    | select(.key | startswith("_") | not)
-                    | select(.value | type == "object")
-                    | .key)
-    ' "$sm" | tr -d '\r' | sort -u)"
+  declared="$(for f in "$fm"/*.json; do basename "$f" .json; done | tr -d '\r' | sort -u)"
 
   # --output json auto-merges all paginated pages into one document.
-  deployed="$(aws lambda list-functions --output json 2>/dev/null | jq -r '.Functions[].FunctionName' 2>/dev/null | tr -d '\r' | sed '/^$/d' | sort -u)"
+  deployed="$(aws lambda list-functions --output json 2>/dev/null | "$JQ" -r '.Functions[].FunctionName' 2>/dev/null | tr -d '\r' | sed '/^$/d' | sort -u)"
   if [ -z "$deployed" ]; then
     warn "aws lambda list-functions returned nothing (or call failed) -- parity not verifiable"
     return
