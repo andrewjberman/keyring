@@ -9733,3 +9733,33 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-S8 -- dispositions of the inert observations of rounds 90-94; corrects D1-S7
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S8",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T00:40:36Z",
+  "one_line": "Dispositions, by the issuer, of the inert observations of rounds 90-94 (D1-W180-S1, -S2, -S3, D1-W183-S1, -S2) and corrects D1-S7: that row carried hazard ARMED by my error; the live latent hazard is D1-W181-S1 alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~C1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "D1-W180-S1: R3_LINKS.csv holds 90 rows (88 DETERMINISTIC, 2 AMBIGUOUS), the order said 88; the 2 ambiguous are never linked and none is among the 219; the 0-to-active premise holds (R3_RECORD.json @6766addb63)",
+      "D1-W180-S2: R4_LINKS.csv writes household_via as 'via name'; the packet strips the prefix (NEAR_MATCH_REVIEW_PACKET.csv @a1383db444 carries 'name' or 'client_line')",
+      "D1-W180-S3: one R4 link's Black Diamond account has no row in REVERSE_MATCH_V3.csv; the packet records bd_account_state other and in_219 false; the link is counted in the 118 and is not among the 102 in the 219",
+      "D1-W183-S1: run_job's grant default read the round-88 record by a constant path; answered by round 94 (--grant PATH, validated, @bec02b37c6)",
+      "D1-W183-S2: the commit-time naming gate WARNs on the printf template s3://%s/%s in the job module; a tool and registry fact for the naming gate's owner, not a hazard of this project; the WARN window did not block"
+    ]
+  },
+  "spec_asserts": "every worker observation of a round is dispositioned by the issuer before the round's drain-end (spine L10).",
+  "world_is": "Each of the five is inert and answered or carried as stated. D1-S7: its hazard_standing ARMED was my error (it records the disposition of W173-S3 and D1-S2 and restates W181-S1); the armed hazard is W181-S1 alone (latent, trigger: the first object in security_series, store holds 0 objects at the last read). This row does not move W181-S1.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Five inert observations answered or carried by named records; D1-S7 corrected so the armed set is not double-counted."
+}
+```

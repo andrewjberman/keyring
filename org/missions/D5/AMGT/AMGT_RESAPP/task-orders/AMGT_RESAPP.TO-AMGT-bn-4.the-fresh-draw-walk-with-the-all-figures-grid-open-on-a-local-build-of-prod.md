@@ -94,7 +94,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** STAGED SHELL cut 2026-10-15 ~22:5xZ (2.0.0_SA_COO~R1). CTO round-106 analysis (msg 6249): "bm-5 AC5 change 3 is re-graded against this reading at the next walk"; item 2: "one browser walk that opens the grid on the release build, with screenshots and the ui-walk classes graded". THE GO: given on or after 2026-10-16T00:00Z (the walk date is the UTC date of the walk; round 106's draw of 2026-10-15 would repeat for a walk today). The issuer cuts the worktree `C:/dev/wk-resapp-474` with `--sparse-add .claude/skills/ui-walk` (round 106's `W443-S1`), the nested portal at the current `origin/PROD` (`e0e69da7` at the cut, the head printed at the GO), starts `bun run dev:live --port 5174` there, and confirms the walker account reads dormant. The draw is computed from the issuer's round-106 census (`round106/census_v5.json`, 95 of 95 names read after `AMGT-bm-3`; the live served function has not been redeployed since: the scoped API's last deploy is round 106's `bm-3`). THE TWO NAMED NAMES are the issuer's choice inside the CTO's reading: SHOP CN is where the round-106 walk read change 3 as not shown, PBR US is the fixture the mark was first built against; neither is in the fresh draw. AC6 is JUDGMENT: the shot read, graded by the CVO and read by the CTO, never self-graded; the worker's one line per name is evidence for it. A walk-date wait is the one dependency of this order: the hourly drive tick after 00:00Z gives the GO. Build under walk: the running server in this worktree's nested portal; it must stay up until the walk files are committed.
 
-<status>pending</status>
+<status>complete</status>
 <round>107</round>
 <slot>0.9.0_WK_AMGT_RESAPP~474</slot>
 <fabric>dell1</fabric>

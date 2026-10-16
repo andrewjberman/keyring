@@ -9566,5 +9566,121 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "notes": "WHY THIS IS AN OBSERVATION: one job in 70, the runner continued, nothing stored is wrong. If it repeats, the question for the issuer is whether something on the box closes Chrome processes (a reaper) or whether the profile is contended; five errors in a row stop the publisher's leg (the driver's own cap).",
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W146-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~146",
+        "surfaced_at": "2026-10-16T00:13:14Z",
+        "one_line": "main() in __main__.py already binds the name store inside its own body (a local import at the --harvest-grammar branch), so the HVST-cb-10 snapshot taken right after parse_args would raise UnboundLocalError; the redundant local import is removed and the module-level store import used instead.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cb-10 section 1.b: import lib.research.harvest.store as store at the top of __main__.py, then take started = store.get_stats_snapshot() right after the arguments are parsed.",
+        "world_is": "__main__.py:201-202 at 3467e51337 is an import statement 'import lib.research.harvest.store as store' inside main(); in CPython that makes store a local name of the whole function, so the snapshot line near the top of main() reads an unbound local. The fix deletes that one line; store._default_client() on the --harvest-grammar branch then resolves to the same module through the top-level import. No behaviour changed on any branch.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/opal_data_harvest/__main__.py:201-202 at 3467e51337 (local import inside main, before the harvest_client build)",
+                "lib/opal_data_harvest/__main__.py (worktree, this commit): top-level import of lib.research.harvest.store; the local import removed"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W146-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~146",
+        "surfaced_at": "2026-10-16T00:13:14Z",
+        "one_line": "The two S3 GET keys HVST-cb-10 adds to a run record are written to the LOCAL run record only; the bronze copy of the run record is persisted inside worker.run, before the process's ledger line exists, so it does not carry them.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cb-10 section 1.b: for run, add the keys s3_get_count and s3_get_bytes to the run record JSON after the ledger line is written.",
+        "world_is": "worker.py:971-976 at 3467e51337: write_run_record builds the path, sets self.last_run_record, then calls _persist_run_record (the bronze put) before returning to __main__. The rewrite added by HVST-cb-10 runs in __main__ after worker.run returns, so the runtime-root file carries the keys and the persisted bronze object does not. No reader of the bronze run record reads these keys; the cycle record sums the ledger, not the run records.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/opal_data_harvest/worker.py:971-976 at 3467e51337 (path, last_run_record, _persist_run_record)",
+                "lib/opal_data_harvest/__main__.py (worktree, this commit): _record_process_gets rewrites the local run record after worker.run returns"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W147-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~147",
+      "surfaced_at": "2026-10-16T00:13:07Z",
+      "one_line": "A backfill pair with no local wm| mark (no article stored since the change, or a pre-change progress database) is bounded at the floor, and a pair whose candidates are all already held never writes a mark, so each of its jobs re-pages back to the floor.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~W1",
+      "spec_asserts": "HVST-cb-11 section 0 and 1.a-b: the job's bound comes from the local state row wm|publisher|security, the local state is authoritative (CTO design B, msg 6339), and only a STORED article advances the mark.",
+      "world_is": "The code offers no seed: _note_local_watermark is called only after the articles INSERT commit, and the held-in-bucket and duplicate branches of run_job continue before that point. A progress.sqlite3 written before this change has articles rows and no wm| row, so its pairs bound at the floor; a pair whose candidates are all already held stores nothing and keeps no mark, so every backfill job of that pair pages to the floor (capped by listing_page_cap). Read from code only; no progress database or box was read, and the articles table carries no published value to seed from.",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py run_job: duplicate and held-in-bucket branches continue before the store (base 3467e51337)",
+          "lib/opal_data_harvest/worker.py: _note_local_watermark called once, after the articles INSERT commit (cell edit, uncommitted at filing)",
+          "lib/opal_data_harvest/harvest_grammar.py: backfill_bound with local_watermark None returns the floor (cell edit, uncommitted at filing)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S24",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-16T00:50:00Z",
+     "one_line": "The worker rows of HVST-cb-10 and HVST-cb-11 (D1-W146-S1, -S2 and D1-W147-S1) are dispositioned: two were harmless notes, the third is a carried, bounded cost of design B.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-10 and HVST-cb-11 order texts (counters; a job's bound from local state with no silver S3 read).",
+     "world_is": "W146-S1: __main__.main had a local import of store that would have shadowed the module import; the worker removed that one line (merged 62fcc1978e). W146-S2: the two new run-record keys land on the runtime-root copy only, the bronze copy having been persisted earlier inside worker.run; the ledger is the cycle's authority. W147-S1 (ARMED, my disarm): a pair with no local mark is bounded at the cycle floor, and a pair whose candidates are all already held never writes a mark, so its jobs re-page to the floor each cycle; the floor is the last completed cycle's start date (the runner passes it), so the cost is listing requests bounded to about one cycle of dates, not silver reads. The real read after both merges: the same bbg job went from 747 GETs / 212,043,826 bytes to 0 / 0 (ledger/ROUND87_EGRESS_FIX_REAL_READ_20261016.md).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND87_EGRESS_FIX_REAL_READ_20261016.md",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-11.a-job-derives-its-backfill-bound-from-local-state.md COMPLETE note",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-10.every-collector-process-reports-its-own-s3-gets.md COMPLETE note"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-W146-S1",
+      "AMGT_HARVST-D1-W146-S2",
+      "AMGT_HARVST-D1-W147-S1"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "W146-S1 resolved by the worker; W146-S2 inert by design (ledger is authoritative); W147-S1 is a named, bounded cost of the CTO's design B (listing requests to the floor, no silver reads), carried and not fixed."
+    }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S25",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-16T00:50:00Z",
+     "one_line": "HVST-cb-9: step 5's gate could never pass while the seed existed (the issuer ruled it its own error, Amendment 2); and the +15 read of R7 projects 0 GiB only because no upload has run, so the uploader's silver reads are not yet measured.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "TO HVST-cb-9 step 5 (before Amendment 2): delete the seeded copies only after a run record of the new pass reads token_source=browser_profile; otherwise take Branch F. Amendment 1 R7: project a 242-pair cycle from the s3_get_ledger.jsonl per command (run, upload-harvest) and stop if either projection exceeds 5 GiB.",
+     "world_is": "sessions.py:93-103 at pin 3c1e8bcdb1 returns a saved session file first, and returns browser_profile (lines 113-121) only when no stored bundle exists. The first 4 run records of the new pass (T0 2026-10-16T00:31:23Z) read token_source=saved_session_file:...\\runtime\\secrets\\wsj.dpapi. The issuer ruled (msg 6358, Amendment 2): delete first, then read. Deleted 2026-10-16T00:37:46Z; the jobs starting after it (records 20261016T003751Z, 003806Z, 003821Z, 003836Z, 003852Z) read token_source=browser_profile with status no_new_articles and request_attempts=1; 0 REFUSAL, 0 sign_in_refused, 0 error lines since. Branch F not taken, the copies not restored. R7 at +15 (cb9_reads.out, 2026-10-16T00:46:36Z): 60 ledger lines after T0, all command=run, get_count 0 and get_bytes 0; 0 upload-harvest lines, because all 60 jobs ended no_new_articles and nothing was uploaded; so the projection (average run bytes + average upload bytes x uploads per job) x 242 reads 0 GiB, but its upload term is 0 x 0 and the uploader's silver reads were NOT exercised. The wsj cycle reached job 60 of 242; barrons has not started; no cycle.json of the new pass exists yet, so s3_jobs_lines and s3_get_*_jobs are not printed. The +3 read was taken at T0+5:27 (late, labelled), not at +3:00.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "lib/opal_data_harvest/sessions.py lines 93-103 and 113-121 at pin 3c1e8bcdb1",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb9_seed_removed.out (hashes before, deletion time, 7 run records with token_source, Test-Path False, log read 0 errors)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb9_reads.out (+3 and +15 reads including R7)",
+       "the order's Amendment 2 @e64b874e3b and the issuer's msg 6358"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
