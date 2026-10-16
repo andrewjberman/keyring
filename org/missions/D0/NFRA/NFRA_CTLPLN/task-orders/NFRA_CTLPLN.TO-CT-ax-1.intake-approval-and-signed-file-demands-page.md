@@ -5,8 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~136</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>open</status>
-<status_reason>Issued by the issuer 2.0.0_SA_COO~C in the round-28 issuance, per the CTO's round-27 analysis ruling 2 (ROUND_ANALYSIS.round27.md @22207d353b, msg 109661).</status_reason>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-136 @e23255f5c5) and again in the main tree after merge fe1ffbf219: CTax1-AC1 INTAKE-PAGE blocks=7 accepted=5 refused=21 ok=True (the planted wrong form in a copy is detected); CTax1-AC2 grep -c reads 1 (base 0); proof VALID; the page is 119 lines, ASCII; the README gained exactly one line. Two findings for the CTO, both INERT: W136-S1 the fetch approval gate (intake_fetch.py ~355-357, 630-641) and check 2 (intake_check.py ~385-402) read the approval file by different rules (a hash-suffixed line passes fetch and fails check 2; a case or space variant passes check 2 and fails fetch); W136-S2 no tool offers a read-only dry run of one approval line or one signed check-8 file, so the page says NONE where the CTO's ruling 2 expected a dry-run command (the page lists the self-tests and read-only verbs that do exist). The worker dropped the check-2 accepted block to stay under 120 lines: the laxer case and space rule of check 2 is prose, not graded. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
