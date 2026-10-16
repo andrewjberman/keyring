@@ -19991,3 +19991,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W215-S1 -- the AC1 checker r46_checks.py is tracked at HEAD but absent from the worker worktree (sparse cone), so AR-ty-52's criterion cannot run and no test file was written
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W215-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~215",
+  "surfaced_at": "2026-10-16T00:57:00Z",
+  "one_line": "TO-AR-ty-52 AC1 invokes org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py from the worktree root. The file is tracked at HEAD 9d0664b2ff but the worktree's sparse-checkout cone does not carry org/tier1_exec, so the file does not exist in the worktree. The worker stopped at the first act (TREE-OK holds, the checker path does not) and wrote no test file.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The TO-AR-ty-52 acceptance invocation `python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 10 infra/aws/lambda/investor-reporting/ops/tests/test_cross_firm_owned_reads.py` runs from the worker worktree root and the worktree carries the checker it names.",
+  "world_is": "Worktree C:/dev/wk-irpt-anlreq-215 (branch wk-IRPT_ANLREQ-215, HEAD 9d0664b2ff) is a sparse checkout. `git sparse-checkout list` returns .tools, data/transcripts/scripts, docs/contracts, infra/aws/lambda/investor-reporting, infra/aws/lambda/ticket_center, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/modules/graph, org/ref, org/standards. org/tier1_exec and org/surprise_channel are outside the cone: `ls -d org/tier1_exec` and `ls -d org/surprise_channel` both fail, and `org/surprise_channel/schemas/investigation_item.schema.json` named by the channel contract cannot be read in the worktree. `git ls-tree -r --name-only HEAD` does list org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py (count 1). The cited code under test (infra/aws/lambda/investor-reporting/ops/owned_requests.py, owned_report.py), the neighbour tests and the record files ~211 and ~212 are present.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r --name-only HEAD at 9d0664b2ff lists org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py (1 match)",
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-215 returns the cone above, with no org/tier1_exec entry; core.sparseCheckout=true",
+      "ls -d org/tier1_exec/2.0.0_SA_COO/deliverables in C:/dev/wk-irpt-anlreq-215 -> No such file or directory",
+      "task order org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-ty-52.fwd5-owned-readers-cross-firm-tests.md AC1 invocation names the checker path; its <paths> block names only the test file and this channel"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
