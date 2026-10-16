@@ -21463,3 +21463,59 @@
   "notes": "The count is the file-level rule the order asks for. Not a blocker; the xfail stays strict and flips when 2.0.0_SA_COO~V2 adds the rows."
 }
 ```
+
+## IRPT_ANLREQ-D2-W230-S4 -- (worker 0.9.0_WK_IRPT_ANLREQ~230, cell AR-tz-66) the amendment's register rows G4 to G11 are not on this branch (BLOCKING for AR66-tz-AC1)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~230",
+  "surfaced_at": "2026-10-16T05:41:18Z",
+  "class": "BLOCKING",
+  "id": "IRPT_ANLREQ-D2-W230-S4",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The amendment's register rows G4 to G11 are not on this branch: the register at HEAD holds G1 to G3 only; rows G4 to G11 live on box/dell2 (8e6ecfc86c, dc51f0d497), which are not ancestors of wk-IRPT_ANLREQ-230. AR66-tz-AC1 FAILs (5 failed, 9 passed).",
+  "spec_asserts": "TO-AR-tz-66 AMENDMENT 1 (issuer, 2026-10-16 ~05:15Z) says 2.0.0_SA_COO~V2 added register rows G4 to G11 (commit 8e6ecfc86c) and that they were placed on the worker branch (commit 38b3732735 message), so the register-coverage test must PASS now and the acceptance (both files, at least 8 passed) can pass.",
+  "world_is": "At HEAD c119e7224a (branch wk-IRPT_ANLREQ-230, 5 commits on merge base 857e3085b3) R19_GLOBAL_ADMISSIONS_REGISTER.md is 20 lines with rows G1 to G3 only; its last change on the branch is 25949cd333. Commit 38b3732735 changes only the order file (1 file). Commit 8e6ecfc86c (rows G4 to G11, 20 insertions) and dc51f0d497 (rows marked RULED) are on box/dell2, 108 commits ahead of the merge base, and are not ancestors of this branch. Measured at c119e7224a: the coverage test FAILs naming 6 unregistered ADMITS files (_scope/global.py, _scope/owner_reads.py, _scope/resolve.py, holdings/resolve.py, reports/repository.py, reports/retention.py); the acceptance run prints R46-TESTS-FAIL 5 failed, 9 passed in 16.10s, rc=1. The register is outside this order's write grant and a merge or cherry-pick of a box/dell2 commit would edit it or merge a branch, so the rows were not brought in.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R19_GLOBAL_ADMISSIONS_REGISTER.md at HEAD c119e7224a: 20 lines; grep for rows G4 to G11 returns none",
+      "git merge-base --is-ancestor 8e6ecfc86c HEAD: no ANCESTOR (positive control: git merge-base HEAD box/dell2 = 857e3085b3)",
+      "git show --stat 38b3732735: one file, the TO-AR-tz-66 order",
+      "git rev-list --count HEAD..box/dell2 = 108",
+      "acceptance: python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 8 <both files> -> R46-TESTS-FAIL 5 failed, 9 passed in 16.10s, rc=1"
+    ]
+  },
+  "notes": "Not resolvable inside this order's grant. The issuer owns the register and the placement the amendment describes. The worker did not read the box/dell2 register content; whether the G4 to G11 file names match the 8 ADMITS files of SCAN_REL is unverified here. Placement of 8e6ecfc86c onto the worker branch by the issuer clears the coverage and register-gate failures."
+}
+```
+
+## IRPT_ANLREQ-D2-W230-S5 -- (worker 0.9.0_WK_IRPT_ANLREQ~230, cell AR-tz-66) the round-47 register gate's SITE pattern is equality-only; 7 of 10 ADMITS sites fall outside it
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~230",
+  "surfaced_at": "2026-10-16T05:41:18Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W230-S5",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The round-47 register gate's SITE pattern matches only == against the literal OPAL_GLOBAL; 7 of the record's 10 ADMITS sites are written with != or in (...) and fall outside it.",
+  "spec_asserts": "test_cross_firm_global_register.py (round 47) SITE comment: an inequality is a refusal, not an admission, and is not matched. The TO-AR-tz-66 cell states that the global-admissions gate covers every OPAL_GLOBAL equality site.",
+  "world_is": "OPAL_GLOBAL_SITES_CLASSIFIED.md (commit-tree copy in 0.9.0_WK_IRPT_ANLREQ~229) classes 10 ADMITS sites: 3 with == (interactive_access.py:115, global.py:180, resident_installed.py:260), 5 with != (interactive_access.py:131, owner_reads.py:29, retention.py:105, repository.py:181 and :386) and 2 with in (...) (_scope/resolve.py:445, holdings/resolve.py:445). The gate's == pattern matches 3 of the 10; its widened run prints sites=9 files_scanned=8. The new file's scan of ==, !=, in and not in reproduces the record's 40 sites in 21 files at c119e7224a.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~229/OPAL_GLOBAL_SITES_CLASSIFIED.md ADMITS rows (grep ADMITS, 10 rows)",
+      "infra/aws/lambda/ticket_center/tests/test_cross_firm_global_register.py SITE regex at c119e7224a, and the run: sites=9 files_scanned=8",
+      "infra/aws/lambda/ticket_center/tests/test_cross_firm_global_sites_widened.py test_cross_firm_every_site_is_classified PASS at c119e7224a (40 sites, 21 files)"
+    ]
+  },
+  "notes": "Not a blocker for this cell: the order names SCAN_REL as the file list and the gate's pattern is unchanged by AMENDMENT 1. The rule the gate encodes (inequality is a refusal) disagrees with the record's classification of the != guards as ADMITS; the issuer should confirm which population the register gate is meant to grade."
+}
+```
