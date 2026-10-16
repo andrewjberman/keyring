@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell2",
- "written_at": "2026-10-16T12:56:58Z",
+ "written_at": "2026-10-16T13:40:38Z",
  "written_by": "1.0.0_SA_CTO~DELL2",
  "rows": [
   {
@@ -877,7 +877,7 @@
    "source": "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/PARKED_FWD8_ADMITTED_READ_OPAL_TERMINAL_20261011.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-11T06:36:00Z",
    "kind": "act",
    "context": "The second reader of the transcripts bucket is trusted to IAM user Opal_Terminal only (tag: bloomberg-terminal-device). Its key is on none of laptop, site Z or dell2, and IAM shows the key has never been used. FWD-8 stays ungraded until one status-only read is run where that key lives.",
@@ -898,7 +898,14 @@
      "shared": []
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-16T13:40:38Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_134xZ_SYNTHETIC_TEST_DELETES_NEED_NO_CALL_OPAL_TERMINAL_GONE_DELL2.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -4601,7 +4608,7 @@
    "source": "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_fwd1_r3/OBJECTS_WRITTEN_FWD1_R3.txt",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-16T10:50:58Z",
    "kind": "act",
    "context": "FWD-1 run 3 probe (AQ2 record 51686af530, OBJECTS_WRITTEN_FWD1_R3.txt) stored 5 synthetic one-row-plus-SPY CSVs (intake 301 -> 306 versions); the R33 sitting stored 8. Synthetic data only, no client figures. Kept as evidence under the run-3 pair; deleting S3 objects is Andrew's act.",
@@ -4628,7 +4635,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-16T13:40:36Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_134xZ_SYNTHETIC_TEST_DELETES_NEED_NO_CALL_OPAL_TERMINAL_GONE_DELL2.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "dell2-20261016T112339Z-6099",
