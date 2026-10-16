@@ -2433,3 +2433,12 @@ Two batches on two surfaces, never two appliers on the host at once: the IAM and
 | `OG-ch-1` | `register_adapter` holds several modules per vendor with DISJOINT `FIRMS` (the two Black Diamond adapters share `VENDOR = "blackdiamond"`), every route picks the module holding the call's canonical firm; `client_role.role_key` keys the Black Diamond read role by the prefix's firm segment (`BLACKDIAMOND49F_READER_ROLE_ARN`, `BLACKDIAMONDCOTTONWOOD_READER_ROLE_ARN`), so IAM fences the two firms apart (ap-24 A3); `Ctx.firm_roster()` builds `{advisor_name: canonical firm}` from the real roster (cl-5 A2) | `app/client_core.py`, `app/client_role.py`, `tests/test_og_ch1.py` | WORLD | ~111 | cl-1 .. cl-6 merged |
 
 **fanout:** 1 of 1 chains, cap 8. One chain with `OG-cl-7` (the same two files): ch-1 first, cl-7 second, both in slot ~111. The tool registrations, the import lines, the pins and the roster copy under `app/refs/` are the ISSUER's hookup at the merge (`r37/hookup_ch.py`), not a cell.
+
+## ADDENDUM R3-T.76 (2.0.0_SA_COO~O, 2026-10-16 ~03:2xZ) -- round 37, workstream JSON-SERVED: the typed reads of the portal-v2 json objects no tool reads (PRD v3.13 @def417d2be as corrected @7656f484ab; cross-adjudication XA-20261016T024917Z-cdcc; MCPINDEX msg 34654)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-sv-1` | ONE module of typed reads for the seven `opal-data-portal-v2` rows `served_correlation_data`, `served_etf_returns`, `served_factor_tilts`, `served_model_portfolio_timeseries`, `served_model_portfolios_views`, `served_peer_performance`, `served_trending_latest`: each decided BUILT or RULED_OUT by its own freshness at build (views is out: 93 trading days stale); no new IAM (every prefix is under `json/`, granted by `queryv0-iam.tf:34`); the registrations are the issuer's hookup | `app/portal_json_served.py`, `tests/test_og_sv1.py`, the record and the probe | WORLD | ~113 | the hookup merged (5aeafbda15) |
+
+`opal-harvest-security-metrics` is not built here (dell1 AMGT_HARVST, PRD v3.13 item 5). The release is `OG-ap-23` (the code batch), which carries these tools after the hookup.
+**fanout:** 1 of 1 chains, cap 8. Disjoint from `OG-cl-7` (client modules) and from every merged cell; the hookup lines are the issuer's.
