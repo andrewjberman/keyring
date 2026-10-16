@@ -73,7 +73,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-en-14.email-deny-route-class-gu
 - Reading of the CTO's ruling: the four browser routes serve Opal-internal pages, so the route class is `internal_page` and the exemption is the owner roster (`MASTER_ADMIN_EMAILS`); Alyssa (restricted since 09-27, intended deny) stays refused. `opalbloomberg@` is write-capable, not master admin: after `OG-ap-30` it has no deny record, and the guard does not exempt it.
 - Pre-cut: AC1 base FAIL as expected (the test file is absent); AC2 base FAIL as expected (no commit of this serial yet).
 
-<status>staged</status>
+<status>complete</status>
 <round>39</round>
 <workstream>ENRICH-R39-B</workstream>
 <slot>~127</slot>
