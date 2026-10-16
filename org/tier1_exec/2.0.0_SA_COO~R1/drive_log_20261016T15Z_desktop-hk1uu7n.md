@@ -1,0 +1,9 @@
+# 2.0.0_SA_COO~R1 drive log, 2026-10-16 hours 15Z to 16Z (host desktop-hk1uu7n), AMGT_RESAPP
+
+Per-tick lines are in the gitignored runtime file `org/mcp/drive_ticks/2.0.0_SA_COO~R1.md`; this is the substantive part of the span.
+
+- **`AMGT-bo-3` amended** (`81f79c1d1c`, AMENDMENT 1) on the CTO's ruling (msg 6769: one walk with one owner): `GOOGL US`, `ISP IM` and `BATS LN` join the walk so the CVO's `W418-S3` (a historical P/E's price basis) and the BATS half of `C-S142` (an empty `Period 4` column) close on it; `PBR US` is also read for a `$` on BRL team-model rows. Nineteen names, seven walks (AC2 to AC8), AC9 the judgment; the paragraph claiming the `ai_fill` section reads ABSENT is replaced (the hold is lifted, `COO~R2` msg 6768; PROD carries R2's AI-row panel change, portal-v2.1.232). Still staged; the 2026-10-17 UTC date gate is kept. Gate limb that graded it: `to-pipeline-gate` GATE (viii). `C-S133` stays with R2.
+- **Law relayed** (CTO msg 6816, Andrew-direct, CLAUDE.md rule 34): CloudOps is one lane per macro per box; AMGT CloudOps orders go to the one AMGT lane on dell1 that MSTR names (`0.7.0_AE_CloudOps~SC1` becomes it); no fresh lane per task. No CloudOps order of this seat is open.
+- **Empty ticks, counted as waits:** 15:30Z, 16:00Z, 16:30Z, 17:00Z: no mail, no AMGT call open, no FREE option at `/next-calls --drive`.
+- **Waits:** `bo-3`'s GO on or after 2026-10-17T00:00Z (the build is the then-current PROD, which carries R2's panel change); the filings task's fire at 11:30Z on 2026-10-17 (then `last_run.json`, the 8 names' objects and the mean `usage.usd` against 0.80, the keyed plan-only 0 WOULD-RUN, `due=False`, and every `filing_attempt` object under the 8 keys, baseline 0 each); A4 step 1 not before Tue 2026-10-20 (commit Mon 10-19 after that day's fire is read); the Lusha plan tier (Andrew). Round 108 is NOT closed.
+- All commits are LOCAL on `box/dell1` until box-sync carries them; no shared branch pushed.
