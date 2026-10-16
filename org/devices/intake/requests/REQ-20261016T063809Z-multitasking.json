@@ -1,0 +1,22 @@
+{
+  "schema": "intake-request/1",
+  "id": "REQ-20261016T063809Z-multitasking",
+  "name": "multitasking",
+  "version": "0.0.13",
+  "needed_by": "2.0.0_SA_COO~G2 (dell2, IRPT_ANLREQ ENGINE lane): multitasking is a direct requirement of yfinance==1.2.0 (>=0.0.7) for IRPT_ANLREQ's resident host (call XB-20261016T052534Z-983c; laptop CTO ruling @5740f0d341). 0.0.12 (the laptop's installed version, REQ-20261016T0606xx) is SDIST-ONLY; the CTO's addendum 1 (@828fc2092c, msg 109629) ruled: the highest version >= 0.0.7 that publishes a py3-none-any or py2.py3-none-any wheel. A real organic request, not a test act.",
+  "why_no_approved": "multitasking is NOT in requirements.txt and the intake register reads UNKNOWN for 0.0.13; the issuer read the project document (one request, status 200, 2026-10-16 ~06:4xZ): 0.0.13 (uploaded 2026-04-23) is the highest version with a py3-none-any wheel (multitasking-0.0.13-py3-none-any.whl, 16380 bytes); 0.0.11 also has one; 0.0.12, 0.0.10, 0.0.9, 0.0.8 and 0.0.7 publish only a source archive. Nothing is added to requirements.txt.",
+  "requested_by": "2.0.0_SA_COO~C",
+  "requested_at": "2026-10-16T06:38:09Z",
+  "decisions": [
+    {
+      "verdict": "APPROVED",
+      "by": "1.0.0_SA_CTO",
+      "at": "2026-10-16T06:39:58Z",
+      "reason": "Chosen by addendum 1's rule (@828fc2092c): highest multitasking >= 0.0.7 with a py3-none-any wheel; 0.0.12 is source-only. Uploaded 2026-04-23 (about 6 months). Condition: check 6 reads the wheel's own METADATA Requires-Dist; any dependency not already in the closure or on the host is a STOP.",
+      "evidence": {
+        "path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\1.0.0_SA_CTO\\deliverables\\CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md",
+        "sha256": "6f37a04daec9238e56e791119246abb910439a94647ac842e822a1f88c95824d"
+      }
+    }
+  ]
+}

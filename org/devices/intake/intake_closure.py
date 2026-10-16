@@ -21,7 +21,8 @@ Verbs:
   fetchlist [--from-file <closure json>] [--assessment <md>] [--out <json>] [--md <md>]
         The closure members whose installed copy is compiled for another Python only, with the exact wheel FILE NAME each
         would need for the target, marked APPROVED / NOT-YET-APPROVED / NEW-REQUEST against the CRO's assessment of 30.
-        Whether any such file exists on the index is UNREAD: nothing is asked.
+        Whether any such file exists on the index is UNREAD: nothing is asked. Windows (cp314-win_amd64) closures only:
+        any other target is refused with a non-zero exit; intake_fetch.py resolve names the files of another target.
 
 Classes (exactly one per member, from org/devices/kit_python_wheels.py classify_installed, which this tool imports):
   PURE                    an installed pure-Python copy with a RECORD (can be re-packed offline)
@@ -617,6 +618,10 @@ def fetchlist_md(data, fl, assessment_path, assessment_present):
 def cmd_fetchlist(args):
     src = pathlib.Path(args.from_file) if args.from_file else DEFAULT_JSON
     data = json.loads(src.read_text(encoding="utf-8"))
+    # the file names below carry the Windows tag only: a closure for another target is REFUSED, not named wrongly
+    if data["target"]["label"] != "cp314-win_amd64":
+        print("fetchlist: this closure targets %s; use intake_fetch.py resolve to name its files" % data["target"]["label"])
+        return 2
     apath = pathlib.Path(args.assessment) if args.assessment else DEFAULT_ASSESSMENT
     assessment = read_assessment(apath)
     fl = build_fetchlist(data, assessment)

@@ -21383,6 +21383,7 @@
 }
 ```
 
+
 ## IRPT_ANLREQ-D2-W231-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~231, cell AR-tz-67) the meeting route is a POST to a ticket route, which the order's own guard refuses; the run cannot exit 0 as specified
 
 ```json
@@ -21728,4 +21729,140 @@
   },
   "disposition": "UNDER_INVESTIGATION"
 }
+```
+
+## IRPT_ANLREQ-D2-W257-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~257, cell AR-g-118) the proof schema has no slot for the release's stage files, which sit outside the repository and are held by no commit
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~257",
+  "surfaced_at": "2026-10-16T06:20:58Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W257-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The proof's artifacts_produced cannot name the release's out-of-repository stage files by a commit hash, and the checker refuses a sha256 on a repo artifact; the committed record carries their hashes.",
+  "spec_asserts": "TO-AR-g-118 proof block: 'In artifacts_produced, name each file with the hash of the commit that holds it, never a placeholder: the record first, then the proof and the status flip.'",
+  "world_is": "The driver staged the release tarball, its SHA256SUMS and four host scripts at C:/dev/irpt-release-r34f, outside the repository; no commit holds them. proof-of-spec-check.py (rc=1, 6 violations, artifact-resolution) refuses each of those six rows because a sha256 is not a 7-40 hex commit-ish for a repo artifact, and the schema's non-git kinds (s3_object, ddb_rows, aws_resource) do not describe a local staged file. The committed record org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~257/r34/RESIDENT_R34_BUILD.json at 30d6e3bf54 carries the sha256 of every stage file, so the proof names the record as its artifact and states the stage hashes in its evidence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~257/r34/RESIDENT_R34_BUILD.json @30d6e3bf54",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~257/IRPT_ANLREQ.TO-AR-g-118.resident-release-r34c-own-names.proof_of_spec.json (first draft, six artifact-resolution violations, proof-of-spec-check rc=1)"
+    ]
+  },
+  "notes": "The issuer confirms whether a local stage file outside the repository belongs in artifacts_produced under a kind the checker admits, or whether the committed record alone is the artifact for such a build."
+}
+```
+
+## IRPT_ANLREQ-D2-W270-S1 -- A hop failure reaches the ticket page only through the draft-and-package block, so a ticket with a request id and neithe
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W270-S1",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~270",
+    "surfaced_at": "2026-10-16T05:17:48Z",
+    "one_line": "A hop failure reaches the ticket page only through the draft-and-package block, so a ticket with a request id and neither a draft nor a package never reads the status and never shows its failure words",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~V2",
+    "spec_asserts": "TO-AR-v31 THE CELL item 1 and DECOMP R3_V CONTRACT clause 1: the ticket page calls getJobStatus once when an analysis-request ticket that has a report_ref.request_id is opened, and once on refresh; clause 2 shows the failure while the package is absent. A hop failure whose hop produced no draft (COMMENTARY_DRAFT_FAILED) must be shown on the ticket.",
+    "world_is": "TicketCenter.tsx:908 renders the row for an analysis_request ticket only when t.draft_commentary or t.package is set, and AnalysisDraftAndPackage returns null when both are absent (AnalysisRequestParts.tsx:799). The new read is mounted inside that block, so a ticket with a request id and no draft and no package is never read and shows no words. A failed draft leaves no draft, so the hop this code names is the one the page cannot show. The condition at TicketCenter.tsx:908 is outside this order's grant (the one pass-through line is :910); it was not changed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/TicketCenter/TicketCenter.tsx:908 @03f92d82 (the row condition t.draft_commentary || t.package)",
+        "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx:799 @e24facfa (if (!draft && !pkg) return null)",
+        "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx:802 @e24facfa (HopFailureRead mounted inside the block)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W270-S2 -- The order names the requester firm for the status read, but the file's own reads take the firm from the ticket's answers
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W270-S2",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~270",
+    "surfaced_at": "2026-10-16T05:17:48Z",
+    "one_line": "The order names the requester firm for the status read, but the file's own reads take the firm from the ticket's answers; the read follows the file",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-v31 THE CELL item 1: the firm is 'the ticket's own requester firm (find the field the file already uses for it; never a value the viewer types)'.",
+    "world_is": "The file already reads the firm as ticket.answers?.firm (openPackageFile, AnalysisRequestParts.tsx:460, and the status read, :779). The Ticket type also carries requester.firm (tickets.ts:146), which no file in the block reads. The status read passes ticket.answers?.firm, the file's own idiom. If the two ever differ, the read goes to the answered firm, which is the firm the form filed under.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/api/endpoints/tickets.ts:146 @03f92d82 (requester: { email; name; firm })",
+        "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx:460 @e24facfa (const firm = ticket.answers?.firm in openPackageFile)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W270-S3 -- The adapter maps the wire actions WAIT and NONE to the same safe action 'none', so the page cannot tell a NONE words ent
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W270-S3",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~270",
+    "surfaced_at": "2026-10-16T05:17:48Z",
+    "one_line": "The adapter maps the wire actions WAIT and NONE to the same safe action 'none', so the page cannot tell a NONE words entry from a WAIT entry",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-v31 THE CELL: the words are the label of the LAST entry of safeActions when that entry came from the wire action NONE; read how NONE maps and use THAT mapped value.",
+    "world_is": "SAFE_ACTION_FOR_WIRE (adapt.ts:426-427) maps WAIT and NONE both to 'none', so an adapted safeActions entry carries no wire-action field. hopFailureWords gates on the hop code and the last 'none' entry, so a WAIT entry last on a hop-code envelope would be shown as failure words. The producer's hop envelopes carry NONE (msg 9053 shape), so no such entry is expected; the ambiguity is the adapter's, and the order's mapped value is used as written.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts:426 @03f92d82 (WAIT: 'none')",
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts:427 @03f92d82 (NONE: 'none')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W270-S4 -- The AC3 mutant named by the order (remove the clause-5 display guard) survives under AMENDMENT 2, because the call gate 
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W270-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~270",
+    "surfaced_at": "2026-10-16T06:40:00Z",
+    "one_line": "The AC3 mutant named by the order (remove the clause-5 display guard) survives under AMENDMENT 2, because the call gate now makes that guard unreachable",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-AR-v31 AC3 and proof controls.mutant: mutant_check.py removes the clause-5 guard (the failure then shows even when ticket.package is attached), and the mutant must FIRE (the mutated run must fail).",
+    "world_is": "AMENDMENT 2 makes no status call when ticket.package is set (useHopFailureWords: wanted = enabled && analysis_request && !package), so a package-attached ticket has no words for the display guard to pass. With the clause-5 guard removed the suite stays green: bun test 10 pass, 0 fail, and mutant_check.py prints MUTANT-SURVIVES. Removing the call gate's package condition instead fails 'makes no status call for a ticket whose package is attached' (9 pass, 1 fail). The order's AC3 names the display guard, so it cannot fire; which mutant it names is the issuer's decision, and the order was not widened.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/TicketCenter/AnalysisRequestParts.tsx @f488e20a (useHopFailureWords: wanted = enabled && ticket_type === 'analysis_request' && !ticket.package; shownFailure: ticket.package ? null : words)",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~270/mutant_check.py @4a8897c268 (GUARD = return ticket.package ? null : words)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
 ```

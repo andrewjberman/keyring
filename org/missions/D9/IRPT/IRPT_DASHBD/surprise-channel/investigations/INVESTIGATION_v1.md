@@ -21331,3 +21331,78 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. DBF127-1-AC2 checks the file against the contract and PASSES. The naming gate is the lane the issuer and the CTO own; no gate was edited or bypassed here. Recorded for the issuer before any enforcement flip."
 }
 ```
+
+## IRPT_DASHBD-D2-W418-S1 -- the order leaves the status to the issuer, the standing worker rule has the worker flip it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W418-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~418",
+  "surfaced_at": "2026-10-16T06:14:01Z",
+  "one_line": "The task order's BOUNDS say to leave its status as it is and let the issuer flip it, while the standing worker rule says the worker flips it to complete once the proof instance validates; this worker follows the order and leaves the status unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-c-26.page-mirror-takes-on-series-contract-031.md@1797e63a16 line 46: Leave this order's <status> as it is; the issuer flips it.",
+      "worker rule (L7 worker face, standing): flip the task order's <status> to complete when proof-of-spec-check returns rc 0 and every mechanical criterion is PASS-by-output"
+    ]
+  },
+  "spec_asserts": "Task order BOUNDS: Leave this order's <status> as it is; the issuer flips it. Standing worker rule: the worker flips <status> to complete, committed with the instance and deliverables, once the instance validates at rc 0 with every mechanical criterion PASS-by-output.",
+  "world_is": "Both sentences govern the same order and point opposite ways. This worker leaves <status> unchanged, following the order's explicit grant, and states the validated instance in its report for the issuer to flip."
+}
+```
+
+## IRPT_DASHBD-D2-W418-S2 -- the mirror header still cites contract 0.1.0 after the contract moved to 0.3.1
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W418-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~418",
+  "surfaced_at": "2026-10-16T06:14:01Z",
+  "one_line": "The header comment of dashboard/seriesContract.ts names contract_version 0.1.0 and commit b80543a03c; the contract file reads 0.3.1. The cell edited the named lists and fields only, so the header is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/seriesContract.ts line 7 (portal commit d562c6fc7e51a30f98ba68ce6716133bedadf2fb, base dd417a1055e5754182391e79cb941aeab07abfbe): contract_version 0.1.0, committed @b80543a03c",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@1797e63a16 reads contract_version 0.3.1"
+    ]
+  },
+  "spec_asserts": "The mirror header states the contract it mirrors by version and commit, and the pin test reads that contract from disk.",
+  "world_is": "The header names contract 0.1.0 at line 7 while the contract on disk reads 0.3.1. The pin test iv-e-124 passes on the key lists, so the stale version text fails no test."
+}
+```
+
+## IRPT_DASHBD-D2-W418-S3 -- the portal commit pin does not resolve in the workspace store, so the proof checker announces the artifact row and does not assert it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W418-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~418",
+  "surfaced_at": "2026-10-16T06:19:49Z",
+  "one_line": "The portal mirror commit d562c6fc7e lives in the nested portal repo, not the workspace store, so proof-of-spec-check reports its artifact row UNRESOLVED-HERE (announced, not asserted); the row is pinned as the order asks.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~418/IRPT_DASHBD.TO-DB-c-26.proof_of_spec.json@8e9adede76 artifacts_produced[0].commit_or_etag = d562c6fc7e51a30f98ba68ce6716133bedadf2fb (portal repo)",
+      "python .tools/proof-of-spec-check.py on that instance at workspace 1797e63a16: artifact-resolution 1 resolved at pin / 1 UNRESOLVED-HERE (commit not in local store; announced, not asserted)"
+    ]
+  },
+  "spec_asserts": "Worker face: pin each artifact row to the commit that carried it. The proof checker resolves each git pin in the store it runs against.",
+  "world_is": "The carrying commit for a portal file is in the nested portal repo (branch wk-IRPT_DASHBD-418-portal), outside the workspace store. The workspace checker cannot resolve it, so that row is announced and not asserted; the workspace-side BUILD record row resolves at its pin."
+}
+```
