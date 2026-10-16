@@ -27,18 +27,16 @@
     {
       "n": 2,
       "name": "name, version and tags are exactly the approved line",
-      "verdict": "failed",
+      "verdict": "passed",
       "evidence": {
-        "summary": "package/package.json is absent or unreadable (absent)",
-        "problems": [
-          "package/package.json is absent or unreadable (absent)"
-        ],
+        "summary": "file name, bun/package.json and the approved list all say @types/bun@1.4.2",
         "requested_name": "@types/bun",
         "requested_version": "1.4.2",
         "ident": "@types/bun@1.4.2",
         "file_name_expected": "types__bun-1.4.2.tgz",
-        "package_json_name": null,
-        "package_json_version": null,
+        "package_root": "bun",
+        "package_json_name": "@types/bun",
+        "package_json_version": "1.4.2",
         "approved_line_sought": "@types/bun@1.4.2",
         "approved_list": "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_NPM_MCPORTAL_BUN_20261016.md",
         "on_approved_list": true
@@ -62,12 +60,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 38.80 days old (min 14); 74 earlier releases (min 3)",
+        "summary": "release 38.85 days old (min 14); 74 earlier releases (min 3)",
         "this_release_at": "2026-09-08T01:43:20.945Z",
         "first_release_at": "2023-12-15T23:06:53.608Z",
         "release_count": 75,
         "earlier_releases": 74,
-        "age_days": 38.8,
+        "age_days": 38.85,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false,
@@ -166,7 +164,7 @@
   ],
   "verdict": "not_checked",
   "waived_checks": [],
-  "checked_by": "0.9.0_WK_NFRA_CTLPLN~149",
-  "at": "2026-10-16T20:53:16Z",
+  "checked_by": "0.9.0_WK_NFRA_CTLPLN~150",
+  "at": "2026-10-16T22:12:55Z",
   "ecosystem": "npm"
 }

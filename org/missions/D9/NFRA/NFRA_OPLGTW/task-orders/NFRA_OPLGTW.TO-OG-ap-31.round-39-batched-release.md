@@ -76,6 +76,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-31.round-39-batched-release.
 - Pre-cut: `ap31.AC1` and `ap31.AC2` base FAIL as expected (`ap31_release.json`, the ask and `CODE3_SERVED.json` absent). `ap31.AC1` PASS arm exercised on a git-plumbing release commit built from the live ref (12 files: PASS) with three control arms failing for the right reason (tools.py touched, the deploy script changed, a registry file not byte-equal); `ap31.AC2` served-record arm exercised: a good record OK, an arm false NO, a `tools/list` drift NO.
 - `OG-en-15` replaced a `transaction_id` dedupe that was dropping real rows (rows Z-S314, A2): the release changes the count of transactions an analyst sees for the same account. The ask states it.
 
+- A1 (issuer, 2026-10-16 ~22:4xZ, after Phase B): the evidence AC3 is graded on, and the CVO's re-grade of `OG-ap-28` AC3 (relay msg 35275), needs SIX unscrubbed answer bodies from THIS release, captured as `OG-ap-28` A5 had them: one per 49F live tool (`client_get_holdings`, `_transactions`, `_allocation`, `_fees`, master_admin stand-in) with the transactions and fees asked for a 13-month window, one EMPTY-news answer showing `coverage_floor`, one chatter answer showing `trading_days_behind_t1`. Same applier (this order is in flight, rule 34). Account numbers stay masked `****<last4>`; no phone, e-mail or person's name. CLIENT DATA: ONE file under `W`, `CVO_AC3_BODIES_OG-ap-31.json`, git-excluded and NEVER committed, imaged or mailed; the proof records only its byte count, sha256 and per-capture row counts and partition counts. Read-only; no gate limb graded (a note on a completed order).
+
 <status>complete</status>
 <round>39</round>
 <workstream>ENRICH-R39-C</workstream>
