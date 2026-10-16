@@ -21717,3 +21717,55 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The base rule text carries no old code and every clause the check names (income_received, the Black Diamond source, optional_columns, never, zero, reject). The worker kept the rule byte-identical, which satisfies the clause-keeping half and leaves the replacement half with nothing to replace. Whether the order meant a different string is not measured here."
 }
 ```
+
+## IRPT_DASHBD-D2-W231-S1 -- the mixed-income refusal in build_series also governs the 49 Financial path, which the order holds byte-identical
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W231-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~231",
+  "surfaced_at": "2026-10-16T07:21:00Z",
+  "one_line": "build_series now refuses a series whose income is null on some days and a number on others; that refusal is shared with the 49 Financial path, whose reach to live gold was not measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-287 step 2: 'if some entries are None and some are numbers raise PublishRefused'; and 'numeric income writes no claim (the 49 Financial series stays BYTE-IDENTICAL to the base commit's on the checker's fixture)'.",
+  "world_is": "The checker's 49 Financial fixture (p147 fx49) is all-numeric, so the byte identity is proven on it. The base unit-test fixture of the same name in test_publisher_unreported.py (fx49, line 57 at the base) carries a null income on its second positive-value day beside numbers; the base built that frame and the new code refuses it. The refusal sits in build_series, which every caller reaches, so a 49 Financial account with null income on some days and numbers on others would be refused where the base built it. Live 49 Financial gold was not read (no AWS call in this order). The publisher is bundled into the 49 Financial function, so the refusal reaches that path only when this code is later deployed under a code-update pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_unreported.py@52586aaad3",
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py@52586aaad3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure: DB155-1-AC1 and AC2 PASS as written. The refusal is the order's own clause; this row records that its reach to the 49 Financial path on live gold was not measured."
+}
+```
+
+## IRPT_DASHBD-D2-W231-S2 -- two names left by the order's edit list are stale after the change: the publisher module docstring and a test name
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W231-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~231",
+  "surfaced_at": "2026-10-16T07:21:00Z",
+  "one_line": "The publisher module docstring and the test name test_manifest_carries_publisher_version_0_2_0 still describe the 0.2.0 document; the order does not let the docstring change, and the 14-line cap leaves no room to rename the test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-287 step 2: edit ONLY PUBLISHER_VERSION, build_series, build_manifest and validate_against_contract; step 4: the existing tests change by at most FOURTEEN lines, each edit commented with this order's id.",
+  "world_is": "The module docstring of publisher.py still says the optional class keys are absent and the document carries only the required keys; that text is outside the four names the order allows. In test_publisher_unreported.py the test named test_manifest_carries_publisher_version_0_2_0 now asserts 0.3.0. Renaming it would add two counted lines (one added, one deleted) beyond the cap, which the seven forced modified lines already reach exactly, so the name was kept and a comment says so.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py@52586aaad3",
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_unreported.py@52586aaad3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. The stale text is cosmetic to the served bytes; it is recorded so the docstring and the test name can be corrected in a later pass the order allows."
+}
+```
