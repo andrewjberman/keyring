@@ -25,11 +25,17 @@ The payload itself travels by Taildrop from the laptop staging folder and is not
 ## Send log
 
 Commands run, in this order, each once. Time is UTC from `date -u` before the call. Exit code is the `tailscale file cp`
-exit code. Filled in after each call.
+exit code. Printed output was empty on every call.
 
 | time (UTC) | command | exit code | outcome |
 |---|---|---|---|
+| 2026-10-16T03:40:36Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261016-tabulate\MANIFEST.json" dell1:` | 0 | sent (row 1) |
+| 2026-10-16T03:40:50Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261016-tabulate\tabulate-0.9.0-py3-none-any.whl" dell1:` | 0 | sent (row 2) |
+| 2026-10-16T03:41:06Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261016-tabulate\tabulate-0.9.0-py3-none-any.whl.check.json" dell1:` | 0 | sent (row 3) |
+| 2026-10-16T03:41:25Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261016-tabulate\tabulate-0.9.0-py3-none-any.whl.delivery.txt" dell1:` | 0 | sent (row 4) |
 
-Files sent: 0 of 4 (not yet sent). Files failed: 0. Target: dell1.
+Files sent: 4 of 4. Files failed: 0. Target: dell1.
 
-Delivery status: NOT YET SENT.
+Delivery status: NOT YET PROVEN. Taildrop gave exit 0 for each send, which means each file reached dell1's Taildrop inbox.
+It does not show that dell1 has read it. The issuer asks dell1's CTO to run `tailscale file get` and
+`intake_receive.py verify --from <folder>` on dell1 and to report the result back. This record does not claim delivery.

@@ -329,7 +329,8 @@ def cmd_taildrop() -> bool:
     failed = len(rows) - sent
     to_dell1 = bool(rows) and all(r[1].rstrip("`").endswith(TAILDROP_TARGET + ":") for r in rows)
     distinct = len(set(r[1] for r in rows)) == len(rows)
-    each_pack_file = all(sum(1 for r in rows if ('"' + n + '"') in r[1]) == 1 for n in PACK_NAMES)
+    # each command's quoted path ends in one pack file name (backslash before, quote after): one row per name
+    each_pack_file = all(sum(1 for r in rows if ("\\" + n + '"') in r[1]) == 1 for n in PACK_NAMES)
     ok = (sent == PACK_FILE_COUNT and failed == 0 and len(rows) == PACK_FILE_COUNT and to_dell1 and distinct
           and each_pack_file)
     print("JOURNEY-TAILDROP files_sent=%d failed=%d target=%s ok=%s" % (sent, failed, TAILDROP_TARGET, ok))
