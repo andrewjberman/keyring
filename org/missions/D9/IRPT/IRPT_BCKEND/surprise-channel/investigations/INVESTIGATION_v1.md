@@ -40951,3 +40951,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Nothing was written: the order stopped at step 1, before the Branch B name, the ledger, the source-map edit and the upload. Gates 1(a) to 1(e) PASS (pair sha256 8f645588ab10 and addendum blob f0cec424f4 equal; both CTO halves present; the live CodeSha256 equals o9UugRAV; no OPEN ledger or marker names the function or the root across 71 worktrees and 1328 marker files; siblings BEFORE recorded, both o9UugRAV). The release path itself fails the order's own plan bound: once a new version lands at the shared key, a plan of the root sees a new version_id and content-sha256 for all three module instances, so it reads 3 to change (49F, INF, COT), and a safe-apply of that plan moves both siblings to LiDXhN74. The two sibling-bearing claims of the pair (siblings unmoved) and the 0/1/0 plan cannot both hold by this path. Ways the issuer or CTO may rule (none taken by me): (a) a targeted plan and apply on module.irpt_holdings_performance only, which leaves the siblings' state on the old version and makes every later plan of the root show 2 changes until they are released; (b) accept all three functions moving in one apply (the zip is one build and the siblings run the same members; this widens the signed blast radius to INF and COT, which the CTO halves do not sign); (c) a separate artifact key for the 49F function, a Terraform change this order does not grant. The same shape applies to Act 2 and to any later release of this zip."
 }
 ```
+
+## IRPT_BCKEND-D2-S215 -- Disposition of IRPT_BCKEND-D2-S214 (BLOCKING, IB2): the three performance functions share one S3 key; RULED by
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S215",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-16T04:55:00Z",
+  "one_line": "Disposition of IRPT_BCKEND-D2-S214 (BLOCKING, IB2): the three performance functions share one S3 key; RULED by the CTO (msg 9037, option b): all three move under ADDENDUM 2, both halves signed at blob 47e819dd93; the false premise was mine.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "S214: TO-IB-pr-612 step 5 reads a plan of 0/1/0 and the siblings unmoved; the signed COO half said the sibling functions are NOT released.",
+  "world_is": "RULED, not rewritten (S214 is not edited). The COO half's 'siblings NOT released' was a source-map claim and is WITHDRAWN by name in ADDENDUM 2 (section 1). Options: (a) targeted apply REFUSED (unsigned drift a later root apply would release); (c) a separate key REFUSED (a new split for code that already ships as one zip); (b) ACCEPTED: the plan reads exactly 3 changes, Branch B returns all three by the prior VersionId, and the CTO half adds the manifest-reader count before Act 1 (done by the issuer: IB-pr-612_SIBLING_MANIFEST_READER_CENSUS_20261016.md, no first-party serving reader that parses or refuses; limits stated), the per-sibling DELTA = 0 replay on each sibling's first scheduled run, and no other apply on the root while the order's ledger is open. IB-pr-612 AMENDED @17a450546e and handed back to IB2 to resume. NOT measured: any sibling DELTA before the apply (IB-pr-581 was 49 Financial only); the after-read measures it. The same shared-key shape applies to Act 2's order and to any later release of this zip: they name three functions, not one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_49F_SPLIT_ADJUST_PAIR_ADDENDUM_2_COO_HALF.md blob 47e819dd93",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_49F_SPLIT_ADJUST_ADDENDUM_2_CTO_HALF.md @97d1198270",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-612.apply-split-adjust-act-1.md @17a450546e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Corrections are new items citing the old id; S214 stays as IB2 filed it."
+}
+```
