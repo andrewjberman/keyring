@@ -39,6 +39,10 @@ You run as the box identity `cloudops-dell1-agent-user`, deliberately NOT a memb
    (`git revert` of the merge range and the same apply); the stored raw objects are write-once and stay (they hold nothing the old code reads).
 3. **Build the two zips** from the repository root: `bash infra/aws/lambda/globgrph-trino-access/build.sh` and `bash infra/aws/lambda/m365-metadata-collector/build.sh`. Neither zip is committed. Confirm `infra/aws/terraform/trino/layer.auto.tfvars` exists (it holds the pandas layer
    ARN from the first apply); if absent, recreate it as the first apply did (the public AWSSDKPandas-Python312 layer, us-east-1; `aws lambda list-layer-versions --layer-name arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python312 --max-items 1`) and commit that one file.
+3a. **AMENDED 2026-10-16 ~18:2xZ -- the first plan stopped on a dependency cycle (your message 6956; row D1-S1 of the seat).** `access.tf` references `aws_lambda_function.collector`, whose policy in `collector.tf` references the door's alias: a cycle. `infra/aws/terraform/trino/access.tf` is added to your `<paths>` for these TWO edits and no other (the issuer rules this inside its own decomposition; the door cell's worker is gone):
+   (1) in `aws_iam_role_policy.access`, statement `InvokeTheCollectorForRecollect`: `Resource = aws_lambda_function.collector.arn` becomes `Resource = "arn:aws:lambda:us-east-1:${data.aws_caller_identity.current.account_id}:function:${local.collector_lambda_name}"`;
+   (2) in `aws_lambda_function.access` `environment.variables`: `COLLECTOR_FUNCTION = aws_lambda_function.collector.function_name` becomes `COLLECTOR_FUNCTION = local.collector_lambda_name`.
+   Then `terraform -chdir=infra/aws/terraform/trino fmt -check`, `terraform -chdir=infra/aws/terraform/trino validate` (must say `Success`), and `python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/s1_check_a1.py tf` (amended in the main branch at the commit that carries this text; it now refuses a reference to the collector resource). The fixed file was validated by the issuer in a scratch copy of the root: `Success! The configuration is valid.` Commit `access.tf` alone through safe-commit, then continue at item 4.
 4. **Plan, read it, apply once.** `terraform -chdir=infra/aws/terraform/trino init`, then `plan -out=<file under your scratch>`. Read the plan line by line. It must contain ONLY in-place updates: the code hash of the two functions, the door role policy (the added
    invoke of the collector), the door environment (`COLLECTOR_FUNCTION`), a Project tag and the KMS key description string (SM-x-1's word change), and the door's new published version/alias targets if the alias `function_version` follows the function's `version`. NO create, NO destroy, NO replace of
    the bucket, key, group, roles, aliases or log groups. If the plan holds anything else, STOP, write the plan summary in your report and a surprise row. Then ONE apply through the gate: `bash .tools/safe-apply.sh -chdir=infra/aws/terraform/trino apply <that plan file>` (never bare `terraform apply`,
@@ -84,13 +88,14 @@ AC2 needs `switch_at.txt` (it refuses without it). AC4 is the round-2 plan check
   `org/missions/D12/SOC2/SOC2_MSLOGS/deliverables/0.7.0_AE_CloudOps~SOC21/`, the investigation file, and this order's file.
 - **You never** read a stored object, invoke the door or the collector, add or remove a group member, change an alias policy except to restore the committed Deny (item 5), grant anything to anyone, or perform or infer a consent for Andrew.
 - **NEVER** bare `terraform apply` (use `.tools/safe-apply.sh`), `aws lambda update-function-code`, a delete of any object, a change outside the `trino` root, an alarm, SNS topic or notification resource (standing moratorium), or a push. **NEVER** print, log, echo, write to a file or put in a message any secret value, token, tenant id or client id.
-- **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in the ledger and file a NEW surprise row (id `SOC2_MSLOGS-D1-WSOC21-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing). Do not weaken the test.
+- **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in the ledger and file a NEW surprise row (id `SOC2_MSLOGS-D1-S<k>` (the gate refuses the lane-suffixed form; take the next free number after the rows already in the channel file), `surfaced_at` = `date -u +%FT%TZ` at filing). Do not weaken the test.
 - Commit only through `.tools/safe-commit.sh` with your own `--author`, `-F` a message file written with the Write tool, and `-- <paths>`.
 
 <paths>
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
 infra/aws/terraform/trino/layer.auto.tfvars
+infra/aws/terraform/trino/access.tf
 org/missions/D12/SOC2/SOC2_MSLOGS/deliverables/0.7.0_AE_CloudOps~SOC21/switch_at.txt
 org/missions/D12/SOC2/SOC2_MSLOGS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>

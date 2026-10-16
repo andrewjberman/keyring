@@ -272,11 +272,15 @@ def tf():
     t = open(ACCESS_TF, encoding="utf-8").read()
     bad = []
     role = re.search(r'resource\s+"aws_iam_role_policy"\s+"access".*?\n}\n', t, re.S)
-    if not role or "aws_lambda_function.collector.arn" not in role.group(0) or "lambda:InvokeFunction" not in role.group(0):
-        bad.append("the door role policy must allow lambda:InvokeFunction on aws_lambda_function.collector.arn alone")
+    # The door must NOT reference the collector RESOURCE: collector.tf's policy references the door's alias, so a reference back is a
+    # Terraform dependency cycle (the first release plan stopped on exactly that). It names the collector by local.collector_lambda_name.
+    if "aws_lambda_function.collector" in t:
+        bad.append("access.tf references aws_lambda_function.collector (a dependency cycle with collector.tf); use local.collector_lambda_name")
+    if not role or "function:${local.collector_lambda_name}" not in role.group(0) or "lambda:InvokeFunction" not in role.group(0):
+        bad.append("the door role policy must allow lambda:InvokeFunction on the arn ending function:${local.collector_lambda_name} alone")
     fn = re.search(r'resource\s+"aws_lambda_function"\s+"access".*?\n}\n', t, re.S)
-    if not fn or "COLLECTOR_FUNCTION" not in fn.group(0) or "aws_lambda_function.collector.function_name" not in fn.group(0):
-        bad.append("the door function must set COLLECTOR_FUNCTION from aws_lambda_function.collector.function_name")
+    if not fn or "COLLECTOR_FUNCTION" not in fn.group(0) or "COLLECTOR_FUNCTION = local.collector_lambda_name" not in fn.group(0):
+        bad.append("the door function must set COLLECTOR_FUNCTION = local.collector_lambda_name")
     if "TCKT" in t:
         bad.append("access.tf still mentions TCKT")
     deny = re.search(r"data_actions\s*=\s*\[(.*?)\]", t, re.S)
