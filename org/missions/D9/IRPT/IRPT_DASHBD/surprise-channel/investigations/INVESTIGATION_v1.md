@@ -21200,3 +21200,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The header names contract 0.1.0 at line 7 while the contract on disk reads 0.3.1. The pin test iv-e-124 passes on the key lists, so the stale version text fails no test."
 }
 ```
+
+## IRPT_DASHBD-D2-W418-S3 -- the portal commit pin does not resolve in the workspace store, so the proof checker announces the artifact row and does not assert it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W418-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~418",
+  "surfaced_at": "2026-10-16T06:19:49Z",
+  "one_line": "The portal mirror commit d562c6fc7e lives in the nested portal repo, not the workspace store, so proof-of-spec-check reports its artifact row UNRESOLVED-HERE (announced, not asserted); the row is pinned as the order asks.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~418/IRPT_DASHBD.TO-DB-c-26.proof_of_spec.json@8e9adede76 artifacts_produced[0].commit_or_etag = d562c6fc7e51a30f98ba68ce6716133bedadf2fb (portal repo)",
+      "python .tools/proof-of-spec-check.py on that instance at workspace 1797e63a16: artifact-resolution 1 resolved at pin / 1 UNRESOLVED-HERE (commit not in local store; announced, not asserted)"
+    ]
+  },
+  "spec_asserts": "Worker face: pin each artifact row to the commit that carried it. The proof checker resolves each git pin in the store it runs against.",
+  "world_is": "The carrying commit for a portal file is in the nested portal repo (branch wk-IRPT_DASHBD-418-portal), outside the workspace store. The workspace checker cannot resolve it, so that row is announced and not asserted; the workspace-side BUILD record row resolves at its pin."
+}
+```
