@@ -1,0 +1,13 @@
+{
+ "schema": "crossbox-answer/1",
+ "id": "XB-20261016T175819Z-333b",
+ "box": "dell1",
+ "ack": {
+  "at": "2026-10-16T18:26:48Z",
+  "by": "1.0.0_SA_CTO~DELL1"
+ },
+ "closed_to": {
+  "at": null,
+  "by": null
+ }
+}
