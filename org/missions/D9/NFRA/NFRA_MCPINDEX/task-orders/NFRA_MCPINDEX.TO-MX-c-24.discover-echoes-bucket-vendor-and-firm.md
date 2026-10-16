@@ -97,3 +97,7 @@ The issuer then merges and carries the file to `MX-r-16`.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-16 ~15:1xZ); MX-c-24 COMPLETE.** Worker ~47 added a six-line loop to `_silver_answer` (`bucket`, `vendor`, `firm` echoed when a non-empty string, never reassigning `bucket`) and 7 tests (`ad8b39c258`); its first run read AC3 FAIL on two tests already red at the base (rows Z-W47-S1, S2: my order's gap, ruled in A1), repaired by the worker in `a08c13c6b1` (9 insertions, 4 deletions, only the two named tests). Drained by `safe-merge.sh` at `1ee9069f8c` (6 files, none foreign). Issuer re-run on the merged tree: c24.AC1 PASS (bucket 197 of 197, vendor 136 of 136, firm 136 of 136, probe 8 of 8 buckets echoed, vendor and firm on assets and bd), c24.AC2 PASS (788 answers, newly visible 0, altered base keys 0, 247 answers gained a key), c24.AC3 PASS (61 passed, 7 new tests); ruff clean; proof-of-spec VALID. The wider gateway suite read one red outside this cell, `tests/acceptance/test_local_acceptance.py::test_ogv2_a12` (synthetic security_description lines), which is not in the discover path and is told to NFRA_OPLGTW. Gate limb that graded this ruling: the flip-needs-a-VALID-instance limb of to-pipeline-gate.
+
+<status>complete</status>
