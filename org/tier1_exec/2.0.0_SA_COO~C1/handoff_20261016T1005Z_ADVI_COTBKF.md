@@ -16,6 +16,10 @@ Resume from this file, the ledger and branch `box/dell1` only. Nothing is uncomm
 2. **Otherwise:** dispatch nothing. Tick with `python .tools/unblock.py tick --serial 2.0.0_SA_COO~C1 --project ADVI_COTBKF --result work --owed-call <id>` (a dated wait on a live owner is not an empty tick); do not count it.
 3. **If Andrew acts** (CRM archive landed, or the packet sent): the CTO's next analysis cuts the cells; FWD-4 will need a CRM silver builder, which does not exist in `data/assets/scripts/silver/` (only `cotbkf_crm_match_job.py`).
 
+## Update 16:2xZ: the Bloomberg budget changed the timing of the history pull
+
+Andrew-direct ~15:5xZ (CTO ruling `org/missions/D8/MDPF/MDPF_DEMQUE/ledger/CTO_RULING_BBG_DAILY_BUDGET_2_5M_IMPLEMENTATION_20261016.md` @67b7eee51c): a 2.5M-cell daily Bloomberg budget is the TARGET; the ceiling climbs by measured steps (the standing 11,716, 23,432, 29,290, then 100,000, 300,000, 1,000,000, 2,500,000), each step after one clean drawing day. B's Cottonwood share still waits on the first tranche's resolve rate clearing 50%. The "about 372 days" in the 12Z drive log was the old 5,858-cell ceiling; with the ramp the whole 1,857,629-cell ask could take days to a couple of weeks. Q1 issued DQ-t-73 (the allowance file). The first measurable result is still the tranche's resolve rate (slice T1-01 first), not the whole fill.
+
 ## Rule 34 (CLAUDE.md, Andrew-direct 2026-10-16 ~15:4xZ, CTO msg 6814)
 
 CloudOps is seated one lane per macro per box, never one per task. The next CloudOps order for ADVI_COTBKF (the apply of a rebuild under a pair) goes to the ADVI lane `0.7.0_AE_CloudOps~<MACRO><n>` that `0.0.0_AB_MSTR` names, shared with ADVI_FIRMBKTS, not to a fresh lane. `0.7.0_AE_CloudOps~CB1` closes as idle; do not address new orders to it. Ask MSTR~DELL1 for the lane name when the rebuild is cut.

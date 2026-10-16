@@ -3363,6 +3363,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "data/mdpf/scripts/demque/yahoo_pull.py@worktree branch wk-MDPF_DEMQUE-61 line 155: Pacer daily_cap default 600 after this order"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W63-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~63",
+    "surfaced_at": "2026-10-16T16:16:11Z",
+    "one_line": "The whole demque test folder does not pass at HEAD in worktree wk-MDPF_DEMQUE-63: 5 tests fail before any edit (5 of 243) and after this order's edits (5 of 249), because the worktree is a sparse checkout whose list omits integrations/.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order MDPF_DEMQUE.TO-DQ-t73 Build 5: run the whole folder once, no failure; the test files in the folder are read against the tree the order names.",
+    "world_is": "git sparse-checkout list in the worktree has 13 entries (data/mdpf/scripts/demque and org/missions/D8/MDPF/MDPF_DEMQUE among them, no integrations/); integrations/bloomberg/pipeline/etf_daily_pull.py is tracked at HEAD (git ls-files) but absent on disk. Failing at HEAD: test_demque_active_windows.py::test_the_pinned_active_set_is_the_v2_file_and_a_v1_hash_is_refused; test_demque_bbg_backfill.py::test_backfill_stops_on_a_vendor_limit_warning [field] and [response]; test_demque_bbg_ledger_upload.py::test_reads_record_lines_and_converts_rows_to_cells_per_mode and ::test_name_to_literal_assignment_is_resolved_before_literal_eval. Result after edits: 5 failed, 244 passed (238 at HEAD plus the 6 new tests in test_demque_budget.py).",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C C:/dev/wk-MDPF_DEMQUE-63 sparse-checkout list: 13 entries, no integrations/ entry",
+        "data/mdpf/scripts/demque/test_demque_active_windows.py@worktree branch wk-MDPF_DEMQUE-63: FileNotFoundError on integrations/bloomberg/pipeline/etf_daily_pull.py (pytest run, 5 failed 238 passed before edits; 5 failed 244 passed after)",
+        "git ls-files integrations/bloomberg/pipeline/etf_daily_pull.py@worktree branch wk-MDPF_DEMQUE-63: tracked (positive control), ls integrations/bloomberg/pipeline/ on disk: No such file or directory"
+      ]
+    }
   }
 ]
 ```
