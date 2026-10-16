@@ -2442,3 +2442,11 @@ Two batches on two surfaces, never two appliers on the host at once: the IAM and
 
 `opal-harvest-security-metrics` is not built here (dell1 AMGT_HARVST, PRD v3.13 item 5). The release is `OG-ap-23` (the code batch), which carries these tools after the hookup.
 **fanout:** 1 of 1 chains, cap 8. Disjoint from `OG-cl-7` (client modules) and from every merged cell; the hookup lines are the issuer's.
+
+## ADDENDUM R3-T.77 (2.0.0_SA_COO~O, 2026-10-16 ~03:3xZ) -- round 37, workstream JSON-SERVED-2: the capital-markets assumptions tool (CTO ruling @131991960e; MCPINDEX msg 34695)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-sv-2` | `portal_get_cma_assumptions` in the json-served module for `opal_data_portal_v2_served_cma_assumptions` (`json/capital-markets/assumptions.json`, 27 rows, annual 2026 edition; no new IAM, under `json/*`) | `app/portal_json_served.py`, `tests/test_og_sv2.py`, the record and the probe | WORLD | ~113 | `OG-sv-1` merged (same module) |
+
+**fanout:** 1 of 1 chains, cap 8. One chain with `OG-sv-1` (the same file): sv-1 first, sv-2 second, both in slot ~113.
