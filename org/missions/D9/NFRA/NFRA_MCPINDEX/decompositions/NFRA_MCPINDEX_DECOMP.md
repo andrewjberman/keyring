@@ -1789,3 +1789,32 @@ Run in a SPARSE worktree cut with `workflows lib .tools infra/aws/ec2 infra/logi
 ### R20.5 WHAT THIS CUT DOES NOT CLAIM
 
 It does not ship anything: the discover echo and the new claim keys reach the host only in `2.0.0_SA_COO~O`'s next batched release. It does not regenerate or change a catalog row.
+
+## ROUND 21 (2.0.0_SA_COO~MI, 2026-10-16 ~20:2xZ) -- the round-20 analysis's enrichment list: R21-1 (a regeneration guard) and R21-2 (two depth kinds)
+
+Source: `ledger/ROUND_ANALYSIS.round20.md` @3f03a45f83 (CTO msg 35237), on the CVO slug `surprise-channel/adjudications/ADJUDICATION_v16.md` @b0966935f7 (msg 35236). Round 20 is drained: MX-c-27 (`f5e5872dd4`) and MX-c-28 (`614a633c9a`) complete. The CTO accepted the CVO's correction: a series-START claim is a CEILING (a later served start is a truncation and FAILS), a latest-date claim is a floor. The catalog emit stays held until R21-1 lands. This section is spec-frozen once issued.
+
+### R21.1 THE CELLS -- 2 in this issuance
+
+| cell | what | write set | risk | serves |
+|---|---|---|---|---|
+| `MX-c-29` (R21-1) | `gen_silver_rows.py` REFUSES (exit 2, nothing written to either registry file, one `REGISTRY-DROP <file> <row id>` line per row) when a registry write would remove a row that existed before; the issuer's `--allow-registry-drop FILE` (a JSON list of row ids) is the only way to accept a drop. Measured at the base: a regeneration with `--registry-file` drops 36 of the 143 `catalog-*` rows of `legacy_addresses.json` silently. | `workflows/atom_decomposition/gen_silver_rows.py`, `workflows/atom_decomposition/tests/test_registry_drop_guard.py` | LOCAL | FWD-22 (the catalog stays regenerable, the naming gate keeps its held strings) |
+| `MX-c-39` (R21-2) | Two depth kinds on every measured history_depth claim: `latest` (a floor) and `series_start` (a ceiling), DECLARED on the member spec in `members.yaml` (`depth_kind: series_start` on the six series-start specs) and matched by (row, field) in the emitter; the old value `floor` is refused; the grader (`round12/checks/c12_depth.py`, the issuer's, done) tolerates only an EARLIER served start for a series_start claim. | `workflows/atom_decomposition/emit_catalog_v02.py`, `tool_index/members.yaml`, `tool_index/pending_members.yaml`, `tests/test_depth_kinds.py`, `tests/test_depth_floor.py` | LOCAL | FWD-20 (depth claims) |
+
+### R21.2 CHAINS AND FAN-OUT
+
+Disjoint write sets, no edge: 2 chains of 1, workers ~52 (MX-c-29) and ~53 (MX-c-39), cap 8. R21-3-equivalent (the release): `2.0.0_SA_COO~O`'s next batched gateway release takes MX-c-24, and the catalog the issuer emits fresh at that cut (floor-keys become kind-keys), after both cells are on trunk.
+
+### R21.3 CHOICES THIS CUT MAKES
+
+1. **The kind is declared, not inferred.** MX-c-28 wrote `floor` on all 39 claims, including the six series starts: my defect, caught by the CVO. The emitter reads the kind from the member spec; the grader falls back to the two series-start field names only for a claim that carries no kind, and never tolerates a series start upward.
+2. **The guard is in the generator, which writes the registry,** not in the emitter, which only reads it. The allow file is the issuer's explicit statement of an accepted drop.
+3. **No re-measure is needed** for R21-2 (the kind comes from `members.yaml`); the catalog is emitted fresh at the release cut anyway.
+
+### R21.4 BATTERY (base HEAD ff13c436b1; `deliverables/2.0.0_SA_COO~MI/round21/checks/`, run in a SPARSE worktree cut like the workers')
+
+`c29.AC1` FAIL (the option does not exist; 36 rows are dropped silently), `c29.AC2` FAIL, `c29.AC3` FAIL (no test file); `c39.AC1` FAIL (no test file), `c39.AC2` FAIL (0 of 39 claims carry a kind; 39 still read `floor`; the six-claim anchor reads 0).
+
+### R21.5 WHAT THIS CUT DOES NOT CLAIM
+
+It ships nothing and lands no catalog. The depth kinds reach the host only with the next batched gateway release; the guard protects the next regeneration.

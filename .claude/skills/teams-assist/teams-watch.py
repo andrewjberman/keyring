@@ -426,6 +426,58 @@ def _advance(max_ts: str, ts: str | None) -> str:
     return str(ts) if (q is None or p > q) else max_ts
 
 
+PREVIEW_CAP = 400
+ATTACHMENT_ONLY_MARKER = "[attachment-only message]"
+
+
+def _strip_html(raw: str | None) -> str:
+    """Tags out, whitespace collapsed -- the gateway's own preview rule, kept byte-for-byte for a body with text."""
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", raw or "")).strip()
+
+
+def _forwarded_text(att: dict) -> str:
+    """The text of a forwardedMessageReference attachment, or "" when it cannot be read. MEASURED 2026-10-16 on a real
+    Alyssa 1:1 message (0.0.3_BG_BBGTerminal msg 35248, structure only): attachments[i].contentType is
+    "forwardedMessageReference", contentUrl is null, and .content is a JSON STRING whose originalMessageContent holds the
+    forwarded text as HTML. A malformed or unexpected shape yields "" so the caller falls through, never raises."""
+    c = att.get("content")
+    if isinstance(c, str):
+        try:
+            c = json.loads(c)
+        except ValueError:
+            return ""
+    if not isinstance(c, dict):
+        return ""
+    for k in ("originalMessageContent", "messagePreview"):
+        v = c.get(k)
+        if isinstance(v, str) and _strip_html(v):
+            return _strip_html(v)
+    return ""
+
+
+def message_preview(m: dict) -> str:
+    """A preview that is NEVER blank (CTO~Z ruling 35245, row from 0.0.3_BG_BBGTerminal msg 35243). A message that is only an
+    attachment or a forward has a body of attachment TAGS and no text, which the tag strip turned into "" -- a request
+    with a deadline read as "Alyssa sent something". Order: body text; then forwarded-message text; then attachment names;
+    then the literal ATTACHMENT_ONLY_MARKER. A message with body text is unchanged. A quote-reply (contentType
+    "messageReference", same double-encoded shape, text at .content -> messagePreview; 0.0.3_BG_BBGTerminal msg 35249)
+    with no text of the sender's own reads like a forward and is labelled "[quoted]"."""
+    body = _strip_html((m.get("body") or {}).get("content"))
+    if body:
+        return body[:PREVIEW_CAP]
+    atts = [a for a in (m.get("attachments") or []) if isinstance(a, dict)]
+    fwd = [t for t in (_forwarded_text(a) for a in atts if a.get("contentType") == "forwardedMessageReference") if t]
+    if fwd:
+        return ("[forwarded] " + " | ".join(fwd))[:PREVIEW_CAP]
+    quo = [t for t in (_forwarded_text(a) for a in atts if a.get("contentType") == "messageReference") if t]
+    if quo:
+        return ("[quoted] " + " | ".join(quo))[:PREVIEW_CAP]
+    names = [str(a.get("name")).strip() for a in atts if str(a.get("name") or "").strip()]
+    if names:
+        return ("[attachment] " + ", ".join(names))[:PREVIEW_CAP]
+    return ATTACHMENT_ONLY_MARKER
+
+
 def fresh_messages(page: dict | None, chat_id: str, chat_type: str | None, cursor: str) -> list[dict] | None:
     """Normalize ONE chat's read page to the poll's flat message shape -- {chat_id, chat_type,
     from_name, preview, timestamp_utc} with the gateway's own HTML-strip + 400-cap -- filtered to
@@ -440,12 +492,11 @@ def fresh_messages(page: dict | None, chat_id: str, chat_type: str | None, curso
         if not _newer(ts, cursor):
             continue
         usr = ((m.get("from") or {}).get("user")) or {}
-        raw = (m.get("body") or {}).get("content") or ""
         out.append({
             "chat_id": chat_id,
             "chat_type": chat_type,
             "from_name": usr.get("displayName"),
-            "preview": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", raw)).strip()[:400],
+            "preview": message_preview(m),
             "timestamp_utc": ts,
         })
     out.sort(key=lambda m: str(m.get("timestamp_utc") or ""))  # one Graph page = one ts format
