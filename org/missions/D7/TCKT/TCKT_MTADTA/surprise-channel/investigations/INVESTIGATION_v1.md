@@ -500,6 +500,29 @@
     "spec_asserts": "Its members, and only they, may invoke the access Lambda.",
     "world_is": "Invocation is by IAM grant: the group's members, the collector role, and any principal an administrator grants lambda:InvokeFunction (an administrator can grant itself, C-RESIDUAL (2)). The bucket stays reachable only through the role, so the door's own checks (prefix, no bronze reads, member-only get_day) are the whole control on what an invoker can do.",
     "notes": "Read as a wording gap, not a hole in the data path: the collector must invoke the door by some principal. The FWD-8 statement should say 'the group's members and the collector's role', and the PRD gets an addendum. The door does not authenticate the caller beyond IAM, so no op may return more than the member-only day read and writes under the prefix."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W5-S1",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~5",
+    "surfaced_at": "2026-10-16T08:11:09Z",
+    "one_line": "The door's key grammars are hand-written regular expressions in handler.py, and the naming gate's warn window grades five of them REFUSE as NEW and OUT-OF-PATTERN as S3Key, against the rule that every S3 address is lib/opal_naming address() output.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~DELL1 (decides whether the grammar becomes a registry row or stays a stated contract); this worker only surfaces",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/globgrph-trino-access/handler.py@e887029d25 lines 61-64: _GRAMMAR, one pattern per dataset under the PREFIX constant, written by the DOOR CONTRACT v2 in the order",
+        "safe-commit of e887029d25 (naming-gate block): NAMING REFUSE handler.py:46, :61, :62, :63, :64 'NEW and OUT-OF-PATTERN as S3Key: REFUSE; LIVE-READ-FAILED: CensusError ... comp-find [aws] BLOCKED'; 'NAMING-GATE: WARN 5 graded'",
+        "CLAUDE.md section 4 and the LGIC rule: every S3 address is lib/opal_naming.py address() output; a builder refusal is a missing registry row, never a hand-typed workaround"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every S3 address and key the estate writes is lib/opal_naming address() output, and a builder refusal is a registry row to add, never a hand-typed workaround.",
+    "world_is": "The door's key allowlist is hand-written regular expressions over the PREFIX string, as the order's DOOR CONTRACT v2 requires; the tests compare PREFIX and one key per dataset with address() output and pass (112 of 112). The naming gate, in its warn window (ENFORCE off), grades the five pattern lines as REFUSE, and its live census read was BLOCKED in this worktree, so the refusal reason is not a verified registry gap.",
+    "notes": "Filed as an observation, not a block: the order fixed the grammar form and the gate is WARN-only. The CTO decides whether a builder grammar row (a pattern shape per dataset) is the right home, or whether the allowlist stays a stated contract checked against address() output by the tests."
   }
 ]
 ```
