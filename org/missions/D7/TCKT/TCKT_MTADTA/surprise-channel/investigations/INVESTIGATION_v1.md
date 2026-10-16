@@ -315,8 +315,8 @@
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
-        "infra/logic/06_CONFORMANCE_LEDGER.md line 111: '## §4. THE SHARED SERVING BUCKET -- opal-data-portal-v2'",
-        "infra/logic/02_DOCTRINE.md line 599: '## §4. THE EXCEPTION REGISTER -- its schema (its ENTRIES live in 06_CONFORMANCE_LEDGER.md §6)'",
+        "infra/logic/06_CONFORMANCE_LEDGER.md line 111: '## \u00a74. THE SHARED SERVING BUCKET -- opal-data-portal-v2'",
+        "infra/logic/02_DOCTRINE.md line 599: '## \u00a74. THE EXCEPTION REGISTER -- its schema (its ENTRIES live in 06_CONFORMANCE_LEDGER.md \u00a76)'",
         "infra/logic/06_CONFORMANCE_LEDGER.md section 6 table: rows X1 to X17 before the edit; the new row X18 was added after X17 with the schema's columns"
       ]
     },
@@ -433,6 +433,73 @@
     "spec_asserts": "The naming gate grades every name and address the diff writes, and a RAISE names a rule or registry defect to the owner of the gate.",
     "world_is": "The IAM policy resource pattern is an S3 object wildcard, not a name. The gate reads it as a secret and cannot place the wildcard character, so it raises instead of grading it.",
     "notes": "Owed to the naming gate's owner. The worker did not alter the resource pattern to silence it."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S3",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-16T07:35:43Z",
+    "one_line": "Issuer's drain read of the round-1 worker rows: what is cleared, what is carried, and what the merge hookups changed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "merge commits 42e88e6af6, 1398fc4fb1, 1d9a3c6893, 77716ab496, c301aa1ad0 on box/dell1",
+        "org/missions/D7/TCKT/TCKT_MTADTA/deliverables/2.0.0_SA_COO~S1/thread_trace_r1.out.json (THREAD-TRACE-OK)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every worker row is read at the drain and every armed row has a seated disarm.",
+    "world_is": "CLEARED: W3-S1 and W4-S1 (the sparse cone lacked the new directories; the issuer widened all four cones and resumed both workers); W3-S2 (the collector's literal keys equal lib/opal_naming address() output for the same arguments, read after the registry rows merged; the door's get_state reply is {ok, body_b64}, driven in the thread trace). CARRIED to the round-2 repair cell: W3-S3 (one coverage object per day is overwritten by each hourly fire; no round-1 reader exists, so nothing trusts it yet), W3-S4 and W3-S5 (the listing returns blob ids with no time, so the seen-list trim and per-day attribution need the source to return content time), W1-S8 and W1-S9 (typed S3 prefixes in handler.py against the naming gate in warn mode, and a grader false positive on an IAM object pattern), W1-S7 (pandas layer for the silver reader, untested path). CARRIED as a separate portal item: W1-S2 (three regenerated portal targets sit uncommitted in the nested portal worktree, removed with it; they regenerate on demand from the registry, and the portal route needs a cand/<box>/<slug> branch and an approved row). W1-S1, W1-S3, W1-S4, W1-S5, W1-S6, W2-S1, W2-S2: accepted, no action.",
+    "notes": "Merge hookups found at the drain: (1) collector.tf references the door and the two secret containers as data sources, which fail at plan until those exist. The issuer's lane (TREE_COO) may not write infra/aws/terraform, so the fix is NOT applied: the exact patch (direct references to aws_lambda_function.access and the two aws_secretsmanager_secret resources; terraform fmt clean; init -backend=false + validate Success on a scratch copy of the merged root with placeholder zips) is at org/missions/D7/TCKT/TCKT_MTADTA/deliverables/2.0.0_SA_COO~S1/collector_tf_direct_references.patch, for the CloudOps seat that applies the root (release act 1) to land first. (2) register_app.py stored the bare client secret while collector/source_client.py reads a JSON credential {tenant_id, client_id, client_secret}; the issuer fixed it (data/ is in the issuer's reach)."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S4",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-16T07:35:43Z",
+    "one_line": "The bucket policy denies s3:ListBucket to every principal but the access role, and the Terraform AWS provider's refresh of the bucket (HeadBucket) needs s3:ListBucket, so later plans by the applying identity may fail with 403.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~DELL1 (rules the release-act-1 apply order and the C-RESIDUAL statement; the issuer only surfaces)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/trino/access.tf aws_s3_bucket_policy.trino: Deny of s3:ListBucket and s3:ListBucketVersions to NotPrincipal the role",
+        "S3 API reference: HeadBucket requires the s3:ListBucket permission (READ from memory of the reference, NOT exercised: nothing is applied)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-ACCESS (3): every other principal gets an explicit Deny, administrators included; C-RESIDUAL (2): administrators can edit the policy.",
+    "world_is": "If HeadBucket is denied to the applying identity, every plan of the trino root after the policy lands fails on refreshing aws_s3_bucket.trino, including the plan that would change or remove the policy. The deny of the data actions is what FWD-8 proves, and ListBucket is one of them (a key listing reveals file names, C-RESIDUAL (5)).",
+    "notes": "Unread until release act 1. Options for the apply: (i) apply the root in two stages and manage the bucket policy last with the policy then fixed; (ii) keep ListBucket out of the Deny and state the key-name listing in the FWD-8 statement; (iii) admit the apply principal's ARN as a named second exception, which contradicts 'only' and needs Andrew's word. Not ruled by the issuer: it moves the FWD-8 claim."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S5",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-16T07:35:43Z",
+    "one_line": "The collector's execution role invokes the access door by its own identity policy, so 'only members of the IAM group may invoke' (C-ACCESS (1)) is not what the built root enforces: a role cannot be a group member, and nothing in the root restricts invocation to the group.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~DELL1 (owns the PRD; this seat only surfaces)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/trino/collector.tf aws_iam_policy.collector: lambda:InvokeFunction on the door",
+        "infra/aws/terraform/trino/access.tf: the group policy grants invoke to the group; the function has no resource policy naming the invokers",
+        "org/missions/D7/TCKT/TCKT_MTADTA/prd/TCKT_MTADTA_PRD.md C-ACCESS (1) and C-COLLECT (the collector writes through the Lambda)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Its members, and only they, may invoke the access Lambda.",
+    "world_is": "Invocation is by IAM grant: the group's members, the collector role, and any principal an administrator grants lambda:InvokeFunction (an administrator can grant itself, C-RESIDUAL (2)). The bucket stays reachable only through the role, so the door's own checks (prefix, no bronze reads, member-only get_day) are the whole control on what an invoker can do.",
+    "notes": "Read as a wording gap, not a hole in the data path: the collector must invoke the door by some principal. The FWD-8 statement should say 'the group's members and the collector's role', and the PRD gets an addendum. The door does not authenticate the caller beyond IAM, so no op may return more than the member-only day read and writes under the prefix."
   }
 ]
 ```
