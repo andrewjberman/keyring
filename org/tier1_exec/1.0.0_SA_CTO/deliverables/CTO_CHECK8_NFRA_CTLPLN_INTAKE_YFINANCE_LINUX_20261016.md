@@ -72,6 +72,15 @@ websockets-16.0-py3-none-any.whl
 yfinance-1.2.0-py2.py3-none-any.whl
 ```
 
+## Waivers (ruling @a71c144be8; tool merge 6f07651fdf)
+
+Each failure stays on its record. The reason for each is this seat's full read of every `.py` file in the wheel (section above).
+
+WAIVE curl_cffi-0.13.0-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl check 6: compared across platforms (Linux wheel vs Windows install); all 16 differing .py files are equal after CRLF normalisation
+WAIVE numpy-2.4.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl check 6: compared across platforms; 391 of 393 differing .py files equal after CRLF normalisation, the other 2 are the Windows-only delvewheel block in __init__.py and build metadata in __config__.py
+WAIVE pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl check 6: compared across platforms; the 1 differing .py file (__init__.py) differs only by the Windows-only delvewheel DLL-loader block
+WAIVE websockets-16.0-py3-none-any.whl check 6: compared across platforms; all 46 differing .py files are equal after CRLF normalisation
+
 ## Signature
 
 **CHECK 8 SIGNED -- release, pack and Taildrop to dell2 may proceed for these 17 files.** `1.0.0_SA_CTO`

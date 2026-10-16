@@ -22134,7 +22134,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
-
 ## IRPT_DASHBD-D2-S113 -- 49 Financial history_scope is a constant PARTIAL_HISTORY in the gold producer; three series end early on a positive day
 
 ```json
@@ -22159,6 +22158,162 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Answer to the CTO's msg 9223. A rule that derives FULL (an account whose first value is the table's first day, or whose book is complete) is the CTO's ruling and ~D2's producer change; this seat changes no producer."
+}
+```
+
+
+## IRPT_DASHBD-D2-S114 -- TO-DB-b-291: gate (c) read literally trips on stale copies of a closed ledger's sentinel; iam.tf fails fmt -check inside a pinned file; the Lambda answers from the hardcoded calendar fallback
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S114",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T09:25:00Z",
+  "one_line": "TO-DB-b-291 odd finds, none blocking: (1) step 0(c) says any open marker at ANY live worktree naming the surface is a STOP, but four ANLREQ worker worktrees (wk-irpt-anlreq-230 to 233) carry a stale copy of the FIRST pair's sentinel for a ledger already CLOSED on trunk (b-276's order had the sentence 'stale OPEN marker copies are named, never closed'; this order lacks it); (2) terraform fmt -check reads rc 3 on iam.tf, a file the signed packet pins by hash 0008681b0b01 (the first pair's root read rc 0); (3) the Lambda's trading calendar is the hardcoded fallback (every manifest reads calendar_source fallback_2010_2027), the W226-S1 class the CTO's condition 2 anticipated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "marker scan over 74 live worktrees (git grep at HEAD of .open_deploys for the root, the function name and the platinum reporting prefix): 4 hits, all the file irpt-dashbd-cottonwood-reporting-publish-20261016.json at wk-irpt-anlreq-230, -231, -232 and -233; the same ledger's change_management entry on trunk reads 'CLOSED -- nothing stranded -- closed 20261016T071926Z' and box/dell2 HEAD carries no sentinel; positive control on a known marker token hit 41 worktrees; the packet's section 3 states the first pair's ledger CLOSED (6650d1aac6)",
+      "terraform fmt -check -recursive on infra/aws/terraform/investor-reporting/reporting-publish-iso: prints iam.tf, rc 3; the file's sha256 first 12 hex 0008681b0b01 equals the packet's pin; not rewritten (fmt writes by default; only -check was run)",
+      "after the full republish: all 939 manifests carry calendar_source, the sorted distinct values answered are [fallback_2010_2027]; the Lambda log reads 'trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027...)'; the dry run's unreported days equal the report-build function's list, so the CTO's condition 2 stop did not fire"
+    ]
+  },
+  "spec_asserts": "Order step 0(c): no ledger and no .open_deploys marker at ANY live worktree names the root, the function or the prefix; any one open is a STOP. Step 4: fmt -check is a step. Packet section 10 and the CTO half condition 2: which calendar the Lambda answers from is read from calendar_source.",
+  "world_is": "The gate's literal reading and its intent differ when a closed ledger's sentinel survives in a worker worktree cut during the open window; I read it as the intent (an open change on the surface) and named the four copies in the ledger and here. The fmt deviation is in a pinned file and waits on a pair that may touch it. The deployed publisher computes its unreported days from the fallback calendar, correct through 2027 and then needing the regenerate step the log names (lib/tests/gen_nyse_closures.py --write before 2028)."
+}
+```
+
+## IRPT_DASHBD-D2-W1601-S1 -- the worktree's sparse set lacked the two folders the AWS tools and the class-daily test import (stream_parquet, etf_classifications_dynamodb)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1601-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1601",
+  "surfaced_at": "2026-10-16T09:00:12Z",
+  "one_line": "The six tool runs and tests/test_account_class_daily.py could not import: stream_parquet (data/assets/scripts/lib) and etf_classifications_dynamodb (infra/aws/lambda/v2_portal/_shared) were not materialized. Both folders were added with git sparse-checkout add; the runs and the test were then repeated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face's list of materialized folders (org/standards, lib, data/assets/scripts/gold/irpt_reporting, data/inf, infra/logic, org/tier1_exec/4.0.0_SA_CRO/deliverables) is enough for the six tool runs and for tests/test_account_class_daily.py.",
+  "world_is": "It is not enough. The first six runs exited 1 with ModuleNotFoundError: No module named 'stream_parquet'; the class-daily test failed at collection with ModuleNotFoundError: etf_classifications_dynamodb. After git sparse-checkout add data/assets/scripts/lib and infra/aws/lambda/v2_portal/_shared the six runs exit 0 and the class-daily test passes (25 passed, rc 0). No tracked file was edited; the worktree gained only materialized folders. The same two folders were recorded by 0.9.0_WK_IRPT_DASHBD~1501 as IRPT_DASHBD-D2-W1501-S1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@85802662c8 line 94 imports stream_parquet; the tools insert ROOT/lib and the gold folder, not data/assets/scripts/lib",
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py@85802662c8 line 63 inserts infra/aws/lambda/v2_portal/_shared; the first collection of tests/test_account_class_daily.py raised ModuleNotFoundError",
+      "python -m pytest data/assets/scripts/gold/irpt_reporting/tests/test_account_class_daily.py -q: 25 passed, rc 0, after the two sparse adds"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the worker face's materialized list should name these two folders, or the tools should not need them."
+}
+```
+
+
+## IRPT_DASHBD-D2-W1601-S2 -- p130_contract.py's reads reason line names RD_READS_R129.json, the file it reads is RD_READS_R130.json
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1601-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1601",
+  "surfaced_at": "2026-10-16T09:00:12Z",
+  "one_line": "The checker's reason text for the worker's reads names RD_READS_R129.json; its READS constant names RD_READS_R130.json. The criterion is not affected; the reason text is stale. The checker is the issuer's and was not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A checker's reason line names the file the checker reads.",
+  "world_is": "reads_problems() in p130_contract.py returns the reason 'the worker's own read (RD_READS_R129.json)' while READS = .../0.9.0_WK_IRPT_DASHBD~1601/RD_READS_R130.json. DBF130-1-AC2 passes with the R130 file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r130/p130_contract.py@85802662c8 line 26 (READS constant) and line 334 (reason text)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1601-S3 -- TransactionID is non-null on every Cottonwood row but is not unique within every partition
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1601-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1601",
+  "surfaced_at": "2026-10-16T09:00:12Z",
+  "one_line": "Cottonwood TransactionID repeats within 41 of 125 partitions (3,870 rows). The contract states it as a per-row claim and never a universal key; the CVO's J1 natural-key sample must draw only unique-key rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The CTO's natural-key rule (msg 9192) takes the source's TransactionID as the row's own id where it is non-null and unique within its partition, and the order states the identifier is present on every row.",
+  "world_is": "TransactionID is non-null on all 1,096,830 rows of 125 partitions (RD_ID_COVERAGE_R130.json), so the presence half holds. But 3,870 rows in 41 partitions share a value with another row of the same partition, so the uniqueness half does not hold on every partition. Recorded as the id-coverage run measured it; no identifier value was read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1601/RD_ID_COVERAGE_R130.json (cottonwood: rows 1096830, non_null 1096830, rows_in_values_repeated_within_a_partition 3870, partitions_with_a_repeated_value 41)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1601-S4 -- trading_calendar answers from the hardcoded NYSE fallback on this box (pandas_market_calendars absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1601-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1601",
+  "surfaced_at": "2026-10-16T09:00:12Z",
+  "one_line": "On this box every trading-day answer comes from the hardcoded NYSE fallback (2010-2027), with a WARN line on first use. The Cottonwood producer's business_date rests on that answer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "lib/trading_calendar.py is the one frontier for the trading day, and the adapter's performance day is the first trading day on or after the Trade Date.",
+  "world_is": "python -I importing lib/trading_calendar.py prints WARN: pandas_market_calendars absent and answers from NYSE/hardcoded-fallback-2010-2027. The producer's test (Trade Date 2026-03-14 gives business_date 2026-03-16) is answered by that fallback; the fallback holds those dates, but the package is absent on dell2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I -c with lib on the path: the WARN line and is_trading_day(2026-03-10) True, is_trading_day(2026-03-14) False at worktree HEAD 85802662c8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1601-S5 -- the naming gate REFUSEs this commit's literal carriers of the cottonwood key in its WARN window; its live census cannot run here
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1601-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1601",
+  "surfaced_at": "2026-10-16T09:20:00Z",
+  "one_line": "The commit gate's naming limb printed 4 REFUSE verdicts on this commit's carriers of the literal 'cottonwood' (WARN window, not blocking), and its live census could not run on this box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A carrier of the registry key 'cottonwood' reads it through lookup('cottonwood'), and the naming gate's live census runs at commit.",
+  "world_is": "At commit 85d81d74bd the naming limb printed NAMING-GATE: WARN 4 graded with 4 REFUSE verdicts, among them transaction_words.json line 1764 (cottonwood_mapping), each 'hand-kept carrier of cottonwood outside every permitted context'; its live read printed LIVE-READ-FAILED: CensusError (comp-find [aws] blocked: the served-graph client). The verdicts are WARN here because the gate's ENFORCE switch is off; under enforcement the commit would be refused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh output for commit 85d81d74bd (the [naming-gate] lines: NAMING REFUSE x4, WARN window 4 REFUSE verdict(s) did not block)",
+      "data/assets/scripts/gold/irpt_reporting/transaction_words.json@85d81d74bd line 1764 (cottonwood_mapping key)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the 0.2.0 contract already carried the literal in its firm and fee_basis keys; whether the carriers should read the key through the registry is a later round's choice."
 }
 ```
 
