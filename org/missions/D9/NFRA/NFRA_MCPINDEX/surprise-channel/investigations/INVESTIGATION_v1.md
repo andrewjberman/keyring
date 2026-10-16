@@ -9007,6 +9007,30 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S123",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T03:26Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved by MX-r-14 (live, deployed c4c106aea1, still in the live tree at d577e0e729): the discover firm gate no longer binds a firm-scoped silver row to the asking principal. A row shows to a firm principal only when its own firm field names that firm; a firm-scoped row with no firm field is seen by no firm principal. The difference control c23.AC3 re-run 2026-10-16 on the committed catalog at HEAD (1326 pairs): multi, none and unresolved rows are visible to no firm principal (0 seen), cross-firm leaks 0. Its RESULT line reads FAIL only because it also expects the 96 newly visible rows of the not-yet-landed C-GROUP catalog (it saw 0); the two lines cited passed.",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W22-S1"
+    ],
+    "one_line": "DISARMS Z-W22-S1 (every known firm principal was shown a firm-scoped silver row that carries no firm field). The firm field and the gate shipped in MX-r-14; the C-GROUP labels in the next release only add own-firm visibility, at 0 leaks.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-r-14_20261015.md section 1 item 3 (a firm-scoped row with no firm field is seen by no firm principal) and section 2 (cross-firm leaks 0)",
+        "c23.AC3 run 2026-10-16 on the committed catalog: cross-firm leaks 0, multi/none/unresolved rows seen by 0 firm principals"
+      ]
+    },
+    "spec_asserts": "MX-d-6 act 1: a firm-scoped silver row is servable only to the principal kinds the gate admits for that rule.",
+    "world_is": "Since MX-r-14 the gate admits a firm principal on row firm == principal firm, and a row without a firm field is admitted to no firm principal."
   }
 ]
 ```
