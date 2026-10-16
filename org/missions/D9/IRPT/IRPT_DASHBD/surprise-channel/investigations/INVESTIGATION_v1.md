@@ -22945,3 +22945,293 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For 0.0.0_AB_MSTR~DELL2: the restore of the 6 to the merge-tree blobs, one lane per commit under the audited override. The two conflict calls need no change. This row disarms with S116 when the 16 paths read at their intended bytes in the repair tip."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S118 -- W1701-S6 ruled by its disarm owner: the taxonomy bucket wins, the two descriptions stay INTERNAL, a pairing census re-opens it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S118",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-16T12:15:00Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W1701-S6 by its disarm owner (round-131 analysis, ruling 4): Dividend Paid from Cash and Income Paid stay INTERNAL because the source taxonomy places them in the Internal bucket with no account boundary, while Dividend to Cash already reads INCOME; a pairing census over the 154 partitions re-opens the ruling if fewer than 95 percent of those rows pair with a same-account, same-day INCOME row of equal absolute amount.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": ["IRPT_DASHBD-D2-W1701-S6"],
+  "spec_asserts": "An ARMED row disarms by its disarm owner's ruling; the Inflection flow rule takes the taxonomy bucket before the word (order TO-DB-f-1701).",
+  "world_is": "Contract 0.4.0 carries flow_class INTERNAL on the two source_mapping rows; ADJUDICATION_v140 held the class for this seat. The ruling keeps the contract as landed and adds the pairing census to the round-132 enrichment list for 2.0.0_SA_COO~F2.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml: both descriptions in bucket Internal, no account_boundary (read by the worker, row W1701-S6)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_131_20261016.md ruling 4",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v140.md decision (d)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W1701-S6 is ruled by its disarm owner: the class stays INTERNAL as landed; the pairing census is a round-132 criterion, not a hazard."
+}
+```
+
+## IRPT_DASHBD-D2-S119 -- iv-e-124 passes on merged portal DEV against contract 0.3.3: the W225 hazard is disarmed
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S119",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T12:45:15Z",
+  "one_line": "iv-e-124 passes on merged portal DEV (f91881ad5c) against the trunk series contract 0.3.3: the W225 hazard (the page's key lists red against the contract) is disarmed on DEV as the CTO's msg 9311 asked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO msg 9311: disarm W225 when iv-e-124 passes on merged DEV; CTO rulings on call 80ad (XA-20261016T122825Z-7f7d, RULED): complete the 6099 merge-forward taking the candidate's seriesContract.ts for that one path.",
+  "world_is": "Measured 2026-10-16 ~12:5xZ: a detached tree at origin/DEV f91881ad5ca7 (MSTR's push of my hand-completed merge of cand/dell2/irpt-series-mirror-contract-033 @831f974aa1, DEV-PUSH-GATE ADMITTED) with a copy of the trunk org/standards/IRPT_DASHBD_SERIES_CONTRACT.json (0.3.3) beside it: bun test iv-e-124 reads ARM(a) parity failures 0, the planted-key control arm true, VERDICT SERIES-CONTRACT-OK, 1 pass 0 fail. The merge: parents dc057891b0 and 831f974aa1, exactly one conflicted path (seriesContract.ts) resolved with the candidate's file, whose blob 012590d021 equals origin/PROD's (64f9dba10528) and the candidate's; iv-e-124 plus the unreported-days test 9 of 9 and typecheck rc 0 on the merged tree before the push. Rows W225-S1 and W225-S2 (first disarmed against contract 0.3.0 in row S109) are disarmed against 0.3.3 on DEV, PROD (64f9dba10528) and trunk.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal ls-remote origin refs/heads/DEV = f91881ad5ca7 (this seat's read after MSTR's push, msg 9361); bun test src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-124.series-contract.test.ts on a detached worktree at that sha: VERDICT SERIES-CONTRACT-OK",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_DELL2_8DDD_0633_6ECB_20261016.md addendum 80ad; DT receipt org/tier2_senior/0.4.0_DT_ClientPlatform~DELL2/deliverables/irpt_dashbd_m33/A_PROMOTE_M33.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The contract-lands-with-its-reader rule (CTO msg 9311, from round 150) prevents a repeat."
+}
+```
+
+## IRPT_DASHBD-D2-W1801-S1 -- the worktree's sparse set omits data/assets/scripts/lib, so the producers cannot import stream_parquet (materialized, no edit)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "The worktree's sparse checkout omits data/assets/scripts/lib, so account_return_daily.py (imported by account_transaction.py) cannot import stream_parquet and every producer test file fails at collection. The order's list of materialized folders does not name it. Materialized with git sparse-checkout add data/assets/scripts/lib (read only; no file edited).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face: the folders org/standards, lib, data/assets/scripts/gold/irpt_reporting, data/inf and infra/logic are materialized; if one is missing run git sparse-checkout add <folder>.",
+  "world_is": "The producers import stream_parquet from data/assets/scripts/lib (sys.path set in account_return_daily.py), a tracked folder outside the listed set. The same sparse-checkout add the face names for a missing folder was used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@0ecad1fee9 (sys.path.insert data/assets/scripts/lib; import stream_parquet)",
+      "git sparse-checkout list before the add: .tools, data/assets/scripts/gold/irpt_reporting, data/inf, infra/logic, lib, org/* (no data/assets/scripts/lib)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S2 -- the CRO classification table sits outside the listed sparse set (materialized, no edit)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "The generator and the AC1 checker read the CRO classification table under org/tier1_exec/4.0.0_SA_CRO/deliverables, which is outside the listed sparse set; without it the generator stops at its load. Materialized with git sparse-checkout add org/tier1_exec/4.0.0_SA_CRO (read only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order inputs (a) to (d) name the contract, the producers and tests, the issuer records and the checkers; the face lists the materialized folders and does not name org/tier1_exec.",
+  "world_is": "checks/r132/p132_contract.py mapping_problems loads the CRO table and the 0.4.0 generator reads it for the 49 Financial flow classes; the file is tracked and was absent from the sparse set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r132/p132_contract.py (CRO constant; mapping_problems)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1801/gen_transaction_contract_0_4_1.py (CRO load in main)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S3 -- tests/test_account_class_daily.py imports a module under infra/aws outside the sparse set (materialized, no edit)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "Order step 5 says tests/test_account_class_daily.py must still pass. account_class_daily.py imports etf_classifications_dynamodb at module level from infra/aws/lambda/v2_portal/_shared, which is outside the sparse set, so the test fails at collection. Materialized with git sparse-checkout add infra/aws/lambda/v2_portal/_shared (read only); the test then passes, 25 of 25.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 5: run tests/test_account_class_daily.py once (it must still pass).",
+  "world_is": "The test's import chain reaches infra/aws/lambda/v2_portal/_shared (account_class_daily.py sys.path insert and import), which is not in the worktree's materialized set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py@0ecad1fee9 lines 63 to 65 (sys.path insert and import etf_classifications_dynamodb)",
+      "pytest of tests/test_account_class_daily.py: collection error ModuleNotFoundError etf_classifications_dynamodb, then 25 passed after the add"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S4 -- AC3 checker census literal for NAV_PRICE_FUND_ONLY is 2 where the order's rule gives 1 (the criterion fails as written)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "The checker p132_inflection.py expects price_null_census to give NAV_PRICE_FUND_ONLY 2 on its frame. The order's rule for that code needs units non-zero, navPrice positive and no fund family, which only one line of the frame meets. The producer follows the order and counts 1 (NAV_PRICE_FUND_ONLY 1, ZERO_UNITS 2, NAV_NOT_POSITIVE 1). DBF132-1-AC3 therefore prints FAIL as written. With only that literal changed in memory (a scratch diagnostic, not committed) every other AC3 arm passes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 3: price_null_census(frame) returns {reason: count} with exactly NAV_PRICE_FUND_ONLY (units non-zero, navPrice positive, no fund family), ZERO_UNITS (units zero) and NAV_NOT_POSITIVE (units non-zero, navPrice not positive).",
+  "world_is": "The checker's frame has one line that meets the NAV_PRICE_FUND_ONLY condition. The second count the checker asks for is the line with noUnits zero and no fund family, which the order's own parenthetical gives to ZERO_UNITS. A checker and an order that disagree are followed by the order, so the AC3 arm is not repaired here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r132/p132_inflection.py line 226 @44db9f7b62 (reasons == NAV_PRICE_FUND_ONLY 2, ZERO_UNITS 2, NAV_NOT_POSITIVE 1)",
+      "data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py price_null_census at e9cdb2daea (the order's rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S5 -- a null noUnits line has no reason code in the order (counted as ZERO_UNITS)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "The order's three reason codes cover units zero and units non-zero, not a null noUnits. The producer counts a null noUnits as ZERO_UNITS (no units on the line). The price is None either way, so only the label of the census is affected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 3: ZERO_UNITS is units zero; NAV_PRICE_FUND_ONLY and NAV_NOT_POSITIVE require units non-zero.",
+  "world_is": "A null noUnits reads as None through the scalar reader and is in neither of the order's unit conditions, so the census label for it is a choice the order does not state.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py _price_reason at e9cdb2daea (units None or 0 gives ZERO_UNITS)",
+      "order TO-DB-f-1801 step 3 text (the three reason conditions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S6 -- AC2 was measured on the hardcoded NYSE fallback: pandas_market_calendars is absent in this worktree's Python
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "DBF132-1-AC2 PASS was printed while lib/trading_calendar.py answered from its hardcoded NYSE fallback (a WARN per process), because pandas_market_calendars is not installed here; the round-132 F49 census records the calendar as NYSE/pandas_market_calendars. The answers agree for 2010 to 2027 by the calendar's own tests, but the run is not the package's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 1: first_trading_day_on_or_after uses is_trading_day, so the calendar's fail-closed coverage error still propagates; the checker runs the function on the calendar it imports.",
+  "world_is": "The Python of this worktree lacks pandas_market_calendars; the fallback answered, with one WARN line on stderr per process. No package install was made (none is in the grant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R132_F49_BUSINESS_DATE_CENSUS.json calendar field (NYSE/pandas_market_calendars)",
+      "p132_dates.py run at the worktree root: WARN trading_calendar pandas_market_calendars absent; answering from the hardcoded NYSE fallback"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S7 -- the commit trailer names Haiku 5.5, not the Sonnet 5.5 the order gives
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:05:10Z",
+  "one_line": "The order asks for a Co-Authored-By Sonnet 5.5 trailer on each commit message; this worker runs as Haiku 5.5, and the attribution rule in force for this session names Claude Haiku 5.5. The commits carry the Haiku 5.5 trailer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face: each commit message ends with the line Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>.",
+  "world_is": "The worker's model is Haiku 5.5 (claude-haiku-5-5); the session attribution reminder names Claude Haiku 5.5 for commits.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order TO-DB-f-1801 worker face (the trailer line) at 2.0.0_SA_COO~F2 issue commit 44db9f7b62",
+      "session attribution instruction for git commits (Claude Haiku 5.5)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-S120 -- W1701-S6 ruled once on census v2 by its disarm owner: two legs of one event, both INTERNAL; a net-zero criterion in the release pair
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S120",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-16T13:25:00Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W1701-S6 (round-131 analysis ADDENDUM 2): census v2 shows all 14,920 rows of Dividend Paid from Cash and of Income Paid are two legs of one event (same account, day and absolute amount); the income is booked by Dividend to Cash (INCOME), so both legs stay INTERNAL; the release pair carries a per-event net-zero criterion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": ["IRPT_DASHBD-D2-W1701-S6"],
+  "spec_asserts": "An ARMED row disarms by its disarm owner's ruling (round-131 analysis, ADDENDUM 1 asked for census v2 before one final ruling).",
+  "world_is": "Census v2: 14,920 of 14,920 rows of each description share a key with a row of the other; 13,201 pair with an INCOME-class row; of 1,719 unpaired, 1,540 have Dividend to Cash the same day and 462 the day after. Contract 0.4.1 carries s6_status REOPENED_FOR_CTO until 2.0.0_SA_COO~F2 records this ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R132_INFLECTION_S6_CENSUS_V2.json @caf9a946e3 (counts only, 154 partitions)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_131_20261016.md ADDENDUM 2"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W1701-S6 is ruled final by its disarm owner on census v2; the net-zero check is a release criterion, not a hazard."
+}
+```
+
+## IRPT_DASHBD-D2-S121 -- TO-DB-b-298: the stamp wrapper committed an out-of-grant CHANGELOG.json this time; the packet's object counts and the 'newest partition' differ from live by small, explained amounts
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S121",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T13:27:00Z",
+  "one_line": "TO-DB-b-298 odd finds, none blocking: (1) record-terraform-deploy.sh committed infra/aws/terraform/investor-reporting/CHANGELOG.json (1650 added lines) beside the source-map stamp in c9794d9f13, because the naming gate that refused it on my three earlier applies had nothing to refuse for this firm's entry; the file is outside the order's paths grant, so it was restored to its prior content in a new commit f3e4acd431 (no amend, no rewrite); (2) the packet's section 3 counts (6,949 series, 6,949 manifests, 4,344 other) read 6,954 / 6,954 / 4,349 live both at 12:18Z and at 13:01Z, after today's 12:15Z fire (5 more accounts, 5 more summaries), inside the order's 'at least' bounds; (3) the gold holds a 2026-10-15 partition (572 in total) while the absent-days range is capped at 2026-10-14, so the canary's 'newest gold partition' is 2026-10-15 and the absent-days range ends a day earlier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat c9794d9f13: lambda-source-map.json (4 lines) and infra/aws/terraform/investor-reporting/CHANGELOG.json (+1650, 0 deleted); the wrapper's output read 'Source map + CHANGELOG.json committed with [skip ci]'; f3e4acd431 restores the file (git diff of the file between the commit before the stamp and HEAD is empty)",
+      "count of the prefix irpt/49financial/platinum/reporting/ by key suffix (paginated client-side): 12:18Z series 6954, manifest 6954, other 4344; 13:01Z series 6954, manifest 6954, other 4349, newest object 12:46:01Z; the full republish left other at 4349 and series and manifest at 6954",
+      "absent-days script: partitions_total 572, partitions_in_range (2024-07-08 to 2026-10-14) 571; the canary picker read the newest partition 2026-10-15 (6951 rows) as the order says"
+    ]
+  },
+  "spec_asserts": "Order step 5: 'Stamp the deploy as your earlier applies do'; BOUNDS: the grant is the paths block. Step 0(e): the prefix holds at least 6,949 series, 6,949 manifests and 4,344 other objects. Step 6: the range is 2024-07-08 to the newest partition at most 2026-10-14; step 8: the first account of the newest gold partition.",
+  "world_is": "The wrapper's CHANGELOG write is a standing out-of-grant carrier (S89, S96, S99 and now a committed one); what stops it differs by firm entry, so the guard is accidental. The count and partition differences are explained and inside the order's bounds."
+}
+```

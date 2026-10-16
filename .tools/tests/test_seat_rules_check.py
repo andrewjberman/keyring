@@ -91,7 +91,7 @@ def real_table_validates():
 def real_table_needs_andrew_have_questions():
     doc, _ = CK.load_table(os.path.join(ROOT, "org", "ref", "SEAT_RULES.json"))
     needs = [r for r in doc["rules"] if r["needs_andrew"]]
-    return len(needs) == 3 and all(r.get("question") for r in needs), "needs=%d" % len(needs)
+    return len(needs) == 2 and all(r.get("question") for r in needs), "needs=%d" % len(needs)
 
 
 @case

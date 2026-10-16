@@ -1853,3 +1853,47 @@ Criteria: AC1 the named test and `bun test src` 72 or more pass; AC2 the 390 px 
 ## PF5.2 WHAT THIS CUT DOES NOT CLAIM
 
 The 390 px measurement is on the checked-in fixture plus a planted long name, not on the live page: the live look is Andrew's (call 21d9), and S1 item (iii) is graded by the CVO on the served body after this lands and reaches the host. The fix reaches the host only with the next mcportal bundle release (a new `mcportal_commit` in EC2_MANIFEST); nothing here deploys it.
+
+# v16 -- WORKSTREAM PF, ROUND 6: the bundle-only release of the Gateway page fix (2026-10-16 ~12:3xZ, 2.0.0_SA_COO~MP)
+
+Source: the CTO's ruling msg 34980 (b): "cut the bundle-only release now; Andrew is at site Z today and can sit any time ... MP-pc-5 shape, two halves, applier CloudOps~Z ... mcportal c66ca82952 only, with no gateway code. Graded on the served page at 390 px (scrollWidth 390) and at 1280. I sign my half on receipt. ~O's round-38 release then carries the same bundle with no delta." Row Z-S64 is the finding; MP-pf-8 (merged @e15f6538f8) is the fix; origin mcportal DEV reads c66ca82952 (MSTR~Z, ls-remote ~12:0xZ). PRD v0.9 unchanged.
+
+## PF6.0 WHAT IS MEASURED BEFORE THE CUT (issuer, ~12:2xZ)
+
+1. Live: EC2_MANIFEST `services.opal-gateway` `deployed_commit` 1bc2df0b13 (MX-r-15 v2), `mcportal_commit` 090b9cdc85. No opal-gateway release is open in the ledger (MX-r-15 v3 is next to open; one release in flight at a time).
+2. The deploy builds the bundle from the manifest's `mcportal_commit` in a detached mcportal worktree and ships `dist/` as `dashboard/` beside `app/` (`deploy-to-ec2.sh` lines 62-93 and 237-254).
+3. A local build of an mcportal commit equals the host's bytes: the host's `dashboard/index.html`, `routes.json` and both current assets were read over SSM (read-only, `ls` and `sha256sum`) and are byte-identical (sha256) to a local `bun run build` of 090b9cdc85. The host also keeps 12 asset files (older bundles accumulate), so the live bundle is whichever `index.html` names.
+4. The expected bundle of c66ca82952 (local build): `index.html` sha256 5a6e2eeef8ec...; `assets/index-BRnJX9Mi.css` 120ae5bbd491...; `assets/index-DbObnWYp.js` 52466cffc886... (the JS content is unchanged: only its name moved); `routes.json` e6d4a9ac3ce7... (unchanged). The full hashes are in `pf9.AC2.sh`.
+
+## PF6.1 CELL `MP-pf-9` -- the bundle-only release  (WORLD; applier `0.7.0_AE_CloudOps~Z`; staged until the GO)
+
+One swap of the dashboard bundle on the gateway host: `EC2_MANIFEST.json` `services.opal-gateway.mcportal_commit` becomes c66ca82952c01575968d16cc736cdabe36606572 and nothing else in the gateway tree moves (census EMPTY). Never touched: the MCP tool surface, IAM, any store. Rollback: the previous pin (090b9cdc85) through the same deploy. Criteria: AC1 the ledger, the manifest pin and the empty gateway census; AC2 the host's deployed bytes equal the build of c66ca82952, /health 200, the owner gate still 401/403. The 390 px and 1280 px grade is the issuer's real run after the release (the served body through the fixed page, measured).
+
+## PF6.2 EDGES AND WHAT THIS CUT DOES NOT CLAIM
+
+Gate G-REL9 (the issuer holds it): both never-widen halves signed at HEAD AND no opal-gateway release open. `~O`'s round-38 release then carries the same pin with no delta (the CTO's note). It does not claim the page is judged legible: that is S1 item (iii), the CVO's, after the release and MX-r-15's last catalog. The served look is Andrew's (call 21d9).
+
+## PF6.3 SEATING (issuer, ~12:4xZ) -- a departure from the CTO's named applier, and why
+
+The CTO's ruling named `0.7.0_AE_CloudOps~Z` as the applier. `0.7.0_AE_CloudOps~Z` holds NFRA_OPLGTW work, and the seating rule (Andrew-direct 2026-08-24 ~19:29Z, enforced by `.tools/to-decomp-ref-lint.py`'s seating check, announce mode) is ONE PROJECT PER TIER-2 SEAT INSTANCE: the commit gate printed `REFUSED ... FIX: address this TO to a FRESH LANE`. MCPORTAL's own releases have used their own CloudOps lanes (~MP, ~MQ). So `MP-pf-9` is addressed to `0.7.0_AE_CloudOps~MQ`, the lane that applied MP-pc-5 and MP-n-4 and has only ever held NFRA_MCPORTAL orders (same project, so it passes the seating rule), re-seated by the issuer. The order, its checks and its paths follow (`deliverables/0.7.0_AE_CloudOps~MQ/`). The cost: one seat spawn, minutes. Reported to the CTO with the GO-PREP.
+
+# v17 -- WORKSTREAM PF, ROUND 7: six gateway tests repaired against the landed catalog (2026-10-16 ~13:2xZ, 2.0.0_SA_COO~MP)
+
+Source: row `NFRA_MCPORTAL-Z-S67` (filed by `0.7.0_AE_CloudOps~MQ` at the MP-pf-9 prep, step 1) and the issuer's A1 to MP-pf-9 (`66a4be01d8`), which named the six and said their repair is a cell, not the release. PRD v0.9 unchanged; ENDPOINT unchanged.
+
+## PF7.0 WHAT IS MEASURED BEFORE THE CUT (issuer, ~13:0xZ)
+
+1. At `box/sitez` HEAD the admin suite (`tests/test_admin*.py tests/test_owner_gate.py`) reads 6 failed, 110 passed. Nothing else fails. The six: `test_admin_gateway_breakdown.py::test_every_live_tool_in_exactly_one_channel` and `::test_real_server_tool_inventory`; `test_admin_people.py::test_people_lists_every_candidate_even_holding_nothing`, `::test_cadence_reads_absent_with_reason`, `::test_real_server_people_inventory`, `::test_people_principal_never_leaks_into_other_fields`.
+2. Cause (read in the two files): the landed `DATA_CATALOG.yaml` declares a source group for every live tool. `bd.CATALOG_YAML` defaults to that real file. The breakdown `world` fixture patches no catalog at all, and the people `world` fixture patches only `ap.CATALOG_YAML` (a copy taken at import) and leaves `bd.CATALOG_YAML` real, while the placement rule lives in `bd`. So planted-tool tests now place `list_calendar` and `send_email` in `m365` (not `undeclared`), and the two real-inventory tests pin a channel list (`['m365']`, `{"m365","undeclared"} | specs`) that the real catalog no longer yields.
+3. The gateway code is correct as landed (MP-pf-3 and MX-r-15 graded it); only these tests are stale.
+
+## PF7.1 CELL `MP-pf-10` -- repair the six stale tests  (tests only; one chain; worker-light; risk WORLD only because the path floor for infra/ says so)
+
+1. `test_admin_gateway_breakdown.py`: the two planted-tool and real-inventory tests stop depending on the real catalog's contents. `test_every_live_tool_in_exactly_one_channel` plants `tool_index: []` (the file's own `_plant_catalog`) before it plants tools, so its old expectation of an `undeclared` channel is true again. `test_real_server_tool_inventory` asserts invariants derived from the real catalog through `bd._group_ids_for_tools(live)`: every live tool appears exactly once in the body, the set of channel ids equals the union of the group ids of the live tools (plus nothing invented), channel ids are unique, and an integration channel holds only its own tools; the pinned `want=['m365']` list and the pinned count of 5 channels go.
+2. `test_admin_people.py`: the `world` fixture points `bd.CATALOG_YAML` at the same empty catalog it already gives `ap.CATALOG_YAML`, which restores the first, second and fourth failing tests to their old expectations. `test_real_server_people_inventory` runs against the REAL catalog (both `bd.CATALOG_YAML` and `ap.CATALOG_YAML` set to the real file path, recorded by the fixture before it patches) and asserts `allowed_channels` as the union of the group ids `bd._group_ids_for_tools(registered)` yields plus the integration spec ids, not `{"m365","undeclared"} | specs`.
+3. No file outside the two test files changes. If a test needs an app change to pass, the worker files a BLOCKING row and stops.
+Criteria: AC1 the six named tests PASSED and each file 0 failed; AC2 the whole admin suite 0 failed (the existing bound, `pf3.AC2.sh`); AC3 only the two test files changed under `infra/`.
+
+## PF7.2 EDGES AND WHAT THIS CUT DOES NOT CLAIM
+
+No edge to MP-pf-9: the release is bundle-only and excused these six at A1; this cell lands on the trunk after the release's close and is not part of it. The five `FileNotFoundError` tests named in the release ASK are sparse-tree artifacts of the release tree, not stale tests (they pass at HEAD), and are not in this cell. It does not claim the real-inventory tests guard the catalog's content: they guard the placement rule's invariants, which is what they were for.

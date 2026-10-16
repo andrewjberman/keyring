@@ -22,6 +22,7 @@ Design (takes the mdpf module's pmc-with-fallback shape -- the best of the copie
 Public API:
   is_trading_day(date) -> bool
   prev_trading_day(date) -> date
+  first_trading_day_on_or_after(date, window=14) -> date | None   # the first trading day on or after `date`, within `window` days
   expected_last_trading_day(now) -> date          # the "expected last-settled priced frontier"
   trading_days_behind(as_of, expected) -> int     # the lag (trading-day count, not flat hours)
   trading_days_between(start, end) -> list[date]   # inclusive
@@ -195,6 +196,19 @@ def prev_trading_day(date: object) -> dt.date:
     while not is_trading_day(c):
         c -= dt.timedelta(days=1)
     return c
+
+
+def first_trading_day_on_or_after(date: object, window: int = 14) -> dt.date | None:
+    """The first NYSE trading day on or after `date` (round 132, FWD-5: the one business_date rule for every IRPT_DASHBD
+    transaction producer). Looks at the `window` calendar days from `date` inclusive (window 14 is the producers' rule) and
+    returns None when no trading day lies in that window. A Saturday or Sunday rolls forward to the Monday; a holiday to the
+    next trading day. Uses is_trading_day, so the fail-closed coverage error of the fallback still propagates."""
+    d = _to_date(date)
+    for offset in range(window):
+        candidate = d + dt.timedelta(days=offset)
+        if is_trading_day(candidate):
+            return candidate
+    return None
 
 
 def expected_last_trading_day(now: object) -> dt.date:

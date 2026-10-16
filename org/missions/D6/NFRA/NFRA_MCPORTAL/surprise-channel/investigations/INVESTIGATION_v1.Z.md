@@ -3091,3 +3091,82 @@
   "notes": "Not ARMED: no future normal operation harms through this row; it records that the control's premise does not hold after item 2."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T11:54:07Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-S65",
+  "one_line": "Z-W38-S1 is DISARMED: the AC2 offender rule counted the Indexes paragraph that the fix makes scroll on purpose; the measure was the issuer's defect and is corrected (amendment 0cc50b3652).",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W38-S1. The worker built the fix correctly (the page no longer scrolls sideways) and refused to wrap the paragraph in a .gateway-scroll box (it would have failed an existing table-count assertion) or to edit that assertion: right on both counts. The check exempted only elements INSIDE a .gateway-scroll box, so a paragraph with overflow-x: auto read as an offender. _gw_measure.cjs now treats any element whose own computed overflow-x is auto or scroll, or that sits inside one, as a scroll box. Proof on both sides, run by the issuer: the base (mcportal 090b9cdc85) FAILS (long names at 390: scrollWidth=557, 16 offenders), the fix (c66ca82952) PASSES (390 of 390 and 0 offenders; 1280 of 1280 and 0; short control 390 of 390 and 0). The worker re-ran under the amended order: AC1 PASS, AC2 PASS, instance VALID (2f6787aff2).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "amendment commit 0cc50b3652 (trunk) and bf17bc7a5f (worker branch)",
+      "worker report: AC1 72 of 72 pass, AC2 PASS, proof-of-spec-check rc=0"
+    ]
+  },
+  "spec_asserts": "Z-W38-S1 asserted that the AC2 offender rule and the table-count assertion conflict, so the order cannot pass as written.",
+  "world_is": "True of the check as first written; corrected. The assertion at gateway.test.tsx line 383 is untouched and passes.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pf-8."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T11:54:07Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPORTAL-Z-S66",
+  "one_line": "Z-W38-S2 is DISARMED: the short-name control read offenders=1 only because the fixture now carries the long name in the assets channel and the measure counted the scrolling paragraph; with the corrected measure it reads 0.",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W38-S2. Same cause as Z-W38-S1 (the paragraph with overflow-x: auto counted as an offender). The worker's fixture change is the order's step 2 and is correct; the corrected measure reads the short-name control at 390 px as scrollWidth=390, offenders=0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer run of pf8.AC2.sh against the worker tree c66ca82952 from /c/Users: short names at 390 (control): scrollWidth=390 innerWidth=390 offenders=0 ok=yes"
+    ]
+  },
+  "spec_asserts": "Z-W38-S2 asserted that the fixture change makes the AC2 short-name control read offenders=1.",
+  "world_is": "True under the first measure; 0 under the corrected one.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pf-8."
+}
+```
+
+```json
+{
+  "id": "NFRA_MCPORTAL-Z-S67",
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MQ",
+  "surfaced_at": "2026-10-16T12:43:26Z",
+  "one_line": "MP-pf-9 step 1 STOPS at the tests: on the release tree rel-nfra-mcportal-pf (cut on live 38fe44d5cb, commit 3cc7017f1f) 11 of 109 tests in tests/test_admin*.py + tests/test_owner_gate.py fail; 5 are the order's excused FileNotFoundError class, 6 are AssertionError and are NOT excused, so the ASK is not written and the pair is not requested.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run in C:/tmp/mp-pf-rel/infra/aws/ec2/opal-gateway: python -m pytest tests/test_admin*.py tests/test_owner_gate.py -q -p no:cacheprovider => 11 failed, 98 passed.",
+      "EXCUSED class (5): test_admin_fabric.py::test_roster_equals_devices_register, test_admin_fabric_calls.py::test_real_capture_calls, test_admin_fabric_calls.py::test_request_accepted_by_open_calls_scan, test_admin_fabric_gitstate.py::test_real_capture_gitstate, test_admin_fabric_overlap.py::test_real_capture_overlap. FileNotFoundError on org/devices/DEVICES.json, .../2.0.0_SA_COO~MP/cp2/fixtures/s3_capture_20261009T0728Z.json, .tools/open-calls-scan.py: git ls-tree reads 0 at live base 38fe44d5cb and 0 in the release tree, 1 at box/sitez HEAD 1a535637fd; all five pass in the main tree at box/sitez HEAD (the second run below, 74 passed).",
+      "NOT EXCUSED (6), AssertionError: test_admin_gateway_breakdown.py::test_every_live_tool_in_exactly_one_channel, ::test_real_server_tool_inventory; test_admin_people.py::test_people_lists_every_candidate_even_holding_nothing, ::test_cadence_reads_absent_with_reason, ::test_real_server_people_inventory, ::test_people_principal_never_leaks_into_other_fields. Example: test_real_server_tool_inventory asserts ['opal-data-assets', 'opal-data-etfs', ..., 'dynamodb', ...] == ['m365'] ('environment-as-left'); test_cadence_reads_absent_with_reason asserts {'m365','plantint'} == a set that also holds 'undeclared'.",
+      "the same 6 fail when the same selection is run in the main tree at box/sitez HEAD (6 failed, 74 passed over the 6 affected files), so they are not an effect of the release tree's frozen org/ vintage.",
+      "census: git diff --stat 38fe44d5cb HEAD names only infra/aws/ec2/EC2_MANIFEST.json (1 insertion, 1 deletion); the diff over infra/aws/ec2/opal-gateway names nothing. Neither failing file contains the string EC2_MANIFEST (grep -c = 0 on both), so the pin change cannot move them. That they also fail at the bare live base is INFERRED from the identical tree, not run."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO MP-pf-9 step 1 Tests: run tests/test_admin*.py tests/test_owner_gate.py on the release tree: 0 failed, except a FileNotFoundError on a repo path outside infra/aws/ec2/opal-gateway/ that reads 0 at the live base and 1 at HEAD and passes at HEAD; 'Any other failure STOPS.'",
+  "world_is": "6 AssertionError failures outside that exception, present in the live gateway code and at box/sitez HEAD alike; not caused by this release. Done so far and unaffected: release commit 3cc7017f1f (one pin, 090b9cdc85 -> c66ca82952); resolve-only prints MCPORTAL-RESOLVED @c66ca82952; bun_cache_precheck on the c66ca82952 lockfile reads 77 of 77. NOT done: step 2 (ASK, pair) and step 3 (rollback proof); nothing opened, nothing deployed.",
+  "notes": "Ask of the issuer, one line: rule that these 6 are a known pre-existing class for this release (amend the order's test rule and name them), or re-cut the criterion. Nothing is repaired by this seat (BOUNDS 3). On the ruling I resume at step 2 on live base 38fe44d5cb, or on whatever the manifest reads at the GO."
+}
+```

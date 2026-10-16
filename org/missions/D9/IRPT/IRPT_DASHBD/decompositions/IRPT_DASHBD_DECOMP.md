@@ -2582,3 +2582,33 @@ The CTO signed his half of the packet (sha256 `29b7df738efc`) at @582155d0b7, al
 **fanout:** 1 of 1 chains for this cell (the AE applier, not a worker subagent), cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; self-test green with 42 red arms plus the fire-window rule):** `checks/r149/p166_pub49f_apply.py` (DBC166-1-AC1, -2-AC1, -3-AC1).
+
+## 160. ROUND 149, WORKSTREAM GOLDLIST (2026-10-16 ~12:5xZ, issuer 2.0.0_SA_COO~D2): the listing grant of the 49 Financial gold function's filled-report stage (hop 1, ledger L6)
+
+Hop 1's first scheduled fire (2026-10-16 11:41Z) wrote 0 objects at the `filled_report_values` prefix and logged `FILLED_CATCHUP_LIST_FAILED` (AccessDenied on `s3:ListBucket`), read by `2.0.0_SA_COO~S2` (row IRPT_BCKEND-D2-S219). The cause is this decomposition's own design miss, found in `reporting-gold/locals.tf`: the list pattern is built from the READ prefixes, and the filled prefix is only in the WRITE list.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `local.irpt_rg_gold_list_pattern` also takes `local.irpt_rg_gold_filled_prefix` (one expression, no read grant, no write change) | DB-b-299 | FWD-10 (and the hop-1 gate of IB-pr-551) | WORLD (one `infra/` file) | none | chain T |
+| 2. THE 49 FINANCIAL GOLD PAIR (a separate never-widen packet, the CTO signs): ONE `safe-apply` of the `reporting-gold` root (plan 0 add / 2 change / 0 destroy: the role policy's list statement and the function's code), carrying the listing grant AND the `history_scope` derivation (the producer in the entry, re-pinned by `DB-b-297`); NO backfill: the next scheduled fires write derived rows for every account that still holds value, and the daily publish carries the pair to the series; the 3 accounts whose newest row is before the last partition stay without a claim until a targeted rewrite is ruled | NOT CUT: the packet after item 1 and the CTO's reading | FWD-10 | WORLD | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the backfill the producer offers re-emits the class, activity and lot tables for the same days (about five minutes per day at the 7,646-account scale) and is NOT needed for the publisher, which takes `history_scope` and its claim from each account's NEWEST gold row; (b) the cost of skipping it is stated, not hidden: older rows of an account stay at the old constant and carry no claim, while its newest row is derived (a row without the claim makes no statement, per contract 0.4.6); (c) the hop-1 first write is read at the first scheduled fire after the apply, and the packet will ask the CTO whether a hand event may bring it forward.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~241`), cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green with 7 diff-and-semantics red arms and 8 facts arms; run on the real `locals.tf` with the reference edit: green):** `checks/r149/p167_gold_list_grant.py` (DB167-1-AC1..AC3).
+
+## 161. ROUND 149, WORKSTREAM GOLD49FAPPLY (2026-10-16 ~13:3xZ, issuer 2.0.0_SA_COO~D2): the apply of the signed 49 Financial reporting-gold pair
+
+The CTO signed his half of the packet (sha256 `d2c27ac2bdc5`) at @89ca7c661c, all three questions accepted (one packet; a one-day backfill of 2026-10-15; the first write as a hand event), with five conditions: the flip counts printed before Act 5 and any flip on a non-floor account stopping it; Act 5 waiting for the publish pair's ledger to read CLOSED; Branch C a hard stop with the peak recorded and no resize inside the pair; the policy change only the one `s3:prefix` value; Acts 2 to 4 outside 11:35Z to 12:00Z and Act 5 outside 12:05Z to 13:00Z.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The apply: ledger first, build-only hash, new bundle version, plan 0 add / 2 change / 0 destroy (the policy's one list value and the function's code), ONE `safe-apply`, the hop-1 first write, the one-day backfill, the flip count, the republish of the series | DB-b-300 | FWD-10 (and the hop-1 gate of IB-pr-551) | WORLD | `DB-b-294`, `DB-b-295`, `DB-b-297`, `DB-b-299` merged, both halves SIGNED, and `DB-b-298` (its ledger CLOSED before Act 5 only) | chain U |
+| 2. The next WORLD pairs, each separate and signed by the CTO: (a) the Cottonwood landing code update and the 65-day rewrite; (b) the Cottonwood publish code update (publisher 0.4.0) and republish; contract changes name `~C2`'s DB-c-NN cell | NOT CUT: packets after item 1 | FWD-10 | WORLD | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the order carries the CTO's five conditions as steps so the checker can grade them; (b) the checker recomputes from the live gold the floor-start accounts with a row on the day and compares them with the applier's record, and recomputes the value-column hash of the rewritten day, so the backfill's "values identical" is a measurement and not a claim; (c) the order's first-write peak line is 6,553 MB / 720 s (80 percent of the function's limits) and a breach is a stop with no resize; (d) the checker requires the publish pair's open marker ABSENT and this pair's marker PRESENT at the end, so the ordering and the open ledger are graded; (e) hop 1's ledger leg L6 is named in the receipt, closed only if its owner allows.
+
+**fanout:** 1 of 1 chains for this cell (the AE applier, not a worker subagent), cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green with 42 red arms plus two head arms and the fire-window rule):** `checks/r149/p168_gold49f_apply.py` (DBC168-1-AC1, -2-AC1, -3-AC1).

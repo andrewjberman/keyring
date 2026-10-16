@@ -28730,3 +28730,159 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Row-append only; the register's ARMED listing for D1-S40 closes through the disarm this row records. Gap for a successor: C-S132, C-S145, C-S146 and C-S155 (CVO adjudication rows owned for disarm by this seat) remain ARMED and unmeasured since the round-104/105 documents they graded were replaced by the round-107 to 111 sets."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W480-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~480",
+  "surfaced_at": "2026-10-16T11:50:14Z",
+  "one_line": "AMGT-bo-6 does not say what unit the held counter counts for a held fetch group: the order says one HELD entry per group, while the summary says n name(s) held. The batch counts names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Section 1 item 1 of AMGT-bo-6 catches FilingAttemptChangedError around each run_group call, one entry per group. Item 2 prints one HELD line per caught name and counts it in a held counter. Item 3 prints HELD DONE: <n> name(s) held.",
+  "world_is": "lib/research/filings/batch.py main() adds len(group security_keys) to the held counter for each caught group and prints one HELD line naming every key the group holds. A two-key group caught once therefore reads HELD DONE: 2 name(s) held; a count of caught groups would read 1 for the same run. test_t6_a_held_group_names_every_key_and_counts_every_name pins the names reading. The order does not settle which reading it wants.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/batch.py main() fetch loop: held += len(group[\"security_keys\"]) inside the except branch for FilingAttemptChangedError (worktree C:/dev/wk-resapp-480, branch wk-AMGT_RESAPP-480, uncommitted at filing; commits with this row)",
+      "lib/research/filings/tests/test_batch_held_continue.py::test_t6_a_held_group_names_every_key_and_counts_every_name -- 6 passed under the AC1 invocation"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not resolved here. If the COO wants a count of caught groups, the change is one line in the fetch loop of batch.py plus the T6 expectation."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W480-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~480",
+  "surfaced_at": "2026-10-16T11:50:14Z",
+  "one_line": "The worktree's sparse checkout does not carry org/surprise_channel, so the investigation item schema that the channel rules name is absent at its path inside this worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The channel rules name org/surprise_channel/schemas/investigation_item.schema.json as the schema every new row is written against, and the row gate reads that schema when it validates a channel commit.",
+  "world_is": "In C:/dev/wk-resapp-480, test -f on org/surprise_channel/schemas/investigation_item.schema.json reads absent, and the sparse-checkout list read in this worktree does not name org/surprise_channel. The same schema is present at HEAD: git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json prints it, with required id, surfaced_by, surfaced_at, one_line, class, grounding and disposition. This row was written against that HEAD read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test -f org/surprise_channel/schemas/investigation_item.schema.json in C:/dev/wk-resapp-480 printed nothing (absent)",
+      "git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json printed the schema with the seven required keys",
+      "AMGT_RESAPP-D1-W484-S2 (channel line 28658) records the same sparse-checkout observation in a second worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded, not a block: the schema was read from HEAD and the row is written to the shape it names. The row gate's own read of the schema in this worktree is the part the commit will show."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S48",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-16T12:12:25Z",
+  "one_line": "The first fire of the G4 filings task wrote one state object outside its signed radius, AAPL_US_Equity's UNRESOLVED-SOURCE.HELD.json, and the served API now adds four drafting_reason fields to AAPL's thesis because of it; the CTO ruled KEEP (msg 6678).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "NEVER_WIDEN_ROUND108_G4_FILINGS_FIRST_FIRE_COO_HALF.md (signed @b619a274a1) named four kinds of object the run writes (analysis, drafting, source, one model call) and signed that nothing else moves.",
+  "world_is": "The first fire (2026-10-16 11:30Z) wrote amgt/harvest/state/filing_attempt/security_key=AAPL_US_Equity/UNRESOLVED-SOURCE.HELD.json (VersionId ZlQC5YGwdyTDXBJWhG80cP3shVdZRIki, a new key) before its run ended with exit 1. lib/research/api/scoped_amgt.py lines 4147-4198 reads that marker and ADDS drafting_reason_held, drafting_reason_newer, drafting_reason_newer_status and drafting_reason_newer_filing_identity to the name's thesis bundle (the served drafting_reason is untouched; with no marker the bundle is byte-identical). Live read 2026-10-16 ~12:09Z (opal-amgt-scoped-api, GET /thesis for AAPL_US_Equity, status 200): all four present. The Security Analysis page source names none of them: git grep on origin/PROD:portal/src and a grep of the working tree return 0 matches, so the page renders nothing from them unless a generic renderer spreads bundle keys (not checked).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/G4_FILINGS_FIRST_FIRE_RESULT_20261016.md",
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/G4_FILINGS_TASK_REENABLED_8KEYS_20261016.md",
+      "lib/research/api/scoped_amgt.py:4147-4198",
+      "lib/research/harvest/filings.py:440-446 (the marker is written, then FilingAttemptChangedError is raised)"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "CTO msg 6678: KEEP (additive and true; shows only on the Opal-internal page; a delete needs Andrew's word for no gain). Answer to the CTO's third ask: bo-6 does NOT stop the marker write. The harvest module writes the sibling HELD marker BEFORE it raises (filings.py:445-446); bo-6 only catches the raise, so a skipped name still gets a marker. For the 8-key run no name can reach that path: none of the 8 has a stored filing_attempt state object (read 2026-10-16, 0 objects each), so a differing re-attempt cannot occur. A first-time failure to resolve one of the 8 would write its UNRESOLVED-SOURCE.json (a state object the signed radius also did not name)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S49",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T12:14:00Z",
+  "one_line": "C-S145 (a) and (b) and C-S146 (b) re-measured on the 95 stored round-111 documents read from S3: no kept block ends on an abbreviation full stop, no two segments are joined with no space, and no OPAL_SOURCE management bio is kept (V US mgmt_bio is withheld); this seat disarms its part of those three.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "CVO rows C-S145 (a block cut after an abbreviation full stop, KOFUBL MM mgmt_team_view ends 'totaling Ps.'; two answer segments joined with no space in 7 blocks) and C-S146 (b) (an OPAL_SOURCE mgmt_bio restating the pack passage beneath it, V US), both graduated ARMED with this seat as disarm owner; they close when the stored documents no longer carry the defect.",
+  "world_is": "Read 12:14Z 2026-10-16 by this seat: all 95 AI-fill documents under s3://opal-data-harvest/amgt/harvest/gold/ai_fill/ read back from S3 (95 of 95). 134 kept text blocks (mgmt_bio 26, mgmt_recent 55, mgmt_team_view 22, thesis_pillars 31). Regex join `[a-z0-9)\\]][.!?](?=[A-Z][a-z])`: 0 matches; regex ending on Ps/Inc/Corp/Ltd/Co/No/St/Mr/Mrs/Ms/Dr/Jr/Sr/vs/approx/Rs/Cia/SA/Plc: 0 matches; blocks not ending in terminal punctuation: 0; kept OPAL_SOURCE mgmt_bio: 0 (KOFUBL MM mgmt_team_view and mgmt_bio are NONE blocks with a reason; V US mgmt_bio is NONE, 'The text opens without naming the person it describes'). Positive controls run first: the join regex matches 'revenue grew.Su said' and not 'grew. Su said'; the abbreviation regex matches 'totaling Ps.' and not 'one peso.'. NOT MEASURED: C-S146 (a), the page's ABOUT THIS DATA panel wording (a page defect; no page was looked at by this seat); C-S132 and C-S155 (not re-measured); a cut mid-sentence that ends on a word other than the listed abbreviations (the terminal-punctuation check covers an unterminated block, not a sentence truncated at a full stop that is not an abbreviation); the KOFUBL and AMD blocks named in the rows were replaced by later documents, so this is a re-measure of the class on the current set, not of the named blocks.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 get_object over all 95 keys via lib.research.aifill.store.address_for -> 95 of 95 read; kept blocks 134 = 26+55+22+31 (matches the round-111 manifest counts)",
+      "regex positive controls printed before the verdict (join True/True, abbreviation True/True)",
+      "AMGT_RESAPP/surprise-channel/adjudications/ADJUDICATION_v129.md rows C-S145, C-S146"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The CVO closes its own adjudication rows; this row is this seat's disarm with evidence. Still ARMED with this seat as owner after this row: C-S132, C-S146 (a), C-S155."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S50",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T12:45:00Z",
+  "one_line": "W451-S1 half of C-S155 re-measured at HEAD: fetch_source reports an image, octet-stream or zip body as UNSUPPORTED with empty text; this seat disarms W451-S1. The W452-S1 half stays open: D1-S41 measured 1 of 23 CONTRADICTED sentences recording a null source and quote.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "AMGT_RESAPP-D1-W451-S1 (ARMED, owner this seat) and CVO row C-S155: fetch_source reports a 2xx image or octet-stream body as OK with binary-decoded text; W452-S1: a CONTRADICTED sentence records no source and no quote.",
+  "world_is": "Read 12:45Z 2026-10-16 by this seat at HEAD: lib.research.aifill.sources.fetch_source called with a transport returning HTTP 200 and content types image/png, application/octet-stream and application/zip over binary bytes returned status UNSUPPORTED, http_status 200, text empty, chars 0 for all three; the repo tests test_a_non_text_content_type_is_unsupported and test_text_xml_and_xhtml_content_types_are_still_read (the text control: text/plain, text/html, application/xhtml+xml, application/xml read as OK) both pass, 2 passed. D1-S38 recorded the same rung as in place since 229d0ed982 (merged f57f6e049a); this row re-measures it after the gu-1, gv-1 and gw-1 merges. NOT MEASURED: W452-S1 at HEAD (the last measurement is D1-S41: 22 of 23 CONTRADICTED sentences record the shown source and quote, 1 records null; this seat did not re-run it); C-S132; C-S146 (a), the page panel wording.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PYTHONPATH=. python (fetch_source with transport lambda returning (200, ctype, binary)) -> UNSUPPORTED/200/empty for image/png, application/octet-stream, application/zip",
+      "pytest lib/research/aifill/tests/test_sources.py -k 'non_text_content_type or still_read' -> 2 passed",
+      "INVESTIGATION_v1.md rows D1-S38 and D1-S41"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Still ARMED with this seat as owner after this row: C-S132, C-S146 (a), and the W452-S1 half of C-S155."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S51",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T13:14:00Z",
+  "one_line": "W452-S1 half of C-S155 re-measured on the 95 stored documents read from S3: all 10 CONTRADICTED sentences record a shown source and a quote (none null), so with D1-S50 (W451-S1) this seat disarms C-S155 in full. C-S132 and C-S146 (a) stay ARMED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "CVO row C-S155 (graduated to REMEDIATION_v44 (2)): W451-S1 (a 2xx image or zip body reads OK with binary text) and W452-S1 (a CONTRADICTED sentence records no source and no quote); D1-S41 measured 22 of 23 CONTRADICTED sentences recording the shown source and quote and 1 (1299_HK_Equity mgmt_recent) recording null.",
+  "world_is": "Read 13:14Z 2026-10-16 by this seat: all 95 AI-fill documents read back from S3 (95 of 95). Sentence verdicts across them: SUPPORTED 256, UNSUPPORTED 250, CONTRADICTED 10. The 10 CONTRADICTED sentences all carry a non-null source index and a non-empty quote (0 null). Positive control: a synthetic CONTRADICTED sentence with source null and quote null is flagged by the same predicate. Side measure, NOT independent evidence: the 134 kept text blocks all carry a grounding record, and the 256 sentences found in kept text are exactly the 256 SUPPORTED ones (0 kept sentences with another verdict); that is the producer's own record, so it bears on C-S132 only as consistency, and the independent evidence on C-S132 remains the CVO's reads (v136, v137, v138), which sample 11, 8 and 11 blocks and are not a census. NOT MEASURED: that the code path itself (not only the stored set) still records source and quote for a new CONTRADICTED sentence (the 1299_HK null of D1-S41 was a case in an earlier set that is gone from this one; its cause was not re-run by this seat); C-S132 (a census of claims against their sources); C-S146 (a), the page panel wording.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 get_object over all 95 keys -> 95 of 95; sentence verdicts SUPPORTED 256, UNSUPPORTED 250, CONTRADICTED 10; CONTRADICTED with null source or no quote: 0",
+      "synthetic control row (CONTRADICTED, source None, quote None) is flagged by the predicate",
+      "INVESTIGATION_v1.md rows D1-S39, D1-S41 and the D1-S50 row for W451-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Still ARMED with this seat as owner after this row: C-S132 (needs the CVO's judgment, or a census this seat cannot grade because it did the work) and C-S146 (a) (needs the page looked at). The CVO closes its own adjudication rows."
+}
+```

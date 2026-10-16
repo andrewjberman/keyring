@@ -1,0 +1,41 @@
+# NFRA_CTLPLN decomposition -- round 29: one writer per box for cross-box call files, the lambda-source-map census, the placement tool that fails loud, and the seat-rules probes read clean (issuer 2.0.0_SA_COO~C; cut 2026-10-16)
+
+**Status: ISSUED in one issuance. FROZEN at the cut.** (A cell cut later in the round, once its dependency clears, is an AMENDMENT of this document stating its gate limb, as in rounds 22 and 24-28.)
+
+**Input.** `ledger/ROUND_ANALYSIS.round28.md` (1.0.0_SA_CTO) @3894648aa3 sections 2-3 and msg 109677; the CVO's `ADJUDICATION_v32.md` @0c0f95ca4d; the issuer's `deliverables/2.0.0_SA_COO~C/L8_PACKET_ROUND28.md` @cf7b334a00. **PRD:** v0.31. **Coverage entering the round (CTO table):** REALIZED 1, 3, 5, 15, 16, 17, 18, 19, 23, 24, 28 (11); ADVANCED 13; PARKED 9; MOVED 13, 20, 26 (as the CTO's section 1).
+
+## Cells
+
+| cell | what | serves | risk | issued to |
+|---|---|---|---|---|
+| `CT-ba-1` | **Cross-box call files: ONE writer per box.** `.tools/crossbox-call.py` writes layout 2 (the from-side `XB-<id>.json` plus one answer file `XB-<id>.<box>.json` per answering box) and reads both layouts as one call; every `crossbox/1` file reads exactly as before; a committed `LAYOUT` switch (not created by the cell) turns layout 2 on only after every box carries the tool; the tool's red suite case is repaired; tests merge a from-side close and a to-side answer from two clones with zero conflicts. | FWD-8 (CTO ruling 1) | LOCAL (a tool change and tests in temporary repositories) | `0.9.0_WK_NFRA_CTLPLN~139` |
+| `CT-bb-1` | **`lambda-source-map.json`: stage 1 of the split.** A read-only census of every consumer of the map (about 106 files under `infra/` alone), the map's own shape, every past non-owner edit of `record-terraform-deploy.sh`, and a proposed per-function layout with the migration order and the atomic set. No infra file, script or the map changes. | FWD-7, FWD-8 (CTO ruling 2) | LOCAL (a read-only census into the cell's own folder) | `0.9.0_WK_NFRA_CTLPLN~140` |
+| `CT-bc-1` | **`placement-check.py` fails loud.** Exit 3 with `ERROR:` when `org/missions` or `org/projects` is absent or the live project count is short of the register's; findings keep exit 0. | FWD-7 (CTO ruling 3; row `W137-S1`) | LOCAL (a read-only tool and its test) | `0.9.0_WK_NFRA_CTLPLN~141` |
+| `CT-bd-1` | **The seat-rules forbidden-act probes read clean.** The row `R-AWSDEVOPS-7` follows Andrew's 2026-10-13 ruling (the Deny `DenyProtectedFunctions` was removed on purpose; three Denies remain), the slow `R-WORKFLOW-19` probe gets its own bound, the one red case of the tool's suite is repaired, and the per-kind result is reported. | FWD-25 (CTO ruling 4) | LOCAL (a table, its checker and test; no policy changes) | `0.9.0_WK_NFRA_CTLPLN~142` |
+| `CT-be-1` | **AMENDMENT 1 (below).** `round-close-check.py` grades a criterion from the grade of record (the last CVO-kind non-doer row), not the first CVO row that names it; inbound call `XB-20261016T121809Z-95c2` from site Z. | the round-close checker (C-ROUNDCLOSE); no FWD | LOCAL (a read-only checker and its test) | `0.9.0_WK_NFRA_CTLPLN~143` |
+
+## Amendments
+
+1. **`CT-be-1` cut, 2026-10-16 ~12:4xZ (a fifth cell; round tag 28 because the gate keys one issuance to a workstream-round).** An inbound cross-box call from site Z, `XB-20261016T121809Z-95c2` (`1.0.0_SA_CTO~Z`, row `NFRA_OPLGTW-Z-S176`), reports that `.tools/round-close-check.py` (this project's cell `CT-af-2`) grades a criterion from the FIRST CVO row that names it, so a later regrade is never read (NFRA_OPLGTW round 37 `TO-OG-ap-14 AC3` reads NOT MET from v29's `Z-C-S76` while v32's `Z-C-S79` MET is the grade of record). The tool is this project's, the defect is real in the code the issuer read (`grade_criterion` returns on the first CVO-kind row), the fix is small (`<risk>LOCAL</risk>`), and nothing in it widens an endpoint: the issuer rules it inside this decomposition. Cell `CT-be-1`, worker `0.9.0_WK_NFRA_CTLPLN~143`; base: its test absent, the checker's selftest `ROUND-CLOSE-SELFTEST cases=30/30 ok=True`. Gate limb: a newly-added tree order graded by `.tools/to-pipeline-gate.py` at the cut (EXECUTING stage: coverage not graded). After merge the announcement to the four boxes goes through `0.0.0_AB_MSTR` (the tool is shared), and the answer goes on the XB.
+
+## Driven by the issuer in this round (not cells)
+
+1. **FWD-25, the forbidden-act half, run.** At the cut the issuer ran `python .tools/seat-rules-check.py exercise` (123 s): 58 probes, 56 PASS, `R-AWSDEVOPS-7` FAIL (the table describes a Deny Andrew removed on 2026-10-13: cell `CT-bd-1`), `R-WORKFLOW-19` UNREAD (a 60 s bound against a 100 s-plus selftest: `CT-bd-1`). Output kept at `deliverables/2.0.0_SA_COO~C/SEAT_RULES_EXERCISE_20261016.txt`.
+2. **FWD-25, the two kinds not started (the CTO's ruling 4 names `0.0.0_AB_MSTR` for them).** MSTR's own record (`deliverables/0.0.0_AB_MSTR/FWD25_SEAT_START_ANSWERS_20261016.md`) states why `/mstr-spawn` does not start them: a second MSTR lane arms a second `/govern` loop and integrator candidate, and a worker is a subagent of a COO with no send tool. The WORKER kind is spawned by this seat (a COO's own act, as every round does) and asked the same question; the MSTR kind goes back to `0.0.0_AB_MSTR` with the CTO's ruling and one question (a lane with its loops disarmed, or a different arm). Both recorded in the round-29 packet.
+3. **FWD-8, the window read, after `CT-ba-1` merges.** The sequence: `CT-ba-1` merges and its tests pass; box-sync carries the tool to all four boxes (read from `origin/box/<box>`: the tool file at each box's tip equals the merged one); the issuer commits `org/devices/crossbox/LAYOUT` (`2`); the next calls open as layout 2; then a window in which two boxes each complete a full round is read by `python .tools/box-sync-conflicts.py --since <the flip commit's time>`. That window is the FWD-8 grade (CTO ruling 1).
+4. **After `CT-bb-1`: stage 2 (the migration cells) is cut by amendment**, one per consumer class from the census and its atomic set, each with the Terraform plan (not apply) as its check; the CTO reads the proposal at the round-29 analysis. The split of `record-terraform-deploy.sh` into a single owner (`0.7.0_AE_CloudOps`) is declared in stage 2 from the census's list of non-owner edits.
+5. **FWD-11, 4, 12, 22** are the CVO's reads (CTO rulings 5 and 6): no act here.
+
+## Held and carried
+
+- **Held for a later round (round-27 item 7):** FWD-10, FWD-21(a). **Andrew's acts:** FWD-2, FWD-6, FWD-14 (`b87f`), FWD-27.
+- **Carried with an OWNER and the CONDITION that un-parks each:** as in the round-24 to 28 decompositions: `W8-S7`, `S9103`, `S9120`, `W89-S3`, `W12-S1`, `Z-S3` (before 2027-12-01), `S9125` (dell1, before 2026-12-31), `S9119`, `S9128`, `W121-S3`/`S4`.
+- **FWD-23's graded piece from dell1 and site Z**, the FWD-23 reader act: open calls `0ff7` and `a856`, and `laptop-20261016T114905Z-c164`; the CVO graded FWD-23 REALIZED at v32 from dell2's list.
+
+## Rule 24
+
+**Domain:** the CTO's round-28 section 3 enrichment list (items 1-4 acted on, 5 sequenced, 6 the CVO's) against FWD-7, FWD-8 and FWD-25. **Same grain; one intent; disjoint write surface:** `CT-ba-1` writes `crossbox-call.py` and its consumers and tests; `CT-bb-1` writes only its own deliverables folder; `CT-bc-1` writes `placement-check.py` and one test; `CT-bd-1` writes `SEAT_RULES.json`, `seat-rules-check.py` and its test; no two cells share a file. **State coherence:** nothing in this round deploys, pushes, calls AWS, applies Terraform or changes a policy; `CT-ba-1` changes how a FUTURE call is written, no existing call file is rewritten, and layout 2 stays off until a committed switch turns it on. `CT-bb-1` is a census only: the split itself, which touches Terraform consumers, is stage 2 and is checked by plan.
+
+## Dependency chains and fan-out
+
+Four chains, no edges between them: (1) the crossbox split, then the switch, then the FWD-8 window; (2) the source-map census, then the migration cells; (3) the placement tool; (4) the seat-rules table. `fanout: 4 of 4 chains, cap 8, reason: four cells with disjoint write sets and no data dependency; the second stages of chains 1 and 2 wait on the first stage's merge and are cut by amendment.`

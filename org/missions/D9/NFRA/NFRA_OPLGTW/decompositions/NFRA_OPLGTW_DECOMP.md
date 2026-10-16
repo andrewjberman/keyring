@@ -2602,3 +2602,25 @@ Sequence (CTO msg 34913): this backfill merges first, then `OG-rr-2`'s drain (it
 **Release (not yet cut):** E4, E5, E6 and E8 ride ONE batched gateway release (WORLD: the applier cell, the narrowing never-widen ask for E8, the `MUSE_CLIENT_ID` configuration act and the muse served arm); cut after the four builds merge. `OG-ts-1` and `OG-en-7` do not ride it.
 **Risk class:** the L6 gate floors any order whose `<paths>` name a gateway infrastructure path at WORLD (spine v3.19 L6); the five worker cells are WORLD by that floor though none deploys.
 **fanout:** 5 of 5 worker chains plus 1 applier read, cap 8. Disjoint write sets: `client_*` (`en-4`), `news_typed.py` (`en-5`), `harvest_press.py` (`en-6`), entitlement code (`en-8`), two test files (`ts-1`).
+
+## ADDENDUM R3-T.94 (2.0.0_SA_COO~O, 2026-10-16 ~12:5xZ) -- round 38, workstream ENRICH-R38-B: E9 and E10 added to the round-38 rectangle
+
+**Source.** `1.0.0_SA_CTO~Z`'s update to the round-37 analysis @9dbe9546bc ("add E9 (Z-S175)": a missing key answers not-found, a denied one 403) and the CTO's finding msg 34991 (the gateway's per-identity 429 cuts off the site Z seats; the audit holds no 429 row). A second workstream because the L6 gate keys one issuer to a round and workstream.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-en-9` | E9 | `gateway_query_catalog`: a key that does not resolve answers 404 (400 if malformed) in words, never `guard_denied`; an entitled-denied key keeps 403; a test of both arms | WORLD | ~123 | worker |
+| `OG-en-10` | E10 | the per-identity 429 writes one audit row (limit, window, `count_in_window`, retry), bursts folded, an audit failure never changes the answer; no limit value changes | WORLD | ~124 | worker |
+
+Both are WORLD by the L6 floor (a gateway infrastructure path) though neither deploys; both ride the batched gateway release with E4, E5, E6 and E8. Whether the identity limit is raised, or the site Z seats get distinct identities, is decided after the first 429 audit rows exist.
+**fanout:** 2 of 2 chains, cap 8. Disjoint write sets (catalog gate and portal-index tool; ratelimit, server guard, audit).
+
+## ADDENDUM R3-T.95 (2.0.0_SA_COO~O, 2026-10-16 ~13:5xZ) -- round 38, workstream ENRICH-R38-C: the served source of the 49F Black Diamond adapter (CTO msg 35014)
+
+**Source.** The CTO asks that the 49F Black Diamond adapter on `opal-data-bd` (PRD v3.6, Andrew-direct 2026-10-14; G2 item 2) be cut "if not cut". It is already built and live: `OG-cl-2` (complete, merged) wrote `app/client_adapter_bd49f.py` over the live `opal-data-bd/silver/` tables through its own scoped role, `OG-ap-24` (applied) extended `gateway-blackdiamond-read-role`, and both are live in `3d5c9c8bf1`. The CTO's reading that, live, it reads the `opal-data-assets` copy is not contradicted or confirmed by any served record (the OG-ap-23 served read holds no 49F reading). One measuring cell:
+
+| cell | what | risk | slot | class |
+|---|---|---|---|---|
+| `OG-en-11` | READ (`0.7.0_AE_CloudOps~Z`): the four 49F Black Diamond client tools through the installed code for firm `49financial`; per tool the bucket class of the first source key (`opal-data-bd`, `opal-data-assets`, other, none), the partition date, the role session if readable; a BLOCKING row naming tool, bucket and the cause read from the code path if any tool reads other than `opal-data-bd` | SERVED | ~AE | applier |
+
+**fanout:** 1 of 1 chains, cap 8. A code cell follows only if the measurement shows a different bucket.
