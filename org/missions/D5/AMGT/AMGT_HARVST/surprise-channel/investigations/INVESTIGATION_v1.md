@@ -9777,5 +9777,88 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "Resolved by amendment 1 and the merge c1df06b1ef; S2 is a ruled deviation, not a defect."
     }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W149-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~149",
+      "surfaced_at": "2026-10-16T02:43:06Z",
+      "one_line": "Arm (4) as worded (check --since the test's start time, before the seed) counts the seeded parts as DUPLICATES; the window must open after the seed",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~W1",
+      "spec_asserts": "HVST-cb-14 arm (4): after (3), run check --since the test's start time: DUPLICATES=0.",
+      "world_is": "The seed's parts were written before the seed, so their LastModified is earlier than the seed. A --since placed before the seed reads them, and each seeded row matches the seed snapshot, so every one counts as a DUPLICATE, not a re-write. The test opens the window at the first upload after the seed (the next put instant). The order does not fix the re-pin act's T0: it must be an instant after the seed, or check exits 1 on seed-time rows.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/seed_silver_known.py _check (LastModified >= --since) at 28309f6547",
+          "lib/opal_data_harvest/test_cb14_known_lookup_and_seed.py test_check_counts_no_duplicate_and_then_one_direct_rewrite at 28309f6547"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W149-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~149",
+      "surfaced_at": "2026-10-16T02:43:06Z",
+      "one_line": "The cb-12 test form: dict(...) of the encoded texts does not apply to KnownMap, so the iteration check is a set of texts and one subscript became get",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-cb-14 1 (test update): any assertion that compares load(...) to a plain dict must compare through .get or dict(...) of the encoded texts; change nothing else in that file.",
+      "world_is": "KnownMap iterates encoded texts and has no keys() or __getitem__, so dict(...) of it is not a mapping. test_cb12 now compares through get, compares iteration with set(...) of encode_key texts, and rewrites one load(...)[(k,)] subscript as get. The datetime test is renamed to match its new assertion.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_cb12_uploader_known_hashes.py at 28309f6547"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W149-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~149",
+      "surfaced_at": "2026-10-16T02:43:06Z",
+      "one_line": "The worktree's sparse cone omits org/surprise_channel/schemas/investigation_item.schema.json, so this row was checked against the HEAD blob",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Worker face: append a row per org/surprise_channel/schemas/investigation_item.schema.json (the schema a row must satisfy).",
+      "world_is": "The schema is tracked at HEAD and absent from this worktree (FileNotFoundError on the path). It was read with git show HEAD:<path>, read-only. The sparse set is widened at provision (the order names org/tier1_exec/4.0.0_SA_CRO/scripts), not by the worker.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/surprise_channel/schemas/investigation_item.schema.json at ce8abf0167 (git show HEAD blob)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+      "id": "AMGT_HARVST-D1-W149-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~149",
+      "surfaced_at": "2026-10-16T02:43:06Z",
+      "one_line": "The naming gate WARNs on the snapshot table-name string in the new test (barrons/listing_hit): a REFUSE in its WARN window that did not block the commit",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Worker face: commit through .tools/safe-commit.sh; the order names no naming verdict for test files.",
+      "world_is": "The naming gate reported NAMING REFUSE for lib/opal_data_harvest/test_cb14_known_lookup_and_seed.py:193 (barrons/listing_hit -> barrons/listing-hit), a key string that mirrors the uploader's table name. Its live pull was BLOCKED. ENFORCE is off, so the commit landed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "safe-commit output of 28309f6547 (naming-gate lines)",
+          "lib/opal_data_harvest/test_cb14_known_lookup_and_seed.py:193 at 28309f6547"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
