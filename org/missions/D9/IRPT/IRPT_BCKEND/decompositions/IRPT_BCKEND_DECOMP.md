@@ -4541,3 +4541,15 @@ Check IB244-1 (`deliverables/2.0.0_SA_COO~P2/checks/r244/p244_cells.py`), dry-ru
 | `IB-pr-613` | APPLY Act 2: 47 dated invokes of the 49F function, per-day prior version and row comparison, first disagreement stops | FWD-21 | WORLD | IB-pr-612 (complete, first run read, ledger closed) | PM3-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2); staged until the GO.
+
+## 240. ROUND 4, WORKSTREAM ~PM (the forward fix of ACT 1: the 49 Financial role's transactions-read grant, then ONE recovery invoke; 2026-10-16 ~12:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO ruling msg 9318 and both halves signed: packet blob `03cd6e9d46`, CTO half @334655f31b)
+
+IB-pr-612 Act 1 left the 49F function failing (row `IRPT_BCKEND-D2-S217`, ARMED, mine): its role has no grant for the split-adjust transactions prefix, which the signed pair did not carry. NEVER-2 forbids leaving the deploy half-landed, so the CTO ruled a forward IAM pair now, with Branch B of Act 1 at 13:00Z. One WORLD order to `0.7.0_AE_CloudOps~IB2`: the 14-arm simulate battery before and after, the one `locals.tf` edit, one saved plan of 1 change by `safe-apply`, then one recovery invoke with the schedule's own input. IB-pr-612's ledger stays open until this is read; IB-pr-613 (Act 2) stays staged. It takes round 4 of ~PM because rounds 2 and 3 of ~PM already carry an issuance (IB-pr-612, IB-pr-613) and the gate keys ONE ISSUER PER ROUND to the round; it is the completion of the round-2 change, not a new design round.
+
+Check IB245-1 (`deliverables/2.0.0_SA_COO~P2/checks/r245/p245_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control245.py`) passes the three positives and each of 29 negatives fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-614` | APPLY the role grant (plan 1/0/0), battery before and after, one recovery invoke | FWD-21 | WORLD | none (both halves signed) | PM2-b |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2); this is the completion of the open IB-pr-612 change.
