@@ -205,6 +205,49 @@ the watch works at all. Two consequences worth having in writing:
 31: FYIs and corroborations go to the record). Subsequent 30-minute re-arms are routine and get no
 further entry unless the shape changes.
 
+## 8. THIS SEAT'S RECORDS DO NOT COMMIT THEMSELVES, AND TWO ANDREW-DIRECTS WERE SITTING UNCOMMITTED
+
+Found by running `git status --porcelain` on my own folder -- which I only did because the harness
+flagged a file as changed on disk. Nothing else in the startup protocol would have surfaced it.
+
+**8 files of mine were uncommitted**, across two prior sessions and this one. The denominator needed
+care: `git status` showed **6 entries**, but two were untracked DIRECTORIES, which git collapses --
+`logs/2026-10-14/` (2 files) and `logs/2026-10-15/` (2 files, 40 KB). **6 porcelain lines = 8 files.**
+
+**Two of them are `ANDREW_DIRECT_*` records:**
+
+- `deliverables/ANDREW_DIRECT_20261014_1232Z_MCP_INDEX_BUCKET_COLONIZATION_PRIORITIES.md`
+- `deliverables/ANDREW_DIRECT_20261015_1800Z_SEND_CRON_LOG_TO_CTO_AND_HAVE_THEM_FIX_IT.md`
+
+**`org/XXX.md` defines a DURABLE Andrew-direct record as "a commit ... quoting him VERBATIM with
+channel + time."** An uncommitted file is therefore **not** a durable record -- so the record surface
+for both directives was unsatisfied, for up to two days, on a box whose shared tree has lost
+uncommitted work before.
+
+**And the sharpest instance is mine from this session:** `logs/2026-10-15/` holds the cron
+investigation whose **path I handed `1.0.0_SA_CTO~Z`** as the deliverable behind his R8 ruling. **I
+cited an uncommitted file as the evidence for a ruling** -- and separately quoted its findings to him,
+so the ruling itself was not at risk, but the artifact it points at was.
+
+**ROOT CAUSE, and it is structural rather than a lapse.** This seat **cannot commit** -- no OWNPATHS
+lane, by design (`prompt.md`: *"no git work at all"*), and `0.0.0_AB_MSTR` is the named integrator
+that sweeps `logs/`, `threads/` and `deliverables/`. **But nothing sweeps on a schedule: the sweep
+happens when this seat ASKS for it.** So any session of this seat that does not ask leaves its entire
+written output uncommitted, silently, with every local read still succeeding. The 10-14 and 10-15
+sessions did not ask, or asked only for part.
+
+**MY OWN ASK WAS ALSO PARTIAL, twice, and the pattern is the lesson.** My first ask (msg 34653) listed
+the 3 files **I had written**; `1d9aaa3abb` swept exactly those. My second (34803) added 2 more that a
+`git status` turned up. **MSTR's reply then named 6 I had still not listed** -- and my own
+`git status --porcelain` returns exactly his 6, independently. **I enumerated from memory of my own
+acts; he enumerated from the index.** A seat's recollection of what it wrote is not a denominator for
+what is uncommitted, because it cannot see prior sessions' leftovers at all. All 8 asked for and swept
+(`56d5d306d3` for five, the remaining six requested in msg 34805).
+
+**The reusable form: when a seat cannot perform an act itself, the act does not happen by default --
+it happens when the seat remembers to ask.** Measure the queue with the tool that owns it
+(`git status` on the path), never from a list of what you remember doing.
+
 ## Compiler Tools
 
 | tool | result | read |
