@@ -1,0 +1,97 @@
+{
+  "schema": "intake-fetch/1",
+  "batch": "intake-20261016-npm-mcportal-bun",
+  "requested": {
+    "name": "tinyglobby",
+    "version": "0.2.17",
+    "python_tag": null,
+    "abi_tag": null,
+    "platform_tag": null,
+    "file_name": "tinyglobby-0.2.17.tgz"
+  },
+  "index_base": "https://registry.npmjs.org",
+  "requests": [
+    {
+      "url": "https://registry.npmjs.org/tinyglobby/0.2.17",
+      "method": "GET",
+      "status": 200,
+      "bytes": 2568,
+      "at": "2026-10-16T20:30:37Z"
+    },
+    {
+      "url": "https://registry.npmjs.org/tinyglobby",
+      "method": "GET",
+      "status": 200,
+      "bytes": 54291,
+      "at": "2026-10-16T20:30:37Z"
+    },
+    {
+      "url": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.17.tgz",
+      "method": "GET",
+      "status": 200,
+      "bytes": 7873,
+      "at": "2026-10-16T20:30:37Z"
+    }
+  ],
+  "published": {
+    "sha256": null,
+    "size": null,
+    "integrity": "sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==",
+    "shasum": "562a9a6c9eb2b3b123d39719f9af5bb44fcd7631",
+    "url": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.17.tgz",
+    "upload_time": null,
+    "yanked": false,
+    "requires_python": null
+  },
+  "project": {
+    "release_count": 21,
+    "first_release_at": "2024-07-22T18:19:33.355Z",
+    "this_release_at": "2026-05-30T19:57:21.717Z"
+  },
+  "attestation": "present",
+  "attestation_url": "https://registry.npmjs.org/-/npm/v1/attestations/tinyglobby@0.2.17",
+  "held_path": "holding/intake-20261016-npm-mcportal-bun/tinyglobby-0.2.17.tgz",
+  "held_sha256": "afb4afae9175f8b873ac13e1d21cea0997a0bcb40c3598613a834490058cb562",
+  "held_bytes": 7873,
+  "outcome": "held",
+  "reason": "fetched from the registry host; NOT yet checked (intake_check.py reads it)",
+  "fetched_by": "0.9.0_WK_NFRA_CTLPLN~149",
+  "device": "laptop",
+  "at": "2026-10-16T20:30:37Z",
+  "ecosystem": "npm",
+  "approval": {
+    "file": "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_NPM_MCPORTAL_BUN_20261016.md",
+    "sha256": "92d2bb6284a11a5878e0d1b54135a81617afa9e83d04045aa2dfbf366d74f18e",
+    "lines_matched": 1
+  },
+  "packument": {
+    "url": "https://registry.npmjs.org/tinyglobby",
+    "integrity_equal": true,
+    "created": "2024-07-22T18:19:33.107Z",
+    "published_times": {
+      "0.1.0": "2024-07-22T18:19:33.355Z",
+      "0.1.1": "2024-07-22T19:21:36.789Z",
+      "0.1.2": "2024-07-22T21:50:34.722Z",
+      "0.2.0": "2024-07-24T14:07:19.907Z",
+      "0.2.1": "2024-08-04T09:52:21.246Z",
+      "0.2.10": "2024-10-25T07:34:29.010Z",
+      "0.2.11": "2025-02-17T19:31:52.818Z",
+      "0.2.12": "2025-02-20T00:25:55.583Z",
+      "0.2.13": "2025-04-19T18:32:47.367Z",
+      "0.2.14": "2025-05-25T16:19:05.967Z",
+      "0.2.15": "2025-09-06T18:52:04.151Z",
+      "0.2.16": "2026-04-07T23:37:03.457Z",
+      "0.2.17": "2026-05-30T19:57:21.717Z",
+      "0.2.2": "2024-08-06T15:51:09.291Z",
+      "0.2.3": "2024-08-24T12:14:22.936Z",
+      "0.2.4": "2024-08-24T13:19:35.254Z",
+      "0.2.5": "2024-08-24T13:54:47.952Z",
+      "0.2.6": "2024-09-08T23:02:09.719Z",
+      "0.2.7": "2024-09-30T12:30:26.545Z",
+      "0.2.8": "2024-10-01T00:18:49.737Z",
+      "0.2.9": "2024-10-01T10:05:53.334Z"
+    }
+  },
+  "received_sha256": "afb4afae9175f8b873ac13e1d21cea0997a0bcb40c3598613a834490058cb562",
+  "received_bytes": 7873
+}
