@@ -41114,3 +41114,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "They now do: the fact_trn prefix is granted, derived from the declaration, for this one role."
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S221",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-16T13:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-596's first scheduled chain run FAILED at the scope step: pull_inflection_scope_account_returns.py line 34 reads _HERE.parents[2] and the runner path /tmp/orion_gold_scripts/ has no such ancestor; the chain tolerated it and Branch B restored the saved dispatch copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/gold/logs/chain_full_20261016_113302.log (4.5 MB, shipped 12:56Z): step INF_API_PULL_SCOPE_ACCTS started 11:51:47Z with --upload; Traceback: File /tmp/orion_gold_scripts/pull_inflection_scope_account_returns.py, line 34, _REPO_LIB = _HERE.parents[2] / lib, pathlib IndexError: 2 (python3.9); [PERF] wall=0.1s; WARN: INF_API_PULL_SCOPE_ACCTS pull timed out/failed (exit=1, timeout=600s) -- TOLERATING",
+      "feed prefixes orion/inflection/bronze/scope_account_returns/ and silver/scope_account_returns/ list 0 keys after the run (read 12:5xZ and 13:0xZ); 2.0.0_SA_COO~I2 msg 9326 read 0 silver partitions at 11:31Z and 12:01Z",
+      "dispatch object code/gold/orion-gold-dispatch.sh: live version before s1MuRDO6wHvcbuSWAI.Y6zmLo8smB_l0 (sha256 e9aef66bc8a4), restored 13:00Z as new current version 28oA7ykJ1O2TPVC2KFvm6hrhu8e1iD4H whose sha256 d6b00f6fdd75 equals the saved copy; nothing deleted"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-596 step 4(d): the dry-run import on the runner (the script run as the chain will, without --upload) imports, reads the roster, prints PLAN lines and exits 0; step 6: the first scheduled chain shows the step exit 0, not a tolerated failure.",
+  "world_is": "The apply-time dry-run import is recorded as exit 0 (IB229-1_apply_half.json); I did not re-derive its directory in this session, but a deeper temporary directory than the chain's would explain a pass there. The chain runs the script at /tmp/orion_gold_scripts/<file> (parents: /tmp/orion_gold_scripts and /tmp), where parents[2] raises IndexError before any request, so the step wrote nothing (0 requests, 0 keys, no existing key changed) and the chain proceeded on prior bronze. Order step 7 names a tolerated failure as a Branch B trigger, so the saved dispatch copy was restored at 13:00Z; the feed script, trading_calendar.py and the sidecar stay on the code prefix, inert. A forward fix is a one-line path derivation in the script (resolve the lib directory the way the neighbouring pull scripts on /tmp/orion_gold_scripts do, or from the sidecar directory) plus a dry-run import from the chain's own path /tmp/orion_gold_scripts; that is a new build and apply, not this order's. D2-W404-S9 (a WARN-and-succeed pull branch) is not what happened: this exit is 1.",
+  "disarm_owner": "2.0.0_SA_COO~N2"
+}
+```
