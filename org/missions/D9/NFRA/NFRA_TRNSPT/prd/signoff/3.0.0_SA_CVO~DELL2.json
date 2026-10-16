@@ -1,0 +1,12 @@
+{
+  "prd": "NFRA_TRNSPT_PRD.md",
+  "prd_version": "v0.3",
+  "prd_pin": "881f9a12c21e205d7da6eedf30c5c3033b2be720",
+  "half": "ratified-text",
+  "half_hash": "2dd636bd711c598539ec4434ea22cc3ac0c9439a1aa040e8601fcf5f99b1f407",
+  "endpoint_hash": "cb3a4539ad5aa33cd76520d0fdca37e5c1be0091e83f49747d60ee9947df7dfd",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO~DELL2/deliverables/NFRA_TRNSPT_PRD_ADDENDUM3_RATIFIED_TEXT_REVIEW_20261016.md@a571a28bc8",
+  "signed_by": "3.0.0_SA_CVO~DELL2",
+  "signed_at": "2026-10-16T13:57:13Z"
+}
