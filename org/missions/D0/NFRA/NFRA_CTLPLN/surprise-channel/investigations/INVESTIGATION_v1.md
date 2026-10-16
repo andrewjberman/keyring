@@ -12825,3 +12825,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The CTO may prefer the count derived from the table rather than a literal; that is a test-design choice for the owner of the case, not made here."
 }
 ```
+
+## NFRA_CTLPLN-W142-S4 -- the crossbox suite reads cases=69/70 ok=False at HEAD: its writer comparison looks for a server.py anchor that is not in server.py
+
+```json
+{
+  "id": "NFRA_CTLPLN-W142-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~142",
+  "surfaced_at": "2026-10-16T12:55:00Z",
+  "one_line": "The neighbouring suite .tools/tests/test_crossbox_call.py reads CROSSBOX-TEST cases=69/70 ok=False at HEAD: part2_writer_and_watcher raises ValueError substring not found, because org/mcp/server.py has no msg_path.write_text(msg_content anchor; this worker's commits do not touch that file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_crossbox_call.py (worktree, HEAD fd63774332, run 99 s, rc=1): FAIL writer and watcher comparison ran -- ValueError: substring not found; last line CROSSBOX-TEST cases=69/70 ok=False",
+      ".tools/tests/test_crossbox_call.py@fd63774332 line 108-109: server.index(msg_content = () and server.index(msg_path.write_text(msg_content) read from org/mcp/server.py; git show 833181d311:org/mcp/server.py holds the first anchor once and the second zero times, and the worktree copy matches",
+      "git diff --name-only 833181d311 HEAD lists five paths, none under org/mcp/ or .tools/crossbox-call.py, so the red is not this worker's change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The crossbox suite's part 2 checks the writer's code (org/mcp/server.py) and the watcher (org/mcp/inbox-watch.sh) read from the checkout; a sparse worktree that lacks org/mcp skips those checks with a printed reason instead of failing them.",
+  "world_is": "org/mcp is present in this worktree, so the checks run, and the writer's code at HEAD no longer carries the msg_path.write_text(msg_content anchor the comparison slices on. The one red case of the suite is that comparison; the other 69 cases pass.",
+  "notes": "Not repaired here: the suite and server.py are outside this cell's write grant. The owner of org/mcp/server.py or of test_crossbox_call.py decides which side moved. The worker's report names the suite's whole last line."
+}
+```
