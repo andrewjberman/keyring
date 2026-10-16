@@ -1,0 +1,99 @@
+{
+ "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_MDPF_SECCLASS_SEED22_FOLDS_20261016.md @1b45af4766",
+ "ruled_by": "1.0.0_SA_CTO~DELL1 2026-10-16",
+ "note": "Equity tickers AEMGX, CEMVX, FBCVX, FIADX are planned by plan_rows directly (direct canonical match) and are not in this map.",
+ "seed": {
+  "CUBE": {
+   "rule": "F1",
+   "asset_class": "alternatives",
+   "sub_asset_class": "Real Estate",
+   "note": "REIT: the table's own convention (VNQ, IYR, SCHH, XLRE)"
+  },
+  "GLPI": {
+   "rule": "F1",
+   "asset_class": "alternatives",
+   "sub_asset_class": "Real Estate",
+   "note": "REIT: the table's own convention (VNQ, IYR, SCHH, XLRE)"
+  },
+  "HPI": {
+   "rule": "F2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": null,
+   "note": "preferred income fund: old-list class kept, no sub-class"
+  },
+  "LCFYX": {
+   "rule": "F2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": null,
+   "note": "convertible: old-list class kept, no sub-class"
+  },
+  "PFF": {
+   "rule": "F2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": null,
+   "note": "preferred ETF: old-list class kept, no sub-class"
+  },
+  "VRP": {
+   "rule": "F2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": null,
+   "note": "preferred ETF: old-list class kept, no sub-class"
+  },
+  "CPXIX": {
+   "rule": "F2",
+   "asset_class": "fixed_income",
+   "sub_asset_class": null,
+   "note": "convertible: old-list class kept, no sub-class"
+  },
+  "EZET": {
+   "rule": "F4",
+   "asset_class": "commodities",
+   "sub_asset_class": "Commodities",
+   "note": "Ether trust: the table's convention (IBIT, GBTC, ARKB)"
+  },
+  "HODL": {
+   "rule": "F5",
+   "asset_class": "commodities",
+   "sub_asset_class": "Commodities",
+   "note": "OVERRIDE of the old-list class (alternatives / Volatility): the name says bitcoin ETF, so the convention governs"
+  }
+ },
+ "held_out": {
+  "DODBX": {
+   "rule": "F2",
+   "reason": "balanced or income-blend fund: held out"
+  },
+  "BALCX": {
+   "rule": "F2",
+   "reason": "balanced or income-blend fund: held out"
+  },
+  "CIMAX": {
+   "rule": "F2",
+   "reason": "balanced or income-blend fund: held out"
+  },
+  "KAMIX": {
+   "rule": "F3",
+   "reason": "managed-income, target-date or balanced fund is not a structured note: held out"
+  },
+  "FSNQX": {
+   "rule": "F3",
+   "reason": "same"
+  },
+  "HBLFX": {
+   "rule": "F3",
+   "reason": "same"
+  },
+  "JBAWX": {
+   "rule": "F3",
+   "reason": "same"
+  },
+  "TRRNX": {
+   "rule": "F3",
+   "reason": "same"
+  },
+  "PCEF": {
+   "rule": "F6",
+   "reason": "old row needs_review at confidence 0.5: held out"
+  }
+ }
+}
