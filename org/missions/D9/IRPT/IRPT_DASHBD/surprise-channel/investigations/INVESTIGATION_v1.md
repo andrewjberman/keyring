@@ -22734,6 +22734,7 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
 ## IRPT_DASHBD-D2-W239-S1 -- the order's step 3(b) call shape breaks the DB-b-294 spy test that AC3 requires green, so AC3 cannot pass as written
 
 ```json
@@ -22862,5 +22863,58 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Practice from here (CTO msg 9305): before EVERY drain commit run `git diff --stat <first-parent> HEAD -- . ':!<my owned paths>'`, and after a merge that stayed open across other seats' commits, compare `git diff --cached --name-status HEAD` with the expected paths; any deletion outside my paths is a STOP and is restored from the first parent, never reset away. A conflicted drain goes to a LINKED worktree of its own (the shared index is the hazard). The restore of the 10 files is 0.0.0_AB_MSTR~DELL2's under msg 9305; this row disarms when the 10 paths read present in HEAD."
+}
+```
+
+## IRPT_DASHBD-D2-W240-S1 -- the p165 form clause refuses the one unchanged 49F member whose packaged_as differs from its repo_path, so AC1 to AC3 cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W240-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~240",
+  "surfaced_at": "2026-10-16T11:16:20Z",
+  "one_line": "The p165 check_repin form clause requires packaged_as equal to repo_path for every staged member, but irpt-49f-reporting-gold-lambda has an unchanged member (infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py, packaged_as etf_classifications_dynamodb.py) at base and at HEAD, so AC1, AC2 and AC3 refuse the entry although the re-pin is complete.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 2 of the cell: packaged_as and repo_path do not change, and every other member stays byte for byte. DB165-1-AC1: each entry differs from the base only in its stale members' pin and sha256. The checker's check_repin (the proven p158 clause) requires, for every staged member, packaged_as == repo_path == the base repo_path.",
+  "world_is": "At base 7459521a08 and at HEAD ebe2302322 the third staged member of irpt-49f-reporting-gold-lambda has packaged_as etf_classifications_dynamodb.py against repo_path infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py. Its sha256 matches HEAD, so it is not stale and is byte-identical to base. Across the three entries 1 of 48 members has this form. The 14 stale members are re-pinned and nothing else moved, yet the form clause refuses the entry. Satisfying the criteria needs the checker widened (outside the grant) or packaged_as changed (forbidden by step 2). Neither was taken; the order is left open for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I checks/r149/p165_repin_three.py . DB165-1-AC1 at ebe2302322: FAIL: irpt-49f-reporting-gold-lambda: member form: infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py (AC2 fails identically, the same check runs first)",
+      "read of staged_from in infra/aws/lambda/ci/lambda-source-map.json at base 7459521a08 and at HEAD ebe2302322: packaged_as differs from repo_path in 1 of 48 members (12 + 21 + 15), the same member in both"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the p165 form clause, copied from the p158 check_repin, assumes packaged_as equals repo_path for every member; the 49F etf member is the one exception and is unchanged by this order. Not repaired by the worker: the checker and packaged_as are outside the grant or fixed by step 2. The BUILD_ONLY runs of the three entries exited 0 and printed the base64 hashes recorded in the facts record; the build also printed UNENFORCED warnings for the publish entry's modules (no BUILD_MANIFEST.json), which this order does not mention."
+}
+```
+
+
+## IRPT_DASHBD-D2-W240-S2 -- the p165 import clause admits only pyarrow, but the 49F bundle also imports pandas that the shared layer holds, so AC2 and AC3 cannot pass as written
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W240-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~240",
+  "surfaced_at": "2026-10-16T11:29:38Z",
+  "one_line": "The p165 import clause admits only pyarrow as a third-party import, but the 49F bundle also imports pandas (three staged members), which the shared layer irpt-performance-native-layer holds, so AC2 and AC3 refuse the entry although the build exits 0.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB165-1-AC2: the BUILD_ONLY package of each of the three entries holds exactly the entry's files with source-equal bytes, and its third-party imports are pyarrow plus the runtime's (the layer holds it). The checker's check_imports (p149) requires the third-party set, minus boto3 and botocore, to equal exactly {pyarrow}.",
+  "world_is": "The irpt-49f-reporting-gold-lambda staged members account_return_daily.py, account_class_daily.py and account_activity_lots.py import pandas, and the entry's _build_note says pandas and pyarrow come from irpt-performance-native-layer. A GET of that layer (version 1, 4319 entries) holds python/pandas/__init__.py and python/pyarrow/__init__.py. The clause refuses the entry on the pandas import, so AC2 and AC3 fail as written; the BUILD_ONLY runs exited 0 for all three entries. Neither the checker nor the entry was changed; the order is left open for the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I checks/r149/p165_repin_three.py . DB165-1-AC2 at 376689568e (checker from f86d63befd): FAIL: the bundle's third-party imports (any statement, besides boto3/botocore) must be exactly pyarrow, read ['pandas', 'pyarrow']",
+      "p149 layer_names at layer irpt-performance-native-layer version 1 (GET only): 4319 entries; python/pandas/__init__.py held True; python/pyarrow/__init__.py held True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer: the p165 clause (inherited from the p149 check_imports) fixes the third-party set to pyarrow; the 49F entry's own _build_note states pandas comes from the same layer. Not repaired by the worker: the checker is outside the grant."
 }
 ```
