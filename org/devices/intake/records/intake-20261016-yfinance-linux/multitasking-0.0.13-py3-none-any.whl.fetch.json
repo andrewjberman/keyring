@@ -1,0 +1,31 @@
+{
+  "schema": "intake-fetch/1",
+  "batch": "intake-20261016-yfinance-linux",
+  "requested": {
+    "name": "multitasking",
+    "version": "0.0.13",
+    "python_tag": "py3",
+    "abi_tag": "none",
+    "platform_tag": "any",
+    "file_name": "multitasking-0.0.13-py3-none-any.whl"
+  },
+  "index_base": "https://pypi.org",
+  "requests": [],
+  "published": null,
+  "project": null,
+  "attestation": "unread",
+  "attestation_url": null,
+  "held_path": null,
+  "held_sha256": null,
+  "held_bytes": null,
+  "outcome": "refused",
+  "reason": "approval file does not contain the exact multitasking==0.0.13",
+  "fetched_by": "0.9.0_WK_NFRA_CTLPLN~132",
+  "device": "laptop",
+  "at": "2026-10-16T07:03:56Z",
+  "approval": {
+    "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_YFINANCE_LINUX_20261016.md",
+    "sha256": "2c354d03c2f427537f55b14c576669e66b7ddbdc18dfdfb38453cf0e6cdfc47e",
+    "matched": false
+  }
+}
