@@ -8431,3 +8431,51 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Add to the Cottonwood plan's retire list with its consumer census (0 of 304 roles can read it). Its deletion is destructive and needs Andrew's confirmation at the moment it runs (CLAUDE.md Agent Autonomy); the retirement is a round-9 or later change under its own pair. Disarm: none (INERT)."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W92-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~92",
+  "surfaced_at": "2026-10-16T18:21:00Z",
+  "one_line": "The SCP read that remedy row ADVI_FIRMBKTS-D1-W65-S3 records as AccessDenied now answers AWSOrganizationsNotInUseException (not a member of an organization) when run from the worker worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "REMEDIATION_v6 row ADVI_FIRMBKTS-D1-W65-S3 (owner 1.0.0_SA_CTO~DELL1): organizations list-policies (SERVICE_CONTROL_POLICY) is AccessDenied to cloudops-dell1-agent-user, so any SCP that could deny events:PutEvents is unreadable from this identity.",
+  "world_is": "Read 2026-10-16 from C:/dev/wk-firmbkts-r9-92: aws organizations list-policies --filter SERVICE_CONTROL_POLICY returned rc 254 with AWSOrganizationsNotInUseException (Your account is not a member of an organization). The error is not AccessDenied. The identity the shim resolved was not read, so whether the account is outside the organization or the call resolves another identity is open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws organizations list-policies --filter SERVICE_CONTROL_POLICY (read-only), rc 254, stderr AWSOrganizationsNotInUseException, read 2026-10-16 from the worker worktree",
+      "triage record org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~92/TRIAGE_C.json@ac8d228957 (D1-W65-S3 carried to 1.0.0_SA_CTO~DELL1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the row premise and the live read differ. Routed by the triage carry to 1.0.0_SA_CTO~DELL1. No fix attempted; no identity was changed."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W92-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~92",
+  "surfaced_at": "2026-10-16T18:21:00Z",
+  "one_line": "The shared-advisor-router header comment says CANONICAL_PLATINUM_BUCKETS is EMPTY today, but the generated firm-config.mjs at HEAD lists opal-data-49financial.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The router header comment (shared-advisor-router index.mjs line 76) states the canonical list is EMPTY today; REMEDIATION_v3 D1-S7 relies on that list as the gate for the cutover.",
+  "world_is": "index.mjs line 76 still says the list is EMPTY today. firm-config.mjs lines 103-105, generated from the registry by the round-4 flip (commit 69679b90e3), list opal-data-49financial. The comment is stale against the generated file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/shared-advisor-router/index.mjs line 76 (comment) at worktree HEAD 4fb60ead6e",
+      "infra/aws/lambda-edge/_shared/firm-config.mjs lines 103-105 at worktree HEAD (generated header cites registry@8c8634a17f0a39f4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while triaging D1-S7 (carried to 1.0.0_SA_CTO~DELL1). Whether the router as deployed reads the list at firm-config line 103 was not read. No fix attempted."
+}
+```
