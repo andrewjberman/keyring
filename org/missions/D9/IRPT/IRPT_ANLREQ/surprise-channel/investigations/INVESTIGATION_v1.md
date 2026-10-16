@@ -20254,3 +20254,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W216-S1 -- the R46 checker path was absent from this worktree at the first grounding read and present at the acceptance run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W216-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~216",
+  "surfaced_at": "2026-10-16T01:26:00Z",
+  "one_line": "The TO-AR-ty-53 acceptance checker path was absent from this worktree at the first grounding read and present at the acceptance run; the sparse-checkout cone does not list org/tier1_exec.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order runs org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py from the worktree root, and the worktree carries the paths the order names.",
+  "world_is": "The first read (ls of org/tier1_exec/ and of its 2.0.0_SA_COO child) returned No such file or directory. The sparse-checkout list names no org/tier1_exec or org/surprise_channel entry, and the checker is an index entry flagged skip-worktree. At the acceptance run the folder listed with a 21:12 local mtime, git hash-object of the checker equals index blob 417fffb4 (HEAD 9d0664b2ff), and two runs returned R46-TESTS-OK passed=10 rc=0. This worker wrote nothing under that folder; the cause of the change is not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -s org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py at 9d0664b2ff: mode 100644, blob 417fffb48cfda08eb898835e2465fd38780daa9e",
+      "git sparse-checkout list in worktree wk-IRPT_ANLREQ-216 (cone mode): org/missions/D9/IRPT/IRPT_ANLREQ, org/standards, org/ref, org/devices, org/modules/graph and others; no org/tier1_exec entry",
+      "acceptance run from worktree root: r46_checks.py tests 6 with the three AR-ty-53 test files printed R46-TESTS-OK passed=10 (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W216-S2 -- the cell cites retention.py:102 and owner_reads.py:28 for refusals whose raise lines are 103 and 33
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W216-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~216",
+  "surfaced_at": "2026-10-16T01:26:00Z",
+  "one_line": "The TO-AR-ty-53 cell cites retention.py:102 and owner_reads.py:28 for refusals whose raise lines are 103 and 33; the cited lines open the decision conditions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order names retention.py:102 for ReportDenied('retention owner access denied') and owner_reads.py:28 for ProspectOwnershipRefused('issued record not currently authorized').",
+  "world_is": "retention.py line 102 is the second clause of the service-branch condition (or firm != owner[firm_id]); the ReportDenied raise is at line 103. owner_reads.py line 28 opens the owner-firm condition; the ProspectOwnershipRefused raise is at line 33. The binding map (rows 29 and 34) gives the same raise lines. The tests were written against what the code does: the retention test is decided by the line-102 clause and the owner-read OPAL_GLOBAL test by line 28. No code under test was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/retention.py lines 100-103 at 9d0664b2ff (cat -n read): line 102 is the clause, line 103 the raise",
+      "infra/aws/lambda/investor-reporting/_scope/owner_reads.py lines 28 and 33 at 9d0664b2ff (cat -n read): line 28 opens the condition, line 33 raises",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~211/FWD5_REPORT_SIDE_BINDING_MAP.md rows 29 and 34 at 9d0664b2ff"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
