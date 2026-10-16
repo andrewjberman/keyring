@@ -5,7 +5,7 @@
   "fabric": "dell1",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "ROUND_CLOSE",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-13",
   "registered_under_tree": "2026-09-13",
   "placement": "DELL1",
