@@ -21383,7 +21383,6 @@
 }
 ```
 
-
 ## IRPT_ANLREQ-D2-W231-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~231, cell AR-tz-67) the meeting route is a POST to a ticket route, which the order's own guard refuses; the run cannot exit 0 as specified
 
 ```json
@@ -21865,4 +21864,106 @@
     "disposition": "UNDER_INVESTIGATION"
   }
 ]
+```
+
+## IRPT_ANLREQ-D2-W233-S1 -- the ready-signal hop writes no hop_failure when the queue URL is unset, so the status route reads the phase only
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W233-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~233",
+  "surfaced_at": "2026-10-16T06:55:00Z",
+  "one_line": "The ready-signal hop writes no hop_failure when IRPT_ANALYSIS_READY_QUEUE_URL is unset: send_ready returns before its try block, so the status route reads the phase only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell AR-tf-75 (DONE WHEN: each failure is driven on purpose and the ticket names the step) and the comment at ops/status.py:181-183, which says the closed failure codes are written by the three silent hops (ready signal, commentary, packager).",
+  "world_is": "At e1112edbda resident_worker.py:218-221 prints WARN: ANALYSIS_READY_QUEUE_UNSET and returns when the URL is empty; the try block that marks READY_SIGNAL_SEND_FAILED (resident_worker.py:222-240) is not reached. owned_status.py:31-38 then finds no hop_failure, and the RECEIVED phase reads as QUEUED with the WAIT action (owned_status.py:13, 73-74). Read by code only; no run. The state needs the env value removed, which is not a normal operating state, so the item is INERT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py@e1112edbda:218-240",
+      "infra/aws/lambda/investor-reporting/ops/owned_status.py@e1112edbda:13-38",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~233/FWD4_DRIVE_ON_PURPOSE_MAP.md (row 2, the ready-signal queue URL unset)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W233-S2 -- the commentary step can stop with no vendor word and write no hop_failure, so the status route reads the phase only
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W233-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~233",
+  "surfaced_at": "2026-10-16T06:55:30Z",
+  "one_line": "The commentary step stops with no vendor word (KIMI_STANDING_WORD_REF blank) and writes no hop_failure; the status route reads the phase only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell AR-tf-75 (DONE WHEN: each failure is driven on purpose and the ticket names the step) and the comment at ops/status.py:181-183, which says the commentary hop writes the closed COMMENTARY codes.",
+  "world_is": "At e1112edbda lambda_handler.py:386-388 logs commentary stopped with STAGE_NO_VENDOR_WORD and appends the result without calling report_hop_failure. The only writer of the COMMENTARY codes (_report_hop_failure, lambda_handler.py:263-276) is not reached on this branch. The model is None when KIMI_STANDING_WORD_REF is blank (lambda_handler.py:328). Read by code only; no run. The state needs the env value blank, which is not a normal operating state, so the item is INERT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/commentary/lambda_handler.py@e1112edbda:328-388",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~233/FWD4_DRIVE_ON_PURPOSE_MAP.md (row 8, the commentary no-vendor-word stop)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W233-S3 -- a 5xx answer from the ticket attach is recorded as PACKAGER_REFUSED, so its words say the package was refused and not that attaching stopped on an error
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W233-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~233",
+  "surfaced_at": "2026-10-16T06:56:00Z",
+  "one_line": "The packager code is chosen by exception class, so a 5xx answer from the ticket attach is recorded as PACKAGER_REFUSED and its status words say the package was refused; PACKAGER_FAILED is reached only by a non-refusal exception.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ops/status.py:200-202 carries two codes: PACKAGER_REFUSED (the final package was refused when attached) and PACKAGER_FAILED (attaching the package stopped on an error). Cell AR-tf-75 asks for refuses and fails as separate trigger rows.",
+  "world_is": "At e1112edbda reports/resident_installed.py:458 sets the code from type(exc).__name__ == 'PackagerRefused', and ycharts/research/opal_packager.py:347 raises PackagerRefused for every non-2xx attach answer (ATTACH_REFUSED:<status>), so a 500 is recorded as PACKAGER_REFUSED. Read by code only; no run. The step and the NONE action are right; the word is the difference, and no live data is damaged, so the item is INERT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py@e1112edbda:458-460",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py@e1112edbda:340-347",
+      "infra/aws/lambda/investor-reporting/ops/status.py@e1112edbda:200-202"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W233-S4 -- the worktree's sparse checkout omits the channel schema directory, so the row schema the worker face names is not on disk in the worktree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W233-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~233",
+  "surfaced_at": "2026-10-16T06:56:30Z",
+  "one_line": "Worktree wk-IRPT_ANLREQ-233 has core.sparseCheckout on and omits org/surprise_channel, so org/surprise_channel/schemas/investigation_item.schema.json is absent on disk; the schema was read at HEAD with git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face names the row schema at org/surprise_channel/schemas/investigation_item.schema.json as the form a surprise row takes, to be followed when a row is filed in the worktree.",
+  "world_is": "At e1112edbda git ls-files -t reports S (skip-worktree) for the tracked files under org/surprise_channel, the cone list omits that directory, and the directory is absent on disk. The schema is tracked at HEAD and was read with git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json; the row follows that read. The worktree was not extended (no sparse-checkout change). INERT: a missing reader does not change any row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git@e1112edbda:org/surprise_channel/schemas/investigation_item.schema.json (read by git show HEAD:path)",
+      "git config core.sparseCheckout true; git sparse-checkout list (cone omits org/surprise_channel)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
 ```
