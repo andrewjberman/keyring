@@ -20833,6 +20833,110 @@ name the one known failure instead of silently inheriting it.
 }
 ```
 
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~118",
+  "surfaced_at": "2026-10-16T12:02:10Z",
+  "id": "NFRA_OPLGTW-Z-W118-S1",
+  "one_line": "No client adapter reads a currency column, so OG-en-4 emits currency null with currency_basis source_absent on every position row it builds; the premise that the source row carries its currency is supported by no read set and no fixture.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py@e08686be6a UNREALIZED_COLUMNS (lines 44-45) names no currency; get_holdings reads columns=list(UNREALIZED_COLUMNS) at line 307.",
+      "READ: client_adapter_bdcottonwood.py@e08686be6a COLS_HOLD (lines 46-47), client_adapter_commonwealth.py@e08686be6a POSITION_COLS (line 40), client_adapter_orion.py@e08686be6a POSITION_COLUMNS (lines 23-25), client_adapter_schwab.py@e08686be6a POSITION_COLUMNS (lines 60-61): none names a currency column.",
+      "READ: client_adapter_smartx.py@e08686be6a _positions reads every source column (no column list, line 199), and its fixture rows in tests/test_og_cl5.py@e08686be6a (lines 85-92) carry no currency key.",
+      "READ: app/harvest_typed.py@e08686be6a read_parquet raises ValueError('unknown column') for a name the object schema lacks (lines 178-180), so adding currency to a read list is unsafe for any table that does not carry it.",
+      "RUN: python -m pytest tests/test_og_en4.py in the worktree: 3 passed; test_ogen4_ac02 pins currency None and currency_basis source_absent on the explicit-read adapters."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-4 section 1 item 2: currency is the code the adapter's SOURCE row carries for that position, read from the source column; null with currency_basis source_absent only if the source carries none.",
+  "world_is": "Every explicit-read adapter emits currency null and currency_basis source_absent, because its read never names a currency column. smartx emits the source value when one exists, and no fixture or read set shows one. Whether the live client tables carry a currency column is UNMEASURED: no live schema was read in this cell.",
+  "notes": "Owner to decide whether the read lists of the five explicit adapters gain a currency column once the live schemas are measured: a column that exists makes the read safe, a column that does not raises ValueError. Until then the rows say source_absent, never USD."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~118",
+  "surfaced_at": "2026-10-16T12:02:10Z",
+  "id": "NFRA_OPLGTW-Z-W118-S2",
+  "one_line": "OG-en-4 names eclipse among the adapters whose get_holdings position rows gain the keys, but eclipse get_holdings refuses before any read, so it builds no position row for the keys to ride on.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: infra/aws/ec2/opal-gateway/app/client_adapter_eclipse.py@e08686be6a get_holdings (lines 199-201) raises AdapterRefusal vendor_no_holdings before any read; its docstring (line 10) says Eclipse has no holdings table.",
+      "READ: tests/test_og_cl3.py@e08686be6a line 194 asserts the same vendor_no_holdings refusal for eclipse.get_holdings.",
+      "RUN: python -m pytest tests/test_og_en4.py: test_ogen4_ac01 asserts the keys on the six adapters that emit rows and pins the eclipse refusal; 3 passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-4 section 1 names seven adapters that build position rows for get_holdings, eclipse included; AC1 says a position row from each of the seven carries weight_unit, currency and currency_basis.",
+  "world_is": "Eclipse builds no position row, so the keys have no row to carry; eclipse code is unchanged. The six adapters that emit rows carry the keys. The seven-adapter reading of AC1 cannot be met for eclipse as written, and the order's refuse-and-file rule applies to that clause. The status is left staged pending the issuer's ruling.",
+  "notes": "Issuer to rule: either the eclipse clause is met by the refusal (as tested) or the adapter list drops eclipse. No eclipse change was made.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~118",
+  "surfaced_at": "2026-10-16T12:02:10Z",
+  "id": "NFRA_OPLGTW-Z-W118-S3",
+  "one_line": "The orion position rows pass the source assetPercentOfAccount through as weight_pct, and its 0-100 scale is not established, so OG-en-4 names no weight_unit for orion rows; without a unit, a consumer cannot tell a fraction from a percent on that adapter.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: infra/aws/ec2/opal-gateway/app/client_adapter_orion.py@e08686be6a get_holdings (line 277) emits weight_pct = r.get('assetPercentOfAccount') and computes no weight.",
+      "GREP: no catalog description or doc in infra/aws/ec2/opal-gateway names the unit of assetPercentOfAccount; the only occurrences are the orion adapter and tests/test_og_cl3.py@e08686be6a line 67.",
+      "READ: tests/test_og_cl3.py@e08686be6a line 67 sets assetPercentOfAccount 1.0 for a position worth 6000 of 10000, which does not corroborate a 0-100 scale; the fixture is synthetic, so this is no measurement."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-4 section 1 item 1: weight_unit is percent only if an adapter genuinely emits a 0-100 number, and fraction where the adapter divides market_value by the total.",
+  "world_is": "Orion emits the source percent unchanged and names weight_unit null, not percent, because the scale is unverified. Left alone, an orion consumer reads weight_pct with no unit, which is the ambiguity the round-37 ruling closed for the other adapters.",
+  "notes": "Disarm: measure the scale of silver fact_positions assetPercentOfAccount against currentValue over the account total on one partition, then set weight_unit to percent or fraction in client_adapter_orion.py.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~118",
+  "surfaced_at": "2026-10-16T12:02:10Z",
+  "id": "NFRA_OPLGTW-Z-W118-S4",
+  "one_line": "The sparse worktree does not materialize data/mdpf/config/partner_roster.json, which is tracked at HEAD, so tests/test_og_ch1.py test_ogch1_ac04 fails at its file lookup before any adapter code runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git ls-files -- data/mdpf/config/partner_roster.json in the worktree lists the path (tracked at e08686be6a); ls data/mdpf/config/ reports no such directory.",
+      "RUN: git sparse-checkout list in the worktree omits the data/ cone (.tools, infra/aws/ec2/opal-gateway, infra/aws/globgrph, infra/aws/lambda/ci, infra/aws/terraform, and others).",
+      "RUN: python -m pytest tests/test_og_ch1.py: 10 passed, 1 failed (test_ogch1_ac04: 'the repo roster file is not on this tree'); the cell changed no data file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "tests/test_og_ch1.py _repo_roster walks up from the app directory and expects data/mdpf/config/partner_roster.json on the tree.",
+  "world_is": "This worktree's sparse cone excludes data/, so the file the test reads is not on disk here. The failure is in a lookup, not in the client adapters; it is not caused by OG-en-4 and was not repaired, since the order names no data path.",
+  "notes": "Owner to decide whether the sparse cone for this worktree should carry data/mdpf/config; no action was taken in this cell."
+}
+```
+
   ```json
   {
     "id": "NFRA_OPLGTW-Z-S175",
@@ -20878,4 +20982,97 @@ name the one known failure instead of silently inheriting it.
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Remedy, the tool's owner: prefer the latest grading row (by surfaced_at or file version), or let a row whose adjudicates names an earlier grading row replace it, and print the superseded row id. Until then a CVO re-grade must be read from the adjudication file, not from the checker's JUDGMENT line. Not ARMED: verdicts are recorded correctly; the checker mis-reports which one is current."
   }
+
+  ```json
+  [
+    {
+      "id": "NFRA_OPLGTW-Z-W121-S1",
+      "project": "NFRA_OPLGTW",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~121",
+      "surfaced_at": "2026-10-16T12:10:16Z",
+      "one_line": "The muse narrowing also refuses the bearer REST route /query/v0 to the muse client (only /teams/poll stays open). The cell's BUILD names the tools and visible_tools; /query/v0 is a second channel to non-M365 catalog data, so the set would leak through it without this.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~O",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "CODE: infra/aws/ec2/opal-gateway/app/data_entitlement.py MUSE_ROUTES and muse_route_denial, added by this cell (worktree branch wk-NFRA_OPLGTW-121, base e08686be6a).",
+          "CALLERS: app/query_v0.py:124 and app/server.py:759 call data_entitlement.route_denial for GUARDED_ROUTES = /teams/poll and /query/v0.",
+          "TEST: tests/test_og_en8.py test_ogen8_ac01 asserts route_denial('/query/v0') returns 403 and route_denial('/teams/poll') returns None for the muse principal."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The cell's BUILD narrows the tools and visible_tools for the muse client, and its intro says the client may reach no other source.",
+      "world_is": "/query/v0 is the catalog query route, not an M365 surface, and any bearer token could reach it. The narrowing therefore refuses it for the muse client as well. Andrew's client and every other client keep it unchanged.",
+      "notes": "The COO should confirm the route refusal belongs in this cell. Removing it is one membership change: MUSE_ROUTES in data_entitlement.py."
+    },
+    {
+      "id": "NFRA_OPLGTW-Z-W121-S2",
+      "project": "NFRA_OPLGTW",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~121",
+      "surfaced_at": "2026-10-16T12:10:16Z",
+      "one_line": "The CTO's word 'attachments' under mail is ambiguous in app/tools.py: save_email_attachment_to_site writes a mail attachment into a SharePoint site, so the muse set leaves it out; the calendar and meeting-transcript tools are not mail or Teams chat and channel tools, so they are out too.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~O",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "TOOLS: app/tools.py save_email_attachment_to_site (line 372), list_email_attachments (line 360), inspect_email_attachment (line 424), list_calendar (line 501), find_online_meeting, list_meeting_transcripts, read_meeting_transcript (lines 542 to 595).",
+          "SET: MUSE_M365_TOOLS in app/data_entitlement.py holds 20 names: whoami, 9 mail and 10 Teams; the test test_ogen8_ac02 derives the same set from app/tools.py by the underscore tokens email, draft, chat, chats, channel, channels, team, teams, minus save_email_attachment_to_site."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The cell's READ FIRST (3) lists mail as list, read, search, filtered list, attachments, reply, send, create draft, and Teams as teams, channels, chats, channel and chat messages, send channel and chat message, polling of addressed messages.",
+      "world_is": "'Attachments' has two readings. The set takes the read pair (list_email_attachments, inspect_email_attachment) and leaves out the write into a site. read_teams_attachment and read_chat_message_images are in as Teams reads.",
+      "notes": "The boundary is the issuer's call at the never-widen ask. Moving save_email_attachment_to_site in is one set edit plus one line in the test's exclusion."
+    },
+    {
+      "id": "NFRA_OPLGTW-Z-W121-S3",
+      "project": "NFRA_OPLGTW",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~121",
+      "surfaced_at": "2026-10-16T12:10:16Z",
+      "one_line": "test_ogz1_ac08 in tests/test_data_entitlement_guard.py fails before this cell and still fails after it, at the same line 756 with the same assertion; this cell does not touch that test or the route set it compares.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~O",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "RUN AT BASE (before any edit of this cell): python -m pytest tests/test_data_entitlement_guard.py tests/test_data_entitlement_family.py tests/test_entitlement_admin.py tests/test_og_bd3.py tests/test_og_ad1.py from infra/aws/ec2/opal-gateway: '1 failed, 32 passed', FAILED test_ogz1_ac08 at tests/test_data_entitlement_guard.py:756.",
+          "RUN AFTER (same five files plus tests/test_og_en8.py): '1 failed, 35 passed', the same FAILED test_ogz1_ac08 at line 756; the three new tests pass."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The cell says: if a test elsewhere pins a set this changes, update it to the new truth; never weaken it.",
+      "world_is": "The failing assertion compares a set of route declarations under a restricted profile. No route and no restricted-profile decision changed in this cell, so the failure is not caused by it and was not edited.",
+      "notes": "Owner of the guard suite to decide. The cell's AC1 and AC2 name only tests/test_og_en8.py, so no criterion of this cell depends on it."
+    },
+    {
+      "id": "NFRA_OPLGTW-Z-W121-S4",
+      "project": "NFRA_OPLGTW",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~121",
+      "surfaced_at": "2026-10-16T12:10:16Z",
+      "one_line": "On an HTTP tools/call the MCP SDK fills its tool cache through list_tools for a name it has not cached, so a denied call also makes the discovery-list POLICY reads (current_access and person_access) before the denial. The denial itself reads no store.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~O",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "MEASURED: one tools/call for schwab_list_files by the muse client through the served app (test harness of tests/test_data_entitlement_guard.py): the reads during the call were RUNTIME refresh family, then POLICY principal_profile and POLICY person_access, and the SDK logged 'Tool schwab_list_files not listed, no validation will be performed'.",
+          "CODE: app/tools.py _PolicyGuardedMCP.list_tools calls data_entitlement.visible_tools, which reads the principal's profile and person record for the discovery list."
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The cell's BUILD says the denial happens before any data read; the cell's tests do not say how reads are counted on the HTTP path.",
+      "world_is": "A store-read count taken around an HTTP tools/call over-counts, because the discovery reads come from the SDK, not from the denial. The test therefore measures zero store reads on the direct tool_denial call, and zero data touches on the HTTP call.",
+      "notes": "Instrument trap for any later read-count criterion on the MCP path. No behaviour changes; the discovery reads are existing behaviour."
+    }
+  ]
   ```
