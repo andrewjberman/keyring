@@ -24426,7 +24426,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
-
 ## IRPT_DASHBD-D2-W2202-S1 -- iam.tf still describes the write list as six gold tables after DB-f-2202 adds the transaction prefix
 
 ```json
@@ -24502,5 +24501,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "id": "IRPT_DASHBD-D2-S131",
+  "surfaced_at": "2026-10-16T23:06Z",
+  "one_line": "TO-DB-f-2204 Act 3: the 49F reporting-gold function's transaction stage failed on every day because the bundle's staged lib/trading_calendar.py (pin b2b748866020) has no first_trading_day_on_or_after; nothing was written; the apply is done and the function runs the new code.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dry run 2026-10-16T23:01:44Z request a6108244-b883-4718-81c8-d027847ad852, status 200, 691 ms, 251 MB: transaction_rows {} and transaction_failed {2026-10-15: AttributeError: module 'trading_calendar' has no attribute 'first_trading_day_on_or_after'}; 0 objects at irpt/49financial/gold/account_transaction/",
+      "lambda-source-map.json entry irpt-49f-reporting-gold-lambda: staged lib/trading_calendar.py pin b2b748866020370ebbef91fc5f4378b4cafb5f58 sha256 9bc467c6ce4d; git show of that pin has no def first_trading_day_on_or_after; lib/trading_calendar.py at HEAD defines it at line 201",
+      "the packet's build hash SCt7IgN3.. was built from that pin, so the build-only check could not see the defect; the import smoke only imports the handler (AT49_IMPORT_ERROR None)"
+    ]
+  },
+  "spec_asserts": "The packet and the order: the transaction-only dry run of one real fact_trn day returns a positive row count with transaction_failed empty.",
+  "world_is": "The new stage cannot run on the packaged calendar member. The function and role policy are applied (code SCt7IgN3, seven write resources); the scheduled fire on Monday 07:41 New York would run the transaction stage on the same member. A re-pin of the one staged member, a new build hash and a new packet are the fix (the F2 seat's call); no work-around was made."
+}
+```
+
+## IRPT_DASHBD-D2-W250-S1 -- the Inflection test cannot follow the existing irpt-dashbd tests into PATH A markup: they render the template model
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W250-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~250",
+  "surfaced_at": "2026-10-16T22:39:26Z",
+  "one_line": "The order says the Inflection assertion follows the existing irpt-dashbd Inflection tests, which show the PATH A report markup; those tests render the template model PerformanceReport instead. The new test asserts Inflection's PATH A account reads and the tab root, not PATH A figures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-314 worker face, step 3: the Inflection test asserts 'the PATH A report markup the tab renders for that client is still present, as the existing Inflection tests of __tests__/irpt-dashbd/ show'. Step 2: an Inflection client's PATH A performance must render exactly as before.",
+  "world_is": "The existing Inflection tests (report-render-r109, report-render-r110, report-render-r111, disclosure-placeholder) render the template model PerformanceReport or PerformanceReportDocument with firmId inflection. None renders the tab's PATH A body (data-slot reporting-body, reached only when an answered report is present), and no test in the directory asserts PATH A figures for Inflection. The new test asserts that Inflection's own account reads are still asked and that the tab root renders, with no template markup. 'Renders exactly as before' is not asserted by any test; it is NOT PROVEN.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/irpt-dashbd/report-render-r110.test.tsx@75a71ae3 lines 38-45 (tabOf and exportOf render PerformanceReport and PerformanceReportDocument with firmId inflection)",
+      "portal/src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx@355b3bf8 lines 882-919 (the reporting-body PATH A slot, rendered only when answer and report are present)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The issuer decides whether a PATH A fixture test for Inflection is wanted; this cell did not add one."
 }
 ```
