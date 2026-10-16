@@ -49,3 +49,13 @@ The round is MAY-CLOSE, with 7 of 7 judgment criteria graded.
 | **E8** | the muse-only narrowed OAuth client: M365 mail and Teams tools (read and send) plus whoami. A planted Schwab call and portal call by its client both REFUSE; Andrew's client is unchanged | WORLD |
 
 The name_rulings `ruling_ref` work (OG-rr-2 plus the 110-row backfill) is already issued and is not recut.
+
+## Update ~12:2xZ -- CVO v32/v33 (msg 34988, @c49cc748ce): 8 of 8 graded, MAY-CLOSE
+
+- **ap-14 AC3 and mg-1 AC3: MET, bounded.** After OG-mg-1's writes (R1 and R2), the Bloomberg seat's own re-exercise reads 7 PASS and
+  0 DENIED. `gateway_query_catalog` is admitted, but its data path is unexercised. The premise this seat doubted (a Schwab grant
+  admitting non-Schwab tools) held because R2 unscopes the principal. E1 and E2 of round 38 are therefore discharged.
+- **Z-S176:** `round-close-check` grades from the first CVO row, not the grade of record. That tool is NFRA_CTLPLN's, so it goes
+  cross-box to `2.0.0_SA_COO~C` (XB below). It is not a cell here.
+- **Z-S175: a key-lookup failure returns HTTP 403.** A missing key is not a forbidden one. Added as round-38 cell **E9**: a missing
+  key answers 404 (or the gateway's not-found envelope), a denied one answers 403, and a test covers both arms.

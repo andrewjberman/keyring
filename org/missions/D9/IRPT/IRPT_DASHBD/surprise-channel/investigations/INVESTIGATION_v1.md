@@ -22945,3 +22945,32 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "For 0.0.0_AB_MSTR~DELL2: the restore of the 6 to the merge-tree blobs, one lane per commit under the audited override. The two conflict calls need no change. This row disarms with S116 when the 16 paths read at their intended bytes in the repair tip."
 }
 ```
+
+
+## IRPT_DASHBD-D2-S118 -- W1701-S6 ruled by its disarm owner: the taxonomy bucket wins, the two descriptions stay INTERNAL, a pairing census re-opens it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S118",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-16T12:15:00Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W1701-S6 by its disarm owner (round-131 analysis, ruling 4): Dividend Paid from Cash and Income Paid stay INTERNAL because the source taxonomy places them in the Internal bucket with no account boundary, while Dividend to Cash already reads INCOME; a pairing census over the 154 partitions re-opens the ruling if fewer than 95 percent of those rows pair with a same-account, same-day INCOME row of equal absolute amount.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": ["IRPT_DASHBD-D2-W1701-S6"],
+  "spec_asserts": "An ARMED row disarms by its disarm owner's ruling; the Inflection flow rule takes the taxonomy bucket before the word (order TO-DB-f-1701).",
+  "world_is": "Contract 0.4.0 carries flow_class INTERNAL on the two source_mapping rows; ADJUDICATION_v140 held the class for this seat. The ruling keeps the contract as landed and adds the pairing census to the round-132 enrichment list for 2.0.0_SA_COO~F2.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml: both descriptions in bucket Internal, no account_boundary (read by the worker, row W1701-S6)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_131_20261016.md ruling 4",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/adjudications/ADJUDICATION_v140.md decision (d)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W1701-S6 is ruled by its disarm owner: the class stays INTERNAL as landed; the pairing census is a round-132 criterion, not a hazard."
+}
+```

@@ -2567,3 +2567,18 @@ Cells `DB-b-292` to `DB-b-296` are drained (merge commits `9c46b7d536` 293, `55e
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the entry clause is the proven `p158_repin.py` `check_repin` applied to each of the three entries):** `checks/r149/p165_repin_three.py` (DB165-1-AC1..AC3).
 
 **Note to section 154 (2026-10-16 ~11:3xZ, the CTO's ruling msg 9298 and ~C2's answer msg 9301):** the page-side MIRROR (reader) cell of series contract 0.3.3 is `DB-c-30` (`TO-DB-c-30.page-mirror-takes-on-series-contract-033`, merged @b8bff882d4, `portal dashboard/seriesContract.ts` only; its check iv-e-124 reads green on it; no line of 0.3.3 needs rewording for the page). `DB-b-293` and its drain are paired with it. **Standing rule from here:** every contract order of this decomposition names its `DB-c-NN` cell, and ~C2 is sent the changed `series.required`, `optional`, `array_keys` or manifest list BEFORE the cut so both cells land in the same round.
+
+## 159. ROUND 149, WORKSTREAM PUB49FAPPLY (2026-10-16 ~12:3xZ, issuer 2.0.0_SA_COO~D2): the apply of the signed 49 Financial publish pair
+
+The CTO signed his half of the packet (sha256 `29b7df738efc`) at @582155d0b7, all three questions accepted, with four added conditions: the absent days printed and checked before Act 4; the Lambda's calendar must agree with that check; Act 2 not before 13:00Z; the schedule stays ENABLED and untouched. He also corrected the packet: the PROD Performance tab (row 92c0) reads the unreported-days list, so Act 5 turns the sentence on for clients wherever a window holds an absent day.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The apply: ledger first, build-only hash, new bundle version, plan 0 add / 1 change / 0 destroy, ONE `safe-apply` not before 13:00Z, the absent-days check, a one-shard dry run, one canary account, the 7-shard full republish | DB-b-298 | FWD-10 | WORLD | `DB-b-292`, `DB-b-295` merged and both halves SIGNED | chain S |
+| 2. The next WORLD pairs, each separate and signed by the CTO: (a) the 49 Financial `reporting-gold` pair: the listing grant the filled-report stage lacks (row IRPT_BCKEND-D2-S219: the policy's list pattern omits the filled prefix, so the catch-up list is denied), the history_scope code update and the gold rebuild; (b) the Cottonwood landing code update and the 65-day rewrite; (c) the Cottonwood publish code update and republish | NOT CUT: packets after item 1 | FWD-10 | WORLD | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the order carries the CTO's four conditions as steps 4 to 6 so the checker can grade them; (b) the checker recomputes the absent days from the live gold and the repo calendar and compares them with the applier's record, so the printed set is a measurement and not a claim; (c) `published` is read as the sum of the shards' log lines and must equal the fan-out's account count, because a fan-out is asynchronous and the invoke's own response says nothing about the shards; (d) the issuer read the absent set today as empty (572 partitions to 2026-10-15, no trading day absent, no partition on a non-trading day), so the expected non-empty count is 0, to be re-measured by the applier.
+
+**fanout:** 1 of 1 chains for this cell (the AE applier, not a worker subagent), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; self-test green with 42 red arms plus the fire-window rule):** `checks/r149/p166_pub49f_apply.py` (DBC166-1-AC1, -2-AC1, -3-AC1).
