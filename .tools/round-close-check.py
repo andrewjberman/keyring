@@ -82,6 +82,9 @@ VERDICT_GRADED = ("NOT[ _]MET", "MET", "PASS(?:ES|ED)?", "FAIL(?:S|ED)?", "PARTI
 VERDICT_WORD = re.compile(r"(?<![A-Za-z0-9_])(%s)(?![A-Za-z0-9_])" % "|".join(VERDICT_NONE + VERDICT_GRADED))
 VERDICT_NONE_RE = re.compile(r"^(?:%s)$" % "|".join(VERDICT_NONE))
 AUTHOR_LINE = re.compile(r"^Author:\s*(\d+\.\d+\.\d+_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Za-z0-9]+)?)", re.M)
+# NFRA_CTLPLN round 29 (CT-bf-1 AMENDMENT 1): a prose grade in an INVESTIGATION row is read only from the head of the row,
+# the first HEAD_CHARS characters of its one_line. The real CVO grades lead with the criterion ("L9 <criterion> <verdict>").
+HEAD_CHARS = 80
 
 
 class Usage(Exception):
@@ -477,12 +480,26 @@ def row_text(row: dict) -> str:
     return "\n\n".join(out)
 
 
-def verdict_after(text: str, crit_pat, order_pat, span: int = 40) -> str:
+def head_subject(row: dict) -> str:
+    """The text an investigation row's prose grade is read from: its one_line; a row with no one_line reads its whole
+    text (a header pseudo-row reads its prose). The head is the first HEAD_CHARS characters of this text (CT-bf-1 AMENDMENT 1)."""
+    one = row.get("one_line")
+    if isinstance(one, str) and one.strip():
+        return one
+    if isinstance(row.get("_prose"), str):
+        return row["_prose"]
+    return row_text(row)
+
+
+def verdict_after(text: str, crit_pat, order_pat, span: int = 40, head: int = 0) -> str:
     """The first verdict word within fourteen tokens after a mention of the criterion, in the same clause (no sentence
     break between, so a list "AC3, AC4 and AC5 MET" carries one verdict for all of it); '' when none. A
     generic id (order_pat set) must also have its order named in the `span` characters before it (the order's full id
-    plus its "TO-" and a separator, so a long slugged id is not cut)."""
+    plus its "TO-" and a separator, so a long slugged id is not cut). head > 0: only a mention whose FIRST character is
+    among the first `head` characters of the text counts (CT-bf-1 AMENDMENT 1: the head of an investigation row)."""
     for m in crit_pat.finditer(text):
+        if head and m.start() >= head:
+            break
         if order_pat and not order_pat.search(text[max(0, m.start() - span):m.start()]):
             continue
         tail = text[m.end():m.end() + 90]
@@ -579,10 +596,11 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
     THE GRADE OF RECORD (CT-be-1): every qualifying CVO-kind non-doer row is collected and the one read is the grade of
     record (grade_of_record: the latest surfaced_at), not the first row in file order. The verdict in the detail is the
     verdict of that row. A self-grade reads SELF only when no CVO-kind non-doer row grades the criterion.
-    A GRADE IS NOT A MENTION (CT-bf-1, round 29): an INVESTIGATION-file row grades only through a `grades` entry that
-    names the criterion with a verdict (structured_grade); its prose mention beside a verdict word does not grade, so a
-    row that reports the checker's defect and quotes its old verdict never becomes the grade of record. An
-    ADJUDICATION-file row grades as before (structured entry, or the verdict reading of its prose)."""
+    A GRADE IS NOT A MENTION (CT-bf-1, round 29, AMENDMENT 1): an INVESTIGATION-file row grades by a `grades` entry that
+    names the criterion with a verdict (structured_grade), or by prose only when the criterion's first character is among
+    the first HEAD_CHARS characters of the row's one_line and a verdict word follows it. A mention deeper in the row does
+    not grade, so a row that reports the checker's defect and quotes its old verdict never becomes the grade of record.
+    An ADJUDICATION-file row grades as before (structured entry, or the verdict reading of its prose)."""
     pat = re.compile(r"(?<![A-Za-z0-9])%s(?![A-Za-z0-9])" % re.escape(crit_id))
     # A generic id (AC3, J2) is a substring of every order's AC3/J2 and of any check-script name (rl9.AC3.sh): the row must
     # also name THIS order (its to_id or the short id after "TO-"), or a stale row from another round grades it.
@@ -593,7 +611,7 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
         order_pat = re.compile(r"(?<![A-Za-z0-9])(?:%s)(?![A-Za-z0-9])" % "|".join(names))
     doers = {base_of(order["issued_by"]), base_of(order["issued_to"])} - {""}
     self_hit = None
-    mention = ""    # CT-bf-1: the first investigation-row prose mention by a CVO-kind non-doer that did not grade
+    mention = ""    # CT-bf-1: the first investigation-row CVO-kind mention that did not grade (named with its cause)
     cands = []      # (key, row, payload): every CVO-kind non-doer row that grades the criterion
     position = 0
     for source, rows in (("adjudication", adj_rows), ("investigation", inv_rows)):
@@ -617,16 +635,26 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
             is_cvo = kind_of(who) == "CVO"
             if is_cvo and not is_doer:
                 if source == "investigation":
-                    # CT-bf-1 (NFRA_CTLPLN round 29, XB-20261016T121809Z-95c2 follow-up): an INVESTIGATION row grades only
-                    # through a `grades` entry that names the criterion with a verdict. Its prose mention beside a verdict
-                    # word is a report about a grade (a row that reports the checker's defect quotes the old verdict), not a
-                    # grade. The row is not a candidate; its cause is kept for the UNGRADED detail.
+                    # CT-bf-1 (NFRA_CTLPLN round 29, XB-20261016T121809Z-95c2 follow-up, AMENDMENT 1): an INVESTIGATION row
+                    # grades by a `grades` entry naming the criterion with a verdict, or by prose only from its head (the
+                    # criterion's first character within the first HEAD_CHARS characters of its one_line, then a verdict word).
+                    # A deeper prose mention is a report about a grade (a row that reports the checker's defect quotes the old
+                    # verdict), not a grade. The row is not a candidate; its cause is kept for the UNGRADED detail.
                     sv = structured_grade(row, crit_id, order_pat)
-                    if not sv or VERDICT_NONE_RE.match(sv):
-                        mention = mention or ("investigation row %s by %s names it in prose only (no structured grades "
-                                              "entry): a prose mention is not a grade" % (row.get("id", "?"), who))
-                        continue
-                    via = " (verdict %s)" % sv
+                    if sv:
+                        if VERDICT_NONE_RE.match(sv):
+                            mention = mention or ("investigation row %s by %s grades it with a non-grade verdict (%s): "
+                                                  "not a grade" % (row.get("id", "?"), who, sv))
+                            continue
+                        via = " (verdict %s)" % sv
+                    else:
+                        hv = verdict_after(head_subject(row), pat, order_pat, max(40, len(order["id"]) + 16), head=HEAD_CHARS)
+                        if not hv or VERDICT_NONE_RE.match(hv):
+                            mention = mention or ("investigation row %s by %s names it in prose only, not in the first %d "
+                                                  "characters of its one_line (no structured grades entry): a prose mention "
+                                                  "is not a grade" % (row.get("id", "?"), who, HEAD_CHARS))
+                            continue
+                        via = " (verdict %s)" % hv
                 epoch = surfaced_epoch(row.get("surfaced_at"))
                 key = (0, 0.0, position) if epoch is None else (1, epoch, position)
                 cands.append((key, row, (source, row, who, via)))
@@ -808,9 +836,6 @@ def selftest() -> int:
                     {"criterion_id": "T1-AC2", "status": "UNVERIFIABLE-BY-INSTRUMENT", "judgment": True}]}))
         row = {"id": "TEST_PROJ-C-S1", "surfaced_by": graded_by, "adjudicates": ["T1-AC2"],
                "one_line": "TEST_PROJ.TO-1 T1-AC2: MET on this seat's read."}
-        if where == "investigation":
-            # CT-bf-1: an investigation row grades only through a `grades` entry with a verdict (a prose mention does not).
-            row["grades"] = [{"criterion": "T1-AC2", "verdict": "MET", "instance": "TEST_PROJ.TO-1"}]
         if graded_by:
             fname = "adjudications/ADJUDICATION_v1.md" if where == "adjudication" else "investigations/INVESTIGATION_v1.md"
             w(base + "/surprise-channel/" + fname, "# rows\n\n```json\n%s\n```\n" % json.dumps([row], indent=1))
@@ -845,7 +870,7 @@ def selftest() -> int:
         reset()
         case("all present is MAY-CLOSE", run(), "orders=2", "judgment=1", "graded=1", "ungraded=0", "self_graded=0", "verdict=MAY-CLOSE")
         reset(where="investigation")
-        case("a CVO-kind row in the investigation file grades through its grades entry", run(), "graded=1", "verdict=MAY-CLOSE")
+        case("a CVO-kind row in the investigation file grades", run(), "graded=1", "verdict=MAY-CLOSE")
         # D1-S15 (ETFS_RIVALS round 28): a header-only grade reads GRADED; a mention without a verdict reads UNGRADED.
         reset(graded_by="")
         w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md",
