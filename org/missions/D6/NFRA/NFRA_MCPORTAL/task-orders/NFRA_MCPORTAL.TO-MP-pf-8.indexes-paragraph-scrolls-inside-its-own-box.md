@@ -88,6 +88,7 @@ Checks dry-run at the base (in the issuer's render checkout at mcportal 090b9cdc
 The fix reaches the host only with a new mcportal bundle release (a new mcportal_commit in EC2_MANIFEST); nothing in this order deploys. The status flip is the issuer's.
 
 <status>pending</status>
+<status>complete</status>
 <round>5</round>
 <workstream>PF</workstream>
 <slot>~38</slot>

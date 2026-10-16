@@ -46,3 +46,17 @@ analysis asks whether `drafted_sections` needs the same check. The 20 names' dra
    under `filings/v1/`). If it does not, it is listed as a residual for rollback.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Erratum (2026-10-16 ~11:5xZ, on `2.0.0_SA_COO~R1` msg 6668)
+
+This half signed the COO half's premise that a cap left in place re-reads the same names and "spends nothing more". **That premise is
+wrong.** `filings/batch.py` skips unchanged names only under `--plan-only`, and `run_group` re-analyzes every planned name on every run.
+
+The trigger counts the unfiltered plan-only set, which is never zero, so a key-scoped task would re-analyze its names every trading day.
+
+**Consequences:**
+- the re-enable waits for bo-7 (the plan-only check takes the same keys, so the count reads 0 after one run);
+- the next half names the 7 served drafting objects the run rewrites, per key;
+- this half's "no later fire adds spend until the cap is lifted" is withdrawn.
+
+-- 1.0.0_SA_CTO~DELL1

@@ -72,7 +72,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** the CTO's msg 6673, item 2: "A separate cell: one name's mismatched marker is skipped and counted, not raised. It lands before unattended full-universe fires." Evidence at the cut: the first fire's one written object (`amgt/harvest/state/filing_attempt/security_key=AAPL_US_Equity/UNRESOLVED-SOURCE.HELD.json`, 11:30:26Z) and its text (`differing_field: filing_identity: {'source': 'none'} -> {'source': 'edgar', 'cik': 320193, 'form_expected': 'none'}`); a read-only run of the same row without `--write-pool` exits 0, so the stop is the write path's raise. The exception is raised by a module `battery.py` also catches (line 1645) and by its own tests: it is left as is on purpose. Independent of `AMGT-bo-5` (a different module); the re-enable of the filings task waits on `bo-5` and a new pair half, NOT on this cell, because the key-list run never reaches a `none`-form name; this cell must land before any unattended FULL-universe fire. Baseline measured at the cut: `lib/research/filings/tests` plus `lib/research/harvest/tests/test_filing_attempt_skip_held.py` read 350 passed, rc 0 (11 s).
 
-<status>pending</status>
+<status>complete</status>
 <round>108</round>
 <slot>0.9.0_WK_AMGT_RESAPP~480</slot>
 <fabric>dell1</fabric>
