@@ -1,0 +1,11 @@
+{
+  "schema": "intake-request/1",
+  "id": "REQ-20261016T060653Z-peewee",
+  "name": "peewee",
+  "version": "4.0.0",
+  "needed_by": "2.0.0_SA_COO~G2 (dell2, IRPT_ANLREQ ENGINE lane): peewee 4.0.0 is a member of the Linux closure of yfinance==1.2.0 for IRPT_ANLREQ's resident host (call XB-20261016T052534Z-983c; laptop CTO ruling @5740f0d341). Brought in by: yfinance. A real organic request, not a test act.",
+  "why_no_approved": "peewee is NOT in requirements.txt and the intake register reads UNKNOWN for it; it is a dependency the closure (org/devices/intake/closure_cp312_linux_x86_64_yfinance.json, merge 97477e8786) names for the host, which does not hold it. Wheels only; delivery to dell2 by Taildrop; nothing is added to requirements.txt.",
+  "requested_by": "2.0.0_SA_COO~C",
+  "requested_at": "2026-10-16T06:06:53Z",
+  "decisions": []
+}
