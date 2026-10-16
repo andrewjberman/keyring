@@ -1,0 +1,168 @@
+{
+  "schema": "intake-check/1",
+  "batch": "intake-20261016-npm-mcportal-bun",
+  "file_name": "react-router-dom-7.18.4.tgz",
+  "held_sha256": "3f8352715d12d307c1f9adc8d47a8a001642110958e85861afafe247c924d6a6",
+  "checks": [
+    {
+      "n": 1,
+      "name": "sha256 equals the digest the index publishes",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "re-read from disk now: sha512 equals the registry document's dist.integrity AND the lockfile's integrity for react-router-dom@7.18.4",
+        "computed_sha512": "sha512-yrfmJHIpDG7taCpqKjT1G5B6q3O2K+RN8/fgNf0lTjCwiPbQ0ei6vXX9ZjQR+7ld8Tr7Z5xmyMnZ8YJrphWQUw==",
+        "registry_integrity": "sha512-yrfmJHIpDG7taCpqKjT1G5B6q3O2K+RN8/fgNf0lTjCwiPbQ0ei6vXX9ZjQR+7ld8Tr7Z5xmyMnZ8YJrphWQUw==",
+        "lockfile": "MCPORTAL_c66ca82952_bun.lock",
+        "lockfile_ident": "react-router-dom@7.18.4",
+        "lockfile_entries": 1,
+        "lockfile_integrity": "sha512-yrfmJHIpDG7taCpqKjT1G5B6q3O2K+RN8/fgNf0lTjCwiPbQ0ei6vXX9ZjQR+7ld8Tr7Z5xmyMnZ8YJrphWQUw==",
+        "computed_sha256": "3f8352715d12d307c1f9adc8d47a8a001642110958e85861afafe247c924d6a6",
+        "computed_sha1": "07b72b8aab2d80af847425107f966f1688c703d0",
+        "registry_shasum": "07b72b8aab2d80af847425107f966f1688c703d0",
+        "record_held_sha256_matches_disk": true
+      },
+      "rules_out": "a file altered in transit or served by an impostor",
+      "leaves": "anything the real project published"
+    },
+    {
+      "n": 2,
+      "name": "name, version and tags are exactly the approved line",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "file name, package/package.json and the approved list all say react-router-dom@7.18.4",
+        "requested_name": "react-router-dom",
+        "requested_version": "7.18.4",
+        "ident": "react-router-dom@7.18.4",
+        "file_name_expected": "react-router-dom-7.18.4.tgz",
+        "package_json_name": "react-router-dom",
+        "package_json_version": "7.18.4",
+        "approved_line_sought": "react-router-dom@7.18.4",
+        "approved_list": "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_NPM_MCPORTAL_BUN_20261016.md",
+        "on_approved_list": true
+      },
+      "rules_out": "a near-name package; a resolver substituting another version or pulling an unlisted package",
+      "leaves": "a wrong approval"
+    },
+    {
+      "n": 3,
+      "name": "the version is one this machine already runs",
+      "verdict": "not_applicable",
+      "evidence": {
+        "summary": "npm tarball: check 3 reads the Python site-packages of this machine, and this route installs no npm package into them",
+        "reason": "npm tarball: check 3 reads the Python site-packages of this machine, and this route installs no npm package into them"
+      },
+      "rules_out": "a brand-new release nobody has used",
+      "leaves": "a build for Python 3.14 that differs from the 3.12 build of the same version"
+    },
+    {
+      "n": 4,
+      "name": "the release's age and the project's earlier releases",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "release 31.25 days old (min 14); 1062 earlier releases (min 3)",
+        "this_release_at": "2026-09-15T15:05:55.974Z",
+        "first_release_at": "2016-12-14T22:04:07.610Z",
+        "release_count": 1063,
+        "earlier_releases": 1062,
+        "age_days": 31.25,
+        "min_release_age_days": 14,
+        "min_earlier_releases": 3,
+        "yanked": false,
+        "release_age_source": "registry packument time[<version>] (the packument read by the fetch, same host)"
+      },
+      "rules_out": "a package or release published days ago",
+      "leaves": "an old compromise not yet found"
+    },
+    {
+      "n": 5,
+      "name": "build attestation present or absent",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "the index shows a build attestation for this file",
+        "attestation": "present",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/react-router-dom@7.18.4"
+      },
+      "rules_out": "where present: a file uploaded by hand from a stolen account",
+      "leaves": "where absent: nothing; many projects publish none"
+    },
+    {
+      "n": 6,
+      "name": "the archive opened and listed, never installed",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "7 members, 5398 bytes expanded, read in memory and never extracted; no unsafe member name or link; lifecycle script(s): none; native binary(ies) named: none",
+        "members": 7,
+        "expanded_bytes": 5398,
+        "unsafe_member_names": [],
+        "archive_error": null,
+        "lifecycle_scripts": [],
+        "native_binaries": [],
+        "restricted": null,
+        "package_json_error": null,
+        "executed": false
+      },
+      "rules_out": "code added outside the compiled files",
+      "leaves": "code inside the compiled files"
+    },
+    {
+      "n": 7,
+      "name": "Windows' own malware scan of the file",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "on-access scan by Little Dog Tech Managed Antivirus Antimalware, state enabled and current; file present and unchanged after 20 s; no on-demand verdict available",
+        "decoding": "productState is read as six hex digits 0xAABBCC: BB is real-time protection (0x10 or 0x11 on; 0x00 or 0x01 off; any other byte unknown); CC is the definitions (0x00 current; 0x10 out of date; any other byte unknown); unknown is never treated as on or current. Worked examples: 393472 = 0x060100 -> off; 266240 = 0x041000 -> on, definitions current.",
+        "scan_wait_seconds": 20,
+        "limit": "No test-virus file was planted as a control, because it would raise the managed product's alarm; so this check shows that an enabled, current product did not remove or alter the file within the wait, and does not show that the product inspected it.",
+        "products": [
+          {
+            "display_name": "Windows Defender",
+            "name_non_ascii_replaced": false,
+            "state": 393472,
+            "hex": "0x060100",
+            "realtime": "off",
+            "definitions": "current"
+          },
+          {
+            "display_name": "Little Dog Tech Managed Antivirus Antimalware",
+            "name_non_ascii_replaced": false,
+            "state": 266240,
+            "hex": "0x041000",
+            "realtime": "on",
+            "definitions": "current"
+          }
+        ],
+        "products_count": 2,
+        "active": [
+          "Little Dog Tech Managed Antivirus Antimalware"
+        ],
+        "copy_name": "react-router-dom-7.18.4.tgz.scan-copy",
+        "stale_copy_removed": false,
+        "problems": [],
+        "held_after": "unchanged",
+        "copy_after": "unchanged",
+        "copy_cleanup": "removed",
+        "held_sha256_before": "3f8352715d12d307c1f9adc8d47a8a001642110958e85861afafe247c924d6a6",
+        "copy_sha256_readback": "3f8352715d12d307c1f9adc8d47a8a001642110958e85861afafe247c924d6a6"
+      },
+      "rules_out": "known malware",
+      "leaves": "anything new or targeted"
+    },
+    {
+      "n": 8,
+      "name": "a person reads the result of 1 to 7 and signs the batch",
+      "verdict": "awaiting",
+      "evidence": {
+        "summary": "check 8 awaits the signature: the signature file does not exist",
+        "signer": null,
+        "path": null
+      },
+      "rules_out": "a tool's silent failure being read as a pass",
+      "leaves": "what none of 1 to 7 can see"
+    }
+  ],
+  "verdict": "not_checked",
+  "waived_checks": [],
+  "checked_by": "0.9.0_WK_NFRA_CTLPLN~149",
+  "at": "2026-10-16T21:07:19Z",
+  "ecosystem": "npm"
+}
