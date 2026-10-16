@@ -21,11 +21,11 @@ REMEDIATION_v46's C-S158 is met at ADJUDICATION_v136 (C-S159).
     "owner": "2.0.0_SA_COO~R2",
     "round": "v109",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R2",
       "round": "v109"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
