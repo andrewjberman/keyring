@@ -5,7 +5,7 @@ Catches the v1.7.38 incident-B failure mode: layer ARN docstring drift from
 the actual layer's requirements.txt, where a Lambda imports a module that
 no layer in the function's `layers = [...]` config actually provides.
 
-For each Lambda in infra/aws/lambda/ci/lambda-source-map.json:
+For each Lambda in the function map (infra/aws/lambda/ci/function-map/, one <name>.json per function):
   1. Find the function's layers list from its .tf file
   2. Map each layer to its requirements.txt
   3. Read each .py file in the source_dir, extract top-level imports via AST
@@ -53,7 +53,7 @@ import sys
 from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parent.parent
-SOURCE_MAP = WORKSPACE / "infra/aws/lambda/ci/lambda-source-map.json"
+SOURCE_MAP = WORKSPACE / "infra/aws/lambda/ci/function-map"  # CT-ca-1: one <name>.json per function
 LAYERS_DIR = WORKSPACE / "infra/aws/lambda/layers"
 
 # Standard library top-level module names (Python 3.11). Approximate; we err on
@@ -290,10 +290,11 @@ def main() -> int:
     p.add_argument("--json", action="store_true", help="Emit JSON array (CI-friendly)")
     args = p.parse_args()
 
-    if not SOURCE_MAP.exists():
-        print(f"ERROR: source map not found at {SOURCE_MAP}")
+    if not SOURCE_MAP.is_dir() or not any(SOURCE_MAP.glob("*.json")):
+        print(f"ERROR: function map folder missing or empty at {SOURCE_MAP}")
         return 1
-    sm = json.loads(SOURCE_MAP.read_text(encoding="utf-8"))
+    sm = {"functions": {p.stem: json.loads(p.read_text(encoding="utf-8"))
+                        for p in sorted(SOURCE_MAP.glob("*.json"))}}
 
     fns = sm.get("functions", {})
     if args.function:

@@ -528,18 +528,15 @@ def _lambda_leg(function_name: str) -> dict:
     --pipeline phantom-leg expansion: a single-lambda TF apply must NOT open the
     full PIPELINE_MAP x VALID_LAYERS S3-code legs (none of which it touches ->
     false 'unproven leg / half-landed' on close). Resolves the function's
-    tf_resource from lambda-source-map.json for the leg target."""
-    smap = WORKSPACE / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
+    tf_resource from the function's own entry file in the function map (CT-ca-1) for the leg target."""
+    smap = WORKSPACE / "infra" / "aws" / "lambda" / "ci" / "function-map" / (function_name + ".json")
     target = function_name
     try:
-        data = json.loads(smap.read_text(encoding="utf-8", errors="replace"))
-        entry = (data.get(function_name)
-                 or (data.get("functions") or {}).get(function_name)
-                 or (data.get("lambdas") or {}).get(function_name))
-        if entry and entry.get("tf_resource"):
+        entry = json.loads(smap.read_text(encoding="utf-8", errors="replace"))
+        if isinstance(entry, dict) and entry.get("tf_resource"):
             target = entry["tf_resource"]
     except (OSError, ValueError, AttributeError):
-        pass  # source-map unreadable -> fall back to the bare function name as target
+        pass  # the function's entry file unreadable -> fall back to the bare function name as target
     return {
         "id": function_name,
         "kind": "tf-lambda",
@@ -1614,7 +1611,7 @@ def main() -> int:
                    help="'id|kind|target|proof_required' (repeatable)")
     p.add_argument("--lambda", dest="lambda_fn", action="append",
                    help="single-Lambda TF deploy: add ONE 'tf-lambda' leg for this "
-                        "function (tf_resource from lambda-source-map) INSTEAD of the "
+                        "function (tf_resource from the Lambda function map) INSTEAD of the "
                         "--pipeline S3-code expansion. Use this (not --pipeline) for a "
                         "single-function TF apply so close() does not blare on phantom "
                         "S3-code legs the deploy never touched. (repeatable)")
