@@ -20387,3 +20387,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W217-S1 -- the R46 checker folder was outside the sparse cone at the re-ground read and inside it at the acceptance run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W217-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~217",
+  "surfaced_at": "2026-10-16T01:26:10Z",
+  "one_line": "The R46 checker folder was absent from this worktree's sparse cone at the re-ground read and present at the acceptance run; this worker ran no sparse command.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-ty-54 AC1 runs org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py from the worktree root, so the checker is a readable file of this worktree.",
+  "world_is": "At the re-ground read the checker blob 417fffb48cfda08eb898835e2465fd38780daa9e was tracked at HEAD 9d0664b2ff (git ls-files, git ls-tree) but was not materialised: ls org/tier1_exec failed, and the sparse-checkout list named no org/tier1_exec entry. At the acceptance run the same list named org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2, the file was present (mtime 2026-10-15 21:12), and the invocation printed R46-TESTS-OK passed=14 rc=0. This worker ran no sparse-checkout command and did not widen the cone; which actor changed the cone between the two reads is not measured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-217 at the re-ground read (no org/tier1_exec entry) and at the acceptance run (entry org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2)",
+      "git ls-tree HEAD -- org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/ at 9d0664b2ff: 100644 blob 417fffb48cfda08eb898835e2465fd38780daa9e r46_checks.py",
+      "ls -la of org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/ at the acceptance run: r46_checks.py, 3634 bytes, mtime 2026-10-15 21:12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W217-S2 -- the packager's draft read passes the tenant as both principal firm and data_firm, so the service allow's firm equality never refuses it and data_firm=tenant is redundant on that path
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W217-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~217",
+  "surfaced_at": "2026-10-16T01:26:10Z",
+  "one_line": "The packager's draft read passes the tenant as both principal firm and data_firm, so the service allow's firm check never refuses it and data_firm=tenant at opal_packager.py:379 changes no outcome on that path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD5_REPORT_SIDE_BINDING_MAP.md row 28 (cited at 0f71f135b3 and read in 0.9.0_WK_IRPT_ANLREQ~211) says the binding of the packager's read of the stored draft bytes is the repository's service allow for svc-irpt-packager (row 6), and that live_read_artifact passes the tenant as data_firm.",
+  "world_is": "At HEAD 9d0664b2ff, opal_packager.py:379 builds the principal as repository.service_principal(PACKAGER_SUBJECT, tenant) and passes data_firm=tenant, so the principal's firm and the data_firm are the same firm on every call. repository.py:57 (firm == owner firm_id in _service_allows) therefore always holds on this path, and the cross-firm refusals that fire are the storage firm binding (repository.py:464) for an index row filed under the caller's partition, and the index partition miss (repository.py:460-462) otherwise. The service allow refuses a cross-firm packager only when it is reached directly with another data_firm, which the live reader never does. Removing data_firm=tenant at opal_packager.py:379 in a scratch copy leaves all 14 new tests passing, so that argument is not load-bearing on the live path. The tests written for row 28 (test_cross_firm_packager_*) state each refusal by its actual line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:371-379 at 9d0664b2ff (live_read_artifact; principal from repository.service_principal(PACKAGER_SUBJECT, tenant); data_firm=tenant)",
+      "infra/aws/lambda/investor-reporting/reports/repository.py:50-57 (_service_allows, firm == owner.get('firm_id')), :459-465 (_get storage firm binding)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_cross_firm_packager_read.py (6 tests, 6 passed at the run; the mutant with data_firm removed in a scratch copy: 14 passed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
