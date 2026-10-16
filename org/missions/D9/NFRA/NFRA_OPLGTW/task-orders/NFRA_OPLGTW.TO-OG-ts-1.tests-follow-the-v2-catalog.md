@@ -64,7 +64,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ts-1.tests-follow-the-v2-catalo
 - Round 38 remediation (found at the OG-ng-3 A1 re-seat: `ng3.AC2` reads FAIL in the main tree at HEAD, 9 passed 2 failed, since the MCPINDEX v2 catalog landed). Workstream ENRICH-R38 (decomposition addendum R3-T.93). The v2 catalog dropped 18 of the 32 rows OG-gp-1 classified; whether those drops are intended renames is NFRA_MCPINDEX's answer (asked of `2.0.0_SA_COO~MI`); this cell makes the pins honest either way.
 - Pre-cut: ts1.AC1 base FAIL as expected (the two ac01 tests fail at HEAD); ts1 AC2 base FAIL as expected (no commit of this serial yet).
 
-<status>staged</status>
+<status>complete</status>
 <round>38</round>
 <workstream>ENRICH-R38</workstream>
 <slot>~122</slot>
