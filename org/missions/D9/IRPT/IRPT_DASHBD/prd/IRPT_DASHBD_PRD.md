@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.15",
+ "prd_version": "v0.16",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21"],
@@ -108,12 +108,11 @@ outcomes verbatim.
          SOURCE     backend Part V.1, V.2, V.5; Andrew message 3 and message 5 ("a rail for fees")
 
   FWD-10 A person can always tell what they are looking at: where the data starts, which days could
-         not be measured, when a figure is a fallback, and how current the data is
+         not be measured, which trading days the source did not report, and how current the data is
          DONE WHEN  EXERCISED -- read from the screen alone
          ACCEPT     a partial-history account (where its data starts), a day that could not be measured,
                     and a trading day the source did not report (no data for that day) are each explained
-                    on screen in a sentence; no state is hidden inside an average (v0.15: "a fallback day"
-                    withdrawn with ruling 17; the news-history window is graded under FWD-6)
+                    on screen in a sentence; no state is hidden inside an average
          SOURCE     backend Part V.1 (the coverage vocabulary), V.3; frontend F8, Part V.3
 
   FWD-11 Every client firm, not only 49 Financial: an Inflection account and a Cottonwood account each get the same daily
@@ -249,7 +248,7 @@ outcomes verbatim.
 | C-SOURCES: registry rows | LGIC lane; this project's L3 policy step | No table named `reporting` or any of the eight is registered in `infra/logic/registry/reporting_policies.json` (ABSENT, brief Part IV.2); `address()` accepts the names, so registration is a policy row this project adds in round 1 with the first contract. The topics home REFUSED at L4: `address("news","opal","platinum","market_topic_daily",...)` -> `scope 'opal' resolves to no scopes.json row`. So the general platinum home for `market_topic_daily` is a scope row to add (or an existing shared scope to cite by `lookup()`), decided in the round that builds FWD-6; nothing is typed around it. |
 | C-TIEOUT: the parity oracle | this project; Andrew "which would be more accurate" | The 49 Financial total return is tied out against Black Diamond's own time-weighted return for the sample accounts; agreement within the tolerance Andrew accepts is FWD-8's bar; every disagreeing day carries a stated reason (flow timing, missing price, income date). The oracle is read through IRPT's existing per-account Black Diamond calls behind their per-use gate; no new vendor pull without Andrew's per-use word. The existing price-only figure sits a median of about 1.6 points below (READ, `TO-IB-er-302`); closing that gap is what "total" means here. |
 | C-LABEL: the honest label | frontend F8; backend Part IV.4 | The portal's "Time-weighted, net of fees" (`MethodAndSources.tsx:32-63`, `holdings_gold.py:259` `TIME_WEIGHTED`/`NET`) is wrong for a price-only, fee-less figure and is replaced everywhere the new figures show by "Total return, before advisory fees" with the method version in the popover. Where the OLD figure still shows (IRPT_BCKEND's page until this project's switch), the label is corrected by IRPT_BCKEND under its own order; this project does not edit that page. |
-| C-HONESTY: coverage on screen | frontend Part V.3 | Each `coverage` member maps to one sentence shown where the number is; a window before the first data date is clipped and says so; excluded days are counted on the window return; a fallback day is footnoted. No state is hidden by an average, and no skeleton state looks like data. |
+| C-HONESTY: coverage on screen | frontend Part V.3 | Each `coverage` member maps to one sentence shown where the number is; a window before the first data date is clipped and says so; excluded days are counted on the window return; a window holding trading days the source did not report states "N trading days not reported by the source (dates)", read from the report-build output, never filled (v0.16). No state is hidden by an average, and no skeleton state looks like data. |
 | C-DESIGN: the portal's law | consumed; `portal/CLAUDE.md`, `portal/DESIGN.md`; DSGN_IRPTV1 | Light canvas, white containers with the hairline and navy ink, one dark band per page, tabular numerals, chart colours from `chartColors.ts` `ASSET_CLASS`, status and data colours disjoint; verification is `/frontend-dev` screenshots read against the clause cited; dev builds on port 5174 only. Asset-class display order: Cash, Fixed Income, Equity, Structured, Alternatives, Commodities, Other, Unclassified. |
 | C-LEASE: F's rounds beside DSGN_IRPTV1 | this PRD, ruling 6.7 | While a DSGN_IRPTV1 FAST lease is live on `2.0.0_SA_COO~D` over `portal/src/pages/InvestorReporting`, F's items are built by that seat under `/closer-drive` reading this PRD's FWD-1 and C-SEAM, and graded by the CVO after the fact as DSGN_IRPTV1 pins; F's TASK ORDERS (FULL mode) name paths under `portal/src/pages/InvestorReporting/tabs/reporting/` and the new `portal/src/pages/InvestorReporting/dashboard/` only, and the next DSGN_IRPTV1 lease arm excludes those two paths or holds. One seat, two projects, no two writers of one path. |
 | C-MORATORIUM: no alerts | law (CLAUDE.md section 5) | No alarm, SNS, SES send, freshness checker or monitor. The publisher runs on its own schedule (`irpt-49f-reporting-publish-daily`), never on "success of upstream" alone. A stale day is a `SOURCE_LAG` coverage state on the page, not a notification. |
@@ -702,3 +701,13 @@ state.
 - (c) the floor's CAUSE is not stated, because it is not established. The sentence says where the data starts, not why.
 
 Owner of the C-HONESTY footnote's removal: `~C2`, in the same issuance.
+
+## ADDENDUM v0.16 (2026-10-16 ~00:2xZ, `1.0.0_SA_CTO~DELL2`): v0.15 made consistent, on `3.0.0_SA_CVO~DELL2`'s review @c943f8ef91
+
+1. **FWD-10's outcome line** no longer promises "when a figure is a fallback". It reads "which trading days the source did not report".
+2. **The parenthesis is removed from the ACCEPT clause.** v0.14's re-cut ruled provenance out of an ACCEPT. The reason stays in ADDENDUM
+   v0.15, where it belongs.
+3. **C-HONESTY is restated.** "A fallback day is footnoted" is withdrawn with ruling 17, and the row names the handler's unreported-day
+   sentence, read from the report-build output and never filled.
+
+This is ENDPOINT and CONTRACTS wording, so the ratified-text half re-opens.
