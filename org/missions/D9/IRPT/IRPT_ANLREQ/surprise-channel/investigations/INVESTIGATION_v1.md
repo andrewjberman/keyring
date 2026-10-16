@@ -23086,3 +23086,29 @@
   "notes": "Display only: no request changes for a filer the field does not apply to. Either reading is one line in TicketCenter.tsx; the CVO picks at L9."
 }
 ```
+
+## IRPT_ANLREQ-D2-S160 -- DISARMS IRPT_ANLREQ-D2-W170-S4: the Advisor login email field may show to every staff filer who chooses a firm for DEV and window 5; the server is the guard (CTO msg 9975)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S160",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-16T22:58:00Z",
+  "one_line": "DISARMS row IRPT_ANLREQ-D2-W170-S4 (the portal cannot tell a staff profile that lists the firm from one that does not narrow the firms): the CTO disarmed it for DEV and window 5, the field is a lookup key and served.py and uploads.py hold the authority; the session signal joins enrichment A.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W170-S4: AR-y-378's field applies only when the signed-in filer's profile lists the selected firm, but the portal session carries no allowedFirmIds, so the field is shown to every staff filer who chooses a firm.",
+  "world_is": "CTO ruling org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/1.0.0_SA_CTO~DELL2/RULING_WINDOW5_PORTAL_CANDIDATE_WAIVER_AND_W170_S4_20261016.md @fceab1cb2c (msg 9975): the typed email is a lookup key only; the door verifies the partner profile and an active user at the firm, so a wrong or needless entry fails closed or names an owner the server checks; the PROD promote of the candidate is not asked and a session signal for the field joins the next round's enrichment A.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 9975 (inbox read and acked by this seat)",
+      "worker row IRPT_ANLREQ-D2-W170-S4 (merged 557152c62a)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The field is display only and the server decides authority; the CTO disarmed the row for DEV and window 5, and no PROD promote of the candidate is asked, so the hazard of a needless field for an unrestricted staff filer cannot reach a client."
+}
+```
