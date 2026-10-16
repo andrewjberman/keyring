@@ -2701,3 +2701,50 @@ used as fixtures is a different read with a different denominator.
  "notes": "The order stays pending and is not flipped. Disarm is not needed (INERT). The fix is the issuer's or integrator's: widen this worktree's sparse cone to infra/aws/lambda/ticket_center, or re-provision the worktree from a checkout that carries it. Filed by the worker under the BLOCKING stop rule of its WORKER FACE."
 }
 ```
+```json
+{
+ "id": "TCKT_VNEXT-D2-W46-S2",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~46",
+ "surfaced_at": "2026-10-16T02:16:30Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "The whole-folder pytest run of infra/aws/lambda/ticket_center/tests/ cannot collect 8 modules: test_package_route.py reads org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json at import, and that file is tracked at HEAD but outside this worktree's sparse cone (org/missions/D9 is not in it).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "C:/dev/wk-tckt-vnext-46 @HEAD 8957fed16b: git ls-tree HEAD -- org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json lists the file (1 entry); the file is absent from the worktree (test -f returns no)",
+   "C:/dev/wk-tckt-vnext-46 @HEAD 8957fed16b: infra/aws/lambda/ticket_center/tests/test_package_route.py lines 37-41 open the I7 sample at import and raise FileNotFoundError; test_no_row_refuses.py, test_package_409_codes.py, test_package_env_firms.py, test_package_i5p_i7.py, test_package_principal.py, test_package_request_id.py, test_status_active.py load that module through _load",
+   "run: timeout 120 python -m pytest C:/dev/wk-tckt-vnext-46/infra/aws/lambda/ticket_center/tests/ -q -p no:cacheprovider --color=no --continue-on-collection-errors -> 312 passed, 8 errors, 42 subtests passed, rc=1"
+  ]
+ },
+ "spec_asserts": "TO-R19-L2 step 6 and R19L2-AC1: run the whole infra/aws/lambda/ticket_center/tests/ folder once and record the counts in the record (a drain check).",
+ "world_is": "The whole-folder run measures 312 passed and 8 collection errors. The 8 modules named in the evidence are not measured in this worktree, because their import fails before any test runs. None of the 8 modules, and not test_package_route.py, is edited by this order; the cause is the sparse cone, not the change.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Not a blocker for AC1 (the new file passes 7 of 7; the order's check is the new file plus the folder count). The fix belongs to the integrator or issuer: widen this worktree's sparse cone to org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/ or have the drain run the folder where that file is materialised. The worker did not widen the cone, did not extract the file, and did not edit the 8 modules."
+}
+```
+```json
+{
+ "id": "TCKT_VNEXT-D2-W46-S3",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~46",
+ "surfaced_at": "2026-10-16T02:16:30Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "The before-arm of the new test file (its 7 cases run against the HEAD copy of lambda_function.py) gives 6 failed and 1 passed, not 7 failed: test_an_internal_caller_is_unchanged_by_the_set passes on the base because it is the INTERNAL non-regression guard.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "scratch arm: git show HEAD:infra/aws/lambda/ticket_center/lambda_function.py written to C:/dev/wk-tckt-vnext-46/.scratch/base_arm/ticket_center/ with a copy of tests/; timeout 120 python -m pytest C:/dev/wk-tckt-vnext-46/.scratch/base_arm/ticket_center/tests/test_analyst_intake_scoped.py -q -p no:cacheprovider --color=no -rA -> 6 failed, 1 passed in 0.87s, rc=1",
+   "PASSED test_an_internal_caller_is_unchanged_by_the_set; FAILED test_intake_lists_only_the_tickets_of_the_configured_firms, test_an_unset_or_empty_configuration_lists_nothing_with_status_200, test_all_is_never_a_wildcard_for_the_intake_list, test_a_ticket_with_no_requester_firm_is_dropped, test_status_assignee_and_ticket_type_filters_still_work_inside_the_set, test_the_response_carries_cutoff_et_and_a_count_equal_to_the_list_length"
+  ]
+ },
+ "spec_asserts": "TO-R19-L2 step 6 record: the before-arm (the new tests on the base: every case FAILS).",
+ "world_is": "On the base, 6 of 7 cases FAIL and the INTERNAL-unchanged case PASSES. That case asserts that an INTERNAL caller still sees all 8 tickets, which holds before and after the change. It is kept as the non-regression guard step 4 names and is not re-pinned.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "The mutant arm is consistent with this: the firm filter removed gives 6 failed and 1 passed (MUTANT-FIRES). Nothing in the product changed for this row; the expectation in the order's before-arm sentence is what differs from the world."
+}
+```
