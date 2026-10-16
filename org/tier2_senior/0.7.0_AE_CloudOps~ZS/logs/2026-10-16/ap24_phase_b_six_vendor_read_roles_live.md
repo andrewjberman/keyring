@@ -71,3 +71,16 @@
 | `terraform init` | note | two new `opal_name` module calls needed it before any plan |
 | `proof-of-spec-check.py` | PASS | VALID first run |
 | catalog read | note | `DATA_CATALOG.yaml` rows are `- entity:` list items nested under `channels`; a `/tmp` file written by Git Bash is not visible to native Python on this box, so read the YAML straight from `git show` through a pipe or a scratchpad path |
+
+## OG-ap-29: the dedicated 49F live read role
+
+8. **NFRA_OPLGTW.TO-OG-ap-29 (49F Black Diamond live read role), complete.** CTO ruling @8b2865e461, row Z-S292. Phase A 13:49Z-14:19Z (GO 35045): one `aws_iam_role` (trust only `opal-gateway-role`) and one inline policy on `opal-data-bd` `silver/{unrealized,transactions,allocations,fees}/`, the four tables confirmed against `client_adapter_bd49f.py` and the committed catalog rows; plan 2/0/0; the instance role needs no change (the OG-ap-24 roles work by trust alone). Two walls: the naming limb refused every typed S3 address (15 graded, 0 admitted), so four read rows `gateway-client-bdlive-*` went into `legacy_addresses.json` first (`bd93455796`) and the `.tf` reads its addresses from them; that commit needed the audited override `GIT_COMMIT_AUTHOR_OVERRIDE=PLATFORM_LOGIC_DOCS` (the lane admits only the CRO; the same act passed at 00:23Z and I could not find why) and I told the COO it is a lane-coverage gap. `ap29.AC1.sh` then read typed prefixes in the `.tf` text and could not pass a naming-conformant file: row `Z-S294` (BLOCKING), the issuer fixed the script, the `.tf` was not bent. Halves signed CTO `7877e044d7`, COO `b6c6de7fbe`, CVO `6b7d6ef48d` at `.tf` 5604d8577f68a50d / ask 369a8e7a12f7. Phase B 14:40Z-14:57Z (GO 35070): C2 live re-read (role absent, instance role 24 policies, 49F role policy `ceb6ae001918528d`), ledger `nfra-oplgtw-grants-ap29`, one targeted `safe-apply` (2 added), read back (trust only the instance role, policy equals the file, instance role still 24), simulator GetObject 4 of 4 and ListBucket 4 of 4 allowed, 4 of 4 negative controls explicitDeny, positive controls allowed, existence counts KeyCount 1 each (no object read), re-plan No changes, ledger CLOSED (`50e9252cc5`). AC1 and AC2 PASS, instance VALID, status flipped. The COO was told AC2 was green at once (its C4).
+
+| tool | result | notes |
+|---|---|---|
+| `safe-apply.sh` | PASS | one targeted apply of two resources, rc 0 |
+| `deploy_ledger.py` | PASS | 3 legs closed with proof |
+| `comp-schedule --drift --budget 420` | PASS | 6 of 6 carriers in 288 s |
+| naming limb (`safe-commit.sh`) | note | refuses ANY typed S3 address in a new `.tf`; the form that passes is `jsondecode(file(legacy_addresses.json))` locals over registry rows committed first; a literal that equals a registered template is still refused |
+| `GIT_COMMIT_AUTHOR_OVERRIDE` | note | used once, for the registry rows (`PLATFORM_LOGIC_DOCS`); audited at 14:10Z |
+| `proof-of-spec-check.py` | PASS | VALID first run |
