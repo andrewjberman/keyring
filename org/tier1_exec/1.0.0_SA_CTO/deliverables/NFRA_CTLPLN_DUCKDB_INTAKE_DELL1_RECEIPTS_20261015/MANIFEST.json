@@ -1,0 +1,17 @@
+{
+  "schema": "intake-manifest/1",
+  "batch": "intake-20261015-duckdb",
+  "created": "2026-10-15T20:21:21Z",
+  "files": [
+    {
+      "name": "duckdb-1.5.0-cp314-cp314-win_amd64.whl",
+      "sha256": "11ae50aaeda2145b50294ee0247e4f11fb9448b3cc3d2aea1cfc456637dfb977",
+      "size": 13575130,
+      "check_record": "duckdb-1.5.0-cp314-cp314-win_amd64.whl.check.json",
+      "check_record_sha256": "1eba2d9343abe75bbdb7af48f064c563f95fe06f05dcdc73f2f1f7995f397113",
+      "delivery": "duckdb-1.5.0-cp314-cp314-win_amd64.whl.delivery.txt",
+      "delivery_sha256": "9e1d06e637be326971f473419f21ffe7aac508a1c2b4d961d311b6e3ebec8073"
+    }
+  ],
+  "held_back": []
+}
