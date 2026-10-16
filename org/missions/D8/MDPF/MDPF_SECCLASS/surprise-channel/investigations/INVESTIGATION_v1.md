@@ -7952,3 +7952,83 @@ by dell1 or by this seat.
   "world_is": "Met on those three clauses. Not shown: the cause of the 10-10..10-13 content move (a data change on re-derived dates, FDRXX transfer read at FIRE_READ_20261014_2300Z.md; not graded here); the chain's stop instant (unmeasured); three advisor files (abby_horton, erick_webb, sydney_cobb) carry no D_03 write since the ship and are absent from the served summary."
 }
 ```
+
+## MDPF_SECCLASS-D1-W93-S1 -- FWD-4 disposition, round 26 SC-e-103 (B_01b and E_18 uses of bd-securities)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W93-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~93",
+  "surfaced_at": "2026-10-16T03:47:48Z",
+  "one_line": "The chain comment and the B_01b docstring say a later step reads the bd-securities rows B_01b writes; no step does. B_02 names no bd-securities or classification read, and lib/etf_classifier never opens the table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/gold_dispatch.sh:562 at d63495282e: 'DynamoDB bd-securities that B_02 reads'",
+      "data/black_diamond/scripts/gold/B_02.canonical_lots.py at d63495282e: zero matches for bd-securities, dynamodb, Table( or classif",
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py:89 at d63495282e: 'This module never opens bd-securities'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "gold_dispatch.sh:562 'B_01b must run between B_01 and B_02 (classifies new securities into DynamoDB bd-securities that B_02 reads)'; B_01b.classify_new_securities.py:7-8 'Gold scripts (C_00+) then read a fully populated classification table'.",
+  "world_is": "comp-find 'bd-securities' over data/black_diamond/scripts/gold/ returns 48 hits in 128 files; the readers among them are B_01b and E_18 only. B_02, B_03, C_00, C_01, C_02 and C_04 name no bd-securities read. The other mentions are comments or docstrings (B_01.holdings_lots.py:3009-3011, build_canonical_prices_v2.py:398, lib/s3_layout.py:303). Not measured: whether the comment predates a B_02 change."
+}
+```
+
+## MDPF_SECCLASS-D1-W93-S2 -- FWD-4 disposition, round 26 SC-e-103 (B_01b and E_18 uses of bd-securities)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W93-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~93",
+  "surfaced_at": "2026-10-16T03:47:48Z",
+  "one_line": "E_18's canonical write takes its asset_class from the old list. The premise that E_18 already classifies new tickers into the canonical table holds for the write only; the lookup that supplies the class cannot be repointed to etf-classifications.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/E_18.detect_new_securities.py:291 at d63495282e: bd_securities_lookup=default_bd_securities_lookup(BD_SECURITIES_TABLE)",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py:530-531 at d63495282e: plan_rows skips every ticker in existing_tickers before classify_asset_class",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py:538-541 at d63495282e: asset_class and sub_asset_class are read from the bd-securities row as the first source",
+      "data/black_diamond/scripts/gold/gold_dispatch.sh:102 at d63495282e: E_18|E_18.detect_new_securities.py|--upload in the chain"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e103 section 2e: E_18 already classifies new tickers into the canonical table, so the old-list writes of B_01b have no consumer that matters to the decision rule.",
+  "world_is": "E_18 writes the canonical row for a bd-only ticker with a class taken from the old list. Repointing the lookup to etf-classifications returns None for every candidate, because the candidates are the tickers the canonical table does not carry; the old-list class input can only be removed, and such tickers then stop being written and are listed unresolved. Not measured: how many bd-only tickers a nightly E_18 run writes."
+}
+```
+
+## MDPF_SECCLASS-D1-W93-S3 -- FWD-4 disposition, round 26 SC-e-103 (B_01b and E_18 uses of bd-securities)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W93-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~93",
+  "surfaced_at": "2026-10-16T03:47:48Z",
+  "one_line": "The pattern census cannot carry a name-prefix reader: the bd-securities name scan in E_18 names the table only through a handle, so no line matched by the census holds the READ-NAME-PREFIX class.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/E_18.detect_new_securities.py:156-171 at d63495282e: _scan_db_asset_names scans the handle for ticker and asset_name_raw",
+      "data/black_diamond/scripts/gold/E_18.detect_new_securities.py:214 and :218 at d63495282e: the handle is built from BD_SECURITIES_TABLE and the name scan is called on it",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R26_CHECKS/check_fwd45_disposition.py:19 (PAT) at d63495282e: the census is the pattern match over the file lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e103 section 2a: the check recomputes the live set of lines matching bd-securities, BD_SECURITIES_TABLE or bd_securities, and each row carries a class from DOC, DEAD, READ-KNOWN-SET, READ-NAME-PREFIX, READ-LOOKUP or WRITE.",
+  "world_is": "E_18.detect_new_securities.py:156 and :157-171 read the old list for name-prefix matching with no matching text on their lines; they are reached through the handle at :214 and called at :218. The 24-line census cannot see them, so a record covering only the 24 lines is silent on them. Not measured: any other reader reached only through a handle."
+}
+```
