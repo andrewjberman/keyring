@@ -4513,3 +4513,15 @@ Check IB242-1 (`deliverables/2.0.0_SA_COO~P2/checks/r242/p242_cells.py`), dry-ru
 | `IB-pr-611` | APPLY the addendum: gates, digest gate, re-measure, one mint, first fire, evidence after-read | FWD-21 | WORLD | IB-pr-605 done | PQ2-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
+
+## 238. ROUND 2, WORKSTREAM ~PM (the APPLY of the 49 Financial split-adjusted price-return pair, ACT 1; 2026-10-16 ~04:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on both halves signed: pair sha256 `8f645588ab`, ADDENDUM 1 blob `f0cec424f4`, the CTO halves @ab04a4b5a2 and msg 8632)
+
+The split pair has been fully signed since ~20:2xZ (candidate `LiDXhN74`, IB-pr-597, against live `o9UugRAV`) and had no apply order: found on the empty tick of the 30m drive (the exemption addendum apply IB-pr-611 and IB-pr-605 wait on IB-pr-549's 14:15Z fire, IB-pr-596 on the 11:32Z chain run; this cell waits on neither: a different artifact). One WORLD order to `0.7.0_AE_CloudOps~IB2`, ACT 1 only: the gates (one change on the function AND its Terraform root, which the Cottonwood holdings-performance function shares), Branch B named before the upload, the siblings' CodeSha256 read before and after (the CTO addendum's added condition), the source-map rows landed, the build from the REAL map printing `LiDXhN74`, one saved plan 0/1/0 by `safe-apply`, the deployed handler's date line (Act 2 needs it), the health proof, and the first scheduled run's manifest. ACT 2 (the restatement of the 47 split days; 1,291 of 266,455 account-days change, served history) is NOT cut: it is a separate order after the first scheduled run is read (CTO half condition 5), and it needs its own window (at least 30 minutes either side of the scheduled fire).
+
+Check IB243-1 (`deliverables/2.0.0_SA_COO~P2/checks/r243/p243_cells.py`), dry-run at the base: AC1 to AC3 all FAIL; the control (`control243.py`) passes the three positives and twenty-five negatives plus a changed pair and an unsigned CTO half each fail their own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-612` | APPLY Act 1: the source-map rows, the real-map build, one safe-apply, siblings unmoved, the health proof, the first scheduled run | FWD-21 | WORLD | none (both halves signed) | PM2-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
