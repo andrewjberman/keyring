@@ -19991,3 +19991,30 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W218-S1 -- the AC1 checker named by TO-AR-ty-55 is outside the ~218 sparse cone, so the criterion cannot run
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W218-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~218",
+  "surfaced_at": "2026-10-16T00:59:10Z",
+  "one_line": "The acceptance checker org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py named by TO-AR-ty-55 AC1 is absent from the ~218 worktree (sparse cone excludes org/tier1_exec); the criterion cannot run and the test file was not written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-ty-55 (WORKER FACE, ACCEPTANCE) runs python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 3 infra/aws/lambda/ticket_center/tests/test_cross_firm_meeting_scope.py from the worktree root, expect R46-TESTS-OK. The worker bar says a worktree that does not carry the paths the order names is a BLOCKING row and a stop, never a rebuild.",
+  "world_is": "Worktree C:/dev/wk-irpt-anlreq-218 is at HEAD 9d0664b2ff on branch wk-IRPT_ANLREQ-218 with core.sparseCheckout true (cone). The checker path is tracked in the index with the skip-worktree flag (git ls-files -v prints S) but is not materialised: org/tier1_exec does not appear in git sparse-checkout list and ls -d org/tier1_exec returns no such file. The invocation exits rc=2 with 'can't open file ... r46_checks.py: [Errno 2] No such file or directory'. The order's base box/dell2 39eef25c48 is not this worktree's HEAD. The test file's folder infra/aws/lambda/ticket_center/tests/ and the investigation file are inside the cone and present. Nothing was written to infra/, no sparse-checkout widening was run, and no test file was created.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files -v org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py at HEAD 9d0664b2ff prints S (skip-worktree): tracked, not checked out",
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-218 at 9d0664b2ff: entries .tools, data/transcripts/scripts, docs/contracts, infra/aws/lambda/investor-reporting, infra/aws/lambda/ticket_center, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_ANLREQ, org/ref, org/standards; no org/tier1_exec entry",
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R46_CHECKS/r46_checks.py tests 3 infra/aws/lambda/ticket_center/tests/test_cross_firm_meeting_scope.py run from the worktree root under timeout 120: rc=2, Errno 2 No such file or directory",
+      "infra/aws/lambda/ticket_center/tests/test_meeting_request.py:179 is the create-scope test the order cites, present at 9d0664b2ff (premise holds); lambda_function.py:1962 carries the cited if cur is None or not _in_profile_scope guard (premise holds)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
