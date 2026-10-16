@@ -242,7 +242,11 @@ def budget():
             fetched_ids.append(blob_id)
             i = int(blob_id[1:])
             day = 13 + i // 20
-            return [ev("e-" + blob_id, t="2026-10-%02dT15:%02d:00" % (day, i % 20))]
+            stamp = "2026-10-%02dT15:%02d:00" % (day, i % 20)
+            out = [ev("e-" + blob_id, t=stamp, Subject="PLANTED-SUBJECT-Q3", Recipients=["planted.internal@opalinvest.com", "x@planted-external.example"],
+                      SourceFileName="kept-file.xlsx"),
+                   ev("o-" + blob_id, who="planted.outsider@opalinvest.com", t=stamp, SourceFileName="PLANTED-OUTSIDER-FILE.xlsx")]
+            return out
 
     acc = Access()
     cur = None
@@ -266,6 +270,30 @@ def budget():
         bad.append("every blob must be fetched exactly once across the fires (fetched %d distinct %d)" % (len(fetched_ids), len(set(fetched_ids))))
     if first and parse_ok(first["cursor"].get("last_end")) is None:
         bad.append("the cursor has no readable last_end")
+    import gzip as _gz
+    planted = (b"PLANTED-SUBJECT", b"planted.internal@", b"planted-external", b"planted.outsider@", b"PLANTED-OUTSIDER-FILE")
+    for (ds, k), b in acc.objs.items():
+        blob = _gz.decompress(b) if k.endswith(".gz") else b
+        for needle in planted:
+            if needle in blob:
+                bad.append("a planted value reached storage in a partial save (%s)" % k.rsplit("/", 1)[-1])
+                break
+    # A put that fails mid-fire must leave the cursor where it was (a timeout loses nothing and duplicates nothing).
+    class FlakyAccess(Access):
+        def put(self, dataset, key, body):
+            if dataset == "bronze" and sum(1 for (d, _k) in self.objs if d == "bronze") >= 1:
+                raise RuntimeError("synthetic put failure")
+            return super().put(dataset, key, body)
+
+    flaky = FlakyAccess()
+    clock.t = 0.0
+    try:
+        run.run_once(SlowSource(), flaky, CFG, now="2026-10-15T20:00:00Z", cursor=None, clock=clock, budget_seconds=60, max_workers=1)
+        bad.append("a failed bronze put did not stop the fire")
+    except RuntimeError:
+        pass
+    if any(d == "state" for (d, _k) in flaky.objs):
+        bad.append("the cursor was written after a failed bronze put")
     docs = [json.loads(b) for (ds, k), b in acc.objs.items() if ds == "gold" and "collection_coverage" in k]
     if not docs or not any(d.get("complete") is False for d in docs) or not any(d.get("complete") is True for d in docs):
         bad.append("coverage documents must carry complete=false for a stopped fire and complete=true for the finishing fire")
