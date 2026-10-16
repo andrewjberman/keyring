@@ -1933,3 +1933,30 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Blocks CAn1-AC3 only; CAn1-AC1 (7 of 7) and CAn1-AC2 (7/7, 4/4) pass at c08d686f69. The order stays open. The owner decides whether the worktree is re-cut with daily_reports/eod in its sparse set, or the criterion is re-cut. Nothing was widened or repaired by this worker."
 }
 ```
+
+## COMM_ASSIST-S4 -- a targeted plan of module.ldo_001 from a clean detached checkout fails until transcripts-pull.zip is built, and the order's steps do not build it
+
+```json
+{
+  "id": "COMM_ASSIST-S4",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~COMM1",
+  "surfaced_at": "2026-10-16T22:33:10Z",
+  "one_line": "terraform plan -target=module.ldo_001 in infra/aws/terraform/transcripts from a clean detached worktree at 1aa63bde67 exits rc=1 with three filebase64sha256 errors (commentary.tf:283, mail_pull.tf:106, pull.tf:113) because lambda/transcripts-pull/dist/transcripts-pull.zip is gitignored and absent; step 4 of TO-CA-n-2 builds only teams-chat-assist.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~CA",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r21/CAn2_PLAN_BRANCH_A.txt first run at 2026-10-16T22:10:05Z: plan rc=1, 3 errors, all 'local.pull_zip is ./../../lambda/transcripts-pull/dist/transcripts-pull.zip ... cannot find the path specified'",
+      "after bash infra/aws/lambda/transcripts-pull/build.sh in the pinned worktree (built 100 files, dist gitignored, git status --porcelain 0 lines), the same plan read rc=2, 0 add 2 change 0 destroy at 22:11:27Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CA-n-2 steps 1, 4 and 5: a clean detached worktree at the pin, build.sh of teams-chat-assist only, then a saved targeted plan of module.ldo_001.",
+  "world_is": "The root evaluates filebase64sha256 for three untargeted Lambdas at config load, so a targeted plan needs their dist zip too. The applier built it in the pinned worktree with that directory's build.sh; its hash touches no targeted resource (the saved plan's 2 changes name only module.ldo_001's handler and ingress[0]). The act was not blocked or widened.",
+  "notes": "Later COMM deploy orders that plan this root from a clean checkout should name the transcripts-pull build in their steps. No hazard is live."
+}
+```
