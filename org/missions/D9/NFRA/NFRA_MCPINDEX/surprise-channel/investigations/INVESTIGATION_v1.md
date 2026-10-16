@@ -9660,6 +9660,47 @@ carries none.
         "trial emit round21/emit_final.sh: r21.AC1, r21.AC2, c23.AC4, c21.AC2 and r13.AC3 PASS on the candidate (md5 b014f6379707e9071cb73b3a94516182), not landed."
       ]
     }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W52-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~52",
+    "surfaced_at": "2026-10-16T20:20:06Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tests/test_gen_silver_rows.py@4e9017ac2f IntegrationTests.setUpClass runs gen.main with --registry-file on a copy of infra/logic/registry/legacy_addresses.json and no --allow-registry-drop. Measured in the worktree at 4e9017ac2f: the same invocation returns rc=2 with 36 REGISTRY-DROP lines and an ERROR line naming 36 rows. Two of its tests fail: test_contract_ids_are_hashed_and_registry_holds_one_entry_per_row (FileNotFoundError on the fork file, which the refused run did not write) and test_rc_zero_and_180_files_with_unique_names (2 != 0).",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round21/checks/c29.AC3.sh measured at 4e9017ac2f: pytest rc=1, 2 failed, 58 passed (60 tests: 51 existing in the two named files and 9 new). Criterion AC3 expects rc=0 over test_registry_drop_guard.py, test_gen_silver_rows.py and test_regen_preserves.py.",
+        "c29.AC1 run 1 at 4e9017ac2f: exit 2, REGISTRY-DROP rows printed 36. The tracked legacy file holds 143 catalog-* rows; the generator produces 107."
+      ]
+    },
+    "spec_asserts": "MX-c-29 (order section 1) requires a regeneration that would drop a registry row to refuse, and a run that drops nothing to behave as today. AC3 of the order expects pytest rc=0 on tests/test_gen_silver_rows.py, whose integration tests run the generator over the tracked registry with no allow file.",
+    "world_is": "Both cannot hold at once on the tracked registry: any run without --allow-registry-drop over the tracked legacy file is refused with 36 drops, so the two integration tests exit 2. tests/test_gen_silver_rows.py is outside the order's paths, so the worker did not edit it and did not add an allow file to it. AC3 is recorded FAIL; the choice between an allow list in that test, a regenerated registry and a scoped test belongs to the issuer.",
+    "one_line": "AC3 of MX-c-29 is FAIL: two IntegrationTests in tests/test_gen_silver_rows.py run the generator with no allow file against the tracked registry, which the new guard refuses (36 drops); that test file is outside the order's paths."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W52-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~52",
+    "surfaced_at": "2026-10-16T20:20:06Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls org/surprise_channel and ls org/surprise_channel/schemas in the worktree at 4e9017ac2f each return 'No such file or directory'; the comp-find search for *investigation*schema* under org/surprise_channel was denied twice by the rail (pipe form) and did not run.",
+        "The worktree is a sparse cone (workflows, lib, .tools, infra/aws/ec2, infra/logic and the project folder); org/surprise_channel is outside it. The order's section 3 and the surprise-channel rule name org/surprise_channel/schemas/investigation_item.schema.json as the row's schema."
+      ]
+    },
+    "spec_asserts": "The surprise-channel rule names org/surprise_channel/schemas/investigation_item.schema.json as the schema every investigation row must satisfy, and the order's section 3 directs the row to it.",
+    "world_is": "That schema file is not in this worker's worktree, so the rows in this file were written to the field list the existing rows carry, with the commit-time gate (.tools/surprise-row-gate.py) as the only validator the worker could run. Not validated against the schema text.",
+    "one_line": "The investigation_item schema named by the surprise-channel rule is absent from the sparse worktree, so the worker's rows could not be checked against it."
   }
 ]
 ```
