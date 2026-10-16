@@ -4,10 +4,10 @@
  "directive": "D12",
  "macro_code": "SOC2",
  "fabric": "dell1",
- "dep_stage": "DECOMP",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Microsoft 365 audit logs as compromise exposure: if an Opal account is taken over, know what was seen, what left and for how long; the evidence that Opal has internal security",
  "generated_from": "org/missions/D12/SOC2/SOC2_MSLOGS/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-16T17:06:01Z"
+ "generated_at": "2026-10-16T17:07:45Z"
 }
