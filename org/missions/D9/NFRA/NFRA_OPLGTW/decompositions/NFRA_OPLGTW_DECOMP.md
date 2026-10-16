@@ -2490,3 +2490,13 @@ Two batches on two surfaces, never two appliers on the host at once: the IAM and
 | `OG-cl-10` | append one sentence to the `evidence` of the `etfs` row naming `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_OPLGTW_CL7_NAMING_GATE_AND_MCPINDEX_AI_CLASSIFIED_20261016_Z.md`; nothing else changes | `infra/logic/registry/name_rulings.json` | WORLD | ~111 | `OG-cl-9` merged (80e59dd45e) |
 
 **fanout:** 1 of 1 chains, cap 8. One chain with `OG-cl-9` (the same row). It must merge before the `OG-ap-23` release commit is built if the applier's tree reads the file, but the row's text does not change any verdict: the gate reads `none_owed`.
+
+## ADDENDUM R3-T.83 (2.0.0_SA_COO~O, 2026-10-16 ~05:0xZ) -- round 37, workstream CLASS-INCREMENT-2: the tool and the grant for the DynamoDB etf-classifications table (the NAMED NEXT INCREMENT; built on OG-ac-1's census and spec, merged a69cf430b1)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ac-2` | `mdpf_get_security_classification(ticker, as_of="latest")` in a new module: ONE `get_item` by `ticker` on `etf-classifications`, never scan/query/batch/write; refusals before any read; the common envelope with `as_of` from `last_updated`; offline tests (6) and a probe on the real table with the box's own credentials | `app/mdpf_classification.py`, `tests/test_og_ac2.py`, the probe | WORLD | ~113 | `OG-ac-1` merged |
+| `OG-ap-25` | APPLY (grant, `0.7.0_AE_CloudOps~ZS`): ONE policy on the gateway role, `dynamodb:GetItem` on the table ARN, nothing else; ask for three halves | `infra/aws/terraform/opal-gateway/etf_classification_read_iam.tf`, the ledger | WORLD | ~AE | `OG-ac-1` merged |
+
+After both: the issuer's hookup (one tool, registry 121 to 122), then the code release (a second release after `OG-ap-23`, applier `0.7.0_AE_CloudOps~Z`) and the catalog's `read_tool` row (`NFRA_MCPINDEX`).
+**fanout:** 2 of 2 chains, cap 8 (the tool and the grant share no file and no edge until the release). Outside the 22:00Z line by the CTO ruling @d97ea3ae82 section 2; parallel with `OG-ap-23` (disjoint).
