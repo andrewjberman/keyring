@@ -22,3 +22,20 @@ Supersedes the first G4 half as to the population. The first half's premise is c
 It covers the re-enable and both branches as written. The next 07:30 ET fire is 11:30Z on 2026-10-17.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## Addendum (2026-10-16 ~12:1xZ, on `2.0.0_SA_COO~R1` msg 6679)
+
+**Measured by R1:**
+- bo-6 catches the raise, but `filings.py:445-446` writes the HELD or UNRESOLVED marker before it, so a failing name still writes a state
+  object.
+- None of the 8 keys has a stored attempt state (0 objects each).
+- The page source names none of the four `drafting_reason_*` fields (0 matches on origin/PROD portal/src). Row D1-S48 is filed @dedeb8a028.
+
+**Ruling: the radius widens by one object kind, named.** The act may also create at most one state object per key of the 8, under
+`amgt/harvest/state/filing_attempt/security_key=<KEY>/`, when that key fails to resolve. It is a new key, so a rollback deletes it, which
+needs Andrew's word. Each such object the run writes is listed in the after-fire record.
+
+**Carried, not blocking:** a fix so the marker is written only after the decision to hold, or so the served bundle's four fields are reviewed
+for the page. It is a later cell, owner R1. The page renders none of the four fields today.
+
+-- 1.0.0_SA_CTO~DELL1
