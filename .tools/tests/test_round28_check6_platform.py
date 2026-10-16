@@ -25,6 +25,8 @@ WHAT THE ARMS DEFEND (cross-platform means the held wheel's platform tag differs
   i  an empty line inside the four-line reach of the block, in a file with a real edit beside it, fails
   j  a block padded by empty lines on both sides (the delvewheel shape) passes, on either side of the comparison
   k  a file with no block gets no blank-line leniency on a cross-platform comparison
+  l  (CTO msg 109673) a non-empty line at the seam on one side only fails, and a run split by a non-empty line is not collapsed
+  m  (CTO msg 109673) the real pandas seam shape passes: two empty lines before the block, one after, one kept by the wheel
 """
 from __future__ import annotations
 
@@ -287,12 +289,41 @@ def arm_k_no_block_no_blank_line_leniency():
     _expect(v, ev, "failed", compared_across_platforms=True, py_differing=[SYN + "/__init__.py"], platform_normalised_equal=[])
 
 
+# ------------------------------------------------------------------------ arms l and m: the seam holds a NON-empty line (msg 109673)
+def arm_l_non_empty_line_at_the_seam_on_one_side_fails():
+    # l1: the wheel carries an extra non-empty line at the seam the installed copy's block sits in
+    w = {SYN + "/__init__.py": b"import os\nNOTE = 0\nVALUE = 1\n"}
+    i = {SYN + "/__init__.py": b"import os\n" + BLOCK + b"\n\nVALUE = 1\n"}
+    v, ev = run6(wheel_files=w, installed_files=i)
+    _expect(v, ev, "failed", py_differing=[SYN + "/__init__.py"], platform_normalised_equal=[])
+    # l2: the installed copy carries the extra non-empty line beside its block; the wheel has none
+    w2 = {SYN + "/__init__.py": b"import os\nVALUE = 1\n"}
+    i2 = {SYN + "/__init__.py": b"import os\nNOTE = 0\n" + BLOCK + b"VALUE = 1\n"}
+    v2, ev2 = run6(wheel_files=w2, installed_files=i2)
+    _expect(v2, ev2, "failed", py_differing=[SYN + "/__init__.py"], platform_normalised_equal=[])
+    # l3: the wheel's empty line at the seam is split by a non-empty line, so no run is collapsed and the comparison is exact
+    w3 = {SYN + "/__init__.py": b"import os\n\nNOTE = 0\n\nVALUE = 1\n"}
+    i3 = {SYN + "/__init__.py": b"import os\n" + BLOCK + b"\nVALUE = 1\n"}
+    v3, ev3 = run6(wheel_files=w3, installed_files=i3)
+    _expect(v3, ev3, "failed", py_differing=[SYN + "/__init__.py"], platform_normalised_equal=[])
+
+
+def arm_m_pandas_seam_shape_passes():
+    # the shape of the real pandas/__init__.py residual (CTO msg 109673): the installed copy has two empty lines before the block
+    # and one after; the wheel keeps one empty line at that seam; the rest of the file is equal
+    w = {SYN + "/__init__.py": b"from __future__ import annotations\n\nimport os\nVALUE = 1\n"}
+    i = {SYN + "/__init__.py": b"from __future__ import annotations\n\n\n" + BLOCK + b"\nimport os\nVALUE = 1\n"}
+    v, ev = run6(wheel_files=w, installed_files=i)
+    _expect(v, ev, "passed", py_differing=[], platform_normalised_equal=[SYN + "/__init__.py"])
+
+
 ARMS = [arm_a_crlf_only_cross_platform_passes, arm_b_delvewheel_block_cross_platform_passes,
         arm_c_numpy_build_metadata_file_passes_and_other_file_fails, arm_d_planted_edit_fails_across_platforms,
         arm_e_same_platform_is_unchanged, arm_e2_no_installed_wheel_tag_is_not_cross_platform,
         arm_f_scripts_data_and_oversize_keep_failing, arm_g_controls,
         arm_h_blank_line_far_from_block_fails, arm_i_blank_line_inside_reach_with_a_real_edit_fails,
-        arm_j_block_padded_by_empty_lines_on_both_sides_passes, arm_k_no_block_no_blank_line_leniency]
+        arm_j_block_padded_by_empty_lines_on_both_sides_passes, arm_k_no_block_no_blank_line_leniency,
+        arm_l_non_empty_line_at_the_seam_on_one_side_fails, arm_m_pandas_seam_shape_passes]
 
 
 def run_arms():

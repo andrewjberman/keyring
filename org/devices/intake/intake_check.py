@@ -511,22 +511,31 @@ def installed_platform_tag(inst_di):
 CHECK6_BUILD_METADATA_FILES = ("numpy/__config__.py",)
 DELVEWHEEL_START = b"# start delvewheel patch"
 DELVEWHEEL_END = b"# end delvewheel patch"
-# CTO ruling (msg 109671, round 28): the block is removed TOGETHER WITH up to this many empty lines directly before it and up to
-# this many directly after it. Empty lines elsewhere are never removed, and a file with no block gets no leniency.
+# CTO rulings, round 28: the delvewheel block is removed together with up to DELVEWHEEL_PAD empty lines directly before it and up
+# to DELVEWHEEL_PAD directly after it (msg 109671). At the seam where a block was removed from the installed copy, the run of
+# empty lines is collapsed on BOTH sides, the wheel's run at the same seam included, at most DELVEWHEEL_PAD each side (msg
+# 109673, which replaces the padding-only rule). Only that one seam per removed block is touched; empty lines elsewhere are
+# never removed, a file with no block gets no leniency, and a non-empty line at a seam is never removed.
 DELVEWHEEL_PAD = 4
 
 
-def _platform_normalise(data):
-    """CRLF to LF, then remove every block from a line containing the delvewheel start marker through the first following line
-    containing the end marker (both marker lines included), together with up to DELVEWHEEL_PAD empty lines directly before and
-    up to DELVEWHEEL_PAD directly after. A start with no end after it is not a block and is left as it is. The final newline of
-    the file is not an empty line."""
-    text = data.replace(b"\r\n", b"\n")
-    lines = text.split(b"\n")
+def _platform_lines(data):
+    """CRLF to LF, then the lines; the final newline of the file is not a line. Returns (lines, trailing_newline)."""
+    lines = data.replace(b"\r\n", b"\n").split(b"\n")
     trailing = lines[-1] == b""
-    if trailing:
-        lines = lines[:-1]
-    out, i = [], 0
+    return (lines[:-1] if trailing else lines), trailing
+
+
+def _join_lines(lines, trailing):
+    return b"\n".join(lines) + (b"\n" if trailing else b"")
+
+
+def _remove_blocks(lines):
+    """Remove every delvewheel block: from a line containing the start marker through the first following line containing the
+    end marker (both included), together with up to DELVEWHEEL_PAD empty lines directly before and up to DELVEWHEEL_PAD directly
+    after. A start with no end after it is not a block and is left as it is. Returns (kept lines, seams): one seam per removed
+    block, the number of non-empty kept lines before that block."""
+    out, seams, nonempty, i = [], [], 0, 0
     while i < len(lines):
         if DELVEWHEEL_START in lines[i]:
             end = next((j for j in range(i, len(lines)) if DELVEWHEEL_END in lines[j]), None)
@@ -536,6 +545,7 @@ def _platform_normalise(data):
                         out.pop()
                     else:
                         break
+                seams.append(nonempty)
                 i = end + 1
                 for _ in range(DELVEWHEEL_PAD):      # up to DELVEWHEEL_PAD empty lines directly after the block
                     if i < len(lines) and lines[i] == b"":
@@ -544,15 +554,51 @@ def _platform_normalise(data):
                         break
                 continue
         out.append(lines[i])
+        if lines[i] != b"":
+            nonempty += 1
         i += 1
-    return b"\n".join(out) + (b"\n" if trailing else b"")
+    return out, seams
+
+
+def _collapse_seam(lines, seam):
+    """The run of empty lines at a seam on a side that carries no block there: the run that follows the seam-th non-empty line
+    (the start of the file when seam is 0). Up to DELVEWHEEL_PAD empty lines are dropped from its start and up to DELVEWHEEL_PAD
+    from its end; the lines between them stay. A seam the lines do not reach changes nothing."""
+    start = 0
+    if seam:
+        seen = 0
+        for idx, ln in enumerate(lines):
+            if ln != b"":
+                seen += 1
+                if seen == seam:
+                    start = idx + 1
+                    break
+        else:
+            return lines
+    end = start
+    while end < len(lines) and lines[end] == b"":
+        end += 1
+    width = end - start
+    head = min(width, DELVEWHEEL_PAD)
+    tail = min(width - head, DELVEWHEEL_PAD)
+    return lines[:start] + lines[start + head:end - tail] + lines[end:]
 
 
 def _platform_rule(rel, held_bytes, inst_bytes):
     """Check 6's platform rule for ONE differing .py file of a cross-platform comparison: 'equal' when the two sides are equal
-    after _platform_normalise, 'build' when they differ and the site-relative path is a listed build-metadata file, else None
-    (a residual difference that still fails check 6)."""
-    if _platform_normalise(held_bytes) == _platform_normalise(inst_bytes):
+    after the platform normalisation (CRLF to LF, delvewheel blocks removed, the empty-line run at each block's seam collapsed
+    on both sides), 'build' when they differ and the site-relative path is a listed build-metadata file, else None (a residual
+    difference that still fails check 6)."""
+    held_lines, held_nl = _platform_lines(held_bytes)
+    inst_lines, inst_nl = _platform_lines(inst_bytes)
+    held_out, held_seams = _remove_blocks(held_lines)
+    inst_out, inst_seams = _remove_blocks(inst_lines)
+    # a seam the other side carries is collapsed here too; a seam both sides carry is collapsed by each side's own block removal
+    for seam in sorted(set(inst_seams) - set(held_seams)):
+        held_out = _collapse_seam(held_out, seam)
+    for seam in sorted(set(held_seams) - set(inst_seams)):
+        inst_out = _collapse_seam(inst_out, seam)
+    if _join_lines(held_out, held_nl) == _join_lines(inst_out, inst_nl):
         return "equal"
     if rel in CHECK6_BUILD_METADATA_FILES:
         return "build"
