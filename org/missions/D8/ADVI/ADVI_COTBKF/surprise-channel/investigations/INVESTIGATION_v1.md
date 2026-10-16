@@ -9981,3 +9981,57 @@ round.** Never edit an existing row.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## ADVI_COTBKF-D1-W187-S1 -- CB97cs1-AC2 reads price_source for a Yahoo name, which the builder never writes there; the labels reconcile to the Yahoo points, so the criterion fails as written
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W187-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~187",
+  "surfaced_at": "2026-10-16T06:50:44Z",
+  "one_line": "CB97cs1-AC2 reads price_source for a Yahoo name, but price_source is the store name by builder design, so yahoo_source_rows is 0 on a build whose labels reconcile to the price file's Yahoo points; AC2 fails as written",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/cs1_ac2_label_check.py run by the worker: LABELS adv_rows=21102041 yahoo_source_rows=0 labelled_rows=3709042 equal=False (counts only)",
+      "data/assets/scripts/silver/commonwealth_fwd3_serve.py@14793ce188 lines 320-333 (yahoo_priced reads the per-point source column) and line 458 (price_source is the store column)",
+      "scratch counts, off git: .scratch/cotbkf_r97/labels.log and control.log (price file: 1,325,110 yahoo_finance and 705,133 linear_interpolation cusip-days; 3,709,042 labelled rows = 4,038,997 Yahoo-keyed priced rows less 329,955 cash-at-par rows)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~187/SERVED_MOVE_RELABEL_RECORD.json (control: price_source equal on all served and built rows; yahoo_points)"
+    ]
+  },
+  "spec_asserts": "CB97cs1-AC2 (CB-cs-1 item 5): the built account_day_value must name a Yahoo-sourced price_source on at least one row (yahoo_source_rows 1 or more); zero means the regrade did not carry the source. Item 5 counts the same price_source rows.",
+  "world_is": "The regrade carried the source: the new price file's per-point source column names yahoo_finance on 1,325,110 cusip-days and linear_interpolation on 705,133, and the builder's use_class labels 3,709,042 priced non-cash rows, exactly the Yahoo-keyed set. But price_source in the served and built tables is the store name by builder design (served and built are equal on all 21,102,041 rows), so no row names a Yahoo source and AC2 reads 0. The check's premise, that a Yahoo label shows in price_source, does not hold for this schema. Not established: whether price_source was meant to name the source.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## ADVI_COTBKF-D1-S13 -- the issuer dispositions D1-W186-S1, D1-S12 and D1-W187-S1: the per-point Yahoo source is carried and the labels mark the Yahoo-sourced prices
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S13",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T06:55:56Z",
+  "one_line": "the issuer dispositions D1-W186-S1, D1-S12 and D1-W187-S1: a regrade re-run with the current code carries the per-point Yahoo source, the labels now mark 3,709,042 account_day_value rows, and the pre-existing columns still equal the served tables",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~187/SERVED_MOVE_RELABEL_RECORD.json (worker ~187, merged @7d9663b5ad): pre_existing_equal true in 3 of 3 tables, rows_differing 0, max_abs_diff 0.0; use_class NOT_FOR_ACTIVE 3,688,916 and INACTIVE_USE 20,126 on account_day_value, 729 accounts with a NOT_FOR_ACTIVE row; price file source column present",
+      "the issuer's re-run of org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C1/cs1_ac2_label_check.py at 57cb0245b5: LABELS adv_rows=21102041 yahoo_point_rows=3709042 labelled_rows=3709042 equal=True",
+      "proof instance for ADVI_COTBKF.TO-CB-cs-1: proof-of-spec-check VALID rc=0, AC1 AC2 AC3 PASS"
+    ]
+  },
+  "spec_asserts": "D1-W186-S1: no served or rebuilt row carries a Yahoo source, so every label reads NOT_YAHOO. D1-S12: the as-traded substitution keeps the store's source label. D1-W187-S1: AC2's premise (a Yahoo label shows in price_source) does not hold for this schema.",
+  "world_is": "The three were one cause: the served run r34 predates the per-point source column. A regrade at the served settings with the current code writes it, the as-traded substitution keeps each point's own yahoo_finance or linear_interpolation label, and the builder labels the rows priced on those points. The price_source column of the built tables still carries the store name by design (W187-S1): AC2 was amended to read the price file's per-point source. Not established by this round: which served days used a substituted point (the price file has no substitution flag; the label marks every Yahoo-sourced point, replaced or original), and porting_verdict reads UNVERIFIED on every Yahoo-labelled row because the Yahoo index has no verdict column yet.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Answered by round 97: the cause is the served run's age, the relabel build carries the source, and delta 0 holds on every pre-existing column; the pair is the remaining act."
+}
+```
