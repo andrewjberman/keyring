@@ -60,7 +60,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ev-2.measure-49f-partitions-and
 - Risk SERVED (a read of served client data; counts only).
 - Pre-cut: `ev2.AC1` base FAIL as expected (record absent); PASS arms on a synthetic record (increment plus fraction; snapshot plus percent); controls FAIL (a classification that contradicts its ratios; a scale that contradicts its counts; a 12-digit run; too few accounts sampled).
 
-<status>staged</status>
+<status>complete</status>
 <round>39</round>
 <workstream>ENRICH-R39-B</workstream>
 <slot>~AE</slot>
