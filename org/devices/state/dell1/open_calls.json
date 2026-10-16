@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-16T15:18:17Z",
+ "written_at": "2026-10-16T15:57:40Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -5718,6 +5718,101 @@
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": null
    }
+  },
+  {
+   "id": "dell1-20261016T154519Z-f992",
+   "project": "AMGT_RESAPP",
+   "subject": "Delete the local, never-pushed portal branch release/20261016T141236Z that 2.0.0_SA_COO~R2 built as a dry run?",
+   "asked_by": "2.0.0_SA_COO~R2",
+   "source": "org/tier1_exec/2.0.0_SA_COO~R2/drive_log_20261016T15Z_desktop-hk1uu7n.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T15:45:19Z",
+   "kind": "fork",
+   "context": "R2 ran portal-release-build.sh --features on the two approved Security Analysis branches to measure the pair before cutting the promote order (READY, unapproved 0). It left a local release branch in the portal repo, never pushed, not in PROD; the DT built its own release (release/20261016T141737Z) and promoted fa21a303d872. Nothing depends on it.",
+   "rec": "Yes, delete it: git -C portal branch -D release/20261016T141236Z. Its only commits are merges of two branches that live on origin; the builder recreates it from them. R2 will not delete it without your word (unmerged-to-trunk ref).",
+   "scope": {
+    "measured_at": "2026-10-16T15:45:19Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/filings/analyze.py is on the shared branch (lib)",
+      "lib/research/filings/tests/test_reverify_stated_value.py is on the shared branch (lib)",
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_classification_withheld.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_names_read_agreement.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T15:57:40Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_RULING_F992_DELETE_LOCAL_RELEASE_DRY_RUN_REF_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T155000Z-f050"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T155000Z-f050",
+    "at": "2026-10-16T15:50:00Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261016T154656Z-a669",
+   "project": "TCKT_MTADTA",
+   "subject": "Your act: read one of the eight's real Microsoft 365 day through the door (FWD-1), with your MFA session",
+   "asked_by": "2.0.0_SA_COO~S1",
+   "source": "org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.7.0_AE_CloudOps~TM1/TCKT_MTADTA.TO-MD-r2.andrew_consent_card.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-16T15:46:56Z",
+   "kind": "act",
+   "context": "Two clean scheduled fires have landed bronze and silver for 2026-10-09 to 10-16. No seat can read stored data by design; only your MFA session can. This read is the round's exercised outcome and the CVO grades it. Commands: the card's last section, then read_day.py --person <upn> --date <day> and first_content.py --date <day>.",
+   "rec": "Pick a colleague and a recent trading day (Thursday 2026-10-15 has a full day) and read it; say whether you recognise it as their day. Run first_content.py for the same day to see volume, event types and the id-only count.",
+   "scope": {
+    "measured_at": "2026-10-16T15:46:56Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
   }
  ]
 }

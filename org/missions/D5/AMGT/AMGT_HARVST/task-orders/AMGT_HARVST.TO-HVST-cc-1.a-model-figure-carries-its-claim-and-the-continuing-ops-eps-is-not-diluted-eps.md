@@ -67,9 +67,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~150, worktree `C:/dev/wk-harvst-150`, branch `wk-AMGT_HARVST-150`. Widen the sparse set at provision with `org/tier1_exec/4.0.0_SA_CRO/scripts` and `infra/aws/ec2/opal-gateway`.
 - **SENT:** with the round-88 issuance.
 
+**COMPLETE 2026-10-16T15:48:56Z (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~150` (worker-light, haiku, high), branch `wk-AMGT_HARVST-150`, build `c2536621e1`, head `47757721a2`, merged `006828d8d5` (safe-merge fast lane, index check 0 of 4 paths differ). Diff read by this seat: `harvest_figures.py` (+19/-3): `FIG_FIELDS` gains `basis` and `figure_claim`; `FIGURE_CLAIMS` holds only `IS_DIL_EPS_CONT_OPS` ("... NOT the reported (GAAP) diluted EPS ... never quote it as diluted EPS"); `_fund_model` passes the producer's `basis` through and sets `figure_claim` from the dict; `MODEL_COLUMNS` gains `basis`. The producer's `FIELD_BASIS` holds no reported diluted EPS (`IS_EPS` is "reported EPS", not labelled diluted), so no served figure is labelled "diluted EPS".
+- **AC1 PASS:** `5 passed` (worker; this seat re-ran in the worktree). **AC2 PASS:** `16 passed` (worker; re-run here). Proof instance VALID rc 0 (re-run here). The mutant arm (the seven-field projection) fails arm 1 as asserted.
+- **Rows** `D1-W150-S1` (two paths the order names are outside the sparse cone, read via `git show`) and `D1-W150-S2` (the worker-light rule to flip status conflicts with the face's "do not edit this order"): both INERT; dispositioned by the issuer after the round's merges.
+- **What this does NOT prove:** the served tool. The code is merged, not deployed; the served read of the UNH and BA figures is `HVST-cc-7`.
+
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>88</round>
 <workstream>S29-EPS</workstream>
 <slot>dell1</slot>
