@@ -2828,3 +2828,17 @@ Both halves of the never-widen pair are signed (COO @de90b2bb6f; CTO @f78b555c93
 **fanout:** 0 workers (an applier order), 1 of 1 chains, cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected, no record exists; selftest green on a synthetic record and red on 34 single-fault arms):** `checks/r149/p182_cot_publish_apply.py` (DBC182-1-AC1, -2-AC1, -3-AC1).
+
+## 176. ROUND 149, WORKSTREAM PORTALFOLD (2026-10-16 ~23:3xZ, issuer 2.0.0_SA_COO~D2): the holdings panels are folded into the smoke branch by a merge commit
+
+The CTO ruled A (msg 10016): Andrew's point 4 asked for the holdings panels, so he smokes them with the rest; one head, one smoke. `DB-b-313` left the panels on their own stacked branch (`cand/dell2/irpt-performance-holdings-panels`, head `f26fb258`); `DB-b-314` moved the smoke branch to `355b3bf8`. This cell merges the first onto the second (no rebase), resolves the one expected conflict at the `PerformanceTemplateView` mount keeping both sides, and re-runs both cells' checkers on the merged head. The approval row (`7611`) is re-registered at the new head on the same waiver terms.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. A merge commit of `f26fb258` onto `355b3bf8` on `cand/dell2/irpt-49f-performance-template-mount`; both checkers (`p180`, `p181`) amended for the merged branch and green on it | DB-b-316 | FWD-10 (Andrew's smoke, point 4) | SERVED, client-facing | `DB-b-313`, `DB-b-314` (both merged) | chain AJ |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the panels line sits OUTSIDE the `49financial` gate (it shows for every firm: the allocation and positions panels read the holdings snapshot, which all three firms have), and only the template mount is gated; (b) `p180` is amended to the template-mount branch with base `355b3bf8` and `p181` admits the panels component and its test, so the same checkers grade the union; (c) the worker is new (`~251`), on its own worktrees.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~251`), cap 8.
+
+**Checkers (dry-run at the base before the cut; the criteria FAIL as expected):** `checks/r149/p180_portal_holdings_panels.py` (DBP180-1-AC1..AC3, amended) and `checks/r149/p181_template_firm_gate.py` (DBP181-1-AC1..AC3, amended).
