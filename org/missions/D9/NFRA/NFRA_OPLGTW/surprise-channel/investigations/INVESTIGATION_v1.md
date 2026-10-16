@@ -25318,3 +25318,54 @@ name the one known failure instead of silently inheriting it.
   "notes": "Blocks NFRA_MCPORTAL MP-v-2 (a second account served /sprint, PRD A2)."
 }
 ```
+
+Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its order (site Z).
+
+```json
+[
+  {
+    "id": "NFRA_OPLGTW-Z-W127-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~127",
+    "surfaced_at": "2026-10-16T19:40:39Z",
+    "one_line": "The gateway route test test_ogz1_ac08 fails at the base this order cut from: the app registers four routes (/hx/teams/teams, /hx/teams/teams/{team_id}/channels, /hx/teams/channels/{team_id}/{channel_id}/messages and /{path:path}) that its ROUTE_CLASS map does not hold.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TEST: infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py:756 @29fcd5d688 -- assert len(routes) == len(ge.server.app.routes) and set(ROUTE_CLASS) == set(routes)",
+        "RUN: pytest tests/test_data_entitlement_guard.py::test_ogz1_ac08 with app/data_entitlement.py and app/server.py at HEAD 29fcd5d688 in a scratch copy of the gateway tree: 1 failed; 'Extra items in the right set' lists the four routes above (57 app routes)",
+        "RUN: the same test in the order worktree with this order's edits applied: 1 failed; the seven gateway suites run together gave 1 failed, 47 passed"
+      ]
+    },
+    "spec_asserts": "The gateway route-denial test test_ogz1_ac08 passes at the cut base, so a whole-suite regression check names only the failures its own order caused.",
+    "world_is": "test_ogz1_ac08 fails at HEAD 29fcd5d688 with the app files at HEAD, so the failure predates OG-en-14. Its failing assertion names route declarations only; OG-en-14 edits a keyword argument of email_denial and _email_denied and adds no route. The file is not in this order's paths and no criterion of the order runs it.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Pre-existing at HEAD 29fcd5d688; not caused by OG-en-14. Not in this order's <paths>; AC1 and AC2 do not run it."
+  },
+  {
+    "id": "NFRA_OPLGTW-Z-W127-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~127",
+    "surfaced_at": "2026-10-16T19:40:39Z",
+    "one_line": "The order names tests/test_owner_gate.py and tests/test_login_admit_r24.py as the source of the fake store for OG-en-14, but neither holds a deny-record store fake: owner_gate uses a no-deny client and login_admit stubs _email_denied. The deny-record fake is _FakeTable and _seed_deny in tests/test_email_deny.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TREE: infra/aws/ec2/opal-gateway/tests/test_owner_gate.py:38 @29fcd5d688 -- class _NoDenyClient, the store that reports no deny record",
+        "TREE: infra/aws/ec2/opal-gateway/tests/test_login_admit_r24.py:84-87 @29fcd5d688 -- async def _email_denied stub over a denied dict; no store object",
+        "TREE: infra/aws/ec2/opal-gateway/tests/test_email_deny.py @29fcd5d688 -- class _FakeTable and def _seed_deny, the DynamoDB fake and deny-record seeder the new file imports"
+      ]
+    },
+    "spec_asserts": "The test files the order names for the fake store and request fixtures hold a deny-record store fake that the new test can reuse.",
+    "world_is": "The reusable fake is in tests/test_email_deny.py; tests/test_og_en14.py imports _FakeTable and _seed_deny from it, the pattern tests/test_og_en8.py uses. The two named files were read for their request fixtures only. Their one edit is the _email_denied stub signature, which the order's rule for pinned signatures covers. No criterion is affected.",
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Premise narrowed by reading, not a blocker: the fake store lives in a file the order does not list in its paths, so the new test imports it rather than copying it."
+  }
+]
+```
