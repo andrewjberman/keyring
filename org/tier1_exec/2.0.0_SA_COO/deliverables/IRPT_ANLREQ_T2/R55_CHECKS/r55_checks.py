@@ -4,7 +4,11 @@
                 the draft-store Lambda no longer runs the pre-act digest cwf6bUEb, and the commentary function runs a digest that is neither
                 the pre-act hUZY39qN nor the pull functions' (which still run hUZY39qN: the surgical zip reached the commentary function only).
 
-Read-only: one policy read and three configuration reads. Prints R55-AP1-OK or R55-AP1-FAIL <reason>.
+  hoplog     R55-HOPLOG   the driven refusal (TO-APPLY-t55 leg A): the commentary function's log group holds the line
+                `HOP-FAILURE-REPORTED request_id=REQ-d47252fe74634d0c5cdd8067 hop=COMMENTARY code=COMMENTARY_DRAFT_REFUSED written=True`
+  hopabsent  R55-HOPABSENT the synthetic job row REQ-d47252fe74634d0c5cdd8067 (tenant 49financial) carries NO hop_failure (the restored state; a control that passes at the base and after leg B)
+
+Read-only: one policy read and three configuration reads (ap1), one log filter (hoplog), one get-item (hopabsent). Prints R55-<ARM>-OK or -FAIL <reason>.
 """
 import json
 import subprocess
@@ -71,6 +75,46 @@ def main():
     return True, "%s; draft-store=%s commentary=%s pulls=%s" % (why, ds[:8], cm[:8], [p[:8] for p in pulls])
 
 
+ROW_KEY = '{"tenant":{"S":"49financial"},"job":{"S":"REQ-d47252fe74634d0c5cdd8067"}}'
+HOP_LOG_GROUP = "/aws/lambda/outlook-global-commentary-draft-lambda"
+HOP_LINE = "HOP-FAILURE-REPORTED request_id=REQ-d47252fe74634d0c5cdd8067 hop=COMMENTARY code=COMMENTARY_DRAFT_REFUSED written=True"
+
+
+def hoplog():
+    rc, so, _ = aws("logs", "filter-log-events", "--log-group-name", HOP_LOG_GROUP, "--filter-pattern", '"%s"' % HOP_LINE, "--output", "json")
+    if rc != 0:
+        return False, "log read failed rc=%d" % rc
+    try:
+        n = len(json.loads(so).get("events") or [])
+    except ValueError:
+        return False, "log read unparseable"
+    return (n >= 1), "events_with_line=%d" % n
+
+
+def hopabsent():
+    import os
+    import tempfile
+    # the key JSON goes by file and the queries are plain paths: braces and quotes in an argv entry do not survive the bash shim here
+    fd, path = tempfile.mkstemp(suffix=".json")
+    try:
+        with os.fdopen(fd, "w", encoding="ascii") as fh:
+            fh.write(ROW_KEY)
+        key = "file://" + path.replace("\\", "/")
+        rc1, exists, _ = aws("dynamodb", "get-item", "--table-name", "irpt-jobs", "--key", key, "--consistent-read",
+                             "--query", "Item.job.S", "--output", "text")
+        rc2, hop, _ = aws("dynamodb", "get-item", "--table-name", "irpt-jobs", "--key", key, "--consistent-read",
+                          "--query", "Item.hop_failure", "--output", "json")
+    finally:
+        os.unlink(path)
+    if rc1 != 0 or rc2 != 0:
+        return False, "row read failed rc=%d,%d" % (rc1, rc2)
+    if not exists.strip() or exists.strip() == "None":
+        return False, "the synthetic job row does not exist"
+    if hop.strip() not in ("null", "None", ""):
+        return False, "the row carries a hop_failure"
+    return True, "row exists, hop_failure absent"
+
+
 def self_test():
     good = [{"Sid": "S%d%s" % (i, "X"), "Action": ["dynamodb:UpdateItem"] if i == 6 else ["x"]} for i in range(1, 8)]
     cases = [("green", good, True), ("S7 absent", good[:6], False),
@@ -88,9 +132,11 @@ def self_test():
 if __name__ == "__main__":
     if len(sys.argv) == 2 and sys.argv[1] == "--self-test":
         sys.exit(self_test())
-    if len(sys.argv) != 2 or sys.argv[1] != "ap1":
-        print("usage: r55_checks.py ap1 | --self-test")
+    arms = {"ap1": ("AP1", main), "hoplog": ("HOPLOG", hoplog), "hopabsent": ("HOPABSENT", hopabsent)}
+    if len(sys.argv) != 2 or sys.argv[1] not in arms:
+        print("usage: r55_checks.py ap1|hoplog|hopabsent | --self-test")
         sys.exit(2)
-    ok, why = main()
-    print("R55-AP1-%s %s" % ("OK" if ok else "FAIL", why))
+    name, fn = arms[sys.argv[1]]
+    ok, why = fn()
+    print("R55-%s-%s %s" % (name, "OK" if ok else "FAIL", why))
     sys.exit(0 if ok else 1)
