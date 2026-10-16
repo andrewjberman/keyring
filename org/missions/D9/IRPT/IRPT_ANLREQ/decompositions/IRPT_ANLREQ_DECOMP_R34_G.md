@@ -14,10 +14,11 @@ Issuer `2.0.0_SA_COO~G2`, 2026-10-16.
 | cell | what is produced | write set | risk |
 |---|---|---|---|
 | `AR-g-118` | the r34c tarball and four host scripts at the pin, record `RESIDENT_R34_BUILD.json` in the worker's folder, stage folder `C:/dev/irpt-release-r34f` | the worker's folder, the order, the channel file | WORLD (nothing installed, no host touched, no AWS call) |
+| `AR-g-119` | the yfinance 1.2.0 closure (17 approved wheels) delivered into the resident host's pydeps (applier order `TO-APPLY-YFDEPS`, own pair; CTO msgs 9070, 9075, 9143) | the applier's `deliverables/irpt_anlreq_yfdeps/`, the ledger | WORLD (S3 write, a host folder; no restart) |
 
 ## Edges and chains
 
-- ONE chain. Feeds the re-cut packet (R34D), the CTO's signature, and the AQ2 apply order (after the library is installed).
+- TWO chains. `AR-g-118` feeds the signed packet R34D and the AQ2 apply order; `AR-g-119` (the library) is the hard gate of that order (CTO msg 9138): it must close before the r34c apply starts.
 
 ## Four-postulate record
 

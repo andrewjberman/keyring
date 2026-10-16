@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.1.0",
+  "contract_version": "0.1.1",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
   "authored_by": "0.9.0_WK_IRPT_DASHBD~18",
@@ -97,6 +97,8 @@
     "table": "etf-classifications",
     "key": "ticker",
     "read": "GetItem",
+    "as_of": "the oldest GetItem read date over the identifiers used, taken at run time by the producer's own read (ClassTable.as_of(), each GetItem stamped with the run-day it was made); NOT the swap snapshot's operator-dated date; null in a manifest written without it",
+    "claim": "held",
     "client": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
     "pin": "a96e00c279",
     "pin_meaning": "the commit of the shared client module (ETFClassifier) whose table handle the producer's GetItem goes through; the class values are the TABLE's, read at run time, so a class the table gains (MDPF_SECCLASS cell SC-e-49: single stocks as equity, money-market funds as cash) reaches this table with no code change",

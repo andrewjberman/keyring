@@ -21406,3 +21406,289 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The carrying commit for a portal file is in the nested portal repo (branch wk-IRPT_DASHBD-418-portal), outside the workspace store. The workspace checker cannot resolve it, so that row is announced and not asserted; the workspace-side BUILD record row resolves at its pin."
 }
 ```
+
+## IRPT_DASHBD-D2-W1302-S1 -- the worktree's four materialized folders do not cover the existing class test's imports (lib and the v2_portal _shared folder added by sparse checkout)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1302-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1302",
+  "surfaced_at": "2026-10-16T06:44:47Z",
+  "one_line": "The worker face names four folders as materialized; the gate test test_account_class_daily.py imports two more, so it failed at collection until both were added with git sparse-checkout add.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1302 WORKER FACE: org/standards, lib, data/assets/scripts/gold/irpt_reporting and infra/logic are materialized; the step-4 gate runs tests/test_account_class_daily.py.",
+  "world_is": "data/assets/scripts/lib (stream_parquet, read by account_return_daily.py) and infra/aws/lambda/v2_portal/_shared (etf_classifications_dynamodb, read by account_class_daily.py) were outside the sparse checkout. The existing test failed at collection (no module stream_parquet, then no module etf_classifications_dynamodb). Both folders were added with git sparse-checkout add, and the existing test then passed 25 of 25. The sparse config is worktree-local; no tracked file changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1302.fwd5-49-financial-account-transaction-producer-offline-tests-not-wired.md",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_class_daily.py@abb61b3bc0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. DBF127-2-AC1 and AC2 both PASS; the row records the choice made under the refusal clause."
+}
+```
+
+## IRPT_DASHBD-D2-W1302-S2 -- the contract's cash-sign rule needs the tr_cd column, which the order's fact_trn column list omits; the normaliser requires it and refuses a frame without it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1302-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1302",
+  "surfaced_at": "2026-10-16T06:44:47Z",
+  "one_line": "The order lists the frame columns the normaliser reads without tr_cd; the contract's amount meaning signs only cash rows, and the cash marker is tr_cd.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1302 step 2: normalize_trn reads account_id, business_date, trade_date, tran_srcde, quantity, price, gross_amount, debit_credit and ticker_symbol; the frame may carry others.",
+  "world_is": "The contract says the amount sign is taken from debit_credit on a cash row and not on an in-kind row. The declaration's cash_code_column is tr_cd with cash_code_value FC, so without tr_cd no row can be classed cash or in-kind. The producer requires tr_cd (the declared column) in addition to the listed nine and refuses a frame that lacks it. The contract shape wins, as the refusal clause says.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1302.fwd5-49-financial-account-transaction-producer-offline-tests-not-wired.md",
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json@abb61b3bc0",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@abb61b3bc0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. DBF127-2-AC1 and AC2 both PASS; the row records the choice made under the refusal clause."
+}
+```
+
+## IRPT_DASHBD-D2-W1302-S3 -- the firm literal is not typed in the module: the supported firm is derived from the declaration's registry key, as the naming convention requires
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1302-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1302",
+  "surfaced_at": "2026-10-16T06:44:47Z",
+  "one_line": "The order's firm == '49financial' is a typed firm token in a new .py file, which the naming convention keeps out of this file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1302 step 2: only firm == '49financial' is supported (any other firm: SystemExit REFUSED).",
+  "world_is": "sources.json states that no firm token appears in a source file and that the commit-time naming limb refuses one outside the registry and a lookup() argument. account_transaction.py derives the supported firm with account_return_daily.firm_scope over the one declared custody entry, which resolves to the same value the contract's mapping carries. The refusal behaviour for any other firm is unchanged, and the tests use the derived value and a made-up other firm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1302.fwd5-49-financial-account-transaction-producer-offline-tests-not-wired.md",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@abb61b3bc0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. DBF127-2-AC1 and AC2 both PASS; the row records the choice made under the refusal clause."
+}
+```
+
+## IRPT_DASHBD-D2-W1302-S4 -- the contract gives no amount sign for a security trade leg (tr_cd TR): the producer carries its gross_amount unsigned
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1302-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1302",
+  "surfaced_at": "2026-10-16T06:44:47Z",
+  "one_line": "The contract says the sign is taken from debit_credit on cash rows and not on in-kind rows; a trade leg is neither FC nor IC.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CONTRACT amount meaning: On a cash row the sign is taken from debit_credit as account_return_daily takes it; on an in-kind row debit_credit is a position side.",
+  "world_is": "The declaration names a trade leg (trade_code_value TR, direction on trade_typcd BUY or SELL, read by account_class_daily). The contract does not say how a TR row's amount is signed. The producer applies the cash sign only to FC rows and carries gross_amount unsigned on every other row, so a trade row's amount has no direction. Served data would carry that, so the contract owner should state the rule before any release.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json@abb61b3bc0",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@abb61b3bc0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. DBF127-2-AC1 and AC2 both PASS; the row records the choice made under the refusal clause."
+}
+```
+
+## IRPT_DASHBD-D2-W1302-S5 -- four mapping rows pair a word with a flow class of another kind (INTR, SO, GUP, DFRAJ); the producer reproduces them as the mapping states
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1302-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1302",
+  "surfaced_at": "2026-10-16T06:44:47Z",
+  "one_line": "The mapping's flow_class is taken as the row's flow class, as the order says; some pairings look inconsistent with their word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1302 step 2: a mapped code gets its word, its derived action and the row's flow class.",
+  "world_is": "In the contract's 49financial mapping, INTR is Fee with flow INCOME, SO is Corporate action with flow INCOME, GUP is Fee credit with flow CORPORATE_ACTION, and DFRAJ is Dividend with flow UNRESOLVED while DFR is Dividend with flow INCOME. Each is a stated mapping row, so the producer copies it and the contract owner decides whether the pairing is right. Not a producer defect; recorded for the CRO's review.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json@abb61b3bc0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a criterion failure. DBF127-2-AC1 and AC2 both PASS; the row records the choice made under the refusal clause."
+}
+```
+
+## IRPT_DASHBD-D2-W230-S1 -- the handler's emit_classes passes acd.default_table().as_of(), but class_days reads through a fresh acd.ClassTable(), so the process-wide table is never read on the live path and as_of() is None on every emitted day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W230-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~230",
+  "surfaced_at": "2026-10-16T06:41:22Z",
+  "one_line": "The handler's emit_classes passes acd.default_table().as_of(), but class_days reads through a fresh acd.ClassTable(), so the process-wide table is never read on the live path and as_of() is None on every emitted day.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Order DB-b-286 step 3 and CTO ADDENDUM 1 (round 148): the reporting-gold handler passes ClassTable.as_of() of the process-wide table to every emit_class_day call in emit_classes, so the day's manifest class_source.as_of is the producer's own oldest GetItem read date.",
+  "world_is": "At base 99783542eb, handler.py class_days() (lines 296-298) calls acd.compute_classes(..., table=acd.ClassTable(), ...): a fresh table per call, so the process-wide default_table() is never read on that path (no handler line other than the new call references default_table()). In this worktree the one emit_classes call site reads classification_as_of=acd.default_table().as_of(), which returns None on every emitted day. The module's default_table() is process-wide, so on a warm Lambda container a cached identifier would keep the date of its first read, not the run-day's. The order fixes the call-site text and bounds handler edits to that one line, so the wiring is not repaired here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@99783542eb",
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py@99783542eb"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided by the worker. The issuer decides whether class_days passes a run-scoped ClassTable whose as_of() reaches emit_classes, before the code-update pair ships the handler. Built as the order names it: DB154-1-AC1 passes on the literal call text, and the mechanical criteria do not observe the runtime value."
+}
+```
+
+## IRPT_DASHBD-D2-W230-S2 -- answers W230-S1: the handler now dates each manifest from the run's own ClassTable, so the default_table() wiring is out of the tree
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W230-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~230",
+  "surfaced_at": "2026-10-16T07:00:53Z",
+  "one_line": "Answers IRPT_DASHBD-D2-W230-S1 in the worker's own words: the defect is the order's own wiring, and amendment 1 wires it out; the handler's class_days builds one ClassTable per run and emit_classes dates each manifest from that table, so as_of() is no longer None on the live path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order TO-DB-b-286 amendment 1 (issuer 2.0.0_SA_COO~D2, commit 1b9c6eef56 on box/dell2): step 3 is replaced; the handler defines a module global _CLASS_TABLE, class_days builds table = acd.ClassTable() once and passes the same table to compute_classes, and emit_classes passes classification_as_of from _CLASS_TABLE.as_of().",
+  "world_is": "At handler commit 2bbe1e7f4d the wiring is as amendment 1 states: _CLASS_TABLE = None at module level; class_days declares global _CLASS_TABLE, builds the table after the day-selection check and before the try, assigns _CLASS_TABLE = table, and passes table=table to compute_classes; emit_classes passes classification_as_of=(_CLASS_TABLE.as_of() if _CLASS_TABLE is not None else None). The amended checker's handler clause (eight selftest arms) passes its selftest, and DB154-1-AC1 passes on the tree. Nothing is deployed: the function that runs in AWS is the pre-change code until the later code-update pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py@2bbe1e7f4d",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r148/p154_classdated.py@1b9c6eef56",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md@ac110b1d70"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This row answers S1; it does not dispose it. The S1 row is append-only and keeps its own disposition; the issuer decides whether S1 is closed. Not proven here: a run of the deployed function, and that any reader of class_source.as_of reads it correctly."
+}
+```
+
+## IRPT_DASHBD-D2-W1402-S1 -- the ratified Tax withheld word is INTERNAL, but the per-code rule gives every Cottonwood Tax Withholding row EXTERNAL_OUT
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1402-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1402",
+  "surfaced_at": "2026-10-16T07:05:15Z",
+  "one_line": "The ratified type word Tax withheld is INTERNAL and its definition says it is neither an external flow nor income, while the order's per-code External Flow rule makes the pair's Withdrawal rows EXTERNAL_OUT; the record keeps the rule and carries the word unchanged for ratification.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R128_LIVE_SOURCE_CENSUS_3FIRMS.json@4ee228f63c firms.cottonwood.pairs: Expense | Tax Withholding, rows 1279, external_flow {Withdrawal: 1279}",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1001/FWD5_WORDS_PROPOSAL_R124.json@4d272723b3 opal_types: Tax withheld, flow_class INTERNAL",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1402.fwd5-cottonwood-words-recut-type-subtype-pairs-and-action-values.md@4ee228f63c step 3: external_flow_rule and the per-code flow class"
+    ]
+  },
+  "spec_asserts": "The ratified type word Tax withheld carries flow class INTERNAL and the definition: the repository's withholding rule makes it neither an external flow nor income. The order's external_flow_rule maps a Withdrawal row to EXTERNAL_OUT and takes the pair's class only when External Flow is None.",
+  "world_is": "Cottonwood's Expense | Tax Withholding pair has 1279 rows, all External Flow Withdrawal. Mapped to Tax withheld, every row is EXTERNAL_OUT by the rule, which the word's INTERNAL class does not match. The record maps the pair to Tax withheld with flow_class_none null and files this row; the word is not changed here."
+}
+```
+
+## IRPT_DASHBD-D2-W1402-S2 -- the order gives no None-row flow class for a pair whose type word is an external word, so the Transfer Out pair is set UNRESOLVED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1402-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1402",
+  "surfaced_at": "2026-10-16T07:05:15Z",
+  "one_line": "The order says flow_class_none is the pair's own class from INTERNAL, INCOME, FEE, CORPORATE_ACTION or UNRESOLVED, but for a pair whose ratified word is EXTERNAL_OUT (Transfer out) the pair has no such class; the record sets UNRESOLVED for its 25 None rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R128_LIVE_SOURCE_CENSUS_3FIRMS.json@4ee228f63c firms.cottonwood.pairs: Transfer Out | Transfer Out, rows 4763, external_flow {None: 25, Withdrawal: 4738}",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1001/FWD5_WORDS_PROPOSAL_R124.json@4d272723b3 opal_types: Transfer out, flow_class EXTERNAL_OUT",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1402.fwd5-cottonwood-words-recut-type-subtype-pairs-and-action-values.md@4ee228f63c step 3: flow_class_none rule"
+    ]
+  },
+  "spec_asserts": "flow_class_none is the pair's own class, one of INTERNAL, INCOME, FEE, CORPORATE_ACTION or UNRESOLVED, and never EXTERNAL_IN or EXTERNAL_OUT. The order does not say what class a pair's None rows take when the pair's ratified word is an EXTERNAL_IN or EXTERNAL_OUT word.",
+  "world_is": "Transfer Out | Transfer Out carries 4763 rows: 4738 Withdrawal and 25 None. Its ratified word Transfer out is EXTERNAL_OUT, so no permitted class fits the 25 None rows. The record sets flow_class_none UNRESOLVED (counted, never signed) for this pair; the question is for the CTO's ratification."
+}
+```
+
+## IRPT_DASHBD-D2-W1401-S1 -- the commit gate's client account-id check did not run on this box, so the records commit was not checked against the hashed list
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1401-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1401",
+  "surfaced_at": "2026-10-16T07:03:18Z",
+  "one_line": "The commit gate's client-data check could not run on this box: the hashed account-id list is absent, so commit d960a015c0 (the three FWD-5 records and their generator) was not checked against it; the worker's own reading and the checker's digit rule found no account id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit d960a015c0 on branch wk-IRPT_DASHBD-1401: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids",
+      "python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r128/p128_ground3.py . DBF128-1-AC1 on the committed records: PASS rc 0; the records carry column names, counts and flags only"
+    ]
+  },
+  "spec_asserts": "A commit is checked for client account ids against the hashed list named by OPAL_ACCOUNT_ID_HASHES or the default path, and an absent list is announced as a WARN that the check did not run.",
+  "world_is": "The default list is absent on this box, so the client-data check was skipped for commit d960a015c0. The commit carries no client account id by the worker's reading and the checker's digit rule, not by the gate. Whether other commits on this box went unchecked is not measured here."
+}
+```
+
+## IRPT_DASHBD-D2-W1401-S2 -- the row schema the order names is absent from this worktree, so the row was shaped on the rows already in the file
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1401-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1401",
+  "surfaced_at": "2026-10-16T07:10:24Z",
+  "one_line": "The row schema the order names (org/surprise_channel/schemas/investigation_item.schema.json) is not in this worktree; the order's own carrier path and the schema path do not exist here, so the surprise rows were shaped on the fields of the rows already in INVESTIGATION_v1.md.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob for investigation_item.schema.json under the worktree org tree returned no files; org/surprise_channel is absent from the worktree at commit 46d83ece2f",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md rows IRPT_DASHBD-D2-W418-S2 and -S3 carry the field set this row uses"
+    ]
+  },
+  "spec_asserts": "A surprise row takes the shape of org/surprise_channel/schemas/investigation_item.schema.json, which the worker reads before it appends a row.",
+  "world_is": "The schema is absent at that path in this worktree, so it could not be read; the row follows the fields of the rows already in the file and passes the surprise-row gate at commit fa0edef3a2. Whether the gate's own schema matches those fields is not measured here."
+}
+```
