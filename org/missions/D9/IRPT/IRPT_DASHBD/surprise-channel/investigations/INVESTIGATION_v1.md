@@ -21692,3 +21692,133 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The schema is absent at that path in this worktree, so it could not be read; the row follows the fields of the rows already in the file and passes the surprise-row gate at commit fa0edef3a2. Whether the gate's own schema matches those fields is not measured here."
 }
 ```
+
+## IRPT_DASHBD-D2-W1501-S1 -- two folders the round-127 producer and the class-daily test import were outside the sparse set, so both test modules failed at collection until each was added
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:39:33Z",
+  "one_line": "The worktree's sparse set held neither data/assets/scripts/lib nor infra/aws/lambda/v2_portal/_shared, so tests/test_account_transaction.py and tests/test_account_class_daily.py failed at collection (ModuleNotFoundError: stream_parquet; etf_classifications_dynamodb). Each folder was added with git sparse-checkout add; no file in either folder was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 91-95 import stream_parquet and trading_calendar from data/assets/scripts/lib and lib",
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py line 63 puts infra/aws/lambda/v2_portal/_shared on sys.path and line 76 names etf_classifications_dynamodb.py in that folder",
+      "first pytest run of test_account_transaction.py: collection error ModuleNotFoundError: No module named 'stream_parquet'; first run of test_account_class_daily.py: ModuleNotFoundError: No module named 'etf_classifications_dynamodb'"
+    ]
+  },
+  "spec_asserts": "The worktree materializes the folders the order names (org/standards, lib, data/assets/scripts/gold/irpt_reporting, infra/logic, org/tier1_exec/4.0.0_SA_CRO/deliverables), and the round-127 producer and the class-daily test run from that worktree.",
+  "world_is": "The producer's served dependency folder (data/assets/scripts/lib) and the shared classifier folder (infra/aws/lambda/v2_portal/_shared) were not in the sparse set, so both test modules could not be collected. After each git sparse-checkout add, test_account_transaction.py runs 38 passed and test_account_class_daily.py runs 25 passed; no edit was made under either folder."
+}
+```
+
+## IRPT_DASHBD-D2-W1501-S2 -- the ground read keys flow_class on a three-part key, while the mapping, the 30-pair derivation and the producer key it on tran_srcde alone
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:39:33Z",
+  "one_line": "The round-128 ground read's flow_class target names the classification key as (tran_srcde, tr_cd, sb_cd); the contract 0.2.0, its checker and the producer derive flow_class per tran_srcde alone, because the mapping and the checker's expected flow are keyed on tran_srcde. The contract carries the ground read's from_columns in sources as the checker requires and states the tran_srcde key in the column method.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RD_FWD5_GROUND_49FINANCIAL_R128.json targets flow_class: from_columns tran_srcde, tr_cd, sb_cd; method 'Per the three-part key (tran_srcde, tr_cd, sb_cd) through the classification table's (partition, rule) rows'",
+      "checks/r129/p129_contract.py expected_flow(cro_rows) keys on tran_srcde; the CRO table rows carry tr_cd and sb_cd as well as tran_srcde",
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json columns flow_class method (contract 0.2.0) keys on tran_srcde"
+    ]
+  },
+  "spec_asserts": "The 49 Financial flow_class of each code is the class the rule gives when the key is the three-part key (tran_srcde, tr_cd, sb_cd), one class when the key's rows agree and UNRESOLVED when they disagree.",
+  "world_is": "The mapping (one row per tran_srcde code, 160 rows) and the checker's per-code derivation key flow_class on tran_srcde alone; the producer reads the mapping's flow_class by tran_srcde. Whether any code's class changes under the three-part key is not measured here. The CVO's judgment sample (DBF129-1-J1) reads the producer's flow class against the rule over tran_srcde."
+}
+```
+
+## IRPT_DASHBD-D2-W1501-S3 -- transaction_words.json carried no fee_basis key, so the generator now writes one, equal to the contract's fee_basis, for the producer to read
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:39:33Z",
+  "one_line": "The order's step 8 asks the producer to read the fee columns from fee_basis through load_words() or the data file, and says that if transaction_words.json does not carry fee_basis a fee_basis key is added to the generation and to the data file, with a row. The data file carried only contract_version, type_action and source_mapping; it now also carries fee_basis, generated from the contract by script.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "transaction_words.json before this commit: keys contract_version, type_action, source_mapping (224 mapping rows)",
+      "gen_transaction_contract_0_2_0.py writes data = {contract_version, type_action, source_mapping, fee_basis} from the contract it generates",
+      "p129_contract.py data_problems compares source_mapping, type_action and contract_version only, so the extra key does not change its verdict"
+    ]
+  },
+  "spec_asserts": "transaction_words.json is regenerated from the contract by script and equals it; the producer reads the fee columns through load_words() or the data file.",
+  "world_is": "The data file now carries a fee_basis key equal to the contract's fee_basis (49financial 9 columns, cottonwood 2 columns, inflection null), and load_words() returns it. The data file holds the mapping and type_action exactly as the contract does."
+}
+```
+
+## IRPT_DASHBD-D2-W1501-S4 -- three round-127 test items changed, each because the contract change makes the old assertion wrong, and every other round-127 test body is unchanged
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:39:33Z",
+  "one_line": "Round-127 test items edited in tests/test_account_transaction.py: the _line helper gained the new source columns; test_the_four_absent_columns_are_none_on_every_row became test_the_absent_column_asset_name_is_none_on_every_row. The rest of the round-127 bodies are unchanged and the 23 round-127 functions pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_account_transaction.py: _line now sets settlmnt_date, cashiering_transaction_identifier and the fee_basis columns (None) because normalize_trn refuses a frame without the columns it reads",
+      "test_account_transaction.py: the four-absent test asserted settle_date, fee and source_txn_id were None; contract 0.2.0 reads all three, so only asset_name remains absent",
+      "pytest on test_account_transaction.py: 38 passed (23 round-127 functions and 15 round-129 functions); the one failure seen before the fixture fix was a test fixture integer coerced to float by pandas, corrected to a string identifier as the live column is typed string"
+    ]
+  },
+  "spec_asserts": "Keep the round-127 tests green; edit one only if the contract change requires it, and say which in a row.",
+  "world_is": "Two round-127 items changed (the _line helper's columns and the renamed absent-column test) and both are required by contract 0.2.0. No assertion of any other round-127 test was edited. The helper change makes the frame carry the columns the producer now requires, and the renamed test asserts NULL_COLUMNS equals asset_name only."
+}
+```
+
+## IRPT_DASHBD-D2-W1501-S5 -- the rule-24 census label is the order's word 'word-boundary' for an exact count of 160 codes, which reads no text and runs no word-boundary match
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1501-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "surfaced_at": "2026-10-16T07:39:33Z",
+  "one_line": "Each rule-24 census in contract 0.2.0 carries method 'word-boundary' as the order names it, but the census is an exact count over the 160 49 Financial tran_srcde codes, grouped by coverage and by flow class. No text is matched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order step 7: census is {method 'word-boundary', denominator, per_value}, per_value computed from the mapping",
+      "gen_transaction_contract_0_2_0.py computes per_value from source_mapping rows of firm 49financial (flow_class counts; MEASURED, UNMAPPED_BY_TABLE and CODE_NOT_IN_MAPPING counts)",
+      "p129_contract.py census_problems checks method, the integer denominator and per_value equality, and does not check that a text match ran"
+    ]
+  },
+  "spec_asserts": "A rule-24 census is a word-boundary census of the value set's domain, with method word-boundary.",
+  "world_is": "The census of this contract is an exact count over the 160 live codes, so the label names the census form the order required and does not describe an operation performed on text. The counts are computed from the mapping (flow_class: 10 EXTERNAL_IN, 5 EXTERNAL_OUT, 65 INCOME, 12 FEE, 14 INTERNAL, 31 CORPORATE_ACTION, 23 UNRESOLVED; coverage: 144 MEASURED, 16 UNMAPPED_BY_TABLE, 0 CODE_NOT_IN_MAPPING; denominator 160)."
+}
+```

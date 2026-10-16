@@ -1,9 +1,10 @@
 {
-  "contract_version": "0.1.0",
+  "contract_version": "0.2.0",
+  "supersedes": "0.1.0 (a draft, never ratified)",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
-  "authored_by": "0.9.0_WK_IRPT_DASHBD~1301",
-  "authored_under": "IRPT_DASHBD.TO-DB-f-1301 (round 127, workstream ~F2, F-SHIP), cell DB-f-1301 of IRPT_DASHBD_DECOMP_R127_F.md, following the CTO round-124 analysis for F-SHIP (msg 9097) and the round-123 analysis (msg 9064, ruling 1).",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~1501",
+  "authored_under": "IRPT_DASHBD.TO-DB-f-1501 (round 129, workstream ~F2, F-SHIP), cell DB-f-1501 of IRPT_DASHBD_DECOMP_R129_F.md, following the CTO round-127 analysis for F-SHIP (msg 9162: 0.1.0 is a draft; 0.2.0 names the source column of every target per firm, the fee as a stated sum with its basis, and the rule-24 records).",
   "table": "account_transaction",
   "grain": "account x transaction line",
   "partition": "date=YYYY-MM-DD",
@@ -35,15 +36,15 @@
       "name": "trade_date",
       "type": "date32[day]",
       "nullable": true,
-      "meaning": "The trade_date column of fact_trn, which the lot source reads; null when the silver row carries none.",
+      "meaning": "The trade_date column of the transaction table, read as the closing trade's trade date (round-128 ground read); null when the row carries none.",
       "claim": "measured"
     },
     {
       "name": "settle_date",
       "type": "date32[day]",
       "nullable": true,
-      "meaning": "The settlement date. No silver column supplies it (round-123 ground read), so the column is null.",
-      "claim": "absent"
+      "meaning": "The settlement date: the settlmnt_date column of the transaction table (round-128 ground read). The round-123 absent claim is void; the live schema carries the column. Null when the value is missing or unparsable.",
+      "claim": "measured"
     },
     {
       "name": "action",
@@ -51,7 +52,7 @@
       "nullable": true,
       "meaning": "The action word of the row: the txn_type's action through type_action. Null only when the code is not in the mapping.",
       "claim": "inferred",
-      "method": "From txn_type through type_action (the type word to its action word)."
+      "method": "tran_srcde through source_mapping to the ratified type word, then type_action (the type word to its action word); a code the mapping holds as UNMAPPED or lacks gives a null action."
     },
     {
       "name": "txn_type",
@@ -59,7 +60,7 @@
       "nullable": false,
       "meaning": "The ratified type word of the row, or the string UNMAPPED when the mapping holds the code as UNMAPPED or lacks it.",
       "claim": "inferred",
-      "method": "From tran_srcde through source_mapping (the 49 Financial code to its ratified type word); UNMAPPED when the mapping holds the code as UNMAPPED or lacks it."
+      "method": "tran_srcde through source_mapping (the 49 Financial code to its ratified type word); UNMAPPED when the mapping holds the code as UNMAPPED or lacks it."
     },
     {
       "name": "symbol",
@@ -72,59 +73,62 @@
       "name": "asset_name",
       "type": "string",
       "nullable": true,
-      "meaning": "The security's name. No silver column supplies it, so the column is null.",
+      "meaning": "The security's name. The live schema (140 columns) has no name column (round-128 ground read), so the column is null on every row.",
       "claim": "absent"
     },
     {
       "name": "units",
       "type": "double",
       "nullable": true,
-      "meaning": "The quantity column (quantity); null when the row carries none.",
+      "meaning": "The quantity column, named as the units (round-128 ground read); null when the row carries none.",
       "claim": "measured"
     },
     {
       "name": "price",
       "type": "double",
       "nullable": true,
-      "meaning": "The price column; null when the row carries none.",
+      "meaning": "The price column (round-128 ground read); null when the row carries none.",
       "claim": "measured"
     },
     {
       "name": "amount",
       "type": "double",
       "nullable": false,
-      "meaning": "The custodian's gross money amount (gross_amount). On a cash row the sign is taken from debit_credit as account_return_daily.py takes it: CREDIT positive, DEBIT negative. On an in-kind row debit_credit is a position side and is not read as a cash sign.",
-      "claim": "measured"
+      "meaning": "The custodian's gross money amount (gross_amount). On a cash row the sign is taken from debit_credit as account_return_daily takes it: CREDIT positive, DEBIT negative. On an in-kind row debit_credit is a position side and is not read as a cash sign.",
+      "claim": "inferred",
+      "method": "gross_amount, the money column the adapter declares (money_column). The sign is taken from debit_credit on cash rows: CREDIT positive, DEBIT negative (direction_map)."
     },
     {
       "name": "fee",
       "type": "double",
       "nullable": true,
-      "meaning": "The fee column. The fee rail is unused by design, so no silver column supplies it and the column is null.",
-      "claim": "absent"
+      "meaning": "The stated sum, for 49 Financial, of the columns the contract's fee_basis names (commission, exchange_processing_fee, broker_service_fee, prime_broker_fee, trade_away_fee, redemption_fee, other_fee, step_in_fee, research_fee). A null column counts as nothing; a row whose named columns are all null has fee null, never zero.",
+      "claim": "inferred",
+      "method": "Per row, the sum of the fee-named columns listed in from_columns and of commission; null when every listed column is null. markupmarkdown is not summed (a price markup, not a fee charge) and exec_brok_comm is not summed (its meaning as a fee is not established from the census or the tracked records)."
     },
     {
       "name": "custodian",
       "type": "string",
       "nullable": false,
-      "meaning": "The custodian of the row, the constant of the custody entry.",
+      "meaning": "The custodian of the row: the custody entry's constant (sources.json custodian). The round-128 ground read names custdian_id as the custodian identity column; the constant is what a person reads, and custdian_id is not read onto the row.",
       "claim": "inferred",
-      "method": "The custodian constant of the custody entry the silver partition is read under, set once per entry in the registry."
+      "method": "The custodian identity column of the row (custdian_id). Its values are not read by the census; the claim is inferred from the column name."
     },
     {
       "name": "flow_class",
       "type": "string",
       "nullable": false,
-      "meaning": "The flow class of the row's tran_srcde: EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION or UNRESOLVED.",
+      "meaning": "The flow class of the row's tran_srcde code: EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION or UNRESOLVED.",
       "claim": "inferred",
-      "method": "Per tran_srcde through flow_class_rule over the CRO table's (partition, rule) pairs: one class when the code's CRO rows agree, UNRESOLVED when they disagree or the table does not hold the code. The silver-only codes and IRAWH and MCE are fixed in source_mapping."
+      "method": "Per tran_srcde through flow_class_rule over the CRO table's (partition, rule) pairs: one class when the code's CRO rows agree, UNRESOLVED when they disagree or the table does not hold the code. The silver-only codes and IRAWH and MCE are fixed in source_mapping. The round-128 ground read names the key (tran_srcde, tr_cd, sb_cd); this contract keys on tran_srcde, the key source_mapping holds."
     },
     {
       "name": "source_txn_id",
       "type": "string",
       "nullable": true,
-      "meaning": "A per-transaction identifier. None is read: order_number is an order-level id and is not used, so the column is null.",
-      "claim": "absent"
+      "meaning": "The per-transaction identifier: the cashiering_transaction_identifier column (round-128 ground read), read by name; null when the row carries none.",
+      "claim": "inferred",
+      "method": "The per-transaction cashiering identifier column, read by name; values not read."
     },
     {
       "name": "coverage",
@@ -132,9 +136,372 @@
       "nullable": false,
       "meaning": "How the row's code is covered by the mapping: MEASURED, CODE_NOT_IN_MAPPING or UNMAPPED_BY_TABLE.",
       "claim": "inferred",
-      "method": "MEASURED when the code maps to a type word; CODE_NOT_IN_MAPPING when the mapping lacks the code; UNMAPPED_BY_TABLE when the mapping holds the code as UNMAPPED."
+      "method": "MEASURED when tran_srcde maps to a type word; CODE_NOT_IN_MAPPING when the mapping lacks the code; UNMAPPED_BY_TABLE when the mapping holds the code as UNMAPPED."
     }
   ],
+  "sources": {
+    "49financial": [
+      {
+        "target": "trade_date",
+        "source": "trade_date",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "settle_date",
+        "source": "settlmnt_date",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "action",
+        "source": null,
+        "from_columns": [
+          "tran_srcde"
+        ],
+        "claim": "inferred",
+        "method": "tran_srcde through source_mapping to the ratified type word, then type_action (the type word to its action word); a code the mapping holds as UNMAPPED or lacks gives a null action."
+      },
+      {
+        "target": "txn_type",
+        "source": "tran_srcde",
+        "from_columns": [],
+        "claim": "inferred",
+        "method": "tran_srcde through source_mapping (the 49 Financial code to its ratified type word); UNMAPPED when the mapping holds the code as UNMAPPED or lacks it."
+      },
+      {
+        "target": "symbol",
+        "source": "ticker_symbol",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "asset_name",
+        "source": null,
+        "from_columns": [],
+        "claim": "absent",
+        "method": null
+      },
+      {
+        "target": "units",
+        "source": "quantity",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "price",
+        "source": "price",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "amount",
+        "source": "gross_amount",
+        "from_columns": [],
+        "claim": "inferred",
+        "method": "gross_amount, the money column the adapter declares (money_column). The sign is taken from debit_credit on cash rows: CREDIT positive, DEBIT negative (direction_map)."
+      },
+      {
+        "target": "fee",
+        "source": null,
+        "from_columns": [
+          "commission",
+          "exchange_processing_fee",
+          "broker_service_fee",
+          "prime_broker_fee",
+          "trade_away_fee",
+          "redemption_fee",
+          "other_fee",
+          "step_in_fee",
+          "research_fee"
+        ],
+        "claim": "inferred",
+        "method": "Per row, the sum of the fee-named columns listed in from_columns and of commission; null when every listed column is null. markupmarkdown is not summed (a price markup, not a fee charge) and exec_brok_comm is not summed (its meaning as a fee is not established from the census or the tracked records)."
+      },
+      {
+        "target": "custodian",
+        "source": "custdian_id",
+        "from_columns": [],
+        "claim": "inferred",
+        "method": "The custodian identity column of the row (custdian_id). Its values are not read by the census; the claim is inferred from the column name."
+      },
+      {
+        "target": "flow_class",
+        "source": null,
+        "from_columns": [
+          "tran_srcde",
+          "tr_cd",
+          "sb_cd"
+        ],
+        "claim": "inferred",
+        "method": "Per the three-part key (tran_srcde, tr_cd, sb_cd) through the classification table's (partition, rule) rows: one class when the key's rows agree, UNRESOLVED when they disagree or the table does not hold the key. The silver-only codes and the two fixed codes are fixed in source_mapping."
+      },
+      {
+        "target": "source_txn_id",
+        "source": "cashiering_transaction_identifier",
+        "from_columns": [],
+        "claim": "inferred",
+        "method": "The per-transaction cashiering identifier column, read by name; values not read."
+      },
+      {
+        "target": "coverage",
+        "source": null,
+        "from_columns": [
+          "tran_srcde"
+        ],
+        "claim": "inferred",
+        "method": "MEASURED when tran_srcde maps to a type word; CODE_NOT_IN_MAPPING when the mapping lacks the code; UNMAPPED_BY_TABLE when the mapping holds the code as UNMAPPED."
+      }
+    ],
+    "cottonwood": [
+      {
+        "target": "trade_date",
+        "source": "Trade Date",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "settle_date",
+        "source": "Settle Date",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "action",
+        "source": null,
+        "from_columns": [
+          "Action",
+          "Transaction Type"
+        ],
+        "claim": "inferred",
+        "method": "The vendor Action value (87 distinct values) mapped to the Opal action word; where the Action value carries no action word, the action word of the Transaction Type through type_action."
+      },
+      {
+        "target": "txn_type",
+        "source": "Transaction Type",
+        "from_columns": [],
+        "claim": "inferred",
+        "method": "Transaction Type (16 values) through the ratified source_mapping rows for the type field."
+      },
+      {
+        "target": "symbol",
+        "source": "Symbol",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "asset_name",
+        "source": "Asset Name",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "units",
+        "source": "Units",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "price",
+        "source": "Price",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "amount",
+        "source": "Market Value",
+        "from_columns": [],
+        "claim": "inferred",
+        "method": "The transaction money value column. The census holds no values; the reading is inferred from the column name."
+      },
+      {
+        "target": "fee",
+        "source": null,
+        "from_columns": [
+          "Transaction Fee",
+          "Account Fee"
+        ],
+        "claim": "inferred",
+        "method": "Per row, the sum of Transaction Fee and Account Fee; null when both are null."
+      },
+      {
+        "target": "custodian",
+        "source": "Custodian",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "flow_class",
+        "source": null,
+        "from_columns": [
+          "External Flow",
+          "Transaction Type",
+          "Transaction Sub Type"
+        ],
+        "claim": "inferred",
+        "method": "Per row: External Flow Contribution maps to EXTERNAL_IN and Withdrawal to EXTERNAL_OUT; a None External Flow takes the class of the (Transaction Type, Transaction Sub Type) pair under the ratified pair rules (the census pairs table, 33 pairs)."
+      },
+      {
+        "target": "source_txn_id",
+        "source": "TransactionID",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "coverage",
+        "source": null,
+        "from_columns": [
+          "Transaction Type",
+          "Transaction Sub Type"
+        ],
+        "claim": "inferred",
+        "method": "MEASURED when the (Transaction Type, Transaction Sub Type) pair is in the mapping; CODE_NOT_IN_MAPPING when the mapping lacks the pair; UNMAPPED_BY_TABLE when the mapping holds the pair as UNMAPPED."
+      }
+    ],
+    "inflection": [
+      {
+        "target": "trade_date",
+        "source": "transDate",
+        "from_columns": [],
+        "claim": "inferred",
+        "method": "The transaction date column read as the trade date; equality with the trade date is not established."
+      },
+      {
+        "target": "settle_date",
+        "source": null,
+        "from_columns": [],
+        "claim": "absent",
+        "method": null
+      },
+      {
+        "target": "action",
+        "source": null,
+        "from_columns": [
+          "transactionDescription"
+        ],
+        "claim": "inferred",
+        "method": "transactionDescription (47 values) through the contract's source_mapping rows for the Inflection type field, then the type word's action word through type_action."
+      },
+      {
+        "target": "txn_type",
+        "source": "transactionDescription",
+        "from_columns": [],
+        "claim": "inferred",
+        "method": "transactionDescription (47 values) through the contract's source_mapping rows for the Inflection type field; the Orion cashflow taxonomy keys on the same text."
+      },
+      {
+        "target": "symbol",
+        "source": "ticker",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "asset_name",
+        "source": "productName",
+        "from_columns": [],
+        "claim": "inferred",
+        "method": "productName read as the product's name; the census shows its distinct count only."
+      },
+      {
+        "target": "units",
+        "source": "noUnits",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "price",
+        "source": "avgPrice",
+        "from_columns": [],
+        "claim": "inferred",
+        "method": "avgPrice read as the average execution price; navPrice is the NAV and is not used."
+      },
+      {
+        "target": "amount",
+        "source": "transAmount",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "fee",
+        "source": null,
+        "from_columns": [],
+        "claim": "absent",
+        "method": null
+      },
+      {
+        "target": "custodian",
+        "source": "custodianName",
+        "from_columns": [],
+        "claim": "measured",
+        "method": null
+      },
+      {
+        "target": "flow_class",
+        "source": null,
+        "from_columns": [
+          "transactionDescription"
+        ],
+        "claim": "inferred",
+        "method": "The description's ratified bucket in the Orion cashflow taxonomy gives the class: NNA as EXTERNAL_IN or EXTERNAL_OUT by the description's direction, Return as INCOME or FEE by the description, Internal as INTERNAL, CorporateAction as CORPORATE_ACTION; a description the taxonomy lacks is UNRESOLVED."
+      },
+      {
+        "target": "source_txn_id",
+        "source": "id",
+        "from_columns": [],
+        "claim": "inferred",
+        "method": "The table row identifier column read as the per-transaction identifier; values not read."
+      },
+      {
+        "target": "coverage",
+        "source": null,
+        "from_columns": [
+          "transactionDescription"
+        ],
+        "claim": "inferred",
+        "method": "MEASURED when the description maps to a type word in the contract's source_mapping; CODE_NOT_IN_MAPPING when the mapping lacks it; UNMAPPED_BY_TABLE when the mapping holds it as UNMAPPED."
+      }
+    ]
+  },
+  "fee_basis": {
+    "49financial": {
+      "columns": [
+        "commission",
+        "exchange_processing_fee",
+        "broker_service_fee",
+        "prime_broker_fee",
+        "trade_away_fee",
+        "redemption_fee",
+        "other_fee",
+        "step_in_fee",
+        "research_fee"
+      ],
+      "rule": "The fee is the stated sum of the nine listed columns. For each line it is the sum of the non-null values of commission, exchange_processing_fee, broker_service_fee, prime_broker_fee, trade_away_fee, redemption_fee, other_fee, step_in_fee and research_fee. A null column counts as nothing. A line whose nine columns are all null has fee null, never zero. Excluded by the round-128 ground read: markupmarkdown (a price markup, not a fee charge) and exec_brok_comm (its meaning as a fee is not established from the census or the tracked records)."
+    },
+    "cottonwood": {
+      "columns": [
+        "Transaction Fee",
+        "Account Fee"
+      ],
+      "rule": "The fee is the stated sum of Transaction Fee and Account Fee per line. A null column counts as nothing. A line whose two columns are both null has fee null, never zero. No producer exists yet (firms_pending)."
+    },
+    "inflection": null
+  },
   "enums": {
     "txn_type": [
       "Deposit",
@@ -1671,140 +2038,13 @@
       "reason": null
     },
     {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Cash Deposit",
-      "opal_type": "Deposit",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Transfer In",
-      "opal_type": "Transfer in",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Cash Withdrawal",
-      "opal_type": "Withdrawal",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Transfer Out",
-      "opal_type": "Transfer out",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Buy",
-      "opal_type": "Buy",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Sale",
-      "opal_type": "Sell",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Dividend Reinvestment",
-      "opal_type": "Reinvestment",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Journal",
-      "opal_type": "Journal",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Dividend",
-      "opal_type": "Dividend",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Interest",
-      "opal_type": "Interest",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Income",
-      "opal_type": "Other income",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Capital Gains",
-      "opal_type": "Capital gain",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Return of Capital",
-      "opal_type": "Return of capital",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Expense",
-      "opal_type": "Fee",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Management Fee",
-      "opal_type": "Management fee",
-      "flow_class": null,
-      "reason": null
-    },
-    {
-      "firm": "cottonwood",
-      "field": "type",
-      "source_value": "Corporate Action",
-      "opal_type": "Corporate action",
-      "flow_class": null,
-      "reason": null
-    },
-    {
       "firm": "inflection",
       "field": "type",
       "source_value": "Client Contribution",
       "opal_type": "Deposit",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1812,7 +2052,8 @@
       "source_value": "Employer Contribution",
       "opal_type": "Deposit",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1820,7 +2061,8 @@
       "source_value": "Rollover Contribution",
       "opal_type": "Transfer in",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1828,7 +2070,8 @@
       "source_value": "Merge In from Other Account",
       "opal_type": "Transfer in",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1836,7 +2079,8 @@
       "source_value": "External Account Activity In",
       "opal_type": "Transfer in",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1844,7 +2088,8 @@
       "source_value": "Client Distribution",
       "opal_type": "Withdrawal",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1852,7 +2097,8 @@
       "source_value": "Cancel Account",
       "opal_type": "Withdrawal",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": true
     },
     {
       "firm": "inflection",
@@ -1860,7 +2106,8 @@
       "source_value": "Merge Out to Other Account",
       "opal_type": "Transfer out",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1868,7 +2115,8 @@
       "source_value": "External Account Activity Out",
       "opal_type": "Transfer out",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1876,7 +2124,8 @@
       "source_value": "Buy Exchange",
       "opal_type": "Buy",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1884,7 +2133,8 @@
       "source_value": "Sell Exchange",
       "opal_type": "Sell",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1892,7 +2142,8 @@
       "source_value": "Income Reinvested",
       "opal_type": "Reinvestment",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1900,7 +2151,8 @@
       "source_value": "Starting Value",
       "opal_type": "UNMAPPED",
       "flow_class": null,
-      "reason": "Internal bucket, but the yaml calls it a synthetic per-position opening seed, not a transaction a client made."
+      "reason": "Internal bucket, but the yaml calls it a synthetic per-position opening seed, not a transaction a client made.",
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1908,7 +2160,8 @@
       "source_value": "Merge In Exchange",
       "opal_type": "Journal",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1916,7 +2169,8 @@
       "source_value": "Merge Out Exchange",
       "opal_type": "Journal",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1924,7 +2178,8 @@
       "source_value": "Internal Account Journal In",
       "opal_type": "Journal",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1932,7 +2187,8 @@
       "source_value": "Internal Account Journal Out",
       "opal_type": "Journal",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1940,7 +2196,8 @@
       "source_value": "Decrease in Value",
       "opal_type": "Adjustment",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1948,7 +2205,8 @@
       "source_value": "Spin Off in",
       "opal_type": "Corporate action",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1956,7 +2214,8 @@
       "source_value": "Spin Off out",
       "opal_type": "Corporate action",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1964,7 +2223,8 @@
       "source_value": "Dividend Reinvested",
       "opal_type": "Reinvestment",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1972,7 +2232,8 @@
       "source_value": "Interest Reinvested",
       "opal_type": "Reinvestment",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1980,7 +2241,8 @@
       "source_value": "Return of Capital",
       "opal_type": "Return of capital",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1988,7 +2250,8 @@
       "source_value": "Return of Principal (Bonds)",
       "opal_type": "Return of capital",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -1996,7 +2259,8 @@
       "source_value": "Dividend Paid from Cash",
       "opal_type": "Dividend",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2004,7 +2268,8 @@
       "source_value": "Income Paid",
       "opal_type": "Other income",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2012,7 +2277,8 @@
       "source_value": "Dividend to Cash",
       "opal_type": "Dividend",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2020,7 +2286,8 @@
       "source_value": "Management Fee",
       "opal_type": "Management fee",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2028,7 +2295,8 @@
       "source_value": "Long Term Gain to Cash",
       "opal_type": "Capital gain",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2036,7 +2304,8 @@
       "source_value": "Trading Expense",
       "opal_type": "Trading expense",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2044,7 +2313,8 @@
       "source_value": "Short Term Gain to Cash",
       "opal_type": "Capital gain",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2052,7 +2322,8 @@
       "source_value": "Interest Paid in Cash",
       "opal_type": "Interest",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2060,7 +2331,8 @@
       "source_value": "Federal Tax Withheld",
       "opal_type": "Tax withheld",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2068,7 +2340,8 @@
       "source_value": "Fee Credit",
       "opal_type": "Fee credit",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2076,7 +2349,8 @@
       "source_value": "State Tax Withheld",
       "opal_type": "Tax withheld",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2084,7 +2358,8 @@
       "source_value": "Foreign Tax Withheld",
       "opal_type": "Tax withheld",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2092,7 +2367,8 @@
       "source_value": "Foreign Dividend Tax",
       "opal_type": "Tax withheld",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2100,7 +2376,8 @@
       "source_value": "Tax Credit",
       "opal_type": "Tax withheld",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2108,7 +2385,8 @@
       "source_value": "Interest Paid",
       "opal_type": "Interest",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2116,7 +2394,8 @@
       "source_value": "ADR Fee",
       "opal_type": "Fee",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2124,7 +2403,8 @@
       "source_value": "Administrative Fee",
       "opal_type": "Fee",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2132,7 +2412,8 @@
       "source_value": "Administrative Fee Adjustment",
       "opal_type": "Fee credit",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2140,7 +2421,8 @@
       "source_value": "Wire Fee",
       "opal_type": "Fee",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2148,7 +2430,8 @@
       "source_value": "Stock Split",
       "opal_type": "Corporate action",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2156,7 +2439,8 @@
       "source_value": "Reverse Stock Split",
       "opal_type": "Corporate action",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2164,7 +2448,8 @@
       "source_value": "Expired-",
       "opal_type": "Corporate action",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2172,7 +2457,8 @@
       "source_value": "Remark",
       "opal_type": "UNMAPPED",
       "flow_class": null,
-      "reason": "Internal bucket, but the yaml says Remark is a position seed only where a ticker is present and a cash-shaped Remark fails loud to UNRESOLVED; its meaning depends on the row shape."
+      "reason": "Internal bucket, but the yaml says Remark is a position seed only where a ticker is present and a cash-shaped Remark fails loud to UNRESOLVED; its meaning depends on the row shape.",
+      "not_observed": false
     },
     {
       "firm": "inflection",
@@ -2180,7 +2466,8 @@
       "source_value": "Reversal",
       "opal_type": "Adjustment",
       "flow_class": null,
-      "reason": null
+      "reason": null,
+      "not_observed": false
     }
   ],
   "unmapped_display": "Unclassified",
@@ -2191,22 +2478,55 @@
   "firms_pending": [
     {
       "firm": "cottonwood",
-      "reason": "No producer exists yet. Its ground read is round 126. Its 16 mapping rows are carried with a null flow_class."
+      "reason": "No producer exists yet. Its ground read is round 128 (RD_FWD5_GROUND_COTTONWOOD_R128.json) and its table fills all 14 targets. Its re-cut words (33 type pairs and 87 Action values) are a proposal awaiting ratification, so no Cottonwood row is in source_mapping."
     },
     {
       "firm": "inflection",
-      "reason": "No producer exists yet. Its ground read is round 126. Its 48 mapping rows are carried with a null flow_class."
+      "reason": "No producer exists yet. Its ground read is round 128: settle_date and fee are absent from its 36 columns. 47 of the 48 ratified descriptions are live in the census; the 48th is marked not_observed."
     }
   ],
-  "rule24_record": {
-    "ratified_words": "The ratified proposal org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1001/FWD5_WORDS_PROPOSAL_R124.json gives 21 type words with their actions, 8 action words and 224 mapping rows; its postulates are MECE, same grain, intent coherence and state coherence.",
-    "cvo_grades": "The CVO's grades are not read by this worker: the CVO deliverables are not materialized in this worktree. The order cites them through the CTO round-124 analysis.",
-    "cto_ratification": "1.0.0_SA_CTO~DELL2 message 9097 ratified the FWD-5 words: flow class per code from the CRO classification table; UNMAPPED shown as Other with its count; a code not in the mapping reads CODE_NOT_IN_MAPPING and is counted, never dropped.",
-    "analysis_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_124_20261016.md",
-    "round_123_ruling": "Message 9064, ruling 1: a field the producer computes carries inferred and a method, never absent."
+  "rule24_records": {
+    "coverage": {
+      "postulates": {
+        "mece": "Declared domain: the 160 live 49 Financial codes of the round-124 census, each in exactly one state. MEASURED is a code the mapping holds as a type word, UNMAPPED_BY_TABLE a code it holds as UNMAPPED, and CODE_NOT_IN_MAPPING a code the mapping lacks. Subtracting the mapped and the UNMAPPED codes from the 160 leaves none, so CODE_NOT_IN_MAPPING is 0 in the live read and the per_value counts sum to the denominator.",
+        "same_grain": "Grain: one value per transaction line, read from the line's tran_srcde code through source_mapping and computed at row build. It is the grain of txn_type and flow_class; it is never an account, a day or a firm total. A code the mapping lacks is a line-level value, and the line is counted, never dropped.",
+        "intent_coherence": "One intent: say whether the line's code has a ratified reading, so a reader knows whether the txn_type and action on the row are the ratified word or the Unclassified display. Each of the three values answers that one question. The money direction of a line is a different intent and belongs to flow_class, so coverage never carries it.",
+        "state_coherence": "Which values one remedy does NOT move: ratifying an UNMAPPED code as a word moves only that code's rows from UNMAPPED_BY_TABLE to MEASURED; a new code in a later read moves only its own rows to CODE_NOT_IN_MAPPING until the mapping holds it. Neither remedy moves flow_class, which the CRO table gives per code, nor any other code's coverage."
+      },
+      "census": {
+        "method": "word-boundary",
+        "denominator": 160,
+        "per_value": {
+          "MEASURED": 144,
+          "UNMAPPED_BY_TABLE": 16,
+          "CODE_NOT_IN_MAPPING": 0
+        }
+      }
+    },
+    "flow_class_rule": {
+      "postulates": {
+        "mece": "Declared domain: the 30 (partition, rule) pairs of the CRO classification table (187 rows, 157 distinct codes). Every pair the table holds is one of the 30 and the checker finds none outside them, so the subtraction leaves no uncovered pair. Each pair takes one of the seven classes, and a code whose rows disagree takes UNRESOLVED, so every code has exactly one class.",
+        "same_grain": "Grain: one class per tran_srcde code, derived from that code's (partition, rule) rows in the CRO table and carried by each line of the code. The rule reads table rows, not account, day or amount values, so a line of the same code always carries the same class.",
+        "intent_coherence": "One intent: does money cross the account boundary. EXTERNAL_IN and EXTERNAL_OUT say yes, by direction. INTERNAL, INCOME and CORPORATE_ACTION say the money stays inside the account. FEE says a charge is taken from the account. UNRESOLVED says the table does not settle the question. Every pair is classed by that one question and by nothing else.",
+        "state_coherence": "Which values one remedy does NOT move: a specimen that settles one UNRESOLVED pair moves only that pair and the codes whose only row it is; it moves no EXTERNAL_IN or EXTERNAL_OUT pair. The silver-only codes and the two fixed codes are set in source_mapping and move no pair of the table, so the 30-pair rule is unchanged by them."
+      },
+      "census": {
+        "method": "word-boundary",
+        "denominator": 160,
+        "per_value": {
+          "UNRESOLVED": 23,
+          "FEE": 12,
+          "CORPORATE_ACTION": 31,
+          "INCOME": 65,
+          "INTERNAL": 14,
+          "EXTERNAL_OUT": 5,
+          "EXTERNAL_IN": 10
+        }
+      }
+    }
   },
   "schema_hash": "8861518a4ef58baad75b8cf7f91e697fd197191a0fc18a64eb1384ace164d6b4",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines of columns joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries (the same method as the account_class_daily and account_return_daily contracts).",
   "served": false,
-  "served_note": "Nothing is written. No object of this table exists in any bucket. The release is a never-widen act that waits on this contract and on the producer (DB-f-1302), under a CTO and COO sign-off."
+  "served_note": "Nothing is written. No object of this table exists in any bucket. 0.2.0 supersedes the draft 0.1.0, which was never ratified. The release is a never-widen act that waits on this contract, on the producer and on the CVO's judgment at L9 (DBF129-1-J1), under a CTO and COO sign-off."
 }
