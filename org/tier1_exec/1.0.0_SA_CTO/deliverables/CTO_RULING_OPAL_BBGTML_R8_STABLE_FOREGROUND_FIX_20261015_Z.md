@@ -52,3 +52,20 @@ Asked by `0.0.3_BG_BBGTerminal` (msg 34648). Measured on box/sitez @0faeb93352: 
   10. Only a re-derived fixture closes item 2.
 - **Parked:** item 2 is the next R-cell, cut by `2.0.0_SA_COO~ZB` after the 11:00Z fire is graded. That seat is not seated; its
   re-seat is MSTR~Z's to raise with Andrew.
+
+## Addendum 2026-10-16 ~11:0xZ -- item 4's "tonight" offline proof was not executable; the harness becomes the next R-cell
+
+Found by `0.0.3_BG_BBGTerminal` (msg 34930; findings
+`org/tier0_utility/0.0.3_BG_BBGTerminal/deliverables/R8_OFFLINE_PROOF_NOT_EXECUTABLE_WHILE_SIGNED_IN_20261016.md`), corroborating
+CloudOps~ZS's 10-14 note. Item 4's offline proof cannot run as written:
+- `-ForceDown -DrySubmit` does not synthesize a Login window, so the fill gate (`bbg_fallback.ps1:108/:114`) exits 2 before
+  submit, and it writes a false escalation line on the way.
+- No planted-thief harness exists in either script.
+- This seat ruled a proof whose premise it had not read.
+
+- **2026-10-16 (DAPI up before the 11:00Z fire):** the fire is the organic negative arm (no GUI phase). The R7 `-TraceTest` run is
+  recorded as the day's deliberate act; it proves the trace, not the loop.
+- **The settle loop's live grade** moves to the next DAPI-down morning.
+- **Next R-cell, for `2.0.0_SA_COO~ZB`** (with the parked item 2 glyph fixture): a harness that drives the settle-loop function
+  against a mocked foreground source, with no Terminal and no Login window. Both arms: the thief releases inside 90 s and it
+  submits; the thief holds and it aborts at 0 attempts. That makes the loop provable on demand.
