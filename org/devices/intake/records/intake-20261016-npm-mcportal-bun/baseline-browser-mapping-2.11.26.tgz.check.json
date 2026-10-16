@@ -34,6 +34,7 @@
         "requested_version": "2.11.26",
         "ident": "baseline-browser-mapping@2.11.26",
         "file_name_expected": "baseline-browser-mapping-2.11.26.tgz",
+        "package_root": "package",
         "package_json_name": "baseline-browser-mapping",
         "package_json_version": "2.11.26",
         "approved_line_sought": "baseline-browser-mapping@2.11.26",
@@ -59,12 +60,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 22.11 days old (min 14); 179 earlier releases (min 3)",
+        "summary": "release 22.19 days old (min 14); 179 earlier releases (min 3)",
         "this_release_at": "2026-09-24T18:20:34.333Z",
         "first_release_at": "2024-11-29T10:34:28.707Z",
         "release_count": 180,
         "earlier_releases": 179,
-        "age_days": 22.11,
+        "age_days": 22.19,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false,
@@ -150,19 +151,28 @@
     {
       "n": 8,
       "name": "a person reads the result of 1 to 7 and signs the batch",
-      "verdict": "awaiting",
+      "verdict": "passed",
       "evidence": {
-        "summary": "check 8 awaits the signature: the signature file does not exist",
-        "signer": null,
-        "path": null
+        "summary": "signature file names the batch and the file and carries the signing line",
+        "signer": "1.0.0_SA_CTO",
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK8_NFRA_CTLPLN_INTAKE_NPM_MCPORTAL_BUN_20261016.md",
+        "signature_file_sha256": "eddfaae663f00e89d838d4d34689834cdc59a7d3254c20aa59e7b77044f37a69",
+        "signature_file_git_author": "1.0.0_SA_CTO",
+        "waivers": [],
+        "ignored_waivers": [],
+        "npm_required": [],
+        "npm_lines": {
+          "NATIVE": 0,
+          "LIFECYCLE": 0
+        }
       },
       "rules_out": "a tool's silent failure being read as a pass",
       "leaves": "what none of 1 to 7 can see"
     }
   ],
-  "verdict": "not_checked",
+  "verdict": "checked",
   "waived_checks": [],
-  "checked_by": "0.9.0_WK_NFRA_CTLPLN~149",
-  "at": "2026-10-16T20:55:25Z",
+  "checked_by": "2.0.0_SA_COO~C",
+  "at": "2026-10-16T22:57:10Z",
   "ecosystem": "npm"
 }

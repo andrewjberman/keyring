@@ -5,8 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~145</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>open</status>
-<status_reason>Issued by the issuer 2.0.0_SA_COO~C in the round-29 issuance, per the CTO's round-28 analysis (ROUND_ANALYSIS.round28.md @3894648aa3, msg 109677).</status_reason>
+<status>complete</status>
+<status_reason>Complete, 2026-10-16. Worker 0.9.0_WK_NFRA_CTLPLN~145 built it over four seatings (the first two stopped on rows and amendments 1-3 ruled them); the issuer 2.0.0_SA_COO~C regenerated one function file at the moving merge target (the gold entry re-stamped: gen_function_map.py from box/laptop 7ca376584b, map blob 4bdef7713131 unchanged to the merge), plan-checked and merged 48d660b0de. Terraform plans (read-only, -lock=false, scratch data dirs) on the branch against the same-hour main: account-return-daily rc 0 No changes (main 22:19Z rc 0); reporting-gold-iso rc 0 No changes (main rc 0); reporting-publish-iso rc 2 one in-place update of the lambda's s3_object_version and source_code_hash, which main shows with the IDENTICAL attributes in the same hour (a new live S3 artifact version, world drift, not the split). Re-run in the merged main tree: CTca1-AC3 ATOMIC-TF roots=3 fmt_clean=3 uses_fileset=3 equal=240 ok=True; CTca1-AC2 ATOMIC-SUITES green_at_base=13 green_after=16 red_after=5 ok=True (nothing base-green went red); the unit test FUNCTION-MAP arms=13/13; CTca1-AC1 ATOMIC-SPLIT functions=240 equal=240 map_present=False live_old_path_users=0 census_other=1: the one file, org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r136/p137_repin.py, landed on box/laptop after the branch's last census and moves to the follow-on cell CT-cg-1 with the 'can follow' list. The first real Lambda deploy after the merge is the live proof.</status_reason>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
