@@ -13,6 +13,9 @@ receipts/ inside the pack is this tool's to create.
 Verbs:
   verify  --from <pack>                       read-only; one INTAKE-VERIFY-WAIVED line per waived check; LAST line INTAKE-VERIFY ...
           (a record reads 'checked' or 'released-with-waiver'; the waiver is re-derived from the record's own checks)
+  verify  --from <pack> --ecosystem npm --lockfile <bun.lock>
+          the npm limb (CT-cc-1): each .tgz is re-read against its check record AND its lockfile entry (sha512); the LAST
+          line reads INTAKE-VERIFY pack=... tarballs=... ; the pack is verified and stops there (no placement verb here)
   prove   --from <pack> --scratch <new dir>   verify, then install each wheel with no index into its own scratch target,
                                               import it, write one receipt per wheel into <pack>/receipts/; LAST line INTAKE-PROVE ...
   install --from <pack> --python <exe> | --target <new dir> | --user [--dry-run]
@@ -249,13 +252,107 @@ def _record_problems(rec, wheel_name, wheel_sha):
     return out
 
 
-def verify_pack(pack):
-    """Read-only verification. Returns a dict (see keys below); never raises on a bad pack."""
+NPM_EXT = ".tgz"
+NPM_FILE_RE = re.compile(r"^[A-Za-z0-9_.+-]+\.tgz$")
+
+
+def load_bun_lock(path):
+    """STANDALONE MIRROR of intake_check.load_bun_lock (this tool ships alone): the bun text lockfile as a dict with a packages
+    object. Trailing commas are removed outside strings, then JSON is read. Parity arms are in test_intake_npm.py."""
+    with open(path, "r", encoding="utf-8") as fh:
+        text = fh.read()
+    out, in_str, esc, i, n = [], False, False, 0, len(text)
+    while i < n:
+        ch = text[i]
+        if in_str:
+            out.append(ch)
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+            i += 1
+            continue
+        if ch == '"':
+            in_str = True
+        elif ch == ",":
+            j = i + 1
+            while j < n and text[j] in " \t\r\n":
+                j += 1
+            if j < n and text[j] in "}]":
+                i += 1
+                continue
+        out.append(ch)
+        i += 1
+    data = json.loads("".join(out))
+    if not isinstance(data, dict) or not isinstance(data.get("packages"), dict):
+        raise ValueError("the lockfile has no packages object")
+    return data
+
+
+def lock_integrities(lock, ident):
+    """STANDALONE MIRROR of intake_check.lock_integrities: the distinct integrity strings of the entries whose first element is
+    ident (name@version); the fourth element is the integrity, None when absent."""
+    found = []
+    for _key, val in lock["packages"].items():
+        if isinstance(val, list) and val and val[0] == ident:
+            integ = val[3] if len(val) > 3 and isinstance(val[3], str) else None
+            if integ not in found:
+                found.append(integ)
+    return found
+
+
+def _sha512_sri(path):
+    h = hashlib.sha512()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return "sha512-" + base64.b64encode(h.digest()).decode("ascii")
+
+
+def _npm_tarball_problems(rec, path, lock):
+    """The reasons one npm tarball is not cleared against its record and its lockfile entry (empty = cleared)."""
+    checks = rec.get("checks") if isinstance(rec, dict) else None
+    if not isinstance(checks, list) or len(checks) < 2 or not all(isinstance(c, dict) for c in checks[:2]):
+        return ["check record lacks the npm check 1 and check 2 evidence"]
+    ev1 = checks[0].get("evidence") or {}
+    ev2 = checks[1].get("evidence") or {}
+    ident = ev2.get("ident")
+    if not isinstance(ident, str):
+        return ["check 2 record names no name@version"]
+    if lock is None:
+        return ["no lockfile: the tarball cannot be read against its lockfile entry"]
+    found = lock_integrities(lock, ident)
+    actual = _sha512_sri(path)
+    out = []
+    if ev1.get("computed_sha512") != actual:
+        out.append("tarball sha512 differs from the check record's computed_sha512")
+    if len(found) != 1 or found[0] is None:
+        out.append("lockfile holds %d integrity entr%s for %s" % (len(found), "y" if len(found) == 1 else "ies", ident))
+    elif found[0] != actual:
+        out.append("tarball sha512 differs from the lockfile's integrity for %s" % ident)
+    return out
+
+
+def verify_pack(pack, ecosystem="pypi", lockfile=None):
+    """Read-only verification. Returns a dict (see keys below); never raises on a bad pack. ecosystem npm reads .tgz files and
+    re-reads each against its check record and its lockfile entry; pypi (the default) is unchanged."""
+    npm = ecosystem == "npm"
     res = {"pack": os.path.basename(os.path.normpath(pack)), "wheels": [], "stray": [], "pack_defects": [],
-           "verified": 0, "checked": 0, "ok": False}
+           "verified": 0, "checked": 0, "ok": False, "ecosystem": "npm" if npm else "pypi"}
     if not os.path.isdir(pack):
         res["pack_defects"].append("pack dir does not exist")
         return res
+    lock = None
+    if npm:
+        if not lockfile:
+            res["pack_defects"].append("npm verify needs --lockfile <bun.lock>: a missing lockfile is a refusal, never a skip")
+        else:
+            try:
+                lock = load_bun_lock(lockfile)
+            except (OSError, ValueError) as exc:
+                res["pack_defects"].append("lockfile unreadable: %s" % type(exc).__name__)
     entries, defect = _read_manifest(pack)
     if defect:
         res["pack_defects"].append(defect)
@@ -270,7 +367,10 @@ def verify_pack(pack):
     for n in present:
         if os.path.isdir(os.path.join(pack, n)) or n not in listed:
             res["stray"].append(n)
-    wheel_names = sorted(n for n in present if n.endswith(".whl") and os.path.isfile(os.path.join(pack, n)))
+    if npm:
+        wheel_names = sorted(n for n in present if n.endswith(NPM_EXT) and os.path.isfile(os.path.join(pack, n)))
+    else:
+        wheel_names = sorted(n for n in present if n.endswith(".whl") and os.path.isfile(os.path.join(pack, n)))
     # per-file manifest result: name -> None (good) or reason
     file_bad = {}
     for nm, e in listed.items():
@@ -299,7 +399,7 @@ def verify_pack(pack):
         info = {"name": w, "path": wpath, "file_ok": False, "record_ok": False, "reasons": [],
                 "check_record_sha256": None, "wheel_sha256": None, "modules": [], "waived": []}
         reasons = info["reasons"]
-        if not WHEEL_RE.match(w):
+        if not (NPM_FILE_RE if npm else WHEEL_RE).match(w):
             reasons.append("wheel file name has unexpected characters")
         if w not in listed:
             reasons.append("wheel not listed in manifest")
@@ -329,11 +429,13 @@ def verify_pack(pack):
                 rec = None
             if rec is not None:
                 probs = _record_problems(rec, w, info["wheel_sha256"])
+                if npm and not probs:
+                    probs = _npm_tarball_problems(rec, wpath, lock)
                 reasons.extend(probs)
                 if not probs and rname in listed and rname not in file_bad:
                     info["record_ok"] = True
                     info["waived"] = _waiver_lines(rec)
-        if info["file_ok"] and not reasons:
+        if info["file_ok"] and not reasons and not npm:
             info["modules"] = wheel_top_level_modules(wpath)
         res["wheels"].append(info)
     res["verified"] = sum(1 for i in res["wheels"] if i["file_ok"])
@@ -346,6 +448,9 @@ def verify_pack(pack):
 
 
 def verify_last_line(res):
+    if res.get("ecosystem") == "npm":
+        return "INTAKE-VERIFY pack=%s tarballs=%d verified=%d checked=%d stray=%d ok=%s" % (
+            res["pack"], len(res["wheels"]), res["verified"], res["checked"], len(res["stray"]), res["ok"])
     return "INTAKE-VERIFY pack=%s wheels=%d verified=%d checked=%d stray=%d ok=%s" % (
         res["pack"], len(res["wheels"]), res["verified"], res["checked"], len(res["stray"]), res["ok"])
 
@@ -860,6 +965,8 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="verb", required=True)
     v = sub.add_parser("verify")
     v.add_argument("--from", dest="pack", required=True)
+    v.add_argument("--ecosystem", choices=("pypi", "npm"), default="pypi")
+    v.add_argument("--lockfile", default=None, help="npm: the bun text lockfile the tarballs are re-read against")
     p = sub.add_parser("prove")
     p.add_argument("--from", dest="pack", required=True)
     p.add_argument("--scratch", required=True)
@@ -876,7 +983,9 @@ def main(argv=None):
     sub.add_parser("selftest-unchecked")
     args = ap.parse_args(argv)
     if args.verb == "verify":
-        res = verify_pack(args.pack)
+        if args.ecosystem == "npm" and not args.lockfile:
+            print("REFUSED: --ecosystem npm needs --lockfile <bun.lock>; a missing lockfile is a refusal, never a skip")
+        res = verify_pack(args.pack, args.ecosystem, args.lockfile)
         print_verify_detail(res)
         print(verify_last_line(res))
         return 0 if res["ok"] else 1
