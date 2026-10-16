@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~128</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-128 @f32504fc52) and again in the main tree after merge 8114177059: CTao2-AC1 JOURNEY-RELEASE released=1 check8=SIGNED file=tabulate-0.9.0-py3-none-any.whl sha256=024ca478df22 ok=True; CTao2-AC2 JOURNEY-PACK files=4 manifest_ok=True verify=INTAKE-VERIFY pack=intake-20261016-tabulate wheels=1 verified=1 checked=1 stray=0 ok=True ok=True; CTao2-AC3 JOURNEY-TAILDROP files_sent=4 failed=0 target=dell1 ok=True; proof VALID; diff paths inside the order. The issuer listed the release folder (the wheel and its .delivery.txt) and the holding folder (empty): the batch moved, not copied. Taildrop: four `tailscale file cp ... dell1:` calls, each exit 0 at 03:40:36Z-03:41:25Z, printed output empty; NO read receipt, so delivery is NOT proven until dell1's own `tailscale file get` and `verify` (the issuer's call a0a3). The worker re-ran `check` with the CTO's check-8 file (the record at the base read check 8 awaiting, as the duckdb batch did): checks 1-8 passed, row W128-S1 OBSERVATION, INERT. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
