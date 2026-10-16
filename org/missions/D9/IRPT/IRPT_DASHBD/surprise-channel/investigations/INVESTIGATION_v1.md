@@ -19582,3 +19582,79 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W603-S1 -- the worktree's sparse cone omitted the data and docs paths the cell names at the first read, and a later cone carried them, set by no command of this worker
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W603-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~603",
+  "surfaced_at": "2026-10-15T23:51:18Z",
+  "one_line": "At the first read the worktree's sparse-checkout cone (.tools, lib, org/standards, org/missions/D9/IRPT/IRPT_DASHBD and five more) did not carry data/ or docs/, which the cell names as its read sources; the sparse file was rewritten later in the session to a cone that carries data/assets/scripts/gold/irpt_reporting, data/inf, docs/briefs, infra and org/critical_paths. No command of this worker wrote the sparse file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at about 23:24Z (first read of the cell's named paths): .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/ref, org/standards; ls of data/ returned no such directory; git ls-files data still listed 2042 tracked paths (index entries, skip-worktree)",
+      "the worktree's sparse file at .git/worktrees/wk-irpt-dashbd-603/info/sparse-checkout carries mtime 2026-10-15T23:44:24Z (19:44:24 local); the same listing at 23:50Z names data/assets/scripts/gold/irpt_reporting, data/inf, docs/briefs, infra/aws/lambda/investor-reporting, infra/aws/terraform/investor-reporting, org/critical_paths beside the earlier set; git status on data and docs is clean against HEAD fcc5e13f03",
+      "the reflog of the worktree's HEAD shows no commit move (fcc5e13f03), so the widening is a sparse-set change, not a checkout of another commit"
+    ]
+  },
+  "spec_asserts": "The cell (TO IRPT_DASHBD.TO-DB-f-603, WORKER FACE step 1 to 3) reads org/standards, data/assets/scripts/gold/irpt_reporting, data/inf/manual_api, docs/briefs and the portal from the worker's own worktree; the first act checks that org/ and .tools/ exist and stops only if they do not.",
+  "world_is": "Org and tools were present at the first act, so the first act passed; data/ and docs/ were absent from the disk at the first read and were read at that point from HEAD by git show, without rebuilding or extracting the tree. The widened cone reaches beyond the grant (the write grant is the deliverables folder, the investigation file and the order); the checker p119_fwd3.py cites worktree bytes with Path(root)/file, so a producer citation under data/ could only bind while the cone carried data/. The grant is unchanged by this worker."
+}
+```
+
+## IRPT_DASHBD-D2-W603-S2 -- the brief's Opal closed enums for action and txn_type are defined in no file read at HEAD, and the 49 Financial flow-class map uses four values where the brief's flow_class uses seven
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W603-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~603",
+  "surfaced_at": "2026-10-15T23:51:18Z",
+  "one_line": "The reporting dashboard backend brief's account_transaction row (docs/briefs, its line 78) names Opal closed enums for action and txn_type and a seven-value flow_class, but no file read at HEAD defines the action or txn_type values; the 49 Financial flow-class map in perfrp_contract.py (line 283) carries four different values (EXTERNAL, INTERNAL, FEE-MANAGEMENT, FEE-ADMIN).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:docs/briefs/reporting-dashboard-backend-brief-20260930.md line 78: account_transaction, Opal-normalised trade_date, settle_date, action and txn_type (Opal closed enums), symbol, asset_name, units, price, amount, fee, custodian, flow_class (EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION, UNRESOLVED), source_txn_id, coverage",
+      "git grep at HEAD for txn_type and flow_class under data/assets/scripts, lib, org/standards, infra and portal/src: hits only in perfrp_contract.py (FLOW_CLASS_MAP at line 283, four keys) and in infra/aws/lambda/bd_transaction_consolidator (a Black Diamond column name, not an Opal enum) and in a vendored hive_metastore layer"
+    ]
+  },
+  "spec_asserts": "The PRD (IRPT_DASHBD_PRD.md line 292) and the FWD-5 cell ask for account_transaction 'with the Opal action and type vocabulary'; the brief names the enums as closed.",
+  "world_is": "No definition of the Opal action or txn_type value set exists in the files read; the custodian codes live in the 49 Financial classification table (sb_cd, tr_cd, tran_srcde with a partition column) and in the Cottonwood adapter's TYPE_CLASS (sixteen Black Diamond Transaction Type words). The two flow vocabularies disagree (four 49F keys against seven brief values), so a served flow_class needs a ruling before a builder can map to it. The ruling owner is not named in the files read."
+}
+```
+
+## IRPT_DASHBD-D2-W603-S3 -- the Cottonwood report reader the cell names holds no transaction read; the Black Diamond transaction read is in the adapter for return and flow
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W603-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~603",
+  "surfaced_at": "2026-10-15T23:51:18Z",
+  "one_line": "The cell names adapters/cottonwood_report_reader.py as a Cottonwood transactions source; that file holds no transaction token at HEAD, and the Cottonwood transaction read is adapters/cottonwood_bd_account_return_daily.py, which reads the fact_transactions silver for the return and the external flow.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep -n -i transaction at HEAD over data/assets/scripts/gold/irpt_reporting: no line in adapters/cottonwood_report_reader.py",
+      "git show HEAD:data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py line 79: ALLOWED_TABLES = (fact_allocations, fact_transactions)"
+    ]
+  },
+  "spec_asserts": "TO IRPT_DASHBD.TO-DB-f-603 step 2 names Cottonwood's transactions pull and the Cottonwood reader as the custodian transaction sources.",
+  "world_is": "The Cottonwood reader is a report reader; the transaction rows are read by the Black Diamond adapter for the return, which keeps the Transaction Type words and the external flow, and the Inflection transaction history pull is a bronze REST pull (data/inf/manual_api/pull_inflection_transactions_rest.py). The served transaction columns for Cottonwood therefore have no existing adapter that emits Opal's words."
+}
+```
