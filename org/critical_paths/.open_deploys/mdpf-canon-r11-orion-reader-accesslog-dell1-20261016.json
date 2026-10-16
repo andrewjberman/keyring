@@ -12,24 +12,24 @@
       "kind": "verify",
       "target": "preconditions: sentinels in every worktree, identity simulate (PutBucketLogging, PutBucketPolicy), pre-change get-bucket-logging empty, log bucket policy before, owner root of opal-data-assets",
       "proof_required": "printed reads",
-      "proof": null,
-      "closed_at": null
+      "proof": "2026-10-16T18:28Z-18:34Z. GO msg 6966 (acked) amended order; amendment 2 msg 6970 (acked): condition (1) the access-log bucket's grant for the S3 logging service PRINTED BEFORE ENABLING, live policy of opal-data-security-access-logs (one statement): {\"Sid\": \"AllowS3ServerAccessLogDelivery\", \"Effect\": \"Allow\", \"Principal\": {\"Service\": \"logging.s3.amazonaws.com\"}, \"Action\": \"s3:PutObject\", \"Condition\": {\"StringEquals\": {\"aws:SourceAccount\": \"313476888478\"}, \"ArnLike\": {\"aws:SourceArn\": [\"arn:aws:s3:::opal-data-security\", \"arn:aws:s3:::opal-security-evidence\"]}}} -- admits exactly two source buckets (opal-data-security, opal-security-evidence), so opal-data-assets delivery would have been refused silently; saved C:/dev/_deploy_artifacts/accesslog_policy_before.json. Sentinel scan: shared tree open sentinels name none of opal-assets/opsec/access-logs/opal-data-assets; worktree denominator 30 trees, 110 distinct sentinel names. Identity (simulate, single resource each): s3:PutBucketLogging on opal-data-assets allowed, s3:PutBucketPolicy on the log bucket allowed, cloudtrail:PutEventSelectors explicitDeny (not used; the saved trail patch stays UNAPPLIED, applying it is Andrew's act). Pre-change get-bucket-logging on opal-data-assets: empty. Owner root of opal-data-assets: opal-assets (aws_s3_bucket.monolith, bucket local.monolith_bucket); log bucket and policy in the opsec root.",
+      "closed_at": "20261016T184045Z"
     },
     {
       "id": "L1",
       "kind": "activation",
       "target": "opsec root: access-log bucket policy ArnLike SourceArn gains arn:aws:s3:::opal-data-assets (third exact ARN), targeted plan one in-place change, ONE targeted safe-apply, read back",
       "proof_required": "get-bucket-policy shows the three exact ARNs, other statements unchanged",
-      "proof": null,
-      "closed_at": null
+      "proof": "Opsec root, targeted plan aws_s3_bucket_policy.access_logs: Plan 0 add 1 change 0 destroy, the only change the aws:SourceArn list gaining the exact string arn:aws:s3:::opal-data-assets (accesslog_policy_plan.txt). Edit committed 263ad43cd5. safe-apply 18:35:49Z: Apply complete 0 added 1 changed 0 destroyed. Read back: get-bucket-policy shows 1 statement (as before), SourceArn list = opal-data-security, opal-security-evidence, opal-data-assets; with that one ARN removed the policy equals the pre-change policy byte for byte (sorted keys); Principal, Action, Resource, SourceAccount unchanged. Minimal admit: one exact ARN, no wildcard.",
+      "closed_at": "20261016T184045Z"
     },
     {
       "id": "L2",
       "kind": "activation",
       "target": "opal-assets root: ONE aws_s3_bucket_logging on opal-data-assets -> opal-data-security-access-logs prefix opal-data-assets/, targeted plan exactly one add, ONE targeted safe-apply, live before 06Z 2026-10-17",
       "proof_required": "get-bucket-logging names target and prefix",
-      "proof": null,
-      "closed_at": null
+      "proof": "Opal-assets root, targeted plan aws_s3_bucket_logging.monolith_orion_reader: Plan 1 add 0 change 0 destroy, nothing else (accesslog_logging_plan.txt). Edit committed ecd483a857. safe-apply 18:38:58Z-18:40:07Z: Apply complete 1 added 0 changed 0 destroyed. Read back get-bucket-logging opal-data-assets: LoggingEnabled TargetBucket opal-data-security-access-logs TargetPrefix opal-data-assets/. LIVE 2026-10-16T18:40Z, before 06Z 2026-10-17. REMOVAL DEADLINE (amendment 2 condition 2, owner this seat): 2026-10-19T18:39Z (apply + 72 h) or when the reader is named, whichever is first.",
+      "closed_at": "20261016T184046Z"
     },
     {
       "id": "L3",
@@ -57,7 +57,10 @@
     }
   ],
   "log": [
-    "20261016T183331Z OPENED by 0.7.0_AE_CloudOps~DELL1 with 6 leg(s)"
+    "20261016T183331Z OPENED by 0.7.0_AE_CloudOps~DELL1 with 6 leg(s)",
+    "20261016T184045Z LEG L0 closed: 2026-10-16T18:28Z-18:34Z. GO msg 6966 (acked) amended order; amendment 2 msg 6970 (acked): condition (1) the access-log ",
+    "20261016T184045Z LEG L1 closed: Opsec root, targeted plan aws_s3_bucket_policy.access_logs: Plan 0 add 1 change 0 destroy, the only change the aws:Sourc",
+    "20261016T184046Z LEG L2 closed: Opal-assets root, targeted plan aws_s3_bucket_logging.monolith_orion_reader: Plan 1 add 0 change 0 destroy, nothing else"
   ],
   "last_red_at": null,
   "device": "dell1"
