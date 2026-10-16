@@ -2962,3 +2962,55 @@
   "notes": "The order names no owner for the list; the disarm owner is the issuer of record for this order, per the surprise-channel rule. No account id was printed or committed by this order: the committed content is 12-hex digests and counts."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T04:15:52Z",
+  "class": "OBSERVATION",
+  "disposition": "DISMISSED_WITH_REASON",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S62",
+  "hazard_standing": "INERT",
+  "one_line": "Z-W37-S1 is DISARMED for this order: the four committed files hold 12-hex digests, counts and one SSM command id, and the issuer read them for account-id shaped strings itself.",
+  "dismissal_reason": "Disarms NFRA_MCPORTAL-Z-W37-S1 as far as MP-pf-7's commits go. The check that could not run (client-data-check, hashed list absent) is replaced for this order by a direct read: a grep of r3_read.txt, r3_run.json, r3_principal_sets.py and test_r3_principal_sets.py for runs of 7 or more digits returned no match, and the files carry digests of tenant and object ids, never a raw id or an account number. The box-level blind spot the worker found is real and is filed apart as Z-S63 with its own owner.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep -E -o '[0-9]{7,}' over the four committed worker files: 0 matches (run by the issuer at the drain, merge 9b2c6f0715)",
+      "r3_run.json read by the issuer: counts, booleans, one SSM command id"
+    ]
+  },
+  "spec_asserts": "Z-W37-S1 asserted that commit ee65a69a0b was not checked for client account ids.",
+  "world_is": "True for the tool; for this order's content the issuer's direct read found nothing account-id shaped.",
+  "notes": "Filed by the issuer, the disarm_owner of record, in the drain of MP-pf-7."
+}
+```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T04:15:52Z",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~Z",
+  "id": "NFRA_MCPORTAL-Z-S63",
+  "hazard_standing": "ARMED",
+  "one_line": "The client-data check has no hashed account-id list on site Z: ~/.opal exists but account_id_hashes.txt is absent, so safe-commit prints WARN and checks NO commit on this box for client account ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of C:/Users/Opal Bloomberg/.opal at ~04:1xZ: the directory holds ps-lock only; test -f account_id_hashes.txt: ABSENT",
+      "worker 0.9.0_WK_NFRA_MCPORTAL~37's safe-commit output on commit ee65a69a0b (row Z-W37-S1): WARN: client-data-check: hashed account-id list ABSENT",
+      ".tools/git-hooks/client-data-check.py names the file (the only first-party reference)"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 14 and the commit gate: every commit passes the pre-commit gates, one of which is the client-data check.",
+  "world_is": "The check degrades to WARN when the list is absent, so it never refuses; every seat's commit on site Z since the list went missing is unchecked. How the list is produced and distributed is not measured here.",
+  "notes": "Filed by the issuer as the box-level carrier of the worker's observation; the issuer cannot place the list (an infrastructure act). Not known: when it went missing, or whether another box has it."
+}
+```
