@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-16T16:19:54Z",
+ "written_at": "2026-10-16T16:50:08Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -5956,6 +5956,63 @@
     "crossbox": null,
     "ruled_by": "andrew",
     "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261016T164723Z-cc02",
+   "project": "AMGT_RESAPP",
+   "subject": "What does validation.state CLEARED assert for the served AI-fill documents, and are the 95 to be re-stamped HELD to CLEARED?",
+   "asked_by": "2.0.0_SA_COO~R2",
+   "source": "org/tier1_exec/2.0.0_SA_COO~R2/drive_log_20261016T16Z_desktop-hk1uu7n.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-16T16:47:23Z",
+   "kind": "fork",
+   "context": "All 475 blocks of the 95 served round-111 AI-fill documents still read validation HELD/PASS; contract.py defines CLEARED with a stamping function, and the gateway passes the field through beside served text. A re-stamp moves served bytes of 95 keys (a never-widen pair). The CVO has read at most about 25 of the 95 names; the producer's grounding contract was applied to all.",
+   "rec": "Leave HELD until you state what CLEARED means. If it means 'passed the producer grounding contract', re-stamp all 95 (no model call, no spend, one 95-key pair); if it means 'a reader graded it', re-stamp only the names the CVO read.",
+   "scope": {
+    "measured_at": "2026-10-16T16:47:23Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPINDEX placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_OPLGTW placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/filings/analyze.py is on the shared branch (lib)",
+      "lib/research/filings/tests/test_reverify_stated_value.py is on the shared branch (lib)",
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_classification_withheld.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_names_read_agreement.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T165007Z-ff09",
+    "at": "2026-10-16T16:50:07Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
    }
   }
  ]
