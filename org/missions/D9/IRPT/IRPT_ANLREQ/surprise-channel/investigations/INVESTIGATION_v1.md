@@ -22172,3 +22172,31 @@
   "world_is": "wk-provision.sh provisions a sparse cone; the repo's own tests read docs/contracts and other trees outside it."
 }
 ```
+
+## IRPT_ANLREQ-D2-W262-S1 -- AR129-g-AC3 cannot run in this worktree: its sparse cone omits docs/, so both regress test files fail at collection
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~262",
+  "surfaced_at": "2026-10-16T14:30:53Z",
+  "class": "BLOCKING",
+  "id": "IRPT_ANLREQ-D2-W262-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worktree is a sparse checkout whose cone omits docs/, so tests/test_resolve_upload.py and tests/test_frozen_worker.py fail at collection and AR129-g-AC3 cannot pass as written here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-anlreq-262 printed .tools, infra/aws/lambda/investor-reporting, infra/logic/registry, lib and org/devices; docs is not listed. ls -d docs printed 'No such file or directory'.",
+      "positive control: git ls-tree HEAD docs/contracts/investor-reporting/v1/ printed 100644 blob 9e709908fbd11709646373d832769c747a050755 docs/contracts/investor-reporting/v1/AnalysisReport.schema.json, and git ls-tree HEAD for resident_worker.py printed a blob, so HEAD tracks both.",
+      "python -m pytest -q -p no:cacheprovider tests/test_resolve_upload.py, run in ycharts/generate at commit 175596f205: FileNotFoundError on C:/dev/wk-irpt-anlreq-262/docs/contracts/investor-reporting/v1/AnalysisReport.schema.json raised from reports/tests/test_repository.py:19; ERROR at collection; Interrupted: 1 error during collection; rc=2.",
+      "ar_g129_checks.py regress at 175596f205: AR-G129-REGRESS-FAIL test_resolve_upload.py: rc=2 ['1 error']; test_frozen_worker.py: rc=2 ['1 error'].",
+      "ar_g129_checks.py build: AR-G129-OK build: all arms; ar_g129_checks.py guard: AR-G129-OK guard: all arms; both at 175596f205."
+    ]
+  },
+  "spec_asserts": "TO-AR-g-129 AC3: the regress arm runs tests/test_resolve_upload.py and tests/test_frozen_worker.py one at a time and PASSes at base. The worktree is provisioned with infra/aws/lambda/investor-reporting, lib, .tools, org/standards and the project folder, so the two test files can be collected there.",
+  "world_is": "The worktree's sparse-checkout cone names .tools, infra/aws/lambda/investor-reporting, infra/logic/registry, lib and org/devices, and not docs/. HEAD tracks docs/contracts/investor-reporting/v1/AnalysisReport.schema.json, but that path is absent from the worktree. test_frozen_worker imports intake/tests/test_retained_uploads.py, which imports reports/tests/test_repository.py, which reads that schema at its line 19. The collection raises FileNotFoundError before any test runs, so each file exits rc=2 with 1 error. The build and guard arms import resident_worker alone and run. The new tests appended to test_resolve_upload.py were therefore not executed in this worktree; their behaviour is exercised by the build and guard arms. Nothing was materialised into docs/ and the sparse cone was not changed."
+}
+```
