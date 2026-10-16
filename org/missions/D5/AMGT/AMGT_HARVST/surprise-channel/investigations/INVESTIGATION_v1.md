@@ -9566,5 +9566,47 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "notes": "WHY THIS IS AN OBSERVATION: one job in 70, the runner continued, nothing stored is wrong. If it repeats, the question for the issuer is whether something on the box closes Chrome processes (a reaper) or whether the profile is contended; five errors in a row stop the publisher's leg (the driver's own cap).",
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W146-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~146",
+        "surfaced_at": "2026-10-16T00:13:14Z",
+        "one_line": "main() in __main__.py already binds the name store inside its own body (a local import at the --harvest-grammar branch), so the HVST-cb-10 snapshot taken right after parse_args would raise UnboundLocalError; the redundant local import is removed and the module-level store import used instead.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cb-10 section 1.b: import lib.research.harvest.store as store at the top of __main__.py, then take started = store.get_stats_snapshot() right after the arguments are parsed.",
+        "world_is": "__main__.py:201-202 at 3467e51337 is an import statement 'import lib.research.harvest.store as store' inside main(); in CPython that makes store a local name of the whole function, so the snapshot line near the top of main() reads an unbound local. The fix deletes that one line; store._default_client() on the --harvest-grammar branch then resolves to the same module through the top-level import. No behaviour changed on any branch.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/opal_data_harvest/__main__.py:201-202 at 3467e51337 (local import inside main, before the harvest_client build)",
+                "lib/opal_data_harvest/__main__.py (worktree, this commit): top-level import of lib.research.harvest.store; the local import removed"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
+    ,
+    {
+        "id": "AMGT_HARVST-D1-W146-S2",
+        "project": "AMGT_HARVST",
+        "fabric": "dell1",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~146",
+        "surfaced_at": "2026-10-16T00:13:14Z",
+        "one_line": "The two S3 GET keys HVST-cb-10 adds to a run record are written to the LOCAL run record only; the bronze copy of the run record is persisted inside worker.run, before the process's ledger line exists, so it does not carry them.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-cb-10 section 1.b: for run, add the keys s3_get_count and s3_get_bytes to the run record JSON after the ledger line is written.",
+        "world_is": "worker.py:971-976 at 3467e51337: write_run_record builds the path, sets self.last_run_record, then calls _persist_run_record (the bronze put) before returning to __main__. The rewrite added by HVST-cb-10 runs in __main__ after worker.run returns, so the runtime-root file carries the keys and the persisted bronze object does not. No reader of the bronze run record reads these keys; the cycle record sums the ledger, not the run records.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "lib/opal_data_harvest/worker.py:971-976 at 3467e51337 (path, last_run_record, _persist_run_record)",
+                "lib/opal_data_harvest/__main__.py (worktree, this commit): _record_process_gets rewrites the local run record after worker.run returns"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
