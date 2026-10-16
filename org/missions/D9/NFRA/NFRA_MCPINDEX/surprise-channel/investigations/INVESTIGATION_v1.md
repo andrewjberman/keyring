@@ -9162,6 +9162,32 @@ carries none.
       ]
     },
     "notes": "Both ledgers (nfra-mcpindex-r15-catalog-release L4 and nfra-mcpindex-r15-catalog-release-v2 L4) stay open for the issuer's re-measure; the applier holds r15.AC1."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S129",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T13:05Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S126",
+      "NFRA_MCPINDEX-Z-S127",
+      "NFRA_MCPINDEX-Z-S128"
+    ],
+    "one_line": "DISARMS the applier's three MX-r-15 rows: Z-S126 (scopes.json would move backwards under commit A; ruled B), Z-S127 and Z-S128 (the depth claims aged at the daily publish; cured by the v2 and v3 re-measures). All three are measured on the live host.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S126: MX-r-15 A2 pinned commit B (0cb4a87bcb), the catalog plus scopes.json at dde73e4bd0; the host's census at v3 shows app/refs/scopes.json equal to the cut (vis_host_compare_r15_v3.txt, host matrix equals the cut; probes_r15 v3 host_vs_cut 141 of 141 equal).",
+        "Z-S127 and Z-S128: v3 (38fe44d5cb, landed 2026-10-16T12:19:15Z, e9209e0839) -- r13.AC3 PASS on the host: depth 11 of 11, answer-time 17 of 17, anchors 2 of 2; r13.AC2 and r15.AC4 PASS."
+      ]
+    },
+    "spec_asserts": "MX-r-15 A1 and A3 asserted that the depth claims hold until the ~13:30Z daily publish, and that a deploy-only commit of the catalog blob alone ships exactly one file.",
+    "world_is": "The daily publish ran before 11:35Z and the yield-curve object re-stamps near 23:01Z, so a depth claim is a point-in-time read; v3 was re-measured after the publish and graded against live AWS before it shipped. The deploy tree's scopes.json is the file the host already serves under commit B.",
+    "dismissal_reason": "Z-S126: ruled B at MX-r-15 A2 and applied; the host serves the registry copy it served before. Z-S127 and Z-S128: the stale-measurement class is cured for this release by v2 and v3 and carried to the round-18 analysis as the enrichment 'stop pinning depth claims that age with each publish'; emit_final.sh now grades the candidate with r13.AC3 against live AWS first. The issuer is disarm_owner of all three."
   }
 ]
 ```

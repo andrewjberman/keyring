@@ -6,6 +6,10 @@ workstream, whether two projects on different boxes would change the same files,
     python .tools/placement-check.py --self-test  # planted cases for the overlap and resolution rules
 
 A VIEWER, NOT A CHECKER: findings never change the exit code (the monitor moratorium), as .tools/sequence-check.py.
+EXCEPT an INPUT the read cannot reach (NFRA_CTLPLN round-28 ruling 3): exit 3 and an `ERROR:` line when org/missions or
+org/projects is absent, or when a non-terminal register row (org/projects/*.json) that carries a tree home is not read
+as a live project. The expected set is the register's own `home` field (org/missions/...) united with any tree home
+found under ROOT, so a sparse checkout cannot shrink the expectation. An UNREADABLE project.json is a finding, not an error.
 
 Sources, each named in the output:
   box         project.json `fabric`, resolved through the device register org/devices/DEVICES.json (lib/devices.py);
@@ -112,6 +116,32 @@ def read_projects(dev, reg) -> tuple:
     return projects, findings
 
 
+UNREADABLE_RE = re.compile(r"^UNREADABLE (.+?) \(")
+
+
+def register_homes() -> tuple:
+    """(codes, error). The codes of the NON-TERMINAL register rows (org/projects/*.json) that carry a tree home: the
+    register's own `home` under org/missions/, united with a tree home found under ROOT. error is an ERROR line when
+    the register cannot be read row by row (or is absent) -- the read then cannot prove it reached every project."""
+    if not os.path.isdir(os.path.join(ROOT, "org", "projects")):
+        return [], "ERROR: placement-check cannot read org/projects (not found under %s); the read cannot prove it reached every project" % ROOT
+    codes = {os.path.basename(os.path.dirname(f)) for f in glob.glob(os.path.join(ROOT, "org", "missions", "D*", "*", "*", "project.json"))}
+    out = set()
+    for f in sorted(glob.glob(os.path.join(ROOT, "org", "projects", "*.json"))):
+        try:
+            d = json.load(open(f, encoding="utf-8"))
+            if not isinstance(d, dict):
+                raise ValueError("not a JSON object")
+        except (OSError, ValueError) as exc:
+            return [], "ERROR: placement-check cannot read register row %s (%s); the read cannot prove it reached every project" % (os.path.relpath(f, ROOT), exc)
+        if str(d.get("status", "")).lower() in TERMINAL_PROJECT:
+            continue
+        code = str(d.get("project_code") or os.path.basename(f)[:-5])
+        if str(d.get("home") or "").replace("\\", "/").startswith("org/missions/") or code in codes:
+            out.add(code)
+    return sorted(out), None
+
+
 def report(projects, findings, reg) -> dict:
     boxes = {d["name"]: [] for d in reg["devices"]}
     for p in projects:
@@ -122,18 +152,43 @@ def report(projects, findings, reg) -> dict:
                                                                    if d["name"] == b), None)} for b, c in boxes.items()}}
 
 
+def fail(msg, as_json, live=None) -> int:
+    """An input the read cannot reach: exit 3. --json names it in one document; the text form prints the ERROR line."""
+    print(json.dumps({"error": msg, "live_projects": live}, indent=1) if as_json else msg)
+    print(msg, file=sys.stderr)
+    return 3
+
+
 def main(argv) -> int:
     if argv == ["--self-test"]:
         return self_test()
+    as_json = argv == ["--json"]
+    if not os.path.isdir(os.path.join(ROOT, "org", "missions")):
+        return fail("ERROR: placement-check cannot read org/missions (not found under %s); the read has no projects to place"
+                    % ROOT, as_json)
+    need, err = register_homes()
+    if err:
+        return fail(err, as_json)
     dev = devices_module()
     reg = dev.load()
     projects, findings = read_projects(dev, reg)
+    # an UNREADABLE project.json is reached (it is named as a finding), so it counts as read
+    unreadable = [re.split(r"[\\/]", m.group(1))[-2] for m in map(UNREADABLE_RE.match, findings) if m]
+    reached = {p["code"] for p in projects} | set(unreadable)
+    n_read = len(projects) + len(unreadable)
+    missing = [c for c in need if c not in reached]
+    if missing:
+        return fail("ERROR: placement-check read %d live project(s) but the register lists %d with a tree home; first not read: %s"
+                    % (n_read, len(need), ", ".join(missing[:3])), as_json, live=n_read)
     r = report(projects, findings, reg)
-    if argv == ["--json"]:
+    if as_json:
+        r.update({"register_with_tree_home": len(need), "live_projects_read": n_read, "match": True})
         print(json.dumps(r, indent=1))
         return 0
     print("placement-check | live projects: %d | register: %s | boxes: %d" % (len(projects), dev.register_path(),
                                                                           len(r["boxes"])))
+    print("placement-check | register rows with a tree home: %d | live projects read: %d | match=True"
+          % (len(need), n_read))
     for b, v in r["boxes"].items():
         print("BOX %-7s placed %2d%s  %s" % (b, len(v["placed"]), "  (ROOM: nothing placed)" if not v["placed"] else "",
                                              ", ".join(v["placed"])))
