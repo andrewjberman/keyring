@@ -645,7 +645,7 @@ def case_check_8_signature_rules(env):
     assert verdicts(record)[8] == "failed"
     # a file that does not exist
     record, _ = env.check(w.name, signed=str(env.signer_dir / "absent.txt"))
-    assert verdicts(record)[8] == "failed"
+    assert verdicts(record)[8] == "awaiting"
     # a file with the right text but OUTSIDE the required directory
     outside = env.tmp / "outside.txt"
     outside.write_text(SIGNER_TEXT % (BATCH, w.name), encoding="ascii")

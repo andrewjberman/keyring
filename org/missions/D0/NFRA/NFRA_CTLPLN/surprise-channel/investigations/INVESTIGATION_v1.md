@@ -12359,3 +12359,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The worker face's STOP rule applies: the cell stops at this refusal and runs no checks on the 16 held wheels. Clearing needs the CTO: either the approval file names multitasking==0.0.13 as an approved line, or a ruling that says otherwise. The refused record is committed as the measured state; no record was rewritten."
 }
 ```
+
+## NFRA_CTLPLN-W134-S1 -- the intake check suite is red at the base: one stale assertion in case_check_8_signature_rules (a missing signature file reads awaiting, not failed)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W134-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~134",
+  "surfaced_at": "2026-10-16T08:32:45Z",
+  "one_line": "At the base 8ec35ee85f, python org/devices/intake/test_intake_check.py reads INTAKE-CHECK-TEST cases=56/57 skipped=0 ok=False: case_check_8_signature_rules asserts a signature file that does not exist reads check 8 failed, but check_8 reads it awaiting since CT-am-2 (row NFRA_CTLPLN-W119-S1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@8ec35ee85f lines 787-789 -- a signature path that does not exist returns rec('awaiting', 'check 8 awaits the signature: ...'), a recorded state of its own",
+      "org/devices/intake/test_intake_check.py@8ec35ee85f line 647-648 (base) -- record = env.check(w.name, signed=str(env.signer_dir / 'absent.txt')) then assert verdicts(record)[8] == 'failed': the stale assertion",
+      "measured: python org/devices/intake/test_intake_check.py at base 8ec35ee85f in worktree C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-134 -- FAIL case_check_8_signature_rules (AssertionError line 648); the same run also failed case_constants_appear_verbatim_in_the_brief on a sparse checkout that lacked docs/briefs/, a checkout artifact and not a base defect",
+      "CHANGED in the CT-av-1 cell (0.9.0_WK_NFRA_CTLPLN~134): that one assertion now reads awaiting; no other case changed; the suite reads cases=57/57 ok=True after the fix"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The check suite's case_check_8_signature_rules asserts a signature file that does not exist reads check 8 failed (base line 648), so a green suite is the expected base state.",
+  "world_is": "check_8 reads a missing signature file as awaiting (CT-am-2, row NFRA_CTLPLN-W119-S1, a recorded state that is never a failed check). The base suite was red at 56/57 on that one assertion; the stale assertion is updated to awaiting in the CT-av-1 cell.",
+  "notes": "Observation only. The base red was not caught because the suite was not run after CT-am-2 changed check 8's missing-file state."
+}
+```
