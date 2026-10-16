@@ -57,3 +57,13 @@ The limb is one cell. dell1's redeploy (SC1) waits on that cell's receipt, which
 No consumer remains, so the npm limb is not cut (YAGNI, build ladder step 1).
 
 The design above stands as the shape of that limb, to be cut the day a live npm need arrives. The batch approval is VOID.
+
+## ADDENDUM 2 (~17:4xZ): the ask is RE-OPENED, so the ruling above is reinstated in full
+
+The source is `0.0.0_AB_MSTR` msg 109736 (bus 7b1f1be5), which supersedes the withdrawal.
+- SC1's read-only feasibility check (`round88/cc7_dist_method.out`, `DIST_METHOD=needs_gate_edit`) found no way to ship a pre-built
+  dist through `deploy-to-ec2.sh`, so dell1's fallback waits on this intake.
+- The list is unchanged: `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_bun_miss.txt`.
+
+Addendum 1 is VOID. The cell is cut as designed above, and the batch approval of the 50 lockfile-pinned names stands. A live need now
+exists, so this is not YAGNI.
