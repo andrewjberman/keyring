@@ -24880,3 +24880,115 @@ name the one known failure instead of silently inheriting it.
   "dismissal_reason": "Check defect, mine, fixed: ap29.AC1.sh now reads the four prefixes through the registry rows gateway-client-bdlive-<t> and the .tf references local.bdlive_objects/prefixes (the naming limb forbids a typed address); ap29.AC2 PASS by my run and by 0.7.0_AE_CloudOps~ZS (applied, ledger nfra-oplgtw-grants-ap29 CLOSED, proof VALID at e497bc910d)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T16:38:09Z",
+  "id": "NFRA_OPLGTW-Z-S297",
+  "one_line": "Round-38 disposition of worker row Z-W123-S1: OG-en-9 A1 puts app/query_v0.py in the grant and the fix landed: a key with no catalog row answers 404; merged b74ef25060, named tests PASS in the mai",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W123-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-9.not-found-is-not-403.md",
+      "merge commits b74ef25060 (OG-en-9) and 5c345724a6 (OG-en-12) on box/sitez"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "OG-en-9 A1 puts app/query_v0.py in the grant and the fix landed: a key with no catalog row answers 404; merged b74ef25060, named tests PASS in the main tree.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-en-9 A1 puts app/query_v0.py in the grant and the fix landed: a key with no catalog row answers 404; merged b74ef25060, named tests PASS in the main tree."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T16:38:09Z",
+  "id": "NFRA_OPLGTW-Z-S298",
+  "one_line": "Round-38 disposition of worker row Z-W123-S2: OG-en-9 A1 puts tests/test_query_v0_tool.py in the grant; test_mx_q3_uncatalogued_key_refused was updated to the new truth (404, no guard_denied) with",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W123-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-9.not-found-is-not-403.md",
+      "merge commits b74ef25060 (OG-en-9) and 5c345724a6 (OG-en-12) on box/sitez"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "OG-en-9 A1 puts tests/test_query_v0_tool.py in the grant; test_mx_q3_uncatalogued_key_refused was updated to the new truth (404, no guard_denied) without weakening any other assertion; merged b74ef25060.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-en-9 A1 puts tests/test_query_v0_tool.py in the grant; test_mx_q3_uncatalogued_key_refused was updated to the new truth (404, no guard_denied) without weakening any other assertion; merged b74ef25060."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T16:38:09Z",
+  "id": "NFRA_OPLGTW-Z-S299",
+  "one_line": "Round-38 disposition of worker row Z-W123-S4: Ruled in OG-en-9 A1 (b): only a key with NO catalog row moves to 404; a resolved-row gate denial and the entitlement chokepoint denial stay 403 and di",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W123-S4"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-9.not-found-is-not-403.md",
+      "merge commits b74ef25060 (OG-en-9) and 5c345724a6 (OG-en-12) on box/sitez"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Ruled in OG-en-9 A1 (b): only a key with NO catalog row moves to 404; a resolved-row gate denial and the entitlement chokepoint denial stay 403 and differ from the 404 in status and wording. The absent class marker on a resolved-row gate refusal is unchanged and is not carried as a defect (the 403 body does not say not found).",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled in OG-en-9 A1 (b): only a key with NO catalog row moves to 404; a resolved-row gate denial and the entitlement chokepoint denial stay 403 and differ from the 404 in status and wording. The absent class marker on a resolved-row gate refusal is unchanged and is not carried as a defect (the 403 body does not say not found)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T16:38:09Z",
+  "id": "NFRA_OPLGTW-Z-S300",
+  "one_line": "Round-38 disposition of worker row Z-W125-S1: OG-en-12 A1 put tests/test_og_ch1.py:170 in the grant so the pin follows the ruled key blackdiamond49flive; merged 5c345724a6, test_ogch1_ac03 passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W125-S1"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-12.*.md amendment A1",
+      "merge commits b74ef25060 (OG-en-9) and 5c345724a6 (OG-en-12) on box/sitez"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "OG-en-12 A1 put tests/test_og_ch1.py:170 in the grant so the pin follows the ruled key blackdiamond49flive; merged 5c345724a6, test_ogch1_ac03 passes.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-en-12 A1 put tests/test_og_ch1.py:170 in the grant so the pin follows the ruled key blackdiamond49flive; merged 5c345724a6, test_ogch1_ac03 passes."
+}
+```
