@@ -766,6 +766,7 @@ def run_resolve(a, state):
     host = read_host(a.host_pydeps, kw) if a.host_pydeps else None
     res = Resolve(base)
     state["res"] = res
+    state["members"] = len(todo)
     rows, docs = [], {}
     for m in todo:
         norm = kw.canonicalize_name(m["name"])
@@ -841,7 +842,8 @@ def cmd_resolve(a):
         res = state.get("res")
         n = len(res.rec["requests"]) if res else 0
         print("FAILED: %s" % ascii_text(e))
-        print("INTAKE-RESOLVE target=%s members=0 chosen=0 no_wheel=0 requests=%d ok=False" % (a.target, n))
+        print("INTAKE-RESOLVE target=%s members=%d chosen=0 no_wheel=0 requests=%d ok=False" % (
+            a.target, state.get("members", 0), n))
         return 1
     rows, rc = run["rows"], run["recheck"]
     for r in rows:
