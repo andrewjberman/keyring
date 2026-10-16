@@ -9930,6 +9930,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S30",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-16T05:22:21Z",
+     "one_line": "SC1 row D1-S28 (HVST-cb-13 check vacuous: no upload-harvest line under pin ddd7dcdc38) is dispositioned: cb-13 is complete as an act; the uploader evidence moves to HVST-cb-15 step 6b (C-a4 prime), not to a re-run of cb-13.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-13 steps 6 and 7: the duplicate check runs after the first upload-harvest line and reads zero GETs per upload line.",
+     "world_is": "Issuer re-read at 2026-10-16T05:22:21Z: commit 314424bf21 is in the tree; proof_of_spec check VALID rc=0; the scheduled task Opal Data Harvest - Continuous Cycle is Running with WorkingDirectory C:\\dev\\wk-harvest-runner-pin-ddd7dcdc38; cb13_check.out ends DUPLICATES=0 over parts_read=0 (vacuous, as SC1 said); cb13_reads.out R7 upload-harvest lines=0 sum_get_count=0. The CTO ruled (msg 6513, ledger NEVER_WIDEN_ROUND87_CB2_CTO_HALF_ADDENDUM_4_AMENDMENT_1_C_A4_DRIVEN.md) that the real-upload clause of C-a4 is waived and the first sa/bbg uploads are the evidence, read at the end of the first uploading cycle before a second (C-a4 prime). D1-S25 (uploader read) stays open until that read.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb13_check.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb13_reads.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-15.sa-and-bbg-join-the-dell1-runner-seeded.md step 6b"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-S28"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "The vacuity is real and disclosed; it is carried by cb-15 step 6b under the CTO C-a4 prime, so no further action on cb-13."
     }
 ]
 ```
