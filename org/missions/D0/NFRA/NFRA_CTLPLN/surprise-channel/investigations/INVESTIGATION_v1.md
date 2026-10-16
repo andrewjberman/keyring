@@ -12195,3 +12195,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "OWNER: 0.0.0_AB_MSTR~DELL1 (the dell1 manager), for the next occurrence: record the end time of a lane from seat-liveness at each box pass and read the lane's own last log before respawning it. Nothing was changed to find this. No fix is proposed here."
 }
 ```
+
+## NFRA_CTLPLN-W126-S1 -- the client-data check was absent on the laptop box and a worker committed unchecked
+
+```json
+{
+  "id": "NFRA_CTLPLN-W126-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~126",
+  "surfaced_at": "2026-10-16T00:48:28Z",
+  "one_line": "The client-data check of safe-commit.sh found its hashed account-id list ABSENT on this box and printed that the commit was NOT checked for client account ids; the worker committed anyway, as the gate allows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "spec_asserts": "A commit made through .tools/safe-commit.sh is checked for client account ids: the client-data-check runs over the commit and reports it as checked (the gate's own WARN wording states that an absent list means the commit is not checked).",
+  "world_is": "The list is not at C:\\Users\\AndrewBerman\\.opal\\account_id_hashes.txt, and OPAL_ACCOUNT_ID_HASHES is unset in the worker shell, so the check did not run. Only the first commit of this order (7a5d1e28f3) printed the WARN in full; the two later commits (ed6212adcb, 5f3bcfe8a2) were made by the same command with their output cut by a tail pipe, so their check state is not read here. Left alone, every commit on this box is unchecked for client account ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output of commit 7a5d1e28f3 on wk-NFRA_CTLPLN-126: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\AndrewBerman\\.opal\\account_id_hashes.txt (absent is not empty; set OPAL_ACCOUNT_ID_HASHES or place the list there). this commit was NOT checked for client account ids.",
+      "org/devices/intake/intake_receive.py@7a5d1e28f3 (the commit that drew the WARN)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm owner 0.0.0_AB_MSTR is this worker's reading of the box infrastructure role, not a ruling. The worker did not create, move or read the list; no client data was reviewed by hand."
+}
+```

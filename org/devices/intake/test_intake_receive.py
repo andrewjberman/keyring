@@ -645,6 +645,45 @@ def case_user_form_builds_old_command_dry_run_only():
     assert built == [sys.executable, "-m", "pip", "install", "--no-index", "--no-deps", "--user", "w.whl"], built
 
 
+@case
+def case_prove_writes_pip_log_the_receipt_names():
+    pack, names = new_pack("piplog", {"logpkg": {"logpkg": "X = 1\n"}})
+    rc, summ, out = run_prove(pack, scratch_for("piplog"))
+    assert rc == 0 and summ["ok"], summ
+    wheel = names["logpkg"]
+    log = os.path.join(pack, "receipts", "%s.prove-pip.testbox.log" % wheel)
+    assert os.path.isfile(log), log
+    with open(log, "rb") as fh:
+        data = fh.read()
+    assert all(b < 128 for b in data), "non-ASCII byte in the pip log"
+    assert data.startswith(b"INTAKE-PIP-LOG schema=1\n") and b"--no-index" in data and b"rc=0\n" in data, data[:200]
+    pl = read_receipt(pack, wheel).get("pip_log")
+    assert pl == {"file": "%s.prove-pip.testbox.log" % wheel, "sha256": ir.sha256_file(log),
+                  "bytes": os.path.getsize(log)}, pl
+
+
+@case
+def case_parent_pip_index_url_never_in_log():
+    url = "http://127.0.0.1:9/simple"
+    pack, names = new_pack("pipurl", {"urlpkg": {"urlpkg": "X = 1\n"}})
+    old = os.environ.get("PIP_INDEX_URL")
+    os.environ["PIP_INDEX_URL"] = url
+    try:
+        rc, summ, out = run_prove(pack, scratch_for("pipurl"))
+    finally:
+        if old is None:
+            os.environ.pop("PIP_INDEX_URL", None)
+        else:
+            os.environ["PIP_INDEX_URL"] = old
+    assert rc == 0 and summ["ok"], summ
+    log = os.path.join(pack, "receipts", "%s.prove-pip.testbox.log" % names["urlpkg"])
+    with open(log, "rb") as fh:
+        text = fh.read().decode("ascii")
+    assert url not in text and "127.0.0.1" not in text, "the parent index URL reached the log"
+    assert "inherited_pip_vars_removed=PIP_INDEX_URL" in text, text[:300]
+    assert not [ln for ln in text.split("\n") if ln.startswith("Looking in indexes")], "an index line in the log"
+
+
 def main():
     shutil_ok = True
     try:
