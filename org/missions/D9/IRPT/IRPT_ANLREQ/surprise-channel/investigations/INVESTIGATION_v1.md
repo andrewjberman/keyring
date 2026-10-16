@@ -20946,3 +20946,107 @@
   "notes": "Raised by 0.9.0_WK_IRPT_ANLREQ~227 while executing TO-AR-tf-73. The channel file itself is present on disk and was appended in place."
 }
 ```
+
+## IRPT_ANLREQ-D2-W225-S1 -- The live jobs factory cannot be built: DynamoGenerationStore needs composition_sha256 at construction, the ...
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W225-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~225",
+  "surfaced_at": "2026-10-16T03:25:00Z",
+  "one_line": "The live jobs factory cannot be built: DynamoGenerationStore needs composition_sha256 at construction, the fail event carries none, and mark_hop_failure is not at HEAD (TO-AR-g-109 unmerged)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~T2",
+  "spec_asserts": "TO-AR-tf-71 WORKER FACE item (3): compose_ports() adds 'jobs' built as DynamoGenerationStore(client=clients['dynamodb'], tenant=<resolved tenant>, request_id=<id>), and the writer is DynamoGenerationStore.mark_hop_failure(job_id, hop, code, at).",
+  "world_is": "DynamoGenerationStore.__init__ (infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py@cd692a3b94 lines 45-46) takes keyword-only composition_sha256 with no default, and line 49 refuses any value that is not 64 hex with LeaseRefused. The fail event carries tenant, request_id, hop and code only. The file has no mark_hop_failure method (read in full at cd692a3b94). The shipped reports/commentary_draft_store.py therefore wires _hop_failure_jobs, which raises DraftStoreRefused UNAVAILABLE before any read of the job row or write; lambda_handler routes the fail op to it, so the op is live the moment AR-tf-72 calls it and answers UNAVAILABLE until this row is dispositioned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show cd692a3b94:infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py lines 44-49 (constructor and sha refusal)",
+      "git show cd692a3b94:infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py lines 1-292 read in full: no mark_hop_failure",
+      "reports/commentary_draft_store.py at the worker branch, _hop_failure_jobs (uncommitted until the cell commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm owner 2.0.0_SA_COO~T2: decide the composition_sha256 source for the fail op and the TO-AR-g-109 merge; the stub is replaced by the wired factory then. Until then the fail op never records a hop_failure, so AR-tf-72's caller sees UNAVAILABLE on every fail."
+}
+```
+
+## IRPT_ANLREQ-D2-W225-S2 -- The spec's injected jobs port is a per-request factory jobs(tenant, request_id), not one object composed once
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W225-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~225",
+  "surfaced_at": "2026-10-16T03:25:00Z",
+  "one_line": "The spec's injected jobs port is a per-request factory jobs(tenant, request_id), not one object composed once",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tf-71 WORKER FACE item (3): the write goes through an injected jobs port with the method mark_hop_failure(job_id, hop, code, at), and compose_ports() adds 'jobs'.",
+  "world_is": "DynamoGenerationStore binds one tenant and one request_id at construction (infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py@cd692a3b94 lines 45-46 and 54), and store() resolves the tenant per request. A single composed object cannot carry the resolved tenant. store() and handle() therefore take jobs as a factory jobs(tenant, request_id) that returns the port, and compose_ports returns that factory under 'jobs' with the clock under 'clock'. The port's method signature is as specified.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/commentary_draft_store.py at the worker branch: store(), _hop_failure(), compose_ports() (uncommitted until the cell commit)",
+      "reports/tests/test_hop_failure_fail_op.py at the worker branch: Jobs and JobPort fakes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Design departure recorded for the issuer's read. put and get_ref are unchanged; handle() and store() gained keyword defaults jobs=None and clock=None, so existing callers keep their signature."
+}
+```
+
+## IRPT_ANLREQ-D2-W225-S3 -- The surprise channel file uses LF line endings, not the CRLF the launch instruction names
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W225-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~225",
+  "surfaced_at": "2026-10-16T03:25:00Z",
+  "one_line": "The surprise channel file uses LF line endings, not the CRLF the launch instruction names",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker launch instruction: append to the surprise channel with the file's existing CRLF line endings preserved, binary append only.",
+  "world_is": "INVESTIGATION_v1.md at cd692a3b94 is i/lf w/lf in git ls-files --eol and holds no carriage-return bytes (grep -c for CR returns 0). The worker appended these rows as LF lines, which is the file's existing ending; the file was not rewritten.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files --eol org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md at cd692a3b94: i/lf w/lf"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Preserved the file's own LF endings; the CRLF premise is for the issuer to correct."
+}
+```
+
+## IRPT_ANLREQ-D2-W225-S4 -- The surprise-channel schema the order cites is absent from this worktree
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W225-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~225",
+  "surfaced_at": "2026-10-16T03:25:00Z",
+  "one_line": "The surprise-channel schema the order cites is absent from this worktree",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face: rows follow org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "The directory org/surprise_channel/ does not exist in the worktree at cd692a3b94 (a Glob over it returned that the directory does not exist). The rows were shaped on the existing rows of INVESTIGATION_v1.md (the same keys, the class and hazard_standing vocabulary already in use, and disarm_owner on ARMED).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Glob org/surprise_channel/**/investigation_item.schema.json at the worktree root: directory does not exist"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; the schema's location is for the channel owner to confirm."
+}
+```
