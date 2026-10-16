@@ -99,6 +99,9 @@ Criterion ids: MD2-r2-AC1, MD2-r2-AC2, MD2-r2-AC3, MD2-r2-AC4, MD2-r2-AC5. Insta
 validated with `python .tools/proof-of-spec-check.py <instance> MD2-r2-AC1,MD2-r2-AC2,MD2-r2-AC3,MD2-r2-AC4,MD2-r2-AC5` BEFORE the flip. AC1-AC3 and AC5 mechanical; AC4 judgment (UNVERIFIABLE-BY-INSTRUMENT, graded by the CVO).
 </proof_of_spec>
 
+**PER-STEP LINES (AMENDED 2026-10-16 ~13:2xZ, Andrew's ask relayed by the CTO, msg 6698):** send `2.0.0_SA_COO~S1` ONE line by the broker as each of these lands, never a value: (1) the `r2_check_r2.py app` result; (2) the subject key written (yes/no, length only);
+(3) each of the three subscription starts with its HTTP status, or the API's refusal VERBATIM (the unified audit-log check was never run, so a refusal is the measure; send it once and make no retry loop); (4) each of the two fires as it reads clean. The issuer relays them.
+
 **REPORT:** the commands Andrew runs (as in item 2); the three check lines; the subscription HTTP statuses; the start time; every refusal and denial verbatim. No secret, tenant or client value.
 
 ---
