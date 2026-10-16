@@ -80,6 +80,7 @@ run `proof-of-spec-check.py` on it as the worker rules say, and report once, wit
 The cell is tests-only, so it is not part of the MP-pf-9 release and never reaches the host by itself. The status flip is the issuer's.
 
 <status>pending</status>
+<status>complete</status>
 <round>7</round>
 <workstream>PF</workstream>
 <slot>~39</slot>
