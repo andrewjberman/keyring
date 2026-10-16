@@ -21134,3 +21134,58 @@
   "notes": "The substance under test held: a sent and a malformed price date are accepted and ignored, the closed-token line is printed once per request that carries one and never for the request without one. The arms as worded fail on the state, not on the count."
 }
 ```
+
+## IRPT_ANLREQ-D2-W252-S1 -- The release-34 driver cannot write its record: the record folder r34/ is absent from the worker's deliverables
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W252-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~252",
+  "surfaced_at": "2026-10-16T03:54:07Z",
+  "one_line": "The release-34 driver cannot write its record: the record folder r34/ is absent from the worker's deliverables",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-g-112 step 1: run r34_build.py with --record org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~252/r34/RESIDENT_R34_BUILD.json; the last line prints R34-BUILD-OK. The order does not provision that folder.",
+  "world_is": "At 4aad96b3c0, r34_build.py line 215 opens args.record for write with no makedirs. The folder org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~252/ does not exist in the worktree. The run built the stage C:/dev/irpt-release-r34b (tarball 1117483 bytes; bash -n, ASCII and both sha256 gate dry-runs passed, since execution reached the write) and then raised FileNotFoundError at line 215 instead of printing R34-BUILD-OK. The stage now exists and is non-empty and the tool refuses a non-empty stage, so a re-run needs that stage removed first, which is a recursive deletion and was not done. No record exists: AC1 FAILs (FileNotFoundError at ar_g107_checks.py:70, rc=1); AC2 PASSes (rc=0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO~G2/deliverables/r34/r34_build.py@4aad96b3c0 line 215: open(args.record, 'w') with no makedirs",
+      "scratch r34_driver_stdout.txt: FileNotFoundError for .../0.9.0_WK_IRPT_ANLREQ~252/r34/RESIDENT_R34_BUILD.json",
+      "ls of .../0.9.0_WK_IRPT_ANLREQ~252/: No such file or directory",
+      "AC1 invocation rc=1 (no record); AC2 invocation rc=0 AR-G107-SCOPE-OK 0 changed paths"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The driver was not re-run and no tool or record was edited or hand-written. To complete, the issuer provisions the record folder and clears the stage for one fresh driver run at the same pin. The schema the order cites (org/surprise_channel/schemas/investigation_item.schema.json) is absent in this worktree; this row's shape follows the existing rows (see IRPT_ANLREQ-D2-W225-S4)."
+}
+```
+
+
+## IRPT_ANLREQ-D2-S142 -- disposition of IRPT_ANLREQ-D2-W252-S1: the record folder precondition was the issuer's omission
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-16T04:19:57Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S142",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The worker read it right: the r34 driver writes the record file but does not create its folder, and the order did not say to create it. The omission is the issuer's; AR-g-112 was amended (8dce40fd77) to create the folder first and to use a fresh stage folder, and the re-run passed. Nothing was installed from the first stage folder (C:/dev/irpt-release-r34b).",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W252-S1: the r34 driver needs the record folder to exist; the order now says so.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 252 row W252-S1 and its report (R34-BUILD driver rc=1 FileNotFoundError at the record write)",
+      "AR-g-112 amended at 8dce40fd77; the re-run printed R34-BUILD-OK and the issuer's verifier printed AR-G107-OK members=314 changed=8 added=4 (merged 939dcd8176)"
+    ]
+  },
+  "spec_asserts": "The order tells the worker every precondition of the driver's run.",
+  "world_is": "r34_build.py opens the record path for writing without creating its parent; the stage was built before the failure, so the stage folder was left non-empty."
+}
+```
