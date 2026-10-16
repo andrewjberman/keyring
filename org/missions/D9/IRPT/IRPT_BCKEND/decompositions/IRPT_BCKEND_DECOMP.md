@@ -4565,3 +4565,15 @@ Check IB246-1 (`deliverables/2.0.0_SA_COO~P2/checks/r246/p246_cells.py`), dry-ru
 | `IB-pr-615` | DRIVE one DEV export under a transient staff user, read the new status and the old receipt, remove the user | FWD-21 | SERVED | none (ruling msg 9653) | PM5-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, one CloudOps seat (IB2).
+
+## 242. ROUND 7, WORKSTREAM ~PS (the APPLY of hops 3 and 4 of the signed pair IB-pr-551 with its ADDENDUM 1 and 2, STAGED; 2026-10-16 ~21:5xZ, issuer 2.0.0_SA_COO~S2 on dell2, on the CTO's msgs 9528, 9546, 9576 and 9614)
+
+The pair IB-pr-551 (hops 2 to 4 of the filled-report serve path) is signed by both halves, with ADDENDUM 1 (the export role's read of the platinum filled object, blob `9462b5ad35af`) and ADDENDUM 2 (the fence row of that role, blob `b5c303ea69ff`), both halves SIGNED. The CTO split the release (msg 9614): `~D2`'s publish pair carries hop 2 (the reader, switch OFF; TO-DB-b-312, ledger `irpt-dashbd-49f-publish-hop2-reader-readgrant-20261016`, open at this writing) and this cell carries hops 3 and 4, both to `0.7.0_AE_CloudOps~IB2` (rule 34), hop 2 first, one apply at a time. The filled-report switch-on pair is separate and is cut only when hops 2, 3 and 4 are all live. This cell is cut now as a `staged` order so no tick is lost once hop 2 lands: it does NOT start on reading; the issuer flips it to `pending` and sends a GO citing it when hop 2's ledger is CLOSED and `~D2`'s TO-DB-b-312 is `complete`, and, for the IAM leg only, when the second fence row for `irpt-export-render-role` is at HEAD of `infra/logic/registry/exemptions.json` and the laptop's regeneration is read back (the IAM leg waits; the code legs do not). The legs are the packet's legs 2 and 3 (the report route on `irpt-49f-reporting-read-lambda`; the export bundle with `server_pinned_body`), then the one IAM statement of ADDENDUM 1. The BEFORE state, the STEP 0 and the rollbacks are in `deliverables/2.0.0_SA_COO~S2/IB_pr_551_HOPS_3_4_RELEASE_PLAN_BEFORE_STATE_20261016.md` @0d9a58d59e, re-read at the GO.
+
+Check IB247-1 (`deliverables/2.0.0_SA_COO~S2/checks/r247/p247_cells.py`), dry-run at the base: AC1 to AC3 all FAIL (no record); the control (`control247.py`) passes the three positives and each of 13 negatives (including the no-record case) fails its own arm (0 unexpected).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-616` | APPLY hops 3 and 4: the report route and the read function bundle, the export bundle, then the one IAM statement on `irpt-export-render-role` (after the fence row is read back) | FWD-21 | WORLD | `~D2` TO-DB-b-312 complete and hop 2 ledger closed; the IAM leg also the second fence row regenerated | PS7-a |
+
+fanout: 1 of 1 chains, cap 4 (CTO msg 8765), reason: one cell, one CloudOps seat (IB2); staged until the GO.
