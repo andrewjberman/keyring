@@ -78,10 +78,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - **Direct act:** ONE cell, LOCAL, about 120 product lines; no L2, L4-R or L8-L10. The real-job criterion is the issuer's dry run: `seed --dry-run` against the real bucket for `barrons` (read-only, about 13 MiB) after the merge, printing the SEED lines.
 - Slot ~149, worktree `C:/dev/wk-harvst-149`, branch `wk-AMGT_HARVST-149`. Widen the sparse set at provision with `org/tier1_exec/4.0.0_SA_CRO/scripts`.
 
+**COMPLETE 2026-10-16 ~03:0xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~149` (worker-light, haiku, high), branch `wk-AMGT_HARVST-149`, build `28309f6547`, head `48ed1e7591`. Diff read by this seat: `silver_known.py` (+41/-?: `KnownMap` keyed by the encoded text, `get` and `__contains__` encode the lookup tuple, so a `date` or `datetime` key matches; `load` returns it; `encode_key`, `decode_key`, `ensure`, `note` unchanged), `seed_silver_known.py` (new, 217 lines: `seed` does ONE `store.silver_latest` per (publisher, table) of `UPLOADER_TABLES`, notes only keys the local record lacks, writes the snapshot; `--dry-run` writes neither; `check` lists, GETs only parts with `LastModified >= --since`, counts a row whose (key text, hash) is in the snapshot as a DUPLICATE, prints `DUPLICATES=<n>`, exit 1 when not 0, exit 2 with no snapshot), the cb-12 test that pinned the old limit now asserts the match (15 insertions, 12 deletions in that file only).
+- **AC1 PASS:** `18 passed` (worker; this seat re-ran). **AC2 PASS:** `110 passed` (worker; this seat re-ran). Proof instance VALID rc 0 (re-run here); ruff clean. Suite per the worker: `lib/opal_data_harvest` before 887 passed / 1 failed (sparse import) / 3 skipped, after 896 / 1 / 3.
+- **Rows** `D1-W149-S1` (ARMED, my disarm: `check --since` must open AFTER the seed, carried into the re-pin order), `-S2`, `-S3`, `-S4` (INERT notes); dispositioned by the issuer's row after the merge.
+- **What this does NOT prove:** a seed or a check against the real bucket. The issuer's dry run (`seed --dry-run`, `barrons`) and the executor's seed at the re-pin are the real reads.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <direct_act>true</direct_act>
-<status>pending</status>
+<status>complete</status>
 <round>87</round>
 <workstream>EGRESS-SEED</workstream>
 <slot>dell1</slot>
