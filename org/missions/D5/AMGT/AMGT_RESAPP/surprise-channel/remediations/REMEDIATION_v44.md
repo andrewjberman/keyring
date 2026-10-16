@@ -23,16 +23,16 @@ REMEDIATION_v43 (W419-S3) stays OPEN: this round's walk did not open the All-fig
     "owner": "2.0.0_SA_COO~R1",
     "round": "v106",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v106"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R1",
-      "at": null
+      "at": "2026-10-16T14:46:56Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-D1-W443-S2",
@@ -49,16 +49,16 @@ REMEDIATION_v43 (W419-S3) stays OPEN: this round's walk did not open the All-fig
     "owner": "2.0.0_SA_COO~R1",
     "round": "v106",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v106"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R1",
-      "at": null
+      "at": "2026-10-16T14:46:56Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-D1-S31",
@@ -75,16 +75,16 @@ REMEDIATION_v43 (W419-S3) stays OPEN: this round's walk did not open the All-fig
     "owner": "2.0.0_SA_COO~R1",
     "round": "v106",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v106"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R1",
-      "at": null
+      "at": "2026-10-16T14:46:56Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-D1-S32",
@@ -101,16 +101,16 @@ REMEDIATION_v43 (W419-S3) stays OPEN: this round's walk did not open the All-fig
     "owner": "2.0.0_SA_COO~R1",
     "round": "v106",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v106"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R1",
-      "at": null
+      "at": "2026-10-16T14:46:56Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-D1-C-S151",
@@ -127,16 +127,16 @@ REMEDIATION_v43 (W419-S3) stays OPEN: this round's walk did not open the All-fig
     "owner": "2.0.0_SA_COO~R1",
     "round": "v106",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v106"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R1",
-      "at": null
+      "at": "2026-10-16T14:46:56Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-D1-W451-S1",
@@ -153,16 +153,16 @@ REMEDIATION_v43 (W419-S3) stays OPEN: this round's walk did not open the All-fig
     "owner": "2.0.0_SA_COO~R2",
     "round": "v106",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R2",
       "round": "v106"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R2",
-      "at": null
+      "at": "2026-10-16T14:46:56Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-D1-W452-S1",
@@ -179,16 +179,16 @@ REMEDIATION_v43 (W419-S3) stays OPEN: this round's walk did not open the All-fig
     "owner": "2.0.0_SA_COO~R2",
     "round": "v106",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R2",
       "round": "v106"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R2",
-      "at": null
+      "at": "2026-10-16T14:46:56Z"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
