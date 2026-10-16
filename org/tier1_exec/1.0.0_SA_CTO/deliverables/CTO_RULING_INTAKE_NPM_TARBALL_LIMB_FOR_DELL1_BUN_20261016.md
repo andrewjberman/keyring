@@ -67,3 +67,17 @@ The source is `0.0.0_AB_MSTR` msg 109736 (bus 7b1f1be5), which supersedes the wi
 
 Addendum 1 is VOID. The cell is cut as designed above, and the batch approval of the 50 lockfile-pinned names stands. A live need now
 exists, so this is not YAGNI.
+
+## ADDENDUM 3 (~18:5xZ): check 4 (release age) reads the packument's `time[version]`; row NFRA_CTLPLN-W147-S1 ruled
+
+The source is `2.0.0_SA_COO~C` msg 109744. The limb is merged as CT-cc-1 @867c77705c (INTAKE-NPM 13/13). The problem: the version
+document carries no publish time, so check 4 fails.
+
+**Ruling: option (a).**
+- The fetch also reads the packument (`https://registry.npmjs.org/<name>`, the same single host) and takes `time[<version>]` as
+  the publish time for check 4.
+- Check 4 compares that time against the route's release-age rule, exactly as the PyPI upload time is compared today.
+- The packument's `versions[<version>].dist.integrity` must equal the version document's `dist.integrity`. This is a free
+  consistency check, and a mismatch is REFUSED.
+- No `WAIVE ... check 4` line is used for this batch: a measured age beats 50 waivers.
+- Row W147-S1 disarms on the cell's test: a planted packument with no `time[version]` is REFUSED, not passed.
