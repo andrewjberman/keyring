@@ -2,7 +2,7 @@
 """comp-lambdamap -- derive/verify the Lambda source-map against ground truth.
 
 Phase 1 (this file): `check` -- read-only drift detection. Compares
-infra/aws/lambda/ci/lambda-source-map.json against the two real sources of
+the function map (infra/aws/lambda/ci/function-map/, one file per function; CT-ca-1) against the two real sources of
 truth (Terraform function->source_dir + the on-disk lambda dirs) and reports
 drift classes. NO map mutation (zero blast radius). CI-gate friendly: exits 1
 on any drift, 0 when clean.
@@ -34,7 +34,11 @@ import os
 import re
 import sys
 
-SRCMAP_REL = "infra/aws/lambda/ci/lambda-source-map.json"
+# the one reader of the function map (CT-ca-1): lib/opal_lambda_map.py, found from this file's location
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "lib"))
+import opal_lambda_map as olm  # noqa: E402
+
+FUNCTION_MAP_REL = "infra/aws/lambda/ci/function-map"
 TF_ROOT_REL = "infra/aws/terraform"
 LAMBDA_ROOT_REL = "infra/aws/lambda"
 # top-level source-map keys that are metadata, not function entries
@@ -47,8 +51,21 @@ def workspace_root() -> str:
 
 
 def load_srcmap(root: str) -> dict:
-    with open(os.path.join(root, SRCMAP_REL), encoding="utf-8") as fh:
-        return json.load(fh)
+    """The function map as {"functions": {name: entry}}, read whole from the per-function folder. Read-only;
+    a missing or empty folder raises (olm.load_all). Writers use write_function_files, never the whole folder."""
+    return {"functions": olm.load_all(root)}
+
+
+def write_function_files(root: str, entries: dict) -> None:
+    """Rewrite ONLY the files of the named functions: <folder>/<name>.json holds the entry object alone. A name with
+    no existing file raises (a new function is a new file, written by the cell that adds it, never by this tool)."""
+    d = os.path.join(root, FUNCTION_MAP_REL)
+    for name, entry in sorted(entries.items()):
+        path = os.path.join(d, name + ".json")
+        if not os.path.isfile(path):
+            raise FileNotFoundError("no function-map file for %r: %s" % (name, path))
+        with open(path, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(json.dumps(entry, indent=2, sort_keys=False, ensure_ascii=True) + "\n")
 
 
 def _strip_interp(val: str) -> str:
@@ -382,16 +399,14 @@ def derive(root: str, write: bool = False, only=None) -> int:
         print("  DRY-RUN: no changes written. `derive --write` reconciles ONLY the STALE-RECORD class "
               "(CVO-GATED per-entry confirm of live==S3, verdict ed13b714a).")
         return 1 if unsafe else 0
-    print("  CVO-GATED WRITE: mutating lambda-source-map.json -- CVO sign-off WITH live==S3 evidence required "
+    print("  CVO-GATED WRITE: mutating the function-map folder (one file per changed function) -- CVO sign-off WITH live==S3 evidence required "
           "per entry (NFRA_COMPAWS.LAMBDAMAP-P2). Writing ONLY the STALE-RECORD class; HOLD entries skipped.")
     if not safe:
         print("  nothing safe to re-record.")
         return 1 if unsafe else 0
     for name, rec, liveh in safe:
         funcs[name]["artifact_sha256"] = liveh
-    with open(os.path.join(root, SRCMAP_REL), "w", encoding="utf-8", newline="\n") as fh:
-        json.dump(sm, fh, indent=2, ensure_ascii=False)
-        fh.write("\n")
+    write_function_files(root, {name: funcs[name] for name, _rec, _liveh in safe})
     print(f"  WROTE: reconciled {len(safe)} STALE-RECORD entr(ies) to live CodeSha256 "
           f"({len(unsafe)} HOLD left for investigation). Re-run `comp-lambdamap sha` to confirm.")
     return 1 if unsafe else 0
@@ -584,9 +599,8 @@ def reconcile_deployed(root, only, settle_retry_seconds=0, deployed_commit="",
         # MATCH/DISPOSITIONED/CORRUPT: not this hook's job -> leave.
 
     if reconciled or first:
-        with open(os.path.join(root, SRCMAP_REL), "w", encoding="utf-8", newline="\n") as fh:
-            json.dump(sm, fh, indent=2, ensure_ascii=False)
-            fh.write("\n")
+        # only the deployed function(s) that were reconciled or first-recorded: one file each, nothing else
+        write_function_files(root, {n: funcs[n] for n in [r[0] for r in reconciled] + [f[0] for f in first]})
     # C3 audit -- durable, append-only. ONLY on an actual reconcile/HOLD (a
     # no-op run must not touch the file -- keeps the tracked audit clean).
     if reconciled or first or held:
@@ -658,7 +672,7 @@ def main(argv=None) -> int:
     sub.add_parser("sha", help="read-only recorded-sha vs LIVE CodeSha256 drift (Phase 2)")
     d = sub.add_parser("derive", help="reconcile artifact_sha256 -> live CodeSha256 (dry-run; --write CVO-gated)")
     d.add_argument("--write", action="store_true",
-                   help="apply the reconcile to lambda-source-map.json (CVO-gated mutation)")
+                   help="apply the reconcile to the function-map folder, one file per changed function (CVO-gated mutation)")
     d.add_argument("--only", default=None,
                    help="comma-separated function names to scope the reconcile to "
                         "(e.g. the post-apply deployed set, for the record-terraform-deploy hook)")
