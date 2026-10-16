@@ -2740,3 +2740,20 @@ The CTO signed revision 2 of the packet (sha256 `962ef131ff27`) at @f362eb8cb5: 
 **fanout:** 1 of 1 chains for this cell (the CloudOps applier, not a worker subagent), cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; self-test green with 51 red arms plus two head arms):** `checks/r149/p176_cot_landing_r2_apply.py` (DBC176-1-AC1, -2-AC1, -3-AC1).
+
+## 170. ROUND 149, WORKSTREAM PORTALGLOBAL (2026-10-16 ~19:1xZ, issuer 2.0.0_SA_COO~D2): the Performance tab after Andrew's 5174 smoke, on top of the DB-b-307 branch
+
+Andrew's smoke of `DB-b-307` @49381cb5 on port 5174: "I have not seen a change on this page in days." The CTO's measured cause (ruling `d22e05dd68`): at Global the page sends no `selected_tenant`, so every firm-bound served read is refused (Cottonwood and 49 Financial show nothing, Inflection shows the holdings-based path under the firm banner, the template renders nothing). Rulings: (1) Global resolves per client; (2) the firm-mismatch banner is removed and a non-global login is offered only its own firm; (3) the template never renders silent; (4) proof on three named clients; (5) a visuals cell, plan first. Andrew's later asks: Beginning value before Ending value, money as dollars with grouping (msg 9754); the export's print window prints the template (msg 9770). The page owner (`2.0.0_SA_COO~C2`) measured the write set at the branch head: R151_PERFORMANCE_TAB_WRITE_SET_AND_PANELS.md @9b04f830b2.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Rulings 1 to 3 (header selection carries the client's own firm; the banner removed; the template's worded states), Andrew's two asks (tile order; one `formatUsd`), the print window resolving its own template state, four test files; ONE branch | DB-b-309 | FWD-10 (and Andrew's smoke) | SERVED, client-facing | `DB-b-307` (this is its branch @1779d676) | chain AD |
+| 2. The read-only per-client trace (a direct invoke of the served reads with synthetic staff claims and `selected_tenant` = the client's firm, for the three named clients) by the one IRPT CloudOps lane, and the page owner's boolean trace of the published series | issuer order to `0.7.0_AE_CloudOps~IB2` after item 1 pushes | FWD-10 | WORLD (read only) | item 1 | after item 1 |
+| 3. The approval row (client-facing, for Andrew) and the report of the pushed head to the CTO, who serves it on 5174 | issuer act | Andrew's smoke | n/a | item 1 | after item 1 |
+| 4. The visuals panel list (the page owner's draft, with the per-firm data sources this seat adds) to the CTO, then a build cell | issuer and `~C2` | Andrew's point 4 | n/a | none | parallel |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the cell is assigned to the worker that holds the branch (`~246`), so there is one author on one branch; (b) the checker `p177` pins the branch name and descent from `1779d676`, the write set (the page owner's list plus the three export files `DB-b-307` already edited), the protected files, and a probe for the formatter and the template states; the Global read paths themselves are pinned by the cell's own tests, whose names the checker requires; (c) the checker of `DB-b-307` (`p175`) is not run for this cell: its probe expects the `none` state this cell replaces; (d) the browser walk at Global under a staff login is not a worker's act: the CTO serves the branch and Andrew smokes it, and the read-only trace is item 2; (e) the print window's template state is carried by the export's own target (client id and tenant), never by per-page-load memory.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~246`, resumed), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected):** `checks/r149/p177_portal_global_and_format.py` (DBP177-1-AC1..AC3).
