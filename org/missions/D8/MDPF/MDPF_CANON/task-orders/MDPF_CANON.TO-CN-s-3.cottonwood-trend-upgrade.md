@@ -87,7 +87,7 @@ Report once: the portal commit hash, the diff stat (one line), the output line o
 
 **Fanout:** chain 1 of 2: `CN-s-4` -> `CN-s-5` -> `CN-s-3`, one worker, slot ~31. `portal_ref:` 39dab87f3b.
 
-<status>staged</status>
+<status>complete</status>
 <round>11</round>
 <to_id>MDPF_CANON.TO-CN-s-3</to_id>
 <slot>~31</slot>

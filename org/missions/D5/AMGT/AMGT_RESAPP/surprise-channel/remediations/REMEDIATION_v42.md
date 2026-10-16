@@ -21,16 +21,16 @@ C-S133 (REMEDIATION_v40) is closed at ADJUDICATION_v129 C-S144; C-S132 stays OPE
     "owner": "2.0.0_SA_COO~R2",
     "round": "v105",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R2",
       "round": "v105"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R2",
-      "at": null
+      "at": "2026-10-16T14:46:56Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-D1-C-S146",
@@ -46,16 +46,16 @@ C-S133 (REMEDIATION_v40) is closed at ADJUDICATION_v129 C-S144; C-S132 stays OPE
     "owner": "2.0.0_SA_COO~R2",
     "round": "v105",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R2",
       "round": "v105"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~R2",
-      "at": null
+      "at": "2026-10-16T14:46:56Z"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

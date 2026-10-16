@@ -117,3 +117,7 @@ The issuer then merges, re-measures at the release, and re-emits the catalog onc
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-16 ~15:2xZ); MX-c-26 COMPLETE.** Worker ~49 wrote the `address` field (emitter, validator, 9 tests: `87e9436d63`), the four new live entries `opal_data_bd_silver_<t>` with freshness measured on the live tables (listing 2026-10-16T13:59Z: unrealized and allocations 2026-10-09, transactions 2026-10-16, fees 2026-10-14), the eight legacy prefixes back at the frozen copy's real address, and the two group maps (`0d0063a308`). Its first run read AC1 and AC3 FAIL; both were the issuer's (c26.AC1 refused the word FROZEN the face required; the sparse cone lacked the gateway app tree), fixed in A1 and A2 (`5b590c88eb`, `2b9fa8ae4b`) and re-run PASS at `5d376c318b`. Drained by `safe-merge.sh` at `98ce7eb4e7` (33 files, none foreign). Issuer re-run on the merged tree: c26.AC1 PASS (4 of 4 live rows against a fresh listing), c26.AC2 PASS (8 of 8 frozen prefixes non-empty, 9 of 9 legacy rows in opal-data-assets), c26.AC3 PASS (4 addresses, unique; 55 passed, 9 new); the atom_decomposition suite 326 passed; ruff clean; proof-of-spec VALID. The numbers in the four entries are a point-in-time read and are re-measured at the release. Gate limb that graded this ruling: the flip-needs-a-VALID-instance limb of to-pipeline-gate.
+
+<status>complete</status>

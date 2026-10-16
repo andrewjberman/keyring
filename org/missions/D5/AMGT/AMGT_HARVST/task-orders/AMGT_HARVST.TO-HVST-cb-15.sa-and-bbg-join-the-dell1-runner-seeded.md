@@ -91,9 +91,11 @@ This order touches none of them.
 - **AMENDED 2026-10-16T10:28:49Z (issuer, 2.0.0_SA_COO~W1; CTO amendment 3, msg 6655):** step 11 closes C-a4' at 14:40Z on clean hourly reads; the hourly reads run the whole `sa` cycle; no stop, no restart. Gate limb expected on this modify: GATE (viii).
 - **Not covered, named:** an `sa` expiry (a person's sign-in); a challenge in a minimised window for `bbg`; `ft`; an in-profile `sa` sign-in (a candidate cell).
 
+- **COMPLETE 2026-10-16T14:47:25Z (issuer, 2.0.0_SA_COO~W1), WITH LIMITS.** Read by me from SC1's files and the ledger, not from its messages: commit 0b70a9d1f2 in tree; proof instance VALID rc=0; the task runs `--publishers sa wsj barrons --refresh-once` from pin ddd7dcdc38 (AC1 expect `--publishers (bbg )?(sa )?wsj barrons`); `cb15_check.out` ends `DUPLICATES=0` (AC2); `cb15_reads.out` carries the `upload-harvest` R7 line at `sum_get_count=0` (AC3); the cb-15 ledger sentinel is closed. `cb15_c_a4.out` (CTO amendment 3, C-a4' close): first written 13:34:03Z (66 minutes before the ordered point, disclosed), rewritten 14:41:17Z: 21 `upload-harvest` lines since T0_3 `08:40:17Z`, all `get_count=0 get_bytes=0`; `check --since T0_3` `DUPLICATES=0` (sa `article` parts_read=2 rows=12, `listing_hit` parts_read=21 rows=19811); sa R7 0.0000 GiB. LIMITS: (1) `bbg` is OUT of the runner (Branch G, D1-S32): no `bbg` object was ever uploaded under this pin, so the bbg join is NOT proven and bbg collects nowhere; (2) `wsj` and `barrons` uploaded nothing in the window, so their uploader path under the pin is read only from the earlier cb-13 pass; (3) the sa `article` table has 12 rows, a small sample; (4) the sa cycle is 66 hours or more at 22 of 242 jobs in 6 hours, so wsj and barrons wait behind it; (5) the hourly reads continue (SC1) and any defect is Branch F at once. Not all four publishers report productive, so site Z's pin worktrees stay locked. Rows: D1-S31 (SC1) dispositioned by D1-S32.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>87</round>
 <workstream>RUNNER-JOIN</workstream>
 <slot>dell1</slot>
