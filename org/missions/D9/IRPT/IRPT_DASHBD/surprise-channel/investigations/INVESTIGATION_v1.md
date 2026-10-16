@@ -22162,3 +22162,52 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+```json
+{
+  "id": "IRPT_DASHBD-D2-W236-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~236",
+  "surfaced_at": "2026-10-16T09:24:47Z",
+  "one_line": "AC3 line ceiling: the earlier-test edits that the mandated contract edits force measure 42 counted lines (21 changed) against the order's ceiling of 28",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-b-293 step 5 and DB161-1-AC3: the earlier contract tests may change by at most 28 lines in all, and only what the edit forces (the checker's MAX_EARLIER_LINES = 28, counted as added plus deleted lines of git diff --numstat).",
+  "world_is": "At commit 40476cbde7 the eight earlier files carry 21 changed lines, 42 counted: 042 1 line, 043 3, 044 4, test_income_reason_rename 4, test_series_contract_030 6, test_series_contract_031 3. Before those edits the eight files gave 36 failed and 134 passed; after them 170 of 170 pass. Each changed line is an assertion the mandated edit moves (a version pin, a supersedes or lineage index, a list or count, the earlier-fields hash, the basis helper, the optional constant). The checker prints FAIL: the earlier contract tests may change by at most 28 lines in all, read 42.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p161_histscope_contracts.py@508dc3aba1 (MAX_EARLIER_LINES = 28; the added-plus-deleted sum over the eight earlier files)",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_series_contract_030.py@508dc3aba1 (pins the 0.3.2 version, the 19 fields, the optional list and the earlier-fields hash)",
+      "git diff --numstat 508dc3aba1 -- the eight earlier test files, measured at worktree commit 40476cbde7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AC3 is measured FAIL on the line clause and the order stays open. The forced set is neither trimmed nor padded to fit the ceiling: the ceiling as written sits below the minimum the mandated edits require. The ruling on the ceiling belongs to the issuer. Artifacts: 40476cbde7 (LOCAL on wk-IRPT_DASHBD-236)."
+}
+```
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W236-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~236",
+  "surfaced_at": "2026-10-16T09:24:47Z",
+  "one_line": "The series test helper _declared finds a list's basis by declaration, so the two new history_scope fixed fields need a by-name exclusion in it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "test_series_contract_030.py _declared (DB-b-285): exactly one optional series field that declares fixed_value and no fixed_reason is the list's basis, found from the declarations and never from their names.",
+  "world_is": "Series contract 0.3.3 declares two more optional fields with fixed_value and no fixed_reason (history_scope_claim, fixed to inferred; history_scope_basis, a fixed text), so _declared counts three bases where it asserts one. The helper now excludes those two names by name (one changed line, marked DB-b-293). A declaration-only rule cannot tell a list's basis from a second fixed text, so the exclusion has to name them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_series_contract_030.py@508dc3aba1 (the _declared helper and its one-basis assertion)",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@40476cbde7 (history_scope_claim and history_scope_basis in series.optional, both with fixed_value and no fixed_reason)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The by-name exclusion is the minimum the edit forces and is counted in the AC3 line measurement of IRPT_DASHBD-D2-W236-S1. A declaration that binds a basis to its list would remove the need for the name."
+}
+```
+
