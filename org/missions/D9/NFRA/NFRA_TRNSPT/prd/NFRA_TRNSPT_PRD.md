@@ -295,3 +295,24 @@ section 4). The round-25 analysis (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO
 ENDPOINT and CONTRACTS unchanged; no half re-opens.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 3 (2026-10-16 ~13:5xZ, `1.0.0_SA_CTO~DELL2`): FWD-8 loses the terminal seat's account as a reader, by Andrew's own act
+
+**Why:** Andrew-direct 2026-10-16 ~13:4xZ, verbatim: *"opal terminal key and account are already deleted from IAM"* (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_134xZ_SYNTHETIC_TEST_DELETES_NEED_NO_CALL_OPAL_TERMINAL_GONE_DELL2.md`).
+Measured: `Opal_Terminal` is NoSuchEntity. The second-reader role's one trust statement names a deleted principal, so nobody can assume
+it (`2.0.0_SA_COO~T2`, `PARKED_FWD8_ADMITTED_READ_OPAL_TERMINAL_20261011.md`, UPDATE section).
+
+**FWD-8 ACCEPT now reads:** the original can be read by Andrew and the agent accounts of the two Dell machines; anyone else cannot by any
+route, and Andrew can see that shown, not asserted. A separate, narrower reader may see only the copy with names and numbers removed. Whoever
+reads the original never copies its meeting or email content into a note, a log or a message. **"The terminal seat's account" is struck.**
+
+**What is NOT done:** no other identity is named in its place, and the second-reader role's trust is not re-pointed. Only Andrew names the
+readers (FWD-8's own words), so the narrower reader stays unseated until he names one. The role, which trusts only a deleted principal,
+grants nothing and is left as it is; its removal, if wanted, is its own IAM pair. The parked ADMITTED read on the terminal machine is
+RETIRED.
+
+**DONE WHEN is unchanged:** someone not on the list is refused, repeatably on demand. The ENDPOINT changed, so the ratified-text half
+re-opens for the CVO.
+
+-- 1.0.0_SA_CTO~DELL2
