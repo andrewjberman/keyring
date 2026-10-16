@@ -22801,3 +22801,29 @@
   }
 ]
 ```
+
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "id": "IRPT_ANLREQ-D2-S154",
+  "surfaced_at": "2026-10-16T20:58Z",
+  "one_line": "FWD-1 window 4: the synthetic staff filing was refused at the upload step, NOT_AUTHORIZED, ProspectOwnershipRefused 'an on-behalf upload must name the firm advisor'; no ticket, no object, row removed; window spent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-ycharts-generate log 2026-10-16T20:34:57Z: operation analysis-input-upload, exception_type ProspectOwnershipRefused, exception_text 'an on-behalf upload must name the firm advisor', public_reason_code NOT_AUTHORIZED, corr-8853a96b079d; INTERNAL-CALLER-CLASS class=row_present outcome=admitted just before",
+      "run_report.json: ticket_id null, form_resubmits [], form_decisions [], 14 screenshots; the form showed UPLOAD_FAILED_SENTENCE (analysisRequest.ts:311) from the first wait (20:35:54Z) to the end",
+      "resident journal 20:34-20:52Z: 45 POLL lines, 0 RESOLVE, 0 WAF_CHALLENGE, 0 yfinance; intake store 317 to 317 versions; F1 eight ABSENT lines"
+    ]
+  },
+  "spec_asserts": "Addendum 4 and the window-4 order: a staff row with allowedFirmIds [49financial] filing through the Ticket Center reaches the door (the upload resolves) and then a ticket.",
+  "world_is": "The upload route refuses an internal caller's on-behalf upload that does not name a firm advisor; the form's advisor field carried a typed name (SYNTHETIC FWD-1 advisor) that is not a directory advisor, and the upload never reached the resident. The driver's wait ran 780 s past a form that had already failed in under a minute (its still-checking branch did not apply). A further window needs a ruling on the advisor value and on stopping the wait at the failure sentence."
+}
+```
