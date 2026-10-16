@@ -23744,3 +23744,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "The gate's HOLD line is advisory; the commit gate refused the commit only on the test file's future import, which the re-run fixed. The release pair owns any upload."
 }
 ```
+
+## IRPT_DASHBD-D2-W2103-S4 -- S1 resolved by the issuer's amendment: the ASCII clause now covers the added lines
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T18:00:20Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W2103-S1: the issuer's amendment d58c1dda9c makes the ASCII clause the lines the edit adds, and the amended checker prints DBF135-3-AC1 PASS on this tree; the whole-file ASCII test is replaced by test_syntax_added_lines_are_ascii_against_base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBF135-3-AC1 ASCII clause as the issuer amended it (d58c1dda9c): every line the edit ADDS is ASCII; the base's own non-ASCII lines stay.",
+  "world_is": "Measured at 92ed9d18b4: the amended checker prints DBF135-3-AC1 PASS (rc 0, run twice, identical); --selftest PASS (9 arms); test_dispatch_txn_block.py 28 of 28 pass; the three existing dispatch-related files pass 64, 22 and 19. The amended checker copy is an uncommitted input in the worktree and is not part of any commit of this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_dispatch.py@d58c1dda9c (trunk amendment; the worktree copy is a read-only copy of it)",
+      "data/inf/scripts/gold/tests/test_dispatch_txn_block.py@92ed9d18b4: test_syntax_added_lines_are_ascii_against_base"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Records the resolution of IRPT_DASHBD-D2-W2103-S1 by the issuer's amendment; nothing further to investigate in this cell.",
+  "notes": "Written on the coordinator's ruling. S2 and S3 stand as observations."
+}
+```
