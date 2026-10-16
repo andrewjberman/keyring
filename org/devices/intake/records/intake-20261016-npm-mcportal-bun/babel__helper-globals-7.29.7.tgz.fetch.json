@@ -1,0 +1,90 @@
+{
+  "schema": "intake-fetch/1",
+  "batch": "intake-20261016-npm-mcportal-bun",
+  "requested": {
+    "name": "@babel/helper-globals",
+    "version": "7.29.7",
+    "python_tag": null,
+    "abi_tag": null,
+    "platform_tag": null,
+    "file_name": "babel__helper-globals-7.29.7.tgz"
+  },
+  "index_base": "https://registry.npmjs.org",
+  "requests": [
+    {
+      "url": "https://registry.npmjs.org/@babel%2Fhelper-globals/7.29.7",
+      "method": "GET",
+      "status": 200,
+      "bytes": 1937,
+      "at": "2026-10-16T20:18:47Z"
+    },
+    {
+      "url": "https://registry.npmjs.org/@babel%2Fhelper-globals",
+      "method": "GET",
+      "status": 200,
+      "bytes": 27304,
+      "at": "2026-10-16T20:18:47Z"
+    },
+    {
+      "url": "https://registry.npmjs.org/@babel/helper-globals/-/helper-globals-7.29.7.tgz",
+      "method": "GET",
+      "status": 200,
+      "bytes": 6839,
+      "at": "2026-10-16T20:18:47Z"
+    }
+  ],
+  "published": {
+    "sha256": null,
+    "size": null,
+    "integrity": "sha512-3nQVUAtvkKH9zahfWgw96Jc/uFOmjACE1kQz82E2lqWmHBgjzbNlsC22nuQTfahmWeQtTq5nQ/4Nnd2A1wj4zA==",
+    "shasum": "f04a96fbd8473241b1079243f5b3f03a3010ab7b",
+    "url": "https://registry.npmjs.org/@babel/helper-globals/-/helper-globals-7.29.7.tgz",
+    "upload_time": null,
+    "yanked": false,
+    "requires_python": null
+  },
+  "project": {
+    "release_count": 14,
+    "first_release_at": "2025-07-02T08:38:14.923Z",
+    "this_release_at": "2026-05-25T11:15:30.361Z"
+  },
+  "attestation": "present",
+  "attestation_url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fhelper-globals@7.29.7",
+  "held_path": "holding/intake-20261016-npm-mcportal-bun/babel__helper-globals-7.29.7.tgz",
+  "held_sha256": "94fb962c489aae2c4e5581f1494721083dc76dddd7c703314dd4d7ff965d2a3f",
+  "held_bytes": 6839,
+  "outcome": "held",
+  "reason": "fetched from the registry host; NOT yet checked (intake_check.py reads it)",
+  "fetched_by": "0.9.0_WK_NFRA_CTLPLN~149",
+  "device": "laptop",
+  "at": "2026-10-16T20:18:47Z",
+  "ecosystem": "npm",
+  "approval": {
+    "file": "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_NPM_MCPORTAL_BUN_20261016.md",
+    "sha256": "92d2bb6284a11a5878e0d1b54135a81617afa9e83d04045aa2dfbf366d74f18e",
+    "lines_matched": 1
+  },
+  "packument": {
+    "url": "https://registry.npmjs.org/@babel%2Fhelper-globals",
+    "integrity_equal": true,
+    "created": "2025-07-02T08:38:14.638Z",
+    "published_times": {
+      "7.28.0": "2025-07-02T08:38:14.923Z",
+      "7.29.7": "2026-05-25T11:15:30.361Z",
+      "8.0.0": "2026-06-16T13:32:03.390Z",
+      "8.0.0-beta.1": "2025-07-02T09:03:53.852Z",
+      "8.0.0-beta.2": "2025-09-05T15:05:37.992Z",
+      "8.0.0-beta.3": "2025-10-23T14:44:17.852Z",
+      "8.0.0-beta.4": "2026-01-12T17:31:32.081Z",
+      "8.0.0-rc.1": "2026-01-31T17:48:14.841Z",
+      "8.0.0-rc.2": "2026-02-15T20:23:06.474Z",
+      "8.0.0-rc.3": "2026-03-16T20:24:59.847Z",
+      "8.0.0-rc.4": "2026-04-29T21:40:58.858Z",
+      "8.0.0-rc.5": "2026-05-12T14:51:18.104Z",
+      "8.0.0-rc.6": "2026-05-25T10:22:36.555Z",
+      "8.0.6": "2026-09-18T13:48:34.041Z"
+    }
+  },
+  "received_sha256": "94fb962c489aae2c4e5581f1494721083dc76dddd7c703314dd4d7ff965d2a3f",
+  "received_bytes": 6839
+}
