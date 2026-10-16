@@ -90,10 +90,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Direct act: ONE cell, LOCAL, about 90 product lines; no L2, L4-R or L8-L10.
 - Slot ~148, worktree `C:/dev/wk-harvst-148`, branch `wk-AMGT_HARVST-148`. Widen the sparse set at provision with `org/tier1_exec/4.0.0_SA_CRO/scripts`; `lib/research/harvest` and `lib/research/corpus` tests are in the `lib` cone.
 
+**COMPLETE 2026-10-16 ~02:4xZ (issuer `2.0.0_SA_COO~W1`), under AMENDMENT 1:**
+- **Act:** worker `0.9.0_WK_AMGT_HARVST~148` (worker-light, haiku, high), branch `wk-AMGT_HARVST-148`; first report AC2 FAIL (10 of 110: tests pinning the retired per-pass read), repaired by AMENDMENT 1 `a3e951675b`; head `414e51f946`. Diff read by this seat: `store.py` (+29/-5: the `known` keyword, no S3 read in known mode, `written_hashes` ONLY in known mode, default result exactly the three old keys), `uploads.py` (+31/-5: `known_db` on the module-level wrapper, `known` loaded once, `note` only after a returned call, three old keys returned, the two HarvestUploader call sites pass `known_db=self.db`, the legacy `Uploader` untouched), `silver_known.py` (new, 56 lines, sqlite, documented datetime-key limit), the ten tests' instrument changed from `silver_latest` to `silver_append` with the same expected lists plus `LATEST_READS == []`.
+- **AC1 PASS:** `9 passed` (worker; this seat re-ran). **AC2 PASS:** `110 passed` (worker; this seat re-ran in the worker worktree). Proof instance VALID rc 0 (re-run here). The worker ran each of the ten tests' own mutant: all still fail. Suites per the worker: `lib/opal_data_harvest` 887 passed / 1 failed (sparse import) / 3 skipped (base 878 / 1); `lib/research/harvest` 509 passed / 2 failed (`test_m1_move`, `test_m2_move`: missing files outside the sparse cone; both pass on the main tree).
+- **Behaviour change, named (see the order):** a row this runtime never appended is unknown to it, so an identical row already in S3 can be appended again; a failed-then-retried upload after a stale-part collision can write a row twice; consumers read the newest row per key.
+- **Rows:** `D1-W148-S1` (the ten tests: resolved by AMENDMENT 1), `-S2` (the wrapper's three keys: ruled correct), `-S3` (direct callers now receive no new key: resolved by AMENDMENT 1(a)); dispositioned by the issuer's row after the merge.
+- **What this does NOT prove:** the uploader's reads on the real runner. That is the `upload-harvest` ledger lines after a re-pin carrying this merge (the CTO's next pair half).
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <direct_act>true</direct_act>
-<status>pending</status>
+<status>complete</status>
 <round>87</round>
 <workstream>EGRESS-WRITE</workstream>
 <slot>dell1</slot>
