@@ -9792,6 +9792,27 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W53-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~53",
+    "surfaced_at": "2026-10-16T22:53:31Z",
+    "one_line": "A2 says the placed catalog differs from the A1 catalog in two definition lines only; the measured diff is five line pairs, the two definitions plus three header lines (BUILT BY, built_at_git_head, and the deployed_commit comment).",
+    "spec_asserts": "MX-c-39 A2 (AMENDMENT A2 in the order) and step 4 of the re-seat say the diff against the A1 catalog is two definition lines (opal_discover :934 to :940, opal_describe :944 to :950), with every other entry byte-equal, and that the diff should be exactly those two definition lines.",
+    "world_is": "After place_catalog.py placed the candidate (copied=1 equal=1, md5 bdfee515ec348f0ea2ee716eff5acba5) over the tracked catalog at base 42a2e783b4, git diff --stat reads 5 insertions and 5 deletions in infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml. The five hunks are at lines 8-9 (BUILT BY ... at git HEAD 0bc424dd91 to fb250012dc), 17-18 (built_at_git_head 0bc424dd91 to fb250012dc), 26-27 (the deployed_commit comment bf9d23b518 to 4be300110e), 35-36 (opal_describe definition :944 to :950) and 44-45 (opal_discover definition :934 to :940). The two definition lines are as A2 states; the three header lines are not. The naming gate (--enforce, one staged path) exits 0 with NAMING-GATE PASS 0 graded, and AC3 p21.AC1 PASSes on the placed bytes, so the placement was not edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff -- infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml at wk-NFRA_MCPINDEX-53 after round18/place_catalog.py (copied=1 equal=1): 1 file changed, 5 insertions(+), 5 deletions(-); hunk lines 8, 17, 26, 35, 44 (printed 2026-10-16T22:53Z)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/NFRA_MCPINDEX.TO-MX-c-39.two-depth-kinds-latest-and-series-start.md@42a2e783b4 AMENDMENT A2 text: 'the diff against the A1 catalog is two definition lines'",
+        "naming-gate --diff .scratch/cat.diff --enforce --staged-paths .scratch/staged.txt on wk-mx21-53c: NAMING-GATE: PASS 0 graded, exit=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
