@@ -1,0 +1,13 @@
+{
+ "project_code": "NFRA_WFSPINE",
+ "home": "org/missions/D9/NFRA/NFRA_WFSPINE",
+ "directive": "D9",
+ "macro_code": "NFRA",
+ "fabric": "dell1",
+ "dep_stage": "PRD",
+ "status": "active",
+ "name": "M365 workflow activity spine: every employee's Microsoft 365 actions as one timeline, to find recurring workflows and where AI can remove work",
+ "generated_from": "org/missions/D9/NFRA/NFRA_WFSPINE/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-10-16T02:54:45Z"
+}
