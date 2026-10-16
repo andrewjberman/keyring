@@ -8815,6 +8815,67 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-16T00:11:51Z",
+    "one_line": "The order's premise that the worktree needs no portal folder fails: emit_catalog_v02.py refuses without portal/src/api, so the catalog cannot be regenerated here and AC1 to AC4 grade the committed catalog.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "spec_asserts": "MX-c-23 section 1 header and step 3: the worktree 'has no portal folder, which you do not need'; step 3 regenerates the catalog with emit_catalog_v02.py --group-map and it must end with the HARVEST ROWS, SILVER and TOOL INDEX lines, GROUP-MAP unused 0, and no EMIT REFUSED line. The sparse command allows only three folders (workflows, infra/aws/ec2/opal-gateway, the census folder).",
+    "world_is": "The emitter reads its accessor index from portal/src/api (PORTAL_API, line 1177) and refuses when it is empty (line 1588): 'EMIT REFUSED: accessor index is EMPTY -- portal/src/api not readable at C:\\tmp\\wk-r18-45b\\portal\\src\\api (the portal submodule must be present)', rc=2, nothing written. The worktree has no portal/ folder, and no supported input re-points it (set_inputs is a programmatic hook, not a CLI option). Measured on the committed DATA_CATALOG.yaml: AC1 FAIL (rows equal to the map 0 of 136), AC2 FAIL (new rows present 0 of 12; table rows 216), AC3 FAIL (silver rows 221), AC4 FAIL (tool_index entries with assets or bd rows 0 of 99).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/emit_catalog_v02.py@359a187774 (PORTAL_API line 1177; accessor-index refusal line 1588)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~45/ (the emit refusal and the four criteria outputs, saved with the proof instance)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-16T00:11:51Z",
+    "one_line": "The atom_decomposition suite is not all-pass in this worktree before any MX-c-23 change: test_merged_definition fails on an empty accessor index, from the same absent portal/src/api as Z-W45-S6.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-23 section 1 step 1: run python -m pytest -q -p no:cacheprovider workflows/atom_decomposition/tests (all pass).",
+    "world_is": "At 6af29cb186 (the MX-c-21 regrade commit, before any MX-c-23 code change): 260 passed, 1 failed; the failure is workflows/atom_decomposition/tests/test_merged_definition.py::MergedDefinition::test_condition_helpers_census_and_accessors ('getAUMSummary' not found in {}). At e1911c532f + the MX-c-23 test files: 281 passed, 1 failed, the same test.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tests/test_merged_definition.py@6af29cb186 (line 184 assertIn on accessor_index())",
+        "workflows/atom_decomposition/emit_catalog_v02.py@359a187774 (accessor_index reads PORTAL_API, line 1177)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W45-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~45",
+    "surfaced_at": "2026-10-16T00:11:51Z",
+    "one_line": "The regenerated fork registry removes two rows and two entities beside the twelve it adds: the generator no longer writes the two MX-c-30 scope-dropped platinum advi rows, and the registry at HEAD still held them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-23 step 2: the git diff of catalog_fork_keys.json adds the 12 new rows, 12 entities and the labels list, and changes nothing else.",
+    "world_is": "The regeneration wrote 226 rows (214 generated plus 12), the count A1 states. Against HEAD (216 rows): keys removed c-1db3c93b1ae0 and c-cf4e62d5b3c4 (entities opal_data_portal_v2_platinum_advi_49financial_perfrp and opal_data_portal_v2_platinum_advi_49financial_twins); keys added 12; no existing row changed. The two removed rows are the scope_exclusions prefixes platinum/advi/49financial/ (the generator's printed 'excluded' lines).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/gen_silver_rows.py@359a187774 (prints 'excluded ...: platinum/advi/49financial/' for the two entities)",
+        "infra/logic/registry/catalog_fork_keys.json@e1911c532f (216 rows at HEAD, 226 after the regeneration)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
