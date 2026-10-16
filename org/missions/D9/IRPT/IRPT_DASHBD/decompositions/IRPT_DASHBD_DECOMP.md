@@ -2454,3 +2454,18 @@ The writer cell (`DB-b-287`) and the reason rename (`DB-b-289`) landed in ONE dr
 **fanout:** 1 of 1 chains, cap 8 (worker `0.9.0_WK_IRPT_DASHBD~234`).
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green; the re-pin clause validated against a real re-pin computed from git (green) and 10 single-fault arms (red)):** `checks/r148/p158_repin.py` (DB158-1-AC1..AC3).
+
+## 152. ROUND 149, WORKSTREAM PUBAPPLY (2026-10-16, issuer 2.0.0_SA_COO~D2): the apply of the second signed Cottonwood publish pair
+
+The writer, the rename, the schedule files and the re-pin are drained (`edf7999ebe`). The pair (packet sha256 `77f0af99d2bb`, COO half signed @d20bc88608, CTO half owed) is applied by the AE seat in one order.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The apply: ledger first, build-only hash, new bundle version, plan 3 add / 1 change / 0 destroy, ONE `safe-apply`, dry run, one-account republish, full republish (same keys), the S104 read; the schedule stays DISABLED | DB-b-291 | FWD-10 (S104) | WORLD | DB-b-287..290 merged and both halves SIGNED | chain L |
+| 2. Enabling the schedule | NOT CUT: the CTO's separate word | FWD-10 | WORLD | item 1 | held |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) one order for the whole packet, in the packet's act order, because the packet is one pair and each act has its own stop; (b) the order is issued only after the CTO half is SIGNED on the packet's sha256, and its step 0 stops if it is not; (c) the checker pins the packet sha256 and the build-only hash, so a changed packet needs a new order.
+
+**fanout:** 1 of 1 chains, cap 8 (the AE applier `0.7.0_AE_CloudOps~DB2`, not a worker subagent).
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; self-test green with 35 red arms):** `checks/r148/p159_pubapply2.py` (DBC159-1-AC1..AC3).

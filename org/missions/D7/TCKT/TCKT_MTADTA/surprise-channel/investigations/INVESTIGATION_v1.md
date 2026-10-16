@@ -568,6 +568,29 @@
     "spec_asserts": "COLLECTOR CONTRACT v2: one coverage object per fire per Eastern day the window touches; listed and fetched count the new blobs whose created falls on that Eastern day.",
     "world_is": "Without the union, a new blob created on a day outside the touched days would have its listed and fetched counts written nowhere, which is the silent loss the repair exists to remove. The build writes one extra coverage object (the blob's day) for that fire. Whether an out-of-window day should get an object is a contract question, not decided here.",
     "notes": "Built to the union so no count is lost. The CTO or issuer may rule the extra object out (then the count must be carried to the next touched day, a contract change)."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S6",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~TM1",
+    "surfaced_at": "2026-10-16T08:24:58Z",
+    "one_line": "TO-MD-r1 item 3 found no authoritative list of Opal office egress addresses, so population.json office_ips stays empty and every address will read remote.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1 (the issuer; the list is a named human's input, Andrew's)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "native Grep over the repo for office egress/ip/cidr wording, 34 files; read: infra/aws/ec2/SSH_TUNNEL_OFFICE_IP_ROUTING.md names one office address but is dated 2025-12-22 and says 'Not yet implemented'; the address occurs only in that doc and infra/aws/ec2/tunnel-scripts/ (3 files)",
+        "org/missions/D12/NFRA/NFRA_OPSEC202609/decompositions/NFRA_OPSEC202609_DECOMP.md:87,94 quote Andrew saying there are no stable IPs and the source-address axis is dead for this population",
+        "data/m365_metadata/scripts/population.json office_ips is [] at HEAD"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-r1 item 3 / PRD C-FIELDS (d): office_ips holds the addresses of Opal's office egress when the estate holds an authoritative list; never an invented address.",
+    "world_is": "The estate holds no authoritative current list. One address in a 10-month-old unimplemented design doc is a plan, not a measurement, and Andrew's recorded word is that no stable addresses exist. office_ips is left empty, so the egress label reads remote for every address.",
+    "notes": "Nothing invented. If Andrew names the office egress addresses, the list goes into population.json office_ips in a later order."
   }
 ]
 ```
