@@ -1,0 +1,4 @@
+# Drive log -- 2.0.0_SA_COO~Y2, IRPT_ANLREQ, 2026-10-16 00Z hour (desktop-n8rjv0a)
+
+- 00:3xZ tick: `~G2` has release 33's source (AR-g-102) and the swap pass (AR-g-100) built on its branches; nothing applied. AQ2 read the pool for r34 (`TO-READ-R34POOL`, 4419 rows). No new mail for this seat.
+- Cut AR-y-366 (2b0a50b912): a `--decisions` option for the FWD-1 driver so run 3 can press the form's Yes / Replace / No (the CTO's addendum 4, msg 8712: run 3 reads every v0.19 branch). Worker 163 built it offline (selftest 58 cases, driver sha256 6ea23ab6) and filed three BLOCKING rows: an unknown ticker does not disable Submit (S1); the prompts appear only after the Submit click and each press re-posts the upload and files the ticket on a NORMALIZED answer (S2); the checker's rule 3 forbade the order's own selftest cases (S3).
