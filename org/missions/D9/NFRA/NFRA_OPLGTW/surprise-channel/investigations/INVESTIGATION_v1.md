@@ -24679,3 +24679,54 @@ name the one known failure instead of silently inheriting it.
   "notes": "OBSERVATION: the gate may need the schema from the base checkout or from HEAD; the worker did not change the sparse-checkout configuration."
 }
 ```
+
+```json
+  {
+    "id": "NFRA_OPLGTW-Z-S294",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+    "surfaced_at": "2026-10-16T14:15:42Z",
+    "one_line": "ap29.AC1.sh requires the four silver/<table>/ prefixes as literals in the .tf, but the commit-time naming limb refuses a typed S3 address; a .tf that passes the naming limb (addresses read from the registry rows) cannot pass AC1 as written.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First draft of blackdiamond_live_reader_iam.tf wrote the four prefixes as literals ('arn:aws:s3:::opal-data-bd/silver/<t>/*' and 'silver/<t>/*'), as the order's step 2 and the AC1 script imply. safe-commit's naming limb REFUSED it (LGIC_ENFORCE DEC-6): 'arn:aws:s3:::opal-data-bd/silver/unrealized/* -> lookup(49financial)' and 'silver/unrealized/* -> {source}/{scope}/silver/unrealized/* ... NEW and OUT-OF-PATTERN as S3Key: REFUSE', 15 addresses graded, 0 admitted. The same refusal repeated after the four registry rows were committed at HEAD (bd93455796): the gate admits an address only when the .tf reads it from the registry rows, as client_vendor_roles_iam.tf does.",
+        "The .tf was therefore rewritten to derive every S3 address from the four registry rows (jsondecode(file(legacy_addresses.json)), '${r.bucket}/${r.template}*'); the naming limb then passes it. ap29.AC1.sh reads the .tf text and requires ('opal-data-bd/silver/%s/' % t) in the file and the quoted '\"silver/%s/' string for each table; a registry-derived .tf holds neither, so AC1 prints 'the four silver tables in GetObject resources False; in ListBucket s3:prefix values False' and RESULT: FAIL. Every other AC1 figure is as the order expects (roles 1, policies 1, trust True, put/delete/star none, wildcard False, bucket-root False, other bucket False, plan 2 to add 0 to change 0 to destroy True, ask three halves True).",
+        "The plan itself carries all four prefixes in both the GetObject resources and the ListBucket s3:prefix values (W/BDLIVE_PLAN.txt shows silver/<t>/* for each of the four tables), so the grant is what the order specifies; only the check's way of reading it is out of step with the naming limb."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order Phase A item 2: policy on arn:aws:s3:::opal-data-bd/silver/<t>/* for the four tables, and the builder-refusal rule 'a missing registry row to add under infra/logic/registry/, never a hand-typed workaround'; AC1 expects 'prefixes: the four silver tables in GetObject resources True; in ListBucket s3:prefix values True'.",
+    "world_is": "The two requirements cannot both hold in one file: the naming limb forbids a typed S3 address, and AC1 reads typed addresses. This seat did not game AC1 (a trailing comment that merely contains the strings would satisfy the regex and mean nothing). The fix is the issuer's, in ap29.AC1.sh only: resolve the four prefixes through the registry rows the .tf names (or read them from W/BDLIVE_PLAN.txt, which holds the evaluated policy). Nothing in the world needs to change.",
+    "notes": "Same class as Z-S158 and Z-S165 (a check script out of step with what the order's own rules let the file say). Also recorded: the registry commit bd93455796 needed the audited lane override GIT_COMMIT_AUTHOR_OVERRIDE=PLATFORM_LOGIC_DOCS, because the lane infra/logic/** admits only the CRO lanes; the same act (the ap-24 rows, 4de28d210d) passed the lane gate at 00:23Z, and this seat did not find which clause admitted it then. A repeat override for a standing action is, by that lane's own description, a coverage gap to close."
+  }
+  ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T14:25:43Z",
+  "id": "NFRA_OPLGTW-Z-S295",
+  "one_line": "Lane PLATFORM_LOGIC_DOCS (infra/logic/**) admits only the CRO lanes, so an applier's order that names infra/logic/registry/ in its paths still cannot commit its registry rows without the audited GIT_COMMIT_AUTHOR_OVERRIDE; ap-24's identical commit passed at 00:23Z and ap-29's was refused at ~14:10Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~ZS msg 35049 (ap-29 Phase A): the registry rows commit bd93455796 needed GIT_COMMIT_AUTHOR_OVERRIDE=PLATFORM_LOGIC_DOCS, recorded in the override audit at 14:10Z; the applier could not find why ap-24's identical commit passed at 00:23Z.",
+      "CLAUDE.md rule 30: a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround; this order's <paths> names infra/logic/registry/; the lane description names the CRO lanes as the permitted agents."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A cell whose <paths> names infra/logic/registry/ can commit the registry rows that the standing naming rule tells it to add, without an override.",
+  "world_is": "The lane and the rule disagree for any applier or worker that must add a registry row: the rule sends it to the registry, the lane admits only the CRO. The override is audited and was used once, with the rows read-only attributions on pairs the catalog already carries. The inconsistency between ap-24 (passed) and ap-29 (refused) is unexplained (a lane config change between the two, or a difference in the author serial, are the two readings to measure).",
+  "notes": "Owner of the decision: the lane config belongs to 0.0.0_AB_MSTR (the CTO for the rule). The issuer's act: record it and carry it in the L10 slug. Not blocking ap-29: the override is the audited escape and the rows are signed over in the ask."
+}
+```

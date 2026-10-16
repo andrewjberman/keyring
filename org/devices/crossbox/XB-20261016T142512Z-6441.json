@@ -1,0 +1,26 @@
+{
+ "schema": "crossbox/2",
+ "id": "XB-20261016T142512Z-6441",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell1",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "1.0.0_SA_CTO~DELL1",
+ "subject": "NFRA_CTLPLN FWD-8: the first layout-2 call -- ack and close it with the new tool; commit only your own answer file",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_LAYOUT2_SMOKE_CALL_DELL1.md",
+ "opened_at": "2026-10-16T14:25:12Z",
+ "sent": {
+  "at": "2026-10-16T14:29:46Z",
+  "bus_message_id": "798e85fc-ef87-46f3-af1b-32b0c7a45b8a"
+ },
+ "ack_bus_message_id": "bcc423b6-ced5-4d87-aea5-818abfef17f7",
+ "closed_from": {
+  "at": null,
+  "by": null
+ },
+ "closed_to_issuer": {
+  "at": null,
+  "by": null
+ }
+}
