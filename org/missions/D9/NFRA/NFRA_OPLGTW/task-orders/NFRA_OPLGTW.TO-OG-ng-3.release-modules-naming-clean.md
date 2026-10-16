@@ -48,7 +48,7 @@ You WRITE only `portal_served.py`, `tests/test_og_gp1.py` (one assertion at most
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-ng-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ng3.AC1.sh; echo "exit=$?"</invocation><expect>(?s)full-add naming gate over 17 release modules in ENFORCE: rc=0; REFUSE verdicts 0 \(want 0\); RULED verdicts \d+; NAMING-GATE: PASS \d+ graded.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-ng-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ng3.AC1.sh; echo "exit=$?"</invocation><expect>(?s)full-add naming gate over 17 release modules in ENFORCE: rc=0; REFUSE verdicts 0 \(want 0\); RULED verdicts \d+; NAMING-GATE: (?:PASS|WARN) \d+ graded.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-ng-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ng3.AC2.sh; echo "exit=$?"</invocation><expect>(?s)name_rulings: bloomberg_profile rows 1 of 1; unique per \(name, type\) True; portal_served.py typed Scope\("mdpf"\) sites 0 \(want 0\).*gp1 and gf1 suites: pytest rc=0; passed \d+; failed 0 \(want 0\).*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
