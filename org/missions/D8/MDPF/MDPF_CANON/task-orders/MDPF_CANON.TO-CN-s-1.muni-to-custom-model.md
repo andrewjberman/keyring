@@ -87,7 +87,7 @@ Report once: the diff (one line per file), the output line of every criterion, t
 
 **Fanout:** 2 of 2 chains (`CN-s-4` -> `CN-s-5` -> `CN-s-3`; `CN-s-1`). Slot ~32. No shared file with the portal chain. Base: box/dell1 at the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <to_id>MDPF_CANON.TO-CN-s-1</to_id>
 <slot>~32</slot>
