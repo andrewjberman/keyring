@@ -28781,3 +28781,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded, not a block: the schema was read from HEAD and the row is written to the shape it names. The row gate's own read of the schema in this worktree is the part the commit will show."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S48",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-16T12:12:25Z",
+  "one_line": "The first fire of the G4 filings task wrote one state object outside its signed radius, AAPL_US_Equity's UNRESOLVED-SOURCE.HELD.json, and the served API now adds four drafting_reason fields to AAPL's thesis because of it; the CTO ruled KEEP (msg 6678).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "NEVER_WIDEN_ROUND108_G4_FILINGS_FIRST_FIRE_COO_HALF.md (signed @b619a274a1) named four kinds of object the run writes (analysis, drafting, source, one model call) and signed that nothing else moves.",
+  "world_is": "The first fire (2026-10-16 11:30Z) wrote amgt/harvest/state/filing_attempt/security_key=AAPL_US_Equity/UNRESOLVED-SOURCE.HELD.json (VersionId ZlQC5YGwdyTDXBJWhG80cP3shVdZRIki, a new key) before its run ended with exit 1. lib/research/api/scoped_amgt.py lines 4147-4198 reads that marker and ADDS drafting_reason_held, drafting_reason_newer, drafting_reason_newer_status and drafting_reason_newer_filing_identity to the name's thesis bundle (the served drafting_reason is untouched; with no marker the bundle is byte-identical). Live read 2026-10-16 ~12:09Z (opal-amgt-scoped-api, GET /thesis for AAPL_US_Equity, status 200): all four present. The Security Analysis page source names none of them: git grep on origin/PROD:portal/src and a grep of the working tree return 0 matches, so the page renders nothing from them unless a generic renderer spreads bundle keys (not checked).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/G4_FILINGS_FIRST_FIRE_RESULT_20261016.md",
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/G4_FILINGS_TASK_REENABLED_8KEYS_20261016.md",
+      "lib/research/api/scoped_amgt.py:4147-4198",
+      "lib/research/harvest/filings.py:440-446 (the marker is written, then FilingAttemptChangedError is raised)"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "CTO msg 6678: KEEP (additive and true; shows only on the Opal-internal page; a delete needs Andrew's word for no gain). Answer to the CTO's third ask: bo-6 does NOT stop the marker write. The harvest module writes the sibling HELD marker BEFORE it raises (filings.py:445-446); bo-6 only catches the raise, so a skipped name still gets a marker. For the 8-key run no name can reach that path: none of the 8 has a stored filing_attempt state object (read 2026-10-16, 0 objects each), so a differing re-attempt cannot occur. A first-time failure to resolve one of the 8 would write its UNRESOLVED-SOURCE.json (a state object the signed radius also did not name)."
+}
+```

@@ -1853,3 +1853,26 @@ Criteria: AC1 the named test and `bun test src` 72 or more pass; AC2 the 390 px 
 ## PF5.2 WHAT THIS CUT DOES NOT CLAIM
 
 The 390 px measurement is on the checked-in fixture plus a planted long name, not on the live page: the live look is Andrew's (call 21d9), and S1 item (iii) is graded by the CVO on the served body after this lands and reaches the host. The fix reaches the host only with the next mcportal bundle release (a new `mcportal_commit` in EC2_MANIFEST); nothing here deploys it.
+
+# v16 -- WORKSTREAM PF, ROUND 6: the bundle-only release of the Gateway page fix (2026-10-16 ~12:3xZ, 2.0.0_SA_COO~MP)
+
+Source: the CTO's ruling msg 34980 (b): "cut the bundle-only release now; Andrew is at site Z today and can sit any time ... MP-pc-5 shape, two halves, applier CloudOps~Z ... mcportal c66ca82952 only, with no gateway code. Graded on the served page at 390 px (scrollWidth 390) and at 1280. I sign my half on receipt. ~O's round-38 release then carries the same bundle with no delta." Row Z-S64 is the finding; MP-pf-8 (merged @e15f6538f8) is the fix; origin mcportal DEV reads c66ca82952 (MSTR~Z, ls-remote ~12:0xZ). PRD v0.9 unchanged.
+
+## PF6.0 WHAT IS MEASURED BEFORE THE CUT (issuer, ~12:2xZ)
+
+1. Live: EC2_MANIFEST `services.opal-gateway` `deployed_commit` 1bc2df0b13 (MX-r-15 v2), `mcportal_commit` 090b9cdc85. No opal-gateway release is open in the ledger (MX-r-15 v3 is next to open; one release in flight at a time).
+2. The deploy builds the bundle from the manifest's `mcportal_commit` in a detached mcportal worktree and ships `dist/` as `dashboard/` beside `app/` (`deploy-to-ec2.sh` lines 62-93 and 237-254).
+3. A local build of an mcportal commit equals the host's bytes: the host's `dashboard/index.html`, `routes.json` and both current assets were read over SSM (read-only, `ls` and `sha256sum`) and are byte-identical (sha256) to a local `bun run build` of 090b9cdc85. The host also keeps 12 asset files (older bundles accumulate), so the live bundle is whichever `index.html` names.
+4. The expected bundle of c66ca82952 (local build): `index.html` sha256 5a6e2eeef8ec...; `assets/index-BRnJX9Mi.css` 120ae5bbd491...; `assets/index-DbObnWYp.js` 52466cffc886... (the JS content is unchanged: only its name moved); `routes.json` e6d4a9ac3ce7... (unchanged). The full hashes are in `pf9.AC2.sh`.
+
+## PF6.1 CELL `MP-pf-9` -- the bundle-only release  (WORLD; applier `0.7.0_AE_CloudOps~Z`; staged until the GO)
+
+One swap of the dashboard bundle on the gateway host: `EC2_MANIFEST.json` `services.opal-gateway.mcportal_commit` becomes c66ca82952c01575968d16cc736cdabe36606572 and nothing else in the gateway tree moves (census EMPTY). Never touched: the MCP tool surface, IAM, any store. Rollback: the previous pin (090b9cdc85) through the same deploy. Criteria: AC1 the ledger, the manifest pin and the empty gateway census; AC2 the host's deployed bytes equal the build of c66ca82952, /health 200, the owner gate still 401/403. The 390 px and 1280 px grade is the issuer's real run after the release (the served body through the fixed page, measured).
+
+## PF6.2 EDGES AND WHAT THIS CUT DOES NOT CLAIM
+
+Gate G-REL9 (the issuer holds it): both never-widen halves signed at HEAD AND no opal-gateway release open. `~O`'s round-38 release then carries the same pin with no delta (the CTO's note). It does not claim the page is judged legible: that is S1 item (iii), the CVO's, after the release and MX-r-15's last catalog. The served look is Andrew's (call 21d9).
+
+## PF6.3 SEATING (issuer, ~12:4xZ) -- a departure from the CTO's named applier, and why
+
+The CTO's ruling named `0.7.0_AE_CloudOps~Z` as the applier. `0.7.0_AE_CloudOps~Z` holds NFRA_OPLGTW work, and the seating rule (Andrew-direct 2026-08-24 ~19:29Z, enforced by `.tools/to-decomp-ref-lint.py`'s seating check, announce mode) is ONE PROJECT PER TIER-2 SEAT INSTANCE: the commit gate printed `REFUSED ... FIX: address this TO to a FRESH LANE`. MCPORTAL's own releases have used their own CloudOps lanes (~MP, ~MQ). So `MP-pf-9` is addressed to `0.7.0_AE_CloudOps~MQ`, the lane that applied MP-pc-5 and MP-n-4 and has only ever held NFRA_MCPORTAL orders (same project, so it passes the seating rule), re-seated by the issuer. The order, its checks and its paths follow (`deliverables/0.7.0_AE_CloudOps~MQ/`). The cost: one seat spawn, minutes. Reported to the CTO with the GO-PREP.
