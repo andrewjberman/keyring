@@ -93,7 +93,7 @@ def guard():
 
 
 def coverage():
-    c = mod("coverage")
+    c = mod("coverage_record")
     now = "2026-10-16T12:00:00Z"
     bad = []
     quiet = c.build_record("2026-10-15", "Audit.SharePoint", listed=3, fetched=3, events=0, dropped={}, now=now)

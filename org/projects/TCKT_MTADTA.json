@@ -4,10 +4,10 @@
  "directive": "D7",
  "macro_code": "TCKT",
  "fabric": "dell1",
- "dep_stage": "DECOMP",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Ticket Center metadata: the eight operations team members' Microsoft 365 activity, read as sequences, to find the workflows Ticket Center should absorb",
  "generated_from": "org/missions/D7/TCKT/TCKT_MTADTA/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-16T06:58:20Z"
+ "generated_at": "2026-10-16T07:00:30Z"
 }

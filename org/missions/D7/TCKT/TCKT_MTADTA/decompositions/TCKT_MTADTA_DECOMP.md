@@ -35,7 +35,7 @@ Status vocabulary: NOT-EVALUATED / BUILT / SERVED / REALIZED (NOT-EVALUATED is t
   the collector -> silver (D builds to the BRONZE CONTRACT); the door -> `silver_builder` (A's handler takes the reader and builder as injected
   modules; D's file is the production module). A contract is an interface fixed here, not file contention.
 
-**Write sets (disjoint; the issuer creates every `__init__.py` and the empty `tests/` directories at the cut).**
+**Write sets (disjoint).**
 - MD-h-1: `infra/logic/registry/scopes.json`, `infra/logic/registry/systems.json`, `infra/logic/registry/root_map.json`,
   `infra/logic/06_CONFORMANCE_LEDGER.md`, the 19 generated targets `python lib/opal_naming.py generate` writes,
   `infra/aws/terraform/trino/main.tf`.
@@ -43,7 +43,7 @@ Status vocabulary: NOT-EVALUATED / BUILT / SERVED / REALIZED (NOT-EVALUATED is t
   `infra/aws/lambda/globgrph-trino-access/build.sh`, `infra/aws/lambda/globgrph-trino-access/tests/test_handler.py`.
 - MD-i-1: `data/m365_metadata/scripts/app/register_app.py`, `data/m365_metadata/scripts/app/start_subscriptions.py`,
   `data/m365_metadata/scripts/app/RUNBOOK.md`, `data/m365_metadata/scripts/tests/test_app.py`, `infra/aws/terraform/trino/identity.tf`.
-- MD-c-1: `data/m365_metadata/scripts/collector/` (`filter.py`, `coverage.py`, `collect.py`, `source_client.py`, `access_client.py`),
+- MD-c-1: `data/m365_metadata/scripts/collector/` (`filter.py`, `coverage_record.py`, `collect.py`, `source_client.py`, `access_client.py`),
   `data/m365_metadata/scripts/population.json`, `data/m365_metadata/scripts/tests/test_collector.py`,
   `infra/aws/lambda/m365-metadata-collector/handler.py`, `infra/aws/lambda/m365-metadata-collector/build.sh`,
   `infra/aws/terraform/trino/collector.tf`.
