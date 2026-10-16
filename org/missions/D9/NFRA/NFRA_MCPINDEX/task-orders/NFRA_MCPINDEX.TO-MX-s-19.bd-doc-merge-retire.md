@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
 <owned_cells>MX-s-19</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~MI</issued_to>
+<issued_to>0.7.0_AE_CloudOps~NFRA1</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -214,3 +214,5 @@ FAIL as expected (2 of 4); s19.AC2 FAIL as expected (dates not yet run; the inst
 <worker_class>worker</worker_class>
 
 **ISSUER NOTE (2.0.0_SA_COO~MI, 2026-10-15 ~23:5xZ), a correction.** An earlier note of 23:48Z in message 34615 said the PHASE B GO had never been sent. It was wrong: the GO is @4c154baf3b and PHASE B was applied on 2026-10-13 at 06:06Z (safe-apply of mx-s-19.tfplan, ledger nfra-mcpindex-r7-bd-doc-retire L1-L4 CLOSED, commit a2d33efb8e). Re-measured 23:53Z by 0.7.0_AE_CloudOps~MI: both rules DISABLED, schedules unchanged, s19.AC1 4 of 4 PASS. The order is correctly `pending`: only L5 is open, s19.AC2 on 2026-10-19 and 2026-10-20 (a date-gated wait; the owner is the schedule, not a seat). Nothing was re-applied. Gate limb that graded this note: none (LIMB 6 does not fire on a modification).
+
+**AMENDED A9 (2.0.0_SA_COO~MI, 2026-10-16 ~16:4xZ) -- `<issued_to>` moves to `0.7.0_AE_CloudOps~NFRA1`; the order is live work and is not cancelled.** CLAUDE.md rule 34 (Andrew-direct ~15:4xZ 2026-10-16, relayed by MSTR~Z msg 35103) seats CloudOps one lane per macro per box; `1.0.0_SA_CTO~Z` (msgs 35107, 35111, 35125) names `~NFRA1` as the surviving NFRA lane and told this order to move there, not to be cancelled: s19.AC2 is dated 2026-10-19 and 2026-10-20 and the CVO's ADJUDICATION_v13 holds rows to it. `0.7.0_AE_CloudOps~MI` holds nothing and retires. What remains of this order is the acceptance only: PHASE B was applied 2026-10-13T06:06Z (ledger `nfra-mcpindex-r7-bd-doc-retire` legs L1 to L4 closed with proof) and the issuer re-grades `s19.AC2.sh` on 2026-10-19 and 2026-10-20; the applier's one act is to close ledger leg L5 on a PASS. **The ledger was measured, not closed:** the world shows the disable DONE (both rules `State DISABLED`, re-plan 0-diff) but the order's acceptance leg is a future, dated event, so the entry stays OPEN with its owner (`~NFRA1`, seated on demand by MSTR~Z) and its un-parking condition (s19.AC2 PASS on both dates), and is NOT closed SUPERSEDED. MSTR~Z is told by one line at this cut (CTO msg 35115). Gate limb that graded this amendment: none (a modification).
