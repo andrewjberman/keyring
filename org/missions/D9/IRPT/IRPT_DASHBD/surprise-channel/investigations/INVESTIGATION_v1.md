@@ -24504,3 +24504,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "id": "IRPT_DASHBD-D2-S131",
+  "surfaced_at": "2026-10-16T23:06Z",
+  "one_line": "TO-DB-f-2204 Act 3: the 49F reporting-gold function's transaction stage failed on every day because the bundle's staged lib/trading_calendar.py (pin b2b748866020) has no first_trading_day_on_or_after; nothing was written; the apply is done and the function runs the new code.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dry run 2026-10-16T23:01:44Z request a6108244-b883-4718-81c8-d027847ad852, status 200, 691 ms, 251 MB: transaction_rows {} and transaction_failed {2026-10-15: AttributeError: module 'trading_calendar' has no attribute 'first_trading_day_on_or_after'}; 0 objects at irpt/49financial/gold/account_transaction/",
+      "lambda-source-map.json entry irpt-49f-reporting-gold-lambda: staged lib/trading_calendar.py pin b2b748866020370ebbef91fc5f4378b4cafb5f58 sha256 9bc467c6ce4d; git show of that pin has no def first_trading_day_on_or_after; lib/trading_calendar.py at HEAD defines it at line 201",
+      "the packet's build hash SCt7IgN3.. was built from that pin, so the build-only check could not see the defect; the import smoke only imports the handler (AT49_IMPORT_ERROR None)"
+    ]
+  },
+  "spec_asserts": "The packet and the order: the transaction-only dry run of one real fact_trn day returns a positive row count with transaction_failed empty.",
+  "world_is": "The new stage cannot run on the packaged calendar member. The function and role policy are applied (code SCt7IgN3, seven write resources); the scheduled fire on Monday 07:41 New York would run the transaction stage on the same member. A re-pin of the one staged member, a new build hash and a new packet are the fix (the F2 seat's call); no work-around was made."
+}
+```
