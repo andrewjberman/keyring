@@ -21382,3 +21382,138 @@
   "notes": "The 8 ADMITS sites outside the register are listed in the record; they are findings for 2.0.0_SA_COO~V2 and were not fixed here."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W231-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~231, cell AR-tz-67) the meeting route is a POST to a ticket route, which the order's own guard refuses; the run cannot exit 0 as specified
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~231",
+  "surfaced_at": "2026-10-16T05:50:25Z",
+  "class": "BLOCKING",
+  "id": "IRPT_ANLREQ-D2-W231-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The meeting route the run must call, POST /api/scoped/tickets/{ticketId}/meeting, is a POST to a ticket route; the same order's guard admits POST to the sign-in route only, so the call is refused before send and the run exits 2.",
+  "spec_asserts": "TO-AR-tz-67 worker face item 3 names the meeting route among the calls the run makes. Item 4 says the guard may only issue GET to the listed ticket routes and POST to the sign-in routes, and the offline test list requires refusing a POST to a ticket route.",
+  "world_is": "FWD5_TICKET_SERVICE_FENCE_MAP.md row 38 (lambda_function.py:1962) names the meeting route as a POST. The built fwd5_driver.py POST_ALLOWED admits /auth/login only. The meeting call is attempted through the guard, refused before send (guard_refused lists meeting), recorded UNREACHED, and exit_code returns 2. Exit 0 is unreachable while the record and the guard stand together.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~210/FWD5_TICKET_SERVICE_FENCE_MAP.md row 38 @c43f8fc13a",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py POST_ALLOWED and ROUTES, in the commit that carries this row; offline run of test_fwd5_driver_offline.py: 13 passed"
+    ]
+  },
+  "notes": "Ruling needed from the issuer: admit POST meeting as a named exception (a write route; the fence answers 404 for an out-of-scope ticket at lambda_function.py:1962) or drop the call. The build did not widen the guard, because the order's guard tests forbid it."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W231-S2 -- (worker 0.9.0_WK_IRPT_ANLREQ~231, cell AR-tz-67) the package-file routes need the ticket's report and request ids, which the refused ticket read cannot supply; the order names no source for them
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~231",
+  "surfaced_at": "2026-10-16T05:50:25Z",
+  "class": "BLOCKING",
+  "id": "IRPT_ANLREQ-D2-W231-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The four investor-reporting package calls take a request id or job id that only the other firm's ticket record carries; the principal is refused that record, so the driver has no source for them and takes them as operator inputs.",
+  "spec_asserts": "TO-AR-tz-67 worker face item 3: each package-file route is called 'by the ticket's report_ref and package pointers', read from the ticket.",
+  "world_is": "The principal is refused the ticket read (FWD5_FRONT_DOOR_AND_PORTAL_MAP.md row 1, lambda_function.py:1514; FWD5_TICKET_SERVICE_FENCE_MAP.md row 16), so no report_ref, request id or job id is readable for the other firm's ticket. The built driver takes --request-id and --job-id as inputs. Without them original-upload, opal-report, report-pdf and commentary-pdf are UNREACHED, not passes, and the run exits 2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~212/FWD5_FRONT_DOOR_AND_PORTAL_MAP.md rows 1, 42-44 and 47 @c43f8fc13a",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~210/FWD5_TICKET_SERVICE_FENCE_MAP.md row 16 @c43f8fc13a"
+    ]
+  },
+  "notes": "Ruling needed: the operator supplies the ids from the issuing firm's side for the run, or the issuer names the source. The run is not executed by this cell."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W231-S3 -- (worker 0.9.0_WK_IRPT_ANLREQ~231, cell AR-tz-67) the record names no GET route for the commentary draft; the draft is carried only inside the whole ticket record that the principal is refused
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~231",
+  "surfaced_at": "2026-10-16T05:50:25Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W231-S3",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order lists the commentary draft among the package-file routes to call; the record has no GET route for it alone, so the driver lists the route UNREAD and does not call it.",
+  "spec_asserts": "TO-AR-tz-67 worker face item 3 lists 'the commentary draft' among the package-file routes the run calls, each expected to be refused.",
+  "world_is": "The draft is carried only in the whole ticket record returned by GET /api/scoped/tickets/{ticketId} (lambda_function.py:1523, return _resp(200, {ticket: r[Item]})), which is refused to the principal. POST commentary-draft (lambda_function.py:1853, FWD5_TICKET_SERVICE_FENCE_MAP.md row 34) is a write outside the guard. Per the order's refusal clause the route is listed UNREAD and counts as UNREACHED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~210/FWD5_TICKET_SERVICE_FENCE_MAP.md rows 18 and 34 @c43f8fc13a",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~212/FWD5_FRONT_DOOR_AND_PORTAL_MAP.md (no GET row for the draft) @c43f8fc13a"
+    ]
+  },
+  "notes": "The issuer rules whether the ticket read stands in for the draft (it is already called) or a GET route for the draft is named."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W231-S4 -- (worker 0.9.0_WK_IRPT_ANLREQ~231, cell AR-tz-67) the ticket list answers 200 by design, so the order's per-call rule that any 2xx with a body is a LEAK cannot grade it as written
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~231",
+  "surfaced_at": "2026-10-16T05:50:25Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W231-S4",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The scoped ticket list returns 200 with the principal's own rows; the driver grades a 2xx list REFUSED only when its body is a tickets list that carries no ticket id and no other-firm id, and LEAK otherwise.",
+  "spec_asserts": "TO-AR-tz-67 worker face item 3: any 2xx with a body is a LEAK; the other firm's ticket must be absent from the principal's list.",
+  "world_is": "The client list answers 200 with the caller's own rows (lambda_function.py:1504 and the projection at 1466, FWD5_TICKET_SERVICE_FENCE_MAP.md row 13). Read literally, the per-call rule makes the list LEAK on every run. The built driver applies the absence reading to the list only, and treats any other 2xx as LEAK, including an empty body.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~210/FWD5_TICKET_SERVICE_FENCE_MAP.md row 13 @c43f8fc13a",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py classify() in the commit that carries this row"
+    ]
+  },
+  "notes": "The issuer confirms the absence reading for the list, or names another grading for it. No ticket body is read by the driver beyond markers and the tickets key."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W231-S5 -- (worker 0.9.0_WK_IRPT_ANLREQ~231, cell AR-tz-67) the run needs --firm-b, --request-id and --job-id, which the order's stated run arguments do not name
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~231",
+  "surfaced_at": "2026-10-16T05:50:25Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W231-S5",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's run arguments are --base, --email, --ticket, --firm-a, --out and --go; the built driver adds --firm-b, --request-id and --job-id, and nothing else.",
+  "spec_asserts": "TO-AR-tz-67 worker face item 1 gives the run's arguments as --base, --email, --ticket (another firm's), --firm-a (the principal's), --out and --go.",
+  "world_is": "The leak rule must name the other firm, and the investor-reporting routes take selected_tenant set to the other firm (FWD5_FRONT_DOOR_AND_PORTAL_MAP.md rows 38 and 52 @c43f8fc13a). The driver therefore takes --firm-b as the other firm's id and also as a leak marker. --request-id and --job-id are the inputs of row S2. The guard admits GET by the path shapes of the listed ticket and package routes, not by method alone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~212/FWD5_FRONT_DOOR_AND_PORTAL_MAP.md rows 38 and 52 @c43f8fc13a",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py main() in the commit that carries this row"
+    ]
+  },
+  "notes": "The issuer confirms the three added flags or names the replacement. The flags are optional for --plan and for a --go that does not match, and a run without them exits 2."
+}
+```
