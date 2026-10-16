@@ -17,6 +17,8 @@
 
 **Risk class WORLD** is the floor of the paths below (`infra/` paths), not a statement that anything is deployed: python files and tests; no AWS, no deploy, no push. The publisher and the handler are bundled into the deployed `irpt-cot-reporting-publish-lambda` (and the publisher into the 49 Financial function); moving this code to the cloud is a LATER code-update pair of this seat's. Series contract 0.3.1 and source contract 0.4.4 are on trunk.
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~08:0xZ, on the CTO's msg 9158 rulings A and B; gate limb: an existing order modified, placeholders NONE unchanged, no criterion id, cell or path change):** (1) The reason code named in this order's Why (`SOURCE_REPORTS_NO_INCOME`) is FALSE and is renamed `RETURN_METHOD_DOES_NOT_SEPARATE_INCOME` in both contracts by `DB-b-289`; YOUR code never writes a reason, only `income_claim` = `absent`, so nothing in your cell changes. (2) Your branch is HELD by the issuer and merges in ONE drain with `DB-b-289` (the CTO's one-drain rule: a contract and its writer land together); do not expect it to merge the moment you finish. (3) The publish pair's code update and the republish of the 939 series are later acts of the issuer's, not yours.
+
 ---
 
 ## WORKER FACE
