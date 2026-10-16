@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~SOC21</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
@@ -14,7 +14,7 @@
 <round>1</round>
 
 **Directive:** D12 | **Fabric:** dell1 | **Decomp cell:** `SM-r-1` (`decompositions/SOC2_MSLOGS_DECOMP.md`) |
-**outcome_ref:** FWD-1, FWD-8 | **depends_on:** `SM-c-1`, `SM-a-1`, `SM-s-1`, `SM-g-1`, `SM-x-1` complete and MERGED. **STAGED: the issuer flips it to `pending` once the five merges and the drain checks are green.**
+**outcome_ref:** FWD-1, FWD-8 | **depends_on:** `SM-c-1`, `SM-a-1`, `SM-s-1`, `SM-g-1`, `SM-x-1` complete and MERGED. **FLIPPED to `pending` by the issuer 2026-10-16 after the five merges (SM-s-1 56af05ace6, SM-x-1 5660aeb021, SM-c-1 b2fef4b9b5, SM-g-1 ddccf1e8f1, SM-a-1 36f107cee9) and the drain checks.**
 
 ---
 
@@ -33,7 +33,7 @@ You run as the box identity `cloudops-dell1-agent-user`, deliberately NOT a memb
 ### ITEMS, in this order. Stop at the first that fails and write what stands.
 
 1. **Preconditions.** The five cells are complete and merged (`git log`; the order files read `<status>complete</status>`); from the repository root these print their OK tokens:
-   `s1_check_c1.py raw|switch|recollect`, `s1_check_a1.py ops|bronze|tf`, `s1_check_s1.py silver|timeline`, `s1_check_g1.py rows|ledger`, `s1_check_x1.py scrub` (all in `org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/`). Otherwise STOP and report.
+   `s1_check_c1.py raw|switch|recollect`, `s1_check_a1.py ops|bronze|tf`, `s1_check_s1.py silver|timeline`, `s1_check_g1.py ledger`, `s1_check_x1.py scrub`, and `thread_trace_r1.py` (the whole thread over an in-memory store). `s1_check_g1.py rows` is NOT a precondition: it printed OK at the cell's merge (fdecf020e7) and reads `targets stale` since a box-sync brought in another seat's registry change (4.0.0_SA_CRO~Z, `legacy_addresses.json`) that moves the registry hash its generated files stamp; regenerating those files is that seat's act, not this release's (all in `org/tier1_exec/2.0.0_SA_COO~S1/deliverables/SOC2_MSLOGS_R1_CHECKS/`). Otherwise STOP and report.
 2. **Open the ledger** before any write: `python .tools/deploy_ledger.py open --slug soc2-mslogs-r1-raw-switch-20261016 --title "SOC2_MSLOGS round 1: in-place switch of the collector and door to raw bronze" --author 0.7.0_AE_CloudOps~SOC21 --leg ...`
    (legs: apply, subscription, switch read-back). Blast radius: the code of the two functions, the door role's policy, the door's environment, and tag or description strings; NOTHING is created or destroyed. Rollback: re-apply the previous commit's zips
    (`git revert` of the merge range and the same apply); the stored raw objects are write-once and stay (they hold nothing the old code reads).
