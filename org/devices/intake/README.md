@@ -12,3 +12,4 @@ The route in six hops. Records are JSON, ASCII, one file per event, under `org/d
 Holding root: `<workspace drive>/opal-intake/`, outside every git tree. `OPAL_INTAKE_ROOT` overrides it (tests); `OPAL_INTAKE_RECORDS` overrides the records folder.
 
 `intake_fetch.py` against the public index refuses unless `--approved-by <file>` names an existing file containing the exact `name==version`; it makes no request on a refusal. `--index-base` is for a loopback test index. A release's `release_count` counts versions that carry at least one file.
+The approval-file line and the signed check-8 file, with what the tools demand of each: `APPROVAL_AND_SIGNED_FILE_DEMANDS.md` (this folder).
