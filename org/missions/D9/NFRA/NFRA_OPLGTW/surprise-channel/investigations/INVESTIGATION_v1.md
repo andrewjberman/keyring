@@ -19946,3 +19946,53 @@ name the one known failure instead of silently inheriting it.
   "notes": "The census records 11362 with its claim measured. Cost: a count-based claim written from the contract would be wrong by about 7,855 rows. Non-application: the ticker-keyed tool is not sized by this count."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T04:58:12Z",
+  "id": "NFRA_OPLGTW-Z-W113-S6",
+  "one_line": "The catalog row the order names for the table, opal_data_mdpf_gold_ai_classified_securities, carries no DynamoDB table name, so the module holds TABLE = etf-classifications as a constant citing the contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/refs/DATA_CATALOG.yaml at HEAD 869beac0fa, entity opal_data_mdpf_gold_ai_classified_securities (line 15187): its fields are bucket, prefix, key_template and contract; none names a DynamoDB table. Its own open item (line 15245) says the canonical table is not censused by any group.",
+      "app/mdpf_classification.py: TABLE = etf-classifications, with a comment citing org/standards/MDPF_SECCLASS_CONTRACT.json, as the order's fallback directs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ac-2 section 1: read the table name from the DATA_CATALOG row if it names one; otherwise hold it as one module constant and file an OBSERVATION row.",
+  "world_is": "The row names the S3 gold index only. The canonical DynamoDB table name lives in the contract file, not in the catalog, so the catalog cannot drive a rename of the table.",
+  "notes": "Cost: a rename of the table would need the constant changed in code, not the catalog. Non-application: the S3 key template of the same row is not used by this tool. Candidate for the owner: a DynamoDB resource row in the catalog."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T04:58:12Z",
+  "id": "NFRA_OPLGTW-Z-W113-S7",
+  "one_line": "The internal_role DynamoDB helper returns a low-level client, so the get_item Key is typed {ticker: {S: <ticker>}}, not the plain {ticker: <ticker>} the order's test names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/internal_role.py dynamodb_client() (HEAD 869beac0fa) returns the boto3 client from assumed credentials; a low-level client takes typed attribute values.",
+      "tests/test_og_ac2.py ac01 asserts Key == {ticker: {S: AAA}}; the probe's real get_item reached the table with the same typed key (answered True)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ac-2 section 1 and the test list: one get_item with Key == {ticker: <ticker>}.",
+  "world_is": "A low-level get_item needs the typed key form; the plain form is the resource-level API. The module keeps the low-level client so the assumed reader role is used, and the test asserts the typed form.",
+  "notes": "Cost: the test literal differs from the order's wording by the type wrapper only; the key is the ticker alone. Not verified here: whether a resource-level client would be admitted on the assumed role."
+}
+```
