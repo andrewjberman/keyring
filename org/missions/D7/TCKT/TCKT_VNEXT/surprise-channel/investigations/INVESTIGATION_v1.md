@@ -2703,3 +2703,75 @@ used as fixtures is a different read with a different denominator.
  "notes": "Provisioning owner: the issuer 2.0.0_SA_COO~V2 (the worktree is issuer-provisioned). Not checked: whether sibling worktrees -46, -47 and -48 share the cone (no census run). The order stays pending; the proof instance records AC1 and AC2 as FAIL and AC3J as UNVERIFIABLE-BY-INSTRUMENT."
 }
 ```
+```json
+{
+ "id": "TCKT_VNEXT-D2-W45-S2",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~45",
+ "surfaced_at": "2026-10-16T02:26:23Z",
+ "one_line": "The drain-check run of infra/aws/lambda/ticket_center/tests/ cannot collect 8 test modules in this worktree: they read org/missions/D9 deliverables, which the sparse cone does not materialise. The same 8 fail at the base commit and after the build.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "timeout 120 python -m pytest C:/dev/wk-tckt-vnext-45/infra/aws/lambda/ticket_center/tests/ -q -p no:cacheprovider --color=no : 8 errors during collection (test_no_row_refuses, test_package_409_codes, test_package_env_firms, test_package_i5p_i7, test_package_principal, test_package_request_id, test_package_route, test_status_active), each FileNotFoundError on org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json; the run is interrupted (rc=2) without --continue-on-collection-errors",
+   "same folder with --continue-on-collection-errors at base b569143371: 305 passed, 8 errors (rc=1); at 8398ba291b and f388d5ea4a: 321 passed, 8 errors (rc=1); the 16 new cases account for the difference",
+   "git sparse-checkout list at HEAD f388d5ea4a: .tools, infra/aws/lambda/ticket_center, infra/logic/registry, lib, org/devices, org/missions/D7/TCKT/TCKT_VNEXT, org/modules/graph, org/ref, org/standards (no org/missions/D9)"
+  ]
+ },
+ "spec_asserts": "TO-R19-L1 ACCEPTANCE R19L1-AC1: run the whole infra/aws/lambda/ticket_center/tests/ folder once and record the counts in the record (a drain check the issuer re-runs).",
+ "world_is": "The folder cannot be collected in full in this worktree: 8 modules name files under org/missions/D9, which the sparse cone excludes, so collection fails before any test runs. The failure is pre-existing and is not caused by the build. The counts recorded under the continue-on-collection-errors flag are 305 passed at base and 321 passed after the build, with the same 8 errors.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Filed by 0.9.0_WK_TCKT_VNEXT~45 on TO-R19-L1. Not fixed: the sparse cone and the D9 files belong to the issuer. The drain re-run should use a worktree whose cone includes org/missions/D9, or accept the 8 collection errors as known."
+}
+```
+```json
+{
+ "id": "TCKT_VNEXT-D2-W45-S3",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~45",
+ "surfaced_at": "2026-10-16T02:26:23Z",
+ "one_line": "The cell's rule (a blank stored requester goes to the firm's first contact) contradicts one existing assertion in test_client_mail_digest.py, which asserts that a blank requester refuses. The worker kept the assertion by giving that single test an empty map.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "base b569143371 infra/aws/lambda/ticket_center/tests/test_client_mail_digest.py lines 67-76: test_send_failed_digest_is_none_when_the_recipient_did_not_resolve sets requester email to empty and asserts WE_CLIENT_NOT_SINGULAR in the output",
+   "TO-R19-L1 step 2 (cell text): else return [contacts[0]] and log WE_CLIENT_RECIPIENT_IGNORED; a blank stored address is not a contact, so it takes this branch",
+   "at 8398ba291b the same test sets os.environ CLIENT_NOTICE_CONTACT_MAP to {} before the send; its assertions are byte-identical to base (one line added)"
+  ]
+ },
+ "spec_asserts": "TO-R19-L1 step 5: an existing test is edited ONLY where a fixture assumed the requester's own address receives the notice with no map set; no existing assertion about another behaviour may change.",
+ "world_is": "A blank stored requester is refused at base but, under the cell's rule, sends to the firm's first contact whenever a contact is configured. The existing test asserts the base refusal. To keep that assertion unchanged the worker configured zero contacts for that one test. The blank-to-first-contact behaviour is now a named case in test_notice_recipient_firm.py.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Raised for the CTO or CVO at L9: confirm that a blank stored requester should reach the firm's first contact (the rule as written) and not be refused. The worker did not change the rule. The fixture edit is recorded in R19_L1_RECORD.json."
+}
+```
+```json
+{
+ "id": "TCKT_VNEXT-D2-W45-S4",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_TCKT_VNEXT~45",
+ "surfaced_at": "2026-10-16T02:26:23Z",
+ "one_line": "The cell's before-arm premise (every new case FAILS on the base) does not hold: three cases pin behaviour the base already has, so they pass on the base lambda by construction.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest -v on the final test file against the base lambda (git show b569143371:infra/aws/lambda/ticket_center/lambda_function.py in .scratch/r19l1_before): 9 of 16 test cases FAILED; 10 further subtests failed inside tests that report PASSED; 19 failed, 7 passed, 9 subtests passed",
+   "passing on base at test level: test_the_stored_requester_that_is_a_contact_gets_the_notice, test_the_single_recipient_guard_still_refuses_two_addresses, test_no_log_line_the_notice_path_writes_contains_a_full_address",
+   "base _client_recipients (lambda_function.py line 1182 at b569143371) returns [requester email] when non-blank: a stored contact is already sent to; base logs digests only"
+  ]
+ },
+ "spec_asserts": "TO-R19-L1 RECORD FACE: the before-arm (the new tests on the base) -- every case FAILS.",
+ "world_is": "Three cases assert behaviour the base already has: a stored requester that is a contact is notified, the single-recipient guard refuses two addresses, and no notice-path log line carries a full address. They pass on the base, and they stay in the file as regression pins. The other cases fail on the base as the cell intends.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Recorded in R19_L1_RECORD.json as the before-arm result. The mutant check (AC2) is separate: it fires on the mutant copy. The order's criteria are unaffected by this premise."
+}
+```
