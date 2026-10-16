@@ -35,6 +35,113 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
 ```json
   [
     {
+     "id": "AMGT_HARVST-D1-W151-S1",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+     "surfaced_at": "2026-10-16T15:45:51Z",
+     "one_line": "HVST-cc-2 step 2 is STOPPED: the guard cannot be built from what a stored silver research_report row carries. The misfiled KMB report fbd50086c4065785 stores no exchange-qualified ticker in any field, and the silver row holds no header or body text, so the step-1g stop rule applies.",
+     "class": "BLOCKING",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "Order step 1d-1e and the preamble: the guard reads the report's own identity from the stored silver row (a header ticker, or header fields the row carries); step 1g: if the report carries no stored header and no ticker, STOP step 2 and file a row.",
+     "world_is": "Silver research-report (5 parts, 355 rows, parts_read 5 of 5; org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out). The 25 stored fields hold no body or header text. Title ticker only in source_relpath, and KMB's five rows carry none. fbd50086c4065785 stores fund_evidence 'RECOMMENDATION: MAINTAIN 2.25% POSITION IN IDVZ' (IDVZ is the fund, not the security) and source_relpath 'Kimberly Clark KMB/Kimberly Clark Mexico Q2 2026 Earnings Update.docx' (a company name). Its extract object (extract_key, a pointer the row stores, not the text) names 'Kimberly-Clark de Mexico SAB (KCM)' and does NOT contain KIMBERA MM. A stored-field rule returns unknown, so the report is served on KMB's list and arm (1) cannot pass. Step 2 not built; tests AC2 not written.",
+     "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+               "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out",
+               "lib/research/corpus/typed.py@4516893b3b:403-462 (record() stores the fund/period/author evidence, not the header)",
+               "infra/aws/ec2/opal-gateway/app/harvest_research.py@4516893b3b:193-212 (_research_reports; REPORT_FIELDS served)",
+               "s3://opal-data-harvest/amgt/harvest/silver/research-report/ (5 parts; read-only GET, 2026-10-16)",
+               "s3://opal-data-harvest/amgt/harvest/bronze/research-report-extract/security_key=KMB_US_Equity/fbd50086c4065785/extract.json (1 GET, 8677 bytes)"
+          ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W151-S2",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+     "surfaced_at": "2026-10-16T15:45:51Z",
+     "one_line": "A strict equal-ticker rule (title ticker present and different from the key ticker) fires on 22 of the 199 silver rows with a title ticker, and every one of the 22 is another listing of the same issuer (PBR_US vs PETR3 BZ, JD_US vs 9618 HK, WALMEX*_MM vs WALMEX MM, AMXB_MM vs AXMB MM, RWE_GR vs RWE GY, NG/_LN vs NG LN).",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "CTO ruling as cited in the order: a research report attaches to a security by its exchange-qualified ticker; order step 1c MEASURE rule: mismatched = header ticker present and differs from the ticker of the row's security_key.",
+     "world_is": "Measured over 355 silver rows (org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out): with_header_ticker=199, mismatched=22. The 22 keys are ADR, cross-listed or differently spelled keys (PBR_US, JD_US, WALMEX*_MM, AMXB_MM, RWE_GR, NG/_LN) whose titles name the same issuer's local line. An equality guard built on this rule would hide 22 correct reports from their own securities. No guard built, so nothing is hidden yet.",
+     "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+               "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out",
+               "s3://opal-data-harvest/amgt/harvest/silver/research-report/ (5 parts; read-only GET, 2026-10-16)"
+          ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-W151-S3",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+     "surfaced_at": "2026-10-16T15:45:51Z",
+     "one_line": "The order's premise that the other KMB rows are correct does not hold: KMB_US_Equity holds a second silver row with the same Kimberly Clark Mexico title as a .pdf (1a3b56044db679a5), carrying the same IDVZ fund evidence. Its body was not read.",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "disarm_owner": "2.0.0_SA_COO~W1",
+     "spec_asserts": "Order step 1b: print 4 other KMB reports that are correctly KMB's; decomposition note: the misfile is the one report fbd50086c4065785 and stays in bronze under KMB's partition.",
+     "world_is": "KMB_US_Equity holds 5 silver rows (org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out). fbd50086c4065785 (.docx) and 1a3b56044db679a5 (.pdf) share the title 'Kimberly Clark Mexico Q2 2026 Earnings Update' and fund_evidence 'RECOMMENDATION: MAINTAIN 2.25% POSITION IN IDVZ'. The other three rows are KIMBERLY CLARK ONE PAGER 2026 02 09 (.xlsx and .pdf) and PR2Q26.pdf, all fund None. The .pdf's body was not read (no GET spent on it). A KMB served list read today carries both.",
+     "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+               "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~151/measure.out",
+               "s3://opal-data-harvest/amgt/harvest/silver/research-report/ (5 parts; read-only GET, 2026-10-16) part date=2026-09-23/part-20260923T044515Z.parquet, report_id 1a3b56044db679a5"
+          ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W151-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+      "surfaced_at": "2026-10-16T16:21:29Z",
+      "one_line": "The amended order names the next row id as AMGT_HARVST-D1-W151-S1, but S1 to S3 already exist in this channel from the first pass of this slot. The re-seat instruction names S4, so this row takes S4 and no id is reused.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Amended order, the proof-of-spec paragraph: 'Your next surprise row id is AMGT_HARVST-D1-W151-S1'.",
+      "world_is": "INVESTIGATION_v1.md at 42a6ff937c holds AMGT_HARVST-D1-W151-S1, -S2 and -S3 (the rows of the first pass, at lines 38, 62 and 82 of that file). The next free id of this slot is S4.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md@42a6ff937c:38,62,82",
+          "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cc-2.a-research-report-attaches-to-the-security-it-is-about.md@d10b16f3f0 (the amended order, the next-row-id sentence of the proof-of-spec paragraph)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W151-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~151",
+      "surfaced_at": "2026-10-16T16:21:29Z",
+      "one_line": "Amendment 1 step 2b names run.note as the existing note mechanism, but run.note only carries a listing prefix into source_keys and no text. The exclusion note is written to denominator_note, the body's free-text note, and the excluded list to misfiled_reports_excluded.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Amended order step 2b: say the exclusion 'in the tool's existing note mechanism (read how run.note and run.miss are used in _research)', never silent.",
+      "world_is": "At 4516893b3b, harvest_research.py run.note(prefix) (lines 110-111) appends a prefix to the sources list and holds no text; it is called only for listing prefixes (lines 247 and 273). run.miss(part, reason) records a reason for an ABSENT part only. The one free-text note in the body is body['denominator_note'] (line 309). At cfa61fbc79 the exclusion and attachment notes are appended to denominator_note, each with its number and the key.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@4516893b3b:110-111 (run.note appends to sources)",
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@4516893b3b:247,273 (the two run.note calls)",
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@4516893b3b:309 (body denominator_note)",
+          "infra/aws/ec2/opal-gateway/app/harvest_research.py@cfa61fbc79 (_research appends the exclusion note)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
       "id": "AMGT_HARVST-Z-S1",
       "project": "AMGT_HARVST",
       "fabric": "site-z",
