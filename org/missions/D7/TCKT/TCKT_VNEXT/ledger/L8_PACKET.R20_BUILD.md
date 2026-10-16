@@ -24,3 +24,7 @@
 - The worker's folder run of the ticket-service tests is not clean in a worker worktree (11 failed, 8 errors; the same counts on the unchanged base; none names `attachment_open_ticket`): rows `TCKT_VNEXT-D2-W49-S1` and `S2` (INERT, observations).
 - The release's result file, `r20_rel_check.py` printing `REL-OK` and the ledger close are TV2's and are not read at this writing; the issuer re-runs the check when they exist and amends this packet if it differs.
 - The workspace commits above are LOCAL. The portal DEV merge is read on origin.
+
+## 4. UPDATE (issuer, 2026-10-16 ~23:4xZ): the release result is in and read
+
+`TO-R20-REL` is complete (TV2 msg 10018). I re-ran `python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R20_CHECKS/r20_rel_check.py`: `REL-OK code_sha256=iRxJZYp6IXEtiXDRMT4R/EOwKvsqh5Id5NNgPcpy3RM= fence=present env=unchanged`. The result file `org/tier2_senior/0.7.0_AE_CloudOps~TV2/deliverables/r20_rel/R20_REL_RESULT.json` (blob `f097629041a1`) records the apply at 2026-10-16T23:28:32Z, `built_from_sha` `44933b266b`, the member diff against the live member as one hunk (6 added, 1 removed, `attachment_open_ticket`), plan 0 add / 1 change / 0 destroy (the function's code only), the CTO's count at the apply (33 tickets scanned, 19 with an attachment, 0 whose firms differ), the rollback copy (S3 VersionId `0iVZCJN6gNZGepFpC3Fw2__53OnCuXja`), the ledger `tckt-vnext-r20-rel-20261016` CLOSED 23:31:52Z. Section 3's third limit is closed. The other limits stand: nothing in this packet was rendered, and `R20RV-AC1J` is not in it.
