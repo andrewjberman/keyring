@@ -1904,3 +1904,21 @@ No edge to MP-pf-9: the release is bundle-only and excused these six at A1; this
 2. A release tree cut on an older trunk cannot run the tree-local naming gate: commits there run the TRUNK's `.tools/safe-commit.sh` from inside the tree.
 3. A release branch is cut on the live-base lineage and does NOT merge to `box/sitez` (MP-pf-9: 24 conflicting gateway paths). The record of a release lands through a LANDING branch cut from `box/sitez` HEAD carrying only the release's three artifacts (the `opal-gateway` block of `EC2_MANIFEST.json`, the completion entry, the pre-act record), committed by the APPLIER under its own lane (the issuer's lane may not commit `EC2_MANIFEST.json` or the applier's folder), then drained by the issuer. The release branch is kept: the manifest's `deployed_commit` names its commit.
 4. The manifest's `file_checksums` are taken from the trunk, not from a release tree cut earlier: a release that moves no gateway file leaves the files of the live base deployed (MP-pf-9: the release block's md5 values mismatched the files at `38fe44d5cb`; the trunk's matched 10 of 10).
+
+# v18 -- WORKSTREAM PF, ROUND 8: the Indexes box shows the same scroll cue as a tools table (2026-10-16 ~14:3xZ, 2.0.0_SA_COO~MP)
+
+Source: the CTO's round analysis `ledger/ROUND_ANALYSIS.pf-s1.md` @b6efe81187 (update ~14:2xZ, after the CVO's v10 read: S1 item (iii) MET, bounded): "Enrichment, cut in the next mcportal batch, LOCAL: `.gateway-indexes` gets the same scroll cue as `.gateway-scroll`, so a card's Indexes box shows it scrolls ... graded on the fixture's ~65-character name." PRD v0.9 unchanged; ENDPOINT unchanged.
+
+## PF8.0 WHAT IS MEASURED BEFORE THE CUT (issuer, ~14:3xZ)
+
+At mcportal c66ca82952 (origin DEV, live on the host): `.gateway-indexes { overflow-x: auto; }` is the whole rule (gateway.css), so a name wider than the box scrolls with nothing to say so. `.gateway-scroll` carries the cue: four `linear-gradient` layers, `background-position`, `background-repeat`, `background-size`, and `background-attachment: local, local, scroll, scroll`. In a real browser at 390 px with a 65-character name in every index list, 7 of 7 `p.gateway-indexes` scroll and 0 of 7 carry a cue (`pf11.AC2.sh` base: FAIL). The page itself still fits (`pf8.AC2.sh` base: 390 of 390, 1280 of 1280, 0 offenders: the bound). `bun test src` reads 72 pass, 0 fail.
+
+## PF8.1 CELL `MP-pf-11` -- the Indexes box shows the scroll cue  (view; one chain; LOCAL)
+
+1. `mcportal/src/pages/gateway/gateway.css`: the `.gateway-indexes` rule carries the same cue declarations as `.gateway-scroll` (the four gradient layers, position, repeat, size, attachment), by sharing them (a selector list) or repeating them; `overflow-x: auto` stays, and the paragraph keeps wrapping between names. The existing tests `a scroll box shows a cue that more columns lie off the edge` and `an index list holding an unbroken real-length name scrolls inside its own box` keep their names and pass; the white end covers must match the paragraph's own background so no patch shows.
+2. ONE test in `gateway.test.tsx`: `an index list carries the same scroll cue as a tools table` (the rule block or blocks selecting `.gateway-indexes` hold a `background-image` with `linear-gradient(` and a `background-attachment` naming `local` and `scroll`).
+Criteria: AC1 the named test and `bun test src` 73 or more pass; AC2 the cue read in a real browser at 390 px; AC3 the bound: the page still does not scroll sideways (`pf8.AC2.sh`).
+
+## PF8.2 WHAT THIS CUT DOES NOT CLAIM
+
+The cue is graded on the fixture's planted 65-character name, never imaged on real data (the real index names carry Schwab master numbers). The look at it on the served page is Andrew's (call 21d9). Like MP-pf-8 it reaches the host only with the next mcportal bundle release (a new `mcportal_commit` in EC2_MANIFEST); nothing here deploys it.

@@ -24730,3 +24730,125 @@ name the one known failure instead of silently inheriting it.
   "notes": "Owner of the decision: the lane config belongs to 0.0.0_AB_MSTR (the CTO for the rule). The issuer's act: record it and carry it in the L10 slug. Not blocking ap-29: the override is the audited escape and the rows are signed over in the ask."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W125-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~125",
+  "surfaced_at": "2026-10-16T14:05:00Z",
+  "one_line": "tests/test_og_ch1.py test_ogch1_ac03 pins the old -live role key at line 170 and fails after the OG-en-12 change; that file is outside this order's <paths>, so the one-line update is not mine to make.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: python -m pytest tests/test_og_ch1.py in C:/tmp/wk-oplgtw-125/infra/aws/ec2/opal-gateway at e3b32e3789: FAILED test_ogch1_ac03, AssertionError: assert 'blackdiamond49flive' == 'blackdiamond49f'.",
+      "TEXT: infra/aws/ec2/opal-gateway/tests/test_og_ch1.py:170 @b758457a14 asserts client_role.role_key('blackdiamond', '49f-live') == 'blackdiamond49f'; the ruled key at e3b32e3789 is blackdiamond49flive.",
+      "TEXT: the <paths> of NFRA_OPLGTW.TO-OG-en-12 list tests/test_og_en12.py, tests/test_og_cl1..7 and tests/test_client_role.py; tests/test_og_ch1.py is not among them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-12 says an existing test that pins the old role_key for a -live segment is updated with the smallest edit and named; the write grant is the order's <paths>, and a path the order lacks is a BLOCKING row, never an override.",
+  "world_is": "The ruled key blackdiamond49flive makes test_og_ch1.py line 170 false. The test passed at b758457a14 and fails at e3b32e3789. I did not edit it: test_og_ch1.py is outside the grant and AC2 bounds the write set. AC1 and AC2 of OG-en-12 do not run it.",
+  "notes": "The fix is one line in test_og_ch1.py: the assertion takes the value blackdiamond49flive (the ruled truth, not a weakening). It needs that path in a grant. Disarm: the issuer adds the path to a grant or re-cuts the assertion."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W125-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~125",
+  "surfaced_at": "2026-10-16T14:05:00Z",
+  "one_line": "OG-en-12 names an existing refusal for a missing role; none exists. client_for fell back to the default client when the role variable was unset, so I added a refusal for the -live key only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TEXT: infra/aws/ec2/opal-gateway/app/client_role.py@b758457a14:103 reads 'return s3_client(vendor) or default_client()'.",
+      "TEXT: tests/test_og_ch1.py@b758457a14:211-217 pins the fallback to the default client for a 49F read with its variable unset.",
+      "RUN: python -m pytest tests/test_og_en12.py::test_ogen12_ac03 at e3b32e3789 passes: the live read raises LiveRoleUnset with touched == []."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-12 says the live read refuses closed with the gateway's existing refusal for a missing role, and never falls back to the 49f role, the instance role or the internal reader.",
+  "world_is": "At b758457a14 an unset role variable fell back to the box's default client; no refusal existed to reuse. At e3b32e3789 client_for(vendor, live=True) raises LiveRoleUnset (code live_role_unset) for a -live key with its variable unset. Every non-live call keeps the fallback.",
+  "notes": "INERT: no live read runs before the OG-ap-29 role and the batched release. The non-live fallback is unchanged and is pinned by test_og_ch1.py."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W125-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~125",
+  "surfaced_at": "2026-10-16T14:05:00Z",
+  "one_line": "The order's <paths> names infra/aws/ec2/opal-gateway/tests/test_client_role.py, which does not exist in this tree; I did not create it, and the cell's role-key tests live in test_og_en12.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GLOB: tests/test_client_role* under C:/tmp/wk-oplgtw-125/infra/aws/ec2/opal-gateway returned no files at e3b32e3789."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-12 lists tests/test_client_role.py among the files this cell writes, and says to update an existing role-key test there if one pins the old truth.",
+  "world_is": "No test_client_role file exists at b758457a14 in this tree. The role-key assertions for this change are in test_og_en12.py::test_ogen12_ac03. The one existing role-key assertion that breaks is in test_og_ch1.py (row S1).",
+  "notes": "INERT: the grant lists a path that is not in the tree; creating it was not part of the cell's criteria."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W125-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~125",
+  "surfaced_at": "2026-10-16T14:05:00Z",
+  "one_line": "OG-en-12 says list_partitions returns the flat dates newest first as today; today's list_partitions returns ascending (oldest first), and newest_partition takes the last element.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TEXT: infra/aws/ec2/opal-gateway/app/client_core.py@b758457a14 list_partitions ends 'return sorted(found)'.",
+      "TEXT: infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py _select takes chosen[-1] as the newest partition."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-en-12 flat-layout clause: list_partitions returns the two flat dates, newest first as today.",
+  "world_is": "Today's order is ascending. I kept it, and test_ogen12_ac05 asserts ascending. A descending order would move the adapter's newest-partition read, and that read is not part of this cell.",
+  "notes": "INERT: the order's wording and the code disagree on direction; the code's order is the one the adapter reads."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W125-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~125",
+  "surfaced_at": "2026-10-16T14:05:00Z",
+  "one_line": "This worktree is a sparse checkout: org/surprise_channel/schemas is skip-worktree, and several gateway tests read data files this tree does not carry, so they fail here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git config --get core.sparseCheckout returned true in C:/tmp/wk-oplgtw-125; git ls-files -v shows S on org/surprise_channel/schemas/investigation_item.schema.json.",
+      "RUN: python -m pytest on the OG client tests and test_og_mu1.py, test_blackdiamond.py, test_og_ch1.py: FileNotFoundError on data/transcripts/scripts/updates/intake.py, workflows/atom_decomposition/catalog_entries/blackdiamond_fees.yaml and data/mdpf/config/partner_roster.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker worktree carries the paths its order names and the inputs the gateway's offline tests read.",
+  "world_is": "This is the condition of NFRA_OPLGTW-Z-W123-S5, seen again in this worktree. Failing here and not caused by this change: test_og_ch1.py::test_ogch1_ac04, test_og_mu1.py::test_ogmu1_ac01 and ac02, test_blackdiamond.py::test_mx_t13_catalog_gated. The change does not touch those reads. test_og_ch1.py::test_ogch1_ac02 failed in one ordered run with 'a different adapter is already registered' and passed in a run with a larger file list: it depends on test order through the module-level _adapters.",
+  "notes": "OBSERVATION: the row gate's schema read is not on disk in this tree either; I validated the row shape against the HEAD copy through git show."
+}
+```
