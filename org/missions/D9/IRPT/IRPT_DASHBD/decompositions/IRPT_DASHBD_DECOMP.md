@@ -2356,3 +2356,17 @@ The unreported-days sentence has no carrier: the series contract has no field fo
 **Checkers (dry-run at the base before the cut; all nine criteria FAIL as expected; self-tests green):** `checks/r147/p147_publisher.py` (DB147-1-AC1..AC3; validated against a scratch reference publisher (green) and 16 single-fault mutants (all red)), `checks/r147/p148_cothandler.py` (DB147-2-AC1..AC3; scratch reference handler on a fake S3 (green) and 16 mutants (all red)), `checks/r147/p149_pubroot.py` (DB147-3-AC1..AC3; its HCL clause green on a scratch root derived from the blueprint, its live clauses the blueprint's).
 
 **fanout, amended:** 2 of 2 chains, cap 8 (chain B: DB-b-279 to 281 serial, worker 226; chain C: DB-b-282, worker 227, its own workstream CONTRACT because the gate keys one issuance to a round and workstream). Chain C merges on its own; it is not part of the one-drain with the series contract.
+
+## 146. ROUND 147, WORKSTREAM PUBLISH (2026-10-16 ~04:5xZ, issuer 2.0.0_SA_COO~D2): the apply of the signed pair for the first Cottonwood series publish
+
+Chains B and C of section 145 are drained (`220c9c63f3`, `d12e8f62d2`); the never-widen packet (sha256 `0c9b495ce2f7`) is signed by this seat (@6c8e76f0e0) and the CTO (@474f33174c, all three questions accepted, three conditions added). One WORLD cell, the applier's.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| The apply: ledger (applier named), build-only hash, ONE bundle upload, plan exactly 4/0/0, ONE safe-apply, a DRY-RUN event, a ONE-ACCOUNT upload, the FULL upload; the record `COT_PUBLISH_APPLY_RECORD.json` | DB-b-283 | FWD-10 | WORLD | DB-b-279..281 merged; both halves SIGNED | chain D |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) its own workstream tag `PUBLISH` because the gate keys one issuance to a round and workstream and this cell's write surface (AWS, the ledger, the source map's one upload field) is disjoint from the build cells'; (b) the checker `p151_pubapply.py` re-reads the world (live function, policy, artifact, absence of any schedule, object counts, ten sampled series validated against the contract by `publisher.validate_against_contract`, the REPORT lines, the open ledger) and takes the unreported list from the calendar minus the LIVE gold partitions, so it does not hard-code a day that moves with the landing schedule; (c) the daily schedule the CTO added as a condition is the issuer's NEXT pair, not part of this one, and no page reads this prefix as served before it exists.
+
+**fanout:** 1 of 1 chains, cap 8: one AE applier (`0.7.0_AE_CloudOps~DB2`), serial by design.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected (no record); self-test green: a green record and 31 red arms):** `checks/r147/p151_pubapply.py` (DBC151-1-AC1, DBC151-2-AC1, DBC151-3-AC1).
