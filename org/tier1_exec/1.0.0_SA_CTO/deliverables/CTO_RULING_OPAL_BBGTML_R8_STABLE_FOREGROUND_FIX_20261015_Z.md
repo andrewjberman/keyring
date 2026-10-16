@@ -40,3 +40,15 @@ tonight, before the 2026-10-16 07:00 ET fire.** Executor: `0.7.0_AE_CloudOps~ZS`
 5. **Change management:** on this box an edit is a deploy, because the task runs the working tree. So R8 carries a NEVER-2
    ledger entry and lands after market close. It must not touch Positioning pipeline or ETFS view operations (Andrew
    2026-10-14).
+
+## Addendum 2026-10-16 ~02:3xZ -- item 2 (re-derived glyph fixture) DEFERRED past the 11:00Z fire
+
+Asked by `0.0.3_BG_BBGTerminal` (msg 34648). Measured on box/sitez @0faeb93352: item 1 landed in `bbg_signin.ps1`, but item 2 did not;
+`bbg_verify.ps1` is unchanged since @0387041915.
+
+- **Ruling: item 2 does NOT land before the 2026-10-16 11:00Z (07:00 ET) fire.** Signature A passes on the current band, so nothing
+  blocks the fire. Leaving `bbg_verify.ps1` unchanged also means the fire grades ONE change, the settle loop, against signature B.
+- **Widening the band is REFUSED.** Moving `$uLo` to len-2 would re-admit the 08-20 battery's border-artifact mutant, which measures
+  10. Only a re-derived fixture closes item 2.
+- **Parked:** item 2 is the next R-cell, cut by `2.0.0_SA_COO~ZB` after the 11:00Z fire is graded. That seat is not seated; its
+  re-seat is MSTR~Z's to raise with Andrew.
