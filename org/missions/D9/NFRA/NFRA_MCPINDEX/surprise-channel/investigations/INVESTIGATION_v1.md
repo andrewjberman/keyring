@@ -9474,6 +9474,32 @@ carries none.
     },
     "spec_asserts": "The order bounds (item 1) and the face name the group map as the only bucket source for the four new live rows, and do not list the fork registry as a surface for the eight legacy rows.",
     "world_is": "The fork registry join restores bucket and key_template for every table row by hashed contract id, so the eight legacy rows took the live bucket and layout from the registry, not from their entries. The worker did not run the loader path before A3; the registry edit is limited to those eight rows, and c26.AC2 now grades the loader path."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S131",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T16:20Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W49-S8",
+      "NFRA_MCPINDEX-Z-W49-S9"
+    ],
+    "one_line": "ISSUER DISPOSITION of worker ~49's rows S8 (firm: null made the group map conflict) and S9 (the fork registry restored the live bucket for the eight legacy contracts), and RECORD of its row S10 (the enforcing naming gate refuses the entity names opal_data_bd_silver_<t>): three defects of the issuer's order face, each fixed and re-graded on the merged tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S8: the issuer's trial emit crashed in attach_tool_buckets (TypeError, a None bucket); A3 a608e7bc84 deleted the four 'firm: null' lines; c26.AC1 now builds the rows through the emitter's own functions (4 of 4 applied, 0 conflicts).",
+        "S9: the second trial emit was REFUSED with 8 errors (the group map would move the valid S3 bucket opal-data-bd); A4 d1092a10f6 corrected the eight registry rows (bucket opal-data-assets, the frozen copy's key_template); c26.AC2 now builds the eight rows through the loader (0 conflicts).",
+        "S10 (row filed on the archived branch arch-wk-NFRA_MCPINDEX-49-a5-oldnames at f02d1c0cd6, not on trunk): run in ENFORCE the naming gate printed 4 REFUSE on the first placed catalog (the entity names, because the token bd aliases 49financial); the entities were renamed blackdiamond_live_<t> (e717bd2fb2) and the enforcing gate on the final placed diff exits 0 with 0 REFUSE (worker log logs/naming_enforce.log, merge 68d5c5dfa8)."
+      ]
+    },
+    "spec_asserts": "The orders MX-c-26 (A2, A3) and the face written by the issuer asserted that the four new live entries could carry firm: null and an entity name with the token bd, and that a clean table row needs no fork-registry entry.",
+    "world_is": "The emitter's group map treats a present firm: None against a mapped firm as a conflict; the loader joins the fork registry by contract id and the join overrides bucket and key_template; the naming gate's alias table makes bd a carrier of 49financial. All three were found by running the emitter and the enforcing gate on the candidate, not by the worker's criteria as first written.",
+    "dismissal_reason": "The faces were the issuer's; each defect was fixed by an amendment and the placed catalog (blob b81c48aa3c, md5 910ed6e3) re-graded PASS by r16.AC1, r16.AC2, c23.AC4, c21.AC2 and r13.AC3 strict on the emit, the enforcing naming gate exit 0, and c26.AC1 to AC3 plus r16.AC1/AC2 on the merged tree. The lesson is carried to the round-19 analysis: run the emitter AND the enforcing gate on a candidate before a cell that feeds them is flipped."
   }
 ]
 ```
