@@ -20518,3 +20518,29 @@
   "notes": "Resolves IRPT_ANLREQ-D2-W163-S1, IRPT_ANLREQ-D2-W163-S2 and IRPT_ANLREQ-D2-W163-S3."
 }
 ```
+
+## IRPT_ANLREQ-D2-W222-S1 -- the cited CTO ruling and the surprise-channel schema are not checked out in the worker worktree (sparse cone); the test does not need them
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W222-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~222",
+  "surfaced_at": "2026-10-16T02:22:43Z",
+  "one_line": "The worker face of IRPT_ANLREQ.TO-AR-tz-62 cites the CTO ruling org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_ANLREQ_FOUR_LANES_END_TO_END_20261015.md (ADDENDUM 7) and the surprise-channel schema, but the worktree sparse cone excludes both folders; the ruling reads only through git show, and the FWD-5 test file was written from the cited harness and the contract rule in the worker face, which does not need the ruling text.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-AR-tz-62 worker face: 'Cut on the CTO's ruling org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_ANLREQ_FOUR_LANES_END_TO_END_20261015.md ADDENDUM 7'; the surprise channel schema is the row carrier named by the worker face. The worker face names no sparse-cone requirement for these folders.",
+  "world_is": "At worktree HEAD 6df6c60552 (branch wk-IRPT_ANLREQ-222) the sparse-checkout list (git sparse-checkout list) has no org/tier1_exec/1.0.0_SA_CTO and no org/surprise_channel entry; the ruling path is in the index (git ls-files) but not materialized, so ls and Read return absent. git show HEAD:<ruling path> returns 13645 bytes, and git show HEAD:org/surprise_channel/schemas/investigation_item.schema.json reads. The test file (commit 794415c168) reads only the harness files and lambda_function.py, all present in the cone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list at worktree C:/dev/wk-irpt-anlreq-222 (entries include org/tier1_exec/2.0.0_SA_COO and org/missions/D9/IRPT/IRPT_ANLREQ; none for org/tier1_exec/1.0.0_SA_CTO or org/surprise_channel)",
+      "ls of org/tier1_exec/1.0.0_SA_CTO/deliverables in the worktree: No such file or directory; git show HEAD:org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_ANLREQ_FOUR_LANES_END_TO_END_20261015.md piped to wc -c = 13645",
+      "test file commit 794415c168 (infra/aws/lambda/ticket_center/tests/test_cross_firm_intake_list.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
