@@ -15,6 +15,7 @@ Exit 0 on all PASS, 1 on any FAIL.
 """
 from __future__ import annotations
 
+import json
 import sys
 import tempfile
 from pathlib import Path
@@ -89,8 +90,8 @@ def lambda_handler(event, context):
     s3_client.delete_object(Bucket='b', Key='k')
 ''')
 
-    # lambda-source-map.json — wires Lambdas to roles
-    _write(root / "infra/aws/lambda/ci/lambda-source-map.json", '''{
+    # the Lambda function map — wires Lambdas to roles
+    _fmap_text = '''{
   "fixture-user-data-shipper": {
     "source": "infra/aws/lambda/fixture-user-data-shipper",
     "role": "fixture-user-data-shipper-role"
@@ -107,7 +108,10 @@ def lambda_handler(event, context):
     "source": "infra/aws/lambda/fixture-real-gap",
     "role": "fixture-real-gap-role"
   }
-}''')
+}'''
+    # CT-ca-1: the Lambda function map is one <name>.json per function (the entry object alone)
+    for _name, _entry in json.loads(_fmap_text).items():
+        _write(root / "infra/aws/lambda/ci/function-map" / (_name + ".json"), json.dumps(_entry, indent=2))
 
     # Terraform iam.tf — defines roles + inline policies + managed attachment
     _write(root / "infra/aws/terraform/fixture/iam.tf", '''

@@ -310,21 +310,17 @@ _SSM_TARGET_TAG = re.compile(
 def extract_lambda_ec2_edges(graph: TraceGraph, workspace_root: Path):
     """Detect Lambda -> EC2 edges via SSM send_command calls in Lambda source.
 
-    Scans each Lambda source file (via lambda-source-map.json) for
+    Scans each Lambda source file (via the function map) for
     ssm.send_command / ssm_client.send_command calls. Creates INVOKES_EC2
     edges in the graph: lambda:{name} -> ec2:{instance_id_or_name}.
     """
-    source_map_file = (
-        workspace_root / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
-    )
-    if not source_map_file.exists():
-        return
-
-    try:
-        import json as _json
-        source_map = _json.loads(source_map_file.read_text(encoding="utf-8"))
-    except Exception:
-        return
+    # CT-ca-1 (NFRA_CTLPLN round 30): the function map is one <name>.json per function. A missing or empty folder RAISES
+    # (the old single-file read returned silently when the file was absent).
+    fn_dir = workspace_root / "infra" / "aws" / "lambda" / "ci" / "function-map"
+    if not fn_dir.is_dir() or not any(fn_dir.glob("*.json")):
+        raise FileNotFoundError("function-map folder missing or empty: %s" % fn_dir)
+    import json as _json
+    source_map = {p.stem: _json.loads(p.read_text(encoding="utf-8")) for p in sorted(fn_dir.glob("*.json"))}
 
     for fn_name, entry in source_map.items():
         # Skip metadata keys (_comment / _README / _schema etc.): their VALUES are prose, not source

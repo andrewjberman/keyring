@@ -21,6 +21,34 @@ import lambdamap_cli as lm  # noqa: E402
 
 ROOT = lm.workspace_root()
 
+# CT-ca-1: the function map is one file per function under this folder (the old single map file is gone).
+FMAP_REL = os.path.join("infra", "aws", "lambda", "ci", "function-map")
+
+
+def _write_fmap(root, sm):
+    """Write {"functions": {...}} as one file per function, clearing the folder first (the old single-file write)."""
+    import json  # noqa: PLC0415
+    d = os.path.join(str(root), FMAP_REL)
+    os.makedirs(d, exist_ok=True)
+    for f in os.listdir(d):
+        if f.endswith(".json"):
+            os.remove(os.path.join(d, f))
+    for name, entry in sm["functions"].items():
+        with open(os.path.join(d, name + ".json"), "w", encoding="utf-8") as fh:
+            fh.write(json.dumps(entry, indent=2) + "\n")
+
+
+def _read_fmap(root):
+    """The folder read back as {"functions": {...}} (the shape the old single file had)."""
+    import json  # noqa: PLC0415
+    d = os.path.join(str(root), FMAP_REL)
+    out = {}
+    for f in sorted(os.listdir(d)):
+        if f.endswith(".json"):
+            with open(os.path.join(d, f), encoding="utf-8") as fh:
+                out[f[:-5]] = json.load(fh)
+    return {"functions": out}
+
 
 @pytest.fixture(scope="module")
 def findings():
@@ -166,14 +194,14 @@ def test_reconcile_deployed_holds_half_landed(tmp_path, monkeypatch):
         "stale": {"artifact_sha256": _GOOD, "artifact_s3_key": "ks"},   # live==S3 -> reconcile
         "half":  {"artifact_sha256": _GOOD, "artifact_s3_key": "kh"},   # live!=S3 -> HOLD
     }}
-    (smdir / "lambda-source-map.json").write_text(json.dumps(sm))
+    _write_fmap(tmp_path, sm)
     LIVE = "Z" * 43 + "="
     monkeypatch.setattr(lm, "live_code_shas", lambda: {"stale": LIVE, "half": LIVE})
     monkeypatch.setattr(lm, "s3_artifact_sha", lambda k: {"ks": LIVE, "kh": "Q" * 43 + "="}.get(k))
     monkeypatch.setattr(lm, "live_lambda_modified", lambda: {})        # no settling -> persistent
     rc = lm.reconcile_deployed(str(tmp_path), ["stale", "half"], settle_retry_seconds=0)
     assert rc == 1, "a held half-landed must exit 1 (C1 alert)"
-    out = json.loads((smdir / "lambda-source-map.json").read_text())
+    out = _read_fmap(tmp_path)
     assert out["functions"]["stale"]["artifact_sha256"] == LIVE, "stale-record reconciled to live"
     assert out["functions"]["half"]["artifact_sha256"] == _GOOD, "half-landed record UNCHANGED (not laundered)"
     actions = {json.loads(ln)["fn"]: json.loads(ln)["action"]
@@ -191,27 +219,27 @@ def test_reconcile_deployed_first_records_no_record(tmp_path, monkeypatch):
         "fresh": {"artifact_s3_key": "kf"},   # live==S3 -> first record
         "local": {},                          # no S3 key -> left unrecorded
     }}
-    (smdir / "lambda-source-map.json").write_text(json.dumps(sm))
+    _write_fmap(tmp_path, sm)
     LIVE = "Z" * 43 + "="
     monkeypatch.setattr(lm, "live_code_shas", lambda: {"fresh": LIVE, "local": LIVE, "half": LIVE})
     monkeypatch.setattr(lm, "s3_artifact_sha", lambda k: {"kf": LIVE, "kh": "Q" * 43 + "="}.get(k))
     monkeypatch.setattr(lm, "live_lambda_modified", lambda: {})
     assert lm.reconcile_deployed(str(tmp_path), ["fresh", "local"], settle_retry_seconds=0) == 0
-    out = json.loads((smdir / "lambda-source-map.json").read_text())
+    out = _read_fmap(tmp_path)
     assert out["functions"]["fresh"]["artifact_sha256"] == LIVE, "no-record + live==S3 is first-recorded"
     assert "artifact_sha256" not in out["functions"]["local"], "no S3 proof -> never recorded from live alone"
     rows = [json.loads(ln) for ln in (smdir / "source-map-reconcile-audit.jsonl").read_text().splitlines()]
     assert [(r["fn"], r["action"]) for r in rows] == [("fresh", "first-record")]
     sm["functions"] = {"half": {"artifact_s3_key": "kh"}}   # no record, live!=S3 -> HOLD
-    (smdir / "lambda-source-map.json").write_text(json.dumps(sm))
+    _write_fmap(tmp_path, sm)
     assert lm.reconcile_deployed(str(tmp_path), ["half"], settle_retry_seconds=0) == 1
-    assert "artifact_sha256" not in json.loads((smdir / "lambda-source-map.json").read_text())["functions"]["half"]
+    assert "artifact_sha256" not in _read_fmap(tmp_path)["functions"]["half"]
 
 
 def test_reconcile_deployed_fail_safe_empty_set(tmp_path):
     # FAIL-SAFE (CTO condition): empty/unknown deployed set -> NO-OP exit 0 (never reconcile-all)
     smdir = tmp_path / "infra" / "aws" / "lambda" / "ci"
     smdir.mkdir(parents=True)
-    (smdir / "lambda-source-map.json").write_text('{"functions": {"x": {"artifact_sha256": "%s"}}}' % _GOOD)
+    _write_fmap(tmp_path, {"functions": {"x": {"artifact_sha256": _GOOD}}})
     assert lm.reconcile_deployed(str(tmp_path), [], settle_retry_seconds=0) == 0
     assert lm.reconcile_deployed(str(tmp_path), ["no-such-fn"], settle_retry_seconds=0) == 0
