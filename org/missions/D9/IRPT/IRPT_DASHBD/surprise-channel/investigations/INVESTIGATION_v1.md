@@ -19869,7 +19869,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
-
 ## IRPT_DASHBD-D2-S102 -- FWD-3 hops 2-6 have owners, and the ruled producer meets an existing applied producer: one question for the CTO
 
 ```json
@@ -20910,3 +20909,86 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. The partition is not a decision basis in the record (the TO names rule, category and description); the flow-class question is carried to the CTO."
 }
 ```
+
+## IRPT_DASHBD-D2-W417-S1 -- bun run lint in the portal exits 1 on the DEV base: 2 errors, both in TicketCenter test files outside this order's grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W417-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~417",
+  "surfaced_at": "2026-10-16T04:57:56Z",
+  "one_line": "bun run lint in the portal exits 1 with 2 errors (372 problems); both errors sit in TicketCenter test files this order does not touch, so the 0-errors premise of TO-DB-c-25 step 6 does not hold at the DEV base. The six files this order changes carry no lint error.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@dd417a10 bun run lint (eslint .) -> 372 problems (2 errors, 370 warnings); error 1 no-control-regex at src/pages/TicketCenter/__tests__/filing-decision-tree.test.tsx 299:12; error 2 no-regex-spaces at src/pages/TicketCenter/__tests__/filing-hint.test.tsx 190:37",
+      "portal diff 03f92d82..dd417a10 (git -C portal diff --name-only) names six files, all under src/pages/InvestorReporting; none under TicketCenter",
+      "measured output: .scratch/lint_final.txt in the worktree (lint_rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-c-25 step 6: from the portal worktree, bun run typecheck and bun run lint with 0 errors each.",
+  "world_is": "bun run typecheck exits 0. bun run lint exits 1 with 2 errors and 370 warnings across the repo; the two errors are pre-existing in TicketCenter test files at the base, which this order did not edit. No lint error is in a file this order changes."
+}
+```
+
+## IRPT_DASHBD-D2-W417-S2 -- the full-folder bun test run has no base measured by the same command; 35 of its failing names sit outside the two-folder base
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W417-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~417",
+  "surfaced_at": "2026-10-16T04:57:56Z",
+  "one_line": "TO-DB-c-25 step 6 compares bun test src/pages/InvestorReporting with a base; the base measured in step 1 was the two named folders only, so the full-folder subset claim cannot be closed from this order's measurements. The 35 extra failing names are ENOENT and DOM-global failures in files that import none of the changed modules.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SUITE_NAMES_R147.txt in the deliverables folder: two-folder base 10 unique names, after 9 unique names, subset True, only IV-e-124 removed",
+      "portal@dd417a10 bun test src/pages/InvestorReporting: 1023 pass, 25 skip, 68 fail, 27 errors over 1116 tests in 403 files; the failing names outside the base run are in fe-s-1, fe-s-11, fe-s-13, fe-s-14, fe-s-19, fe-s-25, fe-s-35, fe-s-38, fe-s-49, fe-s-50, mvp-selection and tabs/analysis",
+      "workspace git sparse-checkout list at HEAD omits docs/ and org/surprise_channel/; the ENOENT paths are docs/contracts/investor-reporting/v1/*.json and infra/aws/lambda/investor-reporting/_contracts/* (sparse-cone cause as recorded by IRPT_DASHBD-D2-W416-S1)",
+      "tabs/analysis/tests/prospect-suggested-swaps.test.tsx fails with ReferenceError document is not defined at its line 52 (AR-y-248)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-c-25 step 6: the failing-test names after bun test src/pages/InvestorReporting are a subset of the names before.",
+  "world_is": "The two-folder base and after runs satisfy the subset (9 names after, all within the 10 before; IV-e-124 leaves the set). The full-folder after run fails 68 tests and errors 27; their base was not run, so the subset over the full folder is not measured here. None of the 35 names imports seriesContract or DashboardPerformance, and their errors are environmental."
+}
+```
+
+## IRPT_DASHBD-D2-W417-S3 -- the proof instance at the mandated path is 260 characters and the proof checker cannot read it on this device
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W417-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~417",
+  "surfaced_at": "2026-10-16T05:13:58Z",
+  "one_line": "the proof instance at the TO's mandated path is 260 characters, at the Windows MAX_PATH limit on dell2 (LongPathsEnabled=0), so proof-of-spec-check.py cannot open it: READ-ERROR rc=2; the content validates rc=0 from a scratch copy",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "os.path.abspath of the mandated instance path (org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~417/IRPT_DASHBD.TO-DB-c-25.the-performance-tab-prints-the-trading-days-the-source-did-not-report-from-the-series-field-against-writer-made-fixtures.proof_of_spec.json) = 260 characters; os.path.exists on the plain path = False while listdir shows the file",
+      "winreg HKLM SYSTEM/CurrentControlSet/Control/FileSystem LongPathsEnabled = 0 on this device",
+      "python .tools/proof-of-spec-check.py <mandated path> DBC147-1-AC1,DBC147-1-AC2,DBC147-1-AC3 -> READ-ERROR (rc=2) [Errno 2]; the same from the deliverables folder with the relative file name -> READ-ERROR (rc=2); with the extended-length prefix the checker's own Path read also fails (rc=2)",
+      "sibling instance 0.9.0_WK_IRPT_DASHBD~416/IRPT_DASHBD.TO-DB-c-24...proof_of_spec.json is 237 characters and validates VALID rc=0 on this device",
+      "diagnostic only, not the verdict: a byte copy at .scratch/diag_instance.json (short path) validates VALID rc=0 with the same three ids"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-c-25 Proof: the instance at its mandated path is validated by python .tools/proof-of-spec-check.py, rc 0, before the status flips to complete.",
+  "world_is": "The mandated path is at the Windows path-length limit on this device, so the checker cannot read it under any spelling this worker could use without a route the order does not name (a shorter worktree root, a junction, a subst drive or a registry change). The three criteria PASS by output; the instance is committed with status pending, and the order stays open until the path can be read. A short-path copy validates rc=0 as a diagnostic only and is not the verdict."
+}
+```
+
