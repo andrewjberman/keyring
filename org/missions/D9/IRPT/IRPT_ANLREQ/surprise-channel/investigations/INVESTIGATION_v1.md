@@ -23008,3 +23008,29 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S159 -- disposition of S134 (DISARMED) and W275-S1: the FWD-5 live sitting 2 read firm B refused 7 of 7 with a working control
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S159",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T22:41:15Z",
+  "one_line": "Disposes of IRPT_ANLREQ-D2-S134 (the places where the ticket service or the report side ADMITS): DISARMED on the CTO's reading of the second live sitting (msg 9955): firm B (cottonwood, allowedFirmIds cottonwood) was refused on every made call for the one synthetic 49financial ticket, the control (opal-capital, allowedFirmIds 49financial) read ALLOWED on ticket-read and ticket-list and served bodies on original-upload and opal-report, and both principals were removed; also disposes of W275-S1 (the one edited control test): ACCEPTED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD FWD-5 (prd/IRPT_ANLREQ_PRD.md:65-68): another firm never sees the request, the package or the commentary; S134 stayed armed until a seat-driven exercise (CTO Move 2, msg 8742) showed the fence live with a working positive control (laptop CTO ruling XA-20261016T191116Z-4c60, CTO msg 9804).",
+  "world_is": "Order IRPT_ANLREQ.TO-RUN-FWD5.live-cross-firm-s2-ib2 (IB2, complete 3f1992ceb1; instance c09e0d4555 VALID; reports org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s2/). Firm-B run: ticket-read 403, form-as-filled 403, ticket-list 200 without the ticket id, and original-upload, opal-report, report-pdf, commentary-pdf answered ok false FIRM_BINDING with the lengths 430/410/420/442 (served.py:1234-1236, before any route code): REFUSED 7, LEAK 0, UNREACHED 0, EXCLUDED 2, exit 0. Control: ticket-read 200 (1550 B), ticket-list 200 (42778 B, carries the ticket id), original-upload 200 (1961 B) and opal-report 200 (60114 B) served bodies (no envelope: graded UNREACHED by the strict parse, ALLOWED in substance per the CTO), report-pdf and commentary-pdf NOT_FOUND (no PDF exists; the control passed the tenant guard), form-as-filled 404. The checks: absent OK (both principals removed), control OK, report OK, fence OK. The first sitting (S156/S157) was a driver defect, not an exposure. W275-S1: test_fwd5_control_all_allowed_exits_zero had four report-side fakes answering ok-true envelopes after the grading change; its intent is kept. NOT done: the driver does not yet treat a 2xx JSON without ok as ALLOWED in control mode (the CTO's named enrichment); the fence on report-pdf and commentary-pdf rests on the control reaching the owner read, not on a served PDF.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s2/fwd5_run_report.json",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/irpt_anlreq_fwd5_s2/fwd5_control_report.json",
+      "org/tier2_senior/0.7.0_AE_CloudOps~IB2/deliverables/IRPT_ANLREQ.TO-RUN-FWD5.live-cross-firm-s2-ib2.proof_of_spec.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

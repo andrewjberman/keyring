@@ -27,18 +27,16 @@
     {
       "n": 2,
       "name": "name, version and tags are exactly the approved line",
-      "verdict": "failed",
+      "verdict": "passed",
       "evidence": {
-        "summary": "package/package.json is absent or unreadable (absent)",
-        "problems": [
-          "package/package.json is absent or unreadable (absent)"
-        ],
+        "summary": "file name, estree/package.json and the approved list all say @types/estree@1.0.9",
         "requested_name": "@types/estree",
         "requested_version": "1.0.9",
         "ident": "@types/estree@1.0.9",
         "file_name_expected": "types__estree-1.0.9.tgz",
-        "package_json_name": null,
-        "package_json_version": null,
+        "package_root": "estree",
+        "package_json_name": "@types/estree",
+        "package_json_version": "1.0.9",
         "approved_line_sought": "@types/estree@1.0.9",
         "approved_list": "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_NPM_MCPORTAL_BUN_20261016.md",
         "on_approved_list": true
@@ -62,12 +60,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 162.99 days old (min 14); 43 earlier releases (min 3)",
+        "summary": "release 163.05 days old (min 14); 43 earlier releases (min 3)",
         "this_release_at": "2026-05-06T21:01:00.975Z",
         "first_release_at": "2016-05-17T04:52:04.146Z",
         "release_count": 44,
         "earlier_releases": 43,
-        "age_days": 162.99,
+        "age_days": 163.05,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false,
@@ -166,7 +164,7 @@
   ],
   "verdict": "not_checked",
   "waived_checks": [],
-  "checked_by": "0.9.0_WK_NFRA_CTLPLN~149",
-  "at": "2026-10-16T20:53:38Z",
+  "checked_by": "0.9.0_WK_NFRA_CTLPLN~150",
+  "at": "2026-10-16T22:13:16Z",
   "ecosystem": "npm"
 }
