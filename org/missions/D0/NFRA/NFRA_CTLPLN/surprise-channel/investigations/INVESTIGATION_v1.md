@@ -13382,3 +13382,194 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not decided here: whether p170 is a live check (its round is open) or a closed-round record. The census class is OTHER because no line pattern settles it. Decision owner: the issuer 2.0.0_SA_COO~C."
 }
 ```
+
+## NFRA_CTLPLN-W145-S2 -- terraform fmt -check fails on iam.tf in each of the three roots, a file outside the grant that is unformatted at base
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "terraform fmt -check on each of the three investor-reporting roots exits 3 because of iam.tf in that root, a file this cell does not edit and that is unformatted at its base commit; the locals.tf of each root passes fmt -check.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform fmt -check on infra/aws/terraform/investor-reporting/account-return-daily, reporting-gold-iso and reporting-publish-iso after the cell's edit: rc=3 each, naming iam.tf only",
+      "terraform fmt -check on the base blob of iam.tf (git show ca239c0486:<root>/iam.tf written to a scratch file) for the same three roots: rc=3 each, so the file was unformatted before this cell",
+      "terraform fmt -check on each locals.tf file after the cell's edit: rc=0 for the three files"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 BUILD step 2 and criterion CTca1-AC3: terraform fmt -check must pass on each of the three roots.",
+  "world_is": "The root-level check cannot pass as the criterion is worded, because iam.tf in each root is already unformatted at ca239c0486 and is outside the cell's grant. The cell's own edit (locals.tf) is fmt-clean.",
+  "notes": "Not decided here: whether the criterion should name the locals.tf files or the whole roots, and who formats iam.tf. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S3 -- the deploy recorder's reconcile step calls a can-follow reader that writes the whole single map
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "record-terraform-deploy.sh runs .tools/comp-lambdamap reconcile-deployed after each deploy record. That tool is org/modules/graph/lambdamap_cli.py, which the cell's can-follow list labels as a manual tool. It is on the deploy path and it writes the whole single map, so it must move in the same cell as the map deletion.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (the issuer): move org/modules/graph/lambdamap_cli.py into the atomic set (its reconcile_deployed writes the function map, and its check reads it) before the map is deleted, or the recorder's reconcile fails after the deletion",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/record-terraform-deploy.sh (this worktree): the reconcile block runs the comp-lambdamap wrapper with reconcile-deployed --functions ... --deployed-commit ...; a failure prints the HALF-LANDED ALERT and publishes to SNS",
+      ".tools/comp-lambdamap: python org/modules/graph/lambdamap_cli.py \"$@\"",
+      "org/modules/graph/lambdamap_cli.py at ca239c0486: line 37 SRCMAP_REL = the single map path; reconcile_deployed() writes the whole map with json.dump (about line 588)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-ca-1 ruling 1 (round-29 analysis): the atomic set is every live reader and writer of the map on a live path, the deploy path included; the can-follow list is only for readers that fail loudly in a manual tool or a record.",
+  "world_is": "The reconcile step is on the deploy path. Kept as the cell leaves it, it writes the stale single copy after each deploy and never updates the folder. After the map is deleted it fails and the recorder reports a false HALF-LANDED alert. The cell does not edit lambdamap_cli.py because it is outside the grant.",
+  "notes": "Not decided here: whether the reconcile should move in this cell or in the next. The cell's map deletion is withheld in this branch for the separate reason in row NFRA_CTLPLN-W145-S1. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S4 -- the cut worktree lacks two folders that the suites read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "The sparse checkout cut for this worker did not hold infra/aws/terraform/modules/opal_name or infra/aws/terraform/nfra-ctlpln-identity, both tracked at base and read by the shared-infra suite. Both were added with git sparse-checkout add, as the worker face allows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "baseline suite run at ca239c0486 before any sparse add: derive_fence_row_shape.py raised FileNotFoundError for infra/aws/terraform/modules/opal_name/generated_locals.tf",
+      "git ls-tree HEAD infra/aws/terraform/modules/opal_name/ lists four entries; git sparse-checkout list had no modules or nfra-ctlpln-identity entry before the add",
+      "the next run raised FileNotFoundError for the nfra-ctlpln-identity folder (the suite's IDENT path)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worktree carries the paths the order names, and the folders a suite reads when the suite is named by the order.",
+  "world_is": "The wk-provision sparse list does not carry every folder that the named suites read, so a suite can fail on a missing folder and not on the cell's change. This worker added the two folders and recorded the base verdicts after the add.",
+  "notes": "Decision owner: 0.0.0_AB_MSTR (the worktree provisioner)."
+}
+```
+
+## NFRA_CTLPLN-W145-S5 -- a named suite makes live AWS reads, and this worker ran it before the cell's no-aws rule was applied
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py is named in the cell's suite list, but it calls sts get-caller-identity and iam simulate-principal-policy through the repo shim. This worker ran it twice (in the base suite run and once directly) before it applied the cell's rule that no aws command runs. After that it is listed NOT-RUN in the after table and its file is restored to base bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py lines 20-21 state the AWS calls, read-only, through the repo shim",
+      "SUITES_BASE.txt (first run, before the NOT-RUN rule): derive_fence_row_shape FAIL FileNotFoundError; second run: FAIL KeyError Statement; both runs were made by this worker",
+      "the suite's policy reader raised KeyError 'Statement' on a dell policy document in the second run (a base-state failure, not repaired)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker's suite run reads only the committed tree and makes no aws call (the cell's rule); a suite that does make one is run by the issuer, not by the worker.",
+  "world_is": "The suite's base verdict is red for a reason in its own reader (KeyError on a policy document), and its AWS reads happened twice in this worker's session. Its string key for the retired map is unchanged because the suite could not be run here.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (the suite list and the run venue). The two AWS reads are read-only; no write happened."
+}
+```
+
+## NFRA_CTLPLN-W145-S6 -- the folder's order is by file name, and the first-match lookup in the recorder depends on order
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "The base map's functions are not sorted by name (its first key is not the alphabetically first), and the function folder is read in sorted name order. The recorder's get_previous_commit returns the first match in key order, so it can return a different function's last_deployed_commit than the single file did.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python check at ca239c0486: keys of functions in file order are not sorted (the sorted and file orders differ at index 0)",
+      "infra/aws/lambda/ci/record-terraform-deploy.sh get_previous_commit (this worktree): iterates the folder in sorted order and returns on the first tf_file prefix match with a last_deployed_commit",
+      "the value is the fallback anchor for the first deploy, after the CHANGELOG's own most recent entry (the recorder's range rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The per-function layout keeps every reader's answer the same as the single file's, or names the change.",
+  "world_is": "The order of the single file is lost in the folder. The recorder's fallback anchor can differ for a pipeline with several functions that carry a last_deployed_commit. The change is named here and not repaired.",
+  "notes": "Not decided here: whether a stable order matters for the fallback. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
+
+## NFRA_CTLPLN-W145-S7 -- the first WIP commit's function-map entries were refused by the naming gate on the old path key
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:07:35Z",
+  "one_line": "The naming gate's carve-out for source-map literals was keyed to the retired file path. The first WIP commit (da5e5eb8cc) therefore drew 228 REFUSE verdicts in WARN mode on the function-map entries; the second commit keys the carve-out to the folder. Names the old limb also refused on the map remain refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of da5e5eb8cc: NAMING-GATE: WARN 336 graded, with 228 REFUSE verdicts on infra/aws/lambda/ci/function-map/*.json (WARN window, not enforced)",
+      "naming-gate.py at ca239c0486: _source_map_name_citations returned unless path == SOURCE_MAP_PATH (the retired file)",
+      "SWEEP_BEFORE_naming_gate.txt: the atomic set at base, 2522 graded, 2462 REFUSE (WARN), including the retired map's own rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A checker that grades the map keeps its verdicts when the map changes shape, or names the change in the sweep.",
+  "world_is": "The shared gate's verdicts on the folder entries differ from the single file's until the carve-out follows the folder. The second commit makes them follow it; the verdicts that remain are the names the old limb already refused.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (the gate's owner for the sweep)."
+}
+```
+
+## NFRA_CTLPLN-W145-S8 -- the jq ban refuses the commit of parity-gates.sh: bare jq invocations outside the P9 gate, and the P9 change is not committed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T18:55:00Z",
+  "one_line": "The jq ban (.tools/git-hooks/jq-ban-check.sh) refuses any commit of .tools/parity-gates.sh on this box: the file carries bare jq invocations in the EC2 gate (lines 91 and 114 of the cut file), outside the P9 gate this cell changes. The P9 change is therefore NOT in the branch; the worktree holds it.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C (the issuer) with the owner of parity-gates.sh: land the P9 folder change (the worktree copy) with the EC2 jq calls moved to the vendored .tools/jq.exe, or grant an audited ban exception for that one file; until then P9 reads nothing after the map is deleted and warns-and-returns, the silent behaviour the cell removes",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output of the second WIP commit: BLOCKED: jq INVOCATION staged in .tools/parity-gates.sh -- jq is NOT INSTALLED (CLAUDE.md Rule 16); the commit aborted and nothing from that attempt landed",
+      ".tools/git-hooks/jq-ban-check.sh: matches jq as a command token in staged .sh files under .tools/, excluding lines that name the vendored jq.exe, JQ= or $JQ; it reads the whole staged file",
+      "the same file at ca239c0486 carries the EC2 jq calls (gate_ec2_manifest) and the P9 declared and deployed calls; the P9 change of this cell removes the declared-side jq call and keeps the deployed-side one"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A gate that a cell changes lands with the cell, and its refusal is filed as a row, not overridden (worker face: if a gate REFUSES, STOP and file a BLOCKING row).",
+  "world_is": "parity-gates.sh is outside the cell's clean commit path because of pre-existing jq calls in a gate the cell does not own (EC2). The worker stopped at the refusal, did not migrate the EC2 lines and did not use the audited ban exception.",
+  "notes": "Not decided here: who migrates the EC2 jq calls and whether the one-file exception is granted. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```

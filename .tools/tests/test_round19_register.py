@@ -13,7 +13,7 @@
 --fwd7  Every OVERLAP line of .tools/placement-check.py (run unchanged) is classed:
           SHARED        the overlapping (more specific) path is covered by a rule file this test READS and checks
                         for the cited phrase: R1 org/critical_paths/.open_deploys (CLAUDE.md NEVER-2), R2
-                        infra/aws/lambda/ci/ (lambda-source-map.json _description and _note), R3 a layer build_output
+                        infra/aws/lambda/ci/ (the Lambda function map _description and _note), R3 a layer build_output
                         row of infra/aws/lambda/ci/lambda-layer-map.json.
           SPLIT         both projects name the SAME file (equal paths), no rule covers it: two projects on different
                         boxes would change one file (C-PLACEMENT).
@@ -163,10 +163,10 @@ def rules_present():
     checks = {
         "R1 CLAUDE.md NEVER-2 entry-on-worker-branch-until-drain": "the entry sits on the worker's branch until the drain"
                                                                   in _read("CLAUDE.md"),
-        "R2 lambda-source-map.json _description single source of truth":
-            "Single source of truth for source-to-deployment mapping" in _read("infra/aws/lambda/ci/lambda-source-map.json"),
-        "R2 lambda-source-map.json _note names record-terraform-deploy.sh as the updater":
-            "run record-terraform-deploy.sh after terraform apply" in _read("infra/aws/lambda/ci/lambda-source-map.json"),
+        "R2 function-map README _description single source of truth":
+            "Single source of truth for source-to-deployment mapping" in _read("infra/aws/lambda/ci/function-map/README.md"),
+        "R2 function-map README _note names record-terraform-deploy.sh as the updater":
+            "run record-terraform-deploy.sh after terraform apply" in _read("infra/aws/lambda/ci/function-map/README.md"),
     }
     return checks, _layer_build_outputs()
 
@@ -176,7 +176,7 @@ def classify(pa, pb, build_outputs):
     if spec.startswith("org/critical_paths/.open_deploys"):
         return "SHARED", "R1 CLAUDE.md NEVER-2: a worker deploy's entry is its own file and sits on the worker's branch until the drain"
     if spec == "infra/aws/lambda/ci" or spec.startswith("infra/aws/lambda/ci/"):
-        return "SHARED", "R2 infra/aws/lambda/ci/lambda-source-map.json _description+_note: single source of truth, record-terraform-deploy.sh is the named updater"
+        return "SHARED", "R2 infra/aws/lambda/ci/function-map _description+_note: single source of truth, record-terraform-deploy.sh is the named updater"
     if spec in build_outputs:
         return "SHARED", "R3 infra/aws/lambda/ci/lambda-layer-map.json build_output: the one declared builder output of the layer"
     if pa == pb:

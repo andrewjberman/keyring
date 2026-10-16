@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""ADHC_COMPIL_V4.022 Cat 6.1: backfill `iam_role` field in lambda-source-map.json.
+"""ADHC_COMPIL_V4.022 Cat 6.1: backfill `iam_role` field in the Lambda function map (infra/aws/lambda/ci/function-map/).
 
 Parses each pipeline's `lambdas.tf` to extract module->role mapping, then for
 each Lambda function (matching by `function_name` value or by module name
-to entry's `tf_resource`), writes `iam_role` into lambda-source-map.json.
+to entry's `tf_resource`), writes `iam_role` into each function's own file.
 
 Roles can be expressed three ways in TF:
   module "X" { role_arn = aws_iam_role.foo.arn }       -> role 'foo'
@@ -23,7 +23,7 @@ from pathlib import Path
 
 
 WORKSPACE = Path(__file__).resolve().parent.parent
-SOURCE_MAP_PATH = WORKSPACE / "infra" / "aws" / "lambda" / "ci" / "lambda-source-map.json"
+SOURCE_MAP_PATH = WORKSPACE / "infra" / "aws" / "lambda" / "ci" / "function-map"  # CT-ca-1: one <name>.json per function
 
 
 # Match `aws_iam_role "X" { name = "actual-role-name" }`
@@ -162,12 +162,11 @@ def parse_iam_tf_role_names(iam_tf_dir: Path) -> dict[str, str]:
 
 
 def main() -> int:
-    if not SOURCE_MAP_PATH.exists():
-        print(f"ERROR: source map not found: {SOURCE_MAP_PATH}")
+    if not SOURCE_MAP_PATH.is_dir() or not any(SOURCE_MAP_PATH.glob("*.json")):
+        print(f"ERROR: function map folder missing or empty: {SOURCE_MAP_PATH}")
         return 1
 
-    sm = json.loads(SOURCE_MAP_PATH.read_text(encoding="utf-8"))
-    fns = sm.get("functions", {})
+    fns = {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in sorted(SOURCE_MAP_PATH.glob("*.json"))}
 
     # Build cross-pipeline role map: pipeline_dir -> {fn_name: role_resource}
     # Also build pipeline_dir -> {role_resource: actual_role_name}
@@ -256,11 +255,12 @@ def main() -> int:
         entry["iam_role"] = actual_role_name
         populated += 1
 
-    # Write back
-    SOURCE_MAP_PATH.write_text(
-        json.dumps(sm, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    # Write back: ONE file per function, and only the files whose entry changed (CT-ca-1)
+    for fn_name, entry in fns.items():
+        target = SOURCE_MAP_PATH / (fn_name + ".json")
+        text = json.dumps(entry, indent=2) + "\n"
+        if target.read_text(encoding="utf-8") != text:
+            target.write_text(text, encoding="utf-8")
 
     print("BACKFILL COMPLETE")
     print(f"  Total functions:    {len(fns)}")
