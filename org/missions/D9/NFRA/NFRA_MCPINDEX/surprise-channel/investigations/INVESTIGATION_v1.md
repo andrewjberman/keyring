@@ -9117,6 +9117,29 @@ carries none.
       ]
     },
     "notes": "INERT while nothing is applied: PHASE B waits on the issuer's A2, which pins A or B. It becomes a live hazard only if PHASE B runs on commit A without a ruling. Deliverable: deliverables/0.7.0_AE_CloudOps~MI/ANNOUNCE_MX-r-15.md section 0."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MI",
+    "surfaced_at": "2026-10-16T10:56:03Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-S127",
+    "one_line": "MX-r-15 A1 says the catalog's depth claims hold until the next daily publish (~13:30Z 2026-10-16), but the mac.04.yield-curve-fred claim went stale at 2026-10-15T23:01Z; r13.AC3 fails on the deployed release at 10:4xZ, and the old catalog fails it identically.",
+    "spec_asserts": "MX-r-15 A1 time limit: 'the depth claims were read 2026-10-15 16:07Z and hold until the next daily publish (about 13:30Z 2026-10-16). Land PHASE B before 13:00Z.'",
+    "world_is": "After the apply (host 141 of 141 equal to the cut at 10:40:47Z), r13.AC3 reads DEPTH valid 9 of 11 and ANSWER-TIME equal 16 of 17. One claim causes all three: mac.04.yield-curve-fred field generated_at, catalog 2026-10-14, served 2026-10-15 (the object stamps 2026-10-15T23:01:04Z, about 14.5 hours before the assumed publish). The two tools that name it (gateway_query_catalog, opal_asker_query) are the 2 invalid depth tools. The same depth instrument run on the live ref's old catalog b97c59e6ac now reads valid 9 of 11 with the same row, so a rollback cannot cure it. The release is otherwise as signed: r13.AC2 PASS, r15.AC4 PASS, four censuses equal except the expected link counts. Not rolled back; ledger nfra-mcpindex-r15-catalog-release held open on L4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "probes_r15/r13.AC2_r13.AC3_r15.AC4_POST.txt: r13.AC3 DEPTH valid 9 of 11; ANSWER-TIME 16 of 17; RESULT: FAIL exit=1 (r13.AC2 and r15.AC4 PASS).",
+        "probes_r15/r13.AC3_detail_r15.txt: ANSWER mac.04.yield-curve-fred value=2026-10-15T23:01:04.213636+00:00 catalog=2026-10-14 BAD.",
+        "probes_r15/r13.AC3_bad_rows_r15.txt and r13.AC3_control_old_catalog_r15.txt: the one BAD row, and the same row BAD on the old catalog."
+      ]
+    },
+    "notes": "A catalog re-measure and re-emit (or an issuer ruling on how L4 closes) is the cure; the applier holds L4 and r15.AC1 until then."
   }
 ]
 ```

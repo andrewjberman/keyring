@@ -94,3 +94,35 @@ def test_unreadable_registry_is_noticed_and_grades_as_today(gate, nm, monkeypatc
     assert line is not None
     assert line.startswith("NAMING RULINGS-NOTICE name_rulings.json could not be read (")
     assert line.endswith("); no name is graded from a row")
+
+
+# NFRA_OPLGTW OG-rr-2 (CTO ruling @8b9adcbd8d section 3 cell 2): the ruling_ref refusals, on planted dicts only. The registry file is
+# never read or written here; the resolving ref is the registry file at HEAD, the unresolving ref a path HEAD does not hold.
+RULING_KEY = (NAME, CARRIER)
+
+
+def _head_commit(gate):
+    import subprocess
+    p = subprocess.run(["git", "rev-parse", "--verify", "-q", "HEAD^{commit}"], cwd=ROOT, capture_output=True)
+    return p.stdout.decode("ascii", "replace").strip()
+
+
+def test_ruling_ref_unresolved_is_refused(gate):
+    bad = "infra/logic/registry/planted_absent_selftest.json@%s" % _head_commit(gate)
+    got = gate.ruling_ref_refusals({RULING_KEY: _row(canonical=NAME, ruling_ref=bad)}, {})
+    assert len(got) == 1 and got[0][1] == "(a)" and got[0][0] == RULING_KEY
+
+
+def test_ruling_ref_resolved_is_admitted(gate):
+    good = "%s@%s" % (gate.RULINGS_REL, _head_commit(gate))
+    assert gate.ruling_ref_refusals({RULING_KEY: _row(canonical=NAME, ruling_ref=good)}, {}) == []
+
+
+def test_new_row_without_ruling_ref_is_refused(gate):
+    got = gate.ruling_ref_refusals({RULING_KEY: _row(canonical=NAME)}, {})
+    assert len(got) == 1 and got[0][1] == "(b)"
+
+
+def test_legacy_row_without_ruling_ref_is_not_refused(gate):
+    row = _row(canonical=NAME)
+    assert gate.ruling_ref_refusals({RULING_KEY: row}, {RULING_KEY: dict(row)}) == []
