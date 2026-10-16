@@ -94,7 +94,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ch-1.client-core-hookup-fix.pro
 
 - A1 (issuer, 2026-10-16 ~00:5xZ, worker rows Z-W111-S1 to S3): (1) THE AC04 CLAUSE IS WITHDRAWN: the repo roster maps every name to a canonical firm, so "at least one name is None" was an issuer error; the None arm is the synthetic non-canonical document only. (2) `role_key` strips a trailing `-live` (the live Black Diamond tables sit at `blackdiamond/49f-live/`). (3) The Black Diamond fence is added to the core (item 4, `FENCE_KIND` second kind): without it every Black Diamond read refuses at the hookup. New test `ac06`; AC1 reads 6 of 6. Your inherited commits are `b19745d35b` and `c6beffe883`. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>G2-HOOKUP</workstream>
 <slot>~111</slot>

@@ -61,7 +61,14 @@ small; event volume per person is **absent** (not measured).
 ## 4. Recommended path
 
 1. **Layer 1 now, under Andrew's own role.** Register one new app ("workflow spine"), add `ActivityFeed.Read`,
-   consent, start the four subscriptions and pull the 180-day backlog into an LGIC-built S3 home. This is the
+   consent, start the four subscriptions and land every content blob in an LGIC-built S3 home.
+   **CORRECTION (same session, read from the API reference):** the Management Activity API holds content for
+   **7 days only** (`AF20051`: "Content older than 7 days cannot be retrieved"), the first blobs take up to 12 hours
+   after a subscription starts, and events inside blobs are not in order. It cannot pull the 180-day backlog; the
+   spine builds forward from the day it starts, so the collector must run on a schedule with no gap longer than
+   7 days. The 180-day history is reachable only through Purview audit search/export (an audit role, which Andrew's
+   role is not) or the Graph audit-log query API (`AuditLogsQuery.Read.All`, a Graph application permission: Global
+   / Privileged Role Admin). This is the
    sequencing-and-dependency spine: who touched what, when, in what order, across mail, files, Teams and meetings.
    The first act also settles two unknowns: whether audit logging is on, and which events our licence tier emits.
 2. **Mine Layer 1 first** for recurring daily sequences and hand-offs between people. Pick the 5-10 workflows worth
