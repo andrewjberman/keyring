@@ -9056,6 +9056,44 @@ carries none.
     },
     "spec_asserts": "Z-S92: the artifact keys carry the git-ref of the commit they hold, and the signed rollback key is preserved. Z-W29-S1: an emit leaves every row outside needs: unchanged.",
     "world_is": "The rollback key holds the base's bytes again, the d3c31e972e artifact exists under its own ref, and -latest matches the live commit d577e0e729. The default-census emit changes no census_ref path."
+  },
+  {
+      "id": "NFRA_MCPINDEX-Z-S125",
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~MI2",
+      "surfaced_at": "2026-10-16T04:55:37Z",
+      "disposition": "DISMISSED_WITH_REASON",
+      "adjudicates": [
+          "NFRA_MCPINDEX-Z-W50-S1",
+          "NFRA_MCPINDEX-Z-W52-S1",
+          "NFRA_MCPINDEX-Z-W52-S2",
+          "NFRA_MCPINDEX-Z-W53-S1",
+          "NFRA_MCPINDEX-Z-W53-S2",
+          "NFRA_MCPINDEX-Z-W54-S1",
+          "NFRA_MCPINDEX-Z-W55-S1",
+          "NFRA_MCPINDEX-Z-W55-S2",
+          "NFRA_MCPINDEX-Z-W56-S1",
+          "NFRA_MCPINDEX-Z-W56-S2",
+          "NFRA_MCPINDEX-Z-W56-S3",
+          "NFRA_MCPINDEX-Z-W57-S1",
+          "NFRA_MCPINDEX-Z-W57-S2"
+      ],
+      "one_line": "ISSUER DISPOSITION of the 13 round-18 RESEARCH worker rows (workers ~50, ~52 to ~57): each is a form or worker-environment observation on an order's text or a sparse worktree; every graded criterion they touch is met and re-graded on the merged tree.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "MX-c-30, -31, -34, -35, -36, -37 and -38 each end <status>complete</status> in their order files at HEAD (read 2026-10-16 ~05:0xZ): the flips Z-W53-S2 and Z-W55-S2 say the lane could not make were landed by the issuer (23b89ba47f for -34..-37).",
+              "c31.AC1, AC2, AC3 and c38.AC1, AC2 PASS on the merged tree at 623dc1f9ae; the atom_decomposition suite reads 311 passed on the shared tree, which holds the gateway tree the five sparse-worktree failures of Z-W56-S2 and Z-W57-S1 could not read.",
+              "plant_ct.py runs 12 arms and prints PLANTED 12 of 12 (the face said 8: Z-W52-S2, Z-W53-S1, Z-W55-S1).",
+              "Issuer sample of 16 curated tag sets (4 per slice map of ~52, ~53, ~54, ~55): each is plain words, none states a fact the row does not carry (Z-W52-S1, Z-W54-S1); the drain check c30.DRAIN reads 0 inferred rows on the trial catalog C:/tmp/mi-trial/DATA_CATALOG.623dc1f9ae.yaml (md5 a7c127a97ca44dc25ffdf65d3e3992d6)."
+          ]
+      },
+      "spec_asserts": "Each target asserts that an order's text or a worker's sparse worktree differs from what the order's step or control said (planted-arm count 8 vs 12; status flip outside <paths>; step-2 command without --read-links; step-0 pytest control on a sparse cone; the naming gate's K7 list absent in a sparse cone; the portal gitlink modified at worktree open; two unnamed count pins).",
+      "world_is": "None of the 13 left a criterion unmet or a file wrong. The order-text defects (the 8 arms, the missing --read-links in MX-c-31 step 2, the 214 pin in MX-c-38 step 2, the step-0 control that cannot pass on a sparse cone, the status flip outside <paths>) are the issuer's drafting; they are recorded here for the round-18 analysis as one finding: an order's step-2 command and step-0 control are dry-run in a SPARSE worktree at the cut, not only at the base.",
+      "dismissal_reason": "Form and environment observations, all INERT: the criteria they touch were met and re-graded on the merged tree (evidence above); the five order-text defects are the issuer's and are carried to the round-18 analysis as one drafting finding, not a standing hazard. The issuer is disarm_owner of Z-W52-S1, S2 and W56/W57; the others name none and are dismissed here by the project's issuer for RESEARCH."
   }
 ]
 ```
