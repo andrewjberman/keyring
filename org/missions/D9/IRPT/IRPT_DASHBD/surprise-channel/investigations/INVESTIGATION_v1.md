@@ -19506,3 +19506,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-90.method-source-words.test.tsx:34 asserts the face includes the retired label. In MethodAndSources.tsx the label is composed from RETURN_METHOD_WORDS (line 33) and FEE_BASIS_WORDS (line 37); the literal stands only in the comment at line 25 and in that test."
 }
 ```
+
+## IRPT_DASHBD-D2-S101 -- FWD-10 for Cottonwood (round 145 B-CW): the facts measured, what the page says today, and the dispositions of workers 414 and 415
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S101",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T00:07:30Z",
+  "one_line": "FWD-10 for Cottonwood, round 145 B-CW (DB-c-22 census, DB-c-23 page read): the three named facts are measured; the page explains a partial-history account and a not-measurable day, but a trading day with no partition at all, a fallback day and a window before news data have no sentence on the on-screen path; the PRD's fallback clause is stale after ruling 17; issuer's dispositions on the workers' rows W414-S1, S2 and W415-S1 to S6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD FWD-10 ACCEPT: a partial-history account, a day that could not be measured, a fallback day and a window before the news data starts are each explained on screen in a sentence; no state is hidden inside an average (C-HONESTY).",
+  "world_is": "Measured and recounted by the checker from fresh S3 reads (merges 656f1392ba and a04e8b1e80; DBC145 1/2 PASS on the worker trees): Cottonwood filled_report_values 65 partitions 2026-07-10 to 2026-10-14 with 3 absent trading days (2026-08-19, 2026-09-24, 2026-09-25); account_return_daily 3390 partitions from 2013-04-03 with 15 absent trading days in 3 runs including the 12-day run 2026-06-23 to 2026-07-09; holdings_performance_daily 88 partitions, none absent; the floor is 2026-07-10; Black Diamond fact_allocations has 33 of 145 partitions that read 0 rows (22 on non-trading days, 11 on trading days 2026-06-22 to 2026-07-09), a candidate explanation for the floor but not an established one (the rule that starts the gold series was not read); 835 accounts hold on the floor day and 166 accounts of the newest partition have no floor-day row (the partial-history case), 1004 in account_dim; account_return_daily day_quality on the newest partition: MEASURED 827, NOT_MEASURABLE 37. The page (read from code): a partial-history account is EXPLAINED (dashboard note when history_scope is not FULL, DashboardPerformance.tsx:147); a not-measurable day is EXPLAINED (a count and sentence per state, :141-146, and a tooltip at :160); a fallback day is NOT_REACHED (ruling 17 withdrew the substitution, so the PRD's fallback clause in FWD-10 ACCEPT and C-HONESTY is stale); a window before news data is NOT_REACHED on the on-screen tab (the sentence prints only in the export document, PerformanceDocument.tsx:198); only 3 of 8 coverage members have a dashboard sentence (PARTIAL_HISTORY, FLOW_UNRECONCILED, SOURCE_LAG; MISSING_HISTORY in the export only; FULL, NO_LOTS, UNCLASSIFIED_HOLDINGS, FEE_RAIL_UNUSED none); the Cottonwood account_dim adapter assigns coverage (FULL, UNCLASSIFIED_HOLDINGS, PARTIAL_HISTORY) but the page does not read it; the text Time-weighted, net of fees is still in MethodAndSources.tsx line 25 (a comment; the rendered label is composed from lines 33 and 37) and holdings_gold.py now reads TIME_WEIGHTED/GROSS at line 306 (the PRD cites :259 NET). NOT visible on any path read: a trading day with NO partition at all (the 3 absent days and the 12-day run) is not a day_quality state, so no sentence counts it. Dispositions (all INERT, accepted as observations): W414-S1 (three starts, not one floor) and S2 (the silver empties do not alone explain the floor) are carried into the round-146 questions; W415-S1 (PRD cites holdings_gold.py:259 NET, file has :306 GROSS), S2 (news data names a state different from the account-history start), S3 (the fallback clause is stale) are PRD wording questions for the CTO; W415-S4 (the on-screen report path shows no coverage or day-quality sentence), S5 (the accounts table prints a producer reason code on its face) and S6 (the iv-e-90 test pins the label C-LABEL retires) are build-cell candidates. Counts and words only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~414/COTTONWOOD_COVERAGE_CENSUS_R145.json and ~415/COTTONWOOD_SCREEN_COVERAGE_READ_R145.json (with their notes)",
+      "checks/r145/p145_bcw.py (a fresh S3 recount and a re-read of every cited line)",
+      "merges 656f1392ba and a04e8b1e80; round-close-check round 145 B-CW MAY-CLOSE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO's round-146 analysis: the build side is the coverage reader that returns the window's absent trading days, the sentences for the missing coverage members, the on-screen window-clipping sentence, and the label/test correction; the endpoint wording (fallback, news data) is his."
+}
+```
