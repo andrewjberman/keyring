@@ -1,0 +1,22 @@
+# Deploy Completion Record
+**Date opened:** 2026-10-16T09:36:49.038784+00:00
+**Status:** OPEN
+**Deploy:** IRPT_ANLREQ TO-APPLY-YFDEPS (AR-g-119): the yfinance 1.2.0 closure (17 wheels) into the resident host's pydeps: R0 pre-read (PRE OK), D1 upload of 17 wheels to 17 new keys under ec2/investor-reporting-ycharts/resident/pydeps-wheels/yfinance-1.2.0/ in opal-313476888478-lambda-artifacts, D2 install_yf.sh by Systems Manager (17 dist-info added 0 removed, 22 existing unchanged, 18 imports), V checks; no restart; COO half blob 5c6da65b0b, CTO half df1fd7869b (msg 9156), receipts ruling msg 9253
+**Authored by:** 0.7.0_AE_CloudOps~AQ2
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 4.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| R0 | verify | resident host pydeps folder (pre_read_yf.sh) and the host role GetObject simulation | PRE OK and the simulator decision allowed with the matched statement |  | OPEN |
+| D1 | s3-prefix | ec2/investor-reporting-ycharts/resident/pydeps-wheels/yfinance-1.2.0/ 17 new keys | 17 keys read 404 first, uploaded, read back sha256 equal, 17 VersionIds |  | OPEN |
+| D2 | verify | /opt/investor-reporting-ycharts/pydeps on the resident host (install_yf.sh) | INSTALL OK with rc, 17 dist-info added 0 removed, 22 existing unchanged, 18 imports |  | OPEN |
+| V | verify | the record A_AFTER_YFDEPS.txt and the collected wheels untouched | the seven lines and the 17 VersionIds |  | OPEN |
+
+## Log
+
+- 20261016T093649Z OPENED by 0.7.0_AE_CloudOps~AQ2 with 4 leg(s)
