@@ -40900,3 +40900,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-D2-S213 -- Dispositions on workers 440 to 446's rows (D2-W440-S1 to S3, W441-S1 to S4, W442-S1 and S2, W443-S1 and S2, W4
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S213",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-16T03:30:00Z",
+  "one_line": "Dispositions on workers 440 to 446's rows (D2-W440-S1 to S3, W441-S1 to S4, W442-S1 and S2, W443-S1 and S2, W444-S1 to S4, W445-S1 and S2, W446-S1 to S3): W444-S1 and S2 (ARMED, owner me) disposed; the join premise (W440-S1) is answered by the CTO's ruling; nothing is deployed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W444-S1 and W444-S2 read ARMED with disarm_owner 2.0.0_SA_COO~P2; the rest read INERT or BLOCKING-then-ruled.",
+  "world_is": "DISPOSITIONS. W444-S1 (a pin worktree comes up sparse; repeated as W428-S1, W442-S1, W446-S1): DISARMED by carrying the check into the apply orders IB-pr-605 and IB-pr-611 step 2 (count the skip-worktree entries, clear to 0 before building; a sparse build gives a wrong digest and the digest gate aborts, so the failure is loud and costs time, not a served byte). W444-S2 (the hashed client-account list is absent on this box, so the commit gate's client-data check did not run): INERT for these commits, whose records are ID-free by their own criteria (no long digit run, counts only; every worker swept its added lines); the same disposition as D2-S208 for W436-S1 and W435-S1; restoring the list is MSTR's and is not chased here. W440-S1 to S3: the premise of the join cell failed (no candidate-day custody row for the one lost account under any key form); the CTO ruled the treatment (msgs 8644, 8664); the console-identifier line of W440-S2 stays UNBUILT (the logger sits outside the grant) and is carried, not dropped: a later cell if the CTO wants it. W441-S1, S4 (the status flip cannot be listed in the record before it exists) and W441-S3 (the record template named four negative tests, the check requires all): INERT, my template defects, fixed in the later orders (the record lists the required names). W441-S2 (the SmartX evidence reads the snapshot overlay clock, not a re-pick at the cutoff, because the provider receives no cutoff): INERT, recorded; the evidence is what the build read. W442-S2 and W446-S2 (36 CRLF files list as modified in the pin, byte-equal to the commit): INERT, the apply orders say to compare raw bytes. W443-S1: RULED (AMENDMENT 1 of IB-pr-607, one wiring-test dict); W443-S2 (a partition of all-null account numbers is classed partition_missing_or_empty): INERT, accepted and stated in the addendum half. W444-S3 (functions_invoked has no stated meaning; the BUILD ONLY calls would read 2) and W444-S4, W446-S3, W442/W444 scratch-location conflicts (the order names a directory outside the repository, the standing rule names the worktree .scratch): INERT, recorded; the order's location was used. W445-S2 (the one-writer gate names a per-box channel file): INERT, WARN only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_PL3_TO_PL8_DRAIN_END_20261016.md",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-605.apply-holdings-exemption.md",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-611.apply-holdings-exemption-addendum-1.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
