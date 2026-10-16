@@ -1,0 +1,37 @@
+# IRPT_DASHBD round 132 -- workstream F-SHIP (~F2) decomposition: one business date for all three firms, the fund-only Inflection price and the contract 0.4.1, one drain
+
+Issuer `2.0.0_SA_COO~F2`, 2026-10-16 ~12:4xZ. Gate key: `<round>132</round><workstream>~F2</workstream>`. Workstream label beside the round: **F-SHIP, round 132**.
+
+**Answers:** the CTO's round-131 analysis for F-SHIP (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_131_20261016.md`, msg 9342) and the CVO's v140 and v141 (AC1-AC3 PASS; J1 Cottonwood PASS 20/20; J2 Inflection PASS 20/20). The enrichment list it sets: (1) the shared business-date function and Inflection's roll-forward, with 49 Financial read against it; (2) the fund-only price rule; (3) the Reversed-offset census and the S6 pairing census, counts printed with denominators; (4) then the never-widen release pair for the three producers and their wiring, which the CTO signs. Cut after the analysis was read.
+
+## What was measured at the cut (the issuer's, values-free; records in `deliverables/2.0.0_SA_COO~F2/`)
+
+- **49 Financial against the rule** (`R132_F49_BUSINESS_DATE_CENSUS.json`, every partition, 3,354,885 rows): `business_date` equals the first trading day on or after `trade_date` on 3,354,589 rows; on the other **296** the source keeps the raw `trade_date` (which falls on a non-trading day) as the business date. No unreadable dates. So 49 Financial MOVES, by 296 rows. A rolled row belongs to a later partition than its silver day; the cell therefore adds a writer guard (a row is refused under any partition day but its own business_date).
+- **Fund family** (`R132_INFLECTION_CENSUS.json`, every partition): all 154,828,670 unit-bearing Complete lines with a positive `navPrice` carry a fund family (0 without), and `navPrice` times `noUnits` is within one percent of `transAmount` on 154,808,844 of them. The CTO's "no such row exists today" is confirmed over every partition; the rule guards the next one.
+- **S6 pairing and Reversed offsets** (`R132_INFLECTION_PAIRING_CENSUS.json`, the global run): the first run paired inside one partition only and read 88.5 percent (a lower bound, not the ruling's test); the global run, which lets the INCOME partner sit in any partition, is the record the contract binds. **S6 pairing, global: 13,201 of 14,920 rows of each description (88.5 percent) pair with a same-account, same-day INCOME row of equal absolute amount, the SAME number as the partition-local run, so a partner in another partition explains nothing. Below the CTO's 95 percent line: by the ruling's own falsifier the S6 ruling RE-OPENS with this census. The cell does not change the flow classes; the contract states `s6_status` `REOPENED_FOR_CTO`, and the packet puts the census to the CTO.** **Reversed offsets, global: 159,200 Reversed lines in 910 distinct keys; 106 Complete `Foreign Dividend Tax` lines match ONE key, which has 106 Reversed originals, all candidates on the same day: an offset block, one to one in count. By ruling 1 they leave the served set with their originals; the originals are already out (status Reversed), so the cell adds the rule that drops the 106 offsets, counted `OFFSET_OF_REVERSED`.**
+
+## Cell (ONE issuance; LOCAL; one cell so that one merge lands the calendar function, the three producers and the contract)
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `first_trading_day_on_or_after` in `lib/trading_calendar.py`; the three producers use it (49 Financial moves; Inflection rolls; Cottonwood's private helper goes); each writer refuses a row under another partition day. 2. Inflection price from `navPrice` only on a fund-family line, the reason census and the manifest field. 3. The Reversed-offset rule (`reversed_keys_of`, `split_complete(reversed_keys=...)`). 4. The CONTRACT 0.4.1 with its words file and the census records stated as measured claims | `DB-f-1801` | FWD-5 | LOCAL | none | R132-A |
+
+**Judgment criteria.** `DBF132-1-J1` (Inflection, a FRESH sample with at least one rolled line) and `DBF132-1-J2` (49 Financial, a FRESH sample with at least one of the 296 rolled lines). Cottonwood's `business_date` rule is unchanged (a refactor onto the shared function); the round-131 producer criteria are re-run inside `DBF132-1-AC2` as the regression leg, so no new Cottonwood sample is drawn.
+
+**Not in this round (stated, with the reason):** (a) the **supply of the Reversed keys** to the producer in production (the cell builds the rule and its helper; the later wiring builds the key set from the table's Reversed lines); (b) the **never-widen release pair** for the three producers and their wiring (item 4 of the CTO's list): it must name the FINAL producer bytes, so it follows this drain, is signed by the CTO and by this seat, and is applied by the Terraform root's owner; (c) the reader and table component; (d) the FWD-3 mount (waits on `~D2`'s `class_object` 0.4.0 and `~S2`'s route member); (e) Cottonwood's transaction Income enrichment (CTO msg 9312; sized in `R131_COTTONWOOD_INCOME_SIZING.md`), after the release.
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) one cell, one merge; no AWS for the worker (every live fact is a committed record); three mechanical criteria and two judgment. (b) A 49 Financial line with no readable `trade_date` is REFUSED (the census finds none): one meaning of `business_date` cannot be derived without it. (c) The reason codes for a null Inflection price are `NAV_PRICE_FUND_ONLY` (the CTO's), `ZERO_UNITS` and `NAV_NOT_POSITIVE`. (d) The writer guard is added because the roll makes a row of a later day reachable from an earlier silver partition; it is a refusal, not a regroup (the caller groups by `business_date`). (e) The schema is unchanged (18 columns, the same hash). (f) The offset rule takes the Reversed keys as an argument; it does not read the table and stores no set, because the table-wide key set (910 keys) is an input of the wiring the CTO signs.
+
+**Four-postulate record.** (i) Domain: the three firms' lines; 3,354,885 49 Financial rows, 218,054,352 Inflection rows (191,360,953 Complete), 154,828,670 unit-bearing Inflection lines, each counted over every partition. (ii) Same grain: one account-transaction line. (iii) One intent: one meaning of the day, one rule for the price, stated in the contract and applied by the producers, landed together. (iv) Not moved: the ratified words, the flow classes (the bucket wins), the CRO table, the 18 columns and their hash, the handler, every Terraform file and every served file.
+
+**Chain read.** M = 1, N = 1.
+
+fanout: 1 of 1 chains, cap 4 (the CTO's ruling), portal_ref: none, reason: one cell so that one merge lands the calendar function, the producers and the contract. Worker `0.9.0_WK_IRPT_DASHBD~1801` (`DB-f-1801`).
+
+| criterion | invocation | base reading |
+|---|---|---|
+| DBF132-1-AC1 | `python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r132/p132_contract.py . DBF132-1-AC1` | FAIL (the contract is 0.4.0) |
+| DBF132-1-AC2 | `python -I .../checks/r132/p132_dates.py . DBF132-1-AC2` | FAIL (no function) |
+| DBF132-1-AC3 | `python -I .../checks/r132/p132_inflection.py . DBF132-1-AC3` | FAIL |
+| DBF132-1-J1 | JUDGMENT: the CVO's 20-row comparison for Inflection, fresh, with a rolled line | not graded |
+| DBF132-1-J2 | JUDGMENT: the CVO's 20-row comparison for 49 Financial, fresh, with a rolled line | not graded |
