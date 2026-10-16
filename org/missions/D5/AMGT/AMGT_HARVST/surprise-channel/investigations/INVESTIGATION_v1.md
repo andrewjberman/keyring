@@ -9956,5 +9956,52 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "The vacuity is real and disclosed; it is carried by cb-15 step 6b under the CTO C-a4 prime, so no further action on cb-13."
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S31",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-16T08:25:00Z",
+     "one_line": "HVST-cb-15 step 9: the first bbg job under T0_2 ended bot_check then TargetClosedError (1 leg of the 2 that make Branch G); the first upload-harvest line of the pass read get_count=0 get_bytes=0.",
+     "class": "OBSERVATION",
+     "hazard_standing": "ARMED",
+     "spec_asserts": "CTO C-j: two consecutive bbg legs ending bot_check or TargetClosedError take bbg out of the list; the order's step 7 Branch G. Step 6 and AC3: the upload-harvest GETs per line are expected 0.",
+     "world_is": "bbg ran 10 jobs no_new_articles from 08:11:18Z, then job security-d7660d8c73fc8217 (BP) at 08:19:53Z: request 1 sitemap 200; request 2 article /opinion/articles/2026-10-15/... status 403 class bot_check signature bloomberg_press_and_hold; job status=error detail TargetClosedError: Locator.count: Target page, context or browser has been closed (run record 20261016T081953Z-run-44138fa3). token_source secrets:bloomberg/session, signed_in false. The runner logged REFUSAL (class other), kept the pair for retry (attempt 1 of 3), made an upload-harvest line of get_count 0 and get_bytes 0 at 08:20:53Z, and entered COOLDOWN bbg 898 s (next bbg job about 08:35:51Z). No bbg object was uploaded. If the next bbg job also ends bot_check or TargetClosedError, the order's Branch G applies: stop by stop file, re-register sa,wsj,barrons from the same pin, finding to the issuer. This seat signs nothing in and sends no key.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       ".runtime/harvest-cycle/runtime/run_records/20261016T081953Z-run-44138fa3.json",
+       ".runtime/harvest-cycle/state/cycle_runner.log lines 2026-10-16T08:20:51Z to 08:20:53Z",
+       "org/missions/D5/AMGT/AMGT_HARVST/ledger/NEVER_WIDEN_ROUND87_CB2_CTO_HALF_ADDENDUM_1_SA_BBG.md C-j"
+      ]
+     },
+     "disarm_owner": "0.7.0_AE_CloudOps~SC1",
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S32",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-16T08:42:17Z",
+     "one_line": "SC1 row D1-S31 is dispositioned: Branch G fired as signed and is disarmed (bbg is out of the list; sa,wsj,barrons run from T0_3 08:40:17Z); the cause of the press-and-hold page closure is NOT established and goes to the round-88 enrichment list as a named cell.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "CTO C-j and HVST-cb-15 step 7 Branch G: two consecutive bbg legs ending bot_check or TargetClosedError take bbg out of the list.",
+     "world_is": "Read by the issuer from the cycle record 20261016T081114Z, run records 20261016T081953Z-run-44138fa3 and 20261016T083553Z-run-6f00a52f, cb15_stopped3.out, cb15_t0_3.txt and the task arguments (--publishers sa wsj barrons --refresh-once, pin ddd7dcdc38). Two JOBS on the same BP opinion article (403 bot_check bloomberg_press_and_hold, then TargetClosedError), 15 minutes apart in one cycle; SC1 read them as the two legs. No bbg object uploaded, upload-harvest lines 0 GETs. Whether the closure is the vendor page or this runner minimised-window protocol call is not measured. See ledger/ROUND87_BBG_BRANCH_G_PRESS_AND_HOLD_20261016.md.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND87_BBG_BRANCH_G_PRESS_AND_HOLD_20261016.md",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb15_stopped3.out"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-S31"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "The hazard is disarmed by the signed Branch G action; the open question (vendor or runner cause) is carried as a named round-88 cell in the L10 slug, not a round-87 act."
+    }
 ]
 ```
