@@ -20557,3 +20557,27 @@ name the one known failure instead of silently inheriting it.
   "notes": "Recorded for the issuer to confirm or amend. Verdict: no name's grade moved (rr2.AC2)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T10:56:26Z",
+  "id": "NFRA_OPLGTW-Z-S172",
+  "one_line": "OG-ev-1 correction to row Z-S168: the Sunday news_search_articles call I recorded as the quiet-day answer returned rows (716 items matched, 5 returned), so it was not a quiet-day answer and my marker text 'no article matched the window' was wrong.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ W/ANSWER_BODIES.json, ap-19 news_search_articles entry for 2026-10-11: denominator items_matched 716, returned 5, absent_reason null. The marker text and Z-S168's evidence line said no article matched the window; the answer shows otherwise."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-S168 (mine): the quiet-day answer of the news tools is absent_reason plus freshness.",
+  "world_is": "The recorded Sunday call is a populated answer. The finding of Z-S168 that stands is the field one: the portal and news tools carry no data_status key. The marker text in the record and its note are corrected in the file; the ap-19 marker is reworded and dropped by order ap-19 A3.",
+  "notes": "A correction is a new row citing the old id. Cost: a reader of Z-S168 would believe a quiet-day call had been made; it had not."
+}
+```
