@@ -21382,3 +21382,84 @@
   "notes": "The 8 ADMITS sites outside the register are listed in the record; they are findings for 2.0.0_SA_COO~V2 and were not fixed here."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W230-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~230, cell AR-tz-66) the TO-AR-tz-66 paths block is spliced
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~230",
+  "surfaced_at": "2026-10-16T05:22:40Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W230-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The TO-AR-tz-66 <paths> block (order line 52) is spliced: the channel path carries the r46 acceptance invocation and a fragment of the file name.",
+  "spec_asserts": "The order's <paths> block lists the test file and the investigation channel file as its write grant, one path per line (same block shape as TO-AR-tz-65; filed there as IRPT_ANLREQ-D2-W229-S1).",
+  "world_is": "Line 52 of org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-tz-66.fwd5-global-sites-gate-widened.md reads as one line: the channel directory, then the r46_checks.py invocation, then the test file path, then the fragment ESTIGATION_v1.md. The worker used the decoded channel path org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md (present at HEAD 857e3085b3) and the test file path. The r46 checker was run and read only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-tz-66.fwd5-global-sites-gate-widened.md line 52",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md present in the worktree"
+    ]
+  },
+  "notes": "Not a blocker: the criterion ran on the decoded write set. Same defect class as IRPT_ANLREQ-D2-W229-S1."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W230-S2 -- (worker 0.9.0_WK_IRPT_ANLREQ~230, cell AR-tz-66) the worker-face scan rule does not reproduce the record population
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~230",
+  "surfaced_at": "2026-10-16T05:22:40Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W230-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worker-face scan rule (principal_class compared with == or in) does not reproduce the record's 40 comparison sites; the test scans every Compare against the literal under ==, !=, in and not in, which reproduces them.",
+  "spec_asserts": "TO-AR-tz-66 worker face item 2: the completeness scan covers lines where principal_class (any spelling) is compared with == or in against the literal OPAL_GLOBAL, and the table must EQUAL the scan. The record's DENOMINATOR line counts ==, !=, in and not in.",
+  "world_is": "At HEAD 857e3085b3 a principal_class-token rule with == and in only drops every != and not in guard: interactive_access.py:131, owner_reads.py:29, retention.py:105, repository.py:181 and :386, custody_persist.py:152, uploads.py:341, custody.py:76, custody_binding.py:67, custody_ports.py:106, maintained_sources.py:163, :175 and :334. It also drops the bare delegator_class spelling at _authz/enforce.py:572 and evidence[scope] at reports/resident_installed.py:283. Three ADMITS files (owner_reads, retention, repository) would leave both the table and the coverage test. The worker used the record's population: an AST Compare against the literal under Eq, NotEq, In or NotIn. The scan reads 3133 .py files, finds 40 sites in 21 files, and matches the record file by file (scan_sites in the test file).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~229/OPAL_GLOBAL_SITES_CLASSIFIED.md DENOMINATOR line",
+      "infra/aws/lambda/ticket_center/tests/test_cross_firm_global_sites_widened.py scan_sites() at commit 472bc00a41, run with the R46 checker: 6 passed, 1 xfailed"
+    ]
+  },
+  "notes": "The order's wording and the record's population disagree. The record's population is used so the table can be checked against the scan; the issuer should confirm the rule. Not a blocker."
+}
+```
+
+
+## IRPT_ANLREQ-D2-W230-S3 -- (worker 0.9.0_WK_IRPT_ANLREQ~230, cell AR-tz-66) the ADMITS file count in the order's reason is 6, not 8
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~230",
+  "surfaced_at": "2026-10-16T05:22:40Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W230-S3",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's xfail reason says 8 ADMITS files are not register rows; the file-level coverage test flags 6 files (7 sites), and the record's 8 unlisted sites include one site in a file G1 already names.",
+  "spec_asserts": "TO-AR-tz-66 worker face item 3 and the xfail reason string: 8 ADMITS files are not register rows. The acceptance section reads 8 of the 10 ADMITS sites (6 files).",
+  "world_is": "The record has 10 ADMITS sites in 8 ADMITS files. The register names interactive_access.py (G1) and reports/resident_installed.py (G2), so 6 files are unregistered: _scope/global.py, _scope/owner_reads.py, _scope/resolve.py, holdings/resolve.py, reports/repository.py and reports/retention.py, holding 7 ADMITS sites. The record's 8 unlisted sites include interactive_access.py:131, a site in a named file. The strict xfail reason was set to 6 ADMITS files; the test run prints ADMITS files=8 unregistered=6.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~229/OPAL_GLOBAL_SITES_CLASSIFIED.md rows 7 to 31 and the ADMITS sites not in the register section",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R19_GLOBAL_ADMISSIONS_REGISTER.md rows G1 and G2"
+    ]
+  },
+  "notes": "The count is the file-level rule the order asks for. Not a blocker; the xfail stays strict and flips when 2.0.0_SA_COO~V2 adds the rows."
+}
+```
