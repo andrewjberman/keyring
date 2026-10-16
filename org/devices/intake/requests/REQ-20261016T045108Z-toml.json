@@ -1,0 +1,11 @@
+{
+  "schema": "intake-request/1",
+  "id": "REQ-20261016T045108Z-toml",
+  "name": "toml",
+  "version": "0.10.2",
+  "needed_by": "2.0.0_SA_COO~C (NFRA_CTLPLN laptop lane): ONE piece of work, a read-only parse of a TOML config file for the round-27 read-out. TEST ACT: FWD-19's lane-wait clause (CTO round-26 analysis section 3 item 2): this lane is DELIBERATELY put in a waiting state on this package, does not decide the request, and keeps working elsewhere; the wait is shown in the decision list.",
+  "why_no_approved": "toml is NOT in requirements.txt and the intake register reads UNKNOWN for it; a pure-Python wheel (py2.py3-none-any, no dependencies). Nothing is added to requirements.txt; nothing is installed on the laptop; the lane does not touch the package until a decision exists.",
+  "requested_by": "2.0.0_SA_COO~C",
+  "requested_at": "2026-10-16T04:51:08Z",
+  "decisions": []
+}
