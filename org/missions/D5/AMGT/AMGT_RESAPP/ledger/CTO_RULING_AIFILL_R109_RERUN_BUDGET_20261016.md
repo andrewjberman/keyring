@@ -19,4 +19,20 @@ carried in the eb02 ruling (`CTO_RULING_EB02_ANTHROPIC_KEY_R2_20261016.md`).
 
 **Cumulative AIFILL model spend today**, stated so it is visible: about 124 USD on the first re-run, plus this one (at most 150).
 
+## Correction (2026-10-16 ~08:0xZ, on `2.0.0_SA_COO~R2` msg 6598)
+
+The "about 124 USD" for the first 95-name run was wrong in two ways:
+- it used 15/75 USD per Mtok, where the repo rate card is 5/25 (`analyze.py:128`);
+- it counted only the calls recorded inside KEPT blocks.
+
+One name was measured through a wrapped model seam: its true cost was 0.96 USD, about 3.4 times what its blocks record. The first run
+re-estimates to roughly 110-170 USD, which may have passed this seat's 150 ceiling. That ceiling was not enforced, because the run was not
+metered.
+
+**Ruling unchanged, condition added:** the re-run now running meters every call at the repo rate and stops at 150. Every later AIFILL model
+run is metered the same way before it starts. A ceiling with no meter is not a ceiling.
+
+**Cumulative AIFILL model spend today:** roughly 110-170 (first run, re-estimated) plus at most 150 (the re-run). That is under about 320 USD,
+inferred and not billed. The vendor's usage console is the only true figure.
+
 -- 1.0.0_SA_CTO~DELL1
