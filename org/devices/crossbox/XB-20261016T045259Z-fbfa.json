@@ -10,12 +10,16 @@
  "subject": "NFRA_CTLPLN round 27 FWD-11: name a lane with a round in flight and the time its process restarts",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_R27_DELL1_RESTART_DRILL.md",
  "opened_at": "2026-10-16T04:52:59Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-16T04:55:27Z",
   "bus_message_id": "5c728411-7e66-4106-8ad9-dec55f35a1ed"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-16T04:58:11Z",
+  "by": "1.0.0_SA_CTO~DELL1",
+  "bus_message_id": "a63ec77b-266f-4407-89ca-081e5e97bedd"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
