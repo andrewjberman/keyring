@@ -9,13 +9,14 @@
 | cell | what | serves | risk | issued to |
 |---|---|---|---|---|
 | `CT-ao-1` | **Cut as AMENDMENT 1 (below).** Fetch `tabulate==0.9.0` (`tabulate-0.9.0-py3-none-any.whl`) through the checked route and run checks 1-7 (the shape of `CT-al-1`); the CTO signs check 8. | FWD-16 | SERVED (one public-index fetch into a quarantine folder, as `CT-al-1`) | `0.9.0_WK_NFRA_CTLPLN~127` |
-| `CT-ao-2` | **Cut as an amendment when check 8 is signed.** Release, pack and Taildrop to dell1 (the shape of `CT-al-4`), using `CT-an-1`'s pip log from the start. | FWD-15, FWD-16 | WORLD (a delivery off git) | a worker, at the amendment |
+| `CT-ao-2` | **Cut as AMENDMENT 2 (below).** Release, pack and Taildrop to dell1 (the shape of `CT-al-4`), using `CT-an-1`'s pip log from the start. | FWD-15, FWD-16 | SERVED (a release record, a pack and one file set sent to one box; as `CT-al-4`) | `0.9.0_WK_NFRA_CTLPLN~128` |
 
 No order is cut at the issuance: both cells wait on the CTO's decision, which only the CTO can give.
 
 ## Amendments
 
 1. **`CT-ao-1` cut, 2026-10-16 ~03:1xZ.** Dependency cleared: status read 2 of 3 reads `APPROVED` for `tabulate==0.9.0` (CTO decision 02:59:56Z, @3ae1c0fc0e) and the CTO's fetch approval is committed (@a486dee2a8, batch `intake-20261016-tabulate`). Status read 3 of 3: `polars==1.12.0` reads `REFUSED`. The one correction to this document: its text below says `requirements.txt` has 98 lines; the CTO's approval counts 98 lines, 93 non-empty (the issuer's own non-comment count is 67); `tabulate` is absent under every count. **Gate limb that graded the amendment:** `.tools/to-pipeline-gate.py` at the commit (a NEWLY-ADDED order; the amendment commit states the limb output). `CT-ao-2` stays deferred to check 8.
+2. **`CT-ao-2` cut, 2026-10-16 ~03:3xZ.** Dependency cleared: `CT-ao-1` complete (merge `5834b9f30e`, flip `66837d94dc`) and the CTO SIGNED check 8 (`CTO_CHECK8_NFRA_CTLPLN_INTAKE_TABULATE_20261016.md` @9aed0e1263). Risk class stated as `SERVED` (the first table said `WORLD`; `CT-al-4` carried SERVED for the same release, pack and Taildrop acts, and the paths imply no higher floor). Worker `0.9.0_WK_NFRA_CTLPLN~128`. **Gate limb that graded the amendment:** `.tools/to-pipeline-gate.py` at the commit (a NEWLY-ADDED order). The dell1 call (driven item 3) opens after the Taildrop.
 
 ## Driven by the issuer in this round (not cells)
 
