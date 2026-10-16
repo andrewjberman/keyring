@@ -13692,3 +13692,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The 13 arms stay green, but four of them now assert a passing check 4 where they asserted a waiver. A too-new fixture time would have kept the waiver path and asserted a false publish-time story, so the old time was chosen; the choice is recorded for the issuer's review."
 }
 ```
+
+## NFRA_CTLPLN-S9136 -- seat-liveness places a lane on the wrong box from the shared spawn log
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9136",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-16T20:42Z",
+  "one_line": "seat-liveness.py on the laptop placed MDPF_DEMQUE.TO-DQ-t34's holder 0.7.0_AE_CloudOps~ZQ on dell1 from the shared repo's spawn log, while dell1 and sitez both read no live holder; a spawn-log row is read as a seat.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier0_exec/0.0.0_AB_MSTR/deliverables/FINDING_TO_DQ_t34_NO_LIVE_HOLDER_20261016.md (laptop row: seat-liveness.py reads the order as placed on dell1; dell1's manager: it reads the shared spawn log, not a seat)",
+      "dell1 manager bus 6ce39226: no claude.exe for the serial, no spawn marker, broker NOT REGISTERED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A seat-liveness read answers whether a seat is live on a box.",
+  "world_is": "For a lane spawned on one box and logged in the shared repo, the laptop read names another box as the holder; the box placement comes from a shared log row, not from that box's process or broker registration.",
+  "notes": "Owner of the fix: NFRA_CTLPLN's issuer (2.0.0_SA_COO~C) at its next cut; the order itself is ruled in CTO_RULING_TO_DQ_T34_OWNER_AND_BOX_20261016.md."
+}
+```
