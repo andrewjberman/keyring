@@ -10419,3 +10419,30 @@ round.** Never edit an existing row.
 }
 ```
 
+
+## ADVI_COTBKF-D1-S18 -- the issuer dispositions D1-W191-S1..S3 and states the overlap limit of the UNGRADABLE-month census
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-S18",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-16T09:27:04Z",
+  "one_line": "the issuer dispositions D1-W191-S1, S2 and S3 and states a limit of the census: the UNGRADABLE-month categories overlap, so the UNPRICED-first month count is an upper bound on what a vendor close could fill",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~191/BLANK_CENSUS_RECORD.json (worker ~191, merged @5a24f13060): UNGRADABLE months 78,622 split by blank-day clause (first reason: UNPRICED 74,791; NON_POSITIVE_BASE 1,173; FIRST_DAY 1,533; HELD 47; DVR_CLOSE_STEP 21; total 77,565) and by other clauses (no reported return 1,901; reported span not one month 2,865; no daily returns 116; reported rows disagree 15; not finite 8; total 4,905); 77,565 + 4,905 = 82,470, which exceeds 78,622 by 3,848, so a month's reason can join several clauses and the categories are not mutually exclusive",
+      "issuer re-run at HEAD 5a24f13060: CB102cx1-AC1 'BLANK-CENSUS measured=True days_blank=1584413 unreasoned_days=0 unreasoned_months=0 reasons=7 unpriced_cusips=4371'; AC2 'CENSUS-CROSS days_equal=True months_equal=True unreasoned_equal=True unpriced_equal=True'; AC3 'SERVED-UNCHANGED versions_equal=3 of 3'; proof-of-spec-check VALID rc=0; sub-totals add (types 3,791 / 7,492,099; ticker status 3,791 / 7,492,099; gap positions 8,481,300; days by reason 1,584,413)",
+      "cited rule lines read by the issuer: commonwealth_daily_returns.py lines 253, 258, 259, 267 (FLOW_UNVALUED, NON_POSITIVE_BASE, UNPRICED, FIRST_DAY); commonwealth_fwd3_serve.py line 97 (HELD_SOURCE_UNDER_REVIEW); commonwealth_monthly_grade.py line 122 (UNGRADABLE)"
+    ]
+  },
+  "spec_asserts": "D1-W191-S1: the order said universe_from_tx carries each security's asset_type; D1-W191-S2: the order expected a committed Bloomberg request record with per-security outcomes; D1-W191-S3: the store-rule replay prices 897 never-priced securities the served as-traded basis does not.",
+  "world_is": "S1 was the issuer's error in the order text (the universe leaves asset_type blank); the worker read the type from the silver transactions table, read-only, and said so. S2: no committed record carries a per-security Bloomberg outcome (BBG_ACTUALS.jsonl holds 5 job rows with cell counts only), so 'came back priced' stays not established; the request lists name 3,059 distinct securities, 2,354 of them never priced and 515 gap, in the committed Cottonwood lists. S3: the ticker-status split of the never-priced securities (no symbol 1,139; ticker with no store row 1,657; key claimed by more than one security 98; dropped as conflicting 82; resolved and still unpriced 815) is a replay on the round-99 cache and not the served as-traded basis, so its last two groups are approximate. Limit of the month census: the UNPRICED-first count (74,791) includes months that would stay ungradable after a fill because they also carry a reported-side clause (at most 3,848 months overlap, split not made), so a vendor close could make at most 74,791 and at least 70,943 of those months gradable, and only if it covers the securities.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S1 was the issuer's order text and the worker handled it; S2 and S3 are stated limits of the census, carried in the record's not_established and in the CTO message; nothing about a served value follows."
+}
+```
