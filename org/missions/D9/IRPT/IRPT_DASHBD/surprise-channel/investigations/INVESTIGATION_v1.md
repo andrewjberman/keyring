@@ -24319,3 +24319,109 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not decided here. The criteria the order grades (AC1, AC2, AC3) pass; the selftest is a control the order does not name. The issuer decides whether the checker's anchors follow the minted form. No handler edit was made to fit the anchors."
 }
 ```
+
+## IRPT_DASHBD-D2-W246-S7 -- dsgn-irptv1 IV2-AC1 pins the raw unformatted money strings, so it fails by the intended dollar format; the file is outside the grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T19:40:01Z",
+  "one_line": "The suite run of the InvestorReporting folder has one failure that this cell causes: IV2-AC1 (__tests__/dsgn-irptv1/iv-t-2.headline.test.ts) asserts that the injected beginning and ending values print as the raw strings 9143207.18 and 9821455.63; the headline now prints them through formatUsd as $9,143,207.18 and $9,821,455.63. The test file is outside this order's grant (only the firm-binding tests of dsgn-irptv1 are in the write set), so it is not edited here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-309 step 2(e) and Andrew's msg 9754: every printed money value of the tab goes through formatUsd with a dollar sign and grouping; the suite's failing names are a subset of the base's (page owner's gate).",
+  "world_is": "Measured: bun test over src/pages/InvestorReporting: 1431 tests in 419 files; failing names include IV2-AC1 (PerformanceHeadline, the injected-supported-values arm: 'INJECTED SUPPORTED VALUES: beginning present=false ending present=false currency present=true'). The other failing names (IVE26-AC3, IVE98, producer fixtures, F14-AC3, AR-y-248) read wire folders, fixtures, the allowlist file or the prospect upload, none of which this cell changes. Every irpt-dashbd test passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal test output of the InvestorReporting folder run, the IV2-AC1 block (headline) at the worktree",
+      "portal commit 23a95f72: PerformanceHeadline.tsx currencyText now returns formatUsd(value, currency)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The expectation needs the formatted strings ($9,143,207.18 and $9,821,455.63) in the dsgn-irptv1 test; that edit is outside this grant. The issuer or the page owner decides whether to widen the grant for that one file, or to accept the failure as the intended change."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S8 -- at Global the tab's account focus context is null, so the focus POST and the per-account YTD never run; only the dashboard, summary and template reads carry the client firm
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T19:40:01Z",
+  "one_line": "ReportingTab builds its account focus context (focusCtx) only when the scope is non-null. At Global the scope is null, so focusCtx is null: the one-account focus POST (settleAccountFocus) and the per-account YTD reads (resolveAccountYtd) do not run at Global, and the account-scoped report request never starts. The tenant the ruling named for the focus POST therefore changes nothing at Global.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-309 ruling 1 step 3: ReportingTab reads header?.selectedTenant for the focus POST context and the per-account YTD line follows the same value.",
+  "world_is": "Measured by the mounted-tab test (Global, header tenant set, scope null): the manifest, client summary and template reads carry selected_tenant; no /selections POST and no per-account YTD read is issued in that run. The Preview and print template reads take the export target's selectedTenant, which is the focus-derived accountRef.selectedTenant, so at Global it is absent and those reads go out bare unless the target carries the tenant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tabs/reporting/ReportingTab.tsx focusCtx = scope ? {...} : null, and the focus effect returns early when focusCtx is null (commit 23a95f72)",
+      "the mounted-tab test performance-tab-global-and-firm (commit 23a95f72): the reads listed above, none of them a /selections POST"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired: building focusCtx from the header at Global is a larger change to the account focus, outside the ruling's named edits. The issuer decides whether the Global account picker needs it."
+}
+```
+
+## IRPT_DASHBD-D2-W246-S9 -- the print URL carries no client id; the print window takes the client from the bundle's performance report scope
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T19:40:01Z",
+  "one_line": "Ruling 4 asks the print window to read the client and the tenant the export's own target or receipt carries, and to file BLOCKING if the target lacks the client id. The print URL does not carry a client id (bundle, tenant, scope, revision, selection, selected_tenant, account, version only). The print window takes the client from scope.clientId of the performance report inside the bundle it already resolves for the print, and the tenant from the selected_tenant the URL carries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-309 step 4: the print window resolves the template with the client and the tenant the export's own target or receipt carries; if the target lacks the client id, file a BLOCKING row naming the missing field and stop on it.",
+  "world_is": "The print entry's PrintReady reads bundle.performanceReport.scope.clientId (the bundle's own report names the client it covers) and params selected_tenant. The fresh-window test passes the client from the bundle fixture (cli-4a2) through resolvePrintTemplate with an injected read. The BLOCKING stop was not taken because the bundle, which is the export's own state, carries the client; the URL itself does not.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "render/PrintEntry.tsx PrintReady: clientId = bundle.performanceReport?.scope.clientId (commit 23a95f72)",
+      "render/PrintEntry.tsx params: bundle, tenant, scope, revision, selection, selected_tenant, account, version (read at the same commit; no client parameter)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer decides whether a fresh print window should also carry the client id on its URL (a route change, outside this order) or keep the bundle's report as the source."
+}
+```
+
+
+## IRPT_DASHBD-D2-W246-S10 -- disposition of S7: the grant was widened by one test file and the two pinned strings were changed
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W246-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~246",
+  "surfaced_at": "2026-10-16T20:16:51Z",
+  "one_line": "Disposition of IRPT_DASHBD-D2-W246-S7 (BLOCKING, left as filed): the coordinator widened the grant by one file, dsgn-irptv1/iv-t-2.headline.test.ts (order AMENDMENT 2026-10-16); its lines 88 and 89 now expect the formatted strings $9,143,207.18 and $9,821,455.63. The test passes at portal commit b16965e5.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "S7: the dsgn-irptv1 IV2-AC1 test pins the raw money strings and fails by the intended dollar format; the file was outside the grant.",
+  "world_is": "After the amendment: iv-t-2.headline.test.ts passes (1 pass, 0 fail); the irpt-dashbd folder passes (162 pass, 0 fail, 21 files); typecheck rc 0. The one-firm test in performance-tab-global-and-firm.test.tsx was also restated on the reachable state (portal commit 75a71ae3), with no product file changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal commit b16965e5 (headline test lines 88-89) and 75a71ae3 (one-firm test), pushed to origin cand/dell2/irpt-49f-performance-template-mount (ls-remote read 75a71ae3)",
+      "order amendment at the trunk commit eddc17e627 (AMENDMENT 2026-10-16 row S7)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The coordinator widened the grant by one test file (order AMENDMENT 2026-10-16); the test now expects the intended formatted money, and the one-firm test is restated; row S7 is left as filed.",
+  "notes": "Dismissed because the grant was widened by the coordinator's ruling and the test now expects the intended format; row S7 itself is left as filed."
+}
+```
