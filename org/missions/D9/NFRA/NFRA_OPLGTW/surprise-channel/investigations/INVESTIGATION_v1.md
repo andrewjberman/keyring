@@ -19225,3 +19225,73 @@ name the one known failure instead of silently inheriting it.
     "world_is": "The rc captured after the pipeline is the exit status of tr, which returns 0 whatever the probe returns. A probe that exits non-zero after printing a matching line would still pass the check. The probe in this round exits 0, so the verdict is unaffected here; the issuer decides whether the check captures the probe's own status (PIPESTATUS or pipefail)."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S1",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T00:17:13Z",
+    "one_line": "The named test test_ogch1_ac04 asserts that the repo roster yields at least one name mapped to None; under the order's mapping rule every name in the repo roster maps to a canonical firm, so AC1 cannot pass as written.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ data/mdpf/config/partner_roster.json @705ef2c190: partners[] has 3 entries; firm_id values are 49financial, inflection and cottonwood (each canonical); aliases.advisor_name holds one non-empty string per partner; no partner has a non-canonical firm_id or an empty name.",
+        "RAN python -m pytest tests/test_og_ch1.py -v from infra/aws/ec2/opal-gateway in worktree wk-NFRA_OPLGTW-111: test_ogch1_ac04 FAILED at the assertion 'None in values()' (values 49financial, inflection, cottonwood); test_ogch1_ac01, ac02, ac03 and ac05 PASSED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order NFRA_OPLGTW.TO-OG-ch-1 section 1 item 3 and test_ogch1_ac04: firm_roster() over the repo roster file returns a map in which at least one name is None.",
+    "world_is": "The repo roster carries no partner with a non-canonical firm_id and no empty advisor_name, so the order's own mapping rule (a firm_id outside the canonical set, or a name no firm holds, maps to None) produces no None over that file. The clause cannot be met on the repo file as written; test_ogch1_ac04 and criterion AC1 stay FAIL on this head. The test was not weakened. The issuer decides whether the roster, the clause or the rule changes."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S2",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T00:17:13Z",
+    "one_line": "The order's role-key rule keys the Black Diamond 49F live tables (prefix blackdiamond/49f-live/) as blackdiamond49flive, not blackdiamond49f, so a 49F live read would not assume the 49F role.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py @705ef2c190: LIVE_SUFFIX is '-live' (line 36); _live_prefix returns ctx.prefix(VENDOR, segment + LIVE_SUFFIX, 'silver', table) (lines 234-235); unrealized, transactions, allocations and fees read through it.",
+        "RAN python from infra/aws/ec2/opal-gateway in worktree wk-NFRA_OPLGTW-111: client_role.role_key('blackdiamond', '49f-live') returns 'blackdiamond49flive'; role_key('blackdiamond', '49f') returns 'blackdiamond49f'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order NFRA_OPLGTW.TO-OG-ch-1 item 2: role_key returns the vendor plus the prefix's second segment with non-alphanumeric characters removed and lower-cased, Ctx._scope passes that key, and a blackdiamond/49f prefix assumes BLACKDIAMOND49F_READER_ROLE_ARN.",
+    "world_is": "The 49F live tables are addressed with a second segment of 49f-live, so the same rule yields blackdiamond49flive: a 49F live read would take the default client (or a BLACKDIAMOND49FLIVE role) and never BLACKDIAMOND49F_READER_ROLE_ARN. Latent at this head: bd49f._firm refuses firm_segment_unresolved before any prefix is built (see the next row), so no live read is reached. It becomes live when the core's fence table names blackdiamond. The issuer decides the segment-to-key mapping."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S3",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T00:17:13Z",
+    "one_line": "The core's fence-kind table has no blackdiamond entry, so firm_segments returns no segment for either Black Diamond firm and both adapters refuse every read before any S3 call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ infra/aws/ec2/opal-gateway/app/client_core.py @705ef2c190: FENCE_KIND = {'schwab': {'49financial': 'all-segments'}} (line 60); firm_segments returns [] unless FENCE_KIND[vendor][firm] is all-segments.",
+        "READ client_adapter_bd49f.py _firm (lines 80-83: len(segments) != 1 raises firm_segment_unresolved) and client_adapter_bdcottonwood.py _seg (lines 78-79: firm_not_served) @705ef2c190.",
+        "RAN python from infra/aws/ec2/opal-gateway in worktree wk-NFRA_OPLGTW-111: Ctx(catalog_doc={}).firm_segments('blackdiamond', '49financial') returns [] and firm_segments('blackdiamond', 'cottonwood') returns []."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The Black Diamond adapters read their firm segment through ctx.firm_segments(VENDOR, firm) and refuse only when the fence does not name exactly one segment, so a registered Black Diamond firm is readable once the hookup is in place.",
+    "world_is": "At this head no Black Diamond firm resolves a segment, so every Black Diamond read refuses at head (49F with firm_segment_unresolved, cottonwood with firm_not_served). The hookup proves routing (ch1 AC2) but no Black Diamond read succeeds. This is outside the three fixes of OG-ch-1 and was not changed here."
+  }
+  ```
