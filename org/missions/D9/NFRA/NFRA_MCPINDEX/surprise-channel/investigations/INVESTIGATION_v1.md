@@ -9398,6 +9398,40 @@ carries none.
     },
     "spec_asserts": "The commit gate checks each commit for client account ids when the hashed list is present.",
     "world_is": "The hashed list is not at the expected path on this box, so the check printed WARN and passed. The order's content was reviewed by hand for account numbers instead."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S130",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T15:20Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W47-S1",
+      "NFRA_MCPINDEX-Z-W47-S2",
+      "NFRA_MCPINDEX-Z-W48-S1",
+      "NFRA_MCPINDEX-Z-W49-S1",
+      "NFRA_MCPINDEX-Z-W49-S2",
+      "NFRA_MCPINDEX-Z-W49-S3",
+      "NFRA_MCPINDEX-Z-W49-S4",
+      "NFRA_MCPINDEX-Z-W49-S5",
+      "NFRA_MCPINDEX-Z-W49-S6",
+      "NFRA_MCPINDEX-Z-W49-S7"
+    ],
+    "one_line": "ISSUER DISPOSITION of the 10 round-19 worker rows (workers ~47, ~48, ~49): the five BLOCKING ones were the issuer's own defects in the orders and checks, ruled in amendments A1/A2 and re-graded PASS on the merged tree; the five observations change no criterion.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W47-S1, S2: two stale expectations in tests/test_opal_discover.py were red at the base 00113acb2f (the MX-c-19/23 widening and the 12 Schwab dim rows); repaired in a08c13c6b1 under MX-c-24 A1; c24.AC1, AC2, AC3 PASS on the merged tree 1ee9069f8c (61 passed).",
+        "Z-W48-S1: validate_catalog_v02.py reads app/refs/DATA_CATALOG.yaml, outside the sparse cone; cone widened (MX-c-25 A1 5b590c88eb); c25.AC1 and AC2 PASS on the merged tree 7309ccc274.",
+        "Z-W49-S1, S2: my c26.AC1 refused the word FROZEN the face required, and test_c_group needs the gateway app tree outside the cone; check fixed 2b9fa8ae4b, cone widened; c26.AC1, AC2, AC3 PASS on the merged tree 98ce7eb4e7; the atom_decomposition suite reads 326 passed and ruff is clean."
+      ]
+    },
+    "spec_asserts": "Each BLOCKING row asserts that an order or check as written could not be met by a correct build in the worker's sparse worktree.",
+    "world_is": "All five were true and were the issuer's: the base dry-runs ran in the full tree and, for c24.AC3, stopped at 'no test file' without running pytest. Z-W49-S3 (fallback NYSE calendar answers the four freshness values), S4 (silver/transactions/ holds a non-dated _README.txt, counted in the object total), S5 (gen_silver_rows.py has no address source; the four live entries are not contract-generated, so no present row is affected, but a regeneration of an address-carrying entry would drop the field), S6 (the naming gate RAISES, not refuses, on the eight legacy prefix lines, which now equal the frozen copy's real address; no registry row is added for an existing pipeline), S7 (the hashed account-id list is absent on this device; the entries hold no account numbers) change no graded criterion.",
+    "dismissal_reason": "S1, S2 (MX-c-24), S1 (MX-c-25), S1, S2 (MX-c-26): the defect was the issuer's, ruled in the amendment commits and re-graded PASS on the merged trees named above. S3 to S7 of MX-c-26: observations carried to the round-19 analysis, none standing. The issuer is disarm_owner of all ten. The base-dry-run lesson (run the whole criterion, including its pytest, in a SPARSE worktree before the cut) is the issuer's finding for the next cut."
   }
 ]
 ```
