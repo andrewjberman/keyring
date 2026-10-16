@@ -2871,3 +2871,55 @@ used as fixtures is a different read with a different denominator.
  "notes": "Recorded in R19_L1_RECORD.json as the before-arm result. The mutant check (AC2) is separate: it fires on the mutant copy. The order's criteria are unaffected by this premise."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W47-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~47",
+  "surfaced_at": "2026-10-16T01:40:53Z",
+  "one_line": "The worktree C:/dev/wk-tckt-vnext-47 is a sparse checkout that omits infra/aws, so the TO-R19-L3 paths infra/aws/lambda/ticket_center/lambda_function.py and tests/ are absent from the working tree although HEAD carries them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-tckt-vnext-47 config --get core.sparseCheckout = true; git sparse-checkout list = .tools, infra/logic/registry, lib, org/devices, org/missions/D7/TCKT/TCKT_VNEXT, org/modules/graph, org/ref, org/standards (rc=0)",
+      "git ls-files -v infra/aws: 9277 entries flagged S (skip-worktree); ls infra in the worktree shows README.md, launch_agents_powershell.ps1, logic/ only",
+      "git ls-tree HEAD infra/aws/lambda/ticket_center/ at worktree HEAD b84a2ca293: lambda_function.py (blob b51d9ab912) and tests/ (tree e5e5594bea) present",
+      "Read, Glob and Grep on C:/dev/wk-tckt-vnext-47/infra/aws/lambda/ticket_center return does-not-exist; TO-R19-L3 <paths> names these two entries for the cell"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker worktree carries the paths the task order names (infra/aws/lambda/ticket_center/lambda_function.py and its tests/ folder), so the cell can be built and tested in it.",
+  "world_is": "The worktree is a sparse checkout that excludes infra/aws and org/surprise_channel; the named paths exist at HEAD but are not materialised. Per the worker rules this is a BLOCKING stop: the worker does not rebuild, extract or change the sparse-checkout. The surprise-row schema org/surprise_channel/schemas/investigation_item.schema.json is also absent from the worktree.",
+  "notes": "Stop taken at the first act. No source edit, no test, no deploy, no apply, no live call. TO-R19-L3 status stays pending. The issuer may re-provision the worktree or amend the grant; the worker does not decide which."
+}
+```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W47-S2",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~47",
+  "surfaced_at": "2026-10-16T02:27:24Z",
+  "one_line": "The whole-folder drain check cannot collect 8 of the 30 test modules in this sparse worktree: test_package_route.py reads org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json at import, the file is tracked at HEAD but outside the sparse-checkout list, so collection raises FileNotFoundError.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --get core.sparseCheckout = true; git sparse-checkout list (rc=0) has no org/missions/D9 entry",
+      "git ls-files -- org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json lists the file at HEAD (839 bytes); it is absent from C:/dev/wk-tckt-vnext-47",
+      "python -m pytest C:/dev/wk-tckt-vnext-47/infra/aws/lambda/ticket_center/tests/ -q -p no:cacheprovider (no -k): 8 errors during collection, FileNotFoundError at test_package_route.py:37 (_i7_canonical); line 37 is not edited by this order (git diff of test_package_route.py touches line 85 only)",
+      "scratch copy under .scratch/cur-root (the working-tree infra folder plus the same fixture restored byte-for-byte from HEAD): 403 passed, 42 subtests passed, 0 failed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The drain check named by TO-R19-L3 (the whole infra/aws/lambda/ticket_center/tests folder run in the worker worktree, zero failures after the re-pins) collects and runs every test module in the worktree.",
+  "world_is": "In this sparse worktree org/missions/D9 is outside the sparse-checkout, so the one fixture read at import is absent and 8 modules (test_no_row_refuses, test_package_409_codes, test_package_env_firms, test_package_i5p_i7, test_package_principal, test_package_request_id, test_package_route, test_status_active) error at collection. The worker did not change the sparse checkout or the grant. The folder count in the record comes from the scratch copy with the fixture restored from HEAD; the product tree was not changed for it.",
+  "notes": "Filed for the issuer. AC1 and AC2 are measured as the order states. The fix (a sparse-checkout entry for that fixture, or a grant for it) is the issuer's decision; the worker does not decide which."
+}
+```
