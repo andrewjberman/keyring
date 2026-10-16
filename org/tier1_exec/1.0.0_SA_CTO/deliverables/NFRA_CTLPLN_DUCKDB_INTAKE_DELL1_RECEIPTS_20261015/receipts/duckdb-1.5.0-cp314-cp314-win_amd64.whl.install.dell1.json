@@ -1,0 +1,25 @@
+{
+  "schema": "intake-install/1",
+  "device": "dell1",
+  "file_name": "duckdb-1.5.0-cp314-cp314-win_amd64.whl",
+  "received_sha256": "11ae50aaeda2145b50294ee0247e4f11fb9448b3cc3d2aea1cfc456637dfb977",
+  "install": {
+    "command": [
+      "C:\\Users\\Test\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+      "-m",
+      "pip",
+      "install",
+      "--no-index",
+      "--no-deps",
+      "--target",
+      "C:\\dev\\_intake_duckdb_20261015\\TARGET",
+      "C:\\dev\\_intake_duckdb_20261015\\PACK\\duckdb-1.5.0-cp314-cp314-win_amd64.whl"
+    ],
+    "rc": 0,
+    "target_form": "target",
+    "interpreter": "C:\\Users\\Test\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "target": "C:\\dev\\_intake_duckdb_20261015\\TARGET"
+  },
+  "last_line": "Successfully installed duckdb-1.5.0",
+  "at": "2026-10-15T22:58:28Z"
+}
