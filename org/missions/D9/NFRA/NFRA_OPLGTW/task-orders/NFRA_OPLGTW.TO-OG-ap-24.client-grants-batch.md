@@ -83,7 +83,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-24.client-grants-batch.proof
 
 - A3 (issuer, 2026-10-15 ~23:4xZ, `0.7.0_AE_CloudOps~ZS` msg 34612, supersedes item (1) of A2): THE BLACK DIAMOND ROLE IS KEYED BY FIRM. `client_core` derives the vendor role key from the prefix's first segment, so both BD firms (49financial and cottonwood) would read through one `BLACKDIAMOND_READER_ROLE_ARN`: IAM could not fence the firms apart. RULED (option b): the code keys the BD role by firm (cell `OG-ch-1`: env `BLACKDIAMOND49F_READER_ROLE_ARN` and `BLACKDIAMONDCOTTONWOOD_READER_ROLE_ARN`; every other vendor keeps its vendor key), ahead of `OG-ap-23`. The live `gateway-blackdiamond-read-policy` is NOT edited and the live BD role is NOT widened; `blackdiamond_reader_iam.tf` stays in `<paths>` only for a Cottonwood delta the issuer rules separately. The new `client_vendor_roles_iam.tf` holds one role per role key the generator derives from the merged adapters (a `blackdiamond49f` role is new). For the Cottonwood key the live role is reused ONLY if the generator proves its policy covers the prefixes that adapter reads; otherwise the delta is asked of the issuer, one ask. AC1 reads `roles >= 5` in the new `.tf`; `gr_grant_gen.py --check` (the `.tf` equals what the generator derives from the merged adapters) is the equality. Schwab stays at the `dim_*` prefixes its adapter reads; the absent `fact_*` coverage is a NAMED GAP in the ask (MX-c-23, MX-r-15). Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>GRANTS-BATCH</workstream>
 <slot>~AE</slot>

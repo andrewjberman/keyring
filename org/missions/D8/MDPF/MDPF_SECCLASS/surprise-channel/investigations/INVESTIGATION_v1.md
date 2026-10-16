@@ -8081,3 +8081,56 @@ by dell1 or by this seat.
   "world_is": "E_18.detect_new_securities.py:156 and :157-171 read the old list for name-prefix matching with no matching text on their lines; they are reached through the handle at :214 and called at :218. The 24-line census cannot see them, so a record covering only the 24 lines is silent on them. Not measured: any other reader reached only through a handle."
 }
 ```
+
+## MDPF_SECCLASS-D1-W95-S1 -- the Black Diamond and cottonwood D_04 writers take their output bucket from lib.platinum_dest and lib.config, and neither module is tracked at HEAD or on disk, so the write's bucket is not readable from the tree
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W95-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~95",
+  "surfaced_at": "2026-10-16T03:55:29Z",
+  "one_line": "The 49financial (black_diamond) and cottonwood (cot) D_04 writers resolve their output bucket through lib.platinum_dest.destination and lib.config.S3_BUCKET; neither module is tracked at HEAD or present in the main checkout, so the bucket of the write that serves mix_summary.json cannot be read from the tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/D_04.client_portal_summary.py:84 at HEAD d63495282e: `from lib.platinum_dest import destination as platinum_destination`; the write at line 268-276 calls platinum_destination(key) to get dest_bucket, dest_key",
+      "git grep at HEAD d63495282e finds no `def destination` anywhere under lib/, infra/ or data/; the only hits are the imports in data/black_diamond/scripts/gold/C_05.client_tax_liability.py and C_06.client_mix_timeseries.py and D_04",
+      "data/cot/scripts/gold/D_04.client_portal_summary.py:83 at HEAD d63495282e: `from lib.config import S3_BUCKET as BUCKET`; git ls-tree of lib/ at HEAD lists no config.py and C:/dev/ajb_workspace/lib has no config.py or platinum_dest.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e105 worker face item 1a: name the writer of platinum/firm/mix_summary.json for the Black Diamond firm 49financial and say how you know it is this key.",
+  "world_is": "The 49financial identity of the object is established from the readers, not from the writer's destination helper: data/assets/scripts/gold/runners_49f/d06_firm_mix_summary.py:246 reads Bucket=opal-data-bd Key=platinum/firm/mix_summary.json and fit_harness.py:41 names opal-data-bd as the legacy bucket. The cottonwood writer's bucket is likewise unreadable from lib.config; opal-data-cot is taken from data/cot/scripts/gold/runners_cot/d_fleet_common.py:22 (BUCKET constant). Decision unaffected: no reader depends on key order under either bucket."
+}
+```
+
+## MDPF_SECCLASS-D1-W95-S2 -- the order asks a worker to add a row for a reader the census misses, but the check refuses any row for a file outside its census as extra, so census-missed readers can only be recorded in prose
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W95-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~95",
+  "surfaced_at": "2026-10-16T03:55:29Z",
+  "one_line": "TO-SC-e105 says add a row for a census-missed reader; check_firm_mix_summary_record.py refuses a row whose file is outside its census (extra=...). Census-missed readers (a brace-template key, an excluded .mjs file, a listing-driven reader, an indirect hook consumer) are therefore recorded in prose in the record, with verdicts, and no row is added.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_firm_mix_summary_record.py docstring and main(): `missing, extra = sorted(cen - set(rows)), sorted(set(rows) - cen)`; ok requires not missing and not extra",
+      "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml:15553 at HEAD d63495282e: key_template platinum/advi/49financial/{mix_summary,...}.json -- the regex has no brace form, so the census misses it (the key is the advi twin, not this object)",
+      "infra/aws/lambda-edge/_shared/firm-config.mjs:46 at HEAD d63495282e: comment naming platinum/advi/49financial/mix_summary.json; .mjs is outside the census extension list",
+      "data/assets/scripts/gold/runners_49f/d00_served_shape_census.py at HEAD d63495282e lists served families by listing and reads each body with _schema_of; it never names the key, so the census cannot see it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e105 worker face item 1b: if you find a reader the census misses, add its row too and say how you found it.",
+  "world_is": "Record AC1 ran ok=True with census=8 rows=8 missing=[] extra=[] after the prose-only treatment. Found by a bare-token search (\\bmix_summary\\b and quoted mix_summary over data/ infra/ lib/ at HEAD) and by reading every consumer of getPlatinumFirmMixSummary in portal src (ClientsTab.tsx, AuthContext.tsx). All census-missed readers have verdict no; none is order-dependent."
+}
+```

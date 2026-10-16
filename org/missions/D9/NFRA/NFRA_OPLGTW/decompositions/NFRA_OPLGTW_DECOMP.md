@@ -2433,3 +2433,44 @@ Two batches on two surfaces, never two appliers on the host at once: the IAM and
 | `OG-ch-1` | `register_adapter` holds several modules per vendor with DISJOINT `FIRMS` (the two Black Diamond adapters share `VENDOR = "blackdiamond"`), every route picks the module holding the call's canonical firm; `client_role.role_key` keys the Black Diamond read role by the prefix's firm segment (`BLACKDIAMOND49F_READER_ROLE_ARN`, `BLACKDIAMONDCOTTONWOOD_READER_ROLE_ARN`), so IAM fences the two firms apart (ap-24 A3); `Ctx.firm_roster()` builds `{advisor_name: canonical firm}` from the real roster (cl-5 A2) | `app/client_core.py`, `app/client_role.py`, `tests/test_og_ch1.py` | WORLD | ~111 | cl-1 .. cl-6 merged |
 
 **fanout:** 1 of 1 chains, cap 8. One chain with `OG-cl-7` (the same two files): ch-1 first, cl-7 second, both in slot ~111. The tool registrations, the import lines, the pins and the roster copy under `app/refs/` are the ISSUER's hookup at the merge (`r37/hookup_ch.py`), not a cell.
+
+## ADDENDUM R3-T.76 (2.0.0_SA_COO~O, 2026-10-16 ~03:2xZ) -- round 37, workstream JSON-SERVED: the typed reads of the portal-v2 json objects no tool reads (PRD v3.13 @def417d2be as corrected @7656f484ab; cross-adjudication XA-20261016T024917Z-cdcc; MCPINDEX msg 34654)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-sv-1` | ONE module of typed reads for the seven `opal-data-portal-v2` rows `served_correlation_data`, `served_etf_returns`, `served_factor_tilts`, `served_model_portfolio_timeseries`, `served_model_portfolios_views`, `served_peer_performance`, `served_trending_latest`: each decided BUILT or RULED_OUT by its own freshness at build (views is out: 93 trading days stale); no new IAM (every prefix is under `json/`, granted by `queryv0-iam.tf:34`); the registrations are the issuer's hookup | `app/portal_json_served.py`, `tests/test_og_sv1.py`, the record and the probe | WORLD | ~113 | the hookup merged (5aeafbda15) |
+
+`opal-harvest-security-metrics` is not built here (dell1 AMGT_HARVST, PRD v3.13 item 5). The release is `OG-ap-23` (the code batch), which carries these tools after the hookup.
+**fanout:** 1 of 1 chains, cap 8. Disjoint from `OG-cl-7` (client modules) and from every merged cell; the hookup lines are the issuer's.
+
+## ADDENDUM R3-T.77 (2.0.0_SA_COO~O, 2026-10-16 ~03:3xZ) -- round 37, workstream JSON-SERVED-2: the capital-markets assumptions tool (CTO ruling @131991960e; MCPINDEX msg 34695)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-sv-2` | `portal_get_cma_assumptions` in the json-served module for `opal_data_portal_v2_served_cma_assumptions` (`json/capital-markets/assumptions.json`, 27 rows, annual 2026 edition; no new IAM, under `json/*`) | `app/portal_json_served.py`, `tests/test_og_sv2.py`, the record and the probe | WORLD | ~113 | `OG-sv-1` merged (same module) |
+
+**fanout:** 1 of 1 chains, cap 8. One chain with `OG-sv-1` (the same file): sv-1 first, sv-2 second, both in slot ~113.
+
+## ADDENDUM R3-T.78 (2.0.0_SA_COO~O, 2026-10-16 ~03:4xZ) -- round 37, workstream G2-CONFORM-2: the Black Diamond upstream identifiers enter name_rulings.json; the unread orion/4698 alias goes (CTO msg 34699; ruling @d97ea3ae82 section 1)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-cl-8` | one `none_owed` row per refused (name, type) of `bd_account_id`, `bd_account_number`, `fact_bd_allocation`, `market_value_profile` in `infra/logic/registry/name_rulings.json`; delete the unread `orion/4698` alias from `client_core.py`; the full-add naming gate over `app/client_*.py` in ENFORCE prints no REFUSE (so `OG-cl-7` AC2 closes) | `infra/logic/registry/name_rulings.json`, `app/client_core.py`, the investigation file | WORLD | ~111 | `OG-cl-7` merged (517f78548d) |
+
+**fanout:** 1 of 1 chains, cap 8. Disjoint from `OG-sv-1` / `OG-sv-2` (the json-served module). It is an `OG-ap-23` batch cell: it merges before the release is cut.
+
+## ADDENDUM R3-T.79 (2.0.0_SA_COO~O, 2026-10-16 ~03:5xZ) -- round 37, workstream G2-CONFORM-3: the `etfs` field key of the served etf_returns object enters name_rulings.json (CTO msg 34709; row Z-W113-S1)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-cl-9` | one `none_owed` row for `etfs` (type `hand-kept carrier`, the served object's own key, evidence `portal_json_served.py:374` and `:376`) in `infra/logic/registry/name_rulings.json`; no code, no override | `infra/logic/registry/name_rulings.json` | WORLD | ~111 | `OG-sv-1` merged (40051277fc), `OG-cl-8` merged (2ed472c4b9) |
+
+**fanout:** 1 of 1 chains, cap 8. One chain with `OG-cl-8` (the same file): cl-8 first, cl-9 second, both in slot ~111. The issuer's hookup of the seven json-served tools is on trunk (`7200f493d2`).
+
+## ADDENDUM R3-T.80 (2.0.0_SA_COO~O, 2026-10-16 ~04:0xZ, UTC) -- round 37, workstream NAMING-GATE-RULINGS: the commit-time naming gate grades a name with a name_rulings.json row from that row (XA-20261016T034740Z-28da ruled (a); CTO msg 34713)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ng-2` | `.tools/naming-gate.py` reuses `naming-apply-gate.py`'s `ruling_amend` (name, node type) lookup: `none_owed` or an equal `canonical` is RULED (passes, row cited), a different `canonical` REFUSEs, no row leaves the grade unchanged; three self-test arms (admit, no-row control, other-type control); the ten refused lines (8 bd49f, 2 etfs) re-graded RULED; no override | `.tools/naming-gate.py`, optionally `.tools/tests/test_naming_gate_rulings.py` | WORLD | ~114 | `OG-cl-8`, `OG-cl-9` merged (the five rows on the base) |
+
+**fanout:** 1 of 1 chains, cap 8. Disjoint from every other open cell. It is an `OG-ap-23` batch cell: the release commit cannot land in ENFORCE until the ten lines grade RULED. Before the merge the issuer re-runs the self-test, plants a name with no row and a row for another pair, and re-grades the ten lines.
