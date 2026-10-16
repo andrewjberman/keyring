@@ -25318,3 +25318,55 @@ name the one known failure instead of silently inheriting it.
   "notes": "Blocks NFRA_MCPORTAL MP-v-2 (a second account served /sprint, PRD A2)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-16T19:34:56Z",
+  "id": "NFRA_OPLGTW-Z-S313",
+  "one_line": "OG-ev-2: the live allocation weights are on a 0-to-1 scale but a per-account sum of account_allocation + cash_allocation is NOT 1 for 5775 of 7345 accounts, so the order's rule reads weight_scale unclear.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/E1_PARTITION_MEASURE.json (counts and ratios only; read 2026-10-16T19:31Z under the applier's own identity)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ev-2.measure-49f-partitions-and-allocation-scale.md section 1 steps 1 and 2",
+      "Diagnostic read of the same newest allocations partition (2026-10-09, 7345 rows, one row per account): account_allocation in (0,1.05] for 7115 rows, zero for 187, above 1.05 for 9, max 4.33; cash_allocation in (0,1.05] for 6664, zero for 641, above 1.05 for 1; per-account sums: 0 for 187, in (0,0.95) for 5357, in [0.95,1.05] for 1570, in (1.05,5] for 196, in (5,95) for 1, in [95,105] for 0, above 105 for 0."
+    ]
+  },
+  "spec_asserts": "The weight scale is decidable by the near-1 versus near-100 test on the per-account sum of account_allocation and cash_allocation (OG-ev-2 step 2).",
+  "world_is": "near_1 1570, near_100 0, other 5775, so the rule's answer is unclear. No weight sits near 100 (0 of 7345 sums in [95,105], none above 105), so a percent scale is not supported; the values read as fractions that do not sum to 1 per account, which means the two columns are not the whole of an account's weight (the remainder is not in these two columns or the denominator is not the account). OG-en-15 should not name a unit from the sum test.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts only; no account id, amount or name. Does not block OG-ev-2's own AC1 (the record is self-consistent)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-16T19:34:56Z",
+  "id": "NFRA_OPLGTW-Z-S314",
+  "one_line": "OG-ev-2: transaction_id is not unique within one daily partition (newest transactions partition 14359 rows, 2954 distinct ids), and fees repeats it too (3081 rows, 2982 distinct); the overlap test reads distinct-id sets.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/E1_PARTITION_MEASURE.json (counts and ratios only; read 2026-10-16T19:31Z under the applier's own identity)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ev-2.measure-49f-partitions-and-allocation-scale.md section 1 steps 1 and 2",
+      "Newest transactions partition 2026-10-16: 14359 rows, 0 null ids, 2954 distinct; newest fees partition 2026-10-14: 3081 rows, 0 null ids, 2982 distinct. The silver/transactions prefix also lists 1 object that is not a flat dated parquet file (1931 listed, 1930 dated)."
+    ]
+  },
+  "spec_asserts": "transaction_id is the natural key that identifies one row (OG-ev-2 step 1: `transaction_id` for transactions; for fees the column that identifies one fee row).",
+  "world_is": "transaction_id repeats about 4.9 times per row set in transactions and about 1.03 times in fees, so it identifies a transaction, not a row. The overlap ratio was computed on the SET of distinct ids per partition, which the order's formula (|keys(A) AND keys(B)| / |keys(B)|) reads as a set. The classification is unaffected (all 5 pairs of both tables read 0.0 overlap, increment), but any tool that dedupes or joins on transaction_id alone will collapse rows.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Counts only. Bears on OG-en-13's span-of-partitions design."
+}
+```
