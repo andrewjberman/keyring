@@ -24992,3 +24992,30 @@ name the one known failure instead of silently inheriting it.
   "dismissal_reason": "OG-en-12 A1 put tests/test_og_ch1.py:170 in the grant so the pin follows the ruled key blackdiamond49flive; merged 5c345724a6, test_ogch1_ac03 passes."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T16:50:13Z",
+  "id": "NFRA_OPLGTW-Z-S301",
+  "one_line": "OG-ap-28 Phase A STOP: the release commit is REFUSED by the naming gate (ENFORCE) on 16 DATA_CATALOG.yaml string literals -- the registry the gate reads at HEAD does not exist at the live ref, and 4 of the literals (blackdiamond/49f-live/silver/{unrealized,transactions,allocations,fees}/, type S3Key) are RAISED as a rule/registry defect: '49f-live' is not a tier (K3/V7).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN the release commit in C:/tmp/og-rel-batch2 (live ref d14445961d + the take from trunk 066649b10f, catalog blob b81c48aa3c verified) under GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL: LGIC_ENFORCE DEC-6 REFUSE, 46 graded, CATALOG-EXEMPT admitted=0 refused=16 literals=46 registry_head=d14445961dd6. The 16 (name, type): 4 x silver/<table>/ and 8 x blackdiamond/49financial/silver_legacy/<table>/date=<d>/... (EXISTING, OUT-OF-PATTERN, S3Key), 4 x blackdiamond/49f-live/silver/<table>/ (S3Key).",
+      "READ .tools/naming-gate.py:2228-2286: the catalog exemption reads infra/logic/registry/catalog_fork_keys.json and legacy_addresses.json with git show HEAD:<path> only, 'never the index or working tree'. Both files are ABSENT at the live ref (5535 and 2073 lines at trunk), so the working-tree overlay used in OG-ap-23 cannot help here.",
+      "RAN a probe branch rel-nfra-oplgtw-batch2-probe in the release tree (not the release): one prelude commit 191eedf892 carries the two registry files at trunk bytes; the release commit then reads admitted=12 refused=4 new_via_registry=8, and the 4 left are the 49f-live literals with 'RAISE as S3Key: rule or registry defect, not a refusal: K3: 49f-live is not a tier (V7)'.",
+      "AC1 as written cannot take that route: base..release would then differ in 2 files outside its ALLOW set (infra/logic/registry/*.json), so 'outside the batch set' reads 2, not 0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ap-28 step 2: 'the naming gate runs in ENFORCE and must print NO REFUSE (if it refuses a string, STOP and file a BLOCKING row naming the (name, type))'; AC1: outside the batch set 0.",
+  "world_is": "The gate refuses. Nothing else in the re-cut fails: 18 of 18 app files fully attributed (0 unattributable hunks), 167 of 169 taken tests pass and 2 fail identically at the live ref, the deploy hunk and the manifest pin are in place uncommitted. No release commit exists, so no release_sha, no ap28_release.json and no AC1 run yet.",
+  "notes": "Two separate causes, neither mine to change: (1) the two registry files are new to the live ref and must be at HEAD for the exemption to read them -- either the release carries them (the COO amends ap28.AC1's ALLOW; they are not shipped, the tar excludes infra) or the gate's registry source changes; (2) the 4 new live literals fail the tier grammar even with the registry present -- a registry row that holds each exact literal as a whole string (the REGISTRY-HELD route that admitted the 8 legacy ones), a grammar/registry fix to accept the 49f-live segment, or a different emitted prefix from 2.0.0_SA_COO~MI. I did not override the gate, edit the catalog or edit the registry."
+}
+```
