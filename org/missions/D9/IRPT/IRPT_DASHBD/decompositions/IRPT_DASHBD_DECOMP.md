@@ -2710,3 +2710,18 @@ The CTO's msg 9662: Andrew wants to smoke the template view in the Performance t
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~246`), cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected):** `checks/r149/p175_portal_template_mount.py` (DBP175-1-AC1..AC3).
+
+## 168. ROUND 149, WORKSTREAM FILLEDRD2 (2026-10-16 ~18:0xZ, issuer 2.0.0_SA_COO~D2): the hop-2 reader re-cut -- the join through the accounts
+
+Row `IRPT_DASHBD-D2-S128` (@`05be852c08`): measured against the real filled partition and the real directory, the reader drained in `DB-b-302` (client to `relationship_id` to sha256) matches 0 of 4,012 households. The measured join is through the accounts, minted: the table's `account.last4` rows carry raw custodial ids, the directory's `account_ids` are opaque ids, and the handler's own `ids.opaque_account` turns one into the other (6,616 of 6,616; 4,012 clients reach exactly one household, 764 none, none two). The partition holds 4.7 million rows (1,059 MB as plain Arrow strings, 269 MB dictionary-read), so the reader indexes it once per object version.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `read_filled_report_gold` joins through the accounts, indexes the partition once (cache keyed by the object's ETag), reads it dictionary-encoded; the relationship-id rule is gone; six `accounts` tests | DB-b-306 | FWD-10 (and the hop-2 gate of IB-pr-551) | WORLD | `DB-b-302`, `DB-b-305` merged | chain AB |
+| 2. The hop-2 publish pair packet to `0.7.0_AE_CloudOps~IB2` (49 Financial publish function: the bundle, the role's read of the filled prefix, switch OFF) with the build-only hash after this cell drains | NOT CUT: packet after item 1 | FWD-10 | WORLD | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the cell is a re-cut of the issuer's own specification, not a worker defect: the rule was the issuer's REC, sent to the CTO as unmeasured ("id-space match unmeasured until hop 1's first write") and the first measurement after the write reversed it; (b) the 49 Financial publish entry needs NO re-pin for this cell: its handler and publisher are `source_dir` files with no staged pin (worker 244's row W244-S1), so the next build reads the working tree, and only the calendar member is a pinned file; (c) the scale of a whole pass (a household composes in under 0.1 s, 4,012 households, the function's 300 s and 1,024 MB) is NOT settled by this cell: the switch-on pair is cut only when hops 2 to 4 are live and will size or shard the pass.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~247`), cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; run on a reference tree: green; four single-fault reader mutants and one diff mutant: red):** `checks/r149/p174_filled_reader_accounts.py` (DB174-1-AC1..AC3).

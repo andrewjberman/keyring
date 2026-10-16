@@ -10526,3 +10526,103 @@ round.** Never edit an existing row.
   "dismissal_reason": "W192-S1: handled by the issuer's ticker-keyed measure (this row). W193-S1: the script is amended and no count moves. The coverage numbers are the answer to the CTO's item 1; nothing about a served value follows."
 }
 ```
+
+## ADVI_COTBKF-D1-W194-S1 -- The Commonwealth side carries no security name; the old-account holdings are named from the Black Diamond asset name by CUSIP
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W194-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~194",
+  "surfaced_at": "2026-10-16T17:12:20Z",
+  "one_line": "the Commonwealth side carries no security name; the old-account holdings are named from the Black Diamond asset name by CUSIP",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_crosswalk.py@6d5afd6924 TX_COLS and POS_COLS carry Symbol and Cusip and no name column",
+      "served account_day_value (pinned VersionId ObKZXku7Am.QGjO.oSAsIScy8IcJxN5a) read read-only: columns account, date, cusip, quantity, close, value, with no name column"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-da-1 item 2: Old account top holdings and Shared holdings are security NAMES (not tickers alone, never cusips); the order names no source for them.",
+  "world_is": "The Commonwealth tables read carry a CUSIP and a symbol and no security name column; every CUSIP the sheet names on the Commonwealth side was named from the Black Diamond holdings asset_name for the same CUSIP, and none was left unnamed."
+}
+```
+
+## ADVI_COTBKF-D1-W194-S2 -- The packet and key carry no household name; the Household column is the Black Diamond relationship name
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W194-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~194",
+  "surfaced_at": "2026-10-16T17:12:20Z",
+  "one_line": "the packet and key carry no household name; the Household column is the Black Diamond relationship name",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/cotbkf_review_packet.py@6d5afd6924 COLUMNS holds no household field; r4_household_via carries only name or client_line",
+      "data/assets/scripts/silver/commonwealth_match_r4.py@6d5afd6924 households_by_relationship: a household is the Black Diamond relationship_id"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-da-1 groups the To confirm sheet by household and shows the household name; the order names no source for the household.",
+  "world_is": "The packet carries only the route word for how a household was reached and the key carries a CRM household on 18 of 118 pairs; the Black Diamond relationship_id is the one household field on every Black Diamond account, so the sheet groups by it and labels each group with the relationship name, falling back to an account name where the relationship has none."
+}
+```
+
+## ADVI_COTBKF-D1-W194-S3 -- The Black Diamond value is not in the local cache: the proposed value is the market_value of the latest gold holdings file, read from S3
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W194-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~194",
+  "surfaced_at": "2026-10-16T17:12:20Z",
+  "one_line": "the Black Diamond value is not in the local cache: the proposed value is the market_value of the latest gold holdings file, read from S3",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "local cache holdings.parquet (.scratch advi_cotbkf cache) read in this session: columns date, account_id, asset_name, ticker, units, cusip; no market_value",
+      "S3 opal-data-cot gold/canonical/holdings/*.parquet (138 daily files) read read-only: columns include price and market_value"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-da-1 Proposed account value is the latest total for the proposed account; the order names the local cache as the Black Diamond side.",
+  "world_is": "The local cache holdings carry no market value column; the gold canonical holdings files in the Black Diamond bucket carry price and market_value, and the sheet sums market_value on each account latest holdings date; 3 of the 118 pairs have no value on that date and show a blank."
+}
+```
+
+## ADVI_COTBKF-D1-W194-S4 -- For most old accounts the last valued day holds cash only, so the top holdings come from the last earlier day that holds a security
+
+```json
+{
+  "id": "ADVI_COTBKF-D1-W194-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~194",
+  "surfaced_at": "2026-10-16T17:12:20Z",
+  "one_line": "for most old accounts the last valued day holds cash only, so the top holdings come from the last earlier day that holds a security",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served account_day_value (pinned VersionId ObKZXku7Am.QGjO.oSAsIScy8IcJxN5a) read read-only: last valued date per account, cusip and value",
+      "count made in the scratch build of this session over the 115 distinct Commonwealth accounts of the packet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-da-1: Old account value is the total on the last date the account has a value, and Old account top holdings are up to five security names by value or units.",
+  "world_is": "On the last valued day, 101 of the 115 Commonwealth accounts in the packet hold no positive security line, only cash; the sheet takes the top holdings from the last earlier day that holds one, and 9 of the 118 pairs have no such day and show a blank."
+}
+```
