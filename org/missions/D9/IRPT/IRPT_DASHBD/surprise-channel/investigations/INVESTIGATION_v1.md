@@ -23768,3 +23768,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W2101-S5 -- S3 is resolved by the issuer's amendment: the sources price method is restated on the latest snapshot
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:57:36Z",
+  "one_line": "Row S3 (BLOCKING) is resolved by the issuer: the coordinator's ruling restated the sources.inflection price method with the latest-snapshot figures, and the issuer's AMENDMENT 1 (trunk commit d58c1dda9c) names that entry in the order; the 0.5.1 contract carries the restated method and DBF135-1-AC1 PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W2101-S3 (BLOCKING): DBF135-1-AC1 cannot PASS while the order lists sources as unchanged, because the checker requires the sources.inflection price method to state the latest-snapshot figures.",
+  "world_is": "The coordinator's ruling and the issuer's AMENDMENT 1 (trunk commit d58c1dda9c, order TO-DB-f-2101) make the price method restatement part of the cell. The generator restates only that method (source, from_columns, claim and reason unchanged); the contract schema_hash stays ac652e2f71b18427b52f321858163768158f850ec173d1e592c7c3abe815bb6a; DBF135-1-AC1 prints PASS. Row S3 is not edited (the channel is append-only); its disposition is the issuer's to set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show d58c1dda9c -- the order file TO-DB-f-2101 (AMENDMENT 1, the sources.inflection price entry named)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_contract.py price_correction_problems at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Records the resolution of S3. S1, S2 and S4 stand as observations."
+}
+```
+
