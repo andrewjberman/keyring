@@ -72,7 +72,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-25.etf-classifications-read-
 - Census facts: 11,362 items, hash key `ticker`, `last_updated`; the CRO's G4 spec says the gateway read is implicitDeny. The tool is `OG-ac-2` (a worker building now).
 - Pre-cut: ap25.AC1 and ap25.AC2 base FAIL as expected (tf, plan, ask and ledger absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>CLASS-INCREMENT-2</workstream>
 <slot>~AE</slot>

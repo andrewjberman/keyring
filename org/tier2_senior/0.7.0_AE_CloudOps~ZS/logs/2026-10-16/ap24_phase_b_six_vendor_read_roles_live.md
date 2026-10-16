@@ -31,3 +31,18 @@
 | `proof-of-spec-check.py` | PASS | first run INVALID (kind `other`, AC2 expect mismatch, aws row path); kind fixed, AC2 recorded as the script printed it, then VALID |
 | `comp-schedule --drift` | gap | carrier C2 read "scanned 0 of 25 ledger entries; BUDGET PARTIAL", not read as zero; no schedule is added by this order |
 | `iam simulate-principal-policy` | PASS | one resource per call; existence read beside each prefix |
+
+## Later in the same session: OG-ap-24 closed, OG-ap-25 done
+
+4. **OG-ap-24 closed.** The issuer amended `ap24.AC2.sh` at `d55475e545` (Z-S158); AC2 re-run PASS, instance VALID, order flipped complete (`dcc3ac9174`). Row `Z-S159` records the condition met.
+5. **NFRA_OPLGTW.TO-OG-ap-25 (etf-classifications read grant), complete.** Phase A 04:53Z-05:03Z (GO 34735): one `aws_iam_role_policy` on `opal-gateway-role`, `dynamodb:GetItem` on the table ARN, plan 1/0/0, 0 of 24 role policies named the table, AC1 PASS (`31f5f961c1`). Halves signed CTO `9fc726f92a`, COO `d87f790253`, CVO `be6d23b7f6` at `.tf` c51c268d41b63e8f / ask 01861a288d2b. Phase B 05:12Z-05:22Z (GO 34744): ledger `nfra-oplgtw-grants-ap25`, one targeted `safe-apply` (1 added), read back (one statement, GetItem only, the table ARN), simulator GetItem allowed / Scan, Query, PutItem implicitDeny with a positive control, describe-table ACTIVE, re-plan No changes, ledger CLOSED (`3ba4af364d`). AC1 and AC2 PASS, instance VALID, status flipped. The policy is unused until the OG-ac-2 release.
+
+## Compiler Tools (OG-ap-25)
+
+| tool | result | notes |
+|---|---|---|
+| `safe-apply.sh` | PASS | one targeted apply, rc 0 |
+| `deploy_ledger.py` | PASS | 3 legs closed with proof; `close` leaves its own records uncommitted |
+| `comp-schedule --drift --budget 420` | PASS | 6 of 6 carriers in 211 s; C4 and C5 PARTIAL_OR_BLIND, not read as zero |
+| `terraform init` | note | a new `opal_name` module call needs it before any plan ('Module not installed'); no tracked file changed |
+| `proof-of-spec-check.py` | PASS | VALID first run (kind `aws_resource` used for the IAM row) |
