@@ -2677,3 +2677,29 @@ used as fixtures is a different read with a different denominator.
  "notes": "Filed by the worker on TO-R18-TR3 (AMENDMENT 1 record). The order is left pending and its source is NOT committed: the working-tree edits to infra/aws/terraform/ticket-center/main.tf, the TR3 checkers, R18_TR3_RECORD.json and the instance are uncommitted in the worktree. No bypass of the naming gate was attempted. The TR2 meeting change and the TR1 record are unaffected."
 }
 ```
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W47-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~47",
+  "surfaced_at": "2026-10-16T01:40:53Z",
+  "one_line": "The worktree C:/dev/wk-tckt-vnext-47 is a sparse checkout that omits infra/aws, so the TO-R19-L3 paths infra/aws/lambda/ticket_center/lambda_function.py and tests/ are absent from the working tree although HEAD carries them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-tckt-vnext-47 config --get core.sparseCheckout = true; git sparse-checkout list = .tools, infra/logic/registry, lib, org/devices, org/missions/D7/TCKT/TCKT_VNEXT, org/modules/graph, org/ref, org/standards (rc=0)",
+      "git ls-files -v infra/aws: 9277 entries flagged S (skip-worktree); ls infra in the worktree shows README.md, launch_agents_powershell.ps1, logic/ only",
+      "git ls-tree HEAD infra/aws/lambda/ticket_center/ at worktree HEAD b84a2ca293: lambda_function.py (blob b51d9ab912) and tests/ (tree e5e5594bea) present",
+      "Read, Glob and Grep on C:/dev/wk-tckt-vnext-47/infra/aws/lambda/ticket_center return does-not-exist; TO-R19-L3 <paths> names these two entries for the cell"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker worktree carries the paths the task order names (infra/aws/lambda/ticket_center/lambda_function.py and its tests/ folder), so the cell can be built and tested in it.",
+  "world_is": "The worktree is a sparse checkout that excludes infra/aws and org/surprise_channel; the named paths exist at HEAD but are not materialised. Per the worker rules this is a BLOCKING stop: the worker does not rebuild, extract or change the sparse-checkout. The surprise-row schema org/surprise_channel/schemas/investigation_item.schema.json is also absent from the worktree.",
+  "notes": "Stop taken at the first act. No source edit, no test, no deploy, no apply, no live call. TO-R19-L3 status stays pending. The issuer may re-provision the worktree or amend the grant; the worker does not decide which."
+}
+```
