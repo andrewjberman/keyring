@@ -13681,3 +13681,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Decision owner: the issuer 2.0.0_SA_COO~C, to decide whether the root belongs in the grant for the drain's run of p170."
 }
 ```
+
+## NFRA_CTLPLN-W145-S13 -- the census reading tables are outside the grant: one non-owner deploy commit is unread and the reading rows for files now switched are stale
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T20:17:38Z",
+  "one_line": "The census reads its per-file reading tables (READINGS_CONSUMERS_A/B/D.tsv and READINGS_DEPLOY_COMMITS.tsv, in the stage-1 folder) and those tables are not in this cell's paths. After the switch the census prints unread=1 (the WIP 2 commit e00d501231 of this worker, author not the CloudOps base, has no row in READINGS_DEPLOY_COMMITS.tsv) and about 35 STALE reading rows for files that no longer name the retired map. Neither changes the census ok verdict, and neither was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "source_map_census.py (stage-1 folder, HEAD 262f8bc1e6) run read-only: 'UNREAD non-owner deploy commit e00d501231' and 'OWNER_COMMITS owner_commits=14 non_owner_commits=14 non_owner_data=1 non_owner_code=12 unread=1'",
+      "the same run lists STALE reading row lines for .github/workflows/lambda-deploy.yml, .tools/deploy_ledger.py, infra/aws/lambda/ci/record-terraform-deploy.sh and about 30 more, each one a file whose HEAD bytes no longer contain the retired map name",
+      "census ok after this cell: SOURCEMAP-CENSUS ... other:0 ok=True (the verdict does not read unread or stale)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The census classes every file that names the map and reads its deploy history from the reading tables (worker face step 1, and the stage-1 census design).",
+  "world_is": "The tables are data for the census, not census code, and they sit outside the cell's grant. The issuer owns the next row for e00d501231 and the removal of the stale rows, or the table grant.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (grant the READINGS tables, or accept unread=1 and the stale rows as a recorded state)."
+}
+```
+
+## NFRA_CTLPLN-W145-S14 -- the test_lambdamap suite is red at the base and stays red after the change, for the same three test names
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T20:17:38Z",
+  "one_line": "org/modules/graph/tests/test_lambdamap.py ran 11 passed and 3 failed at the base and 11 passed and 3 failed after the change. The three failures (test_detects_mislocated_top_level, test_detects_missing_entry_blindspots, test_detects_seeking_alpha_tf_sourcedir_bug) assert findings that need top-level keys outside functions{} and TF lambdas that the map does not carry. The change does not touch those findings; the cell moved the test's own fixtures to the folder and left the assertions as they were.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SUITES_BASE.txt row test_lambdamap | FAIL | rc=1 | 3 failed, 11 passed (run at ca239c0486 before the change)",
+      "SUITES_AFTER.txt row test_lambdamap after the change: the same counts; pytest -q org/modules/graph/tests/test_lambdamap.py run under the worktree (rc=1, 3 failed, 11 passed)",
+      "the base map has 5 top-level keys (4 metadata keys and functions), so no non-meta top-level key exists for MISLOCATED to find; the folder holds exactly the same functions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 (W145-S3): test_lambdamap.py stays green or is changed minimally; it was red at the base and stays red if it was, and the worker says so.",
+  "world_is": "The three assertions were red before the cell and are red after it; the change to the test is only the fixture helpers that write and read the folder (_write_fmap, _read_fmap).",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (whether those three assertions are repaired in a later cell; the cell does not repair them)."
+}
+```
