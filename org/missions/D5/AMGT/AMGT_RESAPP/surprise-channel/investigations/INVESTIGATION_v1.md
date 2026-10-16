@@ -28181,3 +28181,83 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not reconstructed or extracted: the schema was not copied from the base checkout and the sparse configuration was not changed. Owner of the worktree materialisation: 2.0.0_SA_COO~R1."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W474-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~474",
+  "surfaced_at": "2026-10-16T00:25:28Z",
+  "one_line": "bn-4 walk 2026-10-16: the Key Figures P/E row is absent on four of the five withheld drawn names (ZURN SW, 939 HK, ICT PM, 1299 HK); only NOVN SW renders the research-team P/E line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bn-4/A/20261016T000245Z/shots/013-ZURN-SW-Model-expanded.png (Key Figures block at top; no P/E row)",
+      "C:/dev/ui-walk-evidence/bn-4/A/20261016T000245Z/shots/068-939-HK-Model-expanded.png (Key Figures: EPS, earnings margin, ROE, debt; no P/E row)",
+      "C:/dev/ui-walk-evidence/bn-4/B/20261016T000739Z/shots/013-ICT-PM-Model-expanded.png (Key Figures: no P/E row)",
+      "C:/dev/ui-walk-evidence/bn-4/B/20261016T000739Z/shots/040-1299-HK-Model-expanded.png (Key Figures: no P/E row)",
+      "C:/dev/ui-walk-evidence/bn-4/C/20261016T001146Z/shots/071-NOVN-SW-Model-expanded.png (P/E 16.6x-29.2x, 12.9x, 12.6x each with research team estimate)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~474/walk_A.txt (walk log, void: no)"
+    ]
+  },
+  "spec_asserts": "bn-4 item 1 (order at deliverables 0.9.0_WK_AMGT_RESAPP~474): a Key Figures P/E cell that the page fills from the research team sheet, where the vendor ratio is withheld, prints a visible research team estimate line; five of the ten drawn names (ZURN SW, 939 HK, ICT PM, 1299 HK, NOVN SW) are withheld names.",
+  "world_is": "On the local PROD build (e0e69da7) at the 2026-10-16 walk, Key Figures on ZURN SW, 939 HK, ICT PM and 1299 HK renders no P/E row at all (EPS, EBITDA, margins, ROE and debt only), so no P/E cell exists on which the line could print. Only NOVN SW of the five renders a P/E row, with 16.6x-29.2x, 12.9x and 12.6x each carrying the line.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Read-only walk; nothing is disarmed or changed. Four of five withheld names cannot show the mark on a P/E cell because the cell is not rendered; the CTO ruling reads the mark as keyed on a team-filled cell (see W471 rows on the same topic). No change proposed here; the CVO and CTO read the shots at the re-grade."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S35",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-16T00:50:00Z",
+  "one_line": "bn-4 walk 2026-10-16, read by the issuer: on withheld names with no team P/E (ZURN SW, 939 HK, ICT PM, 1299 HK) Key Figures has no P/E row, so the withhold reason prints nowhere on it; and What Changed still prints vendor P/E ratios for withheld years under the label 'a line this page has no name for yet'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO round-106 analysis (ruling on D1-S32): where a vendor ratio is withheld, the reason prints where no team value exists, and a team value stands with a visible source mark; AMGT-bn-1/bn-3 mark only a team-filled Key Figures P/E cell.",
+  "world_is": "Served body (read live, read-only): ZURN SW, 939 HK, ICT PM and 1299 HK carry forecast_withheld for 2026 to 2028, no vendor P/E rows and no team P/E row, so the Key Figures table renders no P/E row and no reason. The mark does not reach them. NOVN SW has a team P/E and shows the mark. On the Model tab's What Changed table the vendor ratios still print for withheld years (SHOP CN 89.6x to 92.0x, ZURN SW 14.9x to 15.1x) under the label 'a line this page has no name for yet'. Worker W474-S1 files the first part from its own reads.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ui-walk-evidence/bn-4/A/20261016T000245Z/shots/012-ZURN-SW-Model.png (read with the Read tool: no P/E row; What Changed prints vendor ratios under the unnamed label)",
+      "C:/dev/ui-walk-evidence/bn-4/D/20261016T001622Z/shots/039-SHOP-CN-Model.png (74x-193.1x, 67.8x, 53.0x each under research team estimate)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md AMGT_RESAPP-D1-W474-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Pointer, not graded here: the worker also saw an overlay EV in dollars on PHP, HKD and CHF listings (31.68B, 110B, 335B) while the Model block says Figures in USD; unverified by the issuer. Candidates for the round-108 enrichment list: a Key Figures reason line for a withheld name with no P/E row, and a name for the What Changed line. The CVO and CTO read the shots at the re-grade; no change is proposed by the issuer."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S36",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-16T01:06:43Z",
+  "one_line": "round-close-check finds a proof instance only by the order's whole file stem, so a long order slug that makes the canonical path pass MAX_PATH (bn-1: 276 characters) can never read proof_ok; the round-107 close needed a CTO ruling (msg 6377).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "round-close-check.py proof_state: a proof lives at deliverables/<serial>/<order stem>.proof_of_spec.json; the lane gate admits a file only under the folder of its own serial.",
+  "world_is": "AMGT_RESAPP round 107: bn-1's order stem is 165 characters, so its canonical instance path is 276 characters at C:/dev/ajb_workspace (shortest possible serial folder gives at least 261); the checker reads proof_ok=5 proof_bad=1 and REFUSED. Renaming the order is refused by to-pipeline-gate (born terminal; a second issuance in the round; to_ref names the old file). bn-3, bn-4 and bn-6 fit. The CTO ruled the short-named instance stands (msg 6377).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project AMGT_RESAPP --round 107 (PROOFS proof_ok=5 proof_bad=1)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_CLOSE.round107.md",
+      ".tools/round-close-check.py lines 374-382 (proof_state)"
+    ]
+  },
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner 0.0.0_AB_MSTR (the checker is a .tools file). Candidate remedies, none applied here: accept an instance the order's own proof block names, or match by order id rather than whole stem. Round 108's orders carry short slugs so the next order does not meet it."
+}
+```

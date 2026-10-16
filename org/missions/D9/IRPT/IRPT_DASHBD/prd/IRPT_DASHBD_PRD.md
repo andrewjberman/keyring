@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.14",
+ "prd_version": "v0.17",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21"],
@@ -108,11 +108,11 @@ outcomes verbatim.
          SOURCE     backend Part V.1, V.2, V.5; Andrew message 3 and message 5 ("a rail for fees")
 
   FWD-10 A person can always tell what they are looking at: where the data starts, which days could
-         not be measured, when a figure is a fallback, and how current the data is
+         not be measured, which trading days the source did not report, and how current the data is
          DONE WHEN  EXERCISED -- read from the screen alone
-         ACCEPT     a partial-history account, a day that could not be measured, a fallback day and a
-                    window before the news data starts are each explained on screen in a sentence;
-                    no state is hidden inside an average
+         ACCEPT     a partial-history account (where its data starts), a day that could not be measured,
+                    and a trading day the source did not report (no data for that day) are each explained
+                    on screen in a sentence; no state is hidden inside an average
          SOURCE     backend Part V.1 (the coverage vocabulary), V.3; frontend F8, Part V.3
 
   FWD-11 Every client firm, not only 49 Financial: an Inflection account and a Cottonwood account each get the same daily
@@ -234,9 +234,9 @@ outcomes verbatim.
 | C-SHAPE: one gold shape | this project; annex 17c | Eight account-grain tables (section 1 of the backend brief's Part V): `account_return_daily`, `account_class_daily`, `account_activity_daily`, `account_transaction`, `account_lot_realized`, `account_lot_unrealized_daily`, `account_dim`, `market_topic_daily`. Every table carries `firm`, `account_id`, `method_version`, `coverage`. ONE contract file per table under `org/standards/` named `IRPT_DASHBD_<TABLE>_CONTRACT.json`, authored by the round that first writes the table (round 1: `account_return_daily`). A firm-specific column is a contract violation; a firm that lacks a field carries null plus a `coverage` value that says why. The conformance check is the schema hash: the same table from any two firms hashes the same. |
 | C-COVERAGE: the closed vocabulary | this project; rule 24 | `coverage` is one axis with the members `FULL`, `PARTIAL_HISTORY`, `NO_LOTS`, `FLOW_UNRECONCILED`, `UNCLASSIFIED_HOLDINGS`, `SOURCE_LAG`, `FEE_RAIL_UNUSED`, `MISSING_HISTORY` (topics only). Adding a member is a contract addendum with its four-postulate record, never an ad-hoc string. The frontend maps each member to one plain-English sentence (C-HONESTY). |
 | C-ADAPTERS: firm knowledge lives in one place | this project | One adapter per firm (49 Financial from Schwab silver `dim_position`, `dim_balance`, `fact_trn` with the 187-code table, `fact_uln`, `fact_rld`, the household dimension; Inflection from Orion positions, `accounts_v2`, transactions by the ratified `orion_cashflow_taxonomy.yaml`, lots `NO_LOTS` until Eclipse tax lots are shown populated; Cottonwood from Black Diamond holdings, transactions, `fact_realized`/`fact_unrealized`). Schwab `sb_cd` codes, Orion type ids and Black Diamond `Transaction Type` appear ONLY inside their adapter. Black Diamond's `performancePeriod` and `activitySummary` are TIE-OUT oracles (C-TIEOUT), never a source of gold. |
-| C-METHOD: total return | Andrew-direct 2026-09-30 messages 4-6; this project fills the GIPS detail | Daily valuation of the WHOLE account, cash included; `r_t = (V_t - F_t) / V_(t-1) - 1` with `F_t` the net EXTERNAL flow valued at market on its date; daily returns geometrically linked so any window is a product of days; income counts on CASH RECEIPT (a declared departure from GIPS accrual, written in the method contract); reinvested dividends count once; corporate actions are their own class and are neither flow nor income; in-kind transfers valued at quantity times same-day close, an unpriced leg `FLOW_UNRECONCILED`; GROSS of advisory fees, labelled "before advisory fees"; no annualization under one year; since-inception annualized only past a year. Daily TWR is the ONE headline; Modified Dietz is computed from the same columns as the per-window cross-check and the labelled fallback, never a second headline. This is GIPS-ALIGNED methodology, not GIPS compliance (no composites, no verification), and the label says so. One row per `method_version` in `dim_return_method` (flow convention, income basis, fee basis, tolerance, large-flow share, plausibility band, day-count); any change is a new version and the served files carry it. |
+| C-METHOD: total return | Andrew-direct 2026-09-30 messages 4-6; this project fills the GIPS detail | Daily valuation of the WHOLE account, cash included; `r_t = (V_t - F_t) / V_(t-1) - 1` with `F_t` the net EXTERNAL flow valued at market on its date; daily returns geometrically linked so any window is a product of days; income counts on CASH RECEIPT (a declared departure from GIPS accrual, written in the method contract); reinvested dividends count once; corporate actions are their own class and are neither flow nor income; in-kind transfers valued at quantity times same-day close, an unpriced leg `FLOW_UNRECONCILED`; GROSS of advisory fees, labelled "before advisory fees"; no annualization under one year; since-inception annualized only past a year. Daily TWR is the ONE headline; Modified Dietz is computed from the same columns as the per-window cross-check, labelled as such; it is a window figure, never a day state and never a substitute for a daily return (v0.17), and never a second headline. This is GIPS-ALIGNED methodology, not GIPS compliance (no composites, no verification), and the label says so. One row per `method_version` in `dim_return_method` (flow convention, income basis, fee basis, tolerance, large-flow share, plausibility band, day-count); any change is a new version and the served files carry it. |
 | C-FLOWTIME: the flow-timing convention is measured | this project, round 1 | End of day is the default (the custodians' end-of-day values; the retiring engine). The round-1 tie-out scores start, end and midpoint conventions against Black Diamond's own time-weighted return on the 49 Financial sample and writes the winner into the method contract. No sub-period valuation is claimed. |
-| C-GUARD: no hyper-exaggerated return | Andrew message 4; backend Part V.3 | Every day the flow-adjusted return is compared with IRPT_BCKEND's holdings price return (`holdings_price_return`, carried in `account_return_daily`) plus the day's income return; a difference beyond the method's tolerance marks the day `FLOW_UNRECONCILED` and `total_return_daily` falls back to price return plus income with `return_basis = HOLDINGS_INCOME_FALLBACK`. A large external flow marks `LARGE_FLOW`. A prior value at or below zero or a return outside the plausibility band is `NOT_MEASURABLE` and breaks the link with a stated gap. The tolerance, the large-flow share and the band are set in round 1 FROM the 49 Financial data's own distribution and written into `dim_return_method`; they are not invented in this PRD. |
+| C-GUARD: no hyper-exaggerated return | Andrew message 4; backend Part V.3 | Every day the flow-adjusted return is compared with IRPT_BCKEND's holdings price return (`holdings_price_return`, carried in `account_return_daily`) plus the day's income return; a difference beyond the method's tolerance marks the day `FLOW_UNRECONCILED`. A breach MARKS the day and never substitutes: `total_return_daily` keeps the flow-adjusted figure or, where it cannot stand, the day is `NOT_MEASURABLE` with a stated gap (ruling 17; v0.17). A large external flow marks `LARGE_FLOW`. A prior value at or below zero or a return outside the plausibility band is `NOT_MEASURABLE` and breaks the link with a stated gap. The tolerance, the large-flow share and the band are set in round 1 FROM the 49 Financial data's own distribution and written into `dim_return_method`; they are not invented in this PRD. |
 | C-VALUE: the whole-account value contains cash | this project | `V` includes the cash that income produces, taken from each firm's balance table (Schwab `dim_balance`, Orion's custodial-cash flag, Black Diamond allocations). Round 1 verifies `V` per firm before any figure is served; a firm whose value excludes sweep or cash cannot serve a total return, only `PARTIAL` with the reason. |
 | C-FEERAIL: reserved, unused | Andrew message 5 | `fee_amount` in `account_return_daily` and `account_activity_daily` (null, `FEE_RAIL_UNUSED`); `fee_basis = GROSS_ONLY` in `dim_return_method`; `FEE` as a flow class. Nothing computes a net return; a later fee project fills the fields under a new `method_version` and changes no column name. |
 | C-GAINS: realized, unrealized, income | this project | Realized gain is the sum of `account_lot_realized.gain_loss` by closing date (49F from `fact_rld`, the RLD vintage; the PRD confirms the vintage in round 3 against RLU/RLW/RLY and the RT* set); unrealized change is the difference of `account_lot_unrealized_daily.unrealized_gl` over the window; income is separate. All three feed `account_activity_daily` so a window's activity summary is a sum over one file's slice. `NO_LOTS` where the custodian gives no lot detail. |
@@ -248,7 +248,7 @@ outcomes verbatim.
 | C-SOURCES: registry rows | LGIC lane; this project's L3 policy step | No table named `reporting` or any of the eight is registered in `infra/logic/registry/reporting_policies.json` (ABSENT, brief Part IV.2); `address()` accepts the names, so registration is a policy row this project adds in round 1 with the first contract. The topics home REFUSED at L4: `address("news","opal","platinum","market_topic_daily",...)` -> `scope 'opal' resolves to no scopes.json row`. So the general platinum home for `market_topic_daily` is a scope row to add (or an existing shared scope to cite by `lookup()`), decided in the round that builds FWD-6; nothing is typed around it. |
 | C-TIEOUT: the parity oracle | this project; Andrew "which would be more accurate" | The 49 Financial total return is tied out against Black Diamond's own time-weighted return for the sample accounts; agreement within the tolerance Andrew accepts is FWD-8's bar; every disagreeing day carries a stated reason (flow timing, missing price, income date). The oracle is read through IRPT's existing per-account Black Diamond calls behind their per-use gate; no new vendor pull without Andrew's per-use word. The existing price-only figure sits a median of about 1.6 points below (READ, `TO-IB-er-302`); closing that gap is what "total" means here. |
 | C-LABEL: the honest label | frontend F8; backend Part IV.4 | The portal's "Time-weighted, net of fees" (`MethodAndSources.tsx:32-63`, `holdings_gold.py:259` `TIME_WEIGHTED`/`NET`) is wrong for a price-only, fee-less figure and is replaced everywhere the new figures show by "Total return, before advisory fees" with the method version in the popover. Where the OLD figure still shows (IRPT_BCKEND's page until this project's switch), the label is corrected by IRPT_BCKEND under its own order; this project does not edit that page. |
-| C-HONESTY: coverage on screen | frontend Part V.3 | Each `coverage` member maps to one sentence shown where the number is; a window before the first data date is clipped and says so; excluded days are counted on the window return; a fallback day is footnoted. No state is hidden by an average, and no skeleton state looks like data. |
+| C-HONESTY: coverage on screen | frontend Part V.3 | Each `coverage` member maps to one sentence shown where the number is; a window before the first data date is clipped and says so; excluded days are counted on the window return; a window holding trading days the source did not report states "N trading days not reported by the source (dates)", read from the report-build output, never filled (v0.16). No state is hidden by an average, and no skeleton state looks like data. |
 | C-DESIGN: the portal's law | consumed; `portal/CLAUDE.md`, `portal/DESIGN.md`; DSGN_IRPTV1 | Light canvas, white containers with the hairline and navy ink, one dark band per page, tabular numerals, chart colours from `chartColors.ts` `ASSET_CLASS`, status and data colours disjoint; verification is `/frontend-dev` screenshots read against the clause cited; dev builds on port 5174 only. Asset-class display order: Cash, Fixed Income, Equity, Structured, Alternatives, Commodities, Other, Unclassified. |
 | C-LEASE: F's rounds beside DSGN_IRPTV1 | this PRD, ruling 6.7 | While a DSGN_IRPTV1 FAST lease is live on `2.0.0_SA_COO~D` over `portal/src/pages/InvestorReporting`, F's items are built by that seat under `/closer-drive` reading this PRD's FWD-1 and C-SEAM, and graded by the CVO after the fact as DSGN_IRPTV1 pins; F's TASK ORDERS (FULL mode) name paths under `portal/src/pages/InvestorReporting/tabs/reporting/` and the new `portal/src/pages/InvestorReporting/dashboard/` only, and the next DSGN_IRPTV1 lease arm excludes those two paths or holds. One seat, two projects, no two writers of one path. |
 | C-MORATORIUM: no alerts | law (CLAUDE.md section 5) | No alarm, SNS, SES send, freshness checker or monitor. The publisher runs on its own schedule (`irpt-49f-reporting-publish-daily`), never on "success of upstream" alone. A stale day is a `SOURCE_LAG` coverage state on the page, not a notification. |
@@ -676,3 +676,63 @@ flow-bearing account-days of which ONE is eligible. Ruled by `1.0.0_SA_CTO` 2026
   a convention. It gives Andrew a fact about these accounts to set beside whatever the vendor says about its own arithmetic.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.15 (2026-10-16 ~00:1xZ, `1.0.0_SA_CTO~DELL2`): FWD-10's ACCEPT restated on `~C2`'s round-145 read (ENDPOINT wording: the ratified-text half re-opens)
+
+`~C2`'s B-CW round 145 (`R145_BCW_DRAIN_END.md`, row D2-S101) measured FWD-10 on Cottonwood and found two stale clauses and one missing
+state.
+1. **"a fallback day" is withdrawn.** Ruling 17 (ADDENDUM v0.4) withdrew the substitution. The contract's `return_basis` is TWR and
+   NOT_MEASURABLE only, so no day can be a fallback. The clause, and C-HONESTY's fallback footnote, refer to a state that no longer
+   exists.
+2. **"a window before the news data starts" moves to FWD-6,** whose ACCEPT already reads "a drawdown before the news history begins says
+   there is no topic history". It is graded there, once, not twice.
+3. **The missing state is ADDED: "a trading day the source did not report".**
+   - Cottonwood's 08-19, 09-24 and 09-25 have no partition. A day with no partition is not a `day_quality` state, so it carries no
+     sentence today (`~C2`'s finding).
+   - The page shows the handler's statement "N trading days not reported by the source (dates)" for any window that holds one. The
+     handler derives these days from the trading calendar (B-49F rounds 130-132 ADDENDUM 1).
+   - It never fills such a day.
+
+**Round 146 (`~C2`, portal work, one issuance):**
+- (a) the unreported-days sentence on the Performance tab for any window holding one, read from the report-build output, not recomputed in
+  the portal;
+- (b) the partial-history sentence states "Returns from July 10, 2026" for Cottonwood's Black Diamond era. The 06-23 to 07-09 run sits
+  before the floor, and the S92 guard never splices it;
+- (c) the floor's CAUSE is not stated, because it is not established. The sentence says where the data starts, not why.
+
+Owner of the C-HONESTY footnote's removal: `~C2`, in the same issuance.
+
+## ADDENDUM v0.16 (2026-10-16 ~00:2xZ, `1.0.0_SA_CTO~DELL2`): v0.15 made consistent, on `3.0.0_SA_CVO~DELL2`'s review @c943f8ef91
+
+1. **FWD-10's outcome line** no longer promises "when a figure is a fallback". It reads "which trading days the source did not report".
+2. **The parenthesis is removed from the ACCEPT clause.** v0.14's re-cut ruled provenance out of an ACCEPT. The reason stays in ADDENDUM
+   v0.15, where it belongs.
+3. **C-HONESTY is restated.** "A fallback day is footnoted" is withdrawn with ruling 17, and the row names the handler's unreported-day
+   sentence, read from the report-build output and never filled.
+
+This is ENDPOINT and CONTRACTS wording, so the ratified-text half re-opens.
+
+**ADDENDUM v0.16, item 4 (~00:2xZ, `~C2`'s round-146 read):** the unreported-days sentence has no carrier yet.
+- `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json` has no field for it.
+- No Cottonwood series is published (`irpt/cottonwood/platinum/` holds only holdings).
+
+Ruled owners:
+- **(i) The contract field: `2.0.0_SA_COO~D2`**, the contract's sole writer. Two fields:
+  - `unreported_trading_days` (list of ISO dates in the window);
+  - `unreported_trading_days_basis` (fixed text: "trading calendar minus present partitions").
+  They are written from the report-build output's statement. An empty list is written as `[]`, never omitted.
+- **(ii) The first Cottonwood series publish: `2.0.0_SA_COO~S2`** (the serve path), under its own never-widen pair. It is new served output.
+- **(iii) `~C2` builds cell (a) now against a fixture GENERATED by the contract's writer** (the B-IN feed-writer rule, applied here). It
+  exercises the cell on the first Cottonwood publish.
+
+The contract field and its first writer land in ONE drain (the one-drain rule of the B-IN round-127 analysis).
+
+## ADDENDUM v0.17 (2026-10-16 ~00:3xZ, `1.0.0_SA_CTO~DELL2`): the last fallback wording, on `3.0.0_SA_CVO~DELL2`'s note @e5e0284304 (CONTRACTS wording: the ratified-text half re-opens)
+
+1. **C-GUARD:** a breach of the tolerance MARKS the day (`FLOW_UNRECONCILED`) and never substitutes. The sentence "falls back to price return
+   plus income with `return_basis = HOLDINGS_INCOME_FALLBACK`" is removed. Ruling 17 withdrew it, and it contradicted FWD-10's ACCEPT
+   (v0.16).
+2. **C-METHOD:** Modified Dietz's "labelled fallback" is restated as the WINDOW cross-check. It is a window figure, never a day state, and
+   never a substitute for a daily return.
+
+`~C2`'s round 146 was issued before this bump (@39eef25c48), so the bump holds no cut.

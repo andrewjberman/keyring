@@ -1670,6 +1670,33 @@
     "spec_asserts": "Bounds of RV-r-1: commit workspace files through .tools/safe-commit.sh; commit the portal files inside the portal worktree on the worktree branch. The order names no safe-commit path for the portal repo.",
     "world_is": "The portal repo carries no .tools of its own. The only safe-commit is the root worktree's ../.tools/safe-commit.sh, which I ran from inside the portal directory. The commit-gate graded 0 of 2 files because it reads only .py, .sh, .tf and org/projects/*.json, and the risk-reflex used the baked workspace-root comp-pulse path.",
     "notes": "Not changed: the commit landed on the portal worktree branch as c2e0802f. For the issuer to say which tool and gate a portal-repo commit is to name. No gate hazard is present on this commit; the test and typecheck instruments ran on the committed bytes."
+  },
+  {
+    "id": "DSGN_RBNDV2-W31-S1",
+    "project": "DSGN_RBNDV2",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_DSGN_RBNDV2~31",
+    "surfaced_at": "2026-10-16T00:07:40Z",
+    "one_line": "The RV-t-1 change to RankedRow's root class turns the round-10 test rb-10-r1 red: its arm (d) pins RankedRow to its text at 4299f28a, so RB11T1-AC3 (every dsgn-rbndv2 test 0 fail) cannot hold as written.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RB",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@728aa979 (branch wk-DSGN_RBNDV2-31-portal): RankedRow root class gains border border-[hsl(var(--hairline))]; the RV-t-1 cell is the only change to that function",
+        "portal/src/__tests__/dsgn-rbndv2/rb-10-r1.spotlight.test.ts at portal@728aa979, arm (d): RankedRow text must equal its text at git show 4299f28a; the test body is unchanged by this cell",
+        "bun test src/__tests__/dsgn-rbndv2/rb-10-r1.spotlight.test.ts after the edit: '(d) RankedRow differs from its text at the base ref' and 1 fail; the same file passed before the edit",
+        "bun test src/__tests__/dsgn-rbndv2 src/ui/components/panels src/ui/components/modal src/components/market-performance: 57 pass, 1 fail, rc=1; the failing test is RB10R1-AC1 spotlight outlines and canonical labels",
+        "git diff --stat 4299f28a HEAD -- src/components/market-performance/RSIModal.tsx shows changes since 4299f28a, yet the RankedRow arm passed at the feature tip before this edit, so RankedRow was unchanged until RV-t-1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RB11T1-AC3: bun test over src/__tests__/dsgn-rbndv2, src/ui/components/panels, src/ui/components/modal and src/components/market-performance reads 0 fail. RB10R1-AC1 arm (d): RankedRow text equals its text at 4299f28a.",
+    "world_is": "The two criteria cannot both hold on this branch. RV-t-1 requires the RankedRow class change, which is the exact text rb-10-r1 pins. The change is in place as ordered; rb-10-r1 is red on the worktree branch and so the dsgn-rbndv2 folder is red on it until the pin is moved or the cell is re-ruled.",
+    "notes": "Not edited: rb-10-r1 is a prior round's test, outside this cell's change. Re-pinning its arm (d) to the new RankedRow text, or dropping the arm, is a decision for the issuer and not a weakening I would make on my own. RB11T1-AC3 is recorded FAIL; the order stays open. The RV-t-1 commit is 728aa979 on wk-DSGN_RBNDV2-31-portal."
   }
 ]
 ```
+
+Note on DSGN_RBNDV2-W31-S1 (appended, row above unchanged): the issuer ruled (2.0.0_SA_COO~RB) that the RV-t-1 RankedRow change is correct, so rb-10-r1 arm (d) now allows the one RV-t-1 outline (portal commit 9b6f43f7); AC3 re-run reads 58 pass, 0 fail.
