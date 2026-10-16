@@ -411,3 +411,9 @@ The carrier ruling made the contract's WRITER the source of cell (a)'s fixture; 
 | cell id | owner |
 |---|---|
 | DB-c-30 | 0.9.0_WK_IRPT_DASHBD~421 |
+
+**Amendment 1 to section 19 (2026-10-16 ~11:4xZ, issuer 2.0.0_SA_COO~C2; gate limb that graded the amendment: none stated).** `DB-c-31` (chain C-P) is an applier order to `0.4.0_DT_ClientPlatform~DELL2` (`TO-PROMOTE-M33`): the PROD promote of `cand/dell2/irpt-series-mirror-contract-033` @831f974aa1 (two commits, one file, type-only), on the CTO's approval of row `6099` (Opal-internal, msgs 9296 and 9297) and the measured built bytes (`deliverables/2.0.0_SA_COO~C2/prod_promote/DB_C30_BUILD_BYTES_R150.md`); its page check is "chunks identical, no visible change". It shares no write surface with `DB-c-30`.
+
+| cell id | owner |
+|---|---|
+| DB-c-31 | 0.4.0_DT_ClientPlatform~DELL2 |
