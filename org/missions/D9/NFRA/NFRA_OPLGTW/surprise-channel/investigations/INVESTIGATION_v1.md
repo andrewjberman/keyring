@@ -19472,3 +19472,28 @@ name the one known failure instead of silently inheriting it.
     "notes": "Per the order, a criterion this seat cannot meet as written is refused and filed BLOCKING, work continues. The instance is committed with AC2 FAIL and the true output; on the issuer's amendment this seat re-runs AC2 and the checker and flips the order if both PASS. Cost: one edit to a script the issuer owns."
   }
   ```
+
+```json
+  {
+    "id": "NFRA_OPLGTW-Z-S159",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+    "surfaced_at": "2026-10-16T03:30:00Z",
+    "one_line": "Z-S158's condition is MET: ap24.AC2.sh amended at d55475e545 now prints '; policy live yes' and names the 49F role; AC2 re-run PASS and the order flipped.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap24.AC2.sh at HEAD d55475e545 printed 'ledger CLOSED 1 of 1; sentinel at HEAD 0; roles live in IAM 6 of 6;  policy live yes', RESULT: PASS, exit=0 (run by this seat after msg 34693).",
+        "proof-of-spec-check.py on the regenerated instance, --governing-order the order: VALID rc=0 with AC1 and AC2 PASS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row NFRA_OPLGTW-Z-S158: AC2 cannot be graded PASS as written until the check script prints '; policy live yes' and names the 49F role.",
+    "world_is": "Both changes landed in the check script only (issuer, d55475e545) and the world was already as AC2 describes. This row does not change S158: a standing row is not edited, so S158 still reads BLOCKING/UNDER_INVESTIGATION in the file, and its disposition is the adjudicator's, citing this row.",
+    "notes": "Filed because the issuer asked that Z-S158 be closed and a row cannot be mutated by its filer."
+  }
+  ```
