@@ -7952,3 +7952,27 @@ by dell1 or by this seat.
   "world_is": "Met on those three clauses. Not shown: the cause of the 10-10..10-13 content move (a data change on re-derived dates, FDRXX transfer read at FIRE_READ_20261014_2300Z.md; not graded here); the chain's stop instant (unmeasured); three advisor files (abby_horton, erick_webb, sydney_cobb) carry no D_03 write since the ship and are absent from the served summary."
 }
 ```
+## MDPF_SECCLASS-D1-W94-S1 -- the order's nine-key class row holds for 19 of 2,297 firm dates in the committed C_06 body; 2,278 dates carry four keys (equity, fixed_income, alternatives, total)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W94-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~94",
+  "surfaced_at": "2026-10-16T03:43:51Z",
+  "one_line": "The TO-SC-e104 premise that one firm date's row is the nine-key class row (equity, fixed_income, alternatives, commodities, structured, cash, unclassified, other, total) holds on 19 of 2,297 firm dates in the committed C_06 body; 2,278 dates carry only equity, fixed_income, alternatives and total. The repointed reader returns whichever keys a row carries, so an older date reports four classes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~SC1/deliverables/E102_LEGP_mix_daily_summary_BODY.json@d63495282e: firm holds 2297 dates (2020-06-30 .. 2026-10-13); 2278 rows have keys (alternatives, equity, fixed_income, total); 19 rows have keys (alternatives, cash, commodities, equity, fixed_income, other, structured, total, unclassified); the latest date 2026-10-13 is a nine-key row",
+      "data/black_diamond/scripts/gold/E_25.aua_decomposition_audit.py@d63495282e (worktree, pre-commit): load_mix_summary_latest reads firm[latest_date] and returns classes = every key except total; the check org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R26_CHECKS/check_e25_real_body.py run at the worktree printed E25-REAL ok=True date=2026-10-13 of_nonzero=7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e104 worker face, THE CELL: 'The row for one firm date is {equity, fixed_income, alternatives, commodities, structured, cash, unclassified, other, total} (class dollars plus total).'",
+  "world_is": "Measured on the committed body: the nine-key shape is present on 19 of 2,297 dates, including the latest (2026-10-13). The other 2,278 dates carry four keys and no cash, unclassified, commodities, structured or other. Why C_06 writes the four-key shape on older dates was not measured in this order; the repointed function is correct on either shape."
+}
+```
