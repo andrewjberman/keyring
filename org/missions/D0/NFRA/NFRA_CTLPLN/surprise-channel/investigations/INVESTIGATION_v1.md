@@ -13600,3 +13600,84 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (whether the call is recorded in the cell's proof). Disclosed in the worker report."
 }
 ```
+
+## NFRA_CTLPLN-W145-S10 -- p170_filled_reader.py's identity pin was already FAIL at the cell base: its BASE predates the map's last change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T19:48:14Z",
+  "one_line": "p170_filled_reader.py (IRPT_DASHBD r149) pins the source map byte-identical to BASE 2cbe7bbc, but the map at the cell base ca239c0486 is a different blob (fc137d60 against 91526a1c, 550 commits later). Its AC1 was already FAIL before any change of this cell. The amendment's folder identity check is therefore read against the cell base, MAP_BASE, the map the folder was split from.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p170_filled_reader.py <worktree> DB170-1-AC1 at the cell base (before the edit): FAIL: the source map must be byte-identical to the base (the re-pin is a later cell); rc=1",
+      "git rev-parse 2cbe7bbcac:infra/aws/lambda/ci/lambda-source-map.json = 91526a1c6f; git rev-parse ca239c0486:infra/aws/lambda/ci/lambda-source-map.json = fc137d609f; git rev-list --count 2cbe7bbc..ca239c0486 = 550",
+      "p170 edited at org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p170_filled_reader.py: new constant MAP_BASE; check_diff compares lib/opal_lambda_map.py load_all() with the functions of the map at MAP_BASE; after the edit DB170-1-AC1 PASS rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 (W145-S1): p170's AC1 identity pin, read at its own base, becomes the folder must hold exactly the base map's functions; keep the file's intent with the least change.",
+  "world_is": "Read at its own BASE 2cbe7bbc the folder cannot equal the map (the map moved after that commit), so the least change that keeps the intent reads the cell base instead. The file's owner (dell2 COO~D2) should confirm the MAP_BASE choice; the check's output lines and last-line shape are unchanged.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (to tell COO~D2 after the merge, per amendment 1)."
+}
+```
+
+## NFRA_CTLPLN-W145-S11 -- the amendment names two bare jq calls in parity-gates.sh; the file holds four, and the ban refuses on any one
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T19:48:14Z",
+  "one_line": "Amendment 1 (W145-S8) grants the two bare jq calls of parity-gates.sh's EC2 gate. The file holds four bare jq invocations: EC2 lines 87, 91 and 114, and the P9 deployed-side call at line 136. The jq ban reads the whole staged file, so the commit could not pass with two moved. All four moved to the vendored jq resolved first, and the change is committed as 114b926ec4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep of the cell's parity-gates.sh for command-position jq before the edit: lines 87, 91, 114 (EC2 gate) and 136 (P9); at the cell base ca239c0486 the same file carries the EC2 jq calls and P9 declared and deployed calls",
+      "after the edit the same grep returns only line 74, a printf string, which the ban strips",
+      "safe-commit of 114b926ec4 (.tools/parity-gates.sh alone): commit-gate OK, no BLOCKED jq line, rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 (W145-S8): change the two bare jq calls to the vendored .tools/jq.exe resolved first, fail closed loud, no audited ban exception, and ONLY them besides the P9 change.",
+  "world_is": "The four invocations moved, not two, and the resolution is a JQ variable set once from WORKSPACE with an exit 1 when .tools/jq.exe is absent. Converting fewer would leave the file refused. Row W145-S8 (ARMED, disarm_owner the issuer) is disarmed by 114b926ec4: the P9 folder read and the vendored jq are both in the branch.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C, to confirm the four-call reading and the disarm of W145-S8."
+}
+```
+
+## NFRA_CTLPLN-W145-S12 -- two read-only folders outside the cell's paths were added to the sparse checkout because a check reads them
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T19:48:14Z",
+  "one_line": "The worktree's sparse checkout did not hold the IRPT_DASHBD r149 checks folder or the investor-reporting reporting-publish Terraform root, both of which p170_filled_reader.py reads. Both were added with git sparse-checkout add (read-only; no file in them was written). Neither folder is in this cell's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p170 path open before the sparse add: File does not exist (the r149 folder absent from the worktree)",
+      "git sparse-checkout add of the r149 folder, then of infra/aws/terraform/investor-reporting/reporting-publish: rc=0 each",
+      "p170 DB170-1-AC1 after the adds: OK line, DB170-1-AC1 PASS rc=0; the p170 read of reporting-publish/locals.tf and its sibling files matched the base bytes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker reads only its <paths> and its own folder; a check file that reads a folder outside them is a BLOCKING row on that path when the read is needed.",
+  "world_is": "p170 reads a Terraform root that the lane grant does not name. The read is needed for the amended check to run, and the grant covers the check file, not the root. The check's AC1 reads the root and passes at the cell base.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C, to decide whether the root belongs in the grant for the drain's run of p170."
+}
+```
