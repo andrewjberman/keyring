@@ -46,3 +46,15 @@
 | `comp-schedule --drift --budget 420` | PASS | 6 of 6 carriers in 211 s; C4 and C5 PARTIAL_OR_BLIND, not read as zero |
 | `terraform init` | note | a new `opal_name` module call needs it before any plan ('Module not installed'); no tracked file changed |
 | `proof-of-spec-check.py` | PASS | VALID first run (kind `aws_resource` used for the IAM row) |
+
+## OG-ap-26: the etf-classifications grant moved to the internal reader role
+
+6. **NFRA_OPLGTW.TO-OG-ap-26, complete.** The issuer's placement error in OG-ap-25 (the tool reads as `gateway-global-internal-reader-role`). Phase A 06:18Z-06:23Z (GO 34754): the `role` line of the one policy changed to `aws_iam_role.int_reader.id`, plan 1/0/1, internal reader at 4,112 of 10,240 inline characters with it, AC1 PASS (`52b0ff8f89`). Halves signed CTO `4d0a8d3c0d`, COO `90b589c58f`, CVO `f2cf55e41e` at `.tf` 867087958bac89b9 / ask 69466be19798. Phase B 06:31Z-06:41Z (GO 34769): ledger `nfra-oplgtw-grants-ap26`, one targeted `safe-apply` (1 added, 1 destroyed), read back on both roles (present on the internal reader, same document hash `609426e6a083440b`; absent from the instance role, 25 -> 24), simulator internal reader GetItem allowed / Scan implicitDeny, instance role GetItem implicitDeny, positive control allowed, re-plan No changes, ledger CLOSED (`d2e1fd6cef`). AC1 and AC2 PASS, instance VALID, status flipped. The COO was told AC2 was green at once, because OG-ap-23's deploy waits on it.
+
+| tool | result | notes |
+|---|---|---|
+| `safe-apply.sh` | PASS | one targeted apply, rc 0, destroy then create in about a second |
+| `deploy_ledger.py` | PASS | 3 legs closed with proof |
+| `comp-schedule --drift --budget 420` | PASS | 6 of 6 carriers in 253 s |
+| `iam list-attached-role-policies --query ... --output text` | trap | on a role with NO attached policies the text query exits non-zero through the `.tools/aws` shim; read it as `--output json` |
+| `proof-of-spec-check.py` | PASS | VALID first run |
