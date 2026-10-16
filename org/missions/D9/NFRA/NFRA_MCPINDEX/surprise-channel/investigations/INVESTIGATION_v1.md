@@ -8876,6 +8876,49 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W57-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~57",
+    "surfaced_at": "2026-10-16T02:59:29Z",
+    "one_line": "Step 0 control fails on this sparse worktree: workflows/atom_decomposition/tests run 5 failed, 277 passed at 93cac2e41b; the 5 read paths outside the sparse checkout (infra/aws/ec2/opal-gateway, org/tier0_utility), so the order's 'passes before you start' does not hold here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-38 step 0: from the worktree root, python -m pytest -q -p no:cacheprovider workflows/atom_decomposition/tests passes before you start (a control).",
+    "world_is": "Before any edit the run gave 5 failed, 277 passed. Two test_c_group.py tests (DeclaredBucketSource) report harvest_read.py and tool_index members not under infra/aws/ec2/opal-gateway; two test_tool_index_and_harvest.py tests and one test_merged_definition.py test fail on FileNotFoundError for infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml and on ARTIFACT_CENSUS_MACRO.yaml (org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census/), neither folder in the sparse checkout (org/devices, org/missions, org/modules/graph, org/ref, org/standards, workflows, lib, infra/logic/registry, .tools). None of the 5 touches gen_silver_rows.py or the new file. Not repaired: the order allows only a sparse add of folders the generator or a check reads.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tests/test_c_group.py@93cac2e41b (DeclaredBucketSource: 'is not a file under infra/aws/ec2/opal-gateway')",
+        "workflows/atom_decomposition/tests/test_tool_index_and_harvest.py@93cac2e41b (EmittedCatalogTests: FileNotFoundError on DATA_CATALOG.yaml)",
+        "workflows/atom_decomposition/tests/test_merged_definition.py@93cac2e41b (CensusAbsent: ARTIFACT_CENSUS_MACRO.yaml absent)",
+        "git sparse-checkout list in the worktree (no infra/aws, no org/tier0_utility)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W57-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~57",
+    "surfaced_at": "2026-10-16T02:59:29Z",
+    "one_line": "The order pinned only the 214 count; the new default entity exclusions also move two pins it did not name: test_gen_silver_rows RETIRED 5 to 1 and the four test_scope_exclusions run expectations (scope-only runs now carry the 28 entity lines).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "MX-c-38 part (b): fix any EXISTING test that pinned the 214-row count (the new count is 186).",
+    "world_is": "With the default in force, test_gen_silver_rows.py IntegrationTests failed on 186 != 214 and on 1 != 5 (retired rows: four of the five are among the 28). test_scope_exclusions.py ScopeRunTests ran with the default entity file, so its default, printed-count, no-default and named-file expectations also changed (wrote 186, 188 and 188 rows; the 28 entity lines are expected beside the scope lines). The expectations were updated to the new values, not the runs isolated from the entity default.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tests/test_gen_silver_rows.py@f47377fd17 (IN_SCOPE = 186, RETIRED = 1 with comment)",
+        "workflows/atom_decomposition/tests/test_scope_exclusions.py@f47377fd17 (_entity_lines helper; four run expectations)",
+        "workflows/atom_decomposition/catalog_entries/opal_data_mdpf_feeds_non_model_aua.yaml@93cac2e41b (retired row among the 28)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
