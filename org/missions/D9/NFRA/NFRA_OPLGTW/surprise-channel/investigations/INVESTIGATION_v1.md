@@ -20482,3 +20482,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not part of the three ap-21 markers, which are shown with ledger, versions and timeline."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~117",
+  "surfaced_at": "2026-10-16T10:35:28Z",
+  "id": "NFRA_OPLGTW-Z-W117-S1",
+  "one_line": "Path grant: the order's <paths> lists the registry file and this investigation file, yet section 5 flips the order's own <status> tag, a file outside <paths>; same grant as the rr-1 order (NFRA_OPLGTW-Z-W115-S3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-rr-3.apply-cro-ruling-refs.md section 3 lists two surfaces, neither of them the order file; line 62 carries the single <status>staged</status> tag.",
+      "Section 5 of the same order: flip the ONE <status> tag to complete only if both criteria PASS; the closing procedure says commit instance, deliverables and flip together."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "<paths> is the write grant for this order (section 3); the <status> flip in section 5 is part of the procedure and is made on the order file.",
+  "world_is": "The status flip touches the order file, which is outside <paths>. It is made in the same commit as the instance and the deliverables; the commit's lane gate result is stated in the report, and a refusal leaves the order staged.",
+  "notes": "The registry commit (5060b9fc41) carries the ruling_ref writes and W/RR3_UNRESOLVED.json only; the order file is not in it. Class to carry: an order whose procedure flips its own status names that file in <paths>."
+}
+```

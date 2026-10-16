@@ -59,7 +59,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rr-3.apply-cro-ruling-refs.proo
 - Sequence per the CTO: this backfill merges FIRST, then `OG-rr-2` (the gate check; worker `~116` is building it in parallel, its drain waits on this merge), and the full-add re-grade (0 moved) is `OG-rr-2`'s AC2.
 - Pre-cut: rr3.AC1 base FAIL as expected (0 of 110 applied); rr3.AC2 base PASS as expected (a bound: nothing has changed yet). All 110 CRO refs resolve in the issuer's main tree today (issuer read).
 
-<status>staged</status>
+<status>complete</status>
 <round>37</round>
 <workstream>RULING-REF-CRO</workstream>
 <slot>~117</slot>
