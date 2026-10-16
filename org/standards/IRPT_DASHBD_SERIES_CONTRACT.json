@@ -1,10 +1,15 @@
 {
-  "contract_version": "0.2.0",
+  "contract_version": "0.3.0",
   "lineage": [
     {
       "contract_version": "0.1.0",
       "sha256": "40cef6203cbfa109cae26209a9d241b82d6b1071f316c9f71f39d16913853e94",
       "note": "the bytes of 0.1.0 before the model_windows section was added (TO-DB-b-204, round 105); the series section below is unchanged from them"
+    },
+    {
+      "contract_version": "0.2.0",
+      "sha256": "2f0cb189ad07bef091269d5db9b36ccf23748c836af0fa7b3791f1df2f9764ea",
+      "note": "the bytes of 0.2.0 before the unreported-days fields (series.fields.unreported_trading_days and its basis, and the top-level unreported_days_rule) were added (TO-DB-b-278, round 146); the series section below keeps its required, array_keys and shape unchanged from them"
     }
   ],
   "project": "IRPT_DASHBD",
@@ -40,7 +45,9 @@
     "optional": [
       "class_value",
       "class_weight",
-      "class_names"
+      "class_names",
+      "unreported_trading_days",
+      "unreported_trading_days_basis"
     ],
     "array_keys": [
       "date",
@@ -132,8 +139,26 @@
         "kind": "optional; list of string",
         "source": "account_class_daily (not built in round 1)",
         "sentence": "The class labels in the order `class_value` and `class_weight` use; ABSENT under the same rule as `class_value`."
+      },
+      "unreported_trading_days": {
+        "kind": "scalar list of string",
+        "source": "the report-build output's statement, its key unreported_days (the trading days from returns_from to the day per lib/trading_calendar.py, minus the returns partitions present)",
+        "sentence": "The ISO dates (YYYY-MM-DD) of the trading days in the series' window that the source did not report, strictly increasing, each after `first_data_date`, up to `as_of` and not in `date`; always present on a series from a source that carries the report-build statement, and `[]` when there are none, never omitted; a day listed here is never filled, carried forward or treated as zero."
+      },
+      "unreported_trading_days_basis": {
+        "kind": "scalar string",
+        "source": "a fixed text",
+        "fixed_value": "trading calendar minus present partitions",
+        "sentence": "The fixed text 'trading calendar minus present partitions': how the list was derived (the trading calendar from `first_data_date` to `as_of`, minus the date partitions present); fixed, never free text, and present exactly when `unreported_trading_days` is."
       }
     }
+  },
+  "unreported_days_rule": {
+    "present_when": "the series' source carries the report-build statement (the Cottonwood report-build handler's unreported_days); a series from a source with no such statement carries neither field",
+    "pair": "both fields or neither; a lone field is invalid",
+    "empty": "[] is written when there are none, never omitted",
+    "window": "each date is a trading day strictly after `first_data_date`, at or before `as_of`, and not in `date`; the list is strictly increasing",
+    "absent_means": "no statement is made: the page says nothing about unreported days and never guesses"
   },
   "manifest": {
     "required": [
