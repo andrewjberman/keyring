@@ -21800,3 +21800,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "The pin test iv-e-124 was not run (outside this grant). The reader's unknown-key rule carries the key, so the drift is between the pin and the contract, not a read failure. Recorded for the issuer."
 }
 ```
+
+## IRPT_DASHBD-D2-S111 -- round 148 B-CW: the 0.3.1 mirror and the test read of the real Cottonwood publish, workers 418 and 419 dispositioned
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S111",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T07:43:34Z",
+  "one_line": "Round 148 B-CW (DB-c-26 and DB-c-27, FWD-10 cell a): the page mirror takes on series contract 0.3.1 and the real Cottonwood publish is read through the page (939 of 939 read, 917 print the sentence, 0 mismatches, 0 income coerced); workers 418 and 419 rows dispositioned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.15 and v0.16, FWD-10 (a): the unreported-days sentence is printed from the served series, never computed in the portal, never filled; CTO msg 9022: a labelled test read of the published prefix; CTO msg 9056: the page mirror at the current contract with iv-e-124 green.",
+  "world_is": "Merges c2f31e3f1e (DB-c-26) and f3f033ac05 (DB-c-27); round-close-check MAY-CLOSE after the two proof instances were renamed to the stem the check expects (my order text named a shorter name: issuer defect, disclosed). W418-S1 (the status-flip rule differs between the order and the worker standing rule), W418-S2 (the mirror header still cites contract 0.1.0), W418-S3 (the portal pin lives in the nested repo so the workspace checker reports that artifact row UNRESOLVED-HERE), W419-S1 (all 939 manifests carry no calendar_source while every series carries the unreported-days pair) and W419-S2 (the page's optional list lacked income_claim at the worker's base; DB-c-26 closes it) are INERT and accepted. The test read (TEST READ, counts only, read 2026-10-16T06:06:50Z; the issuer's fresh re-measure equals it): 939 series and 939 manifests, 917 accounts with a non-empty list each print exactly one sentence, longest list 3 days (2529 listed days), income null on every entry of every document and never coerced, history scope PARTIAL_HISTORY on all 939, income_claim absent on all. Observations for the CTO: every Cottonwood screen will carry the round 146 note 'Returns from <date>.' (all scopes are PARTIAL_HISTORY); the income words, once a surface prints income, are the CTO's msg 9159 words.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~419/TEST_READ_R148.json and TEST_READ_R148.md; checks/r148/p149_bcw.py AC1 and AC2 PASS (issuer re-run, fresh S3 read)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~418/BUILD_R148.json; checks/r148/p148_bcw.py AC1 and AC2 PASS; org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/prod_promote/DB_C26_BUILD_BYTES_R148.md",
+      "python .tools/round-close-check.py --project IRPT_DASHBD --round 148 --workstream B-CW: MAY-CLOSE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO: the round 148 packet; the Returns-from note on every Cottonwood screen; the next B-CW cell (49 Financial FWD-10 census)."
+}
+```
+
