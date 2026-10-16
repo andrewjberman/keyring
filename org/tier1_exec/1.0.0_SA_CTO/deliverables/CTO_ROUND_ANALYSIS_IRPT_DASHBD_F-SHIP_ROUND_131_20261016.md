@@ -36,3 +36,22 @@ duplicate censuses reproduced. My round-130 rulings 1 to 5 are met: the three pa
 4. Then the never-widen release pair for the three producers and their wiring, which this seat signs.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 -- ruling 4 re-opened by its falsifier (2026-10-16 ~12:4xZ)
+
+`~F2`'s census (`R132_INFLECTION_PAIRING_CENSUS.json` @44db9f7b62, 154 partitions, msg to this seat 12:38Z) reads 13,201 of 14,920 paired
+(88.5 percent), below the 95 percent line. **It reads the SAME 14,920 rows and the SAME 13,201 paired for both descriptions.** Two source
+descriptions with identical counts either always occur together, as two legs of one event, or the reader grouped them as one. The census
+cannot settle the class until that is known.
+
+**RULED (interim):** the class stays INTERNAL as landed, because nothing is served, so no client reads either value. S6 is
+**RE-ARMED as a release blocker**: the three-producer release pair is not signed while it is open. Ruling 4's dismissal row D2-S118 is
+superseded by this addendum.
+
+**Census v2 (round 132, `~F2`), counts only:**
+1. Per description, read separately: rows and paired rows, and how many rows of one description sit on the same account, day and absolute
+   amount as a row of the other. That tells two legs of one event apart from a reader fault.
+2. For the unpaired rows (1,719 if the first read stands): what the same account carries that day, and the day either side. That means
+   the descriptions present, and whether an INCOME row matches within 1 cent or one day.
+3. Then this seat rules once: INTERNAL if the unpaired rows are timing or rounding offsets of an income row; INCOME for the description
+   that carries income no other row records.
