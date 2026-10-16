@@ -21383,6 +21383,7 @@
 }
 ```
 
+
 ## IRPT_ANLREQ-D2-W231-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~231, cell AR-tz-67) the meeting route is a POST to a ticket route, which the order's own guard refuses; the run cannot exit 0 as specified
 
 ```json
@@ -21727,5 +21728,31 @@
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W257-S1 -- (worker 0.9.0_WK_IRPT_ANLREQ~257, cell AR-g-118) the proof schema has no slot for the release's stage files, which sit outside the repository and are held by no commit
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~257",
+  "surfaced_at": "2026-10-16T06:20:58Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W257-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The proof's artifacts_produced cannot name the release's out-of-repository stage files by a commit hash, and the checker refuses a sha256 on a repo artifact; the committed record carries their hashes.",
+  "spec_asserts": "TO-AR-g-118 proof block: 'In artifacts_produced, name each file with the hash of the commit that holds it, never a placeholder: the record first, then the proof and the status flip.'",
+  "world_is": "The driver staged the release tarball, its SHA256SUMS and four host scripts at C:/dev/irpt-release-r34f, outside the repository; no commit holds them. proof-of-spec-check.py (rc=1, 6 violations, artifact-resolution) refuses each of those six rows because a sha256 is not a 7-40 hex commit-ish for a repo artifact, and the schema's non-git kinds (s3_object, ddb_rows, aws_resource) do not describe a local staged file. The committed record org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~257/r34/RESIDENT_R34_BUILD.json at 30d6e3bf54 carries the sha256 of every stage file, so the proof names the record as its artifact and states the stage hashes in its evidence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~257/r34/RESIDENT_R34_BUILD.json @30d6e3bf54",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~257/IRPT_ANLREQ.TO-AR-g-118.resident-release-r34c-own-names.proof_of_spec.json (first draft, six artifact-resolution violations, proof-of-spec-check rc=1)"
+    ]
+  },
+  "notes": "The issuer confirms whether a local stage file outside the repository belongs in artifacts_produced under a kind the checker admits, or whether the committed record alone is the artifact for such a build."
 }
 ```
