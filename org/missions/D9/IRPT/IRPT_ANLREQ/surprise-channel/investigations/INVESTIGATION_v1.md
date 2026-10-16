@@ -19864,3 +19864,54 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W213-S1 -- the hop map says no code records report_ref for a one-step ticket; the worktree shows the package attach writes it
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W213-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~213",
+  "surfaced_at": "2026-10-15T23:41:00Z",
+  "one_line": "The FWD-1 hop map row 16 says nothing records report_ref for a ticket filed through the one-step form sequence; at this worktree the ticket service package route writes the top-level report_ref when the packager's attach carries a request_id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD1_HOP_MAP.md hop 16 (NO_CODE): for a ticket filed through the form's one-step sequence nothing records report_ref; the only writers are the assignee-only report route and the page hides Request report. Source: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/trace/FWD1_HOP_MAP.md, hop 16 row.",
+  "world_is": "infra/aws/lambda/ticket_center/lambda_function.py package_ticket (lines 1736-1817, AR-y-284) records the top-level report_ref in the same write when the body carries request_id; infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:226 puts request_id and request_revision in the attach payload. The package route is therefore a second writer of report_ref on an I1 ticket, and the hop map does not list it. This worker did not open the attach's runtime path; the packager principal is unbound (hop 12), so the write is not exercised.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/trace/FWD1_HOP_MAP.md hop 16 row, read at worktree HEAD fcc5e13f03",
+      "infra/aws/lambda/ticket_center/lambda_function.py:1799-1801 at fcc5e13f03: 'top = cur.get(\"report_ref\")' with the AR-y-284 comment on the same-write record",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py:226 at fcc5e13f03: the attach payload carries request_id and request_revision"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W210-S1 -- the task order's line range for the commentary-draft checks (1540 to 1570) is the claim route; the draft route is at 1840 to 1897
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W210-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~210",
+  "surfaced_at": "2026-10-15T23:38:00Z",
+  "one_line": "AR-tx-41 places the commentary-draft route checks near lambda_function.py lines 1540 to 1570. Those lines are the body of claim_ticket; the commentary-draft handler is commentary_draft_ticket at lines 1840 to 1897.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The AR-tx-41 worker face says the route checks the commentary-draft route makes are at infra/aws/lambda/ticket_center/lambda_function.py near the lines 1540 to 1570, per the deploy packets.",
+  "world_is": "At worktree HEAD b9ac4111f9 (branch wk-IRPT_ANLREQ-210), lambda_function.py lines 1537 to 1600 are claim_ticket (its scope test is at line 1546). commentary_draft_ticket is defined at line 1840 and its requester-firm fence (not in COMMENTARY_ALLOWED_FIRMS) is at line 1874. The route is dispatched at line 2169 of lambda_handler. The record cites the decisive lines 1840 to 1897 and does not use the 1540 to 1570 range.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py read at HEAD b9ac4111f9: lines 1537 to 1600 are the body of claim_ticket, def at line 1537",
+      "infra/aws/lambda/ticket_center/lambda_function.py read at HEAD b9ac4111f9: def commentary_draft_ticket at line 1840, COMMENTARY_ALLOWED_FIRMS fence at line 1874, router dispatch at line 2169"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
