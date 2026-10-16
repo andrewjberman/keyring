@@ -25074,3 +25074,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Options for the ruling, none taken by me: (1) bring the four entry files in as existing content (a cherry-pick or merge of MI's trunk commits) so the gate grades them EXISTING/WARN as it did on trunk -- an audited route round the NEW-literal refusal, the CTO's to name; (2) a registry row holding the 49f-live segment (the K3 tier defect) and the three literal forms as whole strings, so the gate admits them REGISTRY-HELD; (3) the CTO/CRO durable fix to the tier grammar first. The release is otherwise ready: re-cut, take, deploy hunk, pin and 167 of 169 tests."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-16T17:32:38Z",
+  "id": "NFRA_OPLGTW-Z-S304",
+  "one_line": "K3 (condition iii of XA-20261016T171531Z-7acd): is '49f-live' a legal key segment? grade() RAISES on blackdiamond/49f-live/silver/<t>/ ('K3: 49f-live is not a tier (V7)') while blackdiamond/49financial/silver/<t>/ grades CONFORMANT; four LOOKUP ALIAS rows (ca679b6560) admit the catalog literals until this is answered, and the answer retires or keeps them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "4.0.0_SA_CRO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN python -c \"import opal_naming as on; on.grade('blackdiamond/49f-live/silver/unrealized/','S3Key')\" at box/sitez ~17:3xZ: RaiseDefect 'K3: 49f-live is not a tier (V7)'. Control: on.grade('blackdiamond/49financial/silver/unrealized/','S3Key') returns ('CONFORMANT', 'blackdiamond/49financial/silver/unrealized/').",
+      "READ infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py:16: the live tables are addressed as the firm segment plus LIVE_SUFFIX, ctx.prefix(VENDOR, \"49f-live\", \"silver\", t); DATA_CATALOG.yaml:3372/3437/3503/3570 carry address: blackdiamond/49f-live/silver/<t>/ (CTO ruling @ed33f552ae: a lookup field; the prefix stays the true S3 path opal-data-bd/silver/<t>/).",
+      "RAN lib/opal_naming.py legacy_address('gateway-client-bdlive-unrealized-alias') after ca679b6560: returns s3://opal-data-bd/blackdiamond/49f-live/silver/unrealized/, a location no object is under (the physical prefix is s3://opal-data-bd/silver/unrealized/, row gateway-client-bdlive-unrealized). The builder cannot tell an alias row from a store row; only the row's evidence and note say so."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "XA-20261016T171531Z-7acd condition (iii): 4.0.0_SA_CRO~Z opens its own row on K3 (is 49f-live a legal segment?); its answer retires or keeps the alias rows. NAMING_SCHEMA key grammar: the segment after the source is a scope (or tier) the registry holds.",
+  "world_is": "'49f-live' fuses a firm scope (49financial's short form 49f) with a variant word (live, versus the legacy silver feed) in one segment. The registry holds no scope, tier or variant word for it, so every catalog literal carrying it raises. Route (2) admits the four strings whole through legacy_addresses.json; nothing else changed. The alias rows sit in a file whose builder emits S3 locations, and an alias resolves to a non-existent one.",
+  "notes": "Question for this seat (registry owner), not answered here. Candidate answers, none taken: (a) the logical address carries the canonical scope and the variant elsewhere (e.g. a live/legacy word the grammar already holds, or a source word), so the aliases retire once the catalog and adapter re-key (a reviewed-code change, OG-cl-2's owner); (b) the grammar gains a variant slot, which is NAMING_SCHEMA.json law across four boxes; (c) keep the aliases as the logical-address carrier and move them out of legacy_addresses.json into a lookup-alias carrier the builder never emits as S3. Whatever is ruled, the alias rows' INERT standing depends on nobody passing their keys to legacy_address(); a reader census of those four keys belongs with the answer."
+}
+```
