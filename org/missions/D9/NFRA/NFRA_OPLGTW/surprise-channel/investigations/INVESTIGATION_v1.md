@@ -19749,3 +19749,103 @@ name the one known failure instead of silently inheriting it.
     "notes": "Non-application: the release commit diff against HEAD does not grade these lines (untouched context)."
   }
   ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W114-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~114",
+  "surfaced_at": "2026-10-16T04:18:05Z",
+  "one_line": "With NAMING_PLACE_PREVIEW=1 the placement step errors on the full-add construction in this sparse worktree (FileNotFoundError on infra/aws/terraform/49f-value-parity/49f_value_parity.tf) and prints a placement-step error row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN NAMING_PLACE_PREVIEW=1 python .tools/naming-gate.py --diff <full add of app/client_*.py and portal_json_served.py> --enforce in C:/tmp/wk-oplgtw-114 after b7cbb3e93f: 'NAMING PLACE ERROR the placement step could not run: FileNotFoundError ... infra\\aws\\terraform\\49f-value-parity\\49f_value_parity.tf'; 'NAMING REFUSE <placement-step>:0 <error>'; 'NAMING-GATE: WARN 11 graded'; rc=0 (.scratch/ng2_preview.txt).",
+      "The same run with the switch org/mcp/naming-place.enforce absent (the default) skips the step: the AC2 construction prints only the 'NAMING PLACE-NOTICE placement step skipped' line."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ng-2 step 6 and AC2: the full-add gate read as its verdict lines, RULED for ten literals and no REFUSE; the placement step is not named by the order.",
+  "world_is": "The placement step runs only with naming-place.enforce present or NAMING_PLACE_PREVIEW=1. In a sparse checkout it reads a .tf file the checkout does not hold and reports the failure as a placement-step row; with the switch present that row would refuse. The switch is absent on this device, so the row counts WARN here.",
+  "notes": "Non-application: the default AC2 and AC1 runs do not set NAMING_PLACE_PREVIEW and the switch is absent, so the step is skipped and nothing here changes the graded verdicts."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W114-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~114",
+  "surfaced_at": "2026-10-16T04:18:05Z",
+  "one_line": "A name graded RULED stays a placement candidate: _note_place admits market_value_profile (typed INSTANCE_PROFILE), because RULED is not in _NOT_A_NAME_VERDICTS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ .tools/naming-gate.py at b7cbb3e93f: _NOT_A_NAME_VERDICTS = (DECLARED-EXCEPTION, BUILT-NOT-GRADED, NOT-GRADED, RAISE, RAISE-EXISTING, WAIVED-READ, SKIP) does not list RULED; _note_place appends a candidate for any j not in that tuple whose classify() types the literal.",
+      "READ place_step at b7cbb3e93f: a path is placed only under PLACE_PATH_PREFIX (infra/aws/) and only when root_of_path(path) is not None; for the client modules root_of_path is None, so no placement answer is read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ng-2 step 2: a none_owed row returns RULED, which PASSES (exit 0 in ENFORCE).",
+  "world_is": "The verdict passes. The placement step would still place a ruled name in a root it maps (a .tf path under infra/aws/), and an amend there could refuse it under naming-place.enforce. No such path is in the ten ruled literals, so none is observed.",
+  "notes": "Non-application: the verdict and the exit code of the commit limb are as the order states. The choice of whether a RULED name is a placement candidate is the CTO's to read; the order fixes the commit limb only."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W114-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~114",
+  "surfaced_at": "2026-10-16T04:18:05Z",
+  "one_line": "The commit-time client-data check reads ABSENT on this device (the hashed account-id list is not at its home path), so commit b7cbb3e93f was not checked for client account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output for b7cbb3e93f: 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Opal Bloomberg\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'.",
+      "The commit's diff is .tools/naming-gate.py and .tools/tests/test_naming_gate_rulings.py (git show --stat b7cbb3e93f): it carries no account literal, and the verdict output of the gate prints no account number."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ng-2 bounds: print no account number or person's name in the work.",
+  "world_is": "This device holds no hashed account-id list at the home path, so the commit-time check that would grade client account ids reports absence, not an empty result.",
+  "notes": "Non-application: the code commit adds no client data; the check's absence does not change the graded verdicts of this order."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W114-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~114",
+  "surfaced_at": "2026-10-16T04:18:05Z",
+  "one_line": "The worktree shows a modified gitlink at portal (git diff --stat reads 'portal | 2 +-') that this order did not touch; it is not staged in b7cbb3e93f.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN git diff --stat in C:/tmp/wk-oplgtw-114 after the commit: ' .tools/naming-gate.py | 94 +++ / portal | 2 +- / 2 files changed' (the stat before the commit was the same portal line).",
+      "The code commit names its two paths only (safe-commit.sh -- .tools/naming-gate.py .tools/tests/test_naming_gate_rulings.py); the portal gitlink is outside both."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ng-2 bounds: the diff outside org/ is .tools/naming-gate.py and at most the one new test file.",
+  "world_is": "The worktree carries a modified portal gitlink from its sparse setup. The order's AC3 is graded on the commit's own diff (git diff base HEAD), which names only the two tool files; the gitlink is not in that diff.",
+  "notes": "Non-application: the order's bounds are held by the commit; the gitlink is left as found and not staged, reset or cleaned."
+}
+```
