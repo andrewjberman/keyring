@@ -9813,6 +9813,29 @@ carries none.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S137",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T23:07:05Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W53-S5"
+    ],
+    "one_line": "ISSUER DISPOSITION of worker ~53's A2 row: the re-emitted catalog differs from the A1 catalog in five line pairs, not two: the two anchors plus three provenance lines (BUILT BY, built_at_git_head, the deployed_commit comment).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "The issuer's A2 text compared parsed YAML, which drops comments and the built_at_git_head provenance; the file bytes carry those three lines too, and they follow from the re-emit at deployed commit 4be300110e from git HEAD fb250012dc. No row, tool, value or visibility moved; the placed md5 equals the one the order names (place_catalog copied=1 equal=1). The issuer is disarm_owner.",
+    "spec_asserts": "MX-c-39 A2 said the diff against the A1 catalog is two definition lines.",
+    "world_is": "git diff of the catalog between the A1 and A2 placements shows 5 line pairs: the opal_describe and opal_discover definitions (:944 to :950, :934 to :940), the BUILT BY header, built_at_git_head, and the deployed_commit comment (bf9d23b518 to 4be300110e).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git diff a351afd2b1~1 a351afd2b1 -- DATA_CATALOG.yaml: exactly those five line pairs; git rev-parse a351afd2b1:<catalog> = 2cbe275d03c9a5af85afefabc604e26b71e9be12; merged 70cf87661a."
+      ]
+    }
   }
 ]
 ```
