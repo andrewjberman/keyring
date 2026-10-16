@@ -13226,3 +13226,27 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not fixed here: the write surface of this cell is the cell's <paths>, and git checkout -- is not an allowed act. The file is left as the suite wrote it, uncommitted, in worktree ctlpln-144. Decision owner: the issuer 2.0.0_SA_COO~C, for whether the suite should write to a path that is committed or should skip the write when the content is unchanged."
 }
 ```
+
+```json
+{
+  "id": "NFRA_CTLPLN-W144-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~144",
+  "surfaced_at": "2026-10-16T15:07:54Z",
+  "one_line": "The source-priority rule (CT-bf-1 AMENDMENT 2) moves the grade of record from an investigation row to an adjudication row on 5 real ADVI_COTBKF grades. No MET or NOT MET reading changes, and no ROUND-CLOSE verdict changes. In each pair the adjudication row carries the same verdict and the same surfaced_at as the investigation row it displaces.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~144/SWEEP_CLASSIFIED_SOURCE_PRIORITY.txt: five GRADED->GRADED source-changed lines (ADVI_COTBKF rounds 12, 53, 61, 66, 71); base sweep SWEEP_BASE_9a570bb671.txt and after sweep SWEEP_AFTER_SOURCE_PRIORITY.txt, 232 runs each, 0 timeouts",
+      "org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/adjudications/ADJUDICATION_v10.md (C-S17, 2026-10-07T15:05Z, NOT MET) over investigations/INVESTIGATION_v1.md (D2-S24, 2026-10-07T15:05Z, NOT MET); ADJUDICATION_v37.md (C-S44, 2026-10-11T03:22:00Z, NOT MET) over INVESTIGATION_v1.md (D2-S81, 2026-10-11T03:22Z, NOT MET); ADJUDICATION_v39.md (C-S46, 2026-10-11T08:40:26Z, MET) over D2-S102 (08:40:26Z, MET); ADJUDICATION_v43.md (C-S50, 2026-10-11T12:20:43Z, NOT MET) over D2-S115 (12:20:43Z, NOT MET); ADJUDICATION_v48.md (C-S55, 2026-10-11T18:22:31Z, MET) over D2-S122 (18:22:31Z, MET)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 2 accepts the source-priority rule when the sweep shows zero changed MET or NOT MET readings, zero GRADED->UNGRADED lines and zero ROUND-CLOSE verdict changes, and lists any changed source with its two competing rows.",
+  "world_is": "Five grades change SOURCE only, and each adjudication row that now wins restates the same verdict at the same surfaced_at as the investigation row it displaces. C-S44 states its CB53ba1-AC2 NOT MET in world_is, not in one_line. C-S55 says its own D2-S122 'is dismissed as a grade record' and then restates CB71bs1-AC2 MET in the same row.",
+  "notes": "Not ruled here: whether a source change on a tie of surfaced_at is the intended reading. The rule as written takes the adjudication row. Decision owner: the issuer 2.0.0_SA_COO~C."
+}
+```
