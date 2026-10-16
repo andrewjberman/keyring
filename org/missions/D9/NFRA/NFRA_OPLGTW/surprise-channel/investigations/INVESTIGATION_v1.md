@@ -19418,3 +19418,30 @@ name the one known failure instead of silently inheriting it.
     "world_is": "The strip is in place (role_key returns blackdiamond49f), but the catalog has no -live row, so the live path refuses at prefix() before any role is assumed. The live tables' catalog rows are not at head. The issuer decides whether the live rows are catalogued or the live path is retired."
   }
   ```
+
+```json
+  {
+    "id": "NFRA_OPLGTW-Z-S157",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~Z",
+    "surfaced_at": "2026-10-16T01:30:00Z",
+    "one_line": "terraform state show <role>'s inline_policy blocks are a STALE CACHE, not the role's live inline set: it listed 3 policies on gateway-global-internal-reader-role while live IAM held 4, the missing one being gateway-global-etfs-read-policy, which THIS SEAT applied one release earlier as its own aws_iam_role_policy resource.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform state show aws_iam_role.int_reader printed name = rows for exactly three inline policies: gateway-global-harvest-read-policy, gateway-global-internal-reader-policy, gateway-global-portal-tiered-read-policy.",
+        "boto3 iam list_role_policies on the same role, paginated, read FOUR: those three plus gateway-global-etfs-read-policy (2 statements, s3:GetObject and s3:ListBucket over opal-data-etfs, 10 resources). Recorded whole in W/P21_IAM_PREACT.json.",
+        "The fourth is not unmanaged and not drift: it is aws_iam_role_policy.int_reader_etfs_read, applied by OG-ap-20 (release 06cfb6db64) as a SEPARATE resource. The aws_iam_role resource's inline_policy attribute simply was not refreshed by that apply, so the role resource in state still describes the role as it was before it.",
+        "The same read on aws_iam_role.gw printed 25 inline names and live IAM also read 25, so the attribute is not always wrong -- which is exactly what makes it dangerous: it agrees often enough to be trusted."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "No spec asserts this; it is an instrument property a reader cannot re-derive at the call site. Recorded because a never-widen act reads a role's CURRENT statement set to decide what it is about to change, and state show is the convenient way to read it.",
+    "world_is": "A separately-declared aws_iam_role_policy does not update the aws_iam_role resource's cached inline_policy blocks. So state show UNDER-REPORTS a role's inline set, and it under-reports in the direction that matters: a seat enumerating what a role already holds, before widening it, would miss a grant and could describe its act as narrower than it is, or delete a needed policy as unlisted. It fails SILENTLY and it fails PLAUSIBLY -- three names is a perfectly reasonable answer. The live read is iam list_role_policies, PAGINATED, with list_attached_role_policies beside it for the managed half; on this pair that is 25 inline + 1 attached (gw) and 6 inline + 0 attached (internal reader) after this release. This seat used the live read throughout OG-ap-21 and the state figure was never relied on, so nothing in that release is affected.",
+    "notes": "Cost of the sound form: one paginated API call per role instead of one state read. Non-application: reading a role's trust policy or its own attributes, which the role resource does own. Candidate mechanism for the owner, if wanted: the cloud-ops skill's IAM INSTRUMENT TRAPS section already holds comp-iam's and simulate-principal-policy's failure modes and is where this one belongs; this row is not a request for that edit, only the measurement it would cite."
+  }
+  ```

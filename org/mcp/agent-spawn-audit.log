@@ -18989,6 +18989,920 @@
 2026-10-09T16:46:13Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=694  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=72  msys_joined=30  ms=1234
 2026-10-09T17:04:19Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=712  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=83  msys_joined=40  ms=1053
 2026-10-09T17:03:15.035584+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~CA pid=1572 reason='to=2.0.0_SA_COO~ZZ' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 159 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T17:26:32Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=735  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=76  msys_joined=39  ms=1560
+2026-10-09T17:54:23Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=691  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=82  msys_joined=31  ms=1104
+2026-10-09T18:04:12.935284+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~DELL1 pid=27028 reason='to=2.0.0_SA_COO~S1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T18:24:22Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=664  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=67  msys_joined=30  ms=920
+2026-10-09T18:24:35Z  WORKTREE-GC  ESCALATE  path=C:/dev/wk-secclass-54  branch=wk-MDPF_SECCLASS-54  owner=box MSTR (owner unknown)  reason=3 uncommitted/untracked; 4 unmerged commit(s); 5 ignored non-cache path(s); idle 48.19 h, owner not live
+2026-10-09T18:31:21Z  KILL  2.0.0_SA_COO~N1  by 0.0.0_AB_MSTR~DELL1  pid=22412  reason=project NFRA_GATSCP closed @45f5fc4fd9; no re-seat (1.0.0_SA_CTO~DELL1 msg 2978)
+2026-10-09T18:31:21Z  KILL  2.0.0_SA_COO~N1  by 0.0.0_AB_MSTR~DELL1  pid=30900  reason=project NFRA_GATSCP closed @45f5fc4fd9; no re-seat (1.0.0_SA_CTO~DELL1 msg 2978)
+2026-10-09T18:37:07Z  REJECT 0.7.0_AE_CloudOps~SH1  by 0.0.0_AB_MSTR~DELL1  reason=concurrency-cap  live=20/20
+2026-10-09T18:44:08Z  REJECT 0.7.0_AE_CloudOps~SH1  by 0.0.0_AB_MSTR~DELL1  reason=concurrency-cap  live=20/20
+2026-10-09T18:54:31Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=712  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=86  msys_joined=34  ms=1335
+2026-10-09T18:55:27Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk_secclass_r13_64  branch=wk-secclass-r13-64  reason=merged into CLOUD; --force discards 2 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.35 h
+2026-10-09T19:24:20Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=648  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=70  msys_joined=30  ms=852
+2026-10-09T19:24:49Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk_secclass_r14_65  branch=wk-secclass-r14-65  reason=merged into CLOUD; --force discards 62 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.38 h
+2026-10-09T19:29:47.167706+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~D1 pid=18440 reason='to=2.0.0_SA_COO~S1,0.7.0_AE_CloudOps~DELL1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~D1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-09T19:34:43Z  FORCE-SPAWN 0.7.0_AE_CloudOps~SH1  by 0.0.0_AB_MSTR~DELL1  reason=1.0.0_SA_CTO~DELL1 msg 3053: dedicated CloudOps lane for MDPF_SECHIST gold deploy; 20/20 cap, every live seat holds work
+2026-10-09T19:34:43Z  SPAWN  0.7.0_AE_CloudOps~SH1  by 0.0.0_AB_MSTR~DELL1  pid=6196  host_pid=28440
+2026-10-09T19:35:34.951550+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~SH1 pid=26260
+2026-10-09T19:43:23Z  KILL  2.0.0_SA_COO~B1  by 0.0.0_AB_MSTR~DELL1  pid=20952  reason=LGIC_CANON closed @f20404361c; retire per 1.0.0_SA_CTO~DELL1 msg 3085
+2026-10-09T19:43:23Z  KILL  2.0.0_SA_COO~B1  by 0.0.0_AB_MSTR~DELL1  pid=22120  reason=LGIC_CANON closed @f20404361c; retire per 1.0.0_SA_CTO~DELL1 msg 3085
+2026-10-09T19:43:56.846142+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~M1 pid=18080 reason='to=0.7.0_AE_CloudOps~SC1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~M1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-09T19:45:27.069946+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~RA1 pid=21276 reason='to=2.0.0_SA_COO~R1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 178 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T19:46:00.006187+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~R1 pid=8668 reason='to=0.7.0_AE_CloudOps~RA1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~R1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-09T20:00:47Z  FORCE-SPAWN 2.0.0_SA_COO~F1  by 0.0.0_AB_MSTR~DELL1  reason=laptop 1.0.0_SA_CTO msg 108108: ADVI_FIRMBKTS re-placed LAPTOP->DELL1 @8afcb0f851, spawn a fresh COO lane; 20/20 cap, every live seat holds work
+2026-10-09T20:01:00Z  FORCE-SPAWN 2.0.0_SA_COO~F1  by 0.0.0_AB_MSTR~DELL1  reason=laptop 1.0.0_SA_CTO msg 108108: ADVI_FIRMBKTS re-placed LAPTOP->DELL1 @8afcb0f851, spawn a fresh COO lane; 20/20 cap, every live seat holds work
+2026-10-09T20:01:00Z  SPAWN  2.0.0_SA_COO~F1  by 0.0.0_AB_MSTR~DELL1  pid=25388  host_pid=19988
+2026-10-09T20:01:45.343030+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~F1 pid=24588
+2026-10-09T20:05:02Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=687  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=78  msys_joined=41  ms=1254
+2026-10-09T20:05:54Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk_secclass_r15_66  branch=wk-secclass-r15-66  reason=merged into CLOUD; --force discards 3 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.53 h
+2026-10-09T20:06:36Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk_secclass_r15_67  branch=wk-secclass-r15-67  reason=merged into CLOUD; --force discards 9 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.45 h
+2026-10-09T20:07:01Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk_secclass_r15_68  branch=wk-secclass-r15-68  reason=merged into CLOUD; --force discards 1 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.68 h
+2026-10-09T20:24:28Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=683  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=71  msys_joined=29  ms=1297
+2026-10-09T20:28:08.833618+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~RA1 pid=21276 reason='to=2.0.0_SA_COO~R1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 155 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T20:48:58.362011+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=10752 reason='to=0.7.0_AE_CloudOps~SH1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~DELL1 -> a Tier-2 seat with an ACT in the body and no task order assigned to tha'
+2026-10-09T20:49:55.973436+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~H1 pid=16844 reason='to=0.7.0_AE_CloudOps~SH1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~H1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-09T21:25:20Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=656  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=72  msys_joined=42  ms=896
+2026-10-09T21:26:18Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk_secclass_r15_67b  branch=wk-secclass-r15-67b  reason=merged into box/dell1; --force discards 7 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.96 h
+2026-10-09T21:31:49.872534+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~DELL1 pid=27028 reason='to=2.0.0_SA_COO~S1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T21:54:31Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=670  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=66  msys_joined=28  ms=1227
+2026-10-09T22:06:22.256687+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~DELL1 pid=27028 reason='to=0.0.0_AB_MSTR~DELL1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 151 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T22:24:21Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=655  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=64  msys_joined=29  ms=768
+2026-10-09T22:29:35.365895+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~DELL1 pid=27028 reason='to=2.0.0_SA_COO~D1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 151 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T22:54:24Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=649  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=65  msys_joined=31  ms=951
+2026-10-10T21:12:39.284410+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR~DELL1 pid=8676
+2026-10-10T21:16:34.293497+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=16248
+2026-10-10T21:58:10Z  WORKTREE-GC  ESCALATE  path=C:/dev/coo_m1_r8  branch=coo-m1-secclass-r8  owner=2.0.0_SA_COO~M1  reason=7 unmerged commit(s); 7 ignored non-cache path(s); idle 67.77 h, owner not live
+2026-10-10T21:58:10Z  WORKTREE-GC  ESCALATE  path=C:/dev/cvo_secclass_r9  branch=cvo-secclass-r9-compile  owner=3.0.0_SA_CVO  reason=9 uncommitted/untracked; 9 unmerged commit(s); 4 ignored non-cache path(s); idle 66.57 h, owner not live
+2026-10-10T21:58:10Z  WORKTREE-GC  ESCALATE  path=C:/dev/wk-secclass-42  branch=secclass-r10-held-38  owner=2.0.0_SA_COO~M1  reason=3 uncommitted/untracked; 16 unmerged commit(s); 5 ignored non-cache path(s); idle 80.26 h, owner not live
+2026-10-10T21:58:10Z  WORKTREE-GC  HELD  path=C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/a  branch=sm-cont-92872d5e-a-ours  owner=0.9.0_WK_SMCONT~1  reason=6110 unmerged commit(s); 3 ignored non-cache path(s); idle 29.61 h
+2026-10-10T21:58:10Z  WORKTREE-GC  HELD  path=C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/b  branch=sm-cont-92872d5e-b-ours  owner=0.9.0_WK_SMCONT~1  reason=1 uncommitted/untracked; 6110 unmerged commit(s); 3 ignored non-cache path(s); idle 29.6 h
+2026-10-10T21:58:10Z  WORKTREE-GC  HELD  path=C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/c  branch=sm-cont-92872d5e-c-ours  owner=box MSTR (owner unknown)  reason=6108 unmerged commit(s); 2 ignored non-cache path(s); idle 29.59 h
+2026-10-10T21:58:10Z  WORKTREE-GC  HELD  path=C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/a  branch=sm-cont-3b06b9c3-a-ours  owner=0.9.0_WK_SMCONT~1  reason=6110 unmerged commit(s); 3 ignored non-cache path(s); idle 29.51 h
+2026-10-10T21:58:10Z  WORKTREE-GC  HELD  path=C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/b  branch=sm-cont-3b06b9c3-b-ours  owner=0.9.0_WK_SMCONT~1  reason=1 uncommitted/untracked; 6110 unmerged commit(s); 3 ignored non-cache path(s); idle 29.51 h
+2026-10-10T21:58:10Z  WORKTREE-GC  HELD  path=C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/c  branch=sm-cont-3b06b9c3-c-ours  owner=0.9.0_WK_SMCONT~1  reason=6110 unmerged commit(s); 3 ignored non-cache path(s); idle 29.5 h
+2026-10-10T21:58:10Z  WORKTREE-GC  HELD  path=C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/d  branch=sm-cont-3b06b9c3-d-ours  owner=box MSTR (owner unknown)  reason=6108 unmerged commit(s); 2 ignored non-cache path(s); idle 29.49 h
+2026-10-10T21:58:30Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/coo_c1_ap10u  branch=coo-c1-ap10u-p  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 5 ignored non-cache path(s); idle 41.51 h
+2026-10-10T21:58:47Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-corpus-41-1  branch=wk-AMGT_CORPUS-41-1  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 28.47 h
+2026-10-10T21:59:08Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-corpus-41-2  branch=wk-AMGT_CORPUS-41-2  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 28.3 h
+2026-10-10T21:59:25Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-corpus-44-3  branch=wk-AMGT_CORPUS-44-3  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.24 h
+2026-10-10T21:59:47Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-harvst-132  branch=wk-AMGT_HARVST-132-records  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 32.91 h
+2026-10-10T22:00:08Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-harvst-133  branch=wk-AMGT_HARVST-133-r78  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 29.34 h
+2026-10-10T22:00:25Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wt-amgtv1-prod  branch=(detached)  reason=merged into box/dell1; --force discards 395 uncommitted/untracked and 0 ignored non-cache path(s); idle 29.27 h
+2026-10-10T22:00:42Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wt-amgtv1-r57cand  branch=(detached)  reason=merged into box/dell1; --force discards 95 uncommitted/untracked and 0 ignored non-cache path(s); idle 29.3 h
+2026-10-10T22:00:59Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wt-amgtv1-w141  branch=wk-DSGN_AMGTV1-141  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 30.46 h
+2026-10-10T22:01:16Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wt-amgtv1-w142  branch=wk-DSGN_AMGTV1-142  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 29.34 h
+2026-10-10T22:01:34Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wt-canon-w1  branch=wk-MDPF_CANON-1  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 26.71 h
+2026-10-10T22:01:51Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wt-canon-w2  branch=wk-MDPF_CANON-2  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 26.67 h
+2026-10-10T22:02:09Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wt-canon-w3  branch=wk-MDPF_CANON-3  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 26.52 h
+2026-10-10T22:02:29Z  WORKTREE-GC  REMOVED  path=C:/tmp/dd4-build  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 42.78 h
+2026-10-10T22:02:45Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/ee6-build  branch=(detached)  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 1 ignored non-cache path(s); idle 40.66 h
+2026-10-10T22:03:04Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/gg7-build  branch=(detached)  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 1 ignored non-cache path(s); idle 37.98 h
+2026-10-10T22:03:20Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/jj5-build  branch=(detached)  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 1 ignored non-cache path(s); idle 32.56 h
+2026-10-10T22:03:40Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/ll3-build  branch=(detached)  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 1 ignored non-cache path(s); idle 26.13 h
+2026-10-10T22:03:57Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/r81-321  branch=wk-AMGT_RESAPP-321  reason=merged into box/dell1; --force discards 8 uncommitted/untracked and 5 ignored non-cache path(s); idle 39.41 h
+2026-10-10T22:04:15Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/r82-323  branch=wk-AMGT_RESAPP-323  reason=merged into box/dell1; --force discards 22 uncommitted/untracked and 5 ignored non-cache path(s); idle 38.33 h
+2026-10-10T22:04:36Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/r86-343  branch=wk-AMGT_RESAPP-343  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 30.7 h
+2026-10-10T22:04:56Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/r86-344  branch=wk-AMGT_RESAPP-344  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 30.88 h
+2026-10-10T22:05:14Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/r86-345  branch=wk-AMGT_RESAPP-345  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 30.69 h
+2026-10-10T22:05:32Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/r87-346  branch=wk-AMGT_RESAPP-346  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 26.94 h
+2026-10-10T22:05:50Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/r87-347  branch=wk-AMGT_RESAPP-347  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 26.8 h
+2026-10-10T22:06:08Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/r87-348  branch=wk-AMGT_RESAPP-348  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 26.62 h
+2026-10-10T22:06:26Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/r88-349  branch=wk-AMGT_RESAPP-349  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 25.09 h
+2026-10-10T22:06:43Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/r88-350  branch=wk-AMGT_RESAPP-350  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 7 ignored non-cache path(s); idle 24.89 h
+2026-10-10T22:06:59Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/rv-r28-dell1  branch=(detached)  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 2 ignored non-cache path(s); idle 41.54 h
+2026-10-10T22:07:16Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/rv-wi1-dell1  branch=(detached)  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 2 ignored non-cache path(s); idle 30.65 h
+2026-10-10T22:07:34Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/rv-ws23-dell1  branch=(detached)  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 2 ignored non-cache path(s); idle 31.44 h
+2026-10-10T22:07:50Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/sechist-gold  branch=wk-sechist-gold-sh1  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 8 ignored non-cache path(s); idle 25.5 h
+2026-10-10T22:08:05Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/v1-tc1-sim  branch=(detached)  reason=merged into box/dell1; --force discards 5 uncommitted/untracked and 0 ignored non-cache path(s); idle 42.52 h
+2026-10-10T22:08:21Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-demque-13  branch=wk-MDPF_DEMQUE-13  reason=merged into box/dell1; --force discards 2 uncommitted/untracked and 5 ignored non-cache path(s); idle 36.3 h
+2026-10-10T22:08:38Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-demque-14  branch=wk-MDPF_DEMQUE-14  reason=merged into box/dell1; --force discards 2 uncommitted/untracked and 5 ignored non-cache path(s); idle 36.39 h
+2026-10-10T22:08:54Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-demque-15  branch=wk-MDPF_DEMQUE-15  reason=merged into box/dell1; --force discards 6 uncommitted/untracked and 5 ignored non-cache path(s); idle 36.26 h
+2026-10-10T22:09:10Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-demque-16  branch=wk-MDPF_DEMQUE-16  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 32.94 h
+2026-10-10T22:09:28Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-demque-17  branch=wk-MDPF_DEMQUE-17  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 32.99 h
+2026-10-10T22:09:46Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-demque-18  branch=wk-MDPF_DEMQUE-18  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 32.83 h
+2026-10-10T22:10:04Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-demque-19  branch=wk-MDPF_DEMQUE-19  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 7 ignored non-cache path(s); idle 32.23 h
+2026-10-10T22:10:22Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-demque-20  branch=wk-MDPF_DEMQUE-20  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 32.29 h
+2026-10-10T22:10:39Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-rivals-30  branch=wk-ETFS_RIVALS-30  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 32.54 h
+2026-10-10T22:10:58Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-rivals-31  branch=wk-ETFS_RIVALS-31  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 31.95 h
+2026-10-10T22:11:17Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-rivals-32  branch=wk-ETFS_RIVALS-32  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 31.56 h
+2026-10-10T22:11:32Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-rivals-33  branch=wk-ETFS_RIVALS-33  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 31.19 h
+2026-10-10T22:11:48Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-rivals-34  branch=wk-ETFS_RIVALS-34  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 30.79 h
+2026-10-10T22:54:06Z  WORKTREE-GC  HELD  path=C:/dev/wk-corpus-44-1  branch=wk-AMGT_CORPUS-44-1  owner=box MSTR (owner unknown)  reason=7538 unmerged commit(s); 6 ignored non-cache path(s); idle 24.86 h
+2026-10-10T22:54:24Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-corpus-44-2  branch=wk-AMGT_CORPUS-44-2  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.09 h
+2026-10-10T22:54:39Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wt-canon-w4  branch=wk-MDPF_CANON-4  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 7 ignored non-cache path(s); idle 24.04 h
+2026-10-10T22:54:55Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wt-canon-w5  branch=wk-MDPF_CANON-5  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.83 h
+2026-10-10T22:55:10Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wt-canon-w6  branch=wk-MDPF_CANON-6  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.97 h
+2026-10-10T22:55:25Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wt-canon-w7  branch=wk-MDPF_CANON-7  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.89 h
+2026-10-10T22:55:39Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/mm4-build  branch=(detached)  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 1 ignored non-cache path(s); idle 24.18 h
+2026-10-11T02:00:17Z  KILL  4.0.0_SA_CRO~DELL1  by 0.0.0_AB_MSTR~DELL1  pid=14460  reason=re-seat under MP-20261010 after hold lift (Andrew-direct via laptop CTO msg 108173); session never produced a turn since 21:01Z autolaunch
+2026-10-11T02:00:17Z  KILL  4.0.0_SA_CRO~DELL1  by 0.0.0_AB_MSTR~DELL1  pid=21932  reason=re-seat under MP-20261010 after hold lift (Andrew-direct via laptop CTO msg 108173); session never produced a turn since 21:01Z autolaunch
+2026-10-11T02:00:21Z  SPAWN  4.0.0_SA_CRO~DELL1  by 0.0.0_AB_MSTR~DELL1  pid=3460  host_pid=30904
+2026-10-11T02:00:53.855219+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~DELL1 pid=35220
+2026-10-11T02:01:51Z  KILL  3.0.0_SA_CVO  by 0.0.0_AB_MSTR~DELL1  pid=18416  reason=re-seat under MP-20261010 after hold lift (Andrew-direct via laptop CTO msg 108173)
+2026-10-11T02:01:51Z  KILL  3.0.0_SA_CVO  by 0.0.0_AB_MSTR~DELL1  pid=14156  reason=re-seat under MP-20261010 after hold lift (Andrew-direct via laptop CTO msg 108173)
+2026-10-11T02:01:52Z  KILL  3.0.0_SA_CVO~RV1  by 0.0.0_AB_MSTR~DELL1  pid=16136  reason=re-seat under MP-20261010 after hold lift (Andrew-direct via laptop CTO msg 108173)
+2026-10-11T02:01:52Z  KILL  3.0.0_SA_CVO~RV1  by 0.0.0_AB_MSTR~DELL1  pid=21340  reason=re-seat under MP-20261010 after hold lift (Andrew-direct via laptop CTO msg 108173)
+2026-10-11T02:01:52Z  KILL  2.0.0_SA_COO~B1  by 0.0.0_AB_MSTR~DELL1  pid=24068  reason=re-seat under MP-20261010 after hold lift (Andrew-direct via laptop CTO msg 108173)
+2026-10-11T02:01:52Z  KILL  2.0.0_SA_COO~B1  by 0.0.0_AB_MSTR~DELL1  pid=2316  reason=re-seat under MP-20261010 after hold lift (Andrew-direct via laptop CTO msg 108173)
+2026-10-11T02:01:53Z  KILL  2.0.0_SA_COO~C1  by 0.0.0_AB_MSTR~DELL1  pid=32952  reason=re-seat under MP-20261010 after hold lift (Andrew-direct via laptop CTO msg 108173)
+2026-10-11T02:01:53Z  KILL  2.0.0_SA_COO~C1  by 0.0.0_AB_MSTR~DELL1  pid=26240  reason=re-seat under MP-20261010 after hold lift (Andrew-direct via laptop CTO msg 108173)
+2026-10-11T02:01:53Z  SPAWN  3.0.0_SA_CVO  by 0.0.0_AB_MSTR~DELL1  pid=16920  host_pid=27080
+2026-10-11T02:02:17Z  SPAWN  3.0.0_SA_CVO~RV1  by 0.0.0_AB_MSTR~DELL1  pid=1460  host_pid=14600
+2026-10-11T02:02:25.022756+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=14580
+2026-10-11T02:02:51.906502+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~RV1 pid=24404
+2026-10-11T02:06:48Z  SPAWN  0.7.0_AE_CloudOps~DELL1  by 0.0.0_AB_MSTR~DELL1  pid=10212  host_pid=30400
+2026-10-11T02:07:12.107037+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~DELL1 pid=3328
+2026-10-11T02:07:12Z  SPAWN  0.7.0_AE_CloudOps~SC1  by 0.0.0_AB_MSTR~DELL1  pid=6504  host_pid=11392
+2026-10-11T02:07:36Z  SPAWN  0.7.0_AE_CloudOps~RA1  by 0.0.0_AB_MSTR~DELL1  pid=26576  host_pid=8400
+2026-10-11T02:07:40.538533+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~SC1 pid=11096
+2026-10-11T02:08:17.152072+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RA1 pid=12232
+2026-10-11T02:08:30Z  SPAWN  2.0.0_SA_COO~B1  by 0.0.0_AB_MSTR~DELL1  pid=28392  host_pid=23284
+2026-10-11T02:08:55Z  SPAWN  2.0.0_SA_COO~C1  by 0.0.0_AB_MSTR~DELL1  pid=9684  host_pid=32416
+2026-10-11T02:09:15.269805+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~B1 pid=7832
+2026-10-11T02:09:20Z  SPAWN  2.0.0_SA_COO~D1  by 0.0.0_AB_MSTR~DELL1  pid=4312  host_pid=7800
+2026-10-11T02:09:31.881529+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~C1 pid=8248
+2026-10-11T02:09:44Z  SPAWN  2.0.0_SA_COO~G1  by 0.0.0_AB_MSTR~DELL1  pid=23672  host_pid=6316
+2026-10-11T02:09:58.322311+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~D1 pid=35664
+2026-10-11T02:10:10Z  SPAWN  2.0.0_SA_COO~H1  by 0.0.0_AB_MSTR~DELL1  pid=32356  host_pid=11236
+2026-10-11T02:10:34Z  SPAWN  2.0.0_SA_COO~M1  by 0.0.0_AB_MSTR~DELL1  pid=29804  host_pid=29392
+2026-10-11T02:10:45.173543+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~G1 pid=6596
+2026-10-11T02:10:52.442712+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~H1 pid=7756
+2026-10-11T02:11:00Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~G1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=86 out=[kill-orphans] start pid=145001 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~G1
+2026-10-11T02:10:59Z  SPAWN  2.0.0_SA_COO~Q1  by 0.0.0_AB_MSTR~DELL1  pid=9712  host_pid=12644
+2026-10-11T02:11:22.466201+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~M1 pid=31960
+2026-10-11T02:11:25Z  SPAWN  2.0.0_SA_COO~R1  by 0.0.0_AB_MSTR~DELL1  pid=5576  host_pid=36388
+2026-10-11T02:11:49.209155+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~Q1 pid=18220
+2026-10-11T02:11:51Z  SPAWN  2.0.0_SA_COO~S1  by 0.0.0_AB_MSTR~DELL1  pid=10316  host_pid=33976
+2026-10-11T02:12:15.850965+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~R1 pid=1120
+2026-10-11T02:12:17Z  SPAWN  2.0.0_SA_COO~V1  by 0.0.0_AB_MSTR~DELL1  pid=36536  host_pid=31988
+2026-10-11T02:12:31Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~R1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=86 out=[kill-orphans] start pid=167412 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~R1
+2026-10-11T02:12:44.419023+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~S1 pid=18992
+2026-10-11T02:12:43Z  SPAWN  2.0.0_SA_COO~W1  by 0.0.0_AB_MSTR~DELL1  pid=1832  host_pid=25548
+2026-10-11T02:12:59Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~S1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=86 out=[kill-orphans] start pid=173787 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~S1
+2026-10-11T02:13:13.136661+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~V1 pid=22404
+2026-10-11T02:13:41.870428+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~W1 pid=30524
+2026-10-11T02:21:26Z  KILL-SELF-EXCLUDED  0.0.0_AB_MSTR~DELL1  by 0.0.0_AB_MSTR~DELL1  reason=self-relaunch under MP-20261010 (laptop CTO ruling msg 108175, bus aa9e82e3); handoff 1014145d7f  found=0  watchers_reaped=0
+2026-10-11T02:21:37Z  SPAWN  0.0.0_AB_MSTR~DELL1  by 0.0.0_AB_MSTR~DELL1  pid=8604  host_pid=33444
+2026-10-11T02:23:02Z  KILL  1.0.0_SA_CTO~DELL1  by 0.0.0_AB_MSTR~DELL1  pid=2488  reason=relaunch under MP-20261010 (laptop CTO ruling msg 108175); CTO handoff 3afdf30a99
+2026-10-11T02:23:02Z  KILL  1.0.0_SA_CTO~DELL1  by 0.0.0_AB_MSTR~DELL1  pid=12596  reason=relaunch under MP-20261010 (laptop CTO ruling msg 108175); CTO handoff 3afdf30a99
+2026-10-11T02:23:07Z  SPAWN  1.0.0_SA_CTO~DELL1  by 0.0.0_AB_MSTR~DELL1  pid=34288  host_pid=7120
+2026-10-11T02:23:52.688784+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=928
+2026-10-11T02:23:57.245616+00:00 IDENTITY_SERIAL_HELD guard=GA-3 serial=0.0.0_AB_MSTR~DELL1 pid=13328 reason='-' conflict='IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 0.0.0_AB_MSTR~DELL1 was already held by PID 8676 (heartbeat 12s ago) and that PID still resolves ALIVE; you are PID 13328. This is NOT proof of a phantom: the probe cannot distinguish a live incumbent from a lingering orphan MCP process or a recycled OS PID, so it does not block you. But if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting as 0.0.0_AB_MSTR~DELL1. Collision audited.'
+2026-10-11T02:25:07.914500+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR~DELL1 pid=13328
+2026-10-11T02:25:21Z  KILL-ORPHAN  by 0.0.0_AB_MSTR~DELL1  pid=327426  cmd-serial=0.0.0_AB_MSTR~DELL1  force=1 stale=0 global=0 serial=0.0.0_AB_MSTR~DELL1
+2026-10-11T02:26:17.596951+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=928 reason='to=2.0.0_SA_COO~M1,0.7.0_AE_CloudOps~SC1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~DELL1 -> a Tier-2 seat with an ACT in the body and no task order assigned to tha'
+2026-10-11T02:27:40.270573+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=928 reason='to=0.0.0_AB_MSTR~DELL1,0.7.0_AE_CloudOps~DELL1,0.7.0_AE_CloudOps~RA1,0.7.0_AE_CloudOps~SC1,2.0.0_SA_COO~B1,2.0.0_SA_COO~C1,2.0.0_SA_COO~D1,2.0.0_SA_COO~G1,2.0.0_SA_COO~H1,2.0.0_SA_COO~M1,2.0.0_SA_COO~Q1,2.0.0_SA_COO~R1,2.0.0_SA_COO~S1,2.0.0_SA_COO~V1,2.0.0_SA_COO~W1,3.0.0_SA_CVO,3.0.0_SA_CVO~RV1,4.0.0_SA_CRO~DELL1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~DELL1 -> a Tier-2 seat with an ACT in the body and no task order assigned to tha'
+2026-10-11T02:42:14.396673+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~M1 pid=31960 reason='to=0.7.0_AE_CloudOps~SC1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~M1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-11T02:46:19Z  SPAWN  2.0.0_SA_COO~L1  by 0.0.0_AB_MSTR~DELL1  pid=3872  host_pid=17152
+2026-10-11T02:46:49.354489+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~L1 pid=23044
+2026-10-11T03:19:49Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=647  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=68  msys_joined=39  ms=1144
+2026-10-11T03:20:17Z  WORKTREE-GC  HELD  path=C:/dev/cvo_secclass_r9  branch=cvo-secclass-r9-compile  owner=3.0.0_SA_CVO  reason=9 uncommitted/untracked; 9 unmerged commit(s); 4 ignored non-cache path(s); idle 72.01 h
+2026-10-11T03:20:17Z  WORKTREE-GC  HELD  path=C:/dev/wk-secclass-42  branch=secclass-r10-held-38  owner=2.0.0_SA_COO~M1  reason=3 uncommitted/untracked; 16 unmerged commit(s); 6 ignored non-cache path(s); idle 85.7 h
+2026-10-11T03:55:34.297097+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO pid=14580 reason='to=2.0.0_SA_COO~C1' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO -> 2.0.0_SA_COO~C1. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one sen"
+2026-10-11T04:25:54Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=572  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=61  msys_joined=32  ms=986
+2026-10-11T04:37:41.422590+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~R1 pid=1120 reason='to=0.7.0_AE_CloudOps~RA1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~R1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-11T04:43:16.806263+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=15680
+2026-10-11T04:43:25.147947+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=13424
+2026-10-11T04:43:42.092770+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~B1 pid=17132
+2026-10-11T04:43:51.477096+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~DELL1 pid=16564
+2026-10-11T04:43:52.641909+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~RV1 pid=1256
+2026-10-11T04:44:03.150987+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~C1 pid=18132
+2026-10-11T04:44:24.150634+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~H1 pid=13976
+2026-10-11T04:44:25.936590+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~D1 pid=17032
+2026-10-11T04:44:31.104563+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~G1 pid=18656
+2026-10-11T04:44:41Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~D1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=85 out=[kill-orphans] start pid=20008 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~D1
+2026-10-11T04:44:52.643873+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~M1 pid=17688
+2026-10-11T04:45:08Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~M1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=85 out=[kill-orphans] start pid=27801 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~M1
+2026-10-11T04:45:09.772975+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~Q1 pid=21984
+2026-10-11T04:45:12.553792+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~R1 pid=20112
+2026-10-11T04:45:14.500134+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~S1 pid=19604
+2026-10-11T04:45:45.132917+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~V1 pid=9800
+2026-10-11T04:45:51.292030+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~DELL1 pid=19164
+2026-10-11T04:45:57.109064+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~W1 pid=19036
+2026-10-11T04:46:00Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~V1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=85 out=[kill-orphans] start pid=42624 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~V1
+2026-10-11T04:46:05.572370+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~SC1 pid=4076
+2026-10-11T04:46:06Z  ORPHAN-CLEANUP-FAILED  serial=0.7.0_AE_CloudOps~DELL1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=93 out=[kill-orphans] start pid=44432 flags: force=1 stale=0 global=0 serial=0.7.0_AE_CloudOps~DELL1
+2026-10-11T04:46:12Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~W1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=85 out=[kill-orphans] start pid=46123 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~W1
+2026-10-11T04:46:21Z  ORPHAN-CLEANUP-FAILED  serial=0.7.0_AE_CloudOps~SC1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=91 out=[kill-orphans] start pid=48427 flags: force=1 stale=0 global=0 serial=0.7.0_AE_CloudOps~SC1
+2026-10-11T04:46:45.287831+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RA1 pid=19560
+2026-10-11T04:47:00Z  ORPHAN-CLEANUP-FAILED  serial=0.7.0_AE_CloudOps~RA1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=91 out=[kill-orphans] start pid=60129 flags: force=1 stale=0 global=0 serial=0.7.0_AE_CloudOps~RA1
+2026-10-11T04:50:00Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=38  session_pids=698  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=86  msys_joined=36  ms=1356
+2026-10-11T04:54:10.599294+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR~DELL1 pid=15004
+2026-10-11T05:39:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=38  session_pids=518  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=49  msys_joined=26  ms=552
+2026-10-11T06:39:08Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=38  session_pids=565  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=57  msys_joined=27  ms=912
+2026-10-11T07:01:55.432749+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~R1 pid=20112 reason='to=0.7.0_AE_CloudOps~RA1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~R1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-11T07:31:32Z  SPAWN  0.7.0_AE_CloudOps~FB1  by 2.0.0_SA_COO~B1  pid=3956  host_pid=9320
+2026-10-11T07:32:01.507828+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~FB1 pid=6580
+2026-10-11T07:40:28Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=585  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=60  msys_joined=29  ms=724
+2026-10-11T07:46:32.784754+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=15680 reason='to=0.7.0_AE_CloudOps~RA1,2.0.0_SA_COO~R1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~DELL1 -> a Tier-2 seat with an ACT in the body and no task order assigned to tha'
+2026-10-11T08:06:43.077707+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~B1 pid=17132 reason='to=0.7.0_AE_CloudOps~FB1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~B1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-11T09:34:33Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=544  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=51  msys_joined=26  ms=633
+2026-10-11T09:39:05Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=581  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=64  msys_joined=33  ms=631
+2026-10-11T10:40:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=622  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=64  msys_joined=32  ms=1073
+2026-10-11T11:39:15Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=510  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=40  msys_joined=18  ms=529
+2026-10-11T12:37:04.545142+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~B1 pid=17132 reason='to=0.7.0_AE_CloudOps~DELL1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~B1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-11T12:39:54Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=559  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=31  ms=1001
+2026-10-11T13:39:43Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=663  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=82  msys_joined=37  ms=1451
+2026-10-11T13:54:24.955803+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~C1 pid=18132 reason='to=1.0.0_SA_CTO~DELL1,2.0.0_SA_COO~R1,0.7.0_AE_CloudOps~RA1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~C1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-11T14:38:21Z  KILL-MAINT  ORPHAN  by 0.0.0_AB_MSTR~DELL1  pid=17276  name=bash.exe  descendants=0  reason=ORPHAN -- bash/py outside every live claude tree, older than the 1860s Monitor cap, not comms infra  cmd="C:\Program Files\Git\usr\bin\bash.exe" org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round46/av4
+2026-10-11T14:38:21Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=576  targets=1  killed=1  failed=0  msys_ok=True  msys_rows=56  msys_joined=24  ms=1099
+2026-10-11T14:40:58Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=573  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=60  msys_joined=31  ms=697
+2026-10-11T15:39:36Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=578  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=58  msys_joined=28  ms=660
+2026-10-11T16:24:11.868551+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~DELL1 pid=15004 reason='to=1.0.0_SA_CTO~DELL1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 216 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-11T16:40:15Z  KILL-MAINT  ORPHAN  by 0.0.0_AB_MSTR~DELL1  pid=6796  name=bash.exe  descendants=0  reason=ORPHAN -- bash/py outside every live claude tree, older than the 1860s Monitor cap, not comms infra  cmd="C:\Program Files\Git\usr\bin\bash.exe" org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round46/av4
+2026-10-11T16:40:15Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=579  targets=1  killed=1  failed=0  msys_ok=True  msys_rows=70  msys_joined=33  ms=1579
+2026-10-11T16:40:25Z  WORKTREE-GC  ESCALATE  path=C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/a  branch=sm-cont-92872d5e-a-ours  owner=0.9.0_WK_SMCONT~1  reason=6110 unmerged commit(s); 3 ignored non-cache path(s); idle 48.39 h, owner not live
+2026-10-11T16:40:25Z  WORKTREE-GC  ESCALATE  path=C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/b  branch=sm-cont-92872d5e-b-ours  owner=0.9.0_WK_SMCONT~1  reason=1 uncommitted/untracked; 6110 unmerged commit(s); 3 ignored non-cache path(s); idle 48.38 h, owner not live
+2026-10-11T16:40:25Z  WORKTREE-GC  ESCALATE  path=C:/Users/Test/AppData/Local/Temp/smcont_ezapql3c/c  branch=sm-cont-92872d5e-c-ours  owner=box MSTR (owner unknown)  reason=6108 unmerged commit(s); 2 ignored non-cache path(s); idle 48.37 h, owner not live
+2026-10-11T16:40:25Z  WORKTREE-GC  ESCALATE  path=C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/a  branch=sm-cont-3b06b9c3-a-ours  owner=0.9.0_WK_SMCONT~1  reason=6110 unmerged commit(s); 3 ignored non-cache path(s); idle 48.29 h, owner not live
+2026-10-11T16:40:25Z  WORKTREE-GC  ESCALATE  path=C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/b  branch=sm-cont-3b06b9c3-b-ours  owner=0.9.0_WK_SMCONT~1  reason=1 uncommitted/untracked; 6110 unmerged commit(s); 3 ignored non-cache path(s); idle 48.28 h, owner not live
+2026-10-11T16:40:26Z  WORKTREE-GC  ESCALATE  path=C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/c  branch=sm-cont-3b06b9c3-c-ours  owner=0.9.0_WK_SMCONT~1  reason=6110 unmerged commit(s); 3 ignored non-cache path(s); idle 48.27 h, owner not live
+2026-10-11T16:40:26Z  WORKTREE-GC  ESCALATE  path=C:/Users/Test/AppData/Local/Temp/smcont_z5ceg_ie/d  branch=sm-cont-3b06b9c3-d-ours  owner=box MSTR (owner unknown)  reason=6108 unmerged commit(s); 2 ignored non-cache path(s); idle 48.27 h, owner not live
+2026-10-11T17:15:04Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=573  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=67  msys_joined=39  ms=781
+2026-10-11T17:41:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=556  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=53  msys_joined=22  ms=599
+2026-10-11T18:39:15Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=541  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=21  ms=608
+2026-10-11T19:38:00Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=544  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=20  ms=807
+2026-10-11T19:41:08Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=548  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=53  msys_joined=24  ms=634
+2026-10-11T20:39:16Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=561  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=53  msys_joined=21  ms=635
+2026-10-11T21:29:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=556  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=54  msys_joined=26  ms=712
+2026-10-11T21:39:13Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=565  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=58  msys_joined=29  ms=615
+2026-10-11T22:35:04Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=559  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=55  msys_joined=23  ms=642
+2026-10-11T22:39:08Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=539  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=49  msys_joined=19  ms=618
+2026-10-11T22:49:21.136963+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=3.0.0_SA_CVO pid=13424 reason='to=1.0.0_SA_CTO~DELL1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-11T23:39:23Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=571  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=65  msys_joined=35  ms=1077
+2026-10-12T00:39:13Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=541  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=49  msys_joined=19  ms=778
+2026-10-12T01:39:10Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=540  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=51  msys_joined=22  ms=772
+2026-10-12T02:39:19Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=527  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=49  msys_joined=19  ms=775
+2026-10-12T02:39:49Z  WORKTREE-GC  REMOVED  path=C:/tmp/mm4-ac1  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.36 h
+2026-10-12T02:42:15.972837+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO pid=13424 reason='to=0.0.0_AB_MSTR~DELL1' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO -> 0.0.0_AB_MSTR~DELL1. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one"
+2026-10-12T03:39:26Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=573  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=54  msys_joined=23  ms=867
+2026-10-12T03:46:43.355053+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~M1 pid=17688 reason='to=0.7.0_AE_CloudOps~SC1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~M1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-12T04:36:42Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=541  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=50  msys_joined=21  ms=801
+2026-10-12T04:37:22Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-4  branch=wk-ADVI_FIRMBKTS-4  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.03 h
+2026-10-12T04:37:58Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-9  branch=wk-ADVI_FIRMBKTS-9  reason=merged into box/dell1; --force discards 0 uncommitted/untracked and 7 ignored non-cache path(s); idle 24.0 h
+2026-10-12T04:38:22Z  WORKTREE-GC  REMOVED  path=C:/tmp/nn7-build  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.15 h
+2026-10-12T04:40:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=524  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=47  msys_joined=20  ms=748
+2026-10-12T04:40:40Z  WORKTREE-GC  REMOVED  path=C:/tmp/nn7a-build  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.02 h
+2026-10-12T05:13:55Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=553  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=51  msys_joined=23  ms=790
+2026-10-12T05:33:01Z  SPAWN  0.7.0_AE_CloudOps~CT1  by 0.0.0_AB_MSTR~DELL1  pid=28632  host_pid=25244
+2026-10-12T05:33:27.303268+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~CT1 pid=25228
+2026-10-12T05:35:49Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=568  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=50  msys_joined=22  ms=633
+2026-10-12T05:40:00Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=561  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=48  msys_joined=21  ms=584
+2026-10-12T06:15:02Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=574  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=28  ms=606
+2026-10-12T06:25:02.174665+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~B1 pid=17132 reason='to=0.7.0_AE_CloudOps~FB1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~B1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-12T06:39:03Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=572  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=51  msys_joined=24  ms=583
+2026-10-12T07:13:50Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=566  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=51  msys_joined=22  ms=580
+2026-10-12T07:14:19Z  WORKTREE-GC  REMOVED  path=C:/tmp/pp3-run  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.31 h
+2026-10-12T07:39:08Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=583  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=21  ms=675
+2026-10-12T07:39:38Z  WORKTREE-GC  REMOVED  path=C:/tmp/pp6-build  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.19 h
+2026-10-12T08:14:48Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=576  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=22  ms=2138
+2026-10-12T08:39:07Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=559  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=48  msys_joined=21  ms=581
+2026-10-12T09:13:54Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=615  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=60  msys_joined=31  ms=744
+2026-10-12T09:39:07Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=570  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=24  ms=608
+2026-10-12T09:39:34Z  WORKTREE-GC  REMOVED  path=C:/tmp/qq5-build  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.34 h
+2026-10-12T10:14:07Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=561  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=48  msys_joined=21  ms=584
+2026-10-12T10:14:39Z  WORKTREE-GC  REMOVED  path=C:/tmp/qq4-ac1  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.33 h
+2026-10-12T10:14:58Z  WORKTREE-GC  REMOVED  path=C:/tmp/qq4-run  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.5 h
+2026-10-12T10:39:05Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=578  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=54  msys_joined=24  ms=598
+2026-10-12T11:15:19Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=573  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=56  msys_joined=27  ms=945
+2026-10-12T11:17:53Z  WORKTREE-GC  REMOVED  path=C:/tmp/ss5-run  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.12 h
+2026-10-12T11:39:11Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=589  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=56  msys_joined=25  ms=653
+2026-10-12T11:39:40Z  WORKTREE-GC  REMOVED  path=C:/tmp/ss6-run  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.39 h
+2026-10-12T12:16:12Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=559  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=48  msys_joined=21  ms=577
+2026-10-12T12:16:45Z  WORKTREE-GC  REMOVED  path=C:/tmp/ss4-run  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.52 h
+2026-10-12T12:17:04Z  WORKTREE-GC  REMOVED  path=C:/tmp/ss6-ac1  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.61 h
+2026-10-12T12:39:13Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=572  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=50  msys_joined=22  ms=624
+2026-10-12T12:39:42Z  WORKTREE-GC  HELD  path=C:/dev/wk-firmbkts-24  branch=wk-ADVI_FIRMBKTS-24  owner=box MSTR (owner unknown)  reason=4 uncommitted/untracked; 11784 unmerged commit(s); 7 ignored non-cache path(s); idle 24.15 h
+2026-10-12T12:39:42Z  WORKTREE-GC  HELD  path=C:/dev/wk-firmbkts-25  branch=wk-ADVI_FIRMBKTS-25  owner=box MSTR (owner unknown)  reason=2 uncommitted/untracked; 11786 unmerged commit(s); 7 ignored non-cache path(s); idle 24.17 h
+2026-10-12T12:39:43Z  WORKTREE-GC  HELD  path=C:/dev/wk-firmbkts-r4-reader-a  branch=(detached)  owner=box MSTR (owner unknown)  reason=1 uncommitted/untracked; 1 unmerged commit(s); idle 24.22 h
+2026-10-12T12:39:43Z  WORKTREE-GC  HELD  path=C:/dev/wk-firmbkts-r4-reader-b  branch=(detached)  owner=box MSTR (owner unknown)  reason=1 uncommitted/untracked; 1 unmerged commit(s); idle 24.21 h
+2026-10-12T12:40:04Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-29  branch=wk-ADVI_FIRMBKTS-29  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.21 h
+2026-10-12T12:40:25Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-30  branch=wk-ADVI_FIRMBKTS-30  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 0 ignored non-cache path(s); idle 24.27 h
+2026-10-12T12:40:46Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-31  branch=wk-ADVI_FIRMBKTS-31  reason=merged into box/dell1; --force discards 2 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.02 h
+2026-10-12T13:06:53Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=580  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=24  ms=622
+2026-10-12T13:07:42Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-26  branch=wk-ADVI_FIRMBKTS-26  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.09 h
+2026-10-12T13:08:05Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-32  branch=wk-ADVI_FIRMBKTS-32  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.42 h
+2026-10-12T13:08:27Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-33  branch=wk-ADVI_FIRMBKTS-33  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 7 ignored non-cache path(s); idle 24.03 h
+2026-10-12T13:09:10Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-34  branch=wk-ADVI_FIRMBKTS-34  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.15 h
+2026-10-12T13:09:41Z  WORKTREE-GC  REMOVED  path=C:/tmp/ff5-run  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.02 h
+2026-10-12T13:40:47Z  SPAWN  0.7.0_AE_CloudOps~HV1  by 2.0.0_SA_COO~W1  pid=24672  host_pid=11516
+2026-10-12T13:41:31.957512+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~HV1 pid=22924
+2026-10-12T13:42:25Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=629  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=62  msys_joined=27  ms=924
+2026-10-12T13:43:49Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-35  branch=wk-ADVI_FIRMBKTS-35  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.5 h
+2026-10-12T13:44:18Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-36  branch=wk-ADVI_FIRMBKTS-36  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.51 h
+2026-10-12T13:44:46Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-37  branch=wk-ADVI_FIRMBKTS-37  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 7 ignored non-cache path(s); idle 24.24 h
+2026-10-12T13:45:15Z  WORKTREE-GC  REMOVED  path=C:/tmp/ff5-ac1  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.37 h
+2026-10-12T14:43:22Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=699  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=71  msys_joined=25  ms=941
+2026-10-12T14:44:22Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-38  branch=wk-ADVI_FIRMBKTS-38  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.91 h
+2026-10-12T14:44:46Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-39  branch=wk-ADVI_FIRMBKTS-39  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.66 h
+2026-10-12T14:45:11Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-40  branch=wk-ADVI_FIRMBKTS-40  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.5 h
+2026-10-12T14:45:32Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-41  branch=wk-ADVI_FIRMBKTS-41  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.21 h
+2026-10-12T14:45:53Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-42  branch=wk-ADVI_FIRMBKTS-42  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.2 h
+2026-10-12T14:46:15Z  WORKTREE-GC  REMOVED  path=C:/tmp/ff4-build  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.29 h
+2026-10-12T15:17:26Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=644  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=62  msys_joined=22  ms=607
+2026-10-12T15:18:03Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-43  branch=wk-ADVI_FIRMBKTS-43  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.34 h
+2026-10-12T15:18:24Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-44  branch=wk-ADVI_FIRMBKTS-44  reason=merged into box/dell1; --force discards 2 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.09 h
+2026-10-12T15:18:45Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-45  branch=wk-ADVI_FIRMBKTS-45  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.12 h
+2026-10-12T15:22:22.261666+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~D1 pid=17032 reason='to=0.7.0_AE_CloudOps~DELL1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~D1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-12T15:39:10Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=683  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=68  msys_joined=25  ms=606
+2026-10-12T15:39:43Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-46  branch=wk-ADVI_FIRMBKTS-46  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.1 h
+2026-10-12T15:40:03Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-47  branch=wk-ADVI_FIRMBKTS-47  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.07 h
+2026-10-12T16:00:17.880125+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~B1 pid=17132 reason='to=0.7.0_AE_CloudOps~FB1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~B1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-12T16:24:13Z  SPAWN  0.7.0_AE_CloudOps~RV1  by 2.0.0_SA_COO~V1  pid=6020  host_pid=21156
+2026-10-12T16:24:42.769860+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RV1 pid=13092
+2026-10-12T16:33:27Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=46  session_pids=675  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=62  msys_joined=23  ms=598
+2026-10-12T16:34:15Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-48  branch=wk-ADVI_FIRMBKTS-48  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.76 h
+2026-10-12T16:34:37Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-49  branch=wk-ADVI_FIRMBKTS-49  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.62 h
+2026-10-12T16:35:00Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-50  branch=wk-ADVI_FIRMBKTS-50  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.59 h
+2026-10-12T16:35:23Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-51  branch=wk-ADVI_FIRMBKTS-51  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.36 h
+2026-10-12T16:35:29.074538+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~V1 pid=9800 reason='to=0.7.0_AE_CloudOps~RV1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~V1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-12T16:39:18Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=46  session_pids=686  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=67  msys_joined=28  ms=619
+2026-10-12T16:40:54Z  KILL  0.7.0_AE_CloudOps~RV1  by 2.0.0_SA_COO~V1  pid=6020  reason=released by issuer: both owed instances committed @4854e7487a, orders complete @8aa340f9b9, no open work
+2026-10-12T16:40:54Z  KILL  0.7.0_AE_CloudOps~RV1  by 2.0.0_SA_COO~V1  pid=27864  reason=released by issuer: both owed instances committed @4854e7487a, orders complete @8aa340f9b9, no open work
+2026-10-12T16:41:13Z DEREGISTER caller=2.0.0_SA_COO~V1 requested=0.7.0_AE_CloudOps~RV1 resolved=0.7.0_AE_CloudOps~RV1 liveness=removed broker=removed pollers_killed=0
+2026-10-12T17:33:49Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=682  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=66  msys_joined=22  ms=597
+2026-10-12T17:34:08Z  WORKTREE-GC  HELD  path=C:/tmp/aa5-build  branch=(detached)  owner=2.0.0_SA_COO~R1  reason=12331 unmerged commit(s); idle 24.02 h
+2026-10-12T17:34:39Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-52  branch=wk-ADVI_FIRMBKTS-52  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.66 h
+2026-10-12T17:39:33Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=688  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=66  msys_joined=22  ms=611
+2026-10-12T18:20:36Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=718  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=82  msys_joined=36  ms=1152
+2026-10-12T18:39:19Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=636  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=60  msys_joined=22  ms=587
+2026-10-12T19:33:51Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=607  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=55  msys_joined=21  ms=574
+2026-10-12T19:35:00Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-AMGT_CORPUS-47-1  branch=wk-AMGT_CORPUS-47-1  reason=merged into box/dell1; --force discards 3 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.17 h
+2026-10-12T19:39:20Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=617  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=56  msys_joined=21  ms=579
+2026-10-12T20:39:19Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=597  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=21  ms=562
+2026-10-12T20:39:29Z  WORKTREE-GC  HELD  path=C:/tmp/bd2-build  branch=(detached)  owner=2.0.0_SA_COO~R1  reason=12332 unmerged commit(s); idle 24.38 h
+2026-10-12T21:39:27Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=587  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=50  msys_joined=21  ms=567
+2026-10-12T21:40:32Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-AMGT_CORPUS-48-1  branch=wk-AMGT_CORPUS-48-1  reason=merged into box/dell1; --force discards 2 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.47 h
+2026-10-12T22:39:18Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=600  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=55  msys_joined=24  ms=573
+2026-10-12T22:40:05Z  WORKTREE-GC  REMOVED  path=C:/tmp/be1-build  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.63 h
+2026-10-12T22:40:48Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-AMGT_CORPUS-47-2  branch=wk-AMGT_CORPUS-47-2  reason=merged into box/dell1; --force discards 2 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.33 h
+2026-10-12T23:39:18Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=601  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=54  msys_joined=23  ms=566
+2026-10-12T23:39:59Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/ay1-ref-wt  branch=(detached)  reason=merged into box/dell1; --force discards 8 uncommitted/untracked and 0 ignored non-cache path(s); idle 24.39 h
+2026-10-13T00:39:20Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=599  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=54  msys_joined=23  ms=573
+2026-10-13T01:39:27Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=604  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=55  msys_joined=26  ms=606
+2026-10-13T02:39:23Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=592  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=55  msys_joined=22  ms=576
+2026-10-13T03:42:51Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=582  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=54  msys_joined=22  ms=1011
+2026-10-13T04:39:16Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=600  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=22  ms=753
+2026-10-13T04:40:06Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/ay2-am3  branch=(detached)  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 0 ignored non-cache path(s); idle 24.69 h
+2026-10-13T04:40:50.545403+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~DELL1 pid=15004 reason='to=2.0.0_SA_COO~W1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 162 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-13T05:40:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=605  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=56  msys_joined=25  ms=816
+2026-10-13T06:39:53Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=670  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=74  msys_joined=36  ms=1346
+2026-10-13T06:40:18Z  WORKTREE-GC  HELD  path=C:/dev/ct1-readback-20261012T0608Z  branch=dell1/readback-20261012T0608Z  owner=0.7.0_AE_CloudOps~CT1  reason=15173 unmerged commit(s); 3 ignored non-cache path(s); idle 24.51 h
+2026-10-13T06:41:00Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-53  branch=wk-ADVI_FIRMBKTS-53  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.08 h
+2026-10-13T06:47:04.727279+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~B1 pid=17132 reason='to=0.7.0_AE_CloudOps~FB1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~B1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-13T07:39:39Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=599  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=55  msys_joined=27  ms=821
+2026-10-13T08:39:47Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=599  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=55  msys_joined=23  ms=784
+2026-10-13T08:40:21Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-54  branch=wk-ADVI_FIRMBKTS-54  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 18 ignored non-cache path(s); idle 24.49 h
+2026-10-13T09:40:59Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=599  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=55  msys_joined=23  ms=966
+2026-10-13T10:39:07Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=609  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=57  msys_joined=25  ms=776
+2026-10-13T11:39:10Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=610  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=56  msys_joined=24  ms=784
+2026-10-13T12:40:46Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=660  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=67  msys_joined=30  ms=954
+2026-10-13T12:40:54Z  WORKTREE-GC  ESCALATE  path=C:/dev/wk-firmbkts-24  branch=wk-ADVI_FIRMBKTS-24  owner=box MSTR (owner unknown)  reason=4 uncommitted/untracked; 2 unmerged commit(s); 7 ignored non-cache path(s); idle 48.18 h, owner not live
+2026-10-13T12:40:54Z  WORKTREE-GC  ESCALATE  path=C:/dev/wk-firmbkts-25  branch=wk-ADVI_FIRMBKTS-25  owner=box MSTR (owner unknown)  reason=2 uncommitted/untracked; 2 unmerged commit(s); 7 ignored non-cache path(s); idle 48.2 h, owner not live
+2026-10-13T12:40:54Z  WORKTREE-GC  ESCALATE  path=C:/dev/wk-firmbkts-r4-reader-a  branch=(detached)  owner=box MSTR (owner unknown)  reason=1 uncommitted/untracked; 1 unmerged commit(s); idle 48.25 h, owner not live
+2026-10-13T12:40:54Z  WORKTREE-GC  ESCALATE  path=C:/dev/wk-firmbkts-r4-reader-b  branch=(detached)  owner=box MSTR (owner unknown)  reason=1 uncommitted/untracked; 1 unmerged commit(s); idle 48.24 h, owner not live
+2026-10-13T12:46:04Z  SPAWN  2.0.0_SA_COO~K1  by 0.0.0_AB_MSTR~DELL1  pid=13996  host_pid=3188
+2026-10-13T12:46:53.290811+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~K1 pid=17644
+2026-10-13T13:40:14Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=712  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=70  msys_joined=32  ms=1765
+2026-10-13T13:50:22Z  SPAWN  0.7.0_AE_CloudOps~RV1  by 2.0.0_SA_COO~V1  pid=31876  host_pid=13716
+2026-10-13T13:51:04.435269+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RV1 pid=29428
+2026-10-13T13:51:17Z  WORKTREE-GC  HELD  path=C:/Users/Test/AppData/Local/Temp/claude/C--Dev-ajb-workspace/689e6109-116b-4e15-86f4-473fe5f2090d/scratchpad/wt_ycharts  branch=(detached)  owner=2.0.0_SA_COO~B1  reason=1 uncommitted/untracked; 1 unmerged commit(s); 2 ignored non-cache path(s); idle 24.01 h
+2026-10-13T14:11:07Z  KILL  0.7.0_AE_CloudOps~RV1  by 2.0.0_SA_COO~V1  pid=31876  reason=released: TO-APPLY-R29 complete (report @5d8aadb1b5, instance VALID @3bc66645ea, flipped @df8c8aee0a); L2 is the issuer s
+2026-10-13T14:11:07Z  KILL  0.7.0_AE_CloudOps~RV1  by 2.0.0_SA_COO~V1  pid=32272  reason=released: TO-APPLY-R29 complete (report @5d8aadb1b5, instance VALID @3bc66645ea, flipped @df8c8aee0a); L2 is the issuer s
+2026-10-13T14:11:14Z DEREGISTER caller=2.0.0_SA_COO~V1 requested=0.7.0_AE_CloudOps~RV1 resolved=0.7.0_AE_CloudOps~RV1 liveness=removed broker=removed pollers_killed=1
+2026-10-13T14:43:50Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=642  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=69  msys_joined=32  ms=1624
+2026-10-13T14:44:45Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-firmbkts-60  branch=wk-ADVI_FIRMBKTS-60  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 7 ignored non-cache path(s); idle 24.05 h
+2026-10-13T14:45:24Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/Test/AppData/Local/Temp/claude/C--Dev-ajb-workspace/689e6109-116b-4e15-86f4-473fe5f2090d/scratchpad/wt_repin  branch=(detached)  reason=merged into box/dell1; --force discards 55 uncommitted/untracked and 12 ignored non-cache path(s); idle 24.81 h
+2026-10-13T15:39:34Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=40  session_pids=638  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=78  msys_joined=46  ms=1094
+2026-10-13T16:39:33Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=32  session_pids=507  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=53  msys_joined=21  ms=962
+2026-10-13T16:40:05Z  WORKTREE-GC  REMOVED  path=C:/dev/wk-aw1-pin  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.22 h
+2026-10-13T17:09:43Z  SPAWN  2.0.0_SA_COO~W1  by 0.0.0_AB_MSTR~DELL1  pid=6936  host_pid=25060
+2026-10-13T17:09:45Z  SPAWN  2.0.0_SA_COO~V1  by 0.0.0_AB_MSTR~DELL1  pid=3272  host_pid=12916
+2026-10-13T17:10:12.319555+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~V1 pid=32332
+2026-10-13T17:10:18.457488+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~W1 pid=27268
+2026-10-13T17:40:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=36  session_pids=586  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=70  msys_joined=32  ms=1566
+2026-10-13T18:40:09Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=36  session_pids=545  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=53  msys_joined=23  ms=955
+2026-10-13T19:39:54Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=36  session_pids=529  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=19  ms=1087
+2026-10-13T20:26:38Z  SPAWN  0.7.0_AE_CloudOps~HV1  by 0.0.0_AB_MSTR~DELL1  pid=22996  host_pid=18772
+2026-10-13T20:27:11.872465+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~HV1 pid=27480
+2026-10-13T20:40:28Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=38  session_pids=573  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=69  msys_joined=37  ms=1077
+2026-10-13T20:42:07.208256+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~W1 pid=27268 reason='to=0.7.0_AE_CloudOps~HV1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~W1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-13T20:51:13.232723+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=15680 reason='to=0.7.0_AE_CloudOps~HV1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~DELL1 -> a Tier-2 seat with an ACT in the body and no task order assigned to tha'
+2026-10-13T21:04:51Z  SPAWN  2.0.0_SA_COO~R2  by 0.0.0_AB_MSTR~DELL1  pid=25352  host_pid=27884
+2026-10-13T21:05:40.579380+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~R2 pid=28676
+2026-10-13T21:43:59Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=30  session_pids=580  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=83  msys_joined=48  ms=1670
+2026-10-13T21:44:41Z  WORKTREE-GC  ESCALATE  path=C:/tmp/aa5-build  branch=(detached)  owner=2.0.0_SA_COO~R1  reason=1 unmerged commit(s); idle 52.19 h, owner not live
+2026-10-13T21:44:41Z  WORKTREE-GC  ESCALATE  path=C:/tmp/bd2-build  branch=(detached)  owner=2.0.0_SA_COO~R1  reason=2 unmerged commit(s); idle 49.46 h, owner not live
+2026-10-13T22:40:20Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=30  session_pids=523  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=71  msys_joined=35  ms=1328
+2026-10-13T22:40:55Z  WORKTREE-GC  HELD  path=C:/tmp/aa5-build  branch=(detached)  owner=2.0.0_SA_COO~R1  reason=1 unmerged commit(s); idle 53.13 h
+2026-10-13T22:40:55Z  WORKTREE-GC  HELD  path=C:/tmp/bd2-build  branch=(detached)  owner=2.0.0_SA_COO~R1  reason=2 unmerged commit(s); idle 50.4 h
+2026-10-13T23:39:36Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=30  session_pids=493  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=59  msys_joined=27  ms=835
+2026-10-13T23:41:13Z  SPAWN  0.7.0_AE_CloudOps~RA1  by 2.0.0_SA_COO~R1  pid=7900  host_pid=28936
+2026-10-13T23:41:52.094656+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RA1 pid=23008
+2026-10-14T00:25:22Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR~DELL1  pid=19992  host_pid=22088
+2026-10-14T00:25:59.440484+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DT_ClientPlatform pid=27716
+2026-10-14T00:26:28.813506+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~R1 pid=20112 reason='to=0.4.0_DT_ClientPlatform' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~R1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-14T00:39:49Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=34  session_pids=593  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=82  msys_joined=39  ms=1245
+2026-10-14T00:43:56Z  KILL  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR~DELL1  pid=19992  reason=bk-7 promote done (PROD 7d5cb34d, CI success); stand-down asked by COO~R1 and CTO~DELL1 msg 5315  skipped=none
+2026-10-14T00:43:56Z  KILL  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR~DELL1  pid=31708  reason=bk-7 promote done (PROD 7d5cb34d, CI success); stand-down asked by COO~R1 and CTO~DELL1 msg 5315  skipped=none
+2026-10-14T00:45:59.976205+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~R2 pid=28676 reason='to=0.7.0_AE_CloudOps~RA1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~R2 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-14T01:42:21Z  KILL-MAINT  NATIVE  by 0.0.0_AB_MSTR~DELL1  pid=16868  name=tail.exe  descendants=0  reason=NATIVE -- native long-runner outside every live claude tree, older than the 1860s Monitor cap  cmd="C:\Program Files\Git\usr\bin\tail.exe" -n +1 -f C:/dev/ajb_workspace/org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.
+2026-10-14T01:42:21Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=33  session_pids=535  targets=2  killed=1  failed=0  msys_ok=True  msys_rows=77  msys_joined=39  ms=2737
+2026-10-14T02:03:55.476918+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=3.0.0_SA_CVO pid=13424 reason='to=1.0.0_SA_CTO~DELL1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 160 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-14T02:07:43.695227+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=4.0.0_SA_CRO~DELL1 pid=16564 reason='to=1.0.0_SA_CTO~DELL1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 154 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-14T02:40:00Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=32  session_pids=480  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=58  msys_joined=26  ms=1150
+2026-10-14T03:22:57Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR~DELL1  pid=31396  host_pid=10724
+2026-10-14T03:23:27.729016+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DT_ClientPlatform pid=28880
+2026-10-14T03:39:39Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=34  session_pids=509  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=53  msys_joined=21  ms=1068
+2026-10-14T04:39:32Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=34  session_pids=535  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=68  msys_joined=43  ms=1152
+2026-10-14T05:39:42Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=34  session_pids=521  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=64  msys_joined=35  ms=991
+2026-10-14T10:59:34.504648+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=16752
+2026-10-14T10:59:36.481940+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR~DELL1 pid=14840
+2026-10-14T10:59:45.540169+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=15580
+2026-10-14T10:59:58.964222+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~RV1 pid=17456
+2026-10-14T11:00:09Z  KILL-ORPHAN  by 3.0.0_SA_CVO~RV1  pid=3326  cmd-serial=3.0.0_SA_CVO~RV1  force=1 stale=0 global=0 serial=3.0.0_SA_CVO~RV1
+2026-10-14T11:00:11.378531+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~DELL1 pid=9420
+2026-10-14T11:00:35.272784+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~B1 pid=17996
+2026-10-14T11:00:44.574814+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~C1 pid=16436
+2026-10-14T11:00:57.489330+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~D1 pid=20012
+2026-10-14T11:01:22.657919+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~G1 pid=17732
+2026-10-14T11:01:27.586995+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~Q1 pid=11204
+2026-10-14T11:01:28.484815+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~H1 pid=17848
+2026-10-14T11:01:38Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~G1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=85 out=[kill-orphans] start pid=22863 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~G1
+2026-10-14T11:01:41.984878+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~M1 pid=20552
+2026-10-14T11:01:43Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~Q1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=85 out=[kill-orphans] start pid=24066 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~Q1
+2026-10-14T11:02:04.556388+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~R1 pid=17320
+2026-10-14T11:02:21.975585+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~DELL1 pid=23360
+2026-10-14T11:02:25.287158+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~V1 pid=19492
+2026-10-14T11:02:38.750893+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~SC1 pid=24484
+2026-10-14T11:02:54Z  ORPHAN-CLEANUP-FAILED  serial=0.7.0_AE_CloudOps~SC1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=91 out=[kill-orphans] start pid=42266 flags: force=1 stale=0 global=0 serial=0.7.0_AE_CloudOps~SC1
+2026-10-14T11:02:54.494959+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~W1 pid=20032
+2026-10-14T11:02:55.835458+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~S1 pid=17708
+2026-10-14T11:03:10Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~W1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=85 out=[kill-orphans] start pid=46821 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~W1
+2026-10-14T11:03:16.016709+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RA1 pid=22656
+2026-10-14T11:09:58Z  SPAWN  0.7.0_AE_CloudOps~FB1  by 2.0.0_SA_COO~B1  pid=27508  host_pid=6932
+2026-10-14T11:10:54.890668+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~FB1 pid=27876
+2026-10-14T11:14:35.492107+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~M1 pid=20552 reason='to=0.7.0_AE_CloudOps~SC1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~M1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-14T12:34:19.938360+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~B1 pid=17996 reason='to=0.7.0_AE_CloudOps~FB1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~B1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-14T12:35:27Z  SPAWN  0.4.0_DT_ClientPlatform~R1  by 0.0.0_AB_MSTR~DELL1  pid=9380  host_pid=10908
+2026-10-14T12:36:13.338190+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DT_ClientPlatform~R1 pid=28184
+2026-10-14T13:15:29.928058+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=15580 reason='to=0.7.0_AE_CloudOps~FB1,2.0.0_SA_COO~B1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~DELL1 -> a Tier-2 seat with an ACT in the body and no task order assigned to tha'
+2026-10-14T13:27:02.567450+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~R1 pid=17320 reason='to=0.7.0_AE_CloudOps~RA1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~R1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-14T15:35:31Z  SPAWN  2.0.0_SA_COO~J1  by 0.0.0_AB_MSTR~DELL1  pid=9984  host_pid=12628
+2026-10-14T15:36:03.850757+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~J1 pid=28284
+2026-10-14T15:59:23.281823+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO pid=16752 reason='to=0.0.0_AB_MSTR~DELL1' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO -> 0.0.0_AB_MSTR~DELL1. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one"
+2026-10-14T17:58:41Z DEREGISTER caller=2.0.0_SA_COO~W1 requested=2.0.0_SA_COO~W1 resolved=2.0.0_SA_COO~W1 liveness=removed broker=removed pollers_killed=0
+2026-10-14T18:35:44.820368+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~J1 pid=28284 reason='to=0.7.0_AE_CloudOps~DELL1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~J1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-14T18:46:48Z  SPAWN  0.4.0_DT_ClientPlatform~H1  by 0.0.0_AB_MSTR~DELL1  pid=26632  host_pid=13548
+2026-10-14T18:47:25.647243+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DT_ClientPlatform~H1 pid=28300
+2026-10-14T18:59:39Z  SPAWN  0.7.0_AE_CloudOps~SH1  by 2.0.0_SA_COO~H1  pid=21768  host_pid=12652
+2026-10-14T19:00:22.636796+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~SH1 pid=27412
+2026-10-14T19:01:38Z  SPAWN  2.0.0_SA_COO~BL1  by 0.0.0_AB_MSTR~DELL1  pid=18200  host_pid=30308
+2026-10-14T19:02:14.339051+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~BL1 pid=28392
+2026-10-14T19:08:02.623005+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=15580 reason='to=2.0.0_SA_COO~J1,0.4.0_DT_ClientPlatform~H1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~DELL1 -> a Tier-2 seat with an ACT in the body and no task order assigned to tha'
+2026-10-14T19:08:34.876933+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~J1 pid=28284 reason='to=0.4.0_DT_ClientPlatform~R1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~J1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-14T19:16:29.374928+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~J1 pid=28284 reason='to=0.4.0_DT_ClientPlatform~H1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~J1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-14T19:16:36.020999+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~J1 pid=28284 reason='to=0.4.0_DT_ClientPlatform~H1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~J1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-14T20:10:02Z  SPAWN  0.7.0_AE_CloudOps~CT1  by 0.0.0_AB_MSTR~DELL1  pid=19332  host_pid=2488
+2026-10-14T20:10:38.096863+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~CT1 pid=2676
+2026-10-14T20:40:34.437190+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~DELLX pid=12236
+2026-10-14T20:50:17.928942+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=15580 reason='to=0.7.0_AE_CloudOps~CT1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~DELL1 -> a Tier-2 seat with an ACT in the body and no task order assigned to tha'
+2026-10-14T20:50:56.049696+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~SH1 pid=9160
+2026-10-14T20:52:13.817724+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~SH1 pid=19992 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~SH1 cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-14T20:54:07.969463+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~SH1 pid=14140 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~SH1 cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-14T20:56:21.986302+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~J1 pid=28284 reason='to=0.4.0_DT_ClientPlatform~H1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~J1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-14T23:08:03.829923+00:00 IDENTITY_SEND_FORGED_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~DELL1 pid=15580 reason='caller=1.0.0_SA_CTO~DELL1' conflict='SEND REFUSED -- sender identity guard (NFRA_IDENTITY G-A). This session is registered as 1.0.0_SA_CTO~DELL1; from_agent claimed 0.0.0_AB_MSTR~DELL1. A process cannot send as an identity it does not hold (a lane suffix IS an identity). Two junk messages were forged into the CTO\'s inbox exactly this way on 2026-07-14 -- by accident. Send as 1.0.0_SA_CTO~DELL1, or pass from_agent="" to auto-fill your registered serial. Legitimate relay: send_message(..., identity_override="<reason>") -- audited, and the true author is stamped into the delivered message.'
+2026-10-14T23:30:05.559159+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~D1 pid=20012 reason='to=0.7.0_AE_CloudOps~DELL1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~D1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-14T23:43:09.719280+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~DELL1 pid=14840 reason='to=1.0.0_SA_CTO~DELL1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 162 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-14T23:45:02Z  SPAWN  2.0.0_SA_COO~B1  by 0.0.0_AB_MSTR~DELL1  pid=1604  host_pid=29996
+2026-10-14T23:45:08Z  SPAWN  2.0.0_SA_COO~M1  by 0.0.0_AB_MSTR~DELL1  pid=30284  host_pid=31408
+2026-10-14T23:45:33.008484+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~M1 pid=13648
+2026-10-14T23:45:35.037964+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~B1 pid=25948
+2026-10-15T02:13:19Z  WORKTREE-GC  ESCALATE  path=C:/tmp/aa5-build  branch=(detached)  owner=2.0.0_SA_COO~R1  reason=1 unmerged commit(s); idle 80.67 h, owner not live
+2026-10-15T02:13:19Z  WORKTREE-GC  ESCALATE  path=C:/tmp/bd2-build  branch=(detached)  owner=2.0.0_SA_COO~R1  reason=2 unmerged commit(s); idle 77.95 h, owner not live
+2026-10-15T02:13:19Z  WORKTREE-GC  HELD  path=C:/dev/wk-firmbkts-r5-reader-a  branch=(detached)  owner=box MSTR (owner unknown)  reason=1 uncommitted/untracked; 1 unmerged commit(s); idle 43.22 h
+2026-10-15T02:13:19Z  WORKTREE-GC  HELD  path=C:/dev/wk-firmbkts-r5-reader-b  branch=(detached)  owner=box MSTR (owner unknown)  reason=1 uncommitted/untracked; 1 unmerged commit(s); idle 43.22 h
+2026-10-15T02:13:19Z  WORKTREE-GC  HELD  path=C:/dev/wk-firmbkts-r6-reader  branch=(detached)  owner=box MSTR (owner unknown)  reason=1 uncommitted/untracked; 1 unmerged commit(s); idle 42.22 h
+2026-10-15T02:13:19Z  WORKTREE-GC  HELD  path=C:/dev/wk-firmbkts-r7-reader  branch=(detached)  owner=box MSTR (owner unknown)  reason=1 uncommitted/untracked; 1 unmerged commit(s); idle 41.97 h
+2026-10-15T02:13:19Z  WORKTREE-GC  HELD  path=C:/dev/wk_pin_hgt16  branch=scratch/pin-hg-t16-pkg-20261013  owner=2.0.0_SA_COO~G1  reason=1 unmerged commit(s); 5 ignored non-cache path(s); idle 35.02 h
+2026-10-15T02:13:19Z  WORKTREE-GC  HELD  path=C:/tmp/rv-r29-dell1  branch=(detached)  owner=2.0.0_SA_COO~V1  reason=2 unmerged commit(s); 3 ignored non-cache path(s); idle 36.34 h
+2026-10-15T02:27:49Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=31  session_pids=387  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=31  msys_joined=14  ms=723
+2026-10-15T02:28:37Z  WORKTREE-GC  REMOVED  path=C:/dev/scratch-r103-pin  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 32.35 h
+2026-10-15T02:29:00Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-resapp-423  branch=wk-AMGT_RESAPP-423  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 27.12 h
+2026-10-15T02:29:22Z  WORKTREE-GC  REMOVED  path=C:/tmp/ar3-build  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 25.2 h
+2026-10-15T02:29:44Z  WORKTREE-GC  REMOVED  path=C:/tmp/bj2-build  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 31.75 h
+2026-10-15T02:30:07Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/bk2-build  branch=(detached)  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 0 ignored non-cache path(s); idle 25.67 h
+2026-10-15T03:27:49Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=31  session_pids=387  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=34  msys_joined=14  ms=1203
+2026-10-15T04:27:53Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=31  session_pids=387  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=30  msys_joined=14  ms=731
+2026-10-15T05:27:47Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=31  session_pids=387  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=30  msys_joined=14  ms=750
+2026-10-15T06:28:05Z  WORKTREE-GC  HELD  path=C:/dev/wk-resapp-455  branch=wk-AMGT_RESAPP-455  owner=box MSTR (owner unknown)  reason=1 uncommitted/untracked; 2 unmerged commit(s); 6 ignored non-cache path(s); idle 24.08 h
+2026-10-15T06:28:27Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-bdprce-r3-24  branch=wk-ADVI_BDPRCE-24  reason=merged into box/dell1; --force discards 6 uncommitted/untracked and 1 ignored non-cache path(s); idle 24.08 h
+2026-10-15T06:28:56Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-resapp-441  branch=wk-AMGT_RESAPP-441  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.24 h
+2026-10-15T06:29:20Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-resapp-452  branch=wk-AMGT_RESAPP-452  reason=merged into box/dell1; --force discards 1 uncommitted/untracked and 6 ignored non-cache path(s); idle 24.19 h
+2026-10-15T06:29:40Z  WORKTREE-GC  REMOVED  path=C:/tmp/bm3-pin  branch=(detached)  reason=merged into box/dell1, nothing uncommitted, idle 24.47 h
+2026-10-15T06:29:48Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=31  session_pids=387  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=30  msys_joined=14  ms=727
+2026-10-15T06:38:51Z  SPAWN  0.7.0_AE_CloudOps~SC1  by 2.0.0_SA_COO~M1  pid=19304  host_pid=17976
+2026-10-15T06:39:16.811621+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~SC1 pid=8876
+2026-10-15T07:27:43Z  WORKTREE-GC  ESCALATE  path=C:/dev/wk-firmbkts-r5-reader-a  branch=(detached)  owner=box MSTR (owner unknown)  reason=1 uncommitted/untracked; 1 unmerged commit(s); idle 48.46 h, owner not live
+2026-10-15T07:27:43Z  WORKTREE-GC  ESCALATE  path=C:/dev/wk-firmbkts-r5-reader-b  branch=(detached)  owner=box MSTR (owner unknown)  reason=1 uncommitted/untracked; 1 unmerged commit(s); idle 48.46 h, owner not live
+2026-10-15T07:27:51Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=33  session_pids=426  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=15  ms=753
+2026-10-15T08:28:05Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=33  session_pids=402  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=31  msys_joined=15  ms=735
+2026-10-15T09:28:21Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=33  session_pids=405  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=30  msys_joined=14  ms=746
+2026-10-15T10:27:45Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=33  session_pids=412  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=15  ms=730
+2026-10-15T11:28:05Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=33  session_pids=412  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=15  ms=741
+2026-10-15T12:27:47Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=33  session_pids=434  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=38  msys_joined=19  ms=736
+2026-10-15T13:06:04.368244+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~SH1 pid=17456 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~SH1 cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-15T13:06:38.971529+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~SH1 pid=17040 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~SH1 cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-15T13:27:15Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=33  session_pids=419  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=34  msys_joined=16  ms=781
+2026-10-15T14:27:24Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=30  session_pids=377  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=30  msys_joined=14  ms=780
+2026-10-15T15:27:25Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=8  session_pids=117  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=11  msys_joined=4  ms=651
+2026-10-15T15:48:31.324696+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=9832
+2026-10-15T15:48:32.585916+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~RV1 pid=3952
+2026-10-15T15:48:45.663417+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=17160
+2026-10-15T15:49:00.263444+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~B1 pid=5224
+2026-10-15T15:49:01.115773+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~DELL1 pid=11076
+2026-10-15T15:49:30.639566+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~D1 pid=16884
+2026-10-15T15:49:40.445189+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~C1 pid=16500
+2026-10-15T15:49:46.489789+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~G1 pid=17288
+2026-10-15T15:49:49.876423+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~M1 pid=13088
+2026-10-15T15:50:05Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~M1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=85 out=[kill-orphans] start pid=26171 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~M1
+2026-10-15T15:50:12.789175+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~R1 pid=19860
+2026-10-15T15:50:23.463767+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~Q1 pid=21732
+2026-10-15T15:50:39Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~Q1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=85 out=[kill-orphans] start pid=35759 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~Q1
+2026-10-15T15:50:40.238714+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~S1 pid=17776
+2026-10-15T15:50:54.965492+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~V1 pid=22480
+2026-10-15T15:51:09.073858+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~W1 pid=10696
+2026-10-15T15:51:17.921835+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~SC1 pid=21748
+2026-10-15T15:51:19.490296+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RA1 pid=15164
+2026-10-15T15:51:24Z  ORPHAN-CLEANUP-FAILED  serial=2.0.0_SA_COO~W1  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=85 out=[kill-orphans] start pid=48365 flags: force=1 stale=0 global=0 serial=2.0.0_SA_COO~W1
+2026-10-15T15:51:26.363311+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~DELL1 pid=24372
+2026-10-15T15:56:54.002380+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR~DELL1 pid=16376
+2026-10-15T15:57:15Z  SPAWN  0.7.0_AE_CloudOps~FB1  by 2.0.0_SA_COO~B1  pid=17088  host_pid=10112
+2026-10-15T15:57:50.271191+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~FB1 pid=2072
+2026-10-15T16:07:10.489853+00:00 IDENTITY_SEND_GATE_OVERRIDE guard=GA-3 serial=3.0.0_SA_CVO pid=17160 reason='Andrew at the dell1 CVO terminal, 2026-10-15 ~16:1xZ: "Nudge COO~D1, or CTO, because I think that is already done"' conflict='to=2.0.0_SA_COO~D1'
+2026-10-15T17:48:22Z  SPAWN  2.0.0_SA_COO~C1  by 0.0.0_AB_MSTR~DELL1  pid=13228  host_pid=9532
+2026-10-15T17:48:47.638966+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~C1 pid=20880
+2026-10-15T18:09:53.882673+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~RV pid=14624
+2026-10-15T18:10:08.081797+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~R2 pid=8140
+2026-10-15T19:23:54Z  SPAWN  0.7.0_AE_CloudOps~CB1  by 2.0.0_SA_COO~C1  pid=11304  host_pid=3096
+2026-10-15T19:24:24.315138+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~CB1 pid=1480
+2026-10-15T19:27:42.638127+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~RV pid=17052
+2026-10-15T19:32:16Z  SPAWN  0.7.0_AE_CloudOps~CB1  by 0.0.0_AB_MSTR~DELL1  pid=21896  host_pid=23156
+2026-10-15T19:32:18Z  SPAWN  0.7.0_AE_CloudOps~DELL1  by 0.0.0_AB_MSTR~DELL1  pid=15232  host_pid=23252
+2026-10-15T19:32:21Z  SPAWN  0.7.0_AE_CloudOps~FB1  by 0.0.0_AB_MSTR~DELL1  pid=23704  host_pid=20964
+2026-10-15T19:32:52.536460+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~CB1 pid=24888
+2026-10-15T19:33:04.813707+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~DELL1 pid=19052
+2026-10-15T19:33:07.453922+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~FB1 pid=3416
+2026-10-15T19:33:54Z  SPAWN  0.7.0_AE_CloudOps~SC1  by 0.0.0_AB_MSTR~DELL1  pid=18800  host_pid=18508
+2026-10-15T19:34:57.440908+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~SC1 pid=17260
+2026-10-15T19:46:37.022557+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO~RV pid=17052 reason='to=2.0.0_SA_COO~RV' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO~RV -> 2.0.0_SA_COO~RV. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one "
+2026-10-15T19:46:42.666186+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=9832 reason='to=2.0.0_SA_COO~C1,0.7.0_AE_CloudOps~CB1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~DELL1 -> a Tier-2 seat with an ACT in the body and no task order assigned to tha'
+2026-10-15T19:47:04.838309+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~C1 pid=20880 reason='to=0.7.0_AE_CloudOps~CB1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~C1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-15T21:01:11.350528+00:00 IDENTITY_SEND_GATE_OVERRIDE guard=GA-3 serial=3.0.0_SA_CVO pid=17160 reason='Andrew at the dell1 CVO terminal, 2026-10-15 ~20:4xZ: "Check if these agents are online. If they are not, ask MSTR to respawn them."' conflict='to=0.0.0_AB_MSTR~DELL1'
+2026-10-15T21:02:29Z  SPAWN  2.0.0_SA_COO~D1  by 0.0.0_AB_MSTR~DELL1  pid=6920  host_pid=18720
+2026-10-15T21:02:32Z  SPAWN  2.0.0_SA_COO~R2  by 0.0.0_AB_MSTR~DELL1  pid=19000  host_pid=7844
+2026-10-15T21:03:02.742492+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~R2 pid=7780
+2026-10-15T21:03:11.104687+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~D1 pid=28192
+2026-10-15T21:07:19.764910+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~D1 pid=30504
+2026-10-15T21:20:06Z  SPAWN  2.0.0_SA_COO~H1  by 0.0.0_AB_MSTR~DELL1  pid=4680  host_pid=24516
+2026-10-15T21:20:32.524927+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~H1 pid=9040
+2026-10-15T21:49:32Z  SPAWN  0.7.0_AE_CloudOps~RV1  by 2.0.0_SA_COO~RV  pid=20984  host_pid=13840
+2026-10-15T21:50:05.270356+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RV1 pid=9436
+2026-10-15T22:25:26Z  SPAWN  0.4.0_DT_ClientPlatform~H1  by 0.0.0_AB_MSTR~DELL1  pid=3508  host_pid=26512
+2026-10-15T22:25:57.404004+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DT_ClientPlatform~H1 pid=18236
+2026-10-15T23:21:37Z  SPAWN  2.0.0_SA_COO~B1  by 0.0.0_AB_MSTR~DELL1  pid=12160  host_pid=21724
+2026-10-15T23:22:01.095548+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~B1 pid=28760
+2026-10-15T23:24:45Z  SPAWN  0.7.0_AE_CloudOps~FB1  by 2.0.0_SA_COO~B1  pid=30808  host_pid=13576
+2026-10-15T23:25:15.599843+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~FB1 pid=10192
+2026-10-15T23:36:27.045391+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~XXX pid=23728
+2026-10-16T00:33:39.367548+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~W1 pid=10696 reason='to=0.7.0_AE_CloudOps~SC1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~W1 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
+2026-10-09T17:39:30Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=12  session_pids=154  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=39  msys_joined=17  ms=1749
+2026-10-09T18:10:02Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=12  session_pids=153  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=34  msys_joined=13  ms=3685
+2026-10-09T18:11:15.836995+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~CTL pid=10108 reason='to=0.0.0_AB_MSTR' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 170 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T18:22:23.061019+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~CTL pid=10108 reason='to=2.0.0_SA_COO~C' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 177 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T18:35:37Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=12  session_pids=139  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=12  ms=1331
+2026-10-09T19:06:19Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=12  session_pids=151  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=14  ms=1429
+2026-10-09T19:39:10.681585+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=4.0.0_SA_CRO~A pid=15496 reason='to=1.0.0_SA_CTO' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 153 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T19:50:48Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=12  session_pids=146  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=31  msys_joined=13  ms=1692
+2026-10-09T20:05:39Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=12  session_pids=139  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=12  ms=1291
+2026-10-09T20:36:27Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=12  session_pids=142  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=29  msys_joined=12  ms=1565
+2026-10-09T20:45:38.055206+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~TRL pid=20908 reason='to=0.0.0_AB_MSTR' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 157 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T20:46:16Z  SPAWN  0.8.0_AE_CloudComp  by 2.0.0_SA_COO~C  pid=31784  host_pid=1036
+2026-10-09T20:46:49.241187+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.8.0_AE_CloudComp pid=31384
+2026-10-09T20:47:38.284767+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~C pid=22988 reason='to=0.8.0_AE_CloudComp' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~C -> a Tier-2 seat with an ACT in the body and no task order assigned to that re'
+2026-10-09T21:06:21Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=152  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=30  msys_joined=13  ms=1420
+2026-10-09T21:36:10Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=152  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=31  msys_joined=13  ms=1432
+2026-10-09T22:05:48Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=152  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=30  msys_joined=13  ms=1294
+2026-10-09T22:35:25Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=162  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=37  msys_joined=20  ms=1708
+2026-10-09T23:04:29.285712+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~CTL pid=10108 reason='to=2.0.0_SA_COO~C' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 170 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T23:06:31Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=160  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=15  ms=1541
+2026-10-09T23:19:26.455663+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~CTL pid=10108 reason='to=2.0.0_SA_COO~C' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 151 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T23:35:12Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=157  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=15  ms=1270
+2026-10-10T00:05:12Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=157  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=15  ms=1268
+2026-10-10T00:35:14Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=152  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=29  msys_joined=13  ms=1365
+2026-10-10T01:05:25Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=152  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=29  msys_joined=13  ms=1586
+2026-10-10T01:35:28Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=151  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=27  msys_joined=12  ms=1613
+2026-10-10T02:05:30Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=148  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=31  msys_joined=12  ms=1392
+2026-10-10T02:35:34Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=148  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=27  msys_joined=12  ms=1362
+2026-10-10T03:05:13Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=152  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=29  msys_joined=13  ms=1161
+2026-10-10T03:35:11Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=148  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=27  msys_joined=12  ms=1320
+2026-10-10T04:05:16Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=149  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=27  msys_joined=12  ms=1388
+2026-10-10T04:15:07.374252+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~AMG pid=24040 reason='to=1.0.0_SA_CTO' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 162 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-10T04:35:09Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1420
+2026-10-10T05:05:13Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1253
+2026-10-10T05:35:15Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1403
+2026-10-10T06:05:12Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1273
+2026-10-10T06:35:11Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=146  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1428
+2026-10-10T07:05:16Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1300
+2026-10-10T07:35:18Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1279
+2026-10-10T08:06:03Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1412
+2026-10-10T08:35:54Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=146  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1349
+2026-10-10T09:05:29Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=147  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=13  ms=1355
+2026-10-10T09:35:11Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=147  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=13  ms=1256
+2026-10-10T10:05:14Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1357
+2026-10-10T10:35:13Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1241
+2026-10-10T11:05:14Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1273
+2026-10-10T11:35:14Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1289
+2026-10-10T12:05:18Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=140  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=11  ms=1360
+2026-10-10T12:35:08Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=142  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=24  msys_joined=11  ms=1279
+2026-10-10T13:05:43Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=143  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=12  ms=1272
+2026-10-10T13:35:46Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=146  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=27  msys_joined=12  ms=1473
+2026-10-10T14:02:03.024002+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~CTL pid=10108 reason='to=2.0.0_SA_COO~C' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 177 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-10T14:02:23.036085+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~CTL pid=10108 reason='to=2.0.0_SA_COO~C' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 169 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-10T14:02:42.725685+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~CTL pid=10108 reason='to=2.0.0_SA_COO~C' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 151 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-10T14:06:02Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=147  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=13  ms=1349
+2026-10-10T14:35:10Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=147  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=13  ms=1342
+2026-10-10T15:07:02Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=150  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=12  ms=1331
+2026-10-10T15:35:22Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=150  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=12  ms=1437
+2026-10-10T16:05:11Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=150  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=12  ms=1253
+2026-10-10T16:35:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=150  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=12  ms=1225
+2026-10-10T17:05:08Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=146  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=11  ms=1289
+2026-10-10T17:35:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=146  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=11  ms=1328
+2026-10-10T18:06:28Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=146  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=11  ms=1375
+2026-10-10T18:35:09Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=150  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=12  ms=1369
+2026-10-10T19:05:25Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=150  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=12  ms=1282
+2026-10-10T19:35:03Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=13  session_pids=150  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=12  ms=1273
+2026-10-10T20:06:20Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=5  session_pids=64  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=14  msys_joined=4  ms=1410
+2026-10-10T20:15:31.496844+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR pid=20436
+2026-10-10T20:15:43.914206+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO pid=18680
+2026-10-10T20:32:21Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=46  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=9  msys_joined=3  ms=1259
+2026-10-10T21:02:09Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=39  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=9  msys_joined=3  ms=1153
+2026-10-10T21:32:09Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=39  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=9  msys_joined=3  ms=1071
+2026-10-10T22:02:10Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=39  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=9  msys_joined=3  ms=1118
+2026-10-10T22:39:41Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=39  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=9  msys_joined=3  ms=1197
+2026-10-10T23:02:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=39  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=9  msys_joined=3  ms=1159
+2026-10-10T23:32:10Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=39  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=9  msys_joined=3  ms=1114
+2026-10-11T00:11:03Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=39  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=12  msys_joined=3  ms=1218
+2026-10-11T01:11:00Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=39  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=13  msys_joined=3  ms=1247
+2026-10-11T02:11:04Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=35  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=8  msys_joined=2  ms=1064
+2026-10-11T03:11:07Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=41  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=14  msys_joined=5  ms=1171
+2026-10-11T04:10:58Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=35  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=8  msys_joined=2  ms=1120
+2026-10-11T04:31:45Z  SPAWN  0.7.0_AE_CloudOps~CTL  by 0.0.0_AB_MSTR  pid=24652  host_pid=24128
+2026-10-11T04:32:22.193180+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~CTL pid=14920
+2026-10-11T04:34:27.555131+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=18680 reason='to=0.7.0_AE_CloudOps~CTL' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO -> a Tier-2 seat with an ACT in the body and no task order assigned to that reci'
+2026-10-11T05:11:36Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=5  session_pids=52  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=11  msys_joined=4  ms=1077
+2026-10-11T06:11:05Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=5  session_pids=52  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=16  msys_joined=4  ms=1180
+2026-10-11T07:11:17Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=5  session_pids=56  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=13  msys_joined=5  ms=1214
+2026-10-11T07:19:41Z  SPAWN  0.7.0_AE_CloudOps~ANL  by 0.0.0_AB_MSTR  pid=13332  host_pid=15508
+2026-10-11T07:20:24.470037+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ANL pid=24000
+2026-10-11T07:24:21Z  SPAWN  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  pid=25356  host_pid=21236
+2026-10-11T07:25:02.534998+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO pid=3944
+2026-10-11T08:09:36Z  SPAWN  0.7.0_AE_CloudOps~FBL  by 0.0.0_AB_MSTR  pid=27352  host_pid=24280
+2026-10-11T08:10:17.943619+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~FBL pid=26652
+2026-10-11T08:11:24Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=106  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=19  msys_joined=8  ms=1361
+2026-10-11T08:12:45Z  KILL  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  pid=25356  reason=one /ui-walk done and delivered (b39ea1d4eb); stood down per CTO msg 108248
+2026-10-11T09:11:21Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=7  session_pids=73  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=14  msys_joined=6  ms=1082
+2026-10-11T09:12:23Z  KILL  0.7.0_AE_CloudOps~CTL  by 0.0.0_AB_MSTR  pid=24652  reason=idle 92m, 0 open orders; svc-irpt windows 6-9 all closed; dell2 rule: no further single-read windows today; respawn on the next consent
+2026-10-11T09:12:25Z  KILL  0.7.0_AE_CloudOps~ANL  by 0.0.0_AB_MSTR  pid=13332  reason=idle 68m, 0 open orders; TO-AR-y-34 and AMENDMENT 1 done and reported to dell2 Y2
+2026-10-11T09:40:04Z  SPAWN  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  pid=372  host_pid=27264
+2026-10-11T09:40:39.206812+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO pid=2444
+2026-10-11T09:51:27Z  KILL  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  pid=372  reason=stood down after DSGN_IRPTV1 FWD-1 re-walk (msg 108287, record @36d7d697d2 on origin)
+2026-10-11T09:51:44Z  KILL-NOOP  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  reason=verify-after  found=0  watchers_reaped=0
+2026-10-11T09:59:39.434414+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=18680 reason='to=0.7.0_AE_CloudOps~FBL' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO -> a Tier-2 seat with an ACT in the body and no task order assigned to that reci'
+2026-10-11T10:02:12Z  SPAWN  0.7.0_AE_CloudOps~ANL  by 0.0.0_AB_MSTR  pid=9172  host_pid=17756
+2026-10-11T10:02:56.501754+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ANL pid=9256
+2026-10-11T10:11:26Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=6  session_pids=73  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=14  msys_joined=6  ms=1348
+2026-10-11T10:18:54.216417+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=18680 reason='to=0.0.0_AB_MSTR' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 178 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-11T11:11:03Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=6  session_pids=64  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=12  msys_joined=4  ms=1023
+2026-10-11T12:11:28Z  KILL  0.7.0_AE_CloudOps~ANL  by 0.0.0_AB_MSTR  pid=9172  reason=order IRPT_ANLREQ.TO-READS-Y5 complete (flipped by issuer Y2), no open orders; crossbox 6fe4 to-side closed
+2026-10-11T12:12:01Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=5  session_pids=51  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=10  msys_joined=3  ms=1218
+2026-10-11T13:10:39Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=5  session_pids=51  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=14  msys_joined=3  ms=1040
+2026-10-11T13:21:52Z  KILL  0.7.0_AE_CloudOps~FBL  by 0.0.0_AB_MSTR  pid=27352  reason=FB-f-12, FB-g-9, FB-g-10 laptop leg all done; crossbox orders closed both sides; dell1 (bus 1d0b27aa) queues nothing further
+2026-10-11T14:10:59Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=4  session_pids=38  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=13  msys_joined=2  ms=1062
+2026-10-11T14:50:31Z  SPAWN  0.7.0_AE_CloudOps~ANL  by 0.0.0_AB_MSTR  pid=24160  host_pid=27300
+2026-10-11T14:51:14.192079+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ANL pid=11352
+2026-10-11T15:08:50.197770+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=18680 reason='to=0.7.0_AE_CloudOps~ANL' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO -> a Tier-2 seat with an ACT in the body and no task order assigned to that reci'
+2026-10-11T15:11:10Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=5  session_pids=50  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=10  msys_joined=3  ms=1193
+2026-10-11T15:45:12Z  SPAWN  0.7.0_AE_CloudOps~FBL  by 0.0.0_AB_MSTR  pid=19768  host_pid=28168
+2026-10-11T15:46:21.648410+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~FBL pid=21644
+2026-10-11T16:12:57Z  SPAWN  0.7.0_AE_CloudOps~FBL  by 0.0.0_AB_MSTR  pid=23504  host_pid=25832
+2026-10-11T16:12:59Z  SPAWN  0.7.0_AE_CloudOps~ANL  by 0.0.0_AB_MSTR  pid=4228  host_pid=26592
+2026-10-11T16:13:59.975383+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ANL pid=21012
+2026-10-11T16:14:00.813274+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~FBL pid=27644
+2026-10-11T16:16:44Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=6  session_pids=78  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=16  msys_joined=9  ms=1232
+2026-10-11T16:24:04.920402+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=18680 reason='to=0.0.0_AB_MSTR,0.7.0_AE_CloudOps~ANL,0.7.0_AE_CloudOps~FBL' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO -> a Tier-2 seat with an ACT in the body and no task order assigned to that reci'
+2026-10-11T16:24:16.508802+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=18680 reason='to=0.0.0_AB_MSTR,0.7.0_AE_CloudOps~ANL,0.7.0_AE_CloudOps~FBL' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO -> a Tier-2 seat with an ACT in the body and no task order assigned to that reci'
+2026-10-11T17:11:01Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=6  session_pids=64  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=12  msys_joined=4  ms=1222
+2026-10-11T17:19:50Z  SPAWN  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  pid=11020  host_pid=18368
+2026-10-11T17:20:45.363010+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO pid=26360
+2026-10-11T17:58:16.020496+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=19356
+2026-10-11T18:15:18Z  KILL  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  pid=11020  reason=c5ce Investor Reporting walk done and relayed (8cde2da93a)
+2026-10-11T18:15:36.748412+00:00 IDENTITY_CROSS_OVERRIDE guard=GA-3 serial=3.0.0_SA_CVO~L pid=19356 reason='CTO msg 108382 ruling: this session re-seats from base 3.0.0_SA_CVO to lane ~L; base deregister is CTO/COO-only and was denied to this caller' conflict='IDENTITY CONFLICT -- NOT REGISTERED. PID 19356 is currently 3.0.0_SA_CVO (live 2s ago); you claimed 3.0.0_SA_CVO~L. A process cannot hold two identities. If you compacted and re-derived your serial from .comp-graph/.agent_context, that file is SHARED and is NOT an identity source -- you are 3.0.0_SA_CVO. Legitimate override: register_agent(..., identity_override="<reason>") (audited).'
+2026-10-11T18:16:59Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=7  session_pids=85  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=17  msys_joined=7  ms=1207
+2026-10-11T18:20:47Z  KILL  0.7.0_AE_CloudOps~ANL  by 0.0.0_AB_MSTR  pid=4228  reason=no open order; dell2 orders 6fe4/0c52/0162/53a9/3fc2 complete and closed
+2026-10-11T18:21:59Z  KILL  3.0.0_SA_CVO  by 0.0.0_AB_MSTR  pid=29680  reason=relaunch as 3.0.0_SA_CVO~L on 1.0.0_SA_CTO's word (msg 108385); no work in flight
+2026-10-11T18:22:22Z  SPAWN  3.0.0_SA_CVO~L  by 0.0.0_AB_MSTR  pid=30128  host_pid=25772
+2026-10-11T18:23:13.201997+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~L pid=30196
+2026-10-11T18:29:18Z  SPAWN  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  pid=38284  host_pid=25836
+2026-10-11T18:29:53.808922+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO pid=31624
+2026-10-11T18:36:28Z  KILL  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  pid=38284  reason=c5ce follow-up (D2-S22) answered and relayed (c4ef31919d)
+2026-10-11T19:09:08Z  SPAWN  2.0.0_SA_COO~C  by 0.0.0_AB_MSTR  pid=29108  host_pid=36052
+2026-10-11T19:09:56.701524+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~C pid=14520
+2026-10-11T19:15:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=7  session_pids=77  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=16  msys_joined=5  ms=1902
+2026-10-12T01:50:25Z  SPAWN  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  pid=35700  host_pid=15624
+2026-10-12T01:51:33.952701+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO pid=35600
+2026-10-12T01:51:49Z  ORPHAN-CLEANUP-FAILED  serial=4.0.0_SA_CRO  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=84 out=[kill-orphans] start pid=1313263 flags: force=1 stale=0 global=0 serial=4.0.0_SA_CRO
+2026-10-12T01:53:23Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=94  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=17  msys_joined=9  ms=2113
+2026-10-12T02:10:06Z  KILL  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  pid=35700  reason=abb6 vendor-report walk done and relayed (60b9b46afe)
+2026-10-12T02:13:32Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=7  session_pids=90  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=20  msys_joined=11  ms=1422
+2026-10-12T02:41:47Z  SPAWN  0.7.0_AE_CloudOps~ANL  by 0.0.0_AB_MSTR  pid=2732  host_pid=4116
+2026-10-12T02:42:54.721321+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ANL pid=19408
+2026-10-12T03:11:38Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=109  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=35  msys_joined=18  ms=1487
+2026-10-12T04:11:09Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=93  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=24  msys_joined=11  ms=1404
+2026-10-12T04:13:23Z  SPAWN  0.7.0_AE_CloudOps~U7  by 2.0.0_SA_COO~C  pid=30792  host_pid=5304
+2026-10-12T04:14:01.460174+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~U7 pid=26016
+2026-10-12T05:11:15Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=101  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=24  msys_joined=10  ms=1236
+2026-10-12T06:13:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=102  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=20  msys_joined=11  ms=1181
+2026-10-12T07:10:53Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=111  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=23  msys_joined=13  ms=1304
+2026-10-12T08:11:02Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=102  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=25  msys_joined=11  ms=1261
+2026-10-12T08:54:33.711019+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=18680 reason='to=2.0.0_SA_COO~C' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 158 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-12T09:11:08Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=100  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=25  msys_joined=11  ms=1196
+2026-10-12T10:10:57Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=100  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=11  ms=1381
+2026-10-12T11:11:35Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=107  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=13  ms=1469
+2026-10-12T11:44:17.478345+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR pid=20436 reason='to=1.0.0_SA_CTO' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 151 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-12T12:11:41Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=107  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=11  ms=1486
+2026-10-12T13:12:29Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=112  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=15  ms=1778
+2026-10-12T13:28:47.129737+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=18680 reason='to=2.0.0_SA_COO~C,3.0.0_SA_CVO~L' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 153 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-12T13:59:55Z  SPAWN  4.0.0_SA_CRO  by 0.0.0_AB_MSTR  pid=36124  host_pid=12224
+2026-10-12T14:01:42.789268+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO pid=24252
+2026-10-12T14:12:11Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=135  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=15  ms=1602
+2026-10-12T14:23:04.669892+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=18680 reason='to=0.0.0_AB_MSTR' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 174 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-12T15:11:55Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=116  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=25  msys_joined=13  ms=1401
+2026-10-12T16:47:08Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=112  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=30  msys_joined=15  ms=1440
+2026-10-12T17:11:43Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=110  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=21  msys_joined=10  ms=1308
+2026-10-12T21:42:07.025218+00:00 IDENTITY_SEND_GATE_OVERRIDE guard=GA-3 serial=3.0.0_SA_CVO~L pid=30196 reason='Andrew-direct at this terminal ~21:4xZ: "have MSTR send this to each box\'s manager with instruction that i will be there to run escalated"' conflict='to=0.0.0_AB_MSTR'
+2026-10-12T22:18:56.854802+00:00 IDENTITY_SEND_GATE_OVERRIDE guard=GA-3 serial=3.0.0_SA_CVO~L pid=30196 reason="Andrew-direct at this terminal ~21:4xZ: SSH enable relay through MSTR to each box's manager; this closes that thread" conflict='to=0.0.0_AB_MSTR'
+2026-10-13T00:58:52.146332+00:00 IDENTITY_SEND_GATE_OVERRIDE guard=GA-3 serial=3.0.0_SA_CVO~L pid=30196 reason="Andrew-direct at this terminal ~21:4xZ: SSH enable relay through MSTR to each box's manager (STEP 2 green light)" conflict='to=0.0.0_AB_MSTR'
+2026-10-13T13:54:30.424696+00:00 IDENTITY_SEND_GATE_OVERRIDE guard=GA-3 serial=3.0.0_SA_CVO~L pid=30196 reason='Andrew-direct ~13:4xZ (record @256574f3d1): "alert CVO~L to do it and return with a /draw of the updated results" -- the CRO draws, so the grade goes to the CRO' conflict='to=4.0.0_SA_CRO'
+2026-10-13T14:50:53Z  SPAWN  0.2.0_DT_PortfolioAnalytics~PD  by 0.0.0_AB_MSTR  pid=27868  host_pid=20808
+2026-10-13T14:52:22.749603+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.2.0_DT_PortfolioAnalytics~PD pid=36496
+2026-10-13T15:10:20Z  SPAWN  2.0.0_SA_COO~CA  by 0.0.0_AB_MSTR  pid=38720  host_pid=28124
+2026-10-13T15:12:31.750571+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~CA pid=32084
+2026-10-13T16:26:55Z  KILL-MAINT  ORPHANED  by 0.0.0_AB_MSTR  pid=36208  name=bash.exe  descendants=0  reason=ORPHANED -- inbox-watch for 0.7.0_AE_CloudOps~ANL -- no live MCP server for that serial in liveness.json  cmd="C:\Program Files\Git\usr\bin\bash.exe" /cygdrive/c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/inbox-watch.sh 0.7.
+2026-10-13T16:26:55Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=141  targets=1  killed=1  failed=0  msys_ok=True  msys_rows=41  msys_joined=17  ms=3832
+2026-10-13T16:35:34Z  SPAWN  2.0.0_SA_COO~DV  by 0.0.0_AB_MSTR  pid=36928  host_pid=11156
+2026-10-13T16:39:26.563908+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~DV pid=23364
+2026-10-13T17:18:37Z  SPAWN  0.7.0_AE_CloudOps~U7  by 2.0.0_SA_COO~C  pid=21284  host_pid=36388
+2026-10-13T17:19:36Z  KILL-STRAY  git.exe rev-parse  by 0.0.0_AB_MSTR  pid=13904  reason=orphaned 68 min, parent 2928 gone, read-only command
+2026-10-13T17:24:27.573970+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR pid=19280
+2026-10-13T17:28:03.877715+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO pid=20640
+2026-10-13T17:29:36.954840+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~C pid=23620
+2026-10-13T17:51:04Z  SPAWN  2.0.0_SA_COO~CA  by 0.0.0_AB_MSTR  pid=16172  host_pid=26200
+2026-10-13T17:51:11Z  SPAWN  2.0.0_SA_COO~DV  by 0.0.0_AB_MSTR  pid=14616  host_pid=24616
+2026-10-13T17:53:12.046722+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~CA pid=21324
+2026-10-13T17:53:14.730315+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~DV pid=21688
+2026-10-13T19:08:52Z  SPAWN  0.4.0_DT_ClientPlatform  by 0.0.0_AB_MSTR  pid=22112  host_pid=17892
+2026-10-13T19:10:21.977481+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=20640 reason='to=0.4.0_DT_ClientPlatform' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO -> a Tier-2 seat with an ACT in the body and no task order assigned to that reci'
+2026-10-13T19:10:52.762195+00:00 IDENTITY_SEND_GATE_OVERRIDE guard=GA-3 serial=1.0.0_SA_CTO pid=20640 reason='Andrew (human operator) directed ~18:5xZ at dell2 that /prod-deploy be run on the laptop with everything that has come in (relayed by 1.0.0_SA_CTO~DELL2 msg 7163 via 0.0.0_AB_MSTR msg 108849); a DT is the only seat the skill admits, and no COO issues portal promotes.' conflict='to=0.4.0_DT_ClientPlatform'
+2026-10-13T19:11:08.886946+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DT_ClientPlatform pid=29184
+2026-10-13T19:28:49Z  SPAWN  0.7.0_AE_CloudOps~U7  by 2.0.0_SA_COO~C  pid=22004  host_pid=26876
+2026-10-13T19:29:27.137900+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~U7 pid=32472
+2026-10-13T20:23:39Z  SPAWN  0.7.0_AE_CloudOps~FBL  by 0.0.0_AB_MSTR  pid=19768  host_pid=27528
+2026-10-13T20:24:16Z  SPAWN  3.0.0_SA_CVO~L  by 0.0.0_AB_MSTR  pid=34188  host_pid=24796
+2026-10-13T20:24:26.137223+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~FBL pid=5124
+2026-10-13T20:25:00.501902+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~L pid=31916
+2026-10-13T20:32:27.922336+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~C pid=23620 reason='to=0.7.0_AE_CloudOps~U7' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~C -> a Tier-2 seat with an ACT in the body and no task order assigned to that re'
+2026-10-13T20:39:28Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=142  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=11  ms=3167
+2026-10-13T21:20:15Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=149  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=35  msys_joined=14  ms=2421
+2026-10-13T22:29:26Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=7  session_pids=180  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=52  msys_joined=23  ms=3498
+2026-10-13T22:38:26.648600+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR pid=19280 reason='to=2.0.0_SA_COO~CA,1.0.0_SA_CTO' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 170 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-13T23:24:16Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=7  session_pids=108  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=35  msys_joined=11  ms=2443
+2026-10-14T00:08:47.073382+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO~L pid=31916 reason='to=2.0.0_SA_COO~CA' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO~L -> 2.0.0_SA_COO~CA. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one s"
+2026-10-14T00:20:10Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=7  session_pids=103  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=21  msys_joined=9  ms=1830
+2026-10-14T00:27:39Z  SPAWN  0.7.0_AE_CloudOps~CA  by 2.0.0_SA_COO~CA  pid=14680  host_pid=33708
+2026-10-14T00:28:17.575496+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~CA pid=37500
+2026-10-14T01:22:45Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=123  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=24  msys_joined=11  ms=2064
+2026-10-14T02:21:01Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=127  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=30  msys_joined=18  ms=1863
+2026-10-14T03:21:11Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=124  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=27  msys_joined=15  ms=1975
+2026-10-14T04:23:24Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=112  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=21  msys_joined=9  ms=3481
+2026-10-14T05:20:49Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=116  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=23  msys_joined=10  ms=1869
+2026-10-14T06:22:05Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=125  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=12  ms=3179
+2026-10-14T07:24:09Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=112  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=21  msys_joined=9  ms=1760
+2026-10-14T08:22:39Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=116  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=23  msys_joined=10  ms=2389
+2026-10-14T09:22:27Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=116  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=23  msys_joined=10  ms=1790
+2026-10-14T10:21:30Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=116  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=23  msys_joined=10  ms=1730
+2026-10-14T11:08:37Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=127  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=25  msys_joined=11  ms=1729
+2026-10-14T11:20:19Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=116  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=10  ms=1821
+2026-10-14T12:15:32Z  SPAWN  0.4.0_DT_ClientPlatform  by 2.0.0_SA_COO~DV  pid=15548  host_pid=27784
+2026-10-14T12:16:19.684920+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.4.0_DT_ClientPlatform pid=50836
+2026-10-14T12:20:17Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=132  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=29  msys_joined=11  ms=2083
+2026-10-14T12:26:14.694638+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=20640 reason='to=0.7.0_AE_CloudOps~U7' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO -> a Tier-2 seat with an ACT in the body and no task order assigned to that reci'
+2026-10-14T13:21:00Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=131  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=28  msys_joined=11  ms=1783
+2026-10-14T14:20:26Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=134  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=11  ms=2436
+2026-10-14T14:23:54.398688+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO pid=20640 reason='to=0.7.0_AE_CloudOps~U7' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO -> a Tier-2 seat with an ACT in the body and no task order assigned to that reci'
+2026-10-14T15:20:40Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=134  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=34  msys_joined=13  ms=1929
+2026-10-14T16:20:56Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=117  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=29  msys_joined=11  ms=1868
+2026-10-14T17:20:30Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=112  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=24  msys_joined=9  ms=1819
+2026-10-14T18:19:46Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=112  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=21  msys_joined=9  ms=1638
+2026-10-14T18:21:39Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=112  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=22  msys_joined=9  ms=1575
+2026-10-14T19:20:27Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=7  session_pids=98  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=23  msys_joined=9  ms=1746
+2026-10-14T19:24:39Z  SPAWN  4.0.0_SA_CRO  by 1.0.0_SA_CTO  pid=32104  host_pid=32604
+2026-10-14T19:25:35.947363+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO pid=37084
+2026-10-14T20:04:28Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=119  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=23  msys_joined=10  ms=2347
+2026-10-14T20:14:13.905123+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~A pid=23612
+2026-10-14T20:25:11Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=150  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=32  msys_joined=14  ms=2993
+2026-10-14T21:06:16Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=147  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=27  msys_joined=11  ms=1625
+2026-10-14T21:21:36Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=160  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=37  msys_joined=15  ms=2363
+2026-10-14T22:21:33Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=175  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=46  msys_joined=26  ms=2613
+2026-10-15T01:20:54Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=138  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=27  msys_joined=11  ms=1932
+2026-10-15T02:20:24Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=7  session_pids=109  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=22  msys_joined=6  ms=1905
+2026-10-15T02:22:56Z  SPAWN  0.7.0_AE_CloudOps~U7  by 0.0.0_AB_MSTR  pid=32420  host_pid=12340
+2026-10-15T02:23:40.276960+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~U7 pid=39388
+2026-10-15T03:14:20Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=126  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=26  msys_joined=8  ms=2008
+2026-10-15T03:20:48Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=126  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=24  msys_joined=8  ms=2081
+2026-10-15T03:44:35Z  SPAWN  2.0.0_SA_COO~RB  by 0.0.0_AB_MSTR  pid=38760  host_pid=12952
+2026-10-15T03:45:34.632539+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO pid=35468
+2026-10-15T03:45:37.806574+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~RB pid=48120
+2026-10-15T04:26:15Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=165  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=44  msys_joined=20  ms=4929
+2026-10-15T04:32:01Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=153  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=42  msys_joined=23  ms=3362
+2026-10-15T04:50:36.719426+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO pid=35468 reason='to=2.0.0_SA_COO~CA' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO -> 2.0.0_SA_COO~CA. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one sen"
+2026-10-15T05:13:34Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=149  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=36  msys_joined=13  ms=2661
+2026-10-15T05:26:23Z  SPAWN  3.0.0_SA_CVO~L  by 0.0.0_AB_MSTR  pid=38196  host_pid=21460
+2026-10-15T05:26:45Z  SPAWN  0.7.0_AE_CloudOps~CA  by 2.0.0_SA_COO~CA  pid=44584  host_pid=17912
+2026-10-15T05:28:03.172280+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~L pid=38696
+2026-10-15T05:28:04.984006+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~CA pid=22156
+2026-10-15T05:37:44Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=194  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=48  msys_joined=14  ms=3725
+2026-10-15T06:15:04Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=180  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=49  msys_joined=22  ms=3464
+2026-10-15T06:22:37Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=172  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=38  msys_joined=18  ms=2842
+2026-10-15T07:24:25Z  KILL-MAINT  ORPHAN  by 0.0.0_AB_MSTR  pid=14268  name=bash.exe  descendants=0  reason=ORPHAN -- bash/py outside every live claude tree, older than the 1860s Monitor cap, not comms infra  cmd="C:\Program Files\Git\bin\..\usr\bin\bash.exe" -c "source /c/Users/AndrewBerman/.claude/shell-snapshots/snapshot-bash-17
+2026-10-15T07:24:26Z  KILL-MAINT  ORPHAN  by 0.0.0_AB_MSTR  pid=14344  name=bash.exe  descendants=0  reason=ORPHAN -- bash/py outside every live claude tree, older than the 1860s Monitor cap, not comms infra  cmd="C:\Program Files\Git\bin\..\usr\bin\bash.exe" -lc "cd 'C:/Users/AndrewBerman/Desktop/ajb_workspace' && export OPAL_AGEN
+2026-10-15T07:24:28Z  KILL-MAINT  ORPHAN  by 0.0.0_AB_MSTR  pid=19648  name=bash.exe  descendants=4  reason=ORPHAN -- bash/py outside every live claude tree, older than the 1860s Monitor cap, not comms infra  cmd="C:\Program Files\Git\usr\bin\bash.exe" .tools/box-sync.sh integrate
+2026-10-15T07:24:28Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=167  targets=3  killed=3  failed=0  msys_ok=True  msys_rows=40  msys_joined=13  ms=10064
+2026-10-15T07:24:59Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=154  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=29  msys_joined=10  ms=2794
+2026-10-15T08:21:19Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=170  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=37  msys_joined=13  ms=2956
+2026-10-15T08:59:12Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-103  branch=wk-NFRA_CTLPLN-103  preserved=preserve/wk-NFRA_CTLPLN-103-20261015T085906Z@1e32e8229a0f212a92328f587dca339a36fc5702  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.04 h
+2026-10-15T09:21:07Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=168  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=39  msys_joined=13  ms=6696
+2026-10-15T09:21:56Z  WORKTREE-GC  REMOVED  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-104  branch=wk-NFRA_CTLPLN-104  reason=merged into box/laptop, porcelain empty, idle 0.2 h
+2026-10-15T10:20:47Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=152  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=25  msys_joined=10  ms=2181
+2026-10-15T11:17:32Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-105  branch=wk-NFRA_CTLPLN-105  preserved=preserve/wk-NFRA_CTLPLN-105-20261015T111725Z@c9b2d097a9c4748a61d22440a19c6509b9210fe5  reason=merged into box/laptop; 2 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.08 h
+2026-10-15T11:21:18Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=179  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=36  msys_joined=11  ms=3646
+2026-10-15T12:20:54Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=171  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=30  msys_joined=12  ms=2781
+2026-10-15T12:58:01Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-111  branch=wk-NFRA_CTLPLN-111  preserved=preserve/wk-NFRA_CTLPLN-111-20261015T125755Z@c558c1b63954220f5d1d42ac3a9b5f81b1579014  reason=merged into box/laptop; 2 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.1 h
+2026-10-15T13:13:45Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-107  branch=wk-NFRA_CTLPLN-107  preserved=preserve/wk-NFRA_CTLPLN-107-20261015T131339Z@5580a097217c6f553838fe2acdd9dea331a82112  reason=merged into box/laptop; 2 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.31 h
+2026-10-15T13:13:58Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-108  branch=wk-NFRA_CTLPLN-108  preserved=preserve/wk-NFRA_CTLPLN-108-20261015T131350Z@1f856fb718f2bfdc79839108bdbba675aba2adb7  reason=merged into box/laptop; 2 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.18 h
+2026-10-15T13:17:44Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-109  branch=wk-NFRA_CTLPLN-109  preserved=preserve/wk-NFRA_CTLPLN-109-20261015T131736Z@2e422ed03b5d2bee0e1c3db63ca49ec082e87206  reason=merged into box/laptop; 2 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.08 h
+2026-10-15T13:21:07Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=167  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=39  msys_joined=22  ms=2753
+2026-10-15T13:29:23Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-106  branch=wk-NFRA_CTLPLN-106  preserved=preserve/wk-NFRA_CTLPLN-106-20261015T132815Z@be34a410bdb975777095c902a720ca3b84d35997  reason=merged into box/laptop; 2 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.14 h
+2026-10-15T13:29:38Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-110  branch=wk-NFRA_CTLPLN-110  preserved=preserve/wk-NFRA_CTLPLN-110-20261015T132931Z@804c2380cfe609e337c7534b51f59dffd411133f  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.21 h
+2026-10-15T14:21:03Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=170  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=44  msys_joined=23  ms=2822
+2026-10-15T14:43:26Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-114  branch=wk-NFRA_CTLPLN-114  preserved=preserve/wk-NFRA_CTLPLN-114-20261015T144315Z@6e5cdd7493fcc856368b4d0ccf2798f24af3f362  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.1 h
+2026-10-15T14:47:41Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-112  branch=wk-NFRA_CTLPLN-112  preserved=preserve/wk-NFRA_CTLPLN-112-20261015T144736Z@73fdba4a1f59f9bf33460a24e37bfc68a1dd1b49  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.13 h
+2026-10-15T14:53:05Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-113  branch=wk-NFRA_CTLPLN-113  preserved=preserve/wk-NFRA_CTLPLN-113-20261015T145300Z@b9bfbde56bf97bddf2dc689f4b42c58b109629a9  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.15 h
+2026-10-15T15:00:12Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-115  branch=wk-NFRA_CTLPLN-115  preserved=preserve/wk-NFRA_CTLPLN-115-20261015T150007Z@bda90746884e52799a23b510a3de65604027904a  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.07 h
+2026-10-15T15:23:38Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=159  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=31  msys_joined=19  ms=2227
+2026-10-15T16:21:07Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=10  session_pids=170  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=36  msys_joined=18  ms=3091
+2026-10-15T16:22:26Z  SPAWN  0.7.0_AE_CloudOps~U7  by 2.0.0_SA_COO~C  pid=27252  host_pid=41536
+2026-10-15T16:23:50.404153+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~U7 pid=4656
+2026-10-15T16:49:11Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-116  branch=wk-NFRA_CTLPLN-116  preserved=preserve/wk-NFRA_CTLPLN-116-20261015T164902Z@ee8f08c8041fa17d38b586c9494ea9c65a8d0756  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.19 h
+2026-10-15T16:57:33Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-117  branch=wk-NFRA_CTLPLN-117  preserved=preserve/wk-NFRA_CTLPLN-117-20261015T165725Z@ab61ea05e98eb66e23405c1522cf6b7121c77d1d  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.1 h
+2026-10-15T17:24:06Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=11  session_pids=169  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=33  msys_joined=16  ms=2522
+2026-10-15T17:46:35Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-118  branch=wk-NFRA_CTLPLN-118  preserved=preserve/wk-NFRA_CTLPLN-118-20261015T174628Z@cb23d448e26c59035b17bec854978ec7ff20b142  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.14 h
+2026-10-15T17:47:16Z  SPAWN  0.7.0_AE_CloudOps~CT2  by 2.0.0_SA_COO~C  pid=23244  host_pid=42532
+2026-10-15T17:48:26.348700+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~CT2 pid=13776
+2026-10-15T18:21:03Z  KILL-MAINT  ORPHAN  by 0.0.0_AB_MSTR  pid=41992  name=python.exe  descendants=0  reason=ORPHAN -- bash/py outside every live claude tree, older than the 1860s Monitor cap, not comms infra  cmd=C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\python.exe C:/Users/AndrewBerman/Desktop/ajb_workspace/.to
+2026-10-15T18:21:03Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=12  session_pids=182  targets=1  killed=1  failed=0  msys_ok=True  msys_rows=31  msys_joined=13  ms=4859
+2026-10-15T19:22:43Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=14  session_pids=201  targets=1  killed=0  failed=0  msys_ok=True  msys_rows=47  msys_joined=22  ms=13461
+2026-10-15T19:52:25Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-119  branch=wk-NFRA_CTLPLN-119  preserved=preserve/wk-NFRA_CTLPLN-119-20261015T195215Z@ed06d2337f63717bae95b11a8a55a1c581e77225  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.1 h
+2026-10-15T20:21:27Z  KILL-MAINT  ORPHAN  by 0.0.0_AB_MSTR  pid=38476  name=python.exe  descendants=0  reason=ORPHAN -- bash/py outside every live claude tree, older than the 1860s Monitor cap, not comms infra  cmd=C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\python.exe C:/Users/AndrewBerman/Desktop/ajb_workspace/.to
+2026-10-15T20:21:27Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=139  targets=1  killed=1  failed=0  msys_ok=True  msys_rows=30  msys_joined=19  ms=3963
+2026-10-15T20:33:36Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-121  branch=wk-NFRA_CTLPLN-121  preserved=preserve/wk-NFRA_CTLPLN-121-20261015T203325Z@2dacda17813fb03f4efb13ad82ac01a17d97094d  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.3 h
+2026-10-15T20:56:52Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-122  branch=wk-NFRA_CTLPLN-122  preserved=preserve/wk-NFRA_CTLPLN-122-20261015T205641Z@f689fc8e7918dbbce0eea6ef914b605bac175345  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.08 h
+2026-10-15T21:19:12.613993+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO~L pid=38696 reason='to=2.0.0_SA_COO~C' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO~L -> 2.0.0_SA_COO~C. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one se"
+2026-10-15T21:20:55Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=108  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=18  msys_joined=8  ms=1957
+2026-10-15T21:50:16Z  SPAWN  0.7.0_AE_CloudOps~U7  by 0.0.0_AB_MSTR  pid=10684  host_pid=9152
+2026-10-15T21:51:23.111006+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~U7 pid=25208
+2026-10-15T22:21:22Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=139  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=29  msys_joined=9  ms=3076
+2026-10-15T22:41:28Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-123  branch=wk-NFRA_CTLPLN-123  preserved=preserve/wk-NFRA_CTLPLN-123-20261015T224118Z@9b317a9245330999d9ab6874911b44a744265fff  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.1 h
+2026-10-15T23:00:06Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-124  branch=wk-NFRA_CTLPLN-124  preserved=preserve/wk-NFRA_CTLPLN-124-20261015T225957Z@a08f16edd4fce918a04b3d43e7c7244da9094b18  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.12 h
+2026-10-15T23:20:28Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=136  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=30  msys_joined=15  ms=3093
+2026-10-15T23:28:37Z  WORKTREE-GC  REMOVED-FORCE  path=C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-125  branch=wk-NFRA_CTLPLN-125  preserved=preserve/wk-NFRA_CTLPLN-125-20261015T232831Z@64c510f524e74894ecff22e02380736413f0e08d  reason=merged into box/laptop; 1 uncommitted/untracked path(s) preserved to a preserve/ branch before the --force removal; idle 0.16 h
+2026-10-16T00:23:37Z  KILL-MAINT  ORPHAN  by 0.0.0_AB_MSTR  pid=45584  name=python.exe  descendants=0  reason=ORPHAN -- bash/py outside every live claude tree, older than the 1860s Monitor cap, not comms infra  cmd=C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\python.exe C:/Users/AndrewBerman/Desktop/ajb_workspace/.to
+2026-10-16T00:23:37Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=9  session_pids=170  targets=1  killed=1  failed=0  msys_ok=True  msys_rows=45  msys_joined=16  ms=6605
+2026-10-16T00:51:54Z DEREGISTER caller=2.0.0_SA_COO~C requested=2.0.0_SA_COO~C resolved=2.0.0_SA_COO~C liveness=removed broker=removed pollers_killed=1
+2026-10-16T01:06:04.304060+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR pid=19720
+2026-10-16T01:17:28.821696+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO pid=7128
 2026-10-09T17:10:42.011243+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=40536 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZV cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
 2026-10-09T17:14:32.729813+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=1576 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZV cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
 2026-10-09T17:17:28.699063+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=16524 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZV cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
