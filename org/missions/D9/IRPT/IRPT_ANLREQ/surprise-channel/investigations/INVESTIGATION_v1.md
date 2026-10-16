@@ -22645,3 +22645,87 @@
   "world_is": "The schema file is not in the worktree, so the contract could not be read at the cited path; the row gate .tools/surprise-row-gate.py is present and is run on the channel file at commit. Owner: 2.0.0_SA_COO~G2 for the worktree's sparse list. Not an engine defect; no product change."
 }
 ```
+
+## IRPT_ANLREQ-D2-W272-S1 -- the control exit does not say which verdict wins when ticket-read is DENIED and ticket-list is UNREACHED
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W272-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~272",
+  "surfaced_at": "2026-10-16T19:59:25Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-tz-70 sets the control exit as 1 when either gate route is DENIED and 2 when either is UNREACHED, but both can hold in one run; the order names no precedence. The driver decides DENIED first (exit 1), the same order the run mode uses (LEAK 1 beats UNREACHED 2 in exit_code()).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fwd5_driver.py control_exit_code() in C:/dev/wk-irpt-anlreq-272 at org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/ (uncommitted at this row): 'if DENIED in gate: return 1' before the all-ALLOWED test",
+      "fwd5_driver.py exit_code() at base 9e479d702d: 'if LEAK in made: return 1' precedes 'if not made or UNREACHED in made: return 2'",
+      "fwd5_driver.py --selftest check 'control exit 1 denied beats unreached' (ticket-read DENIED, ticket-list UNREACHED -> 1)"
+    ]
+  },
+  "spec_asserts": "Control exit: 0 when ticket-read AND ticket-list are both ALLOWED; 1 when either of them is DENIED; 2 when either is UNREACHED, no session, or a required id is missing (TO-AR-tz-70 step 3).",
+  "world_is": "A run can have one gate route DENIED and the other UNREACHED; the three exit clauses then give 1 and 2 with no stated order. The driver returns 1, so a broken fence-proof control reads as a control failure, not as a transport failure. The order does not settle this; the choice is recorded here for the issuer's ruling.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W272-S2 -- CONTAINS the ticket id is not defined, so the driver reads it as an equality over each tickets entry's string values
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W272-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~272",
+  "surfaced_at": "2026-10-16T19:59:25Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-tz-70 says a ticket-list 2xx is ALLOWED when its tickets list CONTAINS the ticket id, case-insensitive, and does not say whether that is a substring test or an equality test. The driver uses equality over every string value of each tickets entry (keys are not read).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fwd5_driver.py _holds_id() and list_carries_ticket() in C:/dev/wk-irpt-anlreq-272 at org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/ (uncommitted at this row)",
+      "test_fwd5_driver_control.py test_fwd5_control_list_carries_ticket_id_case_insensitive (lowercase id in ticket_id -> ALLOWED)",
+      "fwd5_driver.py --selftest check 'control list lacks id denied' (id TKT-other, not a substring match of the id under test)"
+    ]
+  },
+  "spec_asserts": "A ticket-list 2xx is ALLOWED only when its JSON object carries a tickets list that CONTAINS the ticket id, case-insensitive; otherwise DENIED (TO-AR-tz-70 step 2).",
+  "world_is": "A substring reading would let a ticket id that is a prefix of another (TKT-a inside TKT-ab) read as entitled, weakening the positive control; the equality reading does not. The order does not choose, so the equality reading is recorded here for the issuer's ruling.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W272-S3 -- the surprise-channel schema the order names is absent from this sparse worktree, the same condition sibling row IRPT_ANLREQ-D2-W268-S2 records
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W272-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~272",
+  "surfaced_at": "2026-10-16T19:59:25Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worker face names org/surprise_channel/schemas/investigation_item.schema.json as the row contract, but org/surprise_channel is not in this worktree, so this row follows the fields of the channel's existing rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of C:/dev/wk-irpt-anlreq-272/org/surprise_channel/schemas/investigation_item.schema.json: 'File does not exist'; Glob of C:/dev/wk-irpt-anlreq-272/org/surprise_channel: 'Directory does not exist'",
+      ".tools/surprise-row-gate.py ID_RE at line 116 admits the form <CODE>-W<n>-S<k> used by this row",
+      "INVESTIGATION_v1.md existing rows (class BLOCKING or OBSERVATION; hazard_standing INERT or ARMED with disarm_owner; disposition UNDER_INVESTIGATION) carry the fields used here"
+    ]
+  },
+  "spec_asserts": "A worker shapes each surprise row to org/surprise_channel/schemas/investigation_item.schema.json, which the worker face names as the contract.",
+  "world_is": "The schema file is not in this worktree, so the contract could not be read at the named path; the row gate .tools/surprise-row-gate.py is present and is run on the channel file at commit. Owner of the sparse list not measured by this worker. Not an engine defect; no product change.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```

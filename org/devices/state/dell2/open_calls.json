@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell2",
- "written_at": "2026-10-16T16:26:57Z",
+ "written_at": "2026-10-16T19:58:47Z",
  "written_by": "1.0.0_SA_CTO~DELL2",
  "rows": [
   {
@@ -4877,6 +4877,55 @@
     "to": "xadj",
     "ref": "XA-20261016T160537Z-f98b",
     "at": "2026-10-16T16:05:37Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261016T190526Z-c8f2",
+   "project": "IRPT_ANLREQ",
+   "subject": "Sign the CTO half of the FWD-5 live cross-firm run packet (blob 5fbb9aaf24) and confirm firm B = cottonwood",
+   "asked_by": "2.0.0_SA_COO~T2",
+   "source": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~T2/R58_FWD5_LIVE_EXERCISE_PACKET_DRAFT_20261016.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T19:05:26Z",
+   "kind": "fork",
+   "context": "COO half final at 860c22c8a1 (pins measured, offline selftest OK, V2's release live per msg 9734, mint read-back per ruling 9670 merged 59b330f528). Gates the run order TO-RUN-FWD5 to 0.7.0_AE_CloudOps~IB2 and the disarm of surprise row S134. The CTO seat reads STALE on the broker, so my 19:01 mail may sit unread.",
+   "rec": "Sign: one scoped firm-B principal on DEV, GET-only driver against firm A's synthetic ticket, principal removed; both branches and rollback in sections 3-4. Firm B = cottonwood (alternative inflection).",
+   "scope": {
+    "measured_at": "2026-10-16T19:05:26Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of NFRA_CTLPLN placed on laptop (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of AMGT_RESAPP placed on dell1 (infra/aws/lambda/ci/lambda-source-map.json)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of NFRA_MCPORTAL placed on sitez (infra/aws/lambda/ci/lambda-source-map.json)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T19:58:47Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "ruling": "org/critical_paths/cross_adjudication/20261016T1936Z_XA-20261016T191116Z-4c60.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T191116Z-4c60"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T191116Z-4c60",
+    "at": "2026-10-16T19:11:16Z",
     "by": "1.0.0_SA_CTO~DELL2",
     "reason": null
    }
