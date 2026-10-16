@@ -22734,7 +22734,6 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
-
 ## IRPT_DASHBD-D2-W239-S1 -- the order's step 3(b) call shape breaks the DB-b-294 spy test that AC3 requires green, so AC3 cannot pass as written
 
 ```json
@@ -22758,5 +22757,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "For the issuer: the DB-b-294 spy predates the rewrite keyword. The fix is a grant decision (widen the spy's signature in test_history_scope_derivation.py, or the order's 3(b) states the keyword is passed only when true). Not repaired by the worker."
+}
+```
+
+## IRPT_DASHBD-D2-W421-S1 -- the worktree is a sparse checkout that omits org/surprise_channel, so the row schema the order cites is not on disk
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W421-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~421",
+  "surfaced_at": "2026-10-16T11:08:04Z",
+  "one_line": "The worktree's git sparse-checkout list omits org/surprise_channel/, so org/surprise_channel/schemas/investigation_item.schema.json (the schema this channel's rows are written to) is tracked at HEAD but absent on disk; its 43 tracked files carry skip-worktree. The schema was read with git show at HEAD instead. No grant path was affected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order names org/surprise_channel/schemas/investigation_item.schema.json as the schema each row is written against, and the worker reads it on disk in its own worktree.",
+  "world_is": "The worktree (branch wk-IRPT_DASHBD-421, HEAD bd95b6dec7) is a sparse checkout. git sparse-checkout list names .tools, infra/logic/registry, lib, org/devices, org/missions/D9/IRPT/IRPT_DASHBD, org/modules/graph, org/ref and org/standards; org/surprise_channel is not among them, and git ls-files -v marks its 43 tracked files S (skip-worktree), so the directory does not exist on disk. Every path in the order's grant is present on disk.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list in C:/dev/wk-irpt-dashbd-c421 at bd95b6dec7 (no org/surprise_channel pattern)",
+      "git ls-files -v org/surprise_channel reads S on 43 of 43 tracked files at bd95b6dec7",
+      "git show bd95b6dec7:org/surprise_channel/schemas/investigation_item.schema.json reads the schema (required: id, surfaced_by, surfaced_at, one_line, class, grounding, disposition)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W421-S2 -- the page mirror's header still cites contract 0.1.0 after the key lists took on 0.3.3
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W421-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~421",
+  "surfaced_at": "2026-10-16T11:08:04Z",
+  "one_line": "The header comment of dashboard/seriesContract.ts still says the file mirrors contract_version 0.1.0 (committed @b80543a03c). DB-c-30 changed the key lists to contract 0.3.3 and left the header as it was, because the order names only the list and the interface.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order states that the page mirror takes on series contract 0.3.3, with SERIES_OPTIONAL and SeriesDocument as the only edits in dashboard/seriesContract.ts.",
+  "world_is": "The header comment at the top of portal dashboard/seriesContract.ts (portal commit d82c6b0923, the worker's head) names contract_version 0.1.0 committed @b80543a03c and says the key lists below mirror that file. The file now lists the eight 0.3.3 optional names. The header was not edited in this cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/seriesContract.ts@d82c6b0923 header comment naming contract_version 0.1.0 and committed @b80543a03c",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json@bd95b6dec7 reads contract_version 0.3.3 with eight series.optional names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ```
