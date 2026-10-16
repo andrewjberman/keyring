@@ -61,6 +61,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from datetime import datetime, timezone
 
 TOOLS = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TOOLS)
@@ -515,13 +516,69 @@ def structured_grade(row: dict, crit_id: str, order_pat) -> str:
     return ""
 
 
+# NFRA_CTLPLN round 29 (CT-be-1, cross-box call XB-20261016T121809Z-95c2): a criterion is read from its GRADE OF RECORD.
+# Real rows carry surfaced_at as minute-precision ISO 8601 with a Z ("2026-10-16T12:00Z"); seconds, a fraction and a
+# numeric offset are admitted too.
+SURFACED_AT = re.compile(r"^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?)?\s*(Z|[+-]\d{2}:?\d{2})?$",
+                         re.I)
+
+
+def surfaced_epoch(value):
+    """Epoch seconds of a row's surfaced_at, or None when it is absent or does not parse (such a row sorts before every
+    dated row). A time with no offset is UTC, the convention the adjudication rows use."""
+    if not isinstance(value, str):
+        return None
+    m = SURFACED_AT.match(value.strip())
+    if not m:
+        return None
+    y, mo, d, hh, mi, ss, tz = m.groups()
+    try:
+        stamp = datetime(int(y), int(mo), int(d), int(hh or 0), int(mi or 0), int(ss or 0),
+                         tzinfo=timezone.utc).timestamp()
+    except ValueError:
+        return None
+    if tz and tz.upper() != "Z":
+        digits = tz[1:].replace(":", "")
+        offset = int(digits[:2]) * 3600 + int(digits[2:]) * 60
+        stamp -= offset if tz[0] == "+" else -offset
+    return stamp
+
+
+def _ids_named(value) -> set:
+    """The row ids a `supersedes` or `adjudicates` value names: one string or a list of strings; anything else names none."""
+    if isinstance(value, str):
+        return {value.strip()}
+    if isinstance(value, list):
+        return {x.strip() for x in value if isinstance(x, str)}
+    return set()
+
+
+def grade_of_record(cands: list) -> tuple:
+    """(payload of the grade of record, candidate count). cands are (key, row, payload) for the CVO-kind non-doer rows that
+    grade one criterion, key = (dated, epoch, position): a row with no parseable surfaced_at sorts first, and a tie keeps
+    file order so the later file/row wins. The record is the greatest key, except a row that a LATER candidate names in its
+    `supersedes` or `adjudicates` key. The greatest key is never named by a later row, so one candidate always remains."""
+    ranked = sorted(cands, key=lambda c: c[0])
+    live = []
+    for i, (_key, row, payload) in enumerate(ranked):
+        rid = str(row.get("id", ""))
+        named = any(rid and rid in (_ids_named(later.get("supersedes")) | _ids_named(later.get("adjudicates")))
+                    for _k, later, _p in ranked[i + 1:])
+        if not named:
+            live.append(payload)
+    return live[-1], len(cands)
+
+
 def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, kind_of, strict: bool = False) -> tuple:
     """(state GRADED|SELF|UNGRADED, detail). Adjudication-file rows: a doer is a self-grade, a CVO-kind non-doer a grade.
     Investigation-file rows: only a CVO-kind author counts (a doer's own surprise rows name criteria all the time and are
     not grades); a CVO-kind doer is a self-grade.
     A header-only grade (a `_prose` pseudo-row) and every row under strict=True needs a VERDICT word after the criterion
     (or a `grades` entry with one); a mention without a verdict is not a grade. strict=False keeps the older reading for
-    a fenced row: any mention of the criterion by a CVO-kind non-doer grades."""
+    a fenced row: any mention of the criterion by a CVO-kind non-doer grades.
+    THE GRADE OF RECORD (CT-be-1): every qualifying CVO-kind non-doer row is collected and the one read is the grade of
+    record (grade_of_record: the latest surfaced_at), not the first row in file order. The verdict in the detail is the
+    verdict of that row. A self-grade reads SELF only when no CVO-kind non-doer row grades the criterion."""
     pat = re.compile(r"(?<![A-Za-z0-9])%s(?![A-Za-z0-9])" % re.escape(crit_id))
     # A generic id (AC3, J2) is a substring of every order's AC3/J2 and of any check-script name (rl9.AC3.sh): the row must
     # also name THIS order (its to_id or the short id after "TO-"), or a stale row from another round grades it.
@@ -532,8 +589,11 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
         order_pat = re.compile(r"(?<![A-Za-z0-9])(?:%s)(?![A-Za-z0-9])" % "|".join(names))
     doers = {base_of(order["issued_by"]), base_of(order["issued_to"])} - {""}
     self_hit = None
+    cands = []      # (key, row, payload): every CVO-kind non-doer row that grades the criterion
+    position = 0
     for source, rows in (("adjudication", adj_rows), ("investigation", inv_rows)):
         for _path, row in rows:
+            position += 1
             via = ""
             if strict or row.get("_prose"):
                 v = structured_grade(row, crit_id, order_pat) or verdict_after(
@@ -551,10 +611,18 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
             is_doer = base_of(who) in doers
             is_cvo = kind_of(who) == "CVO"
             if is_cvo and not is_doer:
-                return "GRADED", "%s row %s by %s%s" % (source, row.get("id", "?"), who, via)
-            if is_doer and (source == "adjudication" or is_cvo):
+                epoch = surfaced_epoch(row.get("surfaced_at"))
+                key = (0, 0.0, position) if epoch is None else (1, epoch, position)
+                cands.append((key, row, (source, row, who, via)))
+            elif is_doer and (source == "adjudication" or is_cvo):
                 self_hit = self_hit or "%s row %s by %s, the order's own %s" % (
                     source, row.get("id", "?"), who, "issuer" if base_of(who) == base_of(order["issued_by"]) else "assignee")
+    if cands:
+        (source, row, who, via), n = grade_of_record(cands)
+        detail = "%s row %s by %s%s" % (source, row.get("id", "?"), who, via)
+        if n > 1:
+            detail += "; grade of record among %d CVO-kind rows (latest surfaced_at wins)" % n
+        return "GRADED", detail
     if self_hit:
         return "SELF", self_hit
     return "UNGRADED", "no CVO-kind row names it"
