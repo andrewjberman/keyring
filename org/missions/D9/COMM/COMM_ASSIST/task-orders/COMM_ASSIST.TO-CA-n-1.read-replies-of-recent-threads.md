@@ -52,7 +52,9 @@ with rows NEWEST FIRST, each row shaped like a channel message (`id`, `created`,
    drop every tracked root that is not pinned and whose `active` is older than `THREAD_DAYS`; then call `_read_threads` with
    `emitted` = the reply ids of this channel's events from `_read_channel`, and add its events to the channel's events before they
    are sent. A `GatewayError` from `_read_threads` counts in `failed` and `errors` exactly like a channel read failure, and the other
-   channels still run. Save `threads` in the same `put_json` as `cursors` and `read_at`: `{"cursors", "read_at", "threads"}`.
+   channels still run. (AMENDED 2026-10-16 ~21:2xZ by the issuer, on row W32-S2:) a failing thread costs ONLY that thread: the
+   channel's own events from `_read_channel` are still sent, and the channel's `cursor` and `read_at` still move; the failed
+   thread keeps its previous state and is retried at the next read. A thread that fails must never hold back its channel. Save `threads` in the same `put_json` as `cursors` and `read_at`: `{"cursors", "read_at", "threads"}`.
    Thread reads count against the same `MAX_CALLS` budget.
 
 ### THE TEST FILE EDIT (in `data/transcripts/scripts/tests/test_inbound_channel_mentions.py`, these two changes only)
@@ -79,15 +81,15 @@ is, and one poll stays within `MAX_CALLS`.
 ### ACCEPTANCE
 
 <proof_of_spec>
-<criterion id="CAn1-AC1" cell_refs="CA-n-1"><invocation>python "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r21/checks/check_n1_threads.py"</invocation><expect>N1-THREADS ok=True arms=7 of 7</expect></criterion>
-`CAn1-AC1` -- the built behaviour: the issuer's seven arms. It prints 1 of 7 at the base (only `budget` passes).
+<criterion id="CAn1-AC1" cell_refs="CA-n-1"><invocation>python "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r21/checks/check_n1_threads.py"</invocation><expect>N1-THREADS ok=True arms=8 of 8</expect></criterion>
+`CAn1-AC1` -- the built behaviour: the issuer's eight arms. It prints 2 of 8 at the base (`budget` and `thread_failure_isolated` pass). (AMENDED ~21:2xZ: arm 8 `thread_failure_isolated` added on row W32-S2; the build at c08d686f69 reads 7 of 8, failing it.)
 
 <criterion id="CAn1-AC2" cell_refs="CA-n-1"><invocation>python data/transcripts/scripts/tests/test_inbound_channel_mentions.py</invocation><expect>CHANNEL-MENTIONS ok=True arms=7/7</expect></criterion>
 `CAn1-AC2` -- the existing channel-mention arms still pass with the two test edits above (7/7 at the base; without the edits they
 fail against a correct build).
 
 <criterion id="CAn1-AC3" cell_refs="CA-n-1"><invocation>python "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~CA/r17/checks/check_i2_regression.py"</invocation><expect>I2-REGRESSION ok=True</expect></criterion>
-`CAn1-AC3` -- the bound, a control that PASSES at the base (64 passed): the assistant's flow tests.
+`CAn1-AC3` -- the bound, a control that PASSES at the base (64 passed): the assistant's flow tests. (AMENDED ~21:2xZ, row W32-S4: the issuer's sparse worktree omitted `daily_reports/eod/`, which the tests import; the issuer added it to the worktree's sparse set. The criterion is unchanged.)
 </proof_of_spec>
 
 <expected_criteria>CAn1-AC1,CAn1-AC2,CAn1-AC3</expected_criteria>
