@@ -25839,3 +25839,56 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~NFRA1",
+  "surfaced_at": "2026-10-16T22:25:07Z",
+  "id": "NFRA_OPLGTW-Z-S324",
+  "one_line": "OG-ap-31 Phase B: safe-ec2-deploy.sh refused twice, before any upload, from a release tree cut on the live ref: its stale .tools/halt-gate-check.sh rejects a rule-34 lane (~NFRA1), then the sparse cone had no CloudOps home folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap31_deploy_attempt1_halt_gate_refused.out (HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT; the release tree's copy says a ~lane must be a single uppercase letter)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/ap31_deploy_attempt2_halt_gate_unknown_base.out (check unknown-base: no org/tier*_*/ folder matching the base under the sparse release tree)",
+      "trunk .tools/halt-gate-check.sh (commit c03b8021f0) accepts an uppercase letter followed by uppercase letters or digits; the live ref's copy of the same file (blob 31d419fc35) does not"
+    ]
+  },
+  "spec_asserts": "A release tree cut on the live ref can run the deploy wrapper from the seat the order is issued to (rule 34 lane ~NFRA1) with the gate's own checks, no override.",
+  "world_is": "The wrapper runs the halt gate from the RELEASE tree, and a release is cut on the live ref, so it carries whatever halt-gate-check.sh the live ref had. Any rule-34 lane (~<MACRO><n>) is refused there until the trunk copy is laid in, and the sparse cone must also hold one org/<tier>/ folder matching the base. Both refusals came before any upload, so nothing half-landed. Cured with no override: the trunk copy of halt-gate-check.sh laid in uncommitted and org/tier2_senior/0.7.0_AE_CloudOps~Z added to the cone. The next rule-34 lane cutting a release tree at an older base meets the same two refusals.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A cut-time step for the issuer or the order text: add the trunk halt gate and a CloudOps home folder to the release tree recipe."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T22:29:12Z",
+  "id": "NFRA_OPLGTW-Z-S325",
+  "one_line": "Round-39 disposition (CARRIED) of Z-S322: the owner exemption reaches andrew@ only; widening the roster is a later ask.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S322"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~NFRA1/NEVER_WIDEN_ASK_OG-ap-31.md (the reach is stated); org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_OG-ap-31_20261016.md (the condition)"
+    ]
+  },
+  "spec_asserts": "A worker or applier row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "CARRIED, stated in the OG-ap-31 ask and in all three halves: the host MASTER_ADMIN_EMAILS holds one entry (andrew@), so OG-en-14's owner exemption reaches andrew@ only; opalbloomberg@ has no deny record today (deleted by OG-ap-30) and is not exempt if a later restricted-principal write gives it one. Widening the roster is an env change and a separate ask (the CVO's condition: any MASTER_ADMIN_EMAILS edit widens the deny exemption and its ask must say so). Carried to the round-40 enrichment list as the roster question for the owner (Andrew): whether the Bloomberg account's browser access should be exempt by roster or by a scoped deny.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "CARRIED, stated in the OG-ap-31 ask and in all three halves: the host MASTER_ADMIN_EMAILS holds one entry (andrew@), so OG-en-14's owner exemption reaches andrew@ only; opalbloomberg@ has no deny record today (deleted by OG-ap-30) and is not exempt if a later restricted-principal write gives it one. Widening the roster is an env change and a separate ask (the CVO's condition: any MASTER_ADMIN_EMAILS edit widens the deny exemption and its ask must say so). Carried to the round-40 enrichment list as the roster question for the owner (Andrew): whether the Bloomberg account's browser access should be exempt by roster or by a scoped deny."
+}
+```
