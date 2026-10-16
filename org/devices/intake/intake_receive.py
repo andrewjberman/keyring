@@ -335,6 +335,13 @@ def _npm_tarball_problems(rec, path, lock):
     found = lock_integrities(lock, ident)
     actual = _sha512_sri(path)
     out = []
+    try:
+        with tarfile.open(path, mode="r:gz") as tf:
+            _root, root_reason = npm_package_root([(m.name, m.isdir()) for m in tf.getmembers()])
+    except (tarfile.TarError, OSError, EOFError, zlib.error) as exc:
+        root_reason = "not a readable gzip tar: %s" % type(exc).__name__
+    if root_reason:
+        out.append("no package root: %s" % root_reason)
     if ev1.get("computed_sha512") != actual:
         out.append("tarball sha512 differs from the check record's computed_sha512")
     if len(found) != 1 or found[0] is None:
@@ -511,17 +518,54 @@ def load_precheck():
     return mod, None
 
 
+def npm_package_root(members):
+    """STANDALONE MIRROR of intake_check.npm_package_root (this tool ships alone): the package root of one npm tarball, its
+    single top-level folder whatever its name. members: (name, is_dir) for every member in archive order. Returns (root, None)
+    or (None, the reason). Refused: no members; an absolute, drive-qualified or backslashed name; a first component of '', '.'
+    or '..'; a regular file at the archive root; a file where the top-level folder should be; more than one top-level folder.
+    Parity arms (this text against the intake_check original) are in test_intake_npm_topdir.py."""
+    if not members:
+        return None, "the archive holds no members"
+    bare_files, with_children, firsts = set(), set(), set()
+    for name, is_dir in members:
+        if is_dir:
+            name = name.rstrip("/")
+        if name.startswith("/") or re.match(r"^[A-Za-z]:", name) or "\\" in name:
+            return None, "a member name is absolute, drive-qualified or backslashed: %s" % ascii(name)
+        parts = name.split("/")
+        if parts[0] in ("", ".", ".."):
+            return None, "the first component of %s is %s: no top-level folder" % (ascii(name), ascii(parts[0]))
+        firsts.add(parts[0])
+        if len(parts) > 1:
+            with_children.add(parts[0])
+        elif not is_dir:
+            bare_files.add(parts[0])
+    if bare_files:
+        clash = sorted(bare_files & with_children)
+        if clash:
+            return None, "a file where the top-level folder should be: %s" % ascii(clash[0])
+        return None, "a member at the archive root, not inside a folder: %s" % ascii(sorted(bare_files)[0])
+    if len(firsts) > 1:
+        return None, "more than one top-level folder: %s" % ", ".join(ascii(n) for n in sorted(firsts))
+    return sorted(firsts)[0], None
+
+
 def npm_plan_members(tgz_path):
-    """Read one npm tarball IN MEMORY and name what it would place. Returns a dict: files (path inside the package, size),
-    dirs, package_json (bytes or None) and problems. A non-empty problems list refuses the tarball. A member is refused when its
-    name is absolute, drive-qualified, backslashed, has a '..' or an empty component, is outside the package/ folder, is a link
-    of any kind (links are refused outright, so none can leave the package), is not a regular file or folder, or is over
+    """Read one npm tarball IN MEMORY and name what it would place. Returns a dict: root (the package root, npm_package_root),
+    files (path inside the package root, size), dirs, package_json (bytes or None) and problems. A non-empty problems list
+    refuses the tarball. A tarball with no single top-level folder is refused first. A member is refused when its name is
+    absolute, drive-qualified, backslashed, has a '..' or an empty component, is outside the one root folder, is a link of any
+    kind (links are refused outright, so none can leave the package), is not a regular file or folder, or is over
     NPM_MAX_MEMBER; the expanded total is capped at NPM_MAX_EXPANDED. Nothing is written."""
     files, dirs, problems, seen = [], [], [], set()
     package_json, total = None, 0
     try:
         with tarfile.open(tgz_path, mode="r:gz") as tf:
-            for m in tf:
+            members = tf.getmembers()
+            root, reason = npm_package_root([(m.name, m.isdir()) for m in members])
+            if reason:
+                return {"root": None, "files": [], "dirs": [], "package_json": None, "problems": [reason]}
+            for m in members:
                 shown = ascii_line(m.name, 120)
                 name = m.name.rstrip("/") if m.isdir() else m.name
                 parts = name.split("/")
@@ -530,8 +574,8 @@ def npm_plan_members(tgz_path):
                     reason = "absolute, drive-qualified or backslashed name"
                 elif ".." in parts:
                     reason = "a '..' component"
-                elif parts[0] != "package":
-                    reason = "member outside the package/ folder"
+                elif parts[0] != root:
+                    reason = "member outside the package root %s" % ascii_line(root, 80)
                 elif m.issym() or m.islnk():
                     reason = "a link member (links are refused, never unpacked)"
                 elif not (m.isreg() or m.isdir()):
@@ -545,7 +589,7 @@ def npm_plan_members(tgz_path):
                     continue
                 rel = "/".join(parts[1:])
                 if not rel:
-                    continue  # the package/ folder itself
+                    continue  # the package root folder itself
                 if rel in seen:
                     problems.append("%s: duplicate member" % shown)
                     continue
@@ -563,15 +607,20 @@ def npm_plan_members(tgz_path):
     except (tarfile.TarError, OSError, EOFError, zlib.error) as exc:
         problems.append("not a readable gzip tar: %s" % type(exc).__name__)
     if package_json is None and not problems:
-        problems.append("package/package.json is absent")
-    return {"files": files, "dirs": dirs, "package_json": package_json, "problems": problems}
+        problems.append("%s/package.json is absent" % root)
+    return {"root": root, "files": files, "dirs": dirs, "package_json": package_json, "problems": problems}
 
 
 def _npm_unpack_into(tgz_path, folder):
-    """Write the members of one tarball (already cleared by npm_plan_members) into an EXISTING empty folder, the leading
-    package/ removed. Regular files and folders only; no permission or time is restored from the archive."""
+    """Write the members of one tarball (already cleared by npm_plan_members) into an EXISTING empty folder, the one top-level
+    folder removed, whatever its name. Regular files and folders only; no permission or time is restored from the archive.
+    A tarball with no single top-level folder raises before anything is written."""
     with tarfile.open(tgz_path, mode="r:gz") as tf:
-        for m in tf:
+        members = tf.getmembers()
+        root, reason = npm_package_root([(m.name, m.isdir()) for m in members])
+        if reason:
+            raise ValueError("no package root: %s" % reason)
+        for m in members:
             name = m.name.rstrip("/") if m.isdir() else m.name
             rel = "/".join(name.split("/")[1:])
             if not rel:
@@ -618,9 +667,9 @@ def _npm_plan_item(pack, fn, pc, target):
     try:
         doc = json.loads(plan["package_json"].decode("utf-8-sig"))
     except ValueError:
-        return refuse("package/package.json does not parse")
+        return refuse("%s/package.json does not parse" % plan["root"])
     if not isinstance(doc, dict) or doc.get("name") != name or doc.get("version") != version:
-        return refuse("package/package.json does not name %s@%s" % (name, version))
+        return refuse("%s/package.json does not name %s@%s" % (plan["root"], name, version))
     item["files"], item["dirs"], item["package_json"] = plan["files"], plan["dirs"], plan["package_json"]
     dest = os.path.abspath(os.path.join(target, *("%s@%s@@@1" % (name, version)).split("/")))
     item["dest"] = dest
