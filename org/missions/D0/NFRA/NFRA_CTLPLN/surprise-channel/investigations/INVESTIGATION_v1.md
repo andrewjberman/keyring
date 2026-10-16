@@ -12577,3 +12577,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Clearing needs a CTO ruling on how a wheel-side empty line at the padding seam is treated (the rule as ruled removes the full padding run; the real pandas file needs one of its padding lines kept). The arms h to k of .tools/tests/test_round28_check6_platform.py (12/12 at 0577033587) pin the ruled behaviour, so a change to the seam rule must re-grade them. The W135-S2 row stays as filed."
 }
 ```
+
+## NFRA_CTLPLN-W135-S4 -- the ruled seam collapse has no before and after split on the wheel side, where the wheel carries no block
+
+```json
+{
+  "id": "NFRA_CTLPLN-W135-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~135",
+  "surfaced_at": "2026-10-16T11:12:58Z",
+  "one_line": "CT-aw-1 amendment 2 (CTO msg 109673) collapses the empty-line run at a delvewheel seam on the wheel side too, but the wheel has no block there, so 'up to 4 each side' has no before and after split on that side; the cell takes up to 4 empty lines from the run's start and up to 4 from its end. --real4 reads REAL4 passed=4/4 with no waiver.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_round28_check6_platform.py --real4 at 03e01a85b2 (read only): REAL4 curl_cffi check6=passed, numpy check6=passed, pandas check6=passed, websockets check6=passed; REAL4 passed=4/4 ok=True; exit 0",
+      "python .tools/tests/test_round28_check6_platform.py at 03e01a85b2: CHECK6-PLATFORM arms=14/14 ok=True, with arm l (a non-empty line at the seam on one side fails) and arm m (the real pandas seam shape passes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-aw-1 AMENDMENT 2 (CTO msg 109673): at the position where the delvewheel block was removed from the installed copy, collapse the run of empty lines on BOTH sides, the wheel's lines at the same seam included, at most 4 empty lines each side, then compare exactly; only that one seam is touched.",
+  "world_is": "The wheel has no block at that seam, so it records no before and after split there. The cell takes the run that follows the seam-th non-empty line of the wheel (seam = the installed copy's non-empty lines before its block) and drops up to 4 empty lines from its start and up to 4 from its end. The installed split can keep lines beyond four (5 or more before the block) while the wheel run is one run, so a wheel run of 5 to 8 empty lines is fully collapsed and can match where the installed side keeps one. No real file takes that path: the four real wheels pass 4/4.",
+  "notes": "W135-S3 stays as filed (append-only). The cell's rule clears its one residual line (pandas/__init__.py, wheel line 2) through the wheel-side collapse at the one seam; the CTO dispositions W135-S3 and this row. The rule was not widened beyond the one seam."
+}
+```
