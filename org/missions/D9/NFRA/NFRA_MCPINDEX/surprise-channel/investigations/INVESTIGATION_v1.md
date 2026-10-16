@@ -9701,6 +9701,30 @@ carries none.
     "spec_asserts": "The surprise-channel rule names org/surprise_channel/schemas/investigation_item.schema.json as the schema every investigation row must satisfy, and the order's section 3 directs the row to it.",
     "world_is": "That schema file is not in this worker's worktree, so the rows in this file were written to the field list the existing rows carry, with the commit-time gate (.tools/surprise-row-gate.py) as the only validator the worker could run. Not validated against the schema text.",
     "one_line": "The investigation_item schema named by the surprise-channel rule is absent from the sparse worktree, so the worker's rows could not be checked against it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S134",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T20:45:31Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W52-S3",
+      "NFRA_MCPINDEX-Z-W52-S4"
+    ],
+    "one_line": "ISSUER DISPOSITION of worker ~52's two MX-c-29 rows: S3 (BLOCKING) was the order's omission of the integration-test fixture from its paths, ruled in A1 and re-graded PASS; S4 is an accepted sparse-cone environment note.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "dismissal_reason": "S3: two IntegrationTests of test_gen_silver_rows.py ran the generator on the 180-row round-14 fixture against a copy of the tracked registry, so the new guard rightly refused the 36 other catalog-* rows; A1 (e48fe1117d) granted the test file and the re-seated worker passes an allow file in setUpClass only (a1e42d21dc); c29.AC1, AC2, AC3 PASS on the merged tree 28d19f4834 (60 tests, 9 new). S4: the investigation_item schema is absent from a sparse cone; the rows were graded by the commit gate on trunk. The issuer is disarm_owner of both.",
+    "spec_asserts": "MX-c-29's face bounded the change to gen_silver_rows.py and the new test file and asserted the existing generator tests would pass unchanged.",
+    "world_is": "The pinned round-14 fixture makes 180 rows against the tracked registry's 143 catalog-* rows, so a guarded regeneration of it drops 36; the fixture predates the guard.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "issuer re-run on the merged tree 28d19f4834: c29.AC1 PASS (36 REGISTRY-DROP rows printed, 36 really dropped with the allow file, one key withheld refuses naming exactly that key), c29.AC2 PASS (the planted catalog-planted-row-c29 refused alone), c29.AC3 PASS (60 passed, 9 new); the atom_decomposition suite 372 passed; ruff clean; the proof instance VALID inside the worker tree."
+      ]
+    }
   }
 ]
 ```
