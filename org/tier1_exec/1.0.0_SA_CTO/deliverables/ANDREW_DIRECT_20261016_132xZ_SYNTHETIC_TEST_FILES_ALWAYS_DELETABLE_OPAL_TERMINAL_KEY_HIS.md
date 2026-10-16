@@ -35,3 +35,7 @@ He was replying to the cluster `/open-calls` list read at 13:23Z.
 
 - To dell2's `1.0.0_SA_CTO~DELL2`, through `0.0.0_AB_MSTR`: dc59 is a seat delete under this word, then close; e260 closes as
   superseded.
+
+## Addendum (~13:3xZ): the user is deleted
+
+He said, VERBATIM: "I already deleted that user". Read on the laptop: `iam get-user --user-name Opal_Terminal` returns `NoSuchEntity`. As a control, `get-user Andrew_Berman` returns the user, so the read path works.
