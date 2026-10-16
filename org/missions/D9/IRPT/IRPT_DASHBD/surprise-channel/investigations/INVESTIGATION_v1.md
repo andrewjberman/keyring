@@ -22248,3 +22248,60 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-W235-S4 -- AC2 still fails after the checker fix: the unpacked step looks the contract up under a relative root
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:30:33Z",
+  "one_line": "DB160-1-AC2 still exits rc 1 after the amended checker is in the tree: the unpacked step reads the series contract from a relative path, because run() passes str(root) with root = '.' as contract_root to the --unpacked subprocess, which runs in the unpacked directory. This is a checker defect; the fix (an absolute root) is in the issuer's file, not this grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 1 (issuer ruling, order commit 3115d34): S2 is a defect of the issuer's checker; the unpacked step of AC2 now grades the unpacked handler against the REPO's series contract, so AC2 is expected to PASS once the checker is fixed.",
+  "world_is": "Measured at 3115d34 with the S1 stub edit in the worktree: python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py . DB160-1-AC2 gives rc 1 and 'FAIL: the unpacked handler failed the behaviour clause: UNPACKED FAIL: [Errno 2] No such file or directory: org\\\\standards\\\\IRPT_DASHBD_SERIES_CONTRACT.json' (no drive prefix, so the path is relative). The checker reads Path(contract_root or root) at line 144; the subprocess call at line 330 passes str(root), and root is Path(sys.argv[1]) = '.', which the subprocess resolves against its own cwd (the unpacked directory). The AC1 run passes at the same commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py line 144 (contract read from Path(contract_root or root)) and line 330 (subprocess call passes str(root))",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py --unpacked branch (around line 433) passes sys.argv[3] as contract_root",
+      "DB160-1-AC2 output at 3115d34 plus the S1 stub edit in the worktree: rc 1, the UNPACKED FAIL line (counts and names only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired here: the checker is the issuer's file and outside the grant. The one-line fix is an absolute root in run(), for the issuer to decide."
+}
+```
+
+
+## IRPT_DASHBD-D2-W235-S5 -- the ruled stub names dates and source do not match the keywords the handler passes, so the union tests still fail
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W235-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~235",
+  "surfaced_at": "2026-10-16T09:30:33Z",
+  "one_line": "The ruled signature lambda s3, firm, a, rows, up, c, dates=None, source=None does not accept the keywords the handler passes (present_dates and calendar_source), so the two union tests still raise TypeError: 2 failed, 113 passed on the whole reporting-publish tests folder. The stub edit is applied in the worktree and not committed; the names need the issuer's ruling.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the issuer: the stub parameter names must match the handler's keyword names, present_dates and calendar_source, or the handler's call must change by an order that names it)",
+  "spec_asserts": "AMENDMENT 1 (order commit 3115d34): change ONLY the signatures of the two stubs (lines 59 and 71) to lambda s3, firm, a, rows, up, c, dates=None, source=None, and AC3 requires the whole reporting-publish tests directory to pass.",
+  "world_is": "Measured with the ruled text applied to lines 59 and 71 of infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py: pytest over the reporting-publish tests folder gives 2 failed and 113 passed; both failures are TypeError at infra/aws/lambda/investor-reporting/reporting-publish/handler.py line 253 (got an unexpected keyword argument 'present_dates'). The handler's run() (lines 253 and 254) passes present_dates= and calendar_source= by keyword; a one-line probe of the ruled lambda raises the same TypeError.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py lines 59 and 71 (the ruled signatures, uncommitted in the worktree)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py lines 253 and 254 (the keyword call to _publish_one)",
+      "pytest over the reporting-publish tests folder at 3115d34 with the ruled text: 2 failed, 113 passed (counts only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here: the ruled text is applied as written, and a different parameter name would be a change to the ruling. The issuer decides the names."
+}
+```
+
