@@ -1828,3 +1828,8 @@ chain R3   MP-pf-7   (no edge; the S1 served arm of MP-pf-4 still waits on MX-r-
 1. It is one read at one instant: equal today is not equal after F2 adds a principal. Re-run it then (a measurement, not a monitor).
 2. The raw set is the principals holding a profile, a data grant or a person-access record. A principal holding only an `operator_audit` row is counted separately (`audit_only_principals`, 0 today) and is not a holder.
 3. `RUNTIME#` principals (OAuth families and catalog snapshots, 1,650 items) are sessions, not grants, and are outside both sets.
+
+## PF4.4 CARRIED CRITERION FOR THE NEXT RUN OF THE COMPARATOR (CTO PF round-4 analysis @a49b708852, ruling 1; no cell is cut now)
+
+The re-run owed when F2 adds a principal (`pf7.run.sh` and `r3_principal_sets.py`, MP-pf-7) carries ONE added criterion: the raw side prints the table's TOTAL POLICY items and each EXCLUDED class with its count and its reason, beside the grant-bearing set. Today those are: 3 probe principals (`POLICY#probe-*`, not GUIDs), 1 EMAILDENY digest (`POLICY#EMAILDENY#<digest>`), and the operator_audit-only principals (0). The nine POLICY items MP-pf-7 printed were a post-filter count shown beside the table's 1,669 denominator; the re-run prints the pre-filter count.
+Status of the rest: Z-C-S40 REALIZED for today (CTO). S1 (MP-pf-4, the served /gateway read) stays issued behind OG-ap-23 (after OG-ng-2) and MX-r-15. The probe residue Z-S160 is NFRA_OPLGTW's; Z-S63 stays ARMED on 0.0.0_AB_MSTR~Z.
