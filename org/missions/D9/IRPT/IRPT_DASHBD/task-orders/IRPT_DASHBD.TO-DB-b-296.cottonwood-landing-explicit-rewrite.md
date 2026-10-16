@@ -17,6 +17,8 @@
 
 **Risk class WORLD** is the floor of the paths below (`infra/` path): python in a branch, no Terraform command, no AWS write, no build for upload, no run against S3, no push. The code update and the rewrite of the 65 landed days are a later signed pair and the applier's.
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~11:0xZ, on worker row IRPT_DASHBD-D2-W239-S1; gate limb: GATE (viii), an existing order modified with placeholders NONE unchanged; one path added to the grant, no criterion id or cell change):** the row is a DEFECT OF THE ISSUER'S GRANT: `DB-b-294`'s test `test_history_scope_derivation.py` (carried into your tree) spies on `run_day` with a signature that does not accept the new `rewrite` keyword the handler now passes. It joins the grant for ONE purpose: change ONLY the signature of that spy (add `rewrite=False` or `**kw`, as its other parameters do) so it accepts the keyword; nothing else in that file. Then finish AC3, the record (the facts record's `tests` is your new file's count), the proof instance and the flip.
+
 ---
 
 ## WORKER FACE
@@ -38,7 +40,7 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-239` (branch `wk-IRPT_DASHBD-2
 <criterion id="DB164-1-AC2" cell_refs="DB-b-296"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p164_cot_rewrite.py" . DB164-1-AC2</invocation><expect>DB164-1-AC2 PASS</expect></criterion>
 `DB164-1-AC2` -- the landing handler's rewrite event overwrites the named landed days (the four existing keys, 21 columns with the claim), refuses before any write a day not landed, a combination with day or days, a malformed spec, start after end, a start before the floor, a non-ISO date, a range of no trading day and a range over the cap, writes nothing on a dry run, and the named-day path keeps the no-overwrite guard. Base: FAIL.
 <criterion id="DB164-1-AC3" cell_refs="DB-b-296"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p164_cot_rewrite.py" . DB164-1-AC3</invocation><expect>DB164-1-AC3 PASS</expect></criterion>
-`DB164-1-AC3` -- the new test file holds at least 10 passing tests; the whole gold tests directory (the one known pre-existing red deselected) and the landing handler's tests pass; the worker's commits change only the adapter, the landing handler, the new test file, the folder, the investigation file and task-order files; the facts record equals the checker's recount. Base: FAIL.
+`DB164-1-AC3` -- the new test file holds at least 10 passing tests; the whole gold tests directory (the one known pre-existing red deselected) and the landing handler's tests pass; the worker's commits change only the adapter, the landing handler, the new test file, the signature of one spy in `DB-b-294`'s test, the folder, the investigation file and task-order files; the facts record equals the checker's recount. Base: FAIL.
 
 <expected_criteria>DB164-1-AC1,DB164-1-AC2,DB164-1-AC3</expected_criteria>
 
@@ -53,6 +55,7 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-239` (branch `wk-IRPT_DASHBD-2
 <paths>
 data/assets/scripts/gold/irpt_reporting/adapters/cottonwood_bd_account_return_daily.py
 data/assets/scripts/gold/irpt_reporting/tests/test_cottonwood_rewrite.py
+data/assets/scripts/gold/irpt_reporting/tests/test_history_scope_derivation.py
 infra/aws/lambda/investor-reporting/account-return-daily/handler.py
 infra/aws/lambda/investor-reporting/account-return-daily/tests/
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~239/
