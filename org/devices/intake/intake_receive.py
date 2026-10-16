@@ -62,6 +62,11 @@ ACCEPTABLE_INSTALL_OUTCOMES = ("installed_imported", "installed_import_failed")
 
 # every pip command line this process has built and run (the test reads it)
 COMMANDS_RUN = []
+# the last pip run in full: command, the inherited PIP_* NAMES removed, rc and pip's full captured text (write_pip_log reads it)
+LAST_PIP_RUN = {}
+PIP_LOG_CAP = 200000
+# the pins build_child_env sets, in the order the log's env_pins= line states them
+PIP_ENV_PINS = (("PIP_NO_INDEX", "1"), ("PIP_DISABLE_PIP_VERSION_CHECK", "1"), ("PIP_CONFIG_FILE", os.devnull))
 
 
 def now_utc():
@@ -350,20 +355,69 @@ def build_child_env():
     return env
 
 
+def _keep_pip_run(cmd, inherited, rc, text):
+    LAST_PIP_RUN.clear()
+    LAST_PIP_RUN.update({"command": list(cmd), "inherited": inherited, "rc": rc, "text": text or ""})
+
+
 def run_pip(cmd):
+    """Returns (rc, last non-empty line), as before. The whole run is also kept in LAST_PIP_RUN for write_pip_log."""
     COMMANDS_RUN.append(list(cmd))
+    inherited = sorted(k for k in os.environ if k.upper().startswith("PIP_"))
     try:
         cp = subprocess.run(cmd, env=build_child_env(), capture_output=True, text=True, encoding="utf-8",
                             errors="replace", timeout=PIP_TIMEOUT_S, stdin=subprocess.DEVNULL)
     except subprocess.TimeoutExpired:
-        return 124, "pip timed out after %ds" % PIP_TIMEOUT_S
+        msg = "pip timed out after %ds" % PIP_TIMEOUT_S
+        _keep_pip_run(cmd, inherited, 124, msg)
+        return 124, msg
     except OSError as exc:
-        return 127, "pip could not start (%s)" % type(exc).__name__
+        msg = "pip could not start (%s)" % type(exc).__name__
+        _keep_pip_run(cmd, inherited, 127, msg)
+        return 127, msg
+    _keep_pip_run(cmd, inherited, cp.returncode, cp.stdout + cp.stderr)
     last = ""
     for line in (cp.stderr + "\n" + cp.stdout).splitlines():
         if line.strip():
             last = line
     return cp.returncode, ascii_line(last)
+
+
+def write_pip_log(pack, info, device, kind):
+    """Writes receipts/<wheel>.<kind>-pip.<device>.log for the pip run that run_pip just made, and returns the receipt key
+    pip_log = {file, sha256, bytes}. ASCII, LF line ends; a non-ASCII character becomes '?'. Pip's text is capped at
+    PIP_LOG_CAP bytes and a cut log ends with a TRUNCATED line.
+
+    HONEST LIMIT: the log records the command, the pinned environment and what pip itself printed. It is NOT a network
+    trace and does not prove that no packet left the box; it shows that the tool asked pip for no index and that no
+    inherited index setting reached pip. python= is this tool's interpreter version, as the receipt's python field is."""
+    run = LAST_PIP_RUN
+    body = run["text"].replace("\r\n", "\n").replace("\r", "\n").encode("ascii", "replace")
+    cut = len(body) > PIP_LOG_CAP
+    if cut:
+        body = body[:PIP_LOG_CAP]
+    if body and not body.endswith(b"\n"):
+        body += b"\n"
+    if cut:
+        body += b"TRUNCATED at %d bytes\n" % PIP_LOG_CAP
+    head = [
+        "INTAKE-PIP-LOG schema=1",
+        "device=%s" % ascii_line(device, 80),
+        "utc=%s" % now_utc(),
+        "kind=%s" % kind,
+        "python=%s" % platform.python_version(),
+        "command=" + json.dumps(run["command"]),
+        "env_pins=" + " ".join("%s=%s" % pin for pin in PIP_ENV_PINS),
+        "inherited_pip_vars_removed=" + ",".join(ascii_line(k, 120) for k in run["inherited"]),
+        "rc=%s" % run["rc"],
+        "--- pip stdout+stderr ---",
+    ]
+    data = ("\n".join(head) + "\n").encode("ascii") + body
+    name = "%s.%s-pip.%s.log" % (info["name"], kind, device)
+    os.makedirs(os.path.join(pack, RECEIPTS_DIR), exist_ok=True)
+    with open(os.path.join(pack, RECEIPTS_DIR, name), "wb") as fh:
+        fh.write(data)
+    return {"file": name, "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}
 
 
 def classify_import(rc, stderr, own_modules):
@@ -413,7 +467,8 @@ def receipt_path(pack, wheel_name, device):
     return os.path.join(pack, RECEIPTS_DIR, "%s.receipt.%s.json" % (wheel_name, device))
 
 
-def write_receipt(pack, info, device, outcome, reason, command=None, rc=None, imports=None, form=None, interp=None):
+def write_receipt(pack, info, device, outcome, reason, command=None, rc=None, imports=None, form=None, interp=None,
+                  pip_log=None):
     rec = {
         "schema": "intake-receipt/1",
         "device": device,
@@ -428,6 +483,8 @@ def write_receipt(pack, info, device, outcome, reason, command=None, rc=None, im
         "reason": reason,
         "at": now_utc(),
     }
+    if pip_log is not None:
+        rec["pip_log"] = pip_log
     os.makedirs(os.path.join(pack, RECEIPTS_DIR), exist_ok=True)
     with open(receipt_path(pack, info["name"], device), "w", encoding="ascii", newline="\n") as fh:
         json.dump(rec, fh, indent=2, ensure_ascii=True)
@@ -474,9 +531,10 @@ def prove_pack(pack, scratch, device_override=None):
         target = os.path.join(scratch, stem_of(name))
         cmd = build_pip_command(info["path"], target=target)
         rc, last = run_pip(cmd)
+        plog = write_pip_log(pack, info, device, "prove")
         if rc != 0:
             write_receipt(pack, info, device, "install_failed", "pip rc=%d: %s" % (rc, last), cmd, rc,
-                          form="target", interp=sys.executable)
+                          form="target", interp=sys.executable, pip_log=plog)
             summ["failed"] += 1
             continue
         summ["installed"] += 1
@@ -499,7 +557,8 @@ def prove_pack(pack, scratch, device_override=None):
             outcome = "installed_import_failed"
             reason = "import_failed: " + ",".join(r["module"] for r in hard)
             summ["import_failed"] += 1
-        write_receipt(pack, info, device, outcome, reason, cmd, rc, imports, form="target", interp=sys.executable)
+        write_receipt(pack, info, device, outcome, reason, cmd, rc, imports, form="target", interp=sys.executable,
+                      pip_log=plog)
         print("PROVED: %s %s (%s)" % (ascii_line(name), outcome, ascii_line(reason)))
     summ["ok"] = summ["refused"] == 0 and summ["failed"] == 0
     print("INTAKE-PROVE-DETAIL import_failed=%d no_module=%d" % (summ["import_failed"], summ["no_module"]))
@@ -584,7 +643,7 @@ def resolve_install_target(python, target, user):
     return "user", sys.executable, None, None
 
 
-def write_install_record(pack, info, device, form, interpreter, target, cmd, rc, last):
+def write_install_record(pack, info, device, form, interpreter, target, cmd, rc, last, pip_log=None):
     """One record per wheel per real install: where the wheel went (install.target_form, the interpreter, the folder).
     It sits beside the prove receipt and the receipt gate does not read it."""
     rec = {
@@ -596,6 +655,8 @@ def write_install_record(pack, info, device, form, interpreter, target, cmd, rc,
         "last_line": ascii_line(last),
         "at": now_utc(),
     }
+    if pip_log is not None:
+        rec["pip_log"] = pip_log
     os.makedirs(os.path.join(pack, RECEIPTS_DIR), exist_ok=True)
     path = os.path.join(pack, RECEIPTS_DIR, "%s.install.%s.json" % (info["name"], device))
     with open(path, "w", encoding="ascii", newline="\n") as fh:
@@ -633,7 +694,8 @@ def install_pack(pack, dry_run, form, interpreter=None, target=None):
             print("DRY-RUN: " + json.dumps(cmd))
             continue
         rc, last = run_pip(cmd)
-        write_install_record(pack, info, device, form, where, target, cmd, rc, last)
+        plog = write_pip_log(pack, info, device, "install")
+        write_install_record(pack, info, device, form, where, target, cmd, rc, last, pip_log=plog)
         if rc != 0:
             print("FAILED: %s pip rc=%d: %s" % (ascii_line(info["name"]), rc, last))
             summ["refused"] += 1
