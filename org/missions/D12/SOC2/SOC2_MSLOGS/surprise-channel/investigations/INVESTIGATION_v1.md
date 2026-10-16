@@ -67,6 +67,27 @@ Lane `ANY`. A worker's row is `SOC2_MSLOGS-D1-W<n>-S<k>`; `<n>` is the slot. **A
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "SOC2_MSLOGS-D1-W2-S4",
+    "project": "SOC2_MSLOGS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_SOC2_MSLOGS~2",
+    "surfaced_at": "2026-10-16T17:47:38Z",
+    "one_line": "The owned-paths lane gate refuses every commit of the door's paths by this worker once the order is complete at HEAD, so the head-branch amendment cannot be committed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~S1 (the issuer): re-open or re-issue the order so a non-terminal order at HEAD names these paths to this serial, or rule on the terminal reading of the lane gate",
+    "spec_asserts": "Amendment (issuer 2.0.0_SA_COO~S1): commit the head-branch fix through safe-commit within the order's <paths>, and keep the order status complete.",
+    "world_is": "safe-commit refuses handler.py and tests/test_handler.py: 'no NON-TERMINAL task order at HEAD issued_to this serial names this path'. The first commit e70208bfe7 passed while the order was pending; the order is complete at HEAD da5fe81961, so no open grant remains. The amended fix is uncommitted in the worktree; HEAD's proof still cites the pre-amendment handler.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit refusal at the amendment commit attempt (owned-paths lane violation, block mode, agent 0.9.0_WK_SOC2_MSLOGS~2 not in permitted_agents for infra/aws/lambda/globgrph-trino-access/handler.py and tests/test_handler.py)",
+        "org/missions/D12/SOC2/SOC2_MSLOGS/task-orders/SOC2_MSLOGS.TO-SM-a1.door-raw-timeline.md@da5fe81961: line 8 <status>complete</status>"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
