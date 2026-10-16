@@ -25737,3 +25737,55 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "dismissal_reason": "ACCEPTED: as_of bounds an increment window by partition date (only partitions at or before as_of are read), the reading consistent with the existing single-partition behaviour."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~128",
+  "surfaced_at": "2026-10-16T20:39:43Z",
+  "id": "NFRA_OPLGTW-Z-W128-S1",
+  "one_line": "The order places the RuntimeError in the mods fixture's import of app.config; live it is raised in the test_ogen14_ac03 body, at the import of app.server.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-16.en14-tests-order-independent.md section 1 'THE DEFECT' (says the raise is at app/config.py:17 when fixture mods runs importlib.import_module('app.config'))",
+      "infra/aws/ec2/opal-gateway/tests/test_og_en14.py@a10173850b test_ogen14_ac03 line importlib.import_module('app.server') and fixture mods line importlib.import_module('app.config')",
+      "infra/aws/ec2/opal-gateway/app/server.py@a10173850b line 72 _cfg.validate(), reached through the import of app.server"
+    ]
+  },
+  "spec_asserts": "test_ogen14_ac03 fails with RuntimeError: Missing required env var: TENANT_ID raised at app/config.py:17 when its fixture mods runs importlib.import_module('app.config').",
+  "world_is": "The fixture's import of app.config does not raise: config.py reads the environment at import and calls _req only inside validate(). The raise happens in the test body of test_ogen14_ac03 at importlib.import_module('app.server'): server.py line 72 calls _cfg.validate(), which calls _req('TENANT_ID') because the cached Config carries MOCK_GRAPH False. Measured at base a10173850b, order en4 en12 en14: 10 passed, 1 failed, FAILED test_ogen14_ac03 with the RuntimeError at app/config.py:17 and the traceback through app/server.py:72.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The location in the order does not change the fix (the fixture must make the cached config MOCK_GRAPH True before any app module with import-time validate() is read). Recorded because the order's premise names the wrong frame."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~128",
+  "surfaced_at": "2026-10-16T20:39:43Z",
+  "id": "NFRA_OPLGTW-Z-W128-S2",
+  "one_line": "Setting MOCK_GRAPH through monkeypatch.setenv as the fixture's first line cannot reach the failing read; the cached Config instance must be set as well.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/config.py@a10173850b line 355 MOCK_GRAPH class attribute read from the environment once, at the first import of app.config; line 445 get_config() is lru_cache'd",
+      "infra/aws/ec2/opal-gateway/app/server.py@a10173850b line 71-72 _cfg = get_config(); _cfg.validate()",
+      "forward-order traceback at base a10173850b: app/config.py:410 validate() reached from app/server.py:72"
+    ]
+  },
+  "spec_asserts": "In tests/test_og_en14.py the mods fixture's first line is monkeypatch.setenv('MOCK_GRAPH', '1') and the module-level setdefault may stay; that is the whole fix for the order-dependent failure.",
+  "world_is": "The setenv line alone cannot reach the failing read. Config.MOCK_GRAPH is a class attribute evaluated once at the first import of app.config; in the failing order an earlier file imported app.config before this file's collection-time setdefault ran, so the cached instance says False, and the validate() call at server.py:72 reads that instance. The fixture also sets the cached instance with monkeypatch.setattr(cfg, 'MOCK_GRAPH', True), which the order's robust clause allows. This is inferred from the class-attribute line and the traceback; the setenv-only variant was not run as a separate experiment.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Both forms are in the committed fixture: the setenv first line the order names, and the cached-instance setattr. Forward, reverse and solo runs of en4, en12, en14 pass with 11 passed in both multi-file orders."
+}
+```
