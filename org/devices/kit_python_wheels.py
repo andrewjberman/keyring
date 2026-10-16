@@ -88,9 +88,10 @@ def parse_target(python_tag, platform):
         "win_amd64": ("win32", "Windows", "nt", "AMD64"),
         "win32": ("win32", "Windows", "nt", "x86"),
         "win_arm64": ("win32", "Windows", "nt", "ARM64"),
+        "linux_x86_64": ("linux", "Linux", "posix", "x86_64"),
     }
     if platform not in plat_env:
-        raise SystemExit("ERROR: only the Windows platform tags win_amd64, win32, win_arm64 are supported")
+        raise SystemExit("ERROR: only the platform tags win_amd64, win32, win_arm64, linux_x86_64 are supported")
     sys_platform, system, os_name, machine = plat_env[platform]
     env = {
         "python_version": "%d.%d" % ver,
@@ -109,9 +110,35 @@ def parse_target(python_tag, platform):
     return {"python_tag": python_tag, "platform": platform, "version": ver, "env": env}
 
 
+LINUX_X86_64_GLIBC = (2, 34)  # the requester's host (glibc 2.34), read from the host by the requester
+
+
+def linux_x86_64_platforms(glibc=LINUX_X86_64_GLIBC):
+    """The manylinux platform strings for x86_64 at a FIXED glibc, in the order packaging._manylinux.platform_tags yields
+    them on a host with that glibc: manylinux_<M>_<m>_x86_64 for m from the glibc minor down to 5, each with its legacy
+    alias (manylinux1 at 2_5, manylinux2010 at 2_12, manylinux2014 at 2_17). packaging computes this list from the RUNNING
+    host (its glibc and ELF), so the list for another host is written out here; the test checks it against packaging."""
+    major, minor = glibc
+    legacy = {(2, 5): "manylinux1", (2, 12): "manylinux2010", (2, 17): "manylinux2014"}
+    out = []
+    for m in range(minor, 4, -1):
+        out.append("manylinux_%d_%d_x86_64" % (major, m))
+        if (major, m) in legacy:
+            out.append(legacy[(major, m)] + "_x86_64")
+    return out
+
+
+def platform_list(platform):
+    """The platform strings packaging.tags is asked for: the label itself for a Windows target (unchanged), the
+    manylinux expansion for linux_x86_64."""
+    if platform == "linux_x86_64":
+        return linux_x86_64_platforms()
+    return [platform]
+
+
 def supported_tags(target):
     """The set of (interpreter, abi, platform) triples Python <target> on <platform> installs, from packaging.tags."""
-    ver, plat = target["version"], [target["platform"]]
+    ver, plat = target["version"], platform_list(target["platform"])
     py_tag = target["python_tag"]
     out = set()
     for t in ptags.cpython_tags(python_version=ver, abis=[py_tag], platforms=plat):
