@@ -23235,3 +23235,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The wrapper's CHANGELOG write is a standing out-of-grant carrier (S89, S96, S99 and now a committed one); what stops it differs by firm entry, so the guard is accidental. The count and partition differences are explained and inside the order's bounds."
 }
 ```
+
+## IRPT_DASHBD-D2-W1901-S1 -- TO-DB-f-1901: the 0.4.2 generator's producer import and its CRO input sit in two folders the order does not list as materialized; both were added with git sparse-checkout add, no tracked file edited
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1901-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1901",
+  "surfaced_at": "2026-10-16T13:47:39Z",
+  "one_line": "The 0.4.2 generator imports the producer account_transaction.py, which imports account_return_daily.py, which imports stream_parquet from data/assets/scripts/lib; it also loads the CRO table under org/tier1_exec/4.0.0_SA_CRO. Neither folder is in the worktree sparse set the order describes; both were added with git sparse-checkout add and no tracked file was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run of gen_transaction_contract_0_4_2.py failed: ModuleNotFoundError No module named stream_parquet, raised through account_transaction.py line 65 and account_return_daily.py line 94; data/assets/scripts/lib was absent from the sparse set (git sparse-checkout list at HEAD 7b47813ad1 shows no such folder)",
+      "second run failed: FileNotFoundError on org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json, the CRO constant of the generator; the file is in HEAD at 7b47813ad1",
+      "git sparse-checkout add data/assets/scripts/lib and git sparse-checkout add org/tier1_exec/4.0.0_SA_CRO each exited 0; the third run wrote the contract and the words file; git diff --stat over org/standards and the gold irpt_reporting folder: 2 files, 27 insertions, 6 deletions"
+    ]
+  },
+  "spec_asserts": "Order DB-f-1901 worker face: the folders org/standards, lib, data/assets/scripts/gold/irpt_reporting, data/inf and infra/logic are materialized (if one is missing, run git sparse-checkout add <folder>: not a grant to edit); run the generator with python -I from the worktree root.",
+  "world_is": "The generator's producer import chain and its CRO input lie outside the five named folders, so the sparse set held neither data/assets/scripts/lib nor org/tier1_exec/4.0.0_SA_CRO. Both were materialized with the order's own remedy; no tracked file was edited and the order's grant is unchanged.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W1901-S2 -- TO-DB-f-1901: the 0.4.2 words file breaks a neighbouring test that pins contract_version 0.4.1, so the regression DBF132-1-AC2 prints FAIL; the test file is outside the grant and was not edited
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1901-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1901",
+  "surfaced_at": "2026-10-16T13:47:39Z",
+  "one_line": "data/assets/scripts/gold/irpt_reporting/tests/test_account_transaction_cottonwood.py line 86 asserts the words file contract_version equals '0.4.1'; the order moves it to 0.4.2, so one of the 52 tests in that file fails and the regression DBF132-1-AC2 prints FAIL. The test is outside the grant and was not edited.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~F2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_account_transaction_cottonwood.py line 86 reads: assert WORDS['contract_version'] == CONTRACT['contract_version'] == '0.4.1'",
+      "python -I -m pytest on that file after the generator run: 51 passed, 1 failed; AssertionError: assert '0.4.2' == '0.4.1' in test_load_words_carries_the_cottonwood_mapping_and_fee_basis",
+      "python -I checks/r132/p132_dates.py . DBF132-1-AC2 last lines: reason pytest on test_account_transaction_cottonwood.py rc=1 failed=1 errors=0, then DBF132-1-AC2 FAIL; checks/r132/p132_inflection.py . DBF132-1-AC3 prints PASS; checks/r133 p133_contract.py . DBF133-1-AC1 prints PASS"
+    ]
+  },
+  "spec_asserts": "Order DB-f-1901 step 3: run p132_dates.py DBF132-1-AC2 once as a regression check; both regression checks PASSED before and must still print PASS. The grant is the paths block, which names the words file and not this test.",
+  "world_is": "A neighbouring test in the irpt_reporting tests folder pins the contract version this order changes from 0.4.1 to 0.4.2. Left alone, the regression stays FAIL on this branch and the test is red on the drain; the pin update lies outside the grant and is the issuer's call.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
