@@ -20106,3 +20106,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "Applied in the test file only; no feed, wrapper, run script, adapter or checker file was edited. The multi-day run gives 7001 PRESENT on all 8 trading days with carried_days summing to 10 and the chain within 1e-12 of the silver's factors. The 3-day fixture reads rows_present 1 (7004 on the pull day), and 7001 on 10-12 reads ABSENT NO_EOD_VALUE. The amendment's rule that the file names NO_EOD_VALUE and rows_present is met by the test text."
 }
 ```
+## IRPT_DASHBD-D2-W226-S1 -- the calendar answers from its hardcoded fallback on this box (pandas_market_calendars absent)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W226-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~226",
+  "surfaced_at": "2026-10-16T02:16:22Z",
+  "one_line": "pandas_market_calendars is absent on this box, so lib/trading_calendar answers from its hardcoded NYSE fallback (2010-2027)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py@78f2c2a9c3: _USE_PMC is True only when the pandas_market_calendars package imports; the fallback announces itself once per process and _require_covered raises past its covered years",
+      "infra/aws/lambda/investor-reporting/reporting-gold-cot/handler.py@78f2c2a9c3: unreported_days calls tc.trading_days_between, the same calendar source the publisher's new arithmetic reads"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-b-279 reads lib/trading_calendar.py as the read-only calendar for the unreported-days arithmetic (trading_days_between, inclusive of both ends) and names no calendar source.",
+  "world_is": "On this worktree's box the calendar printed its fallback WARN and answered from the hardcoded NYSE table covering 2010-2027, with the regeneration owed before 2028. The worker's tests and the issuer checker ran on that fallback. Which calendar source the publish Lambda's runtime holds is not read by this order."
+}
+```
+
