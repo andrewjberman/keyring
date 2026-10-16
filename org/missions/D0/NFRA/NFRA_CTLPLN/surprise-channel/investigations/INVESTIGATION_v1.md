@@ -13692,3 +13692,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The 13 arms stay green, but four of them now assert a passing check 4 where they asserted a waiver. A too-new fixture time would have kept the waiver path and asserted a false publish-time story, so the old time was chosen; the choice is recorded for the issuer's review."
 }
 ```
+
+## NFRA_CTLPLN-W149-S1 -- five @types tarballs keep package.json under their own folder, so check 2 fails them
+
+```json
+{
+  "id": "NFRA_CTLPLN-W149-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~149",
+  "surfaced_at": "2026-10-16T21:15:59Z",
+  "one_line": "Five of the 50 npm tarballs (the @types/* DefinitelyTyped packages) carry package.json under a top-level folder named for the package, not package/, so check 2 fails each of them and their check records cannot read checked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_check.py@f418537712 check_2_npm (line 1263): package/package.json is the path it reads; absent reads failed",
+      "org/devices/intake/records/intake-20261016-npm-mcportal-bun/types__bun-1.4.2.tgz.check.json@fb5373cc12 check 2 evidence: package/package.json is absent or unreadable (absent); check 1 passed",
+      "in-memory member listing (names only, no extraction) of the five held tarballs: bun/package.json, estree/package.json, 'node v24.13/package.json', react-dom/package.json, react/package.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An npm tarball's package.json sits at package/package.json, the top-level folder npm packs, so check 2 can read the name and version it must match (APPROVAL_AND_SIGNED_FILE_DEMANDS.md section 1a; intake_check.py check_2_npm).",
+  "world_is": "45 of the 50 tarballs carry package/package.json and pass check 2. Five carry it under their own folder: bun/, estree/, 'node v24.13/', react-dom/, react/. check 2 reads absent for each and fails it; check 2 is never waivable, so those five cannot reach checked on this batch. Nothing was waived, repaired or re-run; the five are findings for the CTO (NPM_BATCH_FACTS.md, failed-checks section)."
+}
+```
