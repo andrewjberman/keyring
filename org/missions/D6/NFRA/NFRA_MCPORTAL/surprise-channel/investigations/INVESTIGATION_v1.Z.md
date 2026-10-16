@@ -3014,3 +3014,29 @@
   "notes": "Filed by the issuer as the box-level carrier of the worker's observation; the issuer cannot place the list (an infrastructure act). Not known: when it went missing, or whether another box has it."
 }
 ```
+
+```json
+{
+  "project": "NFRA_MCPORTAL",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~MP",
+  "surfaced_at": "2026-10-16T11:05:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MP",
+  "id": "NFRA_MCPORTAL-Z-S64",
+  "one_line": "On the SERVED breakdown the Gateway page scrolls sideways at 390 px (scrollWidth 561 against 390): the channel-level Indexes paragraph holds index names wider than its column, and the fixture's short names never showed it.",
+  "spec_asserts": "PF.2 (decomposition v12) and MP-pf-2 section 1: the page itself never scrolls sideways at 390 px; Andrew's words in the order: readable, not wrapped or squished.",
+  "world_is": "The issuer rendered the SERVED breakdown body (read over SSM at 10:59:30Z, deployed_commit 0cb4a87bcb, mcportal_commit 090b9cdc85, holders redacted) through the real GatewayView and CSS at mcportal 090b9cdc85, in a real browser at a true 390 px: documentElement.scrollWidth 561 against innerWidth 390. The cause is p.gateway-indexes, the comma-joined list of a channel's index names: one unbroken name such as the commonwealth/cottonwood account-day-value index is about 65 characters, wider than the 328 px column, so the paragraph's content (scrollWidth 530 in opal-data-assets) overflows it and widens the panel and the page. Six sections overflow this way (opal-data-assets 530, opal-data-etfs 382, opal-data-harvest 438, opal-data-portal-v2 433, Dynamodb 359, the Portal precomputed objects group 462, each against 328). The fixture of MP-pf-2 carries short names (idx-positions), which is why AC1's nine tests and the fixture render at 390 px passed. The 1280 px render is unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~MP/pf/evidence_s1_served_0cb4a87bcb/s1_390_page_scrolls_sideways_harvest.png: the page scrolled right by 171 px, the panel ends and empty canvas continues (a section with no account-shaped text, chosen so the image carries none)",
+      "browser measurements at a true 390 px viewport: scrollWidth 561; p.gateway-indexes clientWidth 328, scrollWidth 530 (assets), 438 (harvest), 433 (portal-v2), 462 (mdpf group); every .gateway-scroll box is cut and carries the cue",
+      "the served body read by deliverables/2.0.0_SA_COO~MP/pf/checks/s1_served_body.sh (ssm command cb52e893): 14 channels, 127 tools, holders redacted before anything was written"
+    ]
+  },
+  "notes": "Screenshots of the full page and of the assets segments are NOT committed: the real index names carry Schwab master numbers (8-digit runs) and this box's client-data check is not running (Z-S63). The fix is small and LOCAL: let the Indexes paragraph (and any other prose that can hold an unbroken name) scroll inside its own box with overflow-x auto, add a real 60-plus character index name to the checked-in fixture so the 390 px render sees it, and a test pinning the rule. The disarm is that cell; it needs the CTO's analysis to carry it (a defect found at the close is the next round's first item). The legibility grade (S1 item iii) reads FAIL until it lands."
+}
+```

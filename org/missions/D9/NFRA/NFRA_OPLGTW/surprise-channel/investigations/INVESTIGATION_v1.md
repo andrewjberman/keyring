@@ -20581,3 +20581,26 @@ name the one known failure instead of silently inheriting it.
   "notes": "A correction is a new row citing the old id. Cost: a reader of Z-S168 would believe a quiet-day call had been made; it had not."
 }
 ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S173",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-16T11:25Z",
+    "one_line": "A ratified rule has no carrier: PRD v2.2 item 4 (kept by v2.3's Unchanged list) holds 'Alyssa's no-download', but her live grant's operations include download_filtered and no profile, grant or contract field carries a no-download, so the rule is not enforced (measured by OG-mg-1's ask, section 3).",
+    "class": "OBSERVATION",
+    "spec_asserts": "NFRA_OPLGTW_PRD.md v2.2 item 4: 'Unchanged ... Alyssa's no-download (his ~19:2xZ \"no downloads needed yet\")'; v2.3 Unchanged: 'Alyssa's grant and her no-download'.",
+    "world_is": "OG-mg-1 ask @a8798df9d0 section 3 (live store re-read 2026-10-16): Alyssa's operations = [describe, download_filtered, list, query] (contract-maximal); her principal_profile carries only status, revision, grant_revision, tid, oid; the contract's portal_only_schwab_tools is []; only forbidden_field_classes are in force, and they are field rules, not a download rule. No surface enforces a no-download for her.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-mg-1.md @a8798df9d0 section 3",
+        "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md v2.2 item 4 and v2.3 'Unchanged'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "For 1.0.0_SA_CTO~Z to rule: enforce the no-download on Alyssa's grant (drop download_filtered from her operations via the one writer), or record that Andrew's 'no downloads needed yet' was a statement of need, not a prohibition, and strike it from the PRD's Unchanged lists. Low hazard (one internal user; downloads go through the ticket transport), so not ARMED. It does not bear on OG-mg-1's R1/R2, which mirror Andrew."
+  }
+  ```
