@@ -77,7 +77,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ng-2.gate-reads-name-rulings.pr
 - Depends on `OG-cl-9` (the `etfs` row) being merged: AC2 needs all five rows on the base.
 - Pre-cut: ng2.AC1, ng2.AC2, ng2.AC3 base FAIL as expected (no arms; 10 REFUSE; naming-gate.py unchanged).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>NAMING-GATE-RULINGS</workstream>
 <slot>~114</slot>
