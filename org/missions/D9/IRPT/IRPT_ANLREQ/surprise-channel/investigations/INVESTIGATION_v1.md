@@ -20518,3 +20518,91 @@
   "notes": "Resolves IRPT_ANLREQ-D2-W163-S1, IRPT_ANLREQ-D2-W163-S2 and IRPT_ANLREQ-D2-W163-S3."
 }
 ```
+
+## IRPT_ANLREQ-D2-W224-S1 -- the gate's scan set is the two named files, but the same OPAL_GLOBAL equality test appears at 21 sites in 12 non-test files, so a new global admission elsewhere leaves the real gate green
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W224-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~224",
+  "surfaced_at": "2026-10-16T02:17:30Z",
+  "one_line": "AR-tz-64 scans only interactive_access.py and resident_installed.py for the OPAL_GLOBAL equality admission, as the order names. The same test on principal_class appears at 21 sites in 12 non-test files under infra/aws/lambda, so a new global admission in any other file would leave the real gate green. The register's 'the two OPAL_GLOBAL admissions' matches only the two scanned files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~T2",
+  "spec_asserts": "AR-tz-64 step 1: enumerate every site where OPAL_GLOBAL is admitted before a firm comparison, in interactive_access.py (authorize_current) and resident_installed.py (make_authorize). Register R19 rule: 'A new global admission is a row here in the same commit that adds it, or the commit is wrong.'",
+  "world_is": "At worktree HEAD 6df6c60552, a grep for principal_class followed by == and the OPAL_GLOBAL literal, excluding tests/, returns 21 lines in 12 files: holdings/resolve.py 2, intake/custody_portfolio.py 1, intake/portfolio.py 2, intake/upload_entry.py 1, reports/request_composition.py 3, reports/resident_installed.py 1, ycharts/generate/submission.py 1, ycharts/generate/recipe_snapshot.py 1, _scope/resolve.py 2, _scope/maintained_sources.py 3, _scope/interactive_access.py 1, _scope/global.py 3. Not every line is an admission before a firm comparison (some are attribution or census flags); that is not judged here. The test is green with 2 sites in 2 scanned files and 2 OPAL_GLOBAL register rows. A new unregistered admission is caught only when its file is handed to the check; the real scan does not reach it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep principal_class == OPAL_GLOBAL over infra/aws/lambda excluding tests/ at worktree HEAD 6df6c60552 (21 lines, 12 files)",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:115 @6df6c60552 (admission before the firm check)",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:259 @6df6c60552 (admission before the firm check)",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R19_GLOBAL_ADMISSIONS_REGISTER.md @6df6c60552 (rows G1 G2 G3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Scope was not widened: the order fixes the scan to the two files. This row records form only; significance is for the issuer and the CTO."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W224-S2 -- the ticket firm fence still admits every firm to an internal PROFILE row with no allowedFirmIds, so the gate is green on a live implicit global
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W224-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~224",
+  "surfaced_at": "2026-10-16T02:17:30Z",
+  "one_line": "The gate is green today while the ticket firm fence at HEAD still admits every firm to an internal PROFILE row that has no allowedFirmIds. Register G3 describes that omission as pre-round-19 behaviour replaced by TO-R19-L3, but this HEAD has not replaced it, and the marker-only check cannot see it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~V2",
+  "spec_asserts": "AR-tz-64 step 1: scope_all_firms is the ticket service's explicit global marker, and zero sites today is fine. Register G3: 'Before round 19 a row with NO attribute meant every firm by omission; from the release it means no firm, and global is only this BOOL marker.'",
+  "world_is": "At 6df6c60552, lambda_function.py _profile_scope (lines 391-426) returns (None, None) when allowedFirmIds is absent or an empty list (lines 418-423). _in_profile_scope (lines 440-442) returns True when scope is None. So an internal caller whose PROFILE row has no allowedFirmIds reaches every firm today. The text scope_all_firms appears nowhere in infra/aws/lambda/ticket_center. G3's location is right, but its 'from the release it means no firm' describes a state that is not yet in the code. The gate cannot fail on this, because the marker is absent and the order says that is fine.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:391-426 @6df6c60552 (_profile_scope; None returned for absent or empty allowedFirmIds)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:440-442 @6df6c60552 (_in_profile_scope returns True when scope is None)",
+      "grep scope_all_firms over infra/aws/lambda/ticket_center at 6df6c60552 returns zero matches"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The R19-L3 fix is TCKT_VNEXT's (owner of G3); this row does not widen the order."
+}
+]
+```
+
+## IRPT_ANLREQ-D2-W224-S3 -- the worktree is a sparse checkout that omits org/surprise_channel/, so the item schema was read from HEAD with git show
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W224-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~224",
+  "surfaced_at": "2026-10-16T02:17:30Z",
+  "one_line": "The worktree is a sparse checkout that omits org/surprise_channel/. The investigation item schema the protocol names is tracked at HEAD but absent from the working tree, so it was read with git show into .scratch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker rules: a surprise row validates against org/surprise_channel/schemas/investigation_item.schema.json, and the gate is .tools/surprise-row-gate.py.",
+  "world_is": "git config core.sparseCheckout is true in C:/dev/wk-irpt-anlreq-224, and the working tree has no org/surprise_channel directory. git ls-tree HEAD lists org/surprise_channel/schemas/investigation_item.schema.json (blob 696468806e9e8163a32b71c65d18d3a98ca318c2). The gate .tools/surprise-row-gate.py is present. This row's shape follows the schema read from HEAD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config core.sparseCheckout returns true in the worktree at 6df6c60552",
+      "git ls-tree HEAD org/surprise_channel/schemas/ lists investigation_item.schema.json (blob 696468806e9e8163a32b71c65d18d3a98ca318c2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
