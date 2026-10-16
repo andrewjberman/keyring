@@ -24425,3 +24425,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Dismissed because the grant was widened by the coordinator's ruling and the test now expects the intended format; row S7 itself is left as filed."
 }
 ```
+
+
+## IRPT_DASHBD-D2-W2201-S1 -- twelve reporting-gold tests fail at the base and stay failing (pre-existing, not edited)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2201-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2201",
+  "surfaced_at": "2026-10-16T21:14:05Z",
+  "one_line": "OBSERVATION: twelve tests in test_activity_lot_emission.py, test_class_catch_up.py and test_class_table_emission.py fail at the base be99bf5767 and still fail after DB-f-2201; the fakes lack as_of after a later handler change. Outside the grant; not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order states twelve reporting-gold tests fail at the base (the fakes lack as_of after a later handler change), are pre-existing and outside the grant, and asks for ONE observation row naming them.",
+  "world_is": "Measured at be99bf5767 before the cell: 12 failed, 108 passed. Measured after the cell in the worktree: 12 failed, 137 passed (the 29 new tests all pass). The 12 failing ids are the same as checks/r136/handler_tests_base_failures.txt: ScheduledPathTests and BackfillPathTests of test_activity_lot_emission.py (4); CatchUpTests of test_class_catch_up.py (3); ScheduledPathTests and BackfillPathTests of test_class_table_emission.py (5). Their stderr shows CLASS_SKIPPED ... AttributeError: 'object' object has no attribute 'as_of' and LOTS_SKIPPED ... KeyError: 'classification_table'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_class_table_emission.py@be99bf5767: python -m pytest tests -q, run at the base: 12 failed, 108 passed, the 12 ids equal handler_tests_base_failures.txt",
+      "the same command after the cell in the worktree of wk-IRPT_DASHBD-2201: 12 failed, 137 passed; no failing id outside the 12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer decides the disposition of the twelve. The new harness in test_transaction_emission.py patches every heavy stage, so it does not inherit the defect."
+}
+```
