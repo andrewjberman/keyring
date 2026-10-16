@@ -2743,3 +2743,28 @@
   "notes": "Observed while repairing the Cottonwood tooltip (AMENDMENT 1). Not fixed here: the Global Trend is outside CN-s-3 (bounds 1). The issuer's amendment note said this 'may also exist' and was not checked; this row records the code read, not a render. Remedy belongs to the issuer (a Global carried-key change in trendGrouping.ts or ModelPortfolios.tsx)."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S30",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-16T15:35:01Z",
+  "one_line": "Does a non-internal Global session render per-custom-model lines? The CTO's owed read (msg 6788, condition 2): the served Global object carries none, so a non-internal session sees Custom Models only as the group total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "FWD-3: a non-internal session reads aggregates only, never a single-firm value. XA-6cad's one-firm condition (B) is struck; Andrew's 2026-10-15 ~18:4xZ word puts the Muni account in the Global Custom Models group.",
+  "world_is": "MEASURED on the served Global aggregate-aua-timeseries of 2026-10-15 (the committed fixture round11/checks/ref/served_global_aggregate_20261015.json): by_model holds 11 keys, the five primary models and the SMA cohorts divz, opal_div_sma, opal_growth_sma, pfde, tax, and NO Cottonwood custom-model key (not opal_muni_sleeve, not opal_income). The Global fold uses the custom keys only to sum model_aua; Custom Models at Global is model_aua minus the five primaries, a group and never a per-key line. The demo-tenant (non-internal) Global Trend render draws one Custom Models series (round11/real_run/REAL_RUN_20261016.md). NOT read: the Snapshot tab's model list for a Global non-internal session (not rendered), and the Cottonwood object's own per-key by_model entries (read by a Cottonwood or internal session behind the edge's tenant scope).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round11/checks/ref/served_global_aggregate_20261015.json: by_model keys listed (11), none a custom model",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round11/real_run/REAL_RUN_20261016.md section 2 (the demo Global Trend, one Custom Models series)",
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round11/NEVER_WIDEN_PAIR_R11_CN_S_1_COO_SIGN_AND_ADDENDUM_1.md section 2 (c)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Appended on the CTO half's condition 2 (ledger/NEVER_WIDEN_R11_CN_S_1_CTO_HALF.md @ac8c4c5b3d). Not a gate on the CN-s-1 pair. It also corrects the pair's prediction that Global by_model gains the new key: it does not (addendum section 2 (c)). The Snapshot-tab read is the CVO's to place."
+}
+```
