@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell2",
- "written_at": "2026-10-16T13:40:38Z",
+ "written_at": "2026-10-16T16:05:38Z",
  "written_by": "1.0.0_SA_CTO~DELL2",
  "rows": [
   {
@@ -4745,6 +4745,124 @@
     "to": "xadj",
     "ref": "XA-20261016T122825Z-7f7d",
     "at": "2026-10-16T12:28:25Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261016T153048Z-e4fb",
+   "project": "IRPT_BCKEND",
+   "subject": "IB-pr-551 hops 3 and 4: sign the CTO half of ADDENDUM 1 (the export role's read of the filled object)? Option a: one GetObject/GetObjectVersion statement on client=*/filled_report.json, 49 Financial first. Option b: the export reads through the route.",
+   "asked_by": "2.0.0_SA_COO~S2",
+   "source": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~S2/NEVER_WIDEN_IB_pr_551_ADDENDUM_1_EXPORT_FILLED_READ_GRANT_DRAFT.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-16T15:30:48Z",
+   "kind": "fork",
+   "context": "Hop 1's gold exists (date=2026-10-15, 14:13Z), so the CTO half's condition 3 is met; hop 2 left the release (msg 9438). The export role holds no filled-object read (row D2-S212). Gates the deploy order for hops 3 and 4, and ~F2's export candidate waits on the export server deploy.",
+   "rec": "Option a. Ruling f50a has the server pin the object at submit, which needs the object's VersionId, sha256 and size; the route returns none of them, so reading through the route cannot serve the pin. The scope check sits in freeze_filled_report (test_filled_report_freeze_scope.py passes), and the statement is read-only on one object name.",
+   "scope": {
+    "measured_at": "2026-10-16T15:30:48Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/investor-reporting/export",
+     "infra/aws/terraform/investor-reporting",
+     "infra/aws/terraform/investor-reporting/api",
+     "infra/aws/terraform/investor-reporting/directory",
+     "infra/aws/terraform/investor-reporting/performance",
+     "infra/aws/terraform/investor-reporting/ycharts",
+     "infra/aws/terraform/investor-reporting/narrative",
+     "infra/aws/terraform/investor-reporting/ops",
+     "infra/aws/terraform/investor-reporting/holdings",
+     "infra/aws/terraform/mdpf-pipeline",
+     "infra/aws/terraform/shared-infra",
+     "infra/aws/terraform/modules/opal_name",
+     "infra/aws/terraform/portal-auth",
+     "infra/aws/terraform/investor-reporting/core"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_RESAPP placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of TCKT_MTADTA placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell1 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by ADVI_FIRMBKTS on dell1",
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+110), also declared by root infra/aws/terraform/shared-infra named by MDPF_SECCLASS on dell1",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez",
+      "root infra/aws/terraform/portal-auth declares /aws/lambda/auth-validator-edge, /aws/lambda/cache-control-injector, /aws/lambda/opal-portal-authorizer (+53), also declared by root infra/aws/terraform/portal-auth named by ADVI_FIRMBKTS on dell1",
+      "root infra/aws/terraform/portal-auth declares cross-firm-secret-deny, also declared by root infra/aws/terraform/shared-infra named by MDPF_SECCLASS on dell1"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      ".tools/safe-deploy.sh is on the shared branch (.tools)",
+      ".tools/tests is on the shared branch (.tools)",
+      ".tools/bundles is on the shared branch (.tools)",
+      ".tools/ds-precommit-check.py is on the shared branch (.tools)",
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T154100Z-904f",
+    "at": "2026-10-16T15:41:00Z",
+    "by": "1.0.0_SA_CTO~DELL2",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell2-20261016T154728Z-2cc0",
+   "project": "IRPT_ANLREQ",
+   "subject": "CTO half of AR_V32_PAIR: one transient staff user minted and removed to read the Ticket Center page for a real hop failure (TICKET round 4 arm A)",
+   "asked_by": "2.0.0_SA_COO~V2",
+   "source": "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~V2/AR_V32/AR_V32_PAIR.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-16T15:47:28Z",
+   "kind": "fork",
+   "context": "t55 leg A is DONE (the failure stands on REQ-d47252fe... since 15:44:44Z, AQ2 ledger OPEN); my order TO-RUN-AR-v32 (staged, 052ac6d8b4) cannot get its GO until the CTO half is signed; it mints ONE opal-users-v2 row, one dev server on 5174, two status reads; msg 9542 queued, CTO not live on the broker",
+   "rec": "Sign: the blast radius is one transient synthetic user row removed in the same order, the same helper as windows 2 and 3, and the CTO already accepted arm A in msg 9529",
+   "scope": {
+    "measured_at": "2026-10-16T15:47:28Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/investor-reporting/intake/security_resolution.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_security_resolution.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_kept_holding.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_registry_known.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_door_yfinance_first.py overlaps the write set of ADVI_FIRMBKTS placed on dell1 (infra/aws/lambda)",
+      "infra/aws/lambda/ci/lambda-source-map.json overlaps the write set of AMGT_RESAPP placed on dell1 (infra/aws/lambda/ci/lambda-source-map.json)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T160537Z-f98b",
+    "at": "2026-10-16T16:05:37Z",
     "by": "1.0.0_SA_CTO~DELL2",
     "reason": null
    }
