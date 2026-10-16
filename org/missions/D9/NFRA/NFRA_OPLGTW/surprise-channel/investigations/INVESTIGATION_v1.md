@@ -25815,3 +25815,27 @@ Worker 0.9.0_WK_NFRA_OPLGTW~127 on OG-en-14, rows appended at the cut of its ord
   "notes": "Booleans and a count only; the .env was not otherwise read. Does not block Phase A."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T21:30:09Z",
+  "id": "NFRA_OPLGTW-Z-S323",
+  "one_line": "Z-S177 measure-first read after OG-en-10 went live (17:57Z): 0 gw_ratelimit audit rows in 2000 audit objects to 21:30Z; no 429 has been observed on the live gateway since the release, so the limit choice has no data yet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-mcp-audit/audit/dt=2026-10-16/ (objects whose key time is 17:57Z or later; 2000 objects read, 0 read errors, listing denominator printed); row shapes: tool-call rows (args, detail, outcome, tier, tool, ts, user) and a few event-keyed rows (4 gw_cred_observe); 0 rows with event gw_ratelimit",
+      "OG-en-10 (merged 580e2f91a7, live in bf9d23b518): a 429 writes one audit row event=gw_ratelimit with the hashed by_client split; the e10 arm of OG-ap-28 drove the installed limiter in-process (130 POSTs, 10 429s, 1 audit row) with the audit emit captured, not read back from the lake"
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 35000: choose between raising the 120 per 60 s limit, exempting initialize and tools/list, or distinct identities from the first rows OG-en-10 writes.",
+  "world_is": "No 429 has occurred on the live gateway since 17:57Z (or none reached the audit stream), so there are no first rows to choose from. Z-S177 stays UNDER_INVESTIGATION and ARMED. What would measure it: an interactive session that hits the limit writes a row; or a deliberate drive of the live limiter by a stand-in bearer through the public endpoint (the order OG-ap-28 e10 forbade because a stand-in bearer needs an access-state write). The read lake-side proves the emit path only once a real 429 happens.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
