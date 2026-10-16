@@ -22568,3 +22568,28 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W269-S1 -- the commit gate could not run its client account-id check on this device: the hashed id list is absent, so the commit printed WARN and was not checked
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~269",
+  "surfaced_at": "2026-10-16T19:03:45Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W269-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The commit gate's client-data-check printed WARN because the hashed account-id list is not at C:\\Users\\Test\\.opal\\account_id_hashes.txt on this device, so commit 8116e45eb8 (AR-g-142 code and tests) was not checked for client account ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 8116e45eb8 on branch wk-IRPT_ANLREQ-269 (5 files): 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "the same commit output: the commit gate, naming gate, to-pipeline gate and surprise-row gate all passed; the account id 2200001 in the new test file already appears in ycharts/session/tests/test_resident_session.py at 9d765b4c8c"
+    ]
+  },
+  "spec_asserts": "The order commits through safe-commit.sh, whose gates include a client account-id check that runs on every commit, so a commit of the session tests is checked for client account ids before it lands.",
+  "world_is": "On this device the hashed account-id list (OPAL_ACCOUNT_ID_HASHES or the default path) is absent, so the check printed WARN and passed the commit unchecked. The worker did not place or create the list; no account id was added by this order beyond the fixture id that the sibling tests already carry."
+}
+```
