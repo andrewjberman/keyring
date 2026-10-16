@@ -205,6 +205,22 @@ def case9_cli_last_line_from_file_explain_fetchlist(tmp):
     return "last line exact; --from-file re-prints it; explain names the chain; fetch list: APPROVED / NEW-REQUEST / UNREAD"
 
 
+def case10_linux_target_and_root_form(tmp):
+    t = ic.make_target("cp312-linux_x86_64")
+    assert t["env"]["python_full_version"] == "3.12.14" and t["env"]["sys_platform"] == "linux", t["env"]
+    site = tmp / "c10"
+    make_dist(site, "alpha", "1.0", ["beta"])
+    make_dist(site, "beta", "1.0")
+    installed, _src = ic.load_installed([("<test-site:1>", site)])
+    res = ic.compute([(1, "alpha==1.0")], installed, t, ic.kw.supported_tags(t), "--root")
+    assert res["by_norm"]["alpha"]["parents"] == [] and res["by_norm"]["beta"]["parents"] == ["alpha"], res["by_norm"]
+    data = {"members": res["members"], "fixed_point": True, "unparsed": [], "conflicts": res["conflicts"],
+            "requirements_file": {"installable_lines": 1}, "target": {"label": "cp312-linux_x86_64"}}
+    line, ok = ic.last_line(data)
+    assert ok and "host_satisfied" not in line and "closure=2" in line, line
+    return "linux target reads CPython 3.12.14; --root is the start label; a run without a host keeps the old last line"
+
+
 CASES = [("a two-level chain closes", case1_two_level_chain_closes),
          ("a marker that excludes the target is not followed (target read, not the running python)",
           case2_marker_for_other_target_not_followed),
@@ -215,7 +231,9 @@ CASES = [("a two-level chain closes", case1_two_level_chain_closes),
          ("a specifier conflict is counted with parent, specifier and installed version", case6_specifier_conflict_counted),
          ("names are matched after normalisation", case7_names_normalised),
          ("each member lands in exactly one class", case8_classes_from_tags),
-         ("the saved file, its bounded re-print, explain and the fetch list", case9_cli_last_line_from_file_explain_fetchlist)]
+         ("the saved file, its bounded re-print, explain and the fetch list", case9_cli_last_line_from_file_explain_fetchlist),
+         ("the linux target reads 3.12.14 and the --root start is its own parent label",
+          case10_linux_target_and_root_form)]
 
 
 def main():

@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~130</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-130 @a3b5781814) and again in the main tree after merge 97477e8786: CTar1-AC1 LINUX-CLOSURE arms=7/7 ok=True; CTar1-AC2 INTAKE-CLOSURE-TEST cases=10/10 ok=True (base 9/9); CTar1-AC3 INTAKE-CLOSURE target=cp312-linux_x86_64 lines=1 closure=24 dependencies_added=23 pure=17 fits=0 needs_fetch=7 unknown_not_installed=0 specifier_conflicts=0 fixed_point=True ok=True host_satisfied=7 host_conflicts=0 to_fetch=17; proof VALID; the Windows closure (cp314-win_amd64, 162 members) still reads back with its stored last line; the branch changed 8 files, all inside the order's paths. The closure is computed from the LAPTOP's installed versions (24 members: yfinance 1.2.0 plus 23 dependencies; 7 left out because the host already satisfies them: cffi, charset-normalizer, pycparser, python-dateutil, six, typing_extensions, urllib3; 17 to fetch; no host conflict); whether any Linux wheel exists on the index for any member is UNREAD. Rows W130-S1 (OBSERVATION, INERT: the manylinux platform list is written out, 33 strings, because packaging reads the running host) and W130-S2 (OBSERVATION, ARMED, disarm owner this issuer: `fetchlist` hard-codes the cp314 win_amd64 suffix and names 7 Windows wheel files for the linux closure; the next cell must not use it for this closure and carries the fix). LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>

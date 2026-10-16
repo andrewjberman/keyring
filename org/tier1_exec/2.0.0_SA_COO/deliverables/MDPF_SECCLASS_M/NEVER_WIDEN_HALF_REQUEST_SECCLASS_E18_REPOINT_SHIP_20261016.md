@@ -25,13 +25,34 @@ Nothing from `lib/`, the shared module `_shared/etf_classification_scheduled.py`
 
 ## Blast radius and what the dry run measured
 
-**Behaviour change in the nightly canonical chain (04:00Z / 23:00Z):** (1) B_01b no longer runs: its outside-model (OpenAI) call and its put into the old list stop; the old list stops growing (CUBE's old row dated 2026-10-11 shows it still writes today). (2) E_18's candidate set is every real-ticker pair absent from the canonical table.
+**Behaviour change in the nightly canonical chain (04:00Z / 23:00Z):** (1) B_01b no longer runs IN THE BD CHAIN: its outside-model (OpenAI) call and its put into the old list stop there. **The old list does NOT stop growing: see 'Writers of the old list after the ship' (CTO msg 6535, limb 1).** (2) E_18's candidate set is every real-ticker pair absent from the canonical table.
 **Measured before the ship (read-only, today):** after the seed, the old-list-only tickers are 13 seeded + 9 held out. Running the shared planner on the 9 held-out names with NO old-list lookup (exactly E_18's post-ship call): **PLANNED 0, UNRESOLVED 9** (the names read as balanced, income-blend, target-date and managed-income funds: no GICS or Schwab source classifies them). So the first night after the ship is expected to **write zero rows** and to print the 9 as unresolved.
 Existing rows, B_02 onward, the served mix objects and AUA: not touched by this act. The chain's wall time falls by B_01b's run (to be read; the STOP rule is the chain's launch-to-stop not exceeding the last fire's by more than 30 minutes).
 
-## Writers of the named property
+## Writers of the named properties (counted; N printed)
 
-The property: an `etf-classifications` row created by the nightly chain. **N = 1** writer in the chain after the ship: E_18's `--upload` conditional put through the scheduled module (`attribute_not_exists(ticker)`, never an overwrite). Before the ship N = 2 (B_01b's put into the OLD list, not this table, and E_18 into this one); B_01b leaves. Counted by reading `CHAIN_CANONICAL` and the call sites in the two scripts.
+**The canonical table** (`etf-classifications`, a row created by the nightly chain): N = 1 after the ship, E_18's `--upload` conditional put through the scheduled module (`attribute_not_exists(ticker)`, never an overwrite); before the ship the same one.
+
+**The OLD list** (`bd-securities`; CTO msg 6535, limb 1; census HEAD, `git grep` of `bd-securities|BD_SECURITIES_TABLE` over `data infra lib scripts .tools`, minus tests and docs: **43 files name it**, **7 of them carry a write verb against it**): after the ship **N = 7 writer files remain a possibility, 1 of them scheduled**:
+- `data/cot/scripts/gold/B_01b.classify_new_securities.py` -- **SCHEDULED, YES.** It names the same table (`BD_SECURITIES_TABLE = 'bd-securities'`, put at `:331`, `classified_by gpt-5.4-mini`), is in the cottonwood chain (`data/cot/scripts/gold/gold_dispatch.sh:46` `canonical = B_00 B_01 B_01b B_02 ...`) and is DEPLOYED at `s3://opal-data-cot/code/gold/B_01b.classify_new_securities.py` (LastModified 2026-10-07T07:09:42Z). The cottonwood gold stage is triggered by the `cot-silver-complete` event rule (`cot-bd-session-trigger`) and wrote its outputs on 2026-10-15 ~11:37-11:40Z (measured `list-objects`). **NOT measured:** whether B_01b ran in that cottonwood run (no per-run log of it was read). So "the old list stops growing" is wrong while that stays in the cottonwood chain; this act does not touch the cottonwood tree (a separate deployment bucket and a separate pair, a round-28 item).
+- `data/inf/scripts/classification/classify_assets.py` -- a MANUAL script (`--upload` writes `bd-securities`, put at `:343`); no scheduler or dispatcher reference found (git grep over `data/inf/scripts infra/aws/terraform .tools`).
+- `data/black_diamond/scripts/classification/{backfill_name_aliases,classify_bd_securities,seed_bd_securities,seed_canonical_securities}.py` -- MANUAL BD classification scripts; no scheduler reference read.
+Removed by this act: BD's `B_01b` (the BD chain). Measured cadence of old-list growth today: 36 new rows on 2026-10-04 (25 `NAME::` keys, 11 real tickers) and 42 on 2026-10-11 (37 `NAME::`, 5 real tickers), at 05:05Z on those two dates.
+
+## The old list's READERS outside the BD canonical chain, priced for a NEW ticker (CTO msg 6535, limb 2)
+
+A "new ticker" here is one the BD chain sees after the ship: no old-list row (BD's B_01b is gone), and a canonical row only if E_18 resolves it (a real ticker with a GICS or Schwab source; a `NAME::` pseudo-key gets none, E_18 keeps it detection-only). Expected per reader, both branches (Branch 1 = the dry run and the served bytes, which change none of this; Branch 2 = the first fire and after):
+
+| reader (file) | how it reads the old list (measured by reading the file) | expected for a new real ticker E_18 cannot resolve, or a `NAME::` key | expected for a new real ticker E_18 resolves |
+|---|---|---|---|
+| partners-data `etf_classifier.py` + `lambda_function.py:1054` | the OLD LIST ONLY (full scan at cold start; no canonical read) | layer 3 name regex (alt / cash / fixed income), then layer 4: an alpha 1-5 character ticker -> `equity`, else `''` (the caller reads `''` as cash residual). **NOT 'Unclassified': an `equity` or a cash-residual label, which can be wrong.** | the SAME (it never reads the canonical row) |
+| investor_reporting `holdings_snapshot.py` + `bd_securities_fallback.py` | canonical `etf-classifications` FIRST, the old-list fallback only for a ticker the canonical table lacks (`_NarrowedClassifier`) | the fallback's same four layers: `equity` for an alpha 1-5 ticker, else `''`, else name regex | the CANONICAL class (correct) |
+| runners_49f `a07_dim_asset_classification.py` | canonical first (ticker, `CUSIP:`, `BBG:`), old-list maps on a canonical miss, then a regex / ticker-shape fallback | the ticker-shape fallback (same heuristic family) | the CANONICAL class |
+| semantic-news-layer3-curation `lambda_function.py:65` | loads the `equity` and `fixed_income` tickers of the old list at cold start (its news universe) | the ticker is absent from the layer-3 curation universe (no curated news for it) | the same: it does not read the canonical table |
+| inf `classify_assets.py` | writer (above) and a reader of the keys already classified | n/a (manual) | n/a |
+| inf `INF_D_03`, schwab `build_gold_firm_composition.py` | **NOT readers**: the only mentions are comments (`INF_D_03:20-22, :560`, `build_gold_firm_composition.py:7`: "no bd-securities lookup") | none | none |
+
+Sizing, measured: the old list grew by 36 and 42 rows on the two Sundays above, 5-11 of them real tickers per week. After the ship the real tickers go to E_18 (the canonical row, correct for the readers that read it; the heuristic for the two that do not) and the `NAME::` keys get no row anywhere; the BD pages are NOT affected (C_06, D_03, D_04 read `lib/etf_classifier.py`, which never opens the old list). **What the act buys and costs:** it stops BD's outside-model writes; it makes partners-data and the news layer 3 blind to new BD securities until they are repointed (their own pairs, carried to round 28 with the cottonwood B_01b and the inf and manual writers).
 
 ## Both branches of the expected outcome
 
