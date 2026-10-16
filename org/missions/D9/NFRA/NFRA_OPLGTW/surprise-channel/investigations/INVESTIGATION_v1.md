@@ -19445,3 +19445,53 @@ name the one known failure instead of silently inheriting it.
     "notes": "Cost of the sound form: one paginated API call per role instead of one state read. Non-application: reading a role's trust policy or its own attributes, which the role resource does own. Candidate mechanism for the owner, if wanted: the cloud-ops skill's IAM INSTRUMENT TRAPS section already holds comp-iam's and simulate-principal-policy's failure modes and is where this one belongs; this row is not a request for that edit, only the measurement it would cite."
   }
   ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T03:26:03Z",
+  "id": "NFRA_OPLGTW-Z-W113-S1",
+  "one_line": "The naming gate REFUSES the served json field name 'etfs' in app/portal_json_served.py (verdicts at lines 366 and 368) as a hand-kept carrier; the gate is in WARN window, so the commit landed with the refusal standing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 35848c8689 on wk-NFRA_OPLGTW-113: the safe-commit run printed 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/portal_json_served.py:366 etfs -> lookup(etfs)' and ':368', then '(WARN window: 2 REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)'. The commit-gate, to-pipeline-gate and surprise-row-gate on the same commit passed.",
+      "The gate's live registry read failed in this sparse worktree: 'LIVE-READ-FAILED: CensusError ... comp-find [aws] BLOCKED'. The string is the key of the served etf_returns object's own etfs field, read verbatim from the object (measured structure at HEAD, not minted by this worker)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The commit-time naming gate admits a committed .py file whose strings are ratified terms, and a field name read from a served object is not a hand-kept carrier of a registry term; the OG-sv-1 WORKER FACE names no naming step.",
+  "world_is": "The naming gate refuses 'etfs' as a hand-kept carrier outside every permitted context, and its live registry read was blocked, so the gate could not confirm the term either way. Nothing was renamed and no override was used.",
+  "notes": "Cost of the open form: at LGIC/NAMING ENFORCE, any later commit touching app/portal_json_served.py is refused until the registry lookup is wired or the gate admits served field names. Renaming the served field would be wrong, since it is the object's own key."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T03:26:03Z",
+  "id": "NFRA_OPLGTW-Z-W113-S2",
+  "one_line": "The row schema the order names, org/surprise_channel/schemas/investigation_item.schema.json, is not in this sparse worktree, so this row is matched to the format of the filed rows and not validated against the schema.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured in C:/tmp/wk-oplgtw-113 at HEAD 7c8c1ee4db: the path org/surprise_channel/schemas does not exist (ls: No such file or directory) and a glob of its *.json returns no files.",
+      "git ls-files lists org/surprise_channel paths (for example org/surprise_channel/ADVI_49F/INVESTIGATION_v1.md) that the sparse checkout does not carry, so the directory is tracked but not checked out in this worktree."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's surprise-row form is 'per org/surprise_channel/schemas/investigation_item.schema.json', readable from the worker's worktree.",
+  "world_is": "The schema is not checked out in this worktree. The row was written to the format of the filed rows (NFRA_OPLGTW-Z-W10-S4 and its siblings); the surprise-row-gate at commit is the only mechanical check on it.",
+  "notes": "Cost: none to the cell. Non-application: a worktree that carries the schema needs no such check. Candidate for the owner: a sparse-cone entry for org/surprise_channel/schemas."
+}
+```
