@@ -9614,6 +9614,28 @@ carries none.
     "spec_asserts": "MX-c-27's face asserted that a tracked overlay file under workflows/ could be applied by default and committed under the enforcing gate.",
     "world_is": "The enforcing gate refuses a new workflows/ file carrying firm tokens, and a default overlay contaminates the carrier-free rows the generator tests assert. Data the issuer maintains belongs in the issuer's deliverables folder, applied only when named.",
     "dismissal_reason": "S2 and S3 were the order's design and are fixed and re-graded; S1, S4 and S5 change no graded criterion. The issuer is disarm_owner of all five. Lesson carried to the round-20 analysis: a new file under workflows/ that carries data with firm tokens meets the enforcing gate; run naming-gate --enforce on the planned file at the cut."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W53-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~53",
+    "surfaced_at": "2026-10-16T20:20:25Z",
+    "one_line": "MX-c-39 step 1 places depth_kind right after a depth spec's method line; the mdpf_get_aggregate_aua depth spec has no method line, so depth_kind: series_start was placed as the spec's last line, after its field line.",
+    "spec_asserts": "Order section 1, step 1: every depth spec dict naming a row and a field where the field is total.series_start or as_of_first gains the line depth_kind: series_start (right after its method line).",
+    "world_is": "workflows/atom_decomposition/tool_index/members.yaml@1071edbdbc: the mdpf_get_aggregate_aua depth spec (lines 294-306) names row mp.03.aggregate-aua-timeseries, scope global and field as_of_first and has no method key; depth_kind is its line 306. The three other series specs (gateway_query_catalog mp.01 and mp.03 at lines 152-165, mdpf_get_aum_metrics mp.01 at lines 307-320) each carry method body-field and take the line after it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/atom_decomposition/tool_index/members.yaml@1071edbdbc lines 294-306 (mdpf_get_aggregate_aua: depth spec with row, scope, field and no method line; depth_kind at line 306)",
+        "workflows/atom_decomposition/tool_index/members.yaml@1071edbdbc lines 152-165 and 307-320 (the three other series specs, each with method body-field and depth_kind on the next line)",
+        "c39.AC2 at 1071edbdbc: kind differs from its member spec 0 of 39 measured history_depth claims; series_start claims 6, the anchor, so the mdpf_get_aggregate_aua spec is graded as declared"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
