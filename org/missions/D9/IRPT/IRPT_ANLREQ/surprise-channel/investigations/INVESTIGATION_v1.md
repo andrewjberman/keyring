@@ -22094,3 +22094,29 @@
   "world_is": "The provisioner's default sparse checkout omits the ycharts and ops directories under investor-reporting, and the issuer's scope arm named no worker folder."
 }
 ```
+
+## IRPT_ANLREQ-D2-W259-S1 -- the proof checker refuses a staged artifact's sha256 as its commit_or_etag, so the stage outputs cannot be listed as artifacts_produced
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W259-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~259",
+  "surfaced_at": "2026-10-16T11:49:10Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The proof-of-spec checker's artifact-resolution limb treats config_data rows as git refs, so the tarball, SHA256SUMS and four host scripts staged outside the repository (sha256 commit_or_etag) are refused; the order's commit-hash rule has no form for an unpublished stage output.",
+  "spec_asserts": "TO-AR-g-122 proof_of_spec: in artifacts_produced, name each file with the hash of the commit that holds it, never a placeholder (record first). The stage outputs (tarball, SHA256SUMS, four host scripts) are artifacts this order produces.",
+  "world_is": "The driver wrote the tarball, SHA256SUMS and four host scripts to C:/dev/irpt-release-r34g, outside the repository, and no commit holds them. Declaring them as config_data rows with their sha256 as commit_or_etag makes proof-of-spec-check.py exit rc=1 INVALID with six artifact-resolution violations (the tarball and the five staged files), since that limb accepts only a 7-40 hex commit-ish for a non-skipped kind. The committed record (a583fe2205) is the one artifact a commit holds; its artifact, SHA256SUMS and scripts keys carry the six hashes. The instance lists only the record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check.py on org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~259/IRPT_ANLREQ.TO-AR-g-122.resident-release-r34d-checker-fix.proof_of_spec.json AR122-g-AC1,AR122-g-AC2 (first run, rc=1): VIOLATION: artifact-resolution: 'C:/dev/irpt-release-r34g/irpt-resident-0485393f3a-r34d.tar.gz' carries commit_or_etag '9a088a5c...78ab', which is neither PENDING-THIS-COMMIT nor a 7-40 hex commit-ish for a repo artifact; five further VIOLATION lines for the SHA256SUMS and the four scripts; INVALID (rc=1)",
+      "driver line: R34D-BUILD-OK 314 members, builds identical 314 of 314, changed 3 added 0 removed 0, scripts 4, tar 9a088a5cfdeecd84173ee85b82d93ecf2b6fdfa311d3aec982e7db7134cf78ab",
+      "stage folder listing: C:/dev/irpt-release-r34g holds irpt-resident-0485393f3a-r34d.tar.gz, irpt-resident-0485393f3a-r34d.package.SHA256SUMS and scripts/ (install_r34.sh, pre_read_r34.sh, resident_host_install_0485393f3a-r34d.sh, rollback_r34.sh); none is in git"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
