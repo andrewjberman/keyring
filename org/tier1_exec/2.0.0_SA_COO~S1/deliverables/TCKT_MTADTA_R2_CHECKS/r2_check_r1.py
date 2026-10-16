@@ -4,6 +4,7 @@ Run from the repo root by the CloudOps seat, after the apply, under the box's ow
   python r2_check_r1.py applied  -> R1-APPLIED-OK  (bucket policy, key policy, aliases, group read back as built)
   python r2_check_r1.py refusals -> R1-REFUSALS-OK (an admin GetObject, a non-member invoke, the collector role's grants)
   python r2_check_r1.py plan     -> R1-PLAN-OK     (a plan of the trino root after the policy lands exits 0: no lock-out, no drift)
+  python r2_check_r1.py mfa      -> R1-MFA-OK      (the group's invoke needs MFA; the group holds Andrew_Berman alone, who has an MFA device)
 
 No object body, secret or event is printed. Only counts, names and error codes.
 """
@@ -147,9 +148,45 @@ def plan():
     return 0
 
 
+def mfa():
+    bad = []
+    rc, out, err = aws("iam", "list-group-policies", "--group-name", GROUP)
+    names = (j(out) or {}).get("PolicyNames", []) if rc == 0 else []
+    if not names:
+        print("R1-MFA-REFUSED no group policy (%s)" % (err.strip().splitlines()[-1][:100] if err.strip() else "none listed"))
+        return 1
+    gated = 0
+    for n in names:
+        rc, out, err = aws("iam", "get-group-policy", "--group-name", GROUP, "--policy-name", n)
+        doc = (j(out) or {}).get("PolicyDocument", {})
+        for st in doc.get("Statement", []):
+            acts = st.get("Action")
+            acts = acts if isinstance(acts, list) else [acts]
+            if "lambda:InvokeFunction" in acts and st.get("Effect") == "Allow":
+                cond = json.dumps(st.get("Condition", {}))
+                if "MultiFactorAuthPresent" in cond and "true" in cond.lower():
+                    gated += 1
+                else:
+                    bad.append("an invoke Allow without the MFA condition")
+    if gated < 1:
+        bad.append("no invoke Allow carries aws:MultiFactorAuthPresent")
+    rc, out, err = aws("iam", "get-group", "--group-name", GROUP)
+    members = sorted(u["UserName"] for u in (j(out) or {}).get("Users", [])) if rc == 0 else []
+    if members != ["Andrew_Berman"]:
+        bad.append("group members %r, ruled: Andrew_Berman alone" % members)
+    rc, out, err = aws("iam", "list-mfa-devices", "--user-name", "Andrew_Berman")
+    if rc != 0 or not (j(out) or {}).get("MFADevices"):
+        bad.append("Andrew_Berman has no MFA device")
+    if bad:
+        print("R1-MFA-REFUSED " + "; ".join(bad))
+        return 1
+    print("R1-MFA-OK members=1 mfa_devices>=1")
+    return 0
+
+
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else ""
-    fn = {"applied": applied, "refusals": refusals, "plan": plan}.get(mode)
+    fn = {"applied": applied, "refusals": refusals, "plan": plan, "mfa": mfa}.get(mode)
     try:
         sys.exit(fn() if fn else 2)
     except Exception as e:  # noqa: BLE001
