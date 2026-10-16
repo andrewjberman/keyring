@@ -24083,3 +24083,53 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "No action in this order. The issuer decides whether the print route should carry the tab's state (a URL or storage read) or stay on the bundle document; the export button's in-page preview is covered."
 }
 ```
+
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "id": "IRPT_DASHBD-D2-S129",
+  "surfaced_at": "2026-10-16T19:50Z",
+  "one_line": "TO-DB-b-308 step 6: the dry run of the 25-day first range hit the 900 s Lambda timeout (Max Memory Used 640 MB of 1024); nothing was written; the pair stops at Act 3 with the new code live.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REPORT RequestId 6fe8d9df-05b1-4472-a663-a3d816eb1b39: Duration 900000.00 ms, Memory Size 1024 MB, Max Memory Used 640 MB; invoke status 200 with FunctionError Unhandled (Task timed out); the function log holds only INIT, START, the trading_calendar WARN, END, REPORT (no per-day line)",
+      "whole gold prefix read after: 6650 history keys with the before digest e6ed5513.., 132 landed keys each at one version, 0 delete markers, 0 keys beyond 2026-10-15; function CodeSha256 +iYXakKx7.. , schedule ENABLED",
+      "sent 2026-10-16T19:32:16Z with {rewrite {start 2026-07-10, end 2026-08-13}, dry_run true}, one invocation, not retried"
+    ]
+  },
+  "spec_asserts": "The packet (Act 3 and section 6 Branch C): the dry run derives 25 days within 720 s and 819 MB.",
+  "world_is": "The 25-day derive does not finish in 900 s at 1024 MB; memory is not the limit (640 MB at the kill), time is, and a resize cannot lift the 900 s timeout. The per-day cost is unmeasured (at least 36 s a day on average if every day completes). A smaller range, a faster derive, or another route is a new ruling and pair; no event was run."
+}
+```
+
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "id": "IRPT_DASHBD-D2-S130",
+  "surfaced_at": "2026-10-16T19:50Z",
+  "one_line": "TO-DB-b-308 step 4: terraform fmt -check flags the pinned file iam.tf of account-return-daily; not edited, not part of the plan.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform fmt -check on infra/aws/terraform/investor-reporting/account-return-daily printed iam.tf, rc 3; iam.tf sha256 be6fe3f38597 equals the packet pin; the plan read 0 add 1 change 0 destroy on the function only"
+    ]
+  },
+  "spec_asserts": "Step 4: fmt -check passes, or a failure on a pinned file is recorded as a row and the file left alone.",
+  "world_is": "iam.tf carries a formatting deviation that predates this order and was left untouched."
+}
+```
