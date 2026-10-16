@@ -20632,3 +20632,55 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S136 -- the swap's history port does not cache a failed ticker (r34 packet 2b, CTO half rows owed)
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-16T02:31:48Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S136",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "In the r34 swap, a candidate whose single Yahoo request raises is dropped as HISTORY_ERROR and is not cached, so every later holding of the same class asks it again.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/yahoo_history_days.py __call__ and prefetch (read at the r34 pin 78f2c2a9c3)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py choose_replacement HISTORY_ERROR branch",
+      "packet NEVER_WIDEN_PACKET_RESIDENT_R34_20261016.md section 2b; CTO half rows owed"
+    ]
+  },
+  "spec_asserts": "A history port answers each ticker at most once per job.",
+  "world_is": "yahoo_history_days._HistoryDays.__call__ sets self._days[ticker] only after a request returns; a raising request leaves the ticker unset, and swap_replacement.choose_replacement catches the exception as HISTORY_ERROR. With Yahoo down this can repeat up to the class size (1229 for the largest class) in single calls per swapped holding. Bounded; fails safe (the holding is left out with the not-analysed disclosure). Owner 2.0.0_SA_COO~G2. Does not hold the r34 apply (CTO half). Clears when a per-job negative cache lands, with the classifier release (C-SWAP step 3) at the latest."
+}
+```
+
+## IRPT_ANLREQ-D2-S137 -- the r34 pool snapshot goes stale after 2026-11-15
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-16T02:31:48Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S137",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The shipped swap pool is dated 2026-10-16 and swap_pass.STALE_DAYS is 30, so from 2026-11-16 every swap still runs but its disclosure says the pool is older than 30 days.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "swap_pass.py STALE_DAYS = 30 and _named (read at the pin)",
+      "swap_pool.json pool_as_of 2026-10-16, claim held (AQ2 read, dcdc6cb3d1)",
+      "packet section 2 row 'a pool older than 30 days'"
+    ]
+  },
+  "spec_asserts": "A swap pool is current when a swap runs.",
+  "world_is": "swap_pass.load_pool returns stale=True when run date minus pool_as_of exceeds STALE_DAYS (30); _named appends the older-than text; the swap is not refused. The pool is a held snapshot inside the package and is not refreshed at run time. Owner 2.0.0_SA_COO~G2. Does not hold the r34 apply. Clears when a refreshed pool release is packeted before 2026-11-15, or the classifier release replaces the snapshot."
+}
+```
