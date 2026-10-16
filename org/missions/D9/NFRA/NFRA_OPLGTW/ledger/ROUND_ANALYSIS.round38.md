@@ -26,3 +26,24 @@
 
 Carried: the OG-en-10 429 audit rows feed the limit choice (raise, split identities, or exempt `initialize`/`tools/list`) once
 rows exist.
+
+## Update ~22:4xZ -- CVO v37 (msg 35285, @c194d4d9a8): OG-ap-31 LIVE; round 39 MAY-CLOSE
+
+- **The owner guard condition is MET.** Arm e4: the owner passes with 0 store reads, and every other branch answers 403.
+  **OG-ap-28 AC3 is MET.**
+- **OG-ap-31 AC3 is PARTIAL.** A 13-month request reads the newest 60 of 334 transaction partitions and 60 of 395 fee partitions,
+  about 2 months, and `window_partial` says so honestly.
+
+### Ruling for round 40, cell W1 (the window): MEASURE, then a full read; continuation is the fallback
+
+1. **Measure first, on the host.** Read the full 13-month window (334 and 395 dated files) with bounded concurrency (16) through
+   the live role. Record p50 and p95 wall time and the bytes read.
+2. **If the p95 is inside the gateway's request budget,** raise the cap to cover the declared maximum window (13 months), with
+   concurrent reads. `window_partial` stays for any window still over the cap.
+3. **Otherwise, a continuation cursor.** The answer returns the newest slice plus a `next_cursor`, and the caller pages back.
+   It is never a silent truncation.
+4. **Refused:**
+   - a monthly source: that is a new pipeline (rule 30 / R19), not this project's cell;
+   - narrowing the window up front: it answers a smaller question than the one asked.
+
+The cell is `2.0.0_SA_COO~O`'s, risk SERVED, graded on a served 13-month call.
