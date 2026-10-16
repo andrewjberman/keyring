@@ -19445,3 +19445,307 @@ name the one known failure instead of silently inheriting it.
     "notes": "Cost of the sound form: one paginated API call per role instead of one state read. Non-application: reading a role's trust policy or its own attributes, which the role resource does own. Candidate mechanism for the owner, if wanted: the cloud-ops skill's IAM INSTRUMENT TRAPS section already holds comp-iam's and simulate-principal-policy's failure modes and is where this one belongs; this row is not a request for that edit, only the measurement it would cite."
   }
   ```
+
+```json
+  {
+    "id": "NFRA_OPLGTW-Z-S158",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+    "surfaced_at": "2026-10-16T03:20:00Z",
+    "one_line": "ap24.AC2 cannot be graded PASS as written: its expect regex requires the field '; policy live yes', which ap24.AC2.sh never prints; the script also counts the pre-existing gateway-blackdiamond-read-role, not the new gateway-49f-blackdiamond-read-role.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run at 19b3257eb9: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap24.AC2.sh printed 'ledger CLOSED 1 of 1; sentinel at HEAD 0; roles live in IAM 6 of 6', RESULT: PASS, exit=0. The order's AC2 <expect> is '(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0; roles live in IAM 6 of 6;  policy live yes.*RESULT: PASS.*exit=0'. The script has no 'policy live' field, so the two cannot match.",
+        "proof-of-spec-check.py on the instance, with the true output, read: 'VIOLATION: acceptance[AC2]: status=PASS but output_evidence does NOT match expect'. The instance therefore records AC2 as FAIL, and the order's <status> is NOT flipped.",
+        "Separately, the script's six-role loop names gateway-blackdiamond-read-role (the live role present before this act, GR_BEFORE.json roles_present) and not gateway-49f-blackdiamond-read-role (the role A3 added), so the count would read 6 of 6 with the 49F role absent. This seat read the 49F role directly: get-role trust = opal-gateway-role only, one inline policy gateway-49f-blackdiamond-read-policy (sha256-16 ceb6ae001918528d), targeted re-plan No changes.",
+        "The act itself is complete and read back: 6 of 6 new roles live, 12-target re-plan No changes, ledger nfra-oplgtw-grants-ap24 CLOSED, live BD and Schwab policy hashes unchanged."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order Phase B item 7 / AC2: the roles are live in IAM, each read back, and the ledger is closed; AC2 expects the output field '; policy live yes' (GR_APPLIED.json _policy_live).",
+    "world_is": "The act is done and the state is as AC2 describes, but the check script the order points at cannot print the field its own expect requires, so no honest run can PASS AC2 as written; and its role list would not notice a missing 49F role. The fix is the issuer's, in the check script only: add 'policy live yes' (read _policy_live from W/GR_APPLIED.json, which this seat wrote as true) and name gateway-49f-blackdiamond-read-role in place of gateway-blackdiamond-read-role. Nothing in the world needs to change.",
+    "notes": "Per the order, a criterion this seat cannot meet as written is refused and filed BLOCKING, work continues. The instance is committed with AC2 FAIL and the true output; on the issuer's amendment this seat re-runs AC2 and the checker and flips the order if both PASS. Cost: one edit to a script the issuer owns."
+  }
+  ```
+
+```json
+  {
+    "id": "NFRA_OPLGTW-Z-S159",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZS",
+    "surfaced_at": "2026-10-16T03:30:00Z",
+    "one_line": "Z-S158's condition is MET: ap24.AC2.sh amended at d55475e545 now prints '; policy live yes' and names the 49F role; AC2 re-run PASS and the order flipped.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r37/checks/ap24.AC2.sh at HEAD d55475e545 printed 'ledger CLOSED 1 of 1; sentinel at HEAD 0; roles live in IAM 6 of 6;  policy live yes', RESULT: PASS, exit=0 (run by this seat after msg 34693).",
+        "proof-of-spec-check.py on the regenerated instance, --governing-order the order: VALID rc=0 with AC1 and AC2 PASS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row NFRA_OPLGTW-Z-S158: AC2 cannot be graded PASS as written until the check script prints '; policy live yes' and names the 49F role.",
+    "world_is": "Both changes landed in the check script only (issuer, d55475e545) and the world was already as AC2 describes. This row does not change S158: a standing row is not edited, so S158 still reads BLOCKING/UNDER_INVESTIGATION in the file, and its disposition is the adjudicator's, citing this row.",
+    "notes": "Filed because the issuer asked that Z-S158 be closed and a row cannot be mutated by its filer."
+  }
+  ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T03:26:03Z",
+  "id": "NFRA_OPLGTW-Z-W113-S1",
+  "one_line": "The naming gate REFUSES the served json field name 'etfs' in app/portal_json_served.py (verdicts at lines 366 and 368) as a hand-kept carrier; the gate is in WARN window, so the commit landed with the refusal standing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 35848c8689 on wk-NFRA_OPLGTW-113: the safe-commit run printed 'NAMING REFUSE infra/aws/ec2/opal-gateway/app/portal_json_served.py:366 etfs -> lookup(etfs)' and ':368', then '(WARN window: 2 REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)'. The commit-gate, to-pipeline-gate and surprise-row-gate on the same commit passed.",
+      "The gate's live registry read failed in this sparse worktree: 'LIVE-READ-FAILED: CensusError ... comp-find [aws] BLOCKED'. The string is the key of the served etf_returns object's own etfs field, read verbatim from the object (measured structure at HEAD, not minted by this worker)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The commit-time naming gate admits a committed .py file whose strings are ratified terms, and a field name read from a served object is not a hand-kept carrier of a registry term; the OG-sv-1 WORKER FACE names no naming step.",
+  "world_is": "The naming gate refuses 'etfs' as a hand-kept carrier outside every permitted context, and its live registry read was blocked, so the gate could not confirm the term either way. Nothing was renamed and no override was used.",
+  "notes": "Cost of the open form: at LGIC/NAMING ENFORCE, any later commit touching app/portal_json_served.py is refused until the registry lookup is wired or the gate admits served field names. Renaming the served field would be wrong, since it is the object's own key."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T03:26:03Z",
+  "id": "NFRA_OPLGTW-Z-W113-S2",
+  "one_line": "The row schema the order names, org/surprise_channel/schemas/investigation_item.schema.json, is not in this sparse worktree, so this row is matched to the format of the filed rows and not validated against the schema.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured in C:/tmp/wk-oplgtw-113 at HEAD 7c8c1ee4db: the path org/surprise_channel/schemas does not exist (ls: No such file or directory) and a glob of its *.json returns no files.",
+      "git ls-files lists org/surprise_channel paths (for example org/surprise_channel/ADVI_49F/INVESTIGATION_v1.md) that the sparse checkout does not carry, so the directory is tracked but not checked out in this worktree."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's surprise-row form is 'per org/surprise_channel/schemas/investigation_item.schema.json', readable from the worker's worktree.",
+  "world_is": "The schema is not checked out in this worktree. The row was written to the format of the filed rows (NFRA_OPLGTW-Z-W10-S4 and its siblings); the surprise-row-gate at commit is the only mechanical check on it.",
+  "notes": "Cost: none to the cell. Non-application: a worktree that carries the schema needs no such check. Candidate for the owner: a sparse-cone entry for org/surprise_channel/schemas."
+}
+```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:11:57Z",
+    "one_line": "After every firm-name literal of the client modules reads through lookup(), the full-add naming gate in ENFORCE still REFUSEs 8 lines of client_adapter_bd49f.py: Black Diamond dim column names, a silver table name and a response key, none of them a firm name.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of app/client_*.py, base 5aeafbda15> --staged-paths <9 paths> --enforce: NAMING-GATE REFUSE 9 graded, of which 8 are REFUSE on client_adapter_bd49f.py at lines 54, 269, 272, 275, 409, 412, 442 (output saved as W/CL7_AFTER.txt).",
+        "READ infra/logic/registry/scopes.json, the 49financial row: alias bd is refused in every slot per NAMING_SCHEMA refused_tokens, and lookup('bd') returns the 49financial row whose short form is 49f, so no registry row supplies a Black Diamond column prefix.",
+        "READ app/client_adapter_bd49f.py at the worktree: DIM_COLUMNS, row.get('bd_account_id') and the fact_bd_allocation table name are upstream data identifiers; renaming them changes what the adapter reads.",
+        "RAN python .tools/naming-gate.py --diff <git diff HEAD of app/client_*.py> --enforce: NAMING-GATE PASS 1 graded; the eight strings are untouched context at HEAD, not added lines."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-7 items 1, 2 and 5 and AC2: every hand-kept firm-name literal in the seven adapters and the core reads through lookup(), and the full-add naming gate over app/client_*.py in ENFORCE prints no REFUSE.",
+    "world_is": "The firm literals are conformed (gate lines for firm tokens: 0). Eight strings of bd49f still REFUSE under the full-add construction: bd_account_id and bd_account_number (the Black Diamond dim column names), fact_bd_allocation (a silver table name) and market_value_profile (a response key that the gate classes as an INSTANCE_PROFILE name). Their firm-token content is the refused alias bd or an out-of-pattern class, and no lookup() row supplies a replacement, so they stay byte-identical. The release diff against HEAD does not grade them. Disposition is the CTO's or CRO's: a sanctioned spelling for the Black Diamond column prefix, or a rule for upstream identifiers. No gate was overridden and no override was placed.",
+    "notes": "AC2 stays FAIL as written (REFUSE 8, want 0). Its literal-count half holds (0)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:11:57Z",
+    "one_line": "The alias orion/4698, the core's spelling of the inflection Orion master 4698, is not a registry spelling: lookup('orion/4698') raises KeyError, so it is a missing registry row.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python -I lib/opal_naming.py lookup() over the spellings at the worktree (base 5aeafbda15): 49financial, 49f, bd49f, bd, cottonwood, inflection and 4698 resolve; orion/4698 raises KeyError.",
+        "READ infra/logic/registry/scopes.json: the 4698 MASTER row (firm inflection) carries no alias orion/4698; no row of the registry spells it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-7 item 2: a scope the registry does not hold is a KeyError, which is a missing registry row to file as a BLOCKING row naming the scope; every firm alias typed as a literal reads through lookup().",
+    "world_is": "client_core._names() keeps the literal orion/4698 unchanged as the key of its alias map (the gate grades it CONFORMANT as SECRET), and no adapter reads it. 4698 resolves to the MASTER row whose firm is inflection, so only the vendor-prefixed spelling is missing. The row is for 4.0.0_SA_CRO~Z to write; this seat added no row and placed no override.",
+    "notes": "Non-application to the adapters: none reads orion/4698. Affects only the core alias map."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S9",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:11:57Z",
+    "one_line": "The gateway hookup registers the adapters at import, but FIRMS now binds at first call, so with the registry unreadable the vendor disjointness check is deferred until the first call.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ app/tools.py at the worktree (base 5aeafbda15), the for-loop that calls _cc.register_adapter on the seven adapter modules at import.",
+        "READ app/client_core.py register_adapter at the worktree: _firms_of(module) binds the module, and on CoreRefusal registry_unavailable the check is skipped so the gateway still starts."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-7 item 3: each adapter module imports safely with no registry read at import, and the firm constants resolve lazily at the first call.",
+    "world_is": "When the registry is unreadable at import, a vendor's modules are registered without the disjointness check; the check runs the first time the registry binds. Nothing overlaps today: the Black Diamond pair serves 49financial and cottonwood, and the other five modules are disjoint. Where the registry is readable, registration binds and checks as before.",
+    "notes": "Latent: it matters only for an overlap added while the registry is unreadable."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:11:57Z",
+    "one_line": "tests/test_og_ch1.py run as a file already fails test_ogch1_ac02 at HEAD: its first admitted call imports app.tools, which re-registers the real adapters over the fakes the test registered.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN pytest tests/test_og_ch1.py in a git archive extract of HEAD 5aeafbda15 at .scratch/headcheck: 1 failed (test_ogch1_ac02, ValueError a different adapter is already registered), 5 passed.",
+        "RAN the same file at the worktree after OG-cl-7: 1 failed (test_ogch1_ac02, same ValueError), 5 passed. The test_og_cl1 through test_og_cl6 suites pass 50 of 50."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-7 item 4: every existing client test still passes.",
+    "world_is": "The failure is pre-existing: admit_scope imports app.tools lazily inside the test, and the tools import registers the seven real adapters into the dict the test has just reset, which holds the fakes for blackdiamond. Because the failure is at HEAD, OG-cl-7 changes nothing here; the file's named test ac04 passes again after the module attribute restore.",
+    "notes": "Non-application: a run of the whole gateway suite, where another test may import app.tools first."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:40:00Z",
+    "one_line": "The commit-time naming gate does not consult name_rulings.json: bd_account_id (hand-kept carrier) still REFUSEs at client_adapter_bd49f.py:54, :269 and :272 after its none_owed row exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of app/client_*.py> --enforce after the none_owed row was added to infra/logic/registry/name_rulings.json (W/CL8_AFTER.txt): NAMING REFUSE client_adapter_bd49f.py:54, :269, :272 bd_account_id -> lookup('49financial'), the same why as before the row.",
+        "READ .tools/naming-gate.py _judge at lines 2329-2373: the carrier branch (typ None) returns REFUSE on carrier only; grep for name_rulings in naming-gate.py returns no match. The rulings are read only for key rulings (_per_firm_rulings, lines 1951-1955) and the placement census (_rootcheck, line 2662)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-8 item 3 and AC2: the four none_owed rows answer the refused identifiers, so the full-add naming gate in ENFORCE prints no REFUSE; if the gate does not consult the file for a type, file a BLOCKING row naming the (name, type) and the gate file/line, and rename nothing.",
+    "world_is": "naming-gate.py never reads name_rulings.json, so a none_owed row does not clear a hand-kept carrier. The consumer is .tools/naming-apply-gate.py ruling_amend (lines 282-298), keyed by (name, node type); a carrier has no node type, and the printed type word is the phrase 'hand-kept carrier', so a row of that type could not match there either. Nothing was renamed, overridden or edited in the gate.",
+    "notes": "Non-application: the release commit diff against HEAD does not grade these lines (they are untouched context); only the full-add construction of AC2 does."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S12",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:40:00Z",
+    "one_line": "The commit-time naming gate does not consult name_rulings.json: bd_account_number (hand-kept carrier) still REFUSEs at client_adapter_bd49f.py:54 and :275 after its none_owed row exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of app/client_*.py> --enforce after the row was added (W/CL8_AFTER.txt): NAMING REFUSE client_adapter_bd49f.py:54 and :275 bd_account_number -> lookup('49financial'), same why as before.",
+        "READ .tools/naming-gate.py _judge lines 2329-2373 (carrier branch REFUSE): no reference to name_rulings; the consumer is .tools/naming-apply-gate.py ruling_amend lines 282-298, keyed by (name, node type)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-8 item 3 and AC2: a refused (name, type) whose none_owed row exists stops refusing; if the gate does not consult the file for the type, file a BLOCKING row naming the (name, type) and the gate file/line; rename nothing.",
+    "world_is": "The commit limb refuses bd_account_number as a hand-kept carrier of bd whatever name_rulings.json says. The ruling arm that reads the file (naming-apply-gate.py ruling_amend) is not the commit limb AC2 grades, and its key is a node type a carrier does not have.",
+    "notes": "Non-application: the release commit diff against HEAD does not grade these lines (untouched context)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S13",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:40:00Z",
+    "one_line": "The commit-time naming gate does not consult name_rulings.json: fact_bd_allocation (hand-kept carrier) still REFUSEs at client_adapter_bd49f.py:409 after its none_owed row exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of app/client_*.py> --enforce after the row was added (W/CL8_AFTER.txt): NAMING REFUSE client_adapter_bd49f.py:409 fact_bd_allocation -> lookup('49financial'), same why as before.",
+        "READ .tools/naming-gate.py _judge lines 2329-2373: carrier branch REFUSE with no name_rulings read; grep for name_rulings in naming-gate.py: no match."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-8 item 3 and AC2: the none_owed row for (fact_bd_allocation, hand-kept carrier) clears the refusal; if the gate does not consult the file for the type, file a BLOCKING row naming the (name, type) and the gate file/line; rename nothing.",
+    "world_is": "The commit limb refuses fact_bd_allocation as a hand-kept carrier of bd regardless of name_rulings.json. The only reader of the file that keys by name is naming-apply-gate.py ruling_amend (lines 282-298), keyed by node type, which a carrier does not carry.",
+    "notes": "Non-application: the release commit diff against HEAD does not grade this line (untouched context)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S14",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:40:00Z",
+    "one_line": "The commit-time naming gate does not consult name_rulings.json: market_value_profile (INSTANCE_PROFILE) still REFUSEs at client_adapter_bd49f.py:412 and :442 after its none_owed row exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of app/client_*.py> --enforce after the row was added (W/CL8_AFTER.txt): NAMING REFUSE client_adapter_bd49f.py:412 and :442 market_value_profile -> {system}-market-value-profile, 'NEW and OUT-OF-PATTERN as INSTANCE_PROFILE: REFUSE', same as before.",
+        "READ .tools/naming-gate.py _judge lines 2375-2376: the grade of the classified type (nm.grade) decides; no name_rulings read in the file (grep: no match)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-8 item 3 and AC2: the none_owed row for (market_value_profile, INSTANCE_PROFILE) clears the refusal; if the gate does not consult the file for the type, file a BLOCKING row naming the (name, type) and the gate file/line; rename nothing.",
+    "world_is": "The commit limb grades market_value_profile by nm.grade (OUT-OF-PATTERN as INSTANCE_PROFILE) and never reads name_rulings.json. The adapter emits market_value_profile as its own response key, not a name the vendor publishes, so the row's none_owed text (vendor-published identifier) fits it only in part; the CTO may want to read that.",
+    "notes": "Non-application: the release commit diff against HEAD does not grade these lines (untouched context)."
+  }
+  ```

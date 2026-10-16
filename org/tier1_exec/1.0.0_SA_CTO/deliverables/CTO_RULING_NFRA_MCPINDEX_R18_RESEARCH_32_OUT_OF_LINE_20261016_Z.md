@@ -31,3 +31,10 @@ the result in `scope_exclusions.json`.
 
 The reasons are measurements, not classes: each exclusion carries its condition, so the row returns when the producer does.
 The other eight (a) rows are at cross-adjudication XA-20261016T024917Z-cdcc (call sitez-...-035e).
+
+## Addendum ~03:5xZ -- the last two rows (MI2 msg 34711): RATIFIED out with reopen conditions
+
+| row | reason | reopens when |
+|---|---|---|
+| `opal_data_portal_v2_served_model_portfolios_views` | 93 trading days stale; NFRA_OPLGTW rules it out at build (PRD v3.13 item 3) | its producer writes inside the trading-day frontier |
+| `dynamodb_dynamodb_opal_harvest_security_metrics` | routed to dell1 AMGT_HARVST (XA-20261016T024917Z-cdcc); not a site Z tool | the AMGT_HARVST tool ships, and its read_tool is linked then |

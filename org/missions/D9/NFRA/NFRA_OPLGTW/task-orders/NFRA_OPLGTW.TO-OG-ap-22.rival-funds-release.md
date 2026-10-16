@@ -80,7 +80,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-22.rival-funds-release.proof
 - Staged: Phase A waits on `OG-ap-21` closing; the GO for Phase A is the issuer's message citing this order. The hookup `OG-rv-3` must be merged first (it is the source of the registrations and the pins).
 - Pre-cut: ap22.AC1 and ap22.AC2 base FAIL as expected (rv_release.json and RV_SERVED.json absent).
 
-<status>pending</status>
+<status>superseded</status>
+<superseded_by>NFRA_OPLGTW.TO-OG-ap-23 -- the rival tools ride the one code-batch release (decomposition addendum R3-T.73; PRD v3.12 item 2)</superseded_by>
 <round>37</round>
 <workstream>RIVAL-REL</workstream>
 <slot>~AE</slot>

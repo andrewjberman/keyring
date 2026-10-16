@@ -1716,3 +1716,115 @@ Appended, not rewritten. Three facts that PF.0 to PF.2 did not have:
    Until MX-c-21 writes it, every assets tool reads the pair (`unresolved`, `unresolved`), which the page shows honestly as `Vendor not resolved / Firm not resolved`.
 
 New cells (PF ROUND 2, because the issuance gate allows one issuance per workstream round; round 1 stays open until its two orders and Amendment 2 drain): `MP-pf-3` (handler: `store` and `serves`, chain H on worker ~31's queue) and Amendment 2 to `MP-pf-2` (the words `Data store`, the type, the fixture with a store channel and a tool serving two pairs, two tests).
+
+
+# v13 -- WORKSTREAM PF, ROUND 3: the served /gateway read, the scroll cue, the principal-set read (2026-10-16 ~03:3xZ, 2.0.0_SA_COO~MP)
+
+Source: the CTO's round-2 analysis `org/missions/D6/NFRA/NFRA_MCPORTAL/ledger/ROUND_ANALYSIS.pf-round2.md` @bfe9f3549c (msg 34676), on the CVO's slug msg 34672
+(`surprise-channel/adjudications/ADJUDICATION_v6.Z.md` @9ffddae434: Z-C-S38 grade, Z-C-S40 and Z-C-S41 graduated). PRD v0.9 unchanged. ENDPOINT unchanged.
+Ruling 1 of that analysis binds this round: a /gateway outcome is REALIZED only when the live page, read at mcp.opalinvest.dev/gateway, shows the segments at a
+measured `mcportal_commit` and `deployed_commit`. A merged display cell is not a live one.
+
+## PF3.0 WHAT IS MEASURED BEFORE THE CUT (issuer, ~03:2xZ)
+
+1. The handler already keys on the `tool_index` block only: `_declared_source_groups` and `_segment_fields_for` read `doc["tool_index"]` and nothing else
+   (`admin_gateway_breakdown.py:127-201`). Run over the REAL repo catalog (`_pf4_realcat.py`): `tool_index_rows=99 firm_keys_outside_tool_index=273 pairs_from_tool_index=0
+   pairs_returned=0 extra_pairs=0`. So ruling 3's trap exists in the real catalog (273 owning-firm `firm:` keys) and the handler does not fall into it; what is missing is the
+   PLANTED negative arm that keeps it so.
+2. The served host today (EC2_MANIFEST `opal-gateway`): `deployed_commit` d577e0e7297b, `mcportal_commit` 17dcbb286; the served `_compute` lists m365 with 76 tools and no
+   segments. The PF handler (54a75d46ba) and page (421f8fb) are not deployed. The release path is MCPINDEX `TO-MX-r-15` (C-GROUP keys in the host catalog), then `OG-ap-23`
+   (`2.0.0_SA_COO~O`, the handler and the bundle), then this round's served read.
+3. The People check (Z-C-S40) compares the principals the host-role Scan returns (`_scan_principals`, `principal_profile` rows) with themselves. The CTO's source for a second plane is the grant
+   writer's OWN table, `mcportal-grant-changes-table` (env `MCPORTAL_CHANGES_TABLE`, host `.env`). MEASURED over SSM at ~03:2xZ (`_r2_probe.py`, command a9f00f73): the grant store holds
+   1 principal (digest b43a6e7dd649); the changes table holds 1 item, a `REFUSED` attempt (`NO-OWNER-HEADER`, 2026-09-29) by a PLACEHOLDER principal (digest 5e6f088b53db), and no grant.
+   The two sets DIFFER. The grant writer is not the only writer today (the real grant was written another way), so its history is not an independent enumeration of who holds a grant.
+   `admin_grants.read_changes_table` reads ONE Scan page and does not follow `LastEvaluatedKey`; the probe follows it.
+
+## PF3.1 CELL `MP-pf-4` (S1) -- the segment compute reads `tool_index` only, shown by a planted arm and by the real catalog; the served arm is the issuer's  (handler tests; chain H)
+
+Risk SERVED as the CTO classed the cell (the order carries WORLD: the L6 gate floors any `infra/` path at WORLD). A worker builds and proves what runs offline; the SERVED arm needs a deploy that is not this order's, so it is NOT a worker criterion (a criterion no worker can pass is a defect at the cut).
+
+1. Two tests in `infra/aws/ec2/opal-gateway/tests/test_admin_gateway_breakdown.py`, by these names:
+   - `test_channel_row_firm_key_never_makes_a_segment`: a catalog with a `tool_index` row that declares a bucket (`opal-data-assets`) and NO `serves`, plus a channel-artifact row whose
+     `read_tool` is that tool and a silver row, each carrying `firm: cottonwood`, yields ONE segment, the pair (`unresolved`, `unresolved`), and no segment named `cottonwood`;
+   - `test_tool_index_serves_pair_makes_a_segment`: the same catalog with `serves: [{vendor: schwab, firm: cottonwood}]` on the `tool_index` row yields the segment (`schwab`, `cottonwood`)
+     (the positive arm, so the first is not vacuous: the planted owning-firm rows are present in both).
+2. The handler is changed only if a test shows a defect (it should not: PF3.0 item 1). A defect is fixed in `admin_gateway_breakdown.py` and named in the report.
+3. THE SEAM: the real-catalog probe `_pf4_realcat.py` reads `extra_pairs=0` with `firm_keys_outside_tool_index` at least 1 (a bound; passes at the base).
+4. THE SERVED ARM (issuer, at close, once `OG-ap-23` reads deployed): `pf4.served.sh` reads `deployed_commit` and `mcportal_commit`, then the SERVED `_compute` over SSM, and prints the
+   denominator (channels, tools, segments per bucket). Then the live page at 1280 and 390 px, screenshots graded by the CVO (judgment, at L9). Until then S1 is NOT REALIZED.
+
+## PF3.2 CELL `MP-pf-5` (S2) -- a table that scrolls inside its box shows a cue at 390 px  (view; chain V)
+
+Risk LOCAL. The CVO's grade Z-C-S38 bound: at 390 px a cut table column shows no scroll cue (the Kind, Tools and Holders columns of the summary table, and Data class and Indexes of a tools
+table, are off the right edge with nothing to say so). The cue is CSS only (no script, no timer): on every `.gateway-scroll`, a fade or edge on the side that has more to scroll to, using
+the existing tokens, one test. The issuer's one real run then re-renders the fixture at 390 px and looks.
+
+## PF3.3 CELL `MP-pf-6` (R2) -- the host-role scan's principal set and the grant writer's change-history set, both read, both denominators printed  (probe and comparator; chain R)
+
+Risk SERVED (one read-only SSM command on the gateway host). It builds a comparator with planted arms and records ONE real read; it does not assert equality (PF3.0 item 3: the sets differ today, and
+that is the finding the CVO's Z-C-S40 asked to see). The cell does NOT widen what the writer or the store may do: it reads.
+
+1. `r2_principal_sets.py` in the worker's deliverables dir: `compare(scan_set, history_set)` returns `{scan_n, history_n, only_scan_n, only_history_n, equal, vacuous}`; `vacuous` is true when
+   BOTH sets are empty (equal is then false: an empty equals an empty proves nothing). A CLI mode turns the probe's `R2 {json}` line into the run file `r2_run.json`.
+2. `test_r2_principal_sets.py` with four named tests (planted arms): equal sets; a principal in the scan only; a principal in the history only; two empty sets.
+3. The one real read: the worker runs the issuer's `pf6.run.sh` (SSM, read-only) and writes `r2_run.json` from its output.
+4. The verdict `equal` is a JUDGMENT for the CVO (criterion AC3): does the grant writer's change history serve as an independent enumeration of who holds a grant, and if not, what source does?
+
+## PF3.4 EDGES AND CHAINS
+
+```
+chain H   MP-pf-4        (handler tests; no edge)
+chain V   MP-pf-5        (the mcportal page; no edge)
+chain R   MP-pf-6        (the principal-set read; no edge)
+```
+`N = 3 of M = 3 chains, cap 8` (workers ~34, ~35, ~36). Write sets are disjoint: MP-pf-4 writes the gateway breakdown test file (and its handler only on a found defect); MP-pf-5 writes
+`mcportal/src/pages/gateway/`; MP-pf-6 writes only its own deliverables dir. No shared-file hookup is needed. The served arm of MP-pf-4 waits on `OG-ap-23`; nothing else waits.
+
+## PF3.5 RULINGS (issuer, inside this decomposition; gate limb: none graded a modification, `<placeholders>` is NONE)
+
+- **The worker status flip.** The order file is outside every worker's `<paths>`, so a worker cannot flip `<status>` (rows Z-W26-S2, Z-W28-S4, Z-W29-S3, Z-W31-S8). Every face of this round says
+  "do not flip this order's `<status>`; the issuer does". The clause in `.claude/agents/worker.md` line 73 is not edited here (a standing agent definition is outside this lane); the face overrides it.
+- **Carried fact (CTO ruling 6):** `opal-gateway-access-admin` has no `dynamodb:Query` or `Scan` on `gateway-access-state-table`. No cell of this round assumes either under that role; MP-pf-6 reads under the
+  host instance role over SSM, and says so.
+
+## PF3.6 WHAT THIS CUT DOES NOT CLAIM
+
+1. No served segment. The live page shows segments only after `TO-MX-r-15` and `OG-ap-23`; the served arm is run then, by me, and is graded by the CVO.
+2. R2 does not close Z-C-S40: it measures the second plane and finds it is not independent. A source that is (the writer made the only writer, or another enumeration) is the CTO's to name.
+3. S2's cue is judged by my look at 390 px, not by a test; the test pins the rule, not the reading.
+
+
+# v14 -- WORKSTREAM PF, ROUND 4: the People view's principal set against a raw read under a different credential (2026-10-16 ~04:0xZ, 2.0.0_SA_COO~MP)
+
+Source: the CTO's PF round-3 analysis `org/missions/D6/NFRA/NFRA_MCPORTAL/ledger/ROUND_ANALYSIS.pf-round3.md` @0a775f4f7b (msg 34710), on the CVO's slug msg 34708 (`ADJUDICATION_v7.Z.md` @3cae7d7992). PRD v0.9 unchanged. ENDPOINT unchanged.
+That analysis WITHDRAWS round-2 ruling 4 (the premise "the grant writer is the only writer" was never measured, and MP-pf-6 measured it false) and names the independent source for Z-C-S40: a raw full read of the table under a different credential, outside the page's code path.
+
+## PF4.0 WHAT IS MEASURED BEFORE THE CUT (issuer, ~04:0xZ)
+
+1. This box's AWS identity (what the workers' `.tools/aws` shim resolves to) is the IAM user `Andrew_Berman`, not the gateway host role. `iam simulate-principal-policy` for it on `gateway-access-state-table` reads `dynamodb:Scan` allowed and `DescribeTable` allowed. The negative control is NOT a nonexistent action (this user allows `NoSuchAction99` too): it is the same `Scan` for the operator role `opal-gateway-access-admin`, which reads `implicitDeny` (it matches row Z-W25-S1's measured AccessDenied), so the simulator discriminates.
+2. The table holds 1,669 items (3 `--no-paginate` pages of 945, 483 and 241, no filter). The raw grant-bearing set (distinct (tid, oid) of `POLICY#<tid>#<oid>` items of record type `principal_profile`, `data_entitlement` or `person_access`) is 1 principal, digest b43a6e7dd649; the same 9 POLICY items hold no other principal (`audit_only_principals` 0). The page set (`_scan_principals` under the host role over SSM) is 1 principal, the same digest. EQUAL today.
+3. The sanctioned writer of `POLICY#` records is `infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py` (the operator role only; it writes a profile and its grant together, DELETES NOTHING, and appends an `operator_audit` row for every change). So the analysis's live plant ("write a planted grant item through the one sanctioned writer, then confirm both sets show it, and that removing it removes it from both") cannot be done as written: the audit rows would keep a planted principal in any raw read for good, and a profile plus grant written together can never be the "page misses a holder" case the arm exists for.
+
+## PF4.1 CELL `MP-pf-7` (R3) -- the raw read, the comparison, and the planted principal both ways  (chain R3; risk SERVED, read-only)
+
+A worker reads and records; the instruments are the issuer's (`pf7.run.sh`, `_r3_page_probe.py`). Built by the worker in its deliverables dir:
+1. `r3_principal_sets.py`: `compare(page_set, raw_set)` returns `{page_n, raw_n, only_page_n, only_raw_n, equal, vacuous}` (`vacuous` when both are empty; `equal` only when both differences are 0 and not vacuous); a command line turns the output of `pf7.run.sh` into `r3_run.json`, exits 3 and writes no run file when the SIM line says Scan is not allowed.
+2. `test_r3_principal_sets.py`: five named tests, the planted principal checked BOTH ways (in the raw set only = the page misses a holder; in the page set only), the empty case, and the STOP branch.
+3. The one real read: `pf7.run.sh`, read-only, three reads (SIM, RAW, PAGE), recorded as `r3_read.txt` (digests and counts only) and `r3_run.json`.
+
+## PF4.2 EDGES, CHAINS, AND WHAT DEPARTS FROM THE ANALYSIS
+
+```
+chain R3   MP-pf-7   (no edge; the S1 served arm of MP-pf-4 still waits on MX-r-15 and OG-ap-23)
+```
+`N = 1 of M = 1 chains, cap 8`. Departures, ruled by the issuer inside this decomposition and reported to the CTO in the L10 slug:
+- **The executor is a worker subagent (`~37`), not the `0.7.0_AE_CloudOps~Z` seat.** The property the analysis needs is "a different credential, outside the page's code path": the worker's read runs under the IAM user above with no app import, which is that. A seat adds a message round and a dependency for the same credential on this box. Whether CloudOps~Z's own shell resolves to a different identity than the IAM user is NOT measured here.
+- **No live plant** (PF4.0 item 3). The both-ways arm is planted in the comparator (offline) and graded by AC1. The control that the raw read can see a holder the page misses is the comparator's own `only_raw_n` arm; a live arm would add a permanent audit row to the production store.
+- **Checks anchor to their own root** (the analysis's template fix): `_root.sh` now derives the worktree root from its own file's location, not the shell's cwd; proven by running `pf7.run.sh` from `/c/Users`.
+
+## PF4.3 WHAT THIS CUT DOES NOT CLAIM
+
+1. It is one read at one instant: equal today is not equal after F2 adds a principal. Re-run it then (a measurement, not a monitor).
+2. The raw set is the principals holding a profile, a data grant or a person-access record. A principal holding only an `operator_audit` row is counted separately (`audit_only_principals`, 0 today) and is not a holder.
+3. `RUNTIME#` principals (OAuth families and catalog snapshots, 1,650 items) are sessions, not grants, and are outside both sets.

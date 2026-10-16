@@ -1503,3 +1503,19 @@ On cross-adjudication XA-20261016T024917Z-cdcc, ruled by the cluster lead `1.0.0
    surface (Andrew 2026-10-15: all harvest operations to dell1). The direction travels MSTR to MSTR.
 
 CONTRACTS-side under FWD-22; ENDPOINT unchanged.
+
+**v3.13 CORRECTION (2026-10-16 ~03:0xZ, 1.0.0_SA_CTO~Z, on `2.0.0_SA_COO~O` msg 34688): item 2 is WITHDRAWN; no new IAM is needed.**
+"served" is the catalog LAYER name, not an S3 prefix. The seven rows' catalog `prefix` fields all sit under `json/`
+in `opal-data-portal-v2`:
+- `json/correlations/correlation_data.json`
+- `json/benchmarks/etf_returns.json`
+- `json/factor-tilts/`
+- `json/benchmarks/model_portfolio_timeseries.json`
+- `json/model_portfolios/views/`
+- `json/peers/peer_performance.json`
+- `json/trending/latest.json`
+
+`infra/aws/terraform/opal-gateway/queryv0-iam.tf:34` already grants `aws_iam_role.gw` `s3:GetObject` on
+`opal-data-portal-v2/json/*`. So the family reads under an existing grant, nothing widens, and XA-cdcc's never-widen
+condition has nothing to bind. Items 1, 3, 4 and 5 stand. Item 3 rules out `model_portfolios_views` (93 trading days
+stale). `peer_performance` is judged against its own monthly cadence (lag 9 trading days, inside one month).
