@@ -19749,3 +19749,26 @@ name the one known failure instead of silently inheriting it.
     "notes": "Non-application: the release commit diff against HEAD does not grade these lines (untouched context)."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-S160",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-16T04:58Z",
+    "one_line": "Three OG-i1 probe principals from 2026-09-16 are still in the LIVE grant store gateway-access-state-table: POLICY#probe-og-i1-...{000402023004Z, 000658709747Z-race, 000705463912Z-ttl}, 8 items (3 principal_profile at status revoked/pending/pending, 4 operator_audit, plus 1 email_deny row on its own key). The '-ttl' probe carries no ttl attribute, so it never expires. They grant nothing today, but every raw read of the store must filter them by key shape, and NFRA_MCPORTAL's R3 raw count did so without printing them.",
+    "class": "OBSERVATION",
+    "spec_asserts": "A probe writes into a live store only what it removes or lets expire (the og-i1 probe named one principal '-ttl').",
+    "world_is": "Scan of gateway-access-state-table by this seat (IAM user Andrew_Berman, ~04:5xZ 2026-10-16): 1671 items, 17 with pk POLICY#. 9 belong to the one real principal (POLICY#<tid>#<oid>: principal_profile active, 4 data_entitlement, 4 operator_audit). 7 belong to the three probe-og-i1 pks: PROFILE status revoked (rev 2), pending (rev 2, rev_by racer-0), pending (rev 1), plus AUDIT rows. 1 is POLICY#EMAILDENY#<digest> email_deny. No probe item has a ttl attribute. No probe profile has tid/oid or status active.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "dynamodb scan gateway-access-state-table, filter begins_with(pk,'POLICY#'), this seat ~04:5xZ 2026-10-16 (17 items; ids masked in the record)",
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~37/r3_read.txt (policy_items 9 = 17 minus the 8 non-GUID-keyed items)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a hazard: the probe profiles are revoked or pending and carry no identity, so no login resolves to them. Remedy, the issuer's (2.0.0_SA_COO~O): delete the three probe principals' items, or record them as a known residue that every raw reader excludes by name. This seat changed nothing in the store."
+  }
+  ```
