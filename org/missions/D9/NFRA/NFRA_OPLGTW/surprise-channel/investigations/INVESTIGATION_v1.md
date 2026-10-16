@@ -25019,3 +25019,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "Two separate causes, neither mine to change: (1) the two registry files are new to the live ref and must be at HEAD for the exemption to read them -- either the release carries them (the COO amends ap28.AC1's ALLOW; they are not shipped, the tar excludes infra) or the gate's registry source changes; (2) the 4 new live literals fail the tier grammar even with the registry present -- a registry row that holds each exact literal as a whole string (the REGISTRY-HELD route that admitted the 8 legacy ones), a grammar/registry fix to accept the 49f-live segment, or a different emitted prefix from 2.0.0_SA_COO~MI. I did not override the gate, edit the catalog or edit the registry."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T17:01:46Z",
+  "id": "NFRA_OPLGTW-Z-S302",
+  "one_line": "Round-38 disposition (CARRIED) of Z-W111-S15: the renamed gf-1 instance reads INVALID because the checker takes the rename commit as its creating commit; carried as a checker repair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W111-S15"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md row NFRA_OPLGTW-Z-W111-S15 (worker 0.9.0_WK_NFRA_OPLGTW~111): rename commit 21c41f4851, original instance commit 72096aefa4",
+      "lane TREE_DELIVERABLES: deliverables/<serial>/ is written by that serial alone"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Issuer decision (CARRIED): the gf-1 instance reads INVALID only because proof-of-spec-check takes the instance's creating commit from the path history, which starts at the rename commit 21c41f4851; the four PENDING-THIS-COMMIT artifact rows predate it. Re-pinning them would change content the order keeps unchanged, and the lane gives that instance to its owning worker serial alone, so no row is re-pinned. Nothing live depends on it (the release carries the gf-1 code and its tests, which pass). Carried to the round-38 enrichment list (named in the L10 slug) as a checker repair: follow renames (git log --follow) when reading an instance's creating commit.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer decision (CARRIED): the gf-1 instance reads INVALID only because proof-of-spec-check takes the instance's creating commit from the path history, which starts at the rename commit 21c41f4851; the four PENDING-THIS-COMMIT artifact rows predate it. Re-pinning them would change content the order keeps unchanged, and the lane gives that instance to its owning worker serial alone, so no row is re-pinned. Nothing live depends on it (the release carries the gf-1 code and its tests, which pass). Carried to the round-38 enrichment list (named in the L10 slug) as a checker repair: follow renames (git log --follow) when reading an instance's creating commit."
+}
+```
