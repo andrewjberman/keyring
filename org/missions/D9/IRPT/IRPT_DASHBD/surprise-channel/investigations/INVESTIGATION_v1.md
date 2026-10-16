@@ -21150,3 +21150,29 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. Recorded for the issuer; the checker file is outside this grant and was not edited."
 }
 ```
+
+## IRPT_DASHBD-D2-W1301-S1 -- the contract rule24_record cites the CVO grades and the CTO round-124 analysis, which this worktree does not materialize
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1301-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1301",
+  "surfaced_at": "2026-10-16T06:03:25Z",
+  "one_line": "The order cites the CVO grades and the CTO round-124 analysis in the contract rule24_record, but neither folder is materialized in this worktree, so they were cited by path and not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-1301 step 1: the contract rule24_record cites the CVO grades and the CTO round-124 analysis path; the worker face materializes only org/standards, org/tier1_exec/4.0.0_SA_CRO/deliverables and the irpt_reporting scripts folder.",
+  "world_is": "The worktree holds org/tier1_exec/4.0.0_SA_CRO only; no org/tier1_exec/1.0.0_SA_CTO or 3.0.0_SA_CVO folder is present. The round-124 analysis path and the CVO grades were not read. The contract states this in its rule24_record.cvo_grades field. The checker does not test these strings.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-f-1301.fwd5-transaction-contract-and-ratified-mapping-with-per-code-flow-class.md@ac575c7ad2",
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json@ac575c7ad2 (rule24_record)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. DBF127-1-AC1 and AC2 PASS. The grades are not invented; the rule24_record says so. Recorded for the issuer."
+}
+```
