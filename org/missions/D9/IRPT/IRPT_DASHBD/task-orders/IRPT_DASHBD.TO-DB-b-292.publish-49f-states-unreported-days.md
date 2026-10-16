@@ -17,6 +17,8 @@
 
 **Risk class WORLD** is the floor of the paths below (`infra/` paths): python and one JSON edit in a branch, no Terraform command, no AWS write, no build for upload, no push. The build, the upload, the apply and the republish are a later signed pair and the applier's.
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~09:5xZ, on worker rows IRPT_DASHBD-D2-W235-S1, S2 and S3; gate limb: GATE (viii), an existing order modified with placeholders NONE unchanged; no criterion id or cell change, one path added):** S2 is a DEFECT OF THE ISSUER'S CHECKER, ruled here: the bundle does NOT package the series contract (the lambda path passes none, S3 below), so the unpacked step of AC2 now grades the unpacked handler against the REPO's contract; the checker `p160_pub49f.py` is fixed (in your tree via the carry commit); you add nothing to the entry's `files` beyond the calendar. S1 is ruled: the two existing union tests stub `_publish_one` with a six-parameter lambda and the new call passes two more arguments, so step 3 gains a sub-step: in `infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py` change ONLY the signatures of the two stubs (lines 59 and 71: `lambda s3, firm, a, rows, up, c: ...` becomes `lambda s3, firm, a, rows, up, c, dates=None, source=None: ...`); nothing else in that file; the file is added to the grant. AC3 now also runs the WHOLE `reporting-publish/tests` directory, which must pass. S3 stands as written: the deployed path passes no contract today; it is the decomposition's decision (a) and not this cell's to change. Re-run AC2 and AC3 after the edit, then finish the record, the proof instance and the flip.
+
 ---
 
 ## WORKER FACE
@@ -38,7 +40,7 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-235` (branch `wk-IRPT_DASHBD-2
 <criterion id="DB160-1-AC2" cell_refs="DB-b-292"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py" . DB160-1-AC2</invocation><expect>DB160-1-AC2 PASS</expect></criterion>
 `DB160-1-AC2` -- the entry gained the calendar (listed once in `files`, pinned in `staged_from` with a sha256 equal to `git show pin:path` and the file at HEAD), stale pins moved and nothing else changed (no deployed field, no other entry); the `BUILD_ONLY` package holds exactly the entry's `files` with every member's bytes equal to its source, its third-party imports are pyarrow plus the runtime's, and the handler UNPACKED from the package passes AC1's behaviour. Base: FAIL.
 <criterion id="DB160-1-AC3" cell_refs="DB-b-292"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p160_pub49f.py" . DB160-1-AC3</invocation><expect>DB160-1-AC3 PASS</expect></criterion>
-`DB160-1-AC3` -- the worker's test file holds at least 8 passing tests that assert the empty list, a listed day and `calendar_source`; the worker's commits change only the handler, its test file, the source map, the folder, the investigation file and task-order files; the facts record equals the checker's recount. Base: FAIL.
+`DB160-1-AC3` -- the worker's test file holds at least 8 passing tests that assert the empty list, a listed day and `calendar_source`; the whole `reporting-publish/tests` directory passes; the worker's commits change only the handler, its test file, the two stub signatures in the union test, the source map, the folder, the investigation file and task-order files; the facts record equals the checker's recount. Base: FAIL.
 
 <expected_criteria>DB160-1-AC1,DB160-1-AC2,DB160-1-AC3</expected_criteria>
 
@@ -53,6 +55,7 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-235` (branch `wk-IRPT_DASHBD-2
 <paths>
 infra/aws/lambda/investor-reporting/reporting-publish/handler.py
 infra/aws/lambda/investor-reporting/reporting-publish/tests/test_handler_unreported.py
+infra/aws/lambda/investor-reporting/reporting-publish/tests/test_publisher_account_union.py
 infra/aws/lambda/ci/lambda-source-map.json
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~235/
 org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md
