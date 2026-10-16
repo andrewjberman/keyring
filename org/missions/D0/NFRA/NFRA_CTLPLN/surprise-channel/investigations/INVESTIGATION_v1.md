@@ -13434,3 +13434,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Ruling wanted: whether not_met= under --loose-grades should read nothing (0 by construction) instead of the strict reading. Decision owner: the issuer 2.0.0_SA_COO~C with the CTO."
 }
 ```
+
+## NFRA_CTLPLN-D2-S7 -- round-close-check scopes a workstream round by the orders it can see: IRPT_ANLREQ TICKET round 4 reads MAY-CLOSE with its two tier-2 seat orders counted 'not complete and outside the verdict' and judgment=0, while the CVO's ADJUDICATION_v25 grade of AR33-v-AC4J is not counted; the CTO reports the gate also refused the round on another workstream's AR200-y-AC2J.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-16T18:15:00Z",
+  "class": "OBSERVATION",
+  "id": "NFRA_CTLPLN-D2-S7",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "round-close-check scopes a workstream round by the orders it can see: IRPT_ANLREQ TICKET round 4 reads MAY-CLOSE with its two tier-2 seat orders counted 'not complete and outside the verdict' and judgment=0, while the CVO's ADJUDICATION_v25 grade of AR33-v-AC4J is not counted; the CTO reports the gate also refused the round on another workstream's AR200-y-AC2J.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project IRPT_ANLREQ --round 4 --workstream TICKET read 2026-10-16 ~17:5xZ by the issuer: 'ORDERS scope round=4 workstream=TICKET: 2 order(s), 0 complete, 2 not complete and outside the verdict (TO-RUN-AR-v32, TO-RUN-AR-v33)'; 'SEAT-FOLDER orders counted: 2'; 'ROUND-CLOSE ... orders=2 judgment=0 graded=0 not_met=0 ungraded=0 self_graded=0 verdict=MAY-CLOSE'",
+      "the CVO graded AR33-v-AC4J in ADJUDICATION_v25 @6408f97626 (FAIL overall, unproven, not refuted), which the check does not count (judgment=0)",
+      "the CTO's round-4 analysis org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_ANLREQ_TICKET_ROUND_4_20261016.md ruling 2: the gate refused round 4 for another workstream's AR200-y-AC2J and cannot see the tier-2 AR-v-33 order (the same class as row NFRA_CTLPLN-D2-S6); the issuer did NOT reproduce the AR200 refusal (the run above reads MAY-CLOSE)"
+    ]
+  },
+  "spec_asserts": "round-close-check grades a round of a workstream by the judgment criteria of that workstream's orders for that round (CLAUDE.md rule 27, L9: a judgment criterion is graded by the CVO and the round closes on it).",
+  "world_is": "For a workstream whose round runs its orders in a Tier-2 applier's own folder (org/tier2_senior/<seat>/task_orders), the check lists them as 'seat-folder orders', counts them 'not complete and outside the verdict' until the issuer flips their status, and sees judgment=0, so MAY-CLOSE is printed before any judgment of the round is counted (the round-3 sitting printed MAY-CLOSE on a FAIL for the same family of reason, row NFRA_CTLPLN-D2-S6). The CTO's rule stands: the round is graded by the CVO's verdict, not the gate."
+}
+```
