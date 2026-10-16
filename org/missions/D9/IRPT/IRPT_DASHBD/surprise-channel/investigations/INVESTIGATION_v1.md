@@ -20488,3 +20488,83 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. The recipe in the order works only where a committer identity is configured; the environment-variable form is the one used here and is recorded in the proof's compiler_tools."
 }
 ```
+
+## IRPT_DASHBD-D2-W802-S1 -- the brief's seven flow classes hold no tax value and the repository's withholding rules disagree, so the tax word's flow class is a default
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W802-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~802",
+  "surfaced_at": "2026-10-16T03:28:38Z",
+  "one_line": "The brief's seven account_transaction flow classes name no tax value, and the repository's withholding rules place withheld tax in three different classes, so the Tax withheld word carries INTERNAL as a default.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Brief line 78 names seven account_transaction flow_class values (EXTERNAL_IN, EXTERNAL_OUT, INCOME, FEE, INTERNAL, CORPORATE_ACTION, UNRESOLVED); TO DB-f-802 step 2 requires each Opal type word to carry one of them.",
+  "world_is": "No flow class names tax. sources.json says withholding is neither a flow nor income (INTERNAL reading). Orion puts federal, state and foreign tax withheld in the Return bucket. The CRO table classes the IRA withholding code (sb_cd WH) EXTERNAL-OUT while the non-IRA withholding codes (WD, WI) are INTERNAL. The proposal gives Tax withheld INTERNAL; the WH row is flagged in its basis.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/sources.json@d12e8f62d2826d3ab28692ce27f80da63c2692ee",
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml@d12e8f62d2826d3ab28692ce27f80da63c2692ee",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json@d12e8f62d2826d3ab28692ce27f80da63c2692ee",
+      "docs/briefs/reporting-dashboard-backend-brief-20260930.md@d12e8f62d2826d3ab28692ce27f80da63c2692ee"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The flow enum is the brief's; a tax value is a contract ruling for the CTO, not this proposal."
+}
+```
+
+## IRPT_DASHBD-D2-W802-S2 -- the 49 Financial type field is the sb_cd sub-code, and three of its values span several CRO meanings, so they are UNMAPPED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W802-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~802",
+  "surfaced_at": "2026-10-16T03:28:38Z",
+  "one_line": "The 49 Financial type field is read as the sb_cd sub-code (an inference the record states); three of its fifteen values, FC, IC and JR, each span several meanings in the CRO table and map to UNMAPPED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "RD_FWD5_FIELDS_R120.json names sb_cd as the 49 Financial type field (its vocabulary_where calls the reading inferred); TO DB-f-802 step 3 requires every value to map to one Opal type word or to UNMAPPED with a reason.",
+  "world_is": "sb_cd FC covers 43 CRO codes over nine partitions and seventeen rules; sb_cd IC covers nine codes over three rules (corporate action, counterparty-resolved share delivery, lending); sb_cd JR covers four codes over journal and account-transfer rules. The line's type sits at tran_srcde, the table key, which the record lists as not a code set. These three type rows and the FC action marker are UNMAPPED; the rest of the 49 Financial mapping is unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json@d12e8f62d2826d3ab28692ce27f80da63c2692ee",
+      "data/assets/scripts/gold/irpt_reporting/sources.json@d12e8f62d2826d3ab28692ce27f80da63c2692ee",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~701/RD_FWD5_FIELDS_R120.json@d12e8f62d2826d3ab28692ce27f80da63c2692ee"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. A type reading at tran_srcde would replace these rows; the premise is for the CTO to rule on at ratification."
+}
+```
+
+## IRPT_DASHBD-D2-W802-S3 -- Orion's Internal bucket excludes two dividend-family values from the cash-flow axis, while the Opal words for them carry INCOME
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W802-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~802",
+  "surfaced_at": "2026-10-16T03:28:38Z",
+  "one_line": "Orion excludes Dividend Paid from Cash and Income Paid from the cash-flow axis (bucket Internal), but the proposal maps them to Dividend and Other income, whose flow class is INCOME; the word and the bucket disagree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-802 step 2: each type word carries one flow class, and the word for a dividend or income line carries INCOME; the flow class is a separate axis from the type.",
+  "world_is": "orion_cashflow_taxonomy.yaml gives Dividend Paid from Cash and Income Paid the bucket Internal (paired entries, excluded by the ratified items 4a and 4b). The proposal maps them to Dividend and Other income because the type is what the line is; whether the pair is excluded is a row decision for the contract. Income Reinvested and Dividend Reinvested sit in Internal in the yaml and map to Reinvestment, whose flow class is INTERNAL, so the two dividend-family readings are consistent only at the row level.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml@d12e8f62d2826d3ab28692ce27f80da63c2692ee"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The flow class is per word here; a per-row exclusion rule is for the contract ratification."
+}
+```
