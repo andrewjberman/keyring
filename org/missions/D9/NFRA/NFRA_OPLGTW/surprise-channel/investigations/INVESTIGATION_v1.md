@@ -20254,3 +20254,57 @@ name the one known failure instead of silently inheriting it.
     "notes": "Same class as NFRA_OPLGTW-Z-S158 (a check script that could not emit the string its own expect requires). Cost of the fix: one line in a script the issuer owns. On the amendment this seat re-runs AC1 and reports; the Phase A files are unchanged."
   }
   ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T09:13:25Z",
+  "id": "NFRA_OPLGTW-Z-S166",
+  "one_line": "Z-S165 RESOLVED: the ap27.AC1.sh defect was the issuer's (the action scan counted the condition key s3:prefix); fixed in the script only at b5652f6db9, AC1 PASS on the unchanged .tf, order OG-ap-27 complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "b5652f6db9 changes ap27.AC1.sh by one line: the action set excludes s3:prefix; the .tf (sha256-16 be09d3dd3aaebdd9) is byte-unchanged since 7be8a06df4.",
+      "issuer re-run of ap27.AC1: policies 2, actions ['s3:GetObject','s3:ListBucket'], plan 2/0/0, RESULT PASS exit 0; the applier's proof instance for OG-ap-27 is VALID with AC1 and AC2 PASS (4958f43207).",
+      "ap27.AC2 re-run by the issuer from IAM and the simulator after the apply e5d53534f6: GetObject 4 of 4, ListBucket 4 of 4, negative control 2 of 2 and 2 of 2, PASS exit 0."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolved: the ap27.AC1.sh defect was the issuer's script and is fixed at b5652f6db9 with the .tf unchanged; AC1 and AC2 PASS and OG-ap-27 is complete; nothing further is owed.",
+  "spec_asserts": "Z-S165: ap27.AC1.sh prints every figure the criterion expects, so a correct .tf can pass its own check.",
+  "world_is": "After the one-line fix the check prints the expected action list and passes on the correct .tf; the standing Z-S165 row is not edited (a new citing row records the disposition). Class: same as Z-S158, a check script that could not emit what its own expect required; both are the issuer's scripts and both were caught by the applier before any act depended on the verdict.",
+  "notes": "Dry-run at the cut proved only the base FAIL arm: a PASS arm needs the check run against a correct artifact before the cut. To carry into the next cut of a Terraform-scanning check: run it once against a hand-written correct fixture."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T09:28:08Z",
+  "id": "NFRA_OPLGTW-Z-S167",
+  "one_line": "Z-S164 DISARMED: the four IAM-denied tools serve after OG-ap-27; the same release 3d5c9c8bf1 is live and the served read is 27 of 27 (issuer's ap23.AC2 re-run PASS).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-ap-27 applied at e5d53534f6 (two read-only policies on gateway-global-internal-reader-role); ap27.AC2 re-run by the issuer from IAM and the simulator: GetObject 4 of 4, ListBucket 4 of 4, negative control 2 of 2 and 2 of 2, PASS.",
+      "second Phase B of OG-ap-23 by 0.7.0_AE_CloudOps~Z: ledger CLOSED at 20261016T092154Z; W/CODE_SERVED.json body.per_tool_good 27, registry 76 to 103, reader_env_keys_present 6, health 200; host md5 141 of 141 equal (W/ap23_host_md5_2.json), .env 58 to 64 names.",
+      "issuer re-run of ap23.AC2 at HEAD: per-tool 27 of 27; reader env keys 6 of 6; client admission refused-then-served yes; classification via the internal reader yes; C1 real AssumeRole yes; C2 smartx two-firm arm yes; RESULT PASS exit 0."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolved: Z-S164's hazard is disarmed; the same release 3d5c9c8bf1 is live and served 27 of 27 after OG-ap-27, by the issuer's ap23.AC2 re-run; nothing further is owed on Z-S164.",
+  "spec_asserts": "Z-S164's disarm note: a release whose per-tool read shows every one of the 27 added tools served, after the internal reader holds the four prefixes.",
+  "world_is": "All 27 tools are served on the host at 3d5c9c8bf1. The first Phase B's rollback under C5 was correct and cost one deploy cycle (about 70 minutes from GO to re-GO). The gap was the issuer's (the preflight declared no IAM change and C5 assumed the prefixes were held). Z-S162 stays with the CVO, who reads body.client_admission to close it.",
+  "notes": "The standing Z-S164 row is not edited; this row cites it. Class to carry: a release preflight names every bucket and prefix its tools read and compares each to the role's statements before declaring no IAM change."
+}
+```

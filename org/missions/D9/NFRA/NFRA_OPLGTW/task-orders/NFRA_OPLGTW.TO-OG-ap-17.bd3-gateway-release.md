@@ -135,7 +135,8 @@ the ONE `<status>` tag to `complete` only if both PASS. Report once per phase.
   before a later release displaced it; runbook 7.2 (rb.AC2) is graded only while this release is the live one. "deployed_commit equals release_sha" flips to FAIL on work graded PASS the
   moment the next release lands, so it is no longer a criterion. Gate limb: GATE (viii) on the modified order (placeholders NONE).
 
-<status>pending</status>
+<status>superseded</status>
+<status_reason>superseded by OG-ap-23 (2026-10-16 ~09:3xZ): the release 3d5c9c8bf1 took app/data_entitlement.py whole (amendment A7), so OG-bd-3's master_admin-survives-profile branch is live; ~Z closed the ledger nfra-oplgtw-gateway-release-code at 20261016T092154Z and the issuer's ap23.AC2 re-run reads PASS (27 of 27 tools). No separate OG-ap-17 release is owed. Gate limb: none graded (a status flip on an order carrying no placeholders).</status_reason>
 <round>37</round>
 <workstream>R37-TIER-REL</workstream>
 <slot>~AE</slot>
