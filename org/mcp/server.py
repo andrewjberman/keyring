@@ -2062,8 +2062,14 @@ async def _deliver_to_one(from_agent: str, to_agent: str, subject: str, body: st
         f"**Subject:** {subject}\n\n"
         f"{body}\n"
     )
-    msg_path.write_text(msg_content, encoding="utf-8")
-
+    # ONE ATOMIC PUBLISH, NOT TWO WRITES (2026-10-16, 0.0.0_AB_MSTR~Z, measured by 0.0.3_BG_BBGTerminal msg 34824).
+    # This path used to write the file here WITHOUT a Msg-ID and rewrite it with one after the broker call. The
+    # recipient's inbox-watch.sh claims every *.md in the inbox root with an atomic mv, so in the gap it could take
+    # the first copy; the rewrite then raised PermissionError (Errno 13, Windows) and the SENDER saw a failure for a
+    # message that was already stored in the broker (a Msg-ID existed) and already READ -- delivered TORN (703 bytes,
+    # no Msg-ID line, so unackable by the documented procedure). Now: the broker row is created first, the final text
+    # is built once, written to a name the *.md glob does not match, and renamed into place, so a reader sees either
+    # nothing or the whole message with its Msg-ID.
     # Route through broker for cross-session delivery.
     # If to_agent has an instance suffix (~B), route to that specific instance.
     # If no suffix, route to the base serial — all instances poll the same inbox.
@@ -2096,9 +2102,10 @@ async def _deliver_to_one(from_agent: str, to_agent: str, subject: str, body: st
     # consumption-side ack has to guess which row it just read (by subject/timestamp),
     # and a guessing ACK is worse than none -- it would mark the wrong message READ.
     if _msg_id is not None:
-        msg_path.write_text(
-            msg_content.replace("**Subject:**", f"**Msg-ID:** {_msg_id}\n**Subject:**", 1),
-            encoding="utf-8")
+        msg_content = msg_content.replace("**Subject:**", f"**Msg-ID:** {_msg_id}\n**Subject:**", 1)
+    _tmp_path = msg_path.with_name(msg_path.name + ".tmp")
+    _tmp_path.write_text(msg_content, encoding="utf-8")
+    os.replace(str(_tmp_path), str(msg_path))
 
     # Attempt direct channel push to all live instances of this agent
     with _locked_liveness() as data:

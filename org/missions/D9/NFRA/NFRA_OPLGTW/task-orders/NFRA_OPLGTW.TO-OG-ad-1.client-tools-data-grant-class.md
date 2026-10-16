@@ -73,7 +73,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ad-1.client-tools-data-grant-cl
 - After this merges, the issuer names a new `trunk_sha` for the OG-ap-23 re-cut (which also carries the CTO's tar-line fix, msg 34787), and `OG-ap-23`'s served read gains the negative arm.
 - Pre-cut: ad1.AC1 and ad1.AC2 base FAIL as expected (the five are in NATIVE_TOOLS; the test file is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>CLIENT-ADMISSION</workstream>
 <slot>~113</slot>
