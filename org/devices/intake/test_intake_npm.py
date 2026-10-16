@@ -345,7 +345,8 @@ def arm_c():
             admitted = False
         # --registry-base outside loopback is a refusal before any request
         rc3, rec3, _o3 = env.fetch("limbprobe", "1.0.0", registry_base="https://registry.npmjs.org")
-        public_base_refused = rec3["outcome"] == "refused" and "loopback" in rec3["reason"]
+        public_base_refused = (rec3["outcome"] == "refused" and "loopback" in rec3["reason"] and rec3["requests"] == []
+                               and not any(r.get("url", "").startswith("https://registry.npmjs.org") for r in rec3["requests"]))
         good = foreign and zero_tgz and refused_foreign and admitted and public_base_refused
         return good, ["foreign dist.tarball: outcome=%s tarball_requests=%d" % (rec["outcome"],
                                                                               len(env.reg.tarball_requests())),
