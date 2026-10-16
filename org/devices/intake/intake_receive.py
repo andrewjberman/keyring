@@ -11,7 +11,8 @@ per FILE (name, sha256, bytes) in an object with a "files" key or as a bare list
 receipts/ inside the pack is this tool's to create.
 
 Verbs:
-  verify  --from <pack>                       read-only; LAST line INTAKE-VERIFY ...
+  verify  --from <pack>                       read-only; one INTAKE-VERIFY-WAIVED line per waived check; LAST line INTAKE-VERIFY ...
+          (a record reads 'checked' or 'released-with-waiver'; the waiver is re-derived from the record's own checks)
   prove   --from <pack> --scratch <new dir>   verify, then install each wheel with no index into its own scratch target,
                                               import it, write one receipt per wheel into <pack>/receipts/; LAST line INTAKE-PROVE ...
   install --from <pack> --python <exe> | --target <new dir> | --user [--dry-run]
@@ -173,6 +174,51 @@ def _read_manifest(pack):
     return out, None
 
 
+WAIVABLE_CHECKS = (3, 4, 5, 6, 7)
+
+
+def _derive_waived(checks):
+    """A STANDALONE MIRROR of intake_check._derive, for a record that reads 'released-with-waiver' (this tool ships alone to the
+    receiving box, so it cannot import intake_check). Returns (verdict, carried): 'released-with-waiver' and the sorted failed
+    checks 3..7 that check 8's waiver lines carry, or 'not_checked' and []. The parity arms in
+    .tools/tests/test_round27_waiver.py hold the two derivations equal."""
+    ev8 = checks[7].get("evidence") or {}
+    if checks[7].get("verdict") != "passed" or not isinstance(ev8, dict) or not (ev8.get("signer") and ev8.get("path")) \
+            or ev8.get("refused_waivers"):
+        return "not_checked", []
+    waived = set()
+    for w in ev8.get("waivers") or []:
+        if isinstance(w, dict) and w.get("check") in WAIVABLE_CHECKS and str(w.get("reason", "")).strip():
+            waived.add(w["check"])
+    carried = []
+    for c in checks[:7]:
+        ev = c.get("evidence") or {}
+        if c.get("verdict") == "passed":
+            continue
+        if c.get("verdict") == "not_applicable" and isinstance(ev, dict) and str(ev.get("reason", "")).strip():
+            continue
+        if c.get("verdict") == "failed" and c["n"] in waived:
+            carried.append(c["n"])
+            continue
+        return "not_checked", []
+    if carried:
+        return "released-with-waiver", sorted(carried)
+    return "not_checked", []
+
+
+def _waiver_lines(rec):
+    """[(check, reason)] for each waived check of a 'released-with-waiver' record; [] for any other record."""
+    if rec.get("verdict") != "released-with-waiver":
+        return []
+    ev8 = rec["checks"][7].get("evidence") or {}
+    out = []
+    for n in rec.get("waived_checks") or []:
+        reason = next((w.get("reason", "") for w in ev8.get("waivers") or []
+                       if isinstance(w, dict) and w.get("check") == n), "")
+        out.append((n, reason))
+    return out
+
+
 def _record_problems(rec, wheel_name, wheel_sha):
     """The reasons a CHECK record does not clear its wheel (empty list = cleared)."""
     if not isinstance(rec, dict):
@@ -182,8 +228,9 @@ def _record_problems(rec, wheel_name, wheel_sha):
         out.append("record file_name %r != wheel name" % (rec.get("file_name"),))
     if wheel_sha is None or rec.get("held_sha256") != wheel_sha:
         out.append("record held_sha256 != wheel sha256")
-    if rec.get("verdict") != "checked":
-        out.append("record verdict is %r, not 'checked'" % (rec.get("verdict"),))
+    verdict = rec.get("verdict")
+    if verdict not in ("checked", "released-with-waiver"):
+        out.append("record verdict is %r, not 'checked' or 'released-with-waiver'" % (verdict,))
     checks = rec.get("checks")
     if not isinstance(checks, list) or len(checks) != 8:
         out.append("record checks is not a list of exactly eight")
@@ -193,6 +240,12 @@ def _record_problems(rec, wheel_name, wheel_sha):
             out.append("record checks are not numbered 1 to 8 in order")
         elif checks[7].get("verdict") != "passed":
             out.append("record check 8 reads %r, not 'passed'" % (checks[7].get("verdict"),))
+        elif verdict == "released-with-waiver":
+            derived, carried = _derive_waived(checks)
+            if derived != "released-with-waiver":
+                out.append("record reads 'released-with-waiver' but its checks re-derive as %r" % (derived,))
+            elif list(rec.get("waived_checks") or []) != carried:
+                out.append("record waived_checks %r disagree with the re-derivation %r" % (rec.get("waived_checks"), carried))
     return out
 
 
@@ -244,7 +297,7 @@ def verify_pack(pack):
     for w in wheel_names:
         wpath = os.path.join(pack, w)
         info = {"name": w, "path": wpath, "file_ok": False, "record_ok": False, "reasons": [],
-                "check_record_sha256": None, "wheel_sha256": None, "modules": []}
+                "check_record_sha256": None, "wheel_sha256": None, "modules": [], "waived": []}
         reasons = info["reasons"]
         if not WHEEL_RE.match(w):
             reasons.append("wheel file name has unexpected characters")
@@ -279,6 +332,7 @@ def verify_pack(pack):
                 reasons.extend(probs)
                 if not probs and rname in listed and rname not in file_bad:
                     info["record_ok"] = True
+                    info["waived"] = _waiver_lines(rec)
         if info["file_ok"] and not reasons:
             info["modules"] = wheel_top_level_modules(wpath)
         res["wheels"].append(info)
@@ -306,6 +360,11 @@ def print_verify_detail(res):
             print("REFUSED: %s: %s" % (ascii_line(i["name"]), "; ".join(ascii_line(r) for r in i["reasons"])))
         else:
             print("OK: %s" % ascii_line(i["name"]))
+    # a waived wheel is checked, and every waived check is named (its failure stays in the record): one line per check,
+    # printed before the INTAKE-VERIFY last line
+    for i in res["wheels"]:
+        for n, reason in i.get("waived", []):
+            print("INTAKE-VERIFY-WAIVED %s check %d: %s" % (ascii_line(i["name"]), n, ascii_line(reason, limit=1000)))
 
 
 # ---------------------------------------------------------------- pip and import plumbing
