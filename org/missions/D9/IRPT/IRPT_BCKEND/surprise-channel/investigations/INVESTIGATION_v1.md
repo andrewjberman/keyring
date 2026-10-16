@@ -40978,3 +40978,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Corrections are new items citing the old id; S214 stays as IB2 filed it."
 }
 ```
+
+## IRPT_BCKEND-D2-S216 -- Two byte-identical copies of the OPAL_GLOBAL population admission: _scope/resolve.py (register row G7) and holdings/reso
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S216",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~S2",
+  "surfaced_at": "2026-10-16T05:12:52Z",
+  "one_line": "Two byte-identical copies of the OPAL_GLOBAL population admission: _scope/resolve.py (register row G7) and holdings/resolve.py (row G8); at my next touch of either file one calls the other.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CTO ADDENDUM 8 (msg 9082, @a9417710f3): G8 is a byte-identical copy of G7's admission (lines 440-450); the register's pairing guards the drift; owner 2.0.0_SA_COO~S2 (IRPT_BCKEND serve path) appends one row to make one call the other at its next touch of either file. Nothing waits on it.",
+  "world_is": "Measured 2026-10-16 with cmp: infra/aws/lambda/investor-reporting/_scope/resolve.py and infra/aws/lambda/investor-reporting/holdings/resolve.py are identical as whole files (693 lines each), so lines 440-450 equal. Neither file is touched by any order of this seat today. Disarms when: a commit by this seat that changes either file makes one import or call the other (holdings/resolve.py delegating to _scope/resolve.py is the likelier direction, since _scope is the shared package), with the register rows G7 and G8 updated in the same commit (the register's change rule). Until then the register pairing is the only guard, and a change to one file alone is the defect.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cmp of the two files printed WHOLE-FILE-IDENTICAL, 2026-10-16",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_ANLREQ_FOUR_LANES_END_TO_END_20261015.md ADDENDUM 8",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R19_GLOBAL_ADMISSIONS_REGISTER.md rows G7 and G8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No file is changed by this row. It is a debt note with an owner and the condition that un-parks it."
+}
+```

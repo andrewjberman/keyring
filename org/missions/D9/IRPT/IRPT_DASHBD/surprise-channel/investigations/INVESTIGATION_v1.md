@@ -20859,3 +20859,54 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The world meets the packet: function, role policy, artifact, no schedule, 1878 objects, ten samples valid. The record is written to the order's exact schema. The checker as committed cannot pass any record that holds the required packet_sha256 value, and cannot pass a sample whose manifest holds the bare id. The order's status stays pending and no proof-of-spec instance is written until the issuer amends p151 (the b-272 path); sampled_hash12 in the record is the hash of the id, as the canary's account_hash12 is."
 }
 ```
+
+## IRPT_DASHBD-D2-W1001-S1 -- The CRO rule column does not give 13 dividends-rule codes a dividend meaning: their descriptions name a capital gain, a
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1001-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1001",
+  "surfaced_at": "2026-10-16T04:54:58Z",
+  "one_line": "The CRO rule column does not give 13 dividends-rule codes a dividend meaning: their descriptions name a capital gain, a return of capital, a principal payment or a spin-off.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-1001 step 2: each 49 Financial code's meaning is what the CRO table gives it (its rule, category and desc), decided on its own description and rule; the rule is read as the code's single meaning.",
+  "world_is": "Of 55 distinct tran_srcde codes whose rows carry rule dividends, 13 carry a description that names another event: CFR, CFRAJ, CFRYE, CGC, CYE, SCFR, SCFRA, SCGYE, SFRYE and STCG name a capital gain distribution; ROC names a return of capital; PRIN names a principal payment; SO names a spin-off. The record maps them on their description (Capital gain, Return of capital, Corporate action); the rule alone would give Dividend to all 13. TRADE (rule trades, desc ADJUSTING ENTRY), TYP (rule acct-transfer, desc JOURNAL) and INTR (rule interest, desc MARGIN INTEREST) disagree with their rule the same way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json@2013283a5d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The record carries the description-first mapping for these codes; the CTO rules at ratification whether the rule column or the description is the meaning."
+}
+```
+
+## IRPT_DASHBD-D2-W1001-S2 -- The CRO table partitions the three ira-withholding rows (IRS WITHHOLDING and IRS WITHHOLD codes IRAWH and MCE) as EXTERN
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1001-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1001",
+  "surfaced_at": "2026-10-16T04:54:58Z",
+  "one_line": "The CRO table partitions the three ira-withholding rows (IRS WITHHOLDING and IRS WITHHOLD codes IRAWH and MCE) as EXTERNAL-OUT, while the Tax withheld word carries the INTERNAL flow class.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-122 vocabulary gives Tax withheld the flow class INTERNAL (the repository withholding rule: neither an external flow nor income), and the TO maps the IRS withholding codes on their rule and description.",
+  "world_is": "The CRO table's partition for IRAWH (two rows) and MCE (one row) is EXTERNAL-OUT. The record maps IRAWH and MCE to Tax withheld by their description and keeps the word's INTERNAL flow class, so the table's partition and the word's flow class disagree for these codes. Deciding which flow class an IRA withholding carries is a CTO ratification question; it is not decided in the record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json@2013283a5d",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~802/FWD5_WORDS_PROPOSAL_R121.json@2013283a5d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The partition is not a decision basis in the record (the TO names rule, category and description); the flow-class question is carried to the CTO."
+}
+```
