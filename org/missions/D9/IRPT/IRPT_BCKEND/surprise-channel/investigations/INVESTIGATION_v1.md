@@ -40926,3 +40926,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S214",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-16T04:01Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-612 cannot plan 1 change: the 49F, INF and COT performance functions read ONE shared S3 key through a latest-version data source, so uploading the candidate makes the root plan 3 changes and a root apply releases both siblings.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/yang-lambda/main.tf lines 17-20 and 36-39: data.aws_s3_object.artifact has bucket and key only (no version_id), and aws_lambda_function.this takes s3_object_version and source_code_hash from it; the module comment at lines 14-16 says Terraform marks the Lambda for update when a new S3 version exists",
+      "infra/aws/terraform/investor-reporting/holdings-performance/lambda.tf lines 23, 71 and 117: module irpt_holdings_performance, irpt_holdings_performance_inf and irpt_holdings_performance_cot all set artifact_key to the 49F function's key (investor-reporting/<49F function name>.zip); the file's own comments at lines 56 and 100 say the INF and COT functions REUSE that key",
+      "get-function-configuration read 2026-10-16: all three functions report CodeSha256 o9UugRAVhYmF3Q2ULtU6eaaNiLFRAFWW4tjjQPyj2Ok= and LastModified 2026-10-15T06:06:08Z, so they run one zip today"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-612 step 5: after the one upload, the Terraform plan reads 1 to change, 0 to add, 0 to destroy on the one function (any other resource: STOP); the siblings irpt-inf-holdings-performance-lambda and irpt-cot-holdings-performance-lambda are NOT released and their CodeSha256 is unmoved (step 6b, bounds).",
+  "world_is": "Nothing was written: the order stopped at step 1, before the Branch B name, the ledger, the source-map edit and the upload. Gates 1(a) to 1(e) PASS (pair sha256 8f645588ab10 and addendum blob f0cec424f4 equal; both CTO halves present; the live CodeSha256 equals o9UugRAV; no OPEN ledger or marker names the function or the root across 71 worktrees and 1328 marker files; siblings BEFORE recorded, both o9UugRAV). The release path itself fails the order's own plan bound: once a new version lands at the shared key, a plan of the root sees a new version_id and content-sha256 for all three module instances, so it reads 3 to change (49F, INF, COT), and a safe-apply of that plan moves both siblings to LiDXhN74. The two sibling-bearing claims of the pair (siblings unmoved) and the 0/1/0 plan cannot both hold by this path. Ways the issuer or CTO may rule (none taken by me): (a) a targeted plan and apply on module.irpt_holdings_performance only, which leaves the siblings' state on the old version and makes every later plan of the root show 2 changes until they are released; (b) accept all three functions moving in one apply (the zip is one build and the siblings run the same members; this widens the signed blast radius to INF and COT, which the CTO halves do not sign); (c) a separate artifact key for the 49F function, a Terraform change this order does not grant. The same shape applies to Act 2 and to any later release of this zip."
+}
+```
