@@ -29,9 +29,11 @@ infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_demque.py
 infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_ycharts.py
 infra/aws/lambda/investor-reporting/ycharts/research/price_adapter_yfinance.py
 infra/aws/lambda/investor-reporting/ycharts/research/price_source.py
+infra/aws/lambda/investor-reporting/ycharts/research/price_transport_ycharts.py
 infra/aws/lambda/investor-reporting/ycharts/research/runner.py
 infra/aws/lambda/investor-reporting/ycharts/research/swap_pass.py
 infra/aws/lambda/investor-reporting/ycharts/research/swap_replacement.py
 infra/aws/lambda/investor-reporting/ycharts/research/tr_level.py
 infra/aws/lambda/investor-reporting/ycharts/research/yahoo_history_days.py
+infra/aws/lambda/investor-reporting/ycharts/session/operation_lease.py
 infra/aws/lambda/investor-reporting/ycharts/session/resident_session.py

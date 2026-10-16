@@ -29,6 +29,10 @@ ycharts/research/multi_map.json and pin them in the bindings (`opal_map_comparis
 `--opal-pricing-binding JSON` writes the optional bindings key `opal_pricing` ({"enabled": bool, "tiers": [..]}, validated by the
 resident installer's own rule); a build with none of the three is the build of before.
 
+IRPT_ANLREQ r34h (2.0.0_SA_COO~G2; nothing else differs): the pricing tiers may name "ycharts", and `--ycharts-window-budget JSON` writes the optional
+bindings key `ycharts_window_budget` ({"calls": int >= 1, "window_s": number > 0}, validated by the resident installer's own rule); a build without
+it is the build of before.
+
 IRPT_ANLREQ r34 (2.0.0_SA_COO~G2, derived from the r32 copy; nothing else differs): `--opal-swap-pool REPO_PATH` packages one tracked file as
 ycharts/research/swap_pool.json and pins it in the bindings (`opal_swap_pool`, a relative path and the sha256, as the maps); a build without
 it is the build of before.
@@ -72,7 +76,7 @@ OPAL_MAP_MEMBER = RESEARCH_DIR + "/overview_map.json"
 OPAL_MAP_COMPARISON_MEMBER = RESEARCH_DIR + "/comparison_map.json"
 OPAL_MAP_MULTICOMP_MEMBER = RESEARCH_DIR + "/multi_map.json"
 OPAL_SWAP_POOL_MEMBER = RESEARCH_DIR + "/swap_pool.json"
-PRICING_TIERS = ("estate", "yfinance")
+PRICING_TIERS = ("estate", "yfinance", "ycharts")  # r34h: the third tier (the resident installer's own PRICING_TIERS names the same three)
 EXTRA_FILES = ("lib/opal_naming.py", "data/firm_registry.json", "org/standards/NAMING_SCHEMA.json")
 EXTRA_DIRS = ("infra/logic/registry", "docs/contracts/investor-reporting/v1")
 
@@ -154,6 +158,19 @@ def pricing_binding(text):
     return value
 
 
+def window_budget_binding(text):
+    """The `ycharts_window_budget` binding from its JSON text, refused by the resident installer's own rule (RESIDENT_WINDOW_BUDGET_BINDING)."""
+    import math
+    try:
+        value = json.loads(text)
+    except ValueError:
+        raise SystemExit("BINDING_BUDGET_JSON")
+    if (not isinstance(value, dict) or set(value) != {"calls", "window_s"} or type(value["calls"]) is not int or value["calls"] < 1
+            or type(value["window_s"]) not in (int, float) or not math.isfinite(value["window_s"]) or value["window_s"] <= 0):
+        raise SystemExit("BINDING_BUDGET_SHAPE")
+    return value
+
+
 def optional_bindings(analysis_ready_queue_url=None, commentary_ready_queue_url=None, packager=None):
     """IRPT_ANLREQ AR-g-41: the three OPTIONAL resident bindings, validated by the runtime's own rule; {} when none is given.
 
@@ -210,6 +227,8 @@ def main(argv=None):
                         help="tracked file at --pin packaged as ycharts/research/swap_pool.json and pinned as bindings opal_swap_pool")
     parser.add_argument("--opal-pricing-binding", metavar="JSON", default=None,
                         help='optional binding opal_pricing, e.g. {"enabled": false, "tiers": ["estate", "yfinance"]}')
+    parser.add_argument("--ycharts-window-budget", metavar="JSON", default=None,
+                        help='optional binding ycharts_window_budget, e.g. {"calls": 6, "window_s": 390}: the host-wide YCharts call budget per window')
     parser.add_argument("--member", action="append", default=[], metavar="PACKAGED_PATH=REPO_PATH",
                         help="package the tracked file REPO_PATH at --pin as the member PACKAGED_PATH (repeatable); "
                              "recorded in the bindings provenance as members_added")
@@ -237,6 +256,7 @@ def main(argv=None):
         raise SystemExit(str(refusal))
 
     pricing = pricing_binding(args.opal_pricing_binding) if args.opal_pricing_binding is not None else None
+    budget = window_budget_binding(args.ycharts_window_budget) if args.ycharts_window_budget is not None else None
     pin = git("rev-parse", args.pin).strip()
     base = git("rev-parse", args.base_pin).strip() if args.base_pin else pin
     listed, list_sha = (read_list(args.files_from) if args.files_from else ([], None))
@@ -358,6 +378,8 @@ def main(argv=None):
         bindings["provenance"]["opal_swap_pool_source"] = args.opal_swap_pool
     if pricing is not None:
         bindings["opal_pricing"] = pricing
+    if budget is not None:
+        bindings["ycharts_window_budget"] = budget
     if added_members:
         bindings["provenance"]["members_added"] = [
             {"packaged": packaged, "repo_path": repo_path, "sha256": next(d for d, p in sums if p == packaged)}

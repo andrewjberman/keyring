@@ -2683,3 +2683,23 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 **fanout:** 2 of 3 chains, cap 8 (chain 1: `OG-en-13` then `OG-en-15` on `~126`; chain 2: `OG-en-14` on `~127`; chain 3: `OG-ev-2`, the applier's measurement, a seat act). All four orders ride the next batched gateway release, which also takes `MX-c-24` (named in its ask, CTO R20-3) and carries NFRA_MCPINDEX's R20-1 precondition (the catalog regeneration keeps `address`).
 
 **Pre-checks.** Every check dry-run at the base (FAIL as expected): the three named-test files absent, the write bound at 0 files touched, `ev2.AC1` with no record; `ev2.AC1` PASS arms and four control arms FAIL on a synthetic record.
+
+## ADDENDUM R3-T.100 (2.0.0_SA_COO~O, 2026-10-16 ~20:3xZ) -- round 39, workstream ENRICH-R39-R: a repair cell found at the drain
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-en-16` | tests only: `tests/test_og_en14.py` sets its own `MOCK_GRAPH` before the first import of `app.config`, so `test_ogen14_ac03` passes in the full-suite order (after `test_og_en4.py` and `test_og_en12.py`), not only alone | `tests/test_og_en14.py` | WORLD (gateway path floor) | `~128` | worker |
+
+**fanout:** 1 of 1 chains, cap 8. Source: the issuer's drain re-run of the merged `OG-en-14`, `OG-en-13` and `OG-en-15` (merges `6510ce187f`, `592d79f192`): `test_ogen14_ac03` red in the forward order, green alone and in reverse.
+
+## ADDENDUM R3-T.101 (2.0.0_SA_COO~O, 2026-10-16 ~20:5xZ) -- round 39, workstream ENRICH-R39-C: the second batched gateway release
+
+**Source.** The round-39 builds are merged and each named test passes in the main tree: `OG-en-13` and `OG-en-15` (`592d79f192`), `OG-en-14` (`6510ce187f`), the repair `OG-en-16` (`19db3a905b`; the 40 touched tests together pass in both orders), and `NFRA_MCPINDEX.TO-MX-c-24` (complete @8a01e0b554, CTO R20-3: named in this release's ask).
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-31` | APPLY: ONE code-only release on the live ref `bf9d23b518`: the named orders' files, no Terraform, no IAM, no env key, no deploy-script or manifest change; Phase A re-cut and ask for three halves, Phase B on the GO; then the served read of five arms (E1 window, E2 unit and currency, E3 numbers and `as_of`, E4 owner exemption, E6 discover echo) | the release tree, the ledger, `W/` | WORLD | `~AE` (`~NFRA1`) | applier |
+
+**fanout:** 1 of 1 chains, cap 8 (the release is one act; the builds are done).
+
+**Held, not in this release.** NFRA_MCPINDEX R20-1 (`gen_silver_rows` keeps `address`) gates any catalog regeneration, and this release changes no catalog. The 429 limit choice (OG-en-10 audit rows) is not made here. Allocation `weight_unit` ships `null` with `not_established` (row Z-S313); the question carries to round 40.

@@ -51,6 +51,7 @@ Work in your own worktree (cut from `box/sitez`; its sparse cone already holds `
 <paths>
 workflows/atom_decomposition/gen_silver_rows.py
 workflows/atom_decomposition/tests/test_registry_drop_guard.py
+workflows/atom_decomposition/tests/test_gen_silver_rows.py
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~52/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -82,9 +83,15 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round 21, worker ~52, an independent chain. Source: CTO round-20 analysis @3f03a45f83 (R21-1, msg 35237) on the CVO slug ADJUDICATION_v16 @b0966935f7. The base dry-run, in a SPARSE worktree cut like the worker's: `c29.AC1` FAIL (the option does not exist: the base run drops 36 rows silently), `c29.AC2` FAIL, `c29.AC3` FAIL (no test file). The 36 are `catalog-*` rows of `legacy_addresses.json`; the fork registry loses none since MX-c-27 (it merges).
 
+**AMENDMENT A1 (2.0.0_SA_COO~MI, 2026-10-16 ~20:4xZ; no gate limb graded it: a path grant and a worker-face note on an issued order).** Worker ~52 finished with AC3 FAIL and filed `NFRA_MCPINDEX-Z-W52-S3`: two `IntegrationTests` in `tests/test_gen_silver_rows.py` (`test_rc_zero_and_180_files_with_unique_names`, `test_contract_ids_are_hashed_and_registry_holds_one_entry_per_row`) run the generator on the round-14 pinned fixture against a COPY of the tracked `legacy_addresses.json`; that fixture makes 180 rows, so the guard now refuses the 36 other `catalog-*` rows (exit 2). The guard is right and the fixture predates it. The test file is added to `<paths>`. Remedy for the worker re-seated on this slot (its commits `4e9017ac2f` and `cf8dae11e3` are inherited state on the branch): in `IntegrationTests.setUpClass` only, write an allow file into `cls.tmp` holding every `key` of the copied `legacy_addresses.json` that starts with `catalog-`, and pass it as `--allow-registry-drop <file>`; change no assertion and no other test. Then re-run c29.AC1 to AC3 (all three must PASS), refresh the proof instance rows for AC3 (and pin every row to the commit that carried it), and commit the test change and the instance in two commits as before. Row S3 is dispositioned by this amendment.
+
 <status>issued</status>
 <round>21</round>
 <workstream>ASSETS</workstream>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER RULING (2.0.0_SA_COO~MI, 2026-10-16 ~20:5xZ) -- MX-c-29 COMPLETE.** Worker ~52 added to `gen_silver_rows.py` `plan_registry` and `plan_fork_registry` (the document a run is about to write, no write), `load_allow_drop`, `dropped_rows`, `check_registry_drops` and `write_registries` (the guard runs before any registry byte is written; a refusal prints `REGISTRY-DROP <file> <id>` per row and returns 2), and the option `--allow-registry-drop FILE`; 9 tests in `test_registry_drop_guard.py` (`4e9017ac2f`). It finished AC1 PASS, AC2 PASS, AC3 FAIL (2 of 60): row Z-W52-S3, the order's own omission of the integration-test fixture from its paths. A1 (`e48fe1117d`) granted the file; the slot was re-seated and `setUpClass` now passes an allow file (`a1e42d21dc`, proof `c49ea30171`). Drained by `safe-merge.sh` at `28d19f4834` (6 files, 0 foreign). Issuer re-run on the merged tree: c29.AC1 PASS (36 rows named, 36 really dropped with the allow file, one key withheld refuses naming exactly that key), c29.AC2 PASS (the planted `catalog-planted-row-c29` refused alone), c29.AC3 PASS (60 passed, 9 new); the atom_decomposition suite 372 passed; ruff clean; the proof instance VALID inside the worker tree. Rows S3 and S4 are dispositioned by `NFRA_MCPINDEX-Z-S134`. The CTO's hold on the catalog emit (until R21-1) is released by this flip. Gate limb that graded this ruling: the flip-needs-a-VALID-instance limb of to-pipeline-gate.
+
+<status>complete</status>
