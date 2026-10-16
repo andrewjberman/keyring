@@ -291,7 +291,20 @@ def arm_f(tmp, base):
             "SKIP: the base object is absent")
         return
     src = REPO / REL
-    names = sorted(p.name for p in src.glob("*.json"))
+    # NFRA_CTLPLN round 30 (CT-cb-1, round-29 ruling 7, C-S104): the real directory also holds layout-2 call files
+    # (crossbox/2) and answer files (crossbox-answer/1), which the base tool correctly refuses. Arm (f) compares the
+    # crossbox/1 files only; every other file is left out and counted.
+    names, left_out = [], 0
+    for p in sorted(src.glob("*.json")):
+        try:
+            doc = json.loads(p.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            doc = None
+        if isinstance(doc, dict) and doc.get("schema") == "crossbox/1":
+            names.append(p.name)
+        else:
+            left_out += 1
+    print("(f) crossbox/1 call files compared=%d left_out=%d (crossbox/2, crossbox-answer/1 or unparsed)" % (len(names), left_out))
     root = Path(tmp) / "real"
     (root / REL).mkdir(parents=True)
     for n in names:
@@ -306,7 +319,7 @@ def arm_f(tmp, base):
             outs[label] = seq
     diffs = [i for i, (x, y) in enumerate(zip(outs["base"], outs["new"])) if x != y]
     ok = len(outs["base"]) == len(outs["new"]) and not diffs and len(names) > 0
-    arm("(f) the existing calls read identically through the new reader: list, list --open and status for every file, base against new",
+    arm("(f) the existing crossbox/1 calls read identically through the new reader: list, list --open and status for every crossbox/1 file, base against new",
         ok, "files=%d commands=%d differing=%d" % (len(names), len(outs["new"]), len(diffs)))
 
 

@@ -23612,3 +23612,56 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The id spaces do not match through the relationship id. The measured join is account based and exact. Hop 2 is OFF, so no client is affected; the reader is re-cut (a new cell) before any deploy pair carries it, with a per-pass cache because the partition holds 4.7 million rows and a per-client scan would not finish."
 }
 ```
+
+## IRPT_DASHBD-D2-W244-S1 -- the 49 Financial publish entry has no pinned handler or publisher; only its lib/trading_calendar.py member was stale
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W244-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~244",
+  "surfaced_at": "2026-10-16T16:54:11Z",
+  "one_line": "The order expects the handler and the shared publisher.py of irpt-49f-reporting-publish-lambda to be stale staged members; neither is a staged_from member, so the re-pin moved one member of that entry (lib/trading_calendar.py), not three.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-304 Summary and WORKER FACE step 2: the stale members of the 49 Financial publish entry are expected to include its handler.py and publisher.py, each re-pinned in staged_from.",
+  "world_is": "At HEAD of this branch (commit 73efc8e1a7 carries the re-pin), irpt-49f-reporting-publish-lambda lists 15 staged_from members and neither handler.py nor publisher.py is among them. Both are source_dir files (infra/aws/lambda/investor-reporting/reporting-publish) that the build reads from the tree and that carry no pin. Of the 15 staged members only lib/trading_calendar.py was stale; it is re-pinned. The checker's AC1 and AC2 pass on this entry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json at 73efc8e1a7: irpt-49f-reporting-publish-lambda staged_from has 15 members; the files list has 17 entries, of which handler.py, publisher.py, ids.py, raw_keys.json, data/custodian_key_seam.json and firm_registry.json are not staged",
+      "the entry's _staged_from_note: handler.py and publisher.py are source_dir files, and the staged members are materialized at build time only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action in this order. The issuer decides whether the source_dir files need pins; the order's premise for this entry is recorded as failed in form, not in the checker's clauses."
+}
+```
+
+## IRPT_DASHBD-D2-W244-S2 -- the order's step 1 names irpt-49f-reporting-gold-lambda where the summary and the checker name irpt-49f-reporting-publish-lambda
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W244-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~244",
+  "surfaced_at": "2026-10-16T16:54:11Z",
+  "one_line": "The order's WORKER FACE step 1 lists irpt-49f-reporting-gold-lambda among the three entries to re-pin; the order's entries field, its summary and the checker's ENTRIES list name irpt-49f-reporting-publish-lambda.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-304 WORKER FACE step 1 names irpt-cot-reporting-publish-lambda, irpt-49f-reporting-gold-lambda and irpt-cot-account-return-daily-lambda as the entries whose staged_from to read; the entries field and the checker's ENTRIES name irpt-49f-reporting-publish-lambda.",
+  "world_is": "The checker p172_repin_after_reader.py has ENTRIES = irpt-cot-account-return-daily-lambda, irpt-49f-reporting-publish-lambda, irpt-cot-reporting-publish-lambda. I re-pinned the publish entry as the checker requires and left irpt-49f-reporting-gold-lambda byte-identical (AC1 confirms no entry outside the three moved). The gold entry's staged members were not measured in this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p172_repin_after_reader.py ENTRIES constant, read at the checker path in the worktree",
+      "AC1 PASS on 73efc8e1a7: no entry outside the three moved"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The issuer names the intended entry; the gold entry is out of this order's grant."
+}
+```
+

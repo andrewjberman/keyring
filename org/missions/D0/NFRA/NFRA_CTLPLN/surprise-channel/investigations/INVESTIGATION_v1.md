@@ -13354,3 +13354,83 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not ruled here: whether a source change on a tie of surfaced_at is the intended reading. The rule as written takes the adjudication row. Decision owner: the issuer 2.0.0_SA_COO~C."
 }
 ```
+
+## NFRA_CTLPLN-W146-S1 -- The face's consumer list for the ROUND-CLOSE line is partly wrong: three of the four named files print their own graded= fields
+
+```json
+{
+  "id": "NFRA_CTLPLN-W146-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~146",
+  "surfaced_at": "2026-10-16T16:48:45Z",
+  "one_line": "The face's consumer list for the ROUND-CLOSE line is partly wrong: box-sync.sh, safe-merge.sh, seat-gates-dry-pass.py and test_apply_who_and_crossbox.py print their own graded= or ungraded= fields and never read the checker's line; .tools/git-hooks/missions-tree-check.sh reads the line and is not on the face's list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/box-sync.sh@ca239c0486 line 118: GRADED_NOTE=\"graded=${n}/...\" is built inside box-sync from its own merge path count, not a read of the ROUND-CLOSE line",
+      ".tools/safe-merge.sh@ca239c0486 line 239: _SM_GRADED is written into its own MERGE-ATTEMPT row, not parsed from the checker",
+      ".tools/seat-gates-dry-pass.py@ca239c0486 line 244: prints SEAT-GATES-DRY ranges=... ungraded=...; no ROUND-CLOSE token in the file",
+      ".tools/git-hooks/missions-tree-check.sh@ca239c0486 lines 105-110: reads the line with case patterns ROUND-CLOSE\\ *verdict=MAY-CLOSE and ROUND-CLOSE\\ *verdict=REFUSED; the new field breaks neither"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "THE LINE HAS CONSUMERS: box-sync.sh, safe-merge.sh, seat-gates-dry-pass.py and the tests test_apply_who_and_crossbox.py, test_round29_grade_of_record.py, test_round19_seat_record.py and test_round_close_and_research.py name ROUND-CLOSE project= or graded=; READ each; a consumer whose regex breaks gets the smallest change in the cell's paths, and a consumer outside them that would break is a BLOCKING row.",
+  "world_is": "Three of the four named files (box-sync.sh, safe-merge.sh, seat-gates-dry-pass.py) do not read the ROUND-CLOSE line: their graded= and ungraded= strings are their own output. test_apply_who_and_crossbox.py names no ROUND-CLOSE token at all (its graded= and ungraded= hits are SEAT-GATES-DRY lines). The consumer outside the list, missions-tree-check.sh, matches the line by a glob with a prefix and a verdict suffix, which the new field does not break. The four tests that read the line pass after the change. No consumer needed a change.",
+  "notes": "Recorded for the issuer's consumer list at the merge. The cell changed no file outside its paths."
+}
+```
+
+## NFRA_CTLPLN-W146-S2 -- The base run of test_round_close_and_research.py read CLOSE-GATES-TEST cases=23/24 ok=False until org/tier0 joined the worktree sparse set
+
+```json
+{
+  "id": "NFRA_CTLPLN-W146-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~146",
+  "surfaced_at": "2026-10-16T16:48:45Z",
+  "one_line": "The worktree sparse checkout omits org/tier0, which the research-owed.py selftest reads through test_round_close_and_research.py; the base run failed one case on a missing file, and the case passed after git sparse-checkout add org/tier0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "base run in worktree wk-NFRA_CTLPLN-146: CLOSE-GATES-TEST cases=23/24 ok=False; the failing case is research-owed.py --selftest, which reads org/tier0/STAKES_MATRIX.md (error: No such file or directory); scratch record .scratch/base/t_rcr.txt",
+      "after git sparse-checkout add org/tier0 (worktree sparse list now holds .tools, lib, org/devices, org/missions/D0/NFRA/NFRA_CTLPLN, org/modules/graph, org/ref, org/standards, infra/logic/registry, org/tier0): CLOSE-GATES-TEST cases=24/24 ok=True; scratch record .scratch/base/t_rcr2.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A neighbouring suite named by the face runs green at the base of the cell, and a worker's sparse checkout holds the folders a named suite reads (a missing folder is added with git sparse-checkout add and named in the report).",
+  "world_is": "The base run of test_round_close_and_research.py failed one case because org/tier0 was outside the worktree's sparse set; the case reads a file the round-close tool does not touch. The defect is the sparse set of the worktree, not round-close-check.py. The folder was added and the suite then read 24/24 ok=True.",
+  "notes": "Recorded because the worktree cut by wk-provision.sh does not hold org/tier0, which a neighbouring suite reads. Decision owner: the issuer 2.0.0_SA_COO~C, for whether the provision set should carry org/tier0."
+}
+```
+
+## NFRA_CTLPLN-W146-S3 -- not_met= under --loose-grades reads the verdict word of the grade of record with the strict readings, which the loose test does not read
+
+```json
+{
+  "id": "NFRA_CTLPLN-W146-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~146",
+  "surfaced_at": "2026-10-16T16:48:45Z",
+  "one_line": "The face asked not_met= to use the SAME verdict reading the checker already applies and no new reading of prose; under --loose-grades that checker reads no verdict word for a fenced row, so the reading is applied to the grade of record for not_met= only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/round-close-check.py@b1f11f01dd grade_criterion: the record's word is structured_grade(...) or verdict_after(...), the two readings the strict candidate test uses (the function body after the candidate loop)",
+      ".tools/round-close-check.py@b1f11f01dd --loose-grades (argparse line): a fenced row grades by any mention of the criterion, and the report prints LOOSE-GRADES IN USE; the JUDGMENT lines carry no verdict for such a row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "not_met=<n> counts the criteria that read GRADED whose grade of record reads NOT MET, using the SAME reading the checker already applies to the grade of record; add no new reading of prose. It changes no verdict.",
+  "world_is": "Under the default strict grades the word is the one the candidate test already reads. Under --loose-grades a fenced row can grade by a bare mention that the checker records with no verdict, so the same two functions are applied to the record for not_met= only: a loose run can count a NOT MET verdict that the loose grade test itself did not read. The JUDGMENT lines, graded, ungraded, self_graded and the verdict are unchanged.",
+  "notes": "Ruling wanted: whether not_met= under --loose-grades should read nothing (0 by construction) instead of the strict reading. Decision owner: the issuer 2.0.0_SA_COO~C with the CTO."
+}
+```

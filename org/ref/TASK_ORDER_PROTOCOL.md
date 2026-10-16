@@ -197,6 +197,14 @@ this template and the spine differ, the spine governs.
       asserts a control, and the proof-of-spec instance.
       No gate counts criteria; this is how the issuer cuts.
 
+    SWEEP BEFORE MERGE (NFRA_CTLPLN round 30, CTO round-29 ruling 4): any order that changes a SHARED CHECKER or GATE
+    (a tool whose output other projects' records feed: for example round-close-check.py, placement-check.py,
+    naming-gate.py, parity-gates.sh) carries in its worker face the instruction to run the changed tool over EVERY
+    real project's records before and after the change, and to print the counts; the issuer re-reads those counts
+    at the merge.
+    COST: one run per such cell.
+    NON-APPLICATION: a checker that no other project's records feed.
+
     STANDARD CRITERIA (include for every gold-touching DS TO):
     N.   comp-validate {script} --artifact /tmp/{artifact}.json exits 0
          (all ERROR checks pass; WARN count documented in session log)
