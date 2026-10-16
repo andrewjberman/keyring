@@ -72,7 +72,7 @@ Report once: the portal branch and commit hash, the diff stat (one line), the ou
 **ISSUER NOTES:** round 11, issuer 2.0.0_SA_COO~D1, on the CTO's round-10 analysis (msg 6731) item 1 and PRD v2.23 @1fb9ac96ab ("the Models band is never carried forward on or after per_model_detail_begins; test it on the real object"). The CTO's criterion: the Variant 2 Total equals the served Total on all 9 carried dates; the real-object arm R3 reads it as "no drawn group above the Total" on those dates. The served Total is null on the 9 carried dates and the module carries the last measured Total there (arm R4: 489 of 489 dated rows equal the served Total, 9 of 9 carried dates carry the last measured one); the base reads R3 red on all 9 (the stack exceeds the Total by $1.32B on 2026-05-30). The repair is client-facing and rides the next portal promote on Andrew's 2026-10-15 word ("it should get added on to the next prod promote of the portal", `ANDREW_DIRECT_20261015_162xZ_DEMO_GLOBAL_TREND_USES_VARIANT1_NEXT_PROMOTE.md`); it disarms row D1-S29 on its PROD read (with CN-s-5, per the row). LANDING (CLAUDE.md Portal): a client-facing row for Andrew (the approval row is cut FROM PROD with a cherry-pick of this ONE commit; portal DEV is written only by `.tools/portal-merge-forward.sh`). This order's commit is separate from CN-s-5's on purpose: 4b is held on the edge call and 4a is not.
 **Fanout:** 2 of 2 chains; chain 1 is `CN-s-4` -> `CN-s-5` -> `CN-s-3` on ONE worker (shared `trendGrouping.ts` and `ModelPortfolios.tsx`). `portal_ref:` 39dab87f3b (portal DEV at the cut).
 
-<status>pending</status>
+<status>complete</status>
 <round>11</round>
 <to_id>MDPF_CANON.TO-CN-s-4</to_id>
 <slot>~31</slot>
