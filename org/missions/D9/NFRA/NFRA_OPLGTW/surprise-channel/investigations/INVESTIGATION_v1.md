@@ -24392,3 +24392,59 @@ name the one known failure instead of silently inheriting it.
   "dismissal_reason": "mg1.AC2.sh was fixed to read calendar_months under the scope's dates map; the applier's reading was right and OG-mg-1 completed."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:55:42Z",
+  "id": "NFRA_OPLGTW-Z-S290",
+  "one_line": "Round-38 disposition of worker row Z-W118-S2 (BLOCKING): Ruled in OG-en-4 A1 (merged 1a535637fd): eclipse's get_holdings refuses before any read and builds no position row, so t",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W118-S2"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-4.holdings-unit-and-currency.md amendment A1 (issuer ruling at the merge)",
+      "merge 1a535637fd; tests/test_og_en4.py named tests PASS in the main tree (issuer re-run)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "Ruled in OG-en-4 A1 (merged 1a535637fd): eclipse's get_holdings refuses before any read and builds no position row, so the six adapters that emit rows carry the keys and eclipse's refusal is pinned in the test; the seven-adapter clause is satisfied; no eclipse change.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled in OG-en-4 A1 (merged 1a535637fd): eclipse's get_holdings refuses before any read and builds no position row, so the six adapters that emit rows carry the keys and eclipse's refusal is pinned in the test; the seven-adapter clause is satisfied; no eclipse change."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T12:55:42Z",
+  "id": "NFRA_OPLGTW-Z-S291",
+  "one_line": "Round-38 disposition of worker row Z-W118-S3 (ARMED): OG-en-4 A1 accepts orion's weight_unit null (its 0-100 scale is not established) as the honest answer, claiming no unit;",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W118-S3"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-en-4.holdings-unit-and-currency.md amendment A1 (issuer ruling at the merge)",
+      "merge 1a535637fd; tests/test_og_en4.py named tests PASS in the main tree (issuer re-run)"
+    ]
+  },
+  "spec_asserts": "A worker row that the issuer rules is dispositioned by a later row naming it.",
+  "world_is": "OG-en-4 A1 accepts orion's weight_unit null (its 0-100 scale is not established) as the honest answer, claiming no unit; carried to the enrichment list as: verify orion's weight scale against a real row, then name its unit. No false unit ships.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-en-4 A1 accepts orion's weight_unit null (its 0-100 scale is not established) as the honest answer, claiming no unit; carried to the enrichment list as: verify orion's weight scale against a real row, then name its unit. No false unit ships."
+}
+```
