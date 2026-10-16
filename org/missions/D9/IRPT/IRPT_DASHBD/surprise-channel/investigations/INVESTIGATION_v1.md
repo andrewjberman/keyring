@@ -23181,3 +23181,31 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_DASHBD-D2-S120 -- W1701-S6 ruled once on census v2 by its disarm owner: two legs of one event, both INTERNAL; a net-zero criterion in the release pair
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S120",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-16T13:25:00Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W1701-S6 (round-131 analysis ADDENDUM 2): census v2 shows all 14,920 rows of Dividend Paid from Cash and of Income Paid are two legs of one event (same account, day and absolute amount); the income is booked by Dividend to Cash (INCOME), so both legs stay INTERNAL; the release pair carries a per-event net-zero criterion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": ["IRPT_DASHBD-D2-W1701-S6"],
+  "spec_asserts": "An ARMED row disarms by its disarm owner's ruling (round-131 analysis, ADDENDUM 1 asked for census v2 before one final ruling).",
+  "world_is": "Census v2: 14,920 of 14,920 rows of each description share a key with a row of the other; 13,201 pair with an INCOME-class row; of 1,719 unpaired, 1,540 have Dividend to Cash the same day and 462 the day after. Contract 0.4.1 carries s6_status REOPENED_FOR_CTO until 2.0.0_SA_COO~F2 records this ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R132_INFLECTION_S6_CENSUS_V2.json @caf9a946e3 (counts only, 154 partitions)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_131_20261016.md ADDENDUM 2"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W1701-S6 is ruled final by its disarm owner on census v2; the net-zero check is a release criterion, not a hazard."
+}
+```
