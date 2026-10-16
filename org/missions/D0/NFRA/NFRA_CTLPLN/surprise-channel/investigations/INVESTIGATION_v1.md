@@ -14261,3 +14261,109 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not decided here: whether the census should accept a worktree mode. Decision owner: the issuer 2.0.0_SA_COO~C."
 }
 ```
+
+## NFRA_CTLPLN-W145-S20 -- disarm record for the ARMED rows W145-S17 and W145-S18: both readers now read the function-map folder on this branch
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S20",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:43:01Z",
+  "one_line": "Rows NFRA_CTLPLN-W145-S17 (p172_repin_after_reader.py reads the whole map) and NFRA_CTLPLN-W145-S18 (p136_sourcemap.py requires the map to be a file) were filed ARMED with the issuer as disarm owner. Both readers are changed in commit e23584c80f (AMENDMENT 3) to read the function-map folder through lib/opal_lambda_map.py. At the merge HEAD 32a4d22d57 the census reads other=0 and live_old_path_users=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show e23584c80f: p136 AC1 PASS, AC2 PASS, selftest PASS (7 arms); p172 selftest PASS (7 red arms) and AC1 FAIL with the reason of row NFRA_CTLPLN-W145-S23, the same reason as on the target before the change",
+      "merge commit 32a4d22d57 (safe-merge fast lane, index check 0 of 176 merged paths differ); atomic_check.py default at HEAD 32a4d22d57: ATOMIC-SPLIT functions=240 equal=240 map_present=False census_other=0 live_old_path_users=0 ok=True",
+      "the disarm is recorded here, not by editing the two rows (append-only); the issuer 2.0.0_SA_COO~C is the disarm owner named in each row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via the row's disarm_owner (CLAUDE.md section 2, surprise channel). The map deletion must not reach box/laptop while a reader names the retired map (rows W145-S17, W145-S18).",
+  "world_is": "On this branch neither reader names the retired map literally. p172 reads the working-tree map through the folder and reads its base by a name built from parts (row NFRA_CTLPLN-W145-S22). The disarm is a fact of the branch; the issuer confirms it at the drain, because the drain runs the Terraform plans and the suites on the merged state.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (confirm the disarm of W145-S17 and W145-S18 at the merge)."
+}
+```
+
+## NFRA_CTLPLN-W145-S21 -- the two DB172 criteria of the IRPT_DASHBD p172 checker (AC2 and AC3) reach live AWS and cannot run in this cell
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S21",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:43:01Z",
+  "one_line": "The checker org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p172_repin_after_reader.py runs its layer-import clause (a live AWS layer lookup through p149 latest_layer_version) before the AC2 and AC3 branches, and its build step runs build-and-upload.sh. The cell's no-aws rule forbids both, so DB172-1-AC2 and DB172-1-AC3 were not run; DB172-1-AC1 and the --selftest were run (both read-only, no aws).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p172 at e23584c80f: line 207 calls p160.build_only(root) (bash infra/aws/lambda/ci/build-and-upload.sh with BUILD_ONLY=1); line 210 calls check_layer_imports, whose line 121 calls p149.layer_names(p149.latest_layer_version()), a live lookup; line 214 is the first cid branch, so both run before AC2 and AC3 are decided",
+      "the cell's face: no aws command; the checker was not run for AC2 or AC3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A checker named in a worker's record is run under its own criterion and its output and last-line shape are kept (amendment 3: keep its output and last-line shape).",
+  "world_is": "The checker has no offline arm for AC2 and AC3: its only offline arm is the selftest, which exercises the pure clauses on synthetic data. Its AC2 and AC3 verdicts are therefore unmeasured in this cell.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (who runs the layer clause, and where, for the IRPT_DASHBD round 149 check)."
+}
+```
+
+## NFRA_CTLPLN-W145-S22 -- the census grades a history read written with the literal map path as a live reader, so both readers name the retired path by parts
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S22",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:43:01Z",
+  "one_line": "At HEAD 7411f90fd2 the census classed the two readers OTHER (census other=2 ok=False): p172 and p136 name the retired path literally, and their only lines with the name are history reads at the order base or a constant, with no reading inside the window. The face asked p172 to keep the literal git show path; the census bar other=0 cannot pass with it. Both readers now name the path by parts (the p170 and atomic_check.py precedent), so the census grep set does not contain them and it classes no file OTHER.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 7411f90fd2:org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r149/p172_repin_after_reader.py line 30 and the census CENSUS-OTHER-FILES line at that HEAD (row NFRA_CTLPLN-W145-S17)",
+      "git show e23584c80f: p172 SOURCE_MAP_REL = infra/aws/lambda/ci/ + lambda + -source-map.json (the comment above it states the reason); p136 has no literal of the retired name",
+      "census at HEAD 32a4d22d57: SOURCEMAP-CENSUS files=2510 grep_files=2510 reconciled=True map_functions=240 classes=read_whole:153,read_one:0,write:0,test:2,doc:2355,other:0 ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The census verdict is other=0 and live_old_path_users=0 (AMENDMENT 3 step 3); a history read of the retired map at a pinned base is not a live reader.",
+  "world_is": "The census is a grep over HEAD that classes by pattern: it cannot tell a history read at a pinned commit from a live read of the working tree, so the only ways to pass it are a reading row in the census tables (outside this grant) or naming the path by parts. The parts-naming hides the name from the grep for every reader that uses it.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~C (accept the parts-naming for the two readers as the precedent, or grant a reading row in READINGS_CONSUMERS_D.tsv for each)."
+}
+```
+
+## NFRA_CTLPLN-W145-S23 -- the IRPT_DASHBD p172 checker's AC1 is FAIL on the target before and after this change: an entry outside its order changed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W145-S23",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~145",
+  "surfaced_at": "2026-10-16T22:43:01Z",
+  "one_line": "On box/laptop be0c78cf70 and ec33cbc208 (the same map blob dc02f1689673 as the base) the p172 checker's AC1 prints FAIL: an entry outside the order changed: irpt-49f-reporting-gold-lambda. The F2 change of checks/r136/p136_sourcemap.py (DBF136-3-AC1) added two files to that entry after p172's order base. The reader change in e23584c80f keeps this verdict and reason; the check was not weakened.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the baseline run on the target map before the change (the map copied in untracked for the run, then removed): FAIL: an entry outside the order changed: irpt-49f-reporting-gold-lambda; the same command after the change at e23584c80f on the folder: the same line",
+      "a comparison of the folder with the map at the order base f0c0e87682 (scratch script in the worktree .scratch): 240 functions in both; 4 entries differ: the three entries of the order and irpt-49f-reporting-gold-lambda"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The p172 checker's AC1 asserts that only the three entries of its order changed between its base and the working tree.",
+  "world_is": "The gold entry changed under a closed-round check of another round (F2, round 136) after p172's base; the p172 clause therefore cannot pass as written on the current map, whatever the reader reads.",
+  "notes": "Decision owner: the issuer 2.0.0_SA_COO~D2 for IRPT_DASHBD round 149 (re-base the clause or accept the F2 change); not changed here, since the criterion of this order does not name it."
+}
+```
