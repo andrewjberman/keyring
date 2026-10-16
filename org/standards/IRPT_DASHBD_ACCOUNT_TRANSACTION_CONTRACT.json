@@ -1,9 +1,9 @@
 {
-  "contract_version": "0.4.2",
-  "supersedes": "0.4.1 (the round-132 contract, whose round_132_censuses.s6_status read REOPENED_FOR_CTO: the CTO's final S6 ruling (ADDENDUM 2, pin a5475b2fdd) makes both legs of the Dividend Paid from Cash / Income Paid event INTERNAL and the status RULED_INTERNAL, recorded in s6_ruling; the rest of 0.4.1 stands)",
+  "contract_version": "0.5.0",
+  "supersedes": "0.4.2 (the round-133 contract, which recorded the CTO's final S6 ruling, pin a5475b2fdd, in s6_ruling): 0.5.0 makes the business-date claim PER ROW (the CTO round-132 ruling 1, msg 9498) by adding business_date_claim as the 19th column and restating the claim of business_date, and changes nothing else of 0.4.2",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
-  "authored_by": "0.9.0_WK_IRPT_DASHBD~1901",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~2001",
   "authored_under": "IRPT_DASHBD.TO-DB-f-1801 (round 132, workstream ~F2, F-SHIP), cell DB-f-1801 of IRPT_DASHBD_DECOMP_R132_F.md, following the CTO round-131 analysis for F-SHIP (msg 9342: rulings (b) the fund-only price, (c) one business_date by the function in lib/trading_calendar.py, (1) the Reversed offsets with their originals, (5) contract, producers and mirror in one merge) and the round-132 issuer's censuses.",
   "table": "account_transaction",
   "grain": "account x transaction line",
@@ -30,7 +30,8 @@
       "type": "date32[day]",
       "nullable": false,
       "meaning": "The business date of the row, the date= partition it is written under: the first NYSE trading day on or after the trade date, computed by first_trading_day_on_or_after in lib/trading_calendar.py (window 14 days) for ALL THREE firms (contract 0.4.1, the CTO's round-131 ruling). 49 Financial: from its trade_date; the silver business_date column is not the answer. Cottonwood: from its Trade Date (the adapter's performance day). Inflection: from its transDate, so a Saturday or Sunday transDate rolls to the Monday.",
-      "claim": "measured"
+      "claim": "inferred",
+      "method": "The per-row claim is the field business_date_claim: the business_date is computed by the producer from the two dates. Its basis is the first NYSE trading day on or after the trade date (first_trading_day_on_or_after, lib/trading_calendar.py, window 14 days). The column's claim is inferred because its weakest row is: a row whose business_date equals trade_date reads measured, and a line rolled forward by the rule reads inferred."
     },
     {
       "name": "trade_date",
@@ -144,6 +145,14 @@
       "nullable": true,
       "meaning": "The source value the type and action were looked up from, exactly as received, unstripped: the 49 Financial tran_srcde code, the Cottonwood Action, or the Inflection transactionDescription. Null where the source cell is missing. Carried on every row, including a row the mapping does not hold.",
       "claim": "measured"
+    },
+    {
+      "name": "business_date_claim",
+      "type": "string",
+      "nullable": false,
+      "meaning": "The business-date claim of the row, per row (contract 0.5.0): measured where business_date equals trade_date (a trading day, as received), inferred where the line was rolled forward by the rule (the first NYSE trading day on or after the trade date). It is decided by one function, business_date_with_claim in account_transaction.py, for all three firms, and check_transaction_rows refuses a claim that disagrees with the two dates.",
+      "claim": "inferred",
+      "method": "Computed by the producer from the two dates: measured where business_date equals trade_date (a trading day, as received); inferred where the line was rolled forward by the rule (basis: the first NYSE trading day on or after the trade date). Not a source value."
     }
   ],
   "sources": {
@@ -3793,10 +3802,10 @@
       "read_at_utc": "2026-10-16T08:48:27Z"
     }
   },
-  "schema_hash": "58790f62fe63c9ca342caaa9e91c6084d348163924bc7153e0013591807a7fac",
+  "schema_hash": "ac652e2f71b18427b52f321858163768158f850ec173d1e592c7c3abe815bb6a",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines of columns joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries (the same method as the account_class_daily and account_return_daily contracts).",
   "served": false,
-  "served_note": "Nothing is written. No object of this table exists in any bucket. 0.4.1 supersedes 0.4.0 on the CTO round-131 rulings (round 132, DB-f-1801): one business_date for all three firms by first_trading_day_on_or_after; the Inflection price on a fund-family line only (NAV_PRICE_FUND_ONLY); the Reversed offsets counted with their originals. The round-132 censuses are stated as measured claims with the statuses the numbers give (round_132_censuses). The release is a never-widen act that waits on the CVO's judgment at L9 (DBF132-1-J1 and J2) and on a CTO and COO sign-off. 0.4.2 records the CTO's final S6 ruling (ADDENDUM 2 to the round-131 analysis, pin a5475b2fdd): both legs of the Dividend Paid from Cash / Income Paid event stay INTERNAL, so round_132_censuses.s6_status reads RULED_INTERNAL.",
+  "served_note": "Nothing is written. No object of this table exists in any bucket. 0.4.1 supersedes 0.4.0 on the CTO round-131 rulings (round 132, DB-f-1801): one business_date for all three firms by first_trading_day_on_or_after; the Inflection price on a fund-family line only (NAV_PRICE_FUND_ONLY); the Reversed offsets counted with their originals. The round-132 censuses are stated as measured claims with the statuses the numbers give (round_132_censuses). The release is a never-widen act that waits on the CVO's judgment at L9 (DBF132-1-J1 and J2) and on a CTO and COO sign-off. 0.4.2 records the CTO's final S6 ruling (ADDENDUM 2 to the round-131 analysis, pin a5475b2fdd): both legs of the Dividend Paid from Cash / Income Paid event stay INTERNAL, so round_132_censuses.s6_status reads RULED_INTERNAL. 0.5.0 (DB-f-2001) makes the business-date claim per row: business_date_claim, the 19th column, reads measured where business_date equals trade_date and inferred on a rolled line, from one function (business_date_with_claim) for all three firms.",
   "business_date_rule": {
     "function": "first_trading_day_on_or_after",
     "module": "trading_calendar",
@@ -3806,7 +3815,13 @@
       "cottonwood",
       "inflection"
     ],
-    "rule": "business_date is the first NYSE trading day on or after the trade date, for all three firms: the day returned by first_trading_day_on_or_after (lib/trading_calendar.py) for the firm's trade date within 14 days. 49 Financial reads its trade_date; Cottonwood its Trade Date; Inflection its transDate. trade_date is the source date as received and is never rolled. A line whose trade date has no trading day within 14 days, or none readable, is refused and counted. Each writer refuses a row whose business_date is not the date= partition it is written under (CTO round-131 ruling (c))."
+    "rule": "business_date is the first NYSE trading day on or after the trade date, for all three firms: the day returned by first_trading_day_on_or_after (lib/trading_calendar.py) for the firm's trade date within 14 days. 49 Financial reads its trade_date; Cottonwood its Trade Date; Inflection its transDate. trade_date is the source date as received and is never rolled. A line whose trade date has no trading day within 14 days, or none readable, is refused and counted. Each writer refuses a row whose business_date is not the date= partition it is written under (CTO round-131 ruling (c)).",
+    "claim_field": "business_date_claim",
+    "basis": "first NYSE trading day on or after the trade date",
+    "claims": {
+      "measured": "business_date equals trade_date, a trading day as received",
+      "inferred": "rolled forward by the rule"
+    }
   },
   "price_rule": {
     "inflection": {
