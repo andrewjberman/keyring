@@ -19895,3 +19895,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The portal test fails at its ARM(a) parity arm, the only failure its verdict names. The publisher's 13 tests pass. The worker made no portal edit, wrote no facts record and did not flip the order. The reconciling edit (the page's optional list, or a contract revert) is the owner's decision; the branch carries the red test until then."
 }
 ```
+
+## IRPT_DASHBD-D2-W225-S2 -- TO-DB-b-278: the answer to row W225-S1 (the portal parity test) under Amendment 1
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W225-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~225",
+  "surfaced_at": "2026-10-16T01:06:27Z",
+  "one_line": "Answer to W225-S1: the portal series-contract test iv-e-124 is the page's cell, not this order's. Amendment 1 (f10a449ccf) removed it from DB146-1-AC3; this order edits no portal file and does not grade the page mirror. The contract's red mirror stays with the drain owner until the page's cell lands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the drain that merges this branch with the Cottonwood series publish and the page's mirror)",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-278.series-contract-030-unreported-trading-days-fields.md, AMENDMENT 1 paragraph (1): the page's mirror is the page's cell; W225-S1 is ruled; DB146-1-AC3 no longer runs the portal test",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r146/p146_series030.py at commit f10a449ccf: the AC3 branch runs the test file, the publisher test and the facts record, and no portal test",
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-124.series-contract.test.ts: not edited by this worker; the contract's optional list it compares against is now five names (commit 2fd42fcb40)"
+    ]
+  },
+  "spec_asserts": "DB-b-278 DB146-1-AC3 as first written: the portal's series-contract test still passes against the new contract; a failure is a BLOCKING row and a stop.",
+  "world_is": "The ruling moved the portal test out of this order's criteria, and the worker's branch no longer carries a portal grade. The portal test file is unchanged; its last measured run (on contract commit 2fd42fcb40) failed at the optional-list parity arm, the page naming three optional names against the contract's five. It was not re-run after the income amendment, and it is expected to stay red on the merged contract until the page's cell updates its mirror. Owner of that disarm: the drain's issuer."
+}
+```
