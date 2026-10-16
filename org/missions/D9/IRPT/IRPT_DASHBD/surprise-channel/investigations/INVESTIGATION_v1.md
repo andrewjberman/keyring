@@ -21406,3 +21406,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The carrying commit for a portal file is in the nested portal repo (branch wk-IRPT_DASHBD-418-portal), outside the workspace store. The workspace checker cannot resolve it, so that row is announced and not asserted; the workspace-side BUILD record row resolves at its pin."
 }
 ```
+
+## IRPT_DASHBD-D2-W1401-S1 -- the commit gate's client account-id check did not run on this box, so the records commit was not checked against the hashed list
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1401-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1401",
+  "surfaced_at": "2026-10-16T07:03:18Z",
+  "one_line": "The commit gate's client-data check could not run on this box: the hashed account-id list is absent, so commit d960a015c0 (the three FWD-5 records and their generator) was not checked against it; the worker's own reading and the checker's digit rule found no account id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit d960a015c0 on branch wk-IRPT_DASHBD-1401: WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids",
+      "python -I org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r128/p128_ground3.py . DBF128-1-AC1 on the committed records: PASS rc 0; the records carry column names, counts and flags only"
+    ]
+  },
+  "spec_asserts": "A commit is checked for client account ids against the hashed list named by OPAL_ACCOUNT_ID_HASHES or the default path, and an absent list is announced as a WARN that the check did not run.",
+  "world_is": "The default list is absent on this box, so the client-data check was skipped for commit d960a015c0. The commit carries no client account id by the worker's reading and the checker's digit rule, not by the gate. Whether other commits on this box went unchecked is not measured here."
+}
+```
