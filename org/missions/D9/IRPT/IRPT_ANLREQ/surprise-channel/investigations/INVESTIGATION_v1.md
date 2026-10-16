@@ -22910,3 +22910,50 @@
   "dismissal_reason": "No exposure: the four bodies equal the computed CONTRACT_VERSION refusal for both identities, byte for byte. FWD-5 stays ungraded and S134 stays armed. The next sitting needs a driver that sends X-Contract-Version and grades by the envelope (ok false is REFUSED or DENIED, never LEAK or ALLOWED), cut by 2.0.0_SA_COO~T2 under a re-signed packet."
 }
 ```
+
+## IRPT_ANLREQ-D2-W172-S4 -- AR-y-380 names the users-table name and the partner-table name as the ones in sitting_r33.py, but the users-table name is set in sitting_r28.py and reached through base.USERS
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W172-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~172",
+  "surfaced_at": "2026-10-16T21:52:02Z",
+  "one_line": "AR-y-380 says the users-table name, the key shape and the partner-table name are the ones in sitting_r33.py. sitting_r33.py spells only the partner table out (opal-partner-<firm>); the users table is base.USERS from sitting_r28.py, which sitting_r33.py imports. The name was read from sitting_r28.py:34 with certainty, so no BLOCKING row was needed and the helper cites both files beside the constant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-380 mint paragraph: 'The users-table name, the key shape and the partner-table name are the ones in sitting_r33.py (read them there; if a name cannot be read there with certainty, file a BLOCKING row instead of guessing).'",
+  "world_is": "sitting_r33.py:191 spells the partner table as 'opal-partner-' + firm; sitting_r33.py:184-188 give the users and partner key shapes. The users table is base.USERS: sitting_r33.py:29-30 imports sitting_r28.py, and sitting_r28.py:34 sets USERS = 'opal-users-v2'. The name is therefore read, with certainty, from sitting_r28.py:34 and not from sitting_r33.py itself.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r33/sitting_r33.py:29-30,184-191 (read in the main workspace, read only)",
+      "C:/dev/ajb_workspace/org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r28/sitting_r28.py:32,34 (read in the main workspace, read only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "IRPT_ANLREQ-D2-W172-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~172",
+  "surfaced_at": "2026-10-16T21:52:02Z",
+  "one_line": "AR-y-380 names createdBy 0.7.0_AE_CloudOps~IB2 for both window-5 rows, but the release-33 helper it reads writes 0.7.0_AE_CloudOps~AQ2. The helper uses the order's value; the window-5 rows therefore carry IB2 unless the issuer says otherwise.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-380 mint paragraph: the users row and the partner row carry createdBy 0.7.0_AE_CloudOps~IB2 (the order's stated value), and the cell says the constants are read from sitting_r33.py.",
+  "world_is": "sitting_r33.py:286 and sitting_r33.py:302 write createdBy '0.7.0_AE_CloudOps~AQ2' on the release-33 users and partner rows. fwd1_advisor.py CREATED_BY is the order's value, not a value taken from sitting_r33.py. The difference is a provenance stamp only: _advisor_owner in infra/aws/lambda/investor-reporting/_authz/served.py (HEAD, lines 1085-1104) reads email, firmId, status and advisorKey, never createdBy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/ajb_workspace/org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r33/sitting_r33.py:286,302 (read in the main workspace, read only)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1085-1104 @HEAD (git show HEAD:<path>)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
