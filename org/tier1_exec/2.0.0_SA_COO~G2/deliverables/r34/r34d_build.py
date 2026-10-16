@@ -5,7 +5,7 @@ usage: python -I r34d_build.py --pin <full 40-hex commit> --out <stage folder ou
 Run it from the repository root (or any worktree of it). The stage folder must not exist yet. It refuses unless the builder, the packer, the
 clock wrapper, the script generator and the files-from list on disk equal the same files at the pin. Steps: verify the r34c base tarball (the
 root running on the host when the install starts);
-build twice under one fixed clock and compare member by member; pack once; extract; diff against the r34c tarball (changed, added, removed; the build REFUSES unless exactly SHA256SUMS and intake/yfinance_check.py changed);
+build twice under one fixed clock and compare member by member; pack once; extract; diff against the r34c tarball (changed, added, removed; the build REFUSES unless exactly SHA256SUMS, reports/resident_bindings.json (only provenance.package_pin) and intake/yfinance_check.py changed);
 derive the four host scripts from the r31 set over the r34c root; `bash -n` each; dry-run the two sha256 gates (an unchanged copy passes, a one-byte copy refuses);
 write the record. Prints one RESULT line: R34D-BUILD-OK <members> ... or R34D-BUILD-BAD <why>. ASCII only. No aws call of any kind.
 """
@@ -25,7 +25,7 @@ TOOLS = ["build_resident_package.py", "pack_r34.py", "run_builder_fixed_clock.py
 R32_DIR = "C:/dev/irpt-release-r34f"  # the r34c stage folder: the OLD root is the r34c tarball that runs on the host
 R32_TAR = R32_DIR + "/irpt-resident-0485393f3a-r34c.tar.gz"
 R32_TAR_SHA = "272d5c543bc7731217f57157afd9817db9ed8906b148977852c9b9b1714d2ff8"
-EXPECT_CHANGED = ["SHA256SUMS", "intake/yfinance_check.py"]
+EXPECT_CHANGED = ["SHA256SUMS", "intake/yfinance_check.py", "reports/resident_bindings.json"]  # the bindings differ only in provenance.package_pin (checked below)
 POOL_SRC = "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r34/swap_pool.json"
 R31_SCRIPTS = "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~144"
 STATE_JSON = "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~55/r19/recipe_evidence/state_st32_from_bindings.json"
@@ -148,6 +148,9 @@ def main():
     bindings32 = json.load(open(x32 + "/reports/resident_bindings.json", encoding="utf-8"))
     keys_added = sorted(set(bindings) - set(bindings32))
     keys_changed = sorted(k for k in bindings if k in bindings32 and bindings[k] != bindings32[k])
+    prov_changed = sorted(k for k in set(bindings["provenance"]) | set(bindings32["provenance"]) if bindings["provenance"].get(k) != bindings32["provenance"].get(k))
+    if keys_added or keys_changed != ["provenance"] or prov_changed != ["package_pin"]:
+        bad("the bindings differ from r34c beyond provenance.package_pin: added %s changed %s provenance %s" % (keys_added, keys_changed, prov_changed))
     # 5. the scripts
     scripts_dir = out + "/scripts"
     os.makedirs(scripts_dir)
