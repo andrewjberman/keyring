@@ -21075,3 +21075,62 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+---
+
+## IRPT_ANLREQ-D2-S140 -- Release 33 sitting: a minted partner advisor is refused again on the owned-input analysis route (D2 INVALID_I...
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-16T04:03:58Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-S140",
+  "one_line": "Release 33 sitting: a minted partner advisor is refused again on the owned-input analysis route (D2 INVALID_INPUT, the function now names COMPOSITION-REFUSED step=2 error_class=ValidationError), and the cottonwood advisor's cross-tenant analysis (D4) answers NOT_FOUND where the order expects NOT_AUTHORIZED; neither was admitted.",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (name the cause of the step-2 refusal by an offline reproduction, or amend the arms; D4's expected code is the issuer's to restate; whether the partner path stays parked is the PRD's)",
+  "spec_asserts": "Order IRPT_ANLREQ.TO-EXERCISE-R33 step 5 and R33E-AC1: D2 an advisor analyses their own input (admitted), D3 refused NOT_AUTHORIZED, D4 an advisor of cottonwood analysing A's input by its id refused NOT_AUTHORIZED; context: AR-y-318 (names the failing step) and AR-y-319 are in the release-33 build, so a D2 or D4 that fails again is a finding with the classifier code and the named step.",
+  "world_is": "MEASURED 2026-10-16 03:41Z (DOOR_RESULT_R33.txt, DOOR_TRACE_R33.txt; irpt-ycharts-generate at kxOEgpbs..): D1 as advisor A NORMALIZED (two requests, the first RESOLVING). D2 (A, own input) answered 200 INVALID_INPUT, body sha256 f0b990f98159..a90e, byte-identical to release 29's D2. The function's own log for that request: COMPOSITION-REFUSED step=2 error_class=ValidationError, exception SubmissionRefused CLOSED_COMPOSITION_REQUIRED (corr-5c72b00fce0c). In composition_admission.py (STEP_NUMBER canonical 1, schema 2, compose 3, bindings 4, portfolio 5) step 2 is the JSON-schema validation of the frozen RequestComposition, so the frozen composition of a FIRM_ADVISOR-owned input fails RequestComposition.schema.json; the failing property is not logged (the message is never logged by design). D3 (B analysing A's input) answered NOT_AUTHORIZED (ProspectOwnershipRefused), body sha256 e51a348e23e5.. identical to release 29's. D4 (C, selected firm cottonwood, A's input id) answered 200 NOT_FOUND, body sha256 1376f34dbdb5.. (internal InputUnavailable INPUT_UNAVAILABLE, corr-8a3fe254311a); release 29 read UNEXPECTED. Not admitted; cottonwood prefix 234 versions before and after. INFERRED, NOT MEASURED: whether step 2 fails because the minted advisor identity (the same partner-row and claim shape as release 29, built from the readers) differs from a real advisor's in a way the schema checks, or because the schema rejects advisor-owned compositions; the property that fails.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r33/DOOR_RESULT_R33.txt, DOOR_DETAIL_R33.txt, DOOR_TRACE_R33.txt",
+      "CloudWatch /aws/lambda/irpt-ycharts-generate 2026-10-16T03:41:20Z-03:41:55Z, closed tokens only (COMPOSITION-REFUSED step and error_class, exception types and texts, public reason codes)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py lines 25-64 at the pin 927337a741"
+    ]
+  },
+  "notes": "D4's NOT_FOUND refuses without revealing that the input exists in another tenant (no existence oracle); the order's expected NOT_AUTHORIZED may be the wrong expectation for that arm. The sitting's one token per identity is spent; no retry was made."
+}
+```
+
+---
+
+## IRPT_ANLREQ-D2-S141 -- Release 33 sitting: the priceDate arms P1 and P1M cannot read NORMALIZED from one request (every fresh upload...
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AQ2",
+  "surfaced_at": "2026-10-16T04:03:58Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-S141",
+  "one_line": "Release 33 sitting: the priceDate arms P1 and P1M cannot read NORMALIZED from one request (every fresh upload token answers RESOLVING first), while their log counts read as ordered: P2 0, P1 1, P1M 1.",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (restate the arms' expected states, or re-issue them with a re-post and a per-request count)",
+  "spec_asserts": "Order IRPT_ANLREQ.TO-EXERCISE-R33 step 5 and R33E-AC1: P2 NORMALIZED with count 0, P1 NORMALIZED with count 1, P1M NORMALIZED with count 1, each request sent ONCE.",
+  "world_is": "MEASURED 2026-10-16: every fresh upload token of this sitting answered 200 RESOLVING on its first request (D1, P2, P1, P1M); D1 and P2 answered NORMALIZED on their second request (the re-post), P1 and P1M were sent once, as the order says, and read RESOLVING (status 200, not a refusal: a malformed price date was refused before release 33 and was not refused now). Log windows on /aws/lambda/irpt-ycharts-generate (5 s before the arm's first request to 90 s after its last, windows 100 s apart so none overlaps): P2 03:41:58Z-03:43:49Z 8 events scanned, 0 with the exact string IRPT_UPLOAD price_date_ignored=1; P1 03:43:54Z-03:45:29Z 5 events, 1; P1M 03:45:34Z-03:47:09Z 5 events, 1. No value of a price date is in any record. A re-post that repeats the price date would print the line again (count 2 for the arm), so NORMALIZED and exactly one line cannot both hold for a sent price date under the observed RESOLVING-then-NORMALIZED protocol. INFERRED, NOT MEASURED: that a re-post of the same upload token would read NORMALIZED for P1 and P1M as it did for D1 and P2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_r33/DOOR_RESULT_R33.txt (LOG_WINDOWS lines), DOOR_TRACE_R33.txt",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py lines 241-245 at the pin (the line is printed per request that carries a price date)"
+    ]
+  },
+  "notes": "The substance under test held: a sent and a malformed price date are accepted and ignored, the closed-token line is printed once per request that carries one and never for the request without one. The arms as worded fail on the state, not on the count."
+}
+```

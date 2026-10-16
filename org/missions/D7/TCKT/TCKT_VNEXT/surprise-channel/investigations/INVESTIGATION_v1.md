@@ -2946,4 +2946,29 @@ used as fixtures is a different read with a different denominator.
  "disposition": "UNDER_INVESTIGATION",
  "notes": "Filed by 0.9.0_WK_TCKT_VNEXT~46 under the order's counts rule. OBSERVATION, not BLOCKING: no file in the grant is touched by the failure, and the order's own criteria (the new file: 7 of 7; the mutant: fires) do not run that module. The fix (a sparse entry for the investor-reporting fixture, or a drain run where it is materialised) is the issuer's or integrator's decision. Hazard INERT: nothing is deployed, applied or called."
 }
+``````json
+{
+ "id": "TCKT_VNEXT-D2-S55",
+ "project": "TCKT_VNEXT",
+ "fabric": "dell2",
+ "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+ "surfaced_at": "2026-10-16T04:25:00Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~V2 (amends the check or rules on the row; any write to that row needs a pair of its own, CTO half included)",
+ "one_line": "TO-R19-MIG is applied exactly per the pair (19 of 19 written, 19 of 19 read back unchanged but for the marker) and r19_mig_check.py still prints MIG-BAD: it counts the one active string-valued allowedFirmIds service row (opaque key c56e4e2e507b) as locked out, and the pair says that row is not selected and not changed. The check can never pass while the pair holds.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/R19_CHECKS/r19_mig_check.py (04:2xZ, after the 19 writes) -> MIG-BAD 1 active internal row(s) have neither a non-empty list nor the marker, rc=1",
+   "read-only ConsistentRead scan of the 23 internal PROFILE rows (types only, no value printed): exactly one active row lacks a marker and a non-empty L list: key sha256-12 c56e4e2e507b, userType service, allowedFirmIds type S",
+   "r19_mig_check.py:64 tests r[allowedFirmIds].get('L') only, so a string value reads as an empty list; R19_MIG_PAIR.md sections 2, 3 and 4 item 4 list this row as not selected and not changed",
+   "infra/aws/lambda/ticket_center/lambda_function.py:426-429: a non-list allowedFirmIds returns 403 'firm scope malformed', with or without the marker, so after the release this service row is refused whatever the migration does"
+  ]
+ },
+ "spec_asserts": "R19_MIG_PAIR.md section 6 and the order's R19MIG-AC1: the issuer's check prints MIG-OK once the 19 selected rows carry the marker, and section 2 says the string-valued service row is left unchanged.",
+ "world_is": "Both cannot hold. With the 19 markers written and the service row untouched, the check prints MIG-BAD for that one row, so the ledger leg M4 and the order's close stay open. Nothing was rolled back: the 19 writes match the pair and the offender row was never touched.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Decision for the issuer, one of: (a) amend the check to exclude the string-valued service row and re-run it (the release will still refuse that row with 403 malformed, which matters only if that service identity calls the ticket service); (b) a separate pair to rewrite that row's allowedFirmIds as a list or add the marker after removing the string (CTO half needed); (c) rule the row out of scope in the release pair. The applier decides none of them. Key is the first 12 hex of sha256(PK): 7 of the 23 internal PKs embed an address, so no raw key is recorded."
+}
 ```
