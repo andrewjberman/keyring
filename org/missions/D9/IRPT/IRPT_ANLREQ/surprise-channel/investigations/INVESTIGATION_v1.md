@@ -22462,3 +22462,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W168-S1 -- the 16-file screenshot bound can be spent before a resubmit, and the cell does not say what the driver does then
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~168",
+  "surfaced_at": "2026-10-16T18:24:10Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W168-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-374 takes each resubmit's screenshot from the same 16-file bound as the wait and press-round shots, and does not say what happens when that bound is spent before a resubmit; the amended driver stops with RESUBMIT-BUDGET and clicks nothing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree C:/dev/wk-irpt-anlreq-168, fwd1_driver.mjs (uncommitted at 2026-10-16T18:24Z, base 00949e10d4): DIAG_SHOTS_MAX = 16 at line 60; the RESUBMIT-BUDGET throw at line 365 is the only path that refuses a resubmit for the bound",
+      "the same file: diagShot (the wait shot each WAIT_SHOT_MS and the shot after each press round) and reserveShot (the resubmit shot) both add to the one counter diagN",
+      "node fwd1_driver.mjs --selftest prints SELFTEST-OK 103 cases; the case 'the 16-file bound spent before a resubmit stops the run with RESUBMIT-BUDGET and no click' passes"
+    ]
+  },
+  "spec_asserts": "AR-y-374 cell, item 2: take a screenshot, then click the same Submit button once more; resubmit screenshots count in the 16. The order names no rule for a resubmit that finds the 16-file bound already spent.",
+  "world_is": "The wait shots (one per 60 s with no prompt visible) and the press-round shots can use all 16 files before the first resubmit. The amended driver then throws RESUBMIT-BUDGET and clicks nothing, rather than clicking without the screenshot the cell requires. The selftest pins that choice; the order does not decide it, and the CVO may prefer another reading."
+}
+```
+
+## IRPT_ANLREQ-D2-W168-S2 -- the TO states the re-click for the driver in general, but the cell places it in answerAfterSubmit, which runs only with --decisions
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~168",
+  "surfaced_at": "2026-10-16T18:24:10Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W168-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The TO title and WORKER FACE describe the re-click for the FWD-1 driver as a whole; the cell puts it in answerAfterSubmit, which is called only behind if (o.decisions), so a run without --decisions never re-clicks.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree C:/dev/wk-irpt-anlreq-168, fwd1_driver.mjs: the one call of answerAfterSubmit is at line 516, directly behind if (o.decisions) { at line 515",
+      "the same file: the selftest source-order check that the one loop call sits behind if (o.decisions) passes (SELFTEST-OK 103 cases)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-374.fwd1-driver-resubmit-on-still-checking.md: the title line and WORKER FACE item 2 (the loop in answerAfterSubmit)"
+    ]
+  },
+  "spec_asserts": "TO AR-y-374 title: the FWD-1 driver, when the Ticket Center form shows its still-being-checked sentence and no prompt, waits 60 s and clicks the same Submit button again, at most 4 times. Cell item 2 places the re-click in answerAfterSubmit.",
+  "world_is": "answerAfterSubmit is the only reader of the form after the Submit click, and it runs only with --decisions. A run without --decisions waits the 240 s ticket bound and never re-clicks. The amended driver keeps that path as signed and adds no action there. Whether that path should re-click is not stated by the order and is not changed here."
+}
+```
