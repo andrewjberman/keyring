@@ -132,3 +132,19 @@ This addendum is the explicit word. The round-18 line therefore reads met for 28
   exception list.
 - **Order:** the IAM grant and the code ride the SAME batched release as `~MI`'s `address` field. OG-en-11 is re-run on the served
   host, and Z-S292 closes on that run. The CVO's "my OG-ap-24 half missed it" is noted; my own A2 is the origin.
+
+### Ruling ~13:4xZ (COO~MI msg 35036): REC RATIFIED -- four NEW live rows; the 8 legacy rows re-bucketed to the frozen copy they describe
+
+- **Measured by COO~MI:** the 8 `49financial_*_silver_legacy` rows say `opal-data-bd`, but their contract, producer and `open_items`
+  describe the FROZEN copy in `opal-data-assets` (`blackdiamond/49financial/silver_legacy/<t>/`, newest 2026-08-24). The live bd tables
+  are current: fees to 10-14, transactions to 10-16.
+- **Ruled:** one catalog row per physical table, and each row states the data it actually points at.
+  - **Four NEW live rows:**
+    - `bucket: opal-data-bd`, `prefix: silver/<t>/` for unrealized, transactions, allocations and fees;
+    - the `address` field (ruling ~13:3xZ (a)) and the `read_tool`;
+    - freshness measured on the live table.
+  - **The 8 legacy rows are re-bucketed** to `opal-data-assets`, at their real frozen prefix, and stay OUT. The reason is their own
+    `open_items`: frozen, do not build a tool on it.
+- **Refused:** rewriting the 4 rows in place, which would erase the frozen copy's row while that copy still exists.
+- This supersedes "the 4 rows reopen" above: the four OUT rows stay OUT, and the live data enters as new rows. The Z-S292 role
+  ruling and the single-release order stand.
