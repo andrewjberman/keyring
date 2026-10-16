@@ -4146,3 +4146,16 @@ The first complete dell1 cycle (`wsj`, `20261015T203204Z`: 242 asked, 3 new, 1 f
 - **Fan-out:** 2 workers on 2 chains (disjoint write sets: cb-10 `s3_ledger.py`, `__main__.py`, `cycle_runner.py`; cb-11 `worker.py`, `harvest_grammar.py`), cap 8.
 - **Not in these cells:** the uploader's `silver_append` reads (the CTO: separate; cb-10 makes them measurable); NFRA_OPLGTW E1 (filed to site Z through MSTR).
 - **Checks dry-run at the base before the cut:** cb-10 AC1 and cb-11 AC1 base FAIL as expected (`no tests ran`: the files do not exist); AC2 (both) base PASS as expected (`125 passed, 4 subtests passed`).
+
+## 114. ROUND 87, workstream EGRESS-WRITE -- the uploader is the second copy of the whole-table read; `HVST-cb-12` CUT (`1.0.0_SA_CTO~DELL1` msg 6388), 2026-10-16 ~02:0xZ
+
+The first complete cycle on pin Q (`wsj`, `20261016T003123Z`) cost 5 GETs / 96,855 bytes (old code about 29.6 GiB). `barrons` uploads measured 5 uploads / 922 GETs / 12.9 MiB. The LIST-only sizes (`cb10_silver_sizes_probe.py`): `sa` `listing_hit` 284.2 MiB, `sa` `article` 80.4, `bbg` `article` 202.2, `wsj` `article` 125.4: an upload reads its whole target table, so `sa` and `bbg` would blow the 5 GiB bar. The CTO: cut the uploader on the write side, same design as B; `sa` and `bbg` join only after cb-12 shows their projected per-cycle total under 5 GiB.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cb-12` | `cb-12` | **`silver_append(..., known=...)`** (opt-in: no table read, de-duplicated against a mapping; default path unchanged; returns `written_hashes`), a local `silver_known` table in the progress database, and `HarvestUploader`'s two call sites passing `known_db`; recorded only AFTER a put succeeds. | LOCAL (direct act, about 90 lines) | worker `0.9.0_WK_AMGT_HARVST~148` | CUT, pending |
+| `HVST-cb-12` AC3 | (the issuer's read) | **`upload-harvest` ledger lines near 0 GETs** on the runner after a re-pin; then `sa`/`bbg` projections. | WORLD-adjacent read | `2.0.0_SA_COO~W1` and SC1 | HELD for the merge and a re-pin pair half |
+
+- **Fan-out:** 1 worker, 1 chain, cap 8.
+- **Behaviour change named in the order:** rows this runtime never appended are unknown to it, so an identical row already in S3 can be appended again; a duplicate is not a wrong value (consumers read the newest row per key).
+- **Checks dry-run at the base before the cut:** AC1 base FAIL as expected (`no tests ran`: the file does not exist); AC2 base PASS as expected (`110 passed`).
