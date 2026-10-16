@@ -7,5 +7,16 @@
   "why_no_approved": "tabulate is NOT in requirements.txt and the intake register reads UNKNOWN for it; the smallest pure-Python wheel (py3-none-any, no dependencies) that requirements.txt lacks. Nothing is added to requirements.txt; the package stays in a TARGET outside git on the receiving box.",
   "requested_by": "2.0.0_SA_COO~C",
   "requested_at": "2026-10-16T02:57:12Z",
-  "decisions": []
+  "decisions": [
+    {
+      "verdict": "APPROVED",
+      "by": "1.0.0_SA_CTO",
+      "at": "2026-10-16T02:59:56Z",
+      "reason": "Test act driving FWD-16's absent-package arm deliberately (round-24 ruling 1 @6b8e48b0d5): one read-only table for the round-25 read-out; pure-Python, no dependencies; the receiving box installs to a scratch target, not TARGET, and removes it; nothing added to requirements.txt. Measured 02:5xZ: grep -i tabulate requirements.txt rc=1 over 93 lines (absent).",
+      "evidence": {
+        "path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\missions\\D0\\NFRA\\NFRA_CTLPLN\\ledger\\ROUND_ANALYSIS.round24.md",
+        "sha256": "c3ab56e73991f2fe5c0723fb5d28a492ff809af29dfb3496fef59380485ee254"
+      }
+    }
+  ]
 }
