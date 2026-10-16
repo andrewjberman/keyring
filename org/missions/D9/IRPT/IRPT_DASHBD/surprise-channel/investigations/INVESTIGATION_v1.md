@@ -22837,3 +22837,30 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-S116 -- my drain merge 96a89eb451 dropped 10 other fabrics' files: a stale index committed after another seat's commit moved HEAD
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S116",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-16T11:35:49Z",
+  "one_line": "My drain merge 96a89eb451 (wk-IRPT_DASHBD-238) dropped 10 other fabrics' files: a conflicted merge held OPEN in the shared worktree for about seven minutes was committed from its stale index after another seat's commit moved HEAD; then I reset the index paths the verifier flagged instead of restoring them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2",
+  "spec_asserts": "CTO msg 9305 and MSTR msg 9306: a drain commit deletes nothing outside its own paths; any deletion outside them is a STOP; the CTO asks how the files were dropped, a conflict resolution or a checkout of the worker tree.",
+  "world_is": "Neither a conflict resolution nor a checkout of the worker tree. The merge of wk-IRPT_DASHBD-238 was opened by safe-merge at 2026-10-16T10:40:21Z and hit two conflicts (the append-only investigation file and one carried test file), which I resolved (union of the appended rows; the worker's version of the test). While it was open, 0.0.0_AB_MSTR~DELL2 committed box-sync 312daca454 into the SAME worktree (10:46:23Z). My `safe-merge --continue` committed at 10:47:04Z with first parent 312daca454 but with the index captured when the merge opened, so the merge commit's tree lacks the files that box-sync brought in. The tool said so at once (`index check 96a89eb451: 16 of 28 merged path(s) differ between the index and HEAD`, 'THE MERGE IS COMMITTED AND CARRIED, BUT THE INDEX DISAGREES WITH HEAD'), and I ran its first repair line (`git reset -q HEAD --` on those 16 paths) after checking only two of them, not the whole list against HEAD; that left 10 files present in the working tree and absent from HEAD, which `git diff --name-only --diff-filter=D 312daca454 96a89eb451` prints (counts: 10 files, other fabrics: NFRA_CTLPLN, AMGT_HARVST, AMGT_RESAPP, NFRA_OPLGTW, the sitez seats list, one drive log). The other five drain merges of this round (8806e382a4, 9c46b7d536, 55e3bfe49b, 8430b776e6, 4c9c1e7af6) delete 0 files against their first parents (the same command, run for each). No worker content was lost; the repair is the restore ruled in msg 9305.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --name-only --diff-filter=D 312daca454 96a89eb451 (10 paths); git show -s --format=%P 96a89eb451 (first parent 312daca454, committed 06:46:23 -0400, my merge 06:47:04 -0400)",
+      "git diff --name-only --diff-filter=D <first parent> <merge> for 8806e382a4, 9c46b7d536, 55e3bfe49b, 8430b776e6, 4c9c1e7af6: 0 each"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Practice from here (CTO msg 9305): before EVERY drain commit run `git diff --stat <first-parent> HEAD -- . ':!<my owned paths>'`, and after a merge that stayed open across other seats' commits, compare `git diff --cached --name-status HEAD` with the expected paths; any deletion outside my paths is a STOP and is restored from the first parent, never reset away. A conflicted drain goes to a LINKED worktree of its own (the shared index is the hazard). The restore of the 10 files is 0.0.0_AB_MSTR~DELL2's under msg 9305; this row disarms when the 10 paths read present in HEAD."
+}
+```
