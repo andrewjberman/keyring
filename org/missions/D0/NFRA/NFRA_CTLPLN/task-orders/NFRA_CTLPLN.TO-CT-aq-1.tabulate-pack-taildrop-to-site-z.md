@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~129</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the worker tree (wk-NFRA_CTLPLN-129 @ffb2ae4fed) and again in the main tree after merge 4471df360a: CTaq1-AC1 JOURNEY-TAILDROP-SITEZ files_sent=4 failed=0 target=sitez ok=True (2 of 2 mutants held); CTaq1-AC2 JOURNEY-PACK files=4 manifest_ok=True verify=INTAKE-VERIFY pack=intake-20261016-tabulate wheels=1 verified=1 checked=1 stray=0 ok=True ok=True; proof VALID; diff paths inside the order. Taildrop: four `tailscale file cp ... sitez:` calls, each exit 0 at 05:05:26Z-05:06:26Z, printed output empty; NO read receipt, so delivery is NOT proven until site Z's own `tailscale file get` and `verify` (the issuer's call to site Z). In the sparse worker tree the older flags `--release` and `--check` read ok=False (the CTO's check-8 file is outside the sparse set); in the main tree after the merge every flag of the journey test reads ok=True (--taildrop-sitez, --pack, --taildrop, --release, --fetch, --check). Row W129-S1 OBSERVATION, INERT (the cell said the dell1 flag carries two mutants; in code it carried none; the new flag carries its own two). The worker reported a mistyped redirect that made a stray file outside the worktree, removed in the same session. LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>

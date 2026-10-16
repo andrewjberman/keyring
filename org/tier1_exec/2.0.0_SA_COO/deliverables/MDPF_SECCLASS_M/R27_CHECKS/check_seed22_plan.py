@@ -45,7 +45,7 @@ def main():
         t, row = e.get('ticker'), e.get('row') or {}
         if row.get('source_table') != 'bd-securities' or not row.get('source_last_updated'):
             problems.append('%s provenance' % t)
-        if not row.get('asset_class') or not row.get('sub_asset_class'):
+        if not row.get('asset_class'):  # a null sub-class is ruled for some rows; check_seed22_fold.py grades each class against the map
             problems.append('%s class incomplete' % t)
         if 'Item' in canon.get_item(Key={'ticker': t}):
             problems.append('%s already in canonical' % t)

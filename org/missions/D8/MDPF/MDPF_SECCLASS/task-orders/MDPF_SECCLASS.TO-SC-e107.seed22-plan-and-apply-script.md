@@ -34,6 +34,21 @@
 4. Nothing else. Do not edit the shared module, E_18, any gold script or any check script.
 **Report (not a criterion):** counts of planned / unresolved / seed_pending, the dollars by class, which of `write` or your own put `apply` uses and why, the legacy-fork tag value, and each unresolved ticker with its reason.
 
+### AMENDMENT 1 (issuer, 2026-10-16 ~04:5xZ, the CTO's fold ruling): the plan seeds 13 and holds out 9
+
+You are a RE-SEATED worker. Inherited state (already merged, in your tree): `seed22.py` with `plan`, `apply`, `selftest` (commit f0df5c57a9, merged @283e087af6) and `SEED22_PLAN.json` as the first run produced it (4 planned, 18 unresolved). Read both first. The CTO ruled (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_MDPF_SECCLASS_SEED22_FOLDS_20261016.md`): the 18 unresolved are not folded by `plan_rows`; 9 are SEEDED with a ruled class and 9 are HELD OUT as Unclassified. The ruling is committed as a MAP you read and never edit: `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/seed22_fold_map_20261016.json` (`seed`: ticker -> rule, asset_class, sub_asset_class (null = no sub-class), note; `held_out`: ticker -> rule, reason).
+
+**What you add:**
+1. `plan --out <file> [--fold-map <file>]`. With `--fold-map`, the tickers that `plan_rows` cannot plan are resolved by the map: a ticker in `seed` becomes a `planned` entry whose `row` has the same field set the module's rows have (read how `plan_rows` builds a row and which fields `apply` writes), with `asset_class` and `sub_asset_class` from the MAP (a null sub-class means the attribute is OMITTED from the row; first read, read-only, how an existing canonical row with no sub-class is stored, for example one found by a scan with `FilterExpression=attribute_not_exists(sub_asset_class)` and `Limit` of a page, and do the same), `input` = `fold-map`, the two provenance attributes `source_table` = `bd-securities` and `source_last_updated` = the old row's `last_updated` (as before), plus `fold_rule` (the map's rule), `fold_note` (the map's note) and the old row's own `source_asset_class` and `source_sub_asset_class` for audit. A ticker in `held_out` goes to `seed_pending` with the map's reason and its baseline dollars and is NEVER planned. The four equity tickers that `plan_rows` already plans stay as they are. Result for the real plan: planned 13 (the 4 equity + the 9 `seed`), seed_pending 9, unresolved 0. A ticker that is in neither `plan_rows`' output nor the map stays `unresolved` (it must not occur; the check refuses it).
+2. `apply` writes the new attributes (`fold_rule`, `fold_note`, `source_asset_class`, `source_sub_asset_class`) with the others, still by your own conditional put, and never writes a `seed_pending` entry.
+3. Extend `selftest` (it must still print `SEED22-SELFTEST ok=True`) with: (vi) a map fixture: a seeded ticker gets the MAP's classes, the provenance and the `fold_*` attributes; a null sub-class omits the attribute; a held-out ticker lands in `seed_pending` and `apply` writes nothing for it; (vii) the OVERRIDE case: a seeded entry whose note starts with `OVERRIDE` keeps that text in `fold_note` of the planned row.
+4. Re-run `plan --fold-map` once for real (read-only AWS) and overwrite `SEED22_PLAN.json`.
+5. Update the proof-of-spec instance to carry `SC27-e107-AC1`, `SC27-e107-AC2` and `SC27-e107-AC3`, and re-validate it with all three.
+
+### AMENDMENT 2 (issuer, 2026-10-16 ~05:1xZ): the check defect is fixed; close the order
+
+Your predecessor's last run read AC2 FAIL because `check_seed22_plan.py` demanded a non-empty `sub_asset_class` on every planned row, which the fold ruling forbids for HPI, LCFYX, PFF, VRP and CPXIX (the issuer's defect, row D1-W97-S2). The check is amended at HEAD (it still requires an `asset_class` and the provenance on each planned row). **What you do, and nothing else:** (1) run the three acceptance invocations once under `timeout 120` and record each output verbatim; (2) in the proof-of-spec instance set the `SC27-e107-AC2` row's `status` to PASS with the new output in `output_evidence` (keep the old FAIL text in the evidence as history, say that the issuer amended the check), and replace every `PENDING-THIS-COMMIT` in `artifacts_produced` by the real hash of the commit that landed that file (`7db826a659` for `seed22.py`, `SEED22_PLAN.json` and the investigation file); (3) re-validate with `python .tools/proof-of-spec-check.py <instance> SC27-e107-AC1,SC27-e107-AC2,SC27-e107-AC3` (rc 0); (4) set this order's `<status>` to `complete` (every mechanical criterion PASSES) and commit the instance and the order file together. Change no script, plan, check, map or baseline.
+
 ### ACCEPTANCE
 
 <criterion id="SC27-e107-AC1" cell_refs="SC-e-107"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/seed22.py selftest</invocation><expect>SEED22-SELFTEST ok=True</expect></criterion>
@@ -42,9 +57,12 @@
 <criterion id="SC27-e107-AC2" cell_refs="SC-e-107"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/check_seed22_plan.py org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~97/SEED22_PLAN.json</invocation><expect>SEED22-PLAN ok=True</expect></criterion>
 `SC27-e107-AC2` -- the real plan covers exactly the 22 baseline tickers once each, every planned row carries provenance equal to the live old row, none is in the canonical table now, and the dollars equal the baseline total within $1.
 
-<expected_criteria>SC27-e107-AC1, SC27-e107-AC2</expected_criteria>
+<criterion id="SC27-e107-AC3" cell_refs="SC-e-107"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R27_CHECKS/check_seed22_fold.py org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~97/SEED22_PLAN.json</invocation><expect>SEED22-FOLD ok=True</expect></criterion>
+`SC27-e107-AC3` -- (amendment 1) the plan seeds exactly the 4 equity tickers and the map's 9, holds out exactly the map's 9, leaves nothing unresolved, takes each seeded class from the map, records the HODL override, and carries the dollars of the baseline.
 
-Dry-run at the base (dell1 box/dell1 HEAD, 2026-10-16 ~04:5xZ): AC1 FAILS as expected (the script is absent); AC2 FAILS as expected (`SEED22-PLAN ok=False file=ABSENT`, rc 3). The check's own green arm (a plan generated from the live old-list rows, 22 planned) read `ok=True dollars=413341.59`; its negative arm (one row without `source_table`) read `ok=False ... KAMIX provenance`.
+<expected_criteria>SC27-e107-AC1, SC27-e107-AC2, SC27-e107-AC3</expected_criteria>
+
+Dry-run at the base (dell1 box/dell1 HEAD, 2026-10-16 ~04:5xZ): AC1 FAILS as expected (the script is absent); AC2 FAILS as expected (`SEED22-PLAN ok=False file=ABSENT`, rc 3). AMENDMENT 1 base: AC3 FAILS as expected on the merged first plan (`SEED22-FOLD ok=False planned=4 seed_pending=0 unresolved=18`); the check's green arm (a plan built from the map, 13 planned, 9 pending) read `ok=True`, its negative arm (the HODL override note removed) read `ok=False ... HODL override not recorded`. The check's own green arm (a plan generated from the live old-list rows, 22 planned) read `ok=True dollars=413341.59`; its negative arm (one row without `source_table`) read `ok=False ... KAMIX provenance`.
 
 ## BOUNDS
 
@@ -70,9 +88,9 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: SC27-e107-AC1, SC27-e107-AC2. Write the instance at
+Criterion ids: SC27-e107-AC1, SC27-e107-AC2, SC27-e107-AC3. Write the instance at
 `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~97/MDPF_SECCLASS.TO-SC-e107.seed22-plan-and-apply-script.proof_of_spec.json`.
-Validate it BEFORE the flip with `python .tools/proof-of-spec-check.py <instance> SC27-e107-AC1,SC27-e107-AC2`.
+Validate it BEFORE the flip with `python .tools/proof-of-spec-check.py <instance> SC27-e107-AC1,SC27-e107-AC2,SC27-e107-AC3`.
 </proof_of_spec>
 
 **REPORT:** the counts, the dollars by class, `write` or own put and why, the legacy-fork tag value, each unresolved ticker with its reason, each criterion's output verbatim, commits, rows.

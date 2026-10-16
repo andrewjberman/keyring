@@ -19946,3 +19946,80 @@ name the one known failure instead of silently inheriting it.
   "notes": "The census records 11362 with its claim measured. Cost: a count-based claim written from the contract would be wrong by about 7,855 rows. Non-application: the ticker-keyed tool is not sized by this count."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T04:58:12Z",
+  "id": "NFRA_OPLGTW-Z-W113-S6",
+  "one_line": "The catalog row the order names for the table, opal_data_mdpf_gold_ai_classified_securities, carries no DynamoDB table name, so the module holds TABLE = etf-classifications as a constant citing the contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/refs/DATA_CATALOG.yaml at HEAD 869beac0fa, entity opal_data_mdpf_gold_ai_classified_securities (line 15187): its fields are bucket, prefix, key_template and contract; none names a DynamoDB table. Its own open item (line 15245) says the canonical table is not censused by any group.",
+      "app/mdpf_classification.py: TABLE = etf-classifications, with a comment citing org/standards/MDPF_SECCLASS_CONTRACT.json, as the order's fallback directs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ac-2 section 1: read the table name from the DATA_CATALOG row if it names one; otherwise hold it as one module constant and file an OBSERVATION row.",
+  "world_is": "The row names the S3 gold index only. The canonical DynamoDB table name lives in the contract file, not in the catalog, so the catalog cannot drive a rename of the table.",
+  "notes": "Cost: a rename of the table would need the constant changed in code, not the catalog. Non-application: the S3 key template of the same row is not used by this tool. Candidate for the owner: a DynamoDB resource row in the catalog."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~113",
+  "surfaced_at": "2026-10-16T04:58:12Z",
+  "id": "NFRA_OPLGTW-Z-W113-S7",
+  "one_line": "The internal_role DynamoDB helper returns a low-level client, so the get_item Key is typed {ticker: {S: <ticker>}}, not the plain {ticker: <ticker>} the order's test names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/internal_role.py dynamodb_client() (HEAD 869beac0fa) returns the boto3 client from assumed credentials; a low-level client takes typed attribute values.",
+      "tests/test_og_ac2.py ac01 asserts Key == {ticker: {S: AAA}}; the probe's real get_item reached the table with the same typed key (answered True)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ac-2 section 1 and the test list: one get_item with Key == {ticker: <ticker>}.",
+  "world_is": "A low-level get_item needs the typed key form; the plain form is the resource-level API. The module keeps the low-level client so the assumed reader role is used, and the test asserts the typed form.",
+  "notes": "Cost: the test literal differs from the order's wording by the type wrapper only; the key is the ticker alone. Not verified here: whether a resource-level client would be admitted on the assumed role."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T05:11:58Z",
+  "id": "NFRA_OPLGTW-Z-S161",
+  "one_line": "OG-ap-23 Phase A: the release commit REFUSEs in ENFORCE on 23 lines of three taken files that ng2.AC2 does not grade (partner_roster.json 20, portal_served.py 2, etfs_silver.py 1), in a healthy tree as well as the release tree; the 10 client lines are RULED and pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN .tools/safe-commit.sh from C:/tmp/og-rel-code (release tree on live d577e0e729, trunk f1b3aeb579 overlaid for the gate: naming-gate.py, naming-apply-gate.py, infra/logic, NAMING_SCHEMA.json, DIRECTIVES.yaml, lib/opal_naming_*.py; manifest ap23_gate_overlay_manifest.txt): rc=1, NAMING-GATE REFUSE 129 graded, 96 REFUSE, 13 RULED, 1 RAISE (W/ap23_commit_gate_release_tree.out).",
+      "CONTROL, the same three files graded by the same gate in the MAIN tree, full add, --enforce: rc=1, 23 REFUSE (W/ap23_gate_main_tree_control.out). ng2.AC2 in the release tree: PASS, 0 REFUSE, 10 RULED.",
+      "READ the refused (name, type): app/refs/partner_roster.json (20 lines) hand-kept carriers of the firm tokens 49financial, 49f, inflection, inf, cottonwood, cot, bd, bd_model_roster, bd_holdings_s2 (type: firm token / config key, read it through lookup()) and four S3Key literals CONFORMANT but carrying a hand-kept firm token: eclipse/inflection/silver/fact_portfolios_full, orion/inflection/silver/fact_assets, blackdiamond/cottonwood/silver/fact_model_roster, blackdiamond/cottonwood/silver/fact_holdings_s2, fact_allocations_s2; app/portal_served.py:125-126 mdpf (hand-kept carrier, lookup('mdpf')); app/etfs_silver.py:313 bloomberg_profile (INSTANCE_PROFILE, NEW and OUT-OF-PATTERN).",
+      "READ in the release tree only, an environment effect: app/refs/scopes.json 72 REFUSE and admin_gateway_breakdown.py:164 opal-data-bd, because the live read fails there (CensusError, the served-graph client is blocked); in the main tree both grade without a REFUSE."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-23 Phase A step 2: the release commit runs the naming gate in ENFORCE and must print NO REFUSE; if the gate still refuses a string, STOP and file a BLOCKING row naming the (name, type).",
+  "world_is": "The commit grades every taken file as a new add against the live base: the roster copy and the registry copy are new files there, so every firm token in them reads as a NEW hand-kept carrier, and portal_served.py and etfs_silver.py carry three lines no name_rulings row covers. Nothing is committed on rel-nfra-oplgtw-code (still at d577e0e729); the tree holds the take uncommitted and nothing was deployed.",
+  "notes": "Cost: every release that stages these two data files hits this. Candidate rulings for the registry owner: none_owed rows for the roster tokens or an exempt context for app/refs/*.json, a row for (bloomberg_profile, INSTANCE_PROFILE), and a lookup() read or a row for the two mdpf lines in portal_served.py. I did not override the gate and will not: the only escape in the order is the lane override. Non-application: the 10 client lines (RULED), tools.py, destructive_ops.py, data_entitlement.py, integration.py and the pin tests grade without a REFUSE."
+}
+```

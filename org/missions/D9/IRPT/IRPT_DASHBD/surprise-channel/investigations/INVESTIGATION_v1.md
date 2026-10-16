@@ -20832,3 +20832,270 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. The registry_row_exists field records false with the probe's denominator; the zero is not evidence of a refusal either way."
 }
 ```
+
+## IRPT_DASHBD-D2-S108 -- TO-DB-b-283: the criteria checker p151_pubapply.py has two defects that fail DBC151-2-AC1 and DBC151-3-AC1 on a correct record and a correct world
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S108",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T05:25:00Z",
+  "one_line": "TO-DB-b-283 is applied and its record written, but the issuer's checker p151_pubapply.py fails DBC151-2-AC1 and DBC151-3-AC1 on two defects of its own: (1) DIGIT_OK_KEYS lacks packet_sha256, so the 64-hex gates.packet_sha256 the order requires trips the 8-digit-run rule (p143 listed it); (2) live() samples the directory token account=<id> as the account, so check_sample compares manifest account_id (the bare id) with account=<id> and hashes the token. With both patched in scratch copies, all three criteria PASS on the unchanged record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -I checks/r147/p151_pubapply.py . DBC151-2-AC1 and DBC151-3-AC1: 'FAIL: a run of 8 or more digits outside the exempt fields: [226258136, 84753371]'; the only field holding both runs is gates.packet_sha256 (the packet's sha256 0c9b495ce2f7...); the checker compares that field for equality (check_head) so the record cannot carry another form; DIGIT_OK_KEYS (line 52) holds sha256 and packet_blob but not packet_sha256",
+      "scratch copy with 'packet_sha256' added to DIGIT_OK_KEYS: DBC151-2-AC1 PASS; DBC151-3-AC1 FAIL 'sample 8c1d0c79b8b6: manifest size, version or account'",
+      "live() line 240: accts = sorted(k[len(PREFIX):].split('/')[0] ...) yields 'account=<id>' (the key layout is irpt/cottonwood/platinum/reporting/account=<id>/series.json.gz); check_sample line 260 requires m['account_id'] == a, but the manifest holds the bare id (publisher.build_manifest: 'account_id': str(account_id); my own read of all 11 accounts: manifest account_id equals the id), and line 257 hashes the token, so the expected sampled_hash12 would be of account=<id>; the order defines the canary's account_hash12 as the sha256 of the id",
+      "second scratch copy with the digit key exempt and 'account=' stripped from the sampled token: DBC151-3-AC1 PASS on the unchanged COT_PUBLISH_APPLY_RECORD.json (1878 objects, ten samples with id hashes, REPORT line equal to the dry run, ledger open); neither scratch copy is committed"
+    ]
+  },
+  "spec_asserts": "Order criteria DBC151-2-AC1 and DBC151-3-AC1: FRESH live reads by the checker; ten sampled accounts validate and carry a matching manifest; 'sampled_hash12 (the 12-hex sha256 prefixes of ten accounts chosen by sorted position)'.",
+  "world_is": "The world meets the packet: function, role policy, artifact, no schedule, 1878 objects, ten samples valid. The record is written to the order's exact schema. The checker as committed cannot pass any record that holds the required packet_sha256 value, and cannot pass a sample whose manifest holds the bare id. The order's status stays pending and no proof-of-spec instance is written until the issuer amends p151 (the b-272 path); sampled_hash12 in the record is the hash of the id, as the canary's account_hash12 is."
+}
+```
+
+## IRPT_DASHBD-D2-W1001-S1 -- The CRO rule column does not give 13 dividends-rule codes a dividend meaning: their descriptions name a capital gain, a
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1001-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1001",
+  "surfaced_at": "2026-10-16T04:54:58Z",
+  "one_line": "The CRO rule column does not give 13 dividends-rule codes a dividend meaning: their descriptions name a capital gain, a return of capital, a principal payment or a spin-off.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO DB-f-1001 step 2: each 49 Financial code's meaning is what the CRO table gives it (its rule, category and desc), decided on its own description and rule; the rule is read as the code's single meaning.",
+  "world_is": "Of 55 distinct tran_srcde codes whose rows carry rule dividends, 13 carry a description that names another event: CFR, CFRAJ, CFRYE, CGC, CYE, SCFR, SCFRA, SCGYE, SFRYE and STCG name a capital gain distribution; ROC names a return of capital; PRIN names a principal payment; SO names a spin-off. The record maps them on their description (Capital gain, Return of capital, Corporate action); the rule alone would give Dividend to all 13. TRADE (rule trades, desc ADJUSTING ENTRY), TYP (rule acct-transfer, desc JOURNAL) and INTR (rule interest, desc MARGIN INTEREST) disagree with their rule the same way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json@2013283a5d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The record carries the description-first mapping for these codes; the CTO rules at ratification whether the rule column or the description is the meaning."
+}
+```
+
+## IRPT_DASHBD-D2-W1001-S2 -- The CRO table partitions the three ira-withholding rows (IRS WITHHOLDING and IRS WITHHOLD codes IRAWH and MCE) as EXTERN
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1001-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1001",
+  "surfaced_at": "2026-10-16T04:54:58Z",
+  "one_line": "The CRO table partitions the three ira-withholding rows (IRS WITHHOLDING and IRS WITHHOLD codes IRAWH and MCE) as EXTERNAL-OUT, while the Tax withheld word carries the INTERNAL flow class.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-122 vocabulary gives Tax withheld the flow class INTERNAL (the repository withholding rule: neither an external flow nor income), and the TO maps the IRS withholding codes on their rule and description.",
+  "world_is": "The CRO table's partition for IRAWH (two rows) and MCE (one row) is EXTERNAL-OUT. The record maps IRAWH and MCE to Tax withheld by their description and keeps the word's INTERNAL flow class, so the table's partition and the word's flow class disagree for these codes. Deciding which flow class an IRA withholding carries is a CTO ratification question; it is not decided in the record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json@2013283a5d",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~802/FWD5_WORDS_PROPOSAL_R121.json@2013283a5d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The partition is not a decision basis in the record (the TO names rule, category and description); the flow-class question is carried to the CTO."
+}
+```
+
+## IRPT_DASHBD-D2-W417-S1 -- bun run lint in the portal exits 1 on the DEV base: 2 errors, both in TicketCenter test files outside this order's grant
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W417-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~417",
+  "surfaced_at": "2026-10-16T04:57:56Z",
+  "one_line": "bun run lint in the portal exits 1 with 2 errors (372 problems); both errors sit in TicketCenter test files this order does not touch, so the 0-errors premise of TO-DB-c-25 step 6 does not hold at the DEV base. The six files this order changes carry no lint error.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal@dd417a10 bun run lint (eslint .) -> 372 problems (2 errors, 370 warnings); error 1 no-control-regex at src/pages/TicketCenter/__tests__/filing-decision-tree.test.tsx 299:12; error 2 no-regex-spaces at src/pages/TicketCenter/__tests__/filing-hint.test.tsx 190:37",
+      "portal diff 03f92d82..dd417a10 (git -C portal diff --name-only) names six files, all under src/pages/InvestorReporting; none under TicketCenter",
+      "measured output: .scratch/lint_final.txt in the worktree (lint_rc=1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-c-25 step 6: from the portal worktree, bun run typecheck and bun run lint with 0 errors each.",
+  "world_is": "bun run typecheck exits 0. bun run lint exits 1 with 2 errors and 370 warnings across the repo; the two errors are pre-existing in TicketCenter test files at the base, which this order did not edit. No lint error is in a file this order changes."
+}
+```
+
+## IRPT_DASHBD-D2-W417-S2 -- the full-folder bun test run has no base measured by the same command; 35 of its failing names sit outside the two-folder base
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W417-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~417",
+  "surfaced_at": "2026-10-16T04:57:56Z",
+  "one_line": "TO-DB-c-25 step 6 compares bun test src/pages/InvestorReporting with a base; the base measured in step 1 was the two named folders only, so the full-folder subset claim cannot be closed from this order's measurements. The 35 extra failing names are ENOENT and DOM-global failures in files that import none of the changed modules.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SUITE_NAMES_R147.txt in the deliverables folder: two-folder base 10 unique names, after 9 unique names, subset True, only IV-e-124 removed",
+      "portal@dd417a10 bun test src/pages/InvestorReporting: 1023 pass, 25 skip, 68 fail, 27 errors over 1116 tests in 403 files; the failing names outside the base run are in fe-s-1, fe-s-11, fe-s-13, fe-s-14, fe-s-19, fe-s-25, fe-s-35, fe-s-38, fe-s-49, fe-s-50, mvp-selection and tabs/analysis",
+      "workspace git sparse-checkout list at HEAD omits docs/ and org/surprise_channel/; the ENOENT paths are docs/contracts/investor-reporting/v1/*.json and infra/aws/lambda/investor-reporting/_contracts/* (sparse-cone cause as recorded by IRPT_DASHBD-D2-W416-S1)",
+      "tabs/analysis/tests/prospect-suggested-swaps.test.tsx fails with ReferenceError document is not defined at its line 52 (AR-y-248)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-c-25 step 6: the failing-test names after bun test src/pages/InvestorReporting are a subset of the names before.",
+  "world_is": "The two-folder base and after runs satisfy the subset (9 names after, all within the 10 before; IV-e-124 leaves the set). The full-folder after run fails 68 tests and errors 27; their base was not run, so the subset over the full folder is not measured here. None of the 35 names imports seriesContract or DashboardPerformance, and their errors are environmental."
+}
+```
+
+## IRPT_DASHBD-D2-W417-S3 -- the proof instance at the mandated path is 260 characters and the proof checker cannot read it on this device
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W417-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~417",
+  "surfaced_at": "2026-10-16T05:13:58Z",
+  "one_line": "the proof instance at the TO's mandated path is 260 characters, at the Windows MAX_PATH limit on dell2 (LongPathsEnabled=0), so proof-of-spec-check.py cannot open it: READ-ERROR rc=2; the content validates rc=0 from a scratch copy",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "os.path.abspath of the mandated instance path (org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~417/IRPT_DASHBD.TO-DB-c-25.the-performance-tab-prints-the-trading-days-the-source-did-not-report-from-the-series-field-against-writer-made-fixtures.proof_of_spec.json) = 260 characters; os.path.exists on the plain path = False while listdir shows the file",
+      "winreg HKLM SYSTEM/CurrentControlSet/Control/FileSystem LongPathsEnabled = 0 on this device",
+      "python .tools/proof-of-spec-check.py <mandated path> DBC147-1-AC1,DBC147-1-AC2,DBC147-1-AC3 -> READ-ERROR (rc=2) [Errno 2]; the same from the deliverables folder with the relative file name -> READ-ERROR (rc=2); with the extended-length prefix the checker's own Path read also fails (rc=2)",
+      "sibling instance 0.9.0_WK_IRPT_DASHBD~416/IRPT_DASHBD.TO-DB-c-24...proof_of_spec.json is 237 characters and validates VALID rc=0 on this device",
+      "diagnostic only, not the verdict: a byte copy at .scratch/diag_instance.json (short path) validates VALID rc=0 with the same three ids"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DB-c-25 Proof: the instance at its mandated path is validated by python .tools/proof-of-spec-check.py, rc 0, before the status flips to complete.",
+  "world_is": "The mandated path is at the Windows path-length limit on this device, so the checker cannot read it under any spelling this worker could use without a route the order does not name (a shorter worktree root, a junction, a subst drive or a registry change). The three criteria PASS by output; the instance is committed with status pending, and the order stays open until the path can be read. A short-path copy validates rc=0 as a diagnostic only and is not the verdict."
+}
+```
+
+
+## IRPT_DASHBD-D2-S109 -- round 147 B-CW: the unreported-days sentence and the 0.3.0 page mirror built, worker 417's rows dispositioned, rows W225-S1 and S2 disarmed
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S109",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T05:38:08Z",
+  "one_line": "Round 147 B-CW (DB-c-25, FWD-10 cell a): the Performance tab names the trading days the source did not report from the served list, and the page mirror takes on series contract 0.3.0; worker 417's rows S1 to S3 dispositioned and the iv-e-124 hazard of rows W225-S1 and W225-S2 disarmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.15 and v0.16, FWD-10 (a): the unreported-days sentence for any window that holds one, read from the series, never computed in the portal; CTO msg 9056: the portal series mirror at contract 0.3.0 with iv-e-124 green on the merged tree.",
+  "world_is": "Merge 82263efa13 (worker 417): AC1 to AC3 PASS re-run by the issuer on the worker tree; typecheck rc 0 re-run; portal diff 6 files all in grant; iv-e-124 passes against the trunk contract (0.3.0) and the five-name SERIES_OPTIONAL. W417-S1 (2 lint errors in TicketCenter tests outside the grant) and S2 (no full-folder base) are INERT and accepted. W417-S3 (proof instance path 260 characters in the worker tree) is RESOLVED: the same instance reads at 233 characters from the main checkout and proof-of-spec-check returns VALID rc=0 there; the cause was the worker worktree root being 6 characters longer. W225-S1 and W225-S2 (iv-e-124 red against the five-name contract) are DISARMED by this merge: the page now lists the five names. Contract 0.3.1 (income_claim, ~D2 msg 9076) is not yet on trunk; when it lands the page mirror needs one more optional name and the fixtures regenerate, which is round 148's cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~417/BUILD_R147.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~C2/checks/r147/p147_bcw.py (AC1, AC2, AC3 PASS, issuer re-run); portal commits c70cc766, e371c40c, 33525f2d, dd417a10 on wk-IRPT_DASHBD-417-portal",
+      "python .tools/proof-of-spec-check.py <instance> DBC147-1-AC1,DBC147-1-AC2,DBC147-1-AC3 from the main checkout: VALID (rc=0); python .tools/round-close-check.py --project IRPT_DASHBD --round 147 --workstream B-CW: MAY-CLOSE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO: review of the DB-c-25 portal change for a PROD-based candidate (cherry-pick of c70cc766, e371c40c, 33525f2d, dd417a10; the sentence uses dateWords, present on PROD)."
+}
+```
+
+## IRPT_DASHBD-D2-W1101-S1 -- the worktree is sparse, so the item schema the row gate names is absent from the tree (read at HEAD instead)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1101-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1101",
+  "surfaced_at": "2026-10-16T05:20:10Z",
+  "one_line": "The worktree is sparse: org/surprise_channel (the row schema and its gate input) is tracked in the index but absent on disk, so the item schema could not be read from the tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The investigation file header names the row schema at org/surprise_channel/schemas/investigation_item.schema.json and says the row gate validates every new row against it; the task order's TREE-OK first act checks only org and .tools.",
+  "world_is": "git config core.sparseCheckout is true and the sparse list is .tools, infra/logic/registry, lib, org/devices and org/missions/D9/IRPT/IRPT_DASHBD, so org/surprise_channel is absent on disk while git ls-files lists it. The schema was read at HEAD with git show (draft-07, required id, surfaced_at, class, grounding, disposition) and the row was formatted from that read. No sparse setting was changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/surprise_channel/schemas/investigation_item.schema.json@354d864d1a",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md@354d864d1a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. Recorded so the CVO can see that the row gate's schema input is outside this worker's sparse checkout."
+}
+```
+
+## IRPT_DASHBD-D2-W1101-S2 -- the securities list sort is inside React components, so no pure sort helper was reusable
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1101-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1101",
+  "surfaced_at": "2026-10-16T05:20:10Z",
+  "one_line": "The securities list's sort helpers named as reusable are not pure exportable functions: the sort sits inside React components, so the view model copies the idea and imports nothing from the holdings tab.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 1 of the task order: the securities list's existing filter and sort helpers (named reusable by the round-119 thread) are found under tabs/holdings, and a helper that would pull a React component is not imported.",
+  "world_is": "comp-find --files 'sort' over portal/src/pages/InvestorReporting/tabs/holdings returned 7 hits across 14 files (DEF 2, SURFACED 5). The two DEF hits are the sort code in the React components DrillTree.tsx and SecurityList.tsx; SecurityList.tsx sorts inside the component body. assetClass.ts and classTotals.ts also match the word sort and were not read as sort helpers. No pure sort helper was reused; the view model copies the idea.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/holdings/SecurityList.tsx@354d864d1a",
+      "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx@354d864d1a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The reuse premise of step 1 does not hold for the sort; the filter and search were written fresh."
+}
+```
+
+## IRPT_DASHBD-D2-W1101-S3 -- the portal lint exits 1 on one error in a file this order does not touch
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1101-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1101",
+  "surfaced_at": "2026-10-16T05:20:10Z",
+  "one_line": "The portal lint command exits 1 on one error in a TicketCenter test file that this order does not touch; the two new files carry no lint finding.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 4 of the task order gates the portal with bun run lint and asks for 0 errors in the worker's files.",
+  "world_is": "bun run lint at portal commit ee30038f exits 1 with 1 error and 359 warnings. The error is src/pages/TicketCenter/__tests__/filing-hint.test.tsx line 147 (no-regex-spaces). transactionsView.ts and transactions-view.test.ts report no finding. The file is outside the order's paths and neither of this order's commits touched it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/__tests__/filing-hint.test.tsx@ee30038f",
+      "portal/src/pages/InvestorReporting/tabs/reporting/transactions/transactionsView.ts@ee30038f"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The lint exit code of the whole portal is not zero at this head; the order's gate is met on the worker's files."
+}
+```
+

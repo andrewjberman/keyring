@@ -9909,6 +9909,52 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION",
      "notes": "INERT for served pages only as far as they quote these fields; any consumer quoting IS_DIL_EPS_CONT_OPS or the KMB fund line as fact is wrong today. Owner to decide: (1) whether the model block should carry IS_DIL_EPS_CONT_OPS at all or label its basis; (2) the research-report-to-security attribution rule for same-name issuers (KMB vs KIMBERA MM); (3) ticker-exact precedence over name match in resolve. Found off-task by the report-skill runs (Andrew-direct at this terminal)."
+    },
+    {
+     "id": "AMGT_HARVST-D1-S28",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-16T04:20:00Z",
+     "one_line": "HVST-cb-13 at T0+45: the runner is re-pinned and seeded, but no upload has run under the new pin, so the C-d3 check (DUPLICATES=0, 0 parts read) and R7's upload term (get_count=0 over 0 lines) are VACUOUS. wsj is at job ~190 of 242 with no new articles; barrons has not started.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-13 steps 6 and 7: the check runs after the first upload-harvest line; the expected upload-harvest reading is zero GETs per line.",
+     "world_is": "Seed 2026-10-16T03:25:51Z (keys wsj article 618, listing_hit 50, barrons article 218, listing_hit 2323; rows_without_hash 0), T0 03:27:57Z. Since T0 the ledger holds only `run` lines (174 at 04:14Z, 0 GETs). The last upload-harvest lines are the old pin's (03:21:20Z and 03:22:56Z, 249 GETs, 3,685,402 bytes each). The check at T0+45 printed parts_read=0 for all four tables and DUPLICATES=0. R1 to R5 TRUE at +3 and +15; R7 0.0000 GiB. The window stays open; the check must be run again after the first upload, which the order leaves to the issuer.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb13_check.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb13_reads.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb13_seed.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+     "id": "AMGT_HARVST-D1-S30",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-16T05:22:21Z",
+     "one_line": "SC1 row D1-S28 (HVST-cb-13 check vacuous: no upload-harvest line under pin ddd7dcdc38) is dispositioned: cb-13 is complete as an act; the uploader evidence moves to HVST-cb-15 step 6b (C-a4 prime), not to a re-run of cb-13.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cb-13 steps 6 and 7: the duplicate check runs after the first upload-harvest line and reads zero GETs per upload line.",
+     "world_is": "Issuer re-read at 2026-10-16T05:22:21Z: commit 314424bf21 is in the tree; proof_of_spec check VALID rc=0; the scheduled task Opal Data Harvest - Continuous Cycle is Running with WorkingDirectory C:\\dev\\wk-harvest-runner-pin-ddd7dcdc38; cb13_check.out ends DUPLICATES=0 over parts_read=0 (vacuous, as SC1 said); cb13_reads.out R7 upload-harvest lines=0 sum_get_count=0. The CTO ruled (msg 6513, ledger NEVER_WIDEN_ROUND87_CB2_CTO_HALF_ADDENDUM_4_AMENDMENT_1_C_A4_DRIVEN.md) that the real-upload clause of C-a4 is waived and the first sa/bbg uploads are the evidence, read at the end of the first uploading cycle before a second (C-a4 prime). D1-S25 (uploader read) stays open until that read.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb13_check.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round87/cb13_reads.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-cb-15.sa-and-bbg-join-the-dell1-runner-seeded.md step 6b"
+      ]
+     },
+     "adjudicates": [
+      "AMGT_HARVST-D1-S28"
+     ],
+     "disposition": "DISMISSED_WITH_REASON",
+     "dismissal_reason": "The vacuity is real and disclosed; it is carried by cb-15 step 6b under the CTO C-a4 prime, so no further action on cb-13."
     }
 ]
 ```

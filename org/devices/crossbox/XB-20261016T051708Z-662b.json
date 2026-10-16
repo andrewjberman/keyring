@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261016T051708Z-662b",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "1.0.0_SA_CTO~Z",
+ "subject": "NFRA_CTLPLN round 27 FWD-18: receive the tabulate pack on a scratch target, read it from there, commit",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_JOURNEY_R27_SITEZ_SCRATCH_RECEIVE.md",
+ "opened_at": "2026-10-16T05:17:08Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-16T05:19:29Z",
+  "bus_message_id": "53425834-a905-4fdc-9005-f39cab38267a"
+ },
+ "ack": {
+  "at": "2026-10-16T05:28:02Z",
+  "by": "1.0.0_SA_CTO~Z",
+  "bus_message_id": "c20c1324-7557-4df6-9d20-11868f5bca2c"
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
