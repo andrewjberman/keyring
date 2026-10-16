@@ -1290,17 +1290,15 @@ def cmd_list_cloud(args, dev, reg) -> int:
 
 
 def crossbox_closed_both(call_id: str, explicit) -> tuple:
-    """(file name or None, lines): a cross-box file for this call that reads CLOSED-BOTH."""
+    """(file name or None, lines): a cross-box file for this call that reads CLOSED-BOTH. The files are read by the ONE reader
+    (.tools/crossbox-call.py fold_dir): a crossbox/2 call is its from-side file with its answer file, read as one call."""
     lines, found = [], None
-    files = sorted(glob.glob(os.path.join(crossbox_root(), "*.json")))
-    if not files:
+    entries = load_mod("crossbox_call_reader", ".tools/crossbox-call.py").fold_dir(crossbox_root())
+    if not entries:
         lines.append("no cross-box file under %s (0 files)" % crossbox_root())
-    for path in files:
-        name = os.path.basename(path)
-        try:
-            data = json.load(open(path, encoding="utf-8"))
-        except (OSError, ValueError) as exc:
-            lines.append("%s unreadable (%s): cannot prove CLOSED-BOTH" % (name, type(exc).__name__))
+    for name, data, err in entries:
+        if err is not None:
+            lines.append("%s unreadable (%s): cannot prove CLOSED-BOTH" % (name, err))
             continue
         text = json.dumps(data)
         body = ""

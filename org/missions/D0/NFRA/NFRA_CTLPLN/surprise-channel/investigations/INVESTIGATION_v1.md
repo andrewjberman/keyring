@@ -13118,3 +13118,107 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The writer of the stamp per commit was not traced here; the diffs of 7edc69c702 and 65eb443109 were not read. The split decides whether the key moves (PROPOSED_LAYOUT_AND_MIGRATION.md section (a))."
 }
 ```
+
+## NFRA_CTLPLN-W139-S1 -- The base tests/test_crossbox_call.py is RED (CROSSBOX-TEST cases=69/70 ok=False): its case 'writer and watcher
+
+```json
+{
+  "id": "NFRA_CTLPLN-W139-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~139",
+  "surfaced_at": "2026-10-16T12:27:13Z",
+  "one_line": "The base tests/test_crossbox_call.py is RED (CROSSBOX-TEST cases=69/70 ok=False): its case 'writer and watcher comparison' cuts the writer's text in org/mcp/server.py at the marker 'msg_path.write_text(msg_content', which no longer exists in the file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_crossbox_call.py at 833181d311 with org/mcp added to the worktree sparse set: 'FAIL writer and watcher comparison ran  -- ValueError: substring not found' then 'CROSSBOX-TEST cases=69/70 ok=False' (exit 1)",
+      "org/mcp/server.py@833181d311 line 2107: '_tmp_path.write_text(msg_content, encoding=\"utf-8\")'; grep for 'msg_path.write_text(msg_content' returns no line; the Msg-ID stamp sits at server.py lines 2101-2105 between the literal and the write"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "tests/test_crossbox_call.py case 'writer and watcher comparison': the writer's msg_content literal is cut from server.py at 'msg_path.write_text(msg_content' and must carry the header fields To, Date, Subject in this order, with the broker's '# Message from' line first.",
+  "world_is": "The end marker is stale: the publish is now '_tmp_path.write_text(msg_content' and a Msg-ID stamp (comment '# D0_TIGHTENING T1: stamp the broker row id into the FILE') sits between the literal and the publish. The case raised ValueError. Repaired in the case only: the end marker is now '# D0_TIGHTENING T1: stamp the broker row id into the FILE', which ends the literal before the stamp. The seven checks then pass: CROSSBOX-TEST cases=76/76 ok=True.",
+  "notes": "Filed under the cell CT-ba-1 (task order NFRA_CTLPLN.TO-CT-ba-1). No other existing case of the suite was changed. The suite was red at the base, so this is an OBSERVATION of the base state, not a fault of this cell's change."
+}
+```
+
+## NFRA_CTLPLN-W139-S2 -- In a worktree whose sparse set lacks org/mcp, tests/test_crossbox_call.py reads GREEN (cases=70/70 ok=True) be
+
+```json
+{
+  "id": "NFRA_CTLPLN-W139-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~139",
+  "surfaced_at": "2026-10-16T12:27:13Z",
+  "one_line": "In a worktree whose sparse set lacks org/mcp, tests/test_crossbox_call.py reads GREEN (cases=70/70 ok=True) because its writer-and-watcher case SKIPs seven checks; the red base appears only with org/mcp present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_crossbox_call.py at 833181d311 in the worktree as provisioned (org/mcp absent from the sparse set): 'skip writer and watcher comparison (7 checks) -- SKIPPED -- SKIP: org/mcp is not in this worktree's sparse set', 'CROSSBOX-TEST-SKIP n=1', 'CROSSBOX-TEST cases=70/70 ok=True' (exit 0)",
+      "the same suite after 'git sparse-checkout add org/mcp': 'CROSSBOX-TEST cases=69/70 ok=False' at 833181d311 (exit 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "tests/test_crossbox_call.py prints a SKIP for a case that cannot run in a sparse worktree, and the last line counts only the cases that ran.",
+  "world_is": "The skip counts as ok, so the last line of a sparse worktree reads ok=True while seven checks did not run. Only the SKIP line names them. A green last line from a sparse worktree therefore carries a skipped case the count does not show.",
+  "notes": "Filed for the reader of the suite's last line. Not fixed here: the skip is the suite's stated design (its docstring names it), and this cell does not widen its paths."
+}
+```
+
+## NFRA_CTLPLN-W139-S3 -- tests/test_apply_who_and_crossbox.py copies crossbox-deploy-check.py into its fixture but not crossbox-call.py
+
+```json
+{
+  "id": "NFRA_CTLPLN-W139-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~139",
+  "surfaced_at": "2026-10-16T13:05:34Z",
+  "one_line": "tests/test_apply_who_and_crossbox.py copies crossbox-deploy-check.py into its fixture but not crossbox-call.py, which the check now imports beside itself; the suite reads APPLY-GATES-TEST cases=51/100 ok=False after CT-ba-1 (base 100/100).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_apply_who_and_crossbox.py at the CT-ba-1 tip (worktree, with the crossbox-call.py layout change): 'FAIL case 15 ... FileNotFoundError: ... fx15\\.tools\\crossbox-call.py'; last line 'APPLY-GATES-TEST cases=51/100 ok=False' (exit 1)",
+      "the same suite at 833181d311 (base): 'APPLY-GATES-TEST cases=100/100 ok=True' (exit 0); COPIES list in the suite names .tools/crossbox-deploy-check.py and not .tools/crossbox-call.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The suite's fixture carries the tools the checks it runs need; each COPIES entry is a copy of a real tool, so a copied check runs with the tools it imports.",
+  "world_is": "crossbox-deploy-check.py now loads crossbox-call.py from its own folder (fold_dir), so the fixture needs .tools/crossbox-call.py in COPIES. That file is outside this cell's <paths>, so the suite is red at the merge until its owner adds it. The reader is not copied in, so no check in the fixture gets a verdict from a silent fallback.",
+  "notes": "Issuer: the fix is one COPIES line in .tools/tests/test_apply_who_and_crossbox.py (outside CT-ba-1's <paths>). Not fixed here: the suite is not in the write grant."
+}
+```
+
+## NFRA_CTLPLN-W139-S4 -- The comment at the crossbox case of .tools/git-hooks/mstr-ledger-check.sh says the folder holds only crossbox/
+
+```json
+{
+  "id": "NFRA_CTLPLN-W139-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~139",
+  "surfaced_at": "2026-10-16T13:05:34Z",
+  "one_line": "The comment at the crossbox case of .tools/git-hooks/mstr-ledger-check.sh says the folder holds only crossbox/1 JSON; layout 2 (crossbox/2 and crossbox-answer/1 files) is now written there when the LAYOUT switch is committed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/crossbox case of .tools/git-hooks/mstr-ledger-check.sh at 833181d311 (line 199): 'NARROW BY CONSTRUCTION: this directory holds only crossbox/1 JSON written by crossbox-call.py.'",
+      "the case pattern is org/devices/crossbox/*, which admits the answer files XB-<id>.<box>.json; the file is outside CT-ba-1's <paths> and was not edited"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The comment in the crossbox case names the record shapes the folder holds.",
+  "world_is": "The case admits every file in the folder by pattern, so the answer files pass it as the from-side files do; only the comment is stale. The behaviour is correct; the text is not.",
+  "notes": "Not edited: the file is outside this cell's <paths>. The owner of the ledger check updates the comment when the LAYOUT switch is committed."
+}
+```

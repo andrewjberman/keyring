@@ -106,7 +106,7 @@ def part2_writer_and_watcher():
         landed = sorted(inbox.glob("*.md"))
         text = landed[0].read_text(encoding="utf-8")
         server = (REPO / "org" / "mcp" / "server.py").read_text(encoding="utf-8")
-        block = server[server.index("msg_content = ("):server.index("msg_path.write_text(msg_content")]
+        block = server[server.index("msg_content = ("):server.index("# D0_TIGHTENING T1: stamp the broker row id into the FILE")]
         writer_fields = re.findall(r"\*\*([A-Za-z-]+):\*\*", block)
         writer_head = re.search(r'f"# (Message from) \{from_agent\}', block)
         mine = re.findall(r"^\*\*([A-Za-z-]+):\*\*", text, re.M)
