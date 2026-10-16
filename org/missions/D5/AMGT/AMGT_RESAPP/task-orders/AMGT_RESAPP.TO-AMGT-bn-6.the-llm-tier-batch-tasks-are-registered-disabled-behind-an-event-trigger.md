@@ -79,7 +79,7 @@ The `<status>` flip is the issuer's.
 
 **ISSUER NOTES:** CTO ruling `ledger/CTO_RULING_G4_CUT_BN6_20261015.md` @842cf564f3 on call `dell1-20261015T233836Z-7f8a` (card `ledger/CALL_G4_LLM_TIER_BATCH_TASKS_20261015.md` @bf1427d82a). THE SCOPE IS NARROWER THAN THE CARD'S "four batches", and the CTO should read it so: the card named drafting and posture; at HEAD neither has a whole-population entry (drafting: two required directories; posture: one `--security-key`), so this cell covers filings, management and scores and files the other two as an observation. The build ladder: filings and management already own `task_definition()` and filings already owns the `--plan-only` skip-on-unchanged read; this cell adds the trigger, the scores task, the launchers and the registration. Only filings and management make Anthropic model calls (scores is S3 reads and math, `run_scores.py` header: "NO VENDOR CALL"); the ENABLE pair names the first fire's measured spend and a stop figure (the CTO's ruling) and the stop is `schtasks /Change /TN <task> /DISABLE`. The host is dell1 (Andrew-direct 2026-10-14 ~18:5xZ placement). The tasks fire DAILY 07:30 local and the trigger decides: a daily schedule gated by an input check, never success-of-upstream as the trigger. The apply and the enable are NOT this order.
 
-<status>pending</status>
+<status>complete</status>
 <round>107</round>
 <slot>0.9.0_WK_AMGT_RESAPP~475</slot>
 <fabric>dell1</fabric>

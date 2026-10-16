@@ -19304,3 +19304,205 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W414-S1 -- The Cottonwood floor 2026-07-10 and the 3 absent days are filled_report_values facts only; the other gold tabl
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W414-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~414",
+  "surfaced_at": "2026-10-15T23:35:06Z",
+  "one_line": "The Cottonwood floor 2026-07-10 and the 3 absent days are filled_report_values facts only; the other gold tables start and gap differently, so the Cottonwood series has three starts, not one floor.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~414/COTTONWOOD_COVERAGE_CENSUS_R145.json (tables, floor, twelve_day_gap; read-only S3 list 2026-10-15T23:29:46Z UTC)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~414/census_r145_read.py@8f17f7b84b (the reads; checker DBC145-1-AC1 PASS on the same tables)"
+    ]
+  },
+  "spec_asserts": "TO DB-c-22 'Why': the CTO named three measured Cottonwood facts, the 07-10 floor, 3 absent days and a 12-day gap, as one Cottonwood series; the cell's floor is the first date of filled_report_values.",
+  "world_is": "filled_report_values: 65 partitions from 2026-07-10, 3 absent trading days (2026-08-19, 2026-09-24 to 2026-09-25). account_return_daily: 3390 partitions from 2013-04-03, 15 absent trading days in 3 runs; its 12-day run 2026-06-23 to 2026-07-09 precedes the floor. holdings_performance_daily: 88 partitions from 2026-06-10, no absent day. The record measures three starts and the 12-day gap in a different table than the 3 absent days."
+}
+```
+
+## IRPT_DASHBD-D2-W414-S2 -- The silver fact_allocations empty partitions do not form one block before the floor, so they do not by count a
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W414-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~414",
+  "surfaced_at": "2026-10-15T23:35:06Z",
+  "one_line": "The silver fact_allocations empty partitions do not form one block before the floor, so they do not by count alone explain why filled_report_values starts on 2026-07-10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~414/COTTONWOOD_COVERAGE_CENSUS_R145.json (floor.silver_empty: scanned 145, count 33, empty_on_trading_days 11, empty_on_non_trading_days 22, nonempty_partitions_before_first_empty 3)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~414/census_r145_read.py@8f17f7b84b (footer read: parquet metadata num_rows per partition, get_object only)"
+    ]
+  },
+  "spec_asserts": "TO DB-c-22 floor 'evidence_words': say which table's first date and which silver partitions explain why there is nothing before the floor, read as one silver empty run ending the day before the floor.",
+  "world_is": "The 33 empty fact_allocations partitions are not one run: 74 partitions lie between 2026-04-25 and 2026-07-09, 33 read 0 rows, 22 of the empties are weekends or holidays, and the 11 empty trading days all fall between 2026-06-22 and 2026-07-09. Rows exist on 2026-04-22 to 2026-04-24 and on 38 trading days inside that span, so the producer rule that starts the gold series is NOT_ESTABLISHED; the silver counts are a candidate, not the cause."
+}
+```
+
+## IRPT_DASHBD-D2-W415-S1 -- the holdings_gold label citation (line 259, NET) does not match the file (line 306, GROSS)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W415-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~415",
+  "surfaced_at": "2026-10-15T23:54:19Z",
+  "one_line": "PRD C-LABEL cites holdings_gold.py:259 for TIME_WEIGHTED and NET; the file sets TIME_WEIGHTED and GROSS at line 306 and holds no NET label.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:306 result.method, result.fee_basis, result.annualization = TIME_WEIGHTED, GROSS, NONE",
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:259 is inside a partition-window lookup ending in HoldingsGoldRefused; no label constant",
+      "a grep of holdings_gold.py for an uppercase NET token returned no line"
+    ]
+  },
+  "spec_asserts": "PRD C-LABEL (line 250) cites holdings_gold.py:259 TIME_WEIGHTED and NET as the source of the label the portal shows wrong.",
+  "world_is": "The label source is holdings_gold.py:306 (TIME_WEIGHTED, GROSS, NONE). Line 259 sits in a partition-window lookup with no label. A C-LABEL check against :259 or against NET grades an unrelated line; the holdings route would render 'gross of fees'."
+}
+```
+
+## IRPT_DASHBD-D2-W415-S2 -- the news-data window is two different states; the topic view is absent from this tree
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W415-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~415",
+  "surfaced_at": "2026-10-15T23:54:19Z",
+  "one_line": "FWD-10 ACCEPT says 'a window before the news data starts'; the screen explains the account-history start, the news or market-history cutoff exists only in the export narrative, and no topic view is in this tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/dashboard/DashboardPerformance.tsx:104 This account's history starts on",
+      "portal/src/pages/InvestorReporting/render/narrative/compose.ts:52 MISSING_HISTORY_PREFIX = 'Market history is not available before '",
+      "a glob for topic files under portal/src/pages/InvestorReporting returned no files"
+    ]
+  },
+  "spec_asserts": "PRD FWD-10 ACCEPT (lines 113-114): a window before the news data starts is explained on screen in a sentence. PRD FWD-6 ACCEPT (line 79): a drawdown before the news history begins says there is no topic history.",
+  "world_is": "Two states carry the words. The dashboard explains the account-history start (DashboardPerformance.tsx:104, 122). The news or market-history cutoff sentence prints only in the print and export narrative (render/narrative/compose.ts:52, PeriodInContextPage.tsx:131, gated by PerformanceDocument.tsx:198). The FWD-6 topic view is not present under portal/src/pages/InvestorReporting. The text does not settle which state FWD-10 means."
+}
+```
+
+## IRPT_DASHBD-D2-W415-S3 -- the fallback clause in FWD-10 ACCEPT and C-HONESTY is stale after ruling 17
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W415-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~415",
+  "surfaced_at": "2026-10-15T23:54:19Z",
+  "one_line": "FWD-10 ACCEPT and the C-HONESTY row still say a fallback day is explained or footnoted; PRD addendum v0.4 ruling 17 withdrew the fallback and the page says there is no fallback footnote.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md:487 The fallback is withdrawn.",
+      "portal/src/pages/InvestorReporting/dashboard/DashboardPerformance.tsx:11 ruling 17 withdrew the fallback, so there is no fallback footnote"
+    ]
+  },
+  "spec_asserts": "PRD FWD-10 ACCEPT (line 113) names a fallback day explained on screen in a sentence; C-HONESTY (line 251) says a fallback day is footnoted.",
+  "world_is": "PRD ADDENDUM v0.4 ruling 17 (line 487) withdraws the fallback. The account-return contract return_basis enum (lines 237-239) carries TWR and NOT_MEASURABLE only. DashboardPerformance.tsx:10-11 says there is no fallback footnote. The ACCEPT and the C-HONESTY clause were not amended, so a fallback day cannot be graded as written."
+}
+```
+
+## IRPT_DASHBD-D2-W415-S4 -- the on-screen report path carries no coverage sentence
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W415-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~415",
+  "surfaced_at": "2026-10-15T23:54:19Z",
+  "one_line": "C-HONESTY wants each coverage member shown where the number is; the on-screen report path shows no coverage, history or day-quality sentence.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx:947 <AccountsTable report={report} />",
+      "portal/src/pages/InvestorReporting/contracts/wire/PerformanceReport.ts:22 readonly dates: {"
+    ]
+  },
+  "spec_asserts": "PRD C-HONESTY (line 251): each coverage member maps to one sentence shown where the number is; a window before the first data date is clipped and says so; excluded days are counted on the window return.",
+  "world_is": "The report branch (ReportingTab.tsx:913-947) mounts AnswerStatus, PerformanceHeadline, PerformanceChart, ReturnsHeatmap and AccountsTable. Their source, PerformanceReport (contracts/wire/PerformanceReport.ts:22-57), carries requested and actual dates, returns and account values, with no coverage, history or day-quality member. PerformanceHeadline.tsx:206 says 'Returns through' when the answer ends early; no clipped-start or excluded-day sentence renders on that path."
+}
+```
+
+## IRPT_DASHBD-D2-W415-S5 -- the accounts table prints a producer reason code on the face
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W415-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~415",
+  "surfaced_at": "2026-10-15T23:54:19Z",
+  "one_line": "AccountsTable prints a producer reason code on the face for an uncovered account ('Not covered -- source-return-unavailable'), against the ruling that no system code reaches the face.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/reporting/AccountsTable.tsx:61 return covered ? 'Covered' : `Not covered -- ${reason ?? NOT_SUPPLIED}`",
+      "portal/src/pages/InvestorReporting/contracts/adapt.ts:797 coverageReason: row.value === null ? 'source-return-unavailable' : null,"
+    ]
+  },
+  "spec_asserts": "CTO ruling 102453, as cited at MethodAndSources.tsx:27-28: no system code, hash or internal producer name reaches the face.",
+  "world_is": "AccountsTable.tsx:61 returns 'Not covered -- ' followed by the reason verbatim. contracts/adapt.ts:797 supplies the reason 'source-return-unavailable' for an account whose value is null."
+}
+```
+
+## IRPT_DASHBD-D2-W415-S6 -- the iv-e-90 test pins the label that C-LABEL retires
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W415-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~415",
+  "surfaced_at": "2026-10-15T23:54:19Z",
+  "one_line": "The iv-e-90 method test pins the label C-LABEL retires; a C-LABEL switch fails it until it is repinned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-90.method-source-words.test.tsx:34 if (!face.includes('Time-weighted, net of fees'))",
+      "portal/src/pages/InvestorReporting/tabs/reporting/MethodAndSources.tsx:37 net: 'net of fees',"
+    ]
+  },
+  "spec_asserts": "PRD C-LABEL (line 250): 'Time-weighted, net of fees' is wrong and is replaced everywhere the new figures show.",
+  "world_is": "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-90.method-source-words.test.tsx:34 asserts the face includes the retired label. In MethodAndSources.tsx the label is composed from RETURN_METHOD_WORDS (line 33) and FEE_BASIS_WORDS (line 37); the literal stands only in the comment at line 25 and in that test."
+}
+```
