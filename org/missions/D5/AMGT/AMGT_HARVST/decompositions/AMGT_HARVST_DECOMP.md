@@ -4184,3 +4184,14 @@ The cluster lead ruled that the seven `served/*` rows of OG-ap-23 are site Z's t
 | **Owner / condition** | `2.0.0_SA_COO~W1`; un-parks at the CTO's next round analysis that names the caller. |
 
 - **Update to section 116 (03:02Z, CTO msg 6442, from site Z's CTO msg 34683):** the read surface is an AGENT read surface built on dell1 as this project's own, so Question 1 is ANSWERED (the callers are agents on dell1, not the site Z gateway) and Question 2 is MOOT (no gateway IAM grant is in scope). Its shape: a typed reader module beside `scoped_amgt.py`'s readers, invokable from a dell1 seat shell. Still a named increment after the runner cells (CTO option A stands); still NOT a round-87 cell.
+
+## 117. ROUND 87, workstream RUNNER-JOIN -- `HVST-cb-15` (`sa` and `bbg` join the dell1 runner, seeded once) CUT, STAGED behind cb-13's evidence (03:59Z)
+
+The CTO signed addendum 4 (msg 6460), effective on C-a4 (cb-13's evidence: the first uploads read about 0 GETs, `check` ends `DUPLICATES=0`, the 5 GiB bar holds). At the cut: the cb-13 pass (T0 2026-10-16T03:27:57Z) has made 116 `run` lines at 0 GETs and 0 bytes, no upload yet. The old pin's last barrons cycle record (`20261016T013317Z`, 27 pairs, stopped by operator) read `s3_get_count_jobs` 6,636 / `s3_get_bytes_jobs` 126,566,449 (about 4.7 MiB per pair, uploads included): the measured before-figure for the uploader.
+
+| cell | order | what | class | executes | state |
+|---|---|---|---|---|---|
+| `HVST-cb-15` | `cb-15` | **Stop at a stop-file boundary, seed `sa` and `bbg` once (about 567 MiB), re-register `wsj,barrons,sa,bbg` from the same pin, read, check duplicates**; `sa` leaves the list if its session reads logged out; branches F, G, E. | WORLD | seat `0.7.0_AE_CloudOps~SC1` | CUT, STAGED: waits on C-a4 |
+
+- **Fan-out:** 0 workers (a seat order), 1 chain.
+- **Checks at the cut:** AC1 base reads `--publishers wsj barrons` (FAIL as expected); AC2 and AC3 files do not exist (FAIL as expected); reads of dell1's scheduler and of files the seat writes.
