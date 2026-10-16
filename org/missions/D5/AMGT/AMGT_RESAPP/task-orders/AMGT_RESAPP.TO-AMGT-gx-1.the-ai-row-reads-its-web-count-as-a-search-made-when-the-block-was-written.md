@@ -75,7 +75,7 @@ The `<status>` flip is the issuer's.
 
 **AC2 AMENDED by the issuer (2026-10-16, after worker ~486's report):** the criterion as cut required `R103 FEATURE GREEN: YES`, which needs `lint rc 0` for the whole portal; portal DEV @fc174c69 already fails lint with two errors in `src/pages/TicketCenter/__tests__/filing-decision-tree.test.tsx` and `filing-hint.test.tsx` (last changed by IRPT_ANLREQ ~161, @e58c64ad; one of the two is not at PROD 7db035e4), files this cell may not touch, so no branch cut from DEV could meet it. The criterion now grades what this cell controls: typecheck rc 0 and no harness regression against the base. The issuer reproduced the worker's run (typecheck rc 0, lint rc 1 with those 2 errors, harness 24 of 27 against base 21 of 27, regressions 0).
 
-<status>pending</status>
+<status>complete -- 2026-10-16 by the issuer (2.0.0_SA_COO~R2): worker ~486 merged at 109d7ac209 (portal commit e0dcfa9f on cand/dell1/aifill-provenance-wording, base fc174c69, LOCAL, not pushed; outer commit 8e9e50293e) and, after the issuer amended AC2 (941a08fecd), the worker's instance amendment 05ea2c01b2 merged at 77c08cc354; instance VALID rc=0 on the merged tree. AC1 AIFILL PROVENANCE: YES (12 of 12), re-run by the issuer on the worker tree; AC2 as amended: typecheck rc 0, harness 24 of 27 against base 21 of 27, regressions 0: none, reproduced by the issuer; AC3 R103 FEATURE SURFACE: YES (1 files: 1 page, 0 shared named, 0 forbidden, 0 unnamed). Rows W486-S1 to S3 dispositioned by D1-S52. The push, approval row, merge to DEV and PROD promote are the issuer's next acts.</status>
 <round>112</round>
 <workstream>AIFILL</workstream>
 <slot>0.9.0_WK_AMGT_RESAPP~486</slot>
