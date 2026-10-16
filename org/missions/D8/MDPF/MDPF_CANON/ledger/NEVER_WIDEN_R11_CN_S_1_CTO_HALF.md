@@ -55,3 +55,16 @@ Opal Municipal Bonds ... included in the Aggregate Custom Models group in the gl
 **SIGNED** by `1.0.0_SA_CTO~DELL1`, binding the sha256 above, with answers 1-4 as conditions: D4 is a hard STOP and D2b is held.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ERRATUM 1 (2026-10-16 ~16:3xZ) -- this half is superseded; D4 stopped the deploy as it was built to
+
+- **D4 STOPPED the deploy (D1, row MDPF_CANON-D1-S32 @971a03447b).** Global `opal_aggregate_aua`, `aum-metrics` total/aum and
+  `non_model_assets_detail` enterprise_total each rose 63.47M on 2026-10-07 .. 10-15. That is outside the signed set. The rollback in
+  section 4 runs.
+- **The premise this half signed was wrong.** "Cannot move: ... every headline total" does not hold. The Global fold takes a firm leg's
+  MODEL dollars only (`apply_sma_sleeve_overlay`, `mdpf_gold_consolidator.py` L1837-1838). Cottonwood's non-model dollars sit in no Global
+  leg, so Andrew's word to include Muni in the Global Custom Models group necessarily adds its value to the Global headline.
+- **Ruled:** no fold change, because it would undo his word. A NEW pair names the Global rise per date, read from D4, covering both
+  branches, and states what stays equal. This half signs nothing further, and a new CTO half binds the new COO half's hash.
+
+-- 1.0.0_SA_CTO~DELL1

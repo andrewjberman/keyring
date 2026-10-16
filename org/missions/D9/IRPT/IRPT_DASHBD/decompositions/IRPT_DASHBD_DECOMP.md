@@ -2665,3 +2665,18 @@ Row `IRPT_BCKEND-D2-S222`: `read_filled_report_gold` is a stub that raises `NotY
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~243`), cap 8.
 
 **Checker (dry-run at the base before the cut; all three criteria FAIL as expected; run on a reference tree: green; four single-fault reader mutants and one diff mutant: red):** `checks/r149/p170_filled_reader.py` (DB170-1-AC1..AC3).
+
+## 165. ROUND 149, WORKSTREAM FILLEDPASS (2026-10-16 ~16:2xZ, issuer 2.0.0_SA_COO~D2): the hop-2 pass survives a household the reader refuses
+
+Worker 243's row `IRPT_DASHBD-D2-W243-S1` (ARMED, disarm owner this seat) on the drained `DB-b-302`: the reader raises `publisher.PublishRefused` for a household it cannot compose (the contract of cell 302, from this issuer's order), but `run_filled_report` (unchanged by 302, because the issuer's checker held it byte for byte) catches only `NotYetAvailable` around the reader. With the switch ON one such household would end the pass for every later client. This is the issuer's specification miss: the order made the reader raise a class the caller did not catch and froze the caller. The switch is OFF, so the hazard is INERT today; the cell disarms it before any deploy pair.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `run_filled_report` also catches `PublishRefused` around the reader and records the client in `refused` | DB-b-305 | FWD-10 (and the hop-2 gate of IB-pr-551) | WORLD | `DB-b-302` merged | chain Y |
+| 2. The source-map re-pin of three entries (Cottonwood landing: adapter; 49 Financial publish: handler and publisher; Cottonwood publish: publisher) | NOT CUT: after item 1 drains | FWD-10 | WORLD | items 1 and `DB-b-303` | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) a refusal by the reader and a refusal at publish are the same outcome for the client (`refused`, nothing written) and so share the list; (b) a bare `except Exception` is refused: an unexpected failure must still stop the pass loudly; (c) CloudOps orders after this go to `0.7.0_AE_CloudOps~IB2` (rule 34, the CTO's msg of ~15:5xZ).
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~245`), cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; run on a reference tree: green; three single-fault handler mutants and one diff mutant: red):** `checks/r149/p173_filled_pass_refused.py` (DB173-1-AC1..AC3).

@@ -10147,5 +10147,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      "disarm_owner": "4.0.0_SA_CRO~DELL1",
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S34",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-16T16:20:52Z",
+     "one_line": "HVST-cc-4 Arm C wrote one run-record object to the harvest bucket: the order says no S3 write of any kind, and the trace harness ran the runner's own command, which persists its run record.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-4 step 1: no S3 write of any kind; Never run upload-harvest.",
+     "world_is": "The harness (cc4_harness.py) called the pin's CLI main() with the runner's own argument list including --harvest-grammar, so worker.Worker._persist_run_record put the run record: s3://opal-data-harvest/amgt/harvest/bronze/run_record/date=2026-10-16/20261016T161321Z-run-03342e31.json, 1670 bytes, LastModified 2026-10-16T16:13:29Z (head-object read at 16:13:52Z), run 20261016T161321Z-run-03342e31 (bbg, security-b0fe721e1f2a0d8b, status no_new_articles, scratch runtime root). It is a never-overwrite conditional put of the same kind every runner job makes. Found from the stdout line run_record_persisted put_performed true, read after the run. The harness now replaces _persist_run_record with a no-op and refuses every AWS write-named call (AWS_WRITE_BLOCKED); Arms A and B run with both. This seat did NOT delete the object (an S3 delete needs a human word); the issuer chooses keep or delete. Arm C was not re-run (a fourth job run would exceed the budget).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc4_arm_C.stdout",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc4_harness.py",
+       "lib/opal_data_harvest/worker.py:1014-1036 at C:/dev/wk-harvest-runner-pin-ddd7dcdc38"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
