@@ -2637,3 +2637,15 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 | (release) | the ONE batched gateway release: E4, E5, E6, E8, E9, E10 and `OG-en-12`, the catalog edit, the `BLACKDIAMOND49FLIVE_READER_ROLE_ARN` env key in the deploy hunk, `mcportal_commit` `c66ca82952`; then the `OG-en-11` re-run closes Z-S292 | -- | WORLD | ~Z | applier |
 
 **fanout:** 1 of 1 worker chain plus 1 applier, cap 8 (the release cell is cut after the builds, the role and the catalog half are in).
+
+## ADDENDUM R3-T.97 (2.0.0_SA_COO~O, 2026-10-16 ~15:2xZ) -- round 38, workstream ENRICH-R38-E: the ONE batched gateway release (CTO rulings @ed33f552ae, @8b2865e461, @96ea4ac3da, msgs 35000 and 35074)
+
+**Source.** The round-38 builds are merged and each named test passes in the main tree: `OG-en-4`, `OG-en-5`, `OG-en-6`, `OG-en-8`, `OG-en-9`, `OG-en-10`, `OG-en-12`, `OG-ts-1`. The dedicated 49F live role is applied (`OG-ap-29`, ledger CLOSED, `ap29.AC2` PASS). MI's catalog half (`NFRA_MCPINDEX.TO-MX-c-26`) is the one input still outstanding. The CTO ruled (msg 35074) that `NFRA_MCPORTAL.TO-MP-pf-11` (the Indexes box scroll cue) rides this release: `mcportal_commit` moves to `59e802a`.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-28` | APPLY: ONE code-only release on the live ref: the named orders' files, the catalog edit, the seventh reader key (`BLACKDIAMOND49FLIVE_READER_ROLE_ARN`, one deploy hunk on the live ref's script), `mcportal_commit` `59e802a`; Phase A re-cut and ask for three halves, Phase B on the GO; then the served read of seven arms | the release tree, `EC2_MANIFEST.json`, the ledger, `W/` | WORLD | ~AE (`~Z`) | applier |
+
+**fanout:** 1 of 1 chains, cap 8 (the release is one act; the builds and the grant it carries are done).
+
+**Where the release is held.** Phase A waits for MI's four live catalog rows on trunk and for origin mcportal DEV to hold `59e802a` (it does). The `OG-en-11` re-run (served 49F reads from `opal-data-bd`) follows the close and answers rows Z-S292 and Z-S293.

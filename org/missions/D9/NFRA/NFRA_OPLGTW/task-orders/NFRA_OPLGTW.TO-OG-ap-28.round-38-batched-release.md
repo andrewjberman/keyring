@@ -1,0 +1,90 @@
+# NFRA_OPLGTW task order -- `OG-ap-28` -- APPLY: the round-38 batched gateway release -- units and currency, the news floor, the chatter lag, the Muse narrowing (inert), the 404, the 429 audit row, the 49F live path and its env key, the mcportal pin (FWD-21, FWD-22; PRD v3.12 to v3.19)
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the applier's context ===================== -->
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md</decomp_doc>
+<owned_cells>OG-ap-28</owned_cells>
+</decomp_ref>
+<to_id>NFRA_OPLGTW.TO-OG-ap-28</to_id>
+<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+<issued_by>2.0.0_SA_COO~O</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- no schedule or trigger is added or changed; the applier still runs `comp-schedule --drift` at the act and records what it scanned.
+comp-iam: DECLARED-NOT-APPLICABLE -- this release changes NO IAM. The dedicated 49F live read role `gateway-49f-blackdiamond-live-read-role` is live from `OG-ap-29` (complete, `e497bc910d`, ledger `nfra-oplgtw-grants-ap29` CLOSED); the applier re-reads it in Phase A with `iam get-role`.
+comp-adversary: DECLARED-NOT-APPLICABLE -- the act is decomposition addendum R3-T.97 and the CTO rulings @ed33f552ae, @8b2865e461, @96ea4ac3da, msg 35000 (measure first on the 429), msg 35074 (the mcportal cue rides this release).
+EGRESS CLASS, declared: NONE beyond Opal's own AWS.
+</preflight>
+
+## 1. THE CELL -- `OG-ap-28` (decomposition addendum R3-T.97, workstream ENRICH-R38-E)
+
+APPLY: ONE release carrying the merged round-38 gateway code, on the live ref (read it, do not assume it: `services.opal-gateway.deployed_commit` at HEAD; it was `d14445961d` when this order was cut). Code only: no Terraform, no apply, one deploy. The builds are merged to trunk (`box/sitez`): `OG-en-4` (units and currency on client position rows: `app/client_adapter_*.py`), `OG-en-5` (`app/news_typed.py`: `coverage_floor`), `OG-en-6` (`app/harvest_press.py`: `trading_days_behind_t1`), `OG-en-8` (`app/data_entitlement.py`, `app/config.py`, `app/server.py`: the Muse client narrowing, INERT unless `MUSE_CLIENT_ID` is set, and the `/teams/poll` route), `OG-en-9` (`app/query_v0.py`, `app/graphql_plumbing/catalog_gate.py`: a key with no catalog row answers 404), `OG-en-10` (`app/ratelimit.py`, `app/server.py`, `app/audit.py`: the 429 audit row `event=gw_ratelimit` and the hashed `by_client` split; the limit itself is NOT changed), `OG-en-12` (`app/client_core.py`, `app/client_role.py`: a catalog row resolved by `address`, the real prefix read in the row's own bucket, flat `<date>.parquet` files and `date=<d>/` both accepted, the `-live` tools routed to the key `blackdiamond49flive` and the env `BLACKDIAMOND49FLIVE_READER_ROLE_ARN`, unset answers `live_role_unset` and reads nothing), `OG-ts-1` (a test pin), and the NFRA_MCPINDEX catalog edit `NFRA_MCPINDEX.TO-MX-c-26` (four NEW live 49F Black Diamond rows with `address` and `read_tool`; eight legacy rows re-bucketed). The GO message names `trunk_sha`, the one trunk commit you take from, and `mcportal_sha`.
+
+### PHASE A (only on the issuer's GO message, which names `trunk_sha` and `mcportal_sha`): re-cut, ask. NO deploy, NO apply IN ANY FORM
+
+1. **Live ref.** Read `services.opal-gateway.deployed_commit` at HEAD and one SSM md5 read of the host against it over `app/`, `deploy/`, `dashboard/` and `lib/`. A mismatch is a STOP and a BLOCKING row. Record `tools_list_before` (the count the public `tools/list` returns to a master_admin stand-in) for AC2. `iam get-role gateway-49f-blackdiamond-live-read-role`: a missing role is a STOP. `MUSE_CLIENT_ID` must be ABSENT from the host `.env` (names only, over SSM); present is a STOP and a row.
+2. **Re-cut** in `C:/tmp/og-rel-batch2`, branch `rel-nfra-oplgtw-batch2`, at the live ref, with `infra/logic/`, `org/missions/DIRECTIVES.yaml`, `org/mcp/naming-gate.enforce` and `infra/aws/globgrph` in the sparse cone. **Enumerate the seams first**: every app module a taken file imports; print each as in-base or in-take-list; a missing seam is a STOP and a row. The take list is the union of the `<paths>` of the complete orders `OG-en-4, 5, 6, 8, 9, 10, 12, OG-ts-1` (read each order's `<paths>`; app files and tests only) plus `app/refs/DATA_CATALOG.yaml` at `trunk_sha`. **Files that differ between the live ref and `trunk_sha` and belong to NO order named here are NOT part of this release** (for example `admin_people_access.py`, `family_depth.py`, `refs/silver_families.json`, the yearinreview files, `tools.py`, `destructive_ops.py`, `integrations/opal_discover/integration.py`); a taken file that imports one is a missing seam: STOP. For every taken file print `git diff <live ref> <trunk_sha> -- <file>` hunk count and attribute each hunk to one of the named orders; a hunk no named order wrote means the file is taken BY HUNK (3-way against the base), never whole; an unattributable hunk is a STOP and a row. DO NOT commit `app/refs/partner_roster.json` or `app/refs/scopes.json` (they are not in the live base; row Z-S161). `tests/` takes: the files named by those orders' `<paths>`, run in the release tree after the take.
+   THE MCPORTAL PIN: set `infra/aws/ec2/EC2_MANIFEST.json` `services.opal-gateway.mcportal_commit` to `mcportal_sha` (the GO names `59e802a4185a62129bf28ebb4df6eda9b70e03ff`: parent `c66ca82952c01575968d16cc736cdabe36606572`, the pin on the host now; it carries `NFRA_MCPORTAL.TO-MP-pf-11`, two CSS and test files, no gateway code), and NOTHING else in the manifest changes in the release commit. Verify `git -C mcportal cat-file -e <mcportal_sha>`, that origin DEV holds it (`git -C mcportal ls-remote origin DEV`; if DEV does not hold it, STOP and tell the issuer), and `git -C mcportal merge-base --is-ancestor <live mcportal_commit> <mcportal_sha>`; a failure is a STOP. Record `mcportal_sha` in `W/ap28_release.json`.
+   THE DEPLOY HUNK, BY HUNK, `deploy-to-ec2.sh` (the live ref already carries the six vendor reader keys; do not touch them): add ONE seventh key. (a) after the line `READER_ARN_SMARTX="$(_vr_arn gateway-smartx-read-role)"` add `READER_ARN_BD49FLIVE="$(_vr_arn gateway-49f-blackdiamond-live-read-role)"` (the existing `_vr_arn` helper refuses the deploy with no upload when `aws iam get-role` does not return the role); (b) in the one `printf 'MOCK_GRAPH=0...` env line add `BLACKDIAMOND49FLIVE_READER_ROLE_ARN=%s\n` immediately after `SMARTX_READER_ROLE_ARN=%s\n` and add the argument `"${READER_ARN_BD49FLIVE}"` immediately after `"${READER_ARN_SMARTX}"` in the argument list, so the positional slots of every other key are unmoved. Nothing else in the script changes. A role ARN is not a secret; print names only. `ap28.AC1.sh` grades this hunk (its `_dsh_check.py` removes the new slot from both lists and requires the base's lists back) and `bash -n`.
+   Commit with the audited `GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL` on the release commit only; the naming gate runs in ENFORCE and must print NO REFUSE (if it refuses a string, STOP and file a BLOCKING row naming the (name, type)). Write `W/ap28_release.json` = `{"base_sha", "release_sha", "trunk_sha", "mcportal_sha"}` (FULL 40-character shas).
+   Run in the release tree: every taken test file; the pinned-count tests; and the host-shaped import check (a 4-parent path with `lib/trading_calendar.py` and `lib/opal_naming.py` beside it: every taken module and `app.tools` import in a fresh interpreter). A failing taken test that also fails at the live ref is recorded by name and carried; a failing taken test that passes at the live ref is a STOP.
+3. **The ask**, `W/NEVER_WIDEN_ASK_OG-ap-28.md`, for THREE halves (`1.0.0_SA_CTO~Z`, `2.0.0_SA_COO~O`, `3.0.0_SA_CVO~Z`), each under a heading containing its word: (1) the `diff` by file, the one manifest field `mcportal_commit` (live `c66ca82952` to `mcportal_sha`) and the one deploy hunk; (2) the `widening`, stated plainly: NO new IAM and NO tool added or removed; the four 49F Black Diamond `-live` tools serve for the FIRST time, through the dedicated role, to master_admin only (the data-grant class), reading `opal-data-bd/silver/{unrealized,transactions,allocations,fees}/` (flat dated files); answer rows gain `weight_unit`, `currency`, `currency_basis`, `coverage_floor`, `trading_days_behind_t1`; a no-row key answers 404 (it answered 200 with an error body); a 429 writes an audit row; the Muse narrowing is INERT (`MUSE_CLIENT_ID` is not set, the act that sets it is a later separate ask); the 120 per 60 s limit is unchanged (the CTO's measure-first ruling, msg 35000); (3) the `order` of acts (one deploy, then the served read, then the issuer's `OG-en-11` re-run); (4) `both branches` (role unset: `live_role_unset`, zero reads; role set and a non-admin principal: refused, zero reads; master_admin: served); (5) the `rollback` (redeploy the base; the manifest pin returns with it); (6) the `triggers` (health not 200 in 60 s, a tool of the 27 that answered before not answering, the `.env` key count not 65, `tools_list` count changing); (7) the CVO's condition on `OG-ap-29`: the routing change ships in THIS release. Commit, run AC1, REPORT, STOP.
+
+### PHASE B (only on the issuer's GO, which names all three halves signed at `release_sha`)
+
+4. PRECONDITIONS: `OG-ap-29`'s ledger `nfra-oplgtw-grants-ap29` is CLOSED; the live role resolves. Ledger `nfra-oplgtw-gateway-release-batch2`, entry AND sentinel first. Deploy from `C:/tmp/og-rel-batch2` through `infra/aws/ec2/safe-ec2-deploy.sh` with `DEPLOY_BASE_REF=<base_sha>` under the A1 guard (HEAD = full `release_sha`, parent = live `deployed_commit`; no other release in flight). No `HALT_OVERRIDE`. Read back against the triggers; on any trigger redeploy the base and file an ARMED row naming `2.0.0_SA_COO~O`.
+5. **The served read**, through the INSTALLED code on the host and the public endpoint, writing `W/CODE2_SERVED.json` = `{"body": {"read_at", "live_commit", "health_status": 200, "env_key_count": 65, "reader_env_keys_present": 7, "registry_count": 103, "per_tool_good": 27, "host_md5": {"equal": N, "differ": 0}, "tools_list_before": N, "tools_list_after": N, "muse_env_present": false, "arms": {"e4_unit_currency": bool, "e5_news_floor": bool, "e6_chatter_lag": bool, "e8_muse_inert": bool, "e9_not_found_404": bool, "e10_429_audited": bool, "e12_bd49f_live": bool}}}`. Each arm is one real call by an Opal stand-in principal (never a seat's identity), counts and booleans only: `e4`: a client position answer for a vendor whose adapter carries a unit has `weight_unit` in {`fraction`, `percent`} and `currency` set (orion's unit stays null, a carried gap: use another vendor); `e5`: a news typed answer carries `coverage_floor`; `e6`: a chatter or harvest answer carries an integer `trading_days_behind_t1`; `e8`: with `MUSE_CLIENT_ID` absent a normal principal's `tools_list` is unchanged (`tools_list_after` equals `tools_list_before`) and `/teams/poll` answers (any status other than 404); `e9`: a `query_v0` call on a key with no catalog row answers HTTP 404; `e10`: from the host, as ONE stand-in bearer identity, 130 `/mcp` POSTs inside 60 s: the 121st onward answer 429 and the audit stream holds a `gw_ratelimit` row carrying the hashed `by_client` split and no raw identity (the stand-in is limited for 60 s; no seat's identity is used; the limit is not changed); `e12`: the four 49F BD `-live` tools, called as master_admin, each return an enveloped answer with rows from `opal-data-bd` (row count above 0, `as_of` the newest flat dated file), the session's assumed-role identity names `gateway-49f-blackdiamond-live-read-role` (names only), and an unprofiled NON-ADMIN principal calling one of them is refused with zero S3 reads. `reader_env_keys_present`: 7 (the six vendor keys plus `BLACKDIAMOND49FLIVE_READER_ROLE_ARN`), names only over SSM. No object content, account number or person's name is printed.
+6. **Standing clauses:** runbook 7.2 names the new live release; EC2_MANIFEST `deployed_commit` and `file_checksums` come from the release blobs. Close the ledger, commit, run AC2, and report once to `2.0.0_SA_COO~O`. After the close, `2.0.0_SA_COO~O` tells `2.0.0_SA_COO~MI` and `~MP` the live commit; MP grades `TO-MP-pf-11` AC2 (the Indexes box cue) on the host.
+
+## 2. BOUNDS
+
+- The release's files only. No IAM or Terraform change, no catalog edit of your own, no object or item written to any bucket or table, no change to the 120 per 60 s limit.
+- Never: push, `git stash`, rebase, `checkout --` or `clean`; merge box/sitez into the release branch; bare `terraform apply`; print an `.env` value, a credential, an account number, a person's name or email, or object content; set `MUSE_CLIENT_ID`; override a gate other than the one audited lane escape in step 2 of Phase A.
+- REFUSE a criterion you cannot meet as written. File a BLOCKING row and keep working.
+
+## 3. SURFACES
+
+<paths>
+infra/aws/ec2/EC2_MANIFEST.json
+infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md
+org/critical_paths/change_management/
+org/critical_paths/.open_deploys/nfra-oplgtw-gateway-release-batch2.json
+org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/
+org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+`W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/`. Rows: id `NFRA_OPLGTW-Z-S<k>` (the next free), fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ`.
+
+## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="OG-ap-28"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/ap28.AC1.sh; echo "exit=$?"</invocation><expect>(?s)base [0-9a-f]+ is the live ref before this release: yes.*outside the batch set 0 \(want 0\); terraform files differing 0 \(want 0\); tools.py or destructive_ops.py touched 0 \(want 0\).*env key added 1 \(want 1\); every %s has its arg yes; slot aligned, other slots unmoved yes; role resolved by _vr_arn 1 \(want 1\); removed lines other than the env printf 0 \(want 0\).*bash -n yes.*mcportal pin: manifest mcportal_commit equals the GO's, descends from the live pin, only that manifest field changed yes; data copies committed in the release 0 \(base had 0; want equal\); ask has the three halves yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-ap-28"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r38/checks/ap28.AC2.sh; echo "exit=$?"</invocation><expect>(?s)ledger CLOSED 1 of 1; sentinel at HEAD 0.*landed=(?:current|superseded).*tools/list before (\d+) after \1 \(want equal\); MUSE_CLIENT_ID present False.*reader env keys 7 of 7; registry 103 \(want 103\); per-tool 27 of 27; host md5 differ 0 \(want 0\); arms true 7 of 7.*served verdict: OK.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OG-ap-28" judgment="true"/>
+</proof_of_spec>
+
+- `AC1`: the re-cut carries exactly the named orders' files, the catalog edit, the one deploy hunk and the one manifest field, no Terraform, no tool added. `AC2`: the release landed and closed; the installed code shows every round-38 arm through one real call each; the seventh reader key is on the host; the tool list is unchanged; the Muse narrowing is inert.
+- `AC3` (judgment, `3.0.0_SA_CVO~Z`): the first 49F Black Diamond live answers and the unit/currency/floor fields read as an analyst would want them (a firm's data date stated, figures with units, nothing merged across firms). Graded on a real call; never simulated here.
+
+## 5. WHEN YOU ARE DONE
+
+Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-28.round-38-batched-release.proof_of_spec.json`. Validate it after your last commit with `python .tools/proof-of-spec-check.py <instance> AC1,AC2 --governing-order <this order>`, flip the ONE `<status>` tag to `complete` only if both PASS, and report once. Report once per phase.
+
+<!-- ===================== RECORD FACE ===================== -->
+
+**ISSUER NOTES:**
+- Round 38, workstream ENRICH-R38-E (decomposition addendum R3-T.97). Queue on the gateway host: THIS only; `~MI`'s catalog-only releases queue behind it and are cut on its commit.
+- Staged: the GO for Phase A is the issuer's message citing this order and naming `trunk_sha` and `mcportal_sha`, sent after `NFRA_MCPINDEX.TO-MX-c-26` is on trunk (`grep -c "address: blackdiamond/49f-live" infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` above 0) and origin mcportal DEV holds `59e802a` (read at cut: it does).
+- The mcportal pin moved from `c66ca82952` (the first plan) to `59e802a` by MC Portal's ask (msg 35075) under the CTO's ruling (msg 35074).
+- Finish-by: Fri 2026-10-16 ~22:00Z.
+- Pre-cut: `ap28.AC1` and `ap28.AC2` base FAIL as expected (`ap28_release.json`, the ask and `CODE2_SERVED.json` absent). `ap28.AC1` PASS arm exercised on a synthetic release commit built with git plumbing from the live ref (18 files: PASS), with three control arms failing for the right reason (a misaligned env slot, no env key, `tools.py` touched). `ap28.AC2`'s served-record arm exercised on a good record (OK), a record with 6 reader keys and one arm false (NO) and a `tools_list` drift (NO).
+- The live ref's `deploy-to-ec2.sh` carries `OG-ap-23`'s staging and reader-key hunk; trunk's copy of that file does NOT (the release branch was never merged back), so the deploy hunk is applied to the LIVE ref's script, never taken from trunk.
+
+<status>staged</status>
+<round>38</round>
+<workstream>ENRICH-R38-E</workstream>
+<slot>~AE</slot>
+<fabric>site-z</fabric>
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
