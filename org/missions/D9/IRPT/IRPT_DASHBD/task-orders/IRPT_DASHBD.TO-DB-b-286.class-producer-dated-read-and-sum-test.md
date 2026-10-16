@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~230</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -16,6 +16,8 @@
 **Directive:** D9 | **Fabric:** dell2 | **Workstream:** CLASS, round 148 | **Ordered by:** 1.0.0_SA_CTO~DELL2, org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_119_20261016.md ERRATUM and ADDENDUM 1 (msgs 8827, 8918) ("~D2 adds the sum-to-account test and the dated classification read (held, as_of) to the existing module"; "the dated classification read records its own run-day as-of and a held claim, and is not tied to the swap snapshot") | **Decomp cell:** `DB-b-286` (decomposition section 148).
 
 **Risk class WORLD** is the floor of the paths below (`infra/` and the producer bundled into a deployed function), not a statement that anything is deployed: python files, a JSON standard and tests; no AWS, no deploy, no push. The producer is bundled into the 49 Financial `reporting-gold` function; moving its code to the cloud is a LATER code-update pair of this seat's.
+
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~07:0xZ, on worker row IRPT_DASHBD-D2-W230-S1; gate limb: an existing order modified, placeholders NONE unchanged, no criterion id, cell or path change):** the row is a DEFECT OF THE ISSUER'S ORDER, ruled here: step 3 wired `acd.default_table().as_of()`, but `class_days` reads through its OWN `acd.ClassTable()`, so the date would be None on every emitted day (and a warm container's process-wide table would keep an earlier run's date). **Step 3 is REPLACED:** in the handler, define a module-level `_CLASS_TABLE = None` beside `_CLASS_CONTEXT`; in `class_days` declare `global _CLASS_TABLE`, build the table ONCE as a local (`table = acd.ClassTable()`), assign `_CLASS_TABLE = table`, and pass that SAME `table` to `acd.compute_classes(..., table=table, ...)` (no `ClassTable()` expression in the call); in `emit_classes` every `acd.emit_class_day(...)` call passes `classification_as_of=(_CLASS_TABLE.as_of() if _CLASS_TABLE is not None else None)`. The table is fresh per run, so its `as_of()` is the oldest GetItem date of THIS run. No other line of the handler changes. The updated checker `p154_classdated.py` (in your tree via the carry commit) states the clause; your module, contract, tests and facts record stand unless you find the handler edit forces something else.
 
 ---
 
