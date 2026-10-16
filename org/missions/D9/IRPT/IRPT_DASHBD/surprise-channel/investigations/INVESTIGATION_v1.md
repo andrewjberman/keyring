@@ -23665,6 +23665,267 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W2101-S1 -- contract 0.5.0 reads and source_txn_id_coverage for Inflection are all-partition counts that the order does not restate
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "The Inflection reads and source_txn_id_coverage hold all-partition row counts (218,054,352 rows over 154 partitions), the same snapshot-weighted basis the order restates for the counts; the order names neither section, and the checker pins both to the round-130 reads, so 0.5.1 carries them unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order restates every Inflection count over every partition on the latest snapshot, and lists the sections that change; reads and source_txn_id_coverage are not in that list.",
+  "world_is": "In the 0.5.1 contract reads.inflection.rows and source_txn_id_coverage.inflection.rows are 218054352 over 154 partitions (the round-130 all-partition read). The checker reads_problems and coverage_problems pin them to RD_READS_R130.json and RD_ID_COVERAGE_R130.json, so the criterion passes with these values.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json reads.inflection and source_txn_id_coverage.inflection at f0cd10473c",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_contract.py reads_problems and coverage_problems at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left unchanged by this cell. Whether a later round restates them is for the issuer to rule."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S2 -- offset_rule keeps its all-partition distinct-key figure and its round-132 reason text; only candidate_rows is restated
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "The 0.5.0 offset_rule holds distinct_keys_with_a_candidate (1) and a reason that names the round-132 pairing census; the round-135 latest-snapshot records carry no distinct-key figure. The order restates candidate_rows only, so 0.5.1 keeps the other two unchanged and the reason's provenance is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order says offset_rule.candidate_rows is the latest-snapshot figure only and lists the changed sections; the other offset_rule fields are not named.",
+  "world_is": "In 0.5.1 row_filter.inflection.offset_rule has candidate_rows 1 (the R135 latest snapshot), distinct_keys_with_a_candidate 1 (copied from 0.5.0, the all-partition pairing census) and the 0.5.0 reason text. The checker rules_problems reads only candidate_rows, so it passes either way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json row_filter.inflection.offset_rule at f0cd10473c",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R135_INFLECTION_SNAPSHOT_CENSUS.json at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Stated in the generator's docstring. The issuer may want the distinct-key figure restated or dropped in a later cell."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S3 -- checker requires the sources price method to carry latest-snapshot figures; the order lists sources as unchanged
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "DBF135-1-AC1 cannot PASS as the order writes it: p135_contract.py price_correction_problems requires the sources.inflection price method to state 1,080,128 and 1,079,919 (the latest-snapshot fund-family figures), while the order lists sources as unchanged, and the 0.5.0 method states 154,828,670 and 154,808,844.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's Unchanged list keeps sources from 0.5.0, and its refusal clause says a checker rule that disagrees with the order is followed as the order writes it and filed as a row.",
+  "world_is": "The 0.5.1 contract, as the order writes it, has sources identical to 0.5.0 (the price method is the 0.5.0 text). The checker prints the two reason lines inflection price method must state '1,080,128' and '1,079,919' and DBF135-1-AC1 FAIL (rc 1). A control with only that method's figures patched, reverted after the run, prints DBF135-1-AC1 PASS, so this rule is the only blocker.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_contract.py price_correction_problems and source_problems at f0cd10473c",
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json sources.inflection price entry at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Decision for the issuer: restate the sources price method on the latest snapshot (a sources change the order does not list), or amend the checker. No route taken in this cell. The order stays open."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S4 -- served_note is unchanged and does not name contract 0.5.1
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:38:23Z",
+  "one_line": "The 0.5.0 served_note records the 0.4.2 and 0.5.0 history only; the order lists everything else as unchanged, so 0.5.1 does not add its own history sentence to the note.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order keeps everything in 0.5.0 that it does not list (served false included) unchanged.",
+  "world_is": "In 0.5.1 served_note is byte-identical to the 0.5.0 text, and served is false. The contract's contract_version, supersedes and authored_by name 0.5.1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_ACCOUNT_TRANSACTION_CONTRACT.json served_note at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A documentation-only point. The version history is carried by supersedes and contract_version."
+}
+```
+
+## IRPT_DASHBD-D2-W2101-S5 -- S3 is resolved by the issuer's amendment: the sources price method is restated on the latest snapshot
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2101-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2101",
+  "surfaced_at": "2026-10-16T17:57:36Z",
+  "one_line": "Row S3 (BLOCKING) is resolved by the issuer: the coordinator's ruling restated the sources.inflection price method with the latest-snapshot figures, and the issuer's AMENDMENT 1 (trunk commit d58c1dda9c) names that entry in the order; the 0.5.1 contract carries the restated method and DBF135-1-AC1 PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-D2-W2101-S3 (BLOCKING): DBF135-1-AC1 cannot PASS while the order lists sources as unchanged, because the checker requires the sources.inflection price method to state the latest-snapshot figures.",
+  "world_is": "The coordinator's ruling and the issuer's AMENDMENT 1 (trunk commit d58c1dda9c, order TO-DB-f-2101) make the price method restatement part of the cell. The generator restates only that method (source, from_columns, claim and reason unchanged); the contract schema_hash stays ac652e2f71b18427b52f321858163768158f850ec173d1e592c7c3abe815bb6a; DBF135-1-AC1 prints PASS. Row S3 is not edited (the channel is append-only); its disposition is the issuer's to set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show d58c1dda9c -- the order file TO-DB-f-2101 (AMENDMENT 1, the sources.inflection price entry named)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_contract.py price_correction_problems at f0cd10473c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Records the resolution of S3. S1, S2 and S4 stand as observations."
+}
+```
+
+## IRPT_DASHBD-D2-W2103-S1 -- DBF135-3-AC1 cannot pass as written: its ASCII clause conflicts with its pure-insertion clause (the pinned base is not ASCII)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T17:39:40Z",
+  "one_line": "DBF135-3-AC1 cannot pass as written: the pinned base copy dispatch_base.sh.txt already holds 10 non-ASCII lines, so a pure insertion over it cannot make the dispatch script ASCII. The lines this cell adds are ASCII; the whole-file ASCII check stays FAIL and is not repaired.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBF135-3-AC1 (checker p135_dispatch.py, ac1): the dispatch edit is a pure insertion over the pinned base copy but for the unknown-chain line, and the script is ASCII (new.isascii()). The worker face asks for ASCII in anything written.",
+  "world_is": "The pinned base copy (sha256 e9aef66b...) already holds 10 non-ASCII lines (base lines 50, 650, 921, 1189, 1205, 1281, 1362, 1523, 1525, 1928: em-dash and section-sign characters). A pure insertion leaves them in place, so the whole-file ASCII check cannot pass without editing base lines, which the order does not name. Measured: p135_dispatch.py prints 'reason: the dispatch script must stay ASCII' and 'DBF135-3-AC1 FAIL'; the diff and block checks and bash -n pass before that line. All added lines are ASCII (test_insertion_added_lines_are_ascii PASS).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/dispatch_base.sh.txt@f0cd10473c: grep -nP '[^\\x00-\\x7F]' reports the 10 base lines listed in world_is",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_dispatch.py@f0cd10473c line 119: need(new.isascii(), 'the dispatch script must stay ASCII')",
+      "data/inf/scripts/gold/tests/test_dispatch_txn_block.py@c973be5435: test_syntax_file_is_ascii_as_written FAILS (measured); test_insertion_added_lines_are_ascii PASSES"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not repaired: the refusal clause names no route for base-line encoding. Decision for the issuer: a named encoding edit of the base lines, or an amendment of the ASCII clause to the added lines."
+}
+```
+
+## IRPT_DASHBD-D2-W2103-S2 -- run_txn_step omits the Eclipse CloudWatch failure metric; a txn failure is visible only in the status marker
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T17:39:40Z",
+  "one_line": "run_txn_step is modelled on run_eclipse_step but does not copy its EclipseStepFailed CloudWatch put: a failed or timed-out txn step is recorded in TXN_RESULTS and in the TXN-BLOCK status marker only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-2103 step 1: run_txn_step is 'modelled on the Eclipse step runner' and the TXN-BLOCK writes its marker 'the way the Eclipse block writes its marker'.",
+  "world_is": "run_eclipse_step puts the EclipseStepFailed metric (aws cloudwatch put-metric-data) on a non-zero rc. run_txn_step has no metric call, because a new metric is a new alarm surface and the standing moratorium forbids building alert or monitor surfaces unless Andrew asks. No alarm in the estate reads dispatch_txn_status.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/orion-gold-dispatch.sh@c973be5435: run_eclipse_step, the EclipseStepFailed put (the aws cloudwatch line under the rc check)",
+      "data/inf/scripts/gold/orion-gold-dispatch.sh@c973be5435: run_txn_step, which records TXN_RESULTS and returns 0 with no aws cloudwatch call"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded so the issuer can decide whether a txn metric is wanted. Building one is an alert surface and needs Andrew's word."
+}
+```
+
+## IRPT_DASHBD-D2-W2103-S3 -- The comp-pulse risk reflex prints an open HOLD on orion-gold-dispatch.sh (collision check citation)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T17:39:40Z",
+  "one_line": "The pre-commit risk reflex printed [HOLD] on orion-gold-dispatch.sh, citing org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md:78 (the collision check at lines 560-571 of the base, which a deletion or copy of build_assets_dim.py would clear).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-f-2103 BOUNDS: offline edit only, NOT DEPLOYED, no AWS call; the grant is the dispatch script, its test and the investigation file.",
+  "world_is": "The HOLD concerns deletion or copy of the build_assets_dim.py collision in the S3 gold prefix, not the dispatch file text. This cell's diff leaves the collision check's content unchanged (every hunk is an addition or the unknown-chain error line, checked by test_insertion_diff_is_pure_but_for_the_error_line). Nothing is uploaded, so the HOLD's deploy-scope question does not arise here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/HOLD_INF_CANONICAL_NNA_REBUILD_20260713.md:78 (the citation the reflex printed; read at the worktree)",
+      "data/inf/scripts/gold/tests/test_dispatch_txn_block.py@c973be5435: test_insertion_diff_is_pure_but_for_the_error_line PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The gate's HOLD line is advisory; the commit gate refused the commit only on the test file's future import, which the re-run fixed. The release pair owns any upload."
+}
+```
+
+## IRPT_DASHBD-D2-W2103-S4 -- S1 resolved by the issuer's amendment: the ASCII clause now covers the added lines
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W2103-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2103",
+  "surfaced_at": "2026-10-16T18:00:20Z",
+  "one_line": "Resolves IRPT_DASHBD-D2-W2103-S1: the issuer's amendment d58c1dda9c makes the ASCII clause the lines the edit adds, and the amended checker prints DBF135-3-AC1 PASS on this tree; the whole-file ASCII test is replaced by test_syntax_added_lines_are_ascii_against_base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DBF135-3-AC1 ASCII clause as the issuer amended it (d58c1dda9c): every line the edit ADDS is ASCII; the base's own non-ASCII lines stay.",
+  "world_is": "Measured at 92ed9d18b4: the amended checker prints DBF135-3-AC1 PASS (rc 0, run twice, identical); --selftest PASS (9 arms); test_dispatch_txn_block.py 28 of 28 pass; the three existing dispatch-related files pass 64, 22 and 19. The amended checker copy is an uncommitted input in the worktree and is not part of any commit of this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_dispatch.py@d58c1dda9c (trunk amendment; the worktree copy is a read-only copy of it)",
+      "data/inf/scripts/gold/tests/test_dispatch_txn_block.py@92ed9d18b4: test_syntax_added_lines_are_ascii_against_base"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Records the resolution of IRPT_DASHBD-D2-W2103-S1 by the issuer's amendment; nothing further to investigate in this cell.",
+  "notes": "Written on the coordinator's ruling. S2 and S3 stand as observations."
+}
+```
+
+## IRPT_DASHBD-D2-W247-S1 -- the composed filled report carries the table's RAW custodial account id as account_id
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W247-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~247",
+  "surfaced_at": "2026-10-16T17:54:57Z",
+  "one_line": "The hop-2 reader composes each account entry's account_id from the table's row_key, and the table's account.last4 row_key is the RAW custodial account id, so the filled document carries the raw id where the directory and the summary builder carry the minted one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "publisher.py at ba3478dab4 (the summary builder, line 514) writes each account entry's account_id as the directory's minted opaque id; the order's checker p174 builds its contract documents with raw account_id values and expects the reader to return them unchanged.",
+  "world_is": "_filled_compose (handler.py, base ba3478dab4, the account_entries append) sets account_id from row_key; the table's account.last4 rows carry RAW custodial ids (measured in the S128 row, 05be852c08). validate_filled_report checks the key set and the window forms only, never the id form. The filled-report switch is OFF, so no document is written today; nothing in this order changed the id form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "handler.py@ba3478dab4 _filled_compose: account_entries.append({\"account_id\": key, ...}) with key = row_key",
+      "publisher.py@ba3478dab4 line 514: the summary builder writes \"account_id\": a for a directory account id",
+      "p174_filled_reader_accounts.py doc_of: account_id values are RAW ids and the reader result must equal the document"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here. The composed id form is the contract's question for the CTO or CVO; the reader was not changed to mint or drop it, because the order's checker fixes the document as the producer's inverse."
+}
+```
 
 ## IRPT_DASHBD-D2-W246-S1 -- the checker resolves the portal from a RELATIVE repo root "." and reads the branch as empty, so AC1 FAILS as written
 

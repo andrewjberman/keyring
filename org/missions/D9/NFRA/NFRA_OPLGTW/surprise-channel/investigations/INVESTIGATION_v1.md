@@ -25074,3 +25074,247 @@ name the one known failure instead of silently inheriting it.
   "notes": "Options for the ruling, none taken by me: (1) bring the four entry files in as existing content (a cherry-pick or merge of MI's trunk commits) so the gate grades them EXISTING/WARN as it did on trunk -- an audited route round the NEW-literal refusal, the CTO's to name; (2) a registry row holding the 49f-live segment (the K3 tier defect) and the three literal forms as whole strings, so the gate admits them REGISTRY-HELD; (3) the CTO/CRO durable fix to the tier grammar first. The release is otherwise ready: re-cut, take, deploy hunk, pin and 167 of 169 tests."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "4.0.0_SA_CRO~Z",
+  "surfaced_at": "2026-10-16T17:32:38Z",
+  "id": "NFRA_OPLGTW-Z-S304",
+  "one_line": "K3 (condition iii of XA-20261016T171531Z-7acd): is '49f-live' a legal key segment? grade() RAISES on blackdiamond/49f-live/silver/<t>/ ('K3: 49f-live is not a tier (V7)') while blackdiamond/49financial/silver/<t>/ grades CONFORMANT; four LOOKUP ALIAS rows (ca679b6560) admit the catalog literals until this is answered, and the answer retires or keeps them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "4.0.0_SA_CRO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN python -c \"import opal_naming as on; on.grade('blackdiamond/49f-live/silver/unrealized/','S3Key')\" at box/sitez ~17:3xZ: RaiseDefect 'K3: 49f-live is not a tier (V7)'. Control: on.grade('blackdiamond/49financial/silver/unrealized/','S3Key') returns ('CONFORMANT', 'blackdiamond/49financial/silver/unrealized/').",
+      "READ infra/aws/ec2/opal-gateway/app/client_adapter_bd49f.py:16: the live tables are addressed as the firm segment plus LIVE_SUFFIX, ctx.prefix(VENDOR, \"49f-live\", \"silver\", t); DATA_CATALOG.yaml:3372/3437/3503/3570 carry address: blackdiamond/49f-live/silver/<t>/ (CTO ruling @ed33f552ae: a lookup field; the prefix stays the true S3 path opal-data-bd/silver/<t>/).",
+      "RAN lib/opal_naming.py legacy_address('gateway-client-bdlive-unrealized-alias') after ca679b6560: returns s3://opal-data-bd/blackdiamond/49f-live/silver/unrealized/, a location no object is under (the physical prefix is s3://opal-data-bd/silver/unrealized/, row gateway-client-bdlive-unrealized). The builder cannot tell an alias row from a store row; only the row's evidence and note say so."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "XA-20261016T171531Z-7acd condition (iii): 4.0.0_SA_CRO~Z opens its own row on K3 (is 49f-live a legal segment?); its answer retires or keeps the alias rows. NAMING_SCHEMA key grammar: the segment after the source is a scope (or tier) the registry holds.",
+  "world_is": "'49f-live' fuses a firm scope (49financial's short form 49f) with a variant word (live, versus the legacy silver feed) in one segment. The registry holds no scope, tier or variant word for it, so every catalog literal carrying it raises. Route (2) admits the four strings whole through legacy_addresses.json; nothing else changed. The alias rows sit in a file whose builder emits S3 locations, and an alias resolves to a non-existent one.",
+  "notes": "Question for this seat (registry owner), not answered here. Candidate answers, none taken: (a) the logical address carries the canonical scope and the variant elsewhere (e.g. a live/legacy word the grammar already holds, or a source word), so the aliases retire once the catalog and adapter re-key (a reviewed-code change, OG-cl-2's owner); (b) the grammar gains a variant slot, which is NAMING_SCHEMA.json law across four boxes; (c) keep the aliases as the logical-address carrier and move them out of legacy_addresses.json into a lookup-alias carrier the builder never emits as S3. Whatever is ruled, the alias rows' INERT standing depends on nobody passing their keys to legacy_address(); a reader census of those four keys belongs with the answer."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T18:22:30Z",
+  "id": "NFRA_OPLGTW-Z-S305",
+  "one_line": "OG-ap-28 Phase B: arm e4 reads FALSE and ap28.AC2 FAILs (arms true 6 of 7): the position rows of the 49F Black Diamond and SmartX adapters carry weight_unit 'fraction' but currency null with currency_basis source_absent -- the order's 'currency set' cannot be met by either vendor; the other vendors were not exercised.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN W/ap28_arms.py on i-07dccb1615503ac99 through the installed code after the deploy (W/ap28_arms.json, ssm command in the record): e12 true, e5 true, e6 true, e8 true, e9 true, e10 true, e4 FALSE. On the 49F Black Diamond holdings answer (34 position rows) weight_unit is 'fraction' and currency is null with currency_basis 'source_absent' on every row; on a SmartX holdings answer (the ap-23 harness path) weight_unit is 'fraction' and currency is null with basis 'source_absent' on every row.",
+      "READ app/client_adapter_bd49f.py:44-47 (UNREALIZED_COLUMNS and TXN_COLUMNS name no currency column) and :143-147 (_currency_keys reads row['currency'], else null with source_absent); RAN a column-name probe on the live unrealized table: 0 columns with 'curr' or 'ccy' in the name. So for this vendor the answer cannot carry a currency until its source does.",
+      "READ the other adapters: schwab has no resolve source in the gateway (resolve_account raises no_resolve_source), orion's weight_unit is null by design (OG-en-4), commonwealth's weight_unit is null; bdcottonwood sets weight_unit 'fraction' but I did not exercise it (no account-discovery path written in this phase)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ap-28 step 5, arm e4: 'a client position answer for a vendor whose adapter carries a unit has weight_unit in {fraction, percent} and currency set (orion's unit stays null: use another vendor)'; AC2: arms true 7 of 7.",
+  "world_is": "weight_unit is set where a weight is computable; currency is null with currency_basis source_absent for the two vendors exercised, by the OG-en-4 design ('never a default: a row that names no currency is never reported as USD'). The arm as worded cannot be true for them. Not a deploy trigger (C6): health 200, 27 of 27 tools, 65 env keys, tools/list 103 before and after. I did not redeploy.",
+  "notes": "For the COO to rule: (1) re-word e4 to what the code promises (weight_unit set, currency a code OR null with a currency_basis naming why) and re-run AC2; or (2) name a vendor whose source carries a currency (cottonwood Black Diamond?) and have me exercise it; or (3) cut a code cell to request a currency column where one exists. The other six arms are true. The order stays pending until then."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-16T18:30:07Z",
+  "id": "NFRA_OPLGTW-Z-S306",
+  "one_line": "Correction to row Z-S305: arm e4 of OG-ap-28 is re-graded TRUE under the COO's A4 (msg 35177) on the counts already recorded; the earlier FALSE was correct against the first wording and was a wording defect, not a release defect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ order OG-ap-28 A4 and msg 35177: e4 is weight_unit in {fraction, percent}, currency_basis in {source, source_absent}, currency non-null iff the basis is source (OG-en-4's ruled spec: never assume USD).",
+      "RAN W/ap28_served_build.py on the recorded counts (no new host read): 49F Black Diamond weight_unit fraction, currency_basis source_absent, currency values all null; SmartX the same. CODE2_SERVED.json carries e4_regrade with the rule, the raw arm under the old wording (false) and the re-grade (true)."
+    ]
+  },
+  "spec_asserts": "Z-S305 (mine): arm e4 reads FALSE because currency is not set.",
+  "world_is": "The release behaves as OG-en-4 specified; the arm's first wording asked for a currency the spec says is null where the source has none.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The COO's A4 (msg 35177) corrected the arm's wording; the recorded counts satisfy it; nothing in the release changes.",
+  "notes": "A correction is a new row citing the old id. Z-S305 is left as written; this row supersedes it."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S307",
+  "one_line": "Round-38 disposition of Z-S292 after OG-ap-28 Phase B: The release bf9d23b518 (live since 17:57Z) routes the -live segment to the dedicated role gateway-49f-blackdiamond-live-",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S292"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/CODE2_SERVED.json (arm e12, arm_counts)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_OG-ap-28_20261016.md (condition), ap28.AC2 PASS by the issuer's run"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The release bf9d23b518 (live since 17:57Z) routes the -live segment to the dedicated role gateway-49f-blackdiamond-live-read-role (OG-en-12 + OG-ap-29). The CVO's closing condition is met by the served read: (a) a master_admin 49F call returned rows above 0 through that role for all four tools (rows 34, 2, 7, 2 from opal-data-bd, the newest flat dated file, dedicated role on all four); (b) a non-admin principal was refused with 0 S3 requests. The CVO's AC3 reading of the answers remains the CVO's.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The release bf9d23b518 (live since 17:57Z) routes the -live segment to the dedicated role gateway-49f-blackdiamond-live-read-role (OG-en-12 + OG-ap-29). The CVO's closing condition is met by the served read: (a) a master_admin 49F call returned rows above 0 through that role for all four tools (rows 34, 2, 7, 2 from opal-data-bd, the newest flat dated file, dedicated role on all four); (b) a non-admin principal was refused with 0 S3 requests. The CVO's AC3 reading of the answers remains the CVO's."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S308",
+  "one_line": "Round-38 disposition of Z-S293 after OG-ap-28 Phase B: OG-en-11 measured the four 49F BD tools answering no_catalog_row and reading nothing. With MX-c-26's four catalog rows (",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S293"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/CODE2_SERVED.json (arm e12)",
+      "MI msg 35178: the host serves the release catalog, visibility matrix equal"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "OG-en-11 measured the four 49F BD tools answering no_catalog_row and reading nothing. With MX-c-26's four catalog rows (blob b81c48aa3c) and OG-en-12's address resolution live in bf9d23b518, the same four tools read opal-data-bd and returned rows (34, 2, 7, 2) in the e12 arm, so the catalog gap is closed.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-en-11 measured the four 49F BD tools answering no_catalog_row and reading nothing. With MX-c-26's four catalog rows (blob b81c48aa3c) and OG-en-12's address resolution live in bf9d23b518, the same four tools read opal-data-bd and returned rows (34, 2, 7, 2) in the e12 arm, so the catalog gap is closed."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S309",
+  "one_line": "Round-38 disposition of Z-S301 after OG-ap-28 Phase B: Phase A's naming-gate refusal of the four catalog 49f-live literals was resolved by route (2): the CRO's four lookup-ali",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S301"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-ap-28.md (gate state)",
+      "CTO msg 35145, 35158"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "Phase A's naming-gate refusal of the four catalog 49f-live literals was resolved by route (2): the CRO's four lookup-alias rows (ca679b6560, XA-20261016T171531Z-7acd), carried byte-equal in the prelude. The release commit exited 0 with 0 REFUSE. The tier-grammar question (K3) is the CRO's row Z-S304 and is carried to the L10 slug.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Phase A's naming-gate refusal of the four catalog 49f-live literals was resolved by route (2): the CRO's four lookup-alias rows (ca679b6560, XA-20261016T171531Z-7acd), carried byte-equal in the prelude. The release commit exited 0 with 0 REFUSE. The tier-grammar question (K3) is the CRO's row Z-S304 and is carried to the L10 slug."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S310",
+  "one_line": "Round-38 disposition of Z-S303 after OG-ap-28 Phase B: The entry-file prelude was dropped (OG-ap-28 A3) and the registry-row route ruled by the CTO and the laptop CTO; the two",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S303"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/ap28_release.json",
+      "order OG-ap-28 amendment A3 (1a74cf39b7)"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The entry-file prelude was dropped (OG-ap-28 A3) and the registry-row route ruled by the CTO and the laptop CTO; the two registry files went in as the prelude 2dc919cf26, byte-equal to trunk 858e927558. The four entry files are not part of the release.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The entry-file prelude was dropped (OG-ap-28 A3) and the registry-row route ruled by the CTO and the laptop CTO; the two registry files went in as the prelude 2dc919cf26, byte-equal to trunk 858e927558. The four entry files are not part of the release."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T18:42:43Z",
+  "id": "NFRA_OPLGTW-Z-S311",
+  "one_line": "Round-38 disposition of Z-S305 after OG-ap-28 Phase B: The e4 arm's 'currency set' wording was the issuer's defect against OG-en-4's ruled spec (currency null with currency_ba",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S305"
+  ],
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-ap-28.round-38-batched-release.md (A4)",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/CODE2_SERVED.json"
+    ]
+  },
+  "spec_asserts": "Every BLOCKING or ARMED row of round 38 carries a disposition before the L10 slug (spine v3 L10).",
+  "world_is": "The e4 arm's 'currency set' wording was the issuer's defect against OG-en-4's ruled spec (currency null with currency_basis source_absent when the source carries none). Order amendment A4 (4102a9e8f1) corrected the definition; the applier re-graded on its recorded counts with no re-deploy (arm true, Z-S306); ap28.AC2 PASS 7 of 7 by the issuer's run.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The e4 arm's 'currency set' wording was the issuer's defect against OG-en-4's ruled spec (currency null with currency_basis source_absent when the source carries none). Order amendment A4 (4102a9e8f1) corrected the definition; the applier re-graded on its recorded counts with no re-deploy (arm true, Z-S306); ap28.AC2 PASS 7 of 7 by the issuer's run."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T19:01:10Z",
+  "id": "NFRA_OPLGTW-Z-S312",
+  "one_line": "OG-mg-1 Phase B (11:22Z) made the owner principals andrew@ and opalbloomberg@ restricted; C2 wrote their email_deny records; the email-only browser routes (/login, /sprint, /rivalfunds, /yearinreview) now refuse the owners themselves.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_BROWSER_DENY_LIST_CAUSE_20261016.md (live access-state table read, GetItem and Query only: active email_deny for andrew@, opalbloomberg@, alyssa@; profiles restricted, operator_audit 11:22:29Z and 11:22:55Z, Phase B GO msg 34954)",
+      "NFRA_OPLGTW_PRD.md C2: a principal made restricted also gets an email_deny record; app/server.py:206-229: a denied email is refused before anything else",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-mg-1.md and the COO half name the email_deny records for the rollback only; neither states that the owners lose the browser routes"
+    ]
+  },
+  "spec_asserts": "A restricted Schwab data-grant profile for an owner principal does not remove that owner's access to the Opal-internal browser pages.",
+  "world_is": "The email_deny record carries no scope, so the guard cannot tell restricted for Schwab data from denied the browser. Both owner principals are refused on four browser routes since 11:22Z (Andrew-direct ~18:5xZ noticed it through MC Portal). The defect is the issuer's: the OG-mg-1 ask and the COO half did not state the effect. Remedy is the CTO's ruling: (b) an audited operator act deactivating the two owner records now, then (a) a route-class guard; alyssa@ stays denied.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks NFRA_MCPORTAL MP-v-2 (a second account served /sprint, PRD A2)."
+}
+```

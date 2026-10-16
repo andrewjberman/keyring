@@ -2710,3 +2710,64 @@ The CTO's msg 9662: Andrew wants to smoke the template view in the Performance t
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~246`), cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected):** `checks/r149/p175_portal_template_mount.py` (DBP175-1-AC1..AC3).
+
+## 168. ROUND 149, WORKSTREAM FILLEDRD2 (2026-10-16 ~18:0xZ, issuer 2.0.0_SA_COO~D2): the hop-2 reader re-cut -- the join through the accounts
+
+Row `IRPT_DASHBD-D2-S128` (@`05be852c08`): measured against the real filled partition and the real directory, the reader drained in `DB-b-302` (client to `relationship_id` to sha256) matches 0 of 4,012 households. The measured join is through the accounts, minted: the table's `account.last4` rows carry raw custodial ids, the directory's `account_ids` are opaque ids, and the handler's own `ids.opaque_account` turns one into the other (6,616 of 6,616; 4,012 clients reach exactly one household, 764 none, none two). The partition holds 4.7 million rows (1,059 MB as plain Arrow strings, 269 MB dictionary-read), so the reader indexes it once per object version.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `read_filled_report_gold` joins through the accounts, indexes the partition once (cache keyed by the object's ETag), reads it dictionary-encoded; the relationship-id rule is gone; six `accounts` tests | DB-b-306 | FWD-10 (and the hop-2 gate of IB-pr-551) | WORLD | `DB-b-302`, `DB-b-305` merged | chain AB |
+| 2. The hop-2 publish pair packet to `0.7.0_AE_CloudOps~IB2` (49 Financial publish function: the bundle, the role's read of the filled prefix, switch OFF) with the build-only hash after this cell drains | NOT CUT: packet after item 1 | FWD-10 | WORLD | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the cell is a re-cut of the issuer's own specification, not a worker defect: the rule was the issuer's REC, sent to the CTO as unmeasured ("id-space match unmeasured until hop 1's first write") and the first measurement after the write reversed it; (b) the 49 Financial publish entry needs NO re-pin for this cell: its handler and publisher are `source_dir` files with no staged pin (worker 244's row W244-S1), so the next build reads the working tree, and only the calendar member is a pinned file; (c) the scale of a whole pass (a household composes in under 0.1 s, 4,012 households, the function's 300 s and 1,024 MB) is NOT settled by this cell: the switch-on pair is cut only when hops 2 to 4 are live and will size or shard the pass.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~247`), cap 8.
+
+**Checker (dry-run at the base before the cut; all three criteria FAIL as expected; run on a reference tree: green; four single-fault reader mutants and one diff mutant: red):** `checks/r149/p174_filled_reader_accounts.py` (DB174-1-AC1..AC3).
+
+## 169. ROUND 149, WORKSTREAM COTLANDAPPLY2 (2026-10-16 ~18:4xZ, issuer 2.0.0_SA_COO~D2): the apply of the signed Cottonwood landing pair, REVISION 2, to the one IRPT CloudOps lane
+
+The CTO signed revision 2 of the packet (sha256 `962ef131ff27`) at @f362eb8cb5: the first-row rule, the late-input allowance as a per-day table (844 `external_flow` and 798 `total_return_daily` rows on ten October days), all 3,325 history days read in Act 5, the writer count, no client sentence moved, IB2 as applier, Acts 2 to 4 outside 12:05Z to 12:45Z. This order replaces `DB-b-301` (superseded) and is addressed to `0.7.0_AE_CloudOps~IB2` under Andrew-direct rule 34.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. The apply: ledger first, build-only hash `+iYXakKx...`, a NEW bundle version over the key's unused current version, plan 0 add / 1 change / 0 destroy, ONE `safe-apply`, a 25-day dry run, four rewrite events over the 66 landed days, the whole-prefix after-read on all 3,325 history days | DB-b-308 | FWD-10 | WORLD | `DB-b-303`, `DB-b-304` merged and both halves of revision 2 SIGNED | chain AC |
+| 2. The Cottonwood publish pair (publisher 0.4.0 code update and republish) with its before-write flip count, naming the returns that move on the Performance tab beside the "Returns from" count | NOT CUT: packet after item 1 | FWD-10 | WORLD | item 1 | later |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the checker `p176` reads the allowance table from the issuer's offline-diff record in the repo, so the packet's table and the checker's ceilings are one source; (b) the record carries, per event, only the days that changed and by how many rows; the checker recomputes them against each day's OLDEST version in the versioned bucket, so the statement is a measurement; (c) `before` records both the key's current version (the unused upload) and the version the function runs, and the landed version must differ from both; (d) the PARTIAL set is the first-row rule (every account with a row in the floor-day silver partition), recomputed by the checker with the adapter's own `_key`.
+
+**fanout:** 1 of 1 chains for this cell (the CloudOps applier, not a worker subagent), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; self-test green with 51 red arms plus two head arms):** `checks/r149/p176_cot_landing_r2_apply.py` (DBC176-1-AC1, -2-AC1, -3-AC1).
+
+## 170. ROUND 149, WORKSTREAM PORTALGLOBAL (2026-10-16 ~19:1xZ, issuer 2.0.0_SA_COO~D2): the Performance tab after Andrew's 5174 smoke, on top of the DB-b-307 branch
+
+Andrew's smoke of `DB-b-307` @49381cb5 on port 5174: "I have not seen a change on this page in days." The CTO's measured cause (ruling `d22e05dd68`): at Global the page sends no `selected_tenant`, so every firm-bound served read is refused (Cottonwood and 49 Financial show nothing, Inflection shows the holdings-based path under the firm banner, the template renders nothing). Rulings: (1) Global resolves per client; (2) the firm-mismatch banner is removed and a non-global login is offered only its own firm; (3) the template never renders silent; (4) proof on three named clients; (5) a visuals cell, plan first. Andrew's later asks: Beginning value before Ending value, money as dollars with grouping (msg 9754); the export's print window prints the template (msg 9770). The page owner (`2.0.0_SA_COO~C2`) measured the write set at the branch head: R151_PERFORMANCE_TAB_WRITE_SET_AND_PANELS.md @9b04f830b2.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Rulings 1 to 3 (header selection carries the client's own firm; the banner removed; the template's worded states), Andrew's two asks (tile order; one `formatUsd`), the print window resolving its own template state, four test files; ONE branch | DB-b-309 | FWD-10 (and Andrew's smoke) | SERVED, client-facing | `DB-b-307` (this is its branch @1779d676) | chain AD |
+| 2. The read-only per-client trace (a direct invoke of the served reads with synthetic staff claims and `selected_tenant` = the client's firm, for the three named clients) by the one IRPT CloudOps lane, and the page owner's boolean trace of the published series | issuer order to `0.7.0_AE_CloudOps~IB2` after item 1 pushes | FWD-10 | WORLD (read only) | item 1 | after item 1 |
+| 3. The approval row (client-facing, for Andrew) and the report of the pushed head to the CTO, who serves it on 5174 | issuer act | Andrew's smoke | n/a | item 1 | after item 1 |
+| 4. The visuals panel list (the page owner's draft, with the per-firm data sources this seat adds) to the CTO, then a build cell | issuer and `~C2` | Andrew's point 4 | n/a | none | parallel |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the cell is assigned to the worker that holds the branch (`~246`), so there is one author on one branch; (b) the checker `p177` pins the branch name and descent from `1779d676`, the write set (the page owner's list plus the three export files `DB-b-307` already edited), the protected files, and a probe for the formatter and the template states; the Global read paths themselves are pinned by the cell's own tests, whose names the checker requires; (c) the checker of `DB-b-307` (`p175`) is not run for this cell: its probe expects the `none` state this cell replaces; (d) the browser walk at Global under a staff login is not a worker's act: the CTO serves the branch and Andrew smokes it, and the read-only trace is item 2; (e) the print window's template state is carried by the export's own target (client id and tenant), never by per-page-load memory.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~246`, resumed), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected):** `checks/r149/p177_portal_global_and_format.py` (DBP177-1-AC1..AC3).
+
+## 171. ROUND 149, WORKSTREAM FILLEDRD3 (2026-10-16 ~19:4xZ, issuer 2.0.0_SA_COO~D2): the hop-2 reader mints the account ids it composes
+
+The worker row `IRPT_DASHBD-D2-W247-S1` (on the drained `DB-b-306`, merge `0a1224e703`): the composed filled document carries the table's RAW custodial account id in three places (`household.accounts[].account_id`, the account-grain `by_row` keys, chart lines named by an account), where the directory and the summary builder carry the minted opaque id. The document is client-facing once the switch is on, so the reader mints with the handler's own `ids.opaque_account(firm, raw)` on the composed copy (the cached table keeps the raw ids). Asset-class keys and non-account lines are left as they are.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. `_filled_mint` helper and the reader's return through it; the seven reader tests that compared with the raw document now expect the minted form; at least four new `mint` tests | DB-b-310 | FWD-10 (hop 2) | WORLD floor (path), no apply | `DB-b-306` (merged) | chain AE |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the minting runs after `_filled_compose`, so `_filled_compose` and its direct tests keep raw ids and the cache is not touched; (b) the account order stays the raw sort order (the checker's expected document keeps it), so no re-sort; (c) only keys equal to the household's own raw account ids are minted, so a class key can never be changed; (d) the contract question the worker row raised (minted or raw in the document) is settled by the summary builder's form, which the document must match; this is the issuer's ruling inside its own decomposition and is reported to the CTO in the next batch.
+
+**fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~248`), cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected; selftest green on a reference tree and red on five handler mutants and one diff mutant):** `checks/r149/p178_filled_reader_mints_ids.py` (DB178-1-AC1..AC3). Base `923e562c61`.

@@ -8431,3 +8431,538 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Add to the Cottonwood plan's retire list with its consumer census (0 of 304 roles can read it). Its deletion is destructive and needs Andrew's confirmation at the moment it runs (CLAUDE.md Agent Autonomy); the retirement is a round-9 or later change under its own pair. Disarm: none (INERT)."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~88 (FB-p-5, the Cottonwood S60 addendum)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W88-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~88",
+  "surfaced_at": "2026-10-16T18:05:00Z",
+  "one_line": "The CRO census cited by row D1-S60 is tracked at HEAD but absent from the sparse worktree on disk (org/tier1_exec is not materialized); it was read from its commit with git show.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/P3_COTTONWOOD_BACKEND_CENSUS_AND_PORTFOLIO_GROUP_20261014.md@1b7cad0123 (git ls-tree --name-only HEAD lists the path at ab8081bfdd; ls of org/tier1_exec in worktree C:/dev/wk-firmbkts-r9-88 fails; git config core.sparseCheckout = true)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker reads the census its order cites from its own worktree at the cited path.",
+  "world_is": "The worktree is a sparse checkout that does not materialize org/tier1_exec; the file is tracked in the index at HEAD but absent on disk. git show 1b7cad0123:<path> returns the full census (18812 bytes; the Q-C table reads 0 of 304 roles).",
+  "notes": "No fix made here. The census figures were read from the commit and the 304 role figure was carried, not re-measured, as recorded in COTTONWOOD_PLAN_ADDENDUM_S60.json. Disarm: none (INERT)."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~88 (FB-p-5, the Cottonwood S60 addendum)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W88-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~88",
+  "surfaced_at": "2026-10-16T18:05:00Z",
+  "one_line": "The worker face of FB-p-5 asks the worker to flip the order's status to complete, but the task-order file is not in the order's write grant (<paths>), so the flip cannot be committed by this worker.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-p-5.cottonwood-s60-addendum.md@ab8081bfdd (worker face line 4 asks the status flip; <paths> lines 53-56 name only the deliverables folder and INVESTIGATION_v1.md)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Flip this order's status to complete in the same commit as the proof instance, when AC1 passes.",
+  "world_is": "AC1 passes (ADDENDUM: OK consumers=0 delete=andrew, rc=0), but the task-order file is outside the <paths> write grant, so the status flip is not committed by 0.9.0_WK_ADVI_FIRMBKTS~88. The proof instance is committed without the flip.",
+  "notes": "Left for the issuer to flip at merge, or for a grant to name the task-order file. No override taken. Disarm: none (INERT)."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~91 (FB-p-8, row triage group B)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W91-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~91",
+  "surfaced_at": "2026-10-16T18:20:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Triage group B: ADVI_FIRMBKTS-D1-C-S34 and D1-C-S37 have no investigation row in INVESTIGATION_v1.md; their rows sit in ADJUDICATION_v5.md, so the order's step-1 premise did not hold for those two ids.",
+  "spec_asserts": "TO-FB-p-8 section 1, step 1: read the investigation row of the same id in INVESTIGATION_v1.md for each id in the triage list.",
+  "world_is": "A quoted-id grep of INVESTIGATION_v1.md at worktree HEAD 4fb60ead6e finds 28 of the 30 listed ids; ADVI_FIRMBKTS-D1-C-S34 and ADVI_FIRMBKTS-D1-C-S37 are absent. Both are adjudication rows in adjudications/ADJUDICATION_v5.md (lines 257 and 362, filed by 3.0.0_SA_CVO), and their remediation rows in REMEDIATION_v5.md cite those adjudication rows as evidence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep of INVESTIGATION_v1.md for the quoted ids ADVI_FIRMBKTS-D1-C-S34 and ADVI_FIRMBKTS-D1-C-S37 at worktree HEAD 4fb60ead6e: 0 matches; the other 28 listed ids each match",
+      "Grep of ADJUDICATION_v5.md for the same two quoted ids at worktree HEAD 4fb60ead6e: line 257 (C-S34) and line 362 (C-S37)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only. The triage read each of the two rows from ADJUDICATION_v5.md and recorded its carrier (C-S21 for C-S34; TO-FB-h-5 for C-S37). No channel row was edited. Disarm: none (INERT)."
+}
+```
+
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~90 (TO-FB-p-7, the triage of REMEDIATION_v4 group A)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W90-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~90",
+  "surfaced_at": "2026-10-16T18:30:00Z",
+  "one_line": "The round-3 CTO analysis routes the three tool rows (D1-W16-S1, D1-W16-S3, D1-W22-S3) to their tools' owner channels as one row each; no such owner-channel row exists in the repository, so the carrier the remedy names is absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "ledger/ROUND_ANALYSIS.round3.md section 2, the paragraph on the three tool rows: W16-S1, W16-S3 and W22-S3 belong to the tools' owners; each goes to its owner's channel as one row.",
+  "world_is": "A search of every INVESTIGATION_v*.md and every .md under org/ for the tool names (comp-pipescript io, lambda_plane_consumers, opal_naming.py targets, E-series, under-reports) returns only ADVI_FIRMBKTS files (INVESTIGATION_v1.md, REMEDIATION_v4.md, ledger/ROUND_ANALYSIS.round3.md, PRODUCER_CENSUS.md of worker 16). No owner-channel row exists. At HEAD, comp-pipescript io D_04 --json reports writes 0 (the row recorded one printed write) and comp-pipescript io E_01 still returns Script not found. lib/opal_naming.py targets --help documents only --extra-target, and targets exits 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/ROUND_ANALYSIS.round3.md@4fb60ead6e (section 2, the tool rows paragraph)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/surprise-channel/investigations/INVESTIGATION_v1.md@4fb60ead6e (Grep over the investigations folder: no row names the tools' owners)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~90/TRIAGE_A.json (rows W16-S1, W16-S3, W22-S3 carried UNDETERMINED on this read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 1.0.0_SA_CTO~DELL1, to name the owner channel of comp-pipescript and of opal_naming.py targets and place the one row each, or to rule the rows carried in this channel. The triage of FB-p-7 carries the three rows UNDETERMINED until a carrier exists. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W90-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~90",
+  "surfaced_at": "2026-10-16T18:30:00Z",
+  "one_line": "The round-9 worker face of TO-FB-p-7 repeats the mechanism of D1-W16-S4 and D1-W17-S4: it orders the worker to flip the order's <status> to complete while the order file is outside the cell's <paths> write grant, so the worker cannot commit that flip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Open remedies D1-W16-S4 and D1-W17-S4: the round cut either names the order file in the worker's <paths> for the flip, or states that the issuer flips it; the round orders carry it.",
+  "world_is": "TO-FB-p-7 line 4 orders the worker to flip <status> to complete in the same commit as its proof instance. Its <paths> (lines 53-56) name the deliverables folder and the investigation file only. The same shape holds in TO-FB-f-8 (its face lines 67, 107, 169 and <paths> without the order file) and TO-FB-f-9 (face line 62). The face states no issuer-flips clause. The worker does not edit the order file: it is outside the grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-p-7.row-triage-a.md@4fb60ead6e (lines 4 and 53-56)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-8.act1-deploy-advtenant.md@4fb60ead6e (lines 67, 107, 169 and its <paths>)",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-f-9.act2-producers-repoint.md@4fb60ead6e (line 62 and its <paths>)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: the issuer 2.0.0_SA_COO~B1, for the round-9 issuance: either the face names the order file in <paths> for the flip, or the face states that the issuer flips it (as FB-f-7 AMENDMENT 1 item 4 states for that order). Recurrence of the mechanism, filed as a new row because the open rows D1-W16-S4 and D1-W17-S4 cannot be edited here. Disarm: none (INERT)."
+}
+```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~85 (FB-p-1, door6 consumer census, round 9)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-W85-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~85",
+  "surfaced_at": "2026-10-16T18:20:00Z",
+  "one_line": "The writer of gold/meta/pipeline-complete.json is not in the paths the FB-p-1 search names: comp-find over infra/, lib/, integrations/ and .tools/ finds no writer; the writer is data/inf/scripts/gold/orion-gold-dispatch.sh:1906.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/gold/orion-gold-dispatch.sh:1906 at c8ed695f93 (worktree wk-ADVI_FIRMBKTS-85): aws s3 cp - s3://INF_S3_BUCKET/gold/meta/pipeline-complete.json, guarded at :1894-1902 by MODE chain, TARGET full, DRY_RUN 0, chain_exit 0",
+      "comp-find -i 'pipeline-complete' over infra/ (51 hits, 7905 files), lib/ (0 hits, 831 files), integrations/ (0 hits, 127 files), .tools/ (0 hits, 590 files): every infra hit is a reader, a mention or config; no writer"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FB-p-1 step 5 searches infra/, lib/, integrations/ and .tools/ for the key and expects the gold chain's tail writer to be found there.",
+  "world_is": "The only writer of the key in the repository is data/inf/scripts/gold/orion-gold-dispatch.sh, a path outside the searched set. The census record names it with file and line.",
+  "notes": "The census record (DOOR6_CENSUS.json, writer_determined true) carries the writer from data/. No disarm is needed; the retirement's writer-stop step should name this script and line. Disarm: none (INERT)."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~85 (FB-p-1, worker bar)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-W85-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~85",
+  "surfaced_at": "2026-10-16T18:20:00Z",
+  "one_line": "The surprise-row schema the worker bar names, org/surprise_channel/schemas/investigation_item.schema.json, is absent from this worktree, so the row shape was taken from the sibling rows of this file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of the worktree path org/surprise_channel/ at c8ed695f93 (wk-ADVI_FIRMBKTS-85): No such file or directory; the gate .tools/surprise-row-gate.py is present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker bar says each row is written per org/surprise_channel/schemas/investigation_item.schema.json.",
+  "world_is": "That schema path is not in the worktree this worker was cut from; the schema could not be read and the fields were copied from the existing rows of INVESTIGATION_v1.md.",
+  "notes": "The gate .tools/surprise-row-gate.py is the check at commit; its verdict on these two rows is the test of the shape. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-W85-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~85",
+  "surfaced_at": "2026-10-16T18:24:00Z",
+  "one_line": "The FB-p-1 order's worker face says to flip its <status> to complete in the proof commit, but the worker face carries no <status> element.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-p-1.door6-consumer-census.md lines 1-73 at 3a9b155680 (wk-ADVI_FIRMBKTS-85): line 4 says flip <status> to complete; a grep of lines 1-73 for status returns prose and JSON-field matches only (lines 4, 31, 33, 42, 46, 72), with no <status> element"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's flip step names a <status> element of the task order to change to complete in the same commit as the proof instance.",
+  "world_is": "The element is not in the worker face (lines 1-73); the worker did not read the record face below the boundary, so the flip was not performed and is left for the issuer or the drain.",
+  "notes": "The proof instance and the census record are committed; the order's status flip is the open step. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W92-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~92",
+  "surfaced_at": "2026-10-16T18:21:00Z",
+  "one_line": "The SCP read that remedy row ADVI_FIRMBKTS-D1-W65-S3 records as AccessDenied now answers AWSOrganizationsNotInUseException (not a member of an organization) when run from the worker worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "REMEDIATION_v6 row ADVI_FIRMBKTS-D1-W65-S3 (owner 1.0.0_SA_CTO~DELL1): organizations list-policies (SERVICE_CONTROL_POLICY) is AccessDenied to cloudops-dell1-agent-user, so any SCP that could deny events:PutEvents is unreadable from this identity.",
+  "world_is": "Read 2026-10-16 from C:/dev/wk-firmbkts-r9-92: aws organizations list-policies --filter SERVICE_CONTROL_POLICY returned rc 254 with AWSOrganizationsNotInUseException (Your account is not a member of an organization). The error is not AccessDenied. The identity the shim resolved was not read, so whether the account is outside the organization or the call resolves another identity is open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws organizations list-policies --filter SERVICE_CONTROL_POLICY (read-only), rc 254, stderr AWSOrganizationsNotInUseException, read 2026-10-16 from the worker worktree",
+      "triage record org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~92/TRIAGE_C.json@ac8d228957 (D1-W65-S3 carried to 1.0.0_SA_CTO~DELL1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only: the row premise and the live read differ. Routed by the triage carry to 1.0.0_SA_CTO~DELL1. No fix attempted; no identity was changed."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W92-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~92",
+  "surfaced_at": "2026-10-16T18:21:00Z",
+  "one_line": "The shared-advisor-router header comment says CANONICAL_PLATINUM_BUCKETS is EMPTY today, but the generated firm-config.mjs at HEAD lists opal-data-49financial.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The router header comment (shared-advisor-router index.mjs line 76) states the canonical list is EMPTY today; REMEDIATION_v3 D1-S7 relies on that list as the gate for the cutover.",
+  "world_is": "index.mjs line 76 still says the list is EMPTY today. firm-config.mjs lines 103-105, generated from the registry by the round-4 flip (commit 69679b90e3), list opal-data-49financial. The comment is stale against the generated file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/shared-advisor-router/index.mjs line 76 (comment) at worktree HEAD 4fb60ead6e",
+      "infra/aws/lambda-edge/_shared/firm-config.mjs lines 103-105 at worktree HEAD (generated header cites registry@8c8634a17f0a39f4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found while triaging D1-S7 (carried to 1.0.0_SA_CTO~DELL1). Whether the router as deployed reads the list at firm-config line 103 was not read. No fix attempted."
+}
+```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~87 (TO FB-p-4, round 9, plan entries 16 to 30; CTO analysis @bc6444b8e2)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W87-S1",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~87",
+    "surfaced_at": "2026-10-16T18:22:00Z",
+    "one_line": "FB-p-4 (round 9, plan entry 23): INF-FN-37 irpt-49f-reporting-read-lambda reads its 49financial key through a directory-bucket map that points at opal-data-bd, not at a 49financial bucket as the plan note and the serving row say.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration --function-name irpt-49f-reporting-read-lambda (read only, 2026-10-16 ~18:1xZ): environment IRPT_DIRECTORY_BUCKET_MAP has one entry, the 49financial key, pointing at opal-data-bd; IRPT_EVIDENCE_BUCKET points at opal-data-ycharts",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~77/PLANINV_INFLECTION_SERVING.json@ab8081bfdd (row INF-FN-37, consumer_note 'IRPT function; no legacy grant or map entry (new bucket only)')",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~87/PLAN_INFLECTION_NOMOVE_16_30.json@ab8081bfdd (entry n=23, verdict CONTRADICTED)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PLAN_INFLECTION.json open_questions entry 23 (deliverables ~81) says the function 'reads 49financial' and is NO-MOVE; the serving inventory row INF-FN-37 says 'new bucket only' with no map entry.",
+    "world_is": "The function's directory-bucket map sends the 49financial key to opal-data-bd, the Black Diamond bucket. It names no opal-data-inf, so the no-move verdict holds, but the description of its reads is wrong.",
+    "notes": "A plan correction for the issuer: the wording of entry 23 and the INF-FN-37 serving row. This worker changed nothing outside its record. Disarm: none (INERT)."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-D1-W87-S2",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~87",
+    "surfaced_at": "2026-10-16T18:22:00Z",
+    "one_line": "FB-p-4 (round 9, plan entry 23): INF-FN-38 irpt-holdings-refresh-lambda's bundle map sends three firm keys to three different buckets, not all three to opal-data-inflection as the plan note says.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration --function-name irpt-holdings-refresh-lambda (read only, 2026-10-16 ~18:1xZ): environment IRPT_HOLDINGS_BUNDLE_MAP has 3 entries: the 49financial key to opal-data-49financial, the cottonwood key to opal-data-cottonwood, the inflection key to opal-data-inflection; no opal-data-inf reference",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~77/PLANINV_INFLECTION_SERVING.json@ab8081bfdd (row INF-FN-38, consumer_note 'IRPT function; no legacy grant or map entry (new bucket only)')",
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~87/PLAN_INFLECTION_NOMOVE_16_30.json@ab8081bfdd (entry n=23, verdict CONTRADICTED)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PLAN_INFLECTION.json open_questions entry 23 (deliverables ~81) says the bundle map sends the 49financial, cottonwood and inflection keys to opal-data-inflection; the serving row INF-FN-38 says 'new bucket only'.",
+    "world_is": "The bundle map sends the 49financial key to opal-data-49financial, the cottonwood key to opal-data-cottonwood, and only the inflection key to opal-data-inflection. No entry names opal-data-inf, so the no-move verdict holds, but the mapping description is wrong.",
+    "notes": "A plan correction for the issuer: the wording of entry 23 and the INF-FN-38 serving row. This worker changed nothing outside its record. Disarm: none (INERT)."
+  }
+]
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~87 (TO FB-p-4, the status flip)
+
+```json
+[
+  {
+    "id": "ADVI_FIRMBKTS-D1-W87-S3",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~87",
+    "surfaced_at": "2026-10-16T18:30:00Z",
+    "one_line": "FB-p-4: the order asks for its status to flip to complete in the same commit as the proof instance, but the order file that carries the status is outside the lane's <paths> grant, so this worker did not flip it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-p-4.inflection-plan-nomove-notes.md@ab8081bfdd (worker face line 4 asks the flip; the <paths> block names only the deliverables folder and the channel file)",
+        "C:/dev/wk-firmbkts-r9-87 git rev-parse --abbrev-ref HEAD = wk-ADVI_FIRMBKTS-87; AC1 PASS recorded in the proof instance of this worker"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's worker face says to flip the order's status to complete in the same commit as the proof instance, only when AC1 passes; its <paths> grant names only the deliverables folder and the channel file.",
+    "world_is": "The status flip writes the order file, which the lane grant does not admit, so the flip cannot be made by this worker. AC1 passes and the proof instance is committed with the order's status left as it was.",
+    "notes": "Owner: the issuer 2.0.0_SA_COO~B1, to flip the status or widen the grant. The worker did not override the lane gate. Disarm: none (INERT)."
+  }
+]
+```
+
+## Rows filed by 0.9.0_WK_ADVI_FIRMBKTS~86 (FB-p-3, inflection plan questions Q1 to Q15)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W86-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~86",
+  "surfaced_at": "2026-10-16T18:23:04Z",
+  "one_line": "The plan's R5 says the Door 6 marker gold/meta/pipeline-complete.json has one consumer, inf-portal-publisher, through a bucket S3 notification entry; live, opal-data-inf carries no Lambda notification that targets inf-portal-publisher, and the marker's only EventBridge rule is mdpf-feeder-accelerator.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~81/PLAN_INFLECTION.md@31ff5a4067 section 3 row R5 and section 4 open question Q7 (the plan's claim, read as committed)",
+      "aws s3api get-bucket-notification-configuration on opal-data-inf, 2026-10-16: LambdaFunctionConfigurations 1 (inf-silver-aggregator, silver/_silver_complete/ and .json), EventBridgeConfiguration present; no Lambda entry names inf-portal-publisher",
+      "aws events list-rules, 156 rules listed: 1 rule whose EventPattern names the marker key (mdpf-feeder-accelerator, ENABLED); aws events list-targets-by-rule on it: 1 target (mdpf-feeder-trigger)",
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py@31ff5a4067 line 5 docstring still says the publisher is triggered by S3 ObjectCreated on the marker key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLAN_INFLECTION.md section 3 row R5 (and the publisher docstring) state that the marker's one consumer is inf-portal-publisher through its S3 bucket notification entry; section 2 counts 2 bucket notification entries on opal-data-inf.",
+  "world_is": "Live on 2026-10-16 the bucket notification names one Lambda entry (inf-silver-aggregator) plus an EventBridge configuration; no bucket notification reaches inf-portal-publisher. The marker's only EventBridge consumer is mdpf-feeder-accelerator, targeting mdpf-feeder-trigger. The consumer map that the M03 and M04 moves rest on is not the live one.",
+  "notes": "Recorded in the Q7 answer of PLAN_INFLECTION_Q01_15.json (0.9.0_WK_ADVI_FIRMBKTS~86, commit a6c41087f1). The plan rows to correct are R5 and the M03 and M04 consumer notes. Nothing is moved or disarmed here, and the marker delete stays Andrew's word (DEC-17). Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W86-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~86",
+  "surfaced_at": "2026-10-16T18:23:04Z",
+  "one_line": "The plan's live denominators have drifted since its 2026-10-14 read: the default scheduler group now lists 40 schedules (plan 33) and Lambda list-functions now returns 244 functions (plan 237); the 12-function portal-role count is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PLAN_INFLECTION.md@31ff5a4067 section 6 denominators: scheduler_default_group_schedules_live 33; lambda_functions_listed_live 237; iam and eventbridge figures unchanged where re-read",
+      "aws scheduler list-schedules --group-name default, 2026-10-16: 40 listed; aws scheduler get-schedule read on each of the 40",
+      "aws lambda list-functions, 2026-10-16: 244 listed; client-side role match on opal-portal-lambda-role: 12 (plan 12)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PLAN_INFLECTION.md section 6 gives the live denominators the moves were sized against: 33 default-group schedules and 237 listed Lambda functions.",
+  "world_is": "On 2026-10-16 the default group lists 40 schedules and the account lists 244 Lambda functions. Any move sized on the 33 and 237 counts needs a re-count before it is cut.",
+  "notes": "Not a move. The FB-p-3 answers carry the 2026-10-16 counts and say so. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W86-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~86",
+  "surfaced_at": "2026-10-16T18:23:04Z",
+  "one_line": "The FB-p-3 worker face says to flip the order's <status> to complete in the proof commit, but the face carries no <status> element, and the order file is outside this order's <paths>; the flip is not made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/task-orders/ADVI_FIRMBKTS.TO-FB-p-3.inflection-plan-questions.md@31ff5a4067 line 4 names the <status> flip; a head of the worker face (lines 1 to 67) holds no <status> element (grep returned no match)",
+      "the same file's section 3 <paths> lists the record folder and this channel file only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face's first line says to flip this order's <status> to complete in the same commit as the proof instance, only when AC1 passes.",
+  "world_is": "The order carries no <status> element to flip, and the order file is not in the write grant, so the flip cannot be made by this worker.",
+  "notes": "The proof instance is committed with AC1 as its verdict. The status flip is left to the issuer. Disarm: none (INERT)."
+}
+```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~89 (TO ADVI_FIRMBKTS.TO-FB-p-6, floor-day 23rd key: premise false, step 4)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:16:36Z",
+  "one_line": "FB-p-6 premise false: the 23rd named key inflection_wealth_management/top_holdings.json DID draw a version on 2026-10-16 (12:52:32Z, gold step INF_D_02b, before the publisher's 13:30Z run), so no KEY23 record is written (TO step 4); AC1 reads FAIL.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions --bucket opal-data-inf --prefix <each of the 23 keys from ACT3_BASELINE_VERSIONS.json>, run by 0.9.0_WK_ADVI_FIRMBKTS~89 on 2026-10-16 after 18:00Z: 23 of 23 rc=0, counted client-side on Key and LastModified; the 23rd key newest version MBHVZkmm4l.2TsHVoJjabw2dUNggRXT8 LastModified 2026-10-16T12:52:32Z IsLatest True Size 1787; all 23 keys have at least one version dated 2026-10-16",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ACT3_BASELINE_VERSIONS.json@ab8081bfdd: the 23rd key baseline VersionId ys6JKj05riUJlrqjXami_YVb7hqiRCgw last_modified 2026-10-15T12:52:33Z, recorded_at 2026-10-15T13:11:26Z (the baseline predates the floor day; the live latest is the newer MBHV version)",
+      "data/inf/scripts/gold/INF_D_02b.top_holdings.py@ab8081bfdd lines 333-361: under --upload the gold step writes platinum/advisors/{advisor_key}/top_holdings.json for every advisor key, empty documents included (lines 336-343 and 358-361)",
+      "infra/aws/lambda/inf-portal-advisor-publisher/lambda_function.py@ab8081bfdd lines 810-814 and 1200-1201: _build_top_holdings returns None on empty holdings and the advisor publisher writes top_holdings.json only when the result is not None",
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py@ab8081bfdd lines 877-882 and 1067-1069: the firm publisher writes the three snapshot keys; the 20 advisor keys fan out to the advisor publisher (comment at line 1029)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO ADVI_FIRMBKTS.TO-FB-p-6 (task-orders/ADVI_FIRMBKTS.TO-FB-p-6.floor-day-23rd-key.md, section 1 and step 1): the 23rd named key drew no new version on the 2026-10-16 floor day, so exactly one key has no version dated 2026-10-16 and its record KEY23.json can be written on that premise.",
+  "world_is": "The premise is false. All 23 named keys have at least one version dated 2026-10-16. The 23rd key, platinum/advisors/inflection_wealth_management/top_holdings.json, has a version dated 2026-10-16T12:52:32Z written by the gold step INF_D_02b before the publisher's 13:30:48Z run, and one version on each of 2026-10-12 to 2026-10-16. The publisher wrote no 2026-10-16 version of this key; the other 22 named keys each drew a publisher version at 13:30:48Z to 13:31:13Z.",
+  "notes": "Step 4 applied: no KEY23.json written (the order says do not force the record). Its writer claim holds: INF_D_02b writes the key daily under --upload, and the advisor publisher writes it only when _build_top_holdings is not None (lines 810-814 and 1200-1201). Its 'drew none' premise does not hold. Not read: why the advisor publisher skipped this key at 13:31 on 2026-10-16. Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:20:00Z",
+  "one_line": "The order names the worker row id form <CODE>-W<n>-S<k>; the row gate refuses a bare worker id on fabric dell1 and requires the coordinate, so ADVI_FIRMBKTS-W89-S1 was renamed to ADVI_FIRMBKTS-D1-W89-S1 before commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/surprise-row-gate.py as run by .tools/safe-commit.sh on 0.9.0_WK_ADVI_FIRMBKTS~89, 2026-10-16 ~18:20Z: BLOCKED on ADVI_FIRMBKTS-W89-S1 -- fabric='dell1' but the id carries no coordinate; a dell1 row is written <CODE>-D1-S<n> (worker <CODE>-D1-W<n>-S<k>); commit aborted, nothing staged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO ADVI_FIRMBKTS.TO-FB-p-6 section 5 and the worker face: a worker's surprise row is minted as <CODE>-W<n>-S<k>, with the allocator coordinate W<n> and no fabric coordinate.",
+  "world_is": "On fabric dell1 the commit-time row gate refuses a bare worker id and requires the fabric coordinate: <CODE>-D1-W<n>-S<k>.",
+  "notes": "Filed as ADVI_FIRMBKTS-D1-W89-S2 for the id-form difference; the row content of S1 is unchanged except its id. Disarm: none (INERT). Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:46:00Z",
+  "one_line": "S3 Select (aws s3api select-object-content) is refused on gold/canonical/holdings_2026-10-16.parquet with MethodNotAllowed, so the holdings count for FB-p-6 was taken from a GET into scratch and counted locally.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api select-object-content --bucket opal-data-inf --key gold/canonical/holdings_2026-10-16.parquet, three SQL variants run by 0.9.0_WK_ADVI_FIRMBKTS~89 on 2026-10-16 ~18:4xZ: each rc 254, 'MethodNotAllowed: The specified method is not allowed against this resource'",
+      "aws s3api get-object (read) of the same key into .scratch/k23/, 230808 bytes, rc 0; pyarrow row count of advisor_key: 12710 rows, 4 distinct values, 0 for the 23rd key's advisor"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO ADVI_FIRMBKTS.TO-FB-p-6 section 2 (bounds): read-only AWS reads through .tools/aws; the order names list-object-versions as the read and no other read method.",
+  "world_is": "The S3 Select read method is refused on this holdings parquet object (MethodNotAllowed), while a plain GET of the same object succeeds.",
+  "notes": "Disarm: none (INERT). The count used a GET into scratch, a read; no write verb was run. Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S4",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:46:00Z",
+  "one_line": "The holdings partition the advisor publisher read on 2026-10-16 (gold/canonical/holdings_2026-10-16.parquet) holds no rows for the 23rd key's advisor, so the publisher skipped that advisor's top_holdings.json while writing its book.json in the same run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-portal-advisor-publisher/lambda_function.py@ab8081bfdd lines 808-814 and 1171, 1200-1201: top_holdings.json is written only when _build_top_holdings over the holdings partition returns a non-None result",
+      "advisor publisher log 2026-10-16 13:30:50Z (Loading holdings: gold/canonical/holdings_2026-10-16.parquet) and 13:31:12Z (book.json 9291 bytes, summary.json 780 bytes, timeseries.json 165 bytes written for the advisor; no top_holdings line); holdings partition 12710 rows, 4 distinct advisor_key values, 0 rows for the advisor"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The advisor publisher writes each of its advisors' top_holdings.json from the canonical holdings partition (lambda_function.py 808-814 and 1200-1201); the TO's baseline records 19 advisor files written by the publisher and 1 (the 23rd key) not written by it.",
+  "world_is": "On 2026-10-16 the holdings partition the publisher read has 0 of 12710 rows for the 23rd key's advisor, while the same run wrote that advisor's book.json (9291 bytes); the partition's advisor_key carries 4 distinct values.",
+  "notes": "Why the partition carries no rows for this advisor was not read (the gold holdings builder is a separate writer). Disarm: none (INERT). Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1."
+}
+```
+
+## Row filed by 2.0.0_SA_COO~B1 (FB-p-2 preparation, the live read of inf-gold-trigger)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S61",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-16T19:25:30Z",
+  "one_line": "The Door 6 census and the CTO's step 1 say inf-gold-trigger reads the marker gold/meta/pipeline-complete.json as its already-done record; the DEPLOYED function (Active, modified 2026-07-16, 545 lines) has no reference to the marker and dedupes with a conditional-put lock, gold/dispatch-lock.json. The repo copy that does read it is a stale May version.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function --function-name inf-gold-trigger (read only, 2026-10-16 ~19:2xZ): State Active, LastModified 2026-07-16T13:05:07Z, one member lambda_function.py of 545 lines downloaded from Code.Location; a search of those 545 lines for pipeline-complete, pipeline_complete, gold/meta and COMPLETE_KEY returns 0 matches; the S3 keys it names are DISPATCH_LOCK_KEY gold/dispatch-lock.json (lines 24, 110, 118, 141, 153, 508).",
+      "infra/aws/lambda/inf-gold-trigger/lambda_function.py at HEAD is 163 lines, last changed c6500c3136 (2026-05-07), and its _check_idempotency (lines 31-43) reads COMPLETE_KEY; it is NOT the deployed code (the two differ).",
+      "s3://opal-data-inf/gold/meta/pipeline-complete.json, all 17 retained versions (2026-09-25 to 2026-10-16) carry the keys chain, completed_at, git_sha, instance_id, run_date and none carries snapshot_date or chain_date, so even the repo copy's check (snapshot_date or chain_date equals today) could not have matched.",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.9.0_WK_ADVI_FIRMBKTS~85/DOOR6_CENSUS.json (its not_read list says the 244 Lambda functions were matched by name only and their code was not scanned live) and org/missions/D8/ADVI/ADVI_FIRMBKTS/ledger/CTO_DECISION_DOOR6_RETIREMENT_ORDER_20261016.md section 1 (read at the repo copy)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "inf-gold-trigger skips a same-day dispatch by reading the marker's snapshot_date, so stopping the marker write would allow a second gold run the same day; therefore the retirement's step 1 moves that idempotency to its own record first (census consumer inf-gold-trigger; CTO decision text section 1 and step 1).",
+  "world_is": "The live inf-gold-trigger never reads the marker and the marker has never carried the field the repo copy compares, so stopping the marker write changes nothing for that function; its same-day protection is the dispatch lock. The census record's inf-gold-trigger consumer entry is wrong for the live account, and its live-reader coverage of the other 243 functions was repo-side only.",
+  "notes": "This seat holds FB-p-2 staged; the order's step 1 is built on the false premise and is not to be cut as ordered. To the CTO: drop step 1 or replace it with a live reader read; the decision is his. The deployed-versus-repo drift of inf-gold-trigger is a separate finding for the Lambda's owner (the repo copy is not what runs). Disarm: none (INERT); the cell is not running."
+}
+```

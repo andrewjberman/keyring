@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-16T16:57:57Z",
+ "written_at": "2026-10-16T18:37:45Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -6018,6 +6018,54 @@
     "to": "xadj",
     "ref": "XA-20261016T165007Z-ff09",
     "at": "2026-10-16T16:50:07Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261016T182557Z-4f7e",
+   "project": "MDPF_CANON",
+   "subject": "Which identity applies the orion/ ReadOnly trail selector (cloudops-dell1-agent-user is denied cloudtrail writes), before 06Z 2026-10-17?",
+   "asked_by": "2.0.0_SA_COO~D1",
+   "source": "org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/canon_r11_orion_trail/BLOCKED_NOTE.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-16T18:25:57Z",
+   "kind": "fork",
+   "context": "CTO msg 6957 ruled the step; the targeted plan is exactly 0 add 1 change 0 destroy; the apply is AccessDenied by DenyCloudTrailWrites on the dell1 CloudOps user (simulate: explicitDeny). Gates ADHOC.canon-r11-orion-reader-trail steps 1-3; the 06Z-16Z window of 2026-10-17 is lost if it is not live by 06Z. The FB-j-15 applier (lane ~FBL, 10-13) is the precedent.",
+   "rec": "Name the identity outside the Deny that applied FB-j-15 and have its seat apply the saved patch; otherwise drop the step and keep the E4 prefix and hours as the finding.",
+   "scope": {
+    "measured_at": "2026-10-16T18:25:57Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "portal/src/lib/cottonwoodTrend.ts overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/pages/ModelPortfolios.tsx overlaps the write set of IRPT_BCKEND placed on dell2 (portal)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-16T18:37:45Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/MDPF/MDPF_CANON/ledger/CTO_RULING_4F7E_ORION_READER_BY_ACCESS_LOGGING_20261016.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261016T182850Z-66b6"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261016T182850Z-66b6",
+    "at": "2026-10-16T18:28:50Z",
     "by": "1.0.0_SA_CTO~DELL1",
     "reason": null
    }

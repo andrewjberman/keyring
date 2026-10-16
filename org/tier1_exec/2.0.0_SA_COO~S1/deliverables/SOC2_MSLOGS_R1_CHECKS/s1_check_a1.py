@@ -32,10 +32,19 @@ SILVER = PFX + "silver/activity_events/date=2026-10-15/data.parquet"
 NOW = "2026-10-16T12:00:00Z"
 
 
+class FakeClientError(Exception):
+    """The shape botocore's ClientError carries: .response['Error']['Code']."""
+
+    def __init__(self, code):
+        super().__init__(code)
+        self.response = {"Error": {"Code": code}}
+
+
 class FakeS3:
-    def __init__(self):
+    def __init__(self, head_error=None):
         self.objs = {}
         self.puts = []
+        self.head_error = head_error
 
     def put_object(self, Bucket, Key, Body, **kw):
         self.puts.append(Key)
@@ -43,8 +52,10 @@ class FakeS3:
         return {}
 
     def head_object(self, Bucket, Key, **kw):
+        if self.head_error:
+            raise FakeClientError(self.head_error)
         if Key not in self.objs:
-            raise KeyError(Key)
+            raise FakeClientError("404")
         return {"ContentLength": len(self.objs[Key])}
 
     def get_object(self, Bucket, Key, **kw):
@@ -205,6 +216,20 @@ def bronze():
         bad.append("the stored bytes changed on a second write")
     if ok(call("collector", {"op": "put", "dataset": "bronze", "key": OLD, "body_b64": b64(body1)})) or OLD in s3.objs:
         bad.append("the frozen audit_events table accepted a write")
+    # fail closed: a head that fails for any reason but "not found" must not become a write (a 500, a 403, a timeout)
+    for code in ("500", "403", "SlowDown"):
+        broken = FakeS3(head_error=code)
+        rb = h.handle({"op": "put", "dataset": "bronze", "key": BRONZE, "body_b64": b64(body1)}, ctx("collector"), s3=broken, log=logs.append,
+                      silver_builder=builder, now=NOW)
+        if ok(rb) or BRONZE in broken.objs or broken.puts:
+            bad.append("a head_object failure %s let a bronze put through: %r" % (code, rb))
+    for code in ("404", "NoSuchKey", "NotFound"):
+        gone = FakeS3()
+        gone.head_error = code
+        rg = h.handle({"op": "put", "dataset": "bronze", "key": BRONZE, "body_b64": b64(body1)}, ctx("collector"), s3=gone, log=logs.append,
+                      silver_builder=builder, now=NOW)
+        if not ok(rg) or BRONZE not in gone.objs:
+            bad.append("a missing key (head code %s) was not written: %r" % (code, rg))
     # derive: audit_records of D and D+1, parsed records handed to the builder
     s3.objs[BRONZE2] = gz([{"Id": "next-day", "CreationTime": "2026-10-16T03:00:00Z"}])
     s3.objs[PFX + "bronze/audit_records/date=20261017/" + CID.replace("20261015", "20261017") + ".json.gz"] = gz([{"Id": "two-days-later"}])
@@ -247,11 +272,15 @@ def tf():
     t = open(ACCESS_TF, encoding="utf-8").read()
     bad = []
     role = re.search(r'resource\s+"aws_iam_role_policy"\s+"access".*?\n}\n', t, re.S)
-    if not role or "aws_lambda_function.collector.arn" not in role.group(0) or "lambda:InvokeFunction" not in role.group(0):
-        bad.append("the door role policy must allow lambda:InvokeFunction on aws_lambda_function.collector.arn alone")
+    # The door must NOT reference the collector RESOURCE: collector.tf's policy references the door's alias, so a reference back is a
+    # Terraform dependency cycle (the first release plan stopped on exactly that). It names the collector by local.collector_lambda_name.
+    if "aws_lambda_function.collector" in t:
+        bad.append("access.tf references aws_lambda_function.collector (a dependency cycle with collector.tf); use local.collector_lambda_name")
+    if not role or "function:${local.collector_lambda_name}" not in role.group(0) or "lambda:InvokeFunction" not in role.group(0):
+        bad.append("the door role policy must allow lambda:InvokeFunction on the arn ending function:${local.collector_lambda_name} alone")
     fn = re.search(r'resource\s+"aws_lambda_function"\s+"access".*?\n}\n', t, re.S)
-    if not fn or "COLLECTOR_FUNCTION" not in fn.group(0) or "aws_lambda_function.collector.function_name" not in fn.group(0):
-        bad.append("the door function must set COLLECTOR_FUNCTION from aws_lambda_function.collector.function_name")
+    if not fn or "COLLECTOR_FUNCTION" not in fn.group(0) or "COLLECTOR_FUNCTION = local.collector_lambda_name" not in fn.group(0):
+        bad.append("the door function must set COLLECTOR_FUNCTION = local.collector_lambda_name")
     if "TCKT" in t:
         bad.append("access.tf still mentions TCKT")
     deny = re.search(r"data_actions\s*=\s*\[(.*?)\]", t, re.S)

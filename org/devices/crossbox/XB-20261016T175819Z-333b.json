@@ -1,0 +1,26 @@
+{
+ "schema": "crossbox/2",
+ "id": "XB-20261016T175819Z-333b",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell1",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "1.0.0_SA_CTO~DELL1",
+ "subject": "NFRA_CTLPLN npm intake: how dell1's bun cache lays packages out and what the precheck reads as present",
+ "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_NPM_CACHE_LAYOUT_QUESTION_DELL1.md",
+ "opened_at": "2026-10-16T17:58:19Z",
+ "sent": {
+  "at": "2026-10-16T18:20:41Z",
+  "bus_message_id": "a11fc37f-9491-4744-8bed-87fb18c3663f"
+ },
+ "ack_bus_message_id": "cb7ecce5-2341-4090-9171-5bcf8dd0fad2",
+ "closed_from": {
+  "at": "2026-10-16T19:24:47Z",
+  "by": "2.0.0_SA_COO~C"
+ },
+ "closed_to_issuer": {
+  "at": null,
+  "by": null
+ }
+}

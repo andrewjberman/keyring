@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~2103</issued_to>
 <issued_by>2.0.0_SA_COO~F2</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -33,11 +33,11 @@ Your workspace worktree is `C:/dev/wk-irpt-dashbd-2103` (branch `wk-IRPT_DASHBD-
    - `TXN_STEP_TIMEOUT="${TXN_STEP_TIMEOUT:-1800}"` and a function `run_txn_step()` modelled on the Eclipse step runner: it runs the script under `timeout -k 60 "$TXN_STEP_TIMEOUT"`, records its result in `TXN_RESULTS`, and ALWAYS `return 0` (never non-zero, never `exit`).
    - The `--chain` case entry `txn) SCRIPT_IDS="$CHAIN_TXN"; CHAIN_LABEL="chain:txn" ;;` (the checker pins its exact shape), its line in `show_help`, and the word `txn` in the unknown-chain error's `(valid: ...)` list (the one changed line).
    - The TXN-BLOCK (comment line `TXN-BLOCK (best-effort, post-sentinel)`) AFTER the ECLIPSE-BLOCK and BEFORE the line `# Auto-shutdown: fires after all modes`: it runs only for `MODE=chain` with `TARGET` full or incremental and `DRY_RUN=0`, loops `for _txn_id in $CHAIN_TXN`, calls `run_txn_step`, writes a status marker `gold/irpt_txn/_meta/dispatch_txn_status.json` the way the Eclipse block writes its marker, and says in a comment that it does NOT affect chain_exit.
-2. **Tests** `data/inf/scripts/gold/tests/test_dispatch_txn_block.py`: at least 12 tests with names containing `catalog`, `chain`, `block`, `sentinel`, `shutdown`, `insertion`, `syntax` and `date`: the row exactly once and after INF_E_00; `CHAIN_TXN` set and in no other chain; the case entry and help line; the block's order (after the Eclipse block, before the auto-shutdown); the guard tokens; `run_txn_step` never returns non-zero; the diff against the pinned base is a pure insertion but for the error line; `bash -n` passes; the file is ASCII; `{date}` is on the row. Where a test needs the script's behaviour, extract the function text and run it under `bash` with a stub `timeout` on PATH; make no AWS call.
+2. **Tests** `data/inf/scripts/gold/tests/test_dispatch_txn_block.py`: at least 12 tests with names containing `catalog`, `chain`, `block`, `sentinel`, `shutdown`, `insertion`, `syntax` and `date`: the row exactly once and after INF_E_00; `CHAIN_TXN` set and in no other chain; the case entry and help line; the block's order (after the Eclipse block, before the auto-shutdown); the guard tokens; `run_txn_step` never returns non-zero; the diff against the pinned base is a pure insertion but for the error line; `bash -n` passes; every line the edit ADDS is ASCII (AMENDMENT 1: the pinned base holds 10 non-ASCII lines of its own, which stay; the test compares the added lines against the pinned base, never the whole file); `{date}` is on the row. Where a test needs the script's behaviour, extract the function text and run it under `bash` with a stub `timeout` on PATH; make no AWS call.
 3. **Mutant** (temporary, reverted): make `run_txn_step` end with `return $rc`: at least one test fails. Say which.
 
 <criterion id="DBF135-3-AC1" cell_refs="DB-f-2103" judgment="false"><invocation>python -I "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r135/p135_dispatch.py" . DBF135-3-AC1</invocation><expect>DBF135-3-AC1 PASS</expect></criterion>
-`DBF135-3-AC1` -- the dispatch edit in one verdict: the diff against the pinned base copy is a pure insertion but for the unknown-chain line gaining `txn`; the catalog row exactly once after INF_E_00; `CHAIN_TXN`; no other chain carries INF_G_01; `run_txn_step` and its timeout; the case entry and help line; the TXN-BLOCK between the ECLIPSE-BLOCK and the auto-shutdown with its guards and marker; `bash -n` passes; ASCII; at least 12 tests with the named words, and those plus the three existing dispatch-related test files pass. Base: FAIL.
+`DBF135-3-AC1` -- the dispatch edit in one verdict: the diff against the pinned base copy is a pure insertion but for the unknown-chain line gaining `txn`; the catalog row exactly once after INF_E_00; `CHAIN_TXN`; no other chain carries INF_G_01; `run_txn_step` and its timeout; the case entry and help line; the TXN-BLOCK between the ECLIPSE-BLOCK and the auto-shutdown with its guards and marker; `bash -n` passes; every added line ASCII; at least 12 tests with the named words, and those plus the three existing dispatch-related test files pass. Base: FAIL.
 
 <expected_criteria>DBF135-3-AC1</expected_criteria>
 

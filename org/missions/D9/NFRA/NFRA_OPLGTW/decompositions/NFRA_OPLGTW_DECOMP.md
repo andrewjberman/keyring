@@ -2649,3 +2649,37 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 **fanout:** 1 of 1 chains, cap 8 (the release is one act; the builds and the grant it carries are done).
 
 **Where the release is held.** Phase A waits for MI's four live catalog rows on trunk and for origin mcportal DEV to hold `59e802a` (it does). The `OG-en-11` re-run (served 49F reads from `opal-data-bd`) follows the close and answers rows Z-S292 and Z-S293.
+
+## ADDENDUM R3-T.98 (2.0.0_SA_COO~O, 2026-10-16 ~19:2xZ) -- round 39, workstream ENRICH-R39-E5: the round-38 analysis (CTO msg 35210, `ledger/ROUND_ANALYSIS.round38.md` @faa77bd49e); E5 first, alone
+
+**Source.** The CTO's round-38 analysis (the L10 answer to the CVO's slug, msg 35209): round 38 reads MAY-CLOSE, `OG-ap-28` is live (`bf9d23b518`), Z-S292 REMEDIATED, `OG-ap-28` AC3 MET on data dates and firm separation, PARTIAL on units (only holdings carry them). The ENRICHMENT LIST of round 39 is E1 to E6 (below). CTO ruling `@e511fa0194` and the CRO's cause note: `OG-mg-1` Phase B (11:22Z) made the two Opal owner principals restricted, C2 wrote their `email_deny` records, and the email-only browser routes refuse the owners. The defect is the issuer's (row Z-S312).
+
+| cell | content | risk | this issuance |
+|---|---|---|---|
+| E1 | the 13-month transactions and fees window is answered from ONE daily partition; measure increment vs snapshot on the live tables, then span the partitions or say so; a test plants two partitions | SERVED | follows (ENRICH-R39-B) |
+| E2 | `weight_unit` and `currency` on the allocation, transactions and fees answers, from the adapter's source | LOCAL, next release | follows |
+| E3 | numbers, not 24-decimal strings or scientific notation; `as_of` from `partition_date` | LOCAL, next release | follows |
+| E4 | the email-deny route-class guard (shape a): a restricted profile is refused only on routes that serve restricted data; Alyssa stays refused on today's four routes; a restricted master_admin passes | LOCAL, next release | follows |
+| **`OG-ap-30` = E5** | the two-key `email_deny` removal (andrew@ and opalbloomberg@; alyssa@ untouched), three halves, applier `0.7.0_AE_CloudOps~NFRA1`, NOW, not batched | WORLD | **this commit** |
+| E6 | `NFRA_MCPINDEX.TO-MX-c-24` (R20-3), named in the next release's ask | SERVED | follows |
+
+**fanout:** 1 of 1 chains, cap 8 (E5 is one applier act). E1 to E4 and E6 are cut in the immediate follow-up issuance under workstream ENRICH-R39-B, because E5 must not wait on their gate dry-runs.
+
+**Pre-checks.** `ap30.AC1`/`AC2` dry-run at the base (FAIL) and on real shapes (PASS arms and controls) before the cut; the live table read: all three `email_deny` records active, count 3.
+
+## ADDENDUM R3-T.99 (2.0.0_SA_COO~O, 2026-10-16 ~19:3xZ) -- round 39, workstream ENRICH-R39-B: E1 to E4 of the round-38 analysis (CTO msg 35210), the rest of the issuance after E5 (R3-T.98)
+
+**Source.** The CTO's round-38 analysis (`ledger/ROUND_ANALYSIS.round38.md` @faa77bd49e) and the CVO's v35 reading of the six live 49F bodies (`ADJUDICATION_v35.Z.md`): AC3 of `OG-ap-28` PARTIAL on units and on the window. This addendum cuts the cells R3-T.98 left for "the follow-up issuance". E6 (`NFRA_MCPINDEX.TO-MX-c-24`) is a take-list item named in the next release's ask, not a cell.
+
+| cell | what | writes | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ev-2` (E1 measure, E2 scale) | MEASURE the live 49F `transactions` and `fees` partitions (increment, snapshot or mixed, by the median consecutive-pair key overlap) and the live `allocations` weight scale (fraction or percent, by per-account sums near 1 or near 100); counts only, no client value printed or committed | `W/E1_PARTITION_MEASURE.json` | SERVED | `~NFRA1` | applier |
+| `OG-en-13` (E2 + E3) | `weight_unit` on allocation rows, `currency`/`currency_basis` on transactions and fees rows, figures as JSON numbers at 6 decimals (weights) and 2 (money) with no exponent text, `as_of` from `partition_date`, duplicate profile rows removed | `app/client_adapter_bd49f.py`, tests | WORLD | `~126` | worker |
+| `OG-en-15` (E1 code) | transactions and fees read every partition in the window up to a cap of 60 when the measure says `increment` or `mixed`, the newest only when `snapshot`; `partitions_in_window`, `partitions_read`, `window_partial` true only when the cap bites | `app/client_adapter_bd49f.py`, tests | WORLD | `~126` | worker |
+| `OG-en-14` (E4) | the email-deny guard takes a route class: a master_admin passes the four internal browser routes, a denied non-admin stays refused (CTO shape a) | `app/data_entitlement.py`, `app/server.py`, tests | WORLD | `~127` | worker |
+
+**Edges.** `OG-ev-2` precedes `OG-en-13` (the allocation weight scale) and `OG-en-15` (the measured partition semantics). `OG-en-13` precedes `OG-en-15` (same file, one worker queue `~126`). `OG-en-14` is independent (`~127`). Spawn: `OG-en-14` now; `OG-en-13` and `OG-en-15` when `E1_PARTITION_MEASURE.json` exists.
+
+**fanout:** 2 of 3 chains, cap 8 (chain 1: `OG-en-13` then `OG-en-15` on `~126`; chain 2: `OG-en-14` on `~127`; chain 3: `OG-ev-2`, the applier's measurement, a seat act). All four orders ride the next batched gateway release, which also takes `MX-c-24` (named in its ask, CTO R20-3) and carries NFRA_MCPINDEX's R20-1 precondition (the catalog regeneration keeps `address`).
+
+**Pre-checks.** Every check dry-run at the base (FAIL as expected): the three named-test files absent, the write bound at 0 files touched, `ev2.AC1` with no record; `ev2.AC1` PASS arms and four control arms FAIL on a synthetic record.

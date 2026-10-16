@@ -221,24 +221,111 @@ def _worker_orders(root: str, code: str):
     return orders
 
 
+def _serial_base(serial: str) -> str:
+    """The tilde-stripped base of a seat serial: '0.7.0_AE_CloudOps~Z' -> '0.7.0_AE_CloudOps'."""
+    return (serial or "").strip().split("~", 1)[0]
+
+
+def _order_author_is_executor(author: str, agent: str) -> bool:
+    """PURE. True iff the order file's last committer is the executor itself or ANY lane of the executor's base serial. An
+    executor that wrote its own order's <paths> last has granted itself, so such an order grants it nothing; a sibling lane
+    of the same base would be the same self-grant by another door."""
+    a = (author or "").strip()
+    return bool(a) and _serial_base(a) == _serial_base(agent) and _serial_base(agent) != ""
+
+
+def _executor_orders(root: str, agent: str):
+    """[(to_path, issued_to, entries)] for the NON-TERMINAL tree task orders at HEAD issued_to `agent` (a seat that is not a
+    spine-v3 worker, e.g. a CloudOps lane), across every project; None when git could not answer (the caller fails closed).
+    CRO~Z ruling REGISTRY_LANE_GAP_RULING_20261016 (CTO-endorsed, msg 35154): the order's <paths> is the executor's grant, as it
+    is the worker's. ONE NARROWING the ruling assumed rather than stated: an order whose last committer is the executor itself
+    (or a lane of its base) grants nothing -- the COO issues the grant, the executor cannot write it. Measured 2026-10-16: the
+    CloudOps lanes may commit to task-order files, so without this the grant is self-issuable in two commits."""
+    env = _root_git_env()
+    forms = []
+    for f in (agent.strip(), _normalize_serial(agent)):
+        if f and f not in forms:
+            forms.append(f)
+    argv = ["git", "grep", "-l", "-F"]
+    for f in forms:
+        argv += ["-e", "<issued_to>%s</issued_to>" % f]
+    argv += ["HEAD", "--", "org/missions/D*/*/*/task-orders/*.md"]
+    try:
+        g = subprocess.run(argv, cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace",
+                           timeout=60, env=env)
+    except Exception as exc:  # noqa: BLE001
+        print("WARN: executor-grant census raised %s -- admitting nothing" % exc, file=sys.stderr)
+        return None
+    if g.returncode == 1:
+        return []        # git grep: no match is rc 1, a genuine empty answer
+    if g.returncode != 0:
+        print("WARN: executor-grant census git grep rc=%d -- admitting nothing" % g.returncode, file=sys.stderr)
+        return None
+    agent_norm = _normalize_serial(agent)
+    orders = []
+    for line in g.stdout.splitlines():
+        p = line.strip().replace("\\", "/")
+        if p.startswith("HEAD:"):
+            p = p[5:]
+        if not p:
+            continue
+        try:
+            show = subprocess.run(["git", "show", "HEAD:%s" % p], cwd=root, capture_output=True, text=True,
+                                  encoding="utf-8", errors="replace", timeout=60, env=env)
+        except Exception as exc:  # noqa: BLE001
+            print("WARN: executor-grant census raised %s on %s -- admitting nothing" % (exc, p), file=sys.stderr)
+            return None
+        if show.returncode != 0:
+            continue
+        text = show.stdout
+        _sms = list(_TO_STATUS_RE.finditer(text))
+        sm = _sms[-1] if _sms else None
+        if sm and sm.group(1).lower() in _TERMINAL_TO_WORDS:
+            continue
+        im = _TO_ISSUED_TO_RE.search(text)
+        if not im or _normalize_serial(im.group(1).strip()) != agent_norm:
+            continue
+        # the author lookup walks history, so it runs ONLY for orders that survived every cheap filter above
+        try:
+            who = subprocess.run(["git", "log", "-1", "--format=%an", "HEAD", "--", p], cwd=root, capture_output=True,
+                                 text=True, encoding="utf-8", errors="replace", timeout=60, env=env)
+        except Exception as exc:  # noqa: BLE001
+            print("WARN: executor-grant census raised %s on %s -- admitting nothing" % (exc, p), file=sys.stderr)
+            return None
+        if who.returncode != 0:
+            continue
+        if _order_author_is_executor(who.stdout.strip(), agent):
+            continue
+        orders.append((p, im.group(1).strip(), _paths_block_entries(text)))
+    return orders
+
+
 def _owns_task_order_paths(agent: str, path: str, grant, root: str | None, cache: dict | None = None) -> bool:
-    """ADHC_OWNPTH.005. True iff `grant` is the registry's worker_grant stanza (source task-order-paths), `agent` matches its
-    serial_glob and parses as 0.9.0_WK_<CODE>~<n>, and a non-terminal task order under <CODE> at HEAD, issued_to that serial,
-    names `path` in its <paths> block. `cache` (per process) keeps the census to one read per project."""
+    """ADHC_OWNPTH.005. True iff `grant` is the registry's worker_grant stanza (source task-order-paths), `agent` matches one
+    of its serial_glob values (a string or a list), and a non-terminal task order at HEAD, issued_to that serial, names `path`
+    in its <paths> block. A spine-v3 worker 0.9.0_WK_<CODE>~<n> is censused in its own project <CODE>; any other serial the
+    stanza admits (a CloudOps executor) is censused across projects and loses any order it last committed itself
+    (_executor_orders). `cache` (per process) keeps the census to one read per project or per executor."""
     if not isinstance(grant, dict) or grant.get("source") != "task-order-paths" or not root:
         return False
-    glob_ = str(grant.get("serial_glob") or "")
-    if not glob_ or not (fnmatch.fnmatch(agent, glob_) or fnmatch.fnmatch(_normalize_serial(agent), glob_)):
+    raw = grant.get("serial_glob")
+    globs = [str(x) for x in raw] if isinstance(raw, (list, tuple)) else ([str(raw)] if raw else [])
+    globs = [x for x in globs if x]
+    if not globs or not any(fnmatch.fnmatch(agent, x) or fnmatch.fnmatch(_normalize_serial(agent), x) for x in globs):
         return False
-    m = _WORKER_SERIAL_RE.match(agent.strip())
-    if not m:
-        return False
-    code = m.group("code")
     if cache is None:
         cache = {}
-    if code not in cache:
-        cache[code] = _worker_orders(root, code)
-    orders = cache[code]
+    m = _WORKER_SERIAL_RE.match(agent.strip())
+    if m:
+        code = m.group("code")
+        if code not in cache:
+            cache[code] = _worker_orders(root, code)
+        orders = cache[code]
+    else:
+        key = "@exec:" + _normalize_serial(agent)
+        if key not in cache:
+            cache[key] = _executor_orders(root, agent)
+        orders = cache[key]
     if orders is None:
         return False
     agent_norm = _normalize_serial(agent)
@@ -551,6 +638,14 @@ def _self_test(yaml_path: str) -> int:
                ["org/modules/graph/cli.py", ".tools/tests/test_x_*.py", "docs/x/", "newtop/"])]
     cache = {"X_PRJ": orders}
     own = lambda agent, path, g=grant, c=cache: _owns_task_order_paths(agent, path, g, root, c)  # noqa: E731
+    # executor grant (CRO~Z ruling 2026-10-16): a non-worker seat the stanza admits, e.g. a CloudOps lane
+    grant2 = {"serial_glob": ["0.9.0_WK_*", "0.7.0_AE_CloudOps*"], "source": "task-order-paths"}
+    CZ = "0.7.0_AE_CloudOps~Z"
+    xorders = [("org/missions/D9/X/X_PRJ/task-orders/X_PRJ.TO-9.md", CZ, ["infra/logic/registry/", "newx/file.json"])]
+    xcache = {"@exec:" + _normalize_serial(CZ): xorders,
+              "@exec:" + _normalize_serial("0.7.0_AE_CloudOps~ZS"): [],
+              "@exec:" + _normalize_serial("0.7.0_AE_CloudOps~NFRA1"): []}
+    own_x = lambda agent, path, g=grant2, c=xcache: _owns_task_order_paths(agent, path, g, root, c)  # noqa: E731
     arms = [
         ("entries: exact path granted", lambda: _order_grants("org/modules/graph/cli.py", orders[0][2])),
         ("entries: glob granted; directory prefix granted", lambda: _order_grants(".tools/tests/test_x_battery.py", orders[0][2])
@@ -570,6 +665,27 @@ def _self_test(yaml_path: str) -> int:
         ("switch: no stanza -> nothing admitted; wrong source -> nothing admitted",
          lambda: not own(WK, "org/modules/graph/cli.py", None) and not own(WK, "org/modules/graph/cli.py", {"serial_glob": "0.9.0_WK_*", "source": "lanes"})),
         ("fail-closed: a census that could not run (None) admits nothing", lambda: not _owns_task_order_paths(WK, "org/modules/graph/cli.py", grant, root, {"X_PRJ": None})),
+        ("executor: CloudOps ~Z on a path its non-terminal order names (directory prefix, and an exact file) -> admitted",
+         lambda: own_x(CZ, "infra/logic/registry/legacy_addresses.json") and own_x(CZ, "newx/file.json")),
+        ("executor MUTANT: ~Z on a path its order does not name -> refused",
+         lambda: not own_x(CZ, "infra/logic/other/x.json") and not own_x(CZ, "newx/other.json")),
+        ("executor MUTANT: ANOTHER CloudOps lane (~ZS, ~NFRA1) on ~Z's order path -> refused",
+         lambda: not own_x("0.7.0_AE_CloudOps~ZS", "infra/logic/registry/legacy_addresses.json")
+         and not own_x("0.7.0_AE_CloudOps~NFRA1", "infra/logic/registry/legacy_addresses.json")),
+        ("executor MUTANT: a seat the stanza's globs do not admit (a COO, the base CloudOps-less serial) -> refused",
+         lambda: not own_x("2.0.0_SA_COO~O", "infra/logic/registry/legacy_addresses.json")
+         and not own_x("0.7.0_AE_Other~Z", "infra/logic/registry/legacy_addresses.json")),
+        ("switch: the OLD worker-only stanza (one glob) does not admit a CloudOps lane",
+         lambda: not own_x(CZ, "infra/logic/registry/legacy_addresses.json", grant)),
+        ("executor fail-closed: a census that could not run (None) admits nothing",
+         lambda: not own_x(CZ, "infra/logic/registry/legacy_addresses.json", grant2, {"@exec:" + _normalize_serial(CZ): None})),
+        ("self-grant guard: an order last committed by the executor, or by a lane of its base, is dropped; a COO author is not",
+         lambda: _order_author_is_executor("0.7.0_AE_CloudOps~Z", CZ) and _order_author_is_executor("0.7.0_AE_CloudOps~NFRA1", CZ)
+         and not _order_author_is_executor("2.0.0_SA_COO~O", CZ) and not _order_author_is_executor("", CZ)),
+        ("executor end to end: UNMAPPED path, check_agent admits ~Z where its order names it, refuses ~ZS and a COO",
+         lambda: check_agent(CZ, "newx/file.json", {}, {}, grant2, root, xcache)
+         and not check_agent("0.7.0_AE_CloudOps~ZS", "newx/file.json", {}, {}, grant2, root, xcache)
+         and not check_agent("2.0.0_SA_COO~O", "newx/file.json", {}, {}, grant2, root, xcache)),
         ("UNMAPPED path (no lane rule): worker ~2 whose order names it -> admitted by check_agent",
          lambda: check_agent(WK, "newtop/a.txt", {}, {}, grant, root, cache)),
         ("UNMAPPED path MUTANT: worker ~3 with no such order, and a seat serial -> both refused",

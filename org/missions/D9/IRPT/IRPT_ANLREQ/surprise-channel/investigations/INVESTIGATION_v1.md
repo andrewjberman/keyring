@@ -22332,3 +22332,316 @@
   "world_is": "The suggestion is an LLM output (the resident's Kimi check) and was present twice and absent once for the same symbols under the same code, so the selection rule picked on a nondeterministic output; and when the planned Yes button was absent the driver pressed nothing for 780 s with no screenshot after Submit, so what the form showed is NOT read. The CTO's ruling (msg 9684): window 4 plans only deterministic branches, treats the suggestion as opportunistic and never selects on it, and the driver falls through whichever prompt the door shows and screenshots each round."
 }
 ```
+
+## IRPT_ANLREQ-D2-W166-S1 -- The run-3 record and the cell name a loop wait that the driver code cannot produce; the 780 s wait with 0 presses means the prompt read saw nothing
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W166-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~166",
+  "surfaced_at": "2026-10-16T17:37:00Z",
+  "one_line": "The run-3 record infers that the loop waited for a planned Yes (ALPPL) that the door did not offer; the driver code throws UNPLANNED-PROMPT at once for that case, so the measured 780 s wait with 0 presses means the prompt read (visible() on [data-slot=analysis-filing-hint] p) returned no prompt text for the whole wait. AR-y-372's fall-through is reached only where that read sees the prompt; whether the rendered finding with no suggestion is that element is NOT READ.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AR-y-372 cell context (order file, worker face): the driver reads a prompt from [data-slot=\"analysis-filing-hint\"] p text and planPrompt returns ok:false, so the loop throws, for a planned yes where the form offers no Yes; the fall-through and the diagnostics are the remedy for a prompt the form shows.",
+  "world_is": "RUN3_OUTCOME_20261016.md sections 1 and 3 (MEASURED): 0 of 3 pressed; the wait ended at 780 s (17:04:01Z) with ticket_id null, while the door had resolved ALPPL, APPL and ZQXWVK as TICKER_NOT_FOUND with the suggestion ABSENT from 16:53:41Z. In fwd1_driver.mjs at e96b60c3dc, answerAfterSubmit (lines 238 to 291) throws UNPLANNED-PROMPT at once for a visible prompt the plan cannot press, so the run did not reach a press or a throw: visible() returned no prompt text (or only NO_CHOICE_LINE) for the 780 s. The record's INFERRED mechanism (the loop waits for ALPPL Yes and does not skip) is contradicted by that code. The AQ2 step log that would show the line (org/tier2_senior/0.7.0_AE_CloudOps~AQ2/deliverables/irpt_anlreq_fwd1_r3/run/step_log.txt) is not in this worktree and was not read.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/fwd1run/RUN3_OUTCOME_20261016.md@e96b60c3dc (sections 1, 2 and 3: 0 of 3 pressed, 780 s, findings with suggestion ABSENT)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs@e96b60c3dc lines 217 to 226 (planPrompt returns ok:false for a yes the form does not offer) and 261 to 264 (the loop throws UNPLANNED-PROMPT)",
+      "worktree C:/dev/wk-irpt-anlreq-166 (branch wk-IRPT_ANLREQ-166): the same lines, unchanged before AR-y-372; the step log is absent from this worktree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W166-S2 -- AR-y-372 reads "at most 16 files in all" as the diagnostic PNGs only; the run own screenshots are not counted
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W166-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~166",
+  "surfaced_at": "2026-10-16T17:37:00Z",
+  "one_line": "The cell's 'at most 16 files in all' is read as the reading-only diagnostic PNGs (form-r and wait files), capped at DIAG_SHOTS_MAX 16; the run's own screenshots (signed-in, before-submit, one per poll) are unchanged and not counted, because a 20-minute poll run already writes more than 16 of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-372 step 2: write a PNG form-r<round>-<n>.png / wait-<nn>.png into the run output folder (at most 16 files in all).",
+  "world_is": "run() at e96b60c3dc writes signed-in and before-submit, and one poll-<n> per minute up to --poll-minutes (at most 60), into the run output folder through shot(); a literal 'in all' over the folder would cap those too, which the cell does not state for the signed screenshots. The reading applied is the diagnostic files only, and it is stated in the record FALL_THROUGH.json.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs@e96b60c3dc run() shot() and the poll loop (lines 325 to 331 and 404 to 417)",
+      "worktree C:/dev/wk-irpt-anlreq-166: DIAG_SHOTS_MAX = 16 counts only the diagnostic writes in answerAfterSubmit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W167-S1 -- the worktree is a sparse checkout with no infra/ directory on disk, so the ticket reader the cell cites was read from the HEAD blob
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~167",
+  "surfaced_at": "2026-10-16T17:40:14Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W167-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell names infra/aws/lambda/ticket_center/lambda_function.py lines 395 to 440 as a read; this worktree has no infra/ directory on disk, so those lines were read from the HEAD blob with git show, and the schema under org/surprise_channel/schemas/ was read the same way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-167 `git config --get core.sparseCheckout` prints true (read at HEAD 35cccb7516)",
+      "C:/dev/wk-irpt-anlreq-167 `ls infra/aws/lambda/` reports No such file or directory; `git ls-files` lists infra/aws/lambda/ticket_center/lambda_function.py (blob 501c46097813)",
+      "`git show HEAD:infra/aws/lambda/ticket_center/lambda_function.py` lines 392 to 441 read at 35cccb7516: def _profile_scope, the malformed and not-configured refusals, the list-of-non-empty-strings rule"
+    ]
+  },
+  "spec_asserts": "The worktree carries the paths the order names, and the reader of the firm scope is readable on disk at infra/aws/lambda/ticket_center/lambda_function.py lines about 395 to 440 for the read the cell cites.",
+  "world_is": "core.sparseCheckout is true in this worktree and infra/ is not materialized: the lambda file and org/surprise_channel/schemas/ are tracked in the index but absent from disk. The order's grant paths (org/ and .tools/ and the one helper file) are on disk, so the cell's edit and the checkers were unaffected; the reader's text was taken from git show at HEAD and not from a file in the worktree."
+}
+```
+
+## IRPT_ANLREQ-D2-W271-S1 -- AR-tz-69: the required scope line broke two existing exact-match stdout assertions, which I relaxed to the first line
+
+```json
+[
+{
+  "id": "IRPT_ANLREQ-D2-W271-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~271",
+  "surfaced_at": "2026-10-16T17:58:06Z",
+  "one_line": "AR-tz-69 makes the green mint print a second line, MINT-SCOPE allowedFirmIds=<ids> entitlement_rows=0, but two existing tests (test_cross_firm_mint_two_emails_give_two_keys and test_cross_firm_mint_readback_ok_when_shape_matches) asserted the whole green stdout as the exact string MINT-OK READBACK-OK. I changed only those two assertions to check the first line; their expected READBACK-OK text is unchanged and no other existing test was touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-tz-69 says keep every existing test green, and the worker face names only the fake's query and cmd_remove as untouchable. The order does not name the two exact-match assertions it would break.",
+  "world_is": "test_cross_firm_mint.py:75 and :145 at base f3e0d5b8d1 compared out.strip() to MINT-OK READBACK-OK. With the scope line printed on green, that whole-stdout comparison is false, so both now compare splitlines()[0]. cmd_remove and FakeDDB.query are unchanged. Worktree pytest: 25 passed. A grep of the ~219 deliverables folder finds no reader of the green stdout outside the test file; a reader elsewhere in the repo was not checked.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~219/fwd5_driver/test_cross_firm_mint.py:75 and :145 @f3e0d5b8d1 (base; the exact-match asserts)",
+      "same file, worktree branch wk-IRPT_ANLREQ-271-portal: lines 75 and 145 now compare splitlines()[0]; the scope tests start near line 205"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
+
+## IRPT_ANLREQ-D2-S152 -- disposition of W271-S1: the mint's green stdout is now two lines, and two exact-match asserts read the first line
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S152",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T18:53:38Z",
+  "one_line": "Disposes of IRPT_ANLREQ-D2-W271-S1 (INERT): after AR-tz-69 the green mint prints MINT-OK READBACK-OK and then MINT-SCOPE allowedFirmIds=.. entitlement_rows=0; the two existing tests that compared the whole stdout now compare the first line, expected text unchanged. Ruled ACCEPTED by the issuer: a direct consequence of the order's own required output; merged 59b330f528.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order said keep every existing test green and named only the fake's query and cmd_remove as untouchable; the required second stdout line made two whole-stdout comparisons false, so the order's two demands collide on those two asserts.",
+  "world_is": "Measured on the merged tree at 59b330f528: test_cross_firm_mint.py reads R46-TESTS-OK passed=25 (base had 15 defined); the worker's proof instance reads VALID; the two relaxed asserts keep the READBACK-OK text and no assertion was removed. Printed lines under the module fake: green MINT-OK READBACK-OK plus MINT-SCOPE allowedFirmIds=firm-a,firm-c entitlement_rows=0; two non-PROFILE rows give MINT-OK READBACK-BAD entitlement, rc 1; a query error gives MINT-OK READBACK-BAD query <type>, rc 1. NOT done: the helper has never run against the real users table; the live run is a WORLD act by the IRPT CloudOps lane under a pair (draft R58_FWD5_LIVE_EXERCISE_PACKET_DRAFT_20261016.md). A reader of the green stdout elsewhere in the repo was grepped for only in the helper's folder by the worker; the only consumer named in the packet is the applier reading the line by eye.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~219/fwd5_driver/fwd5_mint.py (merged 59b330f528)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~219/fwd5_driver/test_cross_firm_mint.py (merged 59b330f528)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W168-S1 -- the 16-file screenshot bound can be spent before a resubmit, and the cell does not say what the driver does then
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~168",
+  "surfaced_at": "2026-10-16T18:24:10Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W168-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "AR-y-374 takes each resubmit's screenshot from the same 16-file bound as the wait and press-round shots, and does not say what happens when that bound is spent before a resubmit; the amended driver stops with RESUBMIT-BUDGET and clicks nothing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree C:/dev/wk-irpt-anlreq-168, fwd1_driver.mjs (uncommitted at 2026-10-16T18:24Z, base 00949e10d4): DIAG_SHOTS_MAX = 16 at line 60; the RESUBMIT-BUDGET throw at line 365 is the only path that refuses a resubmit for the bound",
+      "the same file: diagShot (the wait shot each WAIT_SHOT_MS and the shot after each press round) and reserveShot (the resubmit shot) both add to the one counter diagN",
+      "node fwd1_driver.mjs --selftest prints SELFTEST-OK 103 cases; the case 'the 16-file bound spent before a resubmit stops the run with RESUBMIT-BUDGET and no click' passes"
+    ]
+  },
+  "spec_asserts": "AR-y-374 cell, item 2: take a screenshot, then click the same Submit button once more; resubmit screenshots count in the 16. The order names no rule for a resubmit that finds the 16-file bound already spent.",
+  "world_is": "The wait shots (one per 60 s with no prompt visible) and the press-round shots can use all 16 files before the first resubmit. The amended driver then throws RESUBMIT-BUDGET and clicks nothing, rather than clicking without the screenshot the cell requires. The selftest pins that choice; the order does not decide it, and the CVO may prefer another reading."
+}
+```
+
+## IRPT_ANLREQ-D2-W168-S2 -- the TO states the re-click for the driver in general, but the cell places it in answerAfterSubmit, which runs only with --decisions
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~168",
+  "surfaced_at": "2026-10-16T18:24:10Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W168-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The TO title and WORKER FACE describe the re-click for the FWD-1 driver as a whole; the cell puts it in answerAfterSubmit, which is called only behind if (o.decisions), so a run without --decisions never re-clicks.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree C:/dev/wk-irpt-anlreq-168, fwd1_driver.mjs: the one call of answerAfterSubmit is at line 516, directly behind if (o.decisions) { at line 515",
+      "the same file: the selftest source-order check that the one loop call sits behind if (o.decisions) passes (SELFTEST-OK 103 cases)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-374.fwd1-driver-resubmit-on-still-checking.md: the title line and WORKER FACE item 2 (the loop in answerAfterSubmit)"
+    ]
+  },
+  "spec_asserts": "TO AR-y-374 title: the FWD-1 driver, when the Ticket Center form shows its still-being-checked sentence and no prompt, waits 60 s and clicks the same Submit button again, at most 4 times. Cell item 2 places the re-click in answerAfterSubmit.",
+  "world_is": "answerAfterSubmit is the only reader of the form after the Submit click, and it runs only with --decisions. A run without --decisions waits the 240 s ticket bound and never re-clicks. The amended driver keeps that path as signed and adds no action there. Whether that path should re-click is not stated by the order and is not changed here."
+}
+```
+
+## IRPT_ANLREQ-D2-W270-S5 -- The commit gate's client-data check printed WARN and did not run on commit 2b2bce7deb: the hashed account-id list is absent on this device
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W270-S5",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~270",
+    "surfaced_at": "2026-10-16T19:01:54Z",
+    "one_line": "The commit gate's client-data check printed WARN and did not run on commit 2b2bce7deb: the hashed account-id list is absent on this device",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order commits the code and tests through .tools/safe-commit.sh and treats a commit that passes the gates it runs as checked.",
+    "world_is": "safe-commit.sh printed WARN: client-data-check: hashed account-id list ABSENT at C:/Users/Test/.opal/account_id_hashes.txt -- this commit was NOT checked for client account ids. The commit landed as 2b2bce7deb. A listing of C:/Users/Test/.opal/ run at filing shows only _set_aside_20261011/. The staged diff is one product file and one test file written in this session.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/dev/wk-irpt-anlreq-270 commit 2b2bce7deb: safe-commit.sh output, client-data-check WARN line",
+        "listing of C:/Users/Test/.opal/ at filing lists only _set_aside_20261011/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W270-S6 -- The risk-reflex HOLD on resident_worker.py cites a deploy record that the sparse worktree does not hold on disk; the record is readable only from the HEAD blob
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W270-S6",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~270",
+    "surfaced_at": "2026-10-16T19:01:54Z",
+    "one_line": "The risk-reflex HOLD on resident_worker.py cites a deploy record that the sparse worktree does not hold on disk; the record is readable only from the HEAD blob",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order grants paths in this worktree and says to read them there.",
+    "world_is": "The pre-commit risk-reflex printed HOLD on resident_worker.py and cited org/critical_paths/change_management/20260927T0551Z_irpt-resident-waf-refresh-20260927_deploy_completion.md:4. That record is tracked at HEAD and its Status is CLOSED (nothing stranded, closed 20260927T055524Z). It is not on disk in C:/dev/wk-irpt-anlreq-270 because core.sparseCheckout is true; it was read with git show HEAD:<path>. The commit went through. This order deploys nothing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git config --get core.sparseCheckout prints true in C:/dev/wk-irpt-anlreq-270",
+        "git show HEAD:org/critical_paths/change_management/20260927T0551Z_irpt-resident-waf-refresh-20260927_deploy_completion.md (Status: CLOSED, line 2)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W269-S1 -- the commit gate could not run its client account-id check on this device: the hashed id list is absent, so the commit printed WARN and was not checked
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~269",
+  "surfaced_at": "2026-10-16T19:03:45Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W269-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The commit gate's client-data-check printed WARN because the hashed account-id list is not at C:\\Users\\Test\\.opal\\account_id_hashes.txt on this device, so commit 8116e45eb8 (AR-g-142 code and tests) was not checked for client account ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output for commit 8116e45eb8 on branch wk-IRPT_ANLREQ-269 (5 files): 'WARN: client-data-check: hashed account-id list ABSENT at C:\\Users\\Test\\.opal\\account_id_hashes.txt -- this commit was NOT checked for client account ids'",
+      "the same commit output: the commit gate, naming gate, to-pipeline gate and surprise-row gate all passed; the account id 2200001 in the new test file already appears in ycharts/session/tests/test_resident_session.py at 9d765b4c8c"
+    ]
+  },
+  "spec_asserts": "The order commits through safe-commit.sh, whose gates include a client account-id check that runs on every commit, so a commit of the session tests is checked for client account ids before it lands.",
+  "world_is": "On this device the hashed account-id list (OPAL_ACCOUNT_ID_HASHES or the default path) is absent, so the check printed WARN and passed the commit unchecked. The worker did not place or create the list; no account id was added by this order beyond the fixture id that the sibling tests already carry."
+}
+```
+
+## IRPT_ANLREQ-D2-W268-S1 -- the pinned overview map's source is absent from this sparse worktree, so its ticker template was readable only at HEAD
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~268",
+  "surfaced_at": "2026-10-16T17:50:49Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W268-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The worktree's sparse checkout omits org/missions/D9/IRPT/IRPT_YCDGEN, so the pinned overview map (the holdings and id template of the Opal producer) is absent from the worktree though HEAD holds it; the scope record cites no line of it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config core.sparseCheckout = true and git sparse-checkout list in C:/dev/wk-irpt-anlreq-268 (IRPT: only org/missions/D9/IRPT/IRPT_ANLREQ/ is listed)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json: git ls-files -s lists it (100644 da312a9b...) and git cat-file -e HEAD: succeeds; ls reports no such directory in the worktree",
+      "infra/aws/lambda/investor-reporting/reports/build_resident_package.py:45 names it as OPAL_MAP_SRC (read at cb45dec9ff)"
+    ]
+  },
+  "spec_asserts": "The cell reads the resident's pricing path and the Opal producer's map from the worktree's own paths, so every source the scope record cites is present in the worktree.",
+  "world_is": "The pinned overview map source lies outside the sparse checkout, so the worker read it only through git show of HEAD (blob sha256 21a8f6d6...) and cited no line of it. Owner: 2.0.0_SA_COO~G2 (the issuer that provisioned the worktree's sparse list). Not an engine defect; no product change. Clears when a later cell's worktree carries org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/ or the cell cites the map at HEAD by design."
+}
+```
+
+## IRPT_ANLREQ-D2-W268-S2 -- the surprise-channel schema the order names is absent from this worktree, so the row was shaped from the channel's own rows
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~268",
+  "surfaced_at": "2026-10-16T17:50:49Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W268-S2",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names org/surprise_channel/schemas/investigation_item.schema.json as the row contract, but org/surprise_channel is not in this worktree, so this row follows the fields of the channel's existing rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls org/surprise_channel in C:/dev/wk-irpt-anlreq-268: no such file or directory (the sparse list does not include org/surprise_channel)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md: existing rows S149 to S151 carry the fields used here",
+      "the order's BOUNDS section and its row-gate step name .tools/surprise-row-gate.py, present in the worktree"
+    ]
+  },
+  "spec_asserts": "A worker shapes each surprise row to org/surprise_channel/schemas/investigation_item.schema.json, which the order names as the contract.",
+  "world_is": "The schema file is not in the worktree, so the contract could not be read at the cited path; the row gate .tools/surprise-row-gate.py is present and is run on the channel file at commit. Owner: 2.0.0_SA_COO~G2 for the worktree's sparse list. Not an engine defect; no product change."
+}
+```

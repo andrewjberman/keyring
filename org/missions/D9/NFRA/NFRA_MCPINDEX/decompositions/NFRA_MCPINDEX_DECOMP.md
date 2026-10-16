@@ -1758,3 +1758,34 @@ It does not make the four 49F client tools serve: that is NFRA_OPLGTW's `OG-en-1
 ### R19.6 ADDENDUM (2.0.0_SA_COO~MI, 2026-10-16 ~16:1xZ): `MX-r-16` is retired as a separate release; the catalog placement is step 4 of `MX-c-26` (A5)
 
 The three build cells drained (`MX-c-24` `1ee9069f8c`, `MX-c-25` `7309ccc274`, `MX-c-26` `98ce7eb4e7`, `a608e7bc84`, `d1092a10f6`). The gateway release `NFRA_OPLGTW.TO-OG-ap-28` (staged, `40c539b06d`) is the CTO's ONE batched release (msgs 35030, 35038): it takes `app/refs/DATA_CATALOG.yaml` from trunk and fires its Phase A GO when the four live rows are in it. This project therefore does not deploy, and the held cell `MX-r-16` of R19.1 is **retired**. What is left is the catalog landing on trunk, which only a worker may commit (lane `CLOUD_OPS_OR_ETL`); the L6 gate refuses a second order file in a round, so it is amendment A5 of `MX-c-26` (same slot ~49): place the issuer's candidate (md5 `760e40683e32aa2e429f2137b628287a`, graded by the issuer at ~15:4xZ: `r16.AC1`, `r16.AC2`, `c23.AC4`, `c21.AC2`, `r13.AC3` strict, all PASS), with three added criteria `r16.AC1` (the candidate against the live v3 catalog: +4 rows, the eight legacy rows differ in bucket/prefix/key_template only, 272 rows byte-equal), `r16.AC2` (the visibility matrix: the four rows reach opal-internal and the 49financial principal only, leaks 0) and `r13.AC3` run `monotone`. The issuer's COO half of the never-widen ask in `OG-ap-28` names those four newly visible rows; the host-side one real run (visibility matrix on the host, discover 8 of 8 buckets, `r13.AC2`/`AC3` monotone) is the issuer's after `OG-ap-28` lands.
+
+## ROUND 20 (2.0.0_SA_COO~MI, 2026-10-16 ~19:1xZ) -- the round-19 analysis's enrichment list: R20-1 (BLOCKING), R20-2, and R20-3 (not this project's)
+
+Source: `ledger/ROUND_ANALYSIS.round19.md` @9b905362bc (CTO msg 35181; CVO slug `surprise-channel/adjudications/ADJUDICATION_v15.md` @04531c14fe, msg 35180). Round 19 is drained and served: `NFRA_OPLGTW.TO-OG-ap-28` is live at `bf9d23b518` (ledger closed, `ap28.AC2` PASS, msg 35185), the host serves the release catalog at blob `b81c48aa3c` and the four 49F tools answered rows. This section is spec-frozen once issued.
+
+### R20.1 THE CELLS -- 2 in this issuance
+
+| cell | what | write set | risk | serves |
+|---|---|---|---|---|
+| `MX-c-27` (R20-1, BLOCKING before any regeneration) | A regeneration by `gen_silver_rows.py` loses no hand-set field and no registry row it does not own. MEASURED on trunk 2026-10-16 ~19:0xZ (a dry run into temp folders with the exact inputs of `land_links.sh` and both registry flags): the four `blackdiamond_live_<t>` entries are NOT touched (hand-kept; `address` is safe there), but the generator (a) rewrites the `prefix` of the eight 49financial `*_silver_legacy` entries and the `open_items` of the gold book entry (MX-c-25), losing the hand corrections of MX-c-26 and MX-c-25; (b) with the registry flag drops 34 rows of `catalog_fork_keys.json` and reverts the `restore.bucket` of eight (the emit is refused again); (c) drops a hand-set `address` planted on a generated entry. The cell: a tracked `hand_overlay.json` the generator applies last by default, the carry-over of keys the generator does not own, and a merge (not a replace) of the fork registry. | `workflows/atom_decomposition/gen_silver_rows.py`, `workflows/atom_decomposition/hand_overlay.json` (new), `workflows/atom_decomposition/tests/test_regen_preserves.py` | LOCAL | FWD-22 (the catalog stays regenerable) |
+| `MX-c-28` (R20-2) | After release a measured depth claim is a FLOOR with its `measured_at`: `load_tool_index` adds `depth_kind: floor` and `measured_at` (= the claim's `read_at`) to every `measured` history_depth claim (and each per-link element); `validate_claim` accepts and checks them; freshness, inferred and absent claims do not carry them; the emitter stays strict (r13.AC3 strict at emit is unchanged). | `workflows/atom_decomposition/emit_catalog_v02.py`, `workflows/atom_decomposition/tests/test_depth_floor.py` | LOCAL | FWD-20 (depth claims, PRD v0.9/v0.10) |
+| R20-3 (not cut here) | `MX-c-24` (the `opal_discover` echo, complete on trunk, six lines) rides the NEXT batched gateway release under `2.0.0_SA_COO~O`, named in that release's ask (CTO msg 35182). The catalog carrying R20-2's new claim keys is a catalog change and rides the same release; the issuer emits and places it after `MX-c-27` is on trunk. | `NFRA_OPLGTW` release | SERVED | FWD-22 / FWD-20 |
+
+### R20.2 CHAINS AND FAN-OUT
+
+`MX-c-27` writes the generator, one new JSON file and one new test file; `MX-c-28` writes the emitter and one new test file. Disjoint files, no edge: 2 chains of 1, 2 workers (~50, ~51), cap 8.
+
+### R20.3 CHOICES THIS CUT MAKES
+
+1. **The CTO named `address`; the measurement widens the cell.** `address` survives on the four live entries because the generator never writes them. What a regeneration actually loses is two hand corrections on GENERATED entries (the legacy prefixes, the gold book line) and the fork-registry rows, so the cell carries those too; the CTO's test (regenerate, diff the 49F rows, expect 0 lost) is `c27.AC1`.
+2. **An explicit overlay file, not an implicit memory.** `hand_overlay.json` lists every hand-set value (entity, field, value) and is applied last; the carry-over rule (a key present in an existing entry file that the generator does not own is kept, so a hand-set `address` survives) covers the rest. Both are graded by `c27.AC1`.
+3. **The registry file is merged, not rewritten:** rows for the contracts the generator generates are rewritten, every other row stays byte-equal and in order, the other top-level keys stay. The eight legacy contracts' `restore.bucket` and `key_template` come from the overlay.
+4. **No catalog regeneration is emitted or landed until `MX-c-27` is on trunk** (the CTO's BLOCKING). The catalog is emitted from the entries by `emit_catalog_v02.py` (not by the generator), so `MX-c-28` does not need it, but the release catalog is emitted only after `MX-c-27`.
+
+### R20.4 BATTERY (base HEAD 37d1b8dd9b; `deliverables/2.0.0_SA_COO~MI/round20/checks/`)
+
+Run in a SPARSE worktree cut with `workflows lib .tools infra/aws/ec2 infra/logic` plus the project folder (the lesson of round 19): `c27.AC1` FAIL (9 entries differ; the planted address is lost), `c27.AC2` FAIL (34 fork rows lost, 8 changed; the legacy-address file loses nothing it does not own and the CRO's four alias rows are among those), `c27.AC3` FAIL (no test file); `c28.AC1` FAIL (no test file), `c28.AC2` FAIL (0 of 39 measured claims carry the keys).
+
+### R20.5 WHAT THIS CUT DOES NOT CLAIM
+
+It does not ship anything: the discover echo and the new claim keys reach the host only in `2.0.0_SA_COO~O`'s next batched release. It does not regenerate or change a catalog row.
