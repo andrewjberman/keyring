@@ -20048,3 +20048,28 @@ name the one known failure instead of silently inheriting it.
     "notes": "Decision for the issuer: follow the path history (--follow) in the checker, or re-pin the four rows to 72096aefa4 in a record of their own."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S16",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T05:35:40Z",
+    "one_line": "The full-add naming gate over the 17 release modules still REFUSEs one line outside OG-ng-3's three: admin_gateway_breakdown.py:164 types the legacy bucket alias opal-data-bd in SEGMENTED_BUCKETS.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of the 17 release modules of ng3.AC1.sh> --enforce at trunk 647c5b2786 with the three OG-ng-3 fixes applied (W/NG3_AFTER.txt): NAMING REFUSE infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py:164 opal-data-bd -> opal-data-49financial, 'NEW and ALIAS as S3_BUCKET: REFUSE; hand-kept carrier of bd'.",
+        "READ infra/aws/ec2/opal-gateway/app/admin_gateway_breakdown.py:164 (SEGMENTED_BUCKETS = (opal-data-assets, opal-data-bd)) and infra/logic/registry/scopes.json, the 49financial row alias opal-data-bd: bucket alias, lookup false, provisioned, graded ALIAS of opal-data-49financial."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-ng-3 section 1 and AC1: the release modules graded whole print no REFUSE after the three named fixes (portal_served.py lines 125 and 126, etfs_silver.py line 313 through one row); fix exactly these three, no more.",
+    "world_is": "admin_gateway_breakdown.py is one of the 17 modules the release takes whole, and it types the legacy bucket alias opal-data-bd, which the registry holds as an alias of the 49financial bucket. It is outside the order's surfaces and not one of its three lines, so it was not changed, and no name_rulings row was added for it (the order allows one row only). The owner of the module (its last commit is NFRA_MCPORTAL MP-pf-3) or the CTO has to rule on the alias.",
+    "notes": "Measured, not inferred: AC1 cannot read PASS as written while this line stands. The three named lines are clean in the AFTER output."
+  }
+  ```
