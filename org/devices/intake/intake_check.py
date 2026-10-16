@@ -505,6 +505,41 @@ def installed_platform_tag(inst_di):
     return None
 
 
+# Build-metadata files that a wheel and an installed copy built on DIFFERENT platforms legitimately differ in (a file the
+# package's own build writes with the build machine's compiler and flags). Adding an entry is a CTO ruling, never a worker's
+# (round-27 analysis, ruling 3, ledger/ROUND_ANALYSIS.round27.md). Matched against the site-relative path.
+CHECK6_BUILD_METADATA_FILES = ("numpy/__config__.py",)
+DELVEWHEEL_START = b"# start delvewheel patch"
+DELVEWHEEL_END = b"# end delvewheel patch"
+
+
+def _platform_normalise(data):
+    """CRLF to LF, then remove every block from a line containing the delvewheel start marker through the first following line
+    containing the end marker (both marker lines included). A start with no end after it is not a block and is left as it is."""
+    lines = data.replace(b"\r\n", b"\n").split(b"\n")
+    out, i = [], 0
+    while i < len(lines):
+        if DELVEWHEEL_START in lines[i]:
+            end = next((j for j in range(i, len(lines)) if DELVEWHEEL_END in lines[j]), None)
+            if end is not None:
+                i = end + 1
+                continue
+        out.append(lines[i])
+        i += 1
+    return b"\n".join(out)
+
+
+def _platform_rule(rel, held_bytes, inst_bytes):
+    """Check 6's platform rule for ONE differing .py file of a cross-platform comparison: 'equal' when the two sides are equal
+    after _platform_normalise, 'build' when they differ and the site-relative path is a listed build-metadata file, else None
+    (a residual difference that still fails check 6)."""
+    if _platform_normalise(held_bytes) == _platform_normalise(inst_bytes):
+        return "equal"
+    if rel in CHECK6_BUILD_METADATA_FILES:
+        return "build"
+    return None
+
+
 def check_6(ctx):
     if not ctx.get("installed"):
         reason = ("check 3 was not applicable: the installed distribution is an editable install, not a copy of the published files"
@@ -523,8 +558,11 @@ def check_6(ctx):
     py_total = py_ident = 0
     py_diff, py_missing, py_extra, compiled, hooks_new, hooks_old, unsafe = [], [], [], [], [], [], []
     crlf_only = []
+    # py_diff = every byte-different .py (the raw count); py_residual = those the platform rule does not clear (the verdict)
+    platform_equal, build_meta, py_residual = [], [], []
     installed_plat = installed_platform_tag(inst_di)
     held_plat = (parse_wheel_name(ctx["file_name"]) or {}).get("platform_tag")
+    cross = bool(installed_plat and held_plat and installed_plat != held_plat)
     with zipfile.ZipFile(ctx["path"]) as zf:
         infos = [i for i in zf.infolist() if not i.is_dir()]
         for info in infos:
@@ -551,6 +589,7 @@ def check_6(ctx):
                 py_total += 1
                 if re.match(r"^[^/]+\.data/(scripts|headers|data)/", n):
                     py_diff.append(n)
+                    py_residual.append(n)     # never cleared by the platform rule
                     continue
                 target = site_dir / rel
                 if not target.is_file():
@@ -562,6 +601,7 @@ def check_6(ctx):
                         py_extra.append(n)
                 elif info.file_size > MAX_PY_BYTES:
                     py_diff.append(n)
+                    py_residual.append(n)     # over-size files are never cleared by the platform rule
                 else:
                     held_bytes, inst_bytes = zf.read(info), target.read_bytes()
                     if inst_bytes == held_bytes:
@@ -569,7 +609,14 @@ def check_6(ctx):
                     else:
                         py_diff.append(n)
                         if inst_bytes.replace(b"\r\n", b"\n") == held_bytes.replace(b"\r\n", b"\n"):
-                            crlf_only.append(n)   # recorded only: the verdict stays on the raw comparison
+                            crlf_only.append(n)   # recorded only: the verdict is decided by py_residual
+                        decided = _platform_rule(rel, held_bytes, inst_bytes) if cross else None
+                        if decided == "equal":
+                            platform_equal.append(n)
+                        elif decided == "build":
+                            build_meta.append(n)
+                        else:
+                            py_residual.append(n)
         di, _ = wheel_dist_info(zf)
         wheel_eps = set()
         if di and (di + "/entry_points.txt") in zf.namelist():
@@ -581,12 +628,14 @@ def check_6(ctx):
     detail = {"installed_copy": "<site-packages>/" + inst["dist_info_name"], "py_in_wheel": py_total, "py_identical": py_ident,
               "py_compared": compared, "py_missing_count": len(py_missing), "py_missing": py_missing,
               "py_extra_count": len(py_extra), "py_extra": py_extra, "installed_record_readable": record_readable,
-              "py_differing_count": len(py_diff), "py_differing": py_diff, "compiled_count": len(compiled), "compiled": compiled,
+              "py_differing_count": len(py_diff), "py_differing": py_residual, "compiled_count": len(compiled), "compiled": compiled,
+              "py_differing_after_platform_rules": len(py_residual),
+              "platform_normalised_equal": platform_equal, "build_metadata_residual": build_meta,
               "differ_after_crlf_normalisation": len(py_diff) - len(crlf_only),
-              "compared_across_platforms": bool(installed_plat and held_plat and installed_plat != held_plat),
+              "compared_across_platforms": cross,
               "installed_platform": installed_plat, "held_platform": held_plat,
               "hooks_only_in_wheel": hooks_new, "hooks_also_in_installed_copy": hooks_old, "unsafe_member_names": unsafe}
-    counts = "compared=%d missing=%d extra=%d differ=%d" % (compared, len(py_missing), len(py_extra), len(py_diff))
+    counts = "compared=%d missing=%d extra=%d differ=%d" % (compared, len(py_missing), len(py_extra), len(py_residual))
     absent = len(py_missing) + len(py_extra)
     # nothing present to compare, and (no readable RECORD, or nothing the RECORD fails to list): not applicable
     if py_total and absent == py_total and not unsafe and (not record_readable or not py_extra):
@@ -595,16 +644,20 @@ def check_6(ctx):
     problems = []
     if py_extra:
         problems.append("%s: %d .py file(s) in the wheel that the installed copy never had: %s" % (counts, len(py_extra), cap(py_extra)))
-    if py_diff:
-        problems.append("%s: %d of %d .py files differ from the installed copy: %s" % (counts, len(py_diff), py_total, cap(py_diff)))
+    if py_residual:
+        problems.append("%s: %d of %d .py files differ from the installed copy: %s" % (
+            counts, len(py_residual), py_total, cap(py_residual)))
     if hooks_new:
         problems.append("installer/script/start-up hook(s) not in the installed copy: %s" % cap(hooks_new))
     if unsafe:
         problems.append("unsafe member name(s): %s" % cap(unsafe))
     if problems:
         return rec("failed", "; ".join(problems), **detail)
-    return rec("passed", "%d of %d .py files byte-identical (%s); %d compiled file(s) named; no new hook" % (
-        py_ident, py_total, counts, len(compiled)), **detail)
+    cleared = ""
+    if platform_equal or build_meta:
+        cleared = "; platform-normalised-equal=%d build-metadata-residual=%d" % (len(platform_equal), len(build_meta))
+    return rec("passed", "%d of %d .py files byte-identical (%s); %d compiled file(s) named; no new hook%s" % (
+        py_ident, py_total, counts, len(compiled), cleared), **detail)
 
 
 def _ascii_name(text):
