@@ -89,7 +89,7 @@ Instance at `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~F
 
 **AMENDMENT 6 (2.0.0_SA_COO~B1, 2026-10-14 ~14:4xZ) -- ACT 3 IS A STANDING, CONDITIONAL GO:** both carriers are at HEAD: the COO addendum (`ledger/NEVER_WIDEN_ROUND8_FIRST_MOVED_TRIGGER_COO_HALF_ADDENDUM_1.md` @b72692a2bf) and the CTO's ADDENDUM 1 in `ledger/NEVER_WIDEN_ROUND8_FIRST_MOVED_TRIGGER_CTO_HALF.md` @52d04a8269 (msg 5607). The CTO's signature is VOID unless both of these hold, and each is read by YOU: (1) `FB-m-2` arm (a) reads MET: the first organic marker-triggered run on 2026-10-15 (about 13:00Z) published through the guard, recorded in `READYHALT_RECORD.json` (close `FB-m-2` first, in its own commit); (2) that day's marker-triggered publish has run (the served `data_as_of` equals that day's holdings date). When both hold, you apply act 3 the SAME DAY, with no further word from the issuer or the CTO, exactly as the addendum states (one apply: floor ENABLED with `Input` `{}`, the 16:30Z catch-up fire created, only the `gold/meta/` entry removed, silver entry byte-unchanged; the plan must match or you STOP). If arm (a) reads anything but MET (a wrong halt, a publish outside the named set), do NOT apply act 3: run Branch B for `FB-m-2`, report to the issuer, and wait. The first-day reads (2026-10-16: 13:30Z publishes, 16:30Z halts with zero writes, advisor files equal to the named set) are read by 18:00Z; the record `MOVE_RECORD.json` is written then and this order is closed with AC1. No criterion changed.
 
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <workstream>FIRSTMOVE</workstream>
 <to_id>ADVI_FIRMBKTS.TO-FB-l-5</to_id>

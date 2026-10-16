@@ -79,9 +79,16 @@ This order touches none of them.
 - **Not covered, named:** a fix (a handler that skips the article and keeps the job); re-adding `bbg` to the runner; a human solving the challenge; the Bloomberg Terms of use at this cadence (not read).
 - **SENT:** with the round-88 issuance.
 
+**COMPLETE 2026-10-16T16:51:44Z (issuer `2.0.0_SA_COO~W1`), WITH LIMITS:**
+- **Act:** seat `0.7.0_AE_CloudOps~SC1`, commit `01cbfa54ff` (in tree). Read by this seat from its files: `cc4_trace.out` (CLOSED_BY=other, CONTROL_ARM_C=PASS, ARM_B_DIFFERS=not_run), `cc4_budget.out` (JOBS_RUN=3: Arm C, Arm A, Arm A'; B' not run), `cc4_arm_Aprime.jsonl` as quoted in the trace; proof instance VALID rc 0 (re-run here). AC1 PASS, AC2 PASS, AC3 PASS (JOBS_RUN=3, within the amended bound of 5).
+- **The finding (the CTO's question, answered):** the `bbg` page was NOT closed by the vendor's challenge page and NOT by the runner's minimise. In Arm A' (the case through the hold, as the runner does it) `page.is_closed()` read False at the raise, no `page.close_event` preceded the runner's own close call, no crash; the minimise call returned 46 s before the failure. The `TargetClosedError` is raised by `Locator.count` in `verification._press_and_hold_box` (verification.py:286, the second hold-loop pass, :303-312), 3.3 s after the vendor RELOADED the article following the 14.85 s hold (main-frame navigations at 52.873 and 53.222), while the reload was loading. Read against the code, a frame destroyed by the reload between listing and counting fits (inferred, not shown). The runner's two failed production jobs fit the same timeline (403 to error 25.5 s). So the job aborts on a frame query during a reload that follows what looks like an ACCEPTED hold (the reload to the article URL; the page content after it was not read).
+- **Limits (the seat's NOT_ESTABLISHED, kept):** which frame's `count()` raised (its URL was not recorded); whether the hold PASSED the challenge (the page after the reload was not read); that Arm C requested no article, so it shows the harness and account read cleanly, not that another name's path is clean; the enum word (`other` was chosen because no page closed; the nearest enum value is `vendor_page`).
+- **What this does NOT do:** fix anything or re-add `bbg` to the runner (Branch G stands, the CTO's ruling). A fix is a later cell: make the hold loop in `verification._press_and_hold_box` tolerate a frame destroyed by a reload (retry the pass), record the frame URL, and read the page after the hold; candidate for the round-89 enrichment list.
+- **S3:** Arm C wrote ONE run-record object (the order's gap, row `D1-S34`); Arms A and A' wrote none. Step 10: the object is deleted by VersionId now that the issuer has graded this order (see the issuer's message).
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>88</round>
 <workstream>BBG-CAUSE</workstream>
 <slot>dell1</slot>
