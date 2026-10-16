@@ -19,15 +19,23 @@ import sys
 PAT = r'firm/mix_summary|mix_summary\.json'
 
 
-def _grep(cwd, paths):
-    r = subprocess.run(['git', 'grep', '-l', '-I', '-E', PAT, '--'] + paths, cwd=cwd, capture_output=True, text=True)
-    return r.stdout.splitlines()
+def _main_root():
+    """The main worktree root (a sparse worker worktree has no portal/ and no data/ tree of its own)."""
+    r = subprocess.run(['git', 'rev-parse', '--path-format=absolute', '--git-common-dir'], capture_output=True, text=True)
+    return os.path.dirname(r.stdout.strip()) if r.returncode == 0 and r.stdout.strip() else '.'
+
+
+def _grep(cwd, rev, paths):
+    r = subprocess.run(['git', 'grep', '-l', '-I', '-E', PAT, rev, '--'] + paths, cwd=cwd, capture_output=True, text=True)
+    return [x.split(':', 1)[1] if x.startswith(rev + ':') else x for x in r.stdout.splitlines()]
 
 
 def census(writer_file):
-    files = set(_grep('.', ['data/', 'infra/', 'lib/']))
-    if os.path.isdir('portal/src'):
-        files |= {'portal/' + f for f in _grep('portal', ['src/'])}
+    # HEAD-based, so a sparse checkout cannot shrink the denominator; portal is read from the main root's copy
+    files = set(_grep('.', 'HEAD', ['data/', 'infra/', 'lib/']))
+    mr = _main_root()
+    if os.path.isdir(os.path.join(mr, 'portal', 'src')):
+        files |= {'portal/' + f for f in _grep(os.path.join(mr, 'portal'), 'HEAD', ['src/'])}
     keep = set()
     for f in files:
         base = os.path.basename(f)
