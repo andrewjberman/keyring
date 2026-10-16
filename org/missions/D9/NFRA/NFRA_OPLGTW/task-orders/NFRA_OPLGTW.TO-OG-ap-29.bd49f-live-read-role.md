@@ -74,7 +74,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-29.bd49f-live-read-role.proo
 - The Phase A GO is the issuer's message citing this order. Applied BEFORE the release.
 - Pre-cut: ap29.AC1 base FAIL as expected (tf, plan and ask absent); ap29.AC2 base FAIL as expected (BDLIVE_APPLIED.json absent).
 
-<status>staged</status>
+<status>pending</status>
 <round>38</round>
 <workstream>ENRICH-R38-D</workstream>
 <slot>~AE</slot>
