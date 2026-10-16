@@ -19991,3 +19991,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S133 -- disposition of IRPT_ANLREQ-D2-W201-S1: the proof clause omitted decomp_ref; fixed for later orders
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-16T00:49:47Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S133",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The worker read it right: the proof gate requires a decomp_ref in the proof instance, and the issuer's orders did not say so in their proof-of-spec clause. The omission is the issuer's; it is fixed for every order cut after this one (AR-g-101 names it) and the worker's own fix (copying the order's decomp_ref block) is the correct one.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W201-S1: the proof instance needs a decomp_ref; the order template now says so.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 201's row W201-S1 and its commit b5a80f31b9 (the instance carries decomp_ref copied from the order's block)",
+      "AR-g-102 merged @927337a741 and verified: release-census irpt-ycharts-generate --pin HEAD prints changed_members=8 (five re-pinned, two native, one added)"
+    ]
+  },
+  "spec_asserts": "The proof-of-spec clause of an order tells the worker everything its proof instance must carry (/dispatch Step 2).",
+  "world_is": "The clause named to_id, invocations, artifacts_produced and evidence, not decomp_ref; the gate refused the flip commit until it was added."
+}
+```
