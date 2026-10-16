@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~133</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>pending</status>
+<status>complete</status>
+<status_reason>Closed by the issuer 2.0.0_SA_COO~C after its own re-run in the main tree after merge bc7970050f (worker branch wk-NFRA_CTLPLN-133 @273cb8390e): CTau1-AC1 BATCH-RELEASE released=17 check8=SIGNED names_equal=True sha_equal=True ok=True (13 verdict checked, 4 released-with-waiver with waived_checks [6]); CTau1-AC2 BATCH-PACK files=52 manifest_ok=True verify=INTAKE-VERIFY pack=intake-20261016-yfinance-linux wheels=17 verified=17 checked=17 stray=0 ok=True; CTau1-AC3 BATCH-TAILDROP files_sent=52 failed=0 target=dell2 ok=True; proof VALID. The issuer hashed all 17 wheels in `C:/opal-intake/release/intake-20261016-yfinance-linux/` against the approved sha256 AND size (17 of 17 equal), counted the release folder (34 files: 17 wheels and their delivery files) and the pack (52), and ran `intake_receive.py verify` on the pack read-only: the 17-of-17 last line preceded by four INTAKE-VERIFY-WAIVED lines (curl_cffi, numpy, pandas, websockets; check 6). Taildrop: 4 calls of 13 files to dell2 (100.104.84.87) at 09:14:14Z-09:15:27Z, each exit 0, each file once; NO read receipt: delivery to the collector `0.0.0_AB_MSTR~DELL2` is proven only by dell2's own record of each file's name, size and sha256. The order took four tries because three gates the issuer did not dry-run surfaced in turn: the approval file's exact multitasking line (W132-S1), the signed file's per-wheel names (W133-S1) and compute_verdict's refusal of a failed check (W133-S2, cleared by the CTO-ruled waiver, CT-av-1). Worker `~133`'s worktree held the synced tools and signed file uncommitted (not in the branch). LOCAL until MSTR pushes.</status_reason>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
