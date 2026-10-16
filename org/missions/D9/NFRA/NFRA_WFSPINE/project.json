@@ -4,7 +4,7 @@
   "directive": "D9",
   "fabric": "dell1",
   "pipeline": null,
-  "status": "active",
+  "status": "closed",
   "dep_stage": "PRD",
   "created": "2026-10-16",
   "registered_under_tree": "2026-10-16",
@@ -17,8 +17,8 @@
   ],
   "name": "M365 workflow activity spine: every employee's Microsoft 365 actions as one timeline, to find recurring workflows and where AI can remove work",
   "description": "Registered at L3 by 1.0.0_SA_CTO~DELL1 on Andrew's 'yes do it' to the CRO brief (2026-10-16 ~01:2xZ) and his placement word 'It should live on Dell1 (f086)' (~01:36Z, relayed). Collects the Office 365 audit feed under a new single-purpose app (the gateway stays delegated-only), lands it, and derives per-person timelines, hand-off chains, recurring workflows, step timing and ranked AI candidates; Andrew sets the population. No alerting. D9 placement is LAPTOP; this member runs on DELL1 by his word (per-member placement exception).",
-  "phase": "2026-10-16 ~05:5xZ (1.0.0_SA_CTO~DELL1): RE-SCOPED by Andrew to TCKT_MTADTA; PRD and L3 move HELD on the box. 2026-10-16 ~05:3xZ (1.0.0_SA_CTO~DELL1): L4 PRD v0.1 DRAFT, HELD for Andrew's scope and design word (ops teams on premises; PII read). 2026-10-16 ~04:1xZ (1.0.0_SA_CTO~DELL1): L4 PRD v0.1 written (DRAFT); bucket opal-data-trino (PRODUCT, GENERAL tenancy) per Andrew 04:0xZ; two registry rows owed at round 1 cell 1; ratified-text half owed by 3.0.0_SA_CVO.",
-  "blocking": "HELD: Andrew-direct ~05:4xZ 2026-10-16 (laptop 1.0.0_SA_CTO, relayed msg 6529) re-scopes this project to TCKT_MTADTA (Ticket Center analytics). Eight named ops accounts; every other account dropped at collection (this settles call 142a as option (a), with his R20 acknowledgement); data in opal-data-trino/m365-metadata; readable only by a globgrph-group IAM role behind a Lambda. Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_054xZ_SPINE_BECOMES_TCKT_MTADTA_OPS_EIGHT_DROP_AT_OUTSET_GLOBGRPH_ROLE_ONLY.md @0092da40fe (CLOUD c01562e77c). Held: the PRD and the L3 register move, until Andrew names the box (dell1 or dell2, where TCKT runs); the laptop CTO is asking him.",
+  "phase": "2026-10-16 ~06:2xZ (1.0.0_SA_CTO~DELL1): CLOSED, SUPERSEDED by TCKT_MTADTA on Andrew's 05:4xZ/06:0xZ words; nothing was built. 2026-10-16 ~05:5xZ (1.0.0_SA_CTO~DELL1): RE-SCOPED by Andrew to TCKT_MTADTA; PRD and L3 move HELD on the box. 2026-10-16 ~05:3xZ (1.0.0_SA_CTO~DELL1): L4 PRD v0.1 DRAFT, HELD for Andrew's scope and design word (ops teams on premises; PII read). 2026-10-16 ~04:1xZ (1.0.0_SA_CTO~DELL1): L4 PRD v0.1 written (DRAFT); bucket opal-data-trino (PRODUCT, GENERAL tenancy) per Andrew 04:0xZ; two registry rows owed at round 1 cell 1; ratified-text half owed by 3.0.0_SA_CVO.",
+  "blocking": null,
   "brief_ref": "docs/briefs/m365-workflow-activity-spine-brief-20261016.md@441e9ca92f",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_M365_WORKFLOW_SPINE_20261016.md",
   "prds": [
@@ -27,14 +27,15 @@
   "decompositions": [],
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1",
-    "coo": "2.0.0_SA_COO~S1",
+    "coo": null,
     "cvo": "3.0.0_SA_CVO",
     "cro": "4.0.0_SA_CRO~XXX"
   },
-  "coo_lane": "2.0.0_SA_COO~S1",
+  "coo_lane": null,
   "rulings": [
     "PLACEMENT DELL1 -- Andrew-direct 2026-10-16 ~01:36Z (relayed), VERBATIM: 'It should live on Dell1 (f086).' (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_013xZ_F086_9987_RELAYED.md).",
     "DONE WHEN CONFIRMED -- Andrew-direct 2026-10-16 ~03:5xZ, VERBATIM: 'Yes I like this layout you have for the project. I approve.' (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_035xZ_WFSPINE_DONE_WHEN_APPROVED.md).",
     "BUCKET opal-data-trino, PRODUCT -- Andrew-direct 2026-10-16 ~04:0xZ, VERBATIM: 'I think all of this should be stored in a bucket called opal-data-trino also, using LGIC_NAMING conventions otherwise.' and 'its a product folder so follows product rules' (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_040xZ_WFSPINE_BUCKET_OPAL_DATA_TRINO.md)."
-  ]
+  ],
+  "superseded_by": "TCKT_MTADTA"
 }
