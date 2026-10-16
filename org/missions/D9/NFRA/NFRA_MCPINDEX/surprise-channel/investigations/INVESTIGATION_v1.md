@@ -9584,6 +9584,36 @@ carries none.
     },
     "spec_asserts": "Cell item 4: the merge keeps every other top-level key of the file (_about, entities, labels) as it is.",
     "world_is": "The MX-c-23 contract (a run that names --labels-from writes labels) and the order's keep-labels rule differ only for that run. The code keeps the MX-c-23 contract and the issuer decides which one stands."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S132",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-16T20:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W50-S1",
+      "NFRA_MCPINDEX-Z-W50-S2",
+      "NFRA_MCPINDEX-Z-W50-S3",
+      "NFRA_MCPINDEX-Z-W50-S4",
+      "NFRA_MCPINDEX-Z-W50-S5"
+    ],
+    "one_line": "ISSUER DISPOSITION of worker ~50's five MX-c-27 rows: S2 and S3 (BLOCKING) were two collisions of the order's design, ruled in A1 and re-graded PASS; S1, S4 and S5 are accepted observations.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S2: the enforcing naming gate refused hand_overlay.json as a new workflows/ file (40 firm-token carriers); at org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round20/hand_overlay.json the same gate grades 0 lines (the issuer ran --enforce on a diff of it: exit 0, 0 REFUSE). A1 0561aced58 moved the file.",
+        "S3: an overlay applied by default put the tokened legacy prefixes into generated entries and broke tests/test_gen_silver_rows.py::test_every_clean_row_is_carrier_free; A1 made --hand-overlay an explicit option with NO default. c27.AC1, AC2, AC3 PASS on the merged tree f5e5872dd4 (0 of 192 differ; fork registry 226 of 226 unchanged; 78 tests); a real regeneration into catalog_entries/ changed 0 of 319 files.",
+        "S4: the catalog-* rows of legacy_addresses.json are generator-owned and not a fixed point (36 of 143 dropped when --registry-file is named); the issuer's landing procedure passes only the entries folder, and the overlay-aware regeneration is graded without that flag.",
+        "S5: --labels-from replaces the fork registry's labels only when named, an explicit option (MX-c-23). S1: the gate's K7 membership list is absent in a sparse cone; a sparse-worktree environment note."
+      ]
+    },
+    "spec_asserts": "MX-c-27's face asserted that a tracked overlay file under workflows/ could be applied by default and committed under the enforcing gate.",
+    "world_is": "The enforcing gate refuses a new workflows/ file carrying firm tokens, and a default overlay contaminates the carrier-free rows the generator tests assert. Data the issuer maintains belongs in the issuer's deliverables folder, applied only when named.",
+    "dismissal_reason": "S2 and S3 were the order's design and are fixed and re-graded; S1, S4 and S5 change no graded criterion. The issuer is disarm_owner of all five. Lesson carried to the round-20 analysis: a new file under workflows/ that carries data with firm tokens meets the enforcing gate; run naming-gate --enforce on the planned file at the cut."
   }
 ]
 ```
