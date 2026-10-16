@@ -1876,3 +1876,24 @@ Gate G-REL9 (the issuer holds it): both never-widen halves signed at HEAD AND no
 ## PF6.3 SEATING (issuer, ~12:4xZ) -- a departure from the CTO's named applier, and why
 
 The CTO's ruling named `0.7.0_AE_CloudOps~Z` as the applier. `0.7.0_AE_CloudOps~Z` holds NFRA_OPLGTW work, and the seating rule (Andrew-direct 2026-08-24 ~19:29Z, enforced by `.tools/to-decomp-ref-lint.py`'s seating check, announce mode) is ONE PROJECT PER TIER-2 SEAT INSTANCE: the commit gate printed `REFUSED ... FIX: address this TO to a FRESH LANE`. MCPORTAL's own releases have used their own CloudOps lanes (~MP, ~MQ). So `MP-pf-9` is addressed to `0.7.0_AE_CloudOps~MQ`, the lane that applied MP-pc-5 and MP-n-4 and has only ever held NFRA_MCPORTAL orders (same project, so it passes the seating rule), re-seated by the issuer. The order, its checks and its paths follow (`deliverables/0.7.0_AE_CloudOps~MQ/`). The cost: one seat spawn, minutes. Reported to the CTO with the GO-PREP.
+
+# v17 -- WORKSTREAM PF, ROUND 7: six gateway tests repaired against the landed catalog (2026-10-16 ~13:2xZ, 2.0.0_SA_COO~MP)
+
+Source: row `NFRA_MCPORTAL-Z-S67` (filed by `0.7.0_AE_CloudOps~MQ` at the MP-pf-9 prep, step 1) and the issuer's A1 to MP-pf-9 (`66a4be01d8`), which named the six and said their repair is a cell, not the release. PRD v0.9 unchanged; ENDPOINT unchanged.
+
+## PF7.0 WHAT IS MEASURED BEFORE THE CUT (issuer, ~13:0xZ)
+
+1. At `box/sitez` HEAD the admin suite (`tests/test_admin*.py tests/test_owner_gate.py`) reads 6 failed, 110 passed. Nothing else fails. The six: `test_admin_gateway_breakdown.py::test_every_live_tool_in_exactly_one_channel` and `::test_real_server_tool_inventory`; `test_admin_people.py::test_people_lists_every_candidate_even_holding_nothing`, `::test_cadence_reads_absent_with_reason`, `::test_real_server_people_inventory`, `::test_people_principal_never_leaks_into_other_fields`.
+2. Cause (read in the two files): the landed `DATA_CATALOG.yaml` declares a source group for every live tool. `bd.CATALOG_YAML` defaults to that real file. The breakdown `world` fixture patches no catalog at all, and the people `world` fixture patches only `ap.CATALOG_YAML` (a copy taken at import) and leaves `bd.CATALOG_YAML` real, while the placement rule lives in `bd`. So planted-tool tests now place `list_calendar` and `send_email` in `m365` (not `undeclared`), and the two real-inventory tests pin a channel list (`['m365']`, `{"m365","undeclared"} | specs`) that the real catalog no longer yields.
+3. The gateway code is correct as landed (MP-pf-3 and MX-r-15 graded it); only these tests are stale.
+
+## PF7.1 CELL `MP-pf-10` -- repair the six stale tests  (tests only; one chain; worker-light; risk WORLD only because the path floor for infra/ says so)
+
+1. `test_admin_gateway_breakdown.py`: the two planted-tool and real-inventory tests stop depending on the real catalog's contents. `test_every_live_tool_in_exactly_one_channel` plants `tool_index: []` (the file's own `_plant_catalog`) before it plants tools, so its old expectation of an `undeclared` channel is true again. `test_real_server_tool_inventory` asserts invariants derived from the real catalog through `bd._group_ids_for_tools(live)`: every live tool appears exactly once in the body, the set of channel ids equals the union of the group ids of the live tools (plus nothing invented), channel ids are unique, and an integration channel holds only its own tools; the pinned `want=['m365']` list and the pinned count of 5 channels go.
+2. `test_admin_people.py`: the `world` fixture points `bd.CATALOG_YAML` at the same empty catalog it already gives `ap.CATALOG_YAML`, which restores the first, second and fourth failing tests to their old expectations. `test_real_server_people_inventory` runs against the REAL catalog (both `bd.CATALOG_YAML` and `ap.CATALOG_YAML` set to the real file path, recorded by the fixture before it patches) and asserts `allowed_channels` as the union of the group ids `bd._group_ids_for_tools(registered)` yields plus the integration spec ids, not `{"m365","undeclared"} | specs`.
+3. No file outside the two test files changes. If a test needs an app change to pass, the worker files a BLOCKING row and stops.
+Criteria: AC1 the six named tests PASSED and each file 0 failed; AC2 the whole admin suite 0 failed (the existing bound, `pf3.AC2.sh`); AC3 only the two test files changed under `infra/`.
+
+## PF7.2 EDGES AND WHAT THIS CUT DOES NOT CLAIM
+
+No edge to MP-pf-9: the release is bundle-only and excused these six at A1; this cell lands on the trunk after the release's close and is not part of it. The five `FileNotFoundError` tests named in the release ASK are sparse-tree artifacts of the release tree, not stale tests (they pass at HEAD), and are not in this cell. It does not claim the real-inventory tests guard the catalog's content: they guard the placement rule's invariants, which is what they were for.
