@@ -10298,5 +10298,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      },
      "disposition": "UNDER_INVESTIGATION"
     }
+    ,
+    {
+     "id": "AMGT_HARVST-D1-S36",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+     "surfaced_at": "2026-10-16T17:30:11Z",
+     "one_line": "HVST-cc-7: the release is cut and tested, but the gateway deploy is refused on dell1 before any upload: bun cache holds 27 of 77 packages for mcportal@c66ca82952's lockfile (50 absent); two earlier refusals were tooling vintage (jq not on PATH; the live commit's older halt gate rejects lane ~SC1).",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-cc-7 step 0 and 2: deploy with infra/aws/ec2/safe-ec2-deploy.sh opal-gateway from the release branch, DEPLOY_BASE_REF the live ref; the script builds the dashboard bundle from the manifest's mcportal_commit.",
+     "world_is": "Release rel-amgt-harvst-cc7 @b5aa696c90 (parent d14445961d, six-path diff, 33 tests pass) is cut in C:/tmp/cc7-rel. Attempt 1 (17:23:22Z) refused: jq not on PATH in this shell (.tools/jq.exe exists; rerun with it on PATH). Attempt 2 (17:24:30Z) refused by the HALT gate at the pre-act checkpoint, rc=3: the release tree carries the live commit's older .tools/halt-gate-check.sh whose lane rule is 1 to 3 uppercase letters, so ~SC1 (a digit) fails; the trunk's gate (CTO ruling CTO_RULING_HALT_GATE_MULTI_LETTER_LANE_20261007) accepts it. Attempt 3 (17:27:44Z) copied the TRUNK's halt-gate-check.sh into the release worktree (uncommitted, restored after): the gate passed, the stale-base guard passed (declared base == live ref d14445961d), then mcportal @c66ca82952 resolved (it was absent from dell1's nested repo; a git fetch of origin made it local) and ops/bun_cache_precheck.py refused the dashboard build: 27 of 77 packages present in dell1's bun cache, 50 absent (@babel/*, esbuild, rollup, react 19.3.0, react-router 7.18.4, vite 7.3.6 and others: the list is cc7_bun_miss.txt). The script's own instruction: send this list to the laptop's package intake, then redeploy. The refusal came BEFORE any upload: S3 opal-gateway-latest git-ref still d14445961d at 13:23:35Z, 84 objects under the prefix as at the start, manifest unchanged, 0 SSM commands issued by this seat. The earlier release (MP-pf-9) built the same bundle on another device whose cache held all 77.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_deploy.out",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_bun_miss.txt",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~SC1/round88/cc7_before.out"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
