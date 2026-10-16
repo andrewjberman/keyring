@@ -188,6 +188,16 @@ def projects_covering(pc, dev, reg, rel: str, files=None) -> tuple:
     return out, findings
 
 
+def cross_call_entries(repo_root) -> list:
+    """(file name, call record, error) for every call under org/devices/crossbox, read by the one reader of the call files
+    (.tools/crossbox-call.py, fold_dir). A crossbox/2 call is one entry: its from-side file with its answer file folded in."""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "crossbox-call.py")
+    spec = importlib.util.spec_from_file_location("crossbox_call_reader_deploy", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.fold_dir(os.path.join(repo_root, "org", "devices", "crossbox"))
+
+
 def is_act_row(row) -> bool:
     """An open_calls row of kind act (an act only Andrew can do), compared on the stripped, case-folded value. A row with no
     kind, or kind fork, is not one: it keeps every match rule."""
@@ -208,14 +218,19 @@ def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
     if narrow:
         lines.append("  files mode: a call hits only if it names one of the %d carried file(s) or a project covering one; a row "
                      "hits on those or on its own roots field, not the shared root" % len(files))
-    crossbox = sorted(glob.glob(os.path.join(repo_root, "org", "devices", "crossbox", "*.json")))
+    # the calls are read by the ONE reader (.tools/crossbox-call.py fold_dir): a crossbox/2 call is its from-side file with
+    # its answer file, one entry per call; a file the reader cannot read is an entry with an error, never a clear
+    crossbox = cross_call_entries(repo_root)
     if not crossbox:
         lines.append("  org/devices/crossbox/*.json: none recorded (0 files) -- reads clear")
-    for path in crossbox:
+    for fname, call, err in crossbox:
         scanned += 1
-        name = os.path.relpath(path, repo_root).replace("\\", "/")
+        name = "org/devices/crossbox/%s" % fname
+        if err is not None:
+            hits.append("%s unreadable (%s): a file that exists and cannot be parsed is not clear" % (name, err))
+            lines.append("  HIT %s" % hits[-1])
+            continue
         try:
-            call = json.load(open(path, encoding="utf-8"))
             state = str(call.get("state", "")).upper()
             if state not in LIVE_CALL_STATES:
                 lines.append("  %s: state %s -- not live" % (name, state or "(none)"))
