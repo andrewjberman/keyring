@@ -32,8 +32,12 @@ exit code. Printed output is recorded on each row.
 
 | time (UTC) | command | exit code | outcome |
 |---|---|---|---|
+| 2026-10-16T05:05:26Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261016-tabulate\MANIFEST.json" sitez:` | 0 | sent (row 1, no output) |
+| 2026-10-16T05:05:44Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261016-tabulate\tabulate-0.9.0-py3-none-any.whl" sitez:` | 0 | sent (row 2, no output) |
+| 2026-10-16T05:06:07Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261016-tabulate\tabulate-0.9.0-py3-none-any.whl.check.json" sitez:` | 0 | sent (row 3, no output) |
+| 2026-10-16T05:06:26Z | `tailscale file cp "C:\Users\AndrewBerman\tdrop\out\intake-20261016-tabulate\tabulate-0.9.0-py3-none-any.whl.delivery.txt" sitez:` | 0 | sent (row 4, no output) |
 
-Files sent: 0 of 4. Files failed: 0. Target: sitez.
+Files sent: 4 of 4. Files failed: 0. Target: sitez.
 
 Delivery status: NOT YET PROVEN. A zero exit code means each file reached sitez's Taildrop inbox. It does not show that site Z
 has read it. The issuer asks site Z's CTO to run `tailscale file get` and `intake_receive.py verify --from <folder>` on site Z
