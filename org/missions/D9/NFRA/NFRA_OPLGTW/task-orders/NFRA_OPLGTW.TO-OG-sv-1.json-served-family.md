@@ -98,7 +98,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-sv-1.json-served-family.proof_o
 - The tool registrations, the pins and the import line are the ISSUER's hookup at the merge (a one-line batch), then they ride `OG-ap-23`.
 - Pre-cut: AC1 and AC2 base FAIL as expected (module, tests, record and probe absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>JSON-SERVED</workstream>
 <slot>~113</slot>
