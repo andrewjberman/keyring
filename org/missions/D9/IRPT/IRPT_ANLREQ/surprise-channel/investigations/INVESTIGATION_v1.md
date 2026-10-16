@@ -22384,3 +22384,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W167-S1 -- the worktree is a sparse checkout with no infra/ directory on disk, so the ticket reader the cell cites was read from the HEAD blob
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~167",
+  "surfaced_at": "2026-10-16T17:40:14Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-W167-S1",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "one_line": "The cell names infra/aws/lambda/ticket_center/lambda_function.py lines 395 to 440 as a read; this worktree has no infra/ directory on disk, so those lines were read from the HEAD blob with git show, and the schema under org/surprise_channel/schemas/ was read the same way.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/dev/wk-irpt-anlreq-167 `git config --get core.sparseCheckout` prints true (read at HEAD 35cccb7516)",
+      "C:/dev/wk-irpt-anlreq-167 `ls infra/aws/lambda/` reports No such file or directory; `git ls-files` lists infra/aws/lambda/ticket_center/lambda_function.py (blob 501c46097813)",
+      "`git show HEAD:infra/aws/lambda/ticket_center/lambda_function.py` lines 392 to 441 read at 35cccb7516: def _profile_scope, the malformed and not-configured refusals, the list-of-non-empty-strings rule"
+    ]
+  },
+  "spec_asserts": "The worktree carries the paths the order names, and the reader of the firm scope is readable on disk at infra/aws/lambda/ticket_center/lambda_function.py lines about 395 to 440 for the read the cell cites.",
+  "world_is": "core.sparseCheckout is true in this worktree and infra/ is not materialized: the lambda file and org/surprise_channel/schemas/ are tracked in the index but absent from disk. The order's grant paths (org/ and .tools/ and the one helper file) are on disk, so the cell's edit and the checkers were unaffected; the reader's text was taken from git show at HEAD and not from a file in the worktree."
+}
+```
