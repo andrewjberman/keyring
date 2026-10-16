@@ -22107,3 +22107,84 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "world_is": "The contract's Transfer Out | Transfer Out row carries flow_class_none EXTERNAL_OUT and the record's reason, which says the class is UNRESOLVED. Two statements in one row disagree. Whether the issuer rewrites the reason is for the issuer; no Cottonwood producer reads it in this round."
 }
 ```
+
+## IRPT_DASHBD-D2-S112 -- round 149 B-CW: the 49 Financial FWD-10 census and test read, worker 420's rows dispositioned
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S112",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T08:41:09Z",
+  "one_line": "Round 149 B-CW (DB-c-29, FWD-10 for 49 Financial): the gold tables miss no trading day, the 6,949 published series carry no unreported-days statement and every one reads PARTIAL_HISTORY, so the page prints Returns-from on all of them and cannot say 'none missing' from 'not measured'; worker 420's rows dispositioned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD ADDENDUM v0.15 and v0.16, FWD-10: a person can always tell where the data starts, which trading days the source did not report, and how current the data is; the standing order of work of the CTO's msg 8741 (Cottonwood, then 49 Financial).",
+  "world_is": "Merge 5379548cdb (worker 420). TEST READ, counts only (read at the worker's time; the issuer re-measured fresh): gold account_return_daily 571 partitions 2024-07-08 to 2026-10-14 and holdings_performance_daily 570 partitions 2024-07-09 to 2026-10-14, 0 absent trading days and 0 runs in each; 6,949 published series (6,949 manifests; 4,344 other objects of an unestablished kind, W420-S2), all parse and all are read by the page's reader (0 refused, 0 threw); none carries the unreported-days pair (0 non-empty lists, W420-S1) and none carries income_claim; income holds numbers in all 6,949 (0 coerced); history_scope is PARTIAL_HISTORY on all 6,949, including accounts whose first day equals the table start, so the 'Returns from <date>.' note prints on every 49 Financial account; 4,097 series start after the gold first day; as_of 2026-10-14 on 6,946 and earlier on three (2026-10-02, 2026-10-12, 2026-10-13); day-quality day totals MEASURED 2,578,713, LARGE_FLOW 44,505, FLOW_UNRECONCILED 6,139, NOT_MEASURABLE 57,492 (return_basis NOT_MEASURABLE 63,631 equals NOT_MEASURABLE plus FLOW_UNRECONCILED); a day-quality sentence is printed for 6,945 accounts and the excluded-days note for none. The page cannot tell 'no trading day is missing' from 'not measured' because the series carries no statement: the contract's own rule (the page says nothing, never guesses) holds. No identifier, key or value is recorded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~420/FWD10_49F_CENSUS_R149.json and FWD10_49F_CENSUS_R149.md; checks/r149/p150_bcw.py AC1 to AC3 PASS (issuer re-run, fresh S3 reads)",
+      "python .tools/proof-of-spec-check.py <instance> DBC150-1-AC1,DBC150-1-AC2,DBC150-1-AC3: VALID (rc=0); python .tools/round-close-check.py --project IRPT_DASHBD --round 149 --workstream B-CW: MAY-CLOSE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO: whether the 49 Financial series should state its unreported days (the gold partitions let the publisher say 'none' from the calendar), and whether Returns-from on every 49 Financial account is the wanted reading. Not a build cell of this workstream (the series' producer is ~D2's)."
+}
+```
+
+
+## IRPT_DASHBD-D2-S113 -- 49 Financial history_scope is a constant PARTIAL_HISTORY in the gold producer; three series end early on a positive day
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S113",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-16T08:47:05Z",
+  "one_line": "49 Financial: history_scope is PARTIAL_HISTORY on all 6,949 series because the gold producer writes the literal on every row (HISTORY_FULL is defined and never assigned); it is not the floor, the window or the accounts' start dates. The three series with an earlier as_of end on a positive MEASURED value: the account has no row after that day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2 (the 49 Financial gold producer and publisher; the CTO decides the rule)",
+  "spec_asserts": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py line 174: history_scope is 'how much of this account's life does the table hold', one grain (account); the CTO's msg 9223 read: why all 6,949 are PARTIAL_HISTORY.",
+  "world_is": "Read of source at HEAD (box/dell2): account_return_daily.py line 1355 writes \"history_scope\": HISTORY_PARTIAL on every emitted row, inside the account loop at lines 1336 to 1357, with no condition; HISTORY_FULL is assigned at line 175 and used only in the closed vocabulary HISTORY_SCOPE (line 177, checked at line 1769); no other line assigns it (a search of the file for FULL finds only those two lines). The publisher takes the newest row's value, so every series reads PARTIAL_HISTORY. Measured on the published prefix (counts and booleans only): 2,852 of 6,949 series start on the gold floor (2024-07-08) and are PARTIAL_HISTORY too, so the scope does not follow the start date; the producer's rule is a constant, not a derivation. The three series with an earlier as_of (2026-10-13, 2026-10-12, 2026-10-02) each end on a positive end-of-day value with day_quality MEASURED and return_basis TWR (not zero, not a break): the producer writes a row only for an account that holds a value that day (the loop is over v_now, line 1336), so an account that stops appearing in the source after a day simply ends there. Why each stopped appearing (closed, transferred or unreported) is NOT established by this read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 174 to 177, 1336 to 1357 and 1766 to 1773",
+      "this seat's read of the published prefix, counts and booleans only, 2026-10-16 ~08:5xZ (6,949 series; 2,852 start on the floor, all PARTIAL_HISTORY; 3 with an earlier as_of, each ending on a positive MEASURED TWR day)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Answer to the CTO's msg 9223. A rule that derives FULL (an account whose first value is the table's first day, or whose book is complete) is the CTO's ruling and ~D2's producer change; this seat changes no producer."
+}
+```
+
+
+## IRPT_DASHBD-D2-S114 -- TO-DB-b-291: gate (c) read literally trips on stale copies of a closed ledger's sentinel; iam.tf fails fmt -check inside a pinned file; the Lambda answers from the hardcoded calendar fallback
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S114",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T09:25:00Z",
+  "one_line": "TO-DB-b-291 odd finds, none blocking: (1) step 0(c) says any open marker at ANY live worktree naming the surface is a STOP, but four ANLREQ worker worktrees (wk-irpt-anlreq-230 to 233) carry a stale copy of the FIRST pair's sentinel for a ledger already CLOSED on trunk (b-276's order had the sentence 'stale OPEN marker copies are named, never closed'; this order lacks it); (2) terraform fmt -check reads rc 3 on iam.tf, a file the signed packet pins by hash 0008681b0b01 (the first pair's root read rc 0); (3) the Lambda's trading calendar is the hardcoded fallback (every manifest reads calendar_source fallback_2010_2027), the W226-S1 class the CTO's condition 2 anticipated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "marker scan over 74 live worktrees (git grep at HEAD of .open_deploys for the root, the function name and the platinum reporting prefix): 4 hits, all the file irpt-dashbd-cottonwood-reporting-publish-20261016.json at wk-irpt-anlreq-230, -231, -232 and -233; the same ledger's change_management entry on trunk reads 'CLOSED -- nothing stranded -- closed 20261016T071926Z' and box/dell2 HEAD carries no sentinel; positive control on a known marker token hit 41 worktrees; the packet's section 3 states the first pair's ledger CLOSED (6650d1aac6)",
+      "terraform fmt -check -recursive on infra/aws/terraform/investor-reporting/reporting-publish-iso: prints iam.tf, rc 3; the file's sha256 first 12 hex 0008681b0b01 equals the packet's pin; not rewritten (fmt writes by default; only -check was run)",
+      "after the full republish: all 939 manifests carry calendar_source, the sorted distinct values answered are [fallback_2010_2027]; the Lambda log reads 'trading_calendar: pandas_market_calendars absent; answering from the hardcoded NYSE fallback NYSE/hardcoded-fallback-2010-2027 (covers 2010-2027...)'; the dry run's unreported days equal the report-build function's list, so the CTO's condition 2 stop did not fire"
+    ]
+  },
+  "spec_asserts": "Order step 0(c): no ledger and no .open_deploys marker at ANY live worktree names the root, the function or the prefix; any one open is a STOP. Step 4: fmt -check is a step. Packet section 10 and the CTO half condition 2: which calendar the Lambda answers from is read from calendar_source.",
+  "world_is": "The gate's literal reading and its intent differ when a closed ledger's sentinel survives in a worker worktree cut during the open window; I read it as the intent (an open change on the surface) and named the four copies in the ledger and here. The fmt deviation is in a pinned file and waits on a pair that may touch it. The deployed publisher computes its unreported days from the fallback calendar, correct through 2027 and then needing the regenerate step the log names (lib/tests/gen_nyse_closures.py --write before 2028)."
+}
+```

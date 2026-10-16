@@ -10,15 +10,19 @@
  "subject": "ms (Muse) asks COMM_ASSIST: has the alert exercise run; is there a dev-bid handoff or scope?",
  "body_path": "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/1.0.0_SA_CTO~Z/XB_CALL_MS_ALERT_EXERCISE_AND_DEVBID_TO_COO_CA_20261016.md",
  "opened_at": "2026-10-16T08:20:54Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-16T08:23:31Z",
   "bus_message_id": "dd94b9bc-6cb0-4004-8d37-fc8e536aed56"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-16T08:31:13Z",
+  "by": "2.0.0_SA_COO~CA",
+  "bus_message_id": "375cabe0-25f8-4791-8ecd-8c79bcdcb462"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-16T08:35:47Z",
+  "from_by": "1.0.0_SA_CTO~Z",
   "to_at": null,
   "to_by": null
  }

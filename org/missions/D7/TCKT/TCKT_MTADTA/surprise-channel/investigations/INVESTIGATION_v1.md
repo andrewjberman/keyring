@@ -568,6 +568,52 @@
     "spec_asserts": "COLLECTOR CONTRACT v2: one coverage object per fire per Eastern day the window touches; listed and fetched count the new blobs whose created falls on that Eastern day.",
     "world_is": "Without the union, a new blob created on a day outside the touched days would have its listed and fetched counts written nowhere, which is the silent loss the repair exists to remove. The build writes one extra coverage object (the blob's day) for that fire. Whether an out-of-window day should get an object is a contract question, not decided here.",
     "notes": "Built to the union so no count is lost. The CTO or issuer may rule the extra object out (then the count must be carried to the next touched day, a contract change)."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S6",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~TM1",
+    "surfaced_at": "2026-10-16T08:24:58Z",
+    "one_line": "TO-MD-r1 item 3 found no authoritative list of Opal office egress addresses, so population.json office_ips stays empty and every address will read remote.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~S1 (the issuer; the list is a named human's input, Andrew's)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "native Grep over the repo for office egress/ip/cidr wording, 34 files; read: infra/aws/ec2/SSH_TUNNEL_OFFICE_IP_ROUTING.md names one office address but is dated 2025-12-22 and says 'Not yet implemented'; the address occurs only in that doc and infra/aws/ec2/tunnel-scripts/ (3 files)",
+        "org/missions/D12/NFRA/NFRA_OPSEC202609/decompositions/NFRA_OPSEC202609_DECOMP.md:87,94 quote Andrew saying there are no stable IPs and the source-address axis is dead for this population",
+        "data/m365_metadata/scripts/population.json office_ips is [] at HEAD"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-MD-r1 item 3 / PRD C-FIELDS (d): office_ips holds the addresses of Opal's office egress when the estate holds an authoritative list; never an invented address.",
+    "world_is": "The estate holds no authoritative current list. One address in a 10-month-old unimplemented design doc is a plan, not a measurement, and Andrew's recorded word is that no stable addresses exist. office_ips is left empty, so the egress label reads remote for every address.",
+    "notes": "Nothing invented. If Andrew names the office egress addresses, the list goes into population.json office_ips in a later order."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-S7",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-16T08:45:44Z",
+    "one_line": "An IAM administrator (and the dell agent users) can invoke the access door's aliases, because the group policy and the resource permission only grant and nothing denies; the MFA gate of call 0017 binds only the group's own grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~TM1 under TO-MD-r1 item 7 (the CTO ruled the fix, msg 6614; the issuer surfaces and gates MD-r-2 on the probe)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D7/TCKT/TCKT_MTADTA/deliverables/2.0.0_SA_COO~S1/R2_FINDING_ADMIN_INVOKE_20261016.md (measured: the box IAM user, in no group, invoked the member and collector aliases, StatusCode 200; the door answered op-not-served)",
+        "aws iam simulate-principal-policy for the same user and s3:GetObject against the live bucket policy -> explicitDeny (S3 is sound); a get-object on a missing key answered NoSuchKey",
+        "org/missions/D7/TCKT/TCKT_MTADTA/ledger/CTO_RULING_R2_ADMIN_INVOKE_20261016.md: (a) an MFA-absent Deny on each alias's resource policy, (d) an identity-side Deny if (a) does not bind"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Only the group's members (MFA-gated) and the collector role can invoke the door; a non-member's invoke is refused.",
+    "world_is": "Same-account IAM allows an invoke when any identity policy or the resource policy allows and nothing explicitly denies. The box user, administrators and the laptop agents' user hold lambda:InvokeFunction in their own policies, so they invoke without MFA and reach get_day on the member alias. The bucket policy's explicit Deny does bind them for S3.",
+    "notes": "Disarmed when the probe in TO-MD-r1 item 7d reads AccessDenied for the box identity on both aliases and the collector role still passes its carve-out. MD-r-2 (the consent and the real fires) stays staged until then. Nothing real is stored yet. Correction: the commit 2eefc8d50e message calls this row D1-S6; D1-S6 is the CloudOps seat's office-egress row, and this is D1-S7."
   }
 ]
 ```

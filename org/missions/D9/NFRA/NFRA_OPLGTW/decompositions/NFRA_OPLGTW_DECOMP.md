@@ -2536,3 +2536,12 @@ The error is the issuer's (my `OG-ac-2` order preferred the internal reader's cl
 
 The error is the issuer's: my hookups placed the five tools in `NATIVE_TOOLS` by the default pattern, and I signed the COO half of `OG-ap-23` without reading Ruling 2. `OG-ap-23` is re-cut once more on the merged trunk (the CTO's tar-line fix, A5, rides the same re-cut) and its served read gains the negative arm (A6).
 **fanout:** 1 of 1 chains, cap 8. Gates the `OG-ap-23` re-cut; the ruling_ref cells and the muse cell stay behind it.
+
+## ADDENDUM R3-T.88 (2.0.0_SA_COO~O, 2026-10-16 ~08:4xZ) -- round 37, workstream RELEASE-GAP-GRANTS: the internal reader role gets the read of the four prefixes the OG-ap-23 served read found denied (applier row Z-S164; CTO ruling msg 34853)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-ap-27` | APPLY (grant, `0.7.0_AE_CloudOps~ZS`): two read-only policies on `gateway-global-internal-reader-role` -- `s3:GetObject` and prefix-confined `s3:ListBucket` on `opal-data-etfs` `bbg/`, `snapshots/`, `mdpf/etfs/gold/new_securities/` and `opal-data-mdpf` `mdpf/feeds/model_composition/`, derived from the committed catalog rows (plan `2 to add, 0 to change, 0 to destroy`); ask for three halves, the firm-scoped model-composition row stated plainly | `infra/aws/terraform/opal-gateway/gateway_release_gap_read_iam.tf`, the ledger | WORLD | ~AE | none (re-GO of `OG-ap-23` depends on it) |
+
+The gap is the issuer's: the `OG-ap-23` preflight declared no IAM change and its condition C5 assumed the four tools read prefixes the internal reader already held. C5 fired correctly (rolled back to `d577e0e729`). After `ap27.AC2` PASS the SAME release `3d5c9c8bf1` is re-deployed (CTO: the code halves stand); fallback at 18:00Z is a 23-tool re-cut.
+**fanout:** 1 of 1 chains, cap 8. Disjoint from every worker cell; the ruling_ref cells and the muse cell stay behind the `OG-ap-23` close.

@@ -10,7 +10,7 @@
  "subject": "NFRA_CTLPLN round 27: approve the final 17 wheels of the yfinance Linux closure (APPROVED or a named STOP)",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~C/XB_YFINANCE_R27_DELL2_CTO_APPROVAL.md",
  "opened_at": "2026-10-16T06:42:02Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-16T06:44:23Z",
   "bus_message_id": "9160a61f-a520-4089-a6ac-7e633bc98567"
@@ -21,8 +21,8 @@
   "bus_message_id": "699d8540-075e-4ec2-87d0-feae630b5c93"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-16T08:46:16Z",
+  "from_by": "2.0.0_SA_COO~C",
   "to_at": "2026-10-16T06:49:22Z",
   "to_by": "1.0.0_SA_CTO~DELL2"
  }
