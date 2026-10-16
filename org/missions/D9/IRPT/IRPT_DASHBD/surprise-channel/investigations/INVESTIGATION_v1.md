@@ -23001,3 +23001,183 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+## IRPT_DASHBD-D2-W1801-S1 -- the worktree's sparse set omits data/assets/scripts/lib, so the producers cannot import stream_parquet (materialized, no edit)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "The worktree's sparse checkout omits data/assets/scripts/lib, so account_return_daily.py (imported by account_transaction.py) cannot import stream_parquet and every producer test file fails at collection. The order's list of materialized folders does not name it. Materialized with git sparse-checkout add data/assets/scripts/lib (read only; no file edited).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face: the folders org/standards, lib, data/assets/scripts/gold/irpt_reporting, data/inf and infra/logic are materialized; if one is missing run git sparse-checkout add <folder>.",
+  "world_is": "The producers import stream_parquet from data/assets/scripts/lib (sys.path set in account_return_daily.py), a tracked folder outside the listed set. The same sparse-checkout add the face names for a missing folder was used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py@0ecad1fee9 (sys.path.insert data/assets/scripts/lib; import stream_parquet)",
+      "git sparse-checkout list before the add: .tools, data/assets/scripts/gold/irpt_reporting, data/inf, infra/logic, lib, org/* (no data/assets/scripts/lib)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S2 -- the CRO classification table sits outside the listed sparse set (materialized, no edit)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "The generator and the AC1 checker read the CRO classification table under org/tier1_exec/4.0.0_SA_CRO/deliverables, which is outside the listed sparse set; without it the generator stops at its load. Materialized with git sparse-checkout add org/tier1_exec/4.0.0_SA_CRO (read only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order inputs (a) to (d) name the contract, the producers and tests, the issuer records and the checkers; the face lists the materialized folders and does not name org/tier1_exec.",
+  "world_is": "checks/r132/p132_contract.py mapping_problems loads the CRO table and the 0.4.0 generator reads it for the 49 Financial flow classes; the file is tracked and was absent from the sparse set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r132/p132_contract.py (CRO constant; mapping_problems)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1801/gen_transaction_contract_0_4_1.py (CRO load in main)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S3 -- tests/test_account_class_daily.py imports a module under infra/aws outside the sparse set (materialized, no edit)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "Order step 5 says tests/test_account_class_daily.py must still pass. account_class_daily.py imports etf_classifications_dynamodb at module level from infra/aws/lambda/v2_portal/_shared, which is outside the sparse set, so the test fails at collection. Materialized with git sparse-checkout add infra/aws/lambda/v2_portal/_shared (read only); the test then passes, 25 of 25.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 5: run tests/test_account_class_daily.py once (it must still pass).",
+  "world_is": "The test's import chain reaches infra/aws/lambda/v2_portal/_shared (account_class_daily.py sys.path insert and import), which is not in the worktree's materialized set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py@0ecad1fee9 lines 63 to 65 (sys.path insert and import etf_classifications_dynamodb)",
+      "pytest of tests/test_account_class_daily.py: collection error ModuleNotFoundError etf_classifications_dynamodb, then 25 passed after the add"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S4 -- AC3 checker census literal for NAV_PRICE_FUND_ONLY is 2 where the order's rule gives 1 (the criterion fails as written)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "The checker p132_inflection.py expects price_null_census to give NAV_PRICE_FUND_ONLY 2 on its frame. The order's rule for that code needs units non-zero, navPrice positive and no fund family, which only one line of the frame meets. The producer follows the order and counts 1 (NAV_PRICE_FUND_ONLY 1, ZERO_UNITS 2, NAV_NOT_POSITIVE 1). DBF132-1-AC3 therefore prints FAIL as written. With only that literal changed in memory (a scratch diagnostic, not committed) every other AC3 arm passes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 3: price_null_census(frame) returns {reason: count} with exactly NAV_PRICE_FUND_ONLY (units non-zero, navPrice positive, no fund family), ZERO_UNITS (units zero) and NAV_NOT_POSITIVE (units non-zero, navPrice not positive).",
+  "world_is": "The checker's frame has one line that meets the NAV_PRICE_FUND_ONLY condition. The second count the checker asks for is the line with noUnits zero and no fund family, which the order's own parenthetical gives to ZERO_UNITS. A checker and an order that disagree are followed by the order, so the AC3 arm is not repaired here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/checks/r132/p132_inflection.py line 226 @44db9f7b62 (reasons == NAV_PRICE_FUND_ONLY 2, ZERO_UNITS 2, NAV_NOT_POSITIVE 1)",
+      "data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py price_null_census at e9cdb2daea (the order's rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S5 -- a null noUnits line has no reason code in the order (counted as ZERO_UNITS)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "The order's three reason codes cover units zero and units non-zero, not a null noUnits. The producer counts a null noUnits as ZERO_UNITS (no units on the line). The price is None either way, so only the label of the census is affected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 3: ZERO_UNITS is units zero; NAV_PRICE_FUND_ONLY and NAV_NOT_POSITIVE require units non-zero.",
+  "world_is": "A null noUnits reads as None through the scalar reader and is in neither of the order's unit conditions, so the census label for it is a choice the order does not state.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_transaction_inflection.py _price_reason at e9cdb2daea (units None or 0 gives ZERO_UNITS)",
+      "order TO-DB-f-1801 step 3 text (the three reason conditions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S6 -- AC2 was measured on the hardcoded NYSE fallback: pandas_market_calendars is absent in this worktree's Python
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:02:15Z",
+  "one_line": "DBF132-1-AC2 PASS was printed while lib/trading_calendar.py answered from its hardcoded NYSE fallback (a WARN per process), because pandas_market_calendars is not installed here; the round-132 F49 census records the calendar as NYSE/pandas_market_calendars. The answers agree for 2010 to 2027 by the calendar's own tests, but the run is not the package's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 1: first_trading_day_on_or_after uses is_trading_day, so the calendar's fail-closed coverage error still propagates; the checker runs the function on the calendar it imports.",
+  "world_is": "The Python of this worktree lacks pandas_market_calendars; the fallback answered, with one WARN line on stderr per process. No package install was made (none is in the grant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R132_F49_BUSINESS_DATE_CENSUS.json calendar field (NYSE/pandas_market_calendars)",
+      "p132_dates.py run at the worktree root: WARN trading_calendar pandas_market_calendars absent; answering from the hardcoded NYSE fallback"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+
+## IRPT_DASHBD-D2-W1801-S7 -- the commit trailer names Haiku 5.5, not the Sonnet 5.5 the order gives
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1801-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1801",
+  "surfaced_at": "2026-10-16T13:05:10Z",
+  "one_line": "The order asks for a Co-Authored-By Sonnet 5.5 trailer on each commit message; this worker runs as Haiku 5.5, and the attribution rule in force for this session names Claude Haiku 5.5. The commits carry the Haiku 5.5 trailer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker face: each commit message ends with the line Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>.",
+  "world_is": "The worker's model is Haiku 5.5 (claude-haiku-5-5); the session attribution reminder names Claude Haiku 5.5 for commits.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order TO-DB-f-1801 worker face (the trailer line) at 2.0.0_SA_COO~F2 issue commit 44db9f7b62",
+      "session attribution instruction for git commits (Claude Haiku 5.5)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
