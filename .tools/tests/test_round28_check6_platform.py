@@ -21,6 +21,10 @@ WHAT THE ARMS DEFEND (cross-platform means the held wheel's platform tag differs
   f  .data/scripts and .data/data members and over-size files keep failing across platforms
   g  controls: the rule does not pass a planted edit; a mutant rule that passes everything makes arm d fail (it is caught);
      CHECK6_BUILD_METADATA_FILES holds exactly one entry
+  h  (CTO msg 109671) an empty line far from the block (more than four lines away), or five empty lines before a block, fails
+  i  an empty line inside the four-line reach of the block, in a file with a real edit beside it, fails
+  j  a block padded by empty lines on both sides (the delvewheel shape) passes, on either side of the comparison
+  k  a file with no block gets no blank-line leniency on a cross-platform comparison
 """
 from __future__ import annotations
 
@@ -233,10 +237,62 @@ def arm_g_controls():
     assert ic.CHECK6_BUILD_METADATA_FILES == ("numpy/__config__.py",), ic.CHECK6_BUILD_METADATA_FILES
 
 
+# ----------------------------------------------------------------------- arms h to k: the blank lines around a block (CTO msg 109671)
+BLOCK = b"# start delvewheel patch\ndef _patch():\n    pass\n# end delvewheel patch\n"
+FIVE = b"X1 = 1\nX2 = 1\nX3 = 1\nX4 = 1\nX5 = 1\n"
+
+
+def arm_h_blank_line_far_from_block_fails():
+    # h1: the wheel keeps one empty line six lines after the block; the installed copy has the block and no empty line there
+    w = {SYN + "/__init__.py": b"import os\n" + FIVE + b"\nOTHER = 2\n"}
+    i = {SYN + "/__init__.py": b"import os\n" + BLOCK + FIVE + b"OTHER = 2\n"}
+    v, ev = run6(wheel_files=w, installed_files=i)
+    _expect(v, ev, "failed", py_differing=[SYN + "/__init__.py"], platform_normalised_equal=[])
+    # h2: the same, the empty line on the installed side only, far from the block
+    w2 = {SYN + "/__init__.py": b"import os\n" + BLOCK + FIVE + b"OTHER = 2\n"}
+    i2 = {SYN + "/__init__.py": b"import os\n" + FIVE + b"\nOTHER = 2\n"}
+    v2, ev2 = run6(wheel_files=w2, installed_files=i2)
+    _expect(v2, ev2, "failed", py_differing=[SYN + "/__init__.py"], platform_normalised_equal=[])
+    # h3: five empty lines directly before the block: only the nearest four go with it, so one still differs
+    w3 = {SYN + "/__init__.py": b"import os\nVALUE = 1\n"}
+    i3 = {SYN + "/__init__.py": b"import os\n" + b"\n" * 5 + BLOCK + b"VALUE = 1\n"}
+    v3, ev3 = run6(wheel_files=w3, installed_files=i3)
+    _expect(v3, ev3, "failed", py_differing=[SYN + "/__init__.py"], platform_normalised_equal=[])
+
+
+def arm_i_blank_line_inside_reach_with_a_real_edit_fails():
+    # an empty line inside the four-line reach of the block, in a file whose other content also differs by a real edit
+    w = {SYN + "/__init__.py": b"import os\n\nVALUE = 2\n"}
+    i = {SYN + "/__init__.py": b"import os\n" + BLOCK + b"\nVALUE = 1\n"}
+    v, ev = run6(wheel_files=w, installed_files=i)
+    _expect(v, ev, "failed", py_differing=[SYN + "/__init__.py"], platform_normalised_equal=[])
+
+
+def arm_j_block_padded_by_empty_lines_on_both_sides_passes():
+    # the delvewheel shape: two empty lines before the block, three after; the wheel has the bare code
+    w = {SYN + "/__init__.py": b"import os\nVALUE = 1\n"}
+    i = {SYN + "/__init__.py": b"import os\n\n\n" + BLOCK + b"\n\n\nVALUE = 1\n"}
+    v, ev = run6(wheel_files=w, installed_files=i)
+    _expect(v, ev, "passed", py_differing=[], platform_normalised_equal=[SYN + "/__init__.py"])
+    # and the same padding on the wheel side only
+    v2, ev2 = run6(wheel_files=i, installed_files=w)
+    _expect(v2, ev2, "passed", py_differing=[], platform_normalised_equal=[SYN + "/__init__.py"])
+
+
+def arm_k_no_block_no_blank_line_leniency():
+    # a file with no delvewheel block gets no blank-line leniency at all, on a cross-platform comparison
+    w = {SYN + "/__init__.py": b"VALUE = 1\n\nOTHER = 2\n"}
+    i = {SYN + "/__init__.py": b"VALUE = 1\nOTHER = 2\n"}
+    v, ev = run6(wheel_files=w, installed_files=i)
+    _expect(v, ev, "failed", compared_across_platforms=True, py_differing=[SYN + "/__init__.py"], platform_normalised_equal=[])
+
+
 ARMS = [arm_a_crlf_only_cross_platform_passes, arm_b_delvewheel_block_cross_platform_passes,
         arm_c_numpy_build_metadata_file_passes_and_other_file_fails, arm_d_planted_edit_fails_across_platforms,
         arm_e_same_platform_is_unchanged, arm_e2_no_installed_wheel_tag_is_not_cross_platform,
-        arm_f_scripts_data_and_oversize_keep_failing, arm_g_controls]
+        arm_f_scripts_data_and_oversize_keep_failing, arm_g_controls,
+        arm_h_blank_line_far_from_block_fails, arm_i_blank_line_inside_reach_with_a_real_edit_fails,
+        arm_j_block_padded_by_empty_lines_on_both_sides_passes, arm_k_no_block_no_blank_line_leniency]
 
 
 def run_arms():

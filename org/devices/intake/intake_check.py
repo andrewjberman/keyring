@@ -511,22 +511,41 @@ def installed_platform_tag(inst_di):
 CHECK6_BUILD_METADATA_FILES = ("numpy/__config__.py",)
 DELVEWHEEL_START = b"# start delvewheel patch"
 DELVEWHEEL_END = b"# end delvewheel patch"
+# CTO ruling (msg 109671, round 28): the block is removed TOGETHER WITH up to this many empty lines directly before it and up to
+# this many directly after it. Empty lines elsewhere are never removed, and a file with no block gets no leniency.
+DELVEWHEEL_PAD = 4
 
 
 def _platform_normalise(data):
     """CRLF to LF, then remove every block from a line containing the delvewheel start marker through the first following line
-    containing the end marker (both marker lines included). A start with no end after it is not a block and is left as it is."""
-    lines = data.replace(b"\r\n", b"\n").split(b"\n")
+    containing the end marker (both marker lines included), together with up to DELVEWHEEL_PAD empty lines directly before and
+    up to DELVEWHEEL_PAD directly after. A start with no end after it is not a block and is left as it is. The final newline of
+    the file is not an empty line."""
+    text = data.replace(b"\r\n", b"\n")
+    lines = text.split(b"\n")
+    trailing = lines[-1] == b""
+    if trailing:
+        lines = lines[:-1]
     out, i = [], 0
     while i < len(lines):
         if DELVEWHEEL_START in lines[i]:
             end = next((j for j in range(i, len(lines)) if DELVEWHEEL_END in lines[j]), None)
             if end is not None:
+                for _ in range(DELVEWHEEL_PAD):      # up to DELVEWHEEL_PAD empty lines directly before the block
+                    if out and out[-1] == b"":
+                        out.pop()
+                    else:
+                        break
                 i = end + 1
+                for _ in range(DELVEWHEEL_PAD):      # up to DELVEWHEEL_PAD empty lines directly after the block
+                    if i < len(lines) and lines[i] == b"":
+                        i += 1
+                    else:
+                        break
                 continue
         out.append(lines[i])
         i += 1
-    return b"\n".join(out)
+    return b"\n".join(out) + (b"\n" if trailing else b"")
 
 
 def _platform_rule(rel, held_bytes, inst_bytes):
