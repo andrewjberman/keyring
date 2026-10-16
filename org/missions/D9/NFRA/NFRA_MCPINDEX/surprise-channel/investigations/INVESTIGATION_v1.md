@@ -9140,6 +9140,28 @@ carries none.
       ]
     },
     "notes": "A catalog re-measure and re-emit (or an issuer ruling on how L4 closes) is the cure; the applier holds L4 and r15.AC1 until then."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MI",
+    "surfaced_at": "2026-10-16T11:38:35Z",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-S128",
+    "one_line": "MX-r-15 A3 says the v2 depth claims, read 2026-10-16 10:58Z, 'mostly hold until the ~13:30Z publish', but 7 measured rows served data_as_of 2026-10-15 by 11:35Z, so r13.AC3 fails on the deployed v2 (depth 8 of 11, answer-time 9 of 17).",
+    "spec_asserts": "MX-r-15 A3 time limit: 'the depth claims were read 2026-10-16 10:58Z; most hold until the ~13:30Z publish, so land and close v2 before 13:15Z.'",
+    "world_is": "v2 (1bc2df0b13) landed 11:30:12Z and was graded 11:35Z: r13.AC2 PASS, r15.AC4 PASS (host md5 983464f8 = tree), r13.AC3 FAIL. The BAD claims are data_as_of catalog 2026-10-14 vs served 2026-10-15 on mp.05, mp.06, cor.01, ft.01, ft.02, mac.01 and val.02, so the daily publish of those objects ran between 10:58Z and 11:35Z, not at ~13:30Z. mac.04 (the v1 failure) passes. The prior catalog B fails on the same rows plus more, so no rollback cures it. The depth and freshness claims move with the daily publish, which is earlier than the order assumes; a re-measure holds only if it is read after that publish settles.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "probes_r15/r13.AC2_r13.AC3_r15.AC4_v2_POST.txt: r13.AC3 DEPTH valid 8 of 11, ANSWER-TIME 9 of 17, RESULT: FAIL; r13.AC2 and r15.AC4 PASS.",
+        "probes_r15/r13.AC3_detail_r15_v2.txt: the 7 BAD rows with catalog=2026-10-14 aws=2026-10-15 (read 2026-10-16T11:35:00Z)."
+      ]
+    },
+    "notes": "Both ledgers (nfra-mcpindex-r15-catalog-release L4 and nfra-mcpindex-r15-catalog-release-v2 L4) stay open for the issuer's re-measure; the applier holds r15.AC1."
   }
 ]
 ```

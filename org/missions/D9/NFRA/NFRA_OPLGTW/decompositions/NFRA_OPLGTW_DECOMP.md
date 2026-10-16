@@ -2581,3 +2581,24 @@ The grade is the CVO's judgment on the bodies; the cell only supplies them. `OG-
 
 Sequence (CTO msg 34913): this backfill merges first, then `OG-rr-2`'s drain (its worker `~116` builds the gate check in parallel; its AC2 is the full-add re-grade, 0 moved).
 **fanout:** 2 of 2 chains, cap 8. `OG-rr-3` writes `name_rulings.json`; `OG-rr-2` writes `.tools/naming-gate.py`: disjoint write sets, one ordering edge at the drain.
+
+## ADDENDUM R3-T.93 (2.0.0_SA_COO~O, 2026-10-16 ~11:4xZ) -- round 38, ONE issuance, workstream ENRICH-R38
+
+**Source.** `1.0.0_SA_CTO~Z`'s round-37 analysis `ledger/ROUND_ANALYSIS.round37.md` @afa8003488 section 3 (E1 to E8), answering the CVO's slug (ADJUDICATION_v31.Z.md). Round 37 is MAY-CLOSE with 7 of 7 judgment criteria graded. Plus one remediation found at the `OG-ng-3` A1 re-seat (`OG-ts-1`).
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-mg-1` (existing) | E1 | Phase B: R1 and R2 writes (all three halves signed 11:1xZ; GO sent 11:15Z; `~Z` reported both written 11:30Z) | SERVED | ~Z | applier |
+| (seat act) | E2 | after E1: `0.0.3_BG_BBGTerminal` re-exercises the 8 tools, per tool; DENIED = BLOCKING row naming its gate. Not a task order: the L6 gate refuses an order issued to a Tier-0 seat, so it is a message citing `OG-mg-1` | SERVED | BBGTerminal | seat |
+| (COO act) | E3 | the FWD-21 stand-in read: one covered name's pack and chatter through THIS session's gateway MCP (Andrew's own work Claude as the stand-in principal); recorded in the COO deliverables; waits on the MCP reconnecting (429 rate-limited) | SERVED | ~O | COO |
+| `OG-en-4` | E4 | client holdings state `weight_unit` and `currency` (+ `currency_basis`) per row, from each adapter's source; test on each adapter's real row | WORLD | ~118 | worker |
+| `OG-en-5` | E5 | a `coverage_floor` beside an empty news answer ("no articles in window W, newest article at T") | WORLD | ~119 | worker |
+| `OG-en-6` | E6 | harvest chatter states `trading_days_behind_t1` | WORLD | ~120 | worker |
+| `OG-en-7` | E7 | the 49F SmartX served read counts candidates whose advisor maps to another firm, with the denominator (expected 0) | SERVED | ~AE | applier |
+| `OG-en-8` | E8 | the muse-only narrowed OAuth client (M365 mail and Teams read and send plus `whoami`), inert until `MUSE_CLIENT_ID` is configured | WORLD | ~121 | worker |
+| `OG-ts-1` | remediation | the OG-gp-1 and OG-gf-1 classification pins follow the MCPINDEX v2 catalog (two tests red at HEAD; 18 of 32 classified rows absent from the catalog) | WORLD | ~122 | worker |
+
+**Not cells (the CTO's rulings):** the named asset manager's driven call (a person's act, on site Z's open list); Alyssa's `download_filtered` (Z-S173, Andrew's, act row bd68); `OG-rr-2` and the 110-row backfill (already issued and merged in round 37, not recut).
+**Release (not yet cut):** E4, E5, E6 and E8 ride ONE batched gateway release (WORLD: the applier cell, the narrowing never-widen ask for E8, the `MUSE_CLIENT_ID` configuration act and the muse served arm); cut after the four builds merge. `OG-ts-1` and `OG-en-7` do not ride it.
+**Risk class:** the L6 gate floors any order whose `<paths>` name a gateway infrastructure path at WORLD (spine v3.19 L6); the five worker cells are WORLD by that floor though none deploys.
+**fanout:** 5 of 5 worker chains plus 1 applier read, cap 8. Disjoint write sets: `client_*` (`en-4`), `news_typed.py` (`en-5`), `harvest_press.py` (`en-6`), entitlement code (`en-8`), two test files (`ts-1`).

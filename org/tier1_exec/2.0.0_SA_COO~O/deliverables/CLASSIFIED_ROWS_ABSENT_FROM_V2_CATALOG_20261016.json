@@ -1,0 +1,63 @@
+{
+ "read_at": "2026-10-16",
+ "catalog": "infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml",
+ "catalog_rows": 280,
+ "classified_rows": 32,
+ "absent_from_catalog": [
+  "opal_data_mdpf_feeds_etf_net_assets",
+  "opal_data_mdpf_feeds_model_aua_positions_49financial",
+  "opal_data_mdpf_feeds_model_aua_positions_inflection",
+  "opal_data_mdpf_feeds_non_model_aua",
+  "opal_data_mdpf_feeds_partner_held_etf_49financial",
+  "opal_data_mdpf_gold_ai_classified_securities",
+  "opal_data_portal_v2_platinum_advi_49financial_perfrp",
+  "opal_data_portal_v2_platinum_advi_49financial_twins",
+  "opal_data_portal_v2_platinum_mdpf_cottonwood_account_units",
+  "opal_data_portal_v2_platinum_mdpf_manifests_and_archive",
+  "opal_data_portal_v2_platinum_mdpf_non_model_assets",
+  "opal_data_portal_v2_served_benchmark_returns",
+  "opal_data_portal_v2_served_cma_views",
+  "opal_data_portal_v2_served_keyword_history",
+  "opal_data_portal_v2_served_market_all_returns_legacy",
+  "opal_data_portal_v2_served_model_portfolios_views",
+  "opal_data_portal_v2_served_portfolios_legacy",
+  "opal_data_portal_v2_served_smartx_model_performance"
+ ],
+ "near_matches": {
+  "opal_data_mdpf_feeds_etf_net_assets": [],
+  "opal_data_mdpf_feeds_model_aua_positions_49financial": [],
+  "opal_data_mdpf_feeds_model_aua_positions_inflection": [],
+  "opal_data_mdpf_feeds_non_model_aua": [],
+  "opal_data_mdpf_feeds_partner_held_etf_49financial": [],
+  "opal_data_mdpf_gold_ai_classified_securities": [],
+  "opal_data_portal_v2_platinum_advi_49financial_perfrp": [],
+  "opal_data_portal_v2_platinum_advi_49financial_twins": [],
+  "opal_data_portal_v2_platinum_mdpf_cottonwood_account_units": [
+   "opal_data_portal_v2_platinum_mdpf_account_distribution",
+   "opal_data_portal_v2_platinum_mdpf_aggregate_aua_timeseries"
+  ],
+  "opal_data_portal_v2_platinum_mdpf_manifests_and_archive": [
+   "opal_data_portal_v2_platinum_mdpf_account_distribution",
+   "opal_data_portal_v2_platinum_mdpf_aggregate_aua_timeseries"
+  ],
+  "opal_data_portal_v2_platinum_mdpf_non_model_assets": [
+   "opal_data_portal_v2_platinum_mdpf_account_distribution",
+   "opal_data_portal_v2_platinum_mdpf_aggregate_aua_timeseries"
+  ],
+  "opal_data_portal_v2_served_benchmark_returns": [],
+  "opal_data_portal_v2_served_cma_views": [
+   "opal_data_portal_v2_served_cma_assumptions"
+  ],
+  "opal_data_portal_v2_served_keyword_history": [],
+  "opal_data_portal_v2_served_market_all_returns_legacy": [
+   "opal_data_portal_v2_served_market_overview_tiered",
+   "opal_data_portal_v2_served_market_regime"
+  ],
+  "opal_data_portal_v2_served_model_portfolios_views": [
+   "opal_data_portal_v2_served_model_portfolio_timeseries",
+   "opal_data_portal_v2_served_model_portfolio_benchmarks"
+  ],
+  "opal_data_portal_v2_served_portfolios_legacy": [],
+  "opal_data_portal_v2_served_smartx_model_performance": []
+ }
+}
