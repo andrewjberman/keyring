@@ -8431,3 +8431,55 @@ Rows are appended after the earlier rows; each is one fenced json object.
   "notes": "Add to the Cottonwood plan's retire list with its consumer census (0 of 304 roles can read it). Its deletion is destructive and needs Andrew's confirmation at the moment it runs (CLAUDE.md Agent Autonomy); the retirement is a round-9 or later change under its own pair. Disarm: none (INERT)."
 }
 ```
+
+## Row filed by 0.9.0_WK_ADVI_FIRMBKTS~89 (TO ADVI_FIRMBKTS.TO-FB-p-6, floor-day 23rd key: premise false, step 4)
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:16:36Z",
+  "one_line": "FB-p-6 premise false: the 23rd named key inflection_wealth_management/top_holdings.json DID draw a version on 2026-10-16 (12:52:32Z, gold step INF_D_02b, before the publisher's 13:30Z run), so no KEY23 record is written (TO step 4); AC1 reads FAIL.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions --bucket opal-data-inf --prefix <each of the 23 keys from ACT3_BASELINE_VERSIONS.json>, run by 0.9.0_WK_ADVI_FIRMBKTS~89 on 2026-10-16 after 18:00Z: 23 of 23 rc=0, counted client-side on Key and LastModified; the 23rd key newest version MBHVZkmm4l.2TsHVoJjabw2dUNggRXT8 LastModified 2026-10-16T12:52:32Z IsLatest True Size 1787; all 23 keys have at least one version dated 2026-10-16",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/0.7.0_AE_CloudOps~FB1/ACT3_BASELINE_VERSIONS.json@ab8081bfdd: the 23rd key baseline VersionId ys6JKj05riUJlrqjXami_YVb7hqiRCgw last_modified 2026-10-15T12:52:33Z, recorded_at 2026-10-15T13:11:26Z (the baseline predates the floor day; the live latest is the newer MBHV version)",
+      "data/inf/scripts/gold/INF_D_02b.top_holdings.py@ab8081bfdd lines 333-361: under --upload the gold step writes platinum/advisors/{advisor_key}/top_holdings.json for every advisor key, empty documents included (lines 336-343 and 358-361)",
+      "infra/aws/lambda/inf-portal-advisor-publisher/lambda_function.py@ab8081bfdd lines 810-814 and 1200-1201: _build_top_holdings returns None on empty holdings and the advisor publisher writes top_holdings.json only when the result is not None",
+      "infra/aws/lambda/inf-portal-publisher/lambda_function.py@ab8081bfdd lines 877-882 and 1067-1069: the firm publisher writes the three snapshot keys; the 20 advisor keys fan out to the advisor publisher (comment at line 1029)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO ADVI_FIRMBKTS.TO-FB-p-6 (task-orders/ADVI_FIRMBKTS.TO-FB-p-6.floor-day-23rd-key.md, section 1 and step 1): the 23rd named key drew no new version on the 2026-10-16 floor day, so exactly one key has no version dated 2026-10-16 and its record KEY23.json can be written on that premise.",
+  "world_is": "The premise is false. All 23 named keys have at least one version dated 2026-10-16. The 23rd key, platinum/advisors/inflection_wealth_management/top_holdings.json, has a version dated 2026-10-16T12:52:32Z written by the gold step INF_D_02b before the publisher's 13:30:48Z run, and one version on each of 2026-10-12 to 2026-10-16. The publisher wrote no 2026-10-16 version of this key; the other 22 named keys each drew a publisher version at 13:30:48Z to 13:31:13Z.",
+  "notes": "Step 4 applied: no KEY23.json written (the order says do not force the record). Its writer claim holds: INF_D_02b writes the key daily under --upload, and the advisor publisher writes it only when _build_top_holdings is not None (lines 810-814 and 1200-1201). Its 'drew none' premise does not hold. Not read: why the advisor publisher skipped this key at 13:31 on 2026-10-16. Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1. Disarm: none (INERT)."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W89-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~89",
+  "surfaced_at": "2026-10-16T18:20:00Z",
+  "one_line": "The order names the worker row id form <CODE>-W<n>-S<k>; the row gate refuses a bare worker id on fabric dell1 and requires the coordinate, so ADVI_FIRMBKTS-W89-S1 was renamed to ADVI_FIRMBKTS-D1-W89-S1 before commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/surprise-row-gate.py as run by .tools/safe-commit.sh on 0.9.0_WK_ADVI_FIRMBKTS~89, 2026-10-16 ~18:20Z: BLOCKED on ADVI_FIRMBKTS-W89-S1 -- fabric='dell1' but the id carries no coordinate; a dell1 row is written <CODE>-D1-S<n> (worker <CODE>-D1-W<n>-S<k>); commit aborted, nothing staged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO ADVI_FIRMBKTS.TO-FB-p-6 section 5 and the worker face: a worker's surprise row is minted as <CODE>-W<n>-S<k>, with the allocator coordinate W<n> and no fabric coordinate.",
+  "world_is": "On fabric dell1 the commit-time row gate refuses a bare worker id and requires the fabric coordinate: <CODE>-D1-W<n>-S<k>.",
+  "notes": "Filed as ADVI_FIRMBKTS-D1-W89-S2 for the id-form difference; the row content of S1 is unchanged except its id. Disarm: none (INERT). Disposition left UNDER_INVESTIGATION for the issuer 2.0.0_SA_COO~B1."
+}
+```
