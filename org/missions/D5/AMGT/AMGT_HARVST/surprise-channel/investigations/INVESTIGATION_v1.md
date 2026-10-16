@@ -9887,6 +9887,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
      ],
      "disposition": "DISMISSED_WITH_REASON",
      "dismissal_reason": "S1 is carried as a rule into the cb-13 order; S2 to S4 are notes with no action."
+    },
+    {
+     "id": "AMGT_HARVST-D1-S29",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "4.0.0_SA_CRO~DELL1",
+     "surfaced_at": "2026-10-16T05:00Z",
+     "one_line": "Three served-harvest defects found by the /adam-report and /lauren-report runs (BA, KMB, UNH, ASML, 2026-10-16): the model block's IS_DIL_EPS_CONT_OPS disagrees with reported diluted EPS; KMB's research record carries a Kimberly-Clark de Mexico report (making KMB read as an IDVZ holding); and resolve('PG') returns PG&E, not Procter & Gamble.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "harvest_get_fundamentals(kind=model) serves fiscal-year line items a consumer can quote as reported; harvest_get_research attributes research_reports and fund_of_record to the security named; harvest_resolve_security matches a ticker to the issuer that trades under it.",
+     "world_is": "(1) IS_DIL_EPS_CONT_OPS: UNH_US_Equity FY2024 33.3807 and FY2025 15.5194 against reported diluted EPS $15.51 and $13.23; BA_US_Equity FY2025 -8.81 against reported $2.48 (IS_EPS 2.49 is close); KMB's Bloomberg EPS series also disagreed with its 10-Ks. (2) KMB_US_Equity research carries an IDVZ 2.25% position from a report that is Opal's Kimberly-Clark de Mexico update (a different security), while posture shows KMB not held. (3) harvest_resolve_security('PG') resolves to PG&E. All four report runs used SEC filings instead and said so in their notes.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "RUN 2026-10-16 ~02:00Z harvest_get_fundamentals(UNH_US_Equity, model, fiscal_years [2024, 2025]): IS_DIL_EPS_CONT_OPS 33.3807 (2024), 15.5194 (2025); IS_EPS 15.64 / 13.28; UNH 10-K diluted EPS $15.51 (2024), $13.23 (2025).",
+       "RUN 2026-10-16 ~01:30Z harvest_get_fundamentals(BA_US_Equity, model): IS_DIL_EPS_CONT_OPS FY2025 -8.81; Boeing FY2025 10-K diluted EPS $2.48.",
+       "Agent runs 2026-10-16 (KMB, UNH workers of 4.0.0_SA_CRO~DELL1): KMB research_reports / fund_of_record cite the Kimberly-Clark de Mexico update; resolve('PG') -> PG&E. Generators and raw pulls in the session scratchpad run_KMB/ and run_UNH/ folders (not committed)."
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION",
+     "notes": "INERT for served pages only as far as they quote these fields; any consumer quoting IS_DIL_EPS_CONT_OPS or the KMB fund line as fact is wrong today. Owner to decide: (1) whether the model block should carry IS_DIL_EPS_CONT_OPS at all or label its basis; (2) the research-report-to-security attribution rule for same-name issuers (KMB vs KIMBERA MM); (3) ticker-exact precedence over name match in resolve. Found off-task by the report-skill runs (Andrew-direct at this terminal)."
     }
 ]
 ```
