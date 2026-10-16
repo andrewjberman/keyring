@@ -20832,3 +20832,82 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "notes": "Not an order criterion. The registry_row_exists field records false with the probe's denominator; the zero is not evidence of a refusal either way."
 }
 ```
+
+## IRPT_DASHBD-D2-W1101-S1 -- the worktree is sparse, so the item schema the row gate names is absent from the tree (read at HEAD instead)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1101-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1101",
+  "surfaced_at": "2026-10-16T05:20:10Z",
+  "one_line": "The worktree is sparse: org/surprise_channel (the row schema and its gate input) is tracked in the index but absent on disk, so the item schema could not be read from the tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The investigation file header names the row schema at org/surprise_channel/schemas/investigation_item.schema.json and says the row gate validates every new row against it; the task order's TREE-OK first act checks only org and .tools.",
+  "world_is": "git config core.sparseCheckout is true and the sparse list is .tools, infra/logic/registry, lib, org/devices and org/missions/D9/IRPT/IRPT_DASHBD, so org/surprise_channel is absent on disk while git ls-files lists it. The schema was read at HEAD with git show (draft-07, required id, surfaced_at, class, grounding, disposition) and the row was formatted from that read. No sparse setting was changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/surprise_channel/schemas/investigation_item.schema.json@354d864d1a",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md@354d864d1a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. Recorded so the CVO can see that the row gate's schema input is outside this worker's sparse checkout."
+}
+```
+
+## IRPT_DASHBD-D2-W1101-S2 -- the securities list sort is inside React components, so no pure sort helper was reusable
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1101-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1101",
+  "surfaced_at": "2026-10-16T05:20:10Z",
+  "one_line": "The securities list's sort helpers named as reusable are not pure exportable functions: the sort sits inside React components, so the view model copies the idea and imports nothing from the holdings tab.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 1 of the task order: the securities list's existing filter and sort helpers (named reusable by the round-119 thread) are found under tabs/holdings, and a helper that would pull a React component is not imported.",
+  "world_is": "comp-find --files 'sort' over portal/src/pages/InvestorReporting/tabs/holdings returned 7 hits across 14 files (DEF 2, SURFACED 5). The two DEF hits are the sort code in the React components DrillTree.tsx and SecurityList.tsx; SecurityList.tsx sorts inside the component body. assetClass.ts and classTotals.ts also match the word sort and were not read as sort helpers. No pure sort helper was reused; the view model copies the idea.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/holdings/SecurityList.tsx@354d864d1a",
+      "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx@354d864d1a"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The reuse premise of step 1 does not hold for the sort; the filter and search were written fresh."
+}
+```
+
+## IRPT_DASHBD-D2-W1101-S3 -- the portal lint exits 1 on one error in a file this order does not touch
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W1101-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1101",
+  "surfaced_at": "2026-10-16T05:20:10Z",
+  "one_line": "The portal lint command exits 1 on one error in a TicketCenter test file that this order does not touch; the two new files carry no lint finding.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Step 4 of the task order gates the portal with bun run lint and asks for 0 errors in the worker's files.",
+  "world_is": "bun run lint at portal commit ee30038f exits 1 with 1 error and 359 warnings. The error is src/pages/TicketCenter/__tests__/filing-hint.test.tsx line 147 (no-regex-spaces). transactionsView.ts and transactions-view.test.ts report no finding. The file is outside the order's paths and neither of this order's commits touched it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/TicketCenter/__tests__/filing-hint.test.tsx@ee30038f",
+      "portal/src/pages/InvestorReporting/tabs/reporting/transactions/transactionsView.ts@ee30038f"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not an order criterion. The lint exit code of the whole portal is not zero at this head; the order's gate is met on the worker's files."
+}
+```
+
