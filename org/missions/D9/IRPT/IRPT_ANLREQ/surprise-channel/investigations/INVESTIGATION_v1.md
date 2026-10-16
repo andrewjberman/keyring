@@ -21678,3 +21678,54 @@
   "notes": "Not a blocker: the criterion's coverage check is unchanged; only the mutant's choice of row moved to one whose removal orphans its file. The register is V2's and was not edited."
 }
 ```
+
+## IRPT_ANLREQ-D2-S144 -- disarm of W224-S1: the global-admissions gate now scans the whole denominator
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S144",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T06:17:08Z",
+  "one_line": "DISARMS IRPT_ANLREQ-D2-W224-S1 (ARMED, disarm owner the issuer): the gate covers every OPAL_GLOBAL comparison site under infra/aws/lambda (40 sites, 21 files), merged with AR-tz-66, and V2's register rows G1 to G11 are all ruled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W224-S1: the round-47 gate scanned 2 files while the same test appears elsewhere, so an admission added in any other file would leave the real gate green.",
+  "world_is": "Measured on the merged tree after the AR-tz-66 drain: test_cross_firm_global_sites_widened.py and test_cross_firm_global_register.py read 14 passed (R46-TESTS-OK passed=14), ruff clean. The completeness test scans 3133 non-test files and finds 40 comparison sites in 21 files, equal to the declared table copied from the round-50 record; a new, removed or moved site fails naming the file. The coverage test requires every ADMITS file to be a register row; rows G4 to G11 exist (V2 8e6ecfc86c) and are RULED by the CTO (ADDENDUM 8, msg 9081). The round-47 gate itself now scans the 8 ADMITS files with four comparison operators (18 sites). Not claimed: that the 40-site population is complete for admissions expressed other than as a principal_class comparison (a different spelling of the same rule would not be seen).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_cross_firm_global_sites_widened.py and test_cross_firm_global_register.py: R46-TESTS-OK passed=14 on the merged tree",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~229/OPAL_GLOBAL_SITES_CLASSIFIED.md (40 rows, R45-REC-OK)",
+      "CTO ADDENDUM 8, msg 9081, org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_ANLREQ_FOUR_LANES_END_TO_END_20261015.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S145 -- disposition of W231-S1 and W231-S2: the FWD-5 driver exits 0 over the calls it makes, and the ids are required run inputs
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S145",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T06:31:03Z",
+  "one_line": "Disposes of IRPT_ANLREQ-D2-W231-S1 and S2 (BLOCKING for the later WORLD run): the meeting POST and the commentary draft are EXCLUDED rows outside the DONE WHEN, and --firm-b, --request-id, --job-id are required inputs; merged with AR-tz-68 (e2a160b783).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W231-S1: the meeting route is a POST its own guard refuses, so exit 0 was unreachable. W231-S2: the package-file routes need report and request ids the refused ticket read cannot supply.",
+  "world_is": "Measured on the merged tree: test_fwd5_driver_exit_semantics.py plus test_fwd5_driver_offline.py read R46-TESTS-OK passed=23; the driver selftest reads FWD5-SELFTEST-OK checks=19; ruff clean. The closed verdicts are REFUSED, LEAK, UNREACHED, EXCLUDED; exit 0 only when every made call is REFUSED and no LEAK; exit 1 on a LEAK even with excluded rows; exit 2 on an unreached made call, no made call, or a missing required id (checked before sign-in, zero requests). The meeting write attempt is proved offline by test_cross_firm_meeting_scope.py (AR-ty-55); the commentary draft rides the ticket read body, which the LEAK check inspects. NOT done: the driver has never run against any real service; the run is a WORLD act via AQ2 under a pair after V2's release (target Oct 20), and the ids come from the ticket the FWD-1 run files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~232/fwd5_driver/test_fwd5_driver_exit_semantics.py (merged e2a160b783)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

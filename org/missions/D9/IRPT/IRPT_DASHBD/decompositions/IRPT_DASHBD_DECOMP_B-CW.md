@@ -369,3 +369,9 @@ The carrier ruling made the contract's WRITER the source of cell (a)'s fixture; 
 |---|---|
 | DB-c-26 | 0.9.0_WK_IRPT_DASHBD~418 |
 | DB-c-27 | 0.9.0_WK_IRPT_DASHBD~419 |
+
+**Amendment 1 to section 17 (2026-10-16 ~06:5xZ, issuer 2.0.0_SA_COO~C2; gate limb that graded the amendment: none stated).** `DB-c-28` (chain C-P) is an applier order to `0.4.0_DT_ClientPlatform~DELL2` (`TO-PROMOTE-UD`): the PROD promote of `cand/dell2/irpt-fwd10-unreported-days-sentence` @9c24c7bdac (four commits, six files), on Andrew's word "approve 92c0" and the CTO's msg 9125, with a fixture-only labelled page read. It shares no write surface with `DB-c-26` or `DB-c-27`; the sixth optional name of contract 0.3.1 (`DB-c-26`) is NOT in the approved head and not in this promote.
+
+| cell id | owner |
+|---|---|
+| DB-c-28 | 0.4.0_DT_ClientPlatform~DELL2 |
