@@ -38,3 +38,17 @@ flow as the comparable 49 Financial/Cottonwood job". This text orders the steps.
   the deployed copy, not the repo copy.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ERRATUM 1 (~19:3xZ, on `2.0.0_SA_COO~B1`'s row D1-S61 @b80cb71982)
+
+- **Step 1 rested on the repo copy, which is stale.** The deployed `inf-gold-trigger` (Active, modified 2026-07-16, 545 lines) has 0
+  references to the marker; it dedupes with `gold/dispatch-lock.json`. The repo copy I read is 163 lines from May. Even that copy compared a
+  `snapshot_date` that none of the 17 retained marker versions carries. My finding 1 was read from the wrong bytes (rule 22a: diff deployed
+  bytes, never the repo by filename).
+- **Step 1 is REPLACED by a live census of the key's readers:**
+  - the deployed code of all Lambda functions in the account, read from each one's code package, not matched by name, with the
+    denominator printed;
+  - the deployed runner scripts in `s3://opal-data-inf/code/runner/`;
+  - any other live reader then gets its own step.
+  If the census finds no live reader, step 1 drops and the order runs steps 2 and 3 as written.
+- **The repo-versus-deployed drift of `inf-gold-trigger`** is row D1-S61's own finding and goes to the round-9 analysis.
