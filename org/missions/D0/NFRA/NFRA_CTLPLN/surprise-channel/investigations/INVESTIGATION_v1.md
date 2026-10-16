@@ -12494,3 +12494,58 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Check 8 now passes for all 17 (BLOCKING W133-S1 cleared by the CTO's file block at 0f1ce30022). The four refused records read check 8 passed with the signed path; their verdict is not_checked because of check 6. Dell2 CTO's PROCEED (11f0240cd4) was received; the Taildrop was not sent because the 52-file pack does not exist."
 }
 ```
+
+## NFRA_CTLPLN-W136-S1 -- the fetch approval gate and check 2 read the approval file by different rules
+
+```json
+{
+  "id": "NFRA_CTLPLN-W136-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~136",
+  "surfaced_at": "2026-10-16T10:37:22Z",
+  "one_line": "The fetch approval gate and check 2 read the same approval file by different rules: fetch refuses 'ExamplePkg==1.2.3' and 'examplepkg == 1.2.3' and passes 'examplepkg==1.2.3 --hash=sha256:...'; check 2 accepts the first two and refuses the hash-suffixed line, so a line can pass the fetch and then fail check 2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_fetch.py@7d4aef5b93 lines 355-357 (Fetch.approval) and 630-641 (approval_gate): a case-sensitive regex for name==version, not preceded by [A-Za-z0-9._-] and not followed by [A-Za-z0-9._+!]",
+      "org/devices/intake/intake_check.py@7d4aef5b93 lines 385-402 (check_2): cuts each line at '#', strips, partitions at '==', folds the name with norm_name (line 202: case and [-_.] folded) and compares the version exactly after strip",
+      "measured at 2026-10-16T10:3xZ in worktree C:/Users/AndrewBerman/Desktop/ajb_wk/ctlpln-136 by calling intake_fetch.approval_gate and intake_check.check_2 on a synthetic wheel in a temporary folder: 'examplepkg==1.2.3' fetch=True check2=True; 'ExamplePkg==1.2.3' fetch=False check2=True; 'examplepkg == 1.2.3' fetch=False check2=True; 'examplepkg==1.2.3 --hash=sha256:<64 zeros>' fetch=True check2=False"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-27 analysis ruling 2 and TO CT-ax-1 build step 1.1: the page states the exact name==version form the tool matches, what it does with case, extras, hashes and a trailing comment, so one line is written once and accepted by every reader it meets.",
+  "world_is": "Two readers, two rules, one file. The fetch reader is case-sensitive and strict on spaces and suffixes except a trailing space or comment; check 2 folds case and spaces and refuses a hash suffix. A hash-suffixed line therefore passes the fetch (which writes the held file and its record) and fails check 2 at check time. The page documents both rules and says a line must pass both; the tools are unchanged.",
+  "notes": "Observation only; no tool was changed (the worker's write grant forbids it). The divergence is for the owner of intake_check.py and intake_fetch.py to decide whether the two readers should share one rule."
+}
+```
+
+## NFRA_CTLPLN-W136-S2 -- no tool offers a read-only dry run of one approval-file line or of one signed check-8 file
+
+```json
+{
+  "id": "NFRA_CTLPLN-W136-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~136",
+  "surfaced_at": "2026-10-16T10:37:22Z",
+  "one_line": "The CTO round-27 ruling 2 and TO CT-ax-1 ask for the dry-run command each tool offers to test one approval-file line and one signed check-8 file; no such verb exists, so the page reports NONE for both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_fetch.py@7d4aef5b93 lines 6-8: every fetch writes a FETCH record, also when refused before any request; lines 13-20: resolve reads the approval file before any socket and then makes one release-document GET per member",
+      "org/devices/intake/intake_check.py@7d4aef5b93 header lines 11-17: the verbs check, release, pack, selftest-unsigned and selftest-av; check writes a check record (lines 19-20), and neither selftest tests a line or a signed file",
+      "org/devices/intake/intake_request.py@7d4aef5b93: status and show read request records and requirements.txt; no verb reads an approval file or a signed file",
+      "org/devices/intake/APPROVAL_AND_SIGNED_FILE_DEMANDS.md@5a453d324a sections 1, 2 and 5: each reports NONE for the line and the signed file; the table lists the read-only verbs that do exist"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-27 analysis ruling 2 (the page covers 'the dry-run command each tool offers') and TO CT-ax-1 build step 1: 'the dry-run command the tool offers to test one line before a cut' and 'the dry-run command to test them' (the signed file).",
+  "world_is": "No tool offers a dry run of either file. The nearest verbs write or read other things: fetch writes a record even when refused; check writes a check record; resolve makes index requests. The read-only verbs the page lists test a pack, a synthetic wheel or a request record, never a line or a signed file.",
+  "notes": "The issuer's stated practice of dry-running every gate on every line before a cut has no tool verb behind it. The test .tools/tests/test_round28_intake_page.py calls the gate functions in temporary folders; it is a test, not a tool verb, and it writes nothing else."
+}
+```
