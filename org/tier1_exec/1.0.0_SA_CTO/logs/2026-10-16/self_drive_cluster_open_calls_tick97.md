@@ -16,9 +16,6 @@ arming record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261011_
   - ADDENDUM 1 (16 wheels) @828fc2092c;
   - multitasking 0.0.13 APPROVED by the bounded rule, ADDENDUM 2 @1fb283d47c. 17 lines complete.
   - The fetch waits only on `1.0.0_SA_CTO~DELL2`'s approval of the list.
-- `/fideles`: on Andrew's "go ahead thats fine, store it", the Secrets Manager secret `fideles/imap-app-password` was created
-  (us-east-1; describe-secret read back 1 version; no value recorded anywhere) @84c9cbf3de. Install relayed to
-  `0.0.0_AB_MSTR~DELL1`.
 
 ## Calls this tick
 

@@ -22,7 +22,7 @@ Session cron e6b088c9. **state: ARMED**
 - **XB-20261016T082054Z-9710 (ms's COMM_ASSIST questions to laptop COO~CA):** opened (body @294f6e3fd3, file @cde63d9338); MSTR~Z
   pushed and SENT it; COO~CA ACKED and had already answered ms by mail. The from side is CLOSED @e62271793d.
 - **ms SQS inbox (relays 34848, 34862):**
-  - The /fideles mail channel stays, and the register edit waits for Andrew's own word.
+  - The register edit waits for Andrew's own word.
   - Act row 35b3 is added, and I asked him at this terminal.
 
 ## Scope state

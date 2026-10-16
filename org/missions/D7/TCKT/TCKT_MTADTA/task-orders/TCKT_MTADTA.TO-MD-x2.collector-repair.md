@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_MTADTA~6</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-16</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -37,6 +37,26 @@ subject hash, the IP flag) is correct and STAYS; change only what is named below
 - **The seam found at the round-1 drain.** `collector.tf` read the door and the two secret containers as data sources, which fail at plan until they exist.
   The patch `org/missions/D7/TCKT/TCKT_MTADTA/deliverables/2.0.0_SA_COO~S1/collector_tf_direct_references.patch` is that fix (direct references to the
   root's own resources); apply its intent to the CURRENT file, then change the invoke grant to the alias (below).
+
+### AMENDMENT 2026-10-16 ~13:5xZ -- THE FIRST LIVE FIRE TIMED OUT (issuer, reopening this order; read this section first)
+
+Measured live: the 13:31Z scheduled fire hit the Lambda's 300-second limit and was retried twice, each from zero. Cause: a fire with no cursor lists the whole 7-day window (the tenant's feed holds hundreds of blobs for those
+days: single-window listings returned 9 to 87 blobs each, in 0.2 to 1.8 seconds) and then fetches every blob ONE AT A TIME before it writes anything. The work does not fit the limit, and nothing is saved before the limit hits, so every
+retry restarts from nothing. Add a TIME BUDGET and save as you go. The contract of `run_once` gains, in addition to everything above:
+- `run_once(source, access, config, now, cursor=None, clock=None, budget_seconds=None, max_workers=1) -> dict`. `clock` is a callable returning seconds (default `time.monotonic`); `budget_seconds=None` means unbounded (every
+  existing test keeps passing).
+- Before attempting each new blob's fetch, if `clock() - start >= budget_seconds`, STOP: no further blob is attempted this fire. What was fetched is processed as usual (bronze, `derive_silver` per Eastern day, coverage, cursor).
+- The result gains `"complete": bool` (False when the fire stopped at its budget with blobs left to fetch).
+- Cursor after a stopped fire: `seen` = the earlier entries (trimmed) plus the blobs ATTEMPTED this fire that did not fail; blobs not attempted are NOT in `seen`; `last_end` is NOT advanced (keep the cursor's previous `last_end`; on a cold
+  start use the window start), so the next fire re-lists the same window and fetches only what is left. After a complete fire `last_end` is `now`, as before.
+- The coverage document gains a top-level `"complete": bool` (`{"day", "fire", "complete", "records"}`). A blob skipped by the budget is counted in neither `listed` nor `fetched` this fire; it is counted when a later fire attempts it.
+- `max_workers > 1` fetches concurrently (`concurrent.futures.ThreadPoolExecutor`), then processes the results in listing order (so the output is deterministic); the budget is checked before each batch of `max_workers` fetches. `max_workers=1` is the sequential
+  path the checks drive.
+- `infra/aws/lambda/m365-metadata-collector/handler.py`: pass `max_workers=8` and `budget_seconds = context.get_remaining_time_in_millis() / 1000 - 60` (200 when `context` is None); after `run_once`, `print` ONE line with counts only
+  (`fire fetched=<n> bronze_objects=<n> failed=<n> complete=<True|False>`): the function wrote nothing to its log, which is why the hang was invisible. Never print an event, key, id or value.
+- `infra/aws/terraform/trino/collector.tf`: `timeout = 900` (was 300). No other change in that file.
+- New check, a fourth mechanical criterion with this reason: the first live fire failed in a way criteria 1-3 could not see. `r2_check_x2.py budget` drives a fake clock (1 second per fetch) over 60 blobs across three Eastern days with a 25-second budget: fire 1 must stop with
+  `complete=False` after at most 26 fetches; the backlog finishes in a few fires; every blob is fetched exactly once across them; coverage documents carry `complete`.
 
 ### THE CONTRACTS (fixed; build to them exactly)
 
@@ -88,7 +108,10 @@ An unknown key shape is refused; your keys are the builder's.
 <criterion id="MD2-x2-AC3" cell_refs="MD-x-2"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R2_CHECKS/r2_check_x2.py invoker</invocation><expect>X2-INVOKER-OK</expect></criterion>
 `MD2-x2-AC3` -- the keys equal builder output; the client invokes the collector alias; `collector.tf` has no data source and grants invoke on the alias ARN with no S3 or KMS action.
 
-<expected_criteria>MD2-x2-AC1,MD2-x2-AC2,MD2-x2-AC3</expected_criteria>
+<criterion id="MD2-x2-AC4" cell_refs="MD-x-2"><invocation>python org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R2_CHECKS/r2_check_x2.py budget</invocation><expect>X2-BUDGET-OK</expect></criterion>
+`MD2-x2-AC4` -- (the fourth mechanical criterion, with its reason in the amendment above) a fire stops at its time budget, saves what it did without advancing past the unprocessed, and the next fires finish the backlog with every blob fetched exactly once.
+
+<expected_criteria>MD2-x2-AC1,MD2-x2-AC2,MD2-x2-AC3,MD2-x2-AC4</expected_criteria>
 
 Dry-run at the base 2026-10-16 ~08:3xZ: each `X2-*-REFUSED AttributeError/TypeError ...` (no `fire_key`, no `bronze_key`, the listing returns bare ids) -- FAIL as expected. AC1 and AC2
 were driven GREEN against a throwaway reference outside the repository. Run each from the repository (worktree) root.
@@ -122,8 +145,8 @@ org/missions/D7/TCKT/TCKT_MTADTA/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: MD2-x2-AC1, MD2-x2-AC2, MD2-x2-AC3. Instance at `org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.9.0_WK_TCKT_MTADTA~6/TCKT_MTADTA.TO-MD-x2.collector-repair.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> MD2-x2-AC1,MD2-x2-AC2,MD2-x2-AC3` BEFORE the flip.
+Criterion ids: MD2-x2-AC1, MD2-x2-AC2, MD2-x2-AC3, MD2-x2-AC4. Instance at `org/missions/D7/TCKT/TCKT_MTADTA/deliverables/0.9.0_WK_TCKT_MTADTA~6/TCKT_MTADTA.TO-MD-x2.collector-repair.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> MD2-x2-AC1,MD2-x2-AC2,MD2-x2-AC3,MD2-x2-AC4` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the three check lines, the `pytest` summary line, the `collector.tf` diff nature (resources touched), commits.

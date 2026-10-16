@@ -3,6 +3,7 @@
   python r2_check_x2.py coverage    -> X2-COVERAGE-OK    (one coverage object per fire; a planted gap survives the next fire)
   python r2_check_x2.py attribution -> X2-ATTRIBUTION-OK (counts by each blob's own day; the cursor trims by age; id-only actors counted)
   python r2_check_x2.py invoker     -> X2-INVOKER-OK     (collector.tf and the client use the collector alias; keys equal builder output)
+  python r2_check_x2.py budget      -> X2-BUDGET-OK      (a fire stops at its time budget, saves what it did, and the next fire finishes the backlog once)
 
 Synthetic values only. The collector API this file drives is fixed in the order's worker face.
 """
@@ -209,9 +210,83 @@ def invoker():
     return 0
 
 
+def budget():
+    run = mod("collect")
+    bad = []
+    n_blobs = 60
+
+    class Clock:
+        def __init__(self):
+            self.t = 0.0
+
+        def __call__(self):
+            return self.t
+
+    clock = Clock()
+    fetched_ids = []
+
+    class SlowSource:
+        """60 blobs spread over 3 Eastern days; every fetch costs 1 second of the fake clock."""
+
+        def list_content(self, ct, start, end):
+            if ct != "Audit.SharePoint":
+                return []
+            out = []
+            for i in range(n_blobs):
+                day = 13 + i // 20
+                out.append({"id": "b%02d" % i, "created": "2026-10-%02dT15:%02d:00.000Z" % (day, i % 20)})
+            return out
+
+        def fetch(self, ct, blob_id):
+            clock.t += 1.0
+            fetched_ids.append(blob_id)
+            i = int(blob_id[1:])
+            day = 13 + i // 20
+            return [ev("e-" + blob_id, t="2026-10-%02dT15:%02d:00" % (day, i % 20))]
+
+    acc = Access()
+    cur = None
+    fires = 0
+    complete = False
+    first = None
+    while fires < 10 and not complete:
+        clock.t = 0.0
+        fires += 1
+        out = run.run_once(SlowSource(), acc, CFG, now="2026-10-15T%02d:00:00Z" % (12 + fires), cursor=cur, clock=clock,
+                           budget_seconds=25, max_workers=1)
+        if first is None:
+            first = out
+        cur = out["cursor"]
+        complete = out.get("complete") is True
+    if not first or first.get("complete") is not False or not (0 < first["fetched"] <= 26):
+        bad.append("fire 1 must stop at its 25-second budget with complete=False and a partial count: %r" % ({k: v for k, v in (first or {}).items() if k != "cursor"},))
+    if not complete or fires < 3:
+        bad.append("the backlog should finish in a few fires (fires=%d complete=%r)" % (fires, complete))
+    if sorted(fetched_ids) != ["b%02d" % i for i in range(n_blobs)]:
+        bad.append("every blob must be fetched exactly once across the fires (fetched %d distinct %d)" % (len(fetched_ids), len(set(fetched_ids))))
+    if first and parse_ok(first["cursor"].get("last_end")) is None:
+        bad.append("the cursor has no readable last_end")
+    docs = [json.loads(b) for (ds, k), b in acc.objs.items() if ds == "gold" and "collection_coverage" in k]
+    if not docs or not any(d.get("complete") is False for d in docs) or not any(d.get("complete") is True for d in docs):
+        bad.append("coverage documents must carry complete=false for a stopped fire and complete=true for the finishing fire")
+    if bad:
+        print("X2-BUDGET-REFUSED " + "; ".join(bad))
+        return 1
+    print("X2-BUDGET-OK fires=%d blobs=%d" % (fires, n_blobs))
+    return 0
+
+
+def parse_ok(v):
+    try:
+        mod("coverage_record").parse_utc(v)
+        return v
+    except Exception:  # noqa: BLE001
+        return None
+
+
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else ""
-    fn = {"coverage": coverage, "attribution": attribution, "invoker": invoker}.get(mode)
+    fn = {"coverage": coverage, "attribution": attribution, "invoker": invoker, "budget": budget}.get(mode)
     try:
         sys.exit(fn() if fn else 2)
     except FileNotFoundError as e:

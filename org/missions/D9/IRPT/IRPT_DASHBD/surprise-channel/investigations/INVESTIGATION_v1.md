@@ -23181,3 +23181,57 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_DASHBD-D2-S120 -- W1701-S6 ruled once on census v2 by its disarm owner: two legs of one event, both INTERNAL; a net-zero criterion in the release pair
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S120",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-16T13:25:00Z",
+  "one_line": "Disarm of IRPT_DASHBD-D2-W1701-S6 (round-131 analysis ADDENDUM 2): census v2 shows all 14,920 rows of Dividend Paid from Cash and of Income Paid are two legs of one event (same account, day and absolute amount); the income is booked by Dividend to Cash (INCOME), so both legs stay INTERNAL; the release pair carries a per-event net-zero criterion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": ["IRPT_DASHBD-D2-W1701-S6"],
+  "spec_asserts": "An ARMED row disarms by its disarm owner's ruling (round-131 analysis, ADDENDUM 1 asked for census v2 before one final ruling).",
+  "world_is": "Census v2: 14,920 of 14,920 rows of each description share a key with a row of the other; 13,201 pair with an INCOME-class row; of 1,719 unpaired, 1,540 have Dividend to Cash the same day and 462 the day after. Contract 0.4.1 carries s6_status REOPENED_FOR_CTO until 2.0.0_SA_COO~F2 records this ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~F2/R132_INFLECTION_S6_CENSUS_V2.json @caf9a946e3 (counts only, 154 partitions)",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_F-SHIP_ROUND_131_20261016.md ADDENDUM 2"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W1701-S6 is ruled final by its disarm owner on census v2; the net-zero check is a release criterion, not a hazard."
+}
+```
+
+## IRPT_DASHBD-D2-S121 -- TO-DB-b-298: the stamp wrapper committed an out-of-grant CHANGELOG.json this time; the packet's object counts and the 'newest partition' differ from live by small, explained amounts
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S121",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-16T13:27:00Z",
+  "one_line": "TO-DB-b-298 odd finds, none blocking: (1) record-terraform-deploy.sh committed infra/aws/terraform/investor-reporting/CHANGELOG.json (1650 added lines) beside the source-map stamp in c9794d9f13, because the naming gate that refused it on my three earlier applies had nothing to refuse for this firm's entry; the file is outside the order's paths grant, so it was restored to its prior content in a new commit f3e4acd431 (no amend, no rewrite); (2) the packet's section 3 counts (6,949 series, 6,949 manifests, 4,344 other) read 6,954 / 6,954 / 4,349 live both at 12:18Z and at 13:01Z, after today's 12:15Z fire (5 more accounts, 5 more summaries), inside the order's 'at least' bounds; (3) the gold holds a 2026-10-15 partition (572 in total) while the absent-days range is capped at 2026-10-14, so the canary's 'newest gold partition' is 2026-10-15 and the absent-days range ends a day earlier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat c9794d9f13: lambda-source-map.json (4 lines) and infra/aws/terraform/investor-reporting/CHANGELOG.json (+1650, 0 deleted); the wrapper's output read 'Source map + CHANGELOG.json committed with [skip ci]'; f3e4acd431 restores the file (git diff of the file between the commit before the stamp and HEAD is empty)",
+      "count of the prefix irpt/49financial/platinum/reporting/ by key suffix (paginated client-side): 12:18Z series 6954, manifest 6954, other 4344; 13:01Z series 6954, manifest 6954, other 4349, newest object 12:46:01Z; the full republish left other at 4349 and series and manifest at 6954",
+      "absent-days script: partitions_total 572, partitions_in_range (2024-07-08 to 2026-10-14) 571; the canary picker read the newest partition 2026-10-15 (6951 rows) as the order says"
+    ]
+  },
+  "spec_asserts": "Order step 5: 'Stamp the deploy as your earlier applies do'; BOUNDS: the grant is the paths block. Step 0(e): the prefix holds at least 6,949 series, 6,949 manifests and 4,344 other objects. Step 6: the range is 2024-07-08 to the newest partition at most 2026-10-14; step 8: the first account of the newest gold partition.",
+  "world_is": "The wrapper's CHANGELOG write is a standing out-of-grant carrier (S89, S96, S99 and now a committed one); what stops it differs by firm entry, so the guard is accidental. The count and partition differences are explained and inside the order's bounds."
+}
+```

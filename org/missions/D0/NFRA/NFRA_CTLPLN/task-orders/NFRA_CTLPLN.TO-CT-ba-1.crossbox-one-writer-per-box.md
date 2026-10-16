@@ -47,6 +47,15 @@ Implement the design in `.tools/crossbox-call.py`; make the smallest changes in 
 3. **Lane check, read only.** Run `python .tools/owned-paths-validate.py --check-agent` (read its usage) for `org/devices/crossbox/XB-example.dell1.json` against the serials `0.0.0_AB_MSTR~DELL1`, `1.0.0_SA_CTO~DELL1`, `1.0.0_SA_CTO~DELL2`, `1.0.0_SA_CTO~Z`, `0.0.0_AB_MSTR` and report PERMIT or REFUSE for each (the answering box's seats must be able to commit their answer file). A REFUSE is a row, not a change: `.owned-paths.yaml` is not yours.
 4. **Neighbouring suites.** Run and report the whole last line of each: `python .tools/crossbox-call.py --selftest`, `python .tools/tests/test_open_calls.py`, `python .tools/tests/test_crossbox_deliver.py`, `python .tools/tests/test_apply_who_and_crossbox.py`, `python .tools/tests/test_round13_batch.py`, `python .tools/tests/test_round23_hygiene_b.py`; base values: selftest `CROSSBOX-SELFTEST cases=40/40 ok=True`, open-calls `OPEN-CALLS-TEST cases=19/19 ok=True`, deliver `XBOX-DELIVER ok=True cases=16/16` (run the other three at the base in your worktree first to learn their base values).
 
+### AMENDMENT 1 (issuer 2.0.0_SA_COO~C, 2026-10-16 ~13:5xZ; a re-seat of slot ~139 on the SAME branch `wk-NFRA_CTLPLN-139`)
+
+The first seating built and proved the cell (commits `c5f1670907`, `35f1ffaded`, `c3e1f8f0c3`, `7b20dc39df`, `a985293a6c`; AC1 13/13, AC2 40/40, AC3 76/76) and reported ONE red neighbouring suite that its own change caused (row `W139-S3`): `python .tools/tests/test_apply_who_and_crossbox.py` reads `APPLY-GATES-TEST cases=51/100 ok=False` (100/100 at the base) because `crossbox-deploy-check.py` now imports `crossbox-call.py` and that suite's fixture copies the deploy check into a scratch repository WITHOUT it. KEEP all of the first seating's work; do not start over. The issuer's ruling, which adds one path, one build step and one criterion:
+
+- `.tools/tests/test_apply_who_and_crossbox.py` joins your `<paths>`. Add `.tools/crossbox-call.py` to its `COPIES` list (line ~46), and nothing else in that file unless a case still fails for another reason you can name (then state the reason and the minimal change). Run it: it must read `APPLY-GATES-TEST cases=100/100 ok=True`.
+- A FOURTH criterion `CTba1-AC4` is added, for one stated reason: a change to a shared tool's imports turned a neighbouring suite red, and the suite is the only check that the deploy gates still see the cross-box check (the issuer names it so the proof instance carries it). `<expected_criteria>` becomes `CTba1-AC1,CTba1-AC2,CTba1-AC3,CTba1-AC4`.
+- Re-run all four criteria on the committed state and rewrite the proof instance (every row pinned to the commit that carried it; validate with the four ids).
+- `.tools/git-hooks/mstr-ledger-check.sh` (row `W139-S4`, a stale comment): NOT in your paths and NOT to be changed.
+
 ### RULES FOR THIS CELL
 
 Write surface = the `<paths>` plus your own folder `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~139/`. Every experiment runs in a temporary folder or repository; never write under the real `org/devices/crossbox/` and never open, ack or close a real call. NO network request, no `pip`, no install. No push, no deploy, no AWS write, no `terraform` command. Use `.tools/safe-commit.sh` for every commit, with explicit file paths, and read its whole output (do not pipe it through tail or head). Do NOT commit the `portal` gitlink or `org/git-author-override-audit.laptop.log`. ASCII only; Python 3.12; bash is Git Bash 3.6.7 (default utilities only). CLAUDE.md and org/XXX.md are LOCKED. COMMIT A WORK-IN-PROGRESS COMMIT AS SOON AS A FILE EXISTS, and again after each criterion passes. COPY the proof instance's field names from an existing VALID instance, `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~134/NFRA_CTLPLN.TO-CT-av-1.intake-signed-waiver-for-a-failed-check.proof_of_spec.json` (`config` is not an artifact kind; each control carries `determinism` and `mutant`). The `<status>` flip is the issuer's (your order file is outside your `<paths>`): do not edit it and do not report it as a defect. When you write your proof instance, pin every artifact row to the commit that carried it, never `PENDING-THIS-COMMIT` for a file an earlier commit carried. If a gate REFUSES, STOP and file a BLOCKING row. FOUND SOMETHING ODD OFF-TASK? Append ONE row to `org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md` (id `NFRA_CTLPLN-W139-S<k>`, `surfaced_at` = `date -u +%FT%TZ`, `disposition` `UNDER_INVESTIGATION`) and keep working. A WARN from safe-commit that the client-data check had no account-id list is the standing WARN-only state (ruled): quote it in your report, file no row for it. When your own change turns a neighbouring suite red, say so in your report with the suite's whole last line: the issuer re-runs every suite that imports what you changed at the merge.
@@ -64,7 +73,10 @@ Write surface = the `<paths>` plus your own folder `org/missions/D0/NFRA/NFRA_CT
 `CTba1-AC3` -- the tool's suite passes, its one stale case repaired (base: `CROSSBOX-TEST cases=69/70 ok=False`, a red base); report the whole last line.
 </proof_of_spec>
 
-<expected_criteria>CTba1-AC1,CTba1-AC2,CTba1-AC3</expected_criteria>
+<criterion id="CTba1-AC4" cell_refs="CT-ba-1"><invocation>python .tools/tests/test_apply_who_and_crossbox.py</invocation><expect>APPLY-GATES-TEST cases=100/100 ok=True</expect></criterion>
+`CTba1-AC4` (added by AMENDMENT 1) -- the deploy-gate suite still passes with the cross-box check importing the tool (base: `APPLY-GATES-TEST cases=100/100 ok=True`, a control; after the first seating `51/100`, red); report the whole last line.
+
+<expected_criteria>CTba1-AC1,CTba1-AC2,CTba1-AC3,CTba1-AC4</expected_criteria>
 
 Each invocation runs from the worktree root under `timeout 280` (the suites build temporary git repositories and can take about two minutes: if one hits the bound, run it alone once more and say so); record the criterion text as the invocation. Write the proof instance to `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~139/NFRA_CTLPLN.TO-CT-ba-1.crossbox-one-writer-per-box.proof_of_spec.json`, validate it with `python .tools/proof-of-spec-check.py <instance> CTba1-AC1,CTba1-AC2,CTba1-AC3` on the COMMITTED state.
 
@@ -79,6 +91,7 @@ Each invocation runs from the worktree root under `timeout 280` (the suites buil
 .tools/tests/test_round29_crossbox_split.py
 .tools/tests/test_open_calls.py
 .tools/tests/test_crossbox_deliver.py
+.tools/tests/test_apply_who_and_crossbox.py
 .tools/open-calls.py
 .tools/crossbox-deploy-check.py
 .tools/crossbox-matrix.py

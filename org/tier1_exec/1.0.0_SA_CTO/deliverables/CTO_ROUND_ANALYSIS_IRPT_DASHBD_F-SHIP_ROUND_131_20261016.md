@@ -55,3 +55,19 @@ superseded by this addendum.
    the descriptions present, and whether an INCOME row matches within 1 cent or one day.
 3. Then this seat rules once: INTERNAL if the unpaired rows are timing or rounding offsets of an income row; INCOME for the description
    that carries income no other row records.
+
+## ADDENDUM 2 -- S6 ruled once on census v2 (2026-10-16 ~13:2xZ)
+
+`~F2`'s census v2 (`R132_INFLECTION_S6_CENSUS_V2.json` @caf9a946e3, 154 partitions, 96 accounts) settles what v1 could not. **Every one of
+the 14,920 rows of each description has a row of the other on the same account, day and absolute amount: they are two legs of one event,
+not a reader fault.** 13,201 events also pair with an INCOME-class row. Of the 1,719 that do not, 1,540 have a "Dividend to Cash" row the
+same day and 462 the day after (at another amount), with "Income Reinvested" and an exchange pair beside them.
+
+**RULED (final): both descriptions stay INTERNAL.** The income on those days is recorded by "Dividend to Cash" (INCOME), at the amount the
+source books. The two S6 legs move that money inside the account. Reading them as INCOME would count the dividend a second time, and
+reading one leg as INCOME would count one side of a balanced move.
+
+**One criterion in the release pair:** per event (account, day, absolute amount), the two legs' signed amounts sum to zero, printed as
+N of 14,920. Any event that does not net to zero STOPS the release and comes back here.
+
+**S6 is DISARMED** by this addendum (row D2-S120). The release pair is no longer blocked on S6.
