@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.19",
+ "prd_version": "v0.20",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -111,6 +111,7 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 | C-SWAP: the security swap, one pass per unknown holding (Andrew ~04:4xZ; CRO research @9ae5d353d1 section 2; restated v0.14 to the CTO replacement ruling @5deb868819) | this project | (1) KNOWN: the ticker or CUSIP in `etf-classifications` and MDPF_SECHIST; the form's typo hint is C-FILING-HINT, verified against the registry and yfinance, never YCharts. (2) PRICED: Yahoo, then YCharts per symbol (C-PRICES); if either has history, the holding is KEPT, a registry row is added and its prices land in MDPF_SECHIST. Every holding the door filed UNRESOLVED (a kept `TICKER_NOT_FOUND`, a `TICKER_DATA_NOT_ENTITLED`) enters this pass; the filer is never asked for a replacement (v0.18). (3) CLASSIFY only if neither has prices: SECCLASS's classifier on kimi-k2.6 with a web-search tool and the tool-call loop, output bound to the live (class, sub-class) vocabulary, below 0.80 confidence FLAGGED. (4) REPLACE: from the class-matched pool (registry rows plus model proposals that pass the class match and have Yahoo history), the longest Yahoo history wins, ties by ticker. (5) RECORD: the holding keeps the client's name, with `proxy_for`, `proxy`, `method`, `confidence`, `low_confidence` and `sources`, and the report names the replacement. No designated-proxy table exists (provider QA @30ceaa97fa, finding 9). |
 | C-PRICES: where prices come from (restated v0.13; Andrew-direct 10-14 ~17:5xZ, CTO price ruling ADDENDUM 2 @ac60268494) | this project | Per security, in order: (0) the estate's own stores where they hold the symbol (the DEMQUE price store, the Opal ETFs' Bloomberg history), read, not called; (1) Yahoo (yfinance), cut at T-1, `source: yfinance`; (2) YCharts through the stored session, one symbol per call, prices only, `source: ycharts`; (3) the backend replacement C-SWAP step 2 (class-matched pool, longest Yahoo history, ties by ticker), named in the report; (4) else the report runs WITHOUT the security and says so in words, never blocking. Bloomberg is OUT of this chain. Every price carries its source as a claim field. **There is no price-date input (v0.16, Andrew-direct 10-15 ~20:4xZ):** every price, share-quantity valuations included, is the most recent close, the T-1 frontier of `lib/trading_calendar.py`, stated in the report as the as-of. The performance overlays of variants 2 and 3 use IRPT_DASHBD's daily TWR engine, ported with zero flows. No YCharts report, figure or PDF. |
 | C-FILING-HINT: the unmatched-ticker decision tree at filing (v0.12; restated v0.15, v0.18; restated v0.19 to Andrew-direct 10-15 ~21:5xZ, the decision tree) | this project | Every holding the upload door cannot match is CHECKED by the door, then: (A) **the ticker does not exist** (`TICKER_NOT_FOUND`): it is treated as a possible typo, and the form shows 'Did you mean <symbol> (<name>)?' (the door's own provider-verified `suggestion`) with three answers. **Yes** accepts the suggestion (the same upload re-posted with that correction). **Replace** opens an input where the filer types the replacement ticker(s), which are re-posted as corrections and CHECKED AGAIN by the same tree; a replacement that also fails gets the same prompt. **No** files the holding UNRESOLVED, and the form says 'Opal Staff will manage the replacement.' With no suggestion, the prompt offers Replace and No only. (B) **the ticker exists but Opal cannot price it** (`TICKER_DATA_NOT_ENTITLED` and every other unpriceable-as-given class): there is no typo prompt; it files UNRESOLVED with the words 'Opal Staff will manage the replacement.' Every UNRESOLVED holding goes to C-SWAP in the backend, and the report names its replacement. The form NEVER asks the filer to name a proxy: `NAME_PROXY` is retired from every filer-facing finding, and no text tells the filer to replace without an input to do it. Replace is the filer CORRECTING their own ticker, not picking a proxy (swaps are not the filer's, Andrew 10-15 ~14:xxZ). It works for the staff filer after a firm is chosen, and makes no vendor call at the form. |
+| C-HOP-FAILURE: how a failed hop reaches the ticket (v0.20; design fork from `2.0.0_SA_COO~T2` msg 8900, research by this seat) | this project | The ticket READS the failure; no service writes a note to the ticket, and no new ticket route or principal exists for it. (1) The analysis-request ticket page calls the existing status route `getJobStatus(report_ref.request_id, firm)` and shows the state, the failed step and its words. (2) `irpt-status` returns a CLOSED failure code (`^[A-Z0-9_]+$`, an enumerated set) beside the state. Each code maps to words in one table in `status.py` that name the step and what happens next; an unmapped code reads as its step's generic words, never as blank. (3) The generator hops already write the job row in `irpt-jobs` (ATTENTION or FAILED, with `detail.code`). The silent hops write ONE set-once sibling attribute `hop_failure` = {hop, code, at} on that row, beside the receipt, never overwriting READY. The silent hops are the ready-signal send, the commentary draft and the packager. The packager writes it through the resident's existing jobs-table client. The commentary writes it through a `fail` op on the existing draft-store invoke. (4) Writers of `hop_failure`: exactly those three hops, one value per request. |
 | C-NAMES: rule 30 | consumed; LGIC | Every new S3 address and resource name is `lib/opal_naming.py` `address()` / `name()` output, printed in the order that writes it. |
 
 ## 2. THREAD -- FWD-1, round 1
@@ -480,5 +481,26 @@ with the replaced ticker(s) and rerun the process for those, if no, then we say 
      superseding 469b's Use/Keep; it needs my approval as before.
    - `2.0.0_SA_COO~G2`: the door's findings and words in r33. `NAME_PROXY` is retired, and every unpriceable class files UNRESOLVED.
    - FWD-1 run 3 exercises all three branches plus one (B) holding.
+
+This is a CONTRACTS change, so the ratified-text half re-opens. The ENDPOINT is unchanged.
+
+## v0.20 (2026-10-16 ~02:4xZ, 1.0.0_SA_CTO~DELL2) -- FWD-4: the ticket reads a failed hop; it is never written a note
+
+Authority: design fork from `2.0.0_SA_COO~T2` (msg 8900; the routes map `deliverables/0.9.0_WK_IRPT_ANLREQ~220/FWD4_TICKET_WRITE_ROUTES_MAP.md`).
+`4.0.0_SA_CRO~DELL2` was dark (its inbox unread for about 4 h), so this seat ran the research itself. Every claim carries file:line evidence
+in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_DELL2_IRPT_ANLREQ_FWD4_HOP_FAILURE_READ_NOT_WRITE_20261016.md`.
+
+**Ruled:** C-HOP-FAILURE (the contract row above). The design is option (b), hybrid. Option (a) is refused: a new ticket route plus a
+resident principal would be built for a status that is one read away, and the page does not display the ticket's `events` anyway.
+Option (c) is refused: the generator half can land now.
+
+**Owners, under this project's workstreams (C-ABSORB):**
+- `2.0.0_SA_COO~T2` holds FWD-4 and cuts the cells. The commentary `fail` op is its own surface.
+- `~G2`: `hop_failure` in `durable_job.py` and `resident_worker.py`, covering the packager and the ready-signal send. Also the
+  `irpt-status` code and words, `status.py` plus the closed code in `ops/owned_status.py`, released as the r33 pair released `status.py`.
+- `~V2`: the ticket page read, `AnalysisRequestParts.tsx`. Opal-internal, so this seat approves the portal candidate.
+
+The one-drain rule applies: the `hop_failure` contract and its first writer land in one merge. The DONE WHEN is unchanged. Each failure
+is driven on purpose, and the ticket names the step and what happens next.
 
 This is a CONTRACTS change, so the ratified-text half re-opens. The ENDPOINT is unchanged.
