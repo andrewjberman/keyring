@@ -21704,3 +21704,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S145 -- disposition of W231-S1 and W231-S2: the FWD-5 driver exits 0 over the calls it makes, and the ids are required run inputs
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S145",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T06:31:03Z",
+  "one_line": "Disposes of IRPT_ANLREQ-D2-W231-S1 and S2 (BLOCKING for the later WORLD run): the meeting POST and the commentary draft are EXCLUDED rows outside the DONE WHEN, and --firm-b, --request-id, --job-id are required inputs; merged with AR-tz-68 (e2a160b783).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W231-S1: the meeting route is a POST its own guard refuses, so exit 0 was unreachable. W231-S2: the package-file routes need report and request ids the refused ticket read cannot supply.",
+  "world_is": "Measured on the merged tree: test_fwd5_driver_exit_semantics.py plus test_fwd5_driver_offline.py read R46-TESTS-OK passed=23; the driver selftest reads FWD5-SELFTEST-OK checks=19; ruff clean. The closed verdicts are REFUSED, LEAK, UNREACHED, EXCLUDED; exit 0 only when every made call is REFUSED and no LEAK; exit 1 on a LEAK even with excluded rows; exit 2 on an unreached made call, no made call, or a missing required id (checked before sign-in, zero requests). The meeting write attempt is proved offline by test_cross_firm_meeting_scope.py (AR-ty-55); the commentary draft rides the ticket read body, which the LEAK check inspects. NOT done: the driver has never run against any real service; the run is a WORLD act via AQ2 under a pair after V2's release (target Oct 20), and the ids come from the ticket the FWD-1 run files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~232/fwd5_driver/test_fwd5_driver_exit_semantics.py (merged e2a160b783)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
