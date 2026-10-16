@@ -41005,3 +41005,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No file is changed by this row. It is a debt note with an owner and the condition that un-parks it."
 }
 ```
+
+## IRPT_BCKEND-D2-S217 -- The split pair's Act 1 left the 49F holdings-performance function failing: its first scheduled run (11:30Z, pl
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S217",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-16T11:47:00Z",
+  "one_line": "The split pair's Act 1 left the 49F holdings-performance function failing: its first scheduled run (11:30Z, plus two retries) errored 3 of 3 with AccessDenied s3:ListBucket on opal-data-assets from the new split-adjust transactions read; the role has no grant for that prefix and the signed pair granted none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "The signed pair (COO half sha256 8f645588ab; CTO halves; ADDENDUM 2) states no IAM change rides and that the release moves two members; IB-pr-612 step 9 expects the first scheduled run to complete with split_adjust declared.",
+  "world_is": "Measured by me 2026-10-16 ~11:4xZ: CloudWatch AWS/Lambda for irpt-holdings-performance-lambda from 05:15Z: Invocations 3, Errors 3, Throttles 0 (the 11:30Z fire and two automatic retries). The function log shows [ERROR] AccessDenied on s3:ListBucket for opal-data-assets, raised in holdings_performance.py read_partition (line 706) called from _frame_for (line 1334), the split_adjust transactions read. Cause: infra/aws/terraform/investor-reporting/holdings-performance/locals.tf lines 60 to 70 derive the role's s3:GetObject and s3:ListBucket grants from each source's positions_prefix and balance_prefix only; split_adjust.transactions_prefix is not among them. The READ (IB-pr-572) and the DELTA (IB-pr-581) ran with operator credentials, which hid it; the pair did not test the function's own role. The siblings (orion, blackdiamond_z09 entries) declare no split_adjust, so they read no transactions partition and are not affected by this cause. No served data is damaged: the failing run wrote nothing; the 49F daily gold for the run's day is absent until a working run (the handler's catch-up writes days after the newest landed partition, capped). Next scheduled fire: Monday 2026-10-19 11:30Z (Mon-Fri). ESCALATED to the CTO the same hour (NEVER-2: a half-landed deploy finishes in-session or rolls back): options (a) a forward IAM pair adding list and get on the one prefix, (b) Branch B for all three. Armed until a working 49F scheduled run lands or Branch B is read back.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws cloudwatch get-metric-statistics AWS/Lambda Invocations, Errors, Throttles for irpt-holdings-performance-lambda, 2026-10-16T05:15Z to 11:45Z (read by 2.0.0_SA_COO~P2)",
+      "aws logs filter-log-events on /aws/lambda/irpt-holdings-performance-lambda since 2026-10-16T11:00Z (exception lines only)",
+      "infra/aws/terraform/investor-reporting/holdings-performance/locals.tf lines 60 to 70 and iam.tf lines 56 to 90",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-612.apply-split-adjust-act-1.md @17a450546e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Mine: the pair's blast radius omitted the function's own role. The fix is an IAM change under its own never-widen pair, or Branch B."
+}
+```
