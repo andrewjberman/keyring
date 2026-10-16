@@ -2814,3 +2814,17 @@ The page owner's R154 check (@84ff9c5bcc) found that `PerformanceTemplateView` m
 **fanout:** 1 of 1 chains for this cell (worker `0.9.0_WK_IRPT_DASHBD~250`), cap 8.
 
 **Checker (dry-run at the base before the cut; the criteria FAIL as expected; AC1 and AC2 PASS on a reference edit in a scratch portal worktree):** `checks/r149/p181_template_firm_gate.py` (DBP181-1-AC1..AC3).
+
+## 175. ROUND 149, WORKSTREAM COTPUBHOP2 (2026-10-16 ~23:0xZ, issuer 2.0.0_SA_COO~D2): the apply of the signed Cottonwood reporting-publish pair -- publisher 0.4.0 and the full republish of the 939 series (SERVED output moves)
+
+Both halves of the never-widen pair are signed (COO @de90b2bb6f; CTO @f78b555c93, packet sha256 `584a774339a1`, with the CTO's added STOP: a changed `external_flow` on a common day above 800 series). The landing rewrite (`DB-b-308`) is verified, so the Cottonwood gold carries `history_scope` by the first-row rule; this cell lands publisher 0.4.0 in `irpt-cot-reporting-publish-lambda` and republishes the 939 series at the same 1,878 keys. Counted before the write: 102 series PARTIAL to FULL (the Returns-from sentence goes), 657 with restated daily returns on past days, 826 one day newer, `value` unchanged.
+
+| item | cell | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| 1. Gates, ledger, build, ONE safe-apply (plan 0/1/0), the pre-write read with STOP lines, one dry run, a canary, the full republish, the after-read, the record | DB-b-315 | FWD-10 (Cottonwood Performance tab) | WORLD, served output moves | `DB-b-308` (verified); both halves signed | chain AI |
+
+**Decisions inside this decomposition (the issuer's, stated):** (a) the applier is the one IRPT CloudOps lane `0.7.0_AE_CloudOps~IB2` (rule 34); (b) the daily schedule stays DISABLED (its enabling is a later word); (c) the pre-write read is the issuer's committed read tool, so the applier prints the counts the CTO signed on before the first write.
+
+**fanout:** 0 workers (an applier order), 1 of 1 chains, cap 8.
+
+**Checker (dry-run at the base before the cut; the criteria FAIL as expected, no record exists; selftest green on a synthetic record and red on 34 single-fault arms):** `checks/r149/p182_cot_publish_apply.py` (DBC182-1-AC1, -2-AC1, -3-AC1).
