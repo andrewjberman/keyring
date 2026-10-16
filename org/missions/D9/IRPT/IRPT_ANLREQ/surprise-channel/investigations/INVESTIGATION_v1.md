@@ -20490,3 +20490,31 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S135 -- DISARMS IRPT_ANLREQ-D2-W163-S1, S2 and S3: the FWD-1 driver answers the form's prompts after the Submit click; the checker rule is reworded
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S135",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-16T02:02:00Z",
+  "one_line": "DISARMS rows IRPT_ANLREQ-D2-W163-S1, S2 and S3: the cell AR-y-367 (worker 164, merged b6500a74b9) moved the driver's decisions loop to after the Submit click, and its own labels checker holds the reworded rule; the signed rule 'after Submit only reads' is amended for run 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W163-S1: an unknown ticker does not disable Submit. W163-S2: the prompts appear only after the Submit click and each press files. W163-S3: AR-y-366's AC2 rule 3 forbade the selftest cases the cell required.",
+  "world_is": "Re-run by this seat on the merged tree: the driver at org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~149/fwd1_driver/fwd1_driver.mjs has sha256 455f660940bf34dd0de126d81ec0667df95d3030c7eb40621e26c1cb8eee1247 and prints SELFTEST-OK 67 cases (the 58 of AR-y-366 unchanged, 9 new). Worker 164's record reads LABELS-OK 9 labels with POST_ALLOWED identical to the signed base, nothing between the sign-in and the holdings file, 3 of 3 presses after submit.click(), the ticket listener set before the click (240 s, or 780 s with --decisions). The issuer's ruling, for pair addendum 3: after the Submit click the driver presses only the planned decision buttons, and fills only the one replacement input, until the ticket answer arrives; after the ticket answer it only reads; without --decisions the flow is the signed one. NOT read: any live run; how the form behaves between a press and the next prompt. Worker rows W164-S1 (the checker counts each press at its call site) and W164-S2 (the validator refuses a replacement equal to its symbol, as the form does) stay as observations.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's node --selftest and sha256sum of the merged driver (455f6609..., 67 cases)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~164/r41/DECISIONS_AFTER_SUBMIT.json",
+      "safe-merge b6500a74b9 (worker 164's branch drained)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The three rows described the AR-y-366 design; AR-y-367 replaced it and the merged driver and its checker carry the corrected design. The run itself still needs the pair addendum and the CTO's half.",
+  "notes": "Resolves IRPT_ANLREQ-D2-W163-S1, IRPT_ANLREQ-D2-W163-S2 and IRPT_ANLREQ-D2-W163-S3."
+}
+```
