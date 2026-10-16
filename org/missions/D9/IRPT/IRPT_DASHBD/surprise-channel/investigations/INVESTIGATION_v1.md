@@ -22317,3 +22317,28 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
 }
 ```
 
+
+## IRPT_DASHBD-D2-W238-S1 -- the order's pinned-test list omits a fourth test that pins publisher version 0.3.0
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W238-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~238",
+  "surfaced_at": "2026-10-16T10:02:50Z",
+  "one_line": "The order names three pinned tests, but a fourth test in the publisher test directory pins publisher version 0.3.0 and fails at 0.4.0; that file is outside the grant, so DB163-1-AC3 cannot pass as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Change ONLY the pinned version strings the 0.4.0 bump forces, in the three named tests (test_publisher_claim_calendar.py, test_publisher_unreported.py, and the Cottonwood test_handler.py if it pins the version); any other failure of an earlier test is a BLOCKING row and the worker stops. The publisher and Cottonwood test directories pass with at most 20 forced pin lines.",
+  "world_is": "reporting-publish/tests/test_handler_unreported.py lines 179-180 assert the manifest publisher_version and publisher.PUBLISHER_VERSION equal 0.3.0 (test UnreportedDaysOnTheFortyNinthFinancialPublisher::test_publisher_version_is_0_3_0). That file is not among the three named tests and not in the paths grant. After the 0.4.0 bump the directory run reads 1 failed, 145 passed (base: 129 passed). The file was not edited; the other cell edits are committed at 74651deb68.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_handler_unreported.py@8065d85982 lines 179-180 (pins 0.3.0)",
+      "pytest run of the reporting-publish and reporting-publish-cot test directories at 74651deb68: 1 failed, 145 passed; base 129 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
