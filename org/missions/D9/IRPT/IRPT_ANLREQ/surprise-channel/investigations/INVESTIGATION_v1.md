@@ -20017,3 +20017,29 @@
   "world_is": "The clause named to_id, invocations, artifacts_produced and evidence, not decomp_ref; the gate refused the flip commit until it was added."
 }
 ```
+
+## IRPT_ANLREQ-D2-S134 -- the ticket service and the report side admit another firm in four places the round-45 FWD-5 maps found
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S134",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T00:52:48Z",
+  "one_line": "FWD-5 round-45 maps find four places where the ticket service or the report side ADMITS by design or by omission: the pickup and ack notice recipient, the svc-analyst-intake list, an internal PROFILE row with no allowedFirmIds, and two OPAL_GLOBAL admissions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD FWD-5 (prd/IRPT_ANLREQ_PRD.md:65-68): another firm never sees the request, the package or the commentary; the ticket service fences a caller by the firm on its profile.",
+  "world_is": "Read at HEAD in round 45 (records deliverables 0.9.0_WK_IRPT_ANLREQ~210 and ~212 and ~211): (1) ticket_center/lambda_function.py:1191 sends the pickup and ack notice to requester.email taken from the CREATE body (:1373) with no tie to the ticket's firm; (2) :433 lists every firm's stored rows to svc-analyst-intake, pinned by test_list_scoped_firm.py:240; (3) :419 an internal PROFILE row with no allowedFirmIds admits every firm (test_no_row_refuses.py:104), so the FWD-1 synthetic principal cannot serve a cross-firm negative test and round 46 builds a scoped mint (AR-ty-56); (4) resident_installed.py:248 and _scope/interactive_access.py:115 admit OPAL_GLOBAL by documented design. Not changed by round 46: a change of who the service admits is a design decision for the ticket-service owner and the CTO, not a test.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~210/FWD5_TICKET_SERVICE_FENCE_MAP.md (rows ADMITS, checked by r45_checks.py rec)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~212/FWD5_FRONT_DOOR_AND_PORTAL_MAP.md (internal PROFILE row, mint helper readback)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~211/FWD5_REPORT_SIDE_BINDING_MAP.md (rows 13 and 36)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
