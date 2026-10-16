@@ -2572,3 +2572,12 @@ The 111 legacy rows are not refused: the CTO ruled (msg 34906) that backfill sta
 
 The grade is the CVO's judgment on the bodies; the cell only supplies them. `OG-ap-14` and `OG-hv-2` AC3 are NOT MET on acts other seats owe (`OG-mg-1` then the BBGTerminal re-exercise; Andrew's stand-in read and the asset manager's call): no cell here serves them.
 **fanout:** 1 of 1 chains, cap 8. Disjoint from every other open cell (`OG-rr-2` runs in parallel on worker `~116`).
+
+## ADDENDUM R3-T.92 (2.0.0_SA_COO~O, 2026-10-16 ~10:5xZ) -- round 37, workstream RULING-REF-CRO: apply the CRO's 110 ruling_refs to the legacy name_rulings.json rows (CRO file msg 34909; CTO msg 34913)
+
+| cell | what | writes | risk | slot | depends on |
+|---|---|---|---|---|---|
+| `OG-rr-3` | set the CRO's `ruling_ref` string (verbatim, verified by `git cat-file -e`) on the 110 registry rows the CRO file rules; `opal-data-ycharts` (CRO: NOT RULED, the open R21 question) stays without one; change nothing else | `infra/logic/registry/name_rulings.json` | WORLD | ~117 | `OG-rr-1` merged (ecd2aad5d0); the CRO file (done) |
+
+Sequence (CTO msg 34913): this backfill merges first, then `OG-rr-2`'s drain (its worker `~116` builds the gate check in parallel; its AC2 is the full-add re-grade, 0 moved).
+**fanout:** 2 of 2 chains, cap 8. `OG-rr-3` writes `name_rulings.json`; `OG-rr-2` writes `.tools/naming-gate.py`: disjoint write sets, one ordering edge at the drain.
