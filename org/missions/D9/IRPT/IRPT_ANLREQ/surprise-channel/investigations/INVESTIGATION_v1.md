@@ -22827,3 +22827,29 @@
   "world_is": "The upload route refuses an internal caller's on-behalf upload that does not name a firm advisor; the form's advisor field carried a typed name (SYNTHETIC FWD-1 advisor) that is not a directory advisor, and the upload never reached the resident. The driver's wait ran 780 s past a form that had already failed in under a minute (its still-checking branch did not apply). A further window needs a ruling on the advisor value and on stopping the wait at the failure sentence."
 }
 ```
+
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "id": "IRPT_ANLREQ-D2-S155",
+  "surfaced_at": "2026-10-16T21:25Z",
+  "one_line": "FWD5 live cross-firm exercise: a cottonwood-scoped principal read 200 on FOUR artifact routes of 49financial's synthetic ticket (original-upload, opal-report, report-pdf, commentary-pdf) while ticket-read and form-as-filled refused 403; the positive control read ALLOWED on the same routes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fwd5_run_report.json (run principal digest 28cb5947d068): calls ticket-read 403 REFUSED, ticket-list 200 REFUSED (the list carries no ticket id), form-as-filled 403 REFUSED, original-upload 200 LEAK, opal-report 200 LEAK, report-pdf 200 LEAK, commentary-pdf 200 LEAK; rc 1",
+      "fwd5_control_report.json (control digest 7b925797fd61, opal-capital with allowedFirmIds 49financial): ticket-read 200, ticket-list 200 with the ticket id, original-upload, opal-report, report-pdf, commentary-pdf 200 ALLOWED; rc 0",
+      "r56_checks fence and report read FAIL; both principals removed and read ABSENT (R56-ABSENT-OK); one run each, no retry"
+    ]
+  },
+  "spec_asserts": "The re-signed FWD-5 pair: a firm-B principal is REFUSED on every call for firm A's synthetic ticket (7 REFUSED, 0 LEAK, 0 UNREACHED, 2 EXCLUDED).",
+  "world_is": "Four of the seven made calls (the artifact download and report routes) answered 200 to a principal whose scope names only cottonwood; only the ticket body, the form-as-filled route and the ticket list withheld the ticket. The data read is synthetic. The control proves the routes are live and the fence is what differs. Which layer should fence these four routes is the CTO's call (S134 stays ARMED)."
+}
+```
