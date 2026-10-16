@@ -19,6 +19,8 @@
 
 **AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~02:5xZ, on worker row IRPT_DASHBD-D2-W226-S2; gate limb: an existing order modified, placeholders NONE unchanged, no criterion id, cell or path change):** (1) Your branch now CONTAINS the series contract 0.3.0: the issuer merged `wk-IRPT_DASHBD-225` into `wk-IRPT_DASHBD-226` (merge commit 6e56bb47d3), so `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json` on your branch reads 0.3.0 and names `unreported_trading_days` and `unreported_trading_days_basis` in `series.optional`. You still edit NO contract file; `DB147-2-AC1` runs against that 0.3.0 file as written, with no re-pointing. (2) Your row W226-S2 is ruled by this: the order's base lacked the contract the handler's guard reads, a defect of the issuer's order. Resume from your committed handler; write the test file, the facts record and the proof instance, and flip the status to complete last.
 
+**AMENDMENT 2 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~03:3xZ, on worker row IRPT_DASHBD-D2-W226-S3; gate limb: an existing order modified, placeholders NONE unchanged, no criterion id, cell or path change):** `DB147-2-AC3`'s grant clause walked from the round's issuance and so counted your two DB-b-279 commits (`publisher.py` and its test file) as outside this order's grant. That is a defect of the issuer's checker, not of your commits: the checker now also admits those two files as the earlier cell's. Nothing else changes. Re-run `DB147-2-AC3`, and flip the status to complete when it passes.
+
 ---
 
 ## WORKER FACE

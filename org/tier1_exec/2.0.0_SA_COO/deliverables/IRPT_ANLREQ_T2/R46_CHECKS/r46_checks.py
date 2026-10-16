@@ -19,6 +19,7 @@ from pathlib import Path
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 DEF = re.compile(r"^\s*(?:async\s+)?def\s+(test_\w+)\s*\(", re.M)
+PREFIX = "test_cross_firm_"   # --prefix=<p> as the first argument after the mode overrides it (FWD-4 cells name tests test_hop_failure_*)
 
 
 def check(min_passed, files, cwd=None):
@@ -28,7 +29,7 @@ def check(min_passed, files, cwd=None):
         if not p.is_file():
             return False, "absent: %s" % Path(f).as_posix()
         found = DEF.findall(p.read_text(encoding="utf-8"))
-        bad = [n for n in found if not n.startswith("test_cross_firm_")]
+        bad = [n for n in found if not n.startswith(PREFIX)]
         if bad:
             return False, "%s: test(s) not named test_cross_firm_*: %s" % (p.name, ", ".join(bad[:3]))
         names += found
@@ -53,7 +54,7 @@ def check_red(min_failed, files, cwd=None):
         p = Path(f)
         if not p.is_file():
             return False, "absent: %s" % p.as_posix()
-        bad = [n for n in DEF.findall(p.read_text(encoding="utf-8")) if not n.startswith("test_cross_firm_")]
+        bad = [n for n in DEF.findall(p.read_text(encoding="utf-8")) if not n.startswith(PREFIX)]
         if bad:
             return False, "%s: test(s) not named test_cross_firm_*: %s" % (p.name, ", ".join(bad[:3]))
     r = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider"] + [str(f) for f in files],
@@ -98,6 +99,9 @@ def self_test():
 
 
 if __name__ == "__main__":
+    for _a in [a for a in sys.argv[1:] if a.startswith("--prefix=")]:
+        PREFIX = _a.split("=", 1)[1]
+        sys.argv.remove(_a)
     if len(sys.argv) >= 2 and sys.argv[1] == "--self-test":
         sys.exit(self_test())
     if len(sys.argv) >= 4 and sys.argv[1] == "red" and sys.argv[2].isdigit():
