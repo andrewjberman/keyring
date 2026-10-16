@@ -22120,3 +22120,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S147 -- disposition of IRPT_ANLREQ-D2-W259-S1: the proof checker admits only git refs as artifact references; the staged build files are hashed in the record
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-16T11:58:34Z",
+  "class": "OBSERVATION",
+  "id": "IRPT_ANLREQ-D2-S147",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "The worker read the checker right: proof-of-spec-check resolves each artifact reference as a git ref, and the staged tarball, sums file and four scripts are held by no commit, so the order's clause 'name each file with the hash of the commit that holds it' cannot be met for them. The instance lists the committed record only, and the six staged hashes sit in the record and in compiler_tools. The issuer re-verified the build independently (ar_g122_checks.py verify on the worker's stage and record: AR-G122-OK, tar 9a088a5c...78ab equal to the issuer's own trial build) before merging (ab9e84fd35). Nothing else rests on the instance's artifact list. The clause is left for the next build order to drop.",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-W259-S1: staged build files are not git objects; their hashes are in the record, re-verified by the issuer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 259 report: proof-of-spec-check rc=0 on an instance listing the committed record only; row W259-S1",
+      "issuer: ar_g122_checks.py verify C:/dev/irpt-release-r34g <record> 9a088a5c...78ab printed AR-G122-OK members=314 changed=3 added=0 removed=0; sha256sum of the staged tarball equals the record"
+    ]
+  },
+  "spec_asserts": "Every produced file is named in the proof instance with the hash of the commit that holds it.",
+  "world_is": "The build's output (tarball, sums, host scripts) lives in a stage folder outside the repository by design, so no commit holds it."
+}
+```
