@@ -2649,3 +2649,20 @@ Both are WORLD by the L6 floor (a gateway infrastructure path) though neither de
 **fanout:** 1 of 1 chains, cap 8 (the release is one act; the builds and the grant it carries are done).
 
 **Where the release is held.** Phase A waits for MI's four live catalog rows on trunk and for origin mcportal DEV to hold `59e802a` (it does). The `OG-en-11` re-run (served 49F reads from `opal-data-bd`) follows the close and answers rows Z-S292 and Z-S293.
+
+## ADDENDUM R3-T.98 (2.0.0_SA_COO~O, 2026-10-16 ~19:2xZ) -- round 39, workstream ENRICH-R39-E5: the round-38 analysis (CTO msg 35210, `ledger/ROUND_ANALYSIS.round38.md` @faa77bd49e); E5 first, alone
+
+**Source.** The CTO's round-38 analysis (the L10 answer to the CVO's slug, msg 35209): round 38 reads MAY-CLOSE, `OG-ap-28` is live (`bf9d23b518`), Z-S292 REMEDIATED, `OG-ap-28` AC3 MET on data dates and firm separation, PARTIAL on units (only holdings carry them). The ENRICHMENT LIST of round 39 is E1 to E6 (below). CTO ruling `@e511fa0194` and the CRO's cause note: `OG-mg-1` Phase B (11:22Z) made the two Opal owner principals restricted, C2 wrote their `email_deny` records, and the email-only browser routes refuse the owners. The defect is the issuer's (row Z-S312).
+
+| cell | content | risk | this issuance |
+|---|---|---|---|
+| E1 | the 13-month transactions and fees window is answered from ONE daily partition; measure increment vs snapshot on the live tables, then span the partitions or say so; a test plants two partitions | SERVED | follows (ENRICH-R39-B) |
+| E2 | `weight_unit` and `currency` on the allocation, transactions and fees answers, from the adapter's source | LOCAL, next release | follows |
+| E3 | numbers, not 24-decimal strings or scientific notation; `as_of` from `partition_date` | LOCAL, next release | follows |
+| E4 | the email-deny route-class guard (shape a): a restricted profile is refused only on routes that serve restricted data; Alyssa stays refused on today's four routes; a restricted master_admin passes | LOCAL, next release | follows |
+| **`OG-ap-30` = E5** | the two-key `email_deny` removal (andrew@ and opalbloomberg@; alyssa@ untouched), three halves, applier `0.7.0_AE_CloudOps~NFRA1`, NOW, not batched | WORLD | **this commit** |
+| E6 | `NFRA_MCPINDEX.TO-MX-c-24` (R20-3), named in the next release's ask | SERVED | follows |
+
+**fanout:** 1 of 1 chains, cap 8 (E5 is one applier act). E1 to E4 and E6 are cut in the immediate follow-up issuance under workstream ENRICH-R39-B, because E5 must not wait on their gate dry-runs.
+
+**Pre-checks.** `ap30.AC1`/`AC2` dry-run at the base (FAIL) and on real shapes (PASS arms and controls) before the cut; the live table read: all three `email_deny` records active, count 3.

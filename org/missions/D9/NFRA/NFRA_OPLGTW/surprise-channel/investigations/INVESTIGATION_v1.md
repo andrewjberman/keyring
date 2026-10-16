@@ -25292,3 +25292,29 @@ name the one known failure instead of silently inheriting it.
   "dismissal_reason": "The e4 arm's 'currency set' wording was the issuer's defect against OG-en-4's ruled spec (currency null with currency_basis source_absent when the source carries none). Order amendment A4 (4102a9e8f1) corrected the definition; the applier re-graded on its recorded counts with no re-deploy (arm true, Z-S306); ap28.AC2 PASS 7 of 7 by the issuer's run."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-16T19:01:10Z",
+  "id": "NFRA_OPLGTW-Z-S312",
+  "one_line": "OG-mg-1 Phase B (11:22Z) made the owner principals andrew@ and opalbloomberg@ restricted; C2 wrote their email_deny records; the email-only browser routes (/login, /sprint, /rivalfunds, /yearinreview) now refuse the owners themselves.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/GATEWAY_BROWSER_DENY_LIST_CAUSE_20261016.md (live access-state table read, GetItem and Query only: active email_deny for andrew@, opalbloomberg@, alyssa@; profiles restricted, operator_audit 11:22:29Z and 11:22:55Z, Phase B GO msg 34954)",
+      "NFRA_OPLGTW_PRD.md C2: a principal made restricted also gets an email_deny record; app/server.py:206-229: a denied email is refused before anything else",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-mg-1.md and the COO half name the email_deny records for the rollback only; neither states that the owners lose the browser routes"
+    ]
+  },
+  "spec_asserts": "A restricted Schwab data-grant profile for an owner principal does not remove that owner's access to the Opal-internal browser pages.",
+  "world_is": "The email_deny record carries no scope, so the guard cannot tell restricted for Schwab data from denied the browser. Both owner principals are refused on four browser routes since 11:22Z (Andrew-direct ~18:5xZ noticed it through MC Portal). The defect is the issuer's: the OG-mg-1 ask and the COO half did not state the effect. Remedy is the CTO's ruling: (b) an audited operator act deactivating the two owner records now, then (a) a route-class guard; alyssa@ stays denied.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Blocks NFRA_MCPORTAL MP-v-2 (a second account served /sprint, PRD A2)."
+}
+```
