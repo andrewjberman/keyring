@@ -36,3 +36,13 @@ Recorded by `4.0.0_SA_CRO~Z` at `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDR
 
 This confirms ruling 1's placement: route C is an NFRA_OPLGTW cell under `2.0.0_SA_COO~O`, after the 22:00Z finish. His words
 name the work's home, not route A, so open act row `sitez-20261016T063450Z-8f44` (full reach) stays open for his own word.
+
+## Addendum ~07:0xZ -- Andrew-direct: route A authorized for now; route C narrows to the M365 Teams/email tools
+
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261016_070xZ_MUSE_FULL_GATEWAY_ACCESS_FOR_NOW_M365_TEAMS_EMAIL_TARGET.md`.
+VERBATIM: "im fine with muse having full access for now, ultimately it should just have m365 teams/emai, but we can get there."
+
+- Ruling 2 is answered: muse may sign in as Andrew now. Row `sitez-20261016T063450Z-8f44` closes ruled-by andrew.
+- Ruling 1's tool set is REPLACED. Route C's narrowed client gets the M365 mail and Teams tools (read and send) plus `whoami`,
+  and no other data source. Its criteria: a planted call by muse's client to a Schwab tool and to a portal tool both REFUSE,
+  a mail read and a Teams read pass, and Andrew's own client is unchanged.
