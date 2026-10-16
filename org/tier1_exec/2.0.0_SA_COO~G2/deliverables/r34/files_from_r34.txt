@@ -14,6 +14,7 @@ infra/aws/lambda/investor-reporting/reports/resident_installed.py
 infra/aws/lambda/investor-reporting/reports/status_installed.py
 infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py
 infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py
+infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py
 infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py
 infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py
 infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py
