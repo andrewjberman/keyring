@@ -19649,3 +19649,103 @@ name the one known failure instead of silently inheriting it.
     "notes": "Non-application: a run of the whole gateway suite, where another test may import app.tools first."
   }
   ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:40:00Z",
+    "one_line": "The commit-time naming gate does not consult name_rulings.json: bd_account_id (hand-kept carrier) still REFUSEs at client_adapter_bd49f.py:54, :269 and :272 after its none_owed row exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of app/client_*.py> --enforce after the none_owed row was added to infra/logic/registry/name_rulings.json (W/CL8_AFTER.txt): NAMING REFUSE client_adapter_bd49f.py:54, :269, :272 bd_account_id -> lookup('49financial'), the same why as before the row.",
+        "READ .tools/naming-gate.py _judge at lines 2329-2373: the carrier branch (typ None) returns REFUSE on carrier only; grep for name_rulings in naming-gate.py returns no match. The rulings are read only for key rulings (_per_firm_rulings, lines 1951-1955) and the placement census (_rootcheck, line 2662)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-8 item 3 and AC2: the four none_owed rows answer the refused identifiers, so the full-add naming gate in ENFORCE prints no REFUSE; if the gate does not consult the file for a type, file a BLOCKING row naming the (name, type) and the gate file/line, and rename nothing.",
+    "world_is": "naming-gate.py never reads name_rulings.json, so a none_owed row does not clear a hand-kept carrier. The consumer is .tools/naming-apply-gate.py ruling_amend (lines 282-298), keyed by (name, node type); a carrier has no node type, and the printed type word is the phrase 'hand-kept carrier', so a row of that type could not match there either. Nothing was renamed, overridden or edited in the gate.",
+    "notes": "Non-application: the release commit diff against HEAD does not grade these lines (they are untouched context); only the full-add construction of AC2 does."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S12",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:40:00Z",
+    "one_line": "The commit-time naming gate does not consult name_rulings.json: bd_account_number (hand-kept carrier) still REFUSEs at client_adapter_bd49f.py:54 and :275 after its none_owed row exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of app/client_*.py> --enforce after the row was added (W/CL8_AFTER.txt): NAMING REFUSE client_adapter_bd49f.py:54 and :275 bd_account_number -> lookup('49financial'), same why as before.",
+        "READ .tools/naming-gate.py _judge lines 2329-2373 (carrier branch REFUSE): no reference to name_rulings; the consumer is .tools/naming-apply-gate.py ruling_amend lines 282-298, keyed by (name, node type)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-8 item 3 and AC2: a refused (name, type) whose none_owed row exists stops refusing; if the gate does not consult the file for the type, file a BLOCKING row naming the (name, type) and the gate file/line; rename nothing.",
+    "world_is": "The commit limb refuses bd_account_number as a hand-kept carrier of bd whatever name_rulings.json says. The ruling arm that reads the file (naming-apply-gate.py ruling_amend) is not the commit limb AC2 grades, and its key is a node type a carrier does not have.",
+    "notes": "Non-application: the release commit diff against HEAD does not grade these lines (untouched context)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S13",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:40:00Z",
+    "one_line": "The commit-time naming gate does not consult name_rulings.json: fact_bd_allocation (hand-kept carrier) still REFUSEs at client_adapter_bd49f.py:409 after its none_owed row exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of app/client_*.py> --enforce after the row was added (W/CL8_AFTER.txt): NAMING REFUSE client_adapter_bd49f.py:409 fact_bd_allocation -> lookup('49financial'), same why as before.",
+        "READ .tools/naming-gate.py _judge lines 2329-2373: carrier branch REFUSE with no name_rulings read; grep for name_rulings in naming-gate.py: no match."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-8 item 3 and AC2: the none_owed row for (fact_bd_allocation, hand-kept carrier) clears the refusal; if the gate does not consult the file for the type, file a BLOCKING row naming the (name, type) and the gate file/line; rename nothing.",
+    "world_is": "The commit limb refuses fact_bd_allocation as a hand-kept carrier of bd regardless of name_rulings.json. The only reader of the file that keys by name is naming-apply-gate.py ruling_amend (lines 282-298), keyed by node type, which a carrier does not carry.",
+    "notes": "Non-application: the release commit diff against HEAD does not grade this line (untouched context)."
+  }
+  ```
+
+  ```json
+  {
+    "id": "NFRA_OPLGTW-Z-W111-S14",
+    "project": "NFRA_OPLGTW",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~111",
+    "surfaced_at": "2026-10-16T03:40:00Z",
+    "one_line": "The commit-time naming gate does not consult name_rulings.json: market_value_profile (INSTANCE_PROFILE) still REFUSEs at client_adapter_bd49f.py:412 and :442 after its none_owed row exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RAN python .tools/naming-gate.py --diff <full add of app/client_*.py> --enforce after the row was added (W/CL8_AFTER.txt): NAMING REFUSE client_adapter_bd49f.py:412 and :442 market_value_profile -> {system}-market-value-profile, 'NEW and OUT-OF-PATTERN as INSTANCE_PROFILE: REFUSE', same as before.",
+        "READ .tools/naming-gate.py _judge lines 2375-2376: the grade of the classified type (nm.grade) decides; no name_rulings read in the file (grep: no match)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-cl-8 item 3 and AC2: the none_owed row for (market_value_profile, INSTANCE_PROFILE) clears the refusal; if the gate does not consult the file for the type, file a BLOCKING row naming the (name, type) and the gate file/line; rename nothing.",
+    "world_is": "The commit limb grades market_value_profile by nm.grade (OUT-OF-PATTERN as INSTANCE_PROFILE) and never reads name_rulings.json. The adapter emits market_value_profile as its own response key, not a name the vendor publishes, so the row's none_owed text (vendor-published identifier) fits it only in part; the CTO may want to read that.",
+    "notes": "Non-application: the release commit diff against HEAD does not grade these lines (untouched context)."
+  }
+  ```
