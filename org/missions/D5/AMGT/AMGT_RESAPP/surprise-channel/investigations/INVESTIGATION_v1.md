@@ -28312,3 +28312,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The walk bo-3 reads PBR US 2025 on the promoted page; that read, not the harness, is the proof."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S38",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R2",
+  "surfaced_at": "2026-10-16T02:04:00Z",
+  "one_line": "W451-S1 DISARMED and CORRECTED: the non-text rung the row asks for has been in fetch_source since 229d0ed982 (merged f57f6e049a, 2026-10-14); my D1-S33 line and my msg 6144 saying it was carried to the round-107 list were wrong. One narrower edge stays open and is carried: a 2xx body with NO Content-Type header reads OK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R2",
+  "spec_asserts": "Row AMGT_RESAPP-D1-W451-S1 (ARMED in REMEDIATION_v44, ADJUDICATION_v133 C-S155): fetch_source reports a 2xx image, octet-stream or zip body as status OK with binary-decoded text; remedy a non-text rung UNSUPPORTED with note 'content type <t>' plus a check arm over an image and a zip body; close when this seat reads the rung and its arm at the merged pin.",
+  "world_is": "At HEAD df2ca8f0a9 and later, lib/research/aifill/sources.py lines 244-246 return UNSUPPORTED with note 'content type <t>' for any 2xx whose declared type is not text/, html or xml; the gr-2 close text of 2026-10-14 already recorded 'rung and two tests added by the issuer'. The arm is test_a_non_text_content_type_is_unsupported (tests/test_sources.py line 499) over image/png, application/octet-stream and application/zip, asserting status UNSUPPORTED, empty text and the type in the note: 1 passed at HEAD, run by this seat 2026-10-16T02:0xZ. The remedy is therefore already built and read. MEASURED RESIDUAL: fetch_source called with a 2xx, content type '' (and None) and a PNG-magic body returns status OK, note None, 2856 characters of text, because the rung needs a declared type; only PDF has a magic-byte test. It is INERT for a false claim: grounding.py _judge counts a sentence SUPPORTED only when a quote of 12 or more characters is in a shown source's normalised full text, and binary bytes do not carry a claim sentence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/aifill/sources.py lines 244-246 at HEAD (read with the Read tool)",
+      "git merge-base --is-ancestor 229d0ed982 HEAD: true; f57f6e049a is the 2026-10-14 merge of worker 451",
+      "python -m pytest lib/research/aifill/tests/test_sources.py::test_a_non_text_content_type_is_unsupported -> 1 passed",
+      "python -I probe: fetch_source(url, transport -> (200, '' or None, PNG-magic body)) -> status OK, note None, 2856 text characters",
+      "task-orders/AMGT_RESAPP.TO-AMGT-gr-2 status line (2026-10-14): Row W451-S1 ruled, rung and two tests added by the issuer"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Corrects D1-S33 and msg 6144 on W451-S1 only. The no-header edge is carried, not built here: the CTO's round-107 list item 3 named the rung, which exists; whether a magic-byte rung for a typeless body is wanted is the CTO's call and I recommend NO (inert, as measured). W452-S1 is a real open build and is cut as its own order."
+}
+```
