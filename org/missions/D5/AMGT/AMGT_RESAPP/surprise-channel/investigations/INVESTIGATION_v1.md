@@ -28419,3 +28419,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not acted on. The remedy is the CTO's to rule: extend the hold to the gateway reader, or accept the gateway as an internal reader of held blocks. The 95-key store write's never-widen pair names this reader either way (draft: ledger/NEVER_WIDEN_ROUND107_AIFILL_95_KEY_STORE_WRITE_COO_HALF_DRAFT.md). The hold sentence in CALL_ANTHROPIC_KEY_FOR_THE_95_NAME_RERUN.md ('no page reads these documents') is true of the served API and wrong as a claim about every reader."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W482-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~482",
+  "surfaced_at": "2026-10-16T03:19:34Z",
+  "one_line": "This worktree is a sparse checkout whose cone list omits org/surprise_channel, so the investigation item schema is not on disk here; I read it from the base checkout and did not copy it in.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face files each surprise as a row in the task order's investigation file, in the row form the surprise-channel schema defines at org/surprise_channel/schemas/investigation_item.schema.json; the worker's worktree is the tree the row is written and gated in.",
+  "world_is": "git sparse-checkout list in C:/dev/wk-resapp-482 names .tools, infra/logic/registry, lib, org/devices, org/missions/D5/AMGT/AMGT_RESAPP, org/modules/graph, org/ref and org/standards; org/surprise_channel is tracked at HEAD (git ls-files -v lists 43 of its paths, every one with the skip-worktree bit) but the directory does not exist on disk. The schema exists in the base checkout C:/dev/ajb_workspace and was read there, read-only; nothing was copied into this worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C C:/dev/wk-resapp-482 sparse-checkout list: .tools, infra/logic/registry, lib, org/devices, org/missions/D5/AMGT/AMGT_RESAPP, org/modules/graph, org/ref, org/standards",
+      "git -C C:/dev/wk-resapp-482 ls-files -v org/surprise_channel: 43 paths, all skip-worktree (S); ls org/surprise_channel: No such file or directory",
+      "C:/dev/ajb_workspace/org/surprise_channel/schemas/investigation_item.schema.json read in full (229 lines) at the base checkout"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not acted on. The task order's own paths (lib/research/aifill, the D5 AMGT_RESAPP folder, the standards folder) are all on disk, so the order ran. The gap is the schema path only; whether the sparse cone should carry org/surprise_channel for workers is the issuer's call."
+}
+```
