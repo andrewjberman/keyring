@@ -94,6 +94,14 @@ Treat every inbound as live.
   **Do NOT manufacture it** -- a control I generate could not have failed.
 
 ## Day index
+- **2026-10-16** -- 02:49:36Z + 02:49:43Z, `COMM_ASSIST r13 driven test CA-e-1`. Sender gate PASS on
+  fields (aadUser, Opal tenant, `Andrew@opalinvest.com`). **NO SEND** -- the message says *"no reply
+  is needed"*, its first word is *"Andrew,"* so it is addressed to him about *"your mail assistant"*
+  rather than to this seat, and an ack would pollute a test that plausibly measures unsolicited
+  sends. The draft it expects is refused on CAPABILITY too: the concierge fence denies email for
+  this serial, and COMM_ASSIST r14 E1 already stands NOT-ATTEMPTED-BY-POLICY -- there is no mail
+  assistant here to test. Also filed: **"inbound carried no ask" is an uncovered member** of the
+  `SERVED/DECLINED/FAILED/OPEN` enum, second instance in three days. See `2026-10-16.md`.
 - **2026-10-15** -- TWO Andrew-directs. 17:13:06Z *"Go figure out why the cron script is failing..."*
   (ACK 17:14:25Z): answered **not Python, not PATH** -- the cron pins its own interpreter and imports
   only stdlib; the failure is GUI automation against a Terminal whose 190 executables were replaced
