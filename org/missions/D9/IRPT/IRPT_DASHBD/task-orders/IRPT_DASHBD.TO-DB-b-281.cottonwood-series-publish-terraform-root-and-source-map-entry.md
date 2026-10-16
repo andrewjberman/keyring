@@ -17,6 +17,8 @@
 
 **Risk class WORLD** is the floor of the paths below (`infra/` paths): this order writes Terraform files and one source-map entry and runs no Terraform command, no AWS write and no upload. NOTHING is planned, applied or deployed; the applier's plan must read 4 add / 0 change / 0 destroy.
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-16 ~02:5xZ, on worker row IRPT_DASHBD-D2-W226-S2; gate limb: an existing order modified, placeholders NONE unchanged, no criterion id, cell or path change):** Your branch CONTAINS the series contract 0.3.0 (merge commit 6e56bb47d3 of `wk-IRPT_DASHBD-225` into your branch); the bundle's `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json` member is that 0.3.0 file, pinned to the commit that last changed it on your branch. You edit no contract file.
+
 ---
 
 ## WORKER FACE
