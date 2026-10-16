@@ -22729,3 +22729,28 @@
 }
 ]
 ```
+
+## IRPT_ANLREQ-D2-S153 -- disposition of W272-S1, W272-S2 and W272-S3: the driver's control mode, its exit order, its list match and the sparse-tree schema gap
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S153",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-16T20:17:42Z",
+  "one_line": "Disposes of IRPT_ANLREQ-D2-W272-S1 (exit order DENIED before UNREACHED: ACCEPTED, mirrors run mode's LEAK-first), W272-S2 (the list match is an exact case-insensitive match over each tickets entry's string values: ACCEPTED with a live caveat) and W272-S3 (the schema named in the worker face is absent from the sparse worktree: NOTED, sibling W268-S2); merged with AR-tz-70 (8815bee2b0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order named exit 1 when ticket-read or ticket-list is DENIED and exit 2 when either is UNREACHED, without saying which wins when both happen; and it said the list must CONTAIN the ticket id without defining contain.",
+  "world_is": "Measured on the merged tree at 8815bee2b0: test_fwd5_driver_control.py reads R46-TESTS-OK passed=14; the two existing driver test files read passed=23 (unchanged); fwd5_driver.py --selftest reads FWD5-SELFTEST-OK checks=36 (19 kept, 17 new). The control exit is 1 when ticket-read is DENIED and ticket-list UNREACHED; the list match is exact on a string value of a tickets entry. The caveat: the real ticket-list entries have never been read by this seat; if the live list names the id in a shape the match does not see, the control reads DENIED on ticket-list, exits 1, and the run grades nothing (the safe failure, with both principals removed), costing one re-cut. NOT done: the driver has never run against the live service.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~231/fwd5_driver/fwd5_driver.py (merged 8815bee2b0)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~272/fwd5_driver/test_fwd5_driver_control.py (merged 8815bee2b0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
