@@ -523,6 +523,51 @@
     "spec_asserts": "Every S3 address and key the estate writes is lib/opal_naming address() output, and a builder refusal is a registry row to add, never a hand-typed workaround.",
     "world_is": "The door's key allowlist is hand-written regular expressions over the PREFIX string, as the order's DOOR CONTRACT v2 requires; the tests compare PREFIX and one key per dataset with address() output and pass (112 of 112). The naming gate, in its warn window (ENFORCE off), grades the five pattern lines as REFUSE, and its live census read was BLOCKED in this worktree, so the refusal reason is not a verified registry gap.",
     "notes": "Filed as an observation, not a block: the order fixed the grammar form and the gate is WARN-only. The CTO decides whether a builder grammar row (a pattern shape per dataset) is the right home, or whether the allowlist stays a stated contract checked against address() output by the tests."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W6-S1",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~6",
+    "surfaced_at": "2026-10-16T08:11:26Z",
+    "one_line": "collector.tf grants invoke on aws_lambda_alias.collector.arn, but no aws_lambda_alias is declared anywhere in the trino root at the base commit; the door cell's access.tf has only aws_lambda_function.access.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/trino/access.tf@a49927b4d1: resources are aws_cloudwatch_log_group.access, aws_iam_group.access, aws_iam_group_policy.invoke, aws_iam_role.access, aws_iam_role_policy.access, aws_lambda_function.access, aws_s3_bucket_policy.trino, aws_kms_key_policy.trino; no aws_lambda_alias and no qualifier or publish",
+        "infra/aws/terraform/trino/ tree-wide search at a49927b4d1 for aws_lambda_alias: no matches",
+        "order TCKT_MTADTA.TO-MD-x2.collector-repair.md Worker Face THE CONTRACTS and BUILD step 4 name aws_lambda_alias.collector as declared in access.tf (another cell's file)",
+        "terraform fmt -check on infra/aws/terraform/trino/collector.tf after the edit: rc=0 (format only; validate and plan not run, WORLD bound)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The collector invokes the door through its own alias, collector (DOOR CONTRACT v2: the alias serves put, derive_silver and get_state); the InvokeTheAccessDoorOnly statement names aws_lambda_alias.collector.arn, which access.tf is said to declare.",
+    "world_is": "The alias does not exist in the root at the base. collector.tf now references aws_lambda_alias.collector.arn as the order directs (reference, never declare), so terraform plan of the trino root fails on an undeclared resource until the door cell declares the alias. Nothing was planned or applied. The MD-x-2 check AC3 passes on its text, not on a plan.",
+    "notes": "Order refusal clause not taken: the reference is the order's literal instruction and access.tf is outside this worker's grant. Owner of the alias is the door cell (MD-x-1); the release act must not apply the root until the alias lands."
+  },
+  {
+    "id": "TCKT_MTADTA-D1-W6-S2",
+    "project": "TCKT_MTADTA",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_TCKT_MTADTA~6",
+    "surfaced_at": "2026-10-16T08:11:26Z",
+    "one_line": "The contract names one coverage object per fire per Eastern day the window touches, but a new blob's counts are attributed to its own Eastern day, which can fall outside the touched days (overlap hour, blob created before the window's first day).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/m365_metadata/scripts/collector/collect.py@1175fb6b70: run_once writes coverage for the union of touched days and the days of this fire's blob counts and kept events",
+        "org/tier1_exec/2.0.0_SA_COO~S1/deliverables/TCKT_MTADTA_R2_CHECKS/r2_check_x2.py coverage: fire 2 lists blob a2 created 2026-10-14 while the window touches only 2026-10-15; the check does not assert against the extra object",
+        "order TCKT_MTADTA.TO-MD-x2.collector-repair.md COLLECTOR CONTRACT v2: 'Per fire, per Eastern day the window touches, ONE coverage object'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "COLLECTOR CONTRACT v2: one coverage object per fire per Eastern day the window touches; listed and fetched count the new blobs whose created falls on that Eastern day.",
+    "world_is": "Without the union, a new blob created on a day outside the touched days would have its listed and fetched counts written nowhere, which is the silent loss the repair exists to remove. The build writes one extra coverage object (the blob's day) for that fire. Whether an out-of-window day should get an object is a contract question, not decided here.",
+    "notes": "Built to the union so no count is lost. The CTO or issuer may rule the extra object out (then the count must be carried to the next touched day, a contract change)."
   }
 ]
 ```
