@@ -22,6 +22,11 @@ Flags (each prints one line; exit 0 only when every requested line says ok=True)
             stray=0 ok=True; the verify is local, read only)
   --taildrop JOURNEY-TAILDROP files_sent=<n> failed=<f> target=dell1 ok=<True|False>
             (reads ONLY TAILDROP_RECORD.md: four send rows, each exit code 0, each to dell1, each naming one pack file)
+  --taildrop-sitez JOURNEY-TAILDROP-SITEZ files_sent=<n> failed=<f> target=sitez ok=<True|False>
+            (reads ONLY TAILDROP_RECORD_SITEZ.md for its send rows and its file table; the pack folder is read for SHA-256
+            only; it never calls Tailscale. ok: four send rows, each exit code 0, 0 failed, each to sitez:, each naming one
+            pack file once, distinct commands, and the record's SHA-256 of each file equal to the pack file on disk.
+            Mutants (must read held=True): a row with a nonzero exit code; a row naming another device.)
 --fetch ok requires: exactly ONE wheel in the batch wherever it sits, named WHEEL_NAME; no file other than .whl in the
 holding folder; the SHA-256 on disk equals the fetch record's held_sha256; the fetch record's device equals this box.
 Mutants (must read held=True): a second wheel in the holding folder; a record whose SHA-256 differs from the disk file.
@@ -60,6 +65,9 @@ CHECKS_FIRST, CHECKS_LAST = 1, 7
 TIME_RE = re.compile(r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$")
 TAILDROP_RECORD_NAME = "TAILDROP_RECORD.md"
 TAILDROP_TARGET = "dell1"
+SITEZ_RECORD_NAME = "TAILDROP_RECORD_SITEZ.md"
+SITEZ_TARGET = "sitez"
+FILE_ROW_RE = re.compile(r"^[1-9]\d*$")
 
 
 def records_dir() -> pathlib.Path:
@@ -339,6 +347,97 @@ def cmd_taildrop() -> bool:
     return ok
 
 
+def sitez_parse(text: str):
+    """(send rows, file rows). A send row is [time, command, exit, outcome] with a UTC time and a 'tailscale file cp'
+    command; a file row is [n, name, bytes, sha256] with a positive integer n. Other table rows are ignored."""
+    sends, files = [], []
+    for line in text.splitlines():
+        if not line.startswith("|"):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) != 4:
+            continue
+        if TIME_RE.match(cells[0]) and "tailscale file cp" in cells[1]:
+            sends.append(cells)
+        elif FILE_ROW_RE.match(cells[0]):
+            files.append(cells)
+    return sends, files
+
+
+def sitez_target_of(command: str) -> str:
+    """The last token of a send command: the target with its trailing colon (backtick wrapper stripped)."""
+    toks = command.strip().strip("`").split()
+    return toks[-1] if toks else ""
+
+
+def sitez_command_names(command: str) -> list[str]:
+    """The pack file names a command's quoted path ends in: a path separator before the name, a quote after it."""
+    return [n for n in PACK_NAMES if re.search(r'[\\/]' + re.escape(n) + r'"', command)]
+
+
+def sitez_facts(sends, files, disk: dict) -> dict:
+    """Every fact the --taildrop-sitez ok is built from; disk maps each pack file name to its SHA-256 read from disk."""
+    table = {r[1]: r[3] for r in files}
+    named = [sitez_command_names(r[1]) for r in sends]
+    return {
+        "rows": len(sends),
+        "files_rows": len(files),
+        "exit_zero": sum(1 for r in sends if r[2] == "0"),
+        "to_sitez": bool(sends) and all(sitez_target_of(r[1]) == SITEZ_TARGET + ":" for r in sends),
+        "distinct": len(set(r[1] for r in sends)) == len(sends),
+        "names_once": sorted(x for ns in named for x in ns) == PACK_NAMES and all(len(ns) == 1 for ns in named),
+        "shas_equal": all(n in disk and table.get(n) == disk[n] for n in PACK_NAMES),
+    }
+
+
+def sitez_ok(f: dict) -> bool:
+    """ok: four send rows, each exit 0 (so 0 failed), each to sitez:, distinct, each pack file named once, and the
+    record's SHA-256 of every pack file equal to the file on disk."""
+    return (f["rows"] == PACK_FILE_COUNT and f["files_rows"] == PACK_FILE_COUNT and f["exit_zero"] == PACK_FILE_COUNT
+            and f["to_sitez"] and f["distinct"] and f["names_once"] and f["shas_equal"])
+
+
+def sitez_mutate(sends, kind: str):
+    """A copy of the send rows with one defect: 'exit' sets the first row's exit code to 1; 'device' retargets it to dell1:."""
+    out = [list(r) for r in sends]
+    if kind == "exit":
+        out[0][2] = "1"
+    elif kind == "device":
+        out[0][1] = re.sub(r"sitez:(`?)$", r"dell1:\1", out[0][1])
+    return out
+
+
+SITEZ_MUTANTS = (("nonzero_exit_row", "exit"), ("other_device_row", "device"))
+
+
+def pack_sha256s() -> dict:
+    folder = pack_dir()
+    return {n: sha256_of(folder / n) for n in PACK_NAMES if (folder / n).is_file()}
+
+
+def cmd_taildrop_sitez() -> bool:
+    path = records_dir() / SITEZ_RECORD_NAME
+    text = path.read_text(encoding="utf-8") if path.is_file() else ""
+    sends, files = sitez_parse(text)
+    disk = pack_sha256s()
+    facts = sitez_facts(sends, files, disk)
+    ok = sitez_ok(facts)
+    mutants_held = True
+    for label, kind in SITEZ_MUTANTS:
+        m_ok = sitez_ok(sitez_facts(sitez_mutate(sends, kind), files, disk))
+        mutants_held = mutants_held and not m_ok
+        print("JOURNEY-TAILDROP-SITEZ-MUTANT case=%s ok=%s expected=False held=%s" % (label, m_ok, not m_ok))
+    ok = ok and mutants_held
+    sent = facts["exit_zero"]
+    print("JOURNEY-TAILDROP-SITEZ files_sent=%d failed=%d target=%s ok=%s"
+          % (sent, len(sends) - sent, SITEZ_TARGET, ok))
+    print("JOURNEY-TAILDROP-SITEZ-DETAIL record=%s rows=%d files_rows=%d exit_codes=%s to_sitez=%s distinct_commands=%s "
+          "names_once=%s shas_equal_pack_on_disk=%s pack_files_on_disk=%d mutants_held=%s"
+          % (path.name, facts["rows"], facts["files_rows"], [r[2] for r in sends], facts["to_sitez"], facts["distinct"],
+             facts["names_once"], facts["shas_equal"], len(disk), mutants_held))
+    return ok
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--fetch", action="store_true")
@@ -346,8 +445,9 @@ def main() -> int:
     ap.add_argument("--release", action="store_true")
     ap.add_argument("--pack", action="store_true")
     ap.add_argument("--taildrop", action="store_true")
+    ap.add_argument("--taildrop-sitez", action="store_true")
     args = ap.parse_args()
-    run_all = not (args.fetch or args.check or args.release or args.pack or args.taildrop)
+    run_all = not (args.fetch or args.check or args.release or args.pack or args.taildrop or args.taildrop_sitez)
     results = []
     if args.fetch or run_all:
         results.append(cmd_fetch())
@@ -359,6 +459,8 @@ def main() -> int:
         results.append(cmd_pack())
     if args.taildrop:
         results.append(cmd_taildrop())
+    if args.taildrop_sitez:
+        results.append(cmd_taildrop_sitez())
     return 0 if results and all(results) else 1
 
 
