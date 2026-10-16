@@ -578,7 +578,9 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
     a fenced row: any mention of the criterion by a CVO-kind non-doer grades.
     THE GRADE OF RECORD (CT-be-1): every qualifying CVO-kind non-doer row is collected and the one read is the grade of
     record (grade_of_record: the latest surfaced_at), not the first row in file order. The verdict in the detail is the
-    verdict of that row. A self-grade reads SELF only when no CVO-kind non-doer row grades the criterion."""
+    verdict of that row. A self-grade reads SELF only when no CVO-kind non-doer row grades the criterion.
+    SOURCE PRIORITY (CT-bf-1, round 29, AMENDMENT 2): an ADJUDICATION-file grade outranks an INVESTIGATION-file grade, whatever
+    their dates; the grade of record is taken within the winning source. A row that only reports a grade does not grade."""
     pat = re.compile(r"(?<![A-Za-z0-9])%s(?![A-Za-z0-9])" % re.escape(crit_id))
     # A generic id (AC3, J2) is a substring of every order's AC3/J2 and of any check-script name (rl9.AC3.sh): the row must
     # also name THIS order (its to_id or the short id after "TO-"), or a stale row from another round grades it.
@@ -618,7 +620,15 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
                 self_hit = self_hit or "%s row %s by %s, the order's own %s" % (
                     source, row.get("id", "?"), who, "issuer" if base_of(who) == base_of(order["issued_by"]) else "assignee")
     if cands:
-        (source, row, who, via), n = grade_of_record(cands)
+        # NFRA_CTLPLN round 29 (CT-bf-1 AMENDMENT 2, SOURCE PRIORITY): the candidates are the rows that already grade (the tests
+        # above, unchanged, strict or loose, prose or structured). An ADJUDICATION-file grade ALWAYS outranks an INVESTIGATION-file
+        # grade, whatever their dates; within one source the grade of record is the latest surfaced_at (grade_of_record). An
+        # investigation grade is read only when no adjudication row grades the criterion. No prose is read differently.
+        adj_c = [c for c in cands if c[2][0] == "adjudication"]
+        inv_c = [c for c in cands if c[2][0] == "investigation"]
+        pool = adj_c or inv_c
+        (source, row, who, via), _n = grade_of_record(pool)
+        n = len(cands)
         detail = "%s row %s by %s%s" % (source, row.get("id", "?"), who, via)
         if n > 1:
             detail += "; grade of record among %d CVO-kind rows (latest surfaced_at wins)" % n

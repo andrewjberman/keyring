@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-16T14:19:12.500668+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261016T151927Z
 **Deploy:** IRPT_BCKEND TO-IB-pr-613 (Act 2): restate the 47 split days of the 49 Financial holdings_performance_daily table (2024-07-09 to 2026-09-03) by one dated invoke each of irpt-holdings-performance-lambda, ascending, outside the fire window; prior version recorded per key before each write
 **Authored by:** 0.7.0_AE_CloudOps~IB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -24,3 +24,4 @@
 - 20261016T151008Z LEG L2 closed: 47 served day keys of the 49F holdings_performance_daily table restated by one dated invoke each, ascending 2024-07-09 t
 - 20261016T151008Z LEG L3 closed: 47 of 47 days comparison_ok: changed rows equal the signed per-day counts (985 on 2026-04-21), sum 1291, other_rows_chan
 - 20261016T151008Z LEG L4 closed: totals 47 days, 1291 changed account-days, 47 writing invokes; 47 manifests all declare split_adjust, named ratio-absent
+- 20261016T151927Z CLOSED -- all 4 legs proven

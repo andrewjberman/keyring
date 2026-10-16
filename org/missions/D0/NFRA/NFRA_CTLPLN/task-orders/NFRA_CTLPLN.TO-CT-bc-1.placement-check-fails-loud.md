@@ -1,6 +1,6 @@
 # TO NFRA_CTLPLN.TO-CT-bc-1.placement-check-fails-loud -- workstream OUTCOME round 27 (cell CT-bc-1): placement-check.py stops saying nothing when it cannot read: a missing org/missions or a short project count exits non-zero with ERROR (FWD-7)
 
-<to_id>NFRA_CTLPLN.TO-CT-bc-1.placement-check-fails-loud</to_id>
+<to_id>NFRA_CTLPLN.TO-CT-bc-1</to_id>
 <project>NFRA_CTLPLN</project>
 <issued_to>0.9.0_WK_NFRA_CTLPLN~141</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>

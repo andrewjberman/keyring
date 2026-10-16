@@ -136,7 +136,7 @@
       "history_scope": {
         "kind": "scalar string",
         "source": "history_scope",
-        "sentence": "Derived per account, never a constant: PARTIAL_HISTORY when the account's first value day equals the source floor (the earliest balance partition the source holds), FULL when it is after; how much of the account's life the file holds, a member of the source table contract's `history_scope` enum; never null."
+        "sentence": "Derived per account, never a constant: PARTIAL_HISTORY when the account's first value day equals the source floor (the earliest balance partition the source holds), FULL when it is after; how much of the account's life the file holds, a member of the source table contract's `history_scope` enum; never null. A 'value day' is a day on which the source holds a row for the account, whatever the row's value: a zero, negative or unreadable balance row counts, so an account with a row on the source floor is PARTIAL_HISTORY."
       },
       "drawdown_episodes": {
         "kind": "list of objects {peak_date, trough_date, recovery_date, depth}",
