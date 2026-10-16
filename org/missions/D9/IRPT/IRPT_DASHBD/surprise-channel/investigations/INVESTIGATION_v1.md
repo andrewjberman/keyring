@@ -19304,3 +19304,53 @@ DB-b-171 (round 91, worker 0.9.0_WK_IRPT_DASHBD~137): the closed list takes none
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W414-S1 -- The Cottonwood floor 2026-07-10 and the 3 absent days are filled_report_values facts only; the other gold tabl
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W414-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~414",
+  "surfaced_at": "2026-10-15T23:35:06Z",
+  "one_line": "The Cottonwood floor 2026-07-10 and the 3 absent days are filled_report_values facts only; the other gold tables start and gap differently, so the Cottonwood series has three starts, not one floor.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~414/COTTONWOOD_COVERAGE_CENSUS_R145.json (tables, floor, twelve_day_gap; read-only S3 list 2026-10-15T23:29:46Z UTC)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~414/census_r145_read.py@8f17f7b84b (the reads; checker DBC145-1-AC1 PASS on the same tables)"
+    ]
+  },
+  "spec_asserts": "TO DB-c-22 'Why': the CTO named three measured Cottonwood facts, the 07-10 floor, 3 absent days and a 12-day gap, as one Cottonwood series; the cell's floor is the first date of filled_report_values.",
+  "world_is": "filled_report_values: 65 partitions from 2026-07-10, 3 absent trading days (2026-08-19, 2026-09-24 to 2026-09-25). account_return_daily: 3390 partitions from 2013-04-03, 15 absent trading days in 3 runs; its 12-day run 2026-06-23 to 2026-07-09 precedes the floor. holdings_performance_daily: 88 partitions from 2026-06-10, no absent day. The record measures three starts and the 12-day gap in a different table than the 3 absent days."
+}
+```
+
+## IRPT_DASHBD-D2-W414-S2 -- The silver fact_allocations empty partitions do not form one block before the floor, so they do not by count a
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W414-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~414",
+  "surfaced_at": "2026-10-15T23:35:06Z",
+  "one_line": "The silver fact_allocations empty partitions do not form one block before the floor, so they do not by count alone explain why filled_report_values starts on 2026-07-10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~414/COTTONWOOD_COVERAGE_CENSUS_R145.json (floor.silver_empty: scanned 145, count 33, empty_on_trading_days 11, empty_on_non_trading_days 22, nonempty_partitions_before_first_empty 3)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~414/census_r145_read.py@8f17f7b84b (footer read: parquet metadata num_rows per partition, get_object only)"
+    ]
+  },
+  "spec_asserts": "TO DB-c-22 floor 'evidence_words': say which table's first date and which silver partitions explain why there is nothing before the floor, read as one silver empty run ending the day before the floor.",
+  "world_is": "The 33 empty fact_allocations partitions are not one run: 74 partitions lie between 2026-04-25 and 2026-07-09, 33 read 0 rows, 22 of the empties are weekends or holidays, and the 11 empty trading days all fall between 2026-06-22 and 2026-07-09. Rows exist on 2026-04-22 to 2026-04-24 and on 38 trading days inside that span, so the producer rule that starts the gold series is NOT_ESTABLISHED; the silver counts are a candidate, not the cause."
+}
+```
